@@ -6,6 +6,7 @@
  * 1. Change canvasBaseUrl to new course ID
  * 2. Update all assignment canvasId values
  * 3. Update weekDates for new semester
+ * 4. Add Loom video URLs as they become available
  */
 
 const CST395_CONFIG = {
@@ -77,19 +78,202 @@ const CST395_CONFIG = {
       dueDate: "2025-02-14",
       type: "bridge"
     },
-    // Sprint 2: Mirror (placeholder IDs)
+
+    // Sprint 2: Mirror
     "s2-stakeholder-selection": {
-      canvasId: "100010",
+      canvasId: "200001",
       title: "Sprint 2: Stakeholder Selection",
       dueDate: "2025-02-19",
       type: "assignment"
+    },
+    "s2-reflection-1": {
+      canvasId: "200002",
+      title: "Sprint 2: Productive Reflection #1",
+      dueDate: "2025-02-21",
+      type: "reflection"
+    },
+    "s2-domain-learning": {
+      canvasId: "200003",
+      title: "Sprint 2: Domain Learning Plan",
+      dueDate: "2025-02-26",
+      type: "assignment"
+    },
+    "s2-reflection-2": {
+      canvasId: "200004",
+      title: "Sprint 2: Productive Reflection #2",
+      dueDate: "2025-02-28",
+      type: "reflection"
+    },
+    "s2-solution-prototype": {
+      canvasId: "200005",
+      title: "Sprint 2: Solution Prototype",
+      dueDate: "2025-03-05",
+      type: "assignment"
+    },
+    "s2-build-log": {
+      canvasId: "200006",
+      title: "Sprint 2: Build Log Entry",
+      dueDate: "2025-03-07",
+      type: "reflection"
+    },
+    "s2-stakeholder-demo": {
+      canvasId: "200007",
+      title: "Sprint 2: Stakeholder Demo",
+      dueDate: "2025-03-12",
+      type: "assignment"
+    },
+    "s2-human-value": {
+      canvasId: "200008",
+      title: "Sprint 2: Human Value Statement",
+      dueDate: "2025-03-13",
+      type: "reflection"
+    },
+    "s2-bridge": {
+      canvasId: "200009",
+      title: "Bridge Reflection: Mirror → Complexity",
+      dueDate: "2025-03-14",
+      type: "bridge"
+    },
+
+    // Sprint 3: Complexity
+    "s3-domain-selection": {
+      canvasId: "300001",
+      title: "Sprint 3: Domain Selection",
+      dueDate: "2025-03-26",
+      type: "assignment"
+    },
+    "s3-reflection-1": {
+      canvasId: "300002",
+      title: "Sprint 3: Productive Reflection #1",
+      dueDate: "2025-03-28",
+      type: "reflection"
+    },
+    "s3-stakeholder-research": {
+      canvasId: "300003",
+      title: "Sprint 3: Stakeholder Research",
+      dueDate: "2025-04-02",
+      type: "assignment"
+    },
+    "s3-reflection-2": {
+      canvasId: "300004",
+      title: "Sprint 3: Productive Reflection #2",
+      dueDate: "2025-04-04",
+      type: "reflection"
+    },
+    "s3-mvp": {
+      canvasId: "300005",
+      title: "Sprint 3: Minimum Viable Product",
+      dueDate: "2025-04-09",
+      type: "assignment"
+    },
+    "s3-build-log": {
+      canvasId: "300006",
+      title: "Sprint 3: Build Log Entry",
+      dueDate: "2025-04-11",
+      type: "reflection"
+    },
+    "s3-presentation": {
+      canvasId: "300007",
+      title: "Sprint 3: Solution Presentation",
+      dueDate: "2025-04-16",
+      type: "assignment"
+    },
+    "s3-human-value": {
+      canvasId: "300008",
+      title: "Sprint 3: Human Value Statement",
+      dueDate: "2025-04-17",
+      type: "reflection"
+    },
+    "s3-bridge": {
+      canvasId: "300009",
+      title: "Bridge Reflection: Complexity → Mastery",
+      dueDate: "2025-04-18",
+      type: "bridge"
+    },
+
+    // Sprint 4: Mastery
+    "s4-problem-definition": {
+      canvasId: "400001",
+      title: "Sprint 4: Problem Definition",
+      dueDate: "2025-04-23",
+      type: "assignment"
+    },
+    "s4-reflection-1": {
+      canvasId: "400002",
+      title: "Sprint 4: Productive Reflection #1",
+      dueDate: "2025-04-25",
+      type: "reflection"
+    },
+    "s4-execution-plan": {
+      canvasId: "400003",
+      title: "Sprint 4: Execution Plan",
+      dueDate: "2025-04-30",
+      type: "assignment"
+    },
+    "s4-reflection-2": {
+      canvasId: "400004",
+      title: "Sprint 4: Productive Reflection #2",
+      dueDate: "2025-05-02",
+      type: "reflection"
+    },
+    "s4-final-solution": {
+      canvasId: "400005",
+      title: "Sprint 4: Final Solution",
+      dueDate: "2025-05-07",
+      type: "assignment"
+    },
+    "s4-build-log": {
+      canvasId: "400006",
+      title: "Sprint 4: Build Log Entry",
+      dueDate: "2025-05-09",
+      type: "reflection"
+    },
+    "s4-final-presentation": {
+      canvasId: "400007",
+      title: "Sprint 4: Final Presentation",
+      dueDate: "2025-05-14",
+      type: "assignment"
+    },
+    "s4-portfolio": {
+      canvasId: "400008",
+      title: "Sprint 4: Portfolio Reflection",
+      dueDate: "2025-05-15",
+      type: "reflection"
+    },
+    "s4-course-reflection": {
+      canvasId: "400009",
+      title: "Course Reflection: Full Journey",
+      dueDate: "2025-05-16",
+      type: "bridge"
     }
+  },
+
+  // Class recording Loom videos - ADD URLS AS AVAILABLE
+  // Set to null if no recording was made for that week
+  loomVideos: {
+    1: null,  // Week 1 - no recording yet
+    2: null,  // Week 2
+    3: null,  // Week 3
+    4: null,  // Week 4
+    5: null,  // Week 5
+    6: null,  // Week 6
+    7: null,  // Week 7
+    8: null,  // Week 8
+    9: null,  // Week 9
+    10: null, // Week 10
+    11: null, // Week 11
+    12: null, // Week 12
+    13: null, // Week 13
+    14: null, // Week 14
+    15: null, // Week 15
+    16: null  // Week 16
   },
 
   // External resource URLs
   resources: {
     umpireGuide: "https://docs.google.com/document/d/UMPIRE_DOC_ID",
     threeCsTemplate: "https://docs.google.com/document/d/3CS_DOC_ID",
+    symbioticThinking: "https://symbioticthinking.ai/",
     dojoAccess: "https://symbioticthinking.ai/dojo",
     myUnderstandingTemplate: "https://docs.google.com/document/d/UNDERSTANDING_DOC_ID",
     syllabus: "https://docs.google.com/document/d/SYLLABUS_DOC_ID"
@@ -217,6 +401,15 @@ function getAssignmentsDueInWeek(weekNum) {
   }
 
   return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+}
+
+/**
+ * Get Loom video URL for a week
+ * @param {number} weekNum - Week number
+ * @returns {string|null} Loom URL or null if no recording
+ */
+function getLoomVideo(weekNum) {
+  return CST395_CONFIG.loomVideos[weekNum] || null;
 }
 
 // For testing: Override current week (set to null to use real date)
