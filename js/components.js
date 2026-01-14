@@ -261,7 +261,32 @@ function updateStatusBanner(config) {
     ? getEffectiveCurrentWeek()
     : getCurrentWeekFromConfig(config);
 
-  if (!currentWeek) return;
+  const titleEl = document.getElementById('status-title');
+  const subtitleEl = document.getElementById('status-subtitle');
+  const progressNumEl = document.getElementById('status-progress-num');
+  const progressBar = document.getElementById('status-progress-bar');
+
+  // Handle pre-semester or post-semester state
+  if (!currentWeek) {
+    const today = new Date();
+    const week1Start = new Date(config.weekDates[1].start);
+    const week16End = new Date(config.weekDates[16].end);
+
+    if (today < week1Start) {
+      // Before semester starts
+      if (titleEl) titleEl.textContent = 'Course Starting Soon';
+      if (subtitleEl) subtitleEl.textContent = `Week 1 begins ${formatDate(config.weekDates[1].start)}`;
+      if (progressNumEl) progressNumEl.textContent = '0/16';
+      if (progressBar) progressBar.style.width = '0%';
+    } else if (today > week16End) {
+      // After semester ends
+      if (titleEl) titleEl.textContent = 'Course Complete';
+      if (subtitleEl) subtitleEl.textContent = 'Congratulations on finishing the journey!';
+      if (progressNumEl) progressNumEl.textContent = '16/16';
+      if (progressBar) progressBar.style.width = '100%';
+    }
+    return;
+  }
 
   const weekData = config.weekDates[currentWeek];
   if (!weekData) return;
@@ -270,25 +295,21 @@ function updateStatusBanner(config) {
   if (!sprintData) return;
 
   // Update title
-  const titleEl = document.getElementById('status-title');
   if (titleEl) {
     titleEl.textContent = `Sprint ${weekData.sprint}: ${sprintData.name} • Week ${currentWeek}`;
   }
 
   // Update subtitle
-  const subtitleEl = document.getElementById('status-subtitle');
   if (subtitleEl) {
     subtitleEl.textContent = weekData.title;
   }
 
   // Update progress
-  const progressNumEl = document.getElementById('status-progress-num');
   if (progressNumEl) {
     progressNumEl.textContent = `${currentWeek}/16`;
   }
 
   // Update progress bar
-  const progressBar = document.getElementById('status-progress-bar');
   if (progressBar) {
     const percent = (currentWeek / 16) * 100;
     progressBar.style.width = `${percent}%`;
@@ -311,14 +332,29 @@ function initHomePage(config) {
   populateAssignmentLinks(config);
   populateDueDates(config);
 
+  // Always update status banner (handles pre/post semester)
+  updateStatusBanner(config);
+
   // Update dynamic content
   const currentWeek = typeof getEffectiveCurrentWeek === 'function'
     ? getEffectiveCurrentWeek()
     : getCurrentWeekFromConfig(config);
 
   if (currentWeek) {
-    updateStatusBanner(config);
     renderDueThisWeek(config, currentWeek, 'due-this-week');
+  } else {
+    // Pre or post semester - show appropriate message
+    const dueContainer = document.getElementById('due-this-week');
+    if (dueContainer) {
+      const today = new Date();
+      const week1Start = new Date(config.weekDates[1].start);
+
+      if (today < week1Start) {
+        dueContainer.innerHTML = '<p style="color: var(--gray-500); font-size: var(--text-sm); padding: var(--space-2);">Course begins ' + formatDate(config.weekDates[1].start) + '. Check back then for assignments!</p>';
+      } else {
+        dueContainer.innerHTML = '<p style="color: var(--gray-500); font-size: var(--text-sm); padding: var(--space-2);">No assignments - course has concluded.</p>';
+      }
+    }
   }
 
   console.log('Home page initialized');

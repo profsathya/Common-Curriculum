@@ -413,7 +413,7 @@ function getLoomVideo(weekNum) {
 }
 
 // For testing: Override current week (set to null to use real date)
-let TEST_CURRENT_WEEK = 2; // Set to week 2 for demo purposes
+let TEST_CURRENT_WEEK = null; // Set to null to use real date-based calculation
 
 function getEffectiveCurrentWeek() {
   return TEST_CURRENT_WEEK !== null ? TEST_CURRENT_WEEK : getCurrentWeek();
