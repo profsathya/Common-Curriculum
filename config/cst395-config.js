@@ -16,7 +16,7 @@ const CST395_CONFIG = {
 
   // Canvas base URL - UPDATE EACH SEMESTER
   // Find this in your Canvas URL: https://csumb.instructure.com/courses/XXXXX
-  canvasBaseUrl: "https://csumb.instructure.com/courses/12345",
+  canvasBaseUrl: "https://csumb.instructure.com/courses/33084",
 
   // Canvas assignment URLs - UPDATE EACH SEMESTER
   // To find assignment IDs: Go to assignment in Canvas, look at URL
@@ -24,7 +24,7 @@ const CST395_CONFIG = {
   assignments: {
     // Sprint 1: Foundation
     "s1-superagency-challenge": {
-      canvasId: "100001",
+      canvasId: "562671",
       title: "Sprint 1: Superagency Challenge",
       dueDate: "2025-01-22",
       type: "assignment"
