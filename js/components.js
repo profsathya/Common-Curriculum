@@ -377,3 +377,67 @@ function addDemoBannerIfNeeded() {
     }
   }
 }
+
+// ============================================
+// Class Recording (Loom) Links
+// ============================================
+
+/**
+ * Populate all Loom video links on the page from config
+ * Elements should have data-loom="week-number" attribute
+ * @param {Object} config - The course config object
+ */
+function populateLoomLinks(config) {
+  const elements = document.querySelectorAll('[data-loom]');
+
+  elements.forEach(container => {
+    const weekNum = parseInt(container.getAttribute('data-loom'));
+    const loomUrl = config.loomVideos ? config.loomVideos[weekNum] : null;
+
+    const linkEl = container.querySelector('.class-recording__link');
+    const noRecordingEl = container.querySelector('.class-recording__no-recording');
+
+    if (loomUrl) {
+      // Has video - show link, hide message
+      container.classList.add('class-recording--has-video');
+      if (linkEl) {
+        linkEl.href = loomUrl;
+        linkEl.target = '_blank';
+        linkEl.style.display = 'inline';
+      }
+      if (noRecordingEl) {
+        noRecordingEl.style.display = 'none';
+      }
+    } else {
+      // No video - hide link, show message
+      container.classList.remove('class-recording--has-video');
+      if (linkEl) {
+        linkEl.style.display = 'none';
+      }
+      if (noRecordingEl) {
+        noRecordingEl.style.display = 'inline';
+      }
+    }
+  });
+}
+
+/**
+ * Initialize a sprint page with Loom support
+ * @param {Object} config - The course config object
+ */
+function initSprintPageWithLoom(config) {
+  // Initialize collapsibles
+  initCollapsibles();
+
+  // Populate Canvas links
+  populateAssignmentLinks(config);
+  populateDueDates(config);
+
+  // Populate Loom links
+  populateLoomLinks(config);
+
+  // Highlight current week
+  highlightCurrentWeek(config);
+
+  console.log('Sprint page initialized with Loom support');
+}
