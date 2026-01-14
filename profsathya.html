@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Dr. Sathya Narayanan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg-dark: #0f1419;
+            --color-bg-card: #1a1f26;
+            --color-accent-teal: #14b8a6;
+            --color-accent-gold: #f59e0b;
+            --color-accent-warm: #fb923c;
+            --color-text-bright: #f8fafc;
+            --color-text-muted: #94a3b8;
+            --color-text-dim: #64748b;
+            --color-border: #2d3748;
+            --color-glow: rgba(20, 184, 166, 0.15);
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--color-text-bright);
+            background: var(--color-bg-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(20, 184, 166, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero - Make it hit */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(180deg, var(--color-accent-teal) 0%, transparent 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .hero-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-accent-teal);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            color: var(--color-text-bright);
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--color-text-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* The Big Question - Philosophy */
+        .big-question {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .big-question .question-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 600;
+            color: var(--color-text-bright);
+            margin-bottom: 3rem;
+            line-height: 1.4;
+        }
+
+        .transfer-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .transfer-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--color-bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transfer-row.computers {
+            opacity: 0.6;
+        }
+
+        .transfer-row.people {
+            border-color: var(--color-accent-teal);
+            box-shadow: 0 0 40px var(--color-glow);
+        }
+
+        .transfer-row.people::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-gold));
+        }
+
+        .entity {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .entity-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .transfer-row:hover .entity-icon {
+            transform: scale(1.1);
+        }
+
+        .entity-icon.computer {
+            background: #374151;
+        }
+
+        .entity-icon.person {
+            background: linear-gradient(135deg, var(--color-accent-teal), #0d9488);
+        }
+
+        .entity-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .transfer-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .arrow-line {
+            width: 100px;
+            height: 2px;
+            background: var(--color-text-dim);
+            position: relative;
+        }
+
+        .transfer-row.people .arrow-line {
+            background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-gold));
+            height: 3px;
+        }
+
+        .arrow-line::after {
+            content: '→';
+            position: absolute;
+            right: -8px;
+            top: -11px;
+            font-size: 1.2rem;
+            color: var(--color-text-dim);
+        }
+
+        .transfer-row.people .arrow-line::after {
+            color: var(--color-accent-gold);
+        }
+
+        .arrow-label {
+            font-size: 0.85rem;
+            color: var(--color-text-dim);
+            font-weight: 500;
+        }
+
+        .transfer-row.people .arrow-label {
+            color: var(--color-accent-teal);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .insight-box {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-radius: 16px;
+            border-left: 4px solid var(--color-accent-teal);
+        }
+
+        .insight-box p {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--color-text-bright);
+            line-height: 1.6;
+        }
+
+        /* Stats that hit hard */
+        .stat-reveal {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stat-intro {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .big-stat {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 15vw, 8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent-warm) 0%, var(--color-accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .stat-context {
+            font-size: 1.4rem;
+            color: var(--color-text-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-subtext {
+            font-size: 1rem;
+            color: var(--color-text-dim);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Section styling */
+        .section {
+            padding: 3rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video section */
+        .video-section {
+            padding: 2rem 0 3rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: var(--color-bg-card);
+            border: 2px dashed var(--color-border);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .video-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .video-placeholder-text {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .video-placeholder-hint {
+            font-size: 0.85rem;
+            color: var(--color-text-dim);
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-accent-teal);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .section-header {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--color-text-bright);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        /* Journey - Visual timeline */
+        .journey-visual {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .journey-path {
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, 
+                var(--color-accent-gold) 0%, 
+                var(--color-accent-teal) 50%,
+                var(--color-accent-teal) 100%);
+            border-radius: 4px;
+        }
+
+        .journey-stop {
+            position: relative;
+            padding-left: 80px;
+            padding-bottom: 3rem;
+        }
+
+        .journey-stop:last-child {
+            padding-bottom: 0;
+        }
+
+        .journey-marker {
+            position: absolute;
+            left: 18px;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--color-bg-dark);
+            border: 4px solid var(--color-accent-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .journey-stop:hover .journey-marker {
+            transform: scale(1.2);
+            background: var(--color-accent-teal);
+        }
+
+        .journey-stop:first-child .journey-marker {
+            border-color: var(--color-accent-gold);
+        }
+
+        .journey-stop:first-child:hover .journey-marker {
+            background: var(--color-accent-gold);
+        }
+
+        .journey-content {
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .journey-stop:hover .journey-content {
+            border-color: var(--color-accent-teal);
+            transform: translateX(8px);
+        }
+
+        .journey-location {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--color-text-bright);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .journey-detail {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .journey-highlight {
+            color: var(--color-accent-teal);
+            font-weight: 500;
+        }
+
+        /* Big Six - Make it personal */
+        .big-six-section {
+            padding: 3rem 0;
+        }
+
+        .experience-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .experience-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--color-bg-card);
+            border-radius: 12px;
+            border: 2px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .experience-card:hover {
+            border-color: var(--color-text-dim);
+            transform: translateX(4px);
+        }
+
+        .experience-card.checked {
+            border-color: var(--color-accent-teal);
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .experience-checkbox {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .experience-card.checked .experience-checkbox {
+            background: var(--color-accent-teal);
+            border-color: var(--color-accent-teal);
+            color: var(--color-bg-dark);
+        }
+
+        .experience-card.checked .experience-checkbox::after {
+            content: '✓';
+            font-weight: bold;
+        }
+
+        .experience-info {
+            flex: 1;
+        }
+
+        .experience-title {
+            font-weight: 500;
+            color: var(--color-text-bright);
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-subtitle {
+            font-size: 0.85rem;
+            color: var(--color-text-dim);
+        }
+
+        .experience-multiplier {
+            background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-warm));
+            color: var(--color-bg-dark);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .experience-summary {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .summary-count {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-accent-teal);
+            line-height: 1;
+        }
+
+        .summary-label {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            margin: 0.5rem 0 1rem;
+        }
+
+        .summary-message {
+            font-size: 1.1rem;
+            color: var(--color-text-bright);
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* Reflection blocks */
+        .reflection-block {
+            padding: 2.5rem 2rem;
+            background: var(--color-bg-card);
+            border-radius: 20px;
+            border: 2px solid var(--color-border);
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reflection-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-gold));
+        }
+
+        .reflection-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .reflection-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-text-bright);
+            margin-bottom: 0.75rem;
+        }
+
+        .reflection-block .prompt {
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .reflection-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .reflection-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--color-bg-dark);
+            border-radius: 12px;
+            border: 2px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reflection-option:hover {
+            border-color: var(--color-text-dim);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .reflection-option.selected {
+            border-color: var(--color-accent-teal);
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .option-radio {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .reflection-option.selected .option-radio {
+            border-color: var(--color-accent-teal);
+            background: var(--color-accent-teal);
+        }
+
+        .reflection-option.selected .option-radio::after {
+            content: '✓';
+            color: var(--color-bg-dark);
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .option-text {
+            flex: 1;
+            color: var(--color-text-bright);
+            font-size: 1rem;
+        }
+
+        .reflection-response {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(20, 184, 166, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--color-accent-teal);
+            display: none;
+        }
+
+        .reflection-response.visible {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reflection-response h4 {
+            font-family: var(--font-display);
+            color: var(--color-accent-teal);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .reflection-response p {
+            color: var(--color-text-muted);
+        }
+
+        /* Principles - More dynamic */
+        .principles-section {
+            padding: 4rem 0;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 700px) {
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .principle-card {
+            background: var(--color-bg-card);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border: 2px solid var(--color-border);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--color-accent-teal), var(--color-accent-gold));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-accent-teal);
+        }
+
+        .principle-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .principle-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .principle-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-text-bright);
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .principle-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Personal touch */
+        .personal-section {
+            padding: 4rem 0;
+        }
+
+        .personal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .personal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .personal-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--color-bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .personal-item:hover {
+            border-color: var(--color-accent-teal);
+            transform: translateX(4px);
+        }
+
+        .personal-item .emoji {
+            font-size: 1.75rem;
+        }
+
+        .personal-item span {
+            color: var(--color-text-bright);
+        }
+
+        .quote-block {
+            padding: 2rem;
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            border-left: 4px solid var(--color-accent-gold);
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Commitment section - with numbers */
+        .commitment-section {
+            padding: 4rem 0;
+        }
+
+        .commitment-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .commitment-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .commitment-stat {
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .commitment-stat .number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent-teal), var(--color-accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .commitment-stat .label {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Closing */
+        .closing {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .closing h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--color-text-bright);
+            margin-bottom: 1rem;
+        }
+
+        .closing h2 span {
+            background: linear-gradient(135deg, var(--color-accent-teal), var(--color-accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .closing p {
+            color: var(--color-text-muted);
+            max-width: 550px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--color-accent-teal), #0d9488);
+            color: var(--color-bg-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+        }
+
+        .contact-link.secondary {
+            background: var(--color-bg-card);
+            color: var(--color-text-bright);
+            border: 2px solid var(--color-border);
+        }
+
+        .contact-link.secondary:hover {
+            border-color: var(--color-accent-teal);
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.15);
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-gold));
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Counter animation */
+        .counter {
+            display: inline-block;
+        }
+
+        /* Images */
+        .hero-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--color-accent-teal);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 40px var(--color-glow);
+        }
+
+        .personal-photo {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            margin: 2rem auto;
+            display: block;
+            border: 2px solid var(--color-border);
+        }
+
+        .journey-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .image-placeholder {
+            background: var(--color-bg-card);
+            border: 2px dashed var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+        }
+
+        .image-placeholder.round {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-label">Welcome to the Course</div>
+            
+            <!-- REPLACE: Add your profile photo here -->
+            <!-- <img src="images/profile.jpg" alt="Prof. Sathya" class="hero-image"> -->
+            <div class="image-placeholder round">Add profile photo</div>
+            
+            <h1>I am <span>Prof. Sathya</span></h1>
+            <p class="tagline">17 years helping students reach their potential.<br>Let me tell you why I'm still here.</p>
+            <div class="scroll-hint">
+                <span>↓</span>
+                <span>Scroll to begin</span>
+            </div>
+        </header>
+
+        <!-- Video Introduction -->
+        <section class="video-section section">
+            <!-- REPLACE: Paste your Loom embed code here -->
+            <!-- 
+            <div class="video-container">
+                <iframe src="https://www.loom.com/embed/YOUR_LOOM_VIDEO_ID" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+            -->
+            <div class="video-placeholder">
+                <div class="video-placeholder-icon">🎬</div>
+                <div class="video-placeholder-text">Video introduction goes here</div>
+                <div class="video-placeholder-hint">Record in Loom → Share → Embed → Copy the iframe code</div>
+            </div>
+        </section>
+
+        <!-- The Big Question -->
+        <section class="big-question section">
+            <p class="question-text">Here's a question that influenced how I think about teaching:</p>
+            
+            <div class="transfer-visual">
+                <div class="transfer-row computers">
+                    <div class="entity">
+                        <div class="entity-icon computer">💻</div>
+                        <span class="entity-label">Computer A</span>
+                    </div>
+                    <div class="transfer-arrow">
+                        <div class="arrow-line"></div>
+                        <span class="arrow-label">Copy files</span>
+                    </div>
+                    <div class="entity">
+                        <div class="entity-icon computer">💻</div>
+                        <span class="entity-label">Computer B</span>
+                    </div>
+                </div>
+                
+                <div class="transfer-row people">
+                    <div class="entity">
+                        <div class="entity-icon person">👤</div>
+                        <span class="entity-label">Person A</span>
+                    </div>
+                    <div class="transfer-arrow">
+                        <div class="arrow-line"></div>
+                        <span class="arrow-label">Model Behavior</span>
+                    </div>
+                    <div class="entity">
+                        <div class="entity-icon person">👤</div>
+                        <span class="entity-label">Person B</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <p>"If knowledge could be copied like files, we'd just do lectures. But learning is about habits, mindsets, and practice. That's why this course is designed differently."</p>
+            </div>
+        </section>
+
+        <!-- The Sobering Stat -->
+        <section class="stat-reveal section">
+            <p class="stat-intro">Research followed thousands of college graduates to find what actually predicted career fulfillment...</p>
+            <div class="big-stat"><span class="counter" data-target="6">0</span>%</div>
+            <p class="stat-context">of students have all six experiences that matter</p>
+            <p class="stat-subtext">Only 63% have even <em>one</em> professor who excited them about learning. This is what I'm trying to change.</p>
+        </section>
+
+        <!-- First Reflection -->
+        <div class="reflection-block" id="reflection1">
+            <div class="reflection-icon">💭</div>
+            <h3>Before we go further...</h3>
+            <p class="prompt">When you're trying to learn something new, which feels most natural?</p>
+            
+            <div class="reflection-options" id="options1">
+                <div class="reflection-option" data-value="watch">
+                    <span class="option-radio"></span>
+                    <span class="option-text">I watch tutorials and follow step-by-step</span>
+                </div>
+                <div class="reflection-option" data-value="dive">
+                    <span class="option-radio"></span>
+                    <span class="option-text">I dive in and figure it out, looking things up when stuck</span>
+                </div>
+                <div class="reflection-option" data-value="understand">
+                    <span class="option-radio"></span>
+                    <span class="option-text">I need to understand "why" before I can do "how"</span>
+                </div>
+                <div class="reflection-option" data-value="people">
+                    <span class="option-radio"></span>
+                    <span class="option-text">I learn best by talking through it with someone</span>
+                </div>
+            </div>
+            
+            <div class="reflection-response" id="response1">
+                <h4>There's no wrong answer.</h4>
+                <p>What matters is knowing yourself. This course helps you become intentional about how you learn—so you can direct your own growth rather than waiting for someone to teach you.</p>
+            </div>
+        </div>
+
+        <!-- Journey -->
+        <section class="section">
+            <div class="section-label">The Path Here</div>
+            <h2 class="section-header">From Physics to Computer Science to... People</h2>
+            
+            <div class="journey-visual">
+                <div class="journey-path"></div>
+                
+                <div class="journey-stop">
+                    <div class="journey-marker">🇮🇳</div>
+                    <div class="journey-content">
+                        <div class="journey-location">Arcot, Tamil Nadu, India</div>
+                        <div class="journey-detail">Born and raised. B.Sc. in Physics. My father was a chemistry professor who <span class="journey-highlight">built a women's college</span> in our town. There's an auditorium named after him.</div>
+                    </div>
+                </div>
+                
+                <div class="journey-stop">
+                    <div class="journey-marker">📚</div>
+                    <div class="journey-content">
+                        <div class="journey-location">Chennai → Bangalore → New Delhi</div>
+                        <div class="journey-detail">Masters in Computer Applications. First industry jobs at Wipro and Hughes. <span class="journey-highlight">Embedded systems</span>—products without screens or hard drives.</div>
+                    </div>
+                </div>
+                
+                <div class="journey-stop">
+                    <div class="journey-marker">🇺🇸</div>
+                    <div class="journey-content">
+                        <div class="journey-location">New Hampshire → Philadelphia → Princeton</div>
+                        <div class="journey-detail">Moved to the US. Security products, then Masters at Temple. <span class="journey-highlight">8 years at Panasonic Research Lab</span>. Designed cable modems. PhD at NYU-Poly while working full-time. Received 9 patents.</div>
+                    </div>
+                </div>
+                
+                <div class="journey-stop">
+                    <div class="journey-marker">🎓</div>
+                    <div class="journey-content">
+                        <div class="journey-location">CSUMB — 2007 to Present</div>
+                        <div class="journey-detail">Started with networking, architecture. But I kept being drawn to the courses that focus on <span class="journey-highlight">student growth</span>—FYS, Pro Seminar, Capstone. The "support courses" that are actually everything.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Big Six Experiences -->
+        <section class="big-six-section section">
+            <div class="section-label">What Actually Matters</div>
+            <h2 class="section-header">The Six Experiences That Predict Career Fulfillment</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Gallup research found these experiences dramatically increase engagement and fulfillment at work. Check any you've had:</p>
+            
+            <div class="experience-grid" id="experienceGrid">
+                <div class="experience-card" data-experience="excited">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">A professor who made me excited about learning</div>
+                        <div class="experience-subtitle">Not just informative—genuinely inspiring</div>
+                    </div>
+                    <div class="experience-multiplier">2.0×</div>
+                </div>
+                
+                <div class="experience-card" data-experience="cared">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">A professor who cared about me as a person</div>
+                        <div class="experience-subtitle">Knew your name, situation, aspirations</div>
+                    </div>
+                    <div class="experience-multiplier">1.9×</div>
+                </div>
+                
+                <div class="experience-card" data-experience="mentor">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">A mentor who encouraged my goals</div>
+                        <div class="experience-subtitle">Someone who pushed you toward what you wanted</div>
+                    </div>
+                    <div class="experience-multiplier">2.2×</div>
+                </div>
+                
+                <div class="experience-card" data-experience="project">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">A semester-long (or longer) project</div>
+                        <div class="experience-subtitle">Sustained work on something meaningful</div>
+                    </div>
+                    <div class="experience-multiplier">1.8×</div>
+                </div>
+                
+                <div class="experience-card" data-experience="internship">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">An internship applying classroom learning</div>
+                        <div class="experience-subtitle">Real work that connected to your education</div>
+                    </div>
+                    <div class="experience-multiplier">2.0×</div>
+                </div>
+                
+                <div class="experience-card" data-experience="extracurricular">
+                    <div class="experience-checkbox"></div>
+                    <div class="experience-info">
+                        <div class="experience-title">Deep involvement in extracurriculars</div>
+                        <div class="experience-subtitle">Clubs, organizations, leadership roles</div>
+                    </div>
+                    <div class="experience-multiplier">1.8×</div>
+                </div>
+            </div>
+            
+            <div class="experience-summary" id="experienceSummary">
+                <div class="summary-count" id="expCount">0</div>
+                <div class="summary-label">of 6 experiences</div>
+                <div class="summary-message" id="expMessage">Select any experiences you've had above</div>
+            </div>
+        </section>
+
+        <!-- My Principles -->
+        <section class="principles-section section">
+            <div class="section-label">What Guides Me</div>
+            <h2 class="section-header">Three Principles I Keep Coming Back To</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 1rem;">I don't follow these perfectly. But I keep trying.</p>
+            
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="icon">🧘</div>
+                    <h3>Be Mindful</h3>
+                    <p>Don't react quickly. Don't make snap judgments. Stay open. Be thoughtful about things.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">💛</div>
+                    <h3>Be Kind</h3>
+                    <p>The world would be better if everyone tried being kind. So I try as much as I can.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">🌱</div>
+                    <h3>Make a Difference</h3>
+                    <p>Leave things better than you found them. A class, a team, a student's trajectory.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principle Reflection -->
+        <div class="reflection-block" id="reflection2">
+            <div class="reflection-icon">🎯</div>
+            <h3>Which resonates most with where you are right now?</h3>
+            <p class="prompt">No right answer—just what you're working on.</p>
+            
+            <div class="reflection-options" id="options2">
+                <div class="reflection-option" data-value="mindful">
+                    <span class="option-radio"></span>
+                    <span class="option-text"><strong>Be Mindful</strong> — I tend to react quickly and want to slow down</span>
+                </div>
+                <div class="reflection-option" data-value="kind">
+                    <span class="option-radio"></span>
+                    <span class="option-text"><strong>Be Kind</strong> — I want to show up better for the people around me</span>
+                </div>
+                <div class="reflection-option" data-value="difference">
+                    <span class="option-radio"></span>
+                    <span class="option-text"><strong>Make a Difference</strong> — I want my work to matter beyond myself</span>
+                </div>
+            </div>
+            
+            <div class="reflection-response" id="response2">
+                <h4>Hold onto that.</h4>
+                <p>This course will ask you to be mindful (reflect before acting), kind (to peers and yourself), and make a difference (create real value). Your instinct about what you need to develop is probably right.</p>
+            </div>
+        </div>
+
+        <!-- Personal -->
+        <section class="personal-section section">
+            <div class="section-label">Beyond Work</div>
+            <h2 class="section-header">The Rest of Life</h2>
+            
+            <div class="personal-grid">
+                <div class="personal-item">
+                    <span class="emoji">🏡</span>
+                    <span>San Jose — hour drive each way</span>
+                </div>
+                <div class="personal-item">
+                    <span class="emoji">👨‍👩‍👧</span>
+                    <span>Family time and travel</span>
+                </div>
+                <div class="personal-item">
+                    <span class="emoji">📚</span>
+                    <span>Always reading something</span>
+                </div>
+                <div class="personal-item">
+                    <span class="emoji">🥾</span>
+                    <span>Hiking with family and dogs</span>
+                </div>
+            </div>
+            
+            <!-- REPLACE: Add photo with father here -->
+            <!-- <img src="images/with-father.jpg" alt="With my father" class="personal-photo" style="max-width: 350px;"> -->
+            <div class="image-placeholder" style="max-width: 350px; margin: 2rem auto;">
+                Add photo with your father<br>
+                <small>(from Personal slide)</small>
+            </div>
+            
+            <div class="quote-block">
+                "My father, the chemistry professor, emphasized the importance of education to all of us. Maybe there's such a thing as a 'professor gene'—I seem to have inherited his passion for it."
+            </div>
+            
+            <!-- REPLACE: Add family hiking photo here -->
+            <!-- <img src="images/family-hiking.jpg" alt="Family hiking in Sedona" class="personal-photo"> -->
+            <div class="image-placeholder" style="max-width: 500px; margin: 2rem auto;">
+                Add family photo here<br>
+                <small>(e.g., the Sedona hiking photo from your slides)</small>
+            </div>
+        </section>
+
+        <!-- What I'm Trying to Do -->
+        <section class="commitment-section section">
+            <div class="section-label">The Work</div>
+            <h2 class="section-header">What I'm Trying to Build</h2>
+            
+            <div class="commitment-stats">
+                <div class="commitment-stat">
+                    <div class="number">$25M+</div>
+                    <div class="label">External funding raised for student opportunities</div>
+                </div>
+                <div class="commitment-stat">
+                    <div class="number">12+</div>
+                    <div class="label">Completely new courses designed</div>
+                </div>
+                <div class="commitment-stat">
+                    <div class="number">2</div>
+                    <div class="label">Cohort programs built from scratch</div>
+                </div>
+                <div class="commitment-stat">
+                    <div class="number">1</div>
+                    <div class="label">Statewide institute created</div>
+                </div>
+            </div>
+            
+            <p style="color: var(--color-text-muted); margin-top: 2rem; text-align: center;">I don't roll over courses—I redesign to meet the moment. CTI, cohort programs, internship workshops, scholarship pipelines. All trying to give students the experiences that actually matter.</p>
+        </section>
+
+        <!-- Closing -->
+        <div class="closing">
+            <h2>Let's <span>Begin</span></h2>
+            <p>Now you know where I come from and what drives me. I'm looking forward to this semester together.</p>
+            
+            <div class="contact-links">
+                <a href="https://bit.ly/profsathya" class="contact-link" target="_blank">
+                    📅 Schedule a Meeting
+                </a>
+                <a href="mailto:snarayanan@csumb.edu" class="contact-link secondary">
+                    📧 snarayanan@csumb.edu
+                </a>
+                <a href="#" class="contact-link secondary">
+                    💬 @profsathya on Slack
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Animate sections on scroll
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Counter animation for the 6% stat
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.dataset.target);
+                    let current = 0;
+                    const increment = target / 30;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current);
+                        }
+                    }, 50);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Reflection interactions
+        function setupReflection(optionsId, responseId) {
+            const options = document.querySelectorAll(`#${optionsId} .reflection-option`);
+            const response = document.getElementById(responseId);
+            
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    options.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    response.classList.add('visible');
+                });
+            });
+        }
+
+        setupReflection('options1', 'response1');
+        setupReflection('options2', 'response2');
+
+        // Experience cards - fixed checkbox behavior
+        const experienceCards = document.querySelectorAll('.experience-card');
+        const expCount = document.getElementById('expCount');
+        const expMessage = document.getElementById('expMessage');
+
+        const messages = {
+            0: "Select any experiences you've had above",
+            1: "Every experience counts. This course is designed to add more.",
+            2: "Building a foundation. What's missing?",
+            3: "Halfway there. Which gaps matter most to you?",
+            4: "Strong foundation. Let's strengthen what's missing.",
+            5: "Almost there. One more could make all the difference.",
+            6: "All six! That's rare—you're in the top 6%. Let's deepen them."
+        };
+
+        experienceCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.toggle('checked');
+                
+                const count = document.querySelectorAll('.experience-card.checked').length;
+                expCount.textContent = count;
+                expMessage.textContent = messages[count];
+            });
+        });
+    </script>
+</body>
+</html>
