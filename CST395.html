@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CST395 Preview Navigation</title>
+  <style>
+    :root {
+      --cst395-primary: #14b8a6;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-900: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--gray-100);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--cst395-primary), #0d9488);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    .notice {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      color: #92400e;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .nav-section h2 {
+      font-size: 1.1rem;
+      color: var(--gray-700);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gray-100);
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 1rem;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--gray-700);
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: var(--cst395-primary);
+      color: white;
+      border-color: var(--cst395-primary);
+      transform: translateY(-2px);
+    }
+
+    .nav-link span {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      margin-top: 0.25rem;
+      opacity: 0.8;
+    }
+
+    .test-info {
+      background: var(--gray-50);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+
+    .test-info h3 {
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      margin-bottom: 0.5rem;
+    }
+
+    .test-info ul {
+      margin-left: 1.25rem;
+    }
+
+    .test-info li {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>CST395: AI-Native Solution Engineering</h1>
+      <p>Preview Navigation for GitHub Pages Proof of Concept</p>
+    </div>
+
+    <div class="notice">
+      <strong>Preview Mode</strong>
+      This page lets you navigate the course pages as they will appear when embedded in Canvas via iframe.
+      Assignment links will show placeholder URLs until Canvas IDs are configured.
+    </div>
+
+    <div class="nav-section">
+      <h2>Main Pages</h2>
+      <div class="nav-grid">
+        <a href="cst395/home.html" class="nav-link">
+          Course Home
+          <span>Status banner, capabilities, due items</span>
+        </a>
+        <a href="cst395/sprint-1.html" class="nav-link">
+          Sprint 1: Foundation
+          <span>Weeks 1-4, activities, reflections</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <h2>Coming Soon (Not Yet Built)</h2>
+      <div class="nav-grid">
+        <a href="#" class="nav-link" style="opacity: 0.5; pointer-events: none;">
+          Sprint 2: Mirror
+          <span>Weeks 5-8</span>
+        </a>
+        <a href="#" class="nav-link" style="opacity: 0.5; pointer-events: none;">
+          Sprint 3: Complexity
+          <span>Weeks 9-12</span>
+        </a>
+        <a href="#" class="nav-link" style="opacity: 0.5; pointer-events: none;">
+          Sprint 4: Mastery
+          <span>Weeks 13-16</span>
+        </a>
+        <a href="#" class="nav-link" style="opacity: 0.5; pointer-events: none;">
+          Capabilities
+          <span>SDL, IS, AB details</span>
+        </a>
+        <a href="#" class="nav-link" style="opacity: 0.5; pointer-events: none;">
+          Tools & Practices
+          <span>UMPIRE, 3Cs, etc.</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="test-info">
+      <h3>What This Proof of Concept Tests:</h3>
+      <ul>
+        <li>Config-based Canvas URL generation (data-assignment attributes)</li>
+        <li>Due date population from config</li>
+        <li>Collapsible sections (framing, weeks)</li>
+        <li>Current week highlighting and auto-expand</li>
+        <li>Capability badges and activity type styling</li>
+        <li>Status banner with progress tracking</li>
+        <li>Demo banner detection (shows when not in iframe)</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
