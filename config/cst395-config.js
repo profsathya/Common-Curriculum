@@ -23,60 +23,62 @@ const CST395_CONFIG = {
   // To find assignment IDs: Go to assignment in Canvas, look at URL
   // Example: /courses/12345/assignments/67890 -> canvasId: "67890"
   assignments: {
-    // Sprint 1: Foundation
+    // Sprint 1: Foundation - Goal Setting
     "s1-superagency-challenge": {
-      canvasId: "562671",
+      canvasId: "564067",
       title: "Sprint 1: Superagency Challenge",
-      dueDate: "2025-01-22",
+      dueDate: "2026-01-22",
       type: "assignment"
-    },
-    "s1-reflection-1": {
-      canvasId: "100002",
-      title: "Sprint 1: Productive Reflection #1",
-      dueDate: "2025-01-24",
-      type: "reflection"
     },
     "s1-problem-analysis": {
-      canvasId: "100003",
+      canvasId: "564068",
       title: "Sprint 1: Problem Analysis (5 Whys)",
-      dueDate: "2025-01-29",
+      dueDate: "2026-01-29",
       type: "assignment"
-    },
-    "s1-reflection-2": {
-      canvasId: "100004",
-      title: "Sprint 1: Productive Reflection #2",
-      dueDate: "2025-01-31",
-      type: "reflection"
     },
     "s1-solution-architecture": {
-      canvasId: "100005",
+      canvasId: "564069",
       title: "Sprint 1: Solution Architecture",
-      dueDate: "2025-02-05",
+      dueDate: "2026-02-05",
       type: "assignment"
     },
-    "s1-build-log": {
-      canvasId: "100006",
-      title: "Sprint 1: Build Log Entry",
-      dueDate: "2025-02-07",
+    // Sprint 1: Foundation - Productive Reflections
+    "s1-reflection-1": {
+      canvasId: "564070",
+      title: "Sprint 1: Productive Reflection #1",
+      dueDate: "2026-01-24",
       type: "reflection"
     },
-    "s1-presentation": {
-      canvasId: "100007",
-      title: "Sprint 1: Solution Presentation",
-      dueDate: "2025-02-12",
-      type: "assignment"
+    "s1-reflection-2": {
+      canvasId: "564231",
+      title: "Sprint 1: Productive Reflection #2",
+      dueDate: "2026-01-31",
+      type: "reflection"
     },
-    "s1-human-value": {
-      canvasId: "100008",
-      title: "Sprint 1: Human Value Statement",
-      dueDate: "2025-02-13",
+    "s1-build-log": {
+      canvasId: "564232",
+      title: "Sprint 1: Build Log Entry",
+      dueDate: "2026-02-07",
       type: "reflection"
     },
     "s1-bridge": {
-      canvasId: "100009",
+      canvasId: "564233",
       title: "Bridge Reflection: Foundation → Mirror",
-      dueDate: "2025-02-14",
+      dueDate: "2026-02-14",
       type: "bridge"
+    },
+    // Sprint 1: Foundation - Check-in/Engagement
+    "s1-peer-conversation": {
+      canvasId: "564234",
+      title: "Sprint 1: Peer Conversation Reflection - Week 1",
+      dueDate: "2026-01-24",
+      type: "engagement"
+    },
+    "s1-week2-engagement": {
+      canvasId: "564308",
+      title: "Sprint 1: Week 2 Engagement",
+      dueDate: "2026-01-31",
+      type: "engagement"
     },
 
     // Sprint 2: Mirror
