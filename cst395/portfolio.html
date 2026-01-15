@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Prototype | CST395</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .breadcrumb a {
+            color: #14b8a6;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            color: #111827;
+        }
+        .card h3 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: #111827;
+        }
+        .card p {
+            margin: 0 0 12px 0;
+            color: #4b5563;
+            font-size: 14px;
+        }
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 700px) {
+            .track-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .track-box {
+            padding: 12px;
+            border-radius: 8px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+        .track-box.selected {
+            background: #f0fdfa;
+            border: 2px solid #14b8a6;
+        }
+        .track-box .track-title {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+        .track-box.selected .track-title {
+            color: #0f766e;
+        }
+        .track-box .track-desc {
+            margin: 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .track-box.selected .track-desc {
+            color: #115e59;
+        }
+        .track-emphasis {
+            background: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+        .track-emphasis p {
+            margin: 0;
+            color: #0f766e;
+        }
+        .section-block {
+            border-left: 4px solid #9ca3af;
+            padding-left: 16px;
+            margin-bottom: 20px;
+        }
+        .section-block:last-child {
+            margin-bottom: 0;
+        }
+        .section-block.symbiotic {
+            border-color: #8b5cf6;
+        }
+        .section-block.sdl {
+            border-color: #3b82f6;
+        }
+        .section-block.is {
+            border-color: #22c55e;
+        }
+        .section-block.ab {
+            border-color: #f97316;
+        }
+        .section-block h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .capability-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            color: white;
+        }
+        .capability-badge.sdl { background: #3b82f6; }
+        .capability-badge.is { background: #22c55e; }
+        .capability-badge.ab { background: #f97316; }
+        .example-box {
+            background: #f9fafb;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #374151;
+            font-size: 14px;
+        }
+        .section-block ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #374151;
+            font-size: 14px;
+        }
+        .section-block li {
+            margin-bottom: 6px;
+        }
+        .section-block li:last-child {
+            margin-bottom: 0;
+        }
+        .rubric-card {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .rubric-card h2 {
+            color: white;
+            margin: 0 0 8px 0;
+            font-size: 20px;
+        }
+        .rubric-card .subtitle {
+            color: #9ca3af;
+            margin: 0 0 20px 0;
+            font-size: 14px;
+        }
+        .rubric-section {
+            border-bottom: 1px solid #374151;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+        .rubric-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .rubric-section h3 {
+            margin: 0 0 12px 0;
+            font-size: 15px;
+        }
+        .rubric-section.sdl h3 { color: #93c5fd; }
+        .rubric-section.is h3 { color: #86efac; }
+        .rubric-section.ab h3 { color: #fdba74; }
+        .rubric-section.hvp h3 { color: #c4b5fd; }
+        .rubric-item {
+            padding: 6px 0;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+        .rubric-bar {
+            background: rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .rubric-bar p {
+            margin: 0;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+        .warning-card {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .warning-card h2 {
+            color: #991b1b;
+            margin: 0 0 16px 0;
+            font-size: 20px;
+        }
+        .warning-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 600px) {
+            .warning-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .warning-item .warning-title {
+            color: #b91c1c;
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .warning-item .warning-desc {
+            color: #dc2626;
+            margin: 0;
+            font-size: 13px;
+        }
+        .timeline-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            border-radius: 12px;
+        }
+        .timeline-card h3 {
+            margin: 0 0 16px 0;
+            color: #111827;
+        }
+        .timeline-row {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+        .timeline-row:last-child {
+            border-bottom: none;
+        }
+        .timeline-row:nth-child(odd) {
+            background: white;
+        }
+        .timeline-when {
+            padding: 12px;
+            color: #374151;
+            font-weight: 600;
+            width: 140px;
+            flex-shrink: 0;
+        }
+        .timeline-what {
+            padding: 12px;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <p class="breadcrumb"><a href="home.html">Home</a> / Portfolio Prototype</p>
+        <div class="header">
+            <h1>Portfolio Prototype</h1>
+            <p>This is what "done" looks like. Your portfolio demonstrates your durable foundation—Symbiotic Thinking and the three capabilities—with evidence from your work.</p>
+        </div>
+
+        <!-- Choose Your Track -->
+        <div class="card">
+            <h2>Choose Your Track</h2>
+            <p>The portfolio structure is the same for everyone. The <em>emphasis</em> shifts based on where you're heading. Pick the track closest to your interest—you can change your mind.</p>
+
+            <div class="track-grid">
+                <div class="track-box selected">
+                    <p class="track-title">Technical IC</p>
+                    <p class="track-desc">Deep builder who ships</p>
+                </div>
+                <div class="track-box">
+                    <p class="track-title">Technical Lead</p>
+                    <p class="track-desc">Multiplier who elevates teams</p>
+                </div>
+                <div class="track-box">
+                    <p class="track-title">Product & Strategy</p>
+                    <p class="track-desc">Problem-finder who shapes direction</p>
+                </div>
+                <div class="track-box">
+                    <p class="track-title">Entrepreneurial</p>
+                    <p class="track-desc">Builder of new things from scratch</p>
+                </div>
+            </div>
+
+            <div class="track-emphasis">
+                <p><strong>For Technical IC:</strong> Adaptive Builder evidence is primary. Show depth of technical judgment, not just code.</p>
+            </div>
+        </div>
+
+        <!-- Portfolio Structure -->
+        <div class="card">
+            <h2>Portfolio Structure</h2>
+
+            <!-- Who I Am Becoming -->
+            <div class="section-block">
+                <h3>Who I Am Becoming</h3>
+                <p>A narrative synthesis—not a resume, not a bio. Who were you at Week 1? Who are you at Week 16? What problems can you now solve that you couldn't before?</p>
+                <div class="example-box">
+                    "I came in thinking AI was about prompts. I'm leaving understanding that my value is knowing which problems are worth solving and why. Here's how that shift happened..."
+                </div>
+            </div>
+
+            <!-- Symbiotic Thinking -->
+            <div class="section-block symbiotic">
+                <h3>Symbiotic Thinking in Action</h3>
+                <p>One concrete example showing how Mindset → Metacognition → Motivation played out in a real project. Not a definition—a story.</p>
+                <div class="example-box">
+                    "In Sprint 3, I caught myself consuming AI outputs without judgment [Mindset awareness]. I used 3Cs to slow down [Metacognition]. That pause led me to realize the AI was solving the wrong problem, which reframed the entire project [Motivation → Wisdom]."
+                </div>
+            </div>
+
+            <!-- SDL -->
+            <div class="section-block sdl">
+                <h3><span class="capability-badge sdl">SDL</span> Self-Directed Learner</h3>
+                <p>Evidence that you can identify gaps and close them without being told.</p>
+                <ul>
+                    <li><strong>Knowledge gap closed:</strong> A domain you learned because the project required it</li>
+                    <li><strong>My Understanding evolution:</strong> Side-by-side of Week 1 vs. Week 16 entries</li>
+                    <li><strong>Bridge Reflection excerpt:</strong> Moment where you recognized your own pattern</li>
+                </ul>
+            </div>
+
+            <!-- IS -->
+            <div class="section-block is">
+                <h3><span class="capability-badge is">IS</span> Integrative Solver</h3>
+                <p>Evidence that you see systems and translate across boundaries.</p>
+                <ul>
+                    <li><strong>Sprint 2 comparison:</strong> What you learned about yourself by designing for someone else</li>
+                    <li><strong>Stakeholder translation:</strong> Technical decision explained to non-technical audience</li>
+                    <li><strong>System insight:</strong> A connection you saw that others missed</li>
+                </ul>
+            </div>
+
+            <!-- AB -->
+            <div class="section-block ab">
+                <h3><span class="capability-badge ab">AB</span> Adaptive Builder</h3>
+                <p>Evidence that you ship, iterate, and know when to pivot.</p>
+                <ul>
+                    <li><strong>Pivot documentation:</strong> A decision to change direction, with your reasoning</li>
+                    <li><strong>Ambiguity navigation:</strong> How you made progress in Sprint 3 despite unclear requirements</li>
+                    <li><strong>Working solution + HVP:</strong> Something that works, with clear articulation of your human value</li>
+                </ul>
+            </div>
+
+            <!-- What's Next -->
+            <div class="section-block">
+                <h3>What's Next</h3>
+                <p>Where you're heading. Not a vague aspiration—a concrete next step informed by what you learned about yourself.</p>
+                <div class="example-box">
+                    "I discovered I'm energized by reframing problems more than implementing solutions. My next step is a product internship where I can practice this at scale."
+                </div>
+            </div>
+        </div>
+
+        <!-- Hiring Manager Rubric -->
+        <div class="rubric-card">
+            <h2>Hiring Manager Rubric</h2>
+            <p class="subtitle">Use this to evaluate your own portfolio. Would a hiring manager see what they need to see?</p>
+
+            <div class="rubric-section sdl">
+                <h3>Signal: Can this person figure things out?</h3>
+                <div class="rubric-item">☐ Shows evidence of learning something without being taught</div>
+                <div class="rubric-item">☐ Demonstrates metacognitive awareness (knows what they don't know)</div>
+                <div class="rubric-item">☐ Can articulate how they approach unfamiliar domains</div>
+            </div>
+
+            <div class="rubric-section is">
+                <h3>Signal: Can this person work across boundaries?</h3>
+                <div class="rubric-item">☐ Evidence of translating technical concepts for non-technical audiences</div>
+                <div class="rubric-item">☐ Shows understanding of stakeholders beyond immediate users</div>
+                <div class="rubric-item">☐ Can point to a time they saw a system-level issue others missed</div>
+            </div>
+
+            <div class="rubric-section ab">
+                <h3>Signal: Can this person ship and adapt?</h3>
+                <div class="rubric-item">☐ Has working artifacts, not just plans or analyses</div>
+                <div class="rubric-item">☐ Shows evidence of changing direction based on evidence (not fear)</div>
+                <div class="rubric-item">☐ Can explain the judgment calls behind technical decisions</div>
+            </div>
+
+            <div class="rubric-section hvp">
+                <h3>Signal: Does this person know their value?</h3>
+                <div class="rubric-item">☐ Can clearly articulate what would be worse without their involvement</div>
+                <div class="rubric-item">☐ Shows growth trajectory, not just current state</div>
+                <div class="rubric-item">☐ Has a clear, grounded sense of where they're heading next</div>
+            </div>
+
+            <div class="rubric-bar">
+                <p><strong style="color: white;">The bar:</strong> A hiring manager should be able to answer "yes" to at least 8 of these 12 checkboxes based solely on your portfolio. If they can't, your portfolio isn't doing its job yet.</p>
+            </div>
+        </div>
+
+        <!-- Warning Card -->
+        <div class="warning-card">
+            <h2>What This Portfolio Is NOT</h2>
+            <div class="warning-grid">
+                <div class="warning-item">
+                    <p class="warning-title">NOT a collection of assignments</p>
+                    <p class="warning-desc">This isn't "here's everything I submitted." It's curated evidence of capability.</p>
+                </div>
+                <div class="warning-item">
+                    <p class="warning-title">NOT a template to copy</p>
+                    <p class="warning-desc">If your portfolio looks exactly like this prototype, you've missed the point.</p>
+                </div>
+                <div class="warning-item">
+                    <p class="warning-title">NOT a last-week scramble</p>
+                    <p class="warning-desc">Evidence accumulates throughout the course. Start organizing from Sprint 1.</p>
+                </div>
+                <div class="warning-item">
+                    <p class="warning-title">NOT about polish over substance</p>
+                    <p class="warning-desc">A rough artifact with clear reasoning beats a polished artifact with no insight.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline-card">
+            <h3>When to Visit This Page</h3>
+            <div class="timeline-row">
+                <div class="timeline-when">Day 1:</div>
+                <div class="timeline-what">Understand what you're building toward</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-when">End of each sprint:</div>
+                <div class="timeline-what">Flag evidence worth saving for portfolio</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-when">Sprint 4:</div>
+                <div class="timeline-what">Assemble everything into your portfolio</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-when">Before interviews:</div>
+                <div class="timeline-what">Review and refine based on the role</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
