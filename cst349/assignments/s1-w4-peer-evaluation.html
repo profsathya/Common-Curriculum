@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer Evaluation | Sprint 1 Week 4 | CST349</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.7;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+        .intro-box {
+            background: #eef2ff;
+            border: 2px solid #c7d2fe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .intro-box h2 { color: #4f46e5; margin: 0 0 12px 0; font-size: 18px; }
+        .intro-box p { color: #6b7280; margin: 0; }
+
+        .section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .section h3 { color: #111827; margin: 0 0 16px 0; font-size: 18px; }
+
+        .rubric {
+            background: #f9fafb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .rubric__row {
+            display: grid;
+            grid-template-columns: 140px 1fr 80px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .rubric__row:last-child { border-bottom: none; }
+        .rubric__header { background: #e5e7eb; font-weight: 600; color: #374151; }
+        .rubric__cell {
+            padding: 12px 16px;
+            font-size: 14px;
+            border-right: 1px solid #e5e7eb;
+        }
+        .rubric__cell:last-child { border-right: none; text-align: center; }
+
+        .eval-template {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        .eval-field {
+            margin-bottom: 16px;
+        }
+        .eval-field:last-child { margin-bottom: 0; }
+        .eval-field__label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+        .eval-field__prompt {
+            color: #6b7280;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .guidance {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .guidance__label {
+            font-size: 12px;
+            color: #166534;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .guidance ul { margin: 0; padding-left: 20px; color: #166534; }
+        .guidance li { margin-bottom: 4px; }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .warning-box__label {
+            font-size: 12px;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .warning-box p { color: #991b1b; margin: 0; }
+
+        .submission {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+        .submission h3 { color: white; margin: 0 0 16px 0; }
+        .submission__checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .submission__checklist li {
+            padding: 8px 0;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .submission__checklist li::before { content: "☐"; color: #6366f1; }
+        .submission__format {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .sdl-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="breadcrumb">
+            <a href="../home.html">Home</a> /
+            <a href="../sprint-1.html">Sprint 1</a> /
+            Peer Evaluation
+        </p>
+
+        <div class="header">
+            <h1>👥 Peer Evaluation</h1>
+            <p>Week 4 · Evaluate 3 peers</p>
+        </div>
+
+        <div class="intro-box">
+            <h2>Evaluating Others = Learning About Yourself</h2>
+            <p>
+                When you evaluate peers, you sharpen your own ability to distinguish real evidence from hand-waving, honest reflection from performance. This is a skill you'll use in every job interview, code review, and team retrospective.
+            </p>
+        </div>
+
+        <div class="section">
+            <h3>Evaluation Rubric</h3>
+            <p>Rate each peer on these criteria (1-5 scale):</p>
+
+            <div class="rubric">
+                <div class="rubric__row rubric__header">
+                    <div class="rubric__cell">Criterion</div>
+                    <div class="rubric__cell">What to Look For</div>
+                    <div class="rubric__cell">Score</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Evidence Quality</div>
+                    <div class="rubric__cell">Is the evidence concrete, specific, and verifiable? Could you fact-check it?</div>
+                    <div class="rubric__cell">1-5</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Honest Self-Assessment</div>
+                    <div class="rubric__cell">Do they acknowledge what didn't work? Are they realistic about their progress?</div>
+                    <div class="rubric__cell">1-5</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">SDL Process</div>
+                    <div class="rubric__cell">Did they actually follow a learning process (not just activities)?</div>
+                    <div class="rubric__cell">1-5</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Presentation Clarity</div>
+                    <div class="rubric__cell">Was it clear, focused, and within time? Easy to follow?</div>
+                    <div class="rubric__cell">1-5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Evaluation Template (Per Peer)</h3>
+
+            <div class="eval-template">
+                <div class="eval-field">
+                    <p class="eval-field__label">Peer Name:</p>
+                </div>
+                <div class="eval-field">
+                    <p class="eval-field__label">Scores (1-5 for each criterion)</p>
+                    <p class="eval-field__prompt">Evidence Quality: ___ | Self-Assessment: ___ | SDL Process: ___ | Clarity: ___</p>
+                </div>
+                <div class="eval-field">
+                    <p class="eval-field__label">Strongest Evidence They Presented</p>
+                    <p class="eval-field__prompt">What was the most convincing proof of their growth?</p>
+                </div>
+                <div class="eval-field">
+                    <p class="eval-field__label">What Would Make Their Case Stronger?</p>
+                    <p class="eval-field__prompt">What additional evidence or honesty would improve their demonstration?</p>
+                </div>
+                <div class="eval-field">
+                    <p class="eval-field__label">One Thing You Learned From Their Presentation</p>
+                    <p class="eval-field__prompt">What insight will you take away for your own SDL journey?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guidance">
+            <p class="guidance__label">Good Evaluator Mindset</p>
+            <ul>
+                <li>Be a skeptical friend—want them to succeed, but don't accept weak evidence</li>
+                <li>Focus on the work, not the person</li>
+                <li>Specific feedback > vague praise</li>
+                <li>If you wouldn't want to receive this feedback, don't give it</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <p class="warning-box__label">⚠️ Avoid</p>
+            <p>Don't give everyone 5s to be "nice." That helps no one. Calibrated, honest feedback is the most valuable thing you can give your peers.</p>
+        </div>
+
+        <div class="submission">
+            <h3>📝 What to Submit</h3>
+            <p style="margin-bottom: 8px;">
+                <span class="sdl-tag">SDL 6: Evaluate</span>
+                <span class="sdl-tag">SDL 7: Collaborate</span>
+            </p>
+            <ul class="submission__checklist">
+                <li>Completed evaluations for 3 peers</li>
+                <li>Each evaluation must include all rubric scores + written responses</li>
+                <li>Feedback should be specific and actionable</li>
+            </ul>
+            <div class="submission__format">
+                <strong>Format:</strong> Text entry or file upload<br>
+                <strong>Due:</strong> Thursday, February 13
+            </div>
+        </div>
+    </div>
+</body>
+</html>

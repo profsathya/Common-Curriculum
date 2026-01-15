@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Log | Sprint 1 Week 3 | CST349</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.7;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+        .intro-box {
+            background: #eef2ff;
+            border: 2px solid #c7d2fe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .intro-box h2 { color: #4f46e5; margin: 0 0 12px 0; font-size: 18px; }
+        .intro-box p { color: #6b7280; margin: 0; }
+
+        .log-template {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .log-template h3 { color: #111827; margin: 0 0 16px 0; font-size: 18px; }
+
+        .log-entry {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .log-entry:last-child { margin-bottom: 0; }
+        .log-entry__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .log-entry__number {
+            background: #6366f1;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .log-entry__date { color: #6b7280; font-size: 14px; }
+
+        .log-field {
+            margin-bottom: 12px;
+        }
+        .log-field:last-child { margin-bottom: 0; }
+        .log-field__label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .log-field__prompt {
+            color: #6b7280;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .warning-box__label {
+            font-size: 12px;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .warning-box p { color: #991b1b; margin: 0; }
+
+        .guidance {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .guidance__label {
+            font-size: 12px;
+            color: #166534;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .guidance ul { margin: 0; padding-left: 20px; color: #166534; }
+        .guidance li { margin-bottom: 4px; }
+
+        .submission {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+        .submission h3 { color: white; margin: 0 0 16px 0; }
+        .submission__checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .submission__checklist li {
+            padding: 8px 0;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .submission__checklist li::before { content: "☐"; color: #6366f1; }
+        .submission__format {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .sdl-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="breadcrumb">
+            <a href="../home.html">Home</a> /
+            <a href="../sprint-1.html">Sprint 1</a> /
+            Learning Log
+        </p>
+
+        <div class="header">
+            <h1>📝 Learning Log</h1>
+            <p>Week 3 · Ongoing documentation</p>
+        </div>
+
+        <div class="intro-box">
+            <h2>Activity vs. Learning</h2>
+            <p>
+                A learning log isn't just a record of what you did—it's evidence of what you <em>learned</em>. "I practiced for 30 minutes" tells us nothing. "I noticed I avoid eye contact when nervous, and tried maintaining it for 3 seconds longer" tells us you're actually learning.
+            </p>
+        </div>
+
+        <div class="warning-box">
+            <p class="warning-box__label">⚠️ Common Mistake</p>
+            <p>Don't wait until the deadline to write your log. Document in real-time or shortly after each practice session. Memory fades; insight evaporates.</p>
+        </div>
+
+        <div class="log-template">
+            <h3>Log Entry Template</h3>
+            <p>Create at least <strong>3 entries</strong> this week. Each entry should include:</p>
+
+            <div class="log-entry">
+                <div class="log-entry__header">
+                    <span class="log-entry__number">Entry #1</span>
+                    <span class="log-entry__date">[Date]</span>
+                </div>
+                <div class="log-field">
+                    <p class="log-field__label">What I Did</p>
+                    <p class="log-field__prompt">Specific activity, duration, context</p>
+                </div>
+                <div class="log-field">
+                    <p class="log-field__label">What I Noticed</p>
+                    <p class="log-field__prompt">Observations about my behavior, reactions, patterns</p>
+                </div>
+                <div class="log-field">
+                    <p class="log-field__label">What I Learned</p>
+                    <p class="log-field__prompt">Insight that will change my approach going forward</p>
+                </div>
+                <div class="log-field">
+                    <p class="log-field__label">What's Still Confusing</p>
+                    <p class="log-field__prompt">Questions, uncertainties, things I don't understand yet</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guidance">
+            <p class="guidance__label">Signs of Real Learning</p>
+            <ul>
+                <li>You can name something specific that changed</li>
+                <li>You discovered something that surprised you</li>
+                <li>You can articulate what you'll do differently next time</li>
+                <li>You identified a sub-skill you didn't know you needed</li>
+            </ul>
+        </div>
+
+        <div class="submission">
+            <h3>📝 What to Submit</h3>
+            <p style="margin-bottom: 8px;">
+                <span class="sdl-tag">SDL 4: Metacognition</span>
+                <span class="sdl-tag">SDL 5: Iteration</span>
+            </p>
+            <ul class="submission__checklist">
+                <li>At least 3 learning log entries from this week</li>
+                <li>Each entry must include all 4 fields (Did, Noticed, Learned, Confused)</li>
+                <li>Entries should show progression—not just repetition</li>
+                <li>Include at least one "aha moment" or unexpected discovery</li>
+            </ul>
+            <div class="submission__format">
+                <strong>Format:</strong> Text entry or file upload<br>
+                <strong>Due:</strong> Wednesday, February 5
+            </div>
+        </div>
+    </div>
+</body>
+</html>
