@@ -12,69 +12,101 @@
             padding: 24px;
             background: #f9fafb;
             color: #111827;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 700px; margin: 0 auto; }
         .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
         .breadcrumb a { color: #14b8a6; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 4px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+        }
+        .progress-bar__fill {
+            background: #14b8a6;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
         .header {
             background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
             color: white;
-            padding: 24px 32px;
+            padding: 20px 24px;
             border-radius: 12px;
             margin-bottom: 24px;
         }
-        .header-meta { display: flex; gap: 12px; margin-bottom: 8px; }
-        .header-tag {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-        .header h1 { margin: 0 0 8px 0; font-size: 28px; }
-        .header p { margin: 0; opacity: 0.9; }
-        .card {
-            background: white;
-            border: 1px solid #e5e7eb;
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+        .hook {
+            background: #f0fdfa;
+            border: 2px solid #5eead4;
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 24px;
+            text-align: center;
         }
-        .card h2 { margin: 0 0 16px 0; font-size: 18px; color: #111827; }
-        .card h3 { margin: 16px 0 8px 0; font-size: 15px; color: #374151; }
-        .card p, .card li { color: #4b5563; font-size: 15px; }
-        .card ul, .card ol { margin: 0; padding-left: 20px; }
-        .card li { margin-bottom: 8px; }
-        .capability-tags { display: flex; gap: 8px; margin-bottom: 16px; }
-        .capability-badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 11px;
+        .hook__question {
+            font-size: 20px;
+            color: #0f766e;
             font-weight: 500;
-            color: white;
+            margin: 0;
         }
-        .capability-badge.sdl { background: #3b82f6; }
-        .capability-badge.is { background: #22c55e; }
-        .info-box {
-            background: #f0fdfa;
-            border: 1px solid #5eead4;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
+
+        .section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
         }
-        .info-box p { margin: 0; color: #0f766e; }
+        .section.completed { border-color: #86efac; }
+        .section__header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section__header:hover { background: #f9fafb; }
+        .section__number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #e5e7eb;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+            color: #6b7280;
+        }
+        .section.completed .section__number { background: #22c55e; color: white; }
+        .section.active .section__number { background: #14b8a6; color: white; }
+        .section__title { font-weight: 600; color: #111827; }
+        .section__toggle { color: #9ca3af; transition: transform 0.2s; }
+        .section.expanded .section__toggle { transform: rotate(180deg); }
+        .section__content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .section.expanded .section__content { display: block; }
+
         .why-chain {
-            margin: 24px 0;
+            margin: 20px 0;
         }
         .why-step {
             display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
             align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
         }
-        .why-number {
+        .why-step__number {
             background: #14b8a6;
             color: white;
             min-width: 32px;
@@ -86,92 +118,96 @@
             font-weight: 600;
             font-size: 14px;
         }
-        .why-content {
+        .why-step__content {
             flex: 1;
             background: #f9fafb;
             border-radius: 8px;
-            padding: 16px;
+            padding: 12px 16px;
             border-left: 3px solid #14b8a6;
         }
-        .why-content .label {
-            font-size: 12px;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        .why-content .prompt {
-            color: #111827;
-            font-weight: 500;
-        }
-        .arrow {
+        .why-step__label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+        .why-step__prompt { color: #374151; font-weight: 500; margin: 0; }
+        .arrow-down {
             text-align: center;
-            color: #9ca3af;
+            color: #14b8a6;
             font-size: 20px;
-            margin: -8px 0 -8px 8px;
+            margin: -4px 0 -4px 10px;
         }
+
         .example-box {
             background: #faf5ff;
             border: 1px solid #d8b4fe;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px;
+            margin: 20px 0;
+        }
+        .example-box h4 { color: #7c3aed; margin: 0 0 12px 0; font-size: 14px; }
+        .example-box__chain {
+            font-size: 14px;
+            color: #6b21a8;
+        }
+        .example-box__chain div {
+            padding: 8px 0;
+            padding-left: 20px;
+            border-left: 2px solid #d8b4fe;
+            margin-left: 8px;
+        }
+        .example-box__root {
+            background: #ede9fe;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            color: #5b21b6;
+        }
+
+        .insight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
             margin: 16px 0;
         }
-        .example-box h4 {
-            color: #7c3aed;
-            margin: 0 0 12px 0;
-            font-size: 14px;
-        }
-        .example-box .example-step {
-            margin-bottom: 8px;
-            padding-left: 24px;
-            position: relative;
-            color: #6b21a8;
-            font-size: 14px;
-        }
-        .example-box .example-step::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #8b5cf6;
-        }
-        .rubric-table {
-            width: 100%;
-            border-collapse: collapse;
+        .insight-box p { margin: 0; color: #92400e; }
+
+        .continue-btn {
+            background: #14b8a6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
             margin-top: 16px;
-            font-size: 14px;
         }
-        .rubric-table th {
-            background: #f9fafb;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        .rubric-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: top;
-        }
-        .level-high { color: #166534; }
-        .level-medium { color: #92400e; }
-        .level-low { color: #991b1b; }
-        .submission-box {
+        .continue-btn:hover { background: #0d9488; }
+
+        .submission {
             background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
             color: white;
             padding: 24px;
             border-radius: 12px;
+            margin-top: 24px;
         }
-        .submission-box h2 { color: white; margin: 0 0 12px 0; }
-        .submission-box p { color: #d1d5db; margin: 0 0 8px 0; }
-        .submission-type {
-            display: inline-block;
-            background: #14b8a6;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            margin-top: 8px;
+        .submission h3 { color: white; margin: 0 0 16px 0; }
+        .submission__checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .submission__checklist li {
+            padding: 8px 0;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .submission__checklist li::before { content: "☐"; color: #14b8a6; }
+        .submission__format {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #9ca3af;
         }
         .submit-btn {
             display: inline-block;
@@ -197,164 +233,207 @@
             5 Whys Problem Analysis
         </p>
 
+        <div class="progress-bar">
+            <div class="progress-bar__fill" id="progress"></div>
+        </div>
+
         <div class="header">
-            <div class="header-meta">
-                <span class="header-tag">Sprint 1</span>
-                <span class="header-tag">Week 2</span>
-            </div>
-            <h1>5 Whys Problem Analysis</h1>
-            <p>Move from surface-level desires to root causes</p>
+            <h1>🔍 5 Whys Problem Analysis</h1>
+            <p>Week 2 · ~20 minutes to complete</p>
         </div>
 
-        <div class="card">
-            <div class="capability-tags">
-                <span class="capability-badge sdl">SDL</span>
-                <span class="capability-badge is">IS</span>
-            </div>
-
-            <h2>Purpose</h2>
-            <p>
-                The 5 Whys technique helps you move from your initial understanding of the problem to
-                its root cause. Often what we think is the problem is actually a symptom of something deeper.
+        <div class="hook">
+            <p class="hook__question">
+                What if the problem you think you have...<br>
+                isn't the real problem?
             </p>
+        </div>
 
-            <div class="info-box">
-                <p><strong>Goal:</strong> Discover why you've been stuck. The answer to "Why #5" should
-                reveal something you didn't fully recognize when you started.</p>
+        <!-- Section 1: The Technique -->
+        <div class="section active expanded" data-section="1">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">1</span>
+                    <span class="section__title">The Technique</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    <strong>5 Whys</strong> is simple: you ask "why?" five times.
+                    Each answer becomes the starting point for the next question.
+                </p>
+                <p>
+                    By the fifth "why," you've usually found something deeper—
+                    the <em>root cause</em> instead of the symptom.
+                </p>
+
+                <div class="example-box">
+                    <h4>Example: "I can't stick to exercise"</h4>
+                    <div class="example-box__chain">
+                        <div><strong>Why #1:</strong> I skip workouts → Because I'm tired after work</div>
+                        <div><strong>Why #2:</strong> Why tired? → Because I don't sleep well</div>
+                        <div><strong>Why #3:</strong> Why? → Because I'm anxious at night</div>
+                        <div><strong>Why #4:</strong> Why anxious? → Because I feel behind on work</div>
+                        <div><strong>Why #5:</strong> Why behind? → Because I don't have clear work boundaries</div>
+                    </div>
+                    <div class="example-box__root">
+                        <strong>Root cause:</strong> This isn't an exercise problem—it's a work-boundary problem.
+                    </div>
+                </div>
+
+                <button class="continue-btn" onclick="completeSection(1)">Got it → Continue</button>
             </div>
         </div>
 
-        <div class="card">
-            <h2>The 5 Whys Chain</h2>
-            <p>Start with your Superagency Challenge, then ask "Why?" five times. Each answer becomes
-            the basis for the next question.</p>
+        <!-- Section 2: Your Turn -->
+        <div class="section" data-section="2">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">2</span>
+                    <span class="section__title">Your 5 Whys</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>Now apply this to your Superagency Challenge. Start with the problem, then dig.</p>
 
-            <div class="why-chain">
-                <div class="why-step">
-                    <div class="why-number">0</div>
-                    <div class="why-content">
-                        <div class="label">Starting Point</div>
-                        <div class="prompt">What is the problem or challenge you want to solve?</div>
+                <div class="why-chain">
+                    <div class="why-step">
+                        <div class="why-step__number">0</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Starting Point</div>
+                            <div class="why-step__prompt">What's the problem you're trying to solve?</div>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="why-step">
+                        <div class="why-step__number">1</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Why #1</div>
+                            <div class="why-step__prompt">Why is this a problem? Why does it matter?</div>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="why-step">
+                        <div class="why-step__number">2</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Why #2</div>
+                            <div class="why-step__prompt">Why is THAT the case?</div>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="why-step">
+                        <div class="why-step__number">3</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Why #3</div>
+                            <div class="why-step__prompt">Why does that happen?</div>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="why-step">
+                        <div class="why-step__number">4</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Why #4</div>
+                            <div class="why-step__prompt">Go deeper. Why?</div>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="why-step">
+                        <div class="why-step__number">5</div>
+                        <div class="why-step__content">
+                            <div class="why-step__label">Why #5 — Root Cause</div>
+                            <div class="why-step__prompt">What's at the core?</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="arrow">↓</div>
-
-                <div class="why-step">
-                    <div class="why-number">1</div>
-                    <div class="why-content">
-                        <div class="label">Why #1</div>
-                        <div class="prompt">Why is this a problem? Why does it matter?</div>
-                    </div>
+                <div class="insight-box">
+                    <p><strong>⏸️ Pause:</strong> Write out your 5 Whys chain before continuing. Don't skip this—the insight comes from doing it.</p>
                 </div>
 
-                <div class="arrow">↓</div>
-
-                <div class="why-step">
-                    <div class="why-number">2</div>
-                    <div class="why-content">
-                        <div class="label">Why #2</div>
-                        <div class="prompt">Why is THAT the case? What causes that?</div>
-                    </div>
-                </div>
-
-                <div class="arrow">↓</div>
-
-                <div class="why-step">
-                    <div class="why-number">3</div>
-                    <div class="why-content">
-                        <div class="label">Why #3</div>
-                        <div class="prompt">Why does that happen? What's behind it?</div>
-                    </div>
-                </div>
-
-                <div class="arrow">↓</div>
-
-                <div class="why-step">
-                    <div class="why-number">4</div>
-                    <div class="why-content">
-                        <div class="label">Why #4</div>
-                        <div class="prompt">Why? Go deeper.</div>
-                    </div>
-                </div>
-
-                <div class="arrow">↓</div>
-
-                <div class="why-step">
-                    <div class="why-number">5</div>
-                    <div class="why-content">
-                        <div class="label">Why #5 — Root Cause</div>
-                        <div class="prompt">Why is that? What's at the core?</div>
-                    </div>
-                </div>
+                <button class="continue-btn" onclick="completeSection(2)">I wrote my 5 Whys → Continue</button>
             </div>
         </div>
 
-        <div class="card">
-            <h2>Example</h2>
-            <div class="example-box">
-                <h4>Challenge: "I can't maintain a consistent exercise routine"</h4>
-                <div class="example-step"><strong>Why #1:</strong> I keep skipping workouts → Because I'm tired after work</div>
-                <div class="example-step"><strong>Why #2:</strong> Why am I tired? → Because I don't sleep well</div>
-                <div class="example-step"><strong>Why #3:</strong> Why don't I sleep well? → Because I'm anxious at night</div>
-                <div class="example-step"><strong>Why #4:</strong> Why am I anxious? → Because I feel behind on work</div>
-                <div class="example-step"><strong>Why #5:</strong> Why do I feel behind? → Because I don't have clear boundaries on when work ends</div>
-                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #d8b4fe;">
-                    <strong style="color: #7c3aed;">Root Cause:</strong> <span style="color: #6b21a8;">The exercise problem is actually a work-boundary problem. Solving exercise without addressing boundaries will fail.</span>
+        <!-- Section 3: The Gap -->
+        <div class="section" data-section="3">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">3</span>
+                    <span class="section__title">Find the Gap</span>
                 </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    Compare your starting point to your root cause.
+                    There's usually a gap—that's the insight.
+                </p>
+                <p><strong>Ask yourself:</strong></p>
+                <ul>
+                    <li>Is my root cause different from what I originally thought?</li>
+                    <li>If I solved only the symptom (Why #1), would the problem come back?</li>
+                    <li>Does the root cause reframe how I should approach this?</li>
+                </ul>
+
+                <div class="insight-box">
+                    <p><strong>The gap matters.</strong> If your root cause is the same as your starting point, you might need to dig deeper or challenge your assumptions.</p>
+                </div>
+
+                <button class="continue-btn" onclick="completeSection(3)">I see the gap → Continue</button>
             </div>
         </div>
 
-        <div class="card">
-            <h2>What to Submit</h2>
-            <ol>
-                <li><strong>Your 5 Whys chain</strong> — Each step with your answer</li>
-                <li><strong>Your root cause</strong> — What did you discover at the bottom?</li>
-                <li><strong>The gap</strong> — How is the root cause different from what you initially thought the problem was?</li>
-                <li><strong>Draft problem statement</strong> — A clear statement of the real problem you'll solve</li>
-            </ol>
-        </div>
-
-        <div class="card">
-            <h2>Success Criteria</h2>
-            <table class="rubric-table">
-                <thead>
-                    <tr>
-                        <th>Indicator</th>
-                        <th>High</th>
-                        <th>Medium</th>
-                        <th>Low</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>5 Whys Progression</strong></td>
-                        <td class="level-high">Each level reveals new insight; reaches a root cause that reframes the problem</td>
-                        <td class="level-medium">Logical progression but stops at intermediate cause</td>
-                        <td class="level-low">Circular reasoning, superficial answers, or forced connections</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Gap Recognition</strong></td>
-                        <td class="level-high">Clearly names difference between initial desire and discovered root barrier</td>
-                        <td class="level-medium">Senses a gap but can't articulate it precisely</td>
-                        <td class="level-low">Root cause is same as initial complaint, just rephrased</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Problem Statement</strong></td>
-                        <td class="level-high">Specific enough to evaluate whether a solution addresses it</td>
-                        <td class="level-medium">Directionally correct but too broad to guide design</td>
-                        <td class="level-low">Vague, solution-embedded, or unchanged from Week 1</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="submission-box">
-            <h2>Submission</h2>
-            <p><strong>Format:</strong> File upload with your 5 Whys chain and analysis</p>
-            <p><strong>Due:</strong> Wednesday, January 29</p>
-            <a href="https://csumb.instructure.com/courses/33084/assignments/564068" target="_parent" class="submit-btn">Submit on Canvas</a>
+        <!-- Section 4: Submit -->
+        <div class="section" data-section="4">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">4</span>
+                    <span class="section__title">Your Submission</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <div class="submission">
+                    <h3>📝 What to Submit</h3>
+                    <ul class="submission__checklist">
+                        <li>Your full 5 Whys chain (starting point + 5 answers)</li>
+                        <li>Your root cause — what did you discover at the bottom?</li>
+                        <li>The gap — how is the root cause different from what you first thought?</li>
+                        <li>Draft problem statement — a clear statement of the real problem</li>
+                    </ul>
+                    <div class="submission__format">
+                        <strong>Format:</strong> File upload with your 5 Whys chain and analysis<br>
+                        <strong>Due:</strong> Wednesday, January 29
+                    </div>
+                    <a href="https://csumb.instructure.com/courses/33084/assignments/564068" target="_parent" class="submit-btn">Submit on Canvas</a>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        let completedSections = new Set();
+
+        function toggleSection(header) {
+            const section = header.closest('.section');
+            section.classList.toggle('expanded');
+        }
+
+        function completeSection(num) {
+            completedSections.add(num);
+            const current = document.querySelector(`[data-section="${num}"]`);
+            current.classList.add('completed');
+            current.classList.remove('active', 'expanded');
+
+            const next = document.querySelector(`[data-section="${num + 1}"]`);
+            if (next) {
+                next.classList.add('active', 'expanded');
+                next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            document.getElementById('progress').style.width = (completedSections.size / 4) * 100 + '%';
+        }
+    </script>
 </body>
 </html>
