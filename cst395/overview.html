@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CST395: AI-Native Solution Engineering - Course Overview</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            color: #111827;
+        }
+        .header {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 32px;
+        }
+        .header .subtitle {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .header .tags {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .header .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 600px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .four-col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 600px) {
+            .four-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .destination-box {
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .destination-box.superagency {
+            background: #f0fdfa;
+            border-left: 4px solid #14b8a6;
+        }
+        .destination-box.human-value {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+        }
+        .destination-box .label {
+            margin: 0 0 8px 0;
+            font-weight: 600;
+        }
+        .destination-box.superagency .label {
+            color: #0f766e;
+        }
+        .destination-box.human-value .label {
+            color: #166534;
+        }
+        .destination-box .question {
+            margin: 0;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .destination-box.superagency .question {
+            color: #115e59;
+        }
+        .destination-box.human-value .question {
+            color: #166534;
+        }
+        .outcome-row {
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .outcome-row:last-child {
+            margin-bottom: 0;
+        }
+        .outcome-row.sdl {
+            background: #eff6ff;
+        }
+        .outcome-row.is {
+            background: #f0fdf4;
+        }
+        .outcome-row.ab {
+            background: #fff7ed;
+        }
+        .capability-badge {
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            flex-shrink: 0;
+        }
+        .capability-badge.sdl {
+            background: #3b82f6;
+        }
+        .capability-badge.is {
+            background: #22c55e;
+        }
+        .capability-badge.ab {
+            background: #f97316;
+        }
+        .sprint-card {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .sprint-card:last-child {
+            margin-bottom: 0;
+        }
+        .sprint-card.s1 {
+            background: #f0fdfa;
+            border-left: 4px solid #14b8a6;
+        }
+        .sprint-card.s2 {
+            background: #ecfdf5;
+            border-left: 4px solid #22c55e;
+        }
+        .sprint-card.s3 {
+            background: #fff7ed;
+            border-left: 4px solid #f97316;
+        }
+        .sprint-card.s4 {
+            background: #faf5ff;
+            border-left: 4px solid #8b5cf6;
+        }
+        .sprint-card .sprint-meta {
+            min-width: 100px;
+        }
+        .sprint-card .sprint-badge {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+        .sprint-card.s1 .sprint-badge { background: #14b8a6; }
+        .sprint-card.s2 .sprint-badge { background: #22c55e; }
+        .sprint-card.s3 .sprint-badge { background: #f97316; }
+        .sprint-card.s4 .sprint-badge { background: #8b5cf6; }
+        .sprint-card .weeks {
+            margin: 8px 0 0 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .sprint-card .sprint-title {
+            margin: 0 0 4px 0;
+        }
+        .sprint-card.s1 .sprint-title { color: #0f766e; }
+        .sprint-card.s2 .sprint-title { color: #166534; }
+        .sprint-card.s3 .sprint-title { color: #c2410c; }
+        .sprint-card.s4 .sprint-title { color: #7c3aed; }
+        .sprint-card .sprint-desc {
+            margin: 0;
+            font-size: 14px;
+        }
+        .sprint-card.s1 .sprint-desc { color: #115e59; }
+        .sprint-card.s2 .sprint-desc { color: #166534; }
+        .sprint-card.s3 .sprint-desc { color: #c2410c; }
+        .sprint-card.s4 .sprint-desc { color: #7c3aed; }
+        .grade-box {
+            text-align: center;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .grade-box .percent {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            color: #14b8a6;
+        }
+        .grade-box .label {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #6b7280;
+        }
+        .grade-box.accent-purple .percent {
+            color: #8b5cf6;
+        }
+        .grade-box.accent-green .percent {
+            color: #22c55e;
+        }
+        .sprint-breakdown {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .sprint-breakdown .title {
+            margin: 0 0 12px 0;
+            color: #374151;
+        }
+        .sprint-breakdown .items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .peer-skill-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 600px) {
+            .peer-skill-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .peer-skill-box {
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .peer-skill-box .sprint-label {
+            margin: 0 0 4px 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .peer-skill-box .skill {
+            margin: 0;
+            color: #374151;
+        }
+        .info-box {
+            background: #f0fdfa;
+            border: 1px solid #5eead4;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .info-box h2 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: #0f766e;
+        }
+        .info-box .time {
+            margin: 0 0 12px 0;
+            color: #115e59;
+            font-weight: 600;
+        }
+        .info-box ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #115e59;
+        }
+        .info-box li {
+            margin-bottom: 8px;
+        }
+        .info-box li:last-child {
+            margin-bottom: 0;
+        }
+        .reflection-box {
+            background: #faf5ff;
+            border: 1px solid #d8b4fe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .reflection-box h2 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: #7c3aed;
+        }
+        .reflection-box p {
+            margin: 0 0 12px 0;
+            color: #6b21a8;
+        }
+        .reflection-box p:last-child {
+            margin: 0;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+        .cta-box h2 {
+            margin: 0 0 8px 0;
+            color: white;
+            font-size: 24px;
+        }
+        .cta-box p {
+            margin: 0 0 20px 0;
+            color: #9ca3af;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #14b8a6;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        .cta-button:hover {
+            background: #0d9488;
+        }
+        .section-label {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>CST395: AI-Native Solution Engineering</h1>
+            <p class="subtitle">Building real solutions with AI as your thinking partner</p>
+            <div class="tags">
+                <span class="tag">4 Units</span>
+                <span class="tag">16 Weeks</span>
+                <span class="tag">Hybrid</span>
+            </div>
+        </div>
+
+        <!-- What This Course Is About -->
+        <div class="card">
+            <h2>What This Course Is About</h2>
+            <p style="margin: 0 0 16px 0; color: #374151;">
+                This is not a course about using AI tools. It's a course about developing the <strong>human capabilities</strong> that make AI partnership valuable. By the end, you'll be able to answer two questions with evidence:
+            </p>
+            <div class="two-col">
+                <div class="destination-box superagency">
+                    <p class="label">Superagency</p>
+                    <p class="question">"What problems are now within my reach that I would not have attempted before?"</p>
+                </div>
+                <div class="destination-box human-value">
+                    <p class="label">Human Value Proposition</p>
+                    <p class="question">"What would be worse about my solutions if I had simply handed the problems to AI?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Five Course Outcomes -->
+        <div class="card">
+            <h2>Five Course Outcomes</h2>
+
+            <p class="section-label">The Destinations (Why)</p>
+            <div style="margin-bottom: 20px;">
+                <div class="outcome-row" style="background: #f0fdfa;">
+                    <strong style="color: #0f766e;">1. Expand Your Problem Range</strong>
+                    <span style="color: #115e59;">— Attempt problems you wouldn't have tackled before</span>
+                </div>
+                <div class="outcome-row" style="background: #f0fdf4;">
+                    <strong style="color: #166534;">2. Recognize and Create Human Value</strong>
+                    <span style="color: #166534;">— Articulate why your involvement matters</span>
+                </div>
+            </div>
+
+            <p class="section-label">Observable Capabilities (How)</p>
+            <div>
+                <div class="outcome-row sdl">
+                    <span class="capability-badge sdl">SDL</span>
+                    <span><strong>3. Direct Your Own Learning</strong> — Recognize gaps, acquire skills just-in-time</span>
+                </div>
+                <div class="outcome-row is">
+                    <span class="capability-badge is">IS</span>
+                    <span><strong>4. Integrate Across Boundaries</strong> — Connect domains, build genuine relationships</span>
+                </div>
+                <div class="outcome-row ab">
+                    <span class="capability-badge ab">AB</span>
+                    <span><strong>5. Build Iteratively Under Uncertainty</strong> — Iterate based on feedback, pivot with evidence</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Four Sprints -->
+        <div class="card">
+            <h2>The Four Sprints</h2>
+            <p style="margin: 0 0 20px 0; color: #6b7280;">Each sprint expands who you're solving problems for:</p>
+
+            <div class="sprint-card s1">
+                <div class="sprint-meta">
+                    <span class="sprint-badge">SPRINT 1</span>
+                    <p class="weeks">Weeks 1-4</p>
+                </div>
+                <div>
+                    <p class="sprint-title"><strong>Foundation:</strong> Superagency Over Self</p>
+                    <p class="sprint-desc">Stakeholder: <strong>Yourself</strong>. Can I solve my own problem?</p>
+                </div>
+            </div>
+
+            <div class="sprint-card s2">
+                <div class="sprint-meta">
+                    <span class="sprint-badge">SPRINT 2</span>
+                    <p class="weeks">Weeks 5-8</p>
+                </div>
+                <div>
+                    <p class="sprint-title"><strong>Mirror:</strong> Learning Through Others</p>
+                    <p class="sprint-desc">Stakeholder: <strong>Close acquaintance</strong>. Can I solve someone else's problem?</p>
+                </div>
+            </div>
+
+            <div class="sprint-card s3">
+                <div class="sprint-meta">
+                    <span class="sprint-badge">SPRINT 3</span>
+                    <p class="weeks">Weeks 9-12</p>
+                </div>
+                <div>
+                    <p class="sprint-title"><strong>Complexity:</strong> Navigating Ambiguity</p>
+                    <p class="sprint-desc">Stakeholder: <strong>External entity</strong>. Can I solve for someone I don't know?</p>
+                </div>
+            </div>
+
+            <div class="sprint-card s4">
+                <div class="sprint-meta">
+                    <span class="sprint-badge">SPRINT 4</span>
+                    <p class="weeks">Weeks 13-16</p>
+                </div>
+                <div>
+                    <p class="sprint-title"><strong>Mastery:</strong> Full Autonomy</p>
+                    <p class="sprint-desc">Stakeholder: <strong>Your choice</strong>. Can I deliver real value at scale?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grading Overview -->
+        <div class="card">
+            <h2>Grading Overview</h2>
+            <div class="four-col" style="margin-bottom: 20px;">
+                <div class="grade-box">
+                    <p class="percent">20%</p>
+                    <p class="label">Sprint 1</p>
+                </div>
+                <div class="grade-box">
+                    <p class="percent">20%</p>
+                    <p class="label">Sprint 2</p>
+                </div>
+                <div class="grade-box">
+                    <p class="percent">20%</p>
+                    <p class="label">Sprint 3</p>
+                </div>
+                <div class="grade-box">
+                    <p class="percent">20%</p>
+                    <p class="label">Sprint 4</p>
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="grade-box accent-purple">
+                    <p class="percent">10%</p>
+                    <p class="label">Capstone Demonstration</p>
+                </div>
+                <div class="grade-box accent-green">
+                    <p class="percent">10%</p>
+                    <p class="label">Reflection Notebook</p>
+                </div>
+            </div>
+            <div class="sprint-breakdown">
+                <p class="title"><strong>Within Each Sprint (20%):</strong></p>
+                <div class="items">
+                    <span>📋 Goal Setting: 20%</span>
+                    <span>🪞 Reflections: 20%</span>
+                    <span>💬 Check-ins: 20%</span>
+                    <span>🎯 Demonstration: 40%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Peer Conversation Skill Progression -->
+        <div class="card">
+            <h2>Peer Conversation Skill Progression</h2>
+            <p style="margin: 0 0 16px 0; color: #6b7280;">Each sprint develops a different interpersonal skill through structured peer conversations:</p>
+            <div class="peer-skill-grid">
+                <div class="peer-skill-box">
+                    <p class="sprint-label">Sprint 1</p>
+                    <p class="skill"><strong>How to Understand</strong> — Get into someone else's perspective</p>
+                </div>
+                <div class="peer-skill-box">
+                    <p class="sprint-label">Sprint 2</p>
+                    <p class="skill"><strong>How to Challenge</strong> — Give direct feedback without hostility</p>
+                </div>
+                <div class="peer-skill-box">
+                    <p class="sprint-label">Sprint 3</p>
+                    <p class="skill"><strong>How to be a Thought Partner</strong> — Help someone think through problems</p>
+                </div>
+                <div class="peer-skill-box">
+                    <p class="sprint-label">Sprint 4</p>
+                    <p class="skill"><strong>How to Hold Accountable</strong> — Push on quality and completion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- In-Person Sessions -->
+        <div class="info-box">
+            <h2>📍 In-Person Sessions</h2>
+            <p class="time">Wednesdays 2:00–4:00pm • CAHSS 1301</p>
+            <ul>
+                <li><strong>First half:</strong> Facilitated peer conversations</li>
+                <li><strong>Second half:</strong> Project work time (instructor available)</li>
+            </ul>
+        </div>
+
+        <!-- Reflection Practice -->
+        <div class="reflection-box">
+            <h2>📓 Reflection Practice</h2>
+            <p>You will receive a <strong>physical reflection notebook</strong>. Each class begins and ends with 5-10 minutes of handwritten reflection.</p>
+            <p>Handwriting enforces the "Slow Down" meta-habit, removes AI from the reflection process, and creates a tangible artifact of your growth.</p>
+            <p>You'll photograph your reflections for Canvas submission. Notebooks are collected at semester end.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h2>Ready to Begin?</h2>
+            <p>Start with the Home page to see where you are and what's due this week.</p>
+            <a href="home.html" class="cta-button">Enter Course →</a>
+        </div>
+    </div>
+</body>
+</html>
