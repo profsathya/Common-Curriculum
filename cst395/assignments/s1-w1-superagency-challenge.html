@@ -12,165 +12,331 @@
             padding: 24px;
             background: #f9fafb;
             color: #111827;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 700px; margin: 0 auto; }
         .breadcrumb {
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 8px;
         }
-        .breadcrumb a {
-            color: #14b8a6;
-            text-decoration: none;
-        }
+        .breadcrumb a { color: #14b8a6; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: #e5e7eb;
+            height: 4px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .progress-bar__fill {
+            background: #14b8a6;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Header - Compact */
         .header {
             background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
             color: white;
-            padding: 24px 32px;
+            padding: 20px 24px;
             border-radius: 12px;
             margin-bottom: 24px;
         }
-        .header-meta {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        .header-tag {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-        .header h1 {
-            margin: 0 0 8px 0;
-            font-size: 28px;
-        }
-        .header p {
-            margin: 0;
-            opacity: 0.9;
-        }
-        .card {
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+        /* Section Cards */
+        .section {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        .card h2 {
-            margin: 0 0 16px 0;
-            font-size: 18px;
-            color: #111827;
-        }
-        .card h3 {
-            margin: 16px 0 8px 0;
-            font-size: 15px;
-            color: #374151;
-        }
-        .card p, .card li {
-            color: #4b5563;
-            font-size: 15px;
-        }
-        .card ul, .card ol {
-            margin: 0;
-            padding-left: 20px;
-        }
-        .card li {
-            margin-bottom: 8px;
-        }
-        .capability-tags {
-            display: flex;
-            gap: 8px;
             margin-bottom: 16px;
+            overflow: hidden;
         }
-        .capability-badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
+        .section.completed {
+            border-color: #86efac;
+        }
+        .section__header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .section__header:hover {
+            background: #f9fafb;
+        }
+        .section__number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #e5e7eb;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+            color: #6b7280;
+        }
+        .section.completed .section__number {
+            background: #22c55e;
             color: white;
         }
-        .capability-badge.sdl { background: #3b82f6; }
-        .capability-badge.is { background: #22c55e; }
-        .capability-badge.ab { background: #f97316; }
-        .info-box {
+        .section.active .section__number {
+            background: #14b8a6;
+            color: white;
+        }
+        .section__title {
+            font-weight: 600;
+            color: #111827;
+        }
+        .section__toggle {
+            color: #9ca3af;
+            transition: transform 0.2s;
+        }
+        .section.expanded .section__toggle {
+            transform: rotate(180deg);
+        }
+        .section__content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .section.expanded .section__content {
+            display: block;
+        }
+
+        /* Hook - Opening Question */
+        .hook {
+            background: #faf5ff;
+            border: 2px solid #d8b4fe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .hook__question {
+            font-size: 20px;
+            color: #7c3aed;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+            line-height: 1.4;
+        }
+        .hook__subtext {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Quick Action Box */
+        .quick-action {
             background: #f0fdfa;
             border: 1px solid #5eead4;
             border-radius: 8px;
             padding: 16px;
             margin: 16px 0;
         }
-        .info-box p {
-            margin: 0;
+        .quick-action__label {
+            font-size: 12px;
             color: #0f766e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
-        .warning-box {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
-        }
-        .warning-box p {
+        .quick-action__prompt {
+            color: #115e59;
+            font-weight: 500;
             margin: 0;
-            color: #92400e;
         }
-        .example-box {
-            background: #f9fafb;
-            border-left: 4px solid #9ca3af;
+
+        /* Pause Box */
+        .pause-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
             padding: 16px;
-            margin: 16px 0;
-            font-style: italic;
-            color: #4b5563;
+            margin: 20px 0;
         }
-        .rubric-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
+        .pause-box__label {
+            font-size: 12px;
+            color: #b45309;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .pause-box__prompt {
+            color: #92400e;
+            margin: 0;
+        }
+
+        /* Visual Model */
+        .visual-model {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .visual-model__diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .visual-model__box {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .visual-model__box.before {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px dashed #fca5a5;
+        }
+        .visual-model__box.after {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #86efac;
+        }
+        .visual-model__arrow {
+            font-size: 24px;
+            color: #14b8a6;
+        }
+        .visual-model__caption {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        /* Example Chips */
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .example-chip {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #374151;
+        }
+        .example-chip:hover {
+            background: #e5e7eb;
+        }
+
+        /* Contrast Grid */
+        .contrast {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        @media (max-width: 500px) {
+            .contrast { grid-template-columns: 1fr; }
+        }
+        .contrast__box {
+            padding: 16px;
+            border-radius: 8px;
             font-size: 14px;
         }
-        .rubric-table th {
-            background: #f9fafb;
-            padding: 12px;
-            text-align: left;
+        .contrast__box.yes {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+        }
+        .contrast__box.no {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+        .contrast__label {
             font-weight: 600;
-            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 8px;
         }
-        .rubric-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: top;
+        .contrast__box.yes .contrast__label { color: #166534; }
+        .contrast__box.no .contrast__label { color: #991b1b; }
+        .contrast__box.yes p { color: #166534; margin: 0; }
+        .contrast__box.no p { color: #991b1b; margin: 0; }
+
+        /* Check Understanding */
+        .check {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
         }
-        .rubric-table tr:last-child td {
-            border-bottom: none;
+        .check__label {
+            font-size: 12px;
+            color: #1e40af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
-        .level-high { color: #166534; }
-        .level-medium { color: #92400e; }
-        .level-low { color: #991b1b; }
-        .submission-box {
+        .check__question {
+            color: #1e40af;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Continue Button */
+        .continue-btn {
+            background: #14b8a6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .continue-btn:hover {
+            background: #0d9488;
+        }
+
+        /* Submission */
+        .submission {
             background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
             color: white;
             padding: 24px;
             border-radius: 12px;
+            margin-top: 24px;
         }
-        .submission-box h2 {
-            color: white;
-            margin: 0 0 12px 0;
+        .submission h3 { color: white; margin: 0 0 16px 0; }
+        .submission__checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
         }
-        .submission-box p {
+        .submission__checklist li {
+            padding: 8px 0;
             color: #d1d5db;
-            margin: 0 0 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
         }
-        .submission-type {
-            display: inline-block;
-            background: #14b8a6;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            margin-top: 8px;
+        .submission__checklist li::before {
+            content: "☐";
+            color: #14b8a6;
+        }
+        .submission__format {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #9ca3af;
         }
         .submit-btn {
             display: inline-block;
@@ -196,118 +362,239 @@
             Superagency Challenge
         </p>
 
+        <div class="progress-bar">
+            <div class="progress-bar__fill" id="progress"></div>
+        </div>
+
         <div class="header">
-            <div class="header-meta">
-                <span class="header-tag">Sprint 1</span>
-                <span class="header-tag">Week 1</span>
-            </div>
-            <h1>Superagency Challenge</h1>
-            <p>Identify a meaningful problem in your own life that you've felt was beyond your capacity to solve</p>
+            <h1>🚀 Superagency Challenge</h1>
+            <p>Week 1 · ~15 minutes to complete</p>
         </div>
 
-        <div class="card">
-            <div class="capability-tags">
-                <span class="capability-badge sdl">SDL</span>
-                <span class="capability-badge is">IS</span>
-            </div>
-
-            <h2>The Challenge</h2>
-            <p>
-                This sprint, you'll tackle something you've wanted to change about your own life but thought was
-                beyond your capacity. The goal isn't just to solve a problem—it's to prove to yourself that
-                your limits aren't fixed.
+        <!-- Hook -->
+        <div class="hook">
+            <p class="hook__question">
+                What's something you've wanted to change about your life<br>
+                but felt was "beyond you"?
             </p>
-
-            <div class="info-box">
-                <p><strong>Superagency Mindset:</strong> What problems are now within my reach that I would not
-                have attempted before?</p>
-            </div>
-
-            <h3>Your Task</h3>
-            <ol>
-                <li><strong>Brainstorm 2-3 challenges</strong> — Things you've wanted to change about your
-                productivity, wellness, habits, or personal growth that you've felt unsure about tackling.</li>
-                <li><strong>Select one</strong> — Choose the one that feels meaningful AND slightly scary.
-                Not trivial (organizing files), not impossible (curing a disease).</li>
-                <li><strong>Reflect on why this felt beyond you</strong> — What made you think you couldn't
-                do this before? Be specific.</li>
-            </ol>
-
-            <h3>Good Challenges Look Like:</h3>
-            <ul>
-                <li>"I've tried to manage my ADHD for years with apps that never stuck"</li>
-                <li>"I want to establish a consistent sleep schedule but I've failed every time"</li>
-                <li>"I need to build a habit of exercise but I can never maintain it past 2 weeks"</li>
-                <li>"I want to reduce my anxiety around deadlines but don't know how"</li>
-            </ul>
-
-            <div class="warning-box">
-                <p><strong>Avoid:</strong> Trivial optimizations ("organize my desktop"), purely technical
-                projects without personal stakes ("build a to-do app"), or problems you don't genuinely
-                care about solving.</p>
-            </div>
+            <p class="hook__subtext">Take 10 seconds. Let something come to mind.</p>
         </div>
 
-        <div class="card">
-            <h2>What to Submit</h2>
-            <ol>
-                <li><strong>Your 2-3 brainstormed challenges</strong> (brief descriptions)</li>
-                <li><strong>Your selected challenge</strong> with explanation of why you chose it</li>
-                <li><strong>Why this felt beyond you before</strong> — What specific barriers made you
-                think you couldn't tackle this?</li>
-                <li><strong>What's at stake</strong> — Why does solving this matter to you personally?</li>
-            </ol>
+        <!-- Section 1: The Idea -->
+        <div class="section active expanded" data-section="1">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">1</span>
+                    <span class="section__title">The Big Idea</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    <strong>Superagency</strong> is a simple belief: your limits aren't fixed.
+                </p>
+                <p>
+                    Things that feel "beyond you" today—building something technical, changing a stubborn habit,
+                    learning something complex—might actually be within reach. You just haven't had the right partner.
+                </p>
 
-            <div class="example-box">
-                <strong>Example submission excerpt:</strong><br><br>
-                "I've wanted to manage my energy levels throughout the day for years. I've tried
-                caffeine timing, sleep apps, productivity systems—nothing stuck. I always assumed
-                I just wasn't disciplined enough. What's at stake: I'm exhausted by 3pm every day,
-                and it's affecting my relationships and my work. If I could solve this, I'd reclaim
-                20+ hours of productive time per week."
+                <div class="visual-model">
+                    <div class="visual-model__diagram">
+                        <div class="visual-model__box before">"I can't do that"</div>
+                        <span class="visual-model__arrow">→</span>
+                        <div class="visual-model__box after">"Let me try with AI"</div>
+                    </div>
+                    <p class="visual-model__caption">Superagency = Expanding what's possible for you</p>
+                </div>
+
+                <div class="pause-box">
+                    <p class="pause-box__label">⏸️ Pause</p>
+                    <p class="pause-box__prompt">
+                        Think of one thing you've said "I can't" or "I'm not good at" about.
+                        Hold it in mind as you continue.
+                    </p>
+                </div>
+
+                <button class="continue-btn" onclick="completeSection(1)">
+                    Got it → Continue
+                </button>
             </div>
         </div>
 
-        <div class="card">
-            <h2>Success Criteria</h2>
-            <table class="rubric-table">
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Indicator</th>
-                        <th style="width: 25%;">High</th>
-                        <th style="width: 25%;">Medium</th>
-                        <th style="width: 25%;">Low</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Problem Identification</strong></td>
-                        <td class="level-high">Specific challenge with personal stakes and history</td>
-                        <td class="level-medium">Real challenge but vague on why it matters</td>
-                        <td class="level-low">Trivial optimization or assignment compliance</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Barrier Awareness</strong></td>
-                        <td class="level-high">Articulates specific reasons they felt stuck</td>
-                        <td class="level-medium">General sense of limitation</td>
-                        <td class="level-low">No reflection on prior barriers</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Personal Investment</strong></td>
-                        <td class="level-high">Clear stakes; genuine desire to solve</td>
-                        <td class="level-medium">Some investment but could take or leave it</td>
-                        <td class="level-low">Doing it for the assignment</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Section 2: Your Challenge -->
+        <div class="section" data-section="2">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">2</span>
+                    <span class="section__title">Pick Your Challenge</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    This sprint, you'll tackle something real in your own life.
+                    Not a fake project—something that actually matters to you.
+                </p>
+
+                <div class="quick-action">
+                    <p class="quick-action__label">✍️ Right now</p>
+                    <p class="quick-action__prompt">
+                        Brainstorm 2-3 things you've wanted to change about your productivity,
+                        wellness, or habits. (Mental list is fine for now.)
+                    </p>
+                </div>
+
+                <p><strong>Good challenges sound like:</strong></p>
+                <div class="examples">
+                    <span class="example-chip">"I can't stick to exercise"</span>
+                    <span class="example-chip">"I procrastinate on hard tasks"</span>
+                    <span class="example-chip">"I can't maintain a sleep schedule"</span>
+                    <span class="example-chip">"I get overwhelmed easily"</span>
+                    <span class="example-chip">"I struggle with focus"</span>
+                </div>
+
+                <div class="contrast">
+                    <div class="contrast__box yes">
+                        <p class="contrast__label">✓ Good</p>
+                        <p>Something you've tried before and failed at. Something with real stakes.</p>
+                    </div>
+                    <div class="contrast__box no">
+                        <p class="contrast__label">✗ Avoid</p>
+                        <p>Trivial tasks ("organize files") or things you don't really care about.</p>
+                    </div>
+                </div>
+
+                <div class="check">
+                    <p class="check__label">🧠 Check yourself</p>
+                    <p class="check__question">
+                        Would solving this actually change your life? If not, pick something else.
+                    </p>
+                </div>
+
+                <button class="continue-btn" onclick="completeSection(2)">
+                    I have 2-3 ideas → Continue
+                </button>
+            </div>
         </div>
 
-        <div class="submission-box">
-            <h2>Submission</h2>
-            <p><strong>Format:</strong> File upload (1-2 pages)</p>
-            <p><strong>Due:</strong> Wednesday, January 22</p>
-            <a href="https://csumb.instructure.com/courses/33084/assignments/564067" target="_parent" class="submit-btn">Submit on Canvas</a>
+        <!-- Section 3: Why It Felt Beyond You -->
+        <div class="section" data-section="3">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">3</span>
+                    <span class="section__title">Why It Felt Impossible</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    Here's the key question: <strong>Why did this feel beyond you before?</strong>
+                </p>
+                <p>
+                    This isn't about blame. It's about understanding.
+                    When you know why you got stuck, you can design around it.
+                </p>
+
+                <div class="visual-model">
+                    <p style="margin: 0 0 12px 0; font-weight: 500; color: #374151;">Common barriers:</p>
+                    <div class="examples" style="justify-content: center;">
+                        <span class="example-chip">Didn't know where to start</span>
+                        <span class="example-chip">Tried things that didn't work</span>
+                        <span class="example-chip">Felt too complicated</span>
+                        <span class="example-chip">Lost motivation midway</span>
+                        <span class="example-chip">Didn't have the right tools</span>
+                    </div>
+                </div>
+
+                <div class="pause-box">
+                    <p class="pause-box__label">⏸️ Pause</p>
+                    <p class="pause-box__prompt">
+                        For your top challenge: What specifically made you think "I can't do this"?
+                        Try to name the actual barrier, not just "I'm lazy" or "I'm bad at this."
+                    </p>
+                </div>
+
+                <button class="continue-btn" onclick="completeSection(3)">
+                    I can name my barrier → Continue
+                </button>
+            </div>
         </div>
+
+        <!-- Section 4: What to Submit -->
+        <div class="section" data-section="4">
+            <div class="section__header" onclick="toggleSection(this)">
+                <div>
+                    <span class="section__number">4</span>
+                    <span class="section__title">Your Submission</span>
+                </div>
+                <span class="section__toggle">▼</span>
+            </div>
+            <div class="section__content">
+                <p>
+                    Now put it together. Your submission should take about 10-15 minutes to write.
+                </p>
+
+                <div class="submission">
+                    <h3>📝 What to Submit</h3>
+                    <ul class="submission__checklist">
+                        <li>Your 2-3 brainstormed challenges (one sentence each)</li>
+                        <li>Which one you're choosing and why it matters to you</li>
+                        <li>Why this felt "beyond you" before (be specific)</li>
+                        <li>What's at stake if you actually solve it</li>
+                    </ul>
+                    <div class="submission__format">
+                        <strong>Format:</strong> File upload (1-2 pages)<br>
+                        <strong>Due:</strong> Wednesday, January 22
+                    </div>
+                    <a href="https://csumb.instructure.com/courses/33084/assignments/564067" target="_parent" class="submit-btn">Submit on Canvas</a>
+                </div>
+
+                <div class="check" style="margin-top: 20px;">
+                    <p class="check__label">✓ Before submitting, ask yourself</p>
+                    <p class="check__question">
+                        "If I solved this, would my life actually be different?"
+                        If yes, you're ready.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        let completedSections = new Set();
+
+        function toggleSection(header) {
+            const section = header.closest('.section');
+            section.classList.toggle('expanded');
+        }
+
+        function completeSection(num) {
+            completedSections.add(num);
+
+            // Mark current as completed
+            const current = document.querySelector(`[data-section="${num}"]`);
+            current.classList.add('completed');
+            current.classList.remove('active');
+            current.classList.remove('expanded');
+
+            // Open next section
+            const next = document.querySelector(`[data-section="${num + 1}"]`);
+            if (next) {
+                next.classList.add('active');
+                next.classList.add('expanded');
+                next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Update progress
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = 4;
+            const progress = (completedSections.size / total) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+    </script>
 </body>
 </html>
