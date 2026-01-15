@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint 1 Demonstration | Sprint 1 Week 4 | CST349</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.7;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+        .intro-box {
+            background: #eef2ff;
+            border: 2px solid #c7d2fe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .intro-box h2 { color: #4f46e5; margin: 0 0 12px 0; font-size: 18px; }
+        .intro-box p { color: #6b7280; margin: 0; }
+
+        .section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .section h3 { color: #111827; margin: 0 0 16px 0; font-size: 18px; }
+
+        .structure-list {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        .structure-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .structure-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .structure-item__time {
+            background: #6366f1;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            height: fit-content;
+        }
+        .structure-item__content { flex: 1; }
+        .structure-item__title { font-weight: 600; color: #374151; margin-bottom: 4px; }
+        .structure-item__desc { font-size: 14px; color: #6b7280; margin: 0; }
+
+        .evidence-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .evidence-box__label {
+            font-size: 12px;
+            color: #166534;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .evidence-box ul { margin: 0; padding-left: 20px; color: #166534; }
+        .evidence-box li { margin-bottom: 4px; }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .warning-box__label {
+            font-size: 12px;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .warning-box p { color: #991b1b; margin: 0; }
+
+        .rubric {
+            background: #f9fafb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .rubric__row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .rubric__row:last-child { border-bottom: none; }
+        .rubric__header {
+            background: #e5e7eb;
+            font-weight: 600;
+            color: #374151;
+        }
+        .rubric__cell {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        .rubric__cell:first-child {
+            border-right: 1px solid #e5e7eb;
+            font-weight: 500;
+        }
+
+        .submission {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+        .submission h3 { color: white; margin: 0 0 16px 0; }
+        .submission__checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .submission__checklist li {
+            padding: 8px 0;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .submission__checklist li::before { content: "☐"; color: #6366f1; }
+        .submission__format {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .sdl-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="breadcrumb">
+            <a href="../home.html">Home</a> /
+            <a href="../sprint-1.html">Sprint 1</a> /
+            Sprint 1 Demonstration
+        </p>
+
+        <div class="header">
+            <h1>🎤 Sprint 1 Demonstration</h1>
+            <p>Week 4 · 5-7 minute presentation</p>
+        </div>
+
+        <div class="intro-box">
+            <h2>Show, Don't Just Tell</h2>
+            <p>
+                This isn't a report on what you did. It's a demonstration that you actually developed. You need to show evidence of growth—not just activity. Your peers will evaluate whether your claims are convincing.
+            </p>
+        </div>
+
+        <div class="section">
+            <h3>Presentation Structure (5-7 minutes)</h3>
+
+            <div class="structure-list">
+                <div class="structure-item">
+                    <span class="structure-item__time">~1 min</span>
+                    <div class="structure-item__content">
+                        <p class="structure-item__title">The Skill & Why It Matters</p>
+                        <p class="structure-item__desc">What soft skill did you focus on? Why did you choose it? What was at stake?</p>
+                    </div>
+                </div>
+                <div class="structure-item">
+                    <span class="structure-item__time">~1 min</span>
+                    <div class="structure-item__content">
+                        <p class="structure-item__title">Your Starting Point</p>
+                        <p class="structure-item__desc">Where were you when you started? Be specific and honest about your baseline.</p>
+                    </div>
+                </div>
+                <div class="structure-item">
+                    <span class="structure-item__time">~2 min</span>
+                    <div class="structure-item__content">
+                        <p class="structure-item__title">What You Did</p>
+                        <p class="structure-item__desc">Key activities from your plan. Don't list everything—highlight what mattered most.</p>
+                    </div>
+                </div>
+                <div class="structure-item">
+                    <span class="structure-item__time">~2 min</span>
+                    <div class="structure-item__content">
+                        <p class="structure-item__title">Evidence of Growth</p>
+                        <p class="structure-item__desc">This is the heart of your presentation. What concrete evidence shows you improved?</p>
+                    </div>
+                </div>
+                <div class="structure-item">
+                    <span class="structure-item__time">~1 min</span>
+                    <div class="structure-item__content">
+                        <p class="structure-item__title">Honest Assessment</p>
+                        <p class="structure-item__desc">What would you do differently? What's still a growth area? Be genuinely reflective.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>What Counts as Evidence?</h3>
+
+            <div class="evidence-box">
+                <p class="evidence-box__label">Strong Evidence</p>
+                <ul>
+                    <li>Before/after comparisons (video, writing samples, feedback)</li>
+                    <li>Specific incidents where you behaved differently than you would have before</li>
+                    <li>Feedback from others who observed your change</li>
+                    <li>Metrics you tracked (e.g., "I initiated 3 difficult conversations vs. 0 before")</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <p class="warning-box__label">⚠️ Weak "Evidence"</p>
+                <p>"I feel more confident" / "I think I improved" / "I did lots of practice" — These are claims, not evidence. Your peers will (rightly) be skeptical.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Evaluation Criteria</h3>
+            <p>Your peers will evaluate you on:</p>
+
+            <div class="rubric">
+                <div class="rubric__row rubric__header">
+                    <div class="rubric__cell">Criterion</div>
+                    <div class="rubric__cell">What We're Looking For</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Evidence Quality</div>
+                    <div class="rubric__cell">Is the evidence concrete and verifiable? Would a skeptic be convinced?</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Honest Self-Assessment</div>
+                    <div class="rubric__cell">Does the presenter acknowledge limitations? Are they realistic about their growth?</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">SDL Process</div>
+                    <div class="rubric__cell">Did they follow a real learning process, or just go through the motions?</div>
+                </div>
+                <div class="rubric__row">
+                    <div class="rubric__cell">Clarity</div>
+                    <div class="rubric__cell">Is the presentation clear, focused, and within time?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="submission">
+            <h3>📝 What to Submit</h3>
+            <p style="margin-bottom: 8px;">
+                <span class="sdl-tag">SDL 6: Evaluate</span>
+            </p>
+            <ul class="submission__checklist">
+                <li>Your presentation slides or outline</li>
+                <li>Any supporting evidence (links, screenshots, before/after samples)</li>
+                <li>A brief written summary (1 page) of your Sprint 1 journey</li>
+            </ul>
+            <div class="submission__format">
+                <strong>Format:</strong> Slides + written summary<br>
+                <strong>Due:</strong> Wednesday, February 12 (present in class)
+            </div>
+        </div>
+    </div>
+</body>
+</html>
