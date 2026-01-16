@@ -459,6 +459,30 @@ function formatCST349Date(dateString) {
 }
 
 /**
+ * Get assignments due in a specific week
+ * @param {number} weekNum - Week number
+ * @returns {Array} Array of assignment objects with keys
+ */
+function getCST349AssignmentsDueInWeek(weekNum) {
+  const weekData = CST349_CONFIG.weekDates[weekNum];
+  if (!weekData) return [];
+
+  const start = new Date(weekData.start);
+  const end = new Date(weekData.end);
+  end.setHours(23, 59, 59, 999);
+
+  const assignments = [];
+  for (const [key, assignment] of Object.entries(CST349_CONFIG.assignments)) {
+    const dueDate = new Date(assignment.dueDate + 'T12:00:00');
+    if (dueDate >= start && dueDate <= end) {
+      assignments.push({ key, ...assignment });
+    }
+  }
+
+  return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+}
+
+/**
  * Get Loom video URL for a week
  * @param {number} weekNum - Week number
  * @returns {string|null} Loom URL or null if no recording
