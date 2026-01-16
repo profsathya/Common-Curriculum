@@ -215,43 +215,14 @@
       </p>
     </section>
 
-    <!-- 6. Priority Work -->
-    <section class="priority-work">
+    <!-- 6. Due This Week -->
+    <section class="priority-work" id="due-this-week-section" style="display: none;">
       <header class="priority-work__header">
         <span>📋</span>
-        <h2 class="priority-work__title">Priority Work</h2>
+        <h2 class="priority-work__title">Due This Week</h2>
       </header>
-      <div class="priority-work__content" id="priority-work-content">
-        <!-- Dynamically populated, static fallback shown -->
-        <div class="priority-work__item priority-work__item--primary">
-          <div class="priority-work__item-left">
-            <span class="priority-work__item-type priority-work__item-type--assignment"></span>
-            <span class="priority-work__item-name">
-              <a href="#" data-assignment="s1-problem-analysis">Problem Analysis (5 Whys)</a>
-            </span>
-          </div>
-          <span class="priority-work__item-due" data-due-date="s1-problem-analysis">Wed, Jan 29</span>
-        </div>
-
-        <div class="priority-work__item">
-          <div class="priority-work__item-left">
-            <span class="priority-work__item-type priority-work__item-type--reflection"></span>
-            <span class="priority-work__item-name">
-              <a href="#" data-assignment="s1-reflection-2">Productive Reflection #2</a>
-            </span>
-          </div>
-          <span class="priority-work__item-due" data-due-date="s1-reflection-2">Fri, Jan 31</span>
-        </div>
-
-        <div class="priority-work__item">
-          <div class="priority-work__item-left">
-            <span class="priority-work__item-type priority-work__item-type--peer"></span>
-            <span class="priority-work__item-name">
-              <a href="#" data-assignment="s1-peer-conversation">Peer Conversation</a>
-            </span>
-          </div>
-          <span class="priority-work__item-due" data-due-date="s1-peer-conversation">Fri, Jan 31</span>
-        </div>
+      <div class="priority-work__content" id="due-this-week-content">
+        <!-- Dynamically populated based on current week -->
       </div>
     </section>
 
@@ -316,23 +287,23 @@
       // Initialize with CST395 config
       initHomePage(CST395_CONFIG);
 
-      // Get current week
+      // Get current week (null if before semester)
       const currentWeek = getEffectiveCurrentWeek();
 
-      // Get Started section: visible only in Week 1
+      // Get Started section: visible before semester and during Week 1
       const getStartedSection = document.getElementById('get-started-section');
-      if (currentWeek === 1) {
+      if (currentWeek === null || currentWeek <= 1) {
         getStartedSection.style.display = 'block';
       }
 
       // Framing section open/close logic:
-      // Weeks 1-2: open
+      // Before semester and Weeks 1-2: open
       // Week 3+: alternating (odd weeks closed, even weeks open)
       const framingContent = document.getElementById('framing-content');
       const framingToggle = document.getElementById('framing-toggle');
 
       let shouldBeOpen = false;
-      if (currentWeek <= 2) {
+      if (currentWeek === null || currentWeek <= 2) {
         shouldBeOpen = true;
       } else {
         // Week 3+: even weeks open, odd weeks closed
@@ -342,6 +313,66 @@
       if (shouldBeOpen) {
         framingContent.classList.add('is-expanded');
         framingToggle.setAttribute('aria-expanded', 'true');
+      }
+
+      // Due This Week section
+      const dueSection = document.getElementById('due-this-week-section');
+      const dueContent = document.getElementById('due-this-week-content');
+
+      // Build due items based on current week
+      let dueItems = [];
+
+      // Week 1: Add Getting Started items (survey and discussion)
+      if (currentWeek === 1) {
+        dueItems.push({
+          title: 'Complete the Pre-course Survey',
+          url: 'https://csumb.instructure.com/courses/33084/quizzes/141970',
+          type: 'assignment',
+          dueText: 'End of Week 1'
+        });
+        dueItems.push({
+          title: 'Introduce Yourself Discussion',
+          url: 'https://csumb.instructure.com/courses/33084/discussion_topics/345054',
+          type: 'engagement',
+          dueText: 'End of Week 1'
+        });
+      }
+
+      // Add regular assignments due this week (if we're in a valid week)
+      if (currentWeek !== null && currentWeek >= 1) {
+        const weekAssignments = getAssignmentsDueInWeek(currentWeek);
+        weekAssignments.forEach(assignment => {
+          dueItems.push({
+            title: assignment.title.replace(/^Sprint \d+: /, ''),
+            url: getAssignmentUrl(assignment.key),
+            type: assignment.type,
+            dueText: formatDate(assignment.dueDate)
+          });
+        });
+      }
+
+      // Show section only if there are items due
+      if (dueItems.length > 0) {
+        dueSection.style.display = 'block';
+
+        // Render the items
+        dueContent.innerHTML = dueItems.map((item, index) => {
+          const typeClass = item.type === 'reflection' ? 'reflection' :
+                           item.type === 'engagement' ? 'peer' : 'assignment';
+          const primaryClass = index === 0 ? ' priority-work__item--primary' : '';
+
+          return `
+            <div class="priority-work__item${primaryClass}">
+              <div class="priority-work__item-left">
+                <span class="priority-work__item-type priority-work__item-type--${typeClass}"></span>
+                <span class="priority-work__item-name">
+                  <a href="${item.url}">${item.title}</a>
+                </span>
+              </div>
+              <span class="priority-work__item-due">${item.dueText}</span>
+            </div>
+          `;
+        }).join('');
       }
     });
   </script>

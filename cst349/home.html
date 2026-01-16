@@ -284,31 +284,13 @@
     </div>
 
     <!-- What's Due This Week -->
-    <div class="due-section">
+    <div class="due-section" id="due-this-week-section" style="display: none;">
       <div class="due-section__header">
         <span>📋</span>
         <h2 class="due-section__title">Due This Week</h2>
       </div>
       <div class="due-section__content" id="due-this-week">
-        <div class="due-item">
-          <div class="due-item__left">
-            <span class="due-item__dot due-item__dot--assignment"></span>
-            <span class="due-item__title">
-              <a href="assignments/s1-w1-skills-self-assessment.html">Skills Self-Assessment</a>
-            </span>
-          </div>
-          <span class="due-item__date">Wed, Jan 22</span>
-        </div>
-
-        <div class="due-item">
-          <div class="due-item__left">
-            <span class="due-item__dot due-item__dot--reflection"></span>
-            <span class="due-item__title">
-              <a href="assignments/s1-w1-productive-reflection.html">Productive Reflection #1</a>
-            </span>
-          </div>
-          <span class="due-item__date">Fri, Jan 24</span>
-        </div>
+        <!-- Dynamically populated based on current week -->
       </div>
     </div>
 
@@ -372,23 +354,23 @@
       addDemoBannerIfNeeded();
       initHomePage(CST349_CONFIG);
 
-      // Get current week
+      // Get current week (null if before semester)
       const currentWeek = getCST349EffectiveCurrentWeek();
 
-      // Get Started section: visible only in Week 1
+      // Get Started section: visible before semester and during Week 1
       const getStartedSection = document.getElementById('get-started-section');
-      if (currentWeek === 1) {
+      if (currentWeek === null || currentWeek <= 1) {
         getStartedSection.style.display = 'block';
       }
 
       // Framing section open/close logic:
-      // Weeks 1-2: open
+      // Before semester and Weeks 1-2: open
       // Week 3+: alternating (odd weeks closed, even weeks open)
       const framingContent = document.getElementById('framing-content');
       const framingToggle = document.getElementById('framing-toggle');
 
       let shouldBeOpen = false;
-      if (currentWeek <= 2) {
+      if (currentWeek === null || currentWeek <= 2) {
         shouldBeOpen = true;
       } else {
         // Week 3+: even weeks open, odd weeks closed
@@ -398,6 +380,65 @@
       if (shouldBeOpen) {
         framingContent.classList.add('is-expanded');
         framingToggle.setAttribute('aria-expanded', 'true');
+      }
+
+      // Due This Week section
+      const dueSection = document.getElementById('due-this-week-section');
+      const dueContent = document.getElementById('due-this-week');
+
+      // Build due items based on current week
+      let dueItems = [];
+
+      // Week 1: Add Getting Started items (survey and discussion)
+      if (currentWeek === 1) {
+        dueItems.push({
+          title: 'Complete the Pre-course Survey',
+          url: 'https://csumb.instructure.com/courses/32911/quizzes/141971',
+          type: 'assignment',
+          dueText: 'End of Week 1'
+        });
+        dueItems.push({
+          title: 'Introduce Yourself Discussion',
+          url: 'https://csumb.instructure.com/courses/32911/discussion_topics/345055',
+          type: 'engagement',
+          dueText: 'End of Week 1'
+        });
+      }
+
+      // Add regular assignments due this week (if we're in a valid week)
+      if (currentWeek !== null && currentWeek >= 1) {
+        const weekAssignments = getCST349AssignmentsDueInWeek(currentWeek);
+        weekAssignments.forEach(assignment => {
+          dueItems.push({
+            title: assignment.title.replace(/^Sprint \d+: /, ''),
+            url: getCST349AssignmentUrl(assignment.key),
+            type: assignment.type,
+            dueText: formatCST349Date(assignment.dueDate)
+          });
+        });
+      }
+
+      // Show section only if there are items due
+      if (dueItems.length > 0) {
+        dueSection.style.display = 'block';
+
+        // Render the items
+        dueContent.innerHTML = dueItems.map((item, index) => {
+          const typeClass = item.type === 'reflection' ? 'reflection' :
+                           item.type === 'engagement' ? 'engagement' : 'assignment';
+
+          return `
+            <div class="due-item">
+              <div class="due-item__left">
+                <span class="due-item__dot due-item__dot--${typeClass}"></span>
+                <span class="due-item__title">
+                  <a href="${item.url}">${item.title}</a>
+                </span>
+              </div>
+              <span class="due-item__date">${item.dueText}</span>
+            </div>
+          `;
+        }).join('');
       }
     });
   </script>
