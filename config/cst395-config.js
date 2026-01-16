@@ -310,6 +310,41 @@ const CST395_CONFIG = {
     4: { name: "Mastery", theme: "Full Autonomy", stakeholder: "Your choice", scaffolding: "Low" }
   },
 
+  // Peer Conversation Settings
+  // UPDATE EACH SEMESTER if targets change
+  peerConversations: {
+    totalConversationsTarget: 16,
+    conversationsPerSprint: 4,
+    breadthTarget: 9,         // Unique partners (50% of 18-person class)
+    depthTarget: 3,           // Deep partnerships (3+ conversations)
+    depthThreshold: 3,        // Conversations needed to count as "deep"
+    formUrl: "#",             // UPDATE: Google Form URL when available
+
+    // Sprint-by-sprint cumulative targets
+    sprintTargets: {
+      1: { conversations: 4, uniquePartners: 3, deepPartners: 0 },
+      2: { conversations: 8, uniquePartners: 5, deepPartners: 1 },
+      3: { conversations: 12, uniquePartners: 7, deepPartners: 2 },
+      4: { conversations: 16, uniquePartners: 9, deepPartners: 3 }
+    },
+
+    // Professional skills by sprint (for display)
+    skills: {
+      1: { name: "How to Understand", desc: "Get into someone's perspective, listen before reacting" },
+      2: { name: "How to Challenge", desc: "Give direct feedback, receive challenge without defensiveness" },
+      3: { name: "How to be a Thought Partner", desc: "Help someone think through a problem" },
+      4: { name: "How to Hold Accountable", desc: "Push on quality, mutual ownership of outcomes" }
+    },
+
+    // Check-in schedule (CST395: only Sprint 1 required)
+    checkIns: {
+      1: { required: true, type: "Professor", duration: "5 min" },
+      2: { required: false, type: "Optional", duration: null },
+      3: { required: false, type: "Optional", duration: null },
+      4: { required: false, type: null, duration: null }
+    }
+  },
+
   // Instructor info
   instructor: {
     name: "Dr. Sathya Narayanan",
