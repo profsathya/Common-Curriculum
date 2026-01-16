@@ -15,14 +15,150 @@
       --violet-700: #6d28d9;
       --violet-800: #5b21b6;
     }
+
+    /* Identity Header for CST349 */
+    .identity-header {
+      background: linear-gradient(135deg, var(--violet-600) 0%, var(--violet-700) 100%);
+      color: white;
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-6);
+    }
+    .identity-header__badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+    .identity-header__greeting {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin: 0 0 var(--space-2) 0;
+    }
+    .identity-header__tagline {
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    /* Get Started Card */
+    .get-started {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px solid #10b981;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .get-started__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .get-started__icon {
+      font-size: 1.5rem;
+    }
+    .get-started__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: #065f46;
+      margin: 0;
+    }
+    .get-started__intro {
+      color: #047857;
+      margin-bottom: var(--space-4);
+      font-size: var(--text-sm);
+    }
+    .get-started__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .get-started__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: white;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      border: 1px solid #a7f3d0;
+    }
+    .get-started__item:last-child {
+      margin-bottom: 0;
+    }
+    .get-started__checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #10b981;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .get-started__item-content {
+      flex: 1;
+    }
+    .get-started__item-title {
+      font-weight: 600;
+      color: #065f46;
+      margin-bottom: var(--space-1);
+    }
+    .get-started__item-title a {
+      color: #065f46;
+      text-decoration: underline;
+    }
+    .get-started__item-desc {
+      font-size: var(--text-sm);
+      color: #047857;
+      margin: 0;
+    }
+    .get-started__item--discussion {
+      background: #f0fdf4;
+    }
+    .get-started__discussion-prompts {
+      font-size: var(--text-sm);
+      color: #065f46;
+      margin: var(--space-2) 0 0 0;
+      padding-left: var(--space-4);
+    }
+    .get-started__discussion-prompts li {
+      margin-bottom: var(--space-1);
+    }
+    .get-started__link {
+      display: inline-block;
+      margin-top: var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      background: #10b981;
+      color: white;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      text-decoration: none;
+    }
+    .get-started__link:hover {
+      background: #059669;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Collapsible Framing Section -->
-    <div class="framing-section" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);">
-      <button class="framing-section__header" data-collapse-toggle="framing-content" aria-expanded="false">
+    <!-- 1. Identity Header -->
+    <header class="identity-header">
+      <span class="identity-header__badge">Professional Seminar</span>
+      <h1 class="identity-header__greeting">Welcome, Self-Directed Learner.</h1>
+      <p class="identity-header__tagline">Your goal is to prove you can learn anything you need to learn.</p>
+    </header>
+
+    <!-- 2. Collapsible Framing Section -->
+    <div class="framing-section" id="framing-section" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);">
+      <button class="framing-section__header" data-collapse-toggle="framing-content" aria-expanded="false" id="framing-toggle">
         <div class="framing-section__header-left">
           <span class="framing-section__icon">🎯</span>
           <div>
@@ -46,7 +182,56 @@
       </div>
     </div>
 
-    <!-- Status Banner -->
+    <!-- 3. Get Started Here (Week 1 only) -->
+    <section class="get-started" id="get-started-section" style="display: none;">
+      <header class="get-started__header">
+        <span class="get-started__icon">🚀</span>
+        <h2 class="get-started__title">Get Started Here</h2>
+      </header>
+      <p class="get-started__intro">Before diving into the course, complete these steps:</p>
+      <ul class="get-started__list">
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="https://csumb.instructure.com/courses/32911/quizzes/141971" id="survey-link">Complete the Pre-course Survey</a></p>
+            <p class="get-started__item-desc">Used by an external evaluation team to measure course effectiveness. Your responses help us improve.</p>
+          </div>
+        </li>
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="../profsathya.html">Get to know your instructor</a></p>
+            <p class="get-started__item-desc">Learn about Prof. Sathya and how to connect throughout the semester.</p>
+          </div>
+        </li>
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="overview.html">Explore the Course Overview</a></p>
+            <p class="get-started__item-desc">Understand what this course is about and how it's structured.</p>
+          </div>
+        </li>
+        <li class="get-started__item get-started__item--discussion">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title">Introduce Yourself</p>
+            <p class="get-started__item-desc">Post in the discussion forum answering:</p>
+            <ol class="get-started__discussion-prompts">
+              <li>Your name</li>
+              <li>How long you've been at CSUMB</li>
+              <li>Something about you (where you're from, hobbies, something interesting)</li>
+              <li>What do you understand this course is about?</li>
+              <li>What will you do to get the most out of this course?</li>
+              <li>What about Prof. Sathya's background, philosophy, or approach caught your attention?</li>
+              <li><em>(Optional)</em> Is there anything you'd like this course to cover?</li>
+            </ol>
+            <a href="https://csumb.instructure.com/courses/32911/discussion_topics/345055" class="get-started__link" id="discussion-link">Go to Discussion Forum →</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4. Status Banner -->
     <div class="status-banner" style="background: linear-gradient(135deg, var(--violet-600) 0%, var(--violet-700) 100%);">
       <div>
         <p class="status-banner__label">Current Position</p>
@@ -186,6 +371,34 @@
     document.addEventListener('DOMContentLoaded', function() {
       addDemoBannerIfNeeded();
       initHomePage(CST349_CONFIG);
+
+      // Get current week
+      const currentWeek = getCST349EffectiveCurrentWeek();
+
+      // Get Started section: visible only in Week 1
+      const getStartedSection = document.getElementById('get-started-section');
+      if (currentWeek === 1) {
+        getStartedSection.style.display = 'block';
+      }
+
+      // Framing section open/close logic:
+      // Weeks 1-2: open
+      // Week 3+: alternating (odd weeks closed, even weeks open)
+      const framingContent = document.getElementById('framing-content');
+      const framingToggle = document.getElementById('framing-toggle');
+
+      let shouldBeOpen = false;
+      if (currentWeek <= 2) {
+        shouldBeOpen = true;
+      } else {
+        // Week 3+: even weeks open, odd weeks closed
+        shouldBeOpen = (currentWeek % 2 === 0);
+      }
+
+      if (shouldBeOpen) {
+        framingContent.classList.add('is-expanded');
+        framingToggle.setAttribute('aria-expanded', 'true');
+      }
     });
   </script>
 </body>

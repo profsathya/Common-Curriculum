@@ -5,6 +5,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Studio | CST395</title>
   <link rel="stylesheet" href="../css/design-system.css">
+  <style>
+    /* Get Started Card */
+    .get-started {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px solid #10b981;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .get-started__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .get-started__icon {
+      font-size: 1.5rem;
+    }
+    .get-started__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: #065f46;
+      margin: 0;
+    }
+    .get-started__intro {
+      color: #047857;
+      margin-bottom: var(--space-4);
+      font-size: var(--text-sm);
+    }
+    .get-started__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .get-started__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: white;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      border: 1px solid #a7f3d0;
+    }
+    .get-started__item:last-child {
+      margin-bottom: 0;
+    }
+    .get-started__checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #10b981;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .get-started__item-content {
+      flex: 1;
+    }
+    .get-started__item-title {
+      font-weight: 600;
+      color: #065f46;
+      margin-bottom: var(--space-1);
+    }
+    .get-started__item-title a {
+      color: #065f46;
+      text-decoration: underline;
+    }
+    .get-started__item-desc {
+      font-size: var(--text-sm);
+      color: #047857;
+      margin: 0;
+    }
+    .get-started__item--discussion {
+      background: #f0fdf4;
+    }
+    .get-started__discussion-prompts {
+      font-size: var(--text-sm);
+      color: #065f46;
+      margin: var(--space-2) 0 0 0;
+      padding-left: var(--space-4);
+    }
+    .get-started__discussion-prompts li {
+      margin-bottom: var(--space-1);
+    }
+    .get-started__link {
+      display: inline-block;
+      margin-top: var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      background: #10b981;
+      color: white;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      text-decoration: none;
+    }
+    .get-started__link:hover {
+      background: #059669;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -16,7 +116,82 @@
       <p class="identity-header__tagline">Your goal is Superagency. Your method is Symbiotic Thinking.</p>
     </header>
 
-    <!-- 2. Current Coordinates -->
+    <!-- 2. Collapsible Framing Section (moved to top) -->
+    <section class="framing-section" id="framing-section">
+      <button class="framing-section__header" data-collapse-toggle="framing-content" aria-expanded="false" id="framing-toggle">
+        <div class="framing-section__header-left">
+          <span class="framing-section__icon">🧭</span>
+          <div>
+            <h2 class="framing-section__title">Why This Course Is Different</h2>
+            <p class="framing-section__subtitle">Superagency • Human Value Proposition • Growth over transactions</p>
+          </div>
+        </div>
+        <div class="framing-section__header-right">
+          <span class="framing-section__hint">Worth revisiting</span>
+          <span class="framing-section__toggle">+</span>
+        </div>
+      </button>
+      <div class="framing-section__content" id="framing-content">
+        <p>This isn't a course about using AI tools. It's a course about <strong>becoming someone who can solve problems that were previously beyond your reach</strong> — using AI as a cognitive partner.</p>
+        <p>We call this <strong>Superagency</strong>: the ability to attempt problems you wouldn't have tackled before. But Superagency without <strong>Human Value</strong> is just delegation. You'll learn to identify where your judgment, taste, and direction matter — and prove it.</p>
+        <p>By semester end, you'll answer two questions with evidence:</p>
+        <ul style="color: var(--gray-300); margin-left: 1.5rem;">
+          <li><em>"What problems are now within my reach that I would not have attempted before?"</em></li>
+          <li><em>"What would be worse about my solutions if I had simply handed the problems to AI?"</em></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Get Started Here (Week 1 only) -->
+    <section class="get-started" id="get-started-section" style="display: none;">
+      <header class="get-started__header">
+        <span class="get-started__icon">🚀</span>
+        <h2 class="get-started__title">Get Started Here</h2>
+      </header>
+      <p class="get-started__intro">Before diving into the course, complete these steps:</p>
+      <ul class="get-started__list">
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="https://csumb.instructure.com/courses/33084/quizzes/141970" id="survey-link">Complete the Pre-course Survey</a></p>
+            <p class="get-started__item-desc">Used by an external evaluation team to measure course effectiveness. Your responses help us improve.</p>
+          </div>
+        </li>
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="../profsathya.html">Get to know your instructor</a></p>
+            <p class="get-started__item-desc">Learn about Prof. Sathya and how to connect throughout the semester.</p>
+          </div>
+        </li>
+        <li class="get-started__item">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title"><a href="overview.html">Explore the Course Overview</a></p>
+            <p class="get-started__item-desc">Understand what this course is about and how it's structured.</p>
+          </div>
+        </li>
+        <li class="get-started__item get-started__item--discussion">
+          <span class="get-started__checkbox"></span>
+          <div class="get-started__item-content">
+            <p class="get-started__item-title">Introduce Yourself</p>
+            <p class="get-started__item-desc">Post in the discussion forum answering:</p>
+            <ol class="get-started__discussion-prompts">
+              <li>Your name</li>
+              <li>How long you've been at CSUMB</li>
+              <li>Something about you (where you're from, hobbies, something interesting)</li>
+              <li>What do you understand this course is about?</li>
+              <li>What will you do to get the most out of this course?</li>
+              <li>What about Prof. Sathya's background, philosophy, or approach caught your attention?</li>
+              <li><em>(Optional)</em> Is there anything you'd like this course to cover?</li>
+            </ol>
+            <a href="https://csumb.instructure.com/courses/33084/discussion_topics/345054" class="get-started__link" id="discussion-link">Go to Discussion Forum →</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4. Current Coordinates -->
     <section class="current-coordinates">
       <div>
         <p class="current-coordinates__label">Current Project</p>
@@ -32,7 +207,7 @@
       </div>
     </section>
 
-    <!-- 3. Weekly Insight -->
+    <!-- 5. Weekly Insight -->
     <section class="weekly-insight">
       <p class="weekly-insight__label">This Week's Key Insight</p>
       <p class="weekly-insight__content" id="weekly-insight-text">
@@ -40,7 +215,7 @@
       </p>
     </section>
 
-    <!-- 4. Priority Work -->
+    <!-- 6. Priority Work -->
     <section class="priority-work">
       <header class="priority-work__header">
         <span>📋</span>
@@ -80,7 +255,7 @@
       </div>
     </section>
 
-    <!-- 5. Skills in Development -->
+    <!-- 7. Skills in Development -->
     <section class="skills-development">
       <header class="skills-development__header">
         <p class="skills-development__label">This Week</p>
@@ -117,32 +292,6 @@
       </div>
     </section>
 
-    <!-- Collapsible Framing Section -->
-    <section class="framing-section">
-      <button class="framing-section__header" data-collapse-toggle="framing-content" aria-expanded="false">
-        <div class="framing-section__header-left">
-          <span class="framing-section__icon">🧭</span>
-          <div>
-            <h2 class="framing-section__title">Why This Course Is Different</h2>
-            <p class="framing-section__subtitle">Superagency • Human Value Proposition • Growth over transactions</p>
-          </div>
-        </div>
-        <div class="framing-section__header-right">
-          <span class="framing-section__hint">Worth revisiting</span>
-          <span class="framing-section__toggle">+</span>
-        </div>
-      </button>
-      <div class="framing-section__content" id="framing-content">
-        <p>This isn't a course about using AI tools. It's a course about <strong>becoming someone who can solve problems that were previously beyond your reach</strong> — using AI as a cognitive partner.</p>
-        <p>We call this <strong>Superagency</strong>: the ability to attempt problems you wouldn't have tackled before. But Superagency without <strong>Human Value</strong> is just delegation. You'll learn to identify where your judgment, taste, and direction matter — and prove it.</p>
-        <p>By semester end, you'll answer two questions with evidence:</p>
-        <ul style="color: var(--gray-300); margin-left: 1.5rem;">
-          <li><em>"What problems are now within my reach that I would not have attempted before?"</em></li>
-          <li><em>"What would be worse about my solutions if I had simply handed the problems to AI?"</em></li>
-        </ul>
-      </div>
-    </section>
-
     <!-- Instructor Info -->
     <footer style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center;">
       <p style="margin: 0 0 var(--space-2) 0; font-weight: 600; color: var(--gray-700);">Dr. Sathya Narayanan</p>
@@ -166,6 +315,34 @@
 
       // Initialize with CST395 config
       initHomePage(CST395_CONFIG);
+
+      // Get current week
+      const currentWeek = getEffectiveCurrentWeek();
+
+      // Get Started section: visible only in Week 1
+      const getStartedSection = document.getElementById('get-started-section');
+      if (currentWeek === 1) {
+        getStartedSection.style.display = 'block';
+      }
+
+      // Framing section open/close logic:
+      // Weeks 1-2: open
+      // Week 3+: alternating (odd weeks closed, even weeks open)
+      const framingContent = document.getElementById('framing-content');
+      const framingToggle = document.getElementById('framing-toggle');
+
+      let shouldBeOpen = false;
+      if (currentWeek <= 2) {
+        shouldBeOpen = true;
+      } else {
+        // Week 3+: even weeks open, odd weeks closed
+        shouldBeOpen = (currentWeek % 2 === 0);
+      }
+
+      if (shouldBeOpen) {
+        framingContent.classList.add('is-expanded');
+        framingToggle.setAttribute('aria-expanded', 'true');
+      }
     });
   </script>
 </body>
