@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CST395 Preview Navigation</title>
+  <title>CST395: AI-Native Solution Engineering | Course Overview</title>
   <style>
     :root {
       --cst395-primary: #14b8a6;
+      --cst395-primary-dark: #0d9488;
+      --cst395-primary-light: #99f6e4;
       --gray-50: #f9fafb;
       --gray-100: #f3f4f6;
       --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
       --gray-600: #4b5563;
       --gray-700: #374151;
+      --gray-800: #1f2937;
       --gray-900: #111827;
     }
 
@@ -23,192 +28,814 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: var(--gray-100);
+      background: white;
+      color: var(--gray-800);
+      line-height: 1.6;
+    }
+
+    /* Layout */
+    .page-layout {
+      display: flex;
       min-height: 100vh;
-      padding: 2rem;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .header {
-      background: linear-gradient(135deg, var(--cst395-primary), #0d9488);
+    /* Left Navigation */
+    .sidebar {
+      width: 260px;
+      background: var(--gray-900);
       color: white;
-      padding: 2rem;
+      padding: 2rem 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar__logo {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--gray-700);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar__logo h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cst395-primary-light);
+    }
+
+    .sidebar__logo p {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      margin-top: 0.25rem;
+    }
+
+    .sidebar__section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar__section-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar__nav {
+      list-style: none;
+    }
+
+    .sidebar__nav a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: var(--gray-300);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar__nav a:hover {
+      background: var(--gray-800);
+      color: white;
+      border-left-color: var(--cst395-primary);
+    }
+
+    .sidebar__nav a.active {
+      background: var(--gray-800);
+      color: var(--cst395-primary-light);
+      border-left-color: var(--cst395-primary);
+    }
+
+    .sidebar__nav a span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      margin-top: 0.15rem;
+    }
+
+    .sidebar__footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--gray-700);
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    .sidebar__footer a {
+      color: var(--cst395-primary-light);
+      text-decoration: none;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+      color: white;
+      padding: 4rem 3rem;
+    }
+
+    .hero__container {
+      max-width: 900px;
+    }
+
+    .hero__badge {
+      display: inline-block;
+      background: var(--cst395-primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero__subtitle {
+      font-size: 1.25rem;
+      color: var(--gray-300);
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__meta {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+    }
+
+    .hero__meta strong {
+      color: var(--cst395-primary-light);
+    }
+
+    /* Content Sections */
+    .content {
+      max-width: 900px;
+      padding: 3rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section__header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section__label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--cst395-primary-dark);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .section p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: var(--gray-50);
+      border-left: 4px solid var(--cst395-primary);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-style: italic;
+      color: var(--gray-700);
+    }
+
+    /* Two Questions */
+    .questions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .question-card {
+      background: white;
+      border: 1px solid var(--gray-200);
       border-radius: 12px;
-      margin-bottom: 2rem;
+      padding: 1.5rem;
+    }
+
+    .question-card__number {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: var(--cst395-primary);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 28px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-card p {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+
+    /* Philosophy Cards */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .philosophy-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .philosophy-card__icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .philosophy-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .philosophy-card p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    /* Theory Section */
+    .theory-box {
+      background: var(--gray-900);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .theory-box h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cst395-primary-light);
+      margin-bottom: 1rem;
+    }
+
+    .theory-box p {
+      color: var(--gray-300);
+      margin-bottom: 1rem;
+    }
+
+    .theory-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .theory-pillar {
+      background: var(--gray-800);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .theory-pillar h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--cst395-primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .theory-pillar p {
+      font-size: 0.85rem;
+      color: var(--gray-400);
+      margin: 0;
+    }
+
+    /* Capabilities */
+    .capability-row {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .capability-item {
+      flex: 1;
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 1.25rem;
       text-align: center;
     }
 
-    .header h1 {
-      font-size: 1.75rem;
+    .capability-badge {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .capability-badge--sdl {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .capability-badge--is {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .capability-badge--ab {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .capability-item h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-900);
       margin-bottom: 0.5rem;
     }
 
-    .header p {
-      opacity: 0.9;
-      font-size: 0.95rem;
+    .capability-item p {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin: 0;
     }
 
-    .notice {
-      background: #fef3c7;
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      font-size: 0.9rem;
-      color: #92400e;
+    /* Sprint Timeline */
+    .sprint-timeline {
+      margin: 1.5rem 0;
     }
 
-    .notice strong {
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .nav-section {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .nav-section h2 {
-      font-size: 1.1rem;
-      color: var(--gray-700);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--gray-100);
-    }
-
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .sprint-item {
+      display: flex;
       gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gray-100);
     }
 
-    .nav-link {
-      display: block;
-      padding: 1rem;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--gray-700);
-      font-weight: 500;
-      transition: all 0.2s ease;
+    .sprint-item:last-child {
+      border-bottom: none;
     }
 
-    .nav-link:hover {
+    .sprint-item__number {
+      width: 40px;
+      height: 40px;
       background: var(--cst395-primary);
       color: white;
-      border-color: var(--cst395-primary);
-      transform: translateY(-2px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      flex-shrink: 0;
     }
 
-    .nav-link span {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 400;
-      margin-top: 0.25rem;
-      opacity: 0.8;
+    .sprint-item__content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.25rem;
     }
 
-    .test-info {
-      background: var(--gray-50);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 2rem;
-      font-size: 0.85rem;
-      color: var(--gray-600);
-    }
-
-    .test-info h3 {
+    .sprint-item__content p {
       font-size: 0.9rem;
-      color: var(--gray-700);
+      color: var(--gray-500);
+      margin: 0;
+    }
+
+    /* Experiment Box */
+    .experiment-box {
+      background: linear-gradient(135deg, var(--cst395-primary) 0%, var(--cst395-primary-dark) 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .experiment-box h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .experiment-box p {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 1rem;
+    }
+
+    .experiment-box ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .experiment-box li {
       margin-bottom: 0.5rem;
     }
 
-    .test-info ul {
-      margin-left: 1.25rem;
+    /* Contact */
+    .contact-section {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
     }
 
-    .test-info li {
-      margin-bottom: 0.25rem;
+    .contact-section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-section p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .contact-section a {
+      color: var(--cst395-primary-dark);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 220px;
+      }
+      .main-content {
+        margin-left: 220px;
+      }
+      .philosophy-grid,
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+      .theory-pillars {
+        grid-template-columns: 1fr;
+      }
+      .capability-row {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page-layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+      .content {
+        padding: 1.5rem;
+      }
+      .hero__meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>CST395: AI-Native Solution Engineering</h1>
-      <p>Preview Navigation for GitHub Pages Proof of Concept</p>
-    </div>
+  <div class="page-layout">
 
-    <div class="notice">
-      <strong>Preview Mode</strong>
-      This page lets you navigate the course pages as they will appear when embedded in Canvas via iframe.
-      Assignment links will show placeholder URLs until Canvas IDs are configured.
-    </div>
-
-    <div class="nav-section">
-      <h2>Main Pages</h2>
-      <div class="nav-grid">
-        <a href="cst395/home.html" class="nav-link">
-          Course Home
-          <span>Status banner, capabilities, due items</span>
-        </a>
-        <a href="cst395/capabilities.html" class="nav-link">
-          Capabilities
-          <span>SDL, IS, AB details</span>
-        </a>
-        <a href="cst395/concepts.html" class="nav-link">
-          Concepts
-          <span>Symbiotic Thinking, Human Value</span>
-        </a>
+    <!-- Left Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar__logo">
+        <h1>CST395</h1>
+        <p>AI-Native Solution Engineering</p>
       </div>
-    </div>
 
-    <div class="nav-section">
-      <h2>Sprint Pages</h2>
-      <div class="nav-grid">
-        <a href="cst395/sprint-1.html" class="nav-link">
-          Sprint 1: Foundation
-          <span>Weeks 1-4, Superagency Over Self</span>
-        </a>
-        <a href="cst395/sprint-2.html" class="nav-link">
-          Sprint 2: Mirror
-          <span>Weeks 5-8, Learning Through Others</span>
-        </a>
-        <a href="cst395/sprint-3.html" class="nav-link">
-          Sprint 3: Complexity
-          <span>Weeks 9-12, Navigating Ambiguity</span>
-        </a>
-        <a href="cst395/sprint-4.html" class="nav-link">
-          Sprint 4: Mastery
-          <span>Weeks 13-16, Full Autonomy</span>
-        </a>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Overview</div>
+        <ul class="sidebar__nav">
+          <li><a href="cst395/home.html">Course Home</a></li>
+          <li><a href="#philosophy">Course Philosophy</a></li>
+        </ul>
       </div>
-    </div>
 
-    <div class="test-info">
-      <h3>Features Implemented:</h3>
-      <ul>
-        <li>Config-based Canvas URL generation (data-assignment attributes)</li>
-        <li>Due date population from config</li>
-        <li>Collapsible sections (framing, weeks)</li>
-        <li>Current week highlighting and auto-expand (TEST_CURRENT_WEEK = 2)</li>
-        <li>Capability badges and activity type styling</li>
-        <li>Status banner with progress tracking</li>
-        <li>Demo banner detection (shows when not in iframe)</li>
-        <li>In-class plan sections with Loom video placeholders</li>
-        <li>Peer conversation boxes with weekly skills</li>
-        <li>Bridge reflections between sprints</li>
-        <li>Full 16-week curriculum structure</li>
-      </ul>
-    </div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Sprints</div>
+        <ul class="sidebar__nav">
+          <li>
+            <a href="cst395/sprint-1.html">
+              Sprint 1: Foundation
+              <span>Weeks 1-4</span>
+            </a>
+          </li>
+          <li>
+            <a href="cst395/sprint-2.html">
+              Sprint 2: Mirror
+              <span>Weeks 5-8</span>
+            </a>
+          </li>
+          <li>
+            <a href="cst395/sprint-3.html">
+              Sprint 3: Complexity
+              <span>Weeks 9-12</span>
+            </a>
+          </li>
+          <li>
+            <a href="cst395/sprint-4.html">
+              Sprint 4: Mastery
+              <span>Weeks 13-16</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Frameworks</div>
+        <ul class="sidebar__nav">
+          <li><a href="cst395/capabilities.html">Capabilities</a></li>
+          <li><a href="cst395/concepts.html">Concepts</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__footer">
+        <p>California State University<br>Monterey Bay</p>
+        <p style="margin-top: 0.5rem;"><a href="profsathya.html">Dr. Sathya Narayanan</a></p>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Hero -->
+      <header class="hero">
+        <div class="hero__container">
+          <span class="hero__badge">Experimental Course</span>
+          <h1>AI-Native Solution Engineering</h1>
+          <p class="hero__subtitle">
+            A course designed for students who will co-evolve with AI throughout their careers—developing the judgment, agency, and integration skills that define human value in an AI-augmented world.
+          </p>
+          <div class="hero__meta">
+            <span><strong>16 weeks</strong> / 4 sprints</span>
+            <span><strong>CSUMB</strong> Computer Science</span>
+            <span><strong>Spring 2025</strong> Pilot</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+
+        <!-- The Challenge -->
+        <section class="section" id="challenge">
+          <div class="section__header">
+            <div class="section__label">The Challenge</div>
+            <h2 class="section__title">Rethinking Foundational Knowledge in the AI Age</h2>
+          </div>
+          <p>
+            Traditional CS education assumes students need the same foundational knowledge their instructors developed over decades—knowledge that emerged before AI could write code, explain concepts, or iterate on solutions. But today's students face a different reality: they will co-evolve with AI tools from the start of their careers.
+          </p>
+          <p>
+            This raises a fundamental question: <strong>What foundational knowledge do students actually need to effectively direct AI?</strong> We can't assume it's identical to what we learned. Some traditional foundations may become less critical; new meta-cognitive skills may become essential.
+          </p>
+          <div class="highlight-box">
+            <p>"The goal isn't to make students AI-dependent or AI-resistant. It's to help them develop the judgment to know when human direction matters—and the skills to provide that direction effectively."</p>
+          </div>
+        </section>
+
+        <!-- Course Philosophy -->
+        <section class="section" id="philosophy">
+          <div class="section__header">
+            <div class="section__label">Course Philosophy</div>
+            <h2 class="section__title">Superagency + Human Value Proposition</h2>
+          </div>
+          <p>
+            This course is built on two complementary ideas that together define success in AI-augmented problem-solving:
+          </p>
+
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="philosophy-card__icon">🚀</div>
+              <h3>Superagency</h3>
+              <p>
+                The ability to attempt problems you wouldn't have tackled before. AI expands what's possible for individuals—but only if they can identify worthwhile problems, break them down effectively, and maintain direction through complexity.
+              </p>
+            </div>
+            <div class="philosophy-card">
+              <div class="philosophy-card__icon">✨</div>
+              <h3>Human Value Proposition</h3>
+              <p>
+                Superagency without human value is just delegation. Students learn to articulate what they specifically contribute—the judgment, taste, context, and integration that AI can't provide. This isn't about competing with AI; it's about understanding where human direction is essential.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            By semester end, students must answer two questions with evidence:
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-card">
+              <div class="question-card__number">1</div>
+              <p>"What problems are now within my reach that I would not have attempted before?"</p>
+            </div>
+            <div class="question-card">
+              <div class="question-card__number">2</div>
+              <p>"What would be worse about my solutions if I had simply handed the problems to AI?"</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Theoretical Foundation -->
+        <section class="section" id="theory">
+          <div class="section__header">
+            <div class="section__label">Theoretical Foundation</div>
+            <h2 class="section__title">Self-Determination Theory as Design Principle</h2>
+          </div>
+          <p>
+            The course structure draws on Self-Determination Theory (SDT), which identifies three psychological needs essential for intrinsic motivation and effective learning: autonomy, competence, and relatedness.
+          </p>
+
+          <div class="theory-box">
+            <h3>Why SDT Matters for AI-Native Education</h3>
+            <p>
+              AI tools can easily undermine autonomy (by providing answers before students form their own thinking), competence (by making students feel their skills are obsolete), and relatedness (by isolating learners from peers and mentors). Our course design deliberately counters these risks.
+            </p>
+            <div class="theory-pillars">
+              <div class="theory-pillar">
+                <h4>Autonomy</h4>
+                <p>Students choose their own problems. Productive reflections precede AI interaction. Sprint progression increases self-direction.</p>
+              </div>
+              <div class="theory-pillar">
+                <h4>Competence</h4>
+                <p>Explicit capability tracking (SDL, IS, AB). Human Value Statements affirm unique contributions. Progressive challenge scaffolding.</p>
+              </div>
+              <div class="theory-pillar">
+                <h4>Relatedness</h4>
+                <p>Weekly peer conversations. Stakeholder interviews. Sprint 2 builds for someone the student knows personally.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bootstrapping Knowledge -->
+        <section class="section" id="bootstrapping">
+          <div class="section__header">
+            <div class="section__label">Key Innovation</div>
+            <h2 class="section__title">Bootstrapping Foundational Knowledge Differently</h2>
+          </div>
+          <p>
+            Rather than front-loading traditional content, we adopt a "just-in-time" approach where foundational knowledge emerges from attempting real problems. The three meta-habits—<strong>Slow Down</strong>, <strong>Know Yourself</strong>, <strong>Take the Lead</strong>—replace rote content with meta-cognitive skills.
+          </p>
+          <p>
+            Students learn to recognize <em>what</em> they need to learn (not what we prescribe), develop strategies to acquire it rapidly with AI assistance, and understand when depth matters versus when breadth suffices. This meta-learning capability may prove more durable than any specific technical knowledge.
+          </p>
+
+          <div class="capability-row">
+            <div class="capability-item">
+              <span class="capability-badge capability-badge--sdl">SDL</span>
+              <h4>Self-Directed Learner</h4>
+              <p>Meta-learning architecture for rapid expertise acquisition</p>
+            </div>
+            <div class="capability-item">
+              <span class="capability-badge capability-badge--is">IS</span>
+              <h4>Integrative Solver</h4>
+              <p>Operating at intersections where human value concentrates</p>
+            </div>
+            <div class="capability-item">
+              <span class="capability-badge capability-badge--ab">AB</span>
+              <h4>Adaptive Builder</h4>
+              <p>Executing through cycles of building, testing, and adapting</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Course Structure -->
+        <section class="section" id="structure">
+          <div class="section__header">
+            <div class="section__label">Course Structure</div>
+            <h2 class="section__title">Four Sprints of Progressive Autonomy</h2>
+          </div>
+          <p>
+            Each sprint increases student autonomy while decreasing instructor scaffolding. Problems become more ambiguous; stakeholders become harder to access; solutions require more integration across domains.
+          </p>
+
+          <div class="sprint-timeline">
+            <div class="sprint-item">
+              <div class="sprint-item__number">1</div>
+              <div class="sprint-item__content">
+                <h4>Foundation: Superagency Over Self</h4>
+                <p>Students build for themselves—understanding their own challenges, learning the frameworks, and experiencing the full cycle with maximum support.</p>
+              </div>
+            </div>
+            <div class="sprint-item">
+              <div class="sprint-item__number">2</div>
+              <div class="sprint-item__content">
+                <h4>Mirror: Learning Through Others</h4>
+                <p>Students build for someone they know (family, friend, colleague)—learning to understand someone else's domain and validate solutions against real feedback.</p>
+              </div>
+            </div>
+            <div class="sprint-item">
+              <div class="sprint-item__number">3</div>
+              <div class="sprint-item__content">
+                <h4>Complexity: Navigating Ambiguity</h4>
+                <p>Students work on a shared challenge with limited stakeholder access—building understanding from indirect sources and navigating team dynamics.</p>
+              </div>
+            </div>
+            <div class="sprint-item">
+              <div class="sprint-item__number">4</div>
+              <div class="sprint-item__content">
+                <h4>Mastery: Full Autonomy</h4>
+                <p>Students identify their own problem, stakeholders, and approach—demonstrating the full capability set with minimal instructor guidance.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- The Experiment -->
+        <section class="section" id="experiment">
+          <div class="experiment-box">
+            <h3>This Course Is an Experiment</h3>
+            <p>
+              We're not claiming to have definitive answers. We're testing hypotheses about how to prepare students for a world where AI capabilities will continue to expand throughout their careers. Our approach is:
+            </p>
+            <ul>
+              <li><strong>Evidence-based:</strong> Grounded in Self-Determination Theory, deliberate practice research, and T-shaped expertise models</li>
+              <li><strong>Iterative:</strong> Designed to evolve based on what we learn from students</li>
+              <li><strong>Honest:</strong> Explicitly acknowledging uncertainty while providing structured support</li>
+              <li><strong>Transferable:</strong> Focused on developing capabilities that will remain valuable as specific tools change</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section">
+          <div class="contact-section">
+            <h3>Interested in Collaborating?</h3>
+            <p>
+              We welcome conversations with educators, researchers, and funders interested in AI-native education.
+            </p>
+            <p>
+              <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> ·
+              <a href="profsathya.html">About Dr. Sathya Narayanan</a>
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
   </div>
 </body>
 </html>
