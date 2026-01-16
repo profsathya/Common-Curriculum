@@ -387,6 +387,41 @@ const CST349_CONFIG = {
     4: { name: "Defend Your Work", description: "Portfolio defense: Support claims with evidence, acknowledge weaknesses honestly" }
   },
 
+  // Peer Conversation Settings
+  // UPDATE EACH SEMESTER if targets change
+  peerConversations: {
+    totalConversationsTarget: 16,
+    conversationsPerSprint: 4,
+    breadthTarget: 12,        // Unique partners
+    depthTarget: 4,           // Deep partnerships (3+ conversations)
+    depthThreshold: 3,        // Conversations needed to count as "deep"
+    formUrl: "#",             // UPDATE: Google Form URL when available
+
+    // Sprint-by-sprint cumulative targets
+    sprintTargets: {
+      1: { conversations: 4, uniquePartners: 3, deepPartners: 0 },
+      2: { conversations: 8, uniquePartners: 6, deepPartners: 1 },
+      3: { conversations: 12, uniquePartners: 9, deepPartners: 2 },
+      4: { conversations: 16, uniquePartners: 12, deepPartners: 4 }
+    },
+
+    // Interview skills by sprint (for display)
+    skills: {
+      1: { name: "Answer Questions Thoughtfully", desc: "Behavioral interview practice" },
+      2: { name: "Ask Good Questions", desc: "Informational interview skills" },
+      3: { name: "Explain Technical Concepts", desc: "Technical interview practice" },
+      4: { name: "Defend Your Work", desc: "Portfolio defense" }
+    },
+
+    // Check-in schedule
+    checkIns: {
+      1: { required: true, type: "Professor", duration: "5 min" },
+      2: { required: true, type: "TA", duration: "10 min" },
+      3: { required: true, type: "TA", duration: "10 min" },
+      4: { required: false, type: null, duration: null }
+    }
+  },
+
   // Instructor info
   instructor: {
     name: "Dr. Sathya Narayanan",
