@@ -3,47 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Building Your Professional Network | CST349</title>
+  <title>Peer Conversations | CST349</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
   <style>
     :root {
       --violet-50: #f5f3ff;
       --violet-100: #ede9fe;
       --violet-200: #ddd6fe;
+      --violet-300: #c4b5fd;
       --violet-500: #8b5cf6;
       --violet-600: #7c3aed;
       --violet-700: #6d28d9;
     }
 
-    /* Page Header */
-    .page-header {
+    /* Hook Box */
+    .hook-box {
       background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
       color: white;
       padding: var(--space-6);
       border-radius: var(--radius-lg);
       margin-bottom: var(--space-6);
+      text-align: center;
     }
-    .page-header__badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.2);
-      padding: var(--space-1) var(--space-3);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
+    .hook-box__question {
+      font-size: var(--text-xl);
       font-weight: 600;
+      margin-bottom: var(--space-4);
+      line-height: 1.4;
+    }
+    .hook-box__follow-up {
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Payoff Box */
+    .payoff-box {
+      background: linear-gradient(135deg, var(--violet-50) 0%, #ede9fe 100%);
+      border: 2px solid var(--violet-500);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .payoff-box__header {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--violet-700);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: var(--space-3);
     }
-    .page-header__title {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      margin: 0 0 var(--space-2) 0;
-    }
-    .page-header__subtitle {
-      font-size: var(--text-base);
-      color: rgba(255, 255, 255, 0.9);
+    .payoff-box__list {
+      list-style: none;
+      padding: 0;
       margin: 0;
-      max-width: 700px;
+    }
+    .payoff-box__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      color: var(--gray-700);
+      font-size: var(--text-base);
+    }
+    .payoff-box__item::before {
+      content: "→";
+      color: var(--violet-600);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Pause Box */
+    .pause-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: var(--space-5);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: var(--space-5) 0;
+    }
+    .pause-box__header {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: #b45309;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+    .pause-box__question {
+      font-size: var(--text-base);
+      color: var(--gray-800);
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Mental Model Section */
+    .mental-model {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .mental-model__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 0 0 var(--space-4) 0;
+    }
+    .mental-model__grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-4);
+      align-items: center;
+    }
+    @media (max-width: 600px) {
+      .mental-model__grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+    .mental-model__before, .mental-model__after {
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+    }
+    .mental-model__before {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+    }
+    .mental-model__after {
+      background: var(--violet-50);
+      border: 1px solid var(--violet-300);
+    }
+    .mental-model__label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+    .mental-model__before .mental-model__label { color: var(--gray-500); }
+    .mental-model__after .mental-model__label { color: var(--violet-600); }
+    .mental-model__text {
+      font-size: var(--text-sm);
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+    .mental-model__arrow {
+      font-size: var(--text-2xl);
+      color: var(--violet-500);
+    }
+
+    /* Insight Box */
+    .insight-box {
+      background: linear-gradient(135deg, var(--violet-50) 0%, #ede9fe 100%);
+      border-left: 4px solid var(--violet-500);
+      padding: var(--space-5);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: var(--space-5) 0;
+    }
+    .insight-box__header {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--violet-700);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+    .insight-box__text {
+      font-size: var(--text-base);
+      color: var(--gray-700);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+    .content-section__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 0 0 var(--space-4) 0;
     }
 
     /* Stats Cards */
@@ -78,24 +225,6 @@
       font-size: var(--text-xs);
       color: var(--gray-500);
       margin-top: var(--space-1);
-    }
-
-    /* Content Sections */
-    .content-section {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      padding: var(--space-5);
-      margin-bottom: var(--space-5);
-    }
-    .content-section__title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--gray-800);
-      margin: 0 0 var(--space-4) 0;
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
     }
 
     /* Skill Progression */
@@ -201,6 +330,42 @@
       color: var(--violet-700);
     }
 
+    /* Check Box */
+    .check-box {
+      background: #f0fdf4;
+      border: 2px solid #22c55e;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-5) 0;
+    }
+    .check-box__header {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+    .check-box__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .check-box__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      color: var(--gray-700);
+      font-size: var(--text-sm);
+    }
+    .check-box__item::before {
+      content: "□";
+      color: #22c55e;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
     /* CTA Button */
     .cta-button {
       display: inline-flex;
@@ -217,21 +382,6 @@
     .cta-button:hover {
       background: var(--violet-700);
       text-decoration: none;
-    }
-
-    /* Quote Box */
-    .quote-box {
-      background: linear-gradient(135deg, var(--violet-50) 0%, #ede9fe 100%);
-      border-left: 4px solid var(--violet-500);
-      padding: var(--space-5);
-      border-radius: var(--radius-md);
-      margin: var(--space-5) 0;
-    }
-    .quote-box p {
-      font-size: var(--text-base);
-      color: var(--gray-700);
-      font-style: italic;
-      margin: 0;
     }
 
     /* Check-in Schedule */
@@ -271,53 +421,80 @@
 <body>
   <div class="container">
 
-    <!-- Page Header -->
-    <header class="page-header">
-      <span class="page-header__badge">Professional Development</span>
-      <h1 class="page-header__title">Building Your Professional Network</h1>
-      <p class="page-header__subtitle">By semester end, you will have had 16+ substantive peer conversations—more meaningful professional exchanges than most people have in a year.</p>
-    </header>
+    <!-- Hook Box -->
+    <div class="hook-box">
+      <p class="hook-box__question">When's the last time you practiced explaining your work<br>before a job interview?</p>
+      <p class="hook-box__follow-up">Most students practice alone. The best candidates practice with people who push back.</p>
+    </div>
+
+    <!-- Payoff Box -->
+    <div class="payoff-box">
+      <div class="payoff-box__header">After this semester, you'll be able to:</div>
+      <ul class="payoff-box__list">
+        <li class="payoff-box__item">Name 12 people who can speak to your capabilities—not just your name</li>
+        <li class="payoff-box__item">Have 4 people who've watched you grow and can be genuine references</li>
+        <li class="payoff-box__item">Answer tough interview questions without freezing</li>
+        <li class="payoff-box__item">Explain technical concepts to someone who doesn't share your background</li>
+      </ul>
+    </div>
+
+    <!-- Mental Model Shift -->
+    <section class="mental-model">
+      <h2 class="mental-model__title">The Shift You Need to Make</h2>
+      <div class="mental-model__grid">
+        <div class="mental-model__before">
+          <div class="mental-model__label">Old Mindset</div>
+          <div class="mental-model__text">"I'll network when I need a job. Talking to classmates about my weaknesses feels awkward. Interview prep is something you do alone."</div>
+        </div>
+        <div class="mental-model__arrow">→</div>
+        <div class="mental-model__after">
+          <div class="mental-model__label">New Mindset</div>
+          <div class="mental-model__text">"The people I practice with now become references later. Getting challenged in low-stakes settings prepares me for high-stakes ones."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pause Box -->
+    <div class="pause-box">
+      <div class="pause-box__header">Pause and Notice</div>
+      <p class="pause-box__question">Who in this class do you actively avoid working with? Who intimidates you? Those are often the people whose feedback would help you most.</p>
+    </div>
 
     <!-- Stats Overview -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-card__number">16+</div>
-        <div class="stat-card__label">Total Conversations</div>
+        <div class="stat-card__label">Practice Conversations</div>
         <div class="stat-card__detail">4 minimum per sprint</div>
       </div>
       <div class="stat-card">
         <div class="stat-card__number">12</div>
         <div class="stat-card__label">Unique Partners</div>
-        <div class="stat-card__detail">Breadth of network</div>
+        <div class="stat-card__detail">Half your classmates</div>
       </div>
       <div class="stat-card">
         <div class="stat-card__number">4</div>
         <div class="stat-card__label">Deep Partnerships</div>
-        <div class="stat-card__detail">3+ conversations each</div>
+        <div class="stat-card__detail">People who really know your growth</div>
       </div>
     </div>
 
-    <!-- Why This Matters -->
-    <section class="content-section">
-      <h2 class="content-section__title">Why This Matters</h2>
-      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Your career will depend more on who knows your capabilities than on your GPA. These conversations are practice for informational interviews, team collaboration, and professional relationships.</p>
-      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">The structure gives you <strong>permission to initiate</strong> conversations you might otherwise avoid. It replaces the uncertainty of "should I approach this person?" with clear expectations that make connection the norm.</p>
-
-      <div class="quote-box">
-        <p>"Deep partnerships"—people you talk with 3+ times—become references, collaborators, people who actually know your work. "Broad connections"—1-2 conversations—expand your perspective and network reach.</p>
-      </div>
-    </section>
+    <!-- Insight Box -->
+    <div class="insight-box">
+      <div class="insight-box__header">Key Insight</div>
+      <p class="insight-box__text">This structure gives you <strong>permission to initiate</strong> conversations you might otherwise avoid. It replaces the uncertainty of "should I approach this person?" with clear expectations that make connection the norm. You're not being awkward—you're doing what the course requires.</p>
+    </div>
 
     <!-- Interview Skill Progression -->
     <section class="content-section">
-      <h2 class="content-section__title">Interview Skills You'll Develop</h2>
-      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Each sprint develops a specific interpersonal skill that directly transfers to professional interviews and workplace collaboration.</p>
+      <h2 class="content-section__title">Four Interview Skills You'll Develop</h2>
+      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Each sprint develops a specific skill that directly transfers to professional interviews. These aren't abstract—they're the exact capabilities hiring managers look for.</p>
 
       <div class="skill-progression">
         <div class="skill-card skill-card--s1">
           <div class="skill-card__sprint">Sprint 1</div>
           <div class="skill-card__title">Answer Questions Thoughtfully</div>
-          <div class="skill-card__desc">Articulate weaknesses, growth plans, reasoning. Behavioral interview practice.</div>
+          <div class="skill-card__desc">Articulate weaknesses, growth plans, reasoning. Behavioral interview practice with real feedback.</div>
         </div>
         <div class="skill-card skill-card--s2">
           <div class="skill-card__sprint">Sprint 2</div>
@@ -327,15 +504,21 @@
         <div class="skill-card skill-card--s3">
           <div class="skill-card__sprint">Sprint 3</div>
           <div class="skill-card__title">Explain Technical Concepts</div>
-          <div class="skill-card__desc">Technical interview practice. Explain unfamiliar concepts to non-experts.</div>
+          <div class="skill-card__desc">Technical interview practice. Explain unfamiliar concepts to non-experts clearly.</div>
         </div>
         <div class="skill-card skill-card--s4">
           <div class="skill-card__sprint">Sprint 4</div>
           <div class="skill-card__title">Defend Your Work</div>
-          <div class="skill-card__desc">Portfolio defense. Respond to skeptical questions. Support claims with evidence.</div>
+          <div class="skill-card__desc">Portfolio defense. Respond to skeptical questions. Support claims with specific evidence.</div>
         </div>
       </div>
     </section>
+
+    <!-- Pause Box -->
+    <div class="pause-box">
+      <div class="pause-box__header">Pause and Notice</div>
+      <p class="pause-box__question">Which of these four skills do you already do well? Which one makes you uncomfortable? That's the one you need most.</p>
+    </div>
 
     <!-- How It Works -->
     <section class="content-section">
@@ -344,40 +527,46 @@
         <li class="steps-list__item">
           <div class="steps-list__number"></div>
           <div class="steps-list__content">
-            <div class="steps-list__title">Have a conversation</div>
-            <div class="steps-list__desc">During class time or outside of class, have a substantive conversation with a peer using the week's prompt.</div>
+            <div class="steps-list__title">Have a real conversation</div>
+            <div class="steps-list__desc">During class or outside, have a substantive conversation with a peer using the sprint's focus. Not a quick chat—a genuine exchange where you both practice and give feedback.</div>
           </div>
         </li>
         <li class="steps-list__item">
           <div class="steps-list__number"></div>
           <div class="steps-list__content">
             <div class="steps-list__title">Both partners submit the form</div>
-            <div class="steps-list__desc">After the conversation, both you and your partner open the Google Form on your phone and submit (takes ~2 minutes).</div>
+            <div class="steps-list__desc">After the conversation, both you and your partner submit the Google Form (takes ~2 minutes). This verifies you both engaged.</div>
           </div>
         </li>
         <li class="steps-list__item">
           <div class="steps-list__number"></div>
           <div class="steps-list__content">
             <div class="steps-list__title">System cross-references submissions</div>
-            <div class="steps-list__desc">Both partners must submit within 48 hours for the conversation to count. This verifies both people engaged.</div>
+            <div class="steps-list__desc">Both partners must submit within 48 hours for the conversation to count. No one-sided credit.</div>
           </div>
         </li>
         <li class="steps-list__item">
           <div class="steps-list__number"></div>
           <div class="steps-list__content">
-            <div class="steps-list__title">Receive your updated status</div>
-            <div class="steps-list__desc">You'll get an email showing your sprint progress, semester progress, network visualization, and suggested next actions.</div>
+            <div class="steps-list__title">See your growing network</div>
+            <div class="steps-list__desc">You'll get updates showing your sprint progress, semester progress, and who you should talk to next.</div>
           </div>
         </li>
       </ol>
 
       <div style="margin-top: var(--space-5); text-align: center;">
         <a href="#" class="cta-button" id="form-link">
-          <span>📝</span> Submit Conversation Form
+          Submit Conversation Form
         </a>
         <p style="font-size: var(--text-xs); color: var(--gray-500); margin-top: var(--space-2);">Form link will be provided at semester start</p>
       </div>
     </section>
+
+    <!-- Insight Box about Breadth and Depth -->
+    <div class="insight-box">
+      <div class="insight-box__header">Breadth + Depth</div>
+      <p class="insight-box__text"><strong>Deep partnerships</strong> (3+ conversations with the same person) become people who actually know your work. They can write you real recommendations because they've seen your growth. <strong>Broad connections</strong> (1-2 conversations) expand your network reach and expose you to different perspectives. You need both.</p>
+    </div>
 
     <!-- Sprint-by-Sprint Targets -->
     <section class="content-section">
@@ -420,10 +609,20 @@
       </table>
     </section>
 
+    <!-- Check Box -->
+    <div class="check-box">
+      <div class="check-box__header">Check Yourself</div>
+      <ul class="check-box__list">
+        <li class="check-box__item">Can you name 3 classmates you've never had a real conversation with?</li>
+        <li class="check-box__item">Have you identified at least one person whose feedback would be uncomfortable but valuable?</li>
+        <li class="check-box__item">Can you explain what you're learning to someone outside your field?</li>
+      </ul>
+    </div>
+
     <!-- Check-in Schedule -->
     <section class="content-section">
       <h2 class="content-section__title">Check-in Schedule</h2>
-      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Brief, intentional conversations about your progress. Come prepared to discuss your current sprint work. This is support, not evaluation—but completion is required.</p>
+      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Brief, intentional conversations about your progress. Come prepared to discuss what you're working on and what you're finding challenging. This is support, not evaluation—but completion is required.</p>
 
       <div class="checkin-grid">
         <div class="checkin-card checkin-card--active">
@@ -446,7 +645,7 @@
 
       <div style="margin-top: var(--space-4); text-align: center;">
         <a href="https://bit.ly/profsathya" class="cta-button" target="_blank" style="background: var(--gray-700);">
-          <span>📅</span> Schedule Check-in
+          Schedule Check-in
         </a>
       </div>
     </section>
@@ -454,7 +653,7 @@
     <!-- Grading -->
     <section class="content-section">
       <h2 class="content-section__title">Grading (16% of Course)</h2>
-      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">Check-ins and engagement: 4 points per sprint (16 total)</p>
+      <p style="color: var(--gray-600); margin-bottom: var(--space-4);">4 points per sprint, 16 total. Credit is proportional—if you complete 3 of 4 conversations, you get 75% of those points.</p>
       <table class="targets-table">
         <thead>
           <tr>
@@ -482,6 +681,12 @@
         </tbody>
       </table>
     </section>
+
+    <!-- Final Pause Box -->
+    <div class="pause-box">
+      <div class="pause-box__header">Final Reflection</div>
+      <p class="pause-box__question">Imagine you're in a job interview and they ask: "Who can speak to your work?" Will you have 12 names ready—people who actually know what you've done and how you've grown?</p>
+    </div>
 
     <!-- Quick Links -->
     <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4);">
