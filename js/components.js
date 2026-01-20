@@ -87,8 +87,8 @@ function populateAssignmentLinks(config) {
     const url = `${config.canvasBaseUrl}/assignments/${assignment.canvasId}`;
     link.href = url;
 
-    // Open in parent frame (Canvas) not iframe
-    link.target = '_parent';
+    // Open in new tab (not inside iframe)
+    link.target = '_blank';
 
     // Optionally set title if not already set
     if (!link.textContent.trim() && assignment.title) {
@@ -241,7 +241,7 @@ function renderDueThisWeek(config, weekNum, containerId) {
         <div class="due-item__left">
           <span class="due-item__dot ${dotClass}"></span>
           <span class="due-item__title">
-            <a href="${url}" target="_parent">${item.title}</a>
+            <a href="${url}" target="_blank">${item.title}</a>
           </span>
         </div>
         <span class="due-item__date">${formatDate(item.dueDate)}</span>
