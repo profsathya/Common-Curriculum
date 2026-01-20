@@ -17,7 +17,7 @@ const CST349_CONFIG = {
 
   // Canvas base URL - UPDATE EACH SEMESTER
   // Find this in your Canvas URL: https://csumb.instructure.com/courses/XXXXX
-  canvasBaseUrl: "https://csumb.instructure.com/courses/XXXXX",
+  canvasBaseUrl: "https://csumb.instructure.com/courses/32911",
 
   // Canvas assignment URLs - UPDATE EACH SEMESTER
   // To find assignment IDs: Go to assignment in Canvas, look at URL
@@ -25,61 +25,61 @@ const CST349_CONFIG = {
   assignments: {
     // Sprint 1: Beyond Technical
     "s1-self-assessment": {
-      canvasId: "100001",
+      canvasId: "570031",
       title: "Sprint 1: Skills Self-Assessment",
       dueDate: "2026-01-22",
       type: "assignment"
     },
     "s1-reflection-1": {
-      canvasId: "100002",
+      canvasId: "570034",
       title: "Sprint 1: Productive Reflection #1",
       dueDate: "2026-01-24",
       type: "reflection"
     },
     "s1-five-whys": {
-      canvasId: "100003",
+      canvasId: "570032",
       title: "Sprint 1: 5 Whys Analysis",
       dueDate: "2026-01-29",
       type: "assignment"
     },
     "s1-sprint-plan": {
-      canvasId: "100004",
+      canvasId: "570033",
       title: "Sprint 1: Sprint Plan v1",
       dueDate: "2026-01-29",
       type: "assignment"
     },
     "s1-reflection-2": {
-      canvasId: "100005",
+      canvasId: "570068",
       title: "Sprint 1: Productive Reflection #2",
       dueDate: "2026-01-31",
       type: "reflection"
     },
     "s1-learning-log": {
-      canvasId: "100006",
+      canvasId: "570072",
       title: "Sprint 1: Learning Log (Week 3)",
       dueDate: "2026-02-05",
       type: "assignment"
     },
     "s1-reflection-3": {
-      canvasId: "100007",
+      canvasId: "570069",
       title: "Sprint 1: Productive Reflection #3",
       dueDate: "2026-02-07",
       type: "reflection"
     },
     "s1-demonstration": {
-      canvasId: "100008",
+      canvasId: "570074",
       title: "Sprint 1: Demonstration",
       dueDate: "2026-02-12",
       type: "assignment"
     },
     "s1-peer-eval": {
-      canvasId: "100009",
+      canvasId: "570075",
       title: "Sprint 1: Peer Evaluation",
       dueDate: "2026-02-13",
       type: "assignment"
     },
     "s1-bridge": {
-      canvasId: "100010",
+      canvasId: "570071",
       title: "Bridge Reflection: Beyond Technical → Accountable Growth",
       dueDate: "2026-02-14",
       type: "bridge"
