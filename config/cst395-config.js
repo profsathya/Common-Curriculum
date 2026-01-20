@@ -318,7 +318,7 @@ const CST395_CONFIG = {
     breadthTarget: 9,         // Unique partners (50% of 18-person class)
     depthTarget: 3,           // Deep partnerships (3+ conversations)
     depthThreshold: 3,        // Conversations needed to count as "deep"
-    formUrl: "#",             // UPDATE: Google Form URL when available
+    formUrl: "https://forms.gle/Jx2hAnGsxvwRzaZq8",             // Peer conversation check-in form
 
     // Sprint-by-sprint cumulative targets
     sprintTargets: {
