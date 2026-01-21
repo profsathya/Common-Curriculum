@@ -27,61 +27,61 @@ const CST349_CONFIG = {
     "s1-self-assessment": {
       canvasId: "570031",
       title: "Sprint 1: Skills Self-Assessment",
-      dueDate: "2026-01-22",
+      dueDate: "2026-01-21",
       type: "assignment"
     },
     "s1-reflection-1": {
       canvasId: "570034",
       title: "Sprint 1: Productive Reflection #1",
-      dueDate: "2026-01-24",
+      dueDate: "2026-01-23",
       type: "reflection"
     },
     "s1-five-whys": {
       canvasId: "570032",
       title: "Sprint 1: 5 Whys Analysis",
-      dueDate: "2026-01-29",
+      dueDate: "2026-01-28",
       type: "assignment"
     },
     "s1-sprint-plan": {
       canvasId: "570033",
       title: "Sprint 1: Sprint Plan v1",
-      dueDate: "2026-01-29",
+      dueDate: "2026-01-28",
       type: "assignment"
     },
     "s1-reflection-2": {
       canvasId: "570068",
       title: "Sprint 1: Productive Reflection #2",
-      dueDate: "2026-01-31",
+      dueDate: "2026-01-30",
       type: "reflection"
     },
     "s1-learning-log": {
       canvasId: "570072",
       title: "Sprint 1: Learning Log (Week 3)",
-      dueDate: "2026-02-05",
+      dueDate: "2026-02-04",
       type: "assignment"
     },
     "s1-reflection-3": {
       canvasId: "570069",
       title: "Sprint 1: Productive Reflection #3",
-      dueDate: "2026-02-07",
+      dueDate: "2026-02-06",
       type: "reflection"
     },
     "s1-demonstration": {
       canvasId: "570074",
       title: "Sprint 1: Demonstration",
-      dueDate: "2026-02-12",
+      dueDate: "2026-02-11",
       type: "assignment"
     },
     "s1-peer-eval": {
       canvasId: "570075",
       title: "Sprint 1: Peer Evaluation",
-      dueDate: "2026-02-13",
+      dueDate: "2026-02-12",
       type: "assignment"
     },
     "s1-bridge": {
       canvasId: "570071",
       title: "Bridge Reflection: Beyond Technical → Accountable Growth",
-      dueDate: "2026-02-14",
+      dueDate: "2026-02-13",
       type: "bridge"
     },
 
@@ -344,7 +344,7 @@ const CST349_CONFIG = {
     1: { start: "2026-01-19", end: "2026-01-23", sprint: 1, title: "Orientation & Self-Assessment" },
     2: { start: "2026-01-26", end: "2026-01-30", sprint: 1, title: "Identifying Your Growth Edge" },
     3: { start: "2026-02-02", end: "2026-02-06", sprint: 1, title: "Active Learning" },
-    4: { start: "2026-02-09", end: "2026-02-13", sprint: 1, title: "Demonstration & Synthesis" },
+    4: { start: "2026-02-09", end: "2026-02-12", sprint: 1, title: "Demonstration & Synthesis" },
     5: { start: "2026-02-16", end: "2026-02-20", sprint: 2, title: "Outreach & Accountability Setup" },
     6: { start: "2026-02-23", end: "2026-02-27", sprint: 2, title: "First Conversation" },
     7: { start: "2026-03-02", end: "2026-03-06", sprint: 2, title: "Stretch Challenge" },
