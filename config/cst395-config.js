@@ -27,57 +27,57 @@ const CST395_CONFIG = {
     "s1-superagency-challenge": {
       canvasId: "564067",
       title: "Sprint 1: Superagency Challenge",
-      dueDate: "2026-01-22",
+      dueDate: "2026-01-21",
       type: "assignment"
     },
     "s1-problem-analysis": {
       canvasId: "564068",
       title: "Sprint 1: Problem Analysis (5 Whys)",
-      dueDate: "2026-01-29",
+      dueDate: "2026-01-28",
       type: "assignment"
     },
     "s1-solution-architecture": {
       canvasId: "564069",
       title: "Sprint 1: Solution Architecture",
-      dueDate: "2026-02-05",
+      dueDate: "2026-02-04",
       type: "assignment"
     },
     // Sprint 1: Foundation - Productive Reflections
     "s1-reflection-1": {
       canvasId: "564070",
       title: "Sprint 1: Productive Reflection #1",
-      dueDate: "2026-01-24",
+      dueDate: "2026-01-23",
       type: "reflection"
     },
     "s1-reflection-2": {
       canvasId: "564231",
       title: "Sprint 1: Productive Reflection #2",
-      dueDate: "2026-01-31",
+      dueDate: "2026-01-30",
       type: "reflection"
     },
     "s1-build-log": {
       canvasId: "564232",
       title: "Sprint 1: Build Log Entry",
-      dueDate: "2026-02-07",
+      dueDate: "2026-02-06",
       type: "reflection"
     },
     "s1-bridge": {
       canvasId: "564233",
       title: "Bridge Reflection: Foundation → Mirror",
-      dueDate: "2026-02-14",
+      dueDate: "2026-02-13",
       type: "bridge"
     },
     // Sprint 1: Foundation - Check-in/Engagement
     "s1-peer-conversation": {
       canvasId: "564234",
       title: "Sprint 1: Peer Conversation Reflection - Week 1",
-      dueDate: "2026-01-24",
+      dueDate: "2026-01-23",
       type: "engagement"
     },
     "s1-week2-engagement": {
       canvasId: "564308",
       title: "Sprint 1: Week 2 Engagement",
-      dueDate: "2026-01-31",
+      dueDate: "2026-01-30",
       type: "engagement"
     },
 
@@ -287,7 +287,7 @@ const CST395_CONFIG = {
     1: { start: "2026-01-19", end: "2026-01-23", sprint: 1, title: "Orientation & Problem Discovery" },
     2: { start: "2026-01-26", end: "2026-01-30", sprint: 1, title: "Understanding Before Building" },
     3: { start: "2026-02-02", end: "2026-02-06", sprint: 1, title: "Strategic Building" },
-    4: { start: "2026-02-09", end: "2026-02-13", sprint: 1, title: "Reflection & Human Value" },
+    4: { start: "2026-02-09", end: "2026-02-12", sprint: 1, title: "Reflection & Human Value" },
     5: { start: "2026-02-16", end: "2026-02-20", sprint: 2, title: "Discovering Another's Problem" },
     6: { start: "2026-02-23", end: "2026-02-27", sprint: 2, title: "Rapid Domain Learning" },
     7: { start: "2026-03-02", end: "2026-03-06", sprint: 2, title: "Building for Another" },
