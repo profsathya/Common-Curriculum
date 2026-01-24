@@ -50,16 +50,26 @@ function loadConfig(configFile) {
   const configPath = path.join(process.cwd(), configFile);
   const content = fs.readFileSync(configPath, 'utf-8');
 
-  // Extract the config object using regex (since it's a JS file, not JSON)
-  // This is a simplified parser - works for our config structure
-  const match = content.match(/const \w+_CONFIG = ({[\s\S]*});?\s*$/);
-  if (!match) {
-    throw new Error(`Could not parse config from ${configFile}`);
+  // Use Node's vm module to safely execute the config file
+  const vm = require('vm');
+  const sandbox = {};
+
+  try {
+    // Create a script that executes the config file
+    const script = new vm.Script(content);
+    const context = vm.createContext(sandbox);
+    script.runInContext(context);
+  } catch (err) {
+    throw new Error(`Could not parse config from ${configFile}: ${err.message}`);
   }
 
-  // Use eval to parse the JS object (safe here since we control the files)
-  // eslint-disable-next-line no-eval
-  const config = eval(`(${match[1]})`);
+  // Find the config variable (CST349_CONFIG or CST395_CONFIG)
+  const configVarName = Object.keys(sandbox).find(key => key.endsWith('_CONFIG'));
+  if (!configVarName) {
+    throw new Error(`Could not find config object in ${configFile}`);
+  }
+
+  const config = sandbox[configVarName];
   return { config, rawContent: content, configPath };
 }
 
