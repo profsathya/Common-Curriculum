@@ -1,0 +1,66 @@
+name: Canvas Sync
+
+on:
+  # Manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      course:
+        description: 'Course to sync'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - cst349
+          - cst395
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'fetch-assignments'
+        type: choice
+        options:
+          - fetch-assignments
+          - validate-config
+          - list-courses
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./
+
+      - name: Run Canvas Sync
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+          CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
+        run: |
+          node scripts/canvas-sync.js --action=${{ inputs.action }} --course=${{ inputs.course }}
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain config/) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add config/
+          git commit -m "Auto-sync Canvas assignment IDs [skip ci]"
+          git push
