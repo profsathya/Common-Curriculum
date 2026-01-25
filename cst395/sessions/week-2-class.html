@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Week 2: Understanding Before Building | CST395</title>
+  <title>Week 2: Willpower vs. Design | CST395</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -36,36 +36,62 @@
     h1 { font-size: clamp(32px, 6vw, 48px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
     h2 { font-size: clamp(28px, 5vw, 40px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
     .subtitle { font-size: clamp(18px, 3vw, 22px); color: var(--text-secondary); }
+    .big-question { font-size: clamp(20px, 4vw, 28px); font-weight: 500; color: var(--teal-400); text-align: center; font-style: italic; line-height: 1.4; }
     .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 32px; }
     .activity-card h3 { font-size: 20px; color: var(--teal-400); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
     .activity-card p { color: var(--text-secondary); margin-bottom: 12px; }
     .activity-card ul { color: var(--text-secondary); padding-left: 24px; }
     .activity-card li { margin-bottom: 8px; }
-    .reflection-prompt { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 12px; padding: 24px; margin-top: 24px; }
-    .reflection-prompt h4 { color: #a78bfa; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; }
-    .reflection-prompt p { color: var(--text-primary); font-size: 18px; font-style: italic; margin: 0; }
     .highlight-quote { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); padding: 24px 32px; border-radius: 12px; margin-top: 32px; text-align: center; }
     .highlight-quote p { font-size: 18px; font-weight: 500; margin: 0; }
-    .reminder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 24px; }
-    .reminder-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; }
-    .reminder-item h4 { color: var(--teal-400); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-    .reminder-item p { color: var(--text-secondary); font-size: 14px; margin: 0; }
-    .reminder-item .due { color: #fbbf24; font-size: 12px; margin-top: 8px; }
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    @media (max-width: 600px) { .comparison-grid { grid-template-columns: 1fr; } }
+    .comparison-box { padding: 24px; border-radius: 12px; }
+    .comparison-box h3 { font-size: 18px; margin-bottom: 12px; }
+    .comparison-box p { color: var(--text-secondary); font-size: 15px; margin: 0; font-style: italic; }
+    .comparison-box.position-a { background: rgba(251, 191, 36, 0.1); border: 2px solid #fbbf24; }
+    .comparison-box.position-a h3 { color: #fbbf24; }
+    .comparison-box.position-b { background: rgba(45, 212, 191, 0.1); border: 2px solid var(--teal-400); }
+    .comparison-box.position-b h3 { color: var(--teal-400); }
+    .reflection-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 24px; margin-top: 24px; }
+    .reflection-box h4 { color: #a78bfa; margin-bottom: 16px; font-size: 16px; }
+    .reflection-box ol { color: var(--text-primary); padding-left: 24px; }
+    .reflection-box li { margin-bottom: 16px; line-height: 1.5; }
+    .reflection-box li strong { color: var(--teal-400); }
+    .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .decision-grid { grid-template-columns: 1fr; } }
+    .decision-box { padding: 20px; border-radius: 12px; text-align: center; }
+    .decision-box h4 { font-size: 18px; margin-bottom: 8px; }
+    .decision-box p { font-size: 14px; margin: 0; }
+    .decision-box.keep { background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; }
+    .decision-box.keep h4 { color: #4ade80; }
+    .decision-box.keep p { color: #86efac; }
+    .decision-box.reframe { background: rgba(251, 191, 36, 0.15); border: 1px solid #fbbf24; }
+    .decision-box.reframe h4 { color: #fbbf24; }
+    .decision-box.reframe p { color: #fde68a; }
+    .decision-box.replace { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; }
+    .decision-box.replace h4 { color: #f87171; }
+    .decision-box.replace p { color: #fca5a5; }
+    .demo-preview { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 16px; padding: 32px; margin-top: 24px; }
+    .demo-preview h3 { color: #a78bfa; margin-bottom: 16px; }
+    .demo-preview ul { color: var(--text-secondary); padding-left: 24px; }
+    .demo-preview li { margin-bottom: 12px; }
+    .timer-display { font-size: 64px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--teal-400); text-align: center; margin: 32px 0; }
     .click-hint { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
     .click-hint kbd { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-family: inherit; }
-    .conversation-box { background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(45, 212, 191, 0.05) 100%); border: 2px solid var(--teal-500); border-radius: 12px; padding: 24px; margin-top: 24px; }
-    .conversation-box h4 { color: var(--teal-400); margin-bottom: 12px; }
-    .conversation-box .question { font-size: 20px; color: var(--text-primary); font-style: italic; margin: 16px 0; }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 14px; margin-top: 32px; }
-    .back-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
+  <!-- Live Content Banner -->
+  <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+    📡 Live content — may be updated until and even during class
+  </div>
+
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST395</strong> · Week 2 Session</div>
-    <div class="nav-progress" id="navProgress">1 of 5</div>
+    <div class="nav-progress" id="navProgress">1 of 12</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
@@ -76,107 +102,277 @@
   <section class="section active" data-section="1">
     <div class="section-content" style="text-align: center;">
       <p class="section-label">Week 2</p>
-      <h1>Understanding<br><span style="color: var(--teal-400);">Before Building</span></h1>
-      <p class="subtitle">The 5 Whys and finding the real problem</p>
+      <h1>Willpower<br><span style="color: var(--teal-400);">vs. Design</span></h1>
+      <p class="subtitle">And stress-testing your Sprint 1 challenge</p>
     </div>
   </section>
 
-  <!-- Section 2: Reflection -->
+  <!-- Section 2: Guided Conversation Setup -->
   <section class="section" data-section="2">
     <div class="section-content">
-      <p class="section-label">Opening Reflection</p>
-      <h2>📓 Notebook Time</h2>
-      <p class="subtitle">Take 10 minutes. Handwrite in your notebook.</p>
-
-      <div class="reflection-prompt">
-        <h4>Reflect on this:</h4>
-        <p>"What have you discovered so far about your challenge? What's turning out to be harder — or easier — than you expected? What assumptions did you have that are shifting?"</p>
-      </div>
+      <p class="section-label">Let's Have a Conversation</p>
+      <h2>Two Perspectives on Personal Change</h2>
 
       <div class="activity-card">
-        <h3>📝 Guidelines</h3>
-        <ul>
-          <li>Write by hand — no devices</li>
-          <li>Don't worry about structure or polish</li>
-          <li>Be honest about confusion or uncertainty</li>
-          <li>This is for you, not for grading</li>
-        </ul>
+        <h3>🎤 We Need Two Volunteers</h3>
+        <p>One person who leans toward each position:</p>
       </div>
+
+      <div class="comparison-grid">
+        <div class="comparison-box position-a">
+          <h3>Position A</h3>
+          <p>"Personal challenges like sleep, hydration, or procrastination are fundamentally simple — you know what to do, you just need to commit and be disciplined."</p>
+        </div>
+        <div class="comparison-box position-b">
+          <h3>Position B</h3>
+          <p>"Personal challenges are actually complex design problems — they require understanding psychology, environment, and systems. Willpower alone rarely works."</p>
+        </div>
+      </div>
+
+      <p style="color: var(--text-secondary); margin-top: 24px; text-align: center; font-style: italic;">
+        This isn't about being right. It's about exploring how change actually happens — and I'll be guiding the conversation.
+      </p>
     </div>
   </section>
 
   <!-- Section 3: Guided Conversation -->
   <section class="section" data-section="3">
-    <div class="section-content">
+    <div class="section-content" style="text-align: center;">
       <p class="section-label">Guided Conversation</p>
-      <h2>Understanding Reasoning</h2>
-      <p class="subtitle">Two volunteers will share their 5 Whys process.</p>
+      <h2>Willpower vs. Design</h2>
+      <p class="big-question" style="margin-top: 40px;">"When you've tried to change a habit or behavior before — what actually worked? What didn't? Why?"</p>
 
-      <div class="conversation-box">
-        <h4>The Question:</h4>
-        <p class="question">"Walk me through why you stopped where you stopped. What was your thinking at each step?"</p>
-        <p style="color: var(--text-secondary); margin-top: 16px;">We're practicing understanding someone's <em>reasoning process</em> — not just their conclusion.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>🎯 What to Listen For</h3>
+      <div class="activity-card" style="text-align: left;">
+        <h3>🧭 Ground Rules</h3>
         <ul>
-          <li>Where did they feel resistance? That's often meaningful.</li>
-          <li>What did they assume without examining?</li>
-          <li>Did they stop at the first "real" answer, or keep pushing?</li>
+          <li>Listen to understand, not to respond</li>
+          <li>Ask genuine questions — not "gotcha" questions</li>
+          <li>It's okay to say "I don't know" or "I hadn't thought of that"</li>
+          <li>The goal is exploration, not conclusion</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Section 4: Key Concept -->
+  <!-- Section 4: Sprint 1 Reality Check -->
   <section class="section" data-section="4">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Key Distinction</p>
-      <h2>Problem vs. Symptom</h2>
+    <div class="section-content">
+      <p class="section-label">Sprint 1 Reality Check</p>
+      <h2>Your Challenge Needs to Be About <span style="color: var(--teal-400);">You</span></h2>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; text-align: left;">
-        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 24px; border-radius: 12px;">
-          <h3 style="color: #f87171; margin-bottom: 12px;">Symptom</h3>
-          <p style="color: var(--text-secondary);">"I procrastinate on important tasks"</p>
-        </div>
-        <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 24px; border-radius: 12px;">
-          <h3 style="color: #4ade80; margin-bottom: 12px;">Problem</h3>
-          <p style="color: var(--text-secondary);">"I avoid tasks where I might fail publicly because I tie my identity to being competent"</p>
-        </div>
+      <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 12px 12px 0; margin-top: 24px;">
+        <p style="color: #f87171; font-weight: 600; margin-bottom: 8px;">Sprint 1 is NOT:</p>
+        <p style="color: var(--text-secondary); margin: 0;">A project for someone else. A resume-builder. A technical challenge you were already excited about. Something that looks good on LinkedIn.</p>
+      </div>
+
+      <div style="background: rgba(34, 197, 94, 0.1); border-left: 4px solid #22c55e; padding: 20px; border-radius: 0 12px 12px 0; margin-top: 16px;">
+        <p style="color: #4ade80; font-weight: 600; margin-bottom: 8px;">Sprint 1 IS:</p>
+        <p style="color: var(--text-secondary); margin: 0;">Something about YOUR life you've wanted to change but couldn't. A personal challenge you're approaching as a <strong>design problem</strong>, not a willpower problem.</p>
       </div>
 
       <div class="highlight-quote">
-        <p>Solutions aimed at symptoms feel productive but don't last. Solutions aimed at problems actually change things.</p>
+        <p>The question: Can I solve my own problem? Before you can help others (Sprints 2-4), prove you can examine your own life honestly.</p>
       </div>
     </div>
   </section>
 
-  <!-- Section 5: Activities & Reminders -->
+  <!-- Section 5: The Key Distinction -->
   <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">The Key Distinction</p>
+      <h2>Willpower vs. Design Framing</h2>
+
+      <div class="comparison-grid">
+        <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid #ef4444; padding: 24px; border-radius: 12px;">
+          <h3 style="color: #f87171; margin-bottom: 12px;">❌ Willpower Framing</h3>
+          <p style="color: var(--text-secondary); font-style: italic; margin-bottom: 16px;">"I need to drink more water. I'll try harder and set reminders."</p>
+          <p style="color: #fca5a5; font-size: 14px; margin: 0;">This is hoping this time will be different. It won't demonstrate superagency.</p>
+        </div>
+        <div style="background: rgba(34, 197, 94, 0.1); border: 2px solid #22c55e; padding: 24px; border-radius: 12px;">
+          <h3 style="color: #4ade80; margin-bottom: 12px;">✓ Design Framing</h3>
+          <p style="color: var(--text-secondary); font-style: italic; margin-bottom: 16px;">"I reach for soda when stressed. What's the trigger? What need am I meeting? How do I redesign my environment?"</p>
+          <p style="color: #86efac; font-size: 14px; margin: 0;">This requires research, self-analysis, and building a personalized system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Individual Reflection -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">Individual Reflection</p>
+      <h2>Stress-Test Your Challenge</h2>
+      <p class="subtitle">10 minutes. Answer these questions honestly in writing.</p>
+
+      <div class="reflection-box">
+        <h4>📝 Four Questions</h4>
+        <ol>
+          <li><strong>Is this actually about me?</strong><br>Is the stakeholder myself — my own wellness, productivity, habits, or growth? Or am I building something for someone else / for external validation?</li>
+          <li><strong>Am I treating this as a design problem or a willpower problem?</strong><br>Have I framed the solution as "try harder"? Or as "understand why this is hard, then engineer a solution"?</li>
+          <li><strong>What would I need to LEARN to solve this?</strong><br>If the answer is "nothing, I just need to do it" — wrong framing. If it involves understanding psychology, behavior, environment, systems — right framing.</li>
+          <li><strong>What does "solved" look like in 4 weeks?</strong><br>Can you describe a concrete outcome? Not "I'll be better at X" but "I'll have a system/process that does Y."</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Pair Challenge -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">Pair Up</p>
+      <h2>Challenge Each Other</h2>
+      <p class="subtitle">7 minutes. Your job is to push your partner.</p>
+
+      <div class="activity-card">
+        <h3>🔍 What to Ask</h3>
+        <ul>
+          <li>If they say "I just need to be more disciplined" → Ask: <em>"Why haven't you been? What's actually getting in the way? What would you need to understand to solve that?"</em></li>
+          <li>If they chose a technical project for someone else → Ask: <em>"What about YOUR life needs to change? What are you avoiding by choosing something external?"</em></li>
+          <li>If they can't articulate what they'd need to learn → Push: <em>"So you already know everything needed to solve this? Then why haven't you?"</em></li>
+        </ul>
+      </div>
+
+      <div class="highlight-quote">
+        <p>A good partner helps you see what you're avoiding. Be that partner.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Revision Decision -->
+  <section class="section" data-section="8">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Decision Time</p>
+      <h2>Where Does Your Challenge Land?</h2>
+
+      <div class="decision-grid">
+        <div class="decision-box keep">
+          <h4>✓ Keep</h4>
+          <p>My challenge is personal AND I'm treating it as a design problem</p>
+        </div>
+        <div class="decision-box reframe">
+          <h4>⟳ Reframe</h4>
+          <p>My challenge is personal but I need to shift from willpower to design thinking</p>
+        </div>
+        <div class="decision-box replace">
+          <h4>✕ Replace</h4>
+          <p>My challenge isn't about me — I need to choose something personal</p>
+        </div>
+      </div>
+
+      <div class="activity-card" style="text-align: left;">
+        <h3>📋 If Reframing or Replacing</h3>
+        <p>Submit your revised challenge by Friday. If keeping your original challenge as-is, no new submission needed.</p>
+        <p style="margin-top: 16px;">
+          <a href="../assignments/s1-w2-challenge-revision.html" target="_blank" style="display: inline-block; background: var(--teal-600); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+            View Submission Details →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: Demo Preview -->
+  <section class="section" data-section="9">
+    <div class="section-content">
+      <p class="section-label">Looking Ahead</p>
+      <h2>Week 4: Sprint Demo</h2>
+      <p class="subtitle">What you're building toward — just two weeks away.</p>
+
+      <div class="demo-preview">
+        <h3>📝 The Format</h3>
+        <ul>
+          <li><strong>Handwritten reflection</strong> — 30 minutes, two sides of a page</li>
+          <li><strong>1 required question + choose 1 of 2</strong> — demonstrating your Sprint 1 work</li>
+          <li><strong>Partner review</strong> — swap papers, discuss, then your partner types up your answers</li>
+          <li><strong>Closed book</strong> — no notes, no references. What you know is what you know.</li>
+        </ul>
+        <p style="color: var(--text-secondary); margin-top: 16px;">The questions will test: Did you actually do the work? Can you articulate what you learned? Is there evidence of design thinking, not just activity?</p>
+      </div>
+
+      <div class="highlight-quote">
+        <p>Start now. Week 4 is closer than it feels. Your demo should show a journey, not a last-minute cram.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: Written Reflection -->
+  <section class="section" data-section="10">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Written Reflection</p>
+      <h2>📓 Notebook Time</h2>
+      <p class="subtitle">15 minutes. Handwrite in your notebook.</p>
+
+      <div class="timer-display">15:00</div>
+
+      <div class="activity-card" style="text-align: left;">
+        <h3>Reflect On:</h3>
+        <p style="font-size: 18px; color: var(--text-primary); font-style: italic; margin-bottom: 16px;">
+          "After today's conversation and reflection — what's shifting in how you think about your challenge? What's the real problem you're trying to solve? What would success actually look like?"
+        </p>
+        <ul>
+          <li>Write by hand — no devices</li>
+          <li>Don't worry about structure or polish</li>
+          <li>Be honest about what you're avoiding</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 11: Peer Conversation -->
+  <section class="section" data-section="11">
+    <div class="section-content">
+      <p class="section-label">If Time Permits</p>
+      <h2>Peer Conversation</h2>
+      <p class="subtitle">Practice articulating your reasoning to someone else.</p>
+
+      <div class="activity-card">
+        <h3>🗣️ The Prompt</h3>
+        <p style="font-size: 18px; color: var(--text-primary); font-style: italic;">
+          "Explain your Sprint 1 challenge to your partner — not what you're doing, but WHY you're approaching it the way you are. What's the design logic?"
+        </p>
+        <p style="margin-top: 16px;">Partner's job: Ask follow-up questions until you truly understand their reasoning. Don't accept surface-level answers.</p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-top: 24px; text-align: center;">
+        <p style="color: var(--text-secondary); margin: 0 0 12px 0;">After your conversation, complete a quick check-in:</p>
+        <a href="https://forms.gle/Jx2hAnGsxvwRzaZq8" target="_blank" style="display: inline-block; background: var(--teal-600); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+          Peer Conversation Check-in →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 12: What's Due -->
+  <section class="section" data-section="12">
     <div class="section-content">
       <p class="section-label">This Week</p>
       <h2>What You're Working On</h2>
 
-      <div class="reminder-grid">
-        <div class="reminder-item">
-          <h4>📋 Problem Analysis</h4>
-          <p>Apply 5 Whys to your challenge. Go deep — at least 5 levels.</p>
-          <p class="due">Due: Wednesday</p>
+      <div style="display: grid; gap: 16px; margin-top: 24px;">
+        <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: #fbbf24; font-weight: 600; margin-bottom: 4px;">📋 Challenge Revision (if reframing/replacing)</p>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Only if you chose Reframe or Replace. If keeping, no submission needed.</p>
+          </div>
+          <span style="color: #fbbf24; font-size: 14px; font-weight: 500;">Due Friday</span>
         </div>
-        <div class="reminder-item">
-          <h4>🪞 Reflection #2</h4>
-          <p>What did you discover by asking "why" repeatedly?</p>
-          <p class="due">Due: Friday</p>
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px;">📋 5 Whys Analysis</p>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Go deep on your challenge — at least 5 levels</p>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 14px; font-weight: 500;">Due next Wed</span>
         </div>
-        <div class="reminder-item">
-          <h4>👥 Peer Conversation</h4>
-          <p>Help someone understand their reasoning — not just their answer.</p>
-          <p class="due">During second half</p>
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px;">🪞 Productive Reflection #2</p>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">What did the 5 Whys reveal?</p>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 14px; font-weight: 500;">Due next Fri</span>
         </div>
       </div>
 
-      <a href="../sprint-1.html" class="back-link">← Back to Sprint 1</a>
+      <a href="../sprint-1.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 14px; margin-top: 32px;">← Back to Sprint 1</a>
     </div>
   </section>
 
@@ -209,7 +405,7 @@
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
     });
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('button, a')) goToSection(currentSection + 1);
+      if (!e.target.closest('button, a, input')) goToSection(currentSection + 1);
     });
   </script>
 
