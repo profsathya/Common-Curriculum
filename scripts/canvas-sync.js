@@ -46,31 +46,19 @@ function parseArgs() {
 /**
  * Load a config file and extract the config object
  */
-function loadConfig(configFile) {
+function loadConfig(configFile, configVarName) {
   const configPath = path.join(process.cwd(), configFile);
   const content = fs.readFileSync(configPath, 'utf-8');
 
-  // Use Node's vm module to safely execute the config file
-  const vm = require('vm');
-  const sandbox = {};
-
+  // Use Function constructor to execute the config and return the config object
+  // This handles const/let declarations properly
   try {
-    // Create a script that executes the config file
-    const script = new vm.Script(content);
-    const context = vm.createContext(sandbox);
-    script.runInContext(context);
+    const fn = new Function(content + `\nreturn ${configVarName};`);
+    const config = fn();
+    return { config, rawContent: content, configPath };
   } catch (err) {
     throw new Error(`Could not parse config from ${configFile}: ${err.message}`);
   }
-
-  // Find the config variable (CST349_CONFIG or CST395_CONFIG)
-  const configVarName = Object.keys(sandbox).find(key => key.endsWith('_CONFIG'));
-  if (!configVarName) {
-    throw new Error(`Could not find config object in ${configFile}`);
-  }
-
-  const config = sandbox[configVarName];
-  return { config, rawContent: content, configPath };
 }
 
 /**
@@ -182,7 +170,7 @@ async function fetchAssignments(api, courseName) {
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
-  const { config, rawContent, configPath } = loadConfig(courseInfo.configFile);
+  const { config, rawContent, configPath } = loadConfig(courseInfo.configFile, courseInfo.configVar);
 
   const courseId = extractCourseId(config.canvasBaseUrl);
   console.log(`Canvas Course ID: ${courseId}`);
@@ -266,7 +254,7 @@ async function validateConfig(api, courseName) {
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
-  const { config } = loadConfig(courseInfo.configFile);
+  const { config } = loadConfig(courseInfo.configFile, courseInfo.configVar);
 
   const courseId = extractCourseId(config.canvasBaseUrl);
 
