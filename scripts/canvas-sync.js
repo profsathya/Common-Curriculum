@@ -80,6 +80,77 @@ function normalizeTitle(title) {
 }
 
 /**
+ * Extract the core part of a title (remove sprint prefixes for fuzzy matching)
+ * Examples:
+ *   "Sprint 1: Skills Self-Assessment" -> "skills self-assessment"
+ *   "S1: Superagency Challenge" -> "superagency challenge"
+ *   "Skills Self-Assessment" -> "skills self-assessment"
+ */
+function extractTitleCore(title) {
+  return title
+    .toLowerCase()
+    .replace(/^sprint\s*\d+\s*:\s*/i, '')  // Remove "Sprint 1: " prefix
+    .replace(/^s\d+\s*:\s*/i, '')           // Remove "S1: " prefix
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Fuzzy match Canvas assignments to config entries
+ * Returns matches based on the core title (ignoring sprint prefixes)
+ */
+function fuzzyMatchAssignments(canvasAssignments, configAssignments) {
+  const results = {
+    matched: [],
+    unmatchedCanvas: [],
+    unmatchedConfig: [],
+  };
+
+  // Create lookup map from Canvas assignments by core title
+  const canvasMap = new Map();
+  canvasAssignments.forEach(a => {
+    const core = extractTitleCore(a.name);
+    if (!canvasMap.has(core)) {
+      canvasMap.set(core, a);
+    }
+  });
+
+  // Try to match each config entry
+  for (const [key, configEntry] of Object.entries(configAssignments)) {
+    const configCore = extractTitleCore(configEntry.title);
+    const canvasAssignment = canvasMap.get(configCore);
+
+    if (canvasAssignment) {
+      results.matched.push({
+        key,
+        configTitle: configEntry.title,
+        canvasId: String(canvasAssignment.id),
+        canvasTitle: canvasAssignment.name,
+        needsRename: canvasAssignment.name !== configEntry.title,
+        configEntry,
+      });
+      canvasMap.delete(configCore);
+    } else {
+      results.unmatchedConfig.push({
+        key,
+        title: configEntry.title,
+        configEntry,
+      });
+    }
+  }
+
+  // Remaining Canvas assignments not matched to config
+  canvasMap.forEach((assignment) => {
+    results.unmatchedCanvas.push({
+      canvasId: String(assignment.id),
+      title: assignment.name,
+    });
+  });
+
+  return results;
+}
+
+/**
  * Match Canvas assignments to config entries by title
  */
 function matchAssignments(canvasAssignments, configAssignments) {
@@ -300,6 +371,200 @@ async function validateConfig(api, courseName) {
 }
 
 /**
+ * Action: Rename Canvas assignments to match config titles
+ * Uses fuzzy matching to find corresponding assignments
+ */
+async function renameAssignments(api, courseName, dryRun = true) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Renaming assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+  const courseId = extractCourseId(config.canvasBaseUrl);
+
+  console.log(`Canvas Course ID: ${courseId}`);
+
+  // Fetch assignments from Canvas
+  console.log('\nFetching assignments from Canvas...');
+  const canvasAssignments = await api.listAssignments(courseId);
+  console.log(`Found ${canvasAssignments.length} assignments`);
+
+  // Fuzzy match
+  const results = fuzzyMatchAssignments(canvasAssignments, config.assignments);
+
+  // Find assignments that need renaming
+  const toRename = results.matched.filter(m => m.needsRename);
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('FUZZY MATCH RESULTS:');
+  console.log(`  Matched: ${results.matched.length}`);
+  console.log(`  Need renaming: ${toRename.length}`);
+  console.log(`  Config items not in Canvas: ${results.unmatchedConfig.length}`);
+  console.log(`  Canvas items not in config: ${results.unmatchedCanvas.length}`);
+
+  if (toRename.length === 0) {
+    console.log('\n✓ No assignments need renaming');
+    return results;
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ASSIGNMENTS TO RENAME:');
+  toRename.forEach(m => {
+    console.log(`  [${m.canvasId}] "${m.canvasTitle}"`);
+    console.log(`       → "${m.configTitle}"`);
+  });
+
+  if (dryRun) {
+    console.log(`\n⚠ DRY RUN - No changes made. Run with --dry-run=false to apply changes.`);
+    return results;
+  }
+
+  // Actually rename the assignments
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('APPLYING CHANGES...');
+
+  let successCount = 0;
+  let errorCount = 0;
+
+  for (const match of toRename) {
+    try {
+      await api.updateAssignment(courseId, match.canvasId, {
+        name: match.configTitle,
+      });
+      console.log(`  ✓ Renamed: "${match.canvasTitle}" → "${match.configTitle}"`);
+      successCount++;
+    } catch (err) {
+      console.log(`  ✗ Failed to rename [${match.canvasId}]: ${err.message}`);
+      errorCount++;
+    }
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log(`Renamed: ${successCount} | Failed: ${errorCount}`);
+
+  return results;
+}
+
+/**
+ * Action: Create assignments in Canvas from config
+ * Only creates assignments that don't already exist
+ */
+async function createAssignments(api, courseName, dryRun = true) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Creating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config, rawContent, configPath } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+  const courseId = extractCourseId(config.canvasBaseUrl);
+
+  console.log(`Canvas Course ID: ${courseId}`);
+
+  // Fetch existing assignments from Canvas
+  console.log('\nFetching existing assignments from Canvas...');
+  const canvasAssignments = await api.listAssignments(courseId);
+  console.log(`Found ${canvasAssignments.length} existing assignments`);
+
+  // Fuzzy match to find what's missing
+  const results = fuzzyMatchAssignments(canvasAssignments, config.assignments);
+
+  const toCreate = results.unmatchedConfig;
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ANALYSIS:');
+  console.log(`  Already exist: ${results.matched.length}`);
+  console.log(`  Need to create: ${toCreate.length}`);
+
+  if (toCreate.length === 0) {
+    console.log('\n✓ All assignments already exist in Canvas');
+    return { created: [], results };
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ASSIGNMENTS TO CREATE:');
+  toCreate.forEach(item => {
+    const entry = item.configEntry;
+    console.log(`  ${item.key}: "${item.title}"`);
+    console.log(`       Due: ${entry.dueDate || 'Not set'} | Type: ${entry.type || 'assignment'}`);
+  });
+
+  if (dryRun) {
+    console.log(`\n⚠ DRY RUN - No changes made. Run with --dry-run=false to apply changes.`);
+    return { created: [], results };
+  }
+
+  // Actually create the assignments
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('CREATING ASSIGNMENTS...');
+
+  const created = [];
+  let errorCount = 0;
+
+  for (const item of toCreate) {
+    const entry = item.configEntry;
+
+    // Build assignment data for Canvas API
+    const assignmentData = {
+      name: item.title,
+      submission_types: ['online_text_entry', 'online_upload'],
+      published: false, // Create as draft
+    };
+
+    // Add due date if specified
+    if (entry.dueDate) {
+      // Canvas expects ISO 8601 format with time
+      assignmentData.due_at = `${entry.dueDate}T23:59:00Z`;
+    }
+
+    // Set points based on type
+    if (entry.type === 'reflection') {
+      assignmentData.points_possible = 10;
+    } else if (entry.type === 'bridge') {
+      assignmentData.points_possible = 20;
+    } else {
+      assignmentData.points_possible = 100;
+    }
+
+    try {
+      const newAssignment = await api.createAssignment(courseId, assignmentData);
+      console.log(`  ✓ Created: "${item.title}" [ID: ${newAssignment.id}]`);
+      created.push({
+        key: item.key,
+        title: item.title,
+        canvasId: String(newAssignment.id),
+      });
+    } catch (err) {
+      console.log(`  ✗ Failed to create "${item.title}": ${err.message}`);
+      errorCount++;
+    }
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log(`Created: ${created.length} | Failed: ${errorCount}`);
+
+  // Update config file with new Canvas IDs
+  if (created.length > 0) {
+    console.log(`\nUpdating config file with new Canvas IDs...`);
+    let updatedContent = rawContent;
+
+    for (const item of created) {
+      // Find and update the canvasId for this assignment key
+      const pattern = new RegExp(
+        `("${item.key}":\\s*\\{[^}]*canvasId:\\s*)"[^"]*"`,
+        'g'
+      );
+      updatedContent = updatedContent.replace(pattern, `$1"${item.canvasId}"`);
+    }
+
+    fs.writeFileSync(configPath, updatedContent, 'utf-8');
+    console.log(`✓ Updated ${created.length} assignment IDs in ${courseInfo.configFile}`);
+  }
+
+  return { created, results };
+}
+
+/**
  * Action: List available courses
  */
 async function listCourses(api) {
@@ -335,11 +600,15 @@ async function main() {
 
   const action = args.action || 'fetch-assignments';
   const course = args.course || 'both';
+  const dryRun = args['dry-run'] !== 'false'; // Default to true (safe mode)
 
   console.log('Canvas Sync Tool');
   console.log('================');
   console.log(`Action: ${action}`);
   console.log(`Course: ${course}`);
+  if (action === 'rename-assignments' || action === 'create-assignments') {
+    console.log(`Dry Run: ${dryRun}`);
+  }
 
   // Initialize API
   const api = new CanvasAPI(
@@ -377,9 +646,33 @@ async function main() {
         }
         break;
 
+      case 'rename-assignments':
+        if (course === 'both') {
+          await renameAssignments(api, 'cst349', dryRun);
+          await renameAssignments(api, 'cst395', dryRun);
+        } else if (COURSES[course]) {
+          await renameAssignments(api, course, dryRun);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
+        break;
+
+      case 'create-assignments':
+        if (course === 'both') {
+          await createAssignments(api, 'cst349', dryRun);
+          await createAssignments(api, 'cst395', dryRun);
+        } else if (COURSES[course]) {
+          await createAssignments(api, course, dryRun);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
+        break;
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: fetch-assignments, validate-config, list-courses');
+        console.error('Valid actions: fetch-assignments, validate-config, list-courses, rename-assignments, create-assignments');
         process.exit(1);
     }
   } catch (error) {
