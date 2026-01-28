@@ -1234,11 +1234,17 @@ async function main() {
     }
   }
 
-  // Initialize API
-  const api = new CanvasAPI(
-    process.env.CANVAS_BASE_URL,
-    process.env.CANVAS_API_TOKEN
-  );
+  // Actions that don't require Canvas API
+  const localOnlyActions = ['sync-html-links'];
+
+  // Initialize API only if needed
+  let api = null;
+  if (!localOnlyActions.includes(action)) {
+    api = new CanvasAPI(
+      process.env.CANVAS_BASE_URL,
+      process.env.CANVAS_API_TOKEN
+    );
+  }
 
   try {
     switch (action) {
