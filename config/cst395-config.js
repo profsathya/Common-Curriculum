@@ -37,7 +37,7 @@ const CST395_CONFIG = {
       type: "assignment"
     },
     "s1-solution-architecture": {
-      canvasId: "564069",
+      canvasId: "",
       title: "S1: Solution Architecture",
       dueDate: "2026-02-02",
       type: "quiz",

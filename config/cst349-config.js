@@ -38,7 +38,7 @@ const CST349_CONFIG = {
     },
     "s1-skills-revision": {
       canvasId: "",
-      title: "Sprint 1: Skills Assessment Revision",
+      title: "S1: Skills Assessment Revision",
       dueDate: "2026-01-29",
       type: "quiz",
       canvasType: "quiz",
@@ -64,8 +64,8 @@ const CST349_CONFIG = {
       ]
     },
     "s1-five-whys": {
-      canvasId: "570032",
-      title: "Sprint 1: 5 Whys Analysis",
+      canvasId: "",
+      title: "S1: 5 Whys Analysis",
       dueDate: "2026-02-02",
       type: "quiz",
       canvasType: "quiz",
@@ -102,12 +102,12 @@ const CST349_CONFIG = {
     },
     "s1-sprint-plan": {
       canvasId: "570033",
-      title: "Sprint 1: Sprint Plan v1",
+      title: "S1: Sprint Plan v1",
       dueDate: "2026-02-05",
       type: "assignment"
     },
     "s1-reflection-2": {
-      canvasId: "570068",
+      canvasId: "",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
