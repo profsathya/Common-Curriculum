@@ -25,13 +25,13 @@ const CST349_CONFIG = {
   assignments: {
     // Sprint 1: Beyond Technical
     "s1-self-assessment": {
-      canvasId: "570031",
+      canvasId: "144469",
       title: "S1: Skills Self-Assessment",
       dueDate: "2026-01-21",
       type: "assignment"
     },
     "s1-reflection-1": {
-      canvasId: "570034",
+      canvasId: "144470",
       title: "S1: Productive Reflection #1",
       dueDate: "2026-01-23",
       type: "reflection"
@@ -64,7 +64,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-five-whys": {
-      canvasId: "",
+      canvasId: "570032",
       title: "S1: 5 Whys Analysis",
       dueDate: "2026-02-02",
       type: "quiz",
@@ -107,7 +107,7 @@ const CST349_CONFIG = {
       type: "assignment"
     },
     "s1-reflection-2": {
-      canvasId: "",
+      canvasId: "570068",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
