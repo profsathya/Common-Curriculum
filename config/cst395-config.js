@@ -37,7 +37,7 @@ const CST395_CONFIG = {
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Foundation",
+      assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
       questions: [
         {
@@ -74,7 +74,7 @@ const CST395_CONFIG = {
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Foundation",
+      assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
       questions: [
         {
@@ -118,7 +118,7 @@ const CST395_CONFIG = {
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Foundation",
+      assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
       questions: [
         {
