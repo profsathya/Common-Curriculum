@@ -39,8 +39,39 @@ const CST395_CONFIG = {
     "s1-solution-architecture": {
       canvasId: "564069",
       title: "S1: Solution Architecture",
-      dueDate: "2026-02-04",
-      type: "assignment"
+      dueDate: "2026-02-02",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Foundation",
+      points: 5,
+      questions: [
+        {
+          type: "essay",
+          text: "Human Process: What behavior or habit needs to change for your challenge to be solved? Describe this without mentioning any technology.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Friction Points: Where in that process do you typically fail or give up? What makes this hard?",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Tech Support: Where specifically could technology help reduce friction? Be specific about which friction points technology addresses.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Solution Sketch: What will you actually build or create? Describe the simplest version that could test whether your approach works.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Architectural Choice: What's one key design decision you made and why? What alternatives did you consider?",
+          points: 1
+        }
+      ]
     },
     // Sprint 1: Foundation - Productive Reflections
     "s1-reflection-1": {
