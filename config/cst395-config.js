@@ -31,7 +31,7 @@ const CST395_CONFIG = {
       type: "assignment"
     },
     "s1-problem-analysis": {
-      canvasId: "",
+      canvasId: "144732",
       title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
       type: "quiz",
@@ -68,7 +68,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-solution-architecture": {
-      canvasId: "",
+      canvasId: "144733",
       title: "S1: Solution Architecture",
       dueDate: "2026-02-02",
       type: "quiz",
@@ -112,7 +112,7 @@ const CST395_CONFIG = {
       type: "reflection"
     },
     "s1-reflection-2": {
-      canvasId: "",
+      canvasId: "144734",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
