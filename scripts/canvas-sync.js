@@ -374,9 +374,9 @@ async function validateConfig(api, courseName) {
  * Action: Rename Canvas assignments to match config titles
  * Uses fuzzy matching to find corresponding assignments
  */
-async function renameAssignments(api, courseName, dryRun = true) {
+async function renameAssignments(api, courseName, dryRun = true, limit = 0) {
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`Renaming assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log(`Renaming assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}${limit > 0 ? ` (LIMIT: ${limit})` : ''}`);
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
@@ -426,8 +426,13 @@ async function renameAssignments(api, courseName, dryRun = true) {
 
   let successCount = 0;
   let errorCount = 0;
+  const itemsToProcess = limit > 0 ? toRename.slice(0, limit) : toRename;
 
-  for (const match of toRename) {
+  if (limit > 0 && toRename.length > limit) {
+    console.log(`  (Processing ${limit} of ${toRename.length} items)\n`);
+  }
+
+  for (const match of itemsToProcess) {
     try {
       await api.updateAssignment(courseId, match.canvasId, {
         name: match.configTitle,
@@ -442,6 +447,9 @@ async function renameAssignments(api, courseName, dryRun = true) {
 
   console.log(`\n${'─'.repeat(40)}`);
   console.log(`Renamed: ${successCount} | Failed: ${errorCount}`);
+  if (limit > 0 && toRename.length > limit) {
+    console.log(`Remaining: ${toRename.length - limit} items (run again to continue)`);
+  }
 
   return results;
 }
@@ -476,9 +484,9 @@ function getPointsForType(type) {
  * Action: Update Canvas assignments to match config (name, due date, points)
  * This is a comprehensive sync from config → Canvas
  */
-async function updateAssignments(api, courseName, dryRun = true) {
+async function updateAssignments(api, courseName, dryRun = true, limit = 0) {
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`Updating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log(`Updating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}${limit > 0 ? ` (LIMIT: ${limit})` : ''}`);
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
@@ -568,8 +576,13 @@ async function updateAssignments(api, courseName, dryRun = true) {
 
   let successCount = 0;
   let errorCount = 0;
+  const itemsToProcess = limit > 0 ? toUpdate.slice(0, limit) : toUpdate;
 
-  for (const item of toUpdate) {
+  if (limit > 0 && toUpdate.length > limit) {
+    console.log(`  (Processing ${limit} of ${toUpdate.length} items)\n`);
+  }
+
+  for (const item of itemsToProcess) {
     try {
       await api.updateAssignment(courseId, item.canvasId, item.updates);
       console.log(`  ✓ Updated: ${item.key}`);
@@ -582,17 +595,20 @@ async function updateAssignments(api, courseName, dryRun = true) {
 
   console.log(`\n${'─'.repeat(40)}`);
   console.log(`Updated: ${successCount} | Failed: ${errorCount}`);
+  if (limit > 0 && toUpdate.length > limit) {
+    console.log(`Remaining: ${toUpdate.length - limit} items (run again to continue)`);
+  }
 
-  return { updated: toUpdate.filter((_, i) => i < successCount) };
+  return { updated: itemsToProcess.filter((_, i) => i < successCount) };
 }
 
 /**
  * Action: Create assignments in Canvas from config
  * Only creates assignments that don't already exist
  */
-async function createAssignments(api, courseName, dryRun = true) {
+async function createAssignments(api, courseName, dryRun = true, limit = 0) {
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`Creating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log(`Creating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}${limit > 0 ? ` (LIMIT: ${limit})` : ''}`);
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
@@ -640,8 +656,13 @@ async function createAssignments(api, courseName, dryRun = true) {
 
   const created = [];
   let errorCount = 0;
+  const itemsToProcess = limit > 0 ? toCreate.slice(0, limit) : toCreate;
 
-  for (const item of toCreate) {
+  if (limit > 0 && toCreate.length > limit) {
+    console.log(`  (Processing ${limit} of ${toCreate.length} items)\n`);
+  }
+
+  for (const item of itemsToProcess) {
     const entry = item.configEntry;
 
     // Build assignment data for Canvas API
@@ -682,6 +703,9 @@ async function createAssignments(api, courseName, dryRun = true) {
 
   console.log(`\n${'─'.repeat(40)}`);
   console.log(`Created: ${created.length} | Failed: ${errorCount}`);
+  if (limit > 0 && toCreate.length > limit) {
+    console.log(`Remaining: ${toCreate.length - limit} items (run again to continue)`);
+  }
 
   // Update config file with new Canvas IDs
   if (created.length > 0) {
@@ -741,6 +765,7 @@ async function main() {
   const action = args.action || 'fetch-assignments';
   const course = args.course || 'both';
   const dryRun = args['dry-run'] !== 'false'; // Default to true (safe mode)
+  const limit = args.limit ? parseInt(args.limit, 10) : 0; // 0 = no limit
 
   console.log('Canvas Sync Tool');
   console.log('================');
@@ -748,6 +773,9 @@ async function main() {
   console.log(`Course: ${course}`);
   if (['rename-assignments', 'create-assignments', 'update-assignments'].includes(action)) {
     console.log(`Dry Run: ${dryRun}`);
+    if (limit > 0) {
+      console.log(`Limit: ${limit} changes`);
+    }
   }
 
   // Initialize API
@@ -788,10 +816,10 @@ async function main() {
 
       case 'rename-assignments':
         if (course === 'both') {
-          await renameAssignments(api, 'cst349', dryRun);
-          await renameAssignments(api, 'cst395', dryRun);
+          await renameAssignments(api, 'cst349', dryRun, limit);
+          await renameAssignments(api, 'cst395', dryRun, limit);
         } else if (COURSES[course]) {
-          await renameAssignments(api, course, dryRun);
+          await renameAssignments(api, course, dryRun, limit);
         } else {
           console.error(`Unknown course: ${course}`);
           process.exit(1);
@@ -800,10 +828,10 @@ async function main() {
 
       case 'create-assignments':
         if (course === 'both') {
-          await createAssignments(api, 'cst349', dryRun);
-          await createAssignments(api, 'cst395', dryRun);
+          await createAssignments(api, 'cst349', dryRun, limit);
+          await createAssignments(api, 'cst395', dryRun, limit);
         } else if (COURSES[course]) {
-          await createAssignments(api, course, dryRun);
+          await createAssignments(api, course, dryRun, limit);
         } else {
           console.error(`Unknown course: ${course}`);
           process.exit(1);
@@ -812,10 +840,10 @@ async function main() {
 
       case 'update-assignments':
         if (course === 'both') {
-          await updateAssignments(api, 'cst349', dryRun);
-          await updateAssignments(api, 'cst395', dryRun);
+          await updateAssignments(api, 'cst349', dryRun, limit);
+          await updateAssignments(api, 'cst395', dryRun, limit);
         } else if (COURSES[course]) {
-          await updateAssignments(api, course, dryRun);
+          await updateAssignments(api, course, dryRun, limit);
         } else {
           console.error(`Unknown course: ${course}`);
           process.exit(1);
