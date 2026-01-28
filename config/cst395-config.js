@@ -349,7 +349,7 @@ const CST395_CONFIG = {
     umpireGuide: "https://docs.google.com/document/d/UMPIRE_DOC_ID",
     threeCsTemplate: "https://docs.google.com/document/d/3CS_DOC_ID",
     symbioticThinking: "https://symbioticthinking.ai/",
-    dojoAccess: "https://symbioticthinking.ai/dojo",
+    dojoAccess: "https://dojo.symbioticthinking.ai",
     myUnderstandingTemplate: "https://docs.google.com/document/d/UNDERSTANDING_DOC_ID",
     syllabus: "https://docs.google.com/document/d/SYLLABUS_DOC_ID"
   },
