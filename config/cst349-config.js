@@ -25,34 +25,103 @@ const CST349_CONFIG = {
   assignments: {
     // Sprint 1: Beyond Technical
     "s1-self-assessment": {
-      canvasId: "570031",
+      canvasId: "144469",
       title: "S1: Skills Self-Assessment",
       dueDate: "2026-01-21",
       type: "assignment"
     },
     "s1-reflection-1": {
-      canvasId: "570034",
+      canvasId: "144470",
       title: "S1: Productive Reflection #1",
       dueDate: "2026-01-23",
       type: "reflection"
     },
+    "s1-skills-revision": {
+      canvasId: "144730",
+      title: "S1: Skills Assessment Revision",
+      dueDate: "2026-01-29",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      questions: [
+        {
+          type: "essay",
+          text: "What's underneath your gap? If you said 'communication' or something similarly broad — what's the real barrier? Be specific about what actually happens. (If your gap was already specific, explain why you're confident it's the real issue.)",
+          points: 2
+        },
+        {
+          type: "essay",
+          text: "Rewrite your friction story with YOU as the protagonist. Focus on what YOU had control over. What could you have done differently? What opportunities did you have that you didn't take?",
+          points: 2
+        },
+        {
+          type: "essay",
+          text: "What would 'better' look like? Describe a specific future situation where you'd handle it differently. What would you actually DO? Be concrete and observable.",
+          points: 1
+        }
+      ]
+    },
     "s1-five-whys": {
       canvasId: "570032",
       title: "S1: 5 Whys Analysis",
-      dueDate: "2026-01-28",
-      type: "assignment"
+      dueDate: "2026-02-02",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      questions: [
+        {
+          type: "essay",
+          text: "Starting Point: 'I struggle with [your skill] because...' — Write your first answer. What happens when you try to use this skill?",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #1: Why is that? What causes the problem you described above?",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #2: Why does that happen? Go deeper into the cause.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #3: Why is that the case? Keep pushing past surface explanations.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #4/5: What's the root cause you can actually address? This should be something specific, actionable, and honest — something you can actually work on.",
+          points: 1
+        }
+      ]
     },
     "s1-sprint-plan": {
       canvasId: "570033",
       title: "S1: Sprint Plan v1",
-      dueDate: "2026-01-28",
+      dueDate: "2026-02-05",
       type: "assignment"
     },
     "s1-reflection-2": {
       canvasId: "570068",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
-      type: "reflection"
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      questions: [
+        {
+          type: "file_upload",
+          text: "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your skill gap and root cause analysis.",
+          points: 5
+        }
+      ]
     },
     "s1-learning-log": {
       canvasId: "570072",

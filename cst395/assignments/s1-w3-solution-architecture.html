@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Architecture | Sprint 1 Week 3 | CST395</title>
+    <title>Solution Architecture | Sprint 1 | CST395</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -19,10 +19,10 @@
         .breadcrumb a { color: #14b8a6; text-decoration: none; }
 
         .progress-bar { background: #e5e7eb; height: 4px; border-radius: 2px; margin-bottom: 24px; }
-        .progress-bar__fill { background: #f97316; height: 100%; width: 0%; transition: width 0.3s ease; }
+        .progress-bar__fill { background: #14b8a6; height: 100%; width: 0%; transition: width 0.3s ease; }
 
         .header {
-            background: linear-gradient(135deg, #c2410c 0%, #f97316 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
             color: white;
             padding: 20px 24px;
             border-radius: 12px;
@@ -32,14 +32,14 @@
         .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
 
         .hook {
-            background: #fff7ed;
-            border: 2px solid #fdba74;
+            background: #f0fdfa;
+            border: 2px solid #5eead4;
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 24px;
             text-align: center;
         }
-        .hook__question { font-size: 20px; color: #c2410c; font-weight: 500; margin: 0; }
+        .hook__question { font-size: 20px; color: #0d9488; font-weight: 500; margin: 0; }
 
         .section {
             background: white;
@@ -71,7 +71,7 @@
             color: #6b7280;
         }
         .section.completed .section__number { background: #22c55e; color: white; }
-        .section.active .section__number { background: #f97316; color: white; }
+        .section.active .section__number { background: #14b8a6; color: white; }
         .section__title { font-weight: 600; color: #111827; }
         .section__toggle { color: #9ca3af; transition: transform 0.2s; }
         .section.expanded .section__toggle { transform: rotate(180deg); }
@@ -103,36 +103,24 @@
         .visual-model__arrow { color: #9ca3af; }
         .visual-model__caption { margin-top: 12px; font-size: 14px; color: #6b7280; }
 
-        .framework-box {
-            background: #fff7ed;
-            border-left: 4px solid #f97316;
+        .dojo-prompt {
+            background: #f0fdfa;
+            border: 2px solid #14b8a6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .dojo-prompt h4 { margin: 0 0 12px 0; color: #0d9488; font-size: 16px; }
+        .dojo-prompt p {
+            margin: 0;
+            color: #111827;
+            font-size: 15px;
+            font-style: italic;
+            background: rgba(0,0,0,0.05);
             padding: 16px;
-            margin: 16px 0;
-        }
-        .framework-box h4 { margin: 0 0 8px 0; color: #c2410c; }
-        .framework-box p { margin: 0; color: #9a3412; font-size: 14px; }
-
-        .threes-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 16px 0;
-        }
-        @media (max-width: 500px) { .threes-grid { grid-template-columns: 1fr; } }
-        .threes-item {
-            background: #f9fafb;
             border-radius: 8px;
-            padding: 16px;
-            text-align: center;
+            line-height: 1.6;
         }
-        .threes-item__letter {
-            font-size: 24px;
-            font-weight: 700;
-            color: #f97316;
-            margin-bottom: 4px;
-        }
-        .threes-item__name { font-weight: 600; color: #111827; margin-bottom: 4px; }
-        .threes-item__desc { font-size: 13px; color: #6b7280; }
 
         .pause-box {
             background: #fffbeb;
@@ -143,7 +131,7 @@
         .pause-box p { margin: 0; color: #92400e; }
 
         .continue-btn {
-            background: #f97316;
+            background: #14b8a6;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -153,7 +141,7 @@
             cursor: pointer;
             margin-top: 16px;
         }
-        .continue-btn:hover { background: #ea580c; }
+        .continue-btn:hover { background: #0d9488; }
 
         .submission {
             background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
@@ -163,31 +151,30 @@
             margin-top: 24px;
         }
         .submission h3 { color: white; margin: 0 0 16px 0; }
-        .submission__checklist { list-style: none; padding: 0; margin: 0 0 16px 0; }
-        .submission__checklist li { padding: 8px 0; color: #d1d5db; display: flex; gap: 12px; }
-        .submission__checklist li::before { content: "☐"; color: #f97316; }
+        .submission__questions { list-style: none; padding: 0; margin: 0 0 16px 0; }
+        .submission__questions li {
+            padding: 12px 0;
+            color: #d1d5db;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .submission__questions li:last-child { border-bottom: none; }
+        .submission__questions li strong { color: #5eead4; display: block; margin-bottom: 4px; }
         .submission__format { background: rgba(255,255,255,0.1); padding: 12px 16px; border-radius: 8px; font-size: 14px; color: #9ca3af; }
         .submit-btn {
             display: inline-block;
-            background: #f97316;
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
             color: white;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
             margin-top: 16px;
-            transition: background 0.2s;
+            transition: opacity 0.2s;
         }
-        .submit-btn:hover {
-            background: #ea580c;
-        }
+        .submit-btn:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
-<!-- Under Construction Banner -->
-<div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin: 16px; text-align: center;">
-  <span style="font-size: 1.1em;">🚧 <strong>Under Construction</strong> — This page is being refined. Don't do any work until this banner is removed.</span>
-</div>
     <div class="container">
         <p class="breadcrumb">
             <a href="../home.html">Home</a> /
@@ -198,8 +185,8 @@
         <div class="progress-bar"><div class="progress-bar__fill" id="progress"></div></div>
 
         <div class="header">
-            <h1>🏗️ Solution Architecture</h1>
-            <p>Week 3 · ~25 minutes to complete</p>
+            <h1>Solution Architecture</h1>
+            <p>Sprint 1 · Due Monday, February 2 · ~30 minutes</p>
         </div>
 
         <div class="hook">
@@ -214,7 +201,7 @@
             </div>
             <div class="section__content">
                 <p>Before you build anything, answer this: <strong>What's the human process that needs to happen?</strong></p>
-                <p>Most people jump straight to "what should I build?" But that's backwards.</p>
+                <p>Most people jump straight to "what should I build?" But that's backwards. The technology should support a behavior change — not replace thinking about what behavior needs to change.</p>
 
                 <div class="visual-model">
                     <div class="visual-model__flow">
@@ -226,69 +213,73 @@
                 </div>
 
                 <div class="pause-box">
-                    <p><strong>⏸️ Think:</strong> What does your ideal day/week look like if this problem is solved? Describe the human behavior, not the tool.</p>
+                    <p><strong>Think:</strong> What does your ideal day/week look like if this problem is solved? Describe the human behavior, not the tool.</p>
                 </div>
 
                 <button class="continue-btn" onclick="completeSection(1)">Got it → Continue</button>
             </div>
         </div>
 
-        <!-- Section 2: 3Cs Framework -->
+        <!-- Section 2: Use AI to Think -->
         <div class="section" data-section="2">
             <div class="section__header" onclick="toggleSection(this)">
-                <div><span class="section__number">2</span><span class="section__title">The 3Cs Framework</span></div>
+                <div><span class="section__number">2</span><span class="section__title">Use AI to Draft Your Architecture</span></div>
                 <span class="section__toggle">▼</span>
             </div>
             <div class="section__content">
-                <p>When you work with AI, use the <strong>3Cs</strong> to structure every interaction:</p>
+                <p>Use the <strong>Symbiotic Thinking Dojo</strong> to help you think through your solution architecture. This isn't about AI doing the work — it's about AI helping you think more clearly.</p>
 
-                <div class="threes-grid">
-                    <div class="threes-item">
-                        <div class="threes-item__letter">C</div>
-                        <div class="threes-item__name">Context</div>
-                        <div class="threes-item__desc">What does AI need to know?</div>
-                    </div>
-                    <div class="threes-item">
-                        <div class="threes-item__letter">C</div>
-                        <div class="threes-item__name">Choices</div>
-                        <div class="threes-item__desc">What options should AI consider?</div>
-                    </div>
-                    <div class="threes-item">
-                        <div class="threes-item__letter">C</div>
-                        <div class="threes-item__name">Confirmation</div>
-                        <div class="threes-item__desc">How will you verify the output?</div>
-                    </div>
+                <div class="dojo-prompt">
+                    <h4>Starting Prompt for Dojo:</h4>
+                    <p>"I'm working on [your challenge]. Through the 5 Whys, I identified [your root cause/design opportunity]. Help me design a solution architecture by thinking through: (1) What human process needs to happen for this to be solved? (2) Where are the friction points where I typically fail? (3) Where could technology help reduce that friction? (4) What's the simplest thing I could build that would test whether this approach works?"</p>
                 </div>
 
-                <div class="framework-box">
-                    <h4>Why this matters</h4>
-                    <p>AI is good at generating options. You're good at judgment. 3Cs keeps you in control of the direction while leveraging AI's capacity.</p>
+                <p style="margin-top: 16px;">
+                    <a href="https://symbioticthinking.ai/dojo" target="_blank" style="display: inline-block; background: #0d9488; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                        Open Symbiotic Thinking Dojo →
+                    </a>
+                </p>
+
+                <div class="pause-box">
+                    <p><strong>Important:</strong> Don't just copy what AI suggests. Use it to help you think, then write your answers in your own words based on what you actually believe.</p>
                 </div>
 
-                <button class="continue-btn" onclick="completeSection(2)">Understood → Continue</button>
+                <button class="continue-btn" onclick="completeSection(2)">I've used the Dojo → Continue</button>
             </div>
         </div>
 
-        <!-- Section 3: Your Architecture -->
+        <!-- Section 3: The 5 Questions -->
         <div class="section" data-section="3">
             <div class="section__header" onclick="toggleSection(this)">
-                <div><span class="section__number">3</span><span class="section__title">Design Your Solution</span></div>
+                <div><span class="section__number">3</span><span class="section__title">The 5 Questions</span></div>
                 <span class="section__toggle">▼</span>
             </div>
             <div class="section__content">
-                <p>Now sketch out your solution. Answer these questions:</p>
-                <ol>
-                    <li><strong>The human process:</strong> What behavior or habit needs to change? Describe it without mentioning any technology.</li>
-                    <li><strong>The friction points:</strong> Where in that process do you typically fail or give up?</li>
-                    <li><strong>Where tech helps:</strong> What specific friction points could technology reduce?</li>
-                    <li><strong>Your solution sketch:</strong> What will you actually build or create?</li>
+                <p>Your submission is a <strong>graded survey</strong> with 5 essay questions. Think through each one carefully:</p>
+
+                <ol style="margin: 20px 0; padding-left: 24px;">
+                    <li style="margin-bottom: 16px;">
+                        <strong style="color: #0d9488;">Human Process:</strong> What behavior or habit needs to change for your challenge to be solved? Describe this <em>without mentioning any technology</em>.
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong style="color: #0d9488;">Friction Points:</strong> Where in that process do you typically fail or give up? What makes this hard?
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong style="color: #0d9488;">Tech Support:</strong> Where specifically could technology help reduce friction? Be specific about which friction points technology addresses.
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong style="color: #0d9488;">Solution Sketch:</strong> What will you actually build or create? Describe the simplest version that could test whether your approach works.
+                    </li>
+                    <li style="margin-bottom: 16px;">
+                        <strong style="color: #0d9488;">Architectural Choice:</strong> What's one key design decision you made and why? What alternatives did you consider?
+                    </li>
                 </ol>
 
                 <div class="pause-box">
-                    <p><strong>⏸️ Important:</strong> Write down your answers to all 4 questions before continuing. This is your solution architecture.</p>
+                    <p><strong>Quality check:</strong> Can someone reading your answers understand your full solution without talking to you? If not, add more detail.</p>
                 </div>
 
-                <button class="continue-btn" onclick="completeSection(3)">I've sketched my solution → Continue</button>
+                <button class="continue-btn" onclick="completeSection(3)">I understand the questions → Continue</button>
             </div>
         </div>
 
@@ -300,19 +291,38 @@
             </div>
             <div class="section__content">
                 <div class="submission">
-                    <h3>📝 What to Submit</h3>
-                    <ul class="submission__checklist">
-                        <li>The human process you're designing for (behavior, not tool)</li>
-                        <li>Key friction points where you typically fail</li>
-                        <li>Where technology will help (and where it won't)</li>
-                        <li>Your solution sketch — what you'll actually build</li>
-                        <li>One architectural choice you made and why</li>
+                    <h3>Graded Survey: 5 Questions</h3>
+                    <ul class="submission__questions">
+                        <li>
+                            <strong>Q1: Human Process</strong>
+                            What behavior or habit needs to change? (No tech mentioned)
+                        </li>
+                        <li>
+                            <strong>Q2: Friction Points</strong>
+                            Where do you typically fail or give up?
+                        </li>
+                        <li>
+                            <strong>Q3: Tech Support</strong>
+                            Where specifically could technology help?
+                        </li>
+                        <li>
+                            <strong>Q4: Solution Sketch</strong>
+                            What will you actually build or create?
+                        </li>
+                        <li>
+                            <strong>Q5: Architectural Choice</strong>
+                            One key decision you made and why
+                        </li>
                     </ul>
                     <div class="submission__format">
-                        <strong>Format:</strong> File upload<br>
-                        <strong>Due:</strong> Wednesday, February 4
+                        <strong>Format:</strong> Graded Survey (5 essay questions)<br>
+                        <strong>Due:</strong> Monday, February 2<br>
+                        <strong>Points:</strong> 5 (auto-graded for completion)<br>
+                        <strong>Group:</strong> Sprint 1: Foundation
                     </div>
-                    <a href="https://csumb.instructure.com/courses/33084/assignments/564069" target="_blank" class="submit-btn">Submit on Canvas</a>
+                    <a href="https://csumb.instructure.com/courses/33084/quizzes/PLACEHOLDER" target="_blank" class="submit-btn">
+                        Submit on Canvas →
+                    </a>
                 </div>
             </div>
         </div>
