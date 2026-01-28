@@ -26,38 +26,38 @@ const CST395_CONFIG = {
     // Sprint 1: Foundation - Goal Setting
     "s1-superagency-challenge": {
       canvasId: "564067",
-      title: "Sprint 1: Superagency Challenge",
+      title: "S1: Superagency Challenge",
       dueDate: "2026-01-21",
       type: "assignment"
     },
     "s1-problem-analysis": {
       canvasId: "564068",
-      title: "Sprint 1: Problem Analysis (5 Whys)",
+      title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
       type: "assignment"
     },
     "s1-solution-architecture": {
       canvasId: "564069",
-      title: "Sprint 1: Solution Architecture",
+      title: "S1: Solution Architecture",
       dueDate: "2026-02-04",
       type: "assignment"
     },
     // Sprint 1: Foundation - Productive Reflections
     "s1-reflection-1": {
       canvasId: "564070",
-      title: "Sprint 1: Productive Reflection #1",
+      title: "S1: Productive Reflection #1",
       dueDate: "2026-01-23",
       type: "reflection"
     },
     "s1-reflection-2": {
       canvasId: "564231",
-      title: "Sprint 1: Productive Reflection #2",
+      title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "reflection"
     },
     "s1-build-log": {
       canvasId: "564232",
-      title: "Sprint 1: Build Log Entry",
+      title: "S1: Build Log Entry",
       dueDate: "2026-02-06",
       type: "reflection"
     },
@@ -70,13 +70,13 @@ const CST395_CONFIG = {
     // Sprint 1: Foundation - Check-in/Engagement
     "s1-peer-conversation": {
       canvasId: "564234",
-      title: "Sprint 1: Peer Conversation Reflection - Week 1",
+      title: "S1: Peer Conversation Reflection - Week 1",
       dueDate: "2026-01-23",
       type: "engagement"
     },
     "s1-week2-engagement": {
       canvasId: "564308",
-      title: "Sprint 1: Week 2 Engagement",
+      title: "S1: Week 2 Engagement",
       dueDate: "2026-01-30",
       type: "engagement"
     },
@@ -84,49 +84,49 @@ const CST395_CONFIG = {
     // Sprint 2: Mirror
     "s2-stakeholder-selection": {
       canvasId: "200001",
-      title: "Sprint 2: Stakeholder Selection",
+      title: "S2: Stakeholder Selection",
       dueDate: "2025-02-19",
       type: "assignment"
     },
     "s2-reflection-1": {
       canvasId: "200002",
-      title: "Sprint 2: Productive Reflection #1",
+      title: "S2: Productive Reflection #1",
       dueDate: "2025-02-21",
       type: "reflection"
     },
     "s2-domain-learning": {
       canvasId: "200003",
-      title: "Sprint 2: Domain Learning Plan",
+      title: "S2: Domain Learning Plan",
       dueDate: "2025-02-26",
       type: "assignment"
     },
     "s2-reflection-2": {
       canvasId: "200004",
-      title: "Sprint 2: Productive Reflection #2",
+      title: "S2: Productive Reflection #2",
       dueDate: "2025-02-28",
       type: "reflection"
     },
     "s2-solution-prototype": {
       canvasId: "200005",
-      title: "Sprint 2: Solution Prototype",
+      title: "S2: Solution Prototype",
       dueDate: "2025-03-05",
       type: "assignment"
     },
     "s2-build-log": {
       canvasId: "200006",
-      title: "Sprint 2: Build Log Entry",
+      title: "S2: Build Log Entry",
       dueDate: "2025-03-07",
       type: "reflection"
     },
     "s2-stakeholder-demo": {
       canvasId: "200007",
-      title: "Sprint 2: Stakeholder Demo",
+      title: "S2: Stakeholder Demo",
       dueDate: "2025-03-12",
       type: "assignment"
     },
     "s2-human-value": {
       canvasId: "200008",
-      title: "Sprint 2: Human Value Statement",
+      title: "S2: Human Value Statement",
       dueDate: "2025-03-13",
       type: "reflection"
     },
@@ -140,49 +140,49 @@ const CST395_CONFIG = {
     // Sprint 3: Complexity
     "s3-domain-selection": {
       canvasId: "300001",
-      title: "Sprint 3: Domain Selection",
+      title: "S3: Domain Selection",
       dueDate: "2025-03-26",
       type: "assignment"
     },
     "s3-reflection-1": {
       canvasId: "300002",
-      title: "Sprint 3: Productive Reflection #1",
+      title: "S3: Productive Reflection #1",
       dueDate: "2025-03-28",
       type: "reflection"
     },
     "s3-stakeholder-research": {
       canvasId: "300003",
-      title: "Sprint 3: Stakeholder Research",
+      title: "S3: Stakeholder Research",
       dueDate: "2025-04-02",
       type: "assignment"
     },
     "s3-reflection-2": {
       canvasId: "300004",
-      title: "Sprint 3: Productive Reflection #2",
+      title: "S3: Productive Reflection #2",
       dueDate: "2025-04-04",
       type: "reflection"
     },
     "s3-mvp": {
       canvasId: "300005",
-      title: "Sprint 3: Minimum Viable Product",
+      title: "S3: Minimum Viable Product",
       dueDate: "2025-04-09",
       type: "assignment"
     },
     "s3-build-log": {
       canvasId: "300006",
-      title: "Sprint 3: Build Log Entry",
+      title: "S3: Build Log Entry",
       dueDate: "2025-04-11",
       type: "reflection"
     },
     "s3-presentation": {
       canvasId: "300007",
-      title: "Sprint 3: Solution Presentation",
+      title: "S3: Solution Presentation",
       dueDate: "2025-04-16",
       type: "assignment"
     },
     "s3-human-value": {
       canvasId: "300008",
-      title: "Sprint 3: Human Value Statement",
+      title: "S3: Human Value Statement",
       dueDate: "2025-04-17",
       type: "reflection"
     },
@@ -196,49 +196,49 @@ const CST395_CONFIG = {
     // Sprint 4: Mastery
     "s4-problem-definition": {
       canvasId: "400001",
-      title: "Sprint 4: Problem Definition",
+      title: "S4: Problem Definition",
       dueDate: "2025-04-23",
       type: "assignment"
     },
     "s4-reflection-1": {
       canvasId: "400002",
-      title: "Sprint 4: Productive Reflection #1",
+      title: "S4: Productive Reflection #1",
       dueDate: "2025-04-25",
       type: "reflection"
     },
     "s4-execution-plan": {
       canvasId: "400003",
-      title: "Sprint 4: Execution Plan",
+      title: "S4: Execution Plan",
       dueDate: "2025-04-30",
       type: "assignment"
     },
     "s4-reflection-2": {
       canvasId: "400004",
-      title: "Sprint 4: Productive Reflection #2",
+      title: "S4: Productive Reflection #2",
       dueDate: "2025-05-02",
       type: "reflection"
     },
     "s4-final-solution": {
       canvasId: "400005",
-      title: "Sprint 4: Final Solution",
+      title: "S4: Final Solution",
       dueDate: "2025-05-07",
       type: "assignment"
     },
     "s4-build-log": {
       canvasId: "400006",
-      title: "Sprint 4: Build Log Entry",
+      title: "S4: Build Log Entry",
       dueDate: "2025-05-09",
       type: "reflection"
     },
     "s4-final-presentation": {
       canvasId: "400007",
-      title: "Sprint 4: Final Presentation",
+      title: "S4: Final Presentation",
       dueDate: "2025-05-14",
       type: "assignment"
     },
     "s4-portfolio": {
       canvasId: "400008",
-      title: "Sprint 4: Portfolio Reflection",
+      title: "S4: Portfolio Reflection",
       dueDate: "2025-05-15",
       type: "reflection"
     },
