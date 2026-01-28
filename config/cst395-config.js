@@ -31,10 +31,41 @@ const CST395_CONFIG = {
       type: "assignment"
     },
     "s1-problem-analysis": {
-      canvasId: "564068",
+      canvasId: "",
       title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
-      type: "assignment"
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Foundation",
+      points: 5,
+      questions: [
+        {
+          type: "essay",
+          text: "Starting Point: 'I struggle with [your challenge] because...' — Write your first answer. What happens when you try to address this challenge?",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #1: Why is that? What causes the problem you described above?",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #2: Why does that happen? Go deeper into the cause.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #3: Why is that the case? Keep pushing past surface explanations.",
+          points: 1
+        },
+        {
+          type: "essay",
+          text: "Why #4/5: What's the design opportunity you found? This should be something about your environment, system, or process you could change — not just 'try harder'.",
+          points: 1
+        }
+      ]
     },
     "s1-solution-architecture": {
       canvasId: "",
@@ -81,10 +112,21 @@ const CST395_CONFIG = {
       type: "reflection"
     },
     "s1-reflection-2": {
-      canvasId: "564231",
+      canvasId: "",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
-      type: "reflection"
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Foundation",
+      points: 5,
+      questions: [
+        {
+          type: "file_upload",
+          text: "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your challenge, the design opportunity you found through 5 Whys, and what your solution might look like.",
+          points: 5
+        }
+      ]
     },
     "s1-build-log": {
       canvasId: "564232",
