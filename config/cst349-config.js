@@ -380,7 +380,7 @@ const CST349_CONFIG = {
   // Class recording Loom videos - ADD URLS AS AVAILABLE
   // Set to null if no recording was made for that week
   loomVideos: {
-    1: null,  // Week 1 - no recording yet
+    1: "https://www.loom.com/share/212ab04d442e4cdf94fadfa026fe9015",  // Week 1
     2: null,  // Week 2
     3: null,  // Week 3
     4: null,  // Week 4
