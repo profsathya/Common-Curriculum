@@ -37,7 +37,7 @@ const CST349_CONFIG = {
       type: "reflection"
     },
     "s1-skills-revision": {
-      canvasId: "",
+      canvasId: "144730",
       title: "S1: Skills Assessment Revision",
       dueDate: "2026-01-29",
       type: "quiz",
