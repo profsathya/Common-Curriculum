@@ -447,6 +447,146 @@ async function renameAssignments(api, courseName, dryRun = true) {
 }
 
 /**
+ * Convert config date to Canvas ISO format
+ */
+function toCanvasDate(dateString) {
+  if (!dateString) return null;
+  return `${dateString}T23:59:00Z`;
+}
+
+/**
+ * Parse Canvas date to YYYY-MM-DD format
+ */
+function fromCanvasDate(isoString) {
+  if (!isoString) return null;
+  return isoString.split('T')[0];
+}
+
+/**
+ * Get points based on assignment type
+ */
+function getPointsForType(type) {
+  if (type === 'reflection') return 10;
+  if (type === 'bridge') return 20;
+  if (type === 'engagement') return 5;
+  return 100;
+}
+
+/**
+ * Action: Update Canvas assignments to match config (name, due date, points)
+ * This is a comprehensive sync from config → Canvas
+ */
+async function updateAssignments(api, courseName, dryRun = true) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Updating assignments for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+  const courseId = extractCourseId(config.canvasBaseUrl);
+
+  console.log(`Canvas Course ID: ${courseId}`);
+
+  // Fetch assignments from Canvas
+  console.log('\nFetching assignments from Canvas...');
+  const canvasAssignments = await api.listAssignments(courseId);
+  console.log(`Found ${canvasAssignments.length} assignments`);
+
+  // Create lookup by ID
+  const canvasById = new Map(canvasAssignments.map(a => [String(a.id), a]));
+
+  // Find assignments that need updating
+  const toUpdate = [];
+
+  for (const [key, configEntry] of Object.entries(config.assignments)) {
+    const canvasAssignment = canvasById.get(configEntry.canvasId);
+    if (!canvasAssignment) continue;
+
+    const changes = [];
+    const updates = {};
+
+    // Check name
+    if (canvasAssignment.name !== configEntry.title) {
+      changes.push(`name: "${canvasAssignment.name}" → "${configEntry.title}"`);
+      updates.name = configEntry.title;
+    }
+
+    // Check due date
+    const configDue = configEntry.dueDate;
+    const canvasDue = fromCanvasDate(canvasAssignment.due_at);
+    if (configDue && configDue !== canvasDue) {
+      changes.push(`due: ${canvasDue || 'none'} → ${configDue}`);
+      updates.due_at = toCanvasDate(configDue);
+    }
+
+    // Check points
+    const expectedPoints = getPointsForType(configEntry.type);
+    if (canvasAssignment.points_possible !== expectedPoints) {
+      changes.push(`points: ${canvasAssignment.points_possible} → ${expectedPoints}`);
+      updates.points_possible = expectedPoints;
+    }
+
+    if (changes.length > 0) {
+      toUpdate.push({
+        key,
+        canvasId: configEntry.canvasId,
+        title: configEntry.title,
+        changes,
+        updates,
+      });
+    }
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ANALYSIS:');
+  console.log(`  Assignments checked: ${Object.keys(config.assignments).length}`);
+  console.log(`  Found in Canvas: ${canvasById.size}`);
+  console.log(`  Need updates: ${toUpdate.length}`);
+
+  if (toUpdate.length === 0) {
+    console.log('\n✓ All assignments are up to date');
+    return { updated: [] };
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ASSIGNMENTS TO UPDATE:');
+  toUpdate.forEach(item => {
+    console.log(`\n  ${item.key} [${item.canvasId}]:`);
+    item.changes.forEach(change => {
+      console.log(`    • ${change}`);
+    });
+  });
+
+  if (dryRun) {
+    console.log(`\n⚠ DRY RUN - No changes made. Run with --dry-run=false to apply changes.`);
+    return { updated: [] };
+  }
+
+  // Apply updates
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('APPLYING CHANGES...');
+
+  let successCount = 0;
+  let errorCount = 0;
+
+  for (const item of toUpdate) {
+    try {
+      await api.updateAssignment(courseId, item.canvasId, item.updates);
+      console.log(`  ✓ Updated: ${item.key}`);
+      successCount++;
+    } catch (err) {
+      console.log(`  ✗ Failed: ${item.key} - ${err.message}`);
+      errorCount++;
+    }
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log(`Updated: ${successCount} | Failed: ${errorCount}`);
+
+  return { updated: toUpdate.filter((_, i) => i < successCount) };
+}
+
+/**
  * Action: Create assignments in Canvas from config
  * Only creates assignments that don't already exist
  */
@@ -606,7 +746,7 @@ async function main() {
   console.log('================');
   console.log(`Action: ${action}`);
   console.log(`Course: ${course}`);
-  if (action === 'rename-assignments' || action === 'create-assignments') {
+  if (['rename-assignments', 'create-assignments', 'update-assignments'].includes(action)) {
     console.log(`Dry Run: ${dryRun}`);
   }
 
@@ -670,9 +810,21 @@ async function main() {
         }
         break;
 
+      case 'update-assignments':
+        if (course === 'both') {
+          await updateAssignments(api, 'cst349', dryRun);
+          await updateAssignments(api, 'cst395', dryRun);
+        } else if (COURSES[course]) {
+          await updateAssignments(api, course, dryRun);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
+        break;
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: fetch-assignments, validate-config, list-courses, rename-assignments, create-assignments');
+        console.error('Valid actions: fetch-assignments, validate-config, list-courses, rename-assignments, create-assignments, update-assignments');
         process.exit(1);
     }
   } catch (error) {
