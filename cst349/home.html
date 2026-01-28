@@ -421,11 +421,27 @@
 
       // Add regular assignments due this week (if we're in a valid week)
       if (currentWeek !== null && currentWeek >= 1) {
+        // Map assignment keys to local HTML files
+        const localAssignmentUrls = {
+          's1-skills-assessment': 'assignments/s1-w1-skills-self-assessment.html',
+          's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
+          's1-problem-analysis': 'assignments/s1-w2-five-whys.html',
+          's1-skills-revision': 'assignments/s1-w2-skills-revision.html',
+          's1-sprint-plan': 'assignments/s1-w2-sprint-plan.html',
+          's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
+          's1-learning-log': 'assignments/s1-w3-learning-log.html',
+          's1-reflection-3': 'assignments/s1-w3-productive-reflection.html',
+          's1-demonstration': 'assignments/s1-w4-demonstration.html',
+          's1-peer-evaluation': 'assignments/s1-w4-peer-evaluation.html',
+          's1-bridge': 'assignments/s1-bridge-reflection.html'
+        };
+
         const weekAssignments = getCST349AssignmentsDueInWeek(currentWeek);
         weekAssignments.forEach(assignment => {
+          const localUrl = localAssignmentUrls[assignment.key] || getCST349AssignmentUrl(assignment.key);
           dueItems.push({
-            title: assignment.title.replace(/^Sprint \d+: /, ''),
-            url: getCST349AssignmentUrl(assignment.key),
+            title: assignment.title.replace(/^S\d+: /, ''),
+            url: localUrl,
             type: assignment.type,
             dueText: formatCST349Date(assignment.dueDate)
           });

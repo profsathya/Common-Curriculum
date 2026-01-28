@@ -360,11 +360,24 @@
 
       // Add regular assignments due this week (if we're in a valid week)
       if (currentWeek !== null && currentWeek >= 1) {
+        // Map assignment keys to local HTML files
+        const localAssignmentUrls = {
+          's1-superagency-challenge': 'assignments/s1-w1-superagency-challenge.html',
+          's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
+          's1-peer-conversation': 'assignments/s1-w1-peer-reflection.html',
+          's1-problem-analysis': 'assignments/s1-w2-five-whys.html',
+          's1-solution-architecture': 'assignments/s1-w3-solution-architecture.html',
+          's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
+          's1-build-log': 'assignments/s1-w3-build-log.html',
+          's1-bridge': 'assignments/s1-bridge-reflection.html'
+        };
+
         const weekAssignments = getAssignmentsDueInWeek(currentWeek);
         weekAssignments.forEach(assignment => {
+          const localUrl = localAssignmentUrls[assignment.key] || getAssignmentUrl(assignment.key);
           dueItems.push({
-            title: assignment.title.replace(/^Sprint \d+: /, ''),
-            url: getAssignmentUrl(assignment.key),
+            title: assignment.title.replace(/^S\d+: /, ''),
+            url: localUrl,
             type: assignment.type,
             dueText: formatDate(assignment.dueDate)
           });
