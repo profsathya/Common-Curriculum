@@ -27,6 +27,7 @@ on:
           - create-assignments
           - update-assignments
           - create-quizzes
+          - sync-html-links
       dry_run:
         description: 'Dry run (preview only, no changes)'
         required: true
@@ -73,7 +74,7 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if [[ -n $(git status --porcelain config/) ]]; then
+          if [[ -n $(git status --porcelain config/ cst349/ cst395/) ]]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -84,6 +85,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add config/
+          git add config/ cst349/ cst395/
           git commit -m "Auto-sync Canvas assignment IDs [skip ci]"
           git push

@@ -24,10 +24,12 @@ const COURSES = {
   cst349: {
     configFile: 'config/cst349-config.js',
     configVar: 'CST349_CONFIG',
+    htmlDir: 'cst349',
   },
   cst395: {
     configFile: 'config/cst395-config.js',
     configVar: 'CST395_CONFIG',
+    htmlDir: 'cst395',
   },
 };
 
@@ -1019,6 +1021,198 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
 }
 
 /**
+ * Recursively find all HTML files in a directory
+ */
+function findHtmlFiles(dir, files = []) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      findHtmlFiles(fullPath, files);
+    } else if (entry.name.endsWith('.html')) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+/**
+ * Build Canvas URL for an assignment entry
+ */
+function buildCanvasUrl(baseUrl, entry) {
+  if (!entry.canvasId || entry.canvasId === '' || entry.canvasId === 'null') {
+    return null;
+  }
+
+  // Quizzes use /quizzes/ path, assignments use /assignments/
+  if (entry.canvasType === 'quiz' || entry.quizType) {
+    return `${baseUrl}/quizzes/${entry.canvasId}`;
+  }
+  return `${baseUrl}/assignments/${entry.canvasId}`;
+}
+
+/**
+ * Action: Sync HTML links with config Canvas IDs
+ * Updates href attributes in HTML files based on data-canvas-assignment attributes
+ */
+async function syncHtmlLinks(courseName, dryRun = true) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Syncing HTML links for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+
+  const htmlDir = path.join(process.cwd(), courseInfo.htmlDir);
+
+  if (!fs.existsSync(htmlDir)) {
+    console.log(`\n⚠ HTML directory not found: ${htmlDir}`);
+    return { updated: [], notFound: [] };
+  }
+
+  // Find all HTML files
+  const htmlFiles = findHtmlFiles(htmlDir);
+  console.log(`Found ${htmlFiles.length} HTML files in ${courseInfo.htmlDir}/`);
+
+  // Regex to find links with data-canvas-assignment attribute
+  // Matches: <a ... data-canvas-assignment="key" ... href="..." ...>
+  const linkRegex = /<a\s+([^>]*?)data-canvas-assignment=["']([^"']+)["']([^>]*?)>/gi;
+  const hrefRegex = /href=["']([^"']*)["']/i;
+
+  const results = {
+    updated: [],
+    notFound: [],
+    noCanvasId: [],
+    skipped: [],
+  };
+
+  for (const filePath of htmlFiles) {
+    let content = fs.readFileSync(filePath, 'utf-8');
+    let fileModified = false;
+    const relativePath = path.relative(process.cwd(), filePath);
+
+    // Find all matches in this file
+    let match;
+    const updates = [];
+
+    // Reset regex lastIndex
+    linkRegex.lastIndex = 0;
+
+    while ((match = linkRegex.exec(content)) !== null) {
+      const fullMatch = match[0];
+      const beforeAttr = match[1];
+      const assignmentKey = match[2];
+      const afterAttr = match[3];
+
+      // Look up the assignment in config
+      const entry = config.assignments[assignmentKey];
+
+      if (!entry) {
+        results.notFound.push({ file: relativePath, key: assignmentKey });
+        continue;
+      }
+
+      const newUrl = buildCanvasUrl(config.canvasBaseUrl, entry);
+
+      if (!newUrl) {
+        results.noCanvasId.push({ file: relativePath, key: assignmentKey });
+        continue;
+      }
+
+      // Extract current href
+      const combinedAttrs = beforeAttr + afterAttr;
+      const hrefMatch = combinedAttrs.match(hrefRegex);
+      const currentHref = hrefMatch ? hrefMatch[1] : '';
+
+      if (currentHref === newUrl) {
+        results.skipped.push({ file: relativePath, key: assignmentKey });
+        continue;
+      }
+
+      updates.push({
+        key: assignmentKey,
+        oldUrl: currentHref,
+        newUrl: newUrl,
+        fullMatch: fullMatch,
+      });
+    }
+
+    // Apply updates to this file
+    for (const update of updates) {
+      // Build new link tag with updated href
+      let newTag = update.fullMatch;
+
+      if (hrefRegex.test(newTag)) {
+        // Replace existing href
+        newTag = newTag.replace(hrefRegex, `href="${update.newUrl}"`);
+      } else {
+        // Add href before the closing >
+        newTag = newTag.slice(0, -1) + ` href="${update.newUrl}">`;
+      }
+
+      content = content.replace(update.fullMatch, newTag);
+      fileModified = true;
+
+      results.updated.push({
+        file: relativePath,
+        key: update.key,
+        oldUrl: update.oldUrl,
+        newUrl: update.newUrl,
+      });
+    }
+
+    // Write file if modified
+    if (fileModified && !dryRun) {
+      fs.writeFileSync(filePath, content, 'utf-8');
+    }
+  }
+
+  // Report results
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('RESULTS:');
+  console.log(`  Links updated: ${results.updated.length}`);
+  console.log(`  Already correct: ${results.skipped.length}`);
+  console.log(`  Config key not found: ${results.notFound.length}`);
+  console.log(`  Missing Canvas ID: ${results.noCanvasId.length}`);
+
+  if (results.updated.length > 0) {
+    console.log(`\n${'─'.repeat(40)}`);
+    console.log('LINKS UPDATED:');
+    results.updated.forEach(item => {
+      console.log(`\n  ${item.file}`);
+      console.log(`    ${item.key}: ${item.oldUrl || '(none)'}`);
+      console.log(`         → ${item.newUrl}`);
+    });
+  }
+
+  if (results.notFound.length > 0) {
+    console.log(`\n${'─'.repeat(40)}`);
+    console.log('CONFIG KEYS NOT FOUND:');
+    results.notFound.forEach(item => {
+      console.log(`  ${item.file}: "${item.key}"`);
+    });
+  }
+
+  if (results.noCanvasId.length > 0) {
+    console.log(`\n${'─'.repeat(40)}`);
+    console.log('MISSING CANVAS IDS (run create-assignments first):');
+    results.noCanvasId.forEach(item => {
+      console.log(`  ${item.file}: "${item.key}"`);
+    });
+  }
+
+  if (dryRun) {
+    console.log(`\n⚠ DRY RUN - No files modified. Run with --dry-run=false to apply changes.`);
+  } else if (results.updated.length > 0) {
+    console.log(`\n✓ Updated ${results.updated.length} links in HTML files`);
+  } else {
+    console.log(`\n✓ All links are up to date`);
+  }
+
+  return results;
+}
+
+/**
  * Main entry point
  */
 async function main() {
@@ -1033,7 +1227,7 @@ async function main() {
   console.log('================');
   console.log(`Action: ${action}`);
   console.log(`Course: ${course}`);
-  if (['rename-assignments', 'create-assignments', 'update-assignments', 'create-quizzes'].includes(action)) {
+  if (['rename-assignments', 'create-assignments', 'update-assignments', 'create-quizzes', 'sync-html-links'].includes(action)) {
     console.log(`Dry Run: ${dryRun}`);
     if (limit > 0) {
       console.log(`Limit: ${limit} changes`);
@@ -1136,9 +1330,21 @@ async function main() {
         }
         break;
 
+      case 'sync-html-links':
+        if (course === 'both') {
+          await syncHtmlLinks('cst349', dryRun);
+          await syncHtmlLinks('cst395', dryRun);
+        } else if (COURSES[course]) {
+          await syncHtmlLinks(course, dryRun);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
+        break;
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: fetch-assignments, validate-config, list-courses, list-groups, rename-assignments, create-assignments, update-assignments, create-quizzes');
+        console.error('Valid actions: fetch-assignments, validate-config, list-courses, list-groups, rename-assignments, create-assignments, update-assignments, create-quizzes, sync-html-links');
         process.exit(1);
     }
   } catch (error) {
