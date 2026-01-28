@@ -757,6 +757,268 @@ async function listCourses(api) {
 }
 
 /**
+ * Action: List assignment groups for a course
+ */
+async function listGroups(api, courseName) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Assignment Groups for ${courseName.toUpperCase()}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+  const courseId = extractCourseId(config.canvasBaseUrl);
+
+  console.log(`Canvas Course ID: ${courseId}\n`);
+
+  const groups = await api.listAssignmentGroups(courseId);
+
+  console.log('Assignment Groups:');
+  console.log('─'.repeat(50));
+
+  groups.forEach(group => {
+    const weight = group.group_weight || 0;
+    console.log(`  [${group.id}] ${group.name}`);
+    console.log(`       Weight: ${weight}% | Position: ${group.position}`);
+  });
+
+  console.log(`\nTotal: ${groups.length} groups`);
+  console.log('\nUse these group IDs in config: assignmentGroup: "<group_id>"');
+
+  return groups;
+}
+
+/**
+ * Build Canvas question object from config question
+ */
+function buildCanvasQuestion(configQuestion, index) {
+  const question = {
+    question_name: `Question ${index + 1}`,
+    question_text: configQuestion.text,
+    points_possible: configQuestion.points || 1,
+  };
+
+  switch (configQuestion.type) {
+    case 'multiple_choice':
+      question.question_type = 'multiple_choice_question';
+      question.answers = configQuestion.answers.map((answer, i) => ({
+        answer_text: answer,
+        answer_weight: 100 / configQuestion.answers.length, // Equal weight for surveys
+      }));
+      break;
+
+    case 'essay':
+    case 'text':
+      question.question_type = 'essay_question';
+      break;
+
+    case 'short_answer':
+      question.question_type = 'short_answer_question';
+      break;
+
+    case 'scale':
+    case 'likert':
+      // Canvas doesn't have native Likert, use multiple choice
+      question.question_type = 'multiple_choice_question';
+      const min = configQuestion.min || 1;
+      const max = configQuestion.max || 5;
+      const labels = configQuestion.labels || {};
+      question.answers = [];
+      for (let i = min; i <= max; i++) {
+        const label = labels[i] || String(i);
+        question.answers.push({
+          answer_text: `${i} - ${label}`,
+          answer_weight: 100 / (max - min + 1),
+        });
+      }
+      break;
+
+    case 'true_false':
+      question.question_type = 'true_false_question';
+      break;
+
+    default:
+      question.question_type = 'essay_question';
+  }
+
+  return question;
+}
+
+/**
+ * Action: Create quizzes/surveys in Canvas from config
+ */
+async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Creating quizzes for ${courseName.toUpperCase()}${dryRun ? ' (DRY RUN)' : ''}${limit > 0 ? ` (LIMIT: ${limit})` : ''}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const { config, rawContent, configPath } = loadConfig(courseInfo.configFile, courseInfo.configVar);
+  const courseId = extractCourseId(config.canvasBaseUrl);
+
+  console.log(`Canvas Course ID: ${courseId}`);
+
+  // Get assignment groups for mapping
+  const assignmentGroups = await api.listAssignmentGroups(courseId);
+  const groupByName = new Map(assignmentGroups.map(g => [g.name.toLowerCase(), g]));
+  const groupById = new Map(assignmentGroups.map(g => [String(g.id), g]));
+
+  // Fetch existing quizzes
+  console.log('\nFetching existing quizzes from Canvas...');
+  const existingQuizzes = await api.listQuizzes(courseId);
+  const existingByTitle = new Map(existingQuizzes.map(q => [q.title.toLowerCase(), q]));
+  console.log(`Found ${existingQuizzes.length} existing quizzes`);
+
+  // Find quiz entries in config (entries with canvasType: "quiz" or quizType field)
+  const quizEntries = [];
+  for (const [key, entry] of Object.entries(config.assignments)) {
+    if (entry.canvasType === 'quiz' || entry.quizType) {
+      quizEntries.push({ key, ...entry });
+    }
+  }
+
+  if (quizEntries.length === 0) {
+    console.log('\n✓ No quiz entries found in config');
+    console.log('  To add a quiz, include canvasType: "quiz" and quizType in assignment config');
+    return { created: [] };
+  }
+
+  // Find quizzes that need to be created
+  const toCreate = quizEntries.filter(entry => {
+    const exists = existingByTitle.has(entry.title.toLowerCase());
+    return !exists && (!entry.canvasId || entry.canvasId === 'null' || entry.canvasId === '');
+  });
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('ANALYSIS:');
+  console.log(`  Quiz entries in config: ${quizEntries.length}`);
+  console.log(`  Already exist: ${quizEntries.length - toCreate.length}`);
+  console.log(`  Need to create: ${toCreate.length}`);
+
+  if (toCreate.length === 0) {
+    console.log('\n✓ All quizzes already exist in Canvas');
+    return { created: [] };
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('QUIZZES TO CREATE:');
+  toCreate.forEach(entry => {
+    console.log(`\n  ${entry.key}: "${entry.title}"`);
+    console.log(`       Type: ${entry.quizType || 'graded_survey'}`);
+    console.log(`       Points: ${entry.points || 'auto'}`);
+    console.log(`       Due: ${entry.dueDate || 'Not set'}`);
+    if (entry.questions) {
+      console.log(`       Questions: ${entry.questions.length}`);
+    }
+    if (entry.assignmentGroup) {
+      console.log(`       Group: ${entry.assignmentGroup}`);
+    }
+  });
+
+  if (dryRun) {
+    console.log(`\n⚠ DRY RUN - No changes made. Run with --dry-run=false to apply changes.`);
+    return { created: [] };
+  }
+
+  // Create quizzes
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log('CREATING QUIZZES...');
+
+  const created = [];
+  let errorCount = 0;
+  const itemsToProcess = limit > 0 ? toCreate.slice(0, limit) : toCreate;
+
+  if (limit > 0 && toCreate.length > limit) {
+    console.log(`  (Processing ${limit} of ${toCreate.length} items)\n`);
+  }
+
+  for (const entry of itemsToProcess) {
+    try {
+      // Build quiz data
+      const quizData = {
+        title: entry.title,
+        quiz_type: entry.quizType || 'graded_survey',
+        published: false,
+      };
+
+      // Add due date
+      if (entry.dueDate) {
+        const time = entry.dueTime || '23:59';
+        quizData.due_at = `${entry.dueDate}T${time}:00Z`;
+      }
+
+      // Calculate points
+      if (entry.points) {
+        quizData.points_possible = entry.points;
+      } else if (entry.questions) {
+        // Sum question points
+        quizData.points_possible = entry.questions.reduce((sum, q) => sum + (q.points || 1), 0);
+      }
+
+      // Find assignment group
+      if (entry.assignmentGroup) {
+        // Try to match by name or ID
+        const group = groupByName.get(entry.assignmentGroup.toLowerCase()) ||
+                      groupById.get(String(entry.assignmentGroup));
+        if (group) {
+          quizData.assignment_group_id = group.id;
+        } else {
+          console.log(`  ⚠ Warning: Assignment group "${entry.assignmentGroup}" not found`);
+        }
+      }
+
+      // Create the quiz
+      const newQuiz = await api.createQuiz(courseId, quizData);
+      console.log(`  ✓ Created quiz: "${entry.title}" [ID: ${newQuiz.id}]`);
+
+      // Add questions if defined
+      if (entry.questions && entry.questions.length > 0) {
+        console.log(`    Adding ${entry.questions.length} questions...`);
+        for (let i = 0; i < entry.questions.length; i++) {
+          const question = buildCanvasQuestion(entry.questions[i], i);
+          await api.addQuizQuestion(courseId, newQuiz.id, question);
+        }
+        console.log(`    ✓ Added ${entry.questions.length} questions`);
+      }
+
+      created.push({
+        key: entry.key,
+        title: entry.title,
+        canvasId: String(newQuiz.id),
+      });
+
+    } catch (err) {
+      console.log(`  ✗ Failed to create "${entry.title}": ${err.message}`);
+      errorCount++;
+    }
+  }
+
+  console.log(`\n${'─'.repeat(40)}`);
+  console.log(`Created: ${created.length} | Failed: ${errorCount}`);
+  if (limit > 0 && toCreate.length > limit) {
+    console.log(`Remaining: ${toCreate.length - limit} items (run again to continue)`);
+  }
+
+  // Update config file with new Canvas IDs
+  if (created.length > 0) {
+    console.log(`\nUpdating config file with new Canvas IDs...`);
+    let updatedContent = rawContent;
+
+    for (const item of created) {
+      const pattern = new RegExp(
+        `("${item.key}":\\s*\\{[^}]*canvasId:\\s*)"[^"]*"`,
+        'g'
+      );
+      updatedContent = updatedContent.replace(pattern, `$1"${item.canvasId}"`);
+    }
+
+    fs.writeFileSync(configPath, updatedContent, 'utf-8');
+    console.log(`✓ Updated ${created.length} quiz IDs in ${courseInfo.configFile}`);
+  }
+
+  return { created };
+}
+
+/**
  * Main entry point
  */
 async function main() {
@@ -771,7 +1033,7 @@ async function main() {
   console.log('================');
   console.log(`Action: ${action}`);
   console.log(`Course: ${course}`);
-  if (['rename-assignments', 'create-assignments', 'update-assignments'].includes(action)) {
+  if (['rename-assignments', 'create-assignments', 'update-assignments', 'create-quizzes'].includes(action)) {
     console.log(`Dry Run: ${dryRun}`);
     if (limit > 0) {
       console.log(`Limit: ${limit} changes`);
@@ -788,6 +1050,18 @@ async function main() {
     switch (action) {
       case 'list-courses':
         await listCourses(api);
+        break;
+
+      case 'list-groups':
+        if (course === 'both') {
+          await listGroups(api, 'cst349');
+          await listGroups(api, 'cst395');
+        } else if (COURSES[course]) {
+          await listGroups(api, course);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
         break;
 
       case 'fetch-assignments':
@@ -850,9 +1124,21 @@ async function main() {
         }
         break;
 
+      case 'create-quizzes':
+        if (course === 'both') {
+          await createQuizzes(api, 'cst349', dryRun, limit);
+          await createQuizzes(api, 'cst395', dryRun, limit);
+        } else if (COURSES[course]) {
+          await createQuizzes(api, course, dryRun, limit);
+        } else {
+          console.error(`Unknown course: ${course}`);
+          process.exit(1);
+        }
+        break;
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: fetch-assignments, validate-config, list-courses, rename-assignments, create-assignments, update-assignments');
+        console.error('Valid actions: fetch-assignments, validate-config, list-courses, list-groups, rename-assignments, create-assignments, update-assignments, create-quizzes');
         process.exit(1);
     }
   } catch (error) {

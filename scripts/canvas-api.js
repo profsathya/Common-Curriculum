@@ -161,6 +161,66 @@ class CanvasAPI {
   async listQuizzes(courseId) {
     return this.requestAllPages(`/courses/${courseId}/quizzes?per_page=100`);
   }
+
+  /**
+   * List all assignment groups in a course
+   */
+  async listAssignmentGroups(courseId) {
+    return this.requestAllPages(`/courses/${courseId}/assignment_groups?per_page=100`);
+  }
+
+  /**
+   * Create a new quiz
+   * @param {string} courseId - Course ID
+   * @param {object} quiz - Quiz data
+   *   - title: Quiz title
+   *   - quiz_type: "practice_quiz", "assignment", "graded_survey", "survey"
+   *   - points_possible: Total points
+   *   - due_at: Due date (ISO 8601)
+   *   - published: Boolean
+   *   - assignment_group_id: Assignment group ID
+   */
+  async createQuiz(courseId, quiz) {
+    return this.request(`/courses/${courseId}/quizzes`, {
+      method: 'POST',
+      body: JSON.stringify({ quiz }),
+    });
+  }
+
+  /**
+   * Update an existing quiz
+   */
+  async updateQuiz(courseId, quizId, quiz) {
+    return this.request(`/courses/${courseId}/quizzes/${quizId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ quiz }),
+    });
+  }
+
+  /**
+   * Add a question to a quiz
+   * @param {string} courseId - Course ID
+   * @param {string} quizId - Quiz ID
+   * @param {object} question - Question data
+   *   - question_name: Short name
+   *   - question_text: Full question HTML
+   *   - question_type: "multiple_choice_question", "essay_question", "short_answer_question", etc.
+   *   - points_possible: Points for this question
+   *   - answers: Array of answer objects (for multiple choice)
+   */
+  async addQuizQuestion(courseId, quizId, question) {
+    return this.request(`/courses/${courseId}/quizzes/${quizId}/questions`, {
+      method: 'POST',
+      body: JSON.stringify({ question }),
+    });
+  }
+
+  /**
+   * Get quiz questions
+   */
+  async listQuizQuestions(courseId, quizId) {
+    return this.requestAllPages(`/courses/${courseId}/quizzes/${quizId}/questions?per_page=100`);
+  }
 }
 
 module.exports = { CanvasAPI };
