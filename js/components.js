@@ -62,41 +62,6 @@ function collapseCollapsible(contentId) {
   content.classList.remove('is-expanded');
 }
 
-// ============================================
-// Canvas Link Population
-// ============================================
-
-/**
- * Populate all assignment links on the page from config
- * Links should have data-assignment="assignment-key" attribute
- * @param {Object} config - The course config object (CST395_CONFIG or CST349_CONFIG)
- */
-function populateAssignmentLinks(config) {
-  const links = document.querySelectorAll('[data-assignment]');
-
-  links.forEach(link => {
-    const key = link.getAttribute('data-assignment');
-    const assignment = config.assignments[key];
-
-    if (!assignment) {
-      console.warn(`Assignment not found in config: ${key}`);
-      return;
-    }
-
-    // Build Canvas URL
-    const url = `${config.canvasBaseUrl}/assignments/${assignment.canvasId}`;
-    link.href = url;
-
-    // Open in new tab (not inside iframe)
-    link.target = '_blank';
-
-    // Optionally set title if not already set
-    if (!link.textContent.trim() && assignment.title) {
-      link.textContent = assignment.title;
-    }
-  });
-}
-
 /**
  * Populate all due dates on the page from config
  * Elements should have data-due-date="assignment-key" attribute
@@ -470,8 +435,7 @@ function initHomePage(config) {
   // Initialize collapsibles
   initCollapsibles();
 
-  // Populate Canvas links
-  populateAssignmentLinks(config);
+  // Populate due dates (Canvas links are baked in at build time)
   populateDueDates(config);
 
   // Always update status banner (handles pre/post semester)
@@ -510,8 +474,7 @@ function initSprintPage(config) {
   // Initialize collapsibles
   initCollapsibles();
 
-  // Populate Canvas links
-  populateAssignmentLinks(config);
+  // Populate due dates (Canvas links are baked in at build time)
   populateDueDates(config);
 
   // Highlight current week
@@ -607,8 +570,7 @@ function initSprintPageWithLoom(config) {
   // Initialize collapsibles
   initCollapsibles();
 
-  // Populate Canvas links
-  populateAssignmentLinks(config);
+  // Populate due dates and Loom links (Canvas links are baked in at build time)
   populateDueDates(config);
 
   // Populate Loom links
