@@ -6,6 +6,289 @@
   <title>Tuesday | CTI 2.0 Strategy Meeting</title>
   <link rel="stylesheet" href="../css/design-system.css">
   <link rel="stylesheet" href="cti-styles.css">
+  <style>
+    .activity-card {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-4);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .activity-card:hover {
+      border-color: var(--cti-primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .activity-card.expanded {
+      border-color: var(--cti-primary);
+    }
+
+    .activity-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      gap: var(--space-3);
+    }
+
+    .activity-card__main {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex: 1;
+    }
+
+    .activity-card__number {
+      width: 36px;
+      height: 36px;
+      background: var(--cti-primary-light);
+      color: var(--cti-primary-dark);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+    }
+
+    .activity-card__number--pm {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .activity-card__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--gray-800);
+      margin: 0;
+    }
+
+    .activity-card__duration {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .activity-card__toggle {
+      color: var(--gray-400);
+      font-size: 1.25rem;
+      transition: transform 0.2s ease;
+    }
+
+    .activity-card.expanded .activity-card__toggle {
+      transform: rotate(180deg);
+    }
+
+    .activity-card__content {
+      display: none;
+      padding: 0 var(--space-4) var(--space-4);
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .activity-card.expanded .activity-card__content {
+      display: block;
+    }
+
+    .activity-card__desc {
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+      padding-top: var(--space-4);
+    }
+
+    .checkpoint {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1px solid #f59e0b;
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      margin-top: var(--space-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .checkpoint__icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .checkpoint__content {
+      flex: 1;
+    }
+
+    .checkpoint__time {
+      font-weight: 700;
+      color: #92400e;
+      font-size: var(--text-sm);
+    }
+
+    .checkpoint__text {
+      color: #78350f;
+      font-size: var(--text-sm);
+      margin-top: 2px;
+    }
+
+    .discuss-prompt {
+      background: #f0fdf4;
+      border-left: 3px solid #22c55e;
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+      font-size: var(--text-sm);
+      color: #166534;
+    }
+
+    .session-header {
+      background: linear-gradient(135deg, var(--cti-primary-light) 0%, #fef3c7 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .session-header--pm {
+      background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+    }
+
+    .session-header__info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .session-header__time {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--cti-primary-dark);
+    }
+
+    .session-header--pm .session-header__time {
+      color: #1e40af;
+    }
+
+    .session-header__goal {
+      font-size: var(--text-sm);
+      color: #92400e;
+      margin-top: var(--space-1);
+    }
+
+    .session-header--pm .session-header__goal {
+      color: #1e3a8a;
+    }
+
+    .session-header__final {
+      background: white;
+      border: 2px solid var(--cti-primary);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      text-align: center;
+    }
+
+    .session-header--pm .session-header__final {
+      border-color: #3b82f6;
+    }
+
+    .session-header__final-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cti-primary-dark);
+    }
+
+    .session-header--pm .session-header__final-label {
+      color: #1e40af;
+    }
+
+    .session-header__final-time {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .session-divider {
+      text-align: center;
+      padding: var(--space-5) 0;
+      color: var(--gray-400);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .group-box {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+    }
+
+    .group-box__title {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .group-box__text {
+      color: var(--gray-600);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+    }
+
+    .exploration-questions {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+    }
+
+    .exploration-questions__title {
+      font-weight: 700;
+      color: #166534;
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-2);
+    }
+
+    .exploration-questions ul {
+      margin: 0;
+      padding-left: var(--space-4);
+    }
+
+    .exploration-questions li {
+      color: #15803d;
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .needs-design {
+      background: #fef3c7;
+      border: 2px dashed #f59e0b;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .needs-design__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: var(--space-2);
+    }
+
+    .needs-design__text {
+      color: #78350f;
+      font-size: var(--text-sm);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -27,110 +310,228 @@
       <p class="identity-header__tagline">From Experience to CTI's Work to Summer 2026</p>
     </header>
 
-    <!-- Overview -->
-    <section class="meeting-info">
-      <h2 class="meeting-info__title">Session Overview</h2>
-      <div class="meeting-info__grid">
-        <span class="meeting-info__label">Morning</span>
-        <span class="meeting-info__value">9:00am - 12:00pm — Connect to CTI's work</span>
-        <span class="meeting-info__label">Afternoon</span>
-        <span class="meeting-info__value">1:00pm - 5:00pm — Design Summer 2026</span>
+    <!-- MORNING SESSION -->
+    <div class="session-header">
+      <div class="session-header__info">
+        <p class="session-header__time">Morning: 9:00am - 12:00pm</p>
+        <p class="session-header__goal">Connect Monday's experience to CTI's existing work</p>
       </div>
-    </section>
-
-    <!-- Morning Agenda -->
-    <div class="agenda-day">
-      <div class="agenda-day__header">
-        <h3 class="agenda-day__title">Morning: Connecting Experience to Design <span class="designed-tag">designed</span></h3>
-        <p class="agenda-day__times">9:00am - 12:00pm (3 hours)</p>
-        <p class="agenda-day__theme">"How CTI Is Building This"</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">9:00 - 9:20am</p>
-        <p class="agenda-block__title">Reconnect with Monday</p>
-        <p class="agenda-block__desc">Form groups of 3 (will be exploration groups). Review what you wrote down yesterday.</p>
-        <div class="agenda-phase__discuss">
-          <strong>Discuss:</strong> What did we actually learn about working at a higher level of abstraction? What capabilities did we need?
-        </div>
-        <p class="agenda-block__desc" style="margin-top: var(--space-2);">Then each group shares one insight with the room (no discussion, just collection).</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">9:20 - 9:25am</p>
-        <p class="agenda-block__title">The Bridge (Sathya)</p>
-        <p class="agenda-block__desc">"What you experienced and what you noticed about the capabilities required—that's what we're trying to develop in students. We've been building toward this. I want you to explore three pieces of that work and see how they connect."</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">9:25 - 10:05am</p>
-        <p class="agenda-block__title">Exploration (Groups of 3)</p>
-        <p class="agenda-block__desc">Each group is assigned one artifact to explore. Their task:</p>
-        <div class="reflection-prompt">
-          <p class="reflection-prompt__label">Exploration Questions</p>
-          <ul>
-            <li>What here develops the capabilities you needed yesterday?</li>
-            <li>What addresses a question from the 1/8 discussion?</li>
-            <li>What new question does this raise?</li>
-          </ul>
-        </div>
-
-        <div class="artifact-assignment">
-          <p class="artifact-assignment__title">Dojo Group (3 people)</p>
-          <p class="artifact-assignment__desc">Explore the prompt configuration—constructs, sparring partners, practice scenarios. Look at how the prompts scaffold thinking without creating dependency. Try editing a prompt. What's the machinery doing?</p>
-        </div>
-
-        <div class="artifact-assignment">
-          <p class="artifact-assignment__title">CST395 Group (3 people)</p>
-          <p class="artifact-assignment__desc">Read the week-by-week course structure. How does the scaffolding progression work? What's assessed vs. explicitly NOT assessed? Where do meta-habits and capabilities show up in practice?</p>
-        </div>
-
-        <div class="artifact-assignment">
-          <p class="artifact-assignment__title">WIN Application Group (3 people)</p>
-          <p class="artifact-assignment__desc">Read the core argument. What problem are we claiming to solve, for whom? How does the language connect to what you experienced yesterday?</p>
-        </div>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">10:05 - 10:20am</p>
-        <p class="agenda-block__title">Break</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">10:20 - 11:20am</p>
-        <p class="agenda-block__title">Teach Back</p>
-        <p class="agenda-block__desc">Each group has 12-15 minutes to teach the others what they explored. Not a summary—focused on: "Here's how this addresses [specific question]" and "Here's the new question this raised."</p>
-        <p class="agenda-block__desc" style="margin-top: var(--space-2);">After each group: 5 minutes for questions from the room.</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">11:20 - 11:50am</p>
-        <p class="agenda-block__title">Synthesis</p>
-        <p class="agenda-block__desc">Open discussion: What patterns emerged? What's still missing? What do we now understand that we didn't before the meeting started?</p>
-      </div>
-
-      <div class="agenda-block">
-        <p class="agenda-block__time">11:50am - 12:00pm</p>
-        <p class="agenda-block__title">Bridge to Afternoon</p>
-        <p class="agenda-block__desc">Preview of afternoon session: Now that we understand the capabilities and have seen how we're trying to develop them, we design what CTI should offer.</p>
+      <div class="session-header__final">
+        <p class="session-header__final-label">Break for Lunch</p>
+        <p class="session-header__final-time">12:00pm</p>
       </div>
     </div>
 
-    <!-- Afternoon Agenda -->
-    <div class="agenda-day">
-      <div class="agenda-day__header">
-        <h3 class="agenda-day__title">Afternoon: Clean Slate Design <span class="discuss-tag">needs design</span></h3>
-        <p class="agenda-day__times">1:00pm - 5:00pm (4 hours)</p>
-      </div>
+    <!-- Morning Activity Cards -->
+    <div class="activity-cards">
 
-      <div class="agenda-block">
-        <p class="agenda-block__time">1:00 - 5:00pm</p>
-        <p class="agenda-block__title">Design Learning Experiences for Summer 2026</p>
-        <p class="agenda-block__desc">Start fresh. What 2-3 learning experiences should we announce for Summer 2026? Design together without being anchored to current programs.</p>
-        <div class="note-box" style="margin-top: var(--space-3);">
-          <strong>To be developed</strong> after reviewing Monday and Tuesday morning with the team.
+      <!-- Activity 1: Reconnect -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">1</span>
+            <div>
+              <h3 class="activity-card__title">Reconnect with Monday</h3>
+              <p class="activity-card__duration">15-25 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Form groups of 3 (these will be your exploration groups). Review what you wrote down yesterday.</p>
+
+          <div class="discuss-prompt">
+            <strong>Discuss:</strong> What did we actually learn about working at a higher level of abstraction? What capabilities did we need?
+          </div>
+
+          <p class="activity-card__desc" style="margin-top: var(--space-2);">Then each group shares one insight with the room (no discussion, just collection).</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 9:25am latest</p>
+              <p class="checkpoint__text">Move to The Bridge. One insight per group is enough—don't let sharing spiral.</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Activity 2: The Bridge -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">2</span>
+            <div>
+              <h3 class="activity-card__title">The Bridge</h3>
+              <p class="activity-card__duration">5-10 min (Sathya)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">"What you experienced and what you noticed about the capabilities required—that's what we're trying to develop in students. We've been building toward this. I want you to explore three pieces of that work and see how they connect."</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 9:35am latest</p>
+              <p class="checkpoint__text">Groups should be starting their exploration. Keep this brief.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 3: Exploration -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">3</span>
+            <div>
+              <h3 class="activity-card__title">Artifact Exploration</h3>
+              <p class="activity-card__duration">30-50 min (groups of 3)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Each group explores one artifact deeply. Not just reading—actively investigating and questioning.</p>
+
+          <div class="exploration-questions">
+            <p class="exploration-questions__title">Questions to Answer</p>
+            <ul>
+              <li>What here develops the capabilities you needed yesterday?</li>
+              <li>What addresses a question from the 1/8 discussion?</li>
+              <li>What new question does this raise?</li>
+            </ul>
+          </div>
+
+          <div class="group-box">
+            <p class="group-box__title">Dojo Group (3 people)</p>
+            <p class="group-box__text">Explore the prompt configuration—constructs, sparring partners, practice scenarios. Look at how the prompts scaffold thinking without creating dependency. Try editing a prompt. What's the machinery doing?</p>
+          </div>
+
+          <div class="group-box">
+            <p class="group-box__title">CST395 Group (3 people)</p>
+            <p class="group-box__text">Read the week-by-week course structure. How does the scaffolding progression work? What's assessed vs. explicitly NOT assessed? Where do meta-habits and capabilities show up in practice?</p>
+          </div>
+
+          <div class="group-box">
+            <p class="group-box__title">WIN Application Group (3 people)</p>
+            <p class="group-box__text">Read the core argument. What problem are we claiming to solve, for whom? How does the language connect to what you experienced yesterday?</p>
+          </div>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 10:15am latest</p>
+              <p class="checkpoint__text">Call for break. Groups should have enough to teach back—they don't need to finish everything.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 4: Break -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">4</span>
+            <div>
+              <h3 class="activity-card__title">Break</h3>
+              <p class="activity-card__duration">10-15 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Quick break. Groups can use this time to organize their teach-back if needed.</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 10:30am latest</p>
+              <p class="checkpoint__text">Start teach-back. Need at least 90 minutes for teach-back + synthesis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 5: Teach Back -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">5</span>
+            <div>
+              <h3 class="activity-card__title">Teach Back</h3>
+              <p class="activity-card__duration">45-60 min (12-15 min per group + Q&A)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Each group has 12-15 minutes to teach the others what they explored. Not a summary—focused on:</p>
+          <ul style="margin: var(--space-2) 0 0 var(--space-4); color: var(--gray-600); font-size: var(--text-sm);">
+            <li>"Here's how this addresses [specific question]"</li>
+            <li>"Here's the new question this raised"</li>
+          </ul>
+          <p class="activity-card__desc" style="margin-top: var(--space-2);">After each group: 3-5 minutes for questions from the room.</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 11:30am latest</p>
+              <p class="checkpoint__text">All three groups must be done. Cut Q&A short if needed to protect synthesis time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 6: Synthesis -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">6</span>
+            <div>
+              <h3 class="activity-card__title">Synthesis + Bridge to Afternoon</h3>
+              <p class="activity-card__duration">25-35 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc"><strong>Synthesis (20-25 min):</strong> Open discussion—What patterns emerged? What's still missing? What do we now understand that we didn't before the meeting started?</p>
+
+          <p class="activity-card__desc" style="margin-top: var(--space-2);"><strong>Bridge (5 min):</strong> Preview of afternoon session: Now that we understand the capabilities and have seen how we're trying to develop them, we design what CTI should offer.</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 12:00pm</p>
+              <p class="checkpoint__text">Break for lunch. Capture any unfinished synthesis points on the board for after lunch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="session-divider">— Lunch Break (12:00 - 1:00pm) —</div>
+
+    <!-- AFTERNOON SESSION -->
+    <div class="session-header session-header--pm">
+      <div class="session-header__info">
+        <p class="session-header__time">Afternoon: 1:00pm - 5:00pm</p>
+        <p class="session-header__goal">Design 2-3 learning experiences for Summer 2026</p>
+      </div>
+      <div class="session-header__final">
+        <p class="session-header__final-label">Hard Stop</p>
+        <p class="session-header__final-time">5:00pm</p>
+      </div>
+    </div>
+
+    <div class="needs-design">
+      <p class="needs-design__title">To Be Designed</p>
+      <p class="needs-design__text">Afternoon structure will be developed after reviewing Monday and Tuesday morning with the team. The goal is to start fresh and design 2-3 learning experiences for Summer 2026 without being anchored to current programs.</p>
     </div>
 
     <!-- Page Navigation -->
@@ -144,5 +545,11 @@
     </footer>
 
   </div>
+
+  <script>
+    function toggleCard(card) {
+      card.classList.toggle('expanded');
+    }
+  </script>
 </body>
 </html>
