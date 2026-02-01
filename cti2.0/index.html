@@ -3,113 +3,388 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CTI 2.0 Strategy Meeting | Overview</title>
+  <title>CTI 2.0 Strategy Meeting</title>
   <link rel="stylesheet" href="../css/design-system.css">
   <link rel="stylesheet" href="cti-styles.css">
+  <style>
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: var(--space-5);
+      gap: var(--space-1);
+    }
+
+    .tab {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--gray-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s ease;
+    }
+
+    .tab:hover {
+      color: var(--gray-700);
+    }
+
+    .tab.active {
+      color: var(--cti-primary-dark);
+      border-bottom-color: var(--cti-primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Goal Statement */
+    .goal-statement {
+      background: white;
+      border: 2px solid var(--cti-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .goal-statement__label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--cti-primary-dark);
+      margin-bottom: var(--space-2);
+    }
+
+    .goal-statement__text {
+      font-size: var(--text-lg);
+      color: var(--gray-800);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Four Components */
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    @media (max-width: 900px) {
+      .components-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .component-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .component-card:hover {
+      border-color: var(--cti-primary);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .component-card__day {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: var(--space-2);
+    }
+
+    .component-card__icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .component-card__title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: var(--space-1);
+    }
+
+    .component-card__time {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+    }
+
+    .component-card__status {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      margin-top: var(--space-2);
+    }
+
+    .component-card__status--ready {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .component-card__status--pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* Compact Info */
+    .compact-info {
+      font-size: var(--text-sm);
+      color: var(--gray-600);
+      margin-bottom: var(--space-5);
+    }
+
+    .compact-info strong {
+      color: var(--gray-800);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Identity Header -->
+    <!-- Header -->
     <header class="identity-header identity-header--cti">
-      <span class="identity-header__badge">Internal Planning Document</span>
+      <span class="identity-header__badge">February 2-4, 2026</span>
       <h1 class="identity-header__greeting">CTI 2.0 Strategy Meeting</h1>
-      <p class="identity-header__tagline">February 2-4, 2026 | In-Person Strategy Session</p>
+      <p class="identity-header__tagline">9 people · 14 hours · In-person</p>
     </header>
 
-    <!-- Design Principle -->
-    <div class="design-principle">
-      <p class="design-principle__label">Design Principle</p>
-      <p class="design-principle__text">The entire meeting should be designed around small group activities.</p>
+    <!-- Goal Statement -->
+    <div class="goal-statement">
+      <p class="goal-statement__label">What We're Here to Do</p>
+      <p class="goal-statement__text">
+        <strong>Experience</strong> working with AI at a higher level of abstraction.
+        <strong>Connect</strong> that experience to what CTI is building.
+        <strong>Design</strong> what we offer for Summer 2026.
+        <strong>Organize</strong> into teams and take first steps.
+      </p>
     </div>
 
-    <!-- Quick Info -->
-    <section class="meeting-info">
-      <h2 class="meeting-info__title">At a Glance</h2>
-      <div class="meeting-info__grid">
-        <span class="meeting-info__label">Monday</span>
-        <span class="meeting-info__value">1:00pm - 5:00pm — Experience the shift</span>
-        <span class="meeting-info__label">Tuesday AM</span>
-        <span class="meeting-info__value">9:00am - 12:00pm — Connect to CTI's work</span>
-        <span class="meeting-info__label">Tuesday PM</span>
-        <span class="meeting-info__value">1:00pm - 5:00pm — Design Summer 2026</span>
-        <span class="meeting-info__label">Wednesday</span>
-        <span class="meeting-info__value">9:00am - 12:00pm — Teams and first steps</span>
-      </div>
-    </section>
-
-    <!-- Meeting Structure -->
-    <section class="section-card">
-      <div class="section-card__header">
-        <span class="section-card__icon">📋</span>
-        <div>
-          <h2 class="section-card__title">Meeting Structure</h2>
-          <p class="section-card__subtitle">Two halves with distinct purposes</p>
-        </div>
-      </div>
-      <div class="section-card__content">
-        <div class="half-card half-card--first">
-          <h3 class="half-card__title">First Half: Experience and Connect (Monday + Tuesday AM)</h3>
-          <p class="half-card__desc">The team needs to <em>experience</em> working with AI at a higher level of abstraction before they can understand the framework we're trying to teach students. Hands-on first, then connect to CTI's existing work.</p>
-        </div>
-        <div class="half-card half-card--second">
-          <h3 class="half-card__title">Second Half: Design and Organize (Tuesday PM + Wednesday)</h3>
-          <p class="half-card__desc">Design what CTI should offer for Summer 2026. Form 2-3 person overlapping teams. Leave with clarity on who is doing what.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Navigation Cards -->
-    <h2 style="font-size: var(--text-lg); font-weight: 700; color: var(--gray-800); margin-bottom: var(--space-4);">Session Details</h2>
-
-    <div class="nav-grid">
-      <a href="monday.html" class="nav-card">
-        <div class="nav-card__icon">🔄</div>
-        <h3 class="nav-card__title">Monday</h3>
-        <p class="nav-card__desc">Experiencing the Shift: Working at a Higher Level of Abstraction</p>
-        <span class="nav-card__status nav-card__status--designed">Designed</span>
+    <!-- Four Components -->
+    <div class="components-grid">
+      <a href="monday.html" class="component-card">
+        <div class="component-card__day">Monday</div>
+        <div class="component-card__icon">🔄</div>
+        <div class="component-card__title">Experience</div>
+        <div class="component-card__time">1:00 - 5:00pm</div>
+        <span class="component-card__status component-card__status--ready">Ready</span>
       </a>
 
-      <a href="tuesday.html" class="nav-card">
-        <div class="nav-card__icon">🔗</div>
-        <h3 class="nav-card__title">Tuesday</h3>
-        <p class="nav-card__desc">Morning: Connect to CTI's work. Afternoon: Design Summer 2026.</p>
-        <span class="nav-card__status nav-card__status--designed">AM Designed</span>
+      <a href="tuesday.html" class="component-card">
+        <div class="component-card__day">Tuesday AM</div>
+        <div class="component-card__icon">🔗</div>
+        <div class="component-card__title">Connect</div>
+        <div class="component-card__time">9:00am - 12:00pm</div>
+        <span class="component-card__status component-card__status--ready">Ready</span>
       </a>
 
-      <a href="wednesday.html" class="nav-card">
-        <div class="nav-card__icon">👥</div>
-        <h3 class="nav-card__title">Wednesday</h3>
-        <p class="nav-card__desc">Teams and First Steps: Operational structure and action.</p>
-        <span class="nav-card__status nav-card__status--pending">Needs Design</span>
+      <a href="tuesday.html#afternoon" class="component-card">
+        <div class="component-card__day">Tuesday PM</div>
+        <div class="component-card__icon">✏️</div>
+        <div class="component-card__title">Design</div>
+        <div class="component-card__time">1:00 - 5:00pm</div>
+        <span class="component-card__status component-card__status--pending">To Design</span>
+      </a>
+
+      <a href="wednesday.html" class="component-card">
+        <div class="component-card__day">Wednesday</div>
+        <div class="component-card__icon">👥</div>
+        <div class="component-card__title">Organize</div>
+        <div class="component-card__time">9:00am - 12:00pm</div>
+        <span class="component-card__status component-card__status--pending">To Design</span>
       </a>
     </div>
 
-    <h2 style="font-size: var(--text-lg); font-weight: 700; color: var(--gray-800); margin-bottom: var(--space-4);">Supporting Materials</h2>
-
-    <div class="nav-grid">
-      <a href="context.html" class="nav-card">
-        <div class="nav-card__icon">📄</div>
-        <h3 class="nav-card__title">Key Context</h3>
-        <p class="nav-card__desc">Background, goals, and the shift we're asking for.</p>
-      </a>
-
-      <a href="materials.html" class="nav-card">
-        <div class="nav-card__icon">📦</div>
-        <h3 class="nav-card__title">Materials Checklist</h3>
-        <p class="nav-card__desc">Everything needed for the meeting.</p>
-      </a>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('overview')">Overview</button>
+      <button class="tab" onclick="showTab('resources')">Resources</button>
+      <button class="tab" onclick="showTab('materials')">Materials</button>
+      <button class="tab" onclick="showTab('context')">Context</button>
     </div>
 
-    <!-- Note -->
-    <div class="note-box">
-      <strong>Note:</strong> Monday and Tuesday morning are fully designed. Tuesday afternoon and Wednesday will be developed after reviewing the first day and a half with the team.
+    <!-- Tab: Overview -->
+    <div id="overview" class="tab-content active">
+      <div class="section-card">
+        <div class="section-card__header">
+          <span class="section-card__icon">📋</span>
+          <div>
+            <h2 class="section-card__title">The Arc</h2>
+            <p class="section-card__subtitle">How the pieces fit together</p>
+          </div>
+        </div>
+        <div class="section-card__content">
+          <div class="half-card half-card--first">
+            <h3 class="half-card__title">First Half: Experience → Connect</h3>
+            <p class="half-card__desc">Monday: hands-on work with Claude Code to experience "agentic" AI—giving it a goal and letting it execute. Tuesday morning: explore how CTI's existing work (Dojo, CST395, WIN application) develops the capabilities you just used.</p>
+          </div>
+          <div class="half-card half-card--second">
+            <h3 class="half-card__title">Second Half: Design → Organize</h3>
+            <p class="half-card__desc">Tuesday afternoon: with shared understanding, design what CTI should offer for Summer 2026. Wednesday: form teams, clarify structure, take first steps before we leave.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-principle">
+        <p class="design-principle__label">Design Principle</p>
+        <p class="design-principle__text">Small group activities throughout. This is a mature team—autonomy to explore.</p>
+      </div>
+    </div>
+
+    <!-- Tab: Resources -->
+    <div id="resources" class="tab-content">
+      <div class="nav-grid">
+        <a href="demonstrations.html" class="nav-card">
+          <div class="nav-card__icon">🎬</div>
+          <h3 class="nav-card__title">Reference Demonstrations</h3>
+          <p class="nav-card__desc">Examples of what's possible with Claude Code—apps built, documents created.</p>
+        </a>
+
+        <a href="monday-activity.html" class="nav-card">
+          <div class="nav-card__icon">🛠️</div>
+          <h3 class="nav-card__title">Monday Activity Guide</h3>
+          <p class="nav-card__desc">Detailed instructions for the hands-on exercise: choose your path, setup steps.</p>
+        </a>
+
+        <a href="team-activity.html" class="nav-card">
+          <div class="nav-card__icon">🎴</div>
+          <h3 class="nav-card__title">Connection Cards</h3>
+          <p class="nav-card__desc">Interactive flip cards for the Monday opening activity.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab: Materials -->
+    <div id="materials" class="tab-content">
+      <div class="section-card">
+        <div class="section-card__header">
+          <span class="section-card__icon">📦</span>
+          <div>
+            <h2 class="section-card__title">Materials Checklist</h2>
+            <p class="section-card__subtitle">Everything needed for the meeting</p>
+          </div>
+        </div>
+        <div class="section-card__content">
+          <h4 style="margin-bottom: var(--space-2); color: var(--gray-700);">Connection Activity</h4>
+          <ul>
+            <li>9 themed cards (printed)</li>
+            <li>Blank slips of paper</li>
+            <li>Basket or container</li>
+          </ul>
+
+          <h4 style="margin: var(--space-4) 0 var(--space-2); color: var(--gray-700);">Monday Hands-On</h4>
+          <ul>
+            <li>Claude desktop app with Claude Code access (all participants)</li>
+            <li>Monday activity guide (printed or projected)</li>
+          </ul>
+
+          <h4 style="margin: var(--space-4) 0 var(--space-2); color: var(--gray-700);">Tuesday Exploration</h4>
+          <ul>
+            <li>Dojo access with ability to view/edit prompts</li>
+            <li>CST395 week-by-week document</li>
+            <li>WIN application Letter of Intent sections</li>
+            <li>1/8 discussion questions (visible for reference)</li>
+          </ul>
+
+          <h4 style="margin: var(--space-4) 0 var(--space-2); color: var(--gray-700);">Throughout</h4>
+          <ul>
+            <li>Paper and pens for reflection moments</li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: var(--space-3);">
+        <a href="materials.html" style="color: var(--cti-primary-dark);">View full materials page →</a>
+      </p>
+    </div>
+
+    <!-- Tab: Context -->
+    <div id="context" class="tab-content">
+      <div class="section-card">
+        <div class="section-card__header">
+          <span class="section-card__icon">🎯</span>
+          <div>
+            <h2 class="section-card__title">The Shift We're Asking For</h2>
+          </div>
+        </div>
+        <div class="section-card__content">
+          <ul>
+            <li><strong>Examine assumptions</strong> — Move beyond current definitions of roles</li>
+            <li><strong>Relax attachment to current programs</strong> — Accelerate, Launch, Open Source as they exist today</li>
+            <li><strong>Recognize AI as a potential fundamental shift</strong> — Not incremental change</li>
+            <li><strong>Develop your own answers</strong> — Ask questions and work through them</li>
+            <li><strong>Categorize answers</strong> — "Status quo/safe" vs. "fundamental shift"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card__header">
+          <span class="section-card__icon">💭</span>
+          <div>
+            <h2 class="section-card__title">Questions the Team Is Carrying</h2>
+            <p class="section-card__subtitle">From the 1/8 discussion</p>
+          </div>
+        </div>
+        <div class="section-card__content">
+          <ul>
+            <li>What is the goal for learner outcomes?</li>
+            <li>What will day-to-day look like for learners in CTI 2.0?</li>
+            <li>What about students currently in-flight?</li>
+            <li>What actually changes in curriculum/content/activities?</li>
+            <li>Can we actually teach and measure durable skills?</li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: var(--space-3);">
+        <a href="context.html" style="color: var(--cti-primary-dark);">View full context page →</a>
+      </p>
     </div>
 
     <footer class="footer-note">
-      CTI 2.0 Planning | Last updated: January 2026
+      CTI 2.0 Planning | Last updated: February 2026
     </footer>
 
   </div>
+
+  <script>
+    function showTab(tabId) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      // Deactivate all tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      // Show selected tab content
+      document.getElementById(tabId).classList.add('active');
+      // Activate clicked tab
+      event.target.classList.add('active');
+    }
+  </script>
 </body>
 </html>
