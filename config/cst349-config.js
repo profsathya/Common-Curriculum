@@ -125,7 +125,14 @@ const CST349_CONFIG = {
       canvasId: "570033",
       title: "S1: Sprint Plan v1",
       dueDate: "2026-02-05",
-      type: "assignment"
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-sprint-plan.html"
     },
     "s1-reflection-2": {
       canvasId: "570068",
@@ -151,12 +158,18 @@ const CST349_CONFIG = {
       canvasId: "570072",
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-04",
-      type: "assignment"
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-learning-log.html"
     },
     "s1-reflection-3": {
       canvasId: "570069",
       title: "S1: Productive Reflection #3",
-      dueDate: "2026-02-07",
+      dueDate: "2026-02-09",
       type: "reflection",
       canvasType: "quiz",
       quizType: "graded_survey",
