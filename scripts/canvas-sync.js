@@ -24,14 +24,19 @@ const COURSES = {
   cst349: {
     configFile: 'config/cst349-config.js',
     configVar: 'CST349_CONFIG',
+    csvFile: 'config/cst349-assignments.csv',
     htmlDir: 'cst349',
   },
   cst395: {
     configFile: 'config/cst395-config.js',
     configVar: 'CST395_CONFIG',
+    csvFile: 'config/cst395-assignments.csv',
     htmlDir: 'cst395',
   },
 };
+
+// GitHub Pages base URL for iframe embedding
+const GITHUB_PAGES_BASE_URL = 'https://profsathya.github.io/Common-Curriculum';
 
 /**
  * Parse command line arguments
@@ -685,8 +690,16 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
       assignmentData.points_possible = 10;
     } else if (entry.type === 'bridge') {
       assignmentData.points_possible = 20;
+    } else if (entry.points) {
+      assignmentData.points_possible = entry.points;
     } else {
       assignmentData.points_possible = 100;
+    }
+
+    // Add iframe description if htmlFile is specified
+    if (entry.htmlFile) {
+      const iframeUrl = `${GITHUB_PAGES_BASE_URL}/${courseInfo.htmlDir}/${entry.htmlFile}`;
+      assignmentData.description = `<iframe src="${iframeUrl}" width="100%" height="800" style="border:none;"></iframe>`;
     }
 
     try {
@@ -1213,6 +1226,200 @@ async function syncHtmlLinks(courseName, dryRun = true) {
 }
 
 /**
+ * Action: Generate config from CSV (runs sync-csv-to-config logic)
+ */
+async function generateConfig() {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('Generating Config from CSV');
+  console.log('='.repeat(60));
+
+  const { execSync } = require('child_process');
+
+  try {
+    const output = execSync('node scripts/sync-csv-to-config.js', {
+      cwd: process.cwd(),
+      encoding: 'utf-8',
+      stdio: 'pipe'
+    });
+    console.log(output);
+    console.log('✓ Config generation complete');
+    return true;
+  } catch (error) {
+    console.error('✗ Config generation failed:', error.message);
+    if (error.stdout) console.log(error.stdout);
+    if (error.stderr) console.error(error.stderr);
+    return false;
+  }
+}
+
+/**
+ * Action: Writeback CSV (copy Canvas IDs from config back to CSV)
+ */
+async function writebackCsv(dryRun = true) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Writeback CSV${dryRun ? ' (DRY RUN)' : ''}`);
+  console.log('='.repeat(60));
+
+  const { execSync } = require('child_process');
+
+  try {
+    const output = execSync(`node scripts/writeback-csv.js --dry-run=${dryRun}`, {
+      cwd: process.cwd(),
+      encoding: 'utf-8',
+      stdio: 'pipe'
+    });
+    console.log(output);
+    console.log('✓ Writeback complete');
+    return true;
+  } catch (error) {
+    console.error('✗ Writeback failed:', error.message);
+    if (error.stdout) console.log(error.stdout);
+    if (error.stderr) console.error(error.stderr);
+    return false;
+  }
+}
+
+/**
+ * Action: Update HTML links (bake Canvas URLs into HTML files)
+ */
+async function updateHtmlLinks() {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('Updating HTML Links');
+  console.log('='.repeat(60));
+
+  const { execSync } = require('child_process');
+
+  try {
+    const output = execSync('node scripts/update-html-links.js', {
+      cwd: process.cwd(),
+      encoding: 'utf-8',
+      stdio: 'pipe'
+    });
+    console.log(output);
+    console.log('✓ HTML links updated');
+    return true;
+  } catch (error) {
+    console.error('✗ HTML links update failed:', error.message);
+    if (error.stdout) console.log(error.stdout);
+    if (error.stderr) console.error(error.stderr);
+    return false;
+  }
+}
+
+/**
+ * Action: Full sync pipeline
+ * Runs: generate-config → create-assignments → create-quizzes → fetch-assignments → writeback-csv → update-html-links
+ */
+async function fullSync(api, course, dryRun = true, limit = 0) {
+  console.log(`\n${'#'.repeat(60)}`);
+  console.log('FULL SYNC PIPELINE');
+  console.log(`Course: ${course} | Dry Run: ${dryRun} | Limit: ${limit || 'none'}`);
+  console.log('#'.repeat(60));
+
+  const steps = [
+    { name: 'Generate Config', action: 'generate-config' },
+    { name: 'Create Assignments', action: 'create-assignments' },
+    { name: 'Create Quizzes', action: 'create-quizzes' },
+    { name: 'Fetch Assignments', action: 'fetch-assignments' },
+    { name: 'Writeback CSV', action: 'writeback-csv' },
+    { name: 'Update HTML Links', action: 'update-html-links' },
+  ];
+
+  const results = [];
+
+  for (let i = 0; i < steps.length; i++) {
+    const step = steps[i];
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`Step ${i + 1}/${steps.length}: ${step.name}`);
+    console.log('─'.repeat(60));
+
+    try {
+      let success = false;
+
+      switch (step.action) {
+        case 'generate-config':
+          success = await generateConfig();
+          break;
+
+        case 'create-assignments':
+          if (course === 'both') {
+            await createAssignments(api, 'cst349', dryRun, limit);
+            await createAssignments(api, 'cst395', dryRun, limit);
+          } else {
+            await createAssignments(api, course, dryRun, limit);
+          }
+          success = true;
+          break;
+
+        case 'create-quizzes':
+          if (course === 'both') {
+            await createQuizzes(api, 'cst349', dryRun, limit);
+            await createQuizzes(api, 'cst395', dryRun, limit);
+          } else {
+            await createQuizzes(api, course, dryRun, limit);
+          }
+          success = true;
+          break;
+
+        case 'fetch-assignments':
+          // Only fetch if not dry run (we need to get real Canvas IDs)
+          if (!dryRun) {
+            if (course === 'both') {
+              await fetchAssignments(api, 'cst349');
+              await fetchAssignments(api, 'cst395');
+            } else {
+              await fetchAssignments(api, course);
+            }
+          } else {
+            console.log('  Skipped (dry run - no Canvas changes to fetch)');
+          }
+          success = true;
+          break;
+
+        case 'writeback-csv':
+          success = await writebackCsv(dryRun);
+          break;
+
+        case 'update-html-links':
+          success = await updateHtmlLinks();
+          break;
+      }
+
+      results.push({ step: step.name, success, error: null });
+
+      if (!success) {
+        console.log(`\n⚠ Step "${step.name}" reported issues, continuing...`);
+      }
+
+    } catch (error) {
+      console.error(`\n✗ Step "${step.name}" failed: ${error.message}`);
+      results.push({ step: step.name, success: false, error: error.message });
+      // Continue with remaining steps
+    }
+  }
+
+  // Summary
+  console.log(`\n${'#'.repeat(60)}`);
+  console.log('PIPELINE SUMMARY');
+  console.log('#'.repeat(60));
+
+  results.forEach((r, i) => {
+    const status = r.success ? '✓' : '✗';
+    const errorMsg = r.error ? ` - ${r.error}` : '';
+    console.log(`  ${status} Step ${i + 1}: ${r.step}${errorMsg}`);
+  });
+
+  const successCount = results.filter(r => r.success).length;
+  console.log(`\nCompleted: ${successCount}/${results.length} steps`);
+
+  if (dryRun) {
+    console.log('\n⚠ DRY RUN - No Canvas changes made. Run with --dry-run=false to apply.');
+  }
+
+  return results;
+}
+
+/**
  * Main entry point
  */
 async function main() {
@@ -1227,7 +1434,7 @@ async function main() {
   console.log('================');
   console.log(`Action: ${action}`);
   console.log(`Course: ${course}`);
-  if (['rename-assignments', 'create-assignments', 'update-assignments', 'create-quizzes', 'sync-html-links'].includes(action)) {
+  if (['rename-assignments', 'create-assignments', 'update-assignments', 'create-quizzes', 'sync-html-links', 'full-sync', 'writeback-csv'].includes(action)) {
     console.log(`Dry Run: ${dryRun}`);
     if (limit > 0) {
       console.log(`Limit: ${limit} changes`);
@@ -1235,15 +1442,25 @@ async function main() {
   }
 
   // Actions that don't require Canvas API
-  const localOnlyActions = ['sync-html-links'];
+  const localOnlyActions = ['sync-html-links', 'generate-config', 'writeback-csv', 'update-html-links'];
 
   // Initialize API only if needed
   let api = null;
   if (!localOnlyActions.includes(action)) {
-    api = new CanvasAPI(
-      process.env.CANVAS_BASE_URL,
-      process.env.CANVAS_API_TOKEN
-    );
+    // Check for required env vars
+    if (!process.env.CANVAS_BASE_URL || !process.env.CANVAS_API_TOKEN) {
+      if (action === 'full-sync' && dryRun) {
+        console.log('\n⚠ Canvas API credentials not set. Local actions will run, Canvas actions will be simulated.');
+      } else if (!localOnlyActions.includes(action)) {
+        console.error('Error: CANVAS_BASE_URL and CANVAS_API_TOKEN environment variables are required');
+        process.exit(1);
+      }
+    } else {
+      api = new CanvasAPI(
+        process.env.CANVAS_BASE_URL,
+        process.env.CANVAS_API_TOKEN
+      );
+    }
   }
 
   try {
@@ -1348,9 +1565,25 @@ async function main() {
         }
         break;
 
+      case 'generate-config':
+        await generateConfig();
+        break;
+
+      case 'writeback-csv':
+        await writebackCsv(dryRun);
+        break;
+
+      case 'update-html-links':
+        await updateHtmlLinks();
+        break;
+
+      case 'full-sync':
+        await fullSync(api, course, dryRun, limit);
+        break;
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: fetch-assignments, validate-config, list-courses, list-groups, rename-assignments, create-assignments, update-assignments, create-quizzes, sync-html-links');
+        console.error('Valid actions: full-sync, generate-config, create-assignments, create-quizzes, update-assignments, fetch-assignments, writeback-csv, update-html-links, validate-config, list-courses, list-groups, rename-assignments, sync-html-links');
         process.exit(1);
     }
   } catch (error) {
