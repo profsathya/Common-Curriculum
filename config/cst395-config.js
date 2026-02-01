@@ -23,12 +23,19 @@ const CST395_CONFIG = {
   // To find assignment IDs: Go to assignment in Canvas, look at URL
   // Example: /courses/12345/assignments/67890 -> canvasId: "67890"
   assignments: {
-    // Sprint 1: Foundation - Goal Setting
+    // Sprint 1
     "s1-superagency-challenge": {
       canvasId: "564067",
       title: "S1: Superagency Challenge",
       dueDate: "2026-01-21",
-      type: "assignment"
+      type: "assignment",
+      canvasType: "assignment",
+      quizType: "textbox",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 5,
+      sprint: 1,
+      week: 1,
+      htmlFile: "assignments/s1-w1-superagency-challenge.html"
     },
     "s1-problem-analysis": {
       canvasId: "144732",
@@ -39,31 +46,34 @@ const CST395_CONFIG = {
       quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-five-whys.html",
       questions: [
         {
-          type: "essay",
-          text: "Starting Point: 'I struggle with [your challenge] because...' — Write your first answer. What happens when you try to address this challenge?",
-          points: 1
+          "type": "essay",
+          "text": "Starting Point: 'I struggle with [your challenge] because...' — Write your first answer. What happens when you try to address this challenge?",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #1: Why is that? What causes the problem you described above?",
-          points: 1
+          "type": "essay",
+          "text": "Why #1: Why is that? What causes the problem you described above?",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #2: Why does that happen? Go deeper into the cause.",
-          points: 1
+          "type": "essay",
+          "text": "Why #2: Why does that happen? Go deeper into the cause.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #3: Why is that the case? Keep pushing past surface explanations.",
-          points: 1
+          "type": "essay",
+          "text": "Why #3: Why is that the case? Keep pushing past surface explanations.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #4/5: What's the design opportunity you found? This should be something about your environment, system, or process you could change — not just 'try harder'.",
-          points: 1
+          "type": "essay",
+          "text": "Why #4/5: What's the design opportunity you found? This should be something about your environment, system, or process you could change — not just 'try harder'.",
+          "points": 1
         }
       ]
     },
@@ -76,40 +86,49 @@ const CST395_CONFIG = {
       quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-solution-architecture.html",
       questions: [
         {
-          type: "essay",
-          text: "Human Process: What behavior or habit needs to change for your challenge to be solved? Describe this without mentioning any technology.",
-          points: 1
+          "type": "essay",
+          "text": "Human Process: What behavior or habit needs to change for your challenge to be solved? Describe this without mentioning any technology.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Friction Points: Where in that process do you typically fail or give up? What makes this hard?",
-          points: 1
+          "type": "essay",
+          "text": "Friction Points: Where in that process do you typically fail or give up? What makes this hard?",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Tech Support: Where specifically could technology help reduce friction? Be specific about which friction points technology addresses.",
-          points: 1
+          "type": "essay",
+          "text": "Tech Support: Where specifically could technology help reduce friction? Be specific about which friction points technology addresses.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Solution Sketch: What will you actually build or create? Describe the simplest version that could test whether your approach works.",
-          points: 1
+          "type": "essay",
+          "text": "Solution Sketch: What will you actually build or create? Describe the simplest version that could test whether your approach works.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Architectural Choice: What's one key design decision you made and why? What alternatives did you consider?",
-          points: 1
+          "type": "essay",
+          "text": "Architectural Choice: What's one key design decision you made and why? What alternatives did you consider?",
+          "points": 1
         }
       ]
     },
-    // Sprint 1: Foundation - Productive Reflections
     "s1-reflection-1": {
       canvasId: "564070",
       title: "S1: Productive Reflection #1",
-      dueDate: "2026-01-23",
-      type: "reflection"
+      dueDate: "2026-01-24",
+      type: "reflection",
+      canvasType: "assignment",
+      quizType: "textbox",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 1,
+      htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-reflection-2": {
       canvasId: "144734",
@@ -120,11 +139,14 @@ const CST395_CONFIG = {
       quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-productive-reflection.html",
       questions: [
         {
-          type: "file_upload",
-          text: "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your challenge, the design opportunity you found through 5 Whys, and what your solution might look like.",
-          points: 5
+          "type": "file_upload",
+          "text": "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your challenge, the design opportunity you found through 5 Whys, and what your solution might look like.",
+          "points": 5
         }
       ]
     },
@@ -140,7 +162,6 @@ const CST395_CONFIG = {
       dueDate: "2026-02-13",
       type: "bridge"
     },
-    // Sprint 1: Foundation - Check-in/Engagement
     "s1-peer-conversation": {
       canvasId: "564234",
       title: "S1: Peer Conversation Reflection - Week 1",
@@ -154,7 +175,7 @@ const CST395_CONFIG = {
       type: "engagement"
     },
 
-    // Sprint 2: Mirror
+    // Sprint 2
     "s2-stakeholder-selection": {
       canvasId: "200001",
       title: "S2: Stakeholder Selection",
@@ -210,7 +231,7 @@ const CST395_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 3: Complexity
+    // Sprint 3
     "s3-domain-selection": {
       canvasId: "300001",
       title: "S3: Domain Selection",
@@ -266,7 +287,7 @@ const CST395_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 4: Mastery
+    // Sprint 4
     "s4-problem-definition": {
       canvasId: "400001",
       title: "S4: Problem Definition",

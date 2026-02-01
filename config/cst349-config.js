@@ -23,18 +23,32 @@ const CST349_CONFIG = {
   // To find assignment IDs: Go to assignment in Canvas, look at URL
   // Example: /courses/12345/assignments/67890 -> canvasId: "67890"
   assignments: {
-    // Sprint 1: Beyond Technical
+    // Sprint 1
     "s1-self-assessment": {
       canvasId: "144469",
       title: "S1: Skills Self-Assessment",
-      dueDate: "2026-01-21",
-      type: "assignment"
+      dueDate: "2026-01-22",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Goal Setting",
+      points: 10,
+      sprint: 1,
+      week: 1,
+      htmlFile: "assignments/s1-w1-skills-self-assessment.html"
     },
     "s1-reflection-1": {
       canvasId: "144470",
       title: "S1: Productive Reflection #1",
-      dueDate: "2026-01-23",
-      type: "reflection"
+      dueDate: "2026-01-24",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 1,
+      htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-skills-revision": {
       canvasId: "144730",
@@ -45,58 +59,64 @@ const CST349_CONFIG = {
       quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-skills-revision.html",
       questions: [
         {
-          type: "essay",
-          text: "What's underneath your gap? If you said 'communication' or something similarly broad — what's the real barrier? Be specific about what actually happens. (If your gap was already specific, explain why you're confident it's the real issue.)",
-          points: 2
+          "type": "essay",
+          "text": "What's underneath your gap? If you said 'communication' or something similarly broad — what's the real barrier? Be specific about what actually happens. (If your gap was already specific, explain why you're confident it's the real issue.)",
+          "points": 2
         },
         {
-          type: "essay",
-          text: "Rewrite your friction story with YOU as the protagonist. Focus on what YOU had control over. What could you have done differently? What opportunities did you have that you didn't take?",
-          points: 2
+          "type": "essay",
+          "text": "Rewrite your friction story with YOU as the protagonist. Focus on what YOU had control over. What could you have done differently? What opportunities did you have that you didn't take?",
+          "points": 2
         },
         {
-          type: "essay",
-          text: "What would 'better' look like? Describe a specific future situation where you'd handle it differently. What would you actually DO? Be concrete and observable.",
-          points: 1
+          "type": "essay",
+          "text": "What would 'better' look like? Describe a specific future situation where you'd handle it differently. What would you actually DO? Be concrete and observable.",
+          "points": 1
         }
       ]
     },
     "s1-five-whys": {
       canvasId: "570032",
       title: "S1: 5 Whys Analysis",
-      dueDate: "2026-02-02",
-      type: "quiz",
-      canvasType: "quiz",
+      dueDate: "2026-01-29",
+      type: "assignment",
+      canvasType: "assignment",
       quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-five-whys.html",
       questions: [
         {
-          type: "essay",
-          text: "Starting Point: 'I struggle with [your skill] because...' — Write your first answer. What happens when you try to use this skill?",
-          points: 1
+          "type": "essay",
+          "text": "Starting Point: 'I struggle with [your skill] because...' — Write your first answer. What happens when you try to use this skill?",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #1: Why is that? What causes the problem you described above?",
-          points: 1
+          "type": "essay",
+          "text": "Why #1: Why is that? What causes the problem you described above?",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #2: Why does that happen? Go deeper into the cause.",
-          points: 1
+          "type": "essay",
+          "text": "Why #2: Why does that happen? Go deeper into the cause.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #3: Why is that the case? Keep pushing past surface explanations.",
-          points: 1
+          "type": "essay",
+          "text": "Why #3: Why is that the case? Keep pushing past surface explanations.",
+          "points": 1
         },
         {
-          type: "essay",
-          text: "Why #4/5: What's the root cause you can actually address? This should be something specific, actionable, and honest — something you can actually work on.",
-          points: 1
+          "type": "essay",
+          "text": "Why #4/5: What's the root cause you can actually address? This should be something specific, actionable, and honest — something you can actually work on.",
+          "points": 1
         }
       ]
     },
@@ -109,17 +129,20 @@ const CST349_CONFIG = {
     "s1-reflection-2": {
       canvasId: "570068",
       title: "S1: Productive Reflection #2",
-      dueDate: "2026-01-30",
-      type: "quiz",
-      canvasType: "quiz",
+      dueDate: "2026-01-31",
+      type: "reflection",
+      canvasType: "assignment",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Goal Setting",
+      assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
+      sprint: 1,
+      week: 2,
+      htmlFile: "assignments/s1-w2-productive-reflection.html",
       questions: [
         {
-          type: "file_upload",
-          text: "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your skill gap and root cause analysis.",
-          points: 5
+          "type": "file_upload",
+          "text": "Upload a photo of your handwritten reflection from today's class session. Your reflection should capture your thinking about your skill gap and root cause analysis.",
+          "points": 5
         }
       ]
     },
@@ -154,7 +177,7 @@ const CST349_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 2: Accountable Growth
+    // Sprint 2
     "s2-outreach": {
       canvasId: "200001",
       title: "S2: Professional Outreach",
@@ -234,7 +257,7 @@ const CST349_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 3: Transfer
+    // Sprint 3
     "s3-curiosity-inventory": {
       canvasId: "300001",
       title: "S3: Curiosity Inventory",
@@ -302,7 +325,7 @@ const CST349_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 4: Proving It
+    // Sprint 4
     "s4-evidence-inventory": {
       canvasId: "400001",
       title: "S4: Evidence Inventory",
