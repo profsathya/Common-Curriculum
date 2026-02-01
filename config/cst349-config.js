@@ -155,8 +155,15 @@ const CST349_CONFIG = {
     "s1-reflection-3": {
       canvasId: "570069",
       title: "S1: Productive Reflection #3",
-      dueDate: "2026-02-06",
-      type: "reflection"
+      dueDate: "2026-02-07",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-productive-reflection.html"
     },
     "s1-demonstration": {
       canvasId: "570074",
