@@ -6,6 +6,271 @@
   <title>Monday | CTI 2.0 Strategy Meeting</title>
   <link rel="stylesheet" href="../css/design-system.css">
   <link rel="stylesheet" href="cti-styles.css">
+  <style>
+    .activity-card {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-4);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .activity-card:hover {
+      border-color: var(--cti-primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .activity-card.expanded {
+      border-color: var(--cti-primary);
+    }
+
+    .activity-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      gap: var(--space-3);
+    }
+
+    .activity-card__main {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex: 1;
+    }
+
+    .activity-card__number {
+      width: 36px;
+      height: 36px;
+      background: var(--cti-primary-light);
+      color: var(--cti-primary-dark);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+    }
+
+    .activity-card__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--gray-800);
+      margin: 0;
+    }
+
+    .activity-card__duration {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .activity-card__toggle {
+      color: var(--gray-400);
+      font-size: 1.25rem;
+      transition: transform 0.2s ease;
+    }
+
+    .activity-card.expanded .activity-card__toggle {
+      transform: rotate(180deg);
+    }
+
+    .activity-card__content {
+      display: none;
+      padding: 0 var(--space-4) var(--space-4);
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .activity-card.expanded .activity-card__content {
+      display: block;
+    }
+
+    .activity-card__desc {
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+      padding-top: var(--space-4);
+    }
+
+    .checkpoint {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1px solid #f59e0b;
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      margin-top: var(--space-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .checkpoint__icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .checkpoint__content {
+      flex: 1;
+    }
+
+    .checkpoint__time {
+      font-weight: 700;
+      color: #92400e;
+      font-size: var(--text-sm);
+    }
+
+    .checkpoint__text {
+      color: #78350f;
+      font-size: var(--text-sm);
+      margin-top: 2px;
+    }
+
+    .activity-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      margin-top: var(--space-3);
+      transition: all 0.15s ease;
+    }
+
+    .activity-link:hover {
+      background: var(--cti-primary-light);
+      color: var(--cti-primary-dark);
+    }
+
+    .activity-link--primary {
+      background: var(--cti-primary-light);
+      color: var(--cti-primary-dark);
+    }
+
+    .activity-link--primary:hover {
+      background: var(--cti-primary);
+      color: white;
+    }
+
+    .phase-box {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+    }
+
+    .phase-box__title {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .phase-box__text {
+      color: var(--gray-600);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+    }
+
+    .discuss-prompt {
+      background: #f0fdf4;
+      border-left: 3px solid #22c55e;
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+      font-size: var(--text-sm);
+      color: #166534;
+    }
+
+    .debrief-rounds {
+      margin-top: var(--space-3);
+    }
+
+    .debrief-round {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .debrief-round__title {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: var(--text-sm);
+    }
+
+    .debrief-round__desc {
+      color: var(--gray-600);
+      font-size: var(--text-sm);
+      margin-top: var(--space-1);
+    }
+
+    .reflection-list {
+      margin: var(--space-3) 0 0;
+      padding-left: var(--space-5);
+    }
+
+    .reflection-list li {
+      color: var(--gray-600);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+
+    .session-header {
+      background: linear-gradient(135deg, var(--cti-primary-light) 0%, #fef3c7 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .session-header__info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .session-header__time {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--cti-primary-dark);
+    }
+
+    .session-header__goal {
+      font-size: var(--text-sm);
+      color: #92400e;
+      margin-top: var(--space-1);
+    }
+
+    .session-header__final {
+      background: white;
+      border: 2px solid var(--cti-primary);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      text-align: center;
+    }
+
+    .session-header__final-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cti-primary-dark);
+    }
+
+    .session-header__final-time {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -27,141 +292,243 @@
       <p class="identity-header__tagline">Working at a Higher Level of Abstraction</p>
     </header>
 
-    <!-- Overview -->
-    <section class="meeting-info">
-      <h2 class="meeting-info__title">Session Overview</h2>
-      <div class="meeting-info__grid">
-        <span class="meeting-info__label">Time</span>
-        <span class="meeting-info__value">1:00pm - 5:00pm (4 hours)</span>
-        <span class="meeting-info__label">Format</span>
-        <span class="meeting-info__value">Team connection + Paired hands-on exercise with Claude Code</span>
-        <span class="meeting-info__label">Goal</span>
-        <span class="meeting-info__value">Connect as humans, then experience what it means to work at a strategic/delegation level with AI</span>
+    <!-- Session Header -->
+    <div class="session-header">
+      <div class="session-header__info">
+        <p class="session-header__time">1:00pm - 5:00pm</p>
+        <p class="session-header__goal">Connect as humans, then experience working at a strategic/delegation level with AI</p>
       </div>
-    </section>
-
-    <!-- Agenda -->
-    <div class="agenda-day">
-      <div class="agenda-day__header">
-        <h3 class="agenda-day__title">Detailed Agenda <span class="designed-tag">designed</span></h3>
+      <div class="session-header__final">
+        <p class="session-header__final-label">Hard Stop</p>
+        <p class="session-header__final-time">5:00pm</p>
       </div>
+    </div>
 
-      <!-- Connection Activity -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">1:00 - 1:30pm</p>
-        <p class="agenda-block__title">Connection Activity</p>
-        <p class="agenda-block__desc">Start with human connection before diving into strategy. 9 themed cards—pick one, answer a question, team guesses who wrote it.</p>
-        <div class="artifact-assignment" style="margin-top: var(--space-3);">
-          <p class="artifact-assignment__title">
-            <a href="team-activity.html" style="color: #166534; text-decoration: none;">→ Open Connection Cards</a>
-          </p>
-          <p class="artifact-assignment__desc">Interactive flip cards with questions for the team to answer and guess.</p>
+    <!-- Activity Cards -->
+    <div class="activity-cards">
+
+      <!-- Activity 1: Connection -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">1</span>
+            <div>
+              <h3 class="activity-card__title">Connection Activity</h3>
+              <p class="activity-card__duration">30-60 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Start with human connection before diving into strategy. 9 themed cards—each person picks one, writes an answer, and the team guesses who wrote it.</p>
+
+          <a href="team-activity.html" class="activity-link activity-link--primary">→ Open Connection Cards</a>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 2:00pm latest</p>
+              <p class="checkpoint__text">Wrap up the activity and transition to hands-on work. If running long, cut to final round.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Demonstration Section Header -->
-      <div class="agenda-block" style="background: #f8fafc;">
-        <p class="agenda-block__time">1:30 - 5:00pm</p>
-        <p class="agenda-block__title">Hands-On: Human-AI Collaboration</p>
-        <p class="agenda-block__desc">Experience what it means to work at a strategic/delegation level with AI through paired exercises with Claude Code.</p>
-      </div>
+      <!-- Activity 2: Setup -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">2</span>
+            <div>
+              <h3 class="activity-card__title">Setup & Orientation</h3>
+              <p class="activity-card__duration">10-20 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Brief orientation to Claude Code. Not a tutorial—just enough that no one is stuck on mechanics. Introduce the two paths for the exercise.</p>
 
-      <!-- Setup -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">1:30 - 1:45pm</p>
-        <p class="agenda-block__title">Setup</p>
-        <p class="agenda-block__desc">Brief orientation to Claude Code. Not a tutorial—just enough that no one is stuck on mechanics. Introduce the two paths for the exercise.</p>
-        <div class="artifact-assignment" style="margin-top: var(--space-3); background: #eff6ff; border-color: #93c5fd;">
-          <p class="artifact-assignment__title" style="color: #1e40af;">Reference Demonstrations</p>
-          <p class="artifact-assignment__desc" style="color: #1e3a8a;">
-            Examples of what's possible—apps built, documents created, explorations completed.
-          </p>
-          <p style="font-size: var(--text-sm); margin-top: var(--space-2);">
-            <a href="demonstrations.html" style="color: #1e40af; font-weight: 600;">→ View Reference Demonstrations</a>
-          </p>
-        </div>
-        <div class="artifact-assignment" style="margin-top: var(--space-3);">
-          <p class="artifact-assignment__title" style="color: #166534;">Activity Guide</p>
-          <p class="artifact-assignment__desc">Detailed instructions for the hands-on exercise: choose your path, setup steps, discussion prompts.</p>
-          <p style="font-size: var(--text-sm); margin-top: var(--space-2);">
-            <a href="monday-activity.html" style="color: #166534; font-weight: 600;">→ Open Activity Guide</a>
-          </p>
-        </div>
-      </div>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+            <a href="demonstrations.html" class="activity-link">→ Reference Demonstrations</a>
+            <a href="monday-activity.html" class="activity-link activity-link--primary">→ Activity Guide</a>
+          </div>
 
-      <!-- Phase 1 -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">1:45 - 2:10pm</p>
-        <p class="agenda-block__title">Phase 1: Beyond What You've Tried Before (Pairs)</p>
-        <p class="agenda-block__desc">Choose one of two paths:</p>
-        <div class="agenda-phase">
-          <p class="agenda-phase__title">Path A: Build and Deploy an App</p>
-          <p class="agenda-phase__task">Ask Claude Code to build and deploy a working web application. Describe what you want—something useful to you—and let Claude handle the implementation.</p>
-        </div>
-        <div class="agenda-phase" style="margin-top: var(--space-3);">
-          <p class="agenda-phase__title">Path B: Create a Document Package</p>
-          <p class="agenda-phase__task">Ask Claude to create three funding packages for three different funding sources—each with a budget request and a contingency version if funding is halved.</p>
-        </div>
-        <div class="agenda-phase__discuss" style="margin-top: var(--space-3);">
-          <strong>While Claude works, discuss:</strong> What is different about giving a task like this to AI vs. how you have used it in the past?
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 2:15pm latest</p>
+              <p class="checkpoint__text">Everyone should have Claude Code open and understand their path. Move on even if some setup isn't perfect.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Quick Capture -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">2:10 - 2:20pm</p>
-        <p class="agenda-block__title">Quick Capture</p>
-        <p class="agenda-block__desc">Before break, each person writes down (on paper) two things they noticed. No discussion yet—just capture.</p>
-      </div>
+      <!-- Activity 3: Phase 1 -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">3</span>
+            <div>
+              <h3 class="activity-card__title">Phase 1: First Exploration</h3>
+              <p class="activity-card__duration">20-40 min (pairs)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Choose one of two paths and start working with Claude Code at a higher level of abstraction:</p>
 
-      <!-- Break -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">2:20 - 2:40pm</p>
-        <p class="agenda-block__title">Break</p>
-      </div>
+          <div class="phase-box">
+            <p class="phase-box__title">Path A: Build and Deploy an App</p>
+            <p class="phase-box__text">Ask Claude Code to build and deploy a working web application. Describe what you want—something useful to you—and let Claude handle the implementation.</p>
+          </div>
 
-      <!-- Phase 2 -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">2:40 - 3:20pm</p>
-        <p class="agenda-block__title">Phase 2: Directed Iteration (Pairs, Switch Drivers)</p>
-        <p class="agenda-block__desc">Switch who is driving. Continue with your chosen path—iterate and improve what you built.</p>
-        <div class="agenda-phase__discuss">
-          <strong>Discuss and write down:</strong> What aspects of your cognitive capabilities are you tapping into? Is it possible to identify and articulate them to someone else?
+          <div class="phase-box">
+            <p class="phase-box__title">Path B: Create a Document Package</p>
+            <p class="phase-box__text">Ask Claude to create three funding packages for three different funding sources—each with a budget request and a contingency version if funding is halved.</p>
+          </div>
+
+          <div class="discuss-prompt">
+            <strong>While Claude works, discuss:</strong> What is different about giving a task like this to AI vs. how you have used it in the past?
+          </div>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 2:45pm latest</p>
+              <p class="checkpoint__text">Pause for Quick Capture—even if not "done." The goal is experience, not completion.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Individual Reflection -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">3:20 - 3:30pm</p>
-        <p class="agenda-block__title">Individual Reflection</p>
-        <p class="agenda-block__desc">Before debrief, each person writes down:</p>
-        <div class="reflection-prompt">
-          <p class="reflection-prompt__label">Reflection Questions</p>
-          <ol>
+      <!-- Activity 4: Quick Capture + Break -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">4</span>
+            <div>
+              <h3 class="activity-card__title">Quick Capture + Break</h3>
+              <p class="activity-card__duration">25-35 min</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc"><strong>Quick Capture (5-10 min):</strong> Before break, each person writes down (on paper) two things they noticed. No discussion yet—just capture.</p>
+          <p class="activity-card__desc" style="margin-top: var(--space-2);"><strong>Break (15-20 min):</strong> Stretch, get refreshments, informal conversation.</p>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 3:15pm latest</p>
+              <p class="checkpoint__text">Return from break and start Phase 2. Call people back if needed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 5: Phase 2 -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">5</span>
+            <div>
+              <h3 class="activity-card__title">Phase 2: Directed Iteration</h3>
+              <p class="activity-card__duration">30-45 min (pairs, switch drivers)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Switch who is driving. Continue with your chosen path—iterate and improve what you built. Focus on the experience of directing rather than doing.</p>
+
+          <div class="discuss-prompt">
+            <strong>Discuss and write down:</strong> What aspects of your cognitive capabilities are you tapping into? Is it possible to identify and articulate them to someone else?
+          </div>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 3:50pm latest</p>
+              <p class="checkpoint__text">Stop work for Individual Reflection. The debrief needs at least 60 minutes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 6: Individual Reflection -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">6</span>
+            <div>
+              <h3 class="activity-card__title">Individual Reflection</h3>
+              <p class="activity-card__duration">5-10 min (silent writing)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
+        </div>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Before debrief, each person writes down answers to these questions:</p>
+
+          <ol class="reflection-list">
             <li>What did the human provide that Claude couldn't?</li>
             <li>What capability would someone need to do this well?</li>
             <li>One moment that shifted how you think about this.</li>
           </ol>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 4:00pm latest</p>
+              <p class="checkpoint__text">Begin debrief. This is the most important part—protect this time.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Debrief -->
-      <div class="agenda-block">
-        <p class="agenda-block__time">3:30 - 5:00pm</p>
-        <p class="agenda-block__title">Debrief (Three Rounds)</p>
-        <div class="debrief-round">
-          <p class="debrief-round__title">Round 1 — What happened? <span class="debrief-round__time">(20 min)</span></p>
-          <p class="debrief-round__desc">Each person shares one specific moment: "Claude did X and I realized Y." Go around the room. No discussion yet—just collection.</p>
+      <!-- Activity 7: Debrief -->
+      <div class="activity-card" onclick="toggleCard(this)">
+        <div class="activity-card__header">
+          <div class="activity-card__main">
+            <span class="activity-card__number">7</span>
+            <div>
+              <h3 class="activity-card__title">Debrief</h3>
+              <p class="activity-card__duration">60-90 min (three rounds)</p>
+            </div>
+          </div>
+          <span class="activity-card__toggle">▼</span>
         </div>
-        <div class="debrief-round">
-          <p class="debrief-round__title">Round 2 — What patterns? <span class="debrief-round__time">(20 min)</span></p>
-          <p class="debrief-round__desc">What did we hear across people? Where did Claude make choices we didn't anticipate? Where did human direction matter most?</p>
-        </div>
-        <div class="debrief-round">
-          <p class="debrief-round__title">Round 3 — So what? <span class="debrief-round__time">(50 min)</span></p>
-          <p class="debrief-round__desc">If this is how work is changing, what does it mean for what we teach? What capabilities did you need that you didn't have? What would a student need to do this well?</p>
+        <div class="activity-card__content">
+          <p class="activity-card__desc">Structured conversation to extract insights from the experience.</p>
+
+          <div class="debrief-rounds">
+            <div class="debrief-round">
+              <p class="debrief-round__title">Round 1 — What happened? (15-20 min)</p>
+              <p class="debrief-round__desc">Each person shares one specific moment: "Claude did X and I realized Y." Go around the room. No discussion yet—just collection.</p>
+            </div>
+            <div class="debrief-round">
+              <p class="debrief-round__title">Round 2 — What patterns? (15-20 min)</p>
+              <p class="debrief-round__desc">What did we hear across people? Where did Claude make choices we didn't anticipate? Where did human direction matter most?</p>
+            </div>
+            <div class="debrief-round">
+              <p class="debrief-round__title">Round 3 — So what? (30-50 min)</p>
+              <p class="debrief-round__desc">If this is how work is changing, what does it mean for what we teach? What capabilities did you need that you didn't have? What would a student need to do this well?</p>
+            </div>
+          </div>
+
+          <div class="checkpoint">
+            <span class="checkpoint__icon">⏱️</span>
+            <div class="checkpoint__content">
+              <p class="checkpoint__time">Checkpoint: 4:45pm</p>
+              <p class="checkpoint__text">Must be in Round 3 by now. If not, skip to "So what?" and capture patterns on paper for tomorrow.</p>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <!-- Page Navigation -->
@@ -175,5 +542,17 @@
     </footer>
 
   </div>
+
+  <script>
+    function toggleCard(card) {
+      card.classList.toggle('expanded');
+    }
+
+    // Expand all cards by default for easier viewing
+    // Comment out this block if you want cards collapsed by default
+    // document.querySelectorAll('.activity-card').forEach(card => {
+    //   card.classList.add('expanded');
+    // });
+  </script>
 </body>
 </html>
