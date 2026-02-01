@@ -16,18 +16,22 @@ on:
       action:
         description: 'Action to perform'
         required: true
-        default: 'fetch-assignments'
+        default: 'full-sync'
         type: choice
         options:
-          - fetch-assignments
-          - validate-config
-          - list-courses
-          - list-groups
-          - rename-assignments
-          - create-assignments
-          - update-assignments
-          - create-quizzes
-          - sync-html-links
+          - full-sync          # Runs the full pipeline
+          - generate-config    # CSV → config.js
+          - create-assignments # Creates Canvas assignments
+          - create-quizzes     # Creates Canvas quizzes
+          - update-assignments # Syncs metadata to Canvas
+          - fetch-assignments  # Pulls Canvas IDs → config
+          - writeback-csv      # Config Canvas IDs → CSV
+          - update-html-links  # Bakes Canvas URLs into HTML
+          - validate-config    # Checks all IDs valid
+          - list-courses       # Utility: list courses
+          - list-groups        # Utility: list assignment groups
+          - rename-assignments # Renames Canvas assignments to match config
+          - sync-html-links    # Legacy: sync HTML links
       dry_run:
         description: 'Dry run (preview only, no changes)'
         required: true
@@ -37,7 +41,7 @@ on:
           - 'true'
           - 'false'
       limit:
-        description: 'Limit number of changes (0 = no limit)'
+        description: 'Limit number of Canvas operations (0 = no limit)'
         required: false
         default: '0'
         type: string
@@ -69,6 +73,12 @@ jobs:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
         run: |
+          echo "=============================================="
+          echo "Canvas Sync: ${{ inputs.action }}"
+          echo "Course: ${{ inputs.course }}"
+          echo "Dry Run: ${{ inputs.dry_run }}"
+          echo "Limit: ${{ inputs.limit }}"
+          echo "=============================================="
           node scripts/canvas-sync.js --action=${{ inputs.action }} --course=${{ inputs.course }} --dry-run=${{ inputs.dry_run }} --limit=${{ inputs.limit }}
 
       - name: Check for changes
@@ -76,15 +86,69 @@ jobs:
         run: |
           if [[ -n $(git status --porcelain config/ cst349/ cst395/) ]]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected:"
+            git status --porcelain config/ cst349/ cst395/
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
           fi
 
       - name: Commit and push changes
-        if: steps.changes.outputs.has_changes == 'true'
+        if: steps.changes.outputs.has_changes == 'true' && inputs.dry_run == 'false'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+          # Stage all relevant directories
           git add config/ cst349/ cst395/
-          git commit -m "Auto-sync Canvas assignment IDs [skip ci]"
+
+          # Create commit message based on action
+          case "${{ inputs.action }}" in
+            full-sync)
+              COMMIT_MSG="Full sync: CSV → Canvas → HTML [skip ci]"
+              ;;
+            create-assignments)
+              COMMIT_MSG="Canvas: Create assignments [skip ci]"
+              ;;
+            create-quizzes)
+              COMMIT_MSG="Canvas: Create quizzes [skip ci]"
+              ;;
+            fetch-assignments)
+              COMMIT_MSG="Canvas: Fetch assignment IDs [skip ci]"
+              ;;
+            generate-config)
+              COMMIT_MSG="Config: Sync from CSV [skip ci]"
+              ;;
+            writeback-csv)
+              COMMIT_MSG="CSV: Writeback Canvas IDs [skip ci]"
+              ;;
+            update-html-links)
+              COMMIT_MSG="HTML: Update Canvas links [skip ci]"
+              ;;
+            *)
+              COMMIT_MSG="Canvas sync: ${{ inputs.action }} [skip ci]"
+              ;;
+          esac
+
+          git commit -m "$COMMIT_MSG"
           git push
+
+          echo "✓ Changes committed and pushed"
+
+      - name: Summary
+        run: |
+          echo "=============================================="
+          echo "SUMMARY"
+          echo "=============================================="
+          echo "Action: ${{ inputs.action }}"
+          echo "Course: ${{ inputs.course }}"
+          echo "Dry Run: ${{ inputs.dry_run }}"
+          if [[ "${{ steps.changes.outputs.has_changes }}" == "true" ]]; then
+            if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+              echo "Status: Changes would be made (dry run)"
+            else
+              echo "Status: Changes committed"
+            fi
+          else
+            echo "Status: No changes"
+          fi
