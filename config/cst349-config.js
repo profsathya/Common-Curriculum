@@ -408,24 +408,25 @@ const CST349_CONFIG = {
   },
 
   // Week dates for determining "current week"
+  // Each week runs Sunday through Saturday
   // UPDATE EACH SEMESTER
   weekDates: {
-    1: { start: "2026-01-19", end: "2026-01-23", sprint: 1, title: "Orientation & Self-Assessment" },
-    2: { start: "2026-01-26", end: "2026-01-30", sprint: 1, title: "Identifying Your Growth Edge" },
-    3: { start: "2026-02-02", end: "2026-02-06", sprint: 1, title: "Active Learning" },
-    4: { start: "2026-02-09", end: "2026-02-12", sprint: 1, title: "Demonstration & Synthesis" },
-    5: { start: "2026-02-16", end: "2026-02-20", sprint: 2, title: "Outreach & Accountability Setup" },
-    6: { start: "2026-02-23", end: "2026-02-27", sprint: 2, title: "First Conversation" },
-    7: { start: "2026-03-02", end: "2026-03-06", sprint: 2, title: "Stretch Challenge" },
-    8: { start: "2026-03-09", end: "2026-03-13", sprint: 2, title: "Validated Demonstration" },
-    9: { start: "2026-03-23", end: "2026-03-27", sprint: 3, title: "Curiosity Mapping" },
-    10: { start: "2026-03-30", end: "2026-04-03", sprint: 3, title: "Following the Thread" },
-    11: { start: "2026-04-06", end: "2026-04-10", sprint: 3, title: "Building Something" },
-    12: { start: "2026-04-13", end: "2026-04-17", sprint: 3, title: "Transfer Demonstration" },
-    13: { start: "2026-04-20", end: "2026-04-24", sprint: 4, title: "Evidence Audit" },
-    14: { start: "2026-04-27", end: "2026-05-01", sprint: 4, title: "Portfolio Construction" },
-    15: { start: "2026-05-04", end: "2026-05-08", sprint: 4, title: "Defense Preparation" },
-    16: { start: "2026-05-11", end: "2026-05-15", sprint: 4, title: "Final Defense" }
+    1: { start: "2026-01-18", end: "2026-01-24", sprint: 1, title: "Orientation & Self-Assessment" },
+    2: { start: "2026-01-25", end: "2026-01-31", sprint: 1, title: "Identifying Your Growth Edge" },
+    3: { start: "2026-02-01", end: "2026-02-07", sprint: 1, title: "Active Learning" },
+    4: { start: "2026-02-08", end: "2026-02-14", sprint: 1, title: "Demonstration & Synthesis" },
+    5: { start: "2026-02-15", end: "2026-02-21", sprint: 2, title: "Outreach & Accountability Setup" },
+    6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "First Conversation" },
+    7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Stretch Challenge" },
+    8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Validated Demonstration" },
+    9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Curiosity Mapping" },
+    10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Following the Thread" },
+    11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Building Something" },
+    12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Transfer Demonstration" },
+    13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Evidence Audit" },
+    14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Portfolio Construction" },
+    15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Defense Preparation" },
+    16: { start: "2026-05-10", end: "2026-05-16", sprint: 4, title: "Final Defense" }
   },
 
   // Sprint info

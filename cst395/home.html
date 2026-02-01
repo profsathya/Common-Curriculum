@@ -215,14 +215,18 @@
       </p>
     </section>
 
-    <!-- 6. Due This Week -->
+    <!-- 6. What You Should Be Learning -->
     <section class="priority-work" id="due-this-week-section" style="display: none;">
       <header class="priority-work__header">
-        <span>📋</span>
-        <h2 class="priority-work__title">Due This Week</h2>
+        <span>📚</span>
+        <h2 class="priority-work__title">What You Should Be Learning</h2>
       </header>
       <div class="priority-work__content" id="due-this-week-content">
         <!-- Dynamically populated based on current week -->
+      </div>
+      <!-- Looking Ahead Card -->
+      <div class="looking-ahead" id="looking-ahead-container" style="display: none; margin: var(--space-4);">
+        <!-- Dynamically populated with first item from next week -->
       </div>
     </section>
 
@@ -340,77 +344,34 @@
         framingToggle.setAttribute('aria-expanded', 'true');
       }
 
-      // Due This Week section
+      // What You Should Be Learning section
       const dueSection = document.getElementById('due-this-week-section');
-      const dueContent = document.getElementById('due-this-week-content');
 
-      // Build due items based on current week
-      let dueItems = [];
+      // Map assignment keys to local HTML files
+      const localAssignmentUrls = {
+        's1-superagency-challenge': 'assignments/s1-w1-superagency-challenge.html',
+        's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
+        's1-peer-conversation': 'assignments/s1-w1-peer-reflection.html',
+        's1-problem-analysis': 'assignments/s1-w2-five-whys.html',
+        's1-solution-architecture': 'assignments/s1-w3-solution-architecture.html',
+        's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
+        's1-week2-engagement': 'assignments/s1-w2-engagement.html',
+        's1-build-log': 'assignments/s1-w3-build-log.html',
+        's1-bridge': 'assignments/s1-bridge-reflection.html'
+      };
 
-      // Week 1: Add Getting Started items (survey and discussion)
-      if (currentWeek === 1) {
-        dueItems.push({
-          title: 'Complete the Pre-course Survey',
-          url: 'https://csumb.instructure.com/courses/33084/quizzes/141970',
-          type: 'assignment',
-          dueText: 'End of Week 1'
-        });
-        dueItems.push({
-          title: 'Introduce Yourself Discussion',
-          url: 'https://csumb.instructure.com/courses/33084/discussion_topics/345054',
-          type: 'engagement',
-          dueText: 'End of Week 1'
-        });
-      }
-
-      // Add regular assignments due this week (if we're in a valid week)
+      // Show section and render content if we're in a valid week
       if (currentWeek !== null && currentWeek >= 1) {
-        // Map assignment keys to local HTML files
-        const localAssignmentUrls = {
-          's1-superagency-challenge': 'assignments/s1-w1-superagency-challenge.html',
-          's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
-          's1-peer-conversation': 'assignments/s1-w1-peer-reflection.html',
-          's1-problem-analysis': 'assignments/s1-w2-five-whys.html',
-          's1-solution-architecture': 'assignments/s1-w3-solution-architecture.html',
-          's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
-          's1-build-log': 'assignments/s1-w3-build-log.html',
-          's1-bridge': 'assignments/s1-bridge-reflection.html'
-        };
-
-        const weekAssignments = getAssignmentsDueInWeek(currentWeek);
-        weekAssignments.forEach(assignment => {
-          const localUrl = localAssignmentUrls[assignment.key] || getAssignmentUrl(assignment.key);
-          dueItems.push({
-            title: assignment.title.replace(/^S\d+: /, ''),
-            url: localUrl,
-            type: assignment.type,
-            dueText: formatDate(assignment.dueDate)
-          });
-        });
-      }
-
-      // Show section only if there are items due
-      if (dueItems.length > 0) {
         dueSection.style.display = 'block';
 
-        // Render the items
-        dueContent.innerHTML = dueItems.map((item, index) => {
-          const typeClass = item.type === 'reflection' ? 'reflection' :
-                           item.type === 'engagement' ? 'peer' : 'assignment';
-          const primaryClass = index === 0 ? ' priority-work__item--primary' : '';
-
-          return `
-            <div class="priority-work__item${primaryClass}">
-              <div class="priority-work__item-left">
-                <span class="priority-work__item-type priority-work__item-type--${typeClass}"></span>
-                <span class="priority-work__item-name">
-                  <a href="${item.url}" target="_blank">${item.title}</a>
-                </span>
-              </div>
-              <span class="priority-work__item-due">${item.dueText}</span>
-            </div>
-          `;
-        }).join('');
+        // Use the new renderWeeklyLearning function for automated content
+        renderWeeklyLearning(
+          CST395_CONFIG,
+          currentWeek,
+          'due-this-week-content',
+          'looking-ahead-container',
+          localAssignmentUrls
+        );
       }
     });
   </script>
