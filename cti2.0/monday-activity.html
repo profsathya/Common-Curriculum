@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monday Activity Guide | CTI 2.0</title>
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="cti-styles.css">
+  <style>
+    .path-card {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .path-card--a {
+      border-color: #3b82f6;
+    }
+
+    .path-card--b {
+      border-color: #10b981;
+    }
+
+    .path-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .path-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .path-card--a .path-card__icon {
+      background: #dbeafe;
+    }
+
+    .path-card--b .path-card__icon {
+      background: #d1fae5;
+    }
+
+    .path-card__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: var(--space-1);
+    }
+
+    .path-card__subtitle {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+    }
+
+    .path-card__section {
+      margin-bottom: var(--space-4);
+    }
+
+    .path-card__section:last-child {
+      margin-bottom: 0;
+    }
+
+    .path-card__section-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+      margin-bottom: var(--space-2);
+    }
+
+    .path-card__task {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-size: var(--text-base);
+      color: var(--gray-700);
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
+    }
+
+    .path-card__steps {
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .path-card__steps li {
+      margin-bottom: var(--space-2);
+      line-height: 1.6;
+    }
+
+    .path-card__steps code {
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+    }
+
+    .setup-box {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .setup-box__title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: var(--space-2);
+    }
+
+    .setup-box__content {
+      font-size: var(--text-sm);
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    .setup-box__content ol {
+      margin: var(--space-2) 0 0;
+      padding-left: var(--space-5);
+    }
+
+    .discussion-section {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .discussion-section__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .discussion-section__prompt {
+      background: white;
+      border-left: 3px solid #22c55e;
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-3);
+      font-size: var(--text-base);
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    .discussion-section__prompt:last-child {
+      margin-bottom: 0;
+    }
+
+    .tips-section {
+      background: #eff6ff;
+      border: 1px solid #93c5fd;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .tips-section__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .tips-section__list {
+      margin: 0;
+      padding-left: var(--space-5);
+      color: #1e3a8a;
+    }
+
+    .tips-section__list li {
+      margin-bottom: var(--space-2);
+      line-height: 1.6;
+    }
+
+    .choose-prompt {
+      text-align: center;
+      padding: var(--space-5);
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-5);
+    }
+
+    .choose-prompt__text {
+      font-size: var(--text-lg);
+      color: var(--gray-600);
+      margin-bottom: var(--space-3);
+    }
+
+    .choose-prompt__question {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-bar__home">CTI 2.0</a>
+      <a href="monday.html" class="nav-bar__link">Monday</a>
+      <a href="tuesday.html" class="nav-bar__link">Tuesday</a>
+      <a href="wednesday.html" class="nav-bar__link">Wednesday</a>
+      <a href="context.html" class="nav-bar__link">Context</a>
+      <a href="materials.html" class="nav-bar__link">Materials</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="identity-header identity-header--cti">
+      <span class="identity-header__badge">Monday 1:45 - 3:20pm</span>
+      <h1 class="identity-header__greeting">Activity Guide</h1>
+      <p class="identity-header__tagline">Beyond What You've Tried Before</p>
+    </header>
+
+    <!-- Choose Your Path -->
+    <div class="choose-prompt">
+      <p class="choose-prompt__text">With your partner, decide:</p>
+      <p class="choose-prompt__question">Do you want to build something or create documents?</p>
+    </div>
+
+    <!-- Path A -->
+    <div class="path-card path-card--a">
+      <div class="path-card__header">
+        <div class="path-card__icon">🚀</div>
+        <div>
+          <h2 class="path-card__title">Path A: Build and Deploy an App</h2>
+          <p class="path-card__subtitle">For those who want to see code come to life</p>
+        </div>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">The Task</p>
+        <div class="path-card__task">
+          Ask Claude Code to build and deploy a working web application. Describe what you want—something useful to you—and let Claude handle the implementation. The goal is to experience working at the level of "what" rather than "how."
+        </div>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">Ideas to Try</p>
+        <ul class="path-card__steps">
+          <li>A simple tool you wish existed (timer, tracker, calculator)</li>
+          <li>A game or interactive experience</li>
+          <li>A dashboard for something you care about</li>
+          <li>A visualization of data or concepts</li>
+        </ul>
+      </div>
+
+      <div class="setup-box">
+        <p class="setup-box__title">Setup Requirements (Path A)</p>
+        <div class="setup-box__content">
+          To deploy your app, you'll need:
+          <ol>
+            <li><strong>GitHub account</strong> — Create one at github.com if you don't have one</li>
+            <li><strong>Netlify account</strong> — Sign up at netlify.com (can use GitHub to sign in)</li>
+            <li><strong>Claude Code</strong> — Open in your terminal or IDE</li>
+          </ol>
+          Ask Claude Code to help with setup if you get stuck.
+        </div>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">Sample Prompts</p>
+        <ul class="path-card__steps">
+          <li>"Build me a simple web app that [describe what it does]. Deploy it to Netlify when it's ready."</li>
+          <li>"I want to create [description]. Start simple and we can iterate from there."</li>
+          <li>"Help me build and deploy a [type of app] that I can share with others."</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Path B -->
+    <div class="path-card path-card--b">
+      <div class="path-card__header">
+        <div class="path-card__icon">📄</div>
+        <div>
+          <h2 class="path-card__title">Path B: Create a Document Package</h2>
+          <p class="path-card__subtitle">For those who want to see strategic document creation</p>
+        </div>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">The Task</p>
+        <div class="path-card__task">
+          Ask Claude to create three funding packages for three different funding sources—each with a budget request and a contingency version if funding is halved. The goal is to experience delegating complex, multi-part document creation.
+        </div>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">Funding Sources to Consider</p>
+        <ul class="path-card__steps">
+          <li><strong>Government grant</strong> — Formal language, specific outcome metrics</li>
+          <li><strong>Corporate sponsor</strong> — ROI focus, partnership benefits</li>
+          <li><strong>Foundation</strong> — Mission alignment, community impact</li>
+          <li><strong>Individual donors</strong> — Personal connection, storytelling</li>
+        </ul>
+      </div>
+
+      <div class="path-card__section">
+        <p class="path-card__section-title">Sample Prompts</p>
+        <ul class="path-card__steps">
+          <li>"Create three funding packages for [your program] targeting [audience 1], [audience 2], and [audience 3]. Each should have a full budget and a contingency version if funding is halved."</li>
+          <li>"I need to request funding from three different sources. Help me create tailored packages for each."</li>
+          <li>"Draft funding proposals for [program] that speak to different audiences—a government agency, a tech company, and a community foundation."</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Discussion Prompts -->
+    <div class="discussion-section">
+      <h2 class="discussion-section__title">💬 Discussion Prompts</h2>
+      <p style="margin-bottom: var(--space-3); color: #15803d;">While Claude works, discuss these with your partner:</p>
+
+      <div class="discussion-section__prompt">
+        <strong>Phase 1:</strong> What is different about giving a task like this to AI vs. how you have used it in the past?
+      </div>
+
+      <div class="discussion-section__prompt">
+        <strong>Phase 2:</strong> What aspects of your cognitive capabilities are you tapping into? Is it possible to identify and articulate them to someone else?
+      </div>
+
+      <div class="discussion-section__prompt">
+        <strong>Throughout:</strong> Where are you adding value that Claude couldn't provide on its own? What would happen if you gave less direction? More direction?
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="tips-section">
+      <h2 class="tips-section__title">💡 Tips for Success</h2>
+      <ul class="tips-section__list">
+        <li><strong>Start with the end in mind.</strong> Describe what you want to exist, not the steps to get there.</li>
+        <li><strong>Let Claude make choices.</strong> You can always redirect—that's part of the experience.</li>
+        <li><strong>Notice when you want to intervene.</strong> What prompts that instinct? Is it helpful?</li>
+        <li><strong>Iterate through conversation.</strong> "That's close, but change X" is more powerful than detailed specifications upfront.</li>
+        <li><strong>Don't worry about perfection.</strong> The goal is to experience the collaboration, not produce a polished deliverable.</li>
+        <li><strong>Write down what surprises you.</strong> These observations will fuel the debrief.</li>
+      </ul>
+    </div>
+
+    <!-- Page Navigation -->
+    <div class="page-nav">
+      <a href="monday.html" class="page-nav__link">← Back to Monday</a>
+      <a href="demonstrations.html" class="page-nav__link">View Demonstrations →</a>
+    </div>
+
+    <footer class="footer-note">
+      CTI 2.0 Planning | Last updated: February 2026
+    </footer>
+
+  </div>
+</body>
+</html>
