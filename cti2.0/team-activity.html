@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Activity: Connection Cards | CTI 2.0</title>
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="cti-styles.css">
+  <style>
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-5) 0;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Flip Card Container */
+    .flip-card {
+      perspective: 1000px;
+      height: 280px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-4);
+      box-shadow: var(--shadow-md);
+    }
+
+    .flip-card-front {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+    }
+
+    .flip-card-back {
+      background: white;
+      border: 2px solid var(--gray-200);
+      transform: rotateY(180deg);
+      text-align: left;
+      justify-content: flex-start;
+      padding-top: var(--space-5);
+    }
+
+    /* Card Front */
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-3);
+    }
+
+    .card-number {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: var(--space-2);
+    }
+
+    .card-theme {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: #78350f;
+    }
+
+    .card-hint {
+      font-size: var(--text-xs);
+      color: #a16207;
+      margin-top: var(--space-3);
+    }
+
+    /* Card Back */
+    .card-back-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+      width: 100%;
+    }
+
+    .card-back-icon {
+      font-size: 1.5rem;
+    }
+
+    .card-back-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .card-questions {
+      width: 100%;
+    }
+
+    .card-question {
+      background: var(--gray-50);
+      border-left: 3px solid #f59e0b;
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+
+    .card-question:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-question-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      margin-bottom: var(--space-1);
+    }
+
+    .tap-hint {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+      margin-top: auto;
+      padding-top: var(--space-2);
+    }
+
+    /* Instructions */
+    .instructions {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .instructions__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .instructions ol {
+      margin: 0;
+      padding-left: var(--space-5);
+      color: #15803d;
+    }
+
+    .instructions li {
+      margin-bottom: var(--space-2);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-bar__home">CTI 2.0</a>
+      <a href="monday.html" class="nav-bar__link">Monday</a>
+      <a href="tuesday.html" class="nav-bar__link">Tuesday</a>
+      <a href="wednesday.html" class="nav-bar__link">Wednesday</a>
+      <a href="context.html" class="nav-bar__link">Context</a>
+      <a href="materials.html" class="nav-bar__link">Materials</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="identity-header identity-header--cti">
+      <span class="identity-header__badge">Monday 1:00 - 2:00pm</span>
+      <h1 class="identity-header__greeting">Connection Cards</h1>
+      <p class="identity-header__tagline">Learn something new about each other</p>
+    </header>
+
+    <!-- Instructions -->
+    <section class="instructions">
+      <h2 class="instructions__title">🎯 How to Play</h2>
+      <ol>
+        <li><strong>Pick a card</strong> from the middle of the table — look at the card number</li>
+        <li><strong>Click on the corresponding card below</strong> to read the two questions — select one or both to answer on your card, fold it and put it back in the middle (we will do this together when everyone is done)</li>
+        <li><strong>Go around the table:</strong> Pick a card, read the corresponding questions on the site and the response — guess who you think wrote the response and why — rest of the team can help and/or participate in the guessing</li>
+      </ol>
+    </section>
+
+    <!-- Card Grid -->
+    <div class="card-grid">
+
+      <!-- Card 1 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🎭</div>
+            <div class="card-number">1</div>
+            <div class="card-theme">Hidden Sides</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🎭</span>
+              <span class="card-back-title">Card 1: Hidden Sides</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's a skill you have that most people at work don't know about?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What would you be doing if you weren't in education/workforce development?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">💡</div>
+            <div class="card-number">2</div>
+            <div class="card-theme">Influences</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">💡</span>
+              <span class="card-back-title">Card 2: Influences</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's something you changed your mind about in the last few years?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's a book, movie, or show that shaped how you see the world?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">☀️</div>
+            <div class="card-number">3</div>
+            <div class="card-theme">Simple Joys</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">☀️</span>
+              <span class="card-back-title">Card 3: Simple Joys</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's something you're looking forward to in the next year that has nothing to do with work?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's a small thing that makes your day noticeably better?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🌱</div>
+            <div class="card-number">4</div>
+            <div class="card-theme">Growth</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🌱</span>
+              <span class="card-back-title">Card 4: Growth</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's a question you wish people would ask you more often?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's something you used to find difficult that feels easy now?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🔭</div>
+            <div class="card-number">5</div>
+            <div class="card-theme">Perspective</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🔭</span>
+              <span class="card-back-title">Card 5: Perspective</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's something you do differently than most people?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's a place you've been that changed how you think?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🔍</div>
+            <div class="card-number">6</div>
+            <div class="card-theme">Curiosity</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🔍</span>
+              <span class="card-back-title">Card 6: Curiosity</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's something you're currently curious about outside of work?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's an opinion you hold that might surprise people who know you?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🦋</div>
+            <div class="card-number">7</div>
+            <div class="card-theme">Evolution</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🦋</span>
+              <span class="card-back-title">Card 7: Evolution</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's something you've learned to appreciate that you didn't when you were younger?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's a hobby or interest you've picked up in the last few years?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">✨</div>
+            <div class="card-number">8</div>
+            <div class="card-theme">Dreams</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">✨</span>
+              <span class="card-back-title">Card 8: Dreams</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's the best meal you've had recently?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's something on your bucket list?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-icon">🎪</div>
+            <div class="card-number">9</div>
+            <div class="card-theme">Rituals</div>
+            <div class="card-hint">Click to reveal questions</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-back-header">
+              <span class="card-back-icon">🎪</span>
+              <span class="card-back-title">Card 9: Rituals</span>
+            </div>
+            <div class="card-questions">
+              <div class="card-question">
+                <div class="card-question-label">Option A</div>
+                What's a tradition you have (personal or family) that matters to you?
+              </div>
+              <div class="card-question">
+                <div class="card-question-label">Option B</div>
+                What's something that always makes you laugh?
+              </div>
+            </div>
+            <div class="tap-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Page Navigation -->
+    <div class="page-nav">
+      <a href="monday.html" class="page-nav__link">← Back to Monday Agenda</a>
+    </div>
+
+    <footer class="footer-note">
+      CTI 2.0 Planning | Last updated: January 2026
+    </footer>
+
+  </div>
+</body>
+</html>
