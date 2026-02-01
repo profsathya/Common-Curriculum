@@ -68,14 +68,14 @@ function collapseCollapsible(contentId) {
 
 /**
  * Populate all assignment links on the page from config
- * Links should have data-assignment="assignment-key" attribute
+ * Links should have data-assignment-key="assignment-key" attribute
  * @param {Object} config - The course config object (CST395_CONFIG or CST349_CONFIG)
  */
 function populateAssignmentLinks(config) {
-  const links = document.querySelectorAll('[data-assignment]');
+  const links = document.querySelectorAll('[data-assignment-key]');
 
   links.forEach(link => {
-    const key = link.getAttribute('data-assignment');
+    const key = link.getAttribute('data-assignment-key');
     const assignment = config.assignments[key];
 
     if (!assignment) {
