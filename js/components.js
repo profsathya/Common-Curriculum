@@ -253,6 +253,148 @@ function renderDueThisWeek(config, weekNum, containerId) {
 }
 
 /**
+ * Get assignments due in a specific week from config
+ * Works with both CST349 and CST395 configs
+ * @param {Object} config - The course config object
+ * @param {number} weekNum - Week number
+ * @returns {Array} Array of assignment objects with keys
+ */
+function getAssignmentsDueInWeekFromConfig(config, weekNum) {
+  const weekData = config.weekDates[weekNum];
+  if (!weekData) return [];
+
+  const start = new Date(weekData.start);
+  const end = new Date(weekData.end);
+  end.setHours(23, 59, 59, 999);
+
+  const assignments = [];
+  for (const [key, assignment] of Object.entries(config.assignments)) {
+    const dueDate = new Date(assignment.dueDate + 'T12:00:00');
+    if (dueDate >= start && dueDate <= end) {
+      assignments.push({ key, ...assignment });
+    }
+  }
+
+  return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+}
+
+/**
+ * Get the first assignment from the next week (for "Looking Ahead" feature)
+ * @param {Object} config - The course config object
+ * @param {number} currentWeekNum - Current week number
+ * @returns {Object|null} First assignment from next week, or null
+ */
+function getFirstItemFromNextWeek(config, currentWeekNum) {
+  const nextWeekNum = currentWeekNum + 1;
+  if (nextWeekNum > 16) return null;
+
+  const nextWeekAssignments = getAssignmentsDueInWeekFromConfig(config, nextWeekNum);
+  return nextWeekAssignments.length > 0 ? nextWeekAssignments[0] : null;
+}
+
+/**
+ * Render the "What You Should Be Learning" section with Looking Ahead
+ * @param {Object} config - The course config object
+ * @param {number} weekNum - Current week number
+ * @param {string} containerId - ID of the container element for this week's items
+ * @param {string} lookingAheadContainerId - ID of container for Looking Ahead card
+ * @param {Object} localAssignmentUrls - Map of assignment keys to local HTML file URLs
+ */
+function renderWeeklyLearning(config, weekNum, containerId, lookingAheadContainerId, localAssignmentUrls) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  localAssignmentUrls = localAssignmentUrls || {};
+
+  // Get this week's assignments
+  const thisWeekItems = getAssignmentsDueInWeekFromConfig(config, weekNum);
+
+  if (thisWeekItems.length === 0) {
+    container.innerHTML = '<p style="color: var(--gray-500); font-size: var(--text-sm); padding: var(--space-2);">No assignments due this week.</p>';
+  } else {
+    // Render this week's items
+    container.innerHTML = thisWeekItems.map(item => {
+      const localUrl = localAssignmentUrls[item.key];
+      const url = localUrl || `${config.canvasBaseUrl}/assignments/${item.canvasId}`;
+      const dotClass = `due-item__dot--${item.type || 'assignment'}`;
+      const displayTitle = item.title.replace(/^S\d+: /, '');
+
+      return `
+        <div class="due-item">
+          <div class="due-item__left">
+            <span class="due-item__dot ${dotClass}"></span>
+            <span class="due-item__title">
+              <a href="${url}" target="_blank">${displayTitle}</a>
+            </span>
+          </div>
+          <span class="due-item__date">${formatDate(item.dueDate)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Render Looking Ahead card
+  const lookingAheadContainer = document.getElementById(lookingAheadContainerId);
+  if (!lookingAheadContainer) return;
+
+  const nextItem = getFirstItemFromNextWeek(config, weekNum);
+  if (!nextItem) {
+    lookingAheadContainer.style.display = 'none';
+    return;
+  }
+
+  const nextWeekData = config.weekDates[weekNum + 1];
+  const localUrl = localAssignmentUrls[nextItem.key];
+  const url = localUrl || `${config.canvasBaseUrl}/assignments/${nextItem.canvasId}`;
+  const displayTitle = nextItem.title.replace(/^S\d+: /, '');
+  const dotClass = `due-item__dot--${nextItem.type || 'assignment'}`;
+
+  lookingAheadContainer.innerHTML = `
+    <button class="looking-ahead__header" data-collapse-toggle="looking-ahead-content" aria-expanded="false">
+      <div class="looking-ahead__header-left">
+        <span class="looking-ahead__icon">👀</span>
+        <span class="looking-ahead__title">Looking Ahead: Week ${weekNum + 1}</span>
+      </div>
+      <span class="looking-ahead__toggle">+</span>
+    </button>
+    <div class="looking-ahead__content" id="looking-ahead-content">
+      <p class="looking-ahead__subtitle">${nextWeekData?.title || 'Next Week'}</p>
+      <div class="due-item">
+        <div class="due-item__left">
+          <span class="due-item__dot ${dotClass}"></span>
+          <span class="due-item__title">
+            <a href="${url}" target="_blank">${displayTitle}</a>
+          </span>
+        </div>
+        <span class="due-item__date">${formatDate(nextItem.dueDate)}</span>
+      </div>
+    </div>
+  `;
+
+  lookingAheadContainer.style.display = 'block';
+
+  // Initialize collapsible for looking ahead
+  const lookingAheadHeader = lookingAheadContainer.querySelector('[data-collapse-toggle]');
+  if (lookingAheadHeader) {
+    lookingAheadHeader.addEventListener('click', () => {
+      const contentId = lookingAheadHeader.getAttribute('data-collapse-toggle');
+      const content = document.getElementById(contentId);
+      if (!content) return;
+
+      const isExpanded = lookingAheadHeader.getAttribute('aria-expanded') === 'true';
+      lookingAheadHeader.setAttribute('aria-expanded', !isExpanded);
+      content.classList.toggle('is-expanded');
+
+      // Toggle the + / - icon
+      const toggle = lookingAheadHeader.querySelector('.looking-ahead__toggle');
+      if (toggle) {
+        toggle.textContent = isExpanded ? '+' : '−';
+      }
+    });
+  }
+}
+
+/**
  * Update status banner with current position
  * @param {Object} config - The course config object
  */

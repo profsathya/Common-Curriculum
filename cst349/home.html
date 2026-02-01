@@ -293,14 +293,18 @@
       </div>
     </div>
 
-    <!-- What's Due This Week -->
+    <!-- What You Should Be Learning This Week -->
     <div class="due-section" id="due-this-week-section" style="display: none;">
       <div class="due-section__header">
-        <span>📋</span>
-        <h2 class="due-section__title">Due This Week</h2>
+        <span>📚</span>
+        <h2 class="due-section__title">What You Should Be Learning</h2>
       </div>
       <div class="due-section__content" id="due-this-week">
         <!-- Dynamically populated based on current week -->
+      </div>
+      <!-- Looking Ahead Card -->
+      <div class="looking-ahead" id="looking-ahead-container" style="display: none; margin: var(--space-4);">
+        <!-- Dynamically populated with first item from next week -->
       </div>
     </div>
 
@@ -368,12 +372,17 @@
       addDemoBannerIfNeeded();
       initHomePage(CST349_CONFIG);
 
-      // Get current week (null if before semester)
+      // Get current week (null if before semester or on weekends between weeks)
       const currentWeek = getCST349EffectiveCurrentWeek();
 
-      // Get Started section: visible before semester and during Week 1
+      // Get Started section: visible before semester starts and during Week 1
+      // Note: currentWeek can be null on weekends between weeks, so we check the actual date
       const getStartedSection = document.getElementById('get-started-section');
-      if (currentWeek === null || currentWeek <= 1) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const week1Start = new Date(CST349_CONFIG.weekDates[1].start);
+      const isBeforeSemester = today < week1Start;
+      if (isBeforeSemester || currentWeek === 1) {
         getStartedSection.style.display = 'block';
       }
 
@@ -396,79 +405,36 @@
         framingToggle.setAttribute('aria-expanded', 'true');
       }
 
-      // Due This Week section
+      // What You Should Be Learning section
       const dueSection = document.getElementById('due-this-week-section');
-      const dueContent = document.getElementById('due-this-week');
 
-      // Build due items based on current week
-      let dueItems = [];
+      // Map assignment keys to local HTML files
+      const localAssignmentUrls = {
+        's1-self-assessment': 'assignments/s1-w1-skills-self-assessment.html',
+        's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
+        's1-five-whys': 'assignments/s1-w2-five-whys.html',
+        's1-skills-revision': 'assignments/s1-w2-skills-revision.html',
+        's1-sprint-plan': 'assignments/s1-w2-sprint-plan.html',
+        's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
+        's1-learning-log': 'assignments/s1-w3-learning-log.html',
+        's1-reflection-3': 'assignments/s1-w3-productive-reflection.html',
+        's1-demonstration': 'assignments/s1-w4-demonstration.html',
+        's1-peer-eval': 'assignments/s1-w4-peer-evaluation.html',
+        's1-bridge': 'assignments/s1-bridge-reflection.html'
+      };
 
-      // Week 1: Add Getting Started items (survey and discussion)
-      if (currentWeek === 1) {
-        dueItems.push({
-          title: 'Complete the Pre-course Survey',
-          url: 'https://csumb.instructure.com/courses/32911/quizzes/141971',
-          type: 'assignment',
-          dueText: 'End of Week 1'
-        });
-        dueItems.push({
-          title: 'Introduce Yourself Discussion',
-          url: 'https://csumb.instructure.com/courses/32911/discussion_topics/345055',
-          type: 'engagement',
-          dueText: 'End of Week 1'
-        });
-      }
-
-      // Add regular assignments due this week (if we're in a valid week)
+      // Show section and render content if we're in a valid week
       if (currentWeek !== null && currentWeek >= 1) {
-        // Map assignment keys to local HTML files
-        const localAssignmentUrls = {
-          's1-skills-assessment': 'assignments/s1-w1-skills-self-assessment.html',
-          's1-reflection-1': 'assignments/s1-w1-productive-reflection.html',
-          's1-five-whys': 'assignments/s1-w2-five-whys.html',
-          's1-skills-revision': 'assignments/s1-w2-skills-revision.html',
-          's1-sprint-plan': 'assignments/s1-w2-sprint-plan.html',
-          's1-reflection-2': 'assignments/s1-w2-productive-reflection.html',
-          's1-learning-log': 'assignments/s1-w3-learning-log.html',
-          's1-reflection-3': 'assignments/s1-w3-productive-reflection.html',
-          's1-demonstration': 'assignments/s1-w4-demonstration.html',
-          's1-peer-evaluation': 'assignments/s1-w4-peer-evaluation.html',
-          's1-bridge': 'assignments/s1-bridge-reflection.html'
-        };
-
-        const weekAssignments = getCST349AssignmentsDueInWeek(currentWeek);
-        weekAssignments.forEach(assignment => {
-          const localUrl = localAssignmentUrls[assignment.key] || getCST349AssignmentUrl(assignment.key);
-          dueItems.push({
-            title: assignment.title.replace(/^S\d+: /, ''),
-            url: localUrl,
-            type: assignment.type,
-            dueText: formatCST349Date(assignment.dueDate)
-          });
-        });
-      }
-
-      // Show section only if there are items due
-      if (dueItems.length > 0) {
         dueSection.style.display = 'block';
 
-        // Render the items
-        dueContent.innerHTML = dueItems.map((item, index) => {
-          const typeClass = item.type === 'reflection' ? 'reflection' :
-                           item.type === 'engagement' ? 'engagement' : 'assignment';
-
-          return `
-            <div class="due-item">
-              <div class="due-item__left">
-                <span class="due-item__dot due-item__dot--${typeClass}"></span>
-                <span class="due-item__title">
-                  <a href="${item.url}" target="_blank">${item.title}</a>
-                </span>
-              </div>
-              <span class="due-item__date">${item.dueText}</span>
-            </div>
-          `;
-        }).join('');
+        // Use the new renderWeeklyLearning function for automated content
+        renderWeeklyLearning(
+          CST349_CONFIG,
+          currentWeek,
+          'due-this-week',
+          'looking-ahead-container',
+          localAssignmentUrls
+        );
       }
     });
   </script>
