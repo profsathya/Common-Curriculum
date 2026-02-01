@@ -1,12 +1,13 @@
+// AUTO-GENERATED — Do not edit manually
+// Source: config/cst395-assignments.csv
+// Run: node scripts/canvas-sync.js --action=generate-config --course=cst395
+//
+// To update assignments: Edit the CSV file, then run the generate-config command above.
+// Canvas IDs are synced via GitHub Actions workflow.
+
 /**
  * CST395 Configuration
  * AI-Native Solution Engineering
- *
- * UPDATE THIS FILE EACH SEMESTER:
- * 1. Change canvasBaseUrl to new course ID
- * 2. Update all assignment canvasId values
- * 3. Update weekDates for new semester
- * 4. Add Loom video URLs as they become available
  */
 
 const CST395_CONFIG = {
