@@ -307,12 +307,17 @@
       // Initialize with CST395 config
       initHomePage(CST395_CONFIG);
 
-      // Get current week (null if before semester)
+      // Get current week (null if before semester or on weekends between weeks)
       const currentWeek = getEffectiveCurrentWeek();
 
-      // Get Started section: visible before semester and during Week 1
+      // Get Started section: visible before semester starts and during Week 1
+      // Note: currentWeek can be null on weekends between weeks, so we check the actual date
       const getStartedSection = document.getElementById('get-started-section');
-      if (currentWeek === null || currentWeek <= 1) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const week1Start = new Date(CST395_CONFIG.weekDates[1].start);
+      const isBeforeSemester = today < week1Start;
+      if (isBeforeSemester || currentWeek === 1) {
         getStartedSection.style.display = 'block';
       }
 
