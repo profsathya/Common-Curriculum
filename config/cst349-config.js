@@ -156,13 +156,21 @@ const CST349_CONFIG = {
     "s1-learning-log": {
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-04",
-      type: "assignment",
-      canvasType: "assignment",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
       sprint: 1,
       week: 3,
-      htmlFile: "assignments/s1-w3-learning-log.html"
+      htmlFile: "assignments/s1-w3-learning-log.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload a photo of your handwritten learning log from this week's class session.",
+          "points": 5
+        }
+      ]
     },
     "s1-reflection-3": {
       title: "S1: Productive Reflection #3",
