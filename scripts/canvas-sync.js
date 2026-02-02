@@ -921,6 +921,10 @@ function buildCanvasQuestion(configQuestion, index) {
       question.question_type = 'true_false_question';
       break;
 
+    case 'file_upload':
+      question.question_type = 'file_upload_question';
+      break;
+
     default:
       question.question_type = 'essay_question';
   }
