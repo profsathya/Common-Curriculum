@@ -491,10 +491,37 @@ async function renameAssignments(api, courseName, dryRun = true, limit = 0) {
 
 /**
  * Convert config date to Canvas ISO format
+ * Uses local time (no Z suffix) so Canvas uses the course's timezone
  */
 function toCanvasDate(dateString) {
   if (!dateString) return null;
-  return `${dateString}T23:59:00Z`;
+  return `${dateString}T23:59:00`;
+}
+
+/**
+ * Update or add canvasId in config content for a given assignment key
+ * Handles both cases: updating existing canvasId and adding new canvasId
+ */
+function updateCanvasIdInConfig(content, key, canvasId) {
+  // First, try to replace existing canvasId
+  const replacePattern = new RegExp(
+    `("${key}":\\s*\\{[^}]*canvasId:\\s*)"[^"]*"`,
+    'g'
+  );
+
+  if (replacePattern.test(content)) {
+    // Reset lastIndex after test
+    replacePattern.lastIndex = 0;
+    return content.replace(replacePattern, `$1"${canvasId}"`);
+  }
+
+  // No existing canvasId - add it after the opening brace
+  const addPattern = new RegExp(
+    `("${key}":\\s*\\{)`,
+    'g'
+  );
+
+  return content.replace(addPattern, `$1\n      canvasId: "${canvasId}",`);
 }
 
 /**
@@ -667,9 +694,12 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
   const results = fuzzyMatchAssignments(canvasAssignments, config.assignments);
 
   // Filter to only assignments that are in the CSV (reviewed) and don't have a canvasId
+  // Skip quiz entries - those are handled by createQuizzes
   const toCreate = results.unmatchedConfig.filter(item => {
     if (!csvKeys.has(item.key)) return false;
     const entry = item.configEntry;
+    // Skip quiz entries - they should be created by createQuizzes instead
+    if (entry.canvasType === 'quiz' || entry.quizType) return false;
     return !entry.canvasId || entry.canvasId === 'null' || entry.canvasId === '';
   });
 
@@ -726,8 +756,8 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
 
     // Add due date if specified
     if (entry.dueDate) {
-      // Canvas expects ISO 8601 format with time
-      assignmentData.due_at = `${entry.dueDate}T23:59:00Z`;
+      // Canvas expects ISO 8601 format with time (no Z = use course timezone)
+      assignmentData.due_at = `${entry.dueDate}T23:59:00`;
     }
 
     // Set points based on type
@@ -773,12 +803,7 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
     let updatedContent = rawContent;
 
     for (const item of created) {
-      // Find and update the canvasId for this assignment key
-      const pattern = new RegExp(
-        `("${item.key}":\\s*\\{[^}]*canvasId:\\s*)"[^"]*"`,
-        'g'
-      );
-      updatedContent = updatedContent.replace(pattern, `$1"${item.canvasId}"`);
+      updatedContent = updateCanvasIdInConfig(updatedContent, item.key, item.canvasId);
     }
 
     fs.writeFileSync(configPath, updatedContent, 'utf-8');
@@ -1015,12 +1040,13 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
         title: entry.title,
         quiz_type: entry.quizType || 'graded_survey',
         published: false,
+        allowed_attempts: -1,  // Unlimited attempts
       };
 
-      // Add due date
+      // Add due date (no Z suffix = use course timezone)
       if (entry.dueDate) {
         const time = entry.dueTime || '23:59';
-        quizData.due_at = `${entry.dueDate}T${time}:00Z`;
+        quizData.due_at = `${entry.dueDate}T${time}:00`;
       }
 
       // Calculate points
@@ -1041,6 +1067,12 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
         } else {
           console.log(`  ⚠ Warning: Assignment group "${entry.assignmentGroup}" not found`);
         }
+      }
+
+      // Add iframe description if htmlFile is specified
+      if (entry.htmlFile) {
+        const iframeUrl = `${GITHUB_PAGES_BASE_URL}/${courseInfo.htmlDir}/${entry.htmlFile}`;
+        quizData.description = `<iframe src="${iframeUrl}" width="100%" height="800" style="border:none;"></iframe>`;
       }
 
       // Create the quiz
@@ -1081,11 +1113,7 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
     let updatedContent = rawContent;
 
     for (const item of created) {
-      const pattern = new RegExp(
-        `("${item.key}":\\s*\\{[^}]*canvasId:\\s*)"[^"]*"`,
-        'g'
-      );
-      updatedContent = updatedContent.replace(pattern, `$1"${item.canvasId}"`);
+      updatedContent = updateCanvasIdInConfig(updatedContent, item.key, item.canvasId);
     }
 
     fs.writeFileSync(configPath, updatedContent, 'utf-8');
