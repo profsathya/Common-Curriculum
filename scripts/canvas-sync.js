@@ -666,8 +666,12 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
   // Fuzzy match to find what's missing
   const results = fuzzyMatchAssignments(canvasAssignments, config.assignments);
 
-  // Filter to only assignments that are in the CSV (reviewed)
-  const toCreate = results.unmatchedConfig.filter(item => csvKeys.has(item.key));
+  // Filter to only assignments that are in the CSV (reviewed) and don't have a canvasId
+  const toCreate = results.unmatchedConfig.filter(item => {
+    if (!csvKeys.has(item.key)) return false;
+    const entry = item.configEntry;
+    return !entry.canvasId || entry.canvasId === 'null' || entry.canvasId === '';
+  });
 
   // Count config-only entries (not in CSV)
   const configOnlyCount = results.unmatchedConfig.length - toCreate.length;
