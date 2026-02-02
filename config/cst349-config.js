@@ -159,7 +159,7 @@ const CST349_CONFIG = {
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Goal Setting",
+      assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
       sprint: 1,
       week: 3,
