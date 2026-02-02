@@ -39,6 +39,34 @@ const COURSES = {
 const GITHUB_PAGES_BASE_URL = 'https://profsathya.github.io/Common-Curriculum';
 
 /**
+ * Parse CSV file and return set of assignment keys
+ * CSV is the source of truth for what should be created
+ */
+function loadCsvKeys(csvPath) {
+  if (!fs.existsSync(csvPath)) {
+    return new Set();
+  }
+  const content = fs.readFileSync(csvPath, 'utf-8');
+  const lines = content.trim().split('\n');
+  if (lines.length < 2) return new Set();
+
+  // Parse header to find key column index
+  const headers = lines[0].split(',').map(h => h.trim());
+  const keyIndex = headers.indexOf('key');
+  if (keyIndex === -1) return new Set();
+
+  const keys = new Set();
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const values = line.split(',');
+    const key = values[keyIndex]?.trim();
+    if (key) keys.add(key);
+  }
+  return keys;
+}
+
+/**
  * Parse command line arguments
  */
 function parseArgs() {
@@ -629,15 +657,32 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
   const canvasAssignments = await api.listAssignments(courseId);
   console.log(`Found ${canvasAssignments.length} existing assignments`);
 
+  // Load CSV to determine which assignments should be created
+  // CSV is the source of truth - only create what's been reviewed in CSV
+  const csvPath = path.join(process.cwd(), courseInfo.csvFile);
+  const csvKeys = loadCsvKeys(csvPath);
+  console.log(`Found ${csvKeys.size} assignments in CSV (source of truth)`);
+
   // Fuzzy match to find what's missing
   const results = fuzzyMatchAssignments(canvasAssignments, config.assignments);
 
-  const toCreate = results.unmatchedConfig;
+  // Filter to only assignments that are in the CSV (reviewed) and don't have a canvasId
+  const toCreate = results.unmatchedConfig.filter(item => {
+    if (!csvKeys.has(item.key)) return false;
+    const entry = item.configEntry;
+    return !entry.canvasId || entry.canvasId === 'null' || entry.canvasId === '';
+  });
+
+  // Count config-only entries (not in CSV)
+  const configOnlyCount = results.unmatchedConfig.length - toCreate.length;
 
   console.log(`\n${'─'.repeat(40)}`);
   console.log('ANALYSIS:');
   console.log(`  Already exist: ${results.matched.length}`);
-  console.log(`  Need to create: ${toCreate.length}`);
+  console.log(`  In CSV, need to create: ${toCreate.length}`);
+  if (configOnlyCount > 0) {
+    console.log(`  Config-only (not in CSV, skipped): ${configOnlyCount}`);
+  }
 
   if (toCreate.length === 0) {
     console.log('\n✓ All assignments already exist in Canvas');
@@ -883,17 +928,28 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
   const existingByTitle = new Map(existingQuizzes.map(q => [q.title.toLowerCase(), q]));
   console.log(`Found ${existingQuizzes.length} existing quizzes`);
 
+  // Load CSV to determine which quizzes should be created
+  // CSV is the source of truth - only create what's been reviewed in CSV
+  const csvPath = path.join(process.cwd(), courseInfo.csvFile);
+  const csvKeys = loadCsvKeys(csvPath);
+  console.log(`Found ${csvKeys.size} assignments in CSV (source of truth)`);
+
   // Find quiz entries in config (entries with canvasType: "quiz" or quizType field)
+  // Only consider entries that are in the CSV
+  const allQuizEntries = [];
   const quizEntries = [];
   for (const [key, entry] of Object.entries(config.assignments)) {
     if (entry.canvasType === 'quiz' || entry.quizType) {
-      quizEntries.push({ key, ...entry });
+      allQuizEntries.push({ key, ...entry });
+      if (csvKeys.has(key)) {
+        quizEntries.push({ key, ...entry });
+      }
     }
   }
 
   if (quizEntries.length === 0) {
-    console.log('\n✓ No quiz entries found in config');
-    console.log('  To add a quiz, include canvasType: "quiz" and quizType in assignment config');
+    console.log('\n✓ No quiz entries found in CSV');
+    console.log('  To add a quiz, include canvasType: "quiz" and quizType in CSV');
     return { created: [] };
   }
 
@@ -903,11 +959,17 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
     return !exists && (!entry.canvasId || entry.canvasId === 'null' || entry.canvasId === '');
   });
 
+  // Count config-only quiz entries (not in CSV)
+  const configOnlyCount = allQuizEntries.length - quizEntries.length;
+
   console.log(`\n${'─'.repeat(40)}`);
   console.log('ANALYSIS:');
-  console.log(`  Quiz entries in config: ${quizEntries.length}`);
+  console.log(`  Quiz entries in CSV: ${quizEntries.length}`);
   console.log(`  Already exist: ${quizEntries.length - toCreate.length}`);
   console.log(`  Need to create: ${toCreate.length}`);
+  if (configOnlyCount > 0) {
+    console.log(`  Config-only quizzes (not in CSV, skipped): ${configOnlyCount}`);
+  }
 
   if (toCreate.length === 0) {
     console.log('\n✓ All quizzes already exist in Canvas');
