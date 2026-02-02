@@ -154,7 +154,6 @@ const CST349_CONFIG = {
       ]
     },
     "s1-learning-log": {
-      canvasId: "570072",
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-04",
       type: "assignment",
