@@ -122,7 +122,6 @@ const CST349_CONFIG = {
       ]
     },
     "s1-sprint-plan": {
-      canvasId: "570033",
       title: "S1: Sprint Plan v1",
       dueDate: "2026-02-05",
       type: "quiz",
@@ -131,8 +130,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
       sprint: 1,
-      week: 2,
-      htmlFile: "assignments/s1-w2-sprint-plan.html"
+      week: 3,
+      htmlFile: "assignments/s1-w3-sprint-plan.html"
     },
     "s1-reflection-2": {
       canvasId: "570068",
@@ -167,7 +166,6 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w3-learning-log.html"
     },
     "s1-reflection-3": {
-      canvasId: "570069",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "reflection",
@@ -180,19 +178,16 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w3-productive-reflection.html"
     },
     "s1-demonstration": {
-      canvasId: "570074",
       title: "S1: Demonstration",
       dueDate: "2026-02-11",
       type: "assignment"
     },
     "s1-peer-eval": {
-      canvasId: "570075",
       title: "S1: Peer Evaluation",
       dueDate: "2026-02-12",
       type: "assignment"
     },
     "s1-bridge": {
-      canvasId: "570071",
       title: "Bridge Reflection: Beyond Technical → Accountable Growth",
       dueDate: "2026-02-13",
       type: "bridge"
@@ -200,79 +195,66 @@ const CST349_CONFIG = {
 
     // Sprint 2
     "s2-outreach": {
-      canvasId: "200001",
       title: "S2: Professional Outreach",
       dueDate: "2026-02-19",
       type: "assignment"
     },
     "s2-fallback-plan": {
-      canvasId: "200002",
       title: "S2: Fallback Plan",
       dueDate: "2026-02-19",
       type: "assignment"
     },
     "s2-reflection-4": {
-      canvasId: "200003",
       title: "S2: Productive Reflection #4",
       dueDate: "2026-02-21",
       type: "reflection"
     },
     "s2-partner-confirmed": {
-      canvasId: "200004",
       title: "S2: Accountability Partner Confirmed",
       dueDate: "2026-02-26",
       type: "assignment"
     },
     "s2-first-conversation": {
-      canvasId: "200005",
       title: "S2: First Conversation",
       dueDate: "2026-02-26",
       type: "assignment"
     },
     "s2-revised-plan": {
-      canvasId: "200006",
       title: "S2: Revised Development Plan",
       dueDate: "2026-02-26",
       type: "assignment"
     },
     "s2-reflection-5": {
-      canvasId: "200007",
       title: "S2: Productive Reflection #5",
       dueDate: "2026-02-28",
       type: "reflection"
     },
     "s2-stretch-activity": {
-      canvasId: "200008",
       title: "S2: Stretch Activity",
       dueDate: "2026-03-05",
       type: "assignment"
     },
     "s2-checkin-2": {
-      canvasId: "200009",
       title: "S2: Check-In #2",
       dueDate: "2026-03-05",
       type: "assignment"
     },
     "s2-reflection-6": {
-      canvasId: "200010",
       title: "S2: Productive Reflection #6",
       dueDate: "2026-03-07",
       type: "reflection"
     },
     "s2-demonstration": {
-      canvasId: "200011",
       title: "S2: Demonstration with Validation",
       dueDate: "2026-03-12",
       type: "assignment"
     },
     "s2-peer-eval": {
-      canvasId: "200012",
       title: "S2: Peer Evaluation",
       dueDate: "2026-03-13",
       type: "assignment"
     },
     "s2-bridge": {
-      canvasId: "200013",
       title: "Bridge Reflection: Accountable Growth → Transfer",
       dueDate: "2026-03-14",
       type: "bridge"
@@ -280,67 +262,56 @@ const CST349_CONFIG = {
 
     // Sprint 3
     "s3-curiosity-inventory": {
-      canvasId: "300001",
       title: "S3: Curiosity Inventory",
       dueDate: "2026-03-26",
       type: "assignment"
     },
     "s3-transfer-plan": {
-      canvasId: "300002",
       title: "S3: Transfer Plan",
       dueDate: "2026-03-26",
       type: "assignment"
     },
     "s3-reflection-7": {
-      canvasId: "300003",
       title: "S3: Productive Reflection #7",
       dueDate: "2026-03-28",
       type: "reflection"
     },
     "s3-learning-log": {
-      canvasId: "300004",
       title: "S3: Learning Log",
       dueDate: "2026-04-02",
       type: "assignment"
     },
     "s3-reflection-8": {
-      canvasId: "300005",
       title: "S3: Productive Reflection #8",
       dueDate: "2026-04-04",
       type: "reflection"
     },
     "s3-mini-project": {
-      canvasId: "300006",
       title: "S3: Mini-Project",
       dueDate: "2026-04-09",
       type: "assignment"
     },
     "s3-iteration-doc": {
-      canvasId: "300007",
       title: "S3: Iteration After Struggle",
       dueDate: "2026-04-09",
       type: "assignment"
     },
     "s3-reflection-9": {
-      canvasId: "300008",
       title: "S3: Productive Reflection #9",
       dueDate: "2026-04-11",
       type: "reflection"
     },
     "s3-presentation": {
-      canvasId: "300009",
       title: "S3: Transfer Presentation",
       dueDate: "2026-04-16",
       type: "assignment"
     },
     "s3-peer-eval": {
-      canvasId: "300010",
       title: "S3: Peer Evaluation",
       dueDate: "2026-04-17",
       type: "assignment"
     },
     "s3-bridge": {
-      canvasId: "300011",
       title: "Bridge Reflection: Transfer → Proving It",
       dueDate: "2026-04-18",
       type: "bridge"
@@ -348,73 +319,61 @@ const CST349_CONFIG = {
 
     // Sprint 4
     "s4-evidence-inventory": {
-      canvasId: "400001",
       title: "S4: Evidence Inventory",
       dueDate: "2026-04-23",
       type: "assignment"
     },
     "s4-gap-analysis": {
-      canvasId: "400002",
       title: "S4: Gap Analysis",
       dueDate: "2026-04-23",
       type: "assignment"
     },
     "s4-reflection-10": {
-      canvasId: "400003",
       title: "S4: Productive Reflection #10",
       dueDate: "2026-04-25",
       type: "reflection"
     },
     "s4-narrative-arc": {
-      canvasId: "400004",
       title: "S4: Narrative Arc Draft",
       dueDate: "2026-04-30",
       type: "assignment"
     },
     "s4-evidence-selection": {
-      canvasId: "400005",
       title: "S4: Evidence Selection",
       dueDate: "2026-04-30",
       type: "assignment"
     },
     "s4-reflection-11": {
-      canvasId: "400006",
       title: "S4: Productive Reflection #11",
       dueDate: "2026-05-02",
       type: "reflection"
     },
     "s4-defense-draft": {
-      canvasId: "400007",
       title: "S4: Defense Draft",
       dueDate: "2026-05-07",
       type: "assignment"
     },
     "s4-practice-defense": {
-      canvasId: "400008",
       title: "S4: Practice Defense",
       dueDate: "2026-05-07",
       type: "assignment"
     },
     "s4-reflection-12": {
-      canvasId: "400009",
       title: "S4: Productive Reflection #12",
       dueDate: "2026-05-09",
       type: "reflection"
     },
     "s4-final-defense": {
-      canvasId: "400010",
       title: "S4: Final Portfolio Defense",
       dueDate: "2026-05-14",
       type: "assignment"
     },
     "s4-peer-eval": {
-      canvasId: "400011",
       title: "S4: Peer Evaluations",
       dueDate: "2026-05-15",
       type: "assignment"
     },
     "s4-final-reflection": {
-      canvasId: "400012",
       title: "Final Reflection",
       dueDate: "2026-05-16",
       type: "bridge"
