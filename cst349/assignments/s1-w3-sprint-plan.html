@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprint Plan v1 | Sprint 1 Week 2 | CST349</title>
+    <title>Sprint Plan | CST349</title>
+    <meta http-equiv="refresh" content="3;url=../activities/sprint-plan.html">
     <style>
         * { box-sizing: border-box; }
         body {
@@ -13,471 +14,58 @@
             background: #f9fafb;
             color: #111827;
             line-height: 1.7;
-        }
-        .container { max-width: 700px; margin: 0 auto; }
-        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
-        .breadcrumb a { color: #6366f1; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
-
-        .progress-bar {
-            background: #e5e7eb;
-            height: 4px;
-            border-radius: 2px;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-        .progress-bar__fill {
-            background: #6366f1;
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-        .header h1 { margin: 0; font-size: 22px; }
-        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
-
-        .section {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            overflow: hidden;
-        }
-        .section.completed { border-color: #86efac; }
-        .section__header {
-            padding: 16px 20px;
-            cursor: pointer;
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .section__header:hover { background: #f9fafb; }
-        .section__number {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: #e5e7eb;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: 600;
-            margin-right: 12px;
-            color: #6b7280;
         }
-        .section.completed .section__number { background: #22c55e; color: white; }
-        .section.active .section__number { background: #6366f1; color: white; }
-        .section__title { font-weight: 600; color: #111827; }
-        .section__toggle { color: #9ca3af; transition: transform 0.2s; }
-        .section.expanded .section__toggle { transform: rotate(180deg); }
-        .section__content {
-            display: none;
-            padding: 0 20px 20px 20px;
-            border-top: 1px solid #e5e7eb;
-        }
-        .section.expanded .section__content { display: block; }
-
-        .hook {
-            background: #eef2ff;
-            border: 2px solid #c7d2fe;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
+        .container {
+            max-width: 500px;
             text-align: center;
         }
-        .hook__question {
-            font-size: 20px;
+        .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0 0 12px 0;
             color: #4f46e5;
-            font-weight: 500;
-            margin: 0 0 16px 0;
         }
-        .hook__subtext { color: #6b7280; font-size: 14px; margin: 0; }
-
-        .framework-box {
-            background: #f0fdf4;
-            border: 2px solid #86efac;
-            border-radius: 12px;
-            padding: 24px;
-            margin: 20px 0;
-        }
-        .framework-box h3 {
-            color: #166534;
-            margin: 0 0 16px 0;
-            font-size: 18px;
-        }
-        .framework-item {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #bbf7d0;
-        }
-        .framework-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        .framework-item__letter {
-            width: 28px;
-            height: 28px;
-            background: #22c55e;
-            color: white;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .framework-item__content { flex: 1; }
-        .framework-item__name { font-weight: 600; color: #166534; }
-        .framework-item__desc { font-size: 14px; color: #166534; margin: 2px 0 0 0; }
-
-        .week-plan {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .week-plan__item {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-        .week-plan__item:last-child { margin-bottom: 0; }
-        .week-plan__label {
-            font-weight: 600;
-            color: #6366f1;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .week-plan__prompt {
+        p {
             color: #6b7280;
-            font-size: 14px;
-            margin: 0;
+            margin: 0 0 24px 0;
         }
-
-        .pause-box {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-            padding: 16px;
-            margin: 20px 0;
-        }
-        .pause-box__label {
-            font-size: 12px;
-            color: #b45309;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        .pause-box__prompt { color: #92400e; margin: 0; }
-
-        .continue-btn {
-            background: #6366f1;
-            color: white;
-            border: none;
+        .redirect-link {
+            display: inline-block;
             padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            margin-top: 16px;
-        }
-        .continue-btn:hover { background: #4f46e5; }
-
-        .submission {
-            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
             color: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-top: 24px;
-        }
-        .submission h3 { color: white; margin: 0 0 16px 0; }
-        .submission__checklist {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 16px 0;
-        }
-        .submission__checklist li {
-            padding: 8px 0;
-            color: #d1d5db;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-        .submission__checklist li::before { content: "☐"; color: #6366f1; }
-        .submission__format {
-            background: rgba(255,255,255,0.1);
-            padding: 12px 16px;
             border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .countdown {
             font-size: 14px;
             color: #9ca3af;
-        }
-
-        .sdl-tag {
-            display: inline-block;
-            background: #e0e7ff;
-            color: #4338ca;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-right: 8px;
+            margin-top: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <p class="breadcrumb">
-            <a href="../home.html">Home</a> /
-            <a href="../sprint-1.html">Sprint 1</a> /
-            Sprint Plan v1
-        </p>
-
-        <div class="progress-bar">
-            <div class="progress-bar__fill" id="progress"></div>
-        </div>
-
-        <div class="header">
-            <h1>📋 Sprint Plan v1</h1>
-            <p>Week 2 · ~30 minutes to complete</p>
-        </div>
-
-        <div class="hook">
-            <p class="hook__question">
-                A goal without a plan is just a wish.
-            </p>
-            <p class="hook__subtext">Your demo is Feb 11. Time to turn your root cause into action.</p>
-        </div>
-
-        <!-- Section 1: UMPIRE Framework -->
-        <div class="section active expanded" data-section="1">
-            <div class="section__header" onclick="toggleSection(this)">
-                <div>
-                    <span class="section__number">1</span>
-                    <span class="section__title">The UMPIRE Framework</span>
-                </div>
-                <span class="section__toggle">▼</span>
-            </div>
-            <div class="section__content">
-                <p>
-                    UMPIRE is a framework for designing learning plans. It ensures you don't just "try harder" but actually structure your approach.
-                </p>
-
-                <div class="framework-box">
-                    <h3>UMPIRE</h3>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">U</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Understand</p>
-                            <p class="framework-item__desc">What exactly am I trying to learn? What does success look like?</p>
-                        </div>
-                    </div>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">M</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Map</p>
-                            <p class="framework-item__desc">What's the full landscape of this challenge? What are all the factors involved?</p>
-                        </div>
-                    </div>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">P</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Plan</p>
-                            <p class="framework-item__desc">What specific activities will I do? When and how often?</p>
-                        </div>
-                    </div>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">I</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Implement</p>
-                            <p class="framework-item__desc">Actually do the work. Track what happens.</p>
-                        </div>
-                    </div>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">R</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Review</p>
-                            <p class="framework-item__desc">What's working? What isn't? Gather feedback and evidence.</p>
-                        </div>
-                    </div>
-                    <div class="framework-item">
-                        <span class="framework-item__letter">E</span>
-                        <div class="framework-item__content">
-                            <p class="framework-item__name">Evaluate</p>
-                            <p class="framework-item__desc">Did you achieve your goal? What did you learn? What's next?</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="continue-btn" onclick="completeSection(1)">
-                    I understand UMPIRE → Continue
-                </button>
-            </div>
-        </div>
-
-        <!-- Section 2: Your 1-Week Demo Plan -->
-        <div class="section" data-section="2">
-            <div class="section__header" onclick="toggleSection(this)">
-                <div>
-                    <span class="section__number">2</span>
-                    <span class="section__title">Design Your Demo Plan</span>
-                </div>
-                <span class="section__toggle">▼</span>
-            </div>
-            <div class="section__content">
-                <p>
-                    Your Sprint 1 Demo is on <strong>Wednesday, February 11</strong>. You have one week to prepare. This plan focuses on what you'll demonstrate and how you'll get there.
-                </p>
-
-                <div class="week-plan">
-                    <div class="week-plan__item">
-                        <p class="week-plan__label">Demo Goal</p>
-                        <p class="week-plan__prompt">What will you show? What does "progress" look like for your skill? Be specific about what the audience will see.</p>
-                    </div>
-                    <div class="week-plan__item">
-                        <p class="week-plan__label">This Week: Key Actions</p>
-                        <p class="week-plan__prompt">What 2-3 specific activities will you do between now and the demo? List concrete steps, not vague intentions.</p>
-                    </div>
-                    <div class="week-plan__item">
-                        <p class="week-plan__label">Evidence Collection</p>
-                        <p class="week-plan__prompt">What evidence will you gather to show your process and progress? (Logs, screenshots, before/after, reflections)</p>
-                    </div>
-                    <div class="week-plan__item">
-                        <p class="week-plan__label">Demo Format</p>
-                        <p class="week-plan__prompt">How will you present? (5 min max) What's your story? What will you show vs. tell?</p>
-                    </div>
-                </div>
-
-                <div class="pause-box">
-                    <p class="pause-box__label">⏸️ Draft Now</p>
-                    <p class="pause-box__prompt">
-                        Be specific. "Practice more" doesn't cut it. "Record myself doing X, review with criteria Y, try again with focus on Z" is a plan.
-                    </p>
-                </div>
-
-                <button class="continue-btn" onclick="completeSection(2)">
-                    I've drafted my plan → Continue
-                </button>
-            </div>
-        </div>
-
-        <!-- Section 3: Define Success -->
-        <div class="section" data-section="3">
-            <div class="section__header" onclick="toggleSection(this)">
-                <div>
-                    <span class="section__number">3</span>
-                    <span class="section__title">Define How You'll Measure Success</span>
-                </div>
-                <span class="section__toggle">▼</span>
-            </div>
-            <div class="section__content">
-                <p>
-                    In the demo, you'll need to show <em>evidence</em> of progress, not just claim it. What will that evidence be?
-                </p>
-
-                <p><strong>Good evidence is:</strong></p>
-                <ul>
-                    <li><strong>Observable:</strong> The audience can see it, not just hear about it</li>
-                    <li><strong>Comparative:</strong> Shows change from where you started</li>
-                    <li><strong>Honest:</strong> Includes struggles, not just success</li>
-                </ul>
-
-                <div class="pause-box">
-                    <p class="pause-box__label">⏸️ Plan Your Evidence</p>
-                    <p class="pause-box__prompt">
-                        What 2-3 pieces of evidence will you show in your demo? Think: before/after comparisons, logs of practice, reflections on what changed.
-                    </p>
-                </div>
-
-                <button class="continue-btn" onclick="completeSection(3)">
-                    I've defined my measures → Continue
-                </button>
-            </div>
-        </div>
-
-        <!-- Section 4: Submission -->
-        <div class="section" data-section="4">
-            <div class="section__header" onclick="toggleSection(this)">
-                <div>
-                    <span class="section__number">4</span>
-                    <span class="section__title">Your Submission</span>
-                </div>
-                <span class="section__toggle">▼</span>
-            </div>
-            <div class="section__content">
-                <p>
-                    <span class="sdl-tag">SDL 2: Design Plan</span>
-                </p>
-
-                <div class="submission">
-                    <h3>📝 What to Submit</h3>
-                    <ul class="submission__checklist">
-                        <li>Your skill focus and root cause (from 5 Whys)</li>
-                        <li>Your demo goal: What will you show on Feb 11?</li>
-                        <li>Your key actions this week (2-3 specific steps)</li>
-                        <li>What evidence you'll collect and present</li>
-                        <li>Your demo format: How will you tell your story in 5 minutes?</li>
-                    </ul>
-                    <div class="submission__format">
-                        <strong>Format:</strong> Text entry or file upload<br>
-                        <strong>Due:</strong> Thursday, February 5
-                    </div>
-                    <a data-assignment-key="s1-sprint-plan" href="https://csumb.instructure.com/courses/32911/quizzes/144791" target="_blank" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                        Submit to Canvas →
-                    </a>
-                </div>
-            </div>
-        </div>
-
+        <div class="icon">📋</div>
+        <h1>Sprint Plan Has Moved</h1>
+        <p>Sprint Plan is now an interactive activity format that guides you through demo preparation step by step.</p>
+        <a href="../activities/sprint-plan.html" class="redirect-link">
+            Go to Sprint Plan Activity →
+        </a>
+        <p class="countdown">Redirecting automatically in 3 seconds...</p>
     </div>
-
-    <script>
-        let completedSections = new Set();
-
-        function toggleSection(header) {
-            const section = header.closest('.section');
-            section.classList.toggle('expanded');
-        }
-
-        function completeSection(num) {
-            completedSections.add(num);
-            const current = document.querySelector(`[data-section="${num}"]`);
-            current.classList.add('completed');
-            current.classList.remove('active');
-            current.classList.remove('expanded');
-
-            const next = document.querySelector(`[data-section="${num + 1}"]`);
-            if (next) {
-                next.classList.add('active');
-                next.classList.add('expanded');
-                next.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            updateProgress();
-        }
-
-        function updateProgress() {
-            const total = 4;
-            const progress = (completedSections.size / total) * 100;
-            document.getElementById('progress').style.width = progress + '%';
-        }
-    </script>
-
-  <!-- Feedback Footer -->
-  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
-    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
-    </p>
-  </footer>
-
 </body>
 </html>
