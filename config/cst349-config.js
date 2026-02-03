@@ -124,7 +124,7 @@ const CST349_CONFIG = {
     "s1-sprint-plan": {
       canvasId: "144791",
       title: "S1: Sprint Plan v1",
-      dueDate: "2026-02-05",
+      dueDate: "2026-02-07",
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
@@ -132,7 +132,14 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 1,
       week: 3,
-      htmlFile: "assignments/s1-w3-sprint-plan.html"
+      htmlFile: "assignments/s1-w3-sprint-plan.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload the JSON file downloaded from the Sprint Plan activity. Make sure the file includes your name.",
+          "points": 5
+        }
+      ]
     },
     "s1-reflection-2": {
       canvasId: "570068",
@@ -157,7 +164,7 @@ const CST349_CONFIG = {
     "s1-learning-log": {
       canvasId: "144792",
       title: "S1: Learning Log (Week 3)",
-      dueDate: "2026-02-04",
+      dueDate: "2026-02-07",
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
@@ -169,7 +176,7 @@ const CST349_CONFIG = {
       questions: [
         {
           "type": "file_upload",
-          "text": "Upload a photo of your handwritten learning log from this week's class session.",
+          "text": "Upload photos of your 3 handwritten learning log entries from your notebook. Make sure all text is legible in the photos.",
           "points": 5
         }
       ]
@@ -185,7 +192,14 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 1,
       week: 3,
-      htmlFile: "assignments/s1-w3-productive-reflection.html"
+      htmlFile: "assignments/s1-w3-productive-reflection.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload a photo of your handwritten Productive Reflection #3 from your notebook.",
+          "points": 5
+        }
+      ]
     },
     "s1-demonstration": {
       title: "S1: Demonstration",
