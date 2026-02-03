@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../css/design-system.css">
   <link rel="stylesheet" href="cti-styles.css">
   <style>
+    /* Activity Cards */
     .activity-card {
       background: white;
       border: 2px solid var(--gray-200);
@@ -16,378 +17,191 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-
-    .activity-card:hover {
-      border-color: var(--cti-primary);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    .activity-card.expanded {
-      border-color: var(--cti-primary);
-    }
-
-    .activity-card__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-4);
-      gap: var(--space-3);
-    }
-
-    .activity-card__main {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      flex: 1;
-    }
-
+    .activity-card:hover { border-color: var(--cti-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .activity-card.expanded { border-color: var(--cti-primary); }
+    .activity-card__header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4); gap: var(--space-3); }
+    .activity-card__main { display: flex; align-items: center; gap: var(--space-3); flex: 1; }
     .activity-card__number {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       background: var(--cti-primary-light);
       color: var(--cti-primary-dark);
       border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: var(--text-sm);
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: var(--text-sm); flex-shrink: 0;
     }
+    .activity-card__title { font-size: var(--text-lg); font-weight: 700; color: var(--gray-800); margin: 0; }
+    .activity-card__duration { font-size: var(--text-sm); color: var(--gray-500); margin-top: 2px; }
+    .activity-card__toggle { color: var(--gray-400); font-size: 1.25rem; transition: transform 0.2s ease; }
+    .activity-card.expanded .activity-card__toggle { transform: rotate(180deg); }
+    .activity-card__content { display: none; padding: 0 var(--space-4) var(--space-4); border-top: 1px solid var(--gray-100); }
+    .activity-card.expanded .activity-card__content { display: block; }
+    .activity-card__desc { color: var(--gray-600); line-height: 1.6; margin-bottom: var(--space-4); padding-top: var(--space-4); }
 
-    .activity-card__number--pm {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-
-    .activity-card__title {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: var(--gray-800);
-      margin: 0;
-    }
-
-    .activity-card__duration {
-      font-size: var(--text-sm);
-      color: var(--gray-500);
-      margin-top: 2px;
-    }
-
-    .activity-card__toggle {
-      color: var(--gray-400);
-      font-size: 1.25rem;
-      transition: transform 0.2s ease;
-    }
-
-    .activity-card.expanded .activity-card__toggle {
-      transform: rotate(180deg);
-    }
-
-    .activity-card__content {
-      display: none;
-      padding: 0 var(--space-4) var(--space-4);
-      border-top: 1px solid var(--gray-100);
-    }
-
-    .activity-card.expanded .activity-card__content {
-      display: block;
-    }
-
-    .activity-card__desc {
-      color: var(--gray-600);
-      line-height: 1.6;
-      margin-bottom: var(--space-4);
-      padding-top: var(--space-4);
-    }
-
+    /* Checkpoint */
     .checkpoint {
       background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
       border: 1px solid #f59e0b;
       border-radius: var(--radius-md);
       padding: var(--space-3) var(--space-4);
       margin-top: var(--space-4);
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
+      display: flex; align-items: flex-start; gap: var(--space-3);
     }
+    .checkpoint__icon { font-size: 1.25rem; flex-shrink: 0; }
+    .checkpoint__content { flex: 1; }
+    .checkpoint__time { font-weight: 700; color: #92400e; font-size: var(--text-sm); }
+    .checkpoint__text { color: #78350f; font-size: var(--text-sm); margin-top: 2px; }
 
-    .checkpoint__icon {
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    .checkpoint__content {
-      flex: 1;
-    }
-
-    .checkpoint__time {
-      font-weight: 700;
-      color: #92400e;
-      font-size: var(--text-sm);
-    }
-
-    .checkpoint__text {
-      color: #78350f;
-      font-size: var(--text-sm);
-      margin-top: 2px;
-    }
-
-    .discuss-prompt {
-      background: #f0fdf4;
-      border-left: 3px solid #22c55e;
-      padding: var(--space-3);
-      margin-top: var(--space-3);
-      font-size: var(--text-sm);
-      color: #166534;
-    }
-
+    /* Session Header */
     .session-header {
       background: linear-gradient(135deg, var(--cti-primary-light) 0%, #fef3c7 100%);
       border-radius: var(--radius-lg);
       padding: var(--space-4);
       margin-bottom: var(--space-5);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);
+    }
+    .session-header--pm { background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); }
+    .session-header__info { flex: 1; min-width: 200px; }
+    .session-header__time { font-size: var(--text-lg); font-weight: 700; color: var(--cti-primary-dark); }
+    .session-header--pm .session-header__time { color: #1e40af; }
+    .session-header__goal { font-size: var(--text-sm); color: #92400e; margin-top: var(--space-1); }
+    .session-header--pm .session-header__goal { color: #1e3a8a; }
+    .session-header__final { background: white; border: 2px solid var(--cti-primary); border-radius: var(--radius-md); padding: var(--space-3); text-align: center; }
+    .session-header--pm .session-header__final { border-color: #3b82f6; }
+    .session-header__final-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cti-primary-dark); }
+    .session-header--pm .session-header__final-label { color: #1e40af; }
+    .session-header__final-time { font-size: var(--text-lg); font-weight: 700; color: var(--gray-800); }
+
+    .session-divider { text-align: center; padding: var(--space-5) 0; color: var(--gray-400); font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* Point A to Point B Box */
+    .point-ab-box {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px solid #10b981;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-4) 0;
+    }
+    .point-ab-box__title { font-weight: 700; color: #065f46; font-size: var(--text-base); margin-bottom: var(--space-3); }
+    .point-ab-box__old { background: white; border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-3); }
+    .point-ab-box__old-label { font-size: var(--text-xs); font-weight: 600; color: var(--gray-500); text-transform: uppercase; margin-bottom: var(--space-1); }
+    .point-ab-box__old-text { color: var(--gray-700); font-size: var(--text-sm); margin: 0; }
+    .point-ab-box__arrow { text-align: center; color: #10b981; font-size: 1.5rem; margin: var(--space-2) 0; }
+    .point-ab-box__new { background: #065f46; color: white; border-radius: var(--radius-md); padding: var(--space-3); }
+    .point-ab-box__new-label { font-size: var(--text-xs); font-weight: 600; color: #a7f3d0; text-transform: uppercase; margin-bottom: var(--space-1); }
+    .point-ab-box__new-text { font-size: var(--text-sm); margin: 0; }
+    .point-ab-box__note { font-size: var(--text-sm); color: #047857; margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid #a7f3d0; }
+
+    /* Assumption Box */
+    .assumption-box {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-3) 0;
+    }
+    .assumption-box__title { font-weight: 700; color: #0369a1; font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .assumption-box__list { margin: 0; padding-left: var(--space-5); color: #0c4a6e; font-size: var(--text-sm); }
+    .assumption-box__list li { margin-bottom: var(--space-2); line-height: 1.5; }
+
+    /* Framing Box */
+    .framing-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-4) 0;
+    }
+    .framing-box__title { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-3); color: #f59e0b; }
+    .framing-box__text { color: rgba(255, 255, 255, 0.9); line-height: 1.7; font-size: var(--text-sm); }
+
+    /* Need Box */
+    .need-box {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-3) 0;
+    }
+    .need-box__title { font-weight: 700; color: #166534; font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .need-box__list { margin: 0; padding-left: var(--space-5); color: #14532d; font-size: var(--text-sm); }
+    .need-box__list li { margin-bottom: var(--space-2); line-height: 1.5; }
+
+    /* Insight Callout */
+    .insight-callout {
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+      border: 2px solid #a855f7;
+      border-radius: var(--radius-lg);
+      padding: 0;
+      margin: var(--space-5) 0;
+      overflow: hidden;
+    }
+    .insight-callout__header {
+      padding: var(--space-4) var(--space-5);
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--space-3);
     }
-
-    .session-header--pm {
-      background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
-    }
-
-    .session-header__info {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .session-header__time {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: var(--cti-primary-dark);
-    }
-
-    .session-header--pm .session-header__time {
-      color: #1e40af;
-    }
-
-    .session-header__goal {
-      font-size: var(--text-sm);
-      color: #92400e;
-      margin-top: var(--space-1);
-    }
-
-    .session-header--pm .session-header__goal {
-      color: #1e3a8a;
-    }
-
-    .session-header__final {
-      background: white;
-      border: 2px solid var(--cti-primary);
+    .insight-callout__header:hover { background: rgba(168, 85, 247, 0.1); }
+    .insight-callout__title { font-weight: 700; color: #6b21a8; font-size: var(--text-base); margin: 0; display: flex; align-items: center; gap: var(--space-2); }
+    .insight-callout__toggle { color: #a855f7; font-size: 1.25rem; transition: transform 0.2s ease; }
+    .insight-callout.expanded .insight-callout__toggle { transform: rotate(180deg); }
+    .insight-callout__content { display: none; padding: 0 var(--space-5) var(--space-5); }
+    .insight-callout.expanded .insight-callout__content { display: block; }
+    .insight-callout__text { color: #581c87; font-size: var(--text-sm); line-height: 1.7; }
+    .insight-callout__key {
+      background: #a855f7;
+      color: white;
+      padding: var(--space-3) var(--space-4);
       border-radius: var(--radius-md);
-      padding: var(--space-3);
-      text-align: center;
-    }
-
-    .session-header--pm .session-header__final {
-      border-color: #3b82f6;
-    }
-
-    .session-header__final-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--cti-primary-dark);
-    }
-
-    .session-header--pm .session-header__final-label {
-      color: #1e40af;
-    }
-
-    .session-header__final-time {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: var(--gray-800);
-    }
-
-    .session-divider {
-      text-align: center;
-      padding: var(--space-5) 0;
-      color: var(--gray-400);
-      font-size: var(--text-sm);
+      margin-top: var(--space-4);
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-size: var(--text-sm);
     }
 
+    /* CST395 Intro */
+    .cst395-intro {
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-4) 0;
+    }
+    .cst395-intro__title { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-3); }
+    .cst395-intro__text { font-size: var(--text-sm); line-height: 1.7; opacity: 0.95; }
+    .cst395-intro__dual { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    @media (max-width: 600px) { .cst395-intro__dual { grid-template-columns: 1fr; } }
+    .cst395-intro__point { background: rgba(255,255,255,0.15); border-radius: var(--radius-md); padding: var(--space-3); }
+    .cst395-intro__point-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-1); color: #ccfbf1; }
+    .cst395-intro__point-text { font-size: var(--text-sm); margin: 0; }
+
+    /* Exploration Questions */
+    .exploration-questions {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-top: var(--space-3);
+    }
+    .exploration-questions__title { font-weight: 600; color: var(--gray-700); font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .exploration-questions ul { margin: 0; padding-left: var(--space-4); font-size: var(--text-sm); color: var(--gray-600); }
+    .exploration-questions li { margin-bottom: var(--space-2); }
+
+    /* Needs Design */
     .needs-design {
       background: #fef3c7;
       border: 2px dashed #f59e0b;
       border-radius: var(--radius-lg);
       padding: var(--space-5);
       text-align: center;
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-5);
     }
-
-    .needs-design__title {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: #92400e;
-      margin-bottom: var(--space-2);
-    }
-
-    .needs-design__text {
-      color: #78350f;
-      font-size: var(--text-sm);
-    }
-
-    /* Framing content styles */
-    .framing-section {
-      background: var(--gray-50);
-      border-radius: var(--radius-md);
-      padding: var(--space-4);
-      margin-bottom: var(--space-4);
-    }
-
-    .framing-section__title {
-      font-weight: 700;
-      color: var(--gray-800);
-      font-size: var(--text-sm);
-      margin-bottom: var(--space-2);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .framing-section__content {
-      color: var(--gray-700);
-      font-size: var(--text-sm);
-      line-height: 1.7;
-    }
-
-    .framing-section__content p {
-      margin-bottom: var(--space-2);
-    }
-
-    .framing-section__content p:last-child {
-      margin-bottom: 0;
-    }
-
-    .framing-section__content ul {
-      margin: var(--space-2) 0;
-      padding-left: var(--space-5);
-    }
-
-    .framing-section__content li {
-      margin-bottom: var(--space-1);
-    }
-
-    .collapsible-section {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: var(--radius-md);
-      margin-bottom: var(--space-4);
-      overflow: hidden;
-    }
-
-    .collapsible-section__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-3) var(--space-4);
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .collapsible-section__header:hover {
-      background: #e0f2fe;
-    }
-
-    .collapsible-section__title {
-      font-weight: 600;
-      color: #0369a1;
-      font-size: var(--text-sm);
-    }
-
-    .collapsible-section__toggle {
-      color: #0369a1;
-      font-size: 1rem;
-      transition: transform 0.2s ease;
-    }
-
-    .collapsible-section.expanded .collapsible-section__toggle {
-      transform: rotate(180deg);
-    }
-
-    .collapsible-section__content {
-      display: none;
-      padding: 0 var(--space-4) var(--space-4);
-      color: #0c4a6e;
-      font-size: var(--text-sm);
-      line-height: 1.6;
-    }
-
-    .collapsible-section.expanded .collapsible-section__content {
-      display: block;
-    }
-
-    .exploration-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      background: var(--cti-primary);
-      color: white;
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: var(--text-sm);
-      transition: all 0.15s ease;
-      margin-top: var(--space-3);
-    }
-
-    .exploration-link:hover {
-      background: var(--cti-primary-dark);
-      color: white;
-      text-decoration: none;
-    }
-
-    .synthesis-prompts {
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      border-radius: var(--radius-md);
-      padding: var(--space-4);
-      margin-top: var(--space-3);
-    }
-
-    .synthesis-prompts__title {
-      font-weight: 700;
-      color: #166534;
-      font-size: var(--text-sm);
-      margin-bottom: var(--space-2);
-    }
-
-    .synthesis-prompts ul {
-      margin: 0;
-      padding-left: var(--space-5);
-    }
-
-    .synthesis-prompts li {
-      color: #15803d;
-      font-size: var(--text-sm);
-      margin-bottom: var(--space-2);
-    }
-
-    .synthesis-prompts li:last-child {
-      margin-bottom: 0;
-    }
+    .needs-design__title { font-size: var(--text-lg); font-weight: 700; color: #92400e; margin-bottom: var(--space-2); }
+    .needs-design__text { color: #78350f; font-size: var(--text-sm); line-height: 1.6; }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Navigation -->
     <nav class="nav-bar">
       <a href="index.html" class="nav-bar__home">CTI 2.0</a>
       <a href="monday.html" class="nav-bar__link">Monday</a>
@@ -397,27 +211,30 @@
       <a href="materials.html" class="nav-bar__link">Materials</a>
     </nav>
 
-    <!-- Header -->
     <header class="identity-header identity-header--cti">
-      <span class="identity-header__badge">Tuesday, February 3</span>
-      <h1 class="identity-header__greeting">Connect and Design</h1>
-      <p class="identity-header__tagline">From Experience to CTI's Work to Summer 2026</p>
+      <span class="identity-header__badge">Tuesday, February 4</span>
+      <h1 class="identity-header__greeting">Connect + Design</h1>
+      <p class="identity-header__tagline">From experience to understanding to action</p>
     </header>
 
     <!-- MORNING SESSION -->
     <div class="session-header">
       <div class="session-header__info">
         <p class="session-header__time">Morning: 9:30am - 12:00pm</p>
-        <p class="session-header__goal">Connect Monday's experience to CTI's existing work</p>
+        <p class="session-header__goal">Build shared understanding of where we're going and why</p>
       </div>
       <div class="session-header__final">
-        <p class="session-header__final-label">Break for Lunch</p>
+        <p class="session-header__final-label">Session Ends</p>
         <p class="session-header__final-time">12:00pm</p>
       </div>
     </div>
 
-    <!-- Morning Activity Cards -->
-    <div class="activity-cards">
+    <div class="design-principle">
+      <p class="design-principle__label">Morning Goal</p>
+      <p class="design-principle__text">Today is about building CTI's Ikigai as a composite of all our individual Ikigai—aligned and comprehensive. That requires honesty about direction and personal fit.</p>
+    </div>
+
+    <div class="activities-list">
 
       <!-- Activity 1: Monday Recap -->
       <div class="activity-card" onclick="toggleCard(this)">
@@ -426,23 +243,31 @@
             <span class="activity-card__number">1</span>
             <div>
               <h3 class="activity-card__title">Monday Recap</h3>
-              <p class="activity-card__duration">10-15 min</p>
+              <p class="activity-card__duration">10-15 min (Sathya)</p>
             </div>
           </div>
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">Quick reconnection to what we experienced and discussed yesterday. Surface key observations before introducing new framing.</p>
+          <p class="activity-card__desc">Brief grounding in what yesterday was about:</p>
 
-          <div class="discuss-prompt">
-            <strong>Prompt:</strong> What stuck with you from yesterday? What are you still thinking about?
+          <div class="exploration-questions">
+            <p class="exploration-questions__title">Yesterday's goals:</p>
+            <ul>
+              <li>Making sure everyone had a chance to set up Claude Code, use it, plant the seed for continued exploration</li>
+              <li>Seeing what people could do with it—both CS and non-CS perspectives</li>
+              <li>Can we see applications in our own work/lives? How might it change how we think about work/life?</li>
+              <li>What might that mean about the work/lives students are preparing for?</li>
+            </ul>
           </div>
+
+          <p class="activity-card__desc" style="margin-top: var(--space-3);">Quick pulse: What seeds got planted? What applications did you glimpse—for yourself, for students?</p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
-              <p class="checkpoint__time">Checkpoint: 9:45am latest</p>
-              <p class="checkpoint__text">Keep this brief—just collection, no extended discussion. Move to The Framing.</p>
+              <p class="checkpoint__time">Checkpoint: 9:45am</p>
+              <p class="checkpoint__text">Move to framing. This is context-setting, not extended discussion.</p>
             </div>
           </div>
         </div>
@@ -461,61 +286,106 @@
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">Sathya presents the conceptual framework that connects yesterday's experience to the larger challenge CTI is trying to address.</p>
 
-          <div class="framing-section">
-            <p class="framing-section__title">Point A → Point B</p>
-            <div class="framing-section__content">
-              <p><strong>Point A (students entering):</strong> "Here's my code, does it work?"—focused on implementation details, asking low-level questions, dependent on specific tools and syntax.</p>
-              <p><strong>Point B (students leaving):</strong> Able to work at the level of "what" rather than "how"—directing AI systems, evaluating outputs critically, knowing when to intervene and when to delegate.</p>
-              <p>The gap between A and B isn't about learning more tools. It's about developing different capabilities—critical evaluation, problem framing, outcome orientation.</p>
+          <!-- Point A to Point B -->
+          <div class="point-ab-box">
+            <p class="point-ab-box__title">Point A → Point B: An Expansion</p>
+            <div class="point-ab-box__old">
+              <p class="point-ab-box__old-label">Old Point B</p>
+              <p class="point-ab-box__old-text">Take students from where they are to being competitive for employment in the tech industry.</p>
+            </div>
+            <p class="point-ab-box__arrow">↓</p>
+            <div class="point-ab-box__new">
+              <p class="point-ab-box__new-label">New Point B (encompasses the old)</p>
+              <p class="point-ab-box__new-text">Take students from where they are to achieving Superagency and Human Value Proposition—a way of thinking that makes them valuable in any context, including tech employment.</p>
+            </div>
+            <p class="point-ab-box__note"><strong>Key:</strong> This isn't abandoning what worked. The old Point B is contained within the new. We're expanding what we're preparing students for.</p>
+          </div>
+
+          <p class="activity-card__desc">"The next part will be useful only if you can take seriously the possibility that these things are probable, not just possible. I'm not asking you to believe them—I'm asking you to explore as if they're likely true."</p>
+
+          <div class="assumption-box">
+            <p class="assumption-box__title">The Possibilities I'm Asking You to Take Seriously:</p>
+            <ul class="assumption-box__list">
+              <li><strong>AI is becoming more capable</strong> at doing more parts of cognitive labor—and this trend continues</li>
+              <li><strong>The average is shifting rapidly</strong>—even if current AI output feels inadequate to some of us, that bar is moving</li>
+              <li><strong>This is a fundamental shift about fundamentals.</strong> What one generation learned as fundamental has never been the same for the next—historically this shifted over decades; with AI it's shifting in years</li>
+              <li><strong>This applies to ALL cognitive work</strong>—not just SWE or CS. Cognitive work is the superset; computing is one domain within it</li>
+              <li><strong>Whatever we build should work across cognitive domains</strong>—a discipline-neutral layer of capabilities, with discipline-specific layers on top</li>
+            </ul>
+          </div>
+
+          <div class="framing-box">
+            <p class="framing-box__title">The Problem We're Trying to Solve</p>
+            <p class="framing-box__text">
+              <strong>What is the value of human cognitive labor going to be when AI can do so much—and keeps getting better?</strong>
+              <br><br>
+              I frame this as two parts:
+              <br><br>
+              <strong>Superagency</strong> — the opportunity: How do we integrate AI to do more than we could before?
+              <br><br>
+              <strong>Human Value Proposition</strong> — the challenge: How do we clearly add human value, not just have AI do the work?
+              <br><br>
+              My claim: <em>Everyone—including us—needs to develop both. Not just demonstrate them, but make them a way of thinking.</em>
+            </p>
+          </div>
+
+          <div class="need-box">
+            <p class="need-box__title">What We Need:</p>
+            <ul class="need-box__list">
+              <li><strong>R&D in its most scientific sense</strong>—genuine experimentation, not just iteration</li>
+              <li><strong>Our own experiments</strong>—we need to develop and extract superagency and human value from this tech ourselves</li>
+              <li><strong>Learning experience experiments</strong>—how do we communicate, inspire, challenge, and support students to develop these capabilities?</li>
+            </ul>
+          </div>
+
+          <!-- PhD Advisor Insight - Collapsible -->
+          <div class="insight-callout" onclick="this.classList.toggle('expanded')">
+            <div class="insight-callout__header">
+              <p class="insight-callout__title">💡 A Lesson From My PhD</p>
+              <span class="insight-callout__toggle">▼</span>
+            </div>
+            <div class="insight-callout__content">
+              <p class="insight-callout__text">
+                I would do research and find a result I was proud of. I'd show it to my advisor. He'd provide feedback, then push on one of my assumptions—sometimes assumptions I didn't even know I had.
+                <br><br>
+                I'd go back, redo the work relaxing that assumption. Bring back new results. He'd identify another assumption. Another layer I hadn't seen.
+                <br><br>
+                The insight: there are always more layers of generalization and depth you can explore. Each layer reveals assumptions you didn't know you were making.
+                <br><br>
+                <strong>But here's what mattered most: the experience of going back and doing the work again, relaxing an assumption, was the critical moment in my growth.</strong> Not the technical content. Not the final result. The experience of discovering I was standing on assumptions I couldn't see—and then rebuilding.
+                <br><br>
+                That's the real value I got from my PhD. Not the technical knowledge.
+              </p>
+              <p class="insight-callout__key">
+                This is what we're trying to help students experience—and what I want us to experience together.
+              </p>
             </div>
           </div>
 
-          <div class="framing-section">
-            <p class="framing-section__title">The Assumptions</p>
-            <div class="framing-section__content">
-              <ul>
-                <li>AI capabilities will continue to increase rapidly</li>
-                <li>The "how" of implementation will increasingly be delegated</li>
-                <li>Human value shifts to the "what" and "why" and "is this right?"</li>
-                <li>Current curricula don't develop these capabilities systematically</li>
-              </ul>
+          <!-- CST395 Introduction -->
+          <div class="cst395-intro">
+            <p class="cst395-intro__title">CST395: A Live Experiment</p>
+            <p class="cst395-intro__text">CST395 is my most advanced attempt at this—the course outcomes, the pedagogy, how I built the course itself—all completely new compared to anything I've done in 15 years.</p>
+            <div class="cst395-intro__dual">
+              <div class="cst395-intro__point">
+                <p class="cst395-intro__point-label">For Students</p>
+                <p class="cst395-intro__point-text">An example of what the new Point B looks like—what they're learning, how they're developing Superagency and HVP.</p>
+              </div>
+              <div class="cst395-intro__point">
+                <p class="cst395-intro__point-label">For Me as Instructor</p>
+                <p class="cst395-intro__point-text">An example of my own Superagency. I built this in ways I couldn't have before—not limited by Canvas, able to create interactive experiences, experiment faster.</p>
+              </div>
             </div>
           </div>
 
-          <div class="framing-section">
-            <p class="framing-section__title">The Problem We're Actually Solving</p>
-            <div class="framing-section__content">
-              <p>Not: "How do we teach students to use AI tools?"</p>
-              <p>But: "How do we develop the capabilities that matter when implementation is no longer the bottleneck?"</p>
-              <p>This reframing changes everything—what we teach, how we teach it, and how we know if it's working.</p>
-            </div>
-          </div>
-
-          <div class="collapsible-section" onclick="toggleSection(event, this)">
-            <div class="collapsible-section__header">
-              <span class="collapsible-section__title">📚 The PhD Lesson (click to expand)</span>
-              <span class="collapsible-section__toggle">▼</span>
-            </div>
-            <div class="collapsible-section__content">
-              <p>PhD students often arrive technically excellent but struggle with the transition from "solve assigned problems" to "identify which problems matter." The same pattern is emerging earlier—students need to develop problem-finding and outcome-orientation skills that traditional curricula assume will emerge naturally.</p>
-              <p style="margin-top: var(--space-2);">The capabilities we're trying to develop aren't new—they're the ones that have always distinguished exceptional practitioners. What's new is that they're becoming essential much earlier in the learning journey.</p>
-            </div>
-          </div>
-
-          <div class="framing-section">
-            <p class="framing-section__title">Enter CST395</p>
-            <div class="framing-section__content">
-              <p>CST395 is an attempt to design a course that systematically develops these capabilities. You're about to explore it—not to validate it, but to understand what it's trying to do and surface what's missing or unclear.</p>
-            </div>
-          </div>
+          <p class="activity-card__desc">I encourage skepticism with open to possibilities/new ideas approach.</p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
-              <p class="checkpoint__time">Checkpoint: 10:15am latest</p>
-              <p class="checkpoint__text">Framing complete. Pairs should be starting their CST395 exploration.</p>
+              <p class="checkpoint__time">Checkpoint: 10:15am</p>
+              <p class="checkpoint__text">Begin CST395 exploration. Framing should create readiness, not resolve all questions.</p>
             </div>
           </div>
         </div>
@@ -534,26 +404,27 @@
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">In pairs, explore CST395 materials. Choose your own path through the content. The goal isn't to read everything—it's to understand enough to have informed opinions.</p>
+          <p class="activity-card__desc">In pairs, explore CST395 as a live experiment. Use the <a href="cst395-exploration.html" target="_blank" style="color: var(--cti-primary); font-weight: 600;">CST395 Exploration Guide</a> to navigate—but choose your own path based on your questions.</p>
 
-          <a href="cst395-exploration.html" class="exploration-link" target="_blank" onclick="event.stopPropagation()">
-            Open Exploration Guide →
-          </a>
-
-          <div class="discuss-prompt" style="margin-top: var(--space-4);">
-            <strong>As you explore, track:</strong>
-            <ul style="margin: var(--space-2) 0 0; padding-left: var(--space-4);">
-              <li>What's clear about what this course is trying to do?</li>
-              <li>What's NOT clear or seems contradictory?</li>
-              <li>What question does this raise that we should discuss?</li>
+          <div class="exploration-questions">
+            <p class="exploration-questions__title">As you explore, look for:</p>
+            <ul>
+              <li>What here develops the capabilities we've been discussing?</li>
+              <li>What does this mean for student day-to-day? How is it measured?</li>
+              <li>What assumptions is this course making?</li>
+              <li>What questions does this raise?</li>
             </ul>
           </div>
+
+          <p class="activity-card__desc" style="margin-top: var(--space-3);">
+            <strong>Note:</strong> Canvas is used only for submission. The actual learning experience happens through the interactive pages.
+          </p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
-              <p class="checkpoint__time">Checkpoint: 11:00am latest</p>
-              <p class="checkpoint__text">Call for break. Pairs should have enough to contribute to synthesis—they don't need to finish everything.</p>
+              <p class="checkpoint__time">Checkpoint: 11:05am</p>
+              <p class="checkpoint__text">Call for break. Pairs should have enough observations for discussion.</p>
             </div>
           </div>
         </div>
@@ -572,13 +443,13 @@
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">Quick break. Pairs can use this time to consolidate their observations.</p>
+          <p class="activity-card__desc">Quick break. Pairs can jot down key observations.</p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
-              <p class="checkpoint__time">Checkpoint: 11:10am latest</p>
-              <p class="checkpoint__text">Start synthesis discussion. Need at least 45 minutes for substantive discussion.</p>
+              <p class="checkpoint__time">Checkpoint: 11:15am</p>
+              <p class="checkpoint__text">Start synthesis. Need ~45 minutes for discussion + bridge.</p>
             </div>
           </div>
         </div>
@@ -591,30 +462,31 @@
             <span class="activity-card__number">5</span>
             <div>
               <h3 class="activity-card__title">Synthesis Discussion</h3>
-              <p class="activity-card__duration">40-45 min (whole group)</p>
+              <p class="activity-card__duration">40-45 min</p>
             </div>
           </div>
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">Whole-group discussion to surface patterns, questions, and gaps. Not a presentation parade—a genuine attempt to make sense of what we've seen.</p>
+          <p class="activity-card__desc">Each pair shares observations. Focus on:</p>
 
-          <div class="synthesis-prompts">
-            <p class="synthesis-prompts__title">Discussion Prompts</p>
+          <div class="exploration-questions">
+            <p class="exploration-questions__title">Discussion threads:</p>
             <ul>
-              <li>What does CST395 seem to be trying to do? (Not what does it say—what do the design choices reveal?)</li>
-              <li>Where does yesterday's experience show up in the course design?</li>
-              <li>What's missing? What capability from yesterday isn't addressed?</li>
-              <li>What assumptions does the course make that we should question?</li>
-              <li>What would you want to know before deciding if this approach makes sense?</li>
+              <li><strong>What develops capabilities?</strong> — Where did you see SDL, IS, AB being developed?</li>
+              <li><strong>What addresses our questions?</strong> — Student day-to-day? Measurement?</li>
+              <li><strong>What assumptions are being made?</strong> — What's this betting on?</li>
+              <li><strong>What questions remain?</strong> — What's still unclear?</li>
             </ul>
           </div>
+
+          <p class="activity-card__desc" style="margin-top: var(--space-3);">Capture patterns on the board. This becomes input for afternoon design work.</p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
-              <p class="checkpoint__time">Checkpoint: 11:50am latest</p>
-              <p class="checkpoint__text">Begin wrapping up. Capture key questions/insights on the board for afternoon reference.</p>
+              <p class="checkpoint__time">Checkpoint: 11:55am</p>
+              <p class="checkpoint__text">Begin bridge to afternoon. Save 10 minutes.</p>
             </div>
           </div>
         </div>
@@ -627,19 +499,21 @@
             <span class="activity-card__number">6</span>
             <div>
               <h3 class="activity-card__title">Bridge to Afternoon</h3>
-              <p class="activity-card__duration">10 min</p>
+              <p class="activity-card__duration">10 min (Sathya)</p>
             </div>
           </div>
           <span class="activity-card__toggle">▼</span>
         </div>
         <div class="activity-card__content">
-          <p class="activity-card__desc">Brief preview of afternoon session: We've experienced working at a higher level of abstraction (Monday) and explored one attempt to develop those capabilities systematically (Tuesday morning). This afternoon, we design what CTI should offer—without being anchored to existing programs.</p>
+          <p class="activity-card__desc">"This morning was about understanding—where we're going and why. This afternoon is about designing what we build.</p>
+
+          <p class="activity-card__desc">"Remember the Ikigai conversation from this morning. The design work you're about to do is also part of answering whether this is your path. The individual meetings will follow—but this afternoon, we're working as if we're building this together."</p>
 
           <div class="checkpoint">
             <span class="checkpoint__icon">⏱️</span>
             <div class="checkpoint__content">
               <p class="checkpoint__time">Checkpoint: 12:00pm</p>
-              <p class="checkpoint__text">Break for lunch. Morning synthesis should inform but not constrain afternoon design work.</p>
+              <p class="checkpoint__text">Break for lunch. Capture unfinished threads on board.</p>
             </div>
           </div>
         </div>
@@ -647,14 +521,13 @@
 
     </div>
 
-    <!-- Divider -->
     <div class="session-divider">— Lunch Break (12:00 - 1:00pm) —</div>
 
     <!-- AFTERNOON SESSION -->
-    <div class="session-header session-header--pm">
+    <div id="afternoon" class="session-header session-header--pm">
       <div class="session-header__info">
         <p class="session-header__time">Afternoon: 1:00pm - 5:00pm</p>
-        <p class="session-header__goal">Design 2-3 learning experiences for Summer 2026</p>
+        <p class="session-header__goal">Design what we offer starting Summer 2026</p>
       </div>
       <div class="session-header__final">
         <p class="session-header__final-label">Session Ends</p>
@@ -663,11 +536,10 @@
     </div>
 
     <div class="needs-design">
-      <p class="needs-design__title">To Be Designed</p>
-      <p class="needs-design__text">Afternoon structure will be developed after reviewing Monday and Tuesday morning with the team. The goal is to start fresh and design 2-3 learning experiences for Summer 2026 without being anchored to current programs.</p>
+      <p class="needs-design__title">To Be Designed Based on Morning</p>
+      <p class="needs-design__text">Afternoon structure depends on what emerges from morning. The goal: design 2-3 learning experiences for Summer 2026. How we get there depends on what the team needs after synthesis.</p>
     </div>
 
-    <!-- Page Navigation -->
     <div class="page-nav">
       <a href="monday.html" class="page-nav__link">← Monday</a>
       <a href="wednesday.html" class="page-nav__link">Wednesday →</a>
@@ -682,11 +554,6 @@
   <script>
     function toggleCard(card) {
       card.classList.toggle('expanded');
-    }
-
-    function toggleSection(event, section) {
-      event.stopPropagation();
-      section.classList.toggle('expanded');
     }
   </script>
 </body>
