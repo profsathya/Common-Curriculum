@@ -380,7 +380,8 @@
       const getStartedSection = document.getElementById('get-started-section');
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const week1Start = new Date(CST349_CONFIG.weekDates[1].start);
+      // Add time component to ensure local timezone parsing
+      const week1Start = new Date(CST349_CONFIG.weekDates[1].start + 'T00:00:00');
       const isBeforeSemester = today < week1Start;
       if (isBeforeSemester || currentWeek === 1) {
         getStartedSection.style.display = 'block';

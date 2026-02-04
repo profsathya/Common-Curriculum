@@ -532,9 +532,9 @@ function getCurrentWeek() {
   today.setHours(0, 0, 0, 0); // Normalize to start of day
 
   for (const [weekNum, dates] of Object.entries(CST395_CONFIG.weekDates)) {
-    const start = new Date(dates.start);
-    const end = new Date(dates.end);
-    end.setHours(23, 59, 59, 999); // Include full end day
+    // Add time component to ensure local timezone parsing
+    const start = new Date(dates.start + 'T00:00:00');
+    const end = new Date(dates.end + 'T23:59:59.999');
 
     if (today >= start && today <= end) {
       return parseInt(weekNum);
@@ -576,9 +576,9 @@ function getAssignmentsDueInWeek(weekNum) {
   const weekData = CST395_CONFIG.weekDates[weekNum];
   if (!weekData) return [];
 
-  const start = new Date(weekData.start);
-  const end = new Date(weekData.end);
-  end.setHours(23, 59, 59, 999);
+  // Add time component to ensure local timezone parsing
+  const start = new Date(weekData.start + 'T00:00:00');
+  const end = new Date(weekData.end + 'T23:59:59.999');
 
   const assignments = [];
   for (const [key, assignment] of Object.entries(CST395_CONFIG.assignments)) {
