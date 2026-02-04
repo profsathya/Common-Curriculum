@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dojo Depth Session | Sprint 1 | CST395</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .breadcrumb a { color: #14b8a6; text-decoration: none; }
+    .header {
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+    .hook {
+      background: #f0fdfa; border: 2px solid #5eead4; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; text-align: center;
+    }
+    .hook__question { font-size: 18px; color: #0d9488; font-weight: 500; margin: 0; }
+    .section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
+    .section p { color: #4b5563; margin: 0 0 12px 0; }
+    .section ul, .section ol { color: #4b5563; margin: 0; padding-left: 24px; }
+    .section li { margin-bottom: 8px; }
+    .flow-diagram {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin: 24px 0; flex-wrap: wrap;
+    }
+    .flow-step { padding: 16px 24px; border-radius: 8px; font-weight: 500; text-align: center; }
+    .flow-step.framer { background: #dbeafe; color: #1e40af; }
+    .flow-step.reflector { background: #fef3c7; color: #92400e; }
+    .flow-arrow { font-size: 24px; color: #9ca3af; }
+    .rubric {
+      background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 20px; margin: 20px 0;
+    }
+    .rubric h3 { color: #92400e; margin: 0 0 16px 0; font-size: 16px; }
+    .rubric-item {
+      display: flex; gap: 12px; margin-bottom: 16px; padding-bottom: 16px;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .rubric-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .rubric-checkbox {
+      width: 24px; height: 24px; border: 2px solid #f59e0b;
+      border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+    }
+    .rubric-text { color: #92400e; }
+    .rubric-text strong { display: block; margin-bottom: 4px; }
+    .prompt-box {
+      background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 12px;
+      padding: 20px; margin: 20px 0;
+    }
+    .prompt-box h4 { color: #0d9488; margin: 0 0 12px 0; font-size: 14px; }
+    .prompt-box pre {
+      margin: 0; white-space: pre-wrap; font-family: 'SF Mono', 'Consolas', monospace;
+      font-size: 13px; background: rgba(0,0,0,0.05); padding: 16px;
+      border-radius: 8px; line-height: 1.6;
+    }
+    .warning-box {
+      background: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; margin: 20px 0;
+    }
+    .warning-box p { margin: 0; color: #991b1b; }
+    .submission {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+    }
+    .submission h3 { color: white; margin: 0 0 16px 0; }
+    .submission p { color: #d1d5db; margin: 0 0 16px 0; }
+    .submission__format {
+      background: rgba(255,255,255,0.1); padding: 12px 16px;
+      border-radius: 8px; font-size: 14px; color: #9ca3af;
+    }
+    .submit-btn {
+      display: inline-block; background: linear-gradient(135deg, #0d9488, #14b8a6);
+      color: white; padding: 12px 24px; border-radius: 8px;
+      text-decoration: none; font-weight: 500; margin-top: 16px;
+    }
+    .dojo-link {
+      display: inline-block; background: #0d9488; color: white;
+      padding: 12px 24px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="breadcrumb"><a href="../sprint-1.html">Sprint 1</a> / Dojo Depth Session</p>
+
+    <div class="header">
+      <h1>Dojo Depth Session</h1>
+      <p>Sprint 1 · Due Sunday, February 8 · ~30 minutes</p>
+    </div>
+
+    <div class="hook">
+      <p class="hook__question">You are your own stakeholder.<br>What did knowing yourself enable you to design?</p>
+    </div>
+
+    <div class="section">
+      <h2>The Session Flow</h2>
+      <p>This session uses TWO Dojo personas in sequence:</p>
+      <div class="flow-diagram">
+        <div class="flow-step framer">@Framer<br>Develop your thinking</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step reflector">@Reflector<br>Test your thinking</div>
+      </div>
+      <p>Framer helps you generate and clarify your design story.</p>
+      <p>Reflector evaluates your thinking against a rubric. Reflector won't approve shallow answers.</p>
+    </div>
+
+    <div class="section">
+      <h2>Step 1: Work with Framer</h2>
+      <p>Start with Framer to develop your thinking:</p>
+      <div class="prompt-box">
+        <h4>Starting Prompt for @Framer:</h4>
+        <pre>I'm preparing for a demo where I need to answer:
+"Walk through your 5 Whys chain. At which 'why' did you find a design opportunity?"
+
+Help me think through:
+1. My challenge was [describe it]
+2. My 5 Whys went like this: [walk through them]
+3. The design opportunity I found was [describe it]
+
+I want to clearly articulate what I KNEW about myself that helped me see this design opportunity.</pre>
+      </div>
+      <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
+    </div>
+
+    <div class="section">
+      <h2>Step 2: Switch to Reflector</h2>
+      <p>When ready, switch to @Reflector. Share your draft and let Reflector evaluate against this rubric:</p>
+
+      <div class="rubric">
+        <h3>Reflector Evaluation Rubric</h3>
+        <div class="rubric-item">
+          <div class="rubric-checkbox"></div>
+          <div class="rubric-text">
+            <strong>DESIGN OPPORTUNITY (not willpower)</strong>
+            Did your 5 Whys find something you can CHANGE about your environment, system, or process? If your answer includes "I need more discipline/motivation/willpower," you haven't gone deep enough.
+          </div>
+        </div>
+        <div class="rubric-item">
+          <div class="rubric-checkbox"></div>
+          <div class="rubric-text">
+            <strong>STAKEHOLDER-INFORMED DESIGN</strong>
+            Can you complete: "I know [X] about myself, which is why my friction is [Y], which is why my solution does [Z]." The connection must be VISIBLE.
+          </div>
+        </div>
+        <div class="rubric-item">
+          <div class="rubric-checkbox"></div>
+          <div class="rubric-text">
+            <strong>SPECIFIC, NOT GENERIC</strong>
+            Would your solution work for anyone, or does it specifically address YOUR context? What would a generic solution miss about you?
+          </div>
+        </div>
+        <div class="rubric-item">
+          <div class="rubric-checkbox"></div>
+          <div class="rubric-text">
+            <strong>PROGRESS EVIDENCE</strong>
+            What have you actually DONE (not planned)? What did you learn about whether your self-knowledge was accurate?
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <p><strong>Don't move on until Reflector confirms all four criteria.</strong> Shallow answers won't prepare you for the demo.</p>
+      </div>
+    </div>
+
+    <div class="submission">
+      <h3>Your Submission</h3>
+      <p>Download the JSON from your Dojo session. The file should include your Reflector-approved answer.</p>
+      <div class="submission__format">
+        <strong>Format:</strong> JSON file from Dojo session<br>
+        <strong>Due:</strong> Sunday, February 8<br>
+        <strong>Points:</strong> 5 (completion)
+      </div>
+      <a href="CANVAS_URL_PLACEHOLDER" class="submit-btn">Submit on Canvas →</a>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+      Feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
