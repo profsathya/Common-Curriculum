@@ -25,8 +25,13 @@ const ActivityEngine = (function() {
   // ============================================
 
   function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-      || window.innerWidth < 768;
+    // If viewport is wide enough, consider it desktop regardless of user agent
+    // This prevents false positives in Canvas iframes on desktop
+    if (window.innerWidth >= 768) {
+      return false;
+    }
+    // For narrow viewports, check user agent to distinguish mobile from narrow desktop window
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
   function getStorageKey() {
