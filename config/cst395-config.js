@@ -346,7 +346,7 @@ const CST395_CONFIG = {
 
     // Sprint 1
     "s1-w3-design-decision": {
-      canvasId: "",
+      canvasId: "144806",
       title: "S1: Design Decision Analysis",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -359,7 +359,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/design-decision-analysis.html"
     },
     "s1-w3-dojo-depth": {
-      canvasId: "",
+      canvasId: "144807",
       title: "S1: Dojo Depth Session",
       dueDate: "2026-02-08",
       type: "quiz",
@@ -379,7 +379,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-w3-reflection": {
-      canvasId: "",
+      canvasId: "144808",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "quiz",
