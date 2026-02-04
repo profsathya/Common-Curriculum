@@ -342,6 +342,61 @@ const CST395_CONFIG = {
       title: "Course Reflection: Full Journey",
       dueDate: "2025-05-16",
       type: "bridge"
+    },
+
+    // Sprint 1
+    "s1-w3-design-decision": {
+      canvasId: "",
+      title: "S1: Design Decision Analysis",
+      dueDate: "2026-02-07",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Check-in/Engagement",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "activities/design-decision-analysis.html"
+    },
+    "s1-w3-dojo-depth": {
+      canvasId: "",
+      title: "S1: Dojo Depth Session",
+      dueDate: "2026-02-08",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-dojo-depth.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload your Dojo session JSON file. This should include your Reflector-approved answer demonstrating: (1) a design opportunity (not willpower), (2) stakeholder-informed design, (3) specific rather than generic solution, and (4) progress evidence.",
+          "points": 5
+        }
+      ]
+    },
+    "s1-w3-reflection": {
+      canvasId: "",
+      title: "S1: Productive Reflection #3",
+      dueDate: "2026-02-09",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-productive-reflection.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload a clear photo of your handwritten reflection. Make sure all text is legible. Your reflection should include: (1) draft of your demo answer for the required question, (2) your chosen optional question and draft answer, (3) what you know about yourself that a stranger would miss, and (4) what's still weak in your demo preparation.",
+          "points": 5
+        }
+      ]
     }
   },
 
