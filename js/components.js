@@ -143,9 +143,9 @@ function getCurrentWeekFromConfig(config) {
   today.setHours(0, 0, 0, 0);
 
   for (const [weekNum, dates] of Object.entries(config.weekDates)) {
-    const start = new Date(dates.start);
-    const end = new Date(dates.end);
-    end.setHours(23, 59, 59, 999);
+    // Add time component to ensure local timezone parsing
+    const start = new Date(dates.start + 'T00:00:00');
+    const end = new Date(dates.end + 'T23:59:59.999');
 
     if (today >= start && today <= end) {
       return parseInt(weekNum);
@@ -175,9 +175,9 @@ function renderDueThisWeek(config, weekNum, containerId) {
     return;
   }
 
-  const start = new Date(weekData.start);
-  const end = new Date(weekData.end);
-  end.setHours(23, 59, 59, 999);
+  // Add time component to ensure local timezone parsing
+  const start = new Date(weekData.start + 'T00:00:00');
+  const end = new Date(weekData.end + 'T23:59:59.999');
 
   // Find assignments due this week
   const dueItems = [];
@@ -228,9 +228,11 @@ function getAssignmentsDueInWeekFromConfig(config, weekNum) {
   const weekData = config.weekDates[weekNum];
   if (!weekData) return [];
 
-  const start = new Date(weekData.start);
-  const end = new Date(weekData.end);
-  end.setHours(23, 59, 59, 999);
+  // Parse dates with time component to ensure local timezone interpretation
+  // (Date-only strings like "2026-02-07" are parsed as UTC midnight,
+  // which can cause off-by-one errors in local time)
+  const start = new Date(weekData.start + 'T00:00:00');
+  const end = new Date(weekData.end + 'T23:59:59.999');
 
   const assignments = [];
   for (const [key, assignment] of Object.entries(config.assignments)) {
@@ -376,8 +378,9 @@ function updateStatusBanner(config) {
   // Handle pre-semester or post-semester state
   if (!currentWeek) {
     const today = new Date();
-    const week1Start = new Date(config.weekDates[1].start);
-    const week16End = new Date(config.weekDates[16].end);
+    // Add time component to ensure local timezone parsing
+    const week1Start = new Date(config.weekDates[1].start + 'T00:00:00');
+    const week16End = new Date(config.weekDates[16].end + 'T23:59:59.999');
 
     if (today < week1Start) {
       // Before semester starts
@@ -453,7 +456,8 @@ function initHomePage(config) {
     const dueContainer = document.getElementById('due-this-week');
     if (dueContainer) {
       const today = new Date();
-      const week1Start = new Date(config.weekDates[1].start);
+      // Add time component to ensure local timezone parsing
+      const week1Start = new Date(config.weekDates[1].start + 'T00:00:00');
 
       if (today < week1Start) {
         dueContainer.innerHTML = '<p style="color: var(--gray-500); font-size: var(--text-sm); padding: var(--space-2);">Course begins ' + formatDate(config.weekDates[1].start) + '. Check back then for assignments!</p>';
