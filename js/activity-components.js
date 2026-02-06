@@ -60,6 +60,9 @@ const ActivityComponents = (function() {
       case 'match-following':
         content = renderMatchFollowing(question, options);
         break;
+      case 'ai-discussion':
+        content = renderAiDiscussion(question, options);
+        break;
       default:
         content = createElement('div', 'activity-question__error', `Unknown question type: ${question.type}`);
     }
@@ -808,6 +811,291 @@ const ActivityComponents = (function() {
     };
     options.onAnswer(matches, allCorrect);
     updateQuestionStatus(question.id, options.response);
+  }
+
+  // ============================================
+  // AI Discussion (Enter → AI Questions → Discuss → Summarize)
+  // ============================================
+
+  function renderAiDiscussion(question, options) {
+    const container = createElement('div', 'activity-question__content activity-ai-discussion');
+    const themeClass = options.courseTheme === 'cst349' ? 'indigo' : 'teal';
+
+    // Phase tracking via response state
+    // options.response is { answer: {..., phase}, attempts, correct, skipped }
+    const savedData = options.response?.answer || {};
+    const currentPhase = savedData.phase || 'enter';
+
+    // --- Prompt ---
+    const prompt = createElement('p', 'activity-question__prompt', question.prompt);
+    container.appendChild(prompt);
+
+    if (question.partnerInstructions) {
+      const instructions = createElement('div', 'activity-ai-discussion__instructions');
+      instructions.innerHTML = `<strong>Partner instructions:</strong> ${question.partnerInstructions}`;
+      container.appendChild(instructions);
+    }
+
+    // --- Phase 1: Enter the paper response ---
+    const enterPhase = createElement('div', 'activity-ai-discussion__phase activity-ai-discussion__phase--enter');
+    enterPhase.id = `ai-enter-${question.id}`;
+
+    const textarea = document.createElement('textarea');
+    textarea.className = 'activity-open__textarea';
+    textarea.placeholder = question.placeholder || 'Type your partner\'s written response here...';
+    textarea.rows = 6;
+
+    if (savedData.enteredResponse) {
+      textarea.value = savedData.enteredResponse;
+    }
+
+    enterPhase.appendChild(textarea);
+
+    // Character count
+    const minLength = question.minLength || 50;
+    const charCount = createElement('div', 'activity-open__charcount');
+    charCount.innerHTML = `<span id="ai-charcount-${question.id}">${textarea.value.length}</span> characters (minimum ${minLength})`;
+    enterPhase.appendChild(charCount);
+
+    textarea.addEventListener('input', () => {
+      const count = textarea.value.length;
+      document.getElementById(`ai-charcount-${question.id}`).textContent = count;
+      if (count < minLength) {
+        charCount.classList.add('activity-open__charcount--insufficient');
+      } else {
+        charCount.classList.remove('activity-open__charcount--insufficient');
+      }
+    });
+
+    // Generate questions button
+    const generateBtn = createElement('button', 'activity-ai-discussion__generate-btn');
+    generateBtn.innerHTML = 'Get Discussion Questions &rarr;';
+    generateBtn.addEventListener('click', () => {
+      const text = textarea.value.trim();
+      if (text.length < minLength) {
+        alert(`Please enter at least ${minLength} characters before generating discussion questions.`);
+        return;
+      }
+      handleAiGenerate(question, text, options, container);
+    });
+    enterPhase.appendChild(generateBtn);
+
+    container.appendChild(enterPhase);
+
+    // --- Phase 2: AI-generated discussion questions ---
+    const discussPhase = createElement('div', 'activity-ai-discussion__phase activity-ai-discussion__phase--discuss');
+    discussPhase.id = `ai-discuss-${question.id}`;
+    discussPhase.style.display = (currentPhase === 'discuss' || currentPhase === 'summarize') ? 'block' : 'none';
+
+    // Observation bubble
+    const observationEl = createElement('div', 'activity-ai-discussion__observation');
+    observationEl.id = `ai-observation-${question.id}`;
+    if (savedData.observation) {
+      observationEl.innerHTML = `<strong>Opening thought:</strong> ${savedData.observation}`;
+    }
+    discussPhase.appendChild(observationEl);
+
+    // Questions list
+    const questionsList = createElement('div', 'activity-ai-discussion__questions-list');
+    questionsList.id = `ai-questions-list-${question.id}`;
+    if (savedData.aiQuestions) {
+      savedData.aiQuestions.forEach((q, i) => {
+        const qEl = createElement('div', 'activity-ai-discussion__question-item');
+        qEl.innerHTML = `<span class="activity-ai-discussion__question-number">${i + 1}</span><span>${q}</span>`;
+        questionsList.appendChild(qEl);
+      });
+    }
+    discussPhase.appendChild(questionsList);
+
+    const discussPrompt = createElement('p', 'activity-ai-discussion__discuss-prompt',
+      question.discussionPrompt || 'Take a few minutes to discuss these questions face-to-face with the author. When you\'re done, summarize below.');
+    discussPhase.appendChild(discussPrompt);
+
+    container.appendChild(discussPhase);
+
+    // --- Loading state ---
+    const loadingEl = createElement('div', 'activity-ai-discussion__loading');
+    loadingEl.id = `ai-loading-${question.id}`;
+    loadingEl.style.display = 'none';
+    loadingEl.innerHTML = `
+      <div class="activity-ai-discussion__spinner"></div>
+      <p>Generating discussion questions...</p>
+    `;
+    container.appendChild(loadingEl);
+
+    // --- Error state ---
+    const errorEl = createElement('div', 'activity-ai-discussion__error');
+    errorEl.id = `ai-error-${question.id}`;
+    errorEl.style.display = 'none';
+    container.appendChild(errorEl);
+
+    // --- Phase 3: Discussion summary ---
+    const summaryPhase = createElement('div', 'activity-ai-discussion__phase activity-ai-discussion__phase--summarize');
+    summaryPhase.id = `ai-summarize-${question.id}`;
+    summaryPhase.style.display = (currentPhase === 'discuss' || currentPhase === 'summarize') ? 'block' : 'none';
+
+    const summaryLabel = createElement('label', 'activity-ai-discussion__summary-label', 'Discussion Summary');
+    summaryPhase.appendChild(summaryLabel);
+
+    const summaryTextarea = document.createElement('textarea');
+    summaryTextarea.className = 'activity-open__textarea activity-ai-discussion__summary-textarea';
+    summaryTextarea.placeholder = 'What were the key insights from your discussion? What surprised you? What did the author learn from the questions?';
+    summaryTextarea.rows = 5;
+    summaryTextarea.id = `ai-summary-textarea-${question.id}`;
+
+    if (savedData.discussionSummary) {
+      summaryTextarea.value = savedData.discussionSummary;
+    }
+    summaryPhase.appendChild(summaryTextarea);
+
+    const saveBtn = createElement('button', 'activity-open__save', savedData.discussionSummary ? 'Update Summary' : 'Save Discussion Summary');
+    saveBtn.addEventListener('click', () => {
+      const summary = summaryTextarea.value.trim();
+      if (summary.length < 30) {
+        alert('Please write at least a brief summary of your discussion (minimum 30 characters).');
+        return;
+      }
+
+      const fullAnswer = {
+        enteredResponse: savedData.enteredResponse || textarea.value.trim(),
+        aiQuestions: savedData.aiQuestions || [],
+        observation: savedData.observation || '',
+        discussionSummary: summary,
+        phase: 'summarize',
+      };
+
+      options.response = {
+        answer: fullAnswer,
+        attempts: 1,
+        correct: null,
+        skipped: false,
+      };
+      options.onAnswer(fullAnswer, null);
+      updateQuestionStatus(question.id, { answer: fullAnswer, attempts: 1, correct: null, skipped: false });
+
+      saveBtn.textContent = 'Saved \u2713';
+      setTimeout(() => { saveBtn.textContent = 'Update Summary'; }, 2000);
+    });
+    summaryPhase.appendChild(saveBtn);
+
+    container.appendChild(summaryPhase);
+
+    // --- If already in discuss/summarize phase, lock the entry textarea ---
+    if (currentPhase === 'discuss' || currentPhase === 'summarize') {
+      textarea.disabled = true;
+      generateBtn.style.display = 'none';
+    }
+
+    return container;
+  }
+
+  async function handleAiGenerate(question, responseText, options, container) {
+    const loadingEl = document.getElementById(`ai-loading-${question.id}`);
+    const errorEl = document.getElementById(`ai-error-${question.id}`);
+    const enterPhase = document.getElementById(`ai-enter-${question.id}`);
+    const discussPhase = document.getElementById(`ai-discuss-${question.id}`);
+    const summaryPhase = document.getElementById(`ai-summarize-${question.id}`);
+
+    // Show loading, hide error
+    loadingEl.style.display = 'flex';
+    errorEl.style.display = 'none';
+
+    // Disable the generate button
+    const generateBtn = enterPhase.querySelector('.activity-ai-discussion__generate-btn');
+    if (generateBtn) {
+      generateBtn.disabled = true;
+      generateBtn.textContent = 'Generating...';
+    }
+
+    // Get the AI endpoint from the activity config
+    const aiEndpoint = question.aiEndpoint ||
+      options.aiEndpoint ||
+      '/.netlify/functions/ai-discuss';
+
+    try {
+      const fetchResponse = await fetch(aiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          response: responseText,
+          prompt: question.prompt,
+          context: question.aiContext || '',
+          course: options.courseTheme === 'cst349' ? 'CST349' : 'CST395',
+          numQuestions: question.numQuestions || 3,
+        }),
+      });
+
+      if (!fetchResponse.ok) {
+        const errData = await fetchResponse.json().catch(() => ({}));
+        throw new Error(errData.error || `Request failed (${fetchResponse.status})`);
+      }
+
+      const data = await fetchResponse.json();
+
+      // Hide loading
+      loadingEl.style.display = 'none';
+
+      // Populate the discussion phase
+      const observationEl = document.getElementById(`ai-observation-${question.id}`);
+      if (observationEl && data.observation) {
+        observationEl.innerHTML = `<strong>Opening thought:</strong> ${escapeHtml(data.observation)}`;
+      }
+
+      const questionsList = document.getElementById(`ai-questions-list-${question.id}`);
+      questionsList.innerHTML = '';
+      data.questions.forEach((q, i) => {
+        const qEl = createElement('div', 'activity-ai-discussion__question-item');
+        qEl.innerHTML = `<span class="activity-ai-discussion__question-number">${i + 1}</span><span>${escapeHtml(q)}</span>`;
+        questionsList.appendChild(qEl);
+      });
+
+      // Show discuss and summary phases
+      discussPhase.style.display = 'block';
+      summaryPhase.style.display = 'block';
+
+      // Lock the entry textarea
+      const textarea = enterPhase.querySelector('textarea');
+      if (textarea) textarea.disabled = true;
+      if (generateBtn) generateBtn.style.display = 'none';
+
+      // Save intermediate state to localStorage so it survives page refresh
+      const intermediateAnswer = {
+        enteredResponse: responseText,
+        aiQuestions: data.questions,
+        observation: data.observation || '',
+        discussionSummary: '',
+        phase: 'discuss',
+      };
+      options.response = {
+        answer: intermediateAnswer,
+        attempts: 0,
+        correct: null,
+        skipped: false,
+      };
+      // Persist via onAnswer so state survives refresh
+      options.onAnswer(intermediateAnswer, null);
+
+    } catch (error) {
+      console.error('AI discussion error:', error);
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.innerHTML = `
+        <p><strong>Could not generate questions.</strong> ${escapeHtml(error.message)}</p>
+        <button class="activity-ai-discussion__retry-btn" onclick="this.parentElement.style.display='none'">Dismiss</button>
+      `;
+
+      // Re-enable the generate button
+      if (generateBtn) {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = 'Try Again &rarr;';
+      }
+    }
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 
   // ============================================

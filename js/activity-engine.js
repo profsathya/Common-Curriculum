@@ -261,7 +261,8 @@ const ActivityEngine = (function() {
         response: state.responses[question.id],
         onAnswer: (answer, isCorrect) => handleAnswer(question.id, answer, isCorrect),
         onSkip: () => handleSkip(question.id),
-        courseTheme: courseTheme
+        courseTheme: courseTheme,
+        aiEndpoint: config.settings?.aiEndpoint || null
       });
       questionsContainer.appendChild(questionEl);
     });
@@ -509,6 +510,15 @@ const ActivityEngine = (function() {
           const selectedOption = question.options[response.answer];
           md += `**Answer:** ${selectedOption} ${response.correct ? '✓' : '✗'}\n`;
           md += `**Attempts:** ${response.attempts}\n\n`;
+        } else if (question.type === 'ai-discussion') {
+          const a = response.answer;
+          md += `**Partner's Response:**\n> ${a.enteredResponse || 'N/A'}\n\n`;
+          if (a.aiQuestions && a.aiQuestions.length > 0) {
+            md += `**AI-Generated Discussion Questions:**\n`;
+            a.aiQuestions.forEach((q, i) => { md += `${i + 1}. ${q}\n`; });
+            md += `\n`;
+          }
+          md += `**Discussion Summary:**\n> ${a.discussionSummary || 'N/A'}\n\n`;
         } else if (question.type === 'match-following') {
           md += `**Matches:** ${JSON.stringify(response.answer)}\n`;
           md += `**Attempts:** ${response.attempts}\n\n`;
