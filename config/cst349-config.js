@@ -124,7 +124,7 @@ const CST349_CONFIG = {
     "s1-sprint-plan": {
       canvasId: "144791",
       title: "S1: Sprint Plan v1",
-      dueDate: "2026-02-07",
+      dueDate: "2026-02-05",
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
@@ -164,7 +164,7 @@ const CST349_CONFIG = {
     "s1-learning-log": {
       canvasId: "144792",
       title: "S1: Learning Log (Week 3)",
-      dueDate: "2026-02-07",
+      dueDate: "2026-02-04",
       type: "quiz",
       canvasType: "quiz",
       quizType: "graded_survey",
@@ -184,7 +184,7 @@ const CST349_CONFIG = {
     "s1-reflection-3": {
       canvasId: "144793",
       title: "S1: Productive Reflection #3",
-      dueDate: "2026-02-09",
+      dueDate: "2026-02-06",
       type: "reflection",
       canvasType: "quiz",
       quizType: "graded_survey",
