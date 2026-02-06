@@ -840,6 +840,48 @@ const ActivityComponents = (function() {
     const enterPhase = createElement('div', 'activity-ai-discussion__phase activity-ai-discussion__phase--enter');
     enterPhase.id = `ai-enter-${question.id}`;
 
+    // Optional: question selector dropdown (for "choose 1 of N" prompts)
+    let selectedPromptText = question.prompt;
+    if (question.questionOptions && question.questionOptions.length > 0) {
+      const selectorWrapper = createElement('div', 'activity-ai-discussion__selector');
+      const selectorLabel = createElement('label', 'activity-ai-discussion__selector-label',
+        question.selectorLabel || 'Which question is your partner responding to?');
+      selectorLabel.setAttribute('for', `ai-selector-${question.id}`);
+      selectorWrapper.appendChild(selectorLabel);
+
+      const selector = document.createElement('select');
+      selector.className = 'activity-ai-discussion__selector-dropdown';
+      selector.id = `ai-selector-${question.id}`;
+
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = '';
+      defaultOpt.textContent = 'Select a question...';
+      selector.appendChild(defaultOpt);
+
+      question.questionOptions.forEach((opt, i) => {
+        const optEl = document.createElement('option');
+        optEl.value = i;
+        optEl.textContent = opt;
+        selector.appendChild(optEl);
+      });
+
+      // Restore saved selection
+      if (savedData.selectedOption !== undefined && savedData.selectedOption !== null) {
+        selector.value = savedData.selectedOption;
+        selectedPromptText = question.questionOptions[savedData.selectedOption] || question.prompt;
+      }
+
+      selector.addEventListener('change', () => {
+        const idx = selector.value;
+        if (idx !== '') {
+          selectedPromptText = question.questionOptions[parseInt(idx)];
+        }
+      });
+
+      selectorWrapper.appendChild(selector);
+      enterPhase.appendChild(selectorWrapper);
+    }
+
     const textarea = document.createElement('textarea');
     textarea.className = 'activity-open__textarea';
     textarea.placeholder = question.placeholder || 'Type your partner\'s written response here...';
@@ -871,12 +913,22 @@ const ActivityComponents = (function() {
     const generateBtn = createElement('button', 'activity-ai-discussion__generate-btn');
     generateBtn.innerHTML = 'Get Discussion Questions &rarr;';
     generateBtn.addEventListener('click', () => {
+      // Validate dropdown selection if question options exist
+      if (question.questionOptions && question.questionOptions.length > 0) {
+        const selector = document.getElementById(`ai-selector-${question.id}`);
+        if (selector && selector.value === '') {
+          alert('Please select which question your partner is responding to.');
+          return;
+        }
+      }
       const text = textarea.value.trim();
       if (text.length < minLength) {
         alert(`Please enter at least ${minLength} characters before generating discussion questions.`);
         return;
       }
-      handleAiGenerate(question, text, options, container);
+      // Pass the selected prompt (from dropdown or the default prompt)
+      const effectivePrompt = selectedPromptText;
+      handleAiGenerate(question, text, options, container, effectivePrompt);
     });
     enterPhase.appendChild(generateBtn);
 
@@ -958,6 +1010,8 @@ const ActivityComponents = (function() {
 
       const fullAnswer = {
         enteredResponse: savedData.enteredResponse || textarea.value.trim(),
+        selectedOption: savedData.selectedOption ?? null,
+        selectedPrompt: savedData.selectedPrompt || question.prompt,
         aiQuestions: savedData.aiQuestions || [],
         observation: savedData.observation || '',
         discussionSummary: summary,
@@ -980,16 +1034,18 @@ const ActivityComponents = (function() {
 
     container.appendChild(summaryPhase);
 
-    // --- If already in discuss/summarize phase, lock the entry textarea ---
+    // --- If already in discuss/summarize phase, lock the entry textarea and selector ---
     if (currentPhase === 'discuss' || currentPhase === 'summarize') {
       textarea.disabled = true;
       generateBtn.style.display = 'none';
+      const selectorEl = document.getElementById(`ai-selector-${question.id}`);
+      if (selectorEl) selectorEl.disabled = true;
     }
 
     return container;
   }
 
-  async function handleAiGenerate(question, responseText, options, container) {
+  async function handleAiGenerate(question, responseText, options, container, effectivePrompt) {
     const loadingEl = document.getElementById(`ai-loading-${question.id}`);
     const errorEl = document.getElementById(`ai-error-${question.id}`);
     const enterPhase = document.getElementById(`ai-enter-${question.id}`);
@@ -1018,7 +1074,7 @@ const ActivityComponents = (function() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           response: responseText,
-          prompt: question.prompt,
+          prompt: effectivePrompt || question.prompt,
           context: question.aiContext || '',
           course: options.courseTheme === 'cst349' ? 'CST349' : 'CST395',
           numQuestions: question.numQuestions || 3,
@@ -1059,8 +1115,11 @@ const ActivityComponents = (function() {
       if (generateBtn) generateBtn.style.display = 'none';
 
       // Save intermediate state to localStorage so it survives page refresh
+      const selectorEl = document.getElementById(`ai-selector-${question.id}`);
       const intermediateAnswer = {
         enteredResponse: responseText,
+        selectedOption: selectorEl ? parseInt(selectorEl.value) : null,
+        selectedPrompt: effectivePrompt || question.prompt,
         aiQuestions: data.questions,
         observation: data.observation || '',
         discussionSummary: '',
