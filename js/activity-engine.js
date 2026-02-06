@@ -155,6 +155,24 @@ const ActivityEngine = (function() {
           ${config.description ? `<p class="activity__description">${config.description}</p>` : ''}
         </header>
 
+        ${config.roster && config.roster.length > 0 ? `
+        <div class="activity__author-section">
+          <label for="activity-author-input" class="activity__author-label">Author Name</label>
+          <p class="activity__author-hint">Select the name of the person whose written responses you are entering.</p>
+          <input
+            type="text"
+            id="activity-author-input"
+            class="activity__author-input"
+            list="activity-author-list"
+            placeholder="Start typing to search..."
+            autocomplete="off"
+          >
+          <datalist id="activity-author-list">
+            ${config.roster.map(name => `<option value="${name}">`).join('\n            ')}
+          </datalist>
+        </div>
+        ` : ''}
+
         <div class="activity__progress">
           <div class="activity__progress-bar">
             <div class="activity__progress-fill" id="activity-progress-fill"></div>
@@ -241,6 +259,22 @@ const ActivityEngine = (function() {
     if (state.name) {
       nameInput.value = state.name;
       downloadBtn.disabled = false;
+    }
+
+    // Set up author name input (for roster-based activities)
+    const authorInput = document.getElementById('activity-author-input');
+    if (authorInput) {
+      if (state.authorName) {
+        authorInput.value = state.authorName;
+      }
+      authorInput.addEventListener('change', () => {
+        state.authorName = authorInput.value.trim();
+        saveState();
+      });
+      authorInput.addEventListener('blur', () => {
+        state.authorName = authorInput.value.trim();
+        saveState();
+      });
     }
 
     // Render questions
@@ -458,6 +492,7 @@ const ActivityEngine = (function() {
 
       // Student info
       studentName: state.name,
+      authorName: state.authorName || null,
       submittedAt: state.downloadedAt,
 
       // Device info
@@ -486,6 +521,9 @@ const ActivityEngine = (function() {
   function generateMarkdown(responses) {
     let md = `# ${config.title}\n\n`;
     md += `**Student:** ${state.name}\n`;
+    if (state.authorName) {
+      md += `**Author:** ${state.authorName}\n`;
+    }
     md += `**Submitted:** ${new Date(state.downloadedAt).toLocaleString()}\n`;
     md += `**Activity Version:** ${config.version}\n`;
     if (state.device.type === 'mobile') {
