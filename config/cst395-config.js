@@ -177,59 +177,150 @@ const CST395_CONFIG = {
     },
 
     // Sprint 2
-    "s2-stakeholder-selection": {
-      canvasId: "200001",
-      title: "S2: Stakeholder Selection",
-      dueDate: "2025-02-19",
-      type: "assignment"
+    "s2-bridge-reflection-1": {
+      title: "S2: Sprint 1-2 Bridge Reflection",
+      dueDate: "2026-02-12",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Productive Reflections",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
-    "s2-reflection-1": {
-      canvasId: "200002",
-      title: "S2: Productive Reflection #1",
-      dueDate: "2025-02-21",
-      type: "reflection"
+    "s2-goal-setting": {
+      title: "S2: Sprint 2 Goal Setting",
+      dueDate: "2026-02-16",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goals",
+      points: 10,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-goal-setting.html"
+    },
+    "s2-discovery-doc": {
+      title: "S2: Discovery Documentation",
+      dueDate: "2026-02-20",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 10,
+      sprint: 2,
+      week: 6
+    },
+    "s2-assumption-audit": {
+      title: "S2: Assumption Audit",
+      dueDate: "2026-02-22",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 6
     },
     "s2-domain-learning": {
-      canvasId: "200003",
       title: "S2: Domain Learning Plan",
-      dueDate: "2025-02-26",
-      type: "assignment"
+      dueDate: "2026-02-22",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goals",
+      points: 5,
+      sprint: 2,
+      week: 6
     },
-    "s2-reflection-2": {
-      canvasId: "200004",
-      title: "S2: Productive Reflection #2",
-      dueDate: "2025-02-28",
-      type: "reflection"
+    "s2-reflection-4": {
+      title: "S2: Productive Reflection #4",
+      dueDate: "2026-02-24",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Productive Reflections",
+      points: 5,
+      sprint: 2,
+      week: 6
     },
-    "s2-solution-prototype": {
-      canvasId: "200005",
-      title: "S2: Solution Prototype",
-      dueDate: "2025-03-05",
-      type: "assignment"
+    "s2-prototype": {
+      title: "S2: Prototype + Build Log",
+      dueDate: "2026-02-27",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 10,
+      sprint: 2,
+      week: 7
     },
-    "s2-build-log": {
-      canvasId: "200006",
-      title: "S2: Build Log Entry",
-      dueDate: "2025-03-07",
-      type: "reflection"
+    "s2-design-rationale": {
+      title: "S2: Design Rationale Log",
+      dueDate: "2026-03-01",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 7
     },
-    "s2-stakeholder-demo": {
-      canvasId: "200007",
-      title: "S2: Stakeholder Demo",
-      dueDate: "2025-03-12",
-      type: "assignment"
+    "s2-partner-feedback": {
+      title: "S2: Partner Feedback Documentation",
+      dueDate: "2026-03-01",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 7
+    },
+    "s2-reflection-5": {
+      title: "S2: Productive Reflection #5",
+      dueDate: "2026-03-03",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Productive Reflections",
+      points: 5,
+      sprint: 2,
+      week: 7
     },
     "s2-human-value": {
-      canvasId: "200008",
       title: "S2: Human Value Statement",
-      dueDate: "2025-03-13",
-      type: "reflection"
+      dueDate: "2026-03-06",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Demo",
+      points: 10,
+      sprint: 2,
+      week: 8
     },
-    "s2-bridge": {
-      canvasId: "200009",
-      title: "Bridge Reflection: Mirror → Complexity",
-      dueDate: "2025-03-14",
-      type: "bridge"
+    "s2-partner-eval": {
+      title: "S2: Partner Evaluation",
+      dueDate: "2026-03-08",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 8
+    },
+    "s2-bridge-reflection-2": {
+      title: "S2: Sprint 2-3 Bridge Reflection",
+      dueDate: "2026-03-10",
+      type: "reflection",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Productive Reflections",
+      points: 5,
+      sprint: 2,
+      week: 8
     },
 
     // Sprint 3
@@ -439,10 +530,10 @@ const CST395_CONFIG = {
     2: { start: "2026-01-25", end: "2026-01-31", sprint: 1, title: "Understanding Before Building" },
     3: { start: "2026-02-01", end: "2026-02-07", sprint: 1, title: "Strategic Building" },
     4: { start: "2026-02-08", end: "2026-02-14", sprint: 1, title: "Reflection & Human Value" },
-    5: { start: "2026-02-15", end: "2026-02-21", sprint: 2, title: "Discovering Another's Problem" },
-    6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "Rapid Domain Learning" },
-    7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Building for Another" },
-    8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Value Through Another's Eyes" },
+    5: { start: "2026-02-09", end: "2026-02-16", sprint: 2, title: "Sprint 1 Demo + Sprint 2 Launch" },
+    6: { start: "2026-02-17", end: "2026-02-24", sprint: 2, title: "Discovery & Domain Learning" },
+    7: { start: "2026-02-25", end: "2026-03-03", sprint: 2, title: "Building & Iteration" },
+    8: { start: "2026-03-04", end: "2026-03-10", sprint: 2, title: "Value Through Another's Eyes" },
     9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Entering Unfamiliar Territory" },
     10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Stakeholder Discovery Without Access" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Simple Over Sophisticated" },
