@@ -201,20 +201,17 @@ const CST349_CONFIG = {
         }
       ]
     },
-    "s1-demonstration": {
-      title: "S1: Demonstration",
+    "s1-demo-discussion": {
+      title: "S1: Sprint 1 Demo Discussion",
       dueDate: "2026-02-11",
-      type: "assignment"
-    },
-    "s1-peer-eval": {
-      title: "S1: Peer Evaluation",
-      dueDate: "2026-02-12",
-      type: "assignment"
-    },
-    "s1-bridge": {
-      title: "Bridge Reflection: Beyond Technical → Accountable Growth",
-      dueDate: "2026-02-13",
-      type: "bridge"
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "assignment",
+      assignmentGroup: "Sprint 1: Demo",
+      points: 10,
+      sprint: 1,
+      week: 4,
+      htmlFile: "activities/sprint-1-demo.html"
     },
 
     // Sprint 2

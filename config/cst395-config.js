@@ -151,29 +151,17 @@ const CST395_CONFIG = {
         }
       ]
     },
-    "s1-build-log": {
-      canvasId: "564232",
-      title: "S1: Build Log Entry",
-      dueDate: "2026-02-06",
-      type: "reflection"
-    },
-    "s1-bridge": {
-      canvasId: "564233",
-      title: "Bridge Reflection: Foundation → Mirror",
-      dueDate: "2026-02-13",
-      type: "bridge"
-    },
-    "s1-peer-conversation": {
-      canvasId: "564234",
-      title: "S1: Peer Conversation Reflection - Week 1",
-      dueDate: "2026-01-23",
-      type: "engagement"
-    },
-    "s1-week2-engagement": {
-      canvasId: "564308",
-      title: "S1: Week 2 Engagement",
-      dueDate: "2026-01-30",
-      type: "engagement"
+    "s1-demo-discussion": {
+      title: "S1: Sprint 1 Demo Discussion",
+      dueDate: "2026-02-11",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "assignment",
+      assignmentGroup: "Sprint 1: Demo",
+      points: 10,
+      sprint: 1,
+      week: 4,
+      htmlFile: "activities/sprint-1-demo.html"
     },
 
     // Sprint 2
