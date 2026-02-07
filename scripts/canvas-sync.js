@@ -292,10 +292,12 @@ async function fetchAssignments(api, courseName) {
   const canvasQuizzes = await api.listQuizzes(courseId);
   console.log(`Found ${canvasQuizzes.length} quizzes in Canvas`);
 
-  // Combine assignments and quizzes for matching
+  // Combine assignments and quizzes for matching.
+  // Assignments go LAST so shadow assignments (which share quiz titles)
+  // overwrite quiz entries — we want the assignment ID for submissions.
   const allCanvasItems = [
-    ...canvasAssignments,
     ...canvasQuizzes.map(q => ({ id: q.id, name: q.title })),
+    ...canvasAssignments,
   ];
 
   // Match assignments
@@ -367,9 +369,10 @@ async function validateConfig(api, courseName) {
   // Fetch assignments
   const canvasAssignments = await api.listAssignments(courseId);
   const canvasQuizzes = await api.listQuizzes(courseId);
+  // Assignments last so shadow assignments overwrite quiz entries (same title)
   const allCanvasItems = [
-    ...canvasAssignments,
     ...canvasQuizzes.map(q => ({ id: q.id, name: q.title })),
+    ...canvasAssignments,
   ];
 
   // Create ID lookup
@@ -1081,7 +1084,10 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
 
       // Create the quiz
       const newQuiz = await api.createQuiz(courseId, quizData);
-      console.log(`  ✓ Created quiz: "${entry.title}" [ID: ${newQuiz.id}]`);
+      // Canvas creates a shadow assignment for each quiz. Use assignment_id
+      // (not quiz id) so that submissions can be fetched via the assignments API.
+      const effectiveId = newQuiz.assignment_id || newQuiz.id;
+      console.log(`  ✓ Created quiz: "${entry.title}" [quiz: ${newQuiz.id}, assignment: ${effectiveId}]`);
 
       // Add questions if defined
       if (entry.questions && entry.questions.length > 0) {
@@ -1096,7 +1102,7 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
       created.push({
         key: entry.key,
         title: entry.title,
-        canvasId: String(newQuiz.id),
+        canvasId: String(effectiveId),
       });
 
     } catch (err) {
