@@ -1,0 +1,103 @@
+name: Analyze Submissions
+
+on:
+  workflow_dispatch:
+    inputs:
+      course:
+        description: 'Course to analyze'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - cst349
+          - cst395
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full              # Download + Analyze + Dashboard
+          - download          # Download submissions from Canvas
+          - analyze           # Analyze with LLM
+          - dashboard         # Generate dashboard only
+      assignment:
+        description: 'Single assignment key to analyze (optional, blank = all)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+
+      - name: Checkout private data repo
+        uses: actions/checkout@v4
+        with:
+          repository: profsathya/Common-Curriculum-Data
+          token: ${{ secrets.DATA_REPO_PAT }}
+          path: data-repo
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Submission Analyzer
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+          CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "=============================================="
+          echo "Submission Analyzer: ${{ inputs.action }}"
+          echo "Course: ${{ inputs.course }}"
+          echo "Assignment: ${{ inputs.assignment || 'all' }}"
+          echo "=============================================="
+
+          ARGS="--action=${{ inputs.action }} --course=${{ inputs.course }} --data-dir=./data-repo"
+
+          if [ -n "${{ inputs.assignment }}" ]; then
+            ARGS="$ARGS --assignment=${{ inputs.assignment }}"
+          fi
+
+          node scripts/submission-analyzer.js $ARGS
+
+      - name: Push results to data repo
+        if: inputs.action != 'download' || inputs.action == 'full'
+        working-directory: data-repo
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          # Check for changes
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -A
+            git commit -m "Update: ${{ inputs.action }} for ${{ inputs.course }} [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git push
+            echo "✓ Results pushed to data repo"
+          else
+            echo "No changes to push"
+          fi
+
+      - name: Summary
+        run: |
+          echo "=============================================="
+          echo "COMPLETE"
+          echo "=============================================="
+          echo "Action: ${{ inputs.action }}"
+          echo "Course: ${{ inputs.course }}"
+          echo ""
+          echo "View results: https://github.com/profsathya/Common-Curriculum-Data"
+          echo ""
+          echo "To view the dashboard locally:"
+          echo "  git clone https://github.com/profsathya/Common-Curriculum-Data"
+          echo "  open Common-Curriculum-Data/dashboard/cst349-dashboard.html"
