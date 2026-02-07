@@ -584,8 +584,10 @@ function generateDashboard(courseName, dataDir) {
 }
 
 function buildDashboardHTML(data) {
-  const profilesJson = JSON.stringify(data.profiles);
-  const assignmentsJson = JSON.stringify(data.assignments);
+  // Escape </ to prevent premature </script> closing when JSON contains HTML-like text
+  const profilesJson = JSON.stringify(data.profiles).replace(/<\//g, '<\\/');
+  const assignmentsJson = JSON.stringify(data.assignments).replace(/<\//g, '<\\/');
+
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -743,7 +745,7 @@ function renderOverview() {
   html += '</tr></thead><tbody>';
 
   PROFILES.forEach(p => {
-    html += '<tr class="clickable" onclick="showView(\'student-detail\',\'' + p.id + '\')">' +
+    html += '<tr class="clickable" onclick="showView(\\'student-detail\\',\\'' + p.id + '\\')">' +
       '<td>' + p.name + '</td>' +
       '<td class="avg-score">' + scoreSpan(p.avgParticipation || null) + '</td>' +
       '<td class="avg-score">' + scoreSpan(p.avgQuality || null) + '</td>';
@@ -776,7 +778,7 @@ function renderAssignments(selectedKey) {
     const avgP = parts.length > 0 ? (parts.reduce((x, y) => x + y, 0) / parts.length).toFixed(1) : '-';
     const avgQ = quals.length > 0 ? (quals.reduce((x, y) => x + y, 0) / quals.length).toFixed(1) : '-';
 
-    html += '<tr class="clickable" onclick="showView(\'assignment-detail\',\'' + a.key + '\')">' +
+    html += '<tr class="clickable" onclick="showView(\\'assignment-detail\\',\\'' + a.key + '\\')">' +
       '<td>' + a.title + '</td><td>S' + (a.sprint || '?') + '</td><td>W' + (a.week || '?') + '</td><td>' + (a.type || '') + '</td>' +
       '<td>' + subs.length + '/' + PROFILES.length + '</td>' +
       '<td>' + scoreSpan(avgP === '-' ? null : parseFloat(avgP)) + '</td>' +
@@ -797,7 +799,7 @@ function renderAssignmentDetail(key) {
   const pCounts = distributionData(parts);
   const qCounts = distributionData(quals);
 
-  let html = '<button class="back-btn" onclick="showView(\'assignments\')">← Back to Assignments</button>';
+  let html = '<button class="back-btn" onclick="showView(\\'assignments\\')">← Back to Assignments</button>';
   html += '<div class="detail-panel"><h2>' + assignment.title + '</h2>' +
     '<div class="subtitle">Sprint ' + (assignment.sprint || '?') + ', Week ' + (assignment.week || '?') +
     ' · ' + (assignment.type || '') + ' · ' + (assignment.points || 0) + ' pts · Due: ' + (assignment.dueDate || 'N/A') + '</div></div>';
@@ -810,7 +812,7 @@ function renderAssignmentDetail(key) {
     '<th>Student</th><th>Participation</th><th>Quality</th><th>Content Type</th><th>Notes</th></tr></thead><tbody>';
 
   subs.sort((a, b) => a.name.localeCompare(b.name)).forEach(s => {
-    html += '<tr class="clickable" onclick="showView(\'student-detail\',\'' + s.id + '\')">' +
+    html += '<tr class="clickable" onclick="showView(\\'student-detail\\',\\'' + s.id + '\\')">' +
       '<td>' + s.name + '</td>' +
       '<td>' + scoreSpan(s.sub.participation) + '</td>' +
       '<td>' + scoreSpan(s.sub.quality) + '</td>' +
@@ -831,7 +833,7 @@ function renderStudentDetail(id) {
   const student = PROFILES.find(p => p.id === id);
   if (!student) return '<p>Student not found</p>';
 
-  let html = '<button class="back-btn" onclick="showView(\'overview\')">← Back to Overview</button>';
+  let html = '<button class="back-btn" onclick="showView(\\'overview\\')">← Back to Overview</button>';
   html += '<div class="detail-panel"><h2>' + student.name + '</h2>' +
     '<div class="subtitle">ID: ' + student.id +
     ' · Avg Participation: ' + (student.avgParticipation || '-') +
@@ -842,7 +844,7 @@ function renderStudentDetail(id) {
 
   ASSIGNMENTS.forEach(a => {
     const sa = student.assignments[a.key];
-    html += '<tr class="clickable" onclick="showView(\'assignment-detail\',\'' + a.key + '\')">' +
+    html += '<tr class="clickable" onclick="showView(\\'assignment-detail\\',\\'' + a.key + '\\')">' +
       '<td>' + a.title + '</td><td>S' + (a.sprint || '?') + '</td>' +
       '<td>' + scoreSpan(sa?.participation) + '</td>' +
       '<td>' + scoreSpan(sa?.quality) + '</td>' +
