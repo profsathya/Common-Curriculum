@@ -191,9 +191,15 @@ async function downloadSubmissions(api, courseName, dataDir) {
     try {
       let submissions;
       if (isQuiz) {
-        // For quizzes, get submissions via the assignment endpoint
-        // Canvas creates a shadow assignment for each quiz
-        submissions = await api.listSubmissions(courseId, canvasId);
+        // canvasId for quizzes is the quiz ID, not the shadow assignment ID.
+        // Look up the quiz to find its linked assignment_id for submissions.
+        const quiz = await api.request(`/courses/${courseId}/quizzes/${canvasId}`);
+        const shadowAssignmentId = quiz.assignment_id;
+        if (!shadowAssignmentId) {
+          throw new Error(`Quiz ${canvasId} has no linked assignment — cannot fetch submissions`);
+        }
+        console.log(`    (quiz ${canvasId} → shadow assignment ${shadowAssignmentId})`);
+        submissions = await api.listSubmissions(courseId, shadowAssignmentId);
       } else {
         submissions = await api.listSubmissions(courseId, canvasId);
       }
