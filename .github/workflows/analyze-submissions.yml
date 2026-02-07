@@ -39,12 +39,16 @@ jobs:
       - name: Checkout public repo
         uses: actions/checkout@v4
 
-      - name: Checkout private data repo
-        uses: actions/checkout@v4
-        with:
-          repository: profsathya/Common-Curriculum-Data
-          token: ${{ secrets.DATA_REPO_PAT }}
-          path: data-repo
+      - name: Clone private data repo
+        run: |
+          git clone https://x-access-token:${{ secrets.DATA_REPO_PAT }}@github.com/profsathya/Common-Curriculum-Data.git data-repo 2>&1 || true
+          if [ ! -d "data-repo/.git" ]; then
+            echo "Empty repo — initializing..."
+            mkdir -p data-repo
+            cd data-repo
+            git init
+            git remote add origin https://x-access-token:${{ secrets.DATA_REPO_PAT }}@github.com/profsathya/Common-Curriculum-Data.git
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -72,7 +76,6 @@ jobs:
           node scripts/submission-analyzer.js $ARGS
 
       - name: Push results to data repo
-        if: inputs.action != 'download' || inputs.action == 'full'
         working-directory: data-repo
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -82,7 +85,14 @@ jobs:
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
             git commit -m "Update: ${{ inputs.action }} for ${{ inputs.course }} [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
-            git push
+
+            # Handle first push to empty repo
+            if git rev-parse --verify origin/main >/dev/null 2>&1; then
+              git push
+            else
+              git branch -M main
+              git push -u origin main
+            fi
             echo "✓ Results pushed to data repo"
           else
             echo "No changes to push"
