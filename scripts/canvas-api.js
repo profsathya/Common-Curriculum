@@ -221,6 +221,45 @@ class CanvasAPI {
   async listQuizQuestions(courseId, quizId) {
     return this.requestAllPages(`/courses/${courseId}/quizzes/${quizId}/questions?per_page=100`);
   }
+
+  /**
+   * List all enrollments (students) in a course
+   */
+  async listEnrollments(courseId, type = 'StudentEnrollment') {
+    return this.requestAllPages(`/courses/${courseId}/enrollments?per_page=100&type[]=${type}&state[]=active`);
+  }
+
+  /**
+   * List all submissions for an assignment
+   */
+  async listSubmissions(courseId, assignmentId) {
+    return this.requestAllPages(
+      `/courses/${courseId}/assignments/${assignmentId}/submissions?per_page=100&include[]=submission_comments`
+    );
+  }
+
+  /**
+   * List quiz submissions for a quiz
+   */
+  async listQuizSubmissions(courseId, quizId) {
+    const data = await this.request(
+      `/courses/${courseId}/quizzes/${quizId}/submissions?per_page=100`
+    );
+    return data.quiz_submissions || [];
+  }
+
+  /**
+   * Download a file by URL (for submission attachments)
+   */
+  async downloadFileContent(url) {
+    const response = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${this.token}` },
+    });
+    if (!response.ok) {
+      throw new Error(`Download failed (${response.status}): ${url}`);
+    }
+    return response.text();
+  }
 }
 
 module.exports = { CanvasAPI };
