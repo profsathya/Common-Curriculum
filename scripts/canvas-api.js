@@ -249,6 +249,17 @@ class CanvasAPI {
   }
 
   /**
+   * Get a student's answers for a specific quiz submission.
+   * Returns array of { question_type, answer, answer_text, ... }
+   */
+  async getQuizSubmissionAnswers(quizSubmissionId) {
+    const data = await this.request(
+      `/quiz_submissions/${quizSubmissionId}/questions`
+    );
+    return data.quiz_submission_questions || data || [];
+  }
+
+  /**
    * Download a file by URL (for submission attachments)
    */
   async downloadFileContent(url) {

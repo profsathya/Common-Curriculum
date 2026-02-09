@@ -258,6 +258,81 @@ async function downloadSubmissions(api, courseName, dataDir) {
         assignmentSubs[anonId] = subData;
       }
 
+      // For quiz-type assignments, fetch quiz submission answers (essay text, file uploads)
+      // The shadow assignment submissions don't contain quiz response content
+      if (isQuiz) {
+        const studentsWithoutContent = Object.values(assignmentSubs)
+          .filter(s => s.contentType === 'none' && s.status !== 'unsubmitted').length;
+
+        if (studentsWithoutContent > 0) {
+          console.log(`    Fetching quiz answers for ${studentsWithoutContent} submissions...`);
+          try {
+            const quizSubs = await api.listQuizSubmissions(courseId, canvasId);
+
+            // Map canvas user_id → quiz submission id (use latest attempt)
+            const userQuizSubMap = {};
+            for (const qs of quizSubs) {
+              // Keep the latest attempt per user
+              if (!userQuizSubMap[qs.user_id] || qs.attempt > userQuizSubMap[qs.user_id].attempt) {
+                userQuizSubMap[qs.user_id] = { id: qs.id, attempt: qs.attempt };
+              }
+            }
+
+            // Fetch answers for each student that's missing content
+            let fetched = 0;
+            for (const [anonId, subData] of Object.entries(assignmentSubs)) {
+              if (subData.contentType !== 'none' || subData.status === 'unsubmitted') continue;
+
+              const canvasUserId = mapping[anonId]?.canvasId;
+              const quizSub = userQuizSubMap[canvasUserId];
+              if (!quizSub) continue;
+
+              try {
+                const questions = await api.getQuizSubmissionAnswers(quizSub.id);
+                const answers = [];
+
+                for (const q of questions) {
+                  // Essay questions — extract text
+                  if (q.answer_text && q.answer_text.trim()) {
+                    answers.push(q.answer_text.trim());
+                  } else if (typeof q.answer === 'string' && q.answer.trim()) {
+                    // HTML answer — strip tags
+                    const plain = q.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    if (plain) answers.push(plain);
+                  }
+                  // File upload questions — try to download text/JSON files
+                  if (q.question_type === 'file_upload_question' && q.answer) {
+                    try {
+                      const fileIds = Array.isArray(q.answer) ? q.answer : [q.answer];
+                      for (const fileId of fileIds) {
+                        const fileInfo = await api.request(`/files/${fileId}`);
+                        const mime = fileInfo['content-type'] || fileInfo.content_type || '';
+                        if (mime.includes('json') || mime.includes('text')) {
+                          const text = await api.downloadFileContent(fileInfo.url);
+                          answers.push(text.substring(0, 3000));
+                        }
+                      }
+                    } catch { /* skip file download errors */ }
+                  }
+                }
+
+                if (answers.length > 0) {
+                  subData.contentType = 'text';
+                  subData.content = answers.join('\n\n').substring(0, 5000);
+                  fetched++;
+                }
+              } catch (err) {
+                // Individual student errors are non-fatal
+                if (process.env.DEBUG) console.log(`      (Quiz answers error for ${anonId}: ${err.message})`);
+              }
+            }
+            console.log(`    → Extracted quiz content for ${fetched} students`);
+          } catch (err) {
+            console.log(`    (Could not fetch quiz submissions: ${err.message})`);
+          }
+        }
+      }
+
       submissionIndex[assignmentKey] = {
         title: row.title,
         type: row.type,
@@ -418,9 +493,51 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     console.log(`    → ${analyzed.length} students, ${withQuality.length} analyzed by LLM, ${totalCalls} API calls so far`);
   }
 
+  // Generate per-student qualitative summaries
+  console.log('\n  Generating student summaries...');
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json')) || {};
+  const allAnonIds = Object.keys(mapping);
+  let summaryCalls = 0;
+
+  if (!analysis.studentSummaries) analysis.studentSummaries = {};
+
+  for (const anonId of allAnonIds) {
+    // Collect this student's data across all assignments
+    const studentData = [];
+    for (const [key, assignment] of Object.entries(analysis.assignments)) {
+      const sd = assignment.students?.[anonId];
+      if (sd) {
+        studentData.push({
+          title: assignment.title,
+          sprint: assignment.sprint,
+          week: assignment.week,
+          participation: sd.participation,
+          quality: sd.quality,
+          qualityNotes: sd.qualityNotes,
+        });
+      }
+    }
+
+    if (studentData.length === 0) continue;
+
+    try {
+      const summary = await generateStudentSummary(apiKey, {
+        studentId: anonId,
+        courseName: courseInfo.name,
+        assignments: studentData,
+      });
+      analysis.studentSummaries[anonId] = summary;
+      summaryCalls++;
+    } catch (err) {
+      console.error(`    ✗ Summary error for ${anonId}: ${err.message}`);
+      analysis.studentSummaries[anonId] = 'Summary not available.';
+    }
+  }
+  console.log(`  → Generated ${summaryCalls} student summaries`);
+
   analysis.lastUpdated = new Date().toISOString();
   saveJson(analysisPath, analysis);
-  console.log(`\n✓ Analysis complete. ${totalCalls} LLM calls for ${totalStudents} student-assignment pairs.`);
+  console.log(`\n✓ Analysis complete. ${totalCalls + summaryCalls} LLM calls total (${totalCalls} quality + ${summaryCalls} summaries).`);
 }
 
 async function callLLM(apiKey, params) {
@@ -482,6 +599,49 @@ Respond in exactly this JSON format, nothing else:
   };
 }
 
+async function generateStudentSummary(apiKey, params) {
+  const { studentId, courseName, assignments } = params;
+
+  // Build a snapshot of this student's work
+  const snapshot = assignments.map(a => {
+    const partLabel = { 1: 'missing', 2: 'low', 3: 'late', 4: 'on-time', 5: 'on-time+substantive' };
+    const qualLabel = a.quality ? `quality ${a.quality}/5` : 'no text';
+    return `- ${a.title} (S${a.sprint} W${a.week}): participation=${partLabel[a.participation] || a.participation}, ${qualLabel}${a.qualityNotes ? ' — ' + a.qualityNotes : ''}`;
+  }).join('\n');
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 200,
+      messages: [{
+        role: 'user',
+        content: `You are helping an instructor understand a student in ${courseName}. Based on their assignment data below, write a 2-3 sentence qualitative summary that helps the instructor understand this student's engagement, strengths, and areas to watch. Be specific and actionable — not generic. If data is limited, say so briefly.
+
+Student: ${studentId}
+Assignment data:
+${snapshot}
+
+Write the summary as plain text (no quotes, no label, no markdown). Focus on patterns: Are they engaged? Improving? Surface-level or deep? Falling behind? Strong in some areas but not others?`,
+      }],
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
+  }
+
+  const data = await response.json();
+  const text = (data.content[0]?.text || '').trim();
+  return text.substring(0, 400);
+}
+
 // ============================================
 // Step 3: Generate Dashboard
 // ============================================
@@ -509,6 +669,7 @@ function generateDashboard(courseName, dataDir) {
       assignments: {},
       avgParticipation: 0,
       avgQuality: 0,
+      summary: (analysis.studentSummaries && analysis.studentSummaries[anonId]) || '',
     };
   });
 
@@ -647,6 +808,8 @@ tr.clickable:hover { background: #eff6ff; }
 .back-btn { color: #3b82f6; cursor: pointer; font-size: 14px; margin-bottom: 16px; display: inline-block; border: none; background: none; font-family: inherit; }
 .back-btn:hover { text-decoration: underline; }
 .notes-cell { max-width: 300px; font-size: 13px; color: #64748b; }
+.summary-row { cursor: default; }
+.summary-row:hover { background: #f8fafc !important; }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -724,6 +887,10 @@ function scoreSpan(val) {
   return '<span class="score score-' + r + '">' + val + '</span>';
 }
 
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function renderOverview() {
   const participations = PROFILES.map(p => p.avgParticipation).filter(v => v > 0);
   const qualities = PROFILES.map(p => p.avgQuality).filter(v => v > 0);
@@ -735,8 +902,9 @@ function renderOverview() {
     renderBarChart('Quality Distribution (Avg per Student)', qCounts, qualities.length) +
     '</div>';
 
+  var totalCols = 3 + ASSIGNMENTS.length;
   html += '<div class="table-card"><h3>All Students (' + PROFILES.length + ')</h3>';
-  html += '<div style="max-height:600px;overflow-y:auto"><table><thead><tr>' +
+  html += '<div style="max-height:700px;overflow-y:auto"><table><thead><tr>' +
     '<th>Student</th><th>Avg Participation</th><th>Avg Quality</th>';
   ASSIGNMENTS.forEach(a => {
     html += '<th title="' + a.title + '" style="writing-mode:vertical-lr;max-width:40px;font-size:11px;padding:8px 4px">' +
@@ -759,6 +927,11 @@ function renderOverview() {
       }
     });
     html += '</tr>';
+    if (p.summary) {
+      html += '<tr class="summary-row"><td colspan="' + totalCols + '" style="padding:4px 12px 12px 24px;border-bottom:2px solid #e2e8f0;background:#f8fafc">' +
+        '<div style="font-size:13px;color:#475569;line-height:1.5;max-width:900px">' +
+        escapeHtml(p.summary) + '</div></td></tr>';
+    }
   });
 
   html += '</tbody></table></div></div>';
@@ -837,7 +1010,12 @@ function renderStudentDetail(id) {
   html += '<div class="detail-panel"><h2>' + student.name + '</h2>' +
     '<div class="subtitle">ID: ' + student.id +
     ' · Avg Participation: ' + (student.avgParticipation || '-') +
-    ' · Avg Quality: ' + (student.avgQuality || '-') + '</div></div>';
+    ' · Avg Quality: ' + (student.avgQuality || '-') + '</div>';
+  if (student.summary) {
+    html += '<div style="margin-top:12px;padding:12px 16px;background:#f8fafc;border-radius:8px;border-left:3px solid #3b82f6;font-size:14px;color:#334155;line-height:1.6">' +
+      escapeHtml(student.summary) + '</div>';
+  }
+  html += '</div>';
 
   html += '<div class="table-card"><h3>Assignment History</h3><table><thead><tr>' +
     '<th>Assignment</th><th>Sprint</th><th>Participation</th><th>Quality</th><th>Content Type</th><th>Notes</th></tr></thead><tbody>';
