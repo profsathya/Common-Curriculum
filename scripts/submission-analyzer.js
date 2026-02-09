@@ -495,7 +495,6 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
 
   // Generate per-student qualitative summaries
   console.log('\n  Generating student summaries...');
-  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json')) || {};
   const allAnonIds = Object.keys(mapping);
   let summaryCalls = 0;
 
