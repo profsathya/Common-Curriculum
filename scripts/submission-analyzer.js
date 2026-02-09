@@ -299,14 +299,36 @@ async function downloadSubmissions(api, courseName, dataDir) {
           const attachment = sub.attachments[0]; // Primary attachment
           if (attachment) {
             const mime = attachment['content-type'] || attachment.content_type || '';
+            const filename = attachment.filename || '';
+            const isJsonFile = mime === 'application/json' || filename.toLowerCase().endsWith('.json');
+
             if (IMAGE_MIME_TYPES.has(mime)) {
               subData.contentType = 'image';
               subData.content = `[Image: ${attachment.filename}]`;
             } else if (mime === 'application/pdf') {
               subData.contentType = 'pdf';
               subData.content = `[PDF: ${attachment.filename}]`;
+            } else if (isJsonFile) {
+              // Explicitly handle JSON files
+              try {
+                const jsonContent = await api.downloadFileContent(attachment.url);
+                // Try to parse and pretty-print the JSON for better LLM analysis
+                try {
+                  const parsed = JSON.parse(jsonContent);
+                  subData.contentType = 'json';
+                  subData.content = JSON.stringify(parsed, null, 2).substring(0, 5000);
+                } catch {
+                  // If JSON parsing fails, use raw content
+                  subData.contentType = 'text';
+                  subData.content = jsonContent.substring(0, 5000);
+                }
+              } catch (error) {
+                console.log(`      (Failed to download JSON for ${anonId}: ${error.message})`);
+                subData.contentType = 'file';
+                subData.content = `[JSON file: ${attachment.filename}]`;
+              }
             } else {
-              // Try to download text-based files
+              // Try to download other text-based files
               try {
                 const textContent = await api.downloadFileContent(attachment.url);
                 subData.contentType = 'text';
@@ -464,8 +486,8 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
         participation = 1;
       } else if (sub.content && sub.status !== 'unsubmitted') {
         participation = sub.late ? 3 : 4;
-        // Bump to 5 if on time with substantive content
-        if (!sub.late && sub.contentType === 'text' && sub.content.length > 100) {
+        // Bump to 5 if on time with substantive content (text or JSON)
+        if (!sub.late && (sub.contentType === 'text' || sub.contentType === 'json') && sub.content.length > 100) {
           participation = 5;
         }
       } else if (sub.status === 'submitted' || sub.status === 'graded') {
@@ -473,7 +495,9 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
       }
 
       // For images, PDFs, URLs, or empty submissions: participation only
-      if (sub.contentType !== 'text' || !sub.content || sub.content.length < 20) {
+      // JSON files should be analyzed like text
+      const canAnalyze = (sub.contentType === 'text' || sub.contentType === 'json') && sub.content && sub.content.length >= 20;
+      if (!canAnalyze) {
         assignmentAnalysis[anonId] = {
           participation,
           quality: null, // Can't assess quality without text
