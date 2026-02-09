@@ -106,6 +106,73 @@ function saveJson(filePath, data) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n');
 }
 
+/**
+ * Parse a Canvas Quiz Report CSV into rows with student ID and answer columns.
+ * The CSV format: name, id, sis_id, root_account, section, section_id, section_sis_id,
+ * submitted, attempt, [question columns...], n correct, n incorrect, score
+ */
+function parseQuizReportCSV(csvText) {
+  const lines = csvText.split('\n').filter(line => line.trim());
+  if (lines.length < 2) return [];
+
+  const headers = parseCSVLine(lines[0]);
+
+  // Find the 'id' column (Canvas user ID) and question columns
+  const idIdx = headers.indexOf('id');
+  if (idIdx === -1) return [];
+
+  // Question columns are between 'attempt' and 'n correct' (or end of known metadata)
+  const attemptIdx = headers.indexOf('attempt');
+  const nCorrectIdx = headers.indexOf('n correct');
+  const questionStart = attemptIdx >= 0 ? attemptIdx + 1 : 9; // default: after first 9 metadata cols
+  const questionEnd = nCorrectIdx >= 0 ? nCorrectIdx : headers.length;
+
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const values = parseCSVLine(lines[i]);
+    const id = values[idIdx];
+    if (!id || id === 'id') continue; // skip empty or duplicate header
+
+    const answers = values.slice(questionStart, questionEnd);
+    rows.push({ id, answers });
+  }
+  return rows;
+}
+
+/** Parse a single CSV line respecting quoted fields */
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (i + 1 < line.length && line[i + 1] === '"') {
+          current += '"';
+          i++; // skip escaped quote
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        current += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
 function loadRubric(assignmentKey, assignmentType, assignmentTitle) {
   // Check for assignment-specific rubric file
   const rubricPath = path.join(__dirname, '..', 'config', 'rubrics', `${assignmentKey}.txt`);
@@ -258,143 +325,51 @@ async function downloadSubmissions(api, courseName, dataDir) {
         assignmentSubs[anonId] = subData;
       }
 
-      // For quiz-type assignments, fetch quiz submission answers (essay text, file uploads)
-      // The shadow assignment submissions don't contain quiz response content
+      // For quiz-type assignments, fetch answers via Quiz Reports API.
+      // The Quiz Submission Questions API doesn't return answers for completed submissions,
+      // and the Events API requires quiz log auditing to be enabled.
+      // The Quiz Reports API generates a CSV export with all student answers.
       if (isQuiz) {
         const studentsWithoutContent = Object.values(assignmentSubs)
           .filter(s => s.contentType === 'none' && s.status !== 'unsubmitted').length;
 
         if (studentsWithoutContent > 0) {
-          console.log(`    Fetching quiz answers for ${studentsWithoutContent} submissions...`);
+          console.log(`    Fetching quiz answers via report for ${studentsWithoutContent} submissions...`);
           try {
-            const quizSubs = await api.listQuizSubmissions(courseId, canvasId);
-            console.log(`    Found ${quizSubs.length} quiz submissions`);
+            const reportCsv = await api.generateQuizReport(courseId, canvasId);
+            const reportRows = parseQuizReportCSV(reportCsv);
+            console.log(`    Quiz report: ${reportRows.length} student rows, ${reportRows[0]?.answers?.length || 0} question columns`);
 
-            // Map canvas user_id → quiz submission (use latest attempt)
-            const userQuizSubMap = {};
-            for (const qs of quizSubs) {
-              if (!userQuizSubMap[qs.user_id] || qs.attempt > userQuizSubMap[qs.user_id].attempt) {
-                userQuizSubMap[qs.user_id] = qs;
-              }
+            // Build reverse lookup: canvasId (string) → anonId
+            const canvasIdToAnon = {};
+            for (const [anonId, info] of Object.entries(mapping)) {
+              canvasIdToAnon[String(info.canvasId)] = anonId;
             }
 
             let fetched = 0;
-            let noMatch = 0;
-            let firstLogged = false;
-            for (const [anonId, subData] of Object.entries(assignmentSubs)) {
-              if (subData.contentType !== 'none' || subData.status === 'unsubmitted') continue;
+            for (const row of reportRows) {
+              const anonId = canvasIdToAnon[String(row.id)];
+              if (!anonId) continue;
 
-              const canvasUserId = mapping[anonId]?.canvasId;
-              const quizSub = userQuizSubMap[canvasUserId];
-              if (!quizSub) { noMatch++; continue; }
+              const subData = assignmentSubs[anonId];
+              if (!subData || subData.contentType !== 'none' || subData.status === 'unsubmitted') continue;
 
-              try {
-                let answers = [];
+              const answerTexts = row.answers
+                .map(a => {
+                  if (!a) return '';
+                  return a.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                })
+                .filter(a => a.length > 0);
 
-                // Approach 1: Quiz Submission Questions API
-                try {
-                  const questions = await api.getQuizSubmissionAnswers(quizSub.id);
-                  if (!firstLogged) {
-                    console.log(`    Approach 1 (Questions API): ${questions.length} questions`);
-                    if (questions.length > 0) {
-                      const q = questions[0];
-                      console.log(`      Sample: type=${q.question_type}, answer_text=${!!q.answer_text}, answer=${typeof q.answer}`);
-                    }
-                  }
-                  for (const q of questions) {
-                    if (q.answer_text && q.answer_text.trim()) {
-                      answers.push(q.answer_text.trim());
-                    } else if (typeof q.answer === 'string' && q.answer.trim()) {
-                      const plain = q.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                      if (plain) answers.push(plain);
-                    }
-                    if ((q.question_type === 'file_upload_question' || q.question_type === 'file_upload') && q.answer) {
-                      try {
-                        const fileIds = Array.isArray(q.answer) ? q.answer : [q.answer];
-                        for (const fileId of fileIds) {
-                          if (!fileId) continue;
-                          const fileInfo = await api.request(`/files/${fileId}`);
-                          const mime = fileInfo['content-type'] || fileInfo.content_type || '';
-                          if (mime.includes('json') || mime.includes('text')) {
-                            const text = await api.downloadFileContent(fileInfo.url);
-                            answers.push(text.substring(0, 3000));
-                          }
-                        }
-                      } catch (fileErr) {
-                        console.log(`      (File download error for ${anonId}: ${fileErr.message})`);
-                      }
-                    }
-                  }
-                } catch (questionsErr) {
-                  if (!firstLogged) console.log(`    Approach 1 failed: ${questionsErr.message}`);
-                }
-
-                // Approach 2: Quiz Submission Events API (if Approach 1 yielded nothing)
-                if (answers.length === 0) {
-                  try {
-                    const events = await api.request(
-                      `/courses/${courseId}/quizzes/${canvasId}/submissions/${quizSub.id}/events?attempt=${quizSub.attempt || 1}&per_page=100`
-                    );
-                    const eventList = events.quiz_submission_events || events || [];
-                    if (!firstLogged) {
-                      console.log(`    Approach 2 (Events API): ${eventList.length} events`);
-                      if (eventList.length > 0) {
-                        const sample = eventList.find(e => e.event_type === 'question_answered');
-                        if (sample) console.log(`      Sample event_data: ${JSON.stringify(sample.event_data)?.substring(0, 200)}`);
-                      }
-                    }
-                    for (const evt of eventList) {
-                      if (evt.event_type === 'question_answered' && evt.event_data) {
-                        for (const ans of (Array.isArray(evt.event_data) ? evt.event_data : [evt.event_data])) {
-                          if (ans.answer && typeof ans.answer === 'string' && ans.answer.trim()) {
-                            const plain = ans.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                            if (plain) answers.push(plain);
-                          }
-                        }
-                      }
-                    }
-                  } catch (eventsErr) {
-                    if (!firstLogged) console.log(`    Approach 2 failed: ${eventsErr.message}`);
-                  }
-                }
-
-                // Approach 3: Shadow assignment submission attachments (file uploads)
-                if (answers.length === 0) {
-                  try {
-                    const sub = submissions.find(s => canvasToAnon[s.user_id] === anonId);
-                    if (sub && sub.attachments && sub.attachments.length > 0) {
-                      if (!firstLogged) console.log(`    Approach 3 (Attachments): ${sub.attachments.length} files`);
-                      for (const att of sub.attachments) {
-                        const mime = att['content-type'] || att.content_type || '';
-                        const name = att.filename || att.display_name || '';
-                        if (mime.includes('json') || mime.includes('text') || name.endsWith('.json') || name.endsWith('.txt')) {
-                          try {
-                            const text = await api.downloadFileContent(att.url);
-                            answers.push(text.substring(0, 3000));
-                          } catch { /* skip */ }
-                        }
-                      }
-                    }
-                  } catch (attErr) {
-                    if (!firstLogged) console.log(`    Approach 3 failed: ${attErr.message}`);
-                  }
-                }
-
-                firstLogged = true;
-
-                if (answers.length > 0) {
-                  subData.contentType = 'text';
-                  subData.content = answers.join('\n\n').substring(0, 5000);
-                  fetched++;
-                }
-              } catch (err) {
-                console.log(`      (Quiz answers error for ${anonId}: ${err.message})`);
+              if (answerTexts.length > 0) {
+                subData.contentType = 'text';
+                subData.content = answerTexts.join('\n\n').substring(0, 5000);
+                fetched++;
               }
             }
-            if (noMatch > 0) console.log(`    (${noMatch} students had no matching quiz submission)`);
             console.log(`    → Extracted quiz content for ${fetched} students`);
           } catch (err) {
-            console.log(`    (Could not fetch quiz submissions: ${err.message})`);
+            console.log(`    (Quiz report failed: ${err.message})`);
           }
         }
       }

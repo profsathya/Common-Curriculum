@@ -239,24 +239,49 @@ class CanvasAPI {
   }
 
   /**
-   * List quiz submissions for a quiz
+   * Generate a quiz student analysis report and return the CSV text.
+   * This is the reliable way to get all quiz answers for completed submissions.
    */
-  async listQuizSubmissions(courseId, quizId) {
-    const data = await this.request(
-      `/courses/${courseId}/quizzes/${quizId}/submissions?per_page=100`
+  async generateQuizReport(courseId, quizId) {
+    // Request a student analysis report
+    const report = await this.request(
+      `/courses/${courseId}/quizzes/${quizId}/reports`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          quiz_report: { report_type: 'student_analysis', includes_all_versions: false }
+        }),
+      }
     );
-    return data.quiz_submissions || [];
-  }
 
-  /**
-   * Get a student's answers for a specific quiz submission.
-   * Returns array of { question_type, answer, answer_text, ... }
-   */
-  async getQuizSubmissionAnswers(quizSubmissionId) {
-    const data = await this.request(
-      `/quiz_submissions/${quizSubmissionId}/questions`
-    );
-    return data.quiz_submission_questions || data || [];
+    // If report already has a file ready, return it
+    if (report.file && report.file.url) {
+      return this.downloadFileContent(report.file.url);
+    }
+
+    // Poll for completion
+    const reportId = report.id;
+    const maxWait = 60000;
+    const pollInterval = 2000;
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < maxWait) {
+      await new Promise(resolve => setTimeout(resolve, pollInterval));
+
+      const status = await this.request(
+        `/courses/${courseId}/quizzes/${quizId}/reports/${reportId}`
+      );
+
+      if (status.file && status.file.url) {
+        return this.downloadFileContent(status.file.url);
+      }
+
+      if (status.progress && status.progress.workflow_state === 'failed') {
+        throw new Error('Quiz report generation failed');
+      }
+    }
+
+    throw new Error('Quiz report generation timed out');
   }
 
   /**
