@@ -26,7 +26,7 @@ const CST349_CONFIG = {
   assignments: {
     // Sprint 1
     "s1-self-assessment": {
-      canvasId: "144469",
+      canvasId: "578900",
       title: "S1: Skills Self-Assessment",
       dueDate: "2026-01-22",
       type: "quiz",
@@ -39,7 +39,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w1-skills-self-assessment.html"
     },
     "s1-reflection-1": {
-      canvasId: "144470",
+      canvasId: "578902",
       title: "S1: Productive Reflection #1",
       dueDate: "2026-01-24",
       type: "reflection",
@@ -52,7 +52,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-skills-revision": {
-      canvasId: "144730",
+      canvasId: "580893",
       title: "S1: Skills Assessment Revision",
       dueDate: "2026-01-29",
       type: "quiz",
@@ -122,7 +122,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-sprint-plan": {
-      canvasId: "144791",
+      canvasId: "581427",
       title: "S1: Sprint Plan v1",
       dueDate: "2026-02-05",
       type: "quiz",
@@ -162,7 +162,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-learning-log": {
-      canvasId: "144792",
+      canvasId: "581428",
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-04",
       type: "quiz",
@@ -182,7 +182,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-reflection-3": {
-      canvasId: "144793",
+      canvasId: "581429",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-06",
       type: "reflection",
@@ -202,6 +202,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-demo-discussion": {
+      canvasId: "582009",
       title: "S1: Sprint 1 Demo Discussion",
       dueDate: "2026-02-11",
       type: "quiz",
@@ -216,6 +217,7 @@ const CST349_CONFIG = {
 
     // Sprint 2
     "s2-bridge-reflection-1": {
+      canvasId: "582010",
       title: "S2: Sprint 1-2 Bridge Reflection",
       dueDate: "2026-02-12",
       type: "reflection",
@@ -228,6 +230,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-goal-setting": {
+      canvasId: "582011",
       title: "S2: Sprint 2 Goal Setting",
       dueDate: "2026-02-16",
       type: "assignment",
@@ -248,7 +251,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
-      week: 6
+      week: 6,
+      htmlFile: "assignments/s2-w6-outreach.html"
     },
     "s2-fallback-plan": {
       title: "S2: Fallback Plan",
@@ -259,7 +263,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Goals",
       points: 5,
       sprint: 2,
-      week: 6
+      week: 6,
+      htmlFile: "assignments/s2-w6-fallback-plan.html"
     },
     "s2-reflection-4": {
       title: "S2: Productive Reflection #4",
@@ -270,7 +275,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 6
+      week: 6,
+      htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
     "s2-stretch": {
       title: "S2: Stretch Challenge",
@@ -281,7 +287,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
-      week: 7
+      week: 7,
+      htmlFile: "assignments/s2-w7-stretch.html"
     },
     "s2-checkin-doc": {
       title: "S2: Check-in Documentation",
@@ -292,7 +299,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 7
+      week: 7,
+      htmlFile: "assignments/s2-w7-checkin-doc.html"
     },
     "s2-reflection-5": {
       title: "S2: Productive Reflection #5",
@@ -303,7 +311,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 7
+      week: 7,
+      htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
     "s2-demo-validation": {
       title: "S2: Demonstration with Validation",
@@ -314,7 +323,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Demo",
       points: 10,
       sprint: 2,
-      week: 8
+      week: 8,
+      htmlFile: "assignments/s2-w8-demo-validation.html"
     },
     "s2-peer-eval": {
       title: "S2: Peer Evaluation",
@@ -325,7 +335,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 8
+      week: 8,
+      htmlFile: "assignments/s2-w8-peer-eval.html"
     },
     "s2-bridge-reflection-2": {
       title: "S2: Sprint 2-3 Bridge Reflection",
@@ -336,7 +347,8 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 8
+      week: 8,
+      htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
 
     // Sprint 3
