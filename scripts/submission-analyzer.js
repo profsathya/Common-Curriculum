@@ -278,7 +278,6 @@ async function downloadSubmissions(api, courseName, dataDir) {
               }
             }
 
-            // Fetch answers for each student that's missing content
             let fetched = 0;
             let noMatch = 0;
             let firstLogged = false;
@@ -290,16 +289,16 @@ async function downloadSubmissions(api, courseName, dataDir) {
               if (!quizSub) { noMatch++; continue; }
 
               try {
-                const answers = [];
+                let answers = [];
 
                 // Approach 1: Quiz Submission Questions API
                 try {
                   const questions = await api.getQuizSubmissionAnswers(quizSub.id);
                   if (!firstLogged) {
-                    console.log(`    First student quiz questions: ${questions.length} questions`);
+                    console.log(`    Approach 1 (Questions API): ${questions.length} questions`);
                     if (questions.length > 0) {
                       const q = questions[0];
-                      console.log(`      Sample question: type=${q.question_type}, has answer_text=${!!q.answer_text}, answer type=${typeof q.answer}, answer preview=${JSON.stringify(q.answer)?.substring(0, 100)}`);
+                      console.log(`      Sample: type=${q.question_type}, answer_text=${!!q.answer_text}, answer=${typeof q.answer}`);
                     }
                   }
                   for (const q of questions) {
@@ -309,7 +308,6 @@ async function downloadSubmissions(api, courseName, dataDir) {
                       const plain = q.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                       if (plain) answers.push(plain);
                     }
-                    // File upload questions — try to download text/JSON files
                     if ((q.question_type === 'file_upload_question' || q.question_type === 'file_upload') && q.answer) {
                       try {
                         const fileIds = Array.isArray(q.answer) ? q.answer : [q.answer];
@@ -328,19 +326,22 @@ async function downloadSubmissions(api, courseName, dataDir) {
                     }
                   }
                 } catch (questionsErr) {
-                  if (!firstLogged) {
-                    console.log(`    Quiz questions API failed: ${questionsErr.message}`);
-                    console.log(`    Falling back to quiz submission events...`);
-                  }
+                  if (!firstLogged) console.log(`    Approach 1 failed: ${questionsErr.message}`);
+                }
 
-                  // Approach 2: Fetch quiz submission events as fallback
+                // Approach 2: Quiz Submission Events API (if Approach 1 yielded nothing)
+                if (answers.length === 0) {
                   try {
                     const events = await api.request(
                       `/courses/${courseId}/quizzes/${canvasId}/submissions/${quizSub.id}/events?attempt=${quizSub.attempt || 1}&per_page=100`
                     );
                     const eventList = events.quiz_submission_events || events || [];
                     if (!firstLogged) {
-                      console.log(`    Events fallback: ${eventList.length} events found`);
+                      console.log(`    Approach 2 (Events API): ${eventList.length} events`);
+                      if (eventList.length > 0) {
+                        const sample = eventList.find(e => e.event_type === 'question_answered');
+                        if (sample) console.log(`      Sample event_data: ${JSON.stringify(sample.event_data)?.substring(0, 200)}`);
+                      }
                     }
                     for (const evt of eventList) {
                       if (evt.event_type === 'question_answered' && evt.event_data) {
@@ -353,9 +354,29 @@ async function downloadSubmissions(api, courseName, dataDir) {
                       }
                     }
                   } catch (eventsErr) {
-                    if (!firstLogged) {
-                      console.log(`    Events fallback also failed: ${eventsErr.message}`);
+                    if (!firstLogged) console.log(`    Approach 2 failed: ${eventsErr.message}`);
+                  }
+                }
+
+                // Approach 3: Shadow assignment submission attachments (file uploads)
+                if (answers.length === 0) {
+                  try {
+                    const sub = submissions.find(s => canvasToAnon[s.user_id] === anonId);
+                    if (sub && sub.attachments && sub.attachments.length > 0) {
+                      if (!firstLogged) console.log(`    Approach 3 (Attachments): ${sub.attachments.length} files`);
+                      for (const att of sub.attachments) {
+                        const mime = att['content-type'] || att.content_type || '';
+                        const name = att.filename || att.display_name || '';
+                        if (mime.includes('json') || mime.includes('text') || name.endsWith('.json') || name.endsWith('.txt')) {
+                          try {
+                            const text = await api.downloadFileContent(att.url);
+                            answers.push(text.substring(0, 3000));
+                          } catch { /* skip */ }
+                        }
+                      }
                     }
+                  } catch (attErr) {
+                    if (!firstLogged) console.log(`    Approach 3 failed: ${attErr.message}`);
                   }
                 }
 
