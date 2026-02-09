@@ -268,53 +268,98 @@ async function downloadSubmissions(api, courseName, dataDir) {
           console.log(`    Fetching quiz answers for ${studentsWithoutContent} submissions...`);
           try {
             const quizSubs = await api.listQuizSubmissions(courseId, canvasId);
+            console.log(`    Found ${quizSubs.length} quiz submissions`);
 
-            // Map canvas user_id → quiz submission id (use latest attempt)
+            // Map canvas user_id → quiz submission (use latest attempt)
             const userQuizSubMap = {};
             for (const qs of quizSubs) {
-              // Keep the latest attempt per user
               if (!userQuizSubMap[qs.user_id] || qs.attempt > userQuizSubMap[qs.user_id].attempt) {
-                userQuizSubMap[qs.user_id] = { id: qs.id, attempt: qs.attempt };
+                userQuizSubMap[qs.user_id] = qs;
               }
             }
 
             // Fetch answers for each student that's missing content
             let fetched = 0;
+            let noMatch = 0;
+            let firstLogged = false;
             for (const [anonId, subData] of Object.entries(assignmentSubs)) {
               if (subData.contentType !== 'none' || subData.status === 'unsubmitted') continue;
 
               const canvasUserId = mapping[anonId]?.canvasId;
               const quizSub = userQuizSubMap[canvasUserId];
-              if (!quizSub) continue;
+              if (!quizSub) { noMatch++; continue; }
 
               try {
-                const questions = await api.getQuizSubmissionAnswers(quizSub.id);
                 const answers = [];
 
-                for (const q of questions) {
-                  // Essay questions — extract text
-                  if (q.answer_text && q.answer_text.trim()) {
-                    answers.push(q.answer_text.trim());
-                  } else if (typeof q.answer === 'string' && q.answer.trim()) {
-                    // HTML answer — strip tags
-                    const plain = q.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                    if (plain) answers.push(plain);
+                // Approach 1: Quiz Submission Questions API
+                try {
+                  const questions = await api.getQuizSubmissionAnswers(quizSub.id);
+                  if (!firstLogged) {
+                    console.log(`    First student quiz questions: ${questions.length} questions`);
+                    if (questions.length > 0) {
+                      const q = questions[0];
+                      console.log(`      Sample question: type=${q.question_type}, has answer_text=${!!q.answer_text}, answer type=${typeof q.answer}, answer preview=${JSON.stringify(q.answer)?.substring(0, 100)}`);
+                    }
                   }
-                  // File upload questions — try to download text/JSON files
-                  if (q.question_type === 'file_upload_question' && q.answer) {
-                    try {
-                      const fileIds = Array.isArray(q.answer) ? q.answer : [q.answer];
-                      for (const fileId of fileIds) {
-                        const fileInfo = await api.request(`/files/${fileId}`);
-                        const mime = fileInfo['content-type'] || fileInfo.content_type || '';
-                        if (mime.includes('json') || mime.includes('text')) {
-                          const text = await api.downloadFileContent(fileInfo.url);
-                          answers.push(text.substring(0, 3000));
+                  for (const q of questions) {
+                    if (q.answer_text && q.answer_text.trim()) {
+                      answers.push(q.answer_text.trim());
+                    } else if (typeof q.answer === 'string' && q.answer.trim()) {
+                      const plain = q.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                      if (plain) answers.push(plain);
+                    }
+                    // File upload questions — try to download text/JSON files
+                    if ((q.question_type === 'file_upload_question' || q.question_type === 'file_upload') && q.answer) {
+                      try {
+                        const fileIds = Array.isArray(q.answer) ? q.answer : [q.answer];
+                        for (const fileId of fileIds) {
+                          if (!fileId) continue;
+                          const fileInfo = await api.request(`/files/${fileId}`);
+                          const mime = fileInfo['content-type'] || fileInfo.content_type || '';
+                          if (mime.includes('json') || mime.includes('text')) {
+                            const text = await api.downloadFileContent(fileInfo.url);
+                            answers.push(text.substring(0, 3000));
+                          }
+                        }
+                      } catch (fileErr) {
+                        console.log(`      (File download error for ${anonId}: ${fileErr.message})`);
+                      }
+                    }
+                  }
+                } catch (questionsErr) {
+                  if (!firstLogged) {
+                    console.log(`    Quiz questions API failed: ${questionsErr.message}`);
+                    console.log(`    Falling back to quiz submission events...`);
+                  }
+
+                  // Approach 2: Fetch quiz submission events as fallback
+                  try {
+                    const events = await api.request(
+                      `/courses/${courseId}/quizzes/${canvasId}/submissions/${quizSub.id}/events?attempt=${quizSub.attempt || 1}&per_page=100`
+                    );
+                    const eventList = events.quiz_submission_events || events || [];
+                    if (!firstLogged) {
+                      console.log(`    Events fallback: ${eventList.length} events found`);
+                    }
+                    for (const evt of eventList) {
+                      if (evt.event_type === 'question_answered' && evt.event_data) {
+                        for (const ans of (Array.isArray(evt.event_data) ? evt.event_data : [evt.event_data])) {
+                          if (ans.answer && typeof ans.answer === 'string' && ans.answer.trim()) {
+                            const plain = ans.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                            if (plain) answers.push(plain);
+                          }
                         }
                       }
-                    } catch { /* skip file download errors */ }
+                    }
+                  } catch (eventsErr) {
+                    if (!firstLogged) {
+                      console.log(`    Events fallback also failed: ${eventsErr.message}`);
+                    }
                   }
                 }
+
+                firstLogged = true;
 
                 if (answers.length > 0) {
                   subData.contentType = 'text';
@@ -322,10 +367,10 @@ async function downloadSubmissions(api, courseName, dataDir) {
                   fetched++;
                 }
               } catch (err) {
-                // Individual student errors are non-fatal
-                if (process.env.DEBUG) console.log(`      (Quiz answers error for ${anonId}: ${err.message})`);
+                console.log(`      (Quiz answers error for ${anonId}: ${err.message})`);
               }
             }
+            if (noMatch > 0) console.log(`    (${noMatch} students had no matching quiz submission)`);
             console.log(`    → Extracted quiz content for ${fetched} students`);
           } catch (err) {
             console.log(`    (Could not fetch quiz submissions: ${err.message})`);
