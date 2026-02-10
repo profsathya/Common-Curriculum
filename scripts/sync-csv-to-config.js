@@ -226,14 +226,19 @@ function syncCsvToConfig(csvPath, configPath) {
 
     if (assignments[key]) {
       // Update existing assignment
-      if (row.canvasId) assignments[key].canvasId = row.canvasId;
+      // canvasId and quizType are always synced (even when empty) so CSV can clear them
+      assignments[key].canvasId = row.canvasId || '';
       if (row.title) assignments[key].title = row.title;
       if (row.dueDate) assignments[key].dueDate = row.dueDate;
       if (row.type) assignments[key].type = row.type;
       if (row.assignmentGroup) assignments[key].assignmentGroup = row.assignmentGroup;
       if (row.points) assignments[key].points = parseInt(row.points, 10);
       if (row.canvasType) assignments[key].canvasType = row.canvasType;
-      if (row.quizType) assignments[key].quizType = row.quizType;
+      if (row.quizType) {
+        assignments[key].quizType = row.quizType;
+      } else {
+        delete assignments[key].quizType;
+      }
 
       // Add new columns from Stage 1
       if (row.sprint) assignments[key].sprint = parseInt(row.sprint, 10);
