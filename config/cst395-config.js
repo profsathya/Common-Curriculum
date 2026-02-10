@@ -152,6 +152,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-demo-discussion": {
+      canvasId: "582032",
       title: "S1: Sprint 1 Demo Discussion",
       dueDate: "2026-02-11",
       type: "quiz",
@@ -517,8 +518,7 @@ const CST395_CONFIG = {
           "points": 5
         }
       ]
-    },
-
+    }
   },
 
   // Class recording Loom videos - ADD URLS AS AVAILABLE
