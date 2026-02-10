@@ -178,18 +178,6 @@ const CST395_CONFIG = {
       week: 5,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
-    "s2-goal-setting": {
-      title: "S2: Sprint 2 Goal Setting",
-      dueDate: "2026-02-16",
-      type: "assignment",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goals",
-      points: 10,
-      sprint: 2,
-      week: 5,
-      htmlFile: "assignments/s2-w5-goal-setting.html"
-    },
     "s2-discovery-doc": {
       canvasId: "582025",
       title: "S2: Discovery Documentation",
