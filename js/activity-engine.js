@@ -158,7 +158,7 @@ const ActivityEngine = (function() {
         ${config.roster && config.roster.length > 0 ? `
         <div class="activity__author-section">
           <label for="activity-author-input" class="activity__author-label">Author Name</label>
-          <p class="activity__author-hint">Select the name of the person whose written responses you are entering.</p>
+          <p class="activity__author-hint">Select or type the name of the person whose written responses you are entering.</p>
           <input
             type="text"
             id="activity-author-input"
