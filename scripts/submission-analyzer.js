@@ -289,6 +289,11 @@ async function downloadSubmissions(api, courseName, dataDir) {
           content: null,
         };
 
+        // Debug: Log what Canvas returns for quiz submissions
+        if (isQuiz && sub.workflow_state === 'submitted') {
+          console.log(`      [DEBUG] ${anonId}: type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
+        }
+
         // For quiz submissions, Canvas may not set submission_type correctly even with file uploads
         // Check for attachments first, regardless of submission_type
         const hasAttachments = sub.attachments && sub.attachments.length > 0;
