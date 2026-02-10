@@ -42,6 +42,13 @@ const ActivityComponents = (function() {
     `;
     wrapper.appendChild(header);
 
+    // Render optional info block above the question
+    if (question.infoBlock) {
+      const infoEl = createElement('div', 'activity-question__info-block');
+      infoEl.innerHTML = question.infoBlock;
+      wrapper.appendChild(infoEl);
+    }
+
     // Render based on type
     let content;
     switch (question.type) {

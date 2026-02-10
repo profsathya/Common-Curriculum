@@ -1,10 +1,10 @@
 {
   "activityId": "cst349-s2-orientation",
-  "version": "1.0",
-  "versionNotes": "Sprint 2 orientation learning activity",
+  "version": "2.0",
+  "versionNotes": "Sprint 2 orientation — modularized info blocks with comprehension checks and AI-nudged reflections",
   "course": "CST349",
   "title": "Sprint 2: Accountable Growth — Orientation",
-  "description": "Before setting your Sprint 2 goals, learn what this sprint is about, how it works, and what's expected. Sprint 2 shifts from working alone to working in groups with collaborative accountability.",
+  "description": "Before setting your Sprint 2 goals, read through each section below to learn what this sprint is about, how it works, and what's expected. Then answer the questions to confirm your understanding.",
 
   "settings": {
     "maxRetries": 3,
@@ -12,14 +12,16 @@
     "showExplanationAfterAttempt": 3,
     "allowSkipAfterNudge": true,
     "skipNudgeMessage": "This question helps you understand Sprint 2 expectations. Are you sure you want to skip?",
-    "requireAtLeastOneOpenEnded": true
+    "requireAtLeastOneOpenEnded": true,
+    "aiEndpoint": "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-discuss"
   },
 
   "questions": [
     {
       "id": "q1-sprint2-shift",
       "type": "multiple-choice",
-      "prompt": "Sprint 2 is called 'Accountable Growth.' In Sprint 1, you developed a skill on your own — the only accountability was yourself. What is the biggest change in Sprint 2?",
+      "infoBlock": "<h4>The Big Shift: From Solo to Group</h4><p>In Sprint 1, you developed a skill on your own. The only person you were accountable to was yourself — your goals, your progress, your assessment.</p><p>Sprint 2 changes that. You'll be placed in a <strong>group</strong> where your growth is interconnected with others. Your group partners' effort directly affects part of your grade, and yours affects theirs. This is <strong>accountable growth</strong> — growth that's visible to others and verified externally, not just self-reported.</p><p>The skill you're developing continues from Sprint 1, but the context changes completely.</p>",
+      "prompt": "What is the biggest change in Sprint 2 compared to Sprint 1?",
       "options": [
         "You pick a completely new skill to develop from scratch",
         "You work in a group where collaborative accountability shapes your growth",
@@ -28,12 +30,13 @@
       ],
       "correctIndex": 1,
       "hint": "Think about what 'accountable' means — who are you accountable to in Sprint 2?",
-      "explanation": "Sprint 2 puts you in a group. Your group partners' effort affects part of your grade (reflections and check-ins are group-averaged), and you'll need to give and receive honest feedback. The skill you're developing continues from Sprint 1, but now with external accountability."
+      "explanation": "Sprint 2 puts you in a group. Your group partners' effort affects part of your grade, and you'll need to give and receive honest feedback. The skill you're developing continues from Sprint 1, but now with external accountability."
     },
     {
       "id": "q2-grading-structure",
       "type": "multiple-choice",
-      "prompt": "Sprint 2 grading has both individual and group-averaged components. Which parts are group-averaged (meaning your group partners' effort affects your grade)?",
+      "infoBlock": "<h4>How Sprint 2 Grading Works</h4><p>Sprint 2 has four grading components:</p><ul><li><strong>Goals (20%)</strong> — Individual. Your personal sprint goals.</li><li><strong>Reflections (20%)</strong> — <em>Group-averaged.</em> Everyone in your group contributes; the average score applies to all.</li><li><strong>Check-ins (20%)</strong> — <em>Group-averaged.</em> Outreach, documentation, and engagement activities shared across the group.</li><li><strong>Demo (40%)</strong> — Individual. Your personal demonstration of growth with validation from your group.</li></ul><p>This means <strong>40% of your grade depends on your group's collective engagement</strong>. If your partners don't show up, it affects you. If you don't show up, it affects them.</p>",
+      "prompt": "Which parts of your Sprint 2 grade are group-averaged (meaning your group partners' effort affects your grade)?",
       "options": [
         "Goals and Demo",
         "Reflections and Check-ins",
@@ -46,15 +49,20 @@
     },
     {
       "id": "q3-why-group-matters",
-      "type": "open-ended",
+      "type": "ai-discussion",
       "prompt": "Knowing that 40% of your Sprint 2 grade is group-averaged, what does that mean for how you should approach your group from day one? What will you do to make sure your group succeeds?",
       "placeholder": "Think about communication, reliability, and what you'd want from your group partners...",
-      "minLength": 60
+      "minLength": 60,
+      "numQuestions": 2,
+      "generateButtonText": "Get Feedback",
+      "aiContext": "This is a Sprint 2 orientation reflection in CST349 (Professional Seminar). The student just learned that 40% of their Sprint 2 grade is group-averaged. They're reflecting on how they'll approach group accountability. Look for specificity — vague answers like 'communicate well' should be pushed to be more concrete. Also check if they address both what they'll contribute AND what they expect from others.",
+      "discussionPrompt": "Consider these follow-up questions to deepen your thinking. Then write a refined response below."
     },
     {
       "id": "q4-weekly-rhythm",
       "type": "multiple-choice",
-      "prompt": "Sprint 2 runs from Week 5 to Week 8. What is the general weekly rhythm?",
+      "infoBlock": "<h4>The Weekly Rhythm</h4><p>Sprint 2 runs from <strong>Week 5 to Week 8</strong>. Each week follows a consistent pattern:</p><ul><li><strong>Core deliverable</strong> (due Friday) — The main work product for the week</li><li><strong>Check-in or documentation</strong> (due Sunday) — Accountability evidence, group documentation</li><li><strong>Productive reflection</strong> (due Tuesday) — What you learned, what you'll change</li></ul><p>This rhythm keeps you consistently engaged throughout the sprint rather than cramming at the end.</p>",
+      "prompt": "What is the general weekly rhythm in Sprint 2?",
       "options": [
         "One big assignment due at the end of each week",
         "A core deliverable (due Fri), a check-in/documentation (due Sun), and a productive reflection (due Tue)",
@@ -62,12 +70,13 @@
         "Daily assignments Monday through Friday"
       ],
       "correctIndex": 1,
-      "hint": "Look at the Sprint 2 timeline — deliverables have a consistent pattern across the weeks.",
+      "hint": "Look at the pattern — deliverables have a consistent rhythm across weeks.",
       "explanation": "Each week follows a rhythm: a core deliverable (due Friday), documentation or check-in (due Sunday), and a productive reflection (due Tuesday). This keeps you consistently engaged rather than cramming at the end."
     },
     {
       "id": "q5-key-deliverables",
       "type": "match-following",
+      "infoBlock": "<h4>What Happens Each Week</h4><ul><li><strong>Week 5:</strong> Sprint 1 Demo wraps up. You complete a Bridge Reflection and set Sprint 2 goals.</li><li><strong>Week 6:</strong> Professional Outreach — reach out to someone in your field. Create a Fallback Plan for your skill development.</li><li><strong>Week 7:</strong> Stretch Challenge — push beyond your Sprint 1 comfort zone. Document your check-in with your group.</li><li><strong>Week 8:</strong> Demonstration with Validation — show your growth with evidence your group partners can verify. Peer evaluation.</li></ul>",
       "prompt": "Match each week with its main focus area:",
       "pairs": [
         { "left": "Week 5", "right": "Sprint 1 Demo + Sprint 2 Goal Setting" },
@@ -81,7 +90,8 @@
     {
       "id": "q6-demo-difference",
       "type": "multiple-choice",
-      "prompt": "In Sprint 1, your demo was a handwritten reflection you created yourself. What makes the Sprint 2 demo different?",
+      "infoBlock": "<h4>The Sprint 2 Demo: Demonstration with Validation</h4><p>In Sprint 1, your demo was a handwritten reflection that you assessed yourself. Nobody else verified your claims.</p><p>Sprint 2's demo is different: it's called <strong>Demonstration with Validation</strong>. You still demonstrate your growth, but your <strong>group partners evaluate whether your claims hold up</strong>. They've watched your progress over 4 weeks — they know if you actually did the work.</p><p>This external validation is the core of accountable growth: your development isn't just what you say it is, it's what others can verify.</p>",
+      "prompt": "What makes the Sprint 2 demo different from Sprint 1?",
       "options": [
         "It's typed instead of handwritten",
         "Your group partners validate your demonstrated growth — it's not just your self-assessment",
@@ -94,10 +104,14 @@
     },
     {
       "id": "q7-readiness",
-      "type": "open-ended",
+      "type": "ai-discussion",
       "prompt": "What excites you most about Sprint 2? What concerns you? Be honest — this reflection is for you.",
       "placeholder": "Consider: working with others, being held accountable, the stretch challenge, group-averaged grades...",
-      "minLength": 60
+      "minLength": 60,
+      "numQuestions": 2,
+      "generateButtonText": "Get Feedback",
+      "aiContext": "This is a Sprint 2 orientation reflection in CST349 (Professional Seminar). The student is reflecting on their readiness for Sprint 2, which involves group accountability, a stretch challenge, and externally validated growth. Push them to be specific about WHAT excites or concerns them and WHY. Vague answers should be challenged gently.",
+      "discussionPrompt": "Consider these follow-up questions to deepen your thinking. Then write a refined response below."
     }
   ]
 }
