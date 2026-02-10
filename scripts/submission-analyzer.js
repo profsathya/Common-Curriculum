@@ -289,60 +289,63 @@ async function downloadSubmissions(api, courseName, dataDir) {
           content: null,
         };
 
+        // For quiz submissions, Canvas may not set submission_type correctly even with file uploads
+        // Check for attachments first, regardless of submission_type
+        const hasAttachments = sub.attachments && sub.attachments.length > 0;
+
         // Extract content based on submission type
-        if (sub.submission_type === 'online_text_entry' && sub.body) {
+        if (hasAttachments) {
+          // Handle file attachments (works for both regular assignments and quizzes)
+          const attachment = sub.attachments[0]; // Primary attachment
+          const mime = attachment['content-type'] || attachment.content_type || '';
+          const filename = attachment.filename || '';
+          const isJsonFile = mime === 'application/json' || filename.toLowerCase().endsWith('.json');
+
+          if (IMAGE_MIME_TYPES.has(mime)) {
+            subData.contentType = 'image';
+            subData.content = `[Image: ${attachment.filename}]`;
+          } else if (mime === 'application/pdf') {
+            subData.contentType = 'pdf';
+            subData.content = `[PDF: ${attachment.filename}]`;
+          } else if (isJsonFile) {
+            // Explicitly handle JSON files
+            console.log(`      → JSON file detected for ${anonId}: ${filename} (MIME: ${mime})`);
+            try {
+              const jsonContent = await api.downloadFileContent(attachment.url);
+              console.log(`      → Downloaded ${jsonContent.length} bytes`);
+              // Try to parse and pretty-print the JSON for better LLM analysis
+              try {
+                const parsed = JSON.parse(jsonContent);
+                subData.contentType = 'json';
+                subData.content = JSON.stringify(parsed, null, 2).substring(0, 5000);
+                console.log(`      → Parsed and formatted as JSON`);
+              } catch (parseErr) {
+                // If JSON parsing fails, use raw content
+                console.log(`      → JSON parsing failed, using raw text: ${parseErr.message}`);
+                subData.contentType = 'text';
+                subData.content = jsonContent.substring(0, 5000);
+              }
+            } catch (error) {
+              console.log(`      ✗ Failed to download JSON for ${anonId}: ${error.message}`);
+              subData.contentType = 'file';
+              subData.content = `[JSON file: ${attachment.filename}]`;
+            }
+          } else {
+            // Try to download other text-based files
+            try {
+              const textContent = await api.downloadFileContent(attachment.url);
+              subData.contentType = 'text';
+              subData.content = textContent.substring(0, 5000); // Limit size
+            } catch {
+              subData.contentType = 'file';
+              subData.content = `[File: ${attachment.filename}]`;
+            }
+          }
+        } else if (sub.submission_type === 'online_text_entry' && sub.body) {
           // Strip HTML tags to get plain text
           const plainText = sub.body.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
           subData.contentType = 'text';
           subData.content = plainText;
-        } else if (sub.submission_type === 'online_upload' && sub.attachments) {
-          const attachment = sub.attachments[0]; // Primary attachment
-          if (attachment) {
-            const mime = attachment['content-type'] || attachment.content_type || '';
-            const filename = attachment.filename || '';
-            const isJsonFile = mime === 'application/json' || filename.toLowerCase().endsWith('.json');
-
-            if (IMAGE_MIME_TYPES.has(mime)) {
-              subData.contentType = 'image';
-              subData.content = `[Image: ${attachment.filename}]`;
-            } else if (mime === 'application/pdf') {
-              subData.contentType = 'pdf';
-              subData.content = `[PDF: ${attachment.filename}]`;
-            } else if (isJsonFile) {
-              // Explicitly handle JSON files
-              console.log(`      → JSON file detected for ${anonId}: ${filename} (MIME: ${mime})`);
-              try {
-                const jsonContent = await api.downloadFileContent(attachment.url);
-                console.log(`      → Downloaded ${jsonContent.length} bytes`);
-                // Try to parse and pretty-print the JSON for better LLM analysis
-                try {
-                  const parsed = JSON.parse(jsonContent);
-                  subData.contentType = 'json';
-                  subData.content = JSON.stringify(parsed, null, 2).substring(0, 5000);
-                  console.log(`      → Parsed and formatted as JSON`);
-                } catch (parseErr) {
-                  // If JSON parsing fails, use raw content
-                  console.log(`      → JSON parsing failed, using raw text: ${parseErr.message}`);
-                  subData.contentType = 'text';
-                  subData.content = jsonContent.substring(0, 5000);
-                }
-              } catch (error) {
-                console.log(`      ✗ Failed to download JSON for ${anonId}: ${error.message}`);
-                subData.contentType = 'file';
-                subData.content = `[JSON file: ${attachment.filename}]`;
-              }
-            } else {
-              // Try to download other text-based files
-              try {
-                const textContent = await api.downloadFileContent(attachment.url);
-                subData.contentType = 'text';
-                subData.content = textContent.substring(0, 5000); // Limit size
-              } catch {
-                subData.contentType = 'file';
-                subData.content = `[File: ${attachment.filename}]`;
-              }
-            }
-          }
         } else if (sub.submission_type === 'online_url') {
           subData.contentType = 'url';
           subData.content = sub.url || '';
