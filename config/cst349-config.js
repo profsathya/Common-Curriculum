@@ -229,6 +229,19 @@ const CST349_CONFIG = {
       week: 5,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
+    "s2-orientation": {
+      canvasId: "",
+      title: "S2: Sprint 2 Orientation",
+      dueDate: "2026-02-14",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "activities/s2-orientation.html"
+    },
     "s2-goal-setting": {
       canvasId: "582011",
       title: "S2: Sprint 2 Goal Setting",
@@ -470,20 +483,6 @@ const CST349_CONFIG = {
       type: "bridge"
     },
 
-    // Sprint 2
-    "s2-orientation": {
-      canvasId: "",
-      title: "S2: Sprint 2 Orientation",
-      dueDate: "2026-02-14",
-      type: "quiz",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goal Setting",
-      points: 5,
-      sprint: 2,
-      week: 5,
-      htmlFile: "activities/s2-orientation.html"
-    }
   },
 
   // Class recording Loom videos - ADD URLS AS AVAILABLE
