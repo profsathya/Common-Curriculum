@@ -272,15 +272,22 @@ async function downloadSubmissions(api, courseName, dataDir) {
 
         // Also fetch quiz submissions to get file attachments (Canvas doesn't include them in assignment submissions)
         try {
-          const quizSubsData = await api.listQuizSubmissions(courseId, canvasId);
+          const quizSubsResponse = await api.listQuizSubmissions(courseId, canvasId);
+          // Canvas returns { quiz_submissions: [...] }, not a flat array
+          const quizSubsData = quizSubsResponse.quiz_submissions || quizSubsResponse || [];
+
           // Build a map: user_id → quiz submission
           quizSubmissions = {};
-          quizSubsData.forEach(qs => {
-            if (qs.user_id) {
-              quizSubmissions[qs.user_id] = qs;
-            }
-          });
-          console.log(`    Fetched ${quizSubsData.length} quiz submissions for attachment checking`);
+          if (Array.isArray(quizSubsData)) {
+            quizSubsData.forEach(qs => {
+              if (qs.user_id) {
+                quizSubmissions[qs.user_id] = qs;
+              }
+            });
+            console.log(`    Fetched ${quizSubsData.length} quiz submissions for attachment checking`);
+          } else {
+            console.log(`    (Quiz submissions API returned unexpected format)`);
+          }
         } catch (error) {
           console.log(`    (Could not fetch quiz submissions: ${error.message})`);
         }
