@@ -87,7 +87,6 @@ const CST349_CONFIG = {
       dueDate: "2026-01-29",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Goal Setting",
       points: 5,
       sprint: 1,
@@ -147,7 +146,6 @@ const CST349_CONFIG = {
       dueDate: "2026-01-31",
       type: "reflection",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 1: Productive Reflections",
       points: 5,
       sprint: 1,
@@ -207,7 +205,6 @@ const CST349_CONFIG = {
       dueDate: "2026-02-11",
       type: "quiz",
       canvasType: "assignment",
-      quizType: "assignment",
       assignmentGroup: "Sprint 1: Demonstration",
       points: 10,
       sprint: 1,
@@ -222,7 +219,6 @@ const CST349_CONFIG = {
       dueDate: "2026-02-12",
       type: "reflection",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
@@ -230,12 +226,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-orientation": {
-      canvasId: "582071",
+      canvasId: "",
       title: "S2: Sprint 2 Orientation",
       dueDate: "2026-02-14",
       type: "quiz",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
@@ -248,7 +243,6 @@ const CST349_CONFIG = {
       dueDate: "2026-02-16",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 10,
       sprint: 2,
@@ -256,11 +250,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting.html"
     },
     "s2-outreach": {
+      canvasId: "",
       title: "S2: Professional Outreach",
       dueDate: "2026-02-20",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
@@ -268,11 +262,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-outreach.html"
     },
     "s2-fallback-plan": {
+      canvasId: "",
       title: "S2: Fallback Plan",
       dueDate: "2026-02-22",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
@@ -280,11 +274,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-fallback-plan.html"
     },
     "s2-reflection-4": {
+      canvasId: "",
       title: "S2: Productive Reflection #4",
       dueDate: "2026-02-24",
       type: "reflection",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
@@ -292,11 +286,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
     "s2-stretch": {
+      canvasId: "",
       title: "S2: Stretch Challenge",
       dueDate: "2026-02-27",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
@@ -304,11 +298,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-stretch.html"
     },
     "s2-checkin-doc": {
+      canvasId: "",
       title: "S2: Check-in Documentation",
       dueDate: "2026-03-01",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
@@ -316,11 +310,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-checkin-doc.html"
     },
     "s2-reflection-5": {
+      canvasId: "",
       title: "S2: Productive Reflection #5",
       dueDate: "2026-03-03",
       type: "reflection",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
@@ -328,11 +322,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
     "s2-demo-validation": {
+      canvasId: "",
       title: "S2: Demonstration with Validation",
       dueDate: "2026-03-06",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Demonstration",
       points: 10,
       sprint: 2,
@@ -340,11 +334,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w8-demo-validation.html"
     },
     "s2-peer-eval": {
+      canvasId: "",
       title: "S2: Peer Evaluation",
       dueDate: "2026-03-08",
       type: "assignment",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
@@ -352,11 +346,11 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w8-peer-eval.html"
     },
     "s2-bridge-reflection-2": {
+      canvasId: "",
       title: "S2: Sprint 2-3 Bridge Reflection",
       dueDate: "2026-03-10",
       type: "reflection",
       canvasType: "assignment",
-      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
