@@ -39,7 +39,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-superagency-challenge.html"
     },
     "s1-problem-analysis": {
-      canvasId: "144732",
+      canvasId: "580903",
       title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
       type: "quiz",
@@ -79,7 +79,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-solution-architecture": {
-      canvasId: "144733",
+      canvasId: "580904",
       title: "S1: Solution Architecture",
       dueDate: "2026-02-02",
       type: "quiz",
@@ -132,7 +132,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-reflection-2": {
-      canvasId: "144734",
+      canvasId: "580905",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
@@ -166,6 +166,7 @@ const CST395_CONFIG = {
 
     // Sprint 2
     "s2-bridge-reflection-1": {
+      canvasId: "582024",
       title: "S2: Sprint 1-2 Bridge Reflection",
       dueDate: "2026-02-12",
       type: "reflection",
@@ -178,7 +179,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-goal-setting-part1": {
-      canvasId: "",
+      canvasId: "582027",
       title: "S2: Goal Setting Part I — Preparation",
       dueDate: "2026-02-16",
       type: "assignment",
@@ -191,7 +192,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting-part1.html"
     },
     "s2-goal-setting-part2": {
-      canvasId: "",
+      canvasId: "582028",
       title: "S2: Goal Setting Part II — Partner Goals",
       dueDate: "2026-02-20",
       type: "assignment",
@@ -204,6 +205,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting-part2.html"
     },
     "s2-discovery-doc": {
+      canvasId: "582025",
       title: "S2: Discovery Documentation",
       dueDate: "2026-02-20",
       type: "assignment",
@@ -216,6 +218,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w6-discovery-doc.html"
     },
     "s2-assumption-audit": {
+      canvasId: "582026",
       title: "S2: Assumption Audit",
       dueDate: "2026-02-22",
       type: "assignment",
@@ -450,7 +453,7 @@ const CST395_CONFIG = {
 
     // Sprint 1
     "s1-w3-design-decision": {
-      canvasId: "144806",
+      canvasId: "581583",
       title: "S1: Design Decision Analysis",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -463,7 +466,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/design-decision-analysis.html"
     },
     "s1-w3-dojo-depth": {
-      canvasId: "144807",
+      canvasId: "581584",
       title: "S1: Dojo Depth Session",
       dueDate: "2026-02-08",
       type: "quiz",
@@ -483,7 +486,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-w3-reflection": {
-      canvasId: "144808",
+      canvasId: "581585",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "quiz",
