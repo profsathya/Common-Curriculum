@@ -468,6 +468,21 @@ const CST349_CONFIG = {
       title: "Final Reflection",
       dueDate: "2026-05-16",
       type: "bridge"
+    },
+
+    // Sprint 2
+    "s2-orientation": {
+      canvasId: "",
+      title: "S2: Sprint 2 Orientation",
+      dueDate: "2026-02-14",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "activities/s2-orientation.html"
     }
   },
 
