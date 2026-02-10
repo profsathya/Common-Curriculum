@@ -1003,6 +1003,28 @@ const ActivityComponents = (function() {
     const saveBtnText = question.saveButtonText || 'Save Discussion Summary';
     const updateBtnText = question.updateButtonText || 'Update Summary';
     const saveBtn = createElement('button', 'activity-open__save', savedData.discussionSummary ? updateBtnText : saveBtnText);
+
+    // --- Dig Deeper button (shown after first save) ---
+    const digDeeperBtn = createElement('button', 'activity-ai-discussion__dig-deeper-btn');
+    digDeeperBtn.innerHTML = (question.digDeeperText || 'Dig deeper with AI guidance') + ' &rarr;';
+    digDeeperBtn.style.display = 'none';
+
+    // Iteration counter display
+    const iterationInfo = createElement('div', 'activity-ai-discussion__iteration-info');
+    iterationInfo.id = `ai-iteration-info-${question.id}`;
+    const currentIterations = savedData.iterations || 0;
+    if (currentIterations > 1) {
+      iterationInfo.textContent = `${currentIterations} rounds of AI guidance completed`;
+      iterationInfo.style.display = 'block';
+    } else {
+      iterationInfo.style.display = 'none';
+    }
+
+    // Show dig deeper button if already saved
+    if (currentPhase === 'summarize' && savedData.discussionSummary) {
+      digDeeperBtn.style.display = 'inline-block';
+    }
+
     saveBtn.addEventListener('click', () => {
       const summary = summaryTextarea.value.trim();
       if (summary.length < 30) {
@@ -1017,8 +1039,13 @@ const ActivityComponents = (function() {
         aiQuestions: savedData.aiQuestions || [],
         observation: savedData.observation || '',
         discussionSummary: summary,
+        iterations: savedData.iterations || 1,
         phase: 'summarize',
       };
+
+      savedData.discussionSummary = summary;
+      savedData.phase = 'summarize';
+      if (!savedData.iterations) savedData.iterations = 1;
 
       options.response = {
         answer: fullAnswer,
@@ -1031,8 +1058,22 @@ const ActivityComponents = (function() {
 
       saveBtn.textContent = 'Saved \u2713';
       setTimeout(() => { saveBtn.textContent = updateBtnText; }, 2000);
+
+      // Show dig deeper button after saving
+      digDeeperBtn.style.display = 'inline-block';
     });
     summaryPhase.appendChild(saveBtn);
+
+    digDeeperBtn.addEventListener('click', () => {
+      const summaryText = summaryTextarea.value.trim();
+      if (summaryText.length < 30) {
+        alert('Please write or update your response before digging deeper (minimum 30 characters).');
+        return;
+      }
+      handleAiIterate(question, summaryText, options, container, savedData, digDeeperBtn, iterationInfo);
+    });
+    summaryPhase.appendChild(digDeeperBtn);
+    summaryPhase.appendChild(iterationInfo);
 
     container.appendChild(summaryPhase);
 
@@ -1125,6 +1166,7 @@ const ActivityComponents = (function() {
         aiQuestions: data.questions,
         observation: data.observation || '',
         discussionSummary: '',
+        iterations: 1,
         phase: 'discuss',
       };
       options.response = {
@@ -1150,6 +1192,95 @@ const ActivityComponents = (function() {
         generateBtn.disabled = false;
         generateBtn.innerHTML = 'Try Again &rarr;';
       }
+    }
+  }
+
+  async function handleAiIterate(question, summaryText, options, container, savedData, digDeeperBtn, iterationInfo) {
+    const loadingEl = document.getElementById(`ai-loading-${question.id}`);
+    const errorEl = document.getElementById(`ai-error-${question.id}`);
+    const currentIterations = savedData.iterations || 1;
+
+    loadingEl.style.display = 'flex';
+    errorEl.style.display = 'none';
+    digDeeperBtn.disabled = true;
+    digDeeperBtn.textContent = 'Generating...';
+
+    const aiEndpoint = question.aiEndpoint ||
+      options.aiEndpoint ||
+      '/.netlify/functions/ai-discuss';
+
+    try {
+      const fetchResponse = await fetch(aiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          response: summaryText,
+          prompt: savedData.selectedPrompt || question.prompt,
+          context: (question.aiContext || '') +
+            '\n\nThis is iteration ' + (currentIterations + 1) + '. The student is refining their thinking. Push them to be more specific and go deeper.',
+          course: options.courseTheme === 'cst349' ? 'CST349' : 'CST395',
+          numQuestions: question.numQuestions || 3,
+        }),
+      });
+
+      if (!fetchResponse.ok) {
+        const errData = await fetchResponse.json().catch(() => ({}));
+        throw new Error(errData.error || 'Request failed (' + fetchResponse.status + ')');
+      }
+
+      const data = await fetchResponse.json();
+      loadingEl.style.display = 'none';
+
+      // Replace observation and questions
+      const observationEl = document.getElementById(`ai-observation-${question.id}`);
+      if (observationEl && data.observation) {
+        observationEl.innerHTML = '<strong>Opening thought:</strong> ' + escapeHtml(data.observation);
+      }
+
+      const questionsList = document.getElementById(`ai-questions-list-${question.id}`);
+      questionsList.innerHTML = '';
+      data.questions.forEach(function(q, i) {
+        const qEl = createElement('div', 'activity-ai-discussion__question-item');
+        qEl.innerHTML = '<span class="activity-ai-discussion__question-number">' + (i + 1) + '</span><span>' + escapeHtml(q) + '</span>';
+        questionsList.appendChild(qEl);
+      });
+
+      // Update savedData
+      savedData.aiQuestions = data.questions;
+      savedData.observation = data.observation || '';
+      savedData.iterations = currentIterations + 1;
+
+      // Save state
+      const fullAnswer = {
+        enteredResponse: savedData.enteredResponse,
+        selectedOption: savedData.selectedOption ?? null,
+        selectedPrompt: savedData.selectedPrompt || question.prompt,
+        aiQuestions: data.questions,
+        observation: data.observation || '',
+        discussionSummary: summaryText,
+        iterations: currentIterations + 1,
+        phase: 'summarize',
+      };
+      options.response = { answer: fullAnswer, attempts: 1, correct: null, skipped: false };
+      options.onAnswer(fullAnswer, null);
+      updateQuestionStatus(question.id, { answer: fullAnswer, attempts: 1, correct: null, skipped: false });
+
+      // Update iteration counter display
+      iterationInfo.textContent = (currentIterations + 1) + ' rounds of AI guidance completed';
+      iterationInfo.style.display = 'block';
+
+      digDeeperBtn.disabled = false;
+      digDeeperBtn.innerHTML = (question.digDeeperText || 'Dig deeper with AI guidance') + ' &rarr;';
+
+    } catch (error) {
+      console.error('AI iteration error:', error);
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.innerHTML =
+        '<p><strong>Could not generate questions.</strong> ' + escapeHtml(error.message) + '</p>' +
+        '<button class="activity-ai-discussion__retry-btn" onclick="this.parentElement.style.display=\'none\'">Dismiss</button>';
+      digDeeperBtn.disabled = false;
+      digDeeperBtn.innerHTML = (question.digDeeperText || 'Dig deeper with AI guidance') + ' &rarr;';
     }
   }
 
