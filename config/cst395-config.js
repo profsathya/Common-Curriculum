@@ -178,6 +178,32 @@ const CST395_CONFIG = {
       week: 5,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
+    "s2-goal-setting-part1": {
+      canvasId: "",
+      title: "S2: Goal Setting Part I — Preparation",
+      dueDate: "2026-02-16",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-goal-setting-part1.html"
+    },
+    "s2-goal-setting-part2": {
+      canvasId: "",
+      title: "S2: Goal Setting Part II — Partner Goals",
+      dueDate: "2026-02-20",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-goal-setting-part2.html"
+    },
     "s2-discovery-doc": {
       canvasId: "582025",
       title: "S2: Discovery Documentation",
@@ -480,33 +506,6 @@ const CST395_CONFIG = {
       ]
     },
 
-    // Sprint 2
-    "s2-goal-setting-part1": {
-      canvasId: "",
-      title: "S2: Goal Setting Part I — Preparation",
-      dueDate: "2026-02-16",
-      type: "assignment",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goal Setting",
-      points: 5,
-      sprint: 2,
-      week: 5,
-      htmlFile: "assignments/s2-w5-goal-setting-part1.html"
-    },
-    "s2-goal-setting-part2": {
-      canvasId: "",
-      title: "S2: Goal Setting Part II — Partner Goals",
-      dueDate: "2026-02-20",
-      type: "assignment",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goal Setting",
-      points: 5,
-      sprint: 2,
-      week: 5,
-      htmlFile: "assignments/s2-w5-goal-setting-part2.html"
-    }
   },
 
   // Class recording Loom videos - ADD URLS AS AVAILABLE
