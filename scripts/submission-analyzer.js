@@ -321,17 +321,28 @@ async function downloadSubmissions(api, courseName, dataDir) {
 
         if (!hasAttachments && isQuiz && quizSubmissions) {
           const quizSub = quizSubmissions[sub.user_id];
-          if (quizSub && quizSub.submission_data) {
-            // Check submission_data for file upload questions
-            for (const answer of quizSub.submission_data) {
-              if (answer.attachment_ids && answer.attachment_ids.length > 0) {
-                // Found file upload - need to fetch attachment details
-                hasAttachments = true;
-                console.log(`      → Found file upload in quiz submission_data for ${anonId}`);
-                // attachment_ids are just IDs, we need to get the actual attachment objects
-                // They should be in the submission object if we included it
-                break;
+          if (quizSub) {
+            // Debug: log quiz submission structure to see where attachments are
+            console.log(`      [DEBUG-QUIZ] ${anonId}: keys=${Object.keys(quizSub).join(',')}`);
+
+            if (quizSub.submission_data) {
+              console.log(`      [DEBUG-QUIZ] ${anonId}: has submission_data with ${quizSub.submission_data.length} answers`);
+              // Check submission_data for file upload questions
+              for (const answer of quizSub.submission_data) {
+                if (answer.attachment_ids && answer.attachment_ids.length > 0) {
+                  // Found file upload - need to fetch attachment details
+                  hasAttachments = true;
+                  console.log(`      → Found file upload in quiz submission_data for ${anonId}`);
+                  // attachment_ids are just IDs, we need to get the actual attachment objects
+                  // They should be in the submission object if we included it
+                  break;
+                }
               }
+            }
+
+            // Also check if there's a 'submission' object with attachments
+            if (quizSub.submission && quizSub.submission.attachments) {
+              console.log(`      [DEBUG-QUIZ] ${anonId}: quiz submission has attachments in submission object: ${quizSub.submission.attachments.length}`);
             }
           }
         }
