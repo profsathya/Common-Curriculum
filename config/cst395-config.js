@@ -180,7 +180,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-orientation": {
-      canvasId: "",
+      canvasId: "582072",
       title: "S2: Sprint 2 Orientation",
       dueDate: "2026-02-14",
       type: "quiz",
