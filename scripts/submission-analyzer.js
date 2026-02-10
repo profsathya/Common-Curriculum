@@ -289,9 +289,9 @@ async function downloadSubmissions(api, courseName, dataDir) {
           content: null,
         };
 
-        // Debug: Log what Canvas returns for quiz submissions
-        if (isQuiz && sub.workflow_state === 'submitted') {
-          console.log(`      [DEBUG] ${anonId}: type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
+        // Debug: Log what Canvas returns for quiz submissions (ALL states, not just 'submitted')
+        if (isQuiz && sub.workflow_state !== 'unsubmitted') {
+          console.log(`      [DEBUG] ${anonId}: state=${sub.workflow_state}, type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
         }
 
         // For quiz submissions, Canvas may not set submission_type correctly even with file uploads
