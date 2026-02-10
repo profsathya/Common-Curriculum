@@ -156,7 +156,7 @@ const CST395_CONFIG = {
       dueDate: "2026-02-11",
       type: "quiz",
       canvasType: "quiz",
-      quizType: "graded_quiz",
+      quizType: "assignment",
       assignmentGroup: "Sprint 1: Demonstration",
       points: 10,
       sprint: 1,
