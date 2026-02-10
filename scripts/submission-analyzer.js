@@ -307,10 +307,18 @@ async function downloadSubmissions(api, courseName, dataDir) {
           content: null,
         };
 
-        // Debug: Log what Canvas returns for quiz submissions (ALL states, not just 'submitted')
+        // Debug: Log what Canvas returns for quiz submissions (ALL states, not just 'unsubmitted')
         if (isQuiz && sub.workflow_state !== 'unsubmitted') {
           const quizSub = quizSubmissions ? quizSubmissions[sub.user_id] : null;
           console.log(`      [DEBUG] ${anonId}: state=${sub.workflow_state}, type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, quizSub=${quizSub ? 'exists' : 'null'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
+        }
+
+        // Debug: Log for Dojo Depth assignment specifically to diagnose attachment issue
+        if (assignmentKey === 's1-w3-dojo-depth' && sub.workflow_state !== 'unsubmitted') {
+          console.log(`      [DEBUG-DOJO] ${anonId}: state=${sub.workflow_state}, type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
+          if (sub.attachments && sub.attachments.length > 0) {
+            console.log(`      [DEBUG-DOJO] ${anonId}: attachment[0] = ${JSON.stringify(sub.attachments[0])}`);
+          }
         }
 
         // For quiz submissions, Canvas may not set submission_type correctly even with file uploads
