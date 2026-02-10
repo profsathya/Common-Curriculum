@@ -156,8 +156,8 @@ const CST395_CONFIG = {
       dueDate: "2026-02-11",
       type: "quiz",
       canvasType: "quiz",
-      quizType: "assignment",
-      assignmentGroup: "Sprint 1: Demo",
+      quizType: "graded_quiz",
+      assignmentGroup: "Sprint 1: Demonstration",
       points: 10,
       sprint: 1,
       week: 4,
@@ -176,18 +176,6 @@ const CST395_CONFIG = {
       sprint: 2,
       week: 5,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
-    },
-    "s2-goal-setting": {
-      title: "S2: Sprint 2 Goal Setting",
-      dueDate: "2026-02-16",
-      type: "assignment",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goals",
-      points: 10,
-      sprint: 2,
-      week: 5,
-      htmlFile: "assignments/s2-w5-goal-setting.html"
     },
     "s2-discovery-doc": {
       title: "S2: Discovery Documentation",
@@ -219,7 +207,7 @@ const CST395_CONFIG = {
       type: "assignment",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Goals",
+      assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
       week: 6,
@@ -291,7 +279,7 @@ const CST395_CONFIG = {
       type: "assignment",
       canvasType: "quiz",
       quizType: "graded_survey",
-      assignmentGroup: "Sprint 2: Demo",
+      assignmentGroup: "Sprint 2: Demonstration",
       points: 10,
       sprint: 2,
       week: 8,
@@ -487,6 +475,34 @@ const CST395_CONFIG = {
           "points": 5
         }
       ]
+    },
+
+    // Sprint 2
+    "s2-goal-setting-part1": {
+      canvasId: "",
+      title: "S2: Goal Setting Part I — Preparation",
+      dueDate: "2026-02-16",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-goal-setting-part1.html"
+    },
+    "s2-goal-setting-part2": {
+      canvasId: "",
+      title: "S2: Goal Setting Part II — Partner Goals",
+      dueDate: "2026-02-20",
+      type: "assignment",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-goal-setting-part2.html"
     }
   },
 
