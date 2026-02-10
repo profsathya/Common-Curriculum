@@ -481,8 +481,7 @@ const CST349_CONFIG = {
       title: "Final Reflection",
       dueDate: "2026-05-16",
       type: "bridge"
-    },
-
+    }
   },
 
   // Class recording Loom videos - ADD URLS AS AVAILABLE
