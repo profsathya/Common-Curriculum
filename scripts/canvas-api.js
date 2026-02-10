@@ -239,6 +239,16 @@ class CanvasAPI {
   }
 
   /**
+   * Get quiz submissions with file attachments
+   * This is needed because the regular submissions API doesn't return attachments for quizzes
+   */
+  async listQuizSubmissions(courseId, quizId) {
+    return this.requestAllPages(
+      `/courses/${courseId}/quizzes/${quizId}/submissions?include[]=submission&include[]=user`
+    );
+  }
+
+  /**
    * Generate a quiz student analysis report and return the CSV text.
    * This is the reliable way to get all quiz answers for completed submissions.
    */

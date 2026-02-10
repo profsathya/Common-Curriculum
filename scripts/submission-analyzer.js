@@ -257,6 +257,8 @@ async function downloadSubmissions(api, courseName, dataDir) {
 
     try {
       let submissions;
+      let quizSubmissions = null;
+
       if (isQuiz) {
         // canvasId for quizzes is the quiz ID, not the shadow assignment ID.
         // Look up the quiz to find its linked assignment_id for submissions.
@@ -267,6 +269,21 @@ async function downloadSubmissions(api, courseName, dataDir) {
         }
         console.log(`    (quiz ${canvasId} → shadow assignment ${shadowAssignmentId})`);
         submissions = await api.listSubmissions(courseId, shadowAssignmentId);
+
+        // Also fetch quiz submissions to get file attachments (Canvas doesn't include them in assignment submissions)
+        try {
+          const quizSubsData = await api.listQuizSubmissions(courseId, canvasId);
+          // Build a map: user_id → quiz submission
+          quizSubmissions = {};
+          quizSubsData.forEach(qs => {
+            if (qs.user_id) {
+              quizSubmissions[qs.user_id] = qs;
+            }
+          });
+          console.log(`    Fetched ${quizSubsData.length} quiz submissions for attachment checking`);
+        } catch (error) {
+          console.log(`    (Could not fetch quiz submissions: ${error.message})`);
+        }
       } else {
         submissions = await api.listSubmissions(courseId, canvasId);
       }
@@ -291,12 +308,32 @@ async function downloadSubmissions(api, courseName, dataDir) {
 
         // Debug: Log what Canvas returns for quiz submissions (ALL states, not just 'submitted')
         if (isQuiz && sub.workflow_state !== 'unsubmitted') {
-          console.log(`      [DEBUG] ${anonId}: state=${sub.workflow_state}, type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
+          const quizSub = quizSubmissions ? quizSubmissions[sub.user_id] : null;
+          console.log(`      [DEBUG] ${anonId}: state=${sub.workflow_state}, type=${sub.submission_type}, attachments=${sub.attachments ? sub.attachments.length : 'undefined'}, quizSub=${quizSub ? 'exists' : 'null'}, body=${sub.body ? 'exists' : 'null'}, url=${sub.url || 'null'}`);
         }
 
         // For quiz submissions, Canvas may not set submission_type correctly even with file uploads
         // Check for attachments first, regardless of submission_type
-        const hasAttachments = sub.attachments && sub.attachments.length > 0;
+        // Also check quiz submissions for attachments (they might be there instead)
+        let hasAttachments = sub.attachments && sub.attachments.length > 0;
+        let attachmentSource = sub.attachments;
+
+        if (!hasAttachments && isQuiz && quizSubmissions) {
+          const quizSub = quizSubmissions[sub.user_id];
+          if (quizSub && quizSub.submission_data) {
+            // Check submission_data for file upload questions
+            for (const answer of quizSub.submission_data) {
+              if (answer.attachment_ids && answer.attachment_ids.length > 0) {
+                // Found file upload - need to fetch attachment details
+                hasAttachments = true;
+                console.log(`      → Found file upload in quiz submission_data for ${anonId}`);
+                // attachment_ids are just IDs, we need to get the actual attachment objects
+                // They should be in the submission object if we included it
+                break;
+              }
+            }
+          }
+        }
 
         // Extract content based on submission type
         if (hasAttachments) {
