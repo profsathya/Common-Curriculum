@@ -241,11 +241,14 @@ class CanvasAPI {
   /**
    * Get quiz submissions with file attachments
    * This is needed because the regular submissions API doesn't return attachments for quizzes
+   * Note: Canvas returns { quiz_submissions: [...] }, not a flat array
    */
   async listQuizSubmissions(courseId, quizId) {
-    return this.requestAllPages(
+    const response = await this.request(
       `/courses/${courseId}/quizzes/${quizId}/submissions?include[]=submission&include[]=user`
     );
+    // Canvas returns { quiz_submissions: [...] }
+    return response.quiz_submissions || [];
   }
 
   /**
