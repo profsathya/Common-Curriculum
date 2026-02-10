@@ -234,7 +234,7 @@ class CanvasAPI {
    */
   async listSubmissions(courseId, assignmentId) {
     return this.requestAllPages(
-      `/courses/${courseId}/assignments/${assignmentId}/submissions?per_page=100&include[]=submission_comments`
+      `/courses/${courseId}/assignments/${assignmentId}/submissions?per_page=100&include[]=submission_comments&include[]=attachments`
     );
   }
 
