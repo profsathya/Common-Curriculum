@@ -186,7 +186,7 @@ const ActivityEngine = (function() {
           <!-- Questions rendered here -->
         </main>
 
-        <footer class="activity__footer" id="activity-footer" style="display: none;">
+        <footer class="activity__footer" id="activity-footer">
           <div class="activity__submit-section">
             <h3 class="activity__submit-title">Ready to submit?</h3>
             <p class="activity__submit-text">Enter your name exactly as it appears in Canvas, then download your responses.</p>
@@ -212,7 +212,7 @@ const ActivityEngine = (function() {
             </button>
 
             ${canvasAssignmentUrl ? `
-              <a href="${canvasAssignmentUrl}" target="_blank" class="activity__canvas-link" id="activity-canvas-link" style="display: none;">
+              <a href="${canvasAssignmentUrl}" target="_blank" class="activity__canvas-link" id="activity-canvas-link">
                 Upload to Canvas →
               </a>
             ` : ''}
@@ -322,28 +322,8 @@ const ActivityEngine = (function() {
   }
 
   function checkCompletion() {
-    const answered = Object.keys(state.responses).length;
-    const total = config.questions.length;
-
-    // Check if at least one open-ended is answered (if required)
-    const requireOpenEnded = config.settings?.requireAtLeastOneOpenEnded !== false;
-    let hasOpenEndedAnswer = !requireOpenEnded;
-
-    if (requireOpenEnded) {
-      const openEndedQuestions = config.questions.filter(q => q.type === 'open-ended');
-      hasOpenEndedAnswer = openEndedQuestions.some(q => {
-        const response = state.responses[q.id];
-        return response && response.answer && response.answer.trim().length > 0;
-      });
-    }
-
-    // Show footer if most questions answered and open-ended requirement met
-    const threshold = Math.ceil(total * 0.7); // At least 70% answered
-    const footer = document.getElementById('activity-footer');
-
-    if (footer && answered >= threshold && hasOpenEndedAnswer) {
-      footer.style.display = 'block';
-    }
+    // Footer is always visible — students can download at any time
+    // This function is kept for future use (e.g., completion indicators)
   }
 
   // ============================================
@@ -425,12 +405,6 @@ const ActivityEngine = (function() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(jsonUrl);
-
-    // Show Canvas link if available
-    const canvasLink = document.getElementById('activity-canvas-link');
-    if (canvasLink) {
-      canvasLink.style.display = 'inline-block';
-    }
 
     // Disable further changes
     nameInput.disabled = true;
