@@ -911,7 +911,7 @@ const ActivityComponents = (function() {
 
     // Generate questions button
     const generateBtn = createElement('button', 'activity-ai-discussion__generate-btn');
-    generateBtn.innerHTML = 'Get Discussion Questions &rarr;';
+    generateBtn.innerHTML = (question.generateButtonText || 'Get Discussion Questions') + ' &rarr;';
     generateBtn.addEventListener('click', () => {
       // Validate dropdown selection if question options exist
       if (question.questionOptions && question.questionOptions.length > 0) {
@@ -971,7 +971,7 @@ const ActivityComponents = (function() {
     loadingEl.style.display = 'none';
     loadingEl.innerHTML = `
       <div class="activity-ai-discussion__spinner"></div>
-      <p>Generating discussion questions...</p>
+      <p>${question.loadingText || 'Generating discussion questions...'}</p>
     `;
     container.appendChild(loadingEl);
 
@@ -986,12 +986,12 @@ const ActivityComponents = (function() {
     summaryPhase.id = `ai-summarize-${question.id}`;
     summaryPhase.style.display = (currentPhase === 'discuss' || currentPhase === 'summarize') ? 'block' : 'none';
 
-    const summaryLabel = createElement('label', 'activity-ai-discussion__summary-label', 'Discussion Summary');
+    const summaryLabel = createElement('label', 'activity-ai-discussion__summary-label', question.summaryLabel || 'Discussion Summary');
     summaryPhase.appendChild(summaryLabel);
 
     const summaryTextarea = document.createElement('textarea');
     summaryTextarea.className = 'activity-open__textarea activity-ai-discussion__summary-textarea';
-    summaryTextarea.placeholder = 'What were the key insights from your discussion? What surprised you? What did the author learn from the questions?';
+    summaryTextarea.placeholder = question.summaryPlaceholder || 'What were the key insights from your discussion? What surprised you? What did the author learn from the questions?';
     summaryTextarea.rows = 5;
     summaryTextarea.id = `ai-summary-textarea-${question.id}`;
 
@@ -1000,7 +1000,9 @@ const ActivityComponents = (function() {
     }
     summaryPhase.appendChild(summaryTextarea);
 
-    const saveBtn = createElement('button', 'activity-open__save', savedData.discussionSummary ? 'Update Summary' : 'Save Discussion Summary');
+    const saveBtnText = question.saveButtonText || 'Save Discussion Summary';
+    const updateBtnText = question.updateButtonText || 'Update Summary';
+    const saveBtn = createElement('button', 'activity-open__save', savedData.discussionSummary ? updateBtnText : saveBtnText);
     saveBtn.addEventListener('click', () => {
       const summary = summaryTextarea.value.trim();
       if (summary.length < 30) {
@@ -1028,7 +1030,7 @@ const ActivityComponents = (function() {
       updateQuestionStatus(question.id, { answer: fullAnswer, attempts: 1, correct: null, skipped: false });
 
       saveBtn.textContent = 'Saved \u2713';
-      setTimeout(() => { saveBtn.textContent = 'Update Summary'; }, 2000);
+      setTimeout(() => { saveBtn.textContent = updateBtnText; }, 2000);
     });
     summaryPhase.appendChild(saveBtn);
 
