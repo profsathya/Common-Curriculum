@@ -310,20 +310,24 @@ async function downloadSubmissions(api, courseName, dataDir) {
               subData.content = `[PDF: ${attachment.filename}]`;
             } else if (isJsonFile) {
               // Explicitly handle JSON files
+              console.log(`      → JSON file detected for ${anonId}: ${filename} (MIME: ${mime})`);
               try {
                 const jsonContent = await api.downloadFileContent(attachment.url);
+                console.log(`      → Downloaded ${jsonContent.length} bytes`);
                 // Try to parse and pretty-print the JSON for better LLM analysis
                 try {
                   const parsed = JSON.parse(jsonContent);
                   subData.contentType = 'json';
                   subData.content = JSON.stringify(parsed, null, 2).substring(0, 5000);
-                } catch {
+                  console.log(`      → Parsed and formatted as JSON`);
+                } catch (parseErr) {
                   // If JSON parsing fails, use raw content
+                  console.log(`      → JSON parsing failed, using raw text: ${parseErr.message}`);
                   subData.contentType = 'text';
                   subData.content = jsonContent.substring(0, 5000);
                 }
               } catch (error) {
-                console.log(`      (Failed to download JSON for ${anonId}: ${error.message})`);
+                console.log(`      ✗ Failed to download JSON for ${anonId}: ${error.message}`);
                 subData.contentType = 'file';
                 subData.content = `[JSON file: ${attachment.filename}]`;
               }
