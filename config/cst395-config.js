@@ -202,7 +202,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting-part1.html"
     },
     "s2-goal-setting-part2": {
-      canvasId: "",
+      canvasId: "582115",
       title: "S2: Goal Setting Part II — Partner Goals",
       dueDate: "2026-02-20",
       type: "assignment",
