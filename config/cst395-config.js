@@ -179,7 +179,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-goal-setting-part1": {
-      canvasId: "",
+      canvasId: "582027",
       title: "S2: Goal Setting Part I — Preparation",
       dueDate: "2026-02-16",
       type: "assignment",
@@ -192,7 +192,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting-part1.html"
     },
     "s2-goal-setting-part2": {
-      canvasId: "",
+      canvasId: "582028",
       title: "S2: Goal Setting Part II — Partner Goals",
       dueDate: "2026-02-20",
       type: "assignment",
@@ -504,8 +504,7 @@ const CST395_CONFIG = {
           "points": 5
         }
       ]
-    },
-
+    }
   },
 
   // Class recording Loom videos - ADD URLS AS AVAILABLE
