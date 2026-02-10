@@ -202,7 +202,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-demo-discussion": {
-      canvasId: "",
+      canvasId: "582091",
       title: "S1: Sprint 1 Demo Discussion",
       dueDate: "2026-02-11",
       type: "quiz",
@@ -217,7 +217,7 @@ const CST349_CONFIG = {
 
     // Sprint 2
     "s2-bridge-reflection-1": {
-      canvasId: "",
+      canvasId: "582092",
       title: "S2: Sprint 1-2 Bridge Reflection",
       dueDate: "2026-02-12",
       type: "reflection",
@@ -243,7 +243,7 @@ const CST349_CONFIG = {
       htmlFile: "activities/s2-orientation.html"
     },
     "s2-goal-setting": {
-      canvasId: "",
+      canvasId: "582093",
       title: "S2: Sprint 2 Goal Setting",
       dueDate: "2026-02-16",
       type: "assignment",
