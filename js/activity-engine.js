@@ -524,13 +524,16 @@ const ActivityEngine = (function() {
           md += `**Attempts:** ${response.attempts}\n\n`;
         } else if (question.type === 'ai-discussion') {
           const a = response.answer;
-          md += `**Partner's Response:**\n> ${a.enteredResponse || 'N/A'}\n\n`;
+          md += `**Response:**\n> ${a.enteredResponse || 'N/A'}\n\n`;
           if (a.aiQuestions && a.aiQuestions.length > 0) {
-            md += `**AI-Generated Discussion Questions:**\n`;
+            md += `**AI-Generated Follow-up Questions:**\n`;
             a.aiQuestions.forEach((q, i) => { md += `${i + 1}. ${q}\n`; });
             md += `\n`;
           }
-          md += `**Discussion Summary:**\n> ${a.discussionSummary || 'N/A'}\n\n`;
+          md += `**Refined Response:**\n> ${a.discussionSummary || 'N/A'}\n\n`;
+          if (a.iterations && a.iterations > 1) {
+            md += `**AI Guidance Rounds:** ${a.iterations}\n\n`;
+          }
         } else if (question.type === 'match-following') {
           md += `**Matches:** ${JSON.stringify(response.answer)}\n`;
           md += `**Attempts:** ${response.attempts}\n\n`;
