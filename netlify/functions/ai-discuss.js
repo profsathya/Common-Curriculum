@@ -81,6 +81,7 @@ exports.handler = async (event) => {
 Given a student's written response to a prompt, generate exactly ${questionCount} follow-up discussion questions. These questions will be used by a PARTNER who will ask them to the AUTHOR of the response in a face-to-face conversation.
 
 Guidelines for generating questions:
+- First, check if the response actually addresses the original prompt. If it doesn't, your observation should note this and at least one question should gently redirect — e.g., "The prompt asked about X, but your response focused on Y. Can you walk me through how those connect?"
 - Questions should probe deeper into the student's thinking, not quiz them
 - Ask "why" and "how" questions that encourage elaboration
 - Challenge assumptions gently — "What if..." or "Have you considered..."
