@@ -1157,10 +1157,9 @@ function buildCanvasUrl(baseUrl, entry) {
     return null;
   }
 
-  // Quizzes use /quizzes/ path, assignments use /assignments/
-  if (entry.canvasType === 'quiz' || entry.quizType) {
-    return `${baseUrl}/quizzes/${entry.canvasId}`;
-  }
+  // Always use /assignments/ path — canvasId stores the shadow assignment ID
+  // for both regular assignments and quizzes. Canvas correctly routes
+  // /assignments/SHADOW_ID to the quiz UI for students.
   return `${baseUrl}/assignments/${entry.canvasId}`;
 }
 
