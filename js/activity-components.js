@@ -1084,12 +1084,9 @@ const ActivityComponents = (function() {
 
     container.appendChild(summaryPhase);
 
-    // --- If already in discuss/summarize phase, lock the entry textarea and selector ---
+    // --- If already in discuss/summarize phase, keep textarea and button editable so student can update and regenerate ---
     if (currentPhase === 'discuss' || currentPhase === 'summarize') {
-      textarea.disabled = true;
-      generateBtn.style.display = 'none';
-      const selectorEl = document.getElementById(`ai-selector-${question.id}`);
-      if (selectorEl) selectorEl.disabled = true;
+      generateBtn.innerHTML = (question.generateButtonText || 'Get Discussion Questions') + ' (update) &rarr;';
     }
 
     return container;
@@ -1159,21 +1156,26 @@ const ActivityComponents = (function() {
       discussPhase.style.display = 'block';
       summaryPhase.style.display = 'block';
 
-      // Lock the entry textarea
+      // Re-enable the entry textarea and button so student can edit and regenerate
       const textarea = enterPhase.querySelector('textarea');
-      if (textarea) textarea.disabled = true;
-      if (generateBtn) generateBtn.style.display = 'none';
+      if (textarea) textarea.disabled = false;
+      if (generateBtn) {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = (question.generateButtonText || 'Get Discussion Questions') + ' (update) &rarr;';
+      }
 
       // Save intermediate state to localStorage so it survives page refresh
       const selectorEl = document.getElementById(`ai-selector-${question.id}`);
+      const existingSummary = options.response?.answer?.discussionSummary || '';
+      const existingIterations = options.response?.answer?.iterations || 0;
       const intermediateAnswer = {
         enteredResponse: responseText,
         selectedOption: selectorEl ? parseInt(selectorEl.value) : null,
         selectedPrompt: effectivePrompt || question.prompt,
         aiQuestions: data.questions,
         observation: data.observation || '',
-        discussionSummary: '',
-        iterations: 1,
+        discussionSummary: existingSummary,
+        iterations: existingIterations + 1,
         phase: 'discuss',
       };
       options.response = {
