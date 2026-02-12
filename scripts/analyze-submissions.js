@@ -604,7 +604,7 @@ ${studentRows.map((s, idx) => {
 </div>
 
 <script>
-const STUDENT_DATA = ${JSON.stringify(studentRows.map((s, idx) => ({
+var STUDENT_DATA = ${escapeForScript(JSON.stringify(studentRows.map((s, idx) => ({
   idx,
   studentName: s.studentName,
   canvasUserId: s.canvasUserId,
@@ -614,7 +614,7 @@ const STUDENT_DATA = ${JSON.stringify(studentRows.map((s, idx) => ({
   writingFeedback: s.grade.writingFeedback || '',
   discussionFeedback: s.grade.discussionFeedback || '',
   overallNote: s.grade.overallNote || '',
-})))};
+}))))};
 
 function toggleCard(el) { el.classList.toggle('open'); }
 function expandAll() { document.querySelectorAll('.student-card').forEach(c => c.classList.add('open')); }
@@ -687,7 +687,13 @@ function escapeHtml(str) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/`/g, '&#96;');
+}
+
+/** Escape a JSON string for safe embedding inside an HTML <script> block */
+function escapeForScript(jsonStr) {
+  return jsonStr.replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
 }
 
 // ---------------------------------------------------------------------------
