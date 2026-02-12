@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const { CanvasAPI } = require('./canvas-api.js');
 
 // Course configurations
@@ -1540,8 +1541,8 @@ async function main() {
     }
   }
 
-  // Actions that don't require Canvas API
-  const localOnlyActions = ['sync-html-links', 'generate-config', 'writeback-csv', 'update-html-links'];
+  // Actions that don't require Canvas API (or manage their own)
+  const localOnlyActions = ['sync-html-links', 'generate-config', 'writeback-csv', 'update-html-links', 'analyze-submissions', 'post-grades'];
 
   // Initialize API only if needed
   let api = null;
@@ -1680,9 +1681,39 @@ async function main() {
         await fullSync(api, course, dryRun, limit);
         break;
 
+      case 'analyze-submissions': {
+        if (!args.assignment) {
+          console.error('Error: --assignment=<key> is required (e.g., --assignment=s1-demo-discussion)');
+          process.exit(1);
+        }
+        if (course === 'both') {
+          console.error('Error: --course must be a specific course (cst349 or cst395), not "both"');
+          process.exit(1);
+        }
+        const analyzeArgs = [`--course=${course}`, `--assignment=${args.assignment}`];
+        if (args.activity) analyzeArgs.push(`--activity=${args.activity}`);
+        execSync(`node scripts/analyze-submissions.js ${analyzeArgs.join(' ')}`, { stdio: 'inherit' });
+        break;
+      }
+
+      case 'post-grades': {
+        if (!args.assignment) {
+          console.error('Error: --assignment=<key> is required');
+          process.exit(1);
+        }
+        if (course === 'both') {
+          console.error('Error: --course must be a specific course (cst349 or cst395), not "both"');
+          process.exit(1);
+        }
+        const gradesFile = args.grades || `dashboards/${course}-${args.assignment}-grades.json`;
+        const postArgs = [`--course=${course}`, `--assignment=${args.assignment}`, '--post-grades', `--grades=${gradesFile}`];
+        execSync(`node scripts/analyze-submissions.js ${postArgs.join(' ')}`, { stdio: 'inherit' });
+        break;
+      }
+
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: full-sync, generate-config, create-assignments, create-quizzes, update-assignments, fetch-assignments, writeback-csv, update-html-links, validate-config, list-courses, list-groups, rename-assignments, sync-html-links');
+        console.error('Valid actions: full-sync, generate-config, create-assignments, create-quizzes, update-assignments, fetch-assignments, writeback-csv, update-html-links, validate-config, list-courses, list-groups, rename-assignments, sync-html-links, analyze-submissions, post-grades');
         process.exit(1);
     }
   } catch (error) {
