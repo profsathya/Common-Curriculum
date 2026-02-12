@@ -1469,47 +1469,81 @@ function generateDiscussionDashboard(courseName, dataDir, assignmentKey) {
   const primaryLight = courseName === 'cst349' ? '#dbeafe' : '#ccfbf1';
   const timestamp = new Date().toLocaleString();
 
-  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/`/g, '&#96;'); }
+
+  // Combine Q1+Q2 writing into one string per student, same for discussions
+  function combineWriting(writing) {
+    if (!writing || writing.length === 0) return '<em class="empty">No writing found</em>';
+    return writing.map((w, i) => `<div class="q-block"><strong>Q${i + 1}:</strong> ${esc(w.response || '(empty)')}</div>`).join('');
+  }
+
+  function combineDiscussions(discussions) {
+    if (!discussions || discussions.length === 0) return '<em class="empty">No discussion data</em>';
+    return discussions.map((d, i) => {
+      const qs = (d.aiQuestions || []).length > 0
+        ? (d.aiQuestions || []).map(q => `<li>${esc(q)}</li>`).join('')
+        : '<li class="empty">No AI questions recorded</li>';
+      return `<div class="q-block">
+        <strong>Q${i + 1} Summary:</strong> ${esc(d.summary || '(empty)')}
+        <div class="ai-qs"><strong>AI Questions Asked:</strong><ul>${qs}</ul></div>
+      </div>`;
+    }).join('');
+  }
+
+  function iterCount(discussions) {
+    if (!discussions || discussions.length === 0) return 0;
+    return discussions.reduce((sum, d) => sum + (d.iterations || 0), 0);
+  }
 
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(assignmentTitle)} — Discussion Dashboard</title>
+<title>${esc(assignmentTitle)} — Grading Dashboard</title>
 <style>
 :root { --primary: ${primary}; --primary-light: ${primaryLight}; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.5; }
-.header { background: var(--primary); color: white; padding: 1.5rem 2rem; }
-.header h1 { font-size: 1.5rem; } .header p { opacity: 0.85; font-size: 0.9rem; margin-top: 0.25rem; }
-.stats { display: flex; gap: 2rem; padding: 1rem 2rem; background: var(--primary-light); border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; flex-wrap: wrap; }
-.stats strong { color: var(--primary); }
-.controls { padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #e2e8f0; background: white; }
-.controls input { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; width: 250px; }
-.controls button { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 0.9rem; }
-.controls button:hover { background: #f8fafc; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.5; font-size: 14px; }
+
+.header { background: var(--primary); color: white; padding: 1.25rem 2rem; }
+.header h1 { font-size: 1.3rem; } .header p { opacity: 0.85; font-size: 0.85rem; margin-top: 0.25rem; }
+
+.stats-bar { display: flex; gap: 2rem; padding: 0.75rem 2rem; background: var(--primary-light); border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; flex-wrap: wrap; }
+.stats-bar strong { color: var(--primary); }
+
+.controls { padding: 0.75rem 2rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #e2e8f0; background: white; }
+.controls input { padding: 0.4rem 0.6rem; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.85rem; width: 200px; }
+.controls button { padding: 0.4rem 0.8rem; border: 1px solid #e2e8f0; border-radius: 4px; background: white; cursor: pointer; font-size: 0.85rem; }
+.controls button:hover { background: #f1f5f9; }
 .controls button.primary { background: var(--primary); color: white; border-color: var(--primary); }
-.container { padding: 1rem 2rem 3rem; }
-.card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
-.card-hdr { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; cursor: pointer; user-select: none; }
-.card-hdr:hover { background: #f8fafc; }
-.card-name { font-weight: 600; } .card-meta { font-size: 0.85rem; color: #64748b; }
-.badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
-.badge-hi { background: #dcfce7; color: #166534; } .badge-mid { background: #fef9c3; color: #854d0e; } .badge-lo { background: #fee2e2; color: #991b1b; }
-.card-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid #e2e8f0; }
-.card.open .card-body { display: block; }
-.sec { margin-top: 1rem; } .sec-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); margin-bottom: 0.5rem; }
-.rblock { background: #f8fafc; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
-.rblock .lbl { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; }
-.rblock .cnt { font-size: 0.9rem; white-space: pre-wrap; }
-.grade-row { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem; padding: 0.75rem 1rem; background: var(--primary-light); border-radius: 6px; }
-.grade-row label { font-size: 0.85rem; font-weight: 500; } .grade-row select, .grade-row textarea { border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.85rem; font-family: inherit; }
-.grade-row select { padding: 0.25rem 0.5rem; } .grade-row textarea { flex: 1; min-width: 250px; padding: 0.4rem; resize: vertical; min-height: 2.5rem; }
-.iter-badge { display: inline-block; background: var(--primary); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
-.note { font-size: 0.85rem; color: #64748b; font-style: italic; padding: 0.5rem 1rem; background: #fffbeb; border-radius: 6px; margin-top: 0.5rem; }
-.missing { color: #dc2626; font-style: italic; font-size: 0.85rem; }
-.arrow { font-size: 1.2rem; color: #64748b; transition: transform 0.2s; } .card.open .arrow { transform: rotate(90deg); }
+
+.table-wrap { padding: 1rem 2rem 3rem; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+thead th { background: #f8fafc; padding: 0.6rem 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; position: sticky; top: 0; z-index: 1; }
+thead th.col-text { min-width: 250px; }
+tbody td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 0.85rem; }
+tbody tr:hover { background: #f8fafc; }
+tbody tr:nth-child(even) { background: #fafbfc; }
+tbody tr:nth-child(even):hover { background: #f1f5f9; }
+
+.q-block { margin-bottom: 0.5rem; }
+.q-block:last-child { margin-bottom: 0; }
+.q-block strong { color: var(--primary); font-size: 0.8rem; }
+.ai-qs { margin-top: 0.25rem; }
+.ai-qs strong { font-size: 0.75rem; color: #64748b; }
+.ai-qs ul { margin: 0.15rem 0 0 1.25rem; font-size: 0.8rem; color: #475569; }
+.empty { color: #94a3b8; }
+
+.score-cell select { padding: 0.2rem 0.3rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.85rem; }
+.feedback-cell textarea { width: 100%; min-width: 120px; padding: 0.3rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.8rem; font-family: inherit; resize: vertical; min-height: 2.2rem; }
+.iter { display: inline-block; background: var(--primary); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: 600; }
+.total-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.9rem; }
+.total-hi { background: #dcfce7; color: #166534; }
+.total-mid { background: #fef9c3; color: #854d0e; }
+.total-lo { background: #fee2e2; color: #991b1b; }
+.takeaway { font-style: italic; color: #475569; font-size: 0.8rem; margin-top: 0.25rem; }
+.note-text { font-size: 0.8rem; color: #64748b; }
 </style>
 </head>
 <body>
@@ -1517,96 +1551,81 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <h1>${esc(assignmentTitle)} — Grading Dashboard</h1>
   <p>${esc(courseCode)} &middot; Generated ${timestamp}</p>
 </div>
-<div class="stats">
+<div class="stats-bar">
   <div>Students: <strong>${rows.length}</strong></div>
   <div>Avg Score: <strong id="avg-score">—</strong>/10</div>
   <div>Score 10: <strong id="c10">—</strong></div>
   <div>Score 9: <strong id="c9">—</strong></div>
-  <div>Score ≤8: <strong id="clo">—</strong></div>
+  <div>Score &le;8: <strong id="clo">—</strong></div>
 </div>
 <div class="controls">
-  <input type="text" id="search" placeholder="Search students..." oninput="filterStudents()">
-  <button onclick="expandAll()">Expand All</button>
-  <button onclick="collapseAll()">Collapse All</button>
+  <input type="text" id="search" placeholder="Search..." oninput="filterRows()">
   <button class="primary" onclick="downloadGrades()">Download Grades JSON</button>
 </div>
-<div class="container" id="students">
+<div class="table-wrap">
+<table>
+<thead>
+  <tr>
+    <th>Student</th>
+    <th>Partner</th>
+    <th class="col-text">What They Wrote (on paper)</th>
+    <th class="col-text">Discussion Outcome (led by partner)</th>
+    <th>Iter.</th>
+    <th>Writing /5</th>
+    <th>Discussion /5</th>
+    <th>Total</th>
+    <th class="col-text">Feedback</th>
+  </tr>
+</thead>
+<tbody>
 ${rows.map((s, idx) => {
-  const total = (s.writingScore || 0) + (s.discussionScore || 0);
-  const bc = total >= 9 ? 'badge-hi' : total >= 8 ? 'badge-mid' : 'badge-lo';
   const writing = s.writing || [];
   const discussions = s.discussions || [];
-  return `
-<div class="card" data-name="${esc(s.name.toLowerCase())}" data-idx="${idx}">
-  <div class="card-hdr" onclick="toggleCard(this.parentElement)">
-    <div><span class="card-name">${esc(s.name)}</span> <span class="card-meta">— partner: ${esc(s.partnerName || '?')}</span>
-    ${!s.hasWriting && !s.hasDiscussion ? '<span class="missing"> (no data)</span>' : ''}</div>
-    <div style="display:flex;align-items:center;gap:0.75rem">
-      <span class="badge ${bc}" id="b${idx}">${total}/10</span><span class="arrow">▶</span>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="sec"><div class="sec-title">Their Written Reflections (as author)</div>
-    ${writing.length === 0 ? '<p class="missing">No writing found — partner may not have submitted.</p>' :
-      writing.map(w => `<div class="rblock"><div class="lbl">${esc(w.prompt)}</div><div class="cnt">${esc(w.response || '(empty)')}</div></div>`).join('')}
-    </div>
-    <div class="grade-row">
-      <label>Writing:</label>
-      <select id="w${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v===(s.writingScore||0)?' selected':''}>${v}</option>`).join('')}</select><span>/5</span>
-      <textarea id="wf${idx}" rows="1">${esc(s.writingFeedback || '')}</textarea>
-    </div>
-    <div class="sec"><div class="sec-title">Their Discussion Leadership (as questioner)</div>
-    ${discussions.length === 0 ? '<p class="missing">No discussion summaries — student may not have submitted.</p>' :
-      discussions.map(d => `<div class="rblock">
-        <div class="lbl">${esc(d.prompt)} <span class="iter-badge">${d.iterations} iter</span></div>
-        <div class="lbl" style="margin-top:0.5rem">Partner's writing discussed:</div>
-        <div class="cnt" style="opacity:0.7;font-size:0.85rem">${esc(d.partnerWriting || '(empty)')}</div>
-        <div class="lbl" style="margin-top:0.5rem">AI questions:</div>
-        <ul style="font-size:0.85rem;margin:0.25rem 0 0.5rem 1.25rem">${(d.aiQuestions||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ul>
-        <div class="lbl">Discussion summary:</div>
-        <div class="cnt">${esc(d.summary || '(empty)')}</div>
-      </div>`).join('')}
-    </div>
-    <div class="grade-row">
-      <label>Discussion:</label>
-      <select id="d${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v===(s.discussionScore||0)?' selected':''}>${v}</option>`).join('')}</select><span>/5</span>
-      <textarea id="df${idx}" rows="1">${esc(s.discussionFeedback || '')}</textarea>
-    </div>
-    ${s.takeaway ? `<div class="sec"><div class="sec-title">Overall Takeaway</div><div class="rblock"><div class="cnt">${esc(s.takeaway)}</div></div></div>` : ''}
-    ${s.overallNote ? `<div class="note">${esc(s.overallNote)}</div>` : ''}
-    ${s.error ? `<div class="note" style="background:#fee2e2">⚠ ${esc(s.error)}</div>` : ''}
-  </div>
-</div>`;
+  const total = (s.writingScore || 0) + (s.discussionScore || 0);
+  const tc = total >= 9 ? 'total-hi' : total >= 8 ? 'total-mid' : 'total-lo';
+  const iters = iterCount(discussions);
+  return `<tr data-name="${esc(s.name.toLowerCase())}">
+    <td><strong>${esc(s.name)}</strong></td>
+    <td>${esc(s.partnerName || '?')}</td>
+    <td>${combineWriting(writing)}${s.takeaway ? `<div class="takeaway"><strong>Takeaway:</strong> ${esc(s.takeaway)}</div>` : ''}</td>
+    <td>${combineDiscussions(discussions)}</td>
+    <td style="text-align:center">${iters > 0 ? `<span class="iter">${iters}</span>` : '0'}</td>
+    <td class="score-cell">
+      <select id="w${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v === (s.writingScore || 0) ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </td>
+    <td class="score-cell">
+      <select id="d${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v === (s.discussionScore || 0) ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </td>
+    <td style="text-align:center"><span class="total-badge ${tc}" id="t${idx}">${total}</span></td>
+    <td class="feedback-cell">
+      <textarea id="wf${idx}" rows="1" placeholder="Writing feedback">${esc(s.writingFeedback || '')}</textarea>
+      <textarea id="df${idx}" rows="1" placeholder="Discussion feedback">${esc(s.discussionFeedback || '')}</textarea>
+      ${s.overallNote ? `<div class="note-text">${esc(s.overallNote)}</div>` : ''}
+    </td>
+  </tr>`;
 }).join('')}
+</tbody>
+</table>
 </div>
 <script>
 var SD = ${escapeForScript(JSON.stringify(rows.map((s, i) => ({i, name: s.name, anonId: s.anonId, canvasId: s.canvasId, ws: s.writingScore || 0, ds: s.discussionScore || 0, wf: s.writingFeedback || '', df: s.discussionFeedback || '', note: s.overallNote || ''}))))};
 
-function toggleCard(el) {
-  el.classList.toggle('open');
-}
-function expandAll() {
-  document.querySelectorAll('.card').forEach(function(c) { c.classList.add('open'); });
-}
-function collapseAll() {
-  document.querySelectorAll('.card').forEach(function(c) { c.classList.remove('open'); });
-}
-function filterStudents() {
+function filterRows() {
   var q = document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.card').forEach(function(c) {
-    c.style.display = c.dataset.name.includes(q) ? '' : 'none';
+  document.querySelectorAll('tbody tr').forEach(function(r) {
+    r.style.display = r.dataset.name.includes(q) ? '' : 'none';
   });
 }
 function upd(i) {
   var w = +(document.getElementById('w' + i).value || 0);
   var d = +(document.getElementById('d' + i).value || 0);
   var t = w + d;
-  var b = document.getElementById('b' + i);
-  b.textContent = t + '/10';
-  b.className = 'badge ' + (t >= 9 ? 'badge-hi' : t >= 8 ? 'badge-mid' : 'badge-lo');
-  stats();
+  var el = document.getElementById('t' + i);
+  el.textContent = t;
+  el.className = 'total-badge ' + (t >= 9 ? 'total-hi' : t >= 8 ? 'total-mid' : 'total-lo');
+  calcStats();
 }
-function stats() {
+function calcStats() {
   try {
     var s = 0, c10 = 0, c9 = 0, clo = 0;
     for (var i = 0; i < SD.length; i++) {
@@ -1614,9 +1633,7 @@ function stats() {
       var d = +(document.getElementById('d' + i).value || 0);
       var t = w + d;
       s += t;
-      if (t === 10) c10++;
-      else if (t === 9) c9++;
-      else clo++;
+      if (t === 10) c10++; else if (t === 9) c9++; else clo++;
     }
     document.getElementById('avg-score').textContent = SD.length > 0 ? (s / SD.length).toFixed(1) : '0';
     document.getElementById('c10').textContent = c10;
@@ -1642,7 +1659,7 @@ function downloadGrades() {
   a.download = '${assignmentKey}-grades.json';
   a.click();
 }
-stats();
+calcStats();
 </script>
 </body></html>`;
 
