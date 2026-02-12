@@ -433,247 +433,196 @@ function generateDashboard(studentDataList, grades, activityConfig, courseName, 
 
   const timestamp = new Date().toLocaleString();
   const courseCode = courseName.includes('349') ? 'CST349' : 'CST395';
+  const primary = courseCode === 'CST349' ? '#2563eb' : '#0d9488';
+  const primaryLight = courseCode === 'CST349' ? '#dbeafe' : '#ccfbf1';
+
+  function combineWriting(writing) {
+    if (!writing || writing.length === 0) return '<em class="empty">No writing found</em>';
+    return writing.map((w, i) => `<div class="q-block"><strong>Q${i + 1}:</strong> ${escapeHtml(w.response || '(empty)')}</div>`).join('');
+  }
+
+  function combineDiscussions(discussions) {
+    if (!discussions || discussions.length === 0) return '<em class="empty">No discussion data</em>';
+    return discussions.map((d, i) => {
+      const qs = (d.aiQuestions || []).length > 0
+        ? (d.aiQuestions || []).map(q => `<li>${escapeHtml(q)}</li>`).join('')
+        : '<li class="empty">No AI questions recorded</li>';
+      return `<div class="q-block">
+        <strong>Q${i + 1} Summary:</strong> ${escapeHtml(d.summary || '(empty)')}
+        <div class="ai-qs"><strong>AI Questions Asked:</strong><ul>${qs}</ul></div>
+      </div>`;
+    }).join('');
+  }
+
+  function iterCount(discussions) {
+    if (!discussions || discussions.length === 0) return 0;
+    return discussions.reduce((sum, d) => sum + (d.iterations || 0), 0);
+  }
 
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${activityConfig.title} — Dashboard</title>
+<title>${escapeHtml(activityConfig.title)} — Grading Dashboard</title>
 <style>
-  :root {
-    --primary: ${courseCode === 'CST349' ? '#2563eb' : '#0d9488'};
-    --primary-light: ${courseCode === 'CST349' ? '#dbeafe' : '#ccfbf1'};
-    --bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text: #1e293b;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --success: #16a34a;
-    --warning: #ca8a04;
-    --danger: #dc2626;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
-  .header { background: var(--primary); color: white; padding: 1.5rem 2rem; }
-  .header h1 { font-size: 1.5rem; font-weight: 600; }
-  .header p { opacity: 0.85; font-size: 0.9rem; margin-top: 0.25rem; }
-  .stats { display: flex; gap: 2rem; padding: 1rem 2rem; background: var(--primary-light); border-bottom: 1px solid var(--border); font-size: 0.9rem; flex-wrap: wrap; }
-  .stats .stat { display: flex; gap: 0.5rem; align-items: center; }
-  .stats .stat strong { color: var(--primary); }
-  .controls { padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--border); background: white; }
-  .controls input[type="text"] { padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; width: 250px; }
-  .controls button { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 6px; background: white; cursor: pointer; font-size: 0.9rem; }
-  .controls button:hover { background: var(--bg); }
-  .controls button.primary { background: var(--primary); color: white; border-color: var(--primary); }
-  .controls button.primary:hover { opacity: 0.9; }
-  .container { padding: 1rem 2rem 3rem; }
-  .student-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
-  .student-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; cursor: pointer; user-select: none; }
-  .student-header:hover { background: var(--bg); }
-  .student-name { font-weight: 600; font-size: 1rem; }
-  .student-meta { font-size: 0.85rem; color: var(--text-muted); }
-  .grade-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
-  .grade-10, .grade-9 { background: #dcfce7; color: #166534; }
-  .grade-8 { background: #fef9c3; color: #854d0e; }
-  .grade-7, .grade-6, .grade-low { background: #fee2e2; color: #991b1b; }
-  .student-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border); }
-  .student-card.open .student-body { display: block; }
-  .section { margin-top: 1rem; }
-  .section-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); margin-bottom: 0.5rem; }
-  .response-block { background: var(--bg); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
-  .response-block .label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem; }
-  .response-block .content { font-size: 0.9rem; white-space: pre-wrap; }
-  .grade-row { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem; padding: 0.75rem 1rem; background: var(--primary-light); border-radius: 6px; }
-  .grade-row label { font-size: 0.85rem; font-weight: 500; }
-  .grade-row select { padding: 0.25rem 0.5rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9rem; }
-  .grade-row .feedback { flex: 1; min-width: 250px; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
-  .grade-row textarea { flex: 1; min-width: 250px; padding: 0.4rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; resize: vertical; min-height: 2.5rem; font-family: inherit; }
-  .iteration-badge { display: inline-block; background: var(--primary); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
-  .note { font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 0.5rem 1rem; background: #fffbeb; border-radius: 6px; margin-top: 0.5rem; }
-  .missing { color: var(--danger); font-style: italic; font-size: 0.85rem; }
-  .expand-indicator { font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
-  .student-card.open .expand-indicator { transform: rotate(90deg); }
+:root { --primary: ${primary}; --primary-light: ${primaryLight}; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.5; font-size: 14px; }
+
+.header { background: var(--primary); color: white; padding: 1.25rem 2rem; }
+.header h1 { font-size: 1.3rem; } .header p { opacity: 0.85; font-size: 0.85rem; margin-top: 0.25rem; }
+
+.stats-bar { display: flex; gap: 2rem; padding: 0.75rem 2rem; background: var(--primary-light); border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; flex-wrap: wrap; }
+.stats-bar strong { color: var(--primary); }
+
+.controls { padding: 0.75rem 2rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #e2e8f0; background: white; }
+.controls input { padding: 0.4rem 0.6rem; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.85rem; width: 200px; }
+.controls button { padding: 0.4rem 0.8rem; border: 1px solid #e2e8f0; border-radius: 4px; background: white; cursor: pointer; font-size: 0.85rem; }
+.controls button:hover { background: #f1f5f9; }
+.controls button.primary { background: var(--primary); color: white; border-color: var(--primary); }
+
+.table-wrap { padding: 1rem 2rem 3rem; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+thead th { background: #f8fafc; padding: 0.6rem 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; position: sticky; top: 0; z-index: 1; }
+thead th.col-text { min-width: 250px; }
+tbody td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 0.85rem; }
+tbody tr:hover { background: #f8fafc; }
+tbody tr:nth-child(even) { background: #fafbfc; }
+tbody tr:nth-child(even):hover { background: #f1f5f9; }
+
+.q-block { margin-bottom: 0.5rem; }
+.q-block:last-child { margin-bottom: 0; }
+.q-block strong { color: var(--primary); font-size: 0.8rem; }
+.ai-qs { margin-top: 0.25rem; }
+.ai-qs strong { font-size: 0.75rem; color: #64748b; }
+.ai-qs ul { margin: 0.15rem 0 0 1.25rem; font-size: 0.8rem; color: #475569; }
+.empty { color: #94a3b8; }
+
+.score-cell select { padding: 0.2rem 0.3rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.85rem; }
+.feedback-cell textarea { width: 100%; min-width: 120px; padding: 0.3rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.8rem; font-family: inherit; resize: vertical; min-height: 2.2rem; }
+.iter { display: inline-block; background: var(--primary); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: 600; }
+.total-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.9rem; }
+.total-hi { background: #dcfce7; color: #166534; }
+.total-mid { background: #fef9c3; color: #854d0e; }
+.total-lo { background: #fee2e2; color: #991b1b; }
+.takeaway { font-style: italic; color: #475569; font-size: 0.8rem; margin-top: 0.25rem; }
+.note-text { font-size: 0.8rem; color: #64748b; }
 </style>
 </head>
 <body>
-
 <div class="header">
-  <h1>${activityConfig.title} — Grading Dashboard</h1>
-  <p>${courseName} &middot; Generated ${timestamp}</p>
+  <h1>${escapeHtml(activityConfig.title)} — Grading Dashboard</h1>
+  <p>${escapeHtml(courseCode)} &middot; Generated ${timestamp}</p>
 </div>
-
-<div class="stats">
-  <div class="stat">Students: <strong>${studentRows.length}</strong></div>
-  <div class="stat">Avg Score: <strong id="avg-score">—</strong>/10</div>
-  <div class="stat">Score 10: <strong id="count-10">—</strong></div>
-  <div class="stat">Score 9: <strong id="count-9">—</strong></div>
-  <div class="stat">Score ≤8: <strong id="count-low">—</strong></div>
+<div class="stats-bar">
+  <div>Students: <strong>${studentRows.length}</strong></div>
+  <div>Avg Score: <strong id="avg-score">—</strong>/10</div>
+  <div>Score 10: <strong id="c10">—</strong></div>
+  <div>Score 9: <strong id="c9">—</strong></div>
+  <div>Score &le;8: <strong id="clo">—</strong></div>
 </div>
-
 <div class="controls">
-  <input type="text" id="search" placeholder="Search students..." oninput="filterStudents()">
-  <button onclick="expandAll()">Expand All</button>
-  <button onclick="collapseAll()">Collapse All</button>
+  <input type="text" id="search" placeholder="Search..." oninput="filterRows()">
   <button class="primary" onclick="downloadGrades()">Download Grades JSON</button>
 </div>
-
-<div class="container" id="students">
+<div class="table-wrap">
+<table>
+<thead>
+  <tr>
+    <th>Student</th>
+    <th>Partner</th>
+    <th class="col-text">What They Wrote (on paper)</th>
+    <th class="col-text">Discussion Outcome (led by partner)</th>
+    <th>Iter.</th>
+    <th>Writing /5</th>
+    <th>Discussion /5</th>
+    <th>Total</th>
+    <th class="col-text">Feedback</th>
+  </tr>
+</thead>
+<tbody>
 ${studentRows.map((s, idx) => {
   const g = s.grade;
   const total = (g.writingScore || 0) + (g.discussionScore || 0);
-  const gradeClass = total >= 9 ? `grade-${total}` : total >= 8 ? 'grade-8' : 'grade-low';
-
-  return `
-  <div class="student-card" data-name="${escapeHtml(s.studentName.toLowerCase())}" data-idx="${idx}">
-    <div class="student-header" onclick="toggleCard(this.parentElement)">
-      <div>
-        <span class="student-name">${escapeHtml(s.studentName)}</span>
-        <span class="student-meta"> — partner: ${escapeHtml(s.partnerName || 'Unknown')}</span>
-        ${!s.hasPartnerMatch ? '<span class="missing"> (partner submission not found)</span>' : ''}
-      </div>
-      <div style="display:flex;align-items:center;gap:0.75rem;">
-        <span class="grade-badge ${gradeClass}" id="badge-${idx}">${total}/10</span>
-        <span class="expand-indicator">▶</span>
-      </div>
-    </div>
-    <div class="student-body">
-
-      <div class="section">
-        <div class="section-title">Their Written Reflections (as author)</div>
-        ${s.writing.length === 0
-          ? '<p class="missing">No writing found — partner may not have submitted their entry.</p>'
-          : s.writing.map(w => `
-          <div class="response-block">
-            <div class="label">${escapeHtml(w.prompt)}</div>
-            <div class="content">${escapeHtml(w.response || '(empty)')}</div>
-          </div>`).join('')
-        }
-      </div>
-
-      <div class="grade-row">
-        <label>Writing:</label>
-        <select id="writing-${idx}" onchange="updateTotal(${idx})">
-          ${[5,4,3,2,1,0].map(v => `<option value="${v}" ${v === (g.writingScore||0) ? 'selected' : ''}>${v}</option>`).join('')}
-        </select>
-        <span>/5</span>
-        <textarea id="wfeedback-${idx}" rows="1">${escapeHtml(g.writingFeedback || '')}</textarea>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Their Discussion Leadership (as questioner)</div>
-        ${s.discussions.length === 0
-          ? '<p class="missing">No discussion summaries — student may not have submitted.</p>'
-          : s.discussions.map(d => `
-          <div class="response-block">
-            <div class="label">${escapeHtml(d.prompt)} <span class="iteration-badge">${d.iterations} iteration${d.iterations !== 1 ? 's' : ''}</span></div>
-            <div class="label" style="margin-top:0.5rem;">Partner's writing they discussed:</div>
-            <div class="content" style="opacity:0.7;font-size:0.85rem;">${escapeHtml(d.partnerWriting || '(empty)')}</div>
-            <div class="label" style="margin-top:0.5rem;">AI discussion questions generated:</div>
-            <ul style="font-size:0.85rem;margin:0.25rem 0 0.5rem 1.25rem;">
-              ${(d.aiQuestions || []).map(q => `<li>${escapeHtml(q)}</li>`).join('')}
-            </ul>
-            <div class="label">Discussion summary:</div>
-            <div class="content">${escapeHtml(d.summary || '(empty)')}</div>
-          </div>`).join('')
-        }
-      </div>
-
-      <div class="grade-row">
-        <label>Discussion:</label>
-        <select id="discussion-${idx}" onchange="updateTotal(${idx})">
-          ${[5,4,3,2,1,0].map(v => `<option value="${v}" ${v === (g.discussionScore||0) ? 'selected' : ''}>${v}</option>`).join('')}
-        </select>
-        <span>/5</span>
-        <textarea id="dfeedback-${idx}" rows="1">${escapeHtml(g.discussionFeedback || '')}</textarea>
-      </div>
-
-      ${s.takeaway ? `
-      <div class="section">
-        <div class="section-title">Overall Takeaway</div>
-        <div class="response-block">
-          <div class="content">${escapeHtml(s.takeaway)}</div>
-        </div>
-      </div>` : ''}
-
-      ${g.overallNote ? `<div class="note">${escapeHtml(g.overallNote)}</div>` : ''}
-      ${g.error ? `<div class="note" style="background:#fee2e2;">⚠ Grading error: ${escapeHtml(g.error)}</div>` : ''}
-    </div>
-  </div>`;
+  const tc = total >= 9 ? 'total-hi' : total >= 8 ? 'total-mid' : 'total-lo';
+  const iters = iterCount(s.discussions);
+  return `<tr data-name="${escapeHtml(s.studentName.toLowerCase())}">
+    <td><strong>${escapeHtml(s.studentName)}</strong></td>
+    <td>${escapeHtml(s.partnerName || '?')}</td>
+    <td>${combineWriting(s.writing)}${s.takeaway ? `<div class="takeaway"><strong>Takeaway:</strong> ${escapeHtml(s.takeaway)}</div>` : ''}</td>
+    <td>${combineDiscussions(s.discussions)}</td>
+    <td style="text-align:center">${iters > 0 ? `<span class="iter">${iters}</span>` : '0'}</td>
+    <td class="score-cell">
+      <select id="w${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v === (g.writingScore || 0) ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </td>
+    <td class="score-cell">
+      <select id="d${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v === (g.discussionScore || 0) ? ' selected' : ''}>${v}</option>`).join('')}</select>
+    </td>
+    <td style="text-align:center"><span class="total-badge ${tc}" id="t${idx}">${total}</span></td>
+    <td class="feedback-cell">
+      <textarea id="wf${idx}" rows="1" placeholder="Writing feedback">${escapeHtml(g.writingFeedback || '')}</textarea>
+      <textarea id="df${idx}" rows="1" placeholder="Discussion feedback">${escapeHtml(g.discussionFeedback || '')}</textarea>
+      ${g.overallNote ? `<div class="note-text">${escapeHtml(g.overallNote)}</div>` : ''}
+    </td>
+  </tr>`;
 }).join('')}
+</tbody>
+</table>
 </div>
-
 <script>
-var STUDENT_DATA = ${escapeForScript(JSON.stringify(studentRows.map((s, idx) => ({
-  idx,
-  studentName: s.studentName,
-  canvasUserId: s.canvasUserId,
-  partnerName: s.partnerName,
-  writingScore: s.grade.writingScore || 0,
-  discussionScore: s.grade.discussionScore || 0,
-  writingFeedback: s.grade.writingFeedback || '',
-  discussionFeedback: s.grade.discussionFeedback || '',
-  overallNote: s.grade.overallNote || '',
-}))))};
+var SD = ${escapeForScript(JSON.stringify(studentRows.map((s, i) => ({i, name: s.studentName, canvasUserId: s.canvasUserId, ws: s.grade.writingScore || 0, ds: s.grade.discussionScore || 0, wf: s.grade.writingFeedback || '', df: s.grade.discussionFeedback || '', note: s.grade.overallNote || ''}))))};
 
-function toggleCard(el) { el.classList.toggle('open'); }
-function expandAll() { document.querySelectorAll('.student-card').forEach(c => c.classList.add('open')); }
-function collapseAll() { document.querySelectorAll('.student-card').forEach(c => c.classList.remove('open')); }
-function filterStudents() {
-  const q = document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.student-card').forEach(c => {
-    c.style.display = c.dataset.name.includes(q) ? '' : 'none';
+function filterRows() {
+  var q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('tbody tr').forEach(function(r) {
+    r.style.display = r.dataset.name.includes(q) ? '' : 'none';
   });
 }
-
-function updateTotal(idx) {
-  const w = parseInt(document.getElementById('writing-' + idx).value) || 0;
-  const d = parseInt(document.getElementById('discussion-' + idx).value) || 0;
-  const total = w + d;
-  const badge = document.getElementById('badge-' + idx);
-  badge.textContent = total + '/10';
-  badge.className = 'grade-badge ' + (total >= 9 ? 'grade-' + total : total >= 8 ? 'grade-8' : 'grade-low');
-  updateStats();
+function upd(i) {
+  var w = +(document.getElementById('w' + i).value || 0);
+  var d = +(document.getElementById('d' + i).value || 0);
+  var t = w + d;
+  var el = document.getElementById('t' + i);
+  el.textContent = t;
+  el.className = 'total-badge ' + (t >= 9 ? 'total-hi' : t >= 8 ? 'total-mid' : 'total-lo');
+  calcStats();
 }
-
-function updateStats() {
-  let sum = 0, count10 = 0, count9 = 0, countLow = 0;
-  const n = STUDENT_DATA.length;
-  for (let i = 0; i < n; i++) {
-    const w = parseInt(document.getElementById('writing-' + i)?.value) || 0;
-    const d = parseInt(document.getElementById('discussion-' + i)?.value) || 0;
-    const t = w + d;
-    sum += t;
-    if (t === 10) count10++;
-    else if (t === 9) count9++;
-    else countLow++;
-  }
-  document.getElementById('avg-score').textContent = (sum / n).toFixed(1);
-  document.getElementById('count-10').textContent = count10;
-  document.getElementById('count-9').textContent = count9;
-  document.getElementById('count-low').textContent = countLow;
+function calcStats() {
+  try {
+    var s = 0, c10 = 0, c9 = 0, clo = 0;
+    for (var i = 0; i < SD.length; i++) {
+      var w = +(document.getElementById('w' + i).value || 0);
+      var d = +(document.getElementById('d' + i).value || 0);
+      var t = w + d;
+      s += t;
+      if (t === 10) c10++; else if (t === 9) c9++; else clo++;
+    }
+    document.getElementById('avg-score').textContent = SD.length > 0 ? (s / SD.length).toFixed(1) : '0';
+    document.getElementById('c10').textContent = c10;
+    document.getElementById('c9').textContent = c9;
+    document.getElementById('clo').textContent = clo;
+  } catch (e) { console.error('stats error:', e); }
 }
-
 function downloadGrades() {
-  const grades = STUDENT_DATA.map((s, i) => ({
-    studentName: s.studentName,
-    canvasUserId: s.canvasUserId,
-    writingScore: parseInt(document.getElementById('writing-' + i).value) || 0,
-    discussionScore: parseInt(document.getElementById('discussion-' + i).value) || 0,
-    writingFeedback: document.getElementById('wfeedback-' + i).value,
-    discussionFeedback: document.getElementById('dfeedback-' + i).value,
-    overallNote: s.overallNote,
-    totalScore: (parseInt(document.getElementById('writing-' + i).value) || 0) +
-                (parseInt(document.getElementById('discussion-' + i).value) || 0),
-  }));
-  const blob = new Blob([JSON.stringify(grades, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
+  var g = SD.map(function(s, i) {
+    return {
+      studentName: s.name, canvasUserId: s.canvasUserId,
+      writingScore: +(document.getElementById('w' + i).value || 0),
+      discussionScore: +(document.getElementById('d' + i).value || 0),
+      writingFeedback: document.getElementById('wf' + i).value,
+      discussionFeedback: document.getElementById('df' + i).value,
+      overallNote: s.note,
+      totalScore: +(document.getElementById('w' + i).value || 0) + +(document.getElementById('d' + i).value || 0)
+    };
+  });
+  var blob = new Blob([JSON.stringify(g, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = '${assignmentKey}-grades.json';
   a.click();
 }
-
-updateStats();
+calcStats();
 </script>
 </body>
 </html>`;
