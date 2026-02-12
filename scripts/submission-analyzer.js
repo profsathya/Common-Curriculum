@@ -306,11 +306,39 @@ async function downloadSubmissions(api, courseName, dataDir) {
               subData.contentType = 'pdf';
               subData.content = `[PDF: ${attachment.filename}]`;
             } else {
-              // Try to download text-based files
+              // Try to download text-based files (detect activity engine JSON)
               try {
                 const textContent = await api.downloadFileContent(attachment.url);
-                subData.contentType = 'text';
-                subData.content = textContent.substring(0, 5000); // Limit size
+                if (attachment.filename?.endsWith('.json')) {
+                  try {
+                    const jsonData = JSON.parse(textContent);
+                    if (jsonData.activityId && jsonData.responses) {
+                      const hasAiDiscussion = jsonData.responses.some(r => r.questionType === 'ai-discussion');
+                      if (hasAiDiscussion) {
+                        subData.contentType = 'ai-discussion';
+                        subData.content = textContent.substring(0, 10000);
+                        subData.activityData = {
+                          activityId: jsonData.activityId,
+                          studentName: jsonData.studentName || '',
+                          authorName: jsonData.authorName || '',
+                          responses: jsonData.responses,
+                        };
+                      } else {
+                        subData.contentType = 'text';
+                        subData.content = textContent.substring(0, 5000);
+                      }
+                    } else {
+                      subData.contentType = 'text';
+                      subData.content = textContent.substring(0, 5000);
+                    }
+                  } catch {
+                    subData.contentType = 'text';
+                    subData.content = textContent.substring(0, 5000);
+                  }
+                } else {
+                  subData.contentType = 'text';
+                  subData.content = textContent.substring(0, 5000);
+                }
               } catch {
                 subData.contentType = 'file';
                 subData.content = `[File: ${attachment.filename}]`;
@@ -374,6 +402,9 @@ async function downloadSubmissions(api, courseName, dataDir) {
         }
       }
 
+      // Detect if this assignment has ai-discussion submissions
+      const hasAiDiscussion = Object.values(assignmentSubs).some(s => s.contentType === 'ai-discussion');
+
       submissionIndex[assignmentKey] = {
         title: row.title,
         type: row.type,
@@ -383,6 +414,7 @@ async function downloadSubmissions(api, courseName, dataDir) {
         sprint: row.sprint,
         week: row.week,
         totalSubmissions: Object.keys(assignmentSubs).length,
+        hasAiDiscussion,
         downloadedAt: new Date().toISOString(),
       };
 
@@ -454,6 +486,46 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title);
 
     console.log(`  ${indexEntry.title} (${assignmentKey})`);
+
+    // AI-Discussion assignments get specialized analysis
+    if (indexEntry.hasAiDiscussion) {
+      console.log(`    → AI-discussion detected, using partner matching & dual grading`);
+      if (!analysis.discussions) analysis.discussions = {};
+      try {
+        const discResult = await analyzeDiscussionAssignment(courseName, dataDir, assignmentKey, indexEntry);
+        if (discResult) {
+          analysis.discussions[assignmentKey] = {
+            title: indexEntry.title,
+            points: indexEntry.points,
+            sprint: indexEntry.sprint,
+            week: indexEntry.week,
+            results: discResult.results,
+            studentData: discResult.studentData,
+            analyzedAt: new Date().toISOString(),
+          };
+          // Also store participation in main analysis for the overview dashboard
+          const assignmentAnalysis = {};
+          for (const [anonId, grade] of Object.entries(discResult.results)) {
+            assignmentAnalysis[anonId] = {
+              participation: grade.hasWriting || grade.hasDiscussion ? 5 : 1,
+              quality: Math.round(((grade.writingScore || 0) + (grade.discussionScore || 0)) / 2),
+              qualityNotes: `Writing: ${grade.writingScore}/5, Discussion: ${grade.discussionScore}/5`,
+              analyzedAt: new Date().toISOString(),
+              contentType: 'ai-discussion',
+            };
+          }
+          analysis.assignments[assignmentKey] = {
+            title: indexEntry.title, type: indexEntry.type, points: indexEntry.points,
+            sprint: indexEntry.sprint, week: indexEntry.week, dueDate: indexEntry.dueDate,
+            students: assignmentAnalysis, analyzedAt: new Date().toISOString(),
+          };
+          totalStudents += Object.keys(discResult.results).length;
+        }
+      } catch (err) {
+        console.error(`    ✗ Discussion analysis error: ${err.message}`);
+      }
+      continue;
+    }
 
     const assignmentAnalysis = {};
 
@@ -782,6 +854,13 @@ function generateDashboard(courseName, dataDir) {
   console.log(`\n✓ Dashboard generated: ${outputPath}`);
   console.log(`  Students: ${dashboardData.profiles.length}`);
   console.log(`  Assignments: ${assignmentList.length}`);
+
+  // Generate per-assignment discussion dashboards for ai-discussion assignments
+  if (analysis.discussions) {
+    for (const key of Object.keys(analysis.discussions)) {
+      generateDiscussionDashboard(courseName, dataDir, key);
+    }
+  }
 }
 
 function buildDashboardHTML(data) {
@@ -1082,6 +1161,477 @@ showView('overview');
 }
 
 // ============================================
+// AI-Discussion: Partner Matching & Grading
+// ============================================
+
+function normalizeNameForMatch(name) {
+  if (!name) return '';
+  return name.toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Find the best anonId match for a name from the activity JSON.
+ * Tries exact normalized match first, then substring/fuzzy match.
+ */
+function findAnonIdByName(targetName, mapping) {
+  const normalTarget = normalizeNameForMatch(targetName);
+  if (!normalTarget) return null;
+
+  // Exact normalized match
+  for (const [anonId, info] of Object.entries(mapping)) {
+    if (normalizeNameForMatch(info.name) === normalTarget) return anonId;
+  }
+
+  // Substring match (e.g., "Perez, Adrian" matches "Alonso Perez, Adrian")
+  for (const [anonId, info] of Object.entries(mapping)) {
+    const n = normalizeNameForMatch(info.name);
+    if (n.includes(normalTarget) || normalTarget.includes(n)) return anonId;
+  }
+
+  return null;
+}
+
+/**
+ * Load the activity config JSON for an assignment.
+ * Tries common path patterns to find the right file.
+ */
+function loadActivityConfig(courseName, assignmentKey) {
+  const patterns = [
+    // demo-discussion → demo-ai-discussion
+    `activities/${courseName}/${assignmentKey.replace('demo-discussion', 'demo-ai-discussion')}.json`,
+    `activities/${courseName}/${assignmentKey}.json`,
+  ];
+
+  for (const p of patterns) {
+    const fullPath = path.join(__dirname, '..', p);
+    if (fs.existsSync(fullPath)) {
+      return JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Analyze an ai-discussion assignment: match partners, grade writing & discussion.
+ */
+async function analyzeDiscussionAssignment(courseName, dataDir, assignmentKey, indexEntry) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error('ANTHROPIC_API_KEY required for discussion analysis');
+
+  const courseInfo = COURSES[courseName];
+  const courseDataDir = path.join(dataDir, courseName);
+  const subsPath = path.join(courseDataDir, 'submissions', `${assignmentKey}.json`);
+  const submissions = loadJson(subsPath);
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
+  if (!submissions || !mapping) return null;
+
+  // Load activity config for question context
+  const activityConfig = loadActivityConfig(courseName, assignmentKey);
+  const questions = activityConfig?.questions || [];
+
+  console.log(`\n  AI-Discussion analysis: ${indexEntry.title}`);
+
+  // Collect all ai-discussion submissions with partner info
+  const aiSubs = {};
+  for (const [anonId, sub] of Object.entries(submissions)) {
+    if (sub.contentType !== 'ai-discussion' || !sub.activityData) continue;
+    aiSubs[anonId] = sub;
+  }
+
+  console.log(`    ${Object.keys(aiSubs).length} ai-discussion submissions found`);
+  if (Object.keys(aiSubs).length === 0) return null;
+
+  // Build partner mapping: submitterAnonId → authorAnonId
+  const partnerMap = {}; // submitterAnonId → authorAnonId
+  for (const [submitterAnonId, sub] of Object.entries(aiSubs)) {
+    const authorName = sub.activityData.authorName;
+    const authorAnonId = findAnonIdByName(authorName, mapping);
+    if (authorAnonId) {
+      partnerMap[submitterAnonId] = authorAnonId;
+    } else {
+      console.log(`    ⚠ Could not match author "${authorName}" for ${submitterAnonId}`);
+    }
+  }
+
+  // Build reverse map: authorAnonId → submitterAnonId (who entered this author's writing)
+  const reversePartnerMap = {};
+  for (const [submitter, author] of Object.entries(partnerMap)) {
+    reversePartnerMap[author] = submitter;
+  }
+
+  // For each student, extract their writing + discussion data
+  const studentData = {};
+  const allStudentIds = new Set([
+    ...Object.keys(aiSubs),
+    ...Object.values(partnerMap),
+  ]);
+
+  for (const studentAnonId of allStudentIds) {
+    const studentName = mapping[studentAnonId]?.name || studentAnonId;
+    const ownSub = aiSubs[studentAnonId]; // their submission (they led discussion)
+    const partnerAsSubmitter = reversePartnerMap[studentAnonId]; // who entered this student's writing
+    const partnerSub = partnerAsSubmitter ? aiSubs[partnerAsSubmitter] : null;
+
+    const data = {
+      studentName,
+      anonId: studentAnonId,
+      partnerAnonId: ownSub ? partnerMap[studentAnonId] : partnerAsSubmitter,
+      partnerName: null,
+      writing: [],
+      discussions: [],
+      takeaway: null,
+    };
+
+    data.partnerName = data.partnerAnonId ? (mapping[data.partnerAnonId]?.name || data.partnerAnonId) : 'Unknown';
+
+    // Extract WRITING — from partner's submission where this student is the author
+    if (partnerSub?.activityData?.responses) {
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        const r = partnerSub.activityData.responses[i];
+        if (q?.type === 'ai-discussion' && r?.answer) {
+          data.writing.push({
+            questionId: q.id || `q${i}`,
+            prompt: r.answer.selectedPrompt || q.prompt || '',
+            response: r.answer.enteredResponse || '',
+            aiContext: q.aiContext || '',
+          });
+        }
+      }
+    }
+
+    // Extract DISCUSSION — from their own submission
+    if (ownSub?.activityData?.responses) {
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        const r = ownSub.activityData.responses[i];
+        if (q?.type === 'ai-discussion' && r?.answer) {
+          data.discussions.push({
+            questionId: q.id || `q${i}`,
+            prompt: r.answer.selectedPrompt || q.prompt || '',
+            summary: r.answer.discussionSummary || '',
+            aiQuestions: r.answer.aiQuestions || [],
+            observation: r.answer.observation || '',
+            iterations: r.answer.iterations || 0,
+            partnerWriting: r.answer.enteredResponse || '',
+          });
+        }
+        if (q?.type === 'open-ended' && r?.answer) {
+          data.takeaway = typeof r.answer === 'string' ? r.answer : '';
+        }
+      }
+    }
+
+    studentData[studentAnonId] = data;
+  }
+
+  // Grade each student with Claude
+  console.log(`    Grading ${Object.keys(studentData).length} students...`);
+  const results = {};
+
+  for (const [anonId, data] of Object.entries(studentData)) {
+    process.stdout.write(`      ${anonId}... `);
+
+    try {
+      const result = await gradeDiscussionStudent(apiKey, data, courseInfo.name);
+      results[anonId] = {
+        ...result,
+        partnerAnonId: data.partnerAnonId,
+        partnerName: data.partnerName,
+        hasWriting: data.writing.length > 0,
+        hasDiscussion: data.discussions.length > 0,
+        iterations: data.discussions.reduce((sum, d) => sum + d.iterations, 0),
+        takeaway: data.takeaway,
+      };
+      console.log(`${result.writingScore + result.discussionScore}/10`);
+    } catch (err) {
+      console.log(`ERROR: ${err.message}`);
+      results[anonId] = {
+        writingScore: 5, writingFeedback: 'Auto-grading failed — manual review needed.',
+        discussionScore: 5, discussionFeedback: 'Auto-grading failed — manual review needed.',
+        overallNote: '', error: err.message,
+        partnerAnonId: data.partnerAnonId, partnerName: data.partnerName,
+        hasWriting: data.writing.length > 0, hasDiscussion: data.discussions.length > 0,
+        iterations: 0, takeaway: data.takeaway,
+      };
+    }
+
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  return { studentData, results };
+}
+
+async function gradeDiscussionStudent(apiKey, studentData, courseName) {
+  const systemPrompt = `You are an encouraging instructor grading student reflections in ${courseName}.
+Grade generously — most students should earn 5/5 for genuine effort. Only give 4 if there's a clearly identifiable area for improvement, and 3 only if the response is notably shallow or off-topic.
+
+Assess two dimensions:
+1. WRITING QUALITY (5 points) — the student's written reflection responses
+2. DISCUSSION QUALITY (5 points) — the student's discussion summary after leading a conversation
+
+Respond ONLY with valid JSON:
+{"writingScore": <3|4|5>, "writingFeedback": "<one actionable sentence for future reflections>", "discussionScore": <3|4|5>, "discussionFeedback": "<one actionable sentence for future conversations>", "overallNote": "<one sentence highlighting something positive>"}`;
+
+  let userPrompt = `# Student: ${studentData.anonId}\n\n`;
+
+  userPrompt += `## WRITING (grade this student's reflection quality)\n\n`;
+  if (studentData.writing.length === 0) {
+    userPrompt += `⚠ No writing found (partner may not have submitted). Give writing score of 3 with feedback noting missing data.\n\n`;
+  } else {
+    for (const w of studentData.writing) {
+      userPrompt += `### Question: ${w.prompt}\n`;
+      if (w.aiContext) userPrompt += `Context: ${w.aiContext}\n`;
+      userPrompt += `Response:\n> ${w.response}\n\n`;
+    }
+  }
+
+  userPrompt += `## DISCUSSION SUMMARIES (grade this student's quality as discussion leader)\n\n`;
+  if (studentData.discussions.length === 0) {
+    userPrompt += `⚠ No discussion summaries found (student may not have submitted). Give discussion score of 3 with feedback noting missing data.\n\n`;
+  } else {
+    for (const d of studentData.discussions) {
+      userPrompt += `### Question: ${d.prompt}\n`;
+      userPrompt += `Partner's writing discussed:\n> ${d.partnerWriting}\n`;
+      userPrompt += `AI discussion questions:\n${(d.aiQuestions || []).map(q => `  - ${q}`).join('\n')}\n`;
+      userPrompt += `Iterations (dig deeper): ${d.iterations}\n`;
+      userPrompt += `Summary:\n> ${d.summary}\n\n`;
+    }
+  }
+
+  if (studentData.takeaway) {
+    userPrompt += `## OVERALL TAKEAWAY (boost scores if insightful, up to 5 max)\n> ${studentData.takeaway}\n`;
+  }
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }],
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Claude API ${response.status}: ${(await response.text()).substring(0, 200)}`);
+  }
+
+  const data = await response.json();
+  const text = data.content[0]?.text || '';
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('Could not parse grading response');
+
+  const result = JSON.parse(jsonMatch[0]);
+  return {
+    writingScore: Math.min(5, Math.max(0, result.writingScore || 0)),
+    writingFeedback: String(result.writingFeedback || '').substring(0, 300),
+    discussionScore: Math.min(5, Math.max(0, result.discussionScore || 0)),
+    discussionFeedback: String(result.discussionFeedback || '').substring(0, 300),
+    overallNote: String(result.overallNote || '').substring(0, 300),
+  };
+}
+
+/**
+ * Generate a discussion-specific dashboard HTML for an ai-discussion assignment.
+ */
+function generateDiscussionDashboard(courseName, dataDir, assignmentKey) {
+  const courseDataDir = path.join(dataDir, courseName);
+  const analysis = loadJson(path.join(courseDataDir, 'analysis.json'));
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
+  if (!analysis?.discussions?.[assignmentKey]) return;
+
+  const disc = analysis.discussions[assignmentKey];
+  const { results, studentData: rawStudentData } = disc;
+  const assignmentTitle = disc.title || assignmentKey;
+
+  // Build display rows sorted by name
+  const rows = Object.entries(results)
+    .map(([anonId, grade]) => {
+      const sd = rawStudentData?.[anonId] || {};
+      return { anonId, name: mapping[anonId]?.name || anonId, canvasId: mapping[anonId]?.canvasId, ...grade, ...sd };
+    })
+    .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+  const courseCode = COURSES[courseName]?.name || courseName.toUpperCase();
+  const primary = courseName === 'cst349' ? '#2563eb' : '#0d9488';
+  const primaryLight = courseName === 'cst349' ? '#dbeafe' : '#ccfbf1';
+  const timestamp = new Date().toLocaleString();
+
+  function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(assignmentTitle)} — Discussion Dashboard</title>
+<style>
+:root { --primary: ${primary}; --primary-light: ${primaryLight}; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.5; }
+.header { background: var(--primary); color: white; padding: 1.5rem 2rem; }
+.header h1 { font-size: 1.5rem; } .header p { opacity: 0.85; font-size: 0.9rem; margin-top: 0.25rem; }
+.stats { display: flex; gap: 2rem; padding: 1rem 2rem; background: var(--primary-light); border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; flex-wrap: wrap; }
+.stats strong { color: var(--primary); }
+.controls { padding: 1rem 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #e2e8f0; background: white; }
+.controls input { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; width: 250px; }
+.controls button { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 0.9rem; }
+.controls button:hover { background: #f8fafc; }
+.controls button.primary { background: var(--primary); color: white; border-color: var(--primary); }
+.container { padding: 1rem 2rem 3rem; }
+.card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+.card-hdr { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; cursor: pointer; user-select: none; }
+.card-hdr:hover { background: #f8fafc; }
+.card-name { font-weight: 600; } .card-meta { font-size: 0.85rem; color: #64748b; }
+.badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
+.badge-hi { background: #dcfce7; color: #166534; } .badge-mid { background: #fef9c3; color: #854d0e; } .badge-lo { background: #fee2e2; color: #991b1b; }
+.card-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid #e2e8f0; }
+.card.open .card-body { display: block; }
+.sec { margin-top: 1rem; } .sec-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); margin-bottom: 0.5rem; }
+.rblock { background: #f8fafc; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+.rblock .lbl { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; }
+.rblock .cnt { font-size: 0.9rem; white-space: pre-wrap; }
+.grade-row { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem; padding: 0.75rem 1rem; background: var(--primary-light); border-radius: 6px; }
+.grade-row label { font-size: 0.85rem; font-weight: 500; } .grade-row select, .grade-row textarea { border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.85rem; font-family: inherit; }
+.grade-row select { padding: 0.25rem 0.5rem; } .grade-row textarea { flex: 1; min-width: 250px; padding: 0.4rem; resize: vertical; min-height: 2.5rem; }
+.iter-badge { display: inline-block; background: var(--primary); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+.note { font-size: 0.85rem; color: #64748b; font-style: italic; padding: 0.5rem 1rem; background: #fffbeb; border-radius: 6px; margin-top: 0.5rem; }
+.missing { color: #dc2626; font-style: italic; font-size: 0.85rem; }
+.arrow { font-size: 1.2rem; color: #64748b; transition: transform 0.2s; } .card.open .arrow { transform: rotate(90deg); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>${esc(assignmentTitle)} — Grading Dashboard</h1>
+  <p>${esc(courseCode)} &middot; Generated ${timestamp}</p>
+</div>
+<div class="stats">
+  <div>Students: <strong>${rows.length}</strong></div>
+  <div>Avg Score: <strong id="avg-score">—</strong>/10</div>
+  <div>Score 10: <strong id="c10">—</strong></div>
+  <div>Score 9: <strong id="c9">—</strong></div>
+  <div>Score ≤8: <strong id="clo">—</strong></div>
+</div>
+<div class="controls">
+  <input type="text" id="search" placeholder="Search students..." oninput="filterStudents()">
+  <button onclick="expandAll()">Expand All</button>
+  <button onclick="collapseAll()">Collapse All</button>
+  <button class="primary" onclick="downloadGrades()">Download Grades JSON</button>
+</div>
+<div class="container" id="students">
+${rows.map((s, idx) => {
+  const total = (s.writingScore || 0) + (s.discussionScore || 0);
+  const bc = total >= 9 ? 'badge-hi' : total >= 8 ? 'badge-mid' : 'badge-lo';
+  const writing = s.writing || [];
+  const discussions = s.discussions || [];
+  return `
+<div class="card" data-name="${esc(s.name.toLowerCase())}" data-idx="${idx}">
+  <div class="card-hdr" onclick="toggle(this.parentElement)">
+    <div><span class="card-name">${esc(s.name)}</span> <span class="card-meta">— partner: ${esc(s.partnerName || '?')}</span>
+    ${!s.hasWriting && !s.hasDiscussion ? '<span class="missing"> (no data)</span>' : ''}</div>
+    <div style="display:flex;align-items:center;gap:0.75rem">
+      <span class="badge ${bc}" id="b${idx}">${total}/10</span><span class="arrow">▶</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="sec"><div class="sec-title">Their Written Reflections (as author)</div>
+    ${writing.length === 0 ? '<p class="missing">No writing found — partner may not have submitted.</p>' :
+      writing.map(w => `<div class="rblock"><div class="lbl">${esc(w.prompt)}</div><div class="cnt">${esc(w.response || '(empty)')}</div></div>`).join('')}
+    </div>
+    <div class="grade-row">
+      <label>Writing:</label>
+      <select id="w${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v===(s.writingScore||0)?' selected':''}>${v}</option>`).join('')}</select><span>/5</span>
+      <textarea id="wf${idx}" rows="1">${esc(s.writingFeedback || '')}</textarea>
+    </div>
+    <div class="sec"><div class="sec-title">Their Discussion Leadership (as questioner)</div>
+    ${discussions.length === 0 ? '<p class="missing">No discussion summaries — student may not have submitted.</p>' :
+      discussions.map(d => `<div class="rblock">
+        <div class="lbl">${esc(d.prompt)} <span class="iter-badge">${d.iterations} iter</span></div>
+        <div class="lbl" style="margin-top:0.5rem">Partner's writing discussed:</div>
+        <div class="cnt" style="opacity:0.7;font-size:0.85rem">${esc(d.partnerWriting || '(empty)')}</div>
+        <div class="lbl" style="margin-top:0.5rem">AI questions:</div>
+        <ul style="font-size:0.85rem;margin:0.25rem 0 0.5rem 1.25rem">${(d.aiQuestions||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ul>
+        <div class="lbl">Discussion summary:</div>
+        <div class="cnt">${esc(d.summary || '(empty)')}</div>
+      </div>`).join('')}
+    </div>
+    <div class="grade-row">
+      <label>Discussion:</label>
+      <select id="d${idx}" onchange="upd(${idx})">${[5,4,3,2,1,0].map(v => `<option value="${v}"${v===(s.discussionScore||0)?' selected':''}>${v}</option>`).join('')}</select><span>/5</span>
+      <textarea id="df${idx}" rows="1">${esc(s.discussionFeedback || '')}</textarea>
+    </div>
+    ${s.takeaway ? `<div class="sec"><div class="sec-title">Overall Takeaway</div><div class="rblock"><div class="cnt">${esc(s.takeaway)}</div></div></div>` : ''}
+    ${s.overallNote ? `<div class="note">${esc(s.overallNote)}</div>` : ''}
+    ${s.error ? `<div class="note" style="background:#fee2e2">⚠ ${esc(s.error)}</div>` : ''}
+  </div>
+</div>`;
+}).join('')}
+</div>
+<script>
+const SD=${JSON.stringify(rows.map((s,i)=>({i,name:s.name,anonId:s.anonId,canvasId:s.canvasId,ws:s.writingScore||0,ds:s.discussionScore||0,wf:s.writingFeedback||'',df:s.discussionFeedback||'',note:s.overallNote||''}))).replace(/<\//g,'<\\/')};
+function toggle(el){el.classList.toggle('open')}
+function expandAll(){document.querySelectorAll('.card').forEach(c=>c.classList.add('open'))}
+function collapseAll(){document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'))}
+function filterStudents(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.name.includes(q)?'':'none'})}
+function upd(i){const w=+(document.getElementById('w'+i)?.value||0),d=+(document.getElementById('d'+i)?.value||0),t=w+d;const b=document.getElementById('b'+i);b.textContent=t+'/10';b.className='badge '+(t>=9?'badge-hi':t>=8?'badge-mid':'badge-lo');stats()}
+function stats(){let s=0,c10=0,c9=0,clo=0;for(let i=0;i<SD.length;i++){const w=+(document.getElementById('w'+i)?.value||0),d=+(document.getElementById('d'+i)?.value||0),t=w+d;s+=t;if(t===10)c10++;else if(t===9)c9++;else clo++}document.getElementById('avg-score').textContent=(s/SD.length).toFixed(1);document.getElementById('c10').textContent=c10;document.getElementById('c9').textContent=c9;document.getElementById('clo').textContent=clo}
+function downloadGrades(){const g=SD.map((s,i)=>({anonId:s.anonId,studentName:s.name,canvasId:s.canvasId,writingScore:+(document.getElementById('w'+i).value||0),discussionScore:+(document.getElementById('d'+i).value||0),writingFeedback:document.getElementById('wf'+i).value,discussionFeedback:document.getElementById('df'+i).value,overallNote:s.note,totalScore:+(document.getElementById('w'+i).value||0)++(document.getElementById('d'+i).value||0)}));const b=new Blob([JSON.stringify(g,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='${assignmentKey}-grades.json';a.click()}
+stats();
+</script>
+</body></html>`;
+
+  const dashboardDir = path.join(dataDir, 'dashboard');
+  ensureDir(dashboardDir);
+  const outputPath = path.join(dashboardDir, `${courseName}-${assignmentKey}-discussion.html`);
+  fs.writeFileSync(outputPath, html);
+  console.log(`    Discussion dashboard: ${outputPath}`);
+}
+
+// ============================================
+// Post Grades to Canvas
+// ============================================
+
+async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, gradesFile) {
+  const courseInfo = COURSES[courseName];
+  const config = loadConfig(path.join(__dirname, '..', courseInfo.configFile));
+  const courseId = extractCourseId(config.canvasBaseUrl);
+  const assignmentConfig = config.assignments?.[assignmentKey];
+  if (!assignmentConfig?.canvasId) throw new Error(`No canvasId for ${assignmentKey}`);
+
+  const grades = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
+  console.log(`\nPosting ${grades.length} grades to Canvas (${courseName}/${assignmentKey})...`);
+
+  let posted = 0, skipped = 0;
+  for (const g of grades) {
+    if (!g.canvasId) { console.log(`  ⚠ Skip ${g.studentName || g.anonId} — no Canvas ID`); skipped++; continue; }
+
+    const comment = [
+      `Writing: ${g.writingScore}/5 — ${g.writingFeedback}`,
+      `Discussion: ${g.discussionScore}/5 — ${g.discussionFeedback}`,
+      g.overallNote ? `\n${g.overallNote}` : '',
+    ].filter(Boolean).join('\n');
+
+    try {
+      await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: g.totalScore, comment });
+      console.log(`  ✓ ${g.studentName || g.anonId}: ${g.totalScore}/10`);
+      posted++;
+    } catch (err) {
+      console.log(`  ✗ ${g.studentName || g.anonId}: ${err.message}`);
+      skipped++;
+    }
+    await new Promise(r => setTimeout(r, 200));
+  }
+  console.log(`\nPosted: ${posted}, Skipped: ${skipped}`);
+}
+
+// ============================================
 // Main
 // ============================================
 
@@ -1104,15 +1654,17 @@ Actions:
   analyze     Analyze submissions with LLM (requires ANTHROPIC_API_KEY)
   dashboard   Generate HTML dashboard from analysis
   full        Run all three steps in sequence
+  post-grades Post grades from a reviewed JSON file to Canvas
 
 Options:
   --course=cst349|cst395|both    Course to process (default: both)
   --data-dir=<path>              Path to private data repo (default: ../Common-Curriculum-Data)
-  --assignment=<key>             Analyze a single assignment (analyze action only)
+  --assignment=<key>             Analyze a single assignment / post grades for it
+  --grades=<path>                Grades JSON file to post (for post-grades action)
 
 Environment Variables:
-  CANVAS_API_TOKEN   Canvas API token (required for download)
-  CANVAS_BASE_URL    Canvas instance URL (required for download)
+  CANVAS_API_TOKEN   Canvas API token (required for download, post-grades)
+  CANVAS_BASE_URL    Canvas instance URL (required for download, post-grades)
   ANTHROPIC_API_KEY  Anthropic API key (required for analyze)
 `);
     process.exit(0);
@@ -1121,7 +1673,7 @@ Environment Variables:
   ensureDir(dataDir);
 
   const courses = course === 'both' ? ['cst349', 'cst395'] : [course];
-  const needsCanvas = action === 'download' || action === 'full';
+  const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades';
 
   let api = null;
   if (needsCanvas) {
@@ -1129,6 +1681,24 @@ Environment Variables:
       process.env.CANVAS_BASE_URL,
       process.env.CANVAS_API_TOKEN
     );
+  }
+
+  // Post-grades is a special action that reads a grades JSON and posts to Canvas
+  if (action === 'post-grades') {
+    if (!assignment) {
+      console.error('Error: --assignment=<key> is required for post-grades');
+      process.exit(1);
+    }
+    const gradesFile = args.grades || path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    if (!fs.existsSync(gradesFile)) {
+      console.error(`Grades file not found: ${gradesFile}`);
+      console.error('Download the grades JSON from the discussion dashboard first.');
+      process.exit(1);
+    }
+    for (const c of courses) {
+      await postGradesToCanvas(api, c, dataDir, assignment, gradesFile);
+    }
+    return;
   }
 
   for (const c of courses) {
