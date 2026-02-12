@@ -96,6 +96,11 @@ function ensureDir(dirPath) {
   }
 }
 
+/** Escape a JSON string for safe embedding inside an HTML <script> block */
+function escapeForScript(str) {
+  return str.replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+}
+
 function loadJson(filePath) {
   if (!fs.existsSync(filePath)) return null;
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -865,8 +870,8 @@ function generateDashboard(courseName, dataDir) {
 
 function buildDashboardHTML(data) {
   // Escape </ to prevent premature </script> closing when JSON contains HTML-like text
-  const profilesJson = JSON.stringify(data.profiles).replace(/<\//g, '<\\/');
-  const assignmentsJson = JSON.stringify(data.assignments).replace(/<\//g, '<\\/');
+  const profilesJson = escapeForScript(JSON.stringify(data.profiles));
+  const assignmentsJson = escapeForScript(JSON.stringify(data.assignments));
 
 
   return `<!DOCTYPE html>
@@ -1533,7 +1538,7 @@ ${rows.map((s, idx) => {
   const discussions = s.discussions || [];
   return `
 <div class="card" data-name="${esc(s.name.toLowerCase())}" data-idx="${idx}">
-  <div class="card-hdr" onclick="toggle(this.parentElement)">
+  <div class="card-hdr" onclick="toggleCard(this.parentElement)">
     <div><span class="card-name">${esc(s.name)}</span> <span class="card-meta">— partner: ${esc(s.partnerName || '?')}</span>
     ${!s.hasWriting && !s.hasDiscussion ? '<span class="missing"> (no data)</span>' : ''}</div>
     <div style="display:flex;align-items:center;gap:0.75rem">
@@ -1575,14 +1580,68 @@ ${rows.map((s, idx) => {
 }).join('')}
 </div>
 <script>
-const SD=${JSON.stringify(rows.map((s,i)=>({i,name:s.name,anonId:s.anonId,canvasId:s.canvasId,ws:s.writingScore||0,ds:s.discussionScore||0,wf:s.writingFeedback||'',df:s.discussionFeedback||'',note:s.overallNote||''}))).replace(/<\//g,'<\\/')};
-function toggle(el){el.classList.toggle('open')}
-function expandAll(){document.querySelectorAll('.card').forEach(c=>c.classList.add('open'))}
-function collapseAll(){document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'))}
-function filterStudents(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.name.includes(q)?'':'none'})}
-function upd(i){const w=+(document.getElementById('w'+i)?.value||0),d=+(document.getElementById('d'+i)?.value||0),t=w+d;const b=document.getElementById('b'+i);b.textContent=t+'/10';b.className='badge '+(t>=9?'badge-hi':t>=8?'badge-mid':'badge-lo');stats()}
-function stats(){let s=0,c10=0,c9=0,clo=0;for(let i=0;i<SD.length;i++){const w=+(document.getElementById('w'+i)?.value||0),d=+(document.getElementById('d'+i)?.value||0),t=w+d;s+=t;if(t===10)c10++;else if(t===9)c9++;else clo++}document.getElementById('avg-score').textContent=(s/SD.length).toFixed(1);document.getElementById('c10').textContent=c10;document.getElementById('c9').textContent=c9;document.getElementById('clo').textContent=clo}
-function downloadGrades(){const g=SD.map((s,i)=>({anonId:s.anonId,studentName:s.name,canvasId:s.canvasId,writingScore:+(document.getElementById('w'+i).value||0),discussionScore:+(document.getElementById('d'+i).value||0),writingFeedback:document.getElementById('wf'+i).value,discussionFeedback:document.getElementById('df'+i).value,overallNote:s.note,totalScore:+(document.getElementById('w'+i).value||0)++(document.getElementById('d'+i).value||0)}));const b=new Blob([JSON.stringify(g,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='${assignmentKey}-grades.json';a.click()}
+var SD = ${escapeForScript(JSON.stringify(rows.map((s, i) => ({i, name: s.name, anonId: s.anonId, canvasId: s.canvasId, ws: s.writingScore || 0, ds: s.discussionScore || 0, wf: s.writingFeedback || '', df: s.discussionFeedback || '', note: s.overallNote || ''}))))};
+
+function toggleCard(el) {
+  el.classList.toggle('open');
+}
+function expandAll() {
+  document.querySelectorAll('.card').forEach(function(c) { c.classList.add('open'); });
+}
+function collapseAll() {
+  document.querySelectorAll('.card').forEach(function(c) { c.classList.remove('open'); });
+}
+function filterStudents() {
+  var q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(function(c) {
+    c.style.display = c.dataset.name.includes(q) ? '' : 'none';
+  });
+}
+function upd(i) {
+  var w = +(document.getElementById('w' + i).value || 0);
+  var d = +(document.getElementById('d' + i).value || 0);
+  var t = w + d;
+  var b = document.getElementById('b' + i);
+  b.textContent = t + '/10';
+  b.className = 'badge ' + (t >= 9 ? 'badge-hi' : t >= 8 ? 'badge-mid' : 'badge-lo');
+  stats();
+}
+function stats() {
+  try {
+    var s = 0, c10 = 0, c9 = 0, clo = 0;
+    for (var i = 0; i < SD.length; i++) {
+      var w = +(document.getElementById('w' + i).value || 0);
+      var d = +(document.getElementById('d' + i).value || 0);
+      var t = w + d;
+      s += t;
+      if (t === 10) c10++;
+      else if (t === 9) c9++;
+      else clo++;
+    }
+    document.getElementById('avg-score').textContent = SD.length > 0 ? (s / SD.length).toFixed(1) : '0';
+    document.getElementById('c10').textContent = c10;
+    document.getElementById('c9').textContent = c9;
+    document.getElementById('clo').textContent = clo;
+  } catch (e) { console.error('stats error:', e); }
+}
+function downloadGrades() {
+  var g = SD.map(function(s, i) {
+    return {
+      anonId: s.anonId, studentName: s.name, canvasId: s.canvasId,
+      writingScore: +(document.getElementById('w' + i).value || 0),
+      discussionScore: +(document.getElementById('d' + i).value || 0),
+      writingFeedback: document.getElementById('wf' + i).value,
+      discussionFeedback: document.getElementById('df' + i).value,
+      overallNote: s.note,
+      totalScore: +(document.getElementById('w' + i).value || 0) + +(document.getElementById('d' + i).value || 0)
+    };
+  });
+  var blob = new Blob([JSON.stringify(g, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '${assignmentKey}-grades.json';
+  a.click();
+}
 stats();
 </script>
 </body></html>`;
