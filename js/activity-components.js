@@ -935,7 +935,7 @@ const ActivityComponents = (function() {
       }
       // Pass the selected prompt (from dropdown or the default prompt)
       const effectivePrompt = selectedPromptText;
-      handleAiGenerate(question, text, options, container, effectivePrompt);
+      handleAiGenerate(question, text, options, container, effectivePrompt, savedData);
     });
     enterPhase.appendChild(generateBtn);
 
@@ -1092,7 +1092,7 @@ const ActivityComponents = (function() {
     return container;
   }
 
-  async function handleAiGenerate(question, responseText, options, container, effectivePrompt) {
+  async function handleAiGenerate(question, responseText, options, container, effectivePrompt, savedData) {
     const loadingEl = document.getElementById(`ai-loading-${question.id}`);
     const errorEl = document.getElementById(`ai-error-${question.id}`);
     const enterPhase = document.getElementById(`ai-enter-${question.id}`);
@@ -1187,6 +1187,10 @@ const ActivityComponents = (function() {
       // Persist via onAnswer so state survives refresh
       options.onAnswer(intermediateAnswer, null);
 
+      // Sync intermediateAnswer fields back to savedData so downstream
+      // handlers (save button, dig deeper) see the correct values
+      Object.assign(savedData, intermediateAnswer);
+
     } catch (error) {
       console.error('AI discussion error:', error);
       loadingEl.style.display = 'none';
@@ -1259,9 +1263,10 @@ const ActivityComponents = (function() {
       savedData.observation = data.observation || '';
       savedData.iterations = currentIterations + 1;
 
-      // Save state
+      // Save state — fall back to textarea DOM value if savedData.enteredResponse is stale
+      const enterTextarea = document.querySelector(`#ai-enter-${question.id} textarea`);
       const fullAnswer = {
-        enteredResponse: savedData.enteredResponse,
+        enteredResponse: savedData.enteredResponse || (enterTextarea && enterTextarea.value.trim()) || '',
         selectedOption: savedData.selectedOption ?? null,
         selectedPrompt: savedData.selectedPrompt || question.prompt,
         aiQuestions: data.questions,
@@ -1273,6 +1278,9 @@ const ActivityComponents = (function() {
       options.response = { answer: fullAnswer, attempts: 1, correct: null, skipped: false };
       options.onAnswer(fullAnswer, null);
       updateQuestionStatus(question.id, { answer: fullAnswer, attempts: 1, correct: null, skipped: false });
+
+      // Sync fullAnswer back to savedData so subsequent iterations stay consistent
+      Object.assign(savedData, fullAnswer);
 
       // Update iteration counter display
       iterationInfo.textContent = (currentIterations + 1) + ' rounds of AI guidance completed';
