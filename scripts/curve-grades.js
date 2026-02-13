@@ -13,7 +13,10 @@
  *   # Dry run (preview changes, no Canvas posting):
  *   node scripts/curve-grades.js --course=cst349 --assignment=s1-demo-discussion --grades=path/to/grades.json
  *
- *   # Post to Canvas:
+ *   # Post to Canvas (first student only, for testing):
+ *   node scripts/curve-grades.js --course=cst349 --assignment=s1-demo-discussion --grades=path/to/grades.json --post --limit=1
+ *
+ *   # Post to Canvas (all students):
  *   node scripts/curve-grades.js --course=cst349 --assignment=s1-demo-discussion --grades=path/to/grades.json --post
  *
  * Environment:
@@ -154,6 +157,11 @@ async function main() {
   console.log(`  Students to post: ${curved.length}`);
   console.log(`  Skipped (no Canvas ID): ${grades.length - curved.length}`);
 
+  const limit = args.limit ? parseInt(args.limit, 10) : 0;
+  if (limit > 0) {
+    console.log(`  Limit: posting first ${limit} student(s)`);
+  }
+
   if (args.post !== true) {
     console.log(`\n  DRY RUN — no grades posted. Add --post to send to Canvas.`);
 
@@ -171,10 +179,31 @@ async function main() {
     process.env.CANVAS_API_TOKEN
   );
 
-  console.log(`\nPosting curved grades to Canvas...`);
-  let posted = 0;
+  // Fetch existing submissions to skip already-graded students
+  console.log(`\nFetching existing submissions from Canvas...`);
+  const existing = await api.listSubmissions(courseId, canvasAssignmentId);
+  const existingMap = new Map();
+  for (const sub of existing) {
+    existingMap.set(String(sub.user_id), sub);
+  }
 
-  for (const g of curved) {
+  console.log(`Posting curved grades to Canvas...`);
+  let posted = 0, skipped = 0;
+
+  const toPost = limit > 0 ? curved.slice(0, limit) : curved;
+  for (const g of toPost) {
+    // Check if grade and comment are already posted
+    const sub = existingMap.get(String(g.canvasUserId));
+    if (sub && sub.score === g.totalScore) {
+      const comments = sub.submission_comments || [];
+      const hasComment = comments.some(c => c.comment && c.comment.startsWith('Grade:'));
+      if (hasComment) {
+        console.log(`  ⊜ ${g.studentName}: already posted (${g.totalScore}/10)`);
+        skipped++;
+        continue;
+      }
+    }
+
     try {
       await api.gradeSubmission(courseId, canvasAssignmentId, g.canvasUserId, {
         grade: g.totalScore,
@@ -188,7 +217,7 @@ async function main() {
     await new Promise(r => setTimeout(r, 200));
   }
 
-  console.log(`\nPosted: ${posted}/${curved.length}`);
+  console.log(`\nPosted: ${posted}, Already posted: ${skipped}, Total: ${toPost.length}`);
 }
 
 main().catch(err => {
