@@ -134,7 +134,8 @@ async function main() {
   // Apply curve and preview
   const curved = [];
   for (const g of grades) {
-    if (!g.canvasUserId) {
+    const canvasUserId = g.canvasUserId || g.canvasId;
+    if (!canvasUserId) {
       console.log(`  ⚠ SKIP (no Canvas ID): ${g.studentName}`);
       continue;
     }
@@ -143,7 +144,7 @@ async function main() {
     const adjusted = applyCurve(original);
     const comment = buildComment(g, adjusted);
 
-    curved.push({ ...g, originalScore: original, totalScore: adjusted, comment });
+    curved.push({ ...g, canvasUserId: canvasUserId, originalScore: original, totalScore: adjusted, comment });
     const arrow = original !== adjusted ? `${original} → ${adjusted}` : `${original} (no change)`;
     console.log(`  ${g.studentName}: ${arrow}`);
   }
