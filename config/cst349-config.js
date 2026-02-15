@@ -222,7 +222,7 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-orientation": {
@@ -234,7 +234,7 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "activities/s2-orientation.html"
     },
     "s2-goal-setting": {
@@ -246,37 +246,61 @@ const CST349_CONFIG = {
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 10,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "assignments/s2-w5-goal-setting.html"
     },
-    "s2-outreach": {
+    "s2-group-rules": {
       canvasId: "",
-      title: "S2: Professional Outreach",
-      dueDate: "2026-02-20",
+      title: "S2: Group Rules & Check-in Plan",
+      dueDate: "2026-02-19",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 10,
+      points: 5,
       sprint: 2,
-      week: 6,
-      htmlFile: "assignments/s2-w6-outreach.html"
+      week: 5,
+      htmlFile: "assignments/s2-w5-group-rules.html"
     },
-    "s2-fallback-plan": {
+    "s2-reflection-4": {
       canvasId: "",
-      title: "S2: Fallback Plan",
-      dueDate: "2026-02-22",
+      title: "S2: Productive Reflection #4",
+      dueDate: "2026-02-21",
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Productive Reflections",
+      points: 5,
+      sprint: 2,
+      week: 5,
+      htmlFile: "assignments/s2-w5-productive-reflection.html"
+    },
+    "s2-evidence-design": {
+      canvasId: "",
+      title: "S2: Evidence Design — What Will You Demonstrate?",
+      dueDate: "2026-02-23",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
-      week: 6,
-      htmlFile: "assignments/s2-w6-fallback-plan.html"
+      week: 5,
+      htmlFile: "assignments/s2-w5-evidence-design.html"
     },
-    "s2-reflection-4": {
+    "s2-triad-checkin-1": {
       canvasId: "",
-      title: "S2: Productive Reflection #4",
-      dueDate: "2026-02-24",
+      title: "S2: Triad Check-in #1",
+      dueDate: "2026-02-26",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 6,
+      htmlFile: "assignments/s2-w6-triad-checkin.html"
+    },
+    "s2-reflection-5": {
+      canvasId: "",
+      title: "S2: Productive Reflection #5",
+      dueDate: "2026-02-28",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
@@ -285,34 +309,34 @@ const CST349_CONFIG = {
       week: 6,
       htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
-    "s2-stretch": {
+    "s2-networking-prep": {
       canvasId: "",
-      title: "S2: Stretch Challenge",
-      dueDate: "2026-02-27",
+      title: "S2: Networking Event Preparation",
+      dueDate: "2026-03-02",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 6,
+      htmlFile: "assignments/s2-w6-networking-prep.html"
+    },
+    "s2-networking-report": {
+      canvasId: "",
+      title: "S2: Networking Event Report",
+      dueDate: "2026-03-05",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-stretch.html"
+      htmlFile: "assignments/s2-w7-networking-report.html"
     },
-    "s2-checkin-doc": {
+    "s2-reflection-6": {
       canvasId: "",
-      title: "S2: Check-in Documentation",
-      dueDate: "2026-03-01",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 7,
-      htmlFile: "assignments/s2-w7-checkin-doc.html"
-    },
-    "s2-reflection-5": {
-      canvasId: "",
-      title: "S2: Productive Reflection #5",
-      dueDate: "2026-03-03",
+      title: "S2: Productive Reflection #6",
+      dueDate: "2026-03-07",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
@@ -321,22 +345,34 @@ const CST349_CONFIG = {
       week: 7,
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
-    "s2-demo-validation": {
+    "s2-demo-slides": {
       canvasId: "",
-      title: "S2: Demonstration with Validation",
-      dueDate: "2026-03-06",
+      title: "S2: Demo Slide Builder",
+      dueDate: "2026-03-09",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Demonstration",
+      points: 5,
+      sprint: 2,
+      week: 7,
+      htmlFile: "assignments/s2-w7-demo-slides.html"
+    },
+    "s2-demo": {
+      canvasId: "",
+      title: "S2: Demonstration with Evidence",
+      dueDate: "2026-03-11",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Demonstration",
       points: 10,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-demo-validation.html"
+      htmlFile: "assignments/s2-w8-demo.html"
     },
     "s2-peer-eval": {
       canvasId: "",
       title: "S2: Peer Evaluation",
-      dueDate: "2026-03-08",
+      dueDate: "2026-03-11",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
@@ -347,8 +383,8 @@ const CST349_CONFIG = {
     },
     "s2-bridge-reflection-2": {
       canvasId: "",
-      title: "S2: Sprint 2-3 Bridge Reflection",
-      dueDate: "2026-03-10",
+      title: "S2: Sprint 2→3 Bridge Reflection",
+      dueDate: "2026-03-12",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
