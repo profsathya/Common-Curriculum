@@ -174,7 +174,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "assignments/s2-w5-bridge-reflection.html"
     },
     "s2-orientation": {
@@ -186,7 +186,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "activities/s2-orientation.html"
     },
     "s2-goal-setting-part1": {
@@ -198,7 +198,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 4,
       htmlFile: "assignments/s2-w5-goal-setting-part1.html"
     },
     "s2-goal-setting-part2": {
@@ -222,7 +222,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
-      week: 6,
+      week: 5,
       htmlFile: "assignments/s2-w6-discovery-doc.html"
     },
     "s2-assumption-audit": {
@@ -234,7 +234,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 6,
+      week: 5,
       htmlFile: "assignments/s2-w6-assumption-audit.html"
     },
     "s2-domain-learning": {
@@ -246,7 +246,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
-      week: 6,
+      week: 5,
       htmlFile: "assignments/s2-w6-domain-learning.html"
     },
     "s2-reflection-4": {
@@ -258,7 +258,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 6,
+      week: 5,
       htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
     "s2-prototype": {
@@ -270,7 +270,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
-      week: 7,
+      week: 6,
       htmlFile: "assignments/s2-w7-prototype.html"
     },
     "s2-design-rationale": {
@@ -282,7 +282,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 7,
+      week: 6,
       htmlFile: "assignments/s2-w7-design-rationale.html"
     },
     "s2-partner-feedback": {
@@ -294,7 +294,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 7,
+      week: 6,
       htmlFile: "assignments/s2-w7-partner-feedback.html"
     },
     "s2-reflection-5": {
@@ -306,7 +306,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 7,
+      week: 6,
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
     "s2-human-value": {
@@ -318,7 +318,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Demonstration",
       points: 10,
       sprint: 2,
-      week: 8,
+      week: 7,
       htmlFile: "assignments/s2-w8-human-value.html"
     },
     "s2-partner-eval": {
@@ -330,7 +330,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 8,
+      week: 7,
       htmlFile: "assignments/s2-w8-partner-eval.html"
     },
     "s2-bridge-reflection-2": {
@@ -342,7 +342,7 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 8,
+      week: 7,
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
 
