@@ -283,7 +283,7 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-evidence-design.html"
+      htmlFile: "activities/s2-evidence-design.html"
     },
     "s2-triad-checkin-1": {
       canvasId: "582793",
