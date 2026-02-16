@@ -223,7 +223,7 @@ const CST395_CONFIG = {
       points: 10,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w6-discovery-doc.html"
+      htmlFile: "assignments/s2-w5-discovery-doc.html"
     },
     "s2-assumption-audit": {
       canvasId: "",
@@ -234,20 +234,8 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 6,
       htmlFile: "assignments/s2-w6-assumption-audit.html"
-    },
-    "s2-domain-learning": {
-      canvasId: "",
-      title: "S2: Domain Learning Plan",
-      dueDate: "2026-02-22",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Goal Setting",
-      points: 5,
-      sprint: 2,
-      week: 5,
-      htmlFile: "assignments/s2-w6-domain-learning.html"
     },
     "s2-reflection-4": {
       canvasId: "",
@@ -258,44 +246,56 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 5,
+      week: 6,
       htmlFile: "assignments/s2-w6-productive-reflection.html"
+    },
+    "s2-prep-w6": {
+      canvasId: "",
+      title: "S2: Week 6 Preparation",
+      dueDate: "2026-02-25",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 6,
+      htmlFile: "assignments/s2-w6-prep.html"
+    },
+    "s2-demo-design": {
+      canvasId: "",
+      title: "S2: Demo Design",
+      dueDate: "2026-02-27",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Goal Setting",
+      points: 5,
+      sprint: 2,
+      week: 6,
+      htmlFile: "assignments/s2-w6-demo-design.html"
+    },
+    "s2-domain-learning": {
+      canvasId: "",
+      title: "S2: Domain Learning Plan",
+      dueDate: "2026-02-28",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 7,
+      htmlFile: "assignments/s2-w7-domain-learning.html"
     },
     "s2-prototype": {
       canvasId: "",
-      title: "S2: Prototype + Build Log",
-      dueDate: "2026-02-27",
+      title: "S2: Prototype v1 + Build Log",
+      dueDate: "2026-03-01",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 10,
       sprint: 2,
-      week: 6,
+      week: 7,
       htmlFile: "assignments/s2-w7-prototype.html"
-    },
-    "s2-design-rationale": {
-      canvasId: "",
-      title: "S2: Design Rationale Log",
-      dueDate: "2026-03-01",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 6,
-      htmlFile: "assignments/s2-w7-design-rationale.html"
-    },
-    "s2-partner-feedback": {
-      canvasId: "",
-      title: "S2: Partner Feedback Documentation",
-      dueDate: "2026-03-01",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 6,
-      htmlFile: "assignments/s2-w7-partner-feedback.html"
     },
     "s2-reflection-5": {
       canvasId: "",
@@ -306,44 +306,68 @@ const CST395_CONFIG = {
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 6,
+      week: 7,
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
-    "s2-human-value": {
+    "s2-partner-feedback": {
       canvasId: "",
-      title: "S2: Human Value Statement",
+      title: "S2: Partner Feedback Documentation",
       dueDate: "2026-03-06",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Demonstration",
-      points: 10,
-      sprint: 2,
-      week: 7,
-      htmlFile: "assignments/s2-w8-human-value.html"
-    },
-    "s2-partner-eval": {
-      canvasId: "",
-      title: "S2: Partner Evaluation",
-      dueDate: "2026-03-08",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
       points: 5,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w8-partner-eval.html"
+      htmlFile: "assignments/s2-w7-partner-feedback.html"
+    },
+    "s2-design-rationale": {
+      canvasId: "",
+      title: "S2: Design Rationale Log",
+      dueDate: "2026-03-07",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 8,
+      htmlFile: "assignments/s2-w8-design-rationale.html"
+    },
+    "s2-demo-prep": {
+      canvasId: "",
+      title: "S2: Final Prototype + Demo Prep",
+      dueDate: "2026-03-08",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Demonstration",
+      points: 10,
+      sprint: 2,
+      week: 8,
+      htmlFile: "assignments/s2-w8-demo-prep.html"
     },
     "s2-bridge-reflection-2": {
       canvasId: "",
-      title: "S2: Sprint 2-3 Bridge Reflection",
+      title: "S2: Sprint 2→3 Bridge Reflection",
       dueDate: "2026-03-10",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
       points: 5,
       sprint: 2,
-      week: 7,
+      week: 8,
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
+    },
+    "s2-partner-eval": {
+      canvasId: "",
+      title: "S2: Partner Evaluation",
+      dueDate: "2026-03-11",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Demonstration",
+      points: 5,
+      sprint: 2,
+      week: 8,
+      htmlFile: "assignments/s2-w8-partner-eval.html"
     },
 
     // Sprint 3

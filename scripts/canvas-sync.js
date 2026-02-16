@@ -683,6 +683,11 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
 
   console.log(`Canvas Course ID: ${courseId}`);
 
+  // Get assignment groups for mapping
+  const assignmentGroups = await api.listAssignmentGroups(courseId);
+  const groupByName = new Map(assignmentGroups.map(g => [g.name.toLowerCase(), g]));
+  const groupById = new Map(assignmentGroups.map(g => [String(g.id), g]));
+
   // Fetch existing assignments from Canvas
   console.log('\nFetching existing assignments from Canvas...');
   const canvasAssignments = await api.listAssignments(courseId);
@@ -773,6 +778,17 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
       assignmentData.points_possible = entry.points;
     } else {
       assignmentData.points_possible = 100;
+    }
+
+    // Find assignment group
+    if (entry.assignmentGroup) {
+      const group = groupByName.get(entry.assignmentGroup.toLowerCase()) ||
+                    groupById.get(String(entry.assignmentGroup));
+      if (group) {
+        assignmentData.assignment_group_id = group.id;
+      } else {
+        console.log(`  ⚠ Warning: Assignment group "${entry.assignmentGroup}" not found`);
+      }
     }
 
     // Add iframe description if htmlFile is specified
