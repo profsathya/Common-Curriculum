@@ -250,7 +250,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting.html"
     },
     "s2-group-rules": {
-      canvasId: "",
+      canvasId: "582790",
       title: "S2: Group Rules & Check-in Plan",
       dueDate: "2026-02-19",
       type: "assignment",
@@ -262,7 +262,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-group-rules.html"
     },
     "s2-reflection-4": {
-      canvasId: "",
+      canvasId: "582791",
       title: "S2: Productive Reflection #4",
       dueDate: "2026-02-21",
       type: "reflection",
@@ -274,7 +274,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w5-productive-reflection.html"
     },
     "s2-evidence-design": {
-      canvasId: "",
+      canvasId: "582792",
       title: "S2: Evidence Design — What Will You Demonstrate?",
       dueDate: "2026-02-23",
       type: "assignment",
@@ -286,7 +286,7 @@ const CST349_CONFIG = {
       htmlFile: "activities/s2-evidence-design.html"
     },
     "s2-triad-checkin-1": {
-      canvasId: "",
+      canvasId: "582793",
       title: "S2: Triad Check-in #1",
       dueDate: "2026-02-26",
       type: "assignment",
@@ -298,7 +298,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-triad-checkin.html"
     },
     "s2-reflection-5": {
-      canvasId: "",
+      canvasId: "582794",
       title: "S2: Productive Reflection #5",
       dueDate: "2026-02-28",
       type: "reflection",
@@ -310,7 +310,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
     "s2-networking-prep": {
-      canvasId: "",
+      canvasId: "582795",
       title: "S2: Networking Event Preparation",
       dueDate: "2026-03-02",
       type: "assignment",
@@ -322,7 +322,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w6-networking-prep.html"
     },
     "s2-networking-report": {
-      canvasId: "",
+      canvasId: "582796",
       title: "S2: Networking Event Report",
       dueDate: "2026-03-05",
       type: "assignment",
@@ -334,7 +334,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-networking-report.html"
     },
     "s2-reflection-6": {
-      canvasId: "",
+      canvasId: "582797",
       title: "S2: Productive Reflection #6",
       dueDate: "2026-03-07",
       type: "reflection",
@@ -346,7 +346,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
     "s2-demo-slides": {
-      canvasId: "",
+      canvasId: "582798",
       title: "S2: Demo Slide Builder",
       dueDate: "2026-03-09",
       type: "assignment",
@@ -358,7 +358,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w7-demo-slides.html"
     },
     "s2-demo": {
-      canvasId: "",
+      canvasId: "582799",
       title: "S2: Demonstration with Evidence",
       dueDate: "2026-03-11",
       type: "assignment",
@@ -370,7 +370,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w8-demo.html"
     },
     "s2-peer-eval": {
-      canvasId: "",
+      canvasId: "582800",
       title: "S2: Peer Evaluation",
       dueDate: "2026-03-11",
       type: "assignment",
@@ -382,7 +382,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w8-peer-eval.html"
     },
     "s2-bridge-reflection-2": {
-      canvasId: "",
+      canvasId: "582801",
       title: "S2: Sprint 2→3 Bridge Reflection",
       dueDate: "2026-03-12",
       type: "reflection",
