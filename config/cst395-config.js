@@ -268,7 +268,7 @@ const CST395_CONFIG = {
     },
     "s2-discovery-doc": {
       canvasId: "582875",
-      title: "S2: Discovery Documentation",
+      title: "S2: Discovery Deep Dive",
       dueDate: "2026-02-20",
       type: "assignment",
       canvasType: "assignment",
