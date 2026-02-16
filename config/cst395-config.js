@@ -163,6 +163,59 @@ const CST395_CONFIG = {
       week: 4,
       htmlFile: "activities/sprint-1-demo.html"
     },
+    "s1-w3-design-decision": {
+      canvasId: "581583",
+      title: "S1: Design Decision Analysis",
+      dueDate: "2026-02-07",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Check-in/Engagement",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "activities/design-decision-analysis.html"
+    },
+    "s1-w3-dojo-depth": {
+      canvasId: "581584",
+      title: "S1: Dojo Depth Session",
+      dueDate: "2026-02-08",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-dojo-depth.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload your Dojo session JSON file. This should include your Reflector-approved answer demonstrating: (1) a design opportunity (not willpower), (2) stakeholder-informed design, (3) specific rather than generic solution, and (4) progress evidence.",
+          "points": 5
+        }
+      ]
+    },
+    "s1-w3-reflection": {
+      canvasId: "581585",
+      title: "S1: Productive Reflection #3",
+      dueDate: "2026-02-09",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
+      assignmentGroup: "Sprint 1: Productive Reflections",
+      points: 5,
+      sprint: 1,
+      week: 3,
+      htmlFile: "assignments/s1-w3-productive-reflection.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload a clear photo of your handwritten reflection. Make sure all text is legible. Your reflection should include: (1) draft of your demo answer for the required question, (2) your chosen optional question and draft answer, (3) what you know about yourself that a stranger would miss, and (4) what's still weak in your demo preparation.",
+          "points": 5
+        }
+      ]
+    },
 
     // Sprint 2
     "s2-bridge-reflection-1": {
@@ -368,173 +421,6 @@ const CST395_CONFIG = {
       sprint: 2,
       week: 8,
       htmlFile: "assignments/s2-w8-partner-eval.html"
-    },
-
-    // Sprint 3
-    "s3-domain-selection": {
-      canvasId: "300001",
-      title: "S3: Domain Selection",
-      dueDate: "2025-03-26",
-      type: "assignment"
-    },
-    "s3-reflection-1": {
-      canvasId: "300002",
-      title: "S3: Productive Reflection #1",
-      dueDate: "2025-03-28",
-      type: "reflection"
-    },
-    "s3-stakeholder-research": {
-      canvasId: "300003",
-      title: "S3: Stakeholder Research",
-      dueDate: "2025-04-02",
-      type: "assignment"
-    },
-    "s3-reflection-2": {
-      canvasId: "300004",
-      title: "S3: Productive Reflection #2",
-      dueDate: "2025-04-04",
-      type: "reflection"
-    },
-    "s3-mvp": {
-      canvasId: "300005",
-      title: "S3: Minimum Viable Product",
-      dueDate: "2025-04-09",
-      type: "assignment"
-    },
-    "s3-build-log": {
-      canvasId: "300006",
-      title: "S3: Build Log Entry",
-      dueDate: "2025-04-11",
-      type: "reflection"
-    },
-    "s3-presentation": {
-      canvasId: "300007",
-      title: "S3: Solution Presentation",
-      dueDate: "2025-04-16",
-      type: "assignment"
-    },
-    "s3-human-value": {
-      canvasId: "300008",
-      title: "S3: Human Value Statement",
-      dueDate: "2025-04-17",
-      type: "reflection"
-    },
-    "s3-bridge": {
-      canvasId: "300009",
-      title: "Bridge Reflection: Complexity → Mastery",
-      dueDate: "2025-04-18",
-      type: "bridge"
-    },
-
-    // Sprint 4
-    "s4-problem-definition": {
-      canvasId: "400001",
-      title: "S4: Problem Definition",
-      dueDate: "2025-04-23",
-      type: "assignment"
-    },
-    "s4-reflection-1": {
-      canvasId: "400002",
-      title: "S4: Productive Reflection #1",
-      dueDate: "2025-04-25",
-      type: "reflection"
-    },
-    "s4-execution-plan": {
-      canvasId: "400003",
-      title: "S4: Execution Plan",
-      dueDate: "2025-04-30",
-      type: "assignment"
-    },
-    "s4-reflection-2": {
-      canvasId: "400004",
-      title: "S4: Productive Reflection #2",
-      dueDate: "2025-05-02",
-      type: "reflection"
-    },
-    "s4-final-solution": {
-      canvasId: "400005",
-      title: "S4: Final Solution",
-      dueDate: "2025-05-07",
-      type: "assignment"
-    },
-    "s4-build-log": {
-      canvasId: "400006",
-      title: "S4: Build Log Entry",
-      dueDate: "2025-05-09",
-      type: "reflection"
-    },
-    "s4-final-presentation": {
-      canvasId: "400007",
-      title: "S4: Final Presentation",
-      dueDate: "2025-05-14",
-      type: "assignment"
-    },
-    "s4-portfolio": {
-      canvasId: "400008",
-      title: "S4: Portfolio Reflection",
-      dueDate: "2025-05-15",
-      type: "reflection"
-    },
-    "s4-course-reflection": {
-      canvasId: "400009",
-      title: "Course Reflection: Full Journey",
-      dueDate: "2025-05-16",
-      type: "bridge"
-    },
-
-    // Sprint 1
-    "s1-w3-design-decision": {
-      canvasId: "581583",
-      title: "S1: Design Decision Analysis",
-      dueDate: "2026-02-07",
-      type: "quiz",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Check-in/Engagement",
-      points: 5,
-      sprint: 1,
-      week: 3,
-      htmlFile: "activities/design-decision-analysis.html"
-    },
-    "s1-w3-dojo-depth": {
-      canvasId: "581584",
-      title: "S1: Dojo Depth Session",
-      dueDate: "2026-02-08",
-      type: "quiz",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Productive Reflections",
-      points: 5,
-      sprint: 1,
-      week: 3,
-      htmlFile: "assignments/s1-w3-dojo-depth.html",
-      questions: [
-        {
-          "type": "file_upload",
-          "text": "Upload your Dojo session JSON file. This should include your Reflector-approved answer demonstrating: (1) a design opportunity (not willpower), (2) stakeholder-informed design, (3) specific rather than generic solution, and (4) progress evidence.",
-          "points": 5
-        }
-      ]
-    },
-    "s1-w3-reflection": {
-      canvasId: "581585",
-      title: "S1: Productive Reflection #3",
-      dueDate: "2026-02-09",
-      type: "quiz",
-      canvasType: "quiz",
-      quizType: "graded_survey",
-      assignmentGroup: "Sprint 1: Productive Reflections",
-      points: 5,
-      sprint: 1,
-      week: 3,
-      htmlFile: "assignments/s1-w3-productive-reflection.html",
-      questions: [
-        {
-          "type": "file_upload",
-          "text": "Upload a clear photo of your handwritten reflection. Make sure all text is legible. Your reflection should include: (1) draft of your demo answer for the required question, (2) your chosen optional question and draft answer, (3) what you know about yourself that a stranger would miss, and (4) what's still weak in your demo preparation.",
-          "points": 5
-        }
-      ]
     }
   },
 
@@ -577,10 +463,10 @@ const CST395_CONFIG = {
     2: { start: "2026-01-25", end: "2026-01-31", sprint: 1, title: "Understanding Before Building" },
     3: { start: "2026-02-01", end: "2026-02-07", sprint: 1, title: "Strategic Building" },
     4: { start: "2026-02-08", end: "2026-02-14", sprint: 1, title: "Reflection & Human Value" },
-    5: { start: "2026-02-09", end: "2026-02-16", sprint: 2, title: "Sprint 1 Demo + Sprint 2 Launch" },
-    6: { start: "2026-02-17", end: "2026-02-24", sprint: 2, title: "Discovery & Domain Learning" },
-    7: { start: "2026-02-25", end: "2026-03-03", sprint: 2, title: "Building & Iteration" },
-    8: { start: "2026-03-04", end: "2026-03-10", sprint: 2, title: "Value Through Another's Eyes" },
+    5: { start: "2026-02-15", end: "2026-02-21", sprint: 2, title: "Partner Discovery" },
+    6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "Discovery & Domain Learning" },
+    7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Building & Iteration" },
+    8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Value Through Another's Eyes" },
     9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Entering Unfamiliar Territory" },
     10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Stakeholder Discovery Without Access" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Simple Over Sophisticated" },
