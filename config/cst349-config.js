@@ -277,13 +277,21 @@ const CST349_CONFIG = {
       canvasId: "",
       title: "S2: Evidence Design — What Will You Demonstrate?",
       dueDate: "2026-02-23",
-      type: "assignment",
-      canvasType: "assignment",
+      type: "quiz",
+      canvasType: "quiz",
+      quizType: "graded_survey",
       assignmentGroup: "Sprint 2: Goal Setting",
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-evidence-design.html"
+      htmlFile: "activities/s2-evidence-design.html",
+      questions: [
+        {
+          "type": "file_upload",
+          "text": "Upload your Evidence Design JSON file from the AI-guided activity. Your file should include your responses to all 4 evidence design questions and the AI feedback you used to deepen your thinking.",
+          "points": 5
+        }
+      ]
     },
     "s2-triad-checkin-1": {
       canvasId: "",
