@@ -267,7 +267,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-goal-setting-part2.html"
     },
     "s2-discovery-doc": {
-      canvasId: "",
+      canvasId: "582875",
       title: "S2: Discovery Documentation",
       dueDate: "2026-02-20",
       type: "assignment",
@@ -279,7 +279,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w5-discovery-doc.html"
     },
     "s2-assumption-audit": {
-      canvasId: "",
+      canvasId: "582876",
       title: "S2: Assumption Audit",
       dueDate: "2026-02-22",
       type: "assignment",
@@ -291,7 +291,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w6-assumption-audit.html"
     },
     "s2-reflection-4": {
-      canvasId: "",
+      canvasId: "582877",
       title: "S2: Productive Reflection #4",
       dueDate: "2026-02-24",
       type: "reflection",
@@ -303,7 +303,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w6-productive-reflection.html"
     },
     "s2-prep-w6": {
-      canvasId: "",
+      canvasId: "582878",
       title: "S2: Week 6 Preparation",
       dueDate: "2026-02-25",
       type: "assignment",
@@ -315,7 +315,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w6-prep.html"
     },
     "s2-demo-design": {
-      canvasId: "",
+      canvasId: "582879",
       title: "S2: Demo Design",
       dueDate: "2026-02-27",
       type: "assignment",
@@ -327,7 +327,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w6-demo-design.html"
     },
     "s2-domain-learning": {
-      canvasId: "",
+      canvasId: "582880",
       title: "S2: Domain Learning Plan",
       dueDate: "2026-02-28",
       type: "assignment",
@@ -339,7 +339,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w7-domain-learning.html"
     },
     "s2-prototype": {
-      canvasId: "",
+      canvasId: "582881",
       title: "S2: Prototype v1 + Build Log",
       dueDate: "2026-03-01",
       type: "assignment",
@@ -351,7 +351,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w7-prototype.html"
     },
     "s2-reflection-5": {
-      canvasId: "",
+      canvasId: "582882",
       title: "S2: Productive Reflection #5",
       dueDate: "2026-03-03",
       type: "reflection",
@@ -363,7 +363,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
     "s2-partner-feedback": {
-      canvasId: "",
+      canvasId: "582883",
       title: "S2: Partner Feedback Documentation",
       dueDate: "2026-03-06",
       type: "assignment",
@@ -375,7 +375,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w7-partner-feedback.html"
     },
     "s2-design-rationale": {
-      canvasId: "",
+      canvasId: "582884",
       title: "S2: Design Rationale Log",
       dueDate: "2026-03-07",
       type: "assignment",
@@ -387,7 +387,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w8-design-rationale.html"
     },
     "s2-demo-prep": {
-      canvasId: "",
+      canvasId: "582885",
       title: "S2: Final Prototype + Demo Prep",
       dueDate: "2026-03-08",
       type: "assignment",
@@ -399,7 +399,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w8-demo-prep.html"
     },
     "s2-bridge-reflection-2": {
-      canvasId: "",
+      canvasId: "582886",
       title: "S2: Sprint 2→3 Bridge Reflection",
       dueDate: "2026-03-10",
       type: "reflection",
@@ -411,7 +411,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
     "s2-partner-eval": {
-      canvasId: "",
+      canvasId: "582887",
       title: "S2: Partner Evaluation",
       dueDate: "2026-03-11",
       type: "assignment",
