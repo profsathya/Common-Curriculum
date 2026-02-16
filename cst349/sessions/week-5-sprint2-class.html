@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5: Accountability Setup | CST349</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-dark: #0f1419;
+      --bg-section: #1a2332;
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --indigo-700: #4338ca;
+      --violet-400: #a78bfa;
+      --violet-500: #8b5cf6;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; line-height: 1.6; font-size: 20px; }
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,0.1); z-index: 100; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--indigo-500), var(--violet-500)); transition: width 0.3s ease; }
+    .nav-bar { position: fixed; top: 0; left: 0; right: 0; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 20, 25, 0.9); backdrop-filter: blur(8px); z-index: 99; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .nav-title { font-size: 16px; color: var(--text-secondary); }
+    .nav-title strong { color: var(--indigo-400); }
+    .nav-progress { font-size: 16px; color: var(--text-muted); }
+    .nav-controls { display: flex; gap: 8px; }
+    .nav-btn { background: rgba(255,255,255,0.1); border: none; color: var(--text-primary); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; transition: all 0.2s; }
+    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .section { min-height: 100vh; padding: 80px 48px 40px; display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .section-content { max-width: 1100px; width: 100%; }
+    .section-label { font-size: 16px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--indigo-400); margin-bottom: 16px; }
+    h1 { font-size: clamp(40px, 7vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+    h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
+    .subtitle { font-size: clamp(22px, 3vw, 28px); color: var(--text-secondary); max-width: 700px; }
+    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 32px; }
+    .activity-card h3 { font-size: 26px; color: var(--indigo-400); margin-bottom: 16px; }
+    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 22px; }
+    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 22px; }
+    .activity-card li { margin-bottom: 12px; }
+    .highlight-quote { background: linear-gradient(135deg, var(--indigo-700) 0%, var(--indigo-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 32px; text-align: center; }
+    .highlight-quote p { font-size: 24px; font-weight: 500; margin: 0; }
+    .timer-container { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
+    .timer-display { font-size: 72px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--indigo-400); min-width: 160px; text-align: center; }
+    .timer-btn { background: var(--indigo-600); border: none; color: white; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+    .timer-btn:hover { background: var(--indigo-500); }
+    .timer-btn.reset { background: rgba(255,255,255,0.1); }
+    .click-hint { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .click-hint kbd { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .tool-grid { grid-template-columns: 1fr; } }
+    .tool-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; }
+    .tool-card h4 { color: var(--indigo-400); font-size: 20px; margin-bottom: 8px; }
+    .tool-card p { color: var(--text-secondary); font-size: 18px; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <!-- Live Content Banner -->
+  <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+    Live content — may be updated until and even during class
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-title"><strong>CST349</strong> · Week 5 Session</div>
+    <div class="nav-progress" id="navProgress">1 of 8</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
+      <button class="nav-btn" id="nextBtn">Next →</button>
+    </div>
+  </nav>
+
+  <!-- Section 1: Title Slide -->
+  <section class="section active" data-section="1">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Week 5 · Accountability Setup</p>
+      <h1>Learning With<br><span style="color: var(--indigo-400);">Others</span></h1>
+      <p class="subtitle" style="margin: 0 auto;">Today you meet your triad, set up your tools, and start Sprint 2 for real.</p>
+    </div>
+  </section>
+
+  <!-- Section 2: Opening Reflection -->
+  <section class="section" data-section="2">
+    <div class="section-content">
+      <p class="section-label">Opening · 5 minutes</p>
+      <h2>Handwritten Reflection</h2>
+      <p class="subtitle">In your notebook. No talking.</p>
+
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay1">5:00</div>
+        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
+      </div>
+
+      <div class="highlight-quote">
+        <p style="font-style: italic;">"What's the one thing from your Bridge Reflection you most want your group to know about you as a learner?"</p>
+      </div>
+
+      <div class="activity-card">
+        <p style="color: var(--text-primary);">This is for you and your triad. You'll share this in a few minutes when you meet your group.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Groups Announced -->
+  <section class="section" data-section="3">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Groups · 5 minutes</p>
+      <h2>Meet Your Triad</h2>
+      <p class="subtitle" style="margin: 0 auto;">Groups are announced. Find your triad and sit together.</p>
+
+      <div class="activity-card" style="text-align: left;">
+        <h3>Once you're seated together:</h3>
+        <ol>
+          <li>Introduce yourselves (even if you already know each other)</li>
+          <li>Share what you wrote in the opening reflection — <em>what do you want your group to know about you as a learner?</em></li>
+          <li>Listen. This is the first thing your group learns about each other.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Guided Conversation Demo -->
+  <section class="section" data-section="4">
+    <div class="section-content">
+      <p class="section-label">Instructor Demo · 15 minutes</p>
+      <h2>How to Ask Questions<br>That <span style="color: var(--indigo-400);">Go Deeper</span></h2>
+      <p class="subtitle">Watch how to help someone discover what they don't yet see about their skill choice.</p>
+
+      <div class="activity-card">
+        <h3>What You're Watching For</h3>
+        <p style="color: var(--text-primary);">Instructor + two volunteers model a conversation about someone's Sprint 2 skill. Pay attention to the follow-up questions:</p>
+        <ul>
+          <li><strong>"Why that skill specifically?"</strong> — Pushing past the first answer</li>
+          <li><strong>"What did Sprint 1 show you about it?"</strong> — Connecting to evidence</li>
+          <li><strong>"What would change if you actually got better at this?"</strong> — Testing if it matters</li>
+          <li><strong>"How would someone else know you improved?"</strong> — Forcing external evidence</li>
+        </ul>
+      </div>
+
+      <div class="highlight-quote">
+        <p>The goal isn't to interrogate. It's to ask questions that help someone see something they missed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Triad Conversations -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Triad Activity · 20 minutes</p>
+      <h2>Your Turn: Triad Conversations</h2>
+      <p class="subtitle">Each person shares their Sprint 2 skill and goals. Partners practice the question-asking you just saw modeled.</p>
+
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay2">20:00</div>
+        <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
+      </div>
+
+      <div class="activity-card">
+        <h3>~5-7 minutes per person</h3>
+        <ol>
+          <li><strong>Share</strong> your Sprint 2 skill choice and your goals</li>
+          <li><strong>Partners ask questions</strong> — use the patterns from the demo:
+            <ul style="margin-top: 8px;">
+              <li>Why that skill? What's behind the choice?</li>
+              <li>What would change if you actually improved?</li>
+              <li>How will someone else know you grew?</li>
+            </ul>
+          </li>
+          <li><strong>Rotate</strong> until everyone has shared</li>
+        </ol>
+      </div>
+
+      <div class="highlight-quote">
+        <p>Goal: each person leaves with at least one question about their skill they hadn't considered.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Group Rules & Plan -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">Group Activity · 10 minutes</p>
+      <h2>Group Rules & Plan</h2>
+      <p class="subtitle">Start writing the group agreement you'll use for the next 4 weeks.</p>
+
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay3">10:00</div>
+        <button class="timer-btn" id="timerBtn3" onclick="toggleTimer(3)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(3)">Reset</button>
+      </div>
+
+      <div class="activity-card">
+        <h3>Discuss and Draft</h3>
+        <p style="color: var(--text-primary);">Your group's norms and check-in template. Cover at minimum:</p>
+        <ul>
+          <li><strong>Communication</strong> — How will you reach each other? Response time expectations?</li>
+          <li><strong>Accountability</strong> — What happens when someone falls behind?</li>
+          <li><strong>Meetings</strong> — When and how, outside of class?</li>
+          <li><strong>Weekly check-in protocol</strong> — What's on the agenda each week?</li>
+        </ul>
+        <p style="margin-top: 16px;">You'll finish and submit this by <strong>Thursday, Feb 19</strong>. Use class time to get the hard conversations started face-to-face.</p>
+        <a href="../assignments/s2-w5-group-rules.html" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: var(--indigo-400); text-decoration: none; font-size: 18px; margin-top: 16px;">→ Full assignment details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Dojo Setup + AI Tools -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">Setup + Exploration · 30 minutes</p>
+      <h2>Your AI<br><span style="color: var(--indigo-400);">Learning Partners</span></h2>
+      <p class="subtitle">Set up the tools you'll use throughout Sprint 2. These aren't replacements for thinking — they're partners for going deeper.</p>
+
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay4">30:00</div>
+        <button class="timer-btn" id="timerBtn4" onclick="toggleTimer(4)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(4)">Reset</button>
+      </div>
+
+      <div class="activity-card">
+        <h3>Step 1: Portable Dojo Setup</h3>
+        <p style="color: var(--text-primary);">Set up the <a href="https://dojo.symbioticthinking.ai" target="_blank" style="color: var(--indigo-400);">Symbiotic Thinking Dojo</a> structure in your preferred chatbot (ChatGPT, Claude, etc.). We'll walk through this together.</p>
+        <p>The Dojo's approach — enter a response, get AI feedback, go deeper — is how you'll verify your thinking throughout the sprint.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>Step 2: Explore Learning Tools</h3>
+        <p style="color: var(--text-primary);">Set up at least one of these. Your goal: have it ready to use this week, not just bookmarked.</p>
+        <div class="tool-grid">
+          <div class="tool-card">
+            <h4>NotebookLM</h4>
+            <p>Upload your Sprint 1 reflections and goals. Ask it questions about patterns in your own writing.</p>
+          </div>
+          <div class="tool-card">
+            <h4>ChatGPT Learning Mode</h4>
+            <p>Tutoring-style conversations that ask you questions instead of giving answers.</p>
+          </div>
+          <div class="tool-card">
+            <h4>Claude Projects</h4>
+            <p>Create a project with your Sprint 2 goals. Use it as a thinking partner for evidence design.</p>
+          </div>
+          <div class="tool-card">
+            <h4>Learn-About Features</h4>
+            <p>Explore domain-specific learning tools that help you build knowledge in your skill area.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-quote">
+        <p>These are your learning partners for the sprint — set them up now so you actually use them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Closing Reflection -->
+  <section class="section" data-section="8">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Closing · 5 minutes</p>
+      <h2>Handwritten Reflection</h2>
+      <p class="subtitle" style="margin: 0 auto;">In your notebook. No talking.</p>
+
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay5">5:00</div>
+        <button class="timer-btn" id="timerBtn5" onclick="toggleTimer(5)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(5)">Reset</button>
+      </div>
+
+      <div class="highlight-quote">
+        <p style="font-style: italic;">"What question did your triad ask you that you couldn't answer? That's where your learning is."</p>
+      </div>
+
+      <div class="activity-card" style="text-align: left;">
+        <h3>This Week</h3>
+        <ul>
+          <li><strong>Thu, Feb 19:</strong> Group Rules & Check-in Plan (one per group)</li>
+          <li><strong>Sat, Feb 21:</strong> Productive Reflection #4</li>
+          <li><strong>Mon, Feb 23:</strong> Evidence Design (AI-guided activity)</li>
+        </ul>
+        <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--indigo-400); text-decoration: none; font-size: 18px; margin-top: 16px;">→ Full Sprint 2 details on the Landing Page</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
+
+  <script>
+    let currentSection = 1;
+    const totalSections = document.querySelectorAll('.section').length;
+    const sections = document.querySelectorAll('.section');
+    const progressFill = document.getElementById('progressFill');
+    const navProgress = document.getElementById('navProgress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const timers = {
+      1: { running: false, seconds: 300, defaultSeconds: 300, interval: null },
+      2: { running: false, seconds: 1200, defaultSeconds: 1200, interval: null },
+      3: { running: false, seconds: 600, defaultSeconds: 600, interval: null },
+      4: { running: false, seconds: 1800, defaultSeconds: 1800, interval: null },
+      5: { running: false, seconds: 300, defaultSeconds: 300, interval: null }
+    };
+
+    const timerLabels = {
+      1: 'Start',
+      2: 'Start',
+      3: 'Start',
+      4: 'Start',
+      5: 'Start'
+    };
+
+    function goToSection(n) {
+      if (n < 1 || n > totalSections) return;
+      sections.forEach(s => s.classList.remove('active'));
+      document.querySelector(`[data-section="${n}"]`).classList.add('active');
+      currentSection = n;
+      progressFill.style.width = `${(currentSection / totalSections) * 100}%`;
+      navProgress.textContent = `${currentSection} of ${totalSections}`;
+      prevBtn.disabled = currentSection === 1;
+      nextBtn.disabled = currentSection === totalSections;
+    }
+
+    prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
+    nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
+    });
+
+    function toggleTimer(id) {
+      const timer = timers[id];
+      const btn = document.getElementById(`timerBtn${id}`);
+      if (timer.running) {
+        clearInterval(timer.interval);
+        btn.textContent = 'Resume';
+        timer.running = false;
+      } else {
+        timer.interval = setInterval(() => {
+          timer.seconds--;
+          updateTimerDisplay(id);
+          if (timer.seconds <= 0) {
+            clearInterval(timer.interval);
+            btn.textContent = 'Done!';
+            timer.running = false;
+          }
+        }, 1000);
+        btn.textContent = 'Pause';
+        timer.running = true;
+      }
+    }
+
+    function resetTimer(id) {
+      const timer = timers[id];
+      clearInterval(timer.interval);
+      timer.seconds = timer.defaultSeconds;
+      timer.running = false;
+      document.getElementById(`timerBtn${id}`).textContent = timerLabels[id];
+      updateTimerDisplay(id);
+    }
+
+    function updateTimerDisplay(id) {
+      const timer = timers[id];
+      const mins = Math.floor(timer.seconds / 60);
+      const secs = timer.seconds % 60;
+      document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+  </script>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--indigo-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
