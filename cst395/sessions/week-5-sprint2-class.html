@@ -13,6 +13,8 @@
       --teal-500: #14b8a6;
       --teal-600: #0d9488;
       --teal-700: #0f766e;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
       --text-primary: #f1f5f9;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
@@ -36,15 +38,43 @@
     h1 { font-size: clamp(40px, 7vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
     h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
     .subtitle { font-size: clamp(22px, 3vw, 28px); color: var(--text-secondary); max-width: 700px; }
-    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 32px; }
-    .activity-card h3 { font-size: 26px; color: var(--teal-400); margin-bottom: 16px; }
-    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 22px; }
-    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 22px; }
-    .activity-card li { margin-bottom: 12px; }
-    .highlight-quote { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 32px; text-align: center; }
+    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 24px; }
+    .activity-card h3 { font-size: 24px; color: var(--teal-400); margin-bottom: 16px; }
+    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 20px; }
+    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 20px; }
+    .activity-card li { margin-bottom: 10px; }
+    .highlight-quote { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 24px; text-align: center; }
     .highlight-quote p { font-size: 24px; font-weight: 500; margin: 0; }
-    .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+    .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
     @media (max-width: 800px) { .two-column { grid-template-columns: 1fr; } }
+    /* Conversation sample styles */
+    .convo-container { margin-top: 20px; }
+    .convo-line { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+    .convo-speaker { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; min-width: 32px; padding-top: 3px; flex-shrink: 0; }
+    .convo-speaker.interviewer { color: var(--teal-400); }
+    .convo-speaker.partner { color: var(--amber-400); }
+    .convo-text { color: var(--text-secondary); font-size: 19px; line-height: 1.5; }
+    .convo-text em { color: var(--text-muted); font-style: italic; }
+    .convo-annotation { background: rgba(45, 212, 191, 0.1); border-left: 3px solid var(--teal-500); padding: 10px 16px; margin: 8px 0 16px 44px; border-radius: 0 8px 8px 0; }
+    .convo-annotation p { font-size: 16px; color: var(--teal-400); margin: 0; font-style: italic; }
+    .convo-insight { background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 12px; padding: 20px; margin-top: 20px; }
+    .convo-insight p { font-size: 18px; color: var(--amber-400); margin: 0; }
+    .convo-insight strong { color: var(--amber-500); }
+    /* Moves framework */
+    .move-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; }
+    .move-number { display: inline-block; background: var(--teal-600); color: white; width: 36px; height: 36px; border-radius: 50%; text-align: center; line-height: 36px; font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+    .move-card h4 { font-size: 20px; color: var(--text-primary); margin-bottom: 8px; }
+    .move-card p { font-size: 17px; color: var(--text-secondary); margin: 0; }
+    .move-card .example { color: var(--teal-400); font-style: italic; margin-top: 8px; }
+    /* Scope styles */
+    .scope-yes, .scope-no { border-radius: 12px; padding: 24px; }
+    .scope-yes { background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45, 212, 191, 0.3); }
+    .scope-no { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .scope-yes h4 { color: var(--teal-400); font-size: 20px; margin-bottom: 12px; }
+    .scope-no h4 { color: #f87171; font-size: 20px; margin-bottom: 12px; }
+    .scope-yes li, .scope-no li { font-size: 18px; margin-bottom: 8px; }
+    .scope-yes li { color: var(--text-secondary); }
+    .scope-no li { color: var(--text-secondary); }
     .timer-container { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
     .timer-display { font-size: 72px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--teal-400); min-width: 160px; text-align: center; }
     .timer-btn { background: var(--teal-600); border: none; color: white; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -52,25 +82,29 @@
     .timer-btn.reset { background: rgba(255,255,255,0.1); }
     .click-hint { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
     .click-hint kbd { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; }
+    /* Sample tabs */
+    .sample-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .sample-tab { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; transition: all 0.2s; }
+    .sample-tab:hover { background: rgba(255,255,255,0.1); }
+    .sample-tab.active { background: var(--teal-700); color: var(--teal-400); border-color: var(--teal-600); }
+    .sample-panel { display: none; }
+    .sample-panel.active { display: block; }
   </style>
 </head>
 <body>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
   <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
     Live content — may be updated until and even during class
   </div>
-
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST395</strong> · Week 5: Partner Discovery</div>
-    <div class="nav-progress" id="navProgress">1 of 8</div>
+    <div class="nav-progress" id="navProgress">1 / 12</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
   </nav>
-
-  <!-- Section 1: Title -->
+  <!-- ===================== SECTION 1: Title ===================== -->
   <section class="section active" data-section="1">
     <div class="section-content" style="text-align: center;">
       <p class="section-label">Week 5 · Partner Discovery</p>
@@ -78,30 +112,25 @@
       <p class="subtitle" style="margin: 0 auto;">Today you discover a real problem. The challenge: understand deeply enough to build something they couldn't ask for themselves.</p>
     </div>
   </section>
-
-  <!-- Section 2: Transparency -->
+  <!-- ===================== SECTION 2: Transparency ===================== -->
   <section class="section" data-section="2">
     <div class="section-content">
       <p class="section-label">A Note From Me</p>
       <h2>Transparency</h2>
-
       <div class="activity-card">
         <p style="color: var(--text-primary); font-size: 22px;">I want to be honest with you about where we are.</p>
         <p style="color: var(--text-primary); font-size: 22px;">I'm <strong>not certain</strong> this is the best approach. But I'm <strong>reasonably confident</strong> it's directionally right. I'm exploring — and part of what I'm exploring is how to push more into <em>human capabilities</em>: the things that matter more, not less, in a world with AI.</p>
         <p style="color: var(--text-primary); font-size: 22px;">That means I need something from you.</p>
       </div>
-
       <div class="highlight-quote">
         <p>I need you to be partners in this, not just students following instructions. Push back. Tell me what's working and what isn't. Explore alongside me.</p>
       </div>
-
       <div class="activity-card">
         <p style="color: var(--text-secondary); font-size: 20px;">This class is designed to be different. If you just follow my instructions without thinking about whether they make sense, you're missing the point. The skill we're building — figuring things out when there's no clear answer — starts right here, with how we run this class together.</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 3: Partner Announcement -->
+  <!-- ===================== SECTION 3: Partner Announcement + Scope ===================== -->
   <section class="section" data-section="3">
     <div class="section-content">
       <p class="section-label">Partner Assignment</p>
@@ -111,136 +140,408 @@
         <p style="color: var(--text-primary);">You'll work with this partner for the next 4 weeks. Your reflections and check-ins are pair-averaged — their effort affects your grade, and yours affects theirs.</p>
         <p>Your job: solve a real problem for them. Not what they ask for. What they actually need.</p>
       </div>
+      <div class="two-column" style="margin-top: 24px;">
+        <div class="scope-yes">
+          <h4>✓ We're looking for</h4>
+          <ul style="padding-left: 20px;">
+            <li>Friction in daily routines — what takes more time or energy than it should</li>
+            <li>Productivity gaps — where time disappears without results</li>
+            <li>Decision points that feel harder than they need to be</li>
+            <li>Habits they want but can't seem to build</li>
+            <li>Recurring frustrations in school, work, or daily life</li>
+          </ul>
+        </div>
+        <div class="scope-no">
+          <h4>✗ Not the focus here</h4>
+          <ul style="padding-left: 20px;">
+            <li>Deeply personal or relationship issues</li>
+            <li>Things entirely outside their control</li>
+            <li>Abstract wishes ("I want to be happier")</li>
+            <li>Problems that need professional help, not a classmate's project</li>
+          </ul>
+        </div>
+      </div>
       <div class="highlight-quote">
-        <p>The gap between what someone says they want and what they actually need — that's where design happens.</p>
+        <p>The question isn't "what's wrong with your life?" — it's "what's harder than it needs to be right now?"</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 4: Discovery Demo -->
+  <!-- ===================== SECTION 4: The Moves ===================== -->
   <section class="section" data-section="4">
     <div class="section-content">
-      <p class="section-label">Guided Demo</p>
-      <h2>Discovery Conversation</h2>
-      <p class="subtitle">Watch how a discovery conversation works. Then you'll do it with your partner.</p>
-      <div class="activity-card">
-        <h3>Key Moves</h3>
+      <p class="section-label">Discovery Technique</p>
+      <h2>The Four Moves</h2>
+      <p class="subtitle">A discovery conversation isn't random. There's a pattern.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px;">
+        <div class="move-card">
+          <div class="move-number">1</div>
+          <h4>Start with facts, not feelings</h4>
+          <p>Ask about time, routine, frequency. Things they can answer without introspection.</p>
+          <p class="example">"Walk me through a normal weekday." · "What are the top 3 things you spend time on outside class?"</p>
+        </div>
+        <div class="move-card">
+          <div class="move-number">2</div>
+          <h4>Ask for the last specific time</h4>
+          <p>Stories reveal what opinions hide. Don't ask what they think — ask what happened.</p>
+          <p class="example">"Tell me about the last time you tried to study and it didn't work." · "Walk me through the last job application you started."</p>
+        </div>
+        <div class="move-card">
+          <div class="move-number">3</div>
+          <h4>Follow the emotional beat</h4>
+          <p>When they hesitate, trail off, laugh uncomfortably, or say "I guess" — that's the signal. Go there.</p>
+          <p class="example">"You paused there — what happened?" · "You said 'I guess' — are you sure, or is something else going on?"</p>
+        </div>
+        <div class="move-card">
+          <div class="move-number">4</div>
+          <h4>Name what they can't see</h4>
+          <p>Reflect the pattern back. "So the problem isn't X, it's actually Y?" Let them confirm or correct.</p>
+          <p class="example">"So you have the time — the problem is deciding what to do with it?" · "It sounds like the issue isn't that companies aren't responding — it's that nothing in your application gives them a reason to pick you?"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 5: Sample 1 ===================== -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Sample Conversation 1</p>
+      <h2 style="font-size: 36px;">"I need to find a job"</h2>
+      <div class="activity-card" style="padding: 28px;">
+        <div class="convo-container">
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">What are the top three things you spend the most time on outside of class?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 1 — Start with facts. Easy to answer.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Uh... homework, applying to jobs, and probably just scrolling on my phone.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Which one do you think about the most — even when you're not doing it?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Probably jobs. It's always in the back of my mind.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">How's that going? Walk me through what's been happening.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">I've been submitting applications but I'm just not hearing back. It's frustrating.</span>
+          </div>
+          <div class="convo-annotation"><p>This is where most people stop. "Not hearing back" feels like the problem. Keep going.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">How many have you sent out roughly? And walk me through what you actually do when you apply — like the last one.</span>
+          </div>
+          <div class="convo-annotation"><p>Move 2 — Ask for the last specific time. Get concrete.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Maybe like 30? I find a posting, upload my resume, fill in the fields, sometimes write a quick cover letter, hit submit. Takes like 20 minutes each.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">What's different about your application compared to the other hundred people applying to the same posting?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">...I mean, I have my projects on my resume and my GPA is decent.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Do the other hundred applicants also have projects and decent GPAs?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 3 — The pause before the answer is the emotional beat. They're realizing something.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">...yeah, probably. I guess I don't really know what makes me different. I just apply and hope.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">So the problem isn't that companies aren't responding. It's that there's nothing in your application that gives them a reason to pick yours out of the pile? You're doing the volume but not the differentiation?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 4 — Name what they can't see.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">When you put it that way... yeah. I've been treating it like a numbers game but I have no idea what would actually make someone stop on mine.</span>
+          </div>
+        </div>
+        <div class="convo-insight">
+          <p><strong>Surface problem:</strong> "I'm applying but not hearing back"<br>
+          <strong>Real problem:</strong> No strategy for differentiation. Treating applications as volume game without understanding what makes a candidate stand out. Hasn't thought about their value proposition — what they specifically bring that others don't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 6: Sample 2 ===================== -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">Sample Conversation 2</p>
+      <h2 style="font-size: 36px;">"I don't know, everything's fine"</h2>
+      <div class="activity-card" style="padding: 28px;">
+        <div class="convo-container">
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">What's a normal Tuesday look like for you? Just walk me through it.</span>
+          </div>
+          <div class="convo-annotation"><p>Move 1 — Facts. A Tuesday. No introspection required.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Wake up, go to class, grab food, do homework, maybe play games, sleep.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Where in that day do you feel the most rushed or frustrated?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">I guess between classes. I have a gap but it's not long enough to do anything real so I just sit there.</span>
+          </div>
+          <div class="convo-annotation"><p>Move 3 — "I guess" is the signal. And notice the claim: "not long enough."</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">How long is the gap?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Like 90 minutes.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">That's not short. What do you actually do during it?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Check my phone. Maybe try to start homework but I can't focus because I know I have to leave soon.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">What would need to be different for that 90 minutes to feel usable?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 2 — Making the specific moment concrete. What's actually blocking them?</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">I think I just don't know what to work on. By the time I figure out what's due next, the gap is half over.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">So the problem isn't time — you actually have it. It's that deciding what to do with it takes so long the time disappears?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 4 — Name the real problem.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Huh. Yeah. Actually that happens with my whole evening too.</span>
+          </div>
+        </div>
+        <div class="convo-insight">
+          <p><strong>Surface problem:</strong> "Everything's fine" (no problem at all)<br>
+          <strong>Real problem:</strong> Decision fatigue about task prioritization. Has available time but loses it to the overhead of deciding what to do. Pattern repeats across the whole day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 7: Sample 3 ===================== -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">Sample Conversation 3</p>
+      <h2 style="font-size: 36px;">"School is stressful"</h2>
+      <div class="activity-card" style="padding: 28px;">
+        <div class="convo-container">
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Of all your classes right now, which one takes the most mental energy — not time, but energy?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 1 — Facts, with a useful distinction: time vs. energy.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Probably my database class. I spend hours on it and still feel lost.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Tell me about the last assignment. Walk me through exactly what happened.</span>
+          </div>
+          <div class="convo-annotation"><p>Move 2 — The last specific time.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">I sat down Saturday, opened the prompt, didn't understand it, Googled for like two hours, found some Stack Overflow stuff, tried to piece it together, it didn't work, and then I asked ChatGPT and it gave me something that worked but I don't know why.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">How did it feel submitting something that works but you don't understand?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 3 — The emotional beat is in the admission.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Honestly? Bad. But the deadline was there so...</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">Right after you read the prompt and felt lost — what did you do in that first moment? Before Googling?</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Nothing really. I just stared at it. I didn't even know what to search for.</span>
+          </div>
+          <div class="convo-line">
+            <span class="convo-speaker interviewer">Q</span>
+            <span class="convo-text">So the bottleneck isn't doing the work. It's that moment between "I don't understand this" and "I don't know what specifically I don't understand" — you can't break your confusion into questions?</span>
+          </div>
+          <div class="convo-annotation"><p>Move 4 — Name the specific cognitive gap.</p></div>
+          <div class="convo-line">
+            <span class="convo-speaker partner">A</span>
+            <span class="convo-text">Yeah! And then I waste hours on the wrong thing because I Googled the wrong question.</span>
+          </div>
+        </div>
+        <div class="convo-insight">
+          <p><strong>Surface problem:</strong> "School is stressful"<br>
+          <strong>Real problem:</strong> Can't decompose confusion into specific questions. The gap between "I'm lost" and "here's what I don't understand" is where all the wasted time lives. That's a solvable problem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 8: The Pattern ===================== -->
+  <section class="section" data-section="8">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">What to notice</p>
+      <h2>The Pattern</h2>
+      <div class="activity-card" style="text-align: left;">
+        <p style="color: var(--text-primary); font-size: 22px;">In every sample, the same thing happened:</p>
+        <ol style="font-size: 22px; color: var(--text-primary); margin-top: 16px;">
+          <li style="margin-bottom: 16px;">The first answer was <strong>vague and general</strong> — "not hearing back," "fine," "stressful"</li>
+          <li style="margin-bottom: 16px;">A specific story revealed <strong>where the friction actually lives</strong></li>
+          <li style="margin-bottom: 16px;">The real problem was <strong>something they couldn't see about themselves</strong></li>
+          <li style="margin-bottom: 16px;">The interviewer <strong>named it</strong>, and the partner was surprised by their own reaction</li>
+        </ol>
+      </div>
+      <div class="highlight-quote">
+        <p>Your partner's first answer is a starting point, not the answer. Your job is to get from the surface to the pattern underneath — without putting words in their mouth.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 9: Live Demo ===================== -->
+  <section class="section" data-section="9">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Live Demo</p>
+      <h2>Let's Try It</h2>
+      <p class="subtitle" style="margin: 0 auto;">I need two volunteers. I'll interview one of you while the class watches the moves in action.</p>
+      <div class="activity-card" style="text-align: left;">
+        <h3>What to watch for</h3>
         <ul>
-          <li><strong>Start broad:</strong> "What's something in your life that's harder than it should be?"</li>
-          <li><strong>Go deeper:</strong> "Why is that hard? What have you tried?"</li>
-          <li><strong>Listen for the gap:</strong> What they say vs. what they mean</li>
-          <li><strong>Note surprises:</strong> What didn't you expect?</li>
-          <li><strong>Get specific:</strong> Ask for examples, stories, moments</li>
+          <li>Where do I start? (Not with "what's your problem?")</li>
+          <li>When do I follow up vs. move on?</li>
+          <li>What do I do when the answer is vague?</li>
+          <li>How does the real problem emerge?</li>
+          <li>What questions would YOU have asked differently?</li>
         </ul>
       </div>
     </div>
   </section>
-
-  <!-- Section 5: Partner Conversation -->
-  <section class="section" data-section="5">
+  <!-- ===================== SECTION 10: Discovery Timer ===================== -->
+  <section class="section" data-section="10">
     <div class="section-content" style="text-align: center;">
-      <p class="section-label">Activity</p>
+      <p class="section-label">Your Turn</p>
       <h2>Discovery Session</h2>
-      <p class="subtitle" style="margin: 0 auto;">Interview your partner. Take notes. Listen more than you talk.</p>
-
+      <p class="subtitle" style="margin: 0 auto;">Interview your partner. Use the four moves. Listen more than you talk.</p>
       <div class="timer-container">
         <div class="timer-display" id="timerDisplay1">25:00</div>
         <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start Discovery</button>
         <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
       </div>
-
       <div class="highlight-quote">
         <p>Use your notebook and pen to take notes. Not your laptop, not your phone. Handwriting keeps you present in the conversation and forces you to capture what matters, not transcribe everything.</p>
       </div>
-
       <div class="activity-card" style="text-align: left;">
         <h3>Your Interview Guide</h3>
-        <p style="color: var(--text-primary);">Use the questions you prepared in Goal Setting Part I. But follow the conversation — your best questions will come from listening.</p>
+        <p style="color: var(--text-primary);">Start with the questions you prepared in Goal Setting Part I. But follow the conversation — your best questions will come from listening.</p>
         <ol>
-          <li>Start with your prepared opening question</li>
-          <li>Follow up on anything surprising or emotional</li>
-          <li>Write down specific quotes — their words, not your summary</li>
-          <li>Note body language and what they don't say</li>
-          <li>End with: "Is there anything I should have asked but didn't?"</li>
+          <li><strong>Start with facts:</strong> "Walk me through your day yesterday" or "What do you spend the most time on outside class?"</li>
+          <li><strong>Follow up on anything surprising or emotional</strong> — hesitations, "I guess," trailing off</li>
+          <li><strong>Ask for the last specific time</strong> something happened — not what they think in general</li>
+          <li><strong>Write down specific quotes</strong> — their words, not your summary</li>
+          <li><strong>Try naming what you see:</strong> "So the problem isn't X, it's actually Y?"</li>
+          <li>End with: <strong>"Is there anything I should have asked but didn't?"</strong></li>
         </ol>
       </div>
     </div>
   </section>
-
-  <!-- Section 6: Switch Roles -->
-  <section class="section" data-section="6">
+  <!-- ===================== SECTION 11: Switch ===================== -->
+  <section class="section" data-section="11">
     <div class="section-content" style="text-align: center;">
       <p class="section-label">Switch</p>
       <h2>Now You're the Stakeholder</h2>
-      <p class="subtitle" style="margin: 0 auto;">Your partner interviews you. Answer honestly — they're trying to find your real problem.</p>
-
+      <p class="subtitle" style="margin: 0 auto;">Your partner interviews you. Answer honestly — they're trying to find your real problem, not the polite version.</p>
       <div class="timer-container">
         <div class="timer-display" id="timerDisplay2">25:00</div>
         <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
         <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
       </div>
-
-      <div class="highlight-quote">
-        <p>Notice: when does your partner ask something that makes you think differently about your own problem?</p>
+      <div class="activity-card" style="text-align: left;">
+        <h3>While Being Interviewed</h3>
+        <p style="color: var(--text-primary);">Pay attention to something specific:</p>
+        <ul>
+          <li>When does your partner ask something that makes you think differently about your own situation?</li>
+          <li>Where do you catch yourself giving the "easy" answer instead of the real one?</li>
+          <li>What question do you wish they'd asked?</li>
+        </ul>
       </div>
     </div>
   </section>
-
-  <!-- Section 7: Debrief -->
-  <section class="section" data-section="7">
+  <!-- ===================== SECTION 12: Debrief + This Week ===================== -->
+  <section class="section" data-section="12">
     <div class="section-content">
-      <p class="section-label">Debrief</p>
+      <p class="section-label">Debrief + This Week</p>
       <h2>What Did You Hear?</h2>
       <div class="two-column">
         <div style="background: rgba(45, 212, 191, 0.1); border: 2px solid var(--teal-500); border-radius: 12px; padding: 24px;">
           <h3 style="color: var(--teal-400); font-size: 22px; margin-bottom: 12px;">What they SAID</h3>
-          <p style="color: var(--text-secondary); font-size: 20px;">The stated problem. What they told you directly.</p>
+          <p style="color: var(--text-secondary); font-size: 20px;">The stated problem. The first answer. What they told you directly.</p>
         </div>
         <div style="background: rgba(251, 191, 36, 0.1); border: 2px solid #fbbf24; border-radius: 12px; padding: 24px;">
           <h3 style="color: #fbbf24; font-size: 22px; margin-bottom: 12px;">What you OBSERVED</h3>
-          <p style="color: var(--text-secondary); font-size: 20px;">The real problem. What you noticed between the lines.</p>
+          <p style="color: var(--text-secondary); font-size: 20px;">The pattern underneath. What you noticed between the lines. Where they surprised themselves.</p>
         </div>
       </div>
-      <div class="highlight-quote">
-        <p>If these two things are identical, you haven't gone deep enough yet.</p>
+      <div class="highlight-quote" style="margin-bottom: 32px;">
+        <p>If these two things are identical, you haven't gone deep enough yet. That's OK — that's what the Dojo is for this week.</p>
       </div>
+      <h2 style="font-size: 32px; margin-top: 20px;">Before Next Wednesday</h2>
+      <div style="display: grid; gap: 16px; margin-top: 20px;">
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px; font-size: 22px;">Goal Setting Part II</p>
+            <p style="color: var(--text-secondary); font-size: 18px; margin: 0;">Set goals based on what you actually heard — not what you assumed before today.</p>
+          </div>
+          <span style="color: #fbbf24; font-size: 18px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Thu, Feb 20</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px; font-size: 22px;">Discovery Deep Dive <span style="font-size: 14px; background: var(--teal-700); padding: 2px 10px; border-radius: 12px; margin-left: 8px;">Dojo</span></p>
+            <p style="color: var(--text-secondary); font-size: 18px; margin: 0;">Process what you heard with AI as thinking partner. Go deeper than your notes.</p>
+          </div>
+          <span style="color: #fbbf24; font-size: 18px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Thu, Feb 20</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px; font-size: 22px;">Assumption Audit <span style="font-size: 14px; background: rgba(99, 102, 241, 0.3); padding: 2px 10px; border-radius: 12px; margin-left: 8px;">AI-Discussion</span> + Domain Learning <span style="font-size: 14px; background: var(--teal-700); padding: 2px 10px; border-radius: 12px; margin-left: 8px;">Dojo</span></p>
+            <p style="color: var(--text-secondary); font-size: 18px; margin: 0;">Surface your assumptions before building. Plan what you need to learn about their world.</p>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 18px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Feb 22</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 4px; font-size: 22px;">Productive Reflection #4 <span style="font-size: 14px; background: rgba(139, 92, 246, 0.3); padding: 2px 10px; border-radius: 12px; margin-left: 8px;">📓 Handwritten</span></p>
+            <p style="color: var(--text-secondary); font-size: 18px; margin: 0;">How do you know you're not just projecting? What assumption scares you most?</p>
+          </div>
+          <span style="color: var(--text-secondary); font-size: 18px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Mon, Feb 24</span>
+        </div>
+      </div>
+      <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 18px; margin-top: 24px;">→ Sprint 2 Landing Page for full details</a>
     </div>
   </section>
-
-  <!-- Section 8: This Week -->
-  <section class="section" data-section="8">
-    <div class="section-content">
-      <p class="section-label">This Week</p>
-      <h2>Before Next Wednesday</h2>
-      <div style="display: grid; gap: 20px; margin-top: 24px;">
-        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Goal Setting Part II</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Set goals based on what you actually heard — not what you assumed before today.</p>
-          </div>
-          <span style="color: #fbbf24; font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Thu, Feb 20</span>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Discovery Deep Dive</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Process what you heard in the Dojo. Go deeper than your notes — what did the conversation actually reveal?</p>
-          </div>
-          <span style="color: #fbbf24; font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Thu, Feb 20</span>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Assumption Audit + Domain Learning</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Surface your assumptions before building. Plan what you need to learn about their world.</p>
-          </div>
-          <span style="color: var(--text-secondary); font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Feb 22</span>
-        </div>
-      </div>
-      <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 18px; margin-top: 32px;">→ Sprint 2 Landing Page</a>
-    </div>
-  </section>
-
   <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
-
   <script>
     let currentSection = 1;
     const totalSections = document.querySelectorAll('.section').length;
@@ -249,30 +550,26 @@
     const navProgress = document.getElementById('navProgress');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
     const timers = {
       1: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null },
       2: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null }
     };
-
     function goToSection(n) {
       if (n < 1 || n > totalSections) return;
       sections.forEach(s => s.classList.remove('active'));
       document.querySelector(`[data-section="${n}"]`).classList.add('active');
       currentSection = n;
       progressFill.style.width = `${(currentSection / totalSections) * 100}%`;
-      navProgress.textContent = `${currentSection} of ${totalSections}`;
+      navProgress.textContent = `${currentSection} / ${totalSections}`;
       prevBtn.disabled = currentSection === 1;
       nextBtn.disabled = currentSection === totalSections;
     }
-
     prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
     nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
     });
-
     function toggleTimer(id) {
       const timer = timers[id];
       const btn = document.getElementById(`timerBtn${id}`);
@@ -290,7 +587,6 @@
         timer.running = true;
       }
     }
-
     function resetTimer(id) {
       const timer = timers[id];
       clearInterval(timer.interval);
@@ -299,7 +595,6 @@
       document.getElementById(`timerBtn${id}`).textContent = id === 1 ? 'Start Discovery' : 'Start';
       updateTimerDisplay(id);
     }
-
     function updateTimerDisplay(id) {
       const timer = timers[id];
       const mins = Math.floor(timer.seconds / 60);
@@ -307,7 +602,6 @@
       document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
     }
   </script>
-
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
     <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--teal-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>
