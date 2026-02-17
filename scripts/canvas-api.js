@@ -285,6 +285,15 @@ class CanvasAPI {
   }
 
   /**
+   * Get a single submission for a student
+   */
+  async getSubmission(courseId, assignmentId, userId) {
+    return this.request(
+      `/courses/${courseId}/assignments/${assignmentId}/submissions/${userId}?include[]=submission_comments`
+    );
+  }
+
+  /**
    * Grade a submission and optionally post a comment
    */
   async gradeSubmission(courseId, assignmentId, userId, { grade, comment } = {}) {

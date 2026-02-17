@@ -1674,6 +1674,30 @@ calcStats();
 // Post Grades to Canvas
 // ============================================
 
+/**
+ * Build a comment string from a grades entry.
+ * Supports discussion-specific fields (writingScore/discussionScore) and
+ * general fields (score/quality/participation + feedback/qualityNotes).
+ */
+function buildGradeComment(g) {
+  // Discussion-style grades (writingScore + discussionScore)
+  if (g.writingScore != null && g.discussionScore != null) {
+    return [
+      `Writing: ${g.writingScore}/5 — ${g.writingFeedback || ''}`,
+      `Discussion: ${g.discussionScore}/5 — ${g.discussionFeedback || ''}`,
+      g.overallNote ? `\n${g.overallNote}` : '',
+    ].filter(Boolean).join('\n');
+  }
+
+  // General grades — assemble from whatever fields are present
+  const parts = [];
+  if (g.feedback) parts.push(g.feedback);
+  if (g.qualityNotes) parts.push(g.qualityNotes);
+  if (g.comment) parts.push(g.comment);
+  if (g.overallNote) parts.push(g.overallNote);
+  return parts.join('\n') || null;
+}
+
 async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, gradesFile) {
   const courseInfo = COURSES[courseName];
   const config = loadConfig(path.join(__dirname, '..', courseInfo.configFile));
@@ -1682,29 +1706,49 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   if (!assignmentConfig?.canvasId) throw new Error(`No canvasId for ${assignmentKey}`);
 
   const grades = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
-  console.log(`\nPosting ${grades.length} grades to Canvas (${courseName}/${assignmentKey})...`);
+  console.log(`\nPosting grades to Canvas (${courseName}/${assignmentKey})...`);
 
-  let posted = 0, skipped = 0;
+  // Fetch current Canvas submissions to check existing grades
+  console.log('  Fetching current grades from Canvas...');
+  const submissions = await api.listSubmissions(courseId, assignmentConfig.canvasId);
+  const currentGrades = {};
+  for (const sub of submissions) {
+    currentGrades[String(sub.user_id)] = {
+      score: sub.score,
+      graded: sub.workflow_state === 'graded',
+    };
+  }
+
+  let posted = 0, skipped = 0, unchanged = 0;
   for (const g of grades) {
-    if (!g.canvasId) { console.log(`  ⚠ Skip ${g.studentName || g.anonId} — no Canvas ID`); skipped++; continue; }
+    const label = g.studentName || g.anonId;
+    if (!g.canvasId) { console.log(`  ⚠ Skip ${label} — no Canvas ID`); skipped++; continue; }
 
-    const comment = [
-      `Writing: ${g.writingScore}/5 — ${g.writingFeedback}`,
-      `Discussion: ${g.discussionScore}/5 — ${g.discussionFeedback}`,
-      g.overallNote ? `\n${g.overallNote}` : '',
-    ].filter(Boolean).join('\n');
+    // Determine the score to post
+    const score = g.totalScore != null ? g.totalScore : g.score;
+    if (score == null) { console.log(`  ⚠ Skip ${label} — no score in grades file`); skipped++; continue; }
+
+    // Check if Canvas already has this exact grade
+    const current = currentGrades[String(g.canvasId)];
+    if (current && current.score === score) {
+      console.log(`  — ${label}: already ${score} in Canvas, skipping`);
+      unchanged++;
+      continue;
+    }
+
+    const comment = buildGradeComment(g);
 
     try {
-      await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: g.totalScore, comment });
-      console.log(`  ✓ ${g.studentName || g.anonId}: ${g.totalScore}/10`);
+      await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: score, comment });
+      console.log(`  ✓ ${label}: ${score}${current?.score != null ? ` (was ${current.score})` : ''}`);
       posted++;
     } catch (err) {
-      console.log(`  ✗ ${g.studentName || g.anonId}: ${err.message}`);
+      console.log(`  ✗ ${label}: ${err.message}`);
       skipped++;
     }
     await new Promise(r => setTimeout(r, 200));
   }
-  console.log(`\nPosted: ${posted}, Skipped: ${skipped}`);
+  console.log(`\nPosted: ${posted}, Unchanged: ${unchanged}, Skipped: ${skipped}`);
 }
 
 // ============================================
