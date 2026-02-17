@@ -46,12 +46,17 @@ on:
         default: '0'
         type: string
 
+concurrency:
+  group: canvas-sync-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -64,22 +69,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
-        working-directory: ./
-
       - name: Run Canvas Sync
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
+          INPUT_ACTION: ${{ inputs.action }}
+          INPUT_COURSE: ${{ inputs.course }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_LIMIT: ${{ inputs.limit }}
         run: |
           echo "=============================================="
-          echo "Canvas Sync: ${{ inputs.action }}"
-          echo "Course: ${{ inputs.course }}"
-          echo "Dry Run: ${{ inputs.dry_run }}"
-          echo "Limit: ${{ inputs.limit }}"
+          echo "Canvas Sync: ${INPUT_ACTION}"
+          echo "Course: ${INPUT_COURSE}"
+          echo "Dry Run: ${INPUT_DRY_RUN}"
+          echo "Limit: ${INPUT_LIMIT}"
           echo "=============================================="
-          node scripts/canvas-sync.js --action=${{ inputs.action }} --course=${{ inputs.course }} --dry-run=${{ inputs.dry_run }} --limit=${{ inputs.limit }}
+          node scripts/canvas-sync.js "--action=${INPUT_ACTION}" "--course=${INPUT_COURSE}" "--dry-run=${INPUT_DRY_RUN}" "--limit=${INPUT_LIMIT}"
 
       - name: Check for changes
         id: changes
@@ -95,6 +100,8 @@ jobs:
 
       - name: Commit and push changes
         if: steps.changes.outputs.has_changes == 'true' && inputs.dry_run == 'false'
+        env:
+          INPUT_ACTION: ${{ inputs.action }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -103,7 +110,7 @@ jobs:
           git add config/ cst349/ cst395/
 
           # Create commit message based on action
-          case "${{ inputs.action }}" in
+          case "${INPUT_ACTION}" in
             full-sync)
               COMMIT_MSG="Full sync: CSV → Canvas → HTML [skip ci]"
               ;;
@@ -126,7 +133,7 @@ jobs:
               COMMIT_MSG="HTML: Update Canvas links [skip ci]"
               ;;
             *)
-              COMMIT_MSG="Canvas sync: ${{ inputs.action }} [skip ci]"
+              COMMIT_MSG="Canvas sync: ${INPUT_ACTION} [skip ci]"
               ;;
           esac
 
@@ -136,15 +143,20 @@ jobs:
           echo "✓ Changes committed and pushed"
 
       - name: Summary
+        env:
+          INPUT_ACTION: ${{ inputs.action }}
+          INPUT_COURSE: ${{ inputs.course }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          CHANGES: ${{ steps.changes.outputs.has_changes }}
         run: |
           echo "=============================================="
           echo "SUMMARY"
           echo "=============================================="
-          echo "Action: ${{ inputs.action }}"
-          echo "Course: ${{ inputs.course }}"
-          echo "Dry Run: ${{ inputs.dry_run }}"
-          if [[ "${{ steps.changes.outputs.has_changes }}" == "true" ]]; then
-            if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+          echo "Action: ${INPUT_ACTION}"
+          echo "Course: ${INPUT_COURSE}"
+          echo "Dry Run: ${INPUT_DRY_RUN}"
+          if [[ "${CHANGES}" == "true" ]]; then
+            if [[ "${INPUT_DRY_RUN}" == "true" ]]; then
               echo "Status: Changes would be made (dry run)"
             else
               echo "Status: Changes committed"

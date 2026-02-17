@@ -29,26 +29,33 @@ on:
         default: ''
         type: string
 
+concurrency:
+  group: analyze-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout public repo
         uses: actions/checkout@v4
 
       - name: Clone private data repo
+        env:
+          DATA_REPO_PAT: ${{ secrets.DATA_REPO_PAT }}
         run: |
-          git clone https://x-access-token:${{ secrets.DATA_REPO_PAT }}@github.com/profsathya/Common-Curriculum-Data.git data-repo 2>&1 || true
+          git clone "https://x-access-token:${DATA_REPO_PAT}@github.com/profsathya/Common-Curriculum-Data.git" data-repo 2>&1 || true
           if [ ! -d "data-repo/.git" ]; then
             echo "Empty repo — initializing..."
             mkdir -p data-repo
             cd data-repo
             git init
-            git remote add origin https://x-access-token:${{ secrets.DATA_REPO_PAT }}@github.com/profsathya/Common-Curriculum-Data.git
+            git remote add origin "https://x-access-token:${DATA_REPO_PAT}@github.com/profsathya/Common-Curriculum-Data.git"
           fi
 
       - name: Setup Node.js
@@ -61,22 +68,28 @@ jobs:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INPUT_ACTION: ${{ inputs.action }}
+          INPUT_COURSE: ${{ inputs.course }}
+          INPUT_ASSIGNMENT: ${{ inputs.assignment }}
         run: |
           echo "=============================================="
-          echo "Submission Analyzer: ${{ inputs.action }}"
-          echo "Course: ${{ inputs.course }}"
-          echo "Assignment: ${{ inputs.assignment || 'all' }}"
+          echo "Submission Analyzer: ${INPUT_ACTION}"
+          echo "Course: ${INPUT_COURSE}"
+          echo "Assignment: ${INPUT_ASSIGNMENT:-all}"
           echo "=============================================="
 
-          ARGS="--action=${{ inputs.action }} --course=${{ inputs.course }} --data-dir=./data-repo"
+          ARGS="--action=${INPUT_ACTION} --course=${INPUT_COURSE} --data-dir=./data-repo"
 
-          if [ -n "${{ inputs.assignment }}" ]; then
-            ARGS="$ARGS --assignment=${{ inputs.assignment }}"
+          if [ -n "${INPUT_ASSIGNMENT}" ]; then
+            ARGS="$ARGS --assignment=${INPUT_ASSIGNMENT}"
           fi
 
           node scripts/submission-analyzer.js $ARGS
 
       - name: Push results to data repo
+        env:
+          INPUT_ACTION: ${{ inputs.action }}
+          INPUT_COURSE: ${{ inputs.course }}
         working-directory: data-repo
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -85,7 +98,7 @@ jobs:
           # Check for changes
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
-            git commit -m "Update: ${{ inputs.action }} for ${{ inputs.course }} [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git commit -m "Update: ${INPUT_ACTION} for ${INPUT_COURSE} [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
 
             # Handle first push to empty repo
             if git rev-parse --verify origin/main >/dev/null 2>&1; then
@@ -100,12 +113,15 @@ jobs:
           fi
 
       - name: Summary
+        env:
+          INPUT_ACTION: ${{ inputs.action }}
+          INPUT_COURSE: ${{ inputs.course }}
         run: |
           echo "=============================================="
           echo "COMPLETE"
           echo "=============================================="
-          echo "Action: ${{ inputs.action }}"
-          echo "Course: ${{ inputs.course }}"
+          echo "Action: ${INPUT_ACTION}"
+          echo "Course: ${INPUT_COURSE}"
           echo ""
           echo "View results: https://github.com/profsathya/Common-Curriculum-Data"
           echo ""
