@@ -835,14 +835,55 @@ async function generateDashboard(courseName, dataDir, api) {
     return (parseInt(a.week) || 0) - (parseInt(b.week) || 0);
   });
 
+  // Fetch current Canvas grades for all assignments (for grade change comparison)
+  const canvasGrades = {}; // assignmentKey → { canvasUserId → score }
+  let canvasGradesFetched = false;
+  if (api) {
+    try {
+      const courseInfo = COURSES[courseName];
+      const config = loadConfig(path.join(__dirname, '..', courseInfo.configFile));
+      const courseId = extractCourseId(config.canvasBaseUrl);
+      const csvRows = loadCsv(path.join(__dirname, '..', courseInfo.csvFile));
+
+      console.log('\nFetching Canvas grades for grade change comparison...');
+      for (const row of csvRows) {
+        if (!row.canvasId || row.canvasId === 'null') continue;
+        try {
+          let assignmentCanvasId = row.canvasId;
+          if (row.canvasType === 'quiz') {
+            const quiz = await api.request(`/courses/${courseId}/quizzes/${row.canvasId}`);
+            assignmentCanvasId = quiz.assignment_id;
+            if (!assignmentCanvasId) continue;
+          }
+          const submissions = await api.listSubmissions(courseId, assignmentCanvasId);
+          canvasGrades[row.key] = {};
+          for (const sub of submissions) {
+            canvasGrades[row.key][String(sub.user_id)] = sub.score;
+          }
+        } catch (err) {
+          console.log(`    Warning: Could not fetch grades for ${row.key}: ${err.message}`);
+        }
+      }
+      canvasGradesFetched = true;
+      console.log(`  Fetched Canvas grades for ${Object.keys(canvasGrades).length} assignments`);
+    } catch (err) {
+      console.log(`  Warning: Could not fetch Canvas grades: ${err.message}`);
+    }
+  }
+
+  // Build per-student canvas grade lookup: profiles need canvasId for matching
+  const profileList = Object.entries(profiles)
+    .map(([anonId, p]) => ({ id: anonId, canvasId: mapping[anonId]?.canvasId, ...p }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   // Generate dashboard data
   const dashboardData = {
     course: COURSES[courseName].name,
     lastUpdated: analysis.lastUpdated,
     assignments: assignmentList,
-    profiles: Object.entries(profiles)
-      .map(([anonId, p]) => ({ id: anonId, ...p }))
-      .sort((a, b) => a.name.localeCompare(b.name)),
+    profiles: profileList,
+    canvasGrades,
+    canvasGradesFetched,
   };
 
   // Write dashboard
@@ -872,6 +913,8 @@ function buildDashboardHTML(data) {
   // Escape </ to prevent premature </script> closing when JSON contains HTML-like text
   const profilesJson = escapeForScript(JSON.stringify(data.profiles));
   const assignmentsJson = escapeForScript(JSON.stringify(data.assignments));
+  const canvasGradesJson = escapeForScript(JSON.stringify(data.canvasGrades || {}));
+  const canvasGradesFetched = data.canvasGradesFetched || false;
 
 
   return `<!DOCTYPE html>
@@ -935,6 +978,22 @@ tr.clickable:hover { background: #eff6ff; }
 .summary-row { cursor: default; }
 .summary-row:hover { background: #f8fafc !important; }
 
+/* Grade change badges */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-new { background: #dbeafe; color: #1d4ed8; }
+.badge-changed { background: #fef3c7; color: #b45309; }
+.badge-unchanged { background: #f1f5f9; color: #64748b; }
+.badge-nocanvas { background: #fce7f3; color: #be185d; }
+.grade-summary { display: flex; gap: 16px; flex-wrap: wrap; padding: 16px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; align-items: center; }
+.grade-summary > div { font-size: 14px; }
+.old-score { color: #94a3b8; text-decoration: line-through; }
+.new-score { font-weight: 700; color: #1e293b; }
+.arrow { color: #94a3b8; }
+.filter-bar { display: flex; gap: 8px; padding: 12px 20px; background: white; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.filter-btn { padding: 4px 12px; border: 1px solid #e2e8f0; border-radius: 4px; background: white; cursor: pointer; font-size: 13px; font-family: inherit; }
+.filter-btn.active { background: #1e293b; color: white; border-color: #1e293b; }
+.filter-btn:hover:not(.active) { background: #f8fafc; }
+
 /* Responsive */
 @media (max-width: 768px) {
   .charts-row { grid-template-columns: 1fr; }
@@ -954,6 +1013,7 @@ tr.clickable:hover { background: #eff6ff; }
   <button class="active" onclick="showView('overview')">Course Overview</button>
   <button onclick="showView('assignments')">By Assignment</button>
   <button onclick="showView('students')">By Student</button>
+  <button onclick="showView('grades')">Grade Changes</button>
 </div>
 
 <div class="container" id="content"></div>
@@ -961,6 +1021,8 @@ tr.clickable:hover { background: #eff6ff; }
 <script>
 const PROFILES = ${profilesJson};
 const ASSIGNMENTS = ${assignmentsJson};
+const CANVAS_GRADES = ${canvasGradesJson};
+const CANVAS_FETCHED = ${canvasGradesFetched};
 
 const COLORS = {
   1: '#ef4444', 2: '#f59e0b', 3: '#eab308', 4: '#22c55e', 5: '#10b981'
@@ -968,6 +1030,23 @@ const COLORS = {
 const LABELS = { 1: 'Very Low', 2: 'Low', 3: 'Adequate', 4: 'Good', 5: 'Excellent' };
 
 let currentView = 'overview';
+let gradeFilter = 'all';
+
+// Calculate suggested grade for a student's assignment submission
+// Image/reflection: 100% participation-based. Others: 50% participation + 50% quality.
+function calculateGrade(sub, assignment) {
+  if (!sub || sub.participation == null) return null;
+  var pts = assignment.points || 0;
+  if (pts === 0) return 0;
+  var pScore = sub.participation / 5; // normalize to 0-1
+  // Image submissions or reflections: full credit based on participation only
+  if (sub.contentType === 'image' || assignment.type === 'reflection') {
+    return Math.round(pScore * pts * 10) / 10;
+  }
+  // Others (text, json, file, etc.): 50% participation + 50% quality
+  var qScore = (sub.quality != null) ? sub.quality / 5 : pScore; // fallback to participation if no quality
+  return Math.round(((pScore * 0.5) + (qScore * 0.5)) * pts * 10) / 10;
+}
 
 function showView(view, detail) {
   currentView = view;
@@ -976,6 +1055,7 @@ function showView(view, detail) {
   if (view === 'overview') buttons[0]?.classList.add('active');
   else if (view === 'assignments') buttons[1]?.classList.add('active');
   else if (view === 'students') buttons[2]?.classList.add('active');
+  else if (view === 'grades') buttons[3]?.classList.add('active');
 
   const el = document.getElementById('content');
   if (view === 'overview') el.innerHTML = renderOverview();
@@ -983,6 +1063,7 @@ function showView(view, detail) {
   else if (view === 'students') el.innerHTML = renderStudents(detail);
   else if (view === 'student-detail') el.innerHTML = renderStudentDetail(detail);
   else if (view === 'assignment-detail') el.innerHTML = renderAssignmentDetail(detail);
+  else if (view === 'grades') el.innerHTML = renderGradeChanges();
 }
 
 function distributionData(values) {
@@ -1105,19 +1186,140 @@ function renderAssignmentDetail(key) {
     renderBarChart('Participation', pCounts, parts.length) +
     renderBarChart('Quality', qCounts, quals.length) + '</div>';
 
+  var cg = CANVAS_GRADES[key] || {};
   html += '<div class="table-card"><h3>Student Submissions (' + subs.length + ')</h3><table><thead><tr>' +
-    '<th>Student</th><th>Participation</th><th>Quality</th><th>Content Type</th><th>Notes</th></tr></thead><tbody>';
+    '<th>Student</th><th>Participation</th><th>Quality</th><th>Content Type</th>' +
+    (CANVAS_FETCHED ? '<th style="text-align:center">Canvas</th><th style="text-align:center">Suggested</th>' : '') +
+    '<th>Notes</th></tr></thead><tbody>';
 
   subs.sort((a, b) => a.name.localeCompare(b.name)).forEach(s => {
-    html += '<tr class="clickable" onclick="showView(\\'student-detail\\',\\'' + s.id + '\\')">' +
+    var suggested = calculateGrade(s.sub, assignment);
+    var canvasScore = (s.canvasId && cg[String(s.canvasId)] !== undefined) ? cg[String(s.canvasId)] : null;
+    var changed = CANVAS_FETCHED && suggested != null && canvasScore != null && canvasScore !== suggested;
+    html += '<tr class="clickable" onclick="showView(\\'student-detail\\',\\'' + s.id + '\\')"' +
+      (changed ? ' style="background:#fefce8"' : '') + '>' +
       '<td>' + s.name + '</td>' +
       '<td>' + scoreSpan(s.sub.participation) + '</td>' +
       '<td>' + scoreSpan(s.sub.quality) + '</td>' +
-      '<td>' + (s.sub.contentType || '-') + '</td>' +
-      '<td class="notes-cell">' + (s.sub.qualityNotes || '') + '</td></tr>';
+      '<td>' + (s.sub.contentType || '-') + '</td>';
+    if (CANVAS_FETCHED) {
+      html += '<td style="text-align:center">' + (canvasScore != null ? canvasScore : '<span style="color:#94a3b8">—</span>') + '</td>' +
+        '<td style="text-align:center"><span class="new-score">' + (suggested != null ? suggested : '—') + '</span></td>';
+    }
+    html += '<td class="notes-cell">' + (s.sub.qualityNotes || '') + '</td></tr>';
   });
 
   html += '</tbody></table></div>';
+  return html;
+}
+
+function renderGradeChanges() {
+  if (!CANVAS_FETCHED) {
+    return '<div class="detail-panel"><h2>Grade Changes</h2>' +
+      '<p style="color:#64748b;margin-top:8px">Canvas credentials not available. Run with CANVAS_API_TOKEN and CANVAS_BASE_URL environment variables to see grade changes.</p></div>';
+  }
+
+  // Build all grade change rows across all assignments
+  var rows = [];
+  var counts = { new_grade: 0, changed: 0, unchanged: 0, nocanvas: 0 };
+
+  ASSIGNMENTS.forEach(function(a) {
+    var cg = CANVAS_GRADES[a.key] || {};
+    PROFILES.forEach(function(p) {
+      var sub = p.assignments[a.key];
+      var suggestedGrade = calculateGrade(sub, a);
+      if (suggestedGrade == null) return; // no submission data at all
+
+      var canvasId = String(p.canvasId || '');
+      var canvasScore = (canvasId && cg[canvasId] !== undefined) ? cg[canvasId] : null;
+      var status, cls;
+
+      if (!canvasId) {
+        status = 'No Canvas ID'; cls = 'nocanvas'; counts.nocanvas++;
+      } else if (canvasScore === null || canvasScore === undefined) {
+        status = 'New'; cls = 'new'; counts.new_grade++;
+      } else if (canvasScore === suggestedGrade) {
+        status = 'Unchanged'; cls = 'unchanged'; counts.unchanged++;
+      } else {
+        status = 'Changed'; cls = 'changed'; counts.changed++;
+      }
+
+      rows.push({
+        student: p.name, studentId: p.id,
+        assignment: a.title, assignmentKey: a.key,
+        points: a.points || 0, type: a.type || '',
+        canvasScore: canvasScore,
+        suggestedGrade: suggestedGrade,
+        status: status, cls: cls
+      });
+    });
+  });
+
+  // Sort: changed first, then new, then no canvas, then unchanged
+  var order = { 'Changed': 0, 'New': 1, 'No Canvas ID': 2, 'Unchanged': 3 };
+  rows.sort(function(a, b) {
+    return (order[a.status] || 9) - (order[b.status] || 9) || a.assignment.localeCompare(b.assignment) || a.student.localeCompare(b.student);
+  });
+
+  var html = '<div class="table-card">';
+  html += '<h3>Grade Changes</h3>';
+
+  // Summary bar
+  html += '<div class="grade-summary">' +
+    '<div>Total: <strong>' + rows.length + '</strong></div>' +
+    '<div><span class="badge badge-new">New</span> <strong>' + counts.new_grade + '</strong></div>' +
+    '<div><span class="badge badge-changed">Changed</span> <strong>' + counts.changed + '</strong></div>' +
+    '<div><span class="badge badge-unchanged">Unchanged</span> <strong>' + counts.unchanged + '</strong></div>' +
+    (counts.nocanvas > 0 ? '<div><span class="badge badge-nocanvas">No Canvas ID</span> <strong>' + counts.nocanvas + '</strong></div>' : '') +
+    '</div>';
+
+  // Filter bar
+  html += '<div class="filter-bar">' +
+    '<button class="filter-btn' + (gradeFilter === 'all' ? ' active' : '') + '" onclick="gradeFilter=\\'all\\';showView(\\'grades\\')">All</button>' +
+    '<button class="filter-btn' + (gradeFilter === 'changed' ? ' active' : '') + '" onclick="gradeFilter=\\'changed\\';showView(\\'grades\\')">Changed Only</button>' +
+    '<button class="filter-btn' + (gradeFilter === 'new' ? ' active' : '') + '" onclick="gradeFilter=\\'new\\';showView(\\'grades\\')">New Only</button>' +
+    '<button class="filter-btn' + (gradeFilter === 'action' ? ' active' : '') + '" onclick="gradeFilter=\\'action\\';showView(\\'grades\\')">Needs Action</button>' +
+    '</div>';
+
+  // Filter rows
+  var filtered = rows;
+  if (gradeFilter === 'changed') filtered = rows.filter(function(r) { return r.status === 'Changed'; });
+  else if (gradeFilter === 'new') filtered = rows.filter(function(r) { return r.status === 'New'; });
+  else if (gradeFilter === 'action') filtered = rows.filter(function(r) { return r.status === 'Changed' || r.status === 'New'; });
+
+  html += '<div style="max-height:700px;overflow-y:auto"><table><thead><tr>' +
+    '<th>Student</th><th>Assignment</th><th>Type</th><th>Points</th>' +
+    '<th style="text-align:center">Canvas</th><th></th><th style="text-align:center">Suggested</th>' +
+    '<th>Status</th></tr></thead><tbody>';
+
+  filtered.forEach(function(r) {
+    html += '<tr>' +
+      '<td><a href="#" onclick="showView(\\'student-detail\\',\\'' + r.studentId + '\\');return false" style="color:#3b82f6;text-decoration:none">' + escapeHtml(r.student) + '</a></td>' +
+      '<td><a href="#" onclick="showView(\\'assignment-detail\\',\\'' + r.assignmentKey + '\\');return false" style="color:#3b82f6;text-decoration:none">' + escapeHtml(r.assignment) + '</a></td>' +
+      '<td>' + r.type + '</td>' +
+      '<td>' + r.points + '</td>' +
+      '<td style="text-align:center">' + (r.canvasScore != null ? '<span class="old-score">' + r.canvasScore + '</span>' : '<span style="color:#94a3b8">—</span>') + '</td>' +
+      '<td style="text-align:center"><span class="arrow">→</span></td>' +
+      '<td style="text-align:center"><span class="new-score">' + r.suggestedGrade + '</span></td>' +
+      '<td><span class="badge badge-' + r.cls + '">' + r.status + '</span></td>' +
+      '</tr>';
+  });
+
+  if (filtered.length === 0) {
+    html += '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:24px">No grade changes found for this filter.</td></tr>';
+  }
+
+  html += '</tbody></table></div></div>';
+
+  // Grading formula explanation
+  html += '<div class="detail-panel" style="margin-top:16px">' +
+    '<h3 style="margin-bottom:8px">Grading Formula</h3>' +
+    '<div style="font-size:14px;color:#475569;line-height:1.8">' +
+    '<strong>Image / Reflection submissions:</strong> 100% participation-based → (participation ÷ 5) × total points<br>' +
+    '<strong>All other submissions (text, JSON, etc.):</strong> 50% participation + 50% quality → ((participation ÷ 5) × 0.5 + (quality ÷ 5) × 0.5) × total points<br>' +
+    '<span style="color:#94a3b8">Participation: 1=Missing, 3=Late, 4=On-time, 5=Substantive &nbsp;|&nbsp; Quality: 1-5 from LLM analysis (falls back to participation if unavailable)</span>' +
+    '</div></div>';
+
   return html;
 }
 
@@ -1142,16 +1344,27 @@ function renderStudentDetail(id) {
   html += '</div>';
 
   html += '<div class="table-card"><h3>Assignment History</h3><table><thead><tr>' +
-    '<th>Assignment</th><th>Sprint</th><th>Participation</th><th>Quality</th><th>Content Type</th><th>Notes</th></tr></thead><tbody>';
+    '<th>Assignment</th><th>Sprint</th><th>Participation</th><th>Quality</th><th>Content Type</th>' +
+    (CANVAS_FETCHED ? '<th style="text-align:center">Canvas</th><th style="text-align:center">Suggested</th>' : '') +
+    '<th>Notes</th></tr></thead><tbody>';
 
   ASSIGNMENTS.forEach(a => {
     const sa = student.assignments[a.key];
-    html += '<tr class="clickable" onclick="showView(\\'assignment-detail\\',\\'' + a.key + '\\')">' +
+    var suggested = calculateGrade(sa, a);
+    var cg = CANVAS_GRADES[a.key] || {};
+    var canvasScore = (student.canvasId && cg[String(student.canvasId)] !== undefined) ? cg[String(student.canvasId)] : null;
+    var changed = CANVAS_FETCHED && suggested != null && canvasScore != null && canvasScore !== suggested;
+    html += '<tr class="clickable" onclick="showView(\\'assignment-detail\\',\\'' + a.key + '\\')"' +
+      (changed ? ' style="background:#fefce8"' : '') + '>' +
       '<td>' + a.title + '</td><td>S' + (a.sprint || '?') + '</td>' +
       '<td>' + scoreSpan(sa?.participation) + '</td>' +
       '<td>' + scoreSpan(sa?.quality) + '</td>' +
-      '<td>' + (sa?.contentType || 'none') + '</td>' +
-      '<td class="notes-cell">' + (sa?.qualityNotes || '-') + '</td></tr>';
+      '<td>' + (sa?.contentType || 'none') + '</td>';
+    if (CANVAS_FETCHED) {
+      html += '<td style="text-align:center">' + (canvasScore != null ? canvasScore : '<span style="color:#94a3b8">—</span>') + '</td>' +
+        '<td style="text-align:center"><span class="new-score">' + (suggested != null ? suggested : '—') + '</span></td>';
+    }
+    html += '<td class="notes-cell">' + (sa?.qualityNotes || '-') + '</td></tr>';
   });
 
   html += '</tbody></table></div>';
