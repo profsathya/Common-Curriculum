@@ -89,6 +89,11 @@
     .sample-tab.active { background: var(--teal-700); color: var(--teal-400); border-color: var(--teal-600); }
     .sample-panel { display: none; }
     .sample-panel.active { display: block; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .tool-grid { grid-template-columns: 1fr; } }
+    .tool-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; }
+    .tool-card h4 { color: var(--teal-400); font-size: 20px; margin-bottom: 8px; }
+    .tool-card p { color: var(--text-secondary); font-size: 18px; margin: 0; }
   </style>
 </head>
 <body>
@@ -98,7 +103,7 @@
   </div>
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST395</strong> · Week 5: Partner Discovery</div>
-    <div class="nav-progress" id="navProgress">1 / 12</div>
+    <div class="nav-progress" id="navProgress">1 / 13</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
@@ -489,8 +494,51 @@
       </div>
     </div>
   </section>
-  <!-- ===================== SECTION 12: Debrief + This Week ===================== -->
+  <!-- ===================== SECTION 12: AI Tools Setup ===================== -->
   <section class="section" data-section="12">
+    <div class="section-content">
+      <p class="section-label">Setup + Exploration · 20 minutes</p>
+      <h2>Your AI<br><span style="color: var(--teal-400);">Thinking Partners</span></h2>
+      <p class="subtitle">Set up the tools you'll use throughout Sprint 2. These aren't replacements for thinking — they're partners for going deeper on what you just heard.</p>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay3">20:00</div>
+        <button class="timer-btn" id="timerBtn3" onclick="toggleTimer(3)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(3)">Reset</button>
+      </div>
+      <div class="activity-card">
+        <h3>Step 1: Portable Dojo Setup</h3>
+        <p style="color: var(--text-primary);">Set up the <a href="https://dojo.symbioticthinking.ai" target="_blank" style="color: var(--teal-400);">Symbiotic Thinking Dojo</a> structure in your preferred chatbot (ChatGPT, Claude, etc.). We'll walk through this together.</p>
+        <p>The Dojo's approach — enter a response, get AI feedback, go deeper — is how you'll process your discovery interviews and verify your thinking throughout the sprint.</p>
+      </div>
+      <div class="activity-card">
+        <h3>Step 2: Explore Learning Tools</h3>
+        <p style="color: var(--text-primary);">Set up at least one of these. Your goal: have it ready to use this week, not just bookmarked.</p>
+        <div class="tool-grid">
+          <div class="tool-card">
+            <h4>NotebookLM</h4>
+            <p>Upload your discovery notes. Ask it to find patterns in what your partner said that you might have missed.</p>
+          </div>
+          <div class="tool-card">
+            <h4>Learning Mode in Chatbots</h4>
+            <p>Have a tutoring conversation about your partner's domain — the area their problem lives in.</p>
+          </div>
+          <div class="tool-card">
+            <h4>Projects in Chatbots</h4>
+            <p>Create a project with your discovery notes. Use it as a thinking partner for exploring solution directions.</p>
+          </div>
+          <div class="tool-card">
+            <h4>Learn-About Features</h4>
+            <p>Explore domain-specific tools that help you build knowledge about your partner's problem area.</p>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-quote">
+        <p>These are your thinking partners for the sprint — set them up now so you actually use them.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== SECTION 13: Debrief + This Week ===================== -->
+  <section class="section" data-section="13">
     <div class="section-content">
       <p class="section-label">Debrief + This Week</p>
       <h2>What Did You Hear?</h2>
@@ -552,7 +600,8 @@
     const nextBtn = document.getElementById('nextBtn');
     const timers = {
       1: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null },
-      2: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null }
+      2: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null },
+      3: { running: false, seconds: 1200, defaultSeconds: 1200, interval: null }
     };
     function goToSection(n) {
       if (n < 1 || n > totalSections) return;
@@ -592,7 +641,8 @@
       clearInterval(timer.interval);
       timer.seconds = timer.defaultSeconds;
       timer.running = false;
-      document.getElementById(`timerBtn${id}`).textContent = id === 1 ? 'Start Discovery' : 'Start';
+      const labels = { 1: 'Start Discovery', 2: 'Start', 3: 'Start' };
+      document.getElementById(`timerBtn${id}`).textContent = labels[id];
       updateTimerDisplay(id);
     }
     function updateTimerDisplay(id) {
