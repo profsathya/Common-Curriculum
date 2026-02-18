@@ -763,7 +763,7 @@ Write the summary as plain text (no quotes, no label, no markdown). Focus on pat
 // Step 3: Generate Dashboard
 // ============================================
 
-function generateDashboard(courseName, dataDir) {
+async function generateDashboard(courseName, dataDir, api) {
   console.log(`\n${'='.repeat(60)}`);
   console.log(`GENERATING DASHBOARD: ${courseName.toUpperCase()}`);
   console.log('='.repeat(60));
@@ -863,7 +863,7 @@ function generateDashboard(courseName, dataDir) {
   // Generate per-assignment discussion dashboards for ai-discussion assignments
   if (analysis.discussions) {
     for (const key of Object.keys(analysis.discussions)) {
-      generateDiscussionDashboard(courseName, dataDir, key);
+      await generateDiscussionDashboard(courseName, dataDir, key, api);
     }
   }
 }
@@ -1446,7 +1446,7 @@ Respond ONLY with valid JSON:
 /**
  * Generate a discussion-specific dashboard HTML for an ai-discussion assignment.
  */
-function generateDiscussionDashboard(courseName, dataDir, assignmentKey) {
+async function generateDiscussionDashboard(courseName, dataDir, assignmentKey, api) {
   const courseDataDir = path.join(dataDir, courseName);
   const analysis = loadJson(path.join(courseDataDir, 'analysis.json'));
   const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
@@ -1463,6 +1463,31 @@ function generateDiscussionDashboard(courseName, dataDir, assignmentKey) {
       return { anonId, name: mapping[anonId]?.name || anonId, canvasId: mapping[anonId]?.canvasId, ...grade, ...sd };
     })
     .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+  // Fetch current Canvas grades for comparison (if API available)
+  let canvasGrades = {};  // canvasId → { score, graded }
+  let canvasFetched = false;
+  if (api) {
+    try {
+      const courseInfo = COURSES[courseName];
+      const config = loadConfig(path.join(__dirname, '..', courseInfo.configFile));
+      const courseId = extractCourseId(config.canvasBaseUrl);
+      const assignmentConfig = config.assignments?.[assignmentKey];
+      if (assignmentConfig?.canvasId) {
+        console.log(`    Fetching Canvas grades for ${assignmentKey}...`);
+        const submissions = await api.listSubmissions(courseId, assignmentConfig.canvasId);
+        for (const sub of submissions) {
+          canvasGrades[String(sub.user_id)] = {
+            score: sub.score,
+            graded: sub.workflow_state === 'graded',
+          };
+        }
+        canvasFetched = true;
+      }
+    } catch (err) {
+      console.log(`    Warning: Could not fetch Canvas grades: ${err.message}`);
+    }
+  }
 
   const courseCode = COURSES[courseName]?.name || courseName.toUpperCase();
   const primary = courseName === 'cst349' ? '#2563eb' : '#0d9488';
@@ -1544,6 +1569,27 @@ tbody tr:nth-child(even):hover { background: #f1f5f9; }
 .total-lo { background: #fee2e2; color: #991b1b; }
 .takeaway { font-style: italic; color: #475569; font-size: 0.8rem; margin-top: 0.25rem; }
 .note-text { font-size: 0.8rem; color: #64748b; }
+
+.tabs { display: flex; gap: 0; border-bottom: 2px solid #e2e8f0; background: white; padding: 0 2rem; }
+.tab-btn { padding: 0.6rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab-btn:hover { color: var(--primary); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.changes-summary { display: flex; gap: 2rem; padding: 1rem 2rem; background: #fffbeb; border-bottom: 1px solid #fde68a; font-size: 0.85rem; flex-wrap: wrap; }
+.changes-summary .badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.8rem; }
+.badge-new { background: #dbeafe; color: #1e40af; }
+.badge-changed { background: #fef3c7; color: #92400e; }
+.badge-unchanged { background: #f1f5f9; color: #64748b; }
+.badge-ungraded { background: #f1f5f9; color: #94a3b8; }
+.arrow { color: #94a3b8; margin: 0 0.25rem; }
+.old-score { color: #94a3b8; text-decoration: line-through; font-size: 0.8rem; }
+.new-score { font-weight: 700; }
+.change-new .new-score { color: #1e40af; }
+.change-changed .new-score { color: #92400e; }
+.change-unchanged .new-score { color: #64748b; }
+.no-canvas { padding: 3rem 2rem; text-align: center; color: #94a3b8; font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -1562,6 +1608,11 @@ tbody tr:nth-child(even):hover { background: #f1f5f9; }
   <input type="text" id="search" placeholder="Search..." oninput="filterRows()">
   <button class="primary" onclick="downloadGrades()">Download Grades JSON</button>
 </div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('grading')">Grading</button>
+  <button class="tab-btn" onclick="switchTab('changes')">Grade Changes${canvasFetched ? '' : ' (no Canvas data)'}</button>
+</div>
+<div id="tab-grading" class="tab-panel active">
 <div class="table-wrap">
 <table>
 <thead>
@@ -1607,13 +1658,127 @@ ${rows.map((s, idx) => {
 </tbody>
 </table>
 </div>
+</div><!-- /tab-grading -->
+<div id="tab-changes" class="tab-panel">
+${canvasFetched ? `
+<div class="changes-summary" id="changes-summary"></div>
+<div class="table-wrap">
+<table id="changes-table">
+<thead>
+  <tr>
+    <th>Student</th>
+    <th>Canvas Score</th>
+    <th></th>
+    <th>New Score</th>
+    <th>Status</th>
+    <th class="col-text">Comment Preview</th>
+  </tr>
+</thead>
+<tbody id="changes-tbody"></tbody>
+</table>
+</div>
+` : '<div class="no-canvas">Canvas credentials not available. Run with CANVAS_API_TOKEN and CANVAS_BASE_URL to see grade changes.</div>'}
+</div><!-- /tab-changes -->
 <script>
 var SD = ${escapeForScript(JSON.stringify(rows.map((s, i) => ({i, name: s.name, anonId: s.anonId, canvasId: s.canvasId, ws: s.writingScore || 0, ds: s.discussionScore || 0, wf: s.writingFeedback || '', df: s.discussionFeedback || '', note: s.overallNote || ''}))))};
+var CG = ${escapeForScript(JSON.stringify(canvasGrades))};
+var canvasFetched = ${canvasFetched ? 'true' : 'false'};
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  // highlight the matching button
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < btns.length; i++) {
+    if ((tab === 'grading' && i === 0) || (tab === 'changes' && i === 1)) btns[i].classList.add('active');
+  }
+  if (tab === 'changes' && canvasFetched) renderChanges();
+}
+
+function renderChanges() {
+  var tbody = document.getElementById('changes-tbody');
+  if (!tbody) return;
+  var rows = [];
+  var counts = { new_grade: 0, changed: 0, unchanged: 0, ungraded: 0 };
+
+  for (var i = 0; i < SD.length; i++) {
+    var s = SD[i];
+    var w = +(document.getElementById('w' + i).value || 0);
+    var d = +(document.getElementById('d' + i).value || 0);
+    var newScore = w + d;
+    var wf = document.getElementById('wf' + i).value || '';
+    var df = document.getElementById('df' + i).value || '';
+
+    var commentParts = [];
+    commentParts.push('Writing: ' + w + '/5' + (wf ? ' \u2014 ' + wf : ''));
+    commentParts.push('Discussion: ' + d + '/5' + (df ? ' \u2014 ' + df : ''));
+    if (s.note) commentParts.push(s.note);
+    var comment = commentParts.join('\\n');  // literal \\n for pre-line display
+
+    var canvasId = String(s.canvasId || '');
+    var current = CG[canvasId];
+    var status, cls;
+
+    if (!canvasId) {
+      status = 'No Canvas ID';
+      cls = 'change-unchanged';
+      counts.ungraded++;
+    } else if (!current || current.score === null || current.score === undefined) {
+      status = 'New';
+      cls = 'change-new';
+      counts.new_grade++;
+    } else if (current.score === newScore) {
+      status = 'Unchanged';
+      cls = 'change-unchanged';
+      counts.unchanged++;
+    } else {
+      status = 'Changed';
+      cls = 'change-changed';
+      counts.changed++;
+    }
+
+    rows.push({
+      name: s.name, canvasScore: current ? current.score : null,
+      newScore: newScore, status: status, cls: cls, comment: comment
+    });
+  }
+
+  // Sort: changed first, then new, then unchanged
+  var order = { 'Changed': 0, 'New': 1, 'No Canvas ID': 2, 'Unchanged': 3 };
+  rows.sort(function(a, b) { return (order[a.status] || 9) - (order[b.status] || 9) || a.name.localeCompare(b.name); });
+
+  var html = '';
+  for (var j = 0; j < rows.length; j++) {
+    var r = rows[j];
+    var esc = function(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+    html += '<tr class="' + r.cls + '">' +
+      '<td><strong>' + esc(r.name) + '</strong></td>' +
+      '<td style="text-align:center">' + (r.canvasScore != null ? '<span class="old-score">' + r.canvasScore + '</span>' : '<span class="empty">—</span>') + '</td>' +
+      '<td style="text-align:center"><span class="arrow">&rarr;</span></td>' +
+      '<td style="text-align:center"><span class="new-score">' + r.newScore + '</span></td>' +
+      '<td><span class="badge badge-' + (r.status === 'New' ? 'new' : r.status === 'Changed' ? 'changed' : 'unchanged') + '">' + r.status + '</span></td>' +
+      '<td style="font-size:0.8rem;color:#64748b;white-space:pre-line">' + esc(r.comment) + '</td>' +
+      '</tr>';
+  }
+  tbody.innerHTML = html;
+
+  // Update summary
+  var sum = document.getElementById('changes-summary');
+  if (sum) {
+    sum.innerHTML =
+      '<div>Total: <strong>' + SD.length + '</strong></div>' +
+      '<div><span class="badge badge-new">New</span> <strong>' + counts.new_grade + '</strong></div>' +
+      '<div><span class="badge badge-changed">Changed</span> <strong>' + counts.changed + '</strong></div>' +
+      '<div><span class="badge badge-unchanged">Unchanged</span> <strong>' + counts.unchanged + '</strong></div>' +
+      (counts.ungraded > 0 ? '<div><span class="badge badge-ungraded">No Canvas ID</span> <strong>' + counts.ungraded + '</strong></div>' : '');
+  }
+}
 
 function filterRows() {
   var q = document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('tbody tr').forEach(function(r) {
-    r.style.display = r.dataset.name.includes(q) ? '' : 'none';
+  document.querySelectorAll('#tab-grading tbody tr').forEach(function(r) {
+    r.style.display = (r.dataset.name || '').includes(q) ? '' : 'none';
   });
 }
 function upd(i) {
@@ -1674,6 +1839,30 @@ calcStats();
 // Post Grades to Canvas
 // ============================================
 
+/**
+ * Build a comment string from a grades entry.
+ * Supports discussion-specific fields (writingScore/discussionScore) and
+ * general fields (score/quality/participation + feedback/qualityNotes).
+ */
+function buildGradeComment(g) {
+  // Discussion-style grades (writingScore + discussionScore)
+  if (g.writingScore != null && g.discussionScore != null) {
+    return [
+      `Writing: ${g.writingScore}/5 — ${g.writingFeedback || ''}`,
+      `Discussion: ${g.discussionScore}/5 — ${g.discussionFeedback || ''}`,
+      g.overallNote ? `\n${g.overallNote}` : '',
+    ].filter(Boolean).join('\n');
+  }
+
+  // General grades — assemble from whatever fields are present
+  const parts = [];
+  if (g.feedback) parts.push(g.feedback);
+  if (g.qualityNotes) parts.push(g.qualityNotes);
+  if (g.comment) parts.push(g.comment);
+  if (g.overallNote) parts.push(g.overallNote);
+  return parts.join('\n') || null;
+}
+
 async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, gradesFile) {
   const courseInfo = COURSES[courseName];
   const config = loadConfig(path.join(__dirname, '..', courseInfo.configFile));
@@ -1682,29 +1871,49 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   if (!assignmentConfig?.canvasId) throw new Error(`No canvasId for ${assignmentKey}`);
 
   const grades = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
-  console.log(`\nPosting ${grades.length} grades to Canvas (${courseName}/${assignmentKey})...`);
+  console.log(`\nPosting grades to Canvas (${courseName}/${assignmentKey})...`);
 
-  let posted = 0, skipped = 0;
+  // Fetch current Canvas submissions to check existing grades
+  console.log('  Fetching current grades from Canvas...');
+  const submissions = await api.listSubmissions(courseId, assignmentConfig.canvasId);
+  const currentGrades = {};
+  for (const sub of submissions) {
+    currentGrades[String(sub.user_id)] = {
+      score: sub.score,
+      graded: sub.workflow_state === 'graded',
+    };
+  }
+
+  let posted = 0, skipped = 0, unchanged = 0;
   for (const g of grades) {
-    if (!g.canvasId) { console.log(`  ⚠ Skip ${g.studentName || g.anonId} — no Canvas ID`); skipped++; continue; }
+    const label = g.studentName || g.anonId;
+    if (!g.canvasId) { console.log(`  ⚠ Skip ${label} — no Canvas ID`); skipped++; continue; }
 
-    const comment = [
-      `Writing: ${g.writingScore}/5 — ${g.writingFeedback}`,
-      `Discussion: ${g.discussionScore}/5 — ${g.discussionFeedback}`,
-      g.overallNote ? `\n${g.overallNote}` : '',
-    ].filter(Boolean).join('\n');
+    // Determine the score to post
+    const score = g.totalScore != null ? g.totalScore : g.score;
+    if (score == null) { console.log(`  ⚠ Skip ${label} — no score in grades file`); skipped++; continue; }
+
+    // Check if Canvas already has this exact grade
+    const current = currentGrades[String(g.canvasId)];
+    if (current && current.score === score) {
+      console.log(`  — ${label}: already ${score} in Canvas, skipping`);
+      unchanged++;
+      continue;
+    }
+
+    const comment = buildGradeComment(g);
 
     try {
-      await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: g.totalScore, comment });
-      console.log(`  ✓ ${g.studentName || g.anonId}: ${g.totalScore}/10`);
+      await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: score, comment });
+      console.log(`  ✓ ${label}: ${score}${current?.score != null ? ` (was ${current.score})` : ''}`);
       posted++;
     } catch (err) {
-      console.log(`  ✗ ${g.studentName || g.anonId}: ${err.message}`);
+      console.log(`  ✗ ${label}: ${err.message}`);
       skipped++;
     }
     await new Promise(r => setTimeout(r, 200));
   }
-  console.log(`\nPosted: ${posted}, Skipped: ${skipped}`);
+  console.log(`\nPosted: ${posted}, Unchanged: ${unchanged}, Skipped: ${skipped}`);
 }
 
 // ============================================
@@ -1751,11 +1960,17 @@ Environment Variables:
   const courses = course === 'both' ? ['cst349', 'cst395'] : [course];
   const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades';
 
+  // Create API if credentials are available (required for download/post-grades, optional for dashboard)
   let api = null;
-  if (needsCanvas) {
+  if (process.env.CANVAS_BASE_URL && process.env.CANVAS_API_TOKEN) {
     api = new CanvasAPI(
       process.env.CANVAS_BASE_URL,
       process.env.CANVAS_API_TOKEN
+    );
+  } else if (needsCanvas) {
+    throw new Error(
+      'Canvas API requires CANVAS_BASE_URL and CANVAS_API_TOKEN environment variables.\n' +
+      'Set these in GitHub Secrets (Settings > Secrets > Actions)'
     );
   }
 
@@ -1791,7 +2006,7 @@ Environment Variables:
         await analyzeSubmissions(c, dataDir, assignment);
       }
       if (action === 'dashboard' || action === 'full') {
-        generateDashboard(c, dataDir);
+        await generateDashboard(c, dataDir, api);
       }
     } catch (error) {
       console.error(`\n✗ Error processing ${c}: ${error.message}`);
