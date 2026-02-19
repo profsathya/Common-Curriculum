@@ -66,6 +66,52 @@
       color: white; padding: 12px 24px; border-radius: 8px;
       text-decoration: none; font-weight: 500; margin-top: 16px;
     }
+    /* Exemplar gate component */
+    .exemplar-gate {
+      background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; position: relative;
+    }
+    .exemplar-gate__label {
+      display: inline-block; background: #f59e0b; color: #78350f;
+      padding: 3px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .exemplar-gate__title {
+      font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+    }
+    .exemplar-gate__subtitle {
+      font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+    }
+    .exemplar-gate__sample {
+      background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .exemplar-gate__sample strong { color: #92400e; }
+    .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+    .exemplar-gate__detail {
+      display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+      border-top: 2px dashed #fcd34d;
+    }
+    .exemplar-gate__detail.visible { display: block; }
+    .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .exemplar-gate__btn-detail {
+      background: white; border: 2px solid #f59e0b; color: #92400e;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+    .exemplar-gate__btn-detail.expanded {
+      background: #fef3c7; border-color: #d97706;
+    }
+    .exemplar-gate__btn-continue {
+      background: #f59e0b; border: none; color: #78350f;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+    .assignment-gated { display: none; }
+    .assignment-gated.revealed { display: block; }
   </style>
 </head>
 <body>
@@ -114,6 +160,35 @@
       </ol>
     </div>
 
+    <!-- Exemplar: What Good Looks Like -->
+    <div class="exemplar-gate">
+      <span class="exemplar-gate__label">📋 What Good Looks Like</span>
+      <h3 class="exemplar-gate__title">Before you start — here's what a strong assumption audit entry looks like</h3>
+      <p class="exemplar-gate__subtitle">Fictional example based on the study problem partner. Yours should reflect YOUR partner's situation.</p>
+
+      <div class="exemplar-gate__sample">
+        <strong>Assumption:</strong> My partner needs a better study planner.<br>
+        <strong>Evidence I have:</strong> She said she "wastes time figuring out what to study." She described going back and forth between Canvas tabs.<br>
+        <strong>What could be wrong:</strong> Maybe she already has a planner and the problem is she doesn't trust it. Maybe the real issue is decision anxiety — she's afraid of picking the wrong thing to study. A planner wouldn't fix that; it might make it worse by showing her MORE options.<br>
+        <strong>What changes if I'm wrong:</strong> If it's anxiety, not organization, then building a planner actively makes things worse (more decisions). I'd need to build something that REMOVES choices, not organizes them.
+      </div>
+
+      <div id="assumptions-detail" class="exemplar-gate__detail">
+        <strong>Assumption:</strong> She would use a digital tool (app, website).<br>
+        <strong>Evidence I have:</strong> She had her laptop open during our conversation. She mentioned Canvas multiple times.<br>
+        <strong>What could be wrong:</strong> She also said "I sometimes write things down" — maybe she's a paper-first person and a digital tool adds friction. I assumed digital because I'm a CS major. That's MY bias, not something from the conversation.<br>
+        <strong>What changes if I'm wrong:</strong> I'd need to design for paper or a hybrid approach. Ask her directly before committing to building an app.<br><br>
+
+        <em>Notice how the second assumption is about the SOLVER's bias, not just the problem. The best audits include assumptions about yourself, not just your partner.</em>
+      </div>
+
+      <div class="exemplar-gate__actions">
+        <button id="assumptions-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('assumptions')">Show me more detail</button>
+        <button id="assumptions-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('assumptions')">I've read this — continue ↓</button>
+      </div>
+    </div>
+
+    <div id="assumptions-gated" class="assignment-gated">
     <div class="section" style="border: 2px solid #14b8a6; background: #f0fdfa;">
       <h2 style="color: #0f766e;">AI-Guided Discussion</h2>
       <p style="color: #115e59;">Use your preferred AI chatbot (ChatGPT, Claude, etc.) to surface and stress-test your assumptions. The AI won't accept surface-level answers — it will push you to distinguish between evidence and intuition.</p>
@@ -133,6 +208,7 @@ Start by asking me: "Describe the problem you're solving for your partner and wh
       </div>
       <a data-assignment-key="s2-assumption-audit" href="https://csumb.instructure.com/courses/33084/assignments/582876" target="_blank" class="submit-btn">Submit on Canvas →</a>
     </div>
+    </div>
   </div>
 
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
@@ -140,5 +216,29 @@ Start by asking me: "Describe the problem you're solving for your partner and wh
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
