@@ -70,6 +70,52 @@
       color: white; padding: 12px 24px; border-radius: 8px;
       text-decoration: none; font-weight: 500; margin-top: 16px;
     }
+    /* Exemplar gate component */
+    .exemplar-gate {
+      background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; position: relative;
+    }
+    .exemplar-gate__label {
+      display: inline-block; background: #f59e0b; color: #78350f;
+      padding: 3px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .exemplar-gate__title {
+      font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+    }
+    .exemplar-gate__subtitle {
+      font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+    }
+    .exemplar-gate__sample {
+      background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .exemplar-gate__sample strong { color: #92400e; }
+    .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+    .exemplar-gate__detail {
+      display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+      border-top: 2px dashed #fcd34d;
+    }
+    .exemplar-gate__detail.visible { display: block; }
+    .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .exemplar-gate__btn-detail {
+      background: white; border: 2px solid #f59e0b; color: #92400e;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+    .exemplar-gate__btn-detail.expanded {
+      background: #fef3c7; border-color: #d97706;
+    }
+    .exemplar-gate__btn-continue {
+      background: #f59e0b; border: none; color: #78350f;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+    .assignment-gated { display: none; }
+    .assignment-gated.revealed { display: block; }
   </style>
 </head>
 <body>
@@ -113,34 +159,62 @@
           <li><strong>What do you still need to understand</strong> that you couldn't get in one conversation?</li>
         </ul>
       </div>
-
-      <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px; margin-top: 16px;">
-        <h4 style="color: #0d9488; margin: 0 0 8px 0; font-size: 14px;">Copy-paste this to start your Dojo session:</h4>
-        <p style="font-family: monospace; font-size: 14px; color: #134e4a; line-height: 1.6; margin: 0; white-space: pre-wrap;">I just had a discovery conversation with my Sprint 2 partner. I need to process what I heard — not just summarize it, but understand what it actually means. Help me go deeper: ask me about my partner's world, what problem emerged, what surprised me, and what I might be missing. Push me to use specific quotes and moments from the conversation, not vague summaries.</p>
-      </div>
-
-      <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
     </div>
 
-    <div class="warning-box">
-      <h4>What We're NOT Looking For</h4>
-      <ul>
-        <li>Surface-level summary that could describe anyone ("they're stressed about school")</li>
-        <li>No specific quotes or moments from the actual conversation</li>
-        <li>Problem statement that sounds like what you assumed before talking to your partner</li>
-        <li>No distinction between what partner SAID vs. what you OBSERVED</li>
-      </ul>
+    <!-- Exemplar: What Good Looks Like -->
+    <div class="exemplar-gate">
+      <span class="exemplar-gate__label">📋 What Good Looks Like</span>
+      <h3 class="exemplar-gate__title">Before you start — read this example</h3>
+      <p class="exemplar-gate__subtitle">This is a fictional sample based on a different partner and problem. Your response should be about YOUR partner.</p>
+
+      <div class="exemplar-gate__sample">
+        My partner is a nursing student who told me her biggest frustration is "studying takes too long." But when I asked her to walk me through the last time she actually sat down to study, a different pattern emerged — she spends 20-30 minutes just figuring out WHAT to study before she even starts. She opens Canvas, checks the syllabus, compares due dates, looks at her notes from class... by the time she picks something, she's already frustrated.<br><br>
+
+        The problem isn't study duration. It's the decision overhead before studying begins. She said "I just sit there going back and forth" — and when I asked how that feels, she laughed uncomfortably and said "honestly, sometimes I just give up and watch TikTok instead." That uncomfortable laugh was the real signal.
+      </div>
+
+      <div id="discovery-detail" class="exemplar-gate__detail">
+        What I still need to understand: Is this a planning problem (she doesn't have a study plan) or an information architecture problem (Canvas and the syllabus don't make priorities clear)? Or is it an anxiety problem (she's afraid of choosing wrong)? Each of those leads to a completely different solution. I also noticed she mentioned "notes from class" but didn't seem confident about them — there might be a note-taking issue underneath the study issue.<br><br>
+
+        What I observed vs. what she said: She SAID "studying takes too long." But what I OBSERVED is that she lit up when describing the actual studying part — her face changed. The frustration was entirely about the pre-study decisions. If I'd only listened to her words, I'd be trying to make studying faster. But her body language told me studying isn't the problem at all.
+      </div>
+
+      <div class="exemplar-gate__actions">
+        <button id="discovery-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('discovery')">Show me more detail</button>
+        <button id="discovery-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('discovery')">I've read this — continue ↓</button>
+      </div>
     </div>
 
-    <div class="submission">
-      <h3>What to Submit</h3>
-      <p>Download the JSON from your Dojo session and upload to Canvas.</p>
-      <div class="submission__format">
-        <strong>Format:</strong> JSON file download from Dojo session<br>
-        <strong>Due:</strong> Thursday, February 20<br>
-        <strong>Points:</strong> 10
+    <div id="discovery-gated" class="assignment-gated">
+      <div class="section">
+        <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px; margin-top: 16px;">
+          <h4 style="color: #0d9488; margin: 0 0 8px 0; font-size: 14px;">Copy-paste this to start your Dojo session:</h4>
+          <p style="font-family: monospace; font-size: 14px; color: #134e4a; line-height: 1.6; margin: 0; white-space: pre-wrap;">I just had a discovery conversation with my Sprint 2 partner. I need to process what I heard — not just summarize it, but understand what it actually means. Help me go deeper: ask me about my partner's world, what problem emerged, what surprised me, and what I might be missing. Push me to use specific quotes and moments from the conversation, not vague summaries.</p>
+        </div>
+
+        <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
       </div>
-      <a data-assignment-key="s2-discovery-doc" href="https://csumb.instructure.com/courses/33084/assignments/582875" target="_blank" class="submit-btn">Submit on Canvas →</a>
+
+      <div class="warning-box">
+        <h4>What We're NOT Looking For</h4>
+        <ul>
+          <li>Surface-level summary that could describe anyone ("they're stressed about school")</li>
+          <li>No specific quotes or moments from the actual conversation</li>
+          <li>Problem statement that sounds like what you assumed before talking to your partner</li>
+          <li>No distinction between what partner SAID vs. what you OBSERVED</li>
+        </ul>
+      </div>
+
+      <div class="submission">
+        <h3>What to Submit</h3>
+        <p>Download the JSON from your Dojo session and upload to Canvas.</p>
+        <div class="submission__format">
+          <strong>Format:</strong> JSON file download from Dojo session<br>
+          <strong>Due:</strong> Thursday, February 20<br>
+          <strong>Points:</strong> 10
+        </div>
+        <a data-assignment-key="s2-discovery-doc" href="https://csumb.instructure.com/courses/33084/assignments/582875" target="_blank" class="submit-btn">Submit on Canvas →</a>
+      </div>
     </div>
   </div>
 
@@ -149,5 +223,29 @@
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>

@@ -66,6 +66,52 @@
       color: white; padding: 12px 24px; border-radius: 8px;
       text-decoration: none; font-weight: 500; margin-top: 16px;
     }
+    /* Exemplar gate component */
+    .exemplar-gate {
+      background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; position: relative;
+    }
+    .exemplar-gate__label {
+      display: inline-block; background: #f59e0b; color: #78350f;
+      padding: 3px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .exemplar-gate__title {
+      font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+    }
+    .exemplar-gate__subtitle {
+      font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+    }
+    .exemplar-gate__sample {
+      background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .exemplar-gate__sample strong { color: #92400e; }
+    .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+    .exemplar-gate__detail {
+      display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+      border-top: 2px dashed #fcd34d;
+    }
+    .exemplar-gate__detail.visible { display: block; }
+    .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .exemplar-gate__btn-detail {
+      background: white; border: 2px solid #f59e0b; color: #92400e;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+    .exemplar-gate__btn-detail.expanded {
+      background: #fef3c7; border-color: #d97706;
+    }
+    .exemplar-gate__btn-continue {
+      background: #f59e0b; border: none; color: #78350f;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+    .assignment-gated { display: none; }
+    .assignment-gated.revealed { display: block; }
   </style>
 </head>
 <body>
@@ -116,6 +162,29 @@
       </ol>
     </div>
 
+    <!-- Exemplar: What Good Looks Like -->
+    <div class="exemplar-gate">
+      <span class="exemplar-gate__label">📋 What Good Looks Like</span>
+      <h3 class="exemplar-gate__title">Before you start — this is what "showing your reasoning" looks like</h3>
+      <p class="exemplar-gate__subtitle">Fictional example. A hiring committee reads this. Which version would you rather show?</p>
+
+      <div class="exemplar-gate__sample">
+        <strong>❌ Weak rationale:</strong> "I chose to build a simple one-page app because I wanted to keep it minimal."<br><br>
+
+        <strong>✅ Strong rationale:</strong> "I chose a single-priority view over a full planner because my discovery conversation revealed the problem isn't missing information — it's too many choices. My partner described going 'back and forth between Canvas tabs.' A planner would replicate exactly that problem. After the feedback session, I added faded secondary items because she needed to know they existed to trust the tool — but the primary action is still one button. AI suggested adding a calendar view. I overrode that because it contradicts what the conversation revealed."
+      </div>
+
+      <div id="rationale-detail" class="exemplar-gate__detail">
+        <em>The difference: the weak version describes WHAT but not WHY. The strong version traces the decision back to the discovery conversation, shows how feedback changed it, and explicitly names where human judgment overrode AI. A hiring committee reading the strong version learns how you think. The weak version tells them nothing.</em>
+      </div>
+
+      <div class="exemplar-gate__actions">
+        <button id="rationale-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('rationale')">Show me more detail</button>
+        <button id="rationale-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('rationale')">I've read this — continue ↓</button>
+      </div>
+    </div>
+
+    <div id="rationale-gated" class="assignment-gated">
     <div class="coming-soon">
       <h3>Interactive Activity</h3>
       <p>The interactive activity will guide you through documenting each design decision. For now, start thinking about the key decisions you made while building your prototype.</p>
@@ -131,6 +200,7 @@
       </div>
       <a data-assignment-key="s2-design-rationale" href="https://csumb.instructure.com/courses/33084/assignments/582884" target="_blank" class="submit-btn">Submit on Canvas →</a>
     </div>
+    </div>
   </div>
 
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
@@ -138,5 +208,29 @@
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>

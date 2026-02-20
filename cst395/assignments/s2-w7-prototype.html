@@ -70,6 +70,52 @@
       color: white; padding: 12px 24px; border-radius: 8px;
       text-decoration: none; font-weight: 500; margin-top: 16px;
     }
+    /* Exemplar gate component */
+    .exemplar-gate {
+      background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; position: relative;
+    }
+    .exemplar-gate__label {
+      display: inline-block; background: #f59e0b; color: #78350f;
+      padding: 3px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .exemplar-gate__title {
+      font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+    }
+    .exemplar-gate__subtitle {
+      font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+    }
+    .exemplar-gate__sample {
+      background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .exemplar-gate__sample strong { color: #92400e; }
+    .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+    .exemplar-gate__detail {
+      display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+      border-top: 2px dashed #fcd34d;
+    }
+    .exemplar-gate__detail.visible { display: block; }
+    .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .exemplar-gate__btn-detail {
+      background: white; border: 2px solid #f59e0b; color: #92400e;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+    .exemplar-gate__btn-detail.expanded {
+      background: #fef3c7; border-color: #d97706;
+    }
+    .exemplar-gate__btn-continue {
+      background: #f59e0b; border: none; color: #78350f;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+    .assignment-gated { display: none; }
+    .assignment-gated.revealed { display: block; }
   </style>
 </head>
 <body>
@@ -112,33 +158,59 @@
           <li><strong>Where does your understanding of your partner's world</strong> show up in what you built?</li>
         </ul>
       </div>
-
-      <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
     </div>
 
-    <div class="warning-box">
-      <h4>Red Flags</h4>
-      <ul>
-        <li>Prototype that could work for anyone (not specific to your partner)</li>
-        <li>Build log that's just a list of features, not decisions</li>
-        <li>No mention of where human judgment overrode AI suggestions</li>
-        <li>No connection between discovery conversation and design choices</li>
-      </ul>
-    </div>
+    <!-- Exemplar: What Good Looks Like -->
+    <div class="exemplar-gate">
+      <span class="exemplar-gate__label">📋 What Good Looks Like</span>
+      <h3 class="exemplar-gate__title">Before you start — a prototype is simpler than you think</h3>
+      <p class="exemplar-gate__subtitle">Fictional example. The bar for "prototype" is lower than you expect — the BUILD LOG is what matters most.</p>
 
-    <div class="submission">
-      <h3>What to Submit</h3>
-      <p>Two things:</p>
-      <ol style="color: #d1d5db; padding-left: 20px; margin: 0 0 16px 0;">
-        <li style="margin-bottom: 8px;">Your prototype artifact (whatever format — link, file, screenshots, document)</li>
-        <li>JSON download from your Dojo build log session</li>
-      </ol>
-      <div class="submission__format">
-        <strong>Format:</strong> Prototype artifact + JSON file from Dojo session<br>
-        <strong>Due:</strong> Thursday, February 27<br>
-        <strong>Points:</strong> 10
+      <div class="exemplar-gate__sample">
+        <strong>Prototype:</strong> A single HTML page called "Study Launchpad." It pulls my partner's Canvas assignments via API and shows ONLY today's top priority with one button: "Start Studying This." No options. No browsing. No weekly view. Just the one thing she should do right now.<br><br>
+
+        <strong>Build log entry — key decision:</strong> I started building a full weekly planner view. After 30 minutes, I stopped and re-read my discovery notes. She never asked to see her whole week — she gets stuck at the MOMENT she sits down. I was building what I assumed she needed, not what the conversation revealed. Scrapped the planner. Built the single-focus view. The AI helped me with the Canvas API code, but the decision to show only one thing was mine — no AI suggested removing features.
       </div>
-      <a data-assignment-key="s2-prototype" href="https://csumb.instructure.com/courses/33084/assignments/582881" target="_blank" class="submit-btn">Submit on Canvas →</a>
+
+      <div id="prototype-detail" class="exemplar-gate__detail">
+        <strong>Build log entry — what I'm unsure about:</strong> I'm not sure "today's top priority" is the right filter. Should it be "most urgent deadline" or "most impactful thing to study"? Those aren't the same. I went with "nearest deadline" because it's simpler to calculate, but this might be wrong — my partner might need to study for a big exam, not a small quiz due tomorrow. This is something I need to test with her in the feedback session.<br><br>
+
+        <em>Notice: the prototype is intentionally rough (one page, one button). The build log is where the thinking lives. A polished app with no decision rationale would score lower than a rough prototype with a thoughtful log.</em>
+      </div>
+
+      <div class="exemplar-gate__actions">
+        <button id="prototype-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('prototype')">Show me more detail</button>
+        <button id="prototype-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('prototype')">I've read this — continue ↓</button>
+      </div>
+    </div>
+
+    <div id="prototype-gated" class="assignment-gated">
+      <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
+
+      <div class="warning-box">
+        <h4>Red Flags</h4>
+        <ul>
+          <li>Prototype that could work for anyone (not specific to your partner)</li>
+          <li>Build log that's just a list of features, not decisions</li>
+          <li>No mention of where human judgment overrode AI suggestions</li>
+          <li>No connection between discovery conversation and design choices</li>
+        </ul>
+      </div>
+
+      <div class="submission">
+        <h3>What to Submit</h3>
+        <p>Two things:</p>
+        <ol style="color: #d1d5db; padding-left: 20px; margin: 0 0 16px 0;">
+          <li style="margin-bottom: 8px;">Your prototype artifact (whatever format — link, file, screenshots, document)</li>
+          <li>JSON download from your Dojo build log session</li>
+        </ol>
+        <div class="submission__format">
+          <strong>Format:</strong> Prototype artifact + JSON file from Dojo session<br>
+          <strong>Due:</strong> Thursday, February 27<br>
+          <strong>Points:</strong> 10
+        </div>
+        <a data-assignment-key="s2-prototype" href="https://csumb.instructure.com/courses/33084/assignments/582881" target="_blank" class="submit-btn">Submit on Canvas →</a>
+      </div>
     </div>
   </div>
 
@@ -147,5 +219,30 @@
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>

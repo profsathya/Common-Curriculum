@@ -60,6 +60,52 @@
             background: rgba(255,255,255,0.1); padding: 12px 16px;
             border-radius: 8px; margin-top: 12px;
         }
+        /* Exemplar gate component */
+        .exemplar-gate {
+          background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+          padding: 24px; margin-bottom: 24px; position: relative;
+        }
+        .exemplar-gate__label {
+          display: inline-block; background: #f59e0b; color: #78350f;
+          padding: 3px 12px; border-radius: 20px; font-size: 12px;
+          font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+        }
+        .exemplar-gate__title {
+          font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+        }
+        .exemplar-gate__subtitle {
+          font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+        }
+        .exemplar-gate__sample {
+          background: white; border: 1px solid #fcd34d; border-radius: 8px;
+          padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+        }
+        .exemplar-gate__sample strong { color: #92400e; }
+        .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+        .exemplar-gate__detail {
+          display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+          padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+          border-top: 2px dashed #fcd34d;
+        }
+        .exemplar-gate__detail.visible { display: block; }
+        .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .exemplar-gate__btn-detail {
+          background: white; border: 2px solid #f59e0b; color: #92400e;
+          padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+          cursor: pointer; transition: background 0.2s;
+        }
+        .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+        .exemplar-gate__btn-detail.expanded {
+          background: #fef3c7; border-color: #d97706;
+        }
+        .exemplar-gate__btn-continue {
+          background: #f59e0b; border: none; color: #78350f;
+          padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+          cursor: pointer; transition: background 0.2s;
+        }
+        .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+        .assignment-gated { display: none; }
+        .assignment-gated.revealed { display: block; }
     </style>
 </head>
 <body>
@@ -108,6 +154,33 @@
             </div>
         </div>
 
+        <!-- Exemplar: What Good Looks Like -->
+        <div class="exemplar-gate">
+          <span class="exemplar-gate__label">📋 What Good Looks Like</span>
+          <h3 class="exemplar-gate__title">Before you start — the difference between generic and useful questions</h3>
+          <p class="exemplar-gate__subtitle">Fictional example for the "active listening" student. Adapt the approach for YOUR skill.</p>
+
+          <div class="exemplar-gate__sample">
+            <strong>❌ Generic question:</strong> "Is listening important in your job?"<br>
+            <em>Problem: Everyone says yes. You learn nothing. You can't be wrong.</em><br><br>
+
+            <strong>✅ Assumption-testing question:</strong> "I've been assuming that active listening mostly means not interrupting — just letting people finish. In your experience, is that what actually distinguishes a good listener from a bad one at work, or is it something different?"<br>
+            <em>Why this works: It states a specific belief that could be WRONG. The professional's answer either confirms or breaks your assumption. Either way, you leave with real data.</em>
+          </div>
+
+          <div id="netprep-detail" class="exemplar-gate__detail">
+            <strong>Elevator pitch example:</strong> "I'm a junior CS major and I've been working on developing active listening — specifically the gap between hearing someone and actually making them feel understood. I realized in a group project that I was waiting for my turn to talk instead of processing what people said. So I'm curious how listening plays out in your work."<br><br>
+
+            <em>Notice: the pitch includes a specific, honest gap ("waiting for my turn to talk") — not a polished strength. Professionals respond better to honesty about a real struggle than to rehearsed confidence. You're not selling yourself here; you're testing your assumptions.</em>
+          </div>
+
+          <div class="exemplar-gate__actions">
+            <button id="netprep-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('netprep')">Show me more detail</button>
+            <button id="netprep-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('netprep')">I've read this — continue ↓</button>
+          </div>
+        </div>
+
+        <div id="netprep-gated" class="assignment-gated">
         <div class="tip-box">
             <h4>Networking Tips</h4>
             <ul>
@@ -131,6 +204,7 @@
                 Submit on Canvas →
             </a>
         </div>
+        </div>
     </div>
 
     <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
@@ -138,5 +212,29 @@
             Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
         </p>
     </footer>
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
