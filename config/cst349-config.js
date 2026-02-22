@@ -26,7 +26,7 @@ const CST349_CONFIG = {
   assignments: {
     // Sprint 1
     "s1-self-assessment": {
-      canvasId: "578900",
+      canvasId: "144469",
       title: "S1: Skills Self-Assessment",
       dueDate: "2026-01-22",
       type: "quiz",
@@ -39,7 +39,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w1-skills-self-assessment.html"
     },
     "s1-reflection-1": {
-      canvasId: "578902",
+      canvasId: "144470",
       title: "S1: Productive Reflection #1",
       dueDate: "2026-01-24",
       type: "reflection",
@@ -52,7 +52,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-skills-revision": {
-      canvasId: "580893",
+      canvasId: "144730",
       title: "S1: Skills Assessment Revision",
       dueDate: "2026-01-29",
       type: "quiz",
