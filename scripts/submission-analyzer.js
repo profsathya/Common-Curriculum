@@ -178,8 +178,17 @@ function parseCSVLine(line) {
   return result;
 }
 
-function loadRubric(assignmentKey, assignmentType, assignmentTitle) {
-  // Check for assignment-specific rubric file
+function loadRubric(assignmentKey, assignmentType, assignmentTitle, courseName) {
+  // Check for course-specific rubric first
+  if (courseName) {
+    const coursePrefix = courseName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const courseRubricPath = path.join(__dirname, '..', 'config', 'rubrics', coursePrefix, `${assignmentKey}.txt`);
+    if (fs.existsSync(courseRubricPath)) {
+      return fs.readFileSync(courseRubricPath, 'utf-8').trim();
+    }
+  }
+
+  // Fall back to shared rubric
   const rubricPath = path.join(__dirname, '..', 'config', 'rubrics', `${assignmentKey}.txt`);
   if (fs.existsSync(rubricPath)) {
     return fs.readFileSync(rubricPath, 'utf-8').trim();
@@ -187,9 +196,9 @@ function loadRubric(assignmentKey, assignmentType, assignmentTitle) {
 
   // Generate default rubric based on assignment type
   const defaults = {
-    reflection: `This is a productive reflection. Quality criteria: honest self-assessment, specific examples from their experience, evidence of genuine thinking rather than surface-level responses, connection to course concepts.`,
+    reflection: `This is a productive reflection. Quality criteria: honest self-assessment, specific examples from their experience, evidence of genuine thinking rather than surface-level responses, connection to course concepts, evidence of metacognition.`,
     quiz: `This is a graded survey/quiz. Quality criteria: thoughtful responses that show engagement with the material, specific rather than vague answers, evidence of reflection.`,
-    assignment: `This is an assignment submission. Quality criteria: completeness, depth of analysis, specificity of examples, actionable insights, evidence of genuine effort.`,
+    assignment: `This is an assignment submission. Quality criteria: completeness, depth of analysis, specificity of examples, actionable insights, evidence of genuine effort, connection to other course work.`,
   };
 
   return defaults[assignmentType] || defaults.assignment;
@@ -488,7 +497,7 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     if (!submissions) continue;
 
     const csvRow = csvRows.find(r => r.key === assignmentKey);
-    const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title);
+    const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title, courseInfo.name);
 
     console.log(`  ${indexEntry.title} (${assignmentKey})`);
 
@@ -668,29 +677,31 @@ async function callLLM(apiKey, params) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 256,
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 512,
       messages: [{
         role: 'user',
-        content: `You are evaluating a student submission for quality. Rate on a scale of 1-5 and give brief notes.
+        content: `You are evaluating a student submission for quality in a course designed around Self-Determination Theory, Symbiotic Thinking, and three core capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
 
 Assignment: "${assignmentTitle}" (${courseName})
-Quality criteria: ${rubric}
+
+Quality criteria specific to this assignment:
+${rubric}
 
 Student submission:
 ---
 ${content}
 ---
 
-Rate the quality of this submission from 1-5:
-1 = Minimal effort, generic/copied, no real engagement
-2 = Below expectations, vague, lacks specifics
-3 = Meets basic expectations, some specifics but surface-level
-4 = Good, specific examples, genuine reflection/analysis
-5 = Excellent, deep insight, specific actionable content
+Rate the quality of this submission from 1-5 using these levels:
+1 = Minimal effort, generic/AI-generated without personal engagement, no real connection to their experience
+2 = Below expectations, vague, lacks specifics, doesn't reference their actual work or partner/group interactions
+3 = Meets basic expectations, has some specifics but stays surface-level, doesn't connect this assignment to other work
+4 = Good — specific examples from their actual experience, genuine reflection or analysis, some connection to course frameworks or other assignments
+5 = Excellent — deep insight, connects this work to other assignments or course concepts, shows metacognitive awareness (thinking about their own thinking), demonstrates human judgment beyond what AI could generate
 
 Respond in exactly this JSON format, nothing else:
-{"quality": <1-5>, "notes": "<one sentence summary of why>"}`,
+{"quality": <1-5>, "notes": "<2-3 sentences: what specific signals did you see or not see? Be concrete about what's present or missing, not generic.>"}`,
       }],
     }),
   });
@@ -712,7 +723,7 @@ Respond in exactly this JSON format, nothing else:
   const result = JSON.parse(jsonMatch[0]);
   return {
     quality: Math.min(5, Math.max(1, parseInt(result.quality) || 3)),
-    notes: String(result.notes || '').substring(0, 200),
+    notes: String(result.notes || '').substring(0, 500),
   };
 }
 
@@ -734,17 +745,24 @@ async function generateStudentSummary(apiKey, params) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 200,
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 400,
       messages: [{
         role: 'user',
-        content: `You are helping an instructor understand a student in ${courseName}. Based on their assignment data below, write a 2-3 sentence qualitative summary that helps the instructor understand this student's engagement, strengths, and areas to watch. Be specific and actionable — not generic. If data is limited, say so briefly.
+        content: `You are helping an instructor understand a student in ${courseName}. This course develops three capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
+
+Based on their assignment data below, write a 3-4 sentence qualitative summary that addresses:
+1. Engagement pattern: Are they doing the work on time? Is quality consistent or variable?
+2. Depth vs. compliance: Do their submissions show genuine thinking or surface-level completion? Is there evidence they connect assignments to each other?
+3. Signal strength: What can you confidently say vs. what's unclear from the data?
+
+If data is limited, say so. Be specific and actionable — not generic. Flag any students who might be struggling silently (on-time but low quality) differently from those who are clearly disengaged (late/missing).
 
 Student: ${studentId}
 Assignment data:
 ${snapshot}
 
-Write the summary as plain text (no quotes, no label, no markdown). Focus on patterns: Are they engaged? Improving? Surface-level or deep? Falling behind? Strong in some areas but not others?`,
+Write the summary as plain text (no quotes, no label, no markdown).`,
       }],
     }),
   });
