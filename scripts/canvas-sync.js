@@ -238,6 +238,82 @@ function matchAssignments(canvasAssignments, configAssignments) {
 }
 
 /**
+ * Match Canvas items to config entries, using the correct ID type.
+ * Quiz-type config entries (canvasType === "quiz") are matched against
+ * the quizzes list to get the actual quiz ID. All other entries are
+ * matched against the assignments list.
+ */
+function matchAssignmentsWithTypes(canvasQuizzes, canvasAssignments, configAssignments) {
+  const results = {
+    matched: [],
+    unmatched: [],
+    notInCanvas: [],
+  };
+
+  // Build lookup maps by normalized title
+  const quizMap = new Map();
+  canvasQuizzes.forEach(q => {
+    quizMap.set(normalizeTitle(q.name), q);
+  });
+
+  const assignmentMap = new Map();
+  canvasAssignments.forEach(a => {
+    assignmentMap.set(normalizeTitle(a.name), a);
+  });
+
+  for (const [key, configEntry] of Object.entries(configAssignments)) {
+    const normalizedTitle = normalizeTitle(configEntry.title);
+
+    // For quiz-type entries, prefer the quiz ID; fall back to assignment ID
+    const isQuizType = configEntry.canvasType === 'quiz';
+    const primaryMatch = isQuizType
+      ? quizMap.get(normalizedTitle)
+      : assignmentMap.get(normalizedTitle);
+    const fallbackMatch = isQuizType
+      ? assignmentMap.get(normalizedTitle)
+      : quizMap.get(normalizedTitle);
+    const canvasItem = primaryMatch || fallbackMatch;
+
+    if (canvasItem) {
+      results.matched.push({
+        key,
+        configTitle: configEntry.title,
+        oldCanvasId: configEntry.canvasId,
+        newCanvasId: String(canvasItem.id),
+        canvasTitle: canvasItem.name,
+        changed: configEntry.canvasId !== String(canvasItem.id),
+      });
+      // Remove from both maps to avoid double-counting
+      quizMap.delete(normalizedTitle);
+      assignmentMap.delete(normalizedTitle);
+    } else {
+      results.notInCanvas.push({
+        key,
+        title: configEntry.title,
+        canvasId: configEntry.canvasId,
+      });
+    }
+  }
+
+  // Remaining unmatched items from both maps
+  const seen = new Set();
+  for (const map of [quizMap, assignmentMap]) {
+    map.forEach((item, title) => {
+      const id = String(item.id);
+      if (!seen.has(id)) {
+        seen.add(id);
+        results.unmatched.push({
+          canvasId: id,
+          title: item.name,
+        });
+      }
+    });
+  }
+
+  return results;
+}
+
+/**
  * Update config file with new Canvas IDs
  */
 function updateConfigFile(configPath, rawContent, matchedAssignments) {
@@ -293,16 +369,16 @@ async function fetchAssignments(api, courseName) {
   const canvasQuizzes = await api.listQuizzes(courseId);
   console.log(`Found ${canvasQuizzes.length} quizzes in Canvas`);
 
-  // Combine assignments and quizzes for matching.
-  // Assignments go LAST so shadow assignments (which share quiz titles)
-  // overwrite quiz entries — we want the assignment ID for submissions.
-  const allCanvasItems = [
-    ...canvasQuizzes.map(q => ({ id: q.id, name: q.title })),
-    ...canvasAssignments,
-  ];
+  // Build separate lookup maps for quizzes and assignments so we can
+  // use the correct ID type for each config entry. Quiz-type entries
+  // need the actual quiz ID (for /quizzes/ URLs), while regular
+  // assignments use the assignment ID.
+  const quizItems = canvasQuizzes.map(q => ({ id: q.id, name: q.title }));
+  const assignmentItems = canvasAssignments;
 
-  // Match assignments
-  const results = matchAssignments(allCanvasItems, config.assignments);
+  // Match config entries, preferring quiz IDs for quiz-type entries
+  // and assignment IDs for everything else.
+  const results = matchAssignmentsWithTypes(quizItems, assignmentItems, config.assignments);
 
   // Report results
   console.log(`\n${'─'.repeat(40)}`);
@@ -1101,10 +1177,11 @@ async function createQuizzes(api, courseName, dryRun = true, limit = 0) {
 
       // Create the quiz
       const newQuiz = await api.createQuiz(courseId, quizData);
-      // Canvas creates a shadow assignment for each quiz. Use assignment_id
-      // (not quiz id) so that submissions can be fetched via the assignments API.
-      const effectiveId = newQuiz.assignment_id || newQuiz.id;
-      console.log(`  ✓ Created quiz: "${entry.title}" [quiz: ${newQuiz.id}, assignment: ${effectiveId}]`);
+      // Use the actual quiz ID so that /quizzes/ URLs work correctly.
+      // The shadow assignment_id is only needed for the submissions API,
+      // not for student-facing links.
+      const effectiveId = newQuiz.id;
+      console.log(`  ✓ Created quiz: "${entry.title}" [quiz: ${newQuiz.id}, shadow-assignment: ${newQuiz.assignment_id}]`);
 
       // Add questions if defined
       if (entry.questions && entry.questions.length > 0) {
@@ -1174,9 +1251,12 @@ function buildCanvasUrl(baseUrl, entry) {
     return null;
   }
 
-  // Always use /assignments/ path — canvasId stores the shadow assignment ID
-  // for both regular assignments and quizzes. Canvas correctly routes
-  // /assignments/SHADOW_ID to the quiz UI for students.
+  // Use the correct Canvas path based on entry type:
+  // - Quiz entries (canvasType === "quiz") use /quizzes/ with the quiz ID
+  // - Regular assignments use /assignments/ with the assignment ID
+  if (entry.canvasType === 'quiz') {
+    return `${baseUrl}/quizzes/${entry.canvasId}`;
+  }
   return `${baseUrl}/assignments/${entry.canvasId}`;
 }
 
