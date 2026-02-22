@@ -87,9 +87,12 @@ function parseConfigFile(configPath) {
 function buildCanvasUrl(baseUrl, assignment) {
   if (!baseUrl || !assignment.canvasId) return null;
 
-  // Always use /assignments/ path — Canvas stores the shadow assignment ID
-  // for both regular assignments and quizzes. The /assignments/ path works
-  // for both types and correctly routes students to the quiz when needed.
+  // Use the correct Canvas path based on entry type:
+  // - Quiz entries (canvasType === "quiz") use /quizzes/ with the quiz ID
+  // - Regular assignments use /assignments/ with the assignment ID
+  if (assignment.canvasType === 'quiz') {
+    return `${baseUrl}/quizzes/${assignment.canvasId}`;
+  }
   return `${baseUrl}/assignments/${assignment.canvasId}`;
 }
 
