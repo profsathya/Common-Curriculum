@@ -567,6 +567,80 @@ function populateLoomLinks(config) {
 }
 
 /**
+ * Render the weekly homepage content in 3 zones.
+ * Zone 1: "This Week" — narrative + connection (always visible)
+ * Zone 2: "Why This Matters" — employer connection + portfolio link (collapsed by default)
+ *
+ * @param {Object} config - Course config with weeklyContent
+ * @param {number} weekNum - Current week number
+ * @param {string} containerId - ID of the container element for Zone 1 narrative
+ * @param {string} connectionContainerId - ID for Zone 2
+ */
+function renderHomepageContent(config, weekNum, containerId, connectionContainerId) {
+  const content = config.weeklyContent && config.weeklyContent[weekNum];
+  if (!content) return;
+
+  // Zone 1: Update narrative and insight
+  const narrativeEl = document.getElementById(containerId);
+  if (narrativeEl) {
+    narrativeEl.innerHTML = `
+      <p class="zone1__narrative">${content.narrative}</p>
+      <p class="zone1__connection">${content.connection}</p>
+    `;
+  }
+
+  const insightEl = document.getElementById('weekly-insight-text');
+  if (insightEl) {
+    insightEl.textContent = content.insight;
+  }
+
+  // Zone 2: Why This Matters (collapsed)
+  const zone2 = document.getElementById(connectionContainerId);
+  if (zone2 && content.employerLink) {
+    let sourceHtml = '';
+    if (content.employerLink.source) {
+      sourceHtml = `
+        <div class="zone2__source">
+          <span class="zone2__source-label">\u{1F4CA} From the research:</span>
+          <p class="zone2__source-title">${content.employerLink.source.title}</p>
+          <p class="zone2__source-finding">"${content.employerLink.source.finding}"</p>
+        </div>
+      `;
+    }
+
+    zone2.innerHTML = `
+      <button class="zone2__header" data-collapse-toggle="zone2-content" aria-expanded="false">
+        <div class="zone2__header-left">
+          <span class="zone2__icon">\u{1F4A1}</span>
+          <span class="zone2__title">Why This Matters \u2014 For Your Career</span>
+        </div>
+        <span class="zone2__toggle">+</span>
+      </button>
+      <div class="zone2__content" id="zone2-content">
+        <p class="zone2__employer-text">${content.employerLink.text}</p>
+        ${sourceHtml}
+        <p class="zone2__portfolio">${content.portfolioConnection}</p>
+      </div>
+    `;
+    zone2.style.display = 'block';
+
+    // Initialize collapse behavior
+    const header = zone2.querySelector('.zone2__header');
+    if (header) {
+      header.addEventListener('click', function() {
+        var contentEl = document.getElementById('zone2-content');
+        if (!contentEl) return;
+        var isExpanded = header.getAttribute('aria-expanded') === 'true';
+        header.setAttribute('aria-expanded', !isExpanded);
+        contentEl.classList.toggle('is-expanded');
+        var toggle = header.querySelector('.zone2__toggle');
+        if (toggle) toggle.textContent = isExpanded ? '+' : '\u2212';
+      });
+    }
+  }
+}
+
+/**
  * Initialize a sprint page with Loom support
  * @param {Object} config - The course config object
  */

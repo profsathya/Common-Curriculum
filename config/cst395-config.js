@@ -455,6 +455,86 @@ const CST395_CONFIG = {
     syllabus: "https://docs.google.com/document/d/SYLLABUS_DOC_ID"
   },
 
+  // Weekly homepage content (narrative zones)
+  weeklyContent: {
+    1: {
+      narrative: "Welcome. This course is about becoming someone who can solve problems beyond your current reach — using AI as a cognitive partner.",
+      connection: "Everything starts with understanding yourself as a learner and problem-solver.",
+      insight: "Superagency means attempting problems you wouldn't have tried before. But the human value has to be visible — what would be worse if you just handed it to AI?",
+      employerLink: { text: "You're building Self-Directed Learning — the capacity that keeps you relevant after technical skills change.", source: null },
+      portfolioConnection: "Sprint 1 establishes your baseline. Every sprint builds on this foundation."
+    },
+    2: {
+      narrative: "Understanding before building. Use 5 Whys to go beneath the surface of your problem.",
+      connection: "Last week you identified a problem. This week you figure out if it's the REAL problem.",
+      insight: "The first answer to 'why' is almost never the real answer. Keep pushing.",
+      employerLink: { text: "Root cause analysis is what employers mean by 'Analytical Thinking' — the #2 skill in tech/professional services.", source: null },
+      portfolioConnection: "Your 5 Whys analysis becomes evidence of how you think, not just what you built."
+    },
+    3: {
+      narrative: "Build week. Turn your understanding into a solution — and document why you made the choices you did.",
+      connection: "You analyzed the problem. Now solve it. The solution architecture is your plan; the build is your execution.",
+      insight: "The solution matters less than your reasoning. Employers want to see HOW you decided, not just what you produced.",
+      employerLink: { text: "Creative Problem Solving + Initiative — approaching problems with new perspectives and making decisions without direction.", source: null },
+      portfolioConnection: "Your build + rationale become the core of your Sprint 1 demo."
+    },
+    4: {
+      narrative: "Reflection and demo. Show what you built, why it matters, and what you'd do differently.",
+      connection: "The full arc: problem → analysis → solution → reflection. Your demo tells this story.",
+      insight: "Reflection isn't about what went well. It's about what you LEARNED — especially from what didn't work.",
+      employerLink: { text: "Demonstrating your process to others builds Communication and Teamwork skills — the top 2 skills employers rate as 'extremely important.'", source: null },
+      portfolioConnection: "Sprint 1 demo is your first portfolio artifact. It establishes the baseline Sprint 2 builds on."
+    },
+    5: {
+      narrative: "You met your partner. This week is about going deeper than their first answer — discovering the problem underneath the problem.",
+      connection: "Sprint 1 you solved your own problem. Sprint 2 tests whether you can understand someone else's — that's a fundamentally different skill.",
+      insight: "Your partner told you their problem. But what they said and what they actually need are almost never the same thing. The Discovery Deep Dive is where you find the gap.",
+      employerLink: {
+        text: "This builds what employers call Analytical Thinking and Active Listening — understanding someone's actual needs, not just their stated request.",
+        source: null
+      },
+      portfolioConnection: "Your Discovery Doc becomes Slide 1 of your demo: 'Here's what I learned that they didn't tell me directly.'"
+    },
+    6: {
+      narrative: "You've done the discovery. Now pressure-test what you think you know — before you build something based on wrong assumptions.",
+      connection: "Last week you listened. This week you challenge your own understanding. The Assumption Audit and Week 6 Prep are about finding where you're wrong BEFORE your partner tells you.",
+      insight: "If your assumptions feel safe and comfortable, you're not being honest enough. The best solutions come from finding and fixing wrong assumptions early, not from protecting them.",
+      employerLink: {
+        text: "This is Critical Thinking in action — what 45% of employers rate as 'extremely important.' Not analyzing data in a textbook, but testing your own beliefs against evidence.",
+        source: {
+          title: "Durable Skills, Strong Starts (UpSkill America / WGU, 2025)",
+          url: null,
+          finding: "Across 550+ employers, skills associated with being ready to execute on day one — including critical thinking and attention to detail — were the most highly valued."
+        }
+      },
+      portfolioConnection: "Your Assumption Audit feeds directly into Demo Slide 3: 'Here's where I was wrong and what I changed.' Employers want to see you caught your own mistakes."
+    },
+    7: {
+      narrative: "Build week. You're turning understanding into something real — and documenting the decisions that matter, not just the output.",
+      connection: "You discovered the problem (Week 5), tested your assumptions (Week 6). Now build something and get your partner's honest reaction to it.",
+      insight: "The prototype matters less than the Build Log. Anyone can build something. The question is: can you explain WHY you built it this way and what would be worse if you'd just handed the problem to AI?",
+      employerLink: {
+        text: "This develops Creative Problem Solving and Initiative — approaching problems with new perspectives and making decisions without waiting for direction. Tech employers especially value this combination.",
+        source: null
+      },
+      portfolioConnection: "The Build Log + Partner Feedback become Demo Slide 2 ('key decisions I made') and Slide 3 ('what I changed after feedback'). Your Design Rationale ties it all together."
+    },
+    8: {
+      narrative: "Demo week. You're not presenting a project — you're proving you understood someone deeply enough to build something they couldn't have asked for.",
+      connection: "Everything converges: discovery → assumptions → building → feedback → iteration. Your demo tells that story in 5 minutes.",
+      insight: "The best demos don't show everything. They show the moments where YOUR judgment mattered — where a human made the difference that AI couldn't.",
+      employerLink: {
+        text: "Demo day is a behavioral interview in disguise. You're demonstrating Teamwork/Collaboration (55% 'extremely important'), Communication (52%), and Ethical Behavior (56%) — the top-rated skills across 550+ employers.",
+        source: {
+          title: "Durable Skills, Strong Starts (UpSkill America / WGU, 2025)",
+          url: null,
+          finding: "85% of employers say durable skills are developed through experience, not formal instruction. Your Sprint 2 demo IS that experience — and the evidence that you have these skills."
+        }
+      },
+      portfolioConnection: "This IS your portfolio piece. Sprint 2's demo answers: 'Can I solve a real problem for a real person and prove the value of my judgment?'"
+    }
+  },
+
   // Week dates for determining "current week"
   // Each week runs Sunday through Saturday
   // UPDATE EACH SEMESTER

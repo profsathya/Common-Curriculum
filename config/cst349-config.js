@@ -544,6 +544,86 @@ const CST349_CONFIG = {
     syllabus: "https://docs.google.com/document/d/SYLLABUS_DOC_ID"
   },
 
+  // Weekly homepage content (narrative zones)
+  weeklyContent: {
+    1: {
+      narrative: "Welcome. This course is about proving you can learn anything you need to learn — with evidence, not just claims.",
+      connection: "Technical skills get you hired. Self-Directed Learning keeps you relevant.",
+      insight: "Most people overestimate what they know and underestimate what they need to learn. This course is about closing that gap with evidence.",
+      employerLink: { text: "You're building the meta-skill underneath everything else employers want.", source: null },
+      portfolioConnection: "Sprint 1 establishes your baseline across 8 SDL dimensions."
+    },
+    2: {
+      narrative: "Identify your growth edge — the specific skill gap that will have the biggest impact on your career readiness.",
+      connection: "Last week was broad self-assessment. This week you narrow to the thing that matters most.",
+      insight: "Students consistently cite networking and time management as their biggest challenges but can't explain WHY or WHAT they've tried. Go deeper than the obvious answer.",
+      employerLink: { text: "Self-awareness about your own gaps is Metacognition — the operating system that makes every other skill work.", source: null },
+      portfolioConnection: "Your skill selection drives the entire semester. Choose based on evidence, not assumption."
+    },
+    3: {
+      narrative: "Active learning week. Start practicing — not just planning.",
+      connection: "You identified the skill. Now actually do something about it and capture what happens.",
+      insight: "A plan to improve is not improvement. Evidence of practice — even failed practice — is.",
+      employerLink: { text: "Initiative means taking action without waiting for direction. Start now.", source: null },
+      portfolioConnection: "Your learning log becomes your evidence trail. Capture what confused you and what clicked."
+    },
+    4: {
+      narrative: "Demo week. Show what changed — with evidence.",
+      connection: "Everything converges: self-assessment → skill selection → practice → demonstration.",
+      insight: "Your demo isn't about what you did. It's about what you LEARNED and how you know you learned it.",
+      employerLink: { text: "Being able to describe what you know and can do is what 22% of employers explicitly expect in behavioral interviews.", source: null },
+      portfolioConnection: "Sprint 1 demo is your first evidence artifact. Sprint 2 builds accountability around it."
+    },
+    5: {
+      narrative: "You picked a skill to develop. This week is about designing how you'll PROVE you actually grew — before you start practicing.",
+      connection: "Sprint 1 you identified what to work on. Sprint 2 tests whether you can hold yourself accountable to actually doing it — with your triad watching.",
+      insight: "Everyone says they want to improve. Evidence Design is what separates 'I plan to get better' from 'here's my baseline, here's my method, here's how you'll see the change.'",
+      employerLink: {
+        text: "This builds Metacognition and Responsibility — knowing what you don't know and taking ownership of your own development. Employers rated Responsibility as 'extremely important' at nearly 60%.",
+        source: null
+      },
+      portfolioConnection: "Your Evidence Design becomes the structure of your entire Sprint 2 demo. Without a baseline, you can't show growth."
+    },
+    6: {
+      narrative: "Check-in week. Your triad holds you accountable — and you find out whether you've actually started practicing or just planned to.",
+      connection: "Last week you designed evidence. This week is the honest moment: have you actually started, or do you just have a plan? Your triad check-in is where you find out.",
+      insight: "If you haven't started practicing your skill yet, this is the week to start. Not next week. The networking event is coming and professionals will ask what you're working on — 'I have a plan' is a weaker answer than 'here's what I've tried so far.'",
+      employerLink: {
+        text: "Coachability — willingness to accept feedback and apply new skills — is the #2 thing employers expect from early-career hires (63.4%). Your triad check-in is where you practice receiving honest feedback.",
+        source: {
+          title: "Durable Skills, Strong Starts (UpSkill America / WGU, 2025)",
+          url: null,
+          finding: "63.7% of employers prioritize professionalism and 63.4% prioritize coachability as their top expectations for early-career talent. These aren't about technical skill — they're about how you show up."
+        }
+      },
+      portfolioConnection: "Your Check-in response and Networking Prep feed Demo Slide 3 (evidence of growth). You need real data points, not promises."
+    },
+    7: {
+      narrative: "Networking week. You're about to talk to professionals who do this work every day — they'll tell you things your classmates and your instructor can't.",
+      connection: "You've been developing a skill based on your own understanding of it. The networking event tests that understanding against professional reality. Where's the gap?",
+      insight: "Don't ask professionals if your skill matters. Ask them HOW it shows up in their work, and where your assumptions about it are wrong. Assumption-testing questions get you 10x more useful information than polite ones.",
+      employerLink: {
+        text: "You're practicing Communication and Initiative in a real professional context. Tech employers specifically want people who can think independently AND operate within professional norms.",
+        source: null
+      },
+      portfolioConnection: "The Networking Report gives you Demo Slide 4 (external validation). A professional confirming or challenging your approach is stronger evidence than self-assessment."
+    },
+    8: {
+      narrative: "Demo week. You're showing evidence that you actually grew — not just that you did assignments.",
+      connection: "Everything converges: baseline → practice → triad accountability → professional validation → demonstration. Your slides tell the story of real growth with real evidence.",
+      insight: "Your demo isn't about what you did — it's about what CHANGED. Slide 1 (baseline) and Slide 4 (evidence) should show a visible difference. If they don't, be honest about what you learned from that too.",
+      employerLink: {
+        text: "This IS a behavioral interview. You're demonstrating Growth Mindset (39.5% 'extremely important'), Self-Direction, and the ability to describe what you know and can do — which 22% of employers explicitly expect in interviews.",
+        source: {
+          title: "Durable Skills, Strong Starts (UpSkill America / WGU, 2025)",
+          url: null,
+          finding: "61% of employers believe their early-career workforce has the durable skills needed for the next 5 years. Your demo is your chance to be in that 61% — with evidence, not claims."
+        }
+      },
+      portfolioConnection: "This IS your portfolio evidence for SDL Dimensions 1, 3, 4, and 7. Your slides become artifacts you'll reference in Sprint 4's defense."
+    }
+  },
+
   // Week dates for determining "current week"
   // Each week runs Sunday through Saturday
   // UPDATE EACH SEMESTER
