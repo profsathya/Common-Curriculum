@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Context — Common Curriculum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --bg-nav: #1c1917;
+      --bg-card: #ffffff;
+      --text: #1c1917;
+      --text-muted: #78716c;
+      --text-nav: #d6d3d1;
+      --text-nav-active: #ffffff;
+      --accent: #0d9488;
+      --accent-light: #ccfbf1;
+      --border: #e7e5e4;
+      --border-active: #0d9488;
+      --status-active: #059669;
+      --status-progress: #d97706;
+      --status-exploring: #7c3aed;
+      --status-pending: #6b7280;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── Sidebar Navigation ─── */
+    .nav {
+      width: 280px;
+      min-width: 280px;
+      background: var(--bg-nav);
+      color: var(--text-nav);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .nav-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-header h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .nav-header p {
+      font-size: 12px;
+      color: var(--text-nav);
+      opacity: 0.6;
+    }
+
+    .nav-section {
+      padding: 16px 12px 8px;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255,255,255,0.3);
+      padding: 0 12px 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 14px;
+      color: var(--text-nav);
+      text-decoration: none;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background: rgba(13, 148, 136, 0.2);
+      color: var(--text-nav-active);
+      font-weight: 500;
+    }
+
+    .nav-item .icon {
+      font-size: 16px;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-item .label { flex: 1; }
+
+    .nav-item .badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .badge-active { background: rgba(5,150,105,0.2); color: #34d399; }
+    .badge-progress { background: rgba(217,119,6,0.2); color: #fbbf24; }
+
+    .nav-footer {
+      margin-top: auto;
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── Main Content ─── */
+    .main {
+      margin-left: 280px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .content-header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .content-header h2 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .content-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .content-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 40px 80px;
+    }
+
+    /* ─── Rendered Markdown Styles ─── */
+    .content-body h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .content-body h2 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin: 36px 0 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .content-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 28px 0 8px;
+      color: var(--text);
+    }
+
+    .content-body p {
+      margin: 0 0 14px;
+      font-size: 15px;
+      color: #292524;
+    }
+
+    .content-body ul, .content-body ol {
+      margin: 0 0 14px;
+      padding-left: 24px;
+    }
+
+    .content-body li {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .content-body strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .content-body code {
+      font-family: 'DM Mono', Menlo, monospace;
+      font-size: 13px;
+      background: #f5f5f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .content-body pre {
+      background: #1c1917;
+      color: #e7e5e4;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      margin: 0 0 16px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-body pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .content-body blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 8px 16px;
+      margin: 0 0 14px;
+      background: var(--accent-light);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .content-body blockquote p {
+      margin: 0;
+      color: #134e4a;
+    }
+
+    .content-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 16px;
+      font-size: 14px;
+    }
+
+    .content-body th {
+      background: #f5f5f4;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .content-body td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .content-body hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .content-body a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .content-body a:hover {
+      text-decoration: underline;
+    }
+
+    /* Status badges in rendered content */
+    .content-body h3 code,
+    .content-body h2 code {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+    }
+
+    /* ─── Loading state ─── */
+    .loading {
+      text-align: center;
+      padding: 80px 40px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .loading::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── Welcome view ─── */
+    .welcome {
+      text-align: center;
+      padding: 80px 40px;
+    }
+
+    .welcome h2 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 24px;
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+
+    .welcome p {
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 768px) {
+      .nav {
+        position: relative;
+        width: 100%;
+        min-width: 100%;
+        max-height: none;
+      }
+      .main { margin-left: 0; }
+      body { flex-direction: column; }
+      .content-body { padding: 24px 20px 60px; }
+      .content-header { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-header">
+      <h1>Project Context</h1>
+      <p>Common Curriculum · Spring 2026</p>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Context Files</div>
+
+      <a class="nav-item" data-file="course-design.md" onclick="loadFile(this)">
+        <span class="icon">📐</span>
+        <span class="label">Course Design</span>
+      </a>
+
+      <a class="nav-item" data-file="evidence.md" onclick="loadFile(this)">
+        <span class="icon">📊</span>
+        <span class="label">Evidence</span>
+        <span class="badge badge-active">7 findings</span>
+      </a>
+
+      <a class="nav-item" data-file="gaps-and-actions.md" onclick="loadFile(this)">
+        <span class="icon">🎯</span>
+        <span class="label">Gaps & Actions</span>
+        <span class="badge badge-progress">5 active</span>
+      </a>
+
+      <a class="nav-item" data-file="pipeline.md" onclick="loadFile(this)">
+        <span class="icon">⚙️</span>
+        <span class="label">Pipeline</span>
+      </a>
+
+      <a class="nav-item" data-file="open-questions.md" onclick="loadFile(this)">
+        <span class="icon">💬</span>
+        <span class="label">Open Questions</span>
+        <span class="badge badge-progress">6 open</span>
+      </a>
+
+      <a class="nav-item" data-file="changelog.md" onclick="loadFile(this)">
+        <span class="icon">📝</span>
+        <span class="label">Changelog</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Reference</div>
+      <a class="nav-item" data-file="README.md" onclick="loadFile(this)">
+        <span class="icon">📖</span>
+        <span class="label">Onboarding Guide</span>
+      </a>
+    </div>
+
+    <div class="nav-footer">
+      Last updated: <span id="nav-updated">—</span>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="content-header">
+      <h2 id="page-title">Project Context</h2>
+      <span class="content-meta" id="page-meta"></span>
+    </div>
+
+    <div class="content-body" id="content">
+      <div class="welcome">
+        <h2>Welcome</h2>
+        <p>Select a file from the sidebar to view the current project context. Start with <strong>Course Design</strong> if you're new, or <strong>Gaps & Actions</strong> to see what's active.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Strip YAML frontmatter before rendering
+    function stripFrontmatter(md) {
+      const match = md.match(/^---\n([\s\S]*?)\n---\n/);
+      const meta = {};
+      if (match) {
+        match[1].split('\n').forEach(line => {
+          const [key, ...rest] = line.split(':');
+          if (key && rest.length) meta[key.trim()] = rest.join(':').trim();
+        });
+        md = md.slice(match[0].length);
+      }
+      return { md, meta };
+    }
+
+    // Transform internal references (→ file.md) into clickable links
+    function linkifyRefs(html) {
+      return html.replace(/→\s*([a-z\-]+\.md)(#[a-z0-9\-]*)?/g, (match, file, anchor) => {
+        const label = file.replace('.md', '').replace(/-/g, ' ');
+        const href = anchor ? `${file}${anchor}` : file;
+        return `→ <a href="#" onclick="loadFileByName('${file}'); return false;">${label}</a>`;
+      });
+    }
+
+    const titles = {
+      'course-design.md': 'Course Design',
+      'evidence.md': 'Evidence',
+      'gaps-and-actions.md': 'Gaps & Actions',
+      'pipeline.md': 'Pipeline & Infrastructure',
+      'open-questions.md': 'Open Questions',
+      'changelog.md': 'Changelog',
+      'README.md': 'Onboarding Guide',
+    };
+
+    let currentFile = null;
+
+    async function loadFile(el) {
+      const file = el.dataset.file;
+      if (currentFile === file) return;
+      currentFile = file;
+
+      // Update nav active state
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+
+      // Show loading
+      const content = document.getElementById('content');
+      content.innerHTML = '<div class="loading">Loading…</div>';
+      document.getElementById('page-title').textContent = titles[file] || file;
+
+      try {
+        const resp = await fetch(file);
+        if (!resp.ok) throw new Error(`${resp.status}`);
+        const raw = await resp.text();
+        const { md, meta } = stripFrontmatter(raw);
+
+        // Update header meta
+        const parts = [];
+        if (meta.last_updated) parts.push(`Updated ${meta.last_updated}`);
+        if (meta.updated_by) parts.push(`by ${meta.updated_by}`);
+        if (meta.status) parts.push(`· ${meta.status}`);
+        document.getElementById('page-meta').textContent = parts.join(' ');
+
+        // Render markdown
+        let html = marked.parse(md);
+        html = linkifyRefs(html);
+        content.innerHTML = html;
+
+        // Update footer timestamp
+        if (meta.last_updated) {
+          document.getElementById('nav-updated').textContent = meta.last_updated;
+        }
+
+        // Scroll to top
+        content.scrollTop = 0;
+
+      } catch (err) {
+        content.innerHTML = `<div class="welcome"><h2>Could not load file</h2><p>${file}: ${err.message}. Make sure you're viewing this on GitHub Pages or a local server (fetch doesn't work from file://).</p></div>`;
+      }
+    }
+
+    function loadFileByName(filename) {
+      const el = document.querySelector(`.nav-item[data-file="${filename}"]`);
+      if (el) loadFile(el);
+    }
+
+    // Load from hash on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = location.hash.slice(1);
+      if (hash && titles[hash]) {
+        loadFileByName(hash);
+      }
+    });
+  </script>
+</body>
+</html>
