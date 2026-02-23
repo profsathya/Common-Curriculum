@@ -363,13 +363,22 @@ async function downloadSubmissions(api, courseName, dataDir) {
       if (isQuiz) {
         // canvasId for quizzes is the quiz ID, not the shadow assignment ID.
         // Look up the quiz to find its linked assignment_id for submissions.
-        const quiz = await api.request(`/courses/${courseId}/quizzes/${canvasId}`);
-        const shadowAssignmentId = quiz.assignment_id;
-        if (!shadowAssignmentId) {
-          throw new Error(`Quiz ${canvasId} has no linked assignment — cannot fetch submissions`);
+        // For New Quizzes (Quizzes.Next/LTI), the classic quiz API returns 404
+        // and canvasId is already the assignment ID (set by canvas-sync fallback).
+        let assignmentId;
+        try {
+          const quiz = await api.request(`/courses/${courseId}/quizzes/${canvasId}`);
+          assignmentId = quiz.assignment_id;
+          if (!assignmentId) {
+            throw new Error(`Quiz ${canvasId} has no linked assignment`);
+          }
+          console.log(`    (classic quiz ${canvasId} → shadow assignment ${assignmentId})`);
+        } catch (quizErr) {
+          // New Quiz or quiz not found — canvasId is already the assignment ID
+          assignmentId = canvasId;
+          console.log(`    (new quiz — using assignment ID ${canvasId} directly)`);
         }
-        console.log(`    (quiz ${canvasId} → shadow assignment ${shadowAssignmentId})`);
-        submissions = await api.listSubmissions(courseId, shadowAssignmentId);
+        submissions = await api.listSubmissions(courseId, assignmentId);
       } else {
         submissions = await api.listSubmissions(courseId, canvasId);
       }
