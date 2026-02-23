@@ -204,6 +204,95 @@ function loadRubric(assignmentKey, assignmentType, assignmentTitle, courseName) 
   return defaults[assignmentType] || defaults.assignment;
 }
 
+/**
+ * Extract readable conversation text from various JSON export formats.
+ * Returns { contentType, content, metadata } or null if not a recognized conversation format.
+ *
+ * Extracts BOTH user and assistant messages to preserve context,
+ * but prefixes each with [Student] or [AI] for the analysis LLM.
+ * Content limit: 15000 chars (conversations are richer than single-field submissions).
+ */
+function extractConversationContent(jsonData) {
+  const CONVERSATION_LIMIT = 15000;
+  let messages = null;
+  let metadata = {};
+
+  // Format 1: Dojo Session Export
+  if (jsonData.messages && jsonData.session && jsonData.version) {
+    messages = jsonData.messages;
+    metadata = {
+      format: 'dojo-session',
+      construct: jsonData.session?.construct || '',
+      constructName: jsonData.session?.constructName || '',
+      messageCount: messages.length,
+      startedAt: jsonData.session?.startedAt || '',
+    };
+  }
+  // Format 2: ChatGPT Export — conversation array in wrapper
+  else if (jsonData.conversation && Array.isArray(jsonData.conversation) &&
+           jsonData.conversation[0]?.role !== undefined) {
+    messages = jsonData.conversation;
+    metadata = { format: 'chatgpt-conversation' };
+  }
+  // Format 4: ChatGPT Export — turns with metadata
+  else if (jsonData.turns && Array.isArray(jsonData.turns) &&
+           jsonData.turns[0]?.content !== undefined) {
+    // Normalize: turns use 'speaker' instead of 'role'
+    messages = jsonData.turns.map(t => ({
+      role: t.speaker || t.role || 'unknown',
+      content: typeof t.content === 'string' ? t.content : JSON.stringify(t.content),
+    }));
+    metadata = {
+      format: 'chatgpt-turns',
+      title: jsonData.conversation_title || '',
+      keyTakeaways: jsonData.key_takeaways || [],
+      context: jsonData.context || null,
+    };
+  }
+  // Format 3: Bare array of messages
+  else if (Array.isArray(jsonData) && jsonData.length > 0 &&
+           jsonData[0]?.role !== undefined && jsonData[0]?.content !== undefined) {
+    messages = jsonData;
+    metadata = { format: 'chatgpt-bare-array' };
+  }
+
+  if (!messages || messages.length === 0) return null;
+
+  // Extract readable text with role prefixes
+  const lines = [];
+  for (const msg of messages) {
+    const role = (msg.role || msg.speaker || 'unknown').toLowerCase();
+    const content = typeof msg.content === 'string'
+      ? msg.content
+      : JSON.stringify(msg.content);
+
+    if (!content || content.length < 2) continue;
+
+    const prefix = role === 'user' ? '[Student]' : '[AI]';
+    lines.push(`${prefix} ${content}`);
+  }
+
+  const fullText = lines.join('\n\n');
+  const userOnly = lines.filter(l => l.startsWith('[Student]')).join('\n\n');
+
+  // Store full conversation (with role prefixes) for analysis context,
+  // but track user word count for engagement metrics
+  const userWordCount = userOnly.split(/\s+/).length;
+  const turnCount = messages.filter(m =>
+    (m.role || m.speaker || '').toLowerCase() === 'user'
+  ).length;
+
+  metadata.userTurns = turnCount;
+  metadata.userWordCount = userWordCount;
+  metadata.totalTurns = messages.length;
+
+  return {
+    contentType: 'conversation',
+    content: fullText.substring(0, CONVERSATION_LIMIT),
+    metadata,
+  };
+}
+
 // ============================================
 // Step 1: Download Submissions
 // ============================================
@@ -326,7 +415,21 @@ async function downloadSubmissions(api, courseName, dataDir) {
                 if (attachment.filename?.endsWith('.json')) {
                   try {
                     const jsonData = JSON.parse(textContent);
-                    if (jsonData.activityId && jsonData.responses) {
+
+                    // Check bare array format first (can't have activityId)
+                    if (Array.isArray(jsonData)) {
+                      const conversationResult = extractConversationContent(jsonData);
+                      if (conversationResult) {
+                        subData.contentType = conversationResult.contentType;
+                        subData.content = conversationResult.content;
+                        subData.conversationMetadata = conversationResult.metadata;
+                      } else {
+                        subData.contentType = 'text';
+                        subData.content = textContent.substring(0, 5000);
+                      }
+                    }
+                    // Activity engine JSON (existing handling)
+                    else if (jsonData.activityId && jsonData.responses) {
                       const hasAiDiscussion = jsonData.responses.some(r => r.questionType === 'ai-discussion');
                       if (hasAiDiscussion) {
                         subData.contentType = 'ai-discussion';
@@ -341,9 +444,18 @@ async function downloadSubmissions(api, courseName, dataDir) {
                         subData.contentType = 'text';
                         subData.content = textContent.substring(0, 5000);
                       }
-                    } else {
-                      subData.contentType = 'text';
-                      subData.content = textContent.substring(0, 5000);
+                    }
+                    // Try conversation extraction for all other JSON objects
+                    else {
+                      const conversationResult = extractConversationContent(jsonData);
+                      if (conversationResult) {
+                        subData.contentType = conversationResult.contentType;
+                        subData.content = conversationResult.content;
+                        subData.conversationMetadata = conversationResult.metadata;
+                      } else {
+                        subData.contentType = 'text';
+                        subData.content = textContent.substring(0, 5000);
+                      }
                     }
                   } catch {
                     subData.contentType = 'text';
@@ -474,6 +586,20 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     throw new Error(`No submission data found. Run download first: --action=download --course=${courseName}`);
   }
 
+  // Check download freshness
+  const downloadDates = Object.values(submissionIndex)
+    .map(s => s.downloadedAt)
+    .filter(Boolean)
+    .map(d => new Date(d));
+  if (downloadDates.length > 0) {
+    const mostRecent = new Date(Math.max(...downloadDates));
+    const hoursOld = (Date.now() - mostRecent.getTime()) / (1000 * 60 * 60);
+    if (hoursOld > 24) {
+      console.log(`\n⚠ WARNING: Download data is ${Math.round(hoursOld / 24)} days old (last: ${mostRecent.toISOString().split('T')[0]})`);
+      console.log(`  Run --action=download first to get fresh submissions.\n`);
+    }
+  }
+
   // Load existing analysis or create new
   const analysisPath = path.join(courseDataDir, 'analysis.json');
   const analysis = loadJson(analysisPath) || { assignments: {}, lastUpdated: null };
@@ -553,13 +679,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
         // Bump to 5 if on time with substantive content
         if (!sub.late && sub.contentType === 'text' && sub.content.length > 100) {
           participation = 5;
+        } else if (!sub.late && sub.contentType === 'conversation' && sub.conversationMetadata?.userWordCount > 50) {
+          participation = 5;
         }
       } else if (sub.status === 'submitted' || sub.status === 'graded') {
         participation = sub.late ? 3 : 4;
       }
 
       // For images, PDFs, URLs, or empty submissions: participation only
-      if (sub.contentType !== 'text' || !sub.content || sub.content.length < 20) {
+      if (!['text', 'conversation'].includes(sub.contentType) || !sub.content || sub.content.length < 20) {
         assignmentAnalysis[anonId] = {
           participation,
           quality: null, // Can't assess quality without text
@@ -575,11 +703,18 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
 
       // Send text content to LLM for quality analysis
       try {
+        // For conversation content, add context about the format
+        let analysisContent = sub.content.substring(0, 3000);
+        if (sub.contentType === 'conversation' && sub.conversationMetadata) {
+          const meta = sub.conversationMetadata;
+          analysisContent = `[This is a ${meta.format} conversation with ${meta.userTurns || '?'} student turns and ${meta.userWordCount || '?'} student words]\n\n${sub.content}`.substring(0, 4000);
+        }
+
         const llmResult = await callLLM(apiKey, {
           studentId: anonId,
           assignmentTitle: indexEntry.title,
           rubric,
-          content: sub.content.substring(0, 3000), // Limit to 3000 chars
+          content: analysisContent,
           courseName: courseInfo.name,
         });
 
@@ -1029,6 +1164,11 @@ function scoreSpan(val) {
   return '<span class="score score-' + r + '">' + val + '</span>';
 }
 
+function contentTypeLabel(type) {
+  const icons = { text: 'text', conversation: '\u{1F4AC}', image: '\u{1F5BC}', pdf: 'pdf', 'ai-discussion': '\u{1F4AC} ai', url: 'url', file: 'file', none: '-' };
+  return icons[type] || type || '-';
+}
+
 function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -1131,7 +1271,7 @@ function renderAssignmentDetail(key) {
       '<td>' + s.name + '</td>' +
       '<td>' + scoreSpan(s.sub.participation) + '</td>' +
       '<td>' + scoreSpan(s.sub.quality) + '</td>' +
-      '<td>' + (s.sub.contentType || '-') + '</td>' +
+      '<td>' + contentTypeLabel(s.sub.contentType) + '</td>' +
       '<td class="notes-cell">' + (s.sub.qualityNotes || '') + '</td></tr>';
   });
 
@@ -1168,7 +1308,7 @@ function renderStudentDetail(id) {
       '<td>' + a.title + '</td><td>S' + (a.sprint || '?') + '</td>' +
       '<td>' + scoreSpan(sa?.participation) + '</td>' +
       '<td>' + scoreSpan(sa?.quality) + '</td>' +
-      '<td>' + (sa?.contentType || 'none') + '</td>' +
+      '<td>' + contentTypeLabel(sa?.contentType) + '</td>' +
       '<td class="notes-cell">' + (sa?.qualityNotes || '-') + '</td></tr>';
   });
 
