@@ -114,13 +114,13 @@ Reframe evidence questions explicitly: "Describe a specific moment in the last 4
 
 ---
 
-### PIPE-4: Anonymized Export [IN PROGRESS]
+### PIPE-4: Anonymized Export [COMPLETE]
 
 **Problem:** Analysis data contains student names. Need PII-stripped versions for external analysis and AI-assisted review.
 
-**Fix:** Anonymized export runs automatically as part of `--action=full`. Outputs to `{dataDir}/anonymous/{course}/` with dashboards, analysis.json, and submissions.
+**Fix:** Anonymized export runs automatically as part of `--action=full` and `--action=dashboard`. Outputs to `{dataDir}/anonymous/{course}/` with analysis.json, dashboard.html, and submissions/. Name replacement uses word boundaries to clean text fields (summaries, qualityNotes). Dashboard shows anonymous IDs as display names.
 
-**Status:** Claude Code prompt submitted.
+**Status:** Implemented. Functions: `buildNameReplacementMap`, `anonymizeAnalysis`, `anonymizeSubmissions`, `generateAnonymizedExport`.
 
 ---
 

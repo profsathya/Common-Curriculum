@@ -11,6 +11,10 @@ Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
 
+## 2026-02-23 — [claude] Stage 4: Anonymized export implemented
+
+Implemented automatic PII-stripped export as part of `--action=full` and `--action=dashboard`. New functions: `buildNameReplacementMap`, `replaceNamesInText`, `anonymizeAnalysis`, `anonymizeSubmissions`, `generateAnonymizedExport`. Outputs analysis.json, dashboard.html, and submissions/ to `{dataDir}/anonymous/{course}/`. Dashboard shows anonymous IDs (CST395-XX) instead of names. Name replacement uses word boundaries and length thresholds (>=4 chars for standalone names) to avoid false positives. Does NOT copy id-mapping.json. See → pipeline.md Stage 4.
+
 ## 2026-02-23 — [sathya] Context folder created
 
 Created shared context system for cross-chat and cross-collaborator continuity. Files: course-design.md, evidence.md, gaps-and-actions.md, pipeline.md, open-questions.md, changelog.md, README.md, index.html. Populated with findings from Sprint 1-2 analysis sessions.

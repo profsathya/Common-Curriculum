@@ -81,11 +81,14 @@ All of the above
 - Staleness warning when download data is >24 hours old
 - **Run this first** — Stage 2 rubrics are meaningless without extracted content
 
-### Stage 4: Anonymized Export [SUBMITTED]
+### Stage 4: Anonymized Export [COMPLETE]
 - Automatic as part of `--action=full` and `--action=dashboard`
 - Outputs to `{dataDir}/anonymous/{course}/` (analysis.json, dashboard.html, submissions/)
 - Strips all name fields; preserves anonymous ID keys, scores, content
-- Does NOT copy student-mapping.json
+- Builds name→anonId replacement map for text fields (summaries, qualityNotes)
+- Uses word boundaries and length thresholds to avoid false-positive replacements
+- Dashboard uses anonymous IDs as display names, sorted by ID
+- Does NOT copy id-mapping.json (that file IS the name↔ID bridge)
 
 ## Known Limitations
 
