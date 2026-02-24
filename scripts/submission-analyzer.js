@@ -1088,11 +1088,49 @@ tr.clickable:hover { background: #eff6ff; }
 .summary-row { cursor: default; }
 .summary-row:hover { background: #f8fafc !important; }
 
+/* Zone cards */
+.zone-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 24px; }
+.zone-card h3 { font-size: 16px; margin-bottom: 16px; color: #334155; }
+.zone-card h4 { font-size: 14px; margin-bottom: 8px; color: #475569; }
+
+/* Sprint status */
+.sprint-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.stat-box { background: #f8fafc; border-radius: 8px; padding: 16px; text-align: center; }
+.stat-box .stat-value { font-size: 28px; font-weight: 700; color: #1e293b; }
+.stat-box .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+/* Alerts */
+.alerts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.alert-list { list-style: none; padding: 0; margin: 0; }
+.alert-list li { padding: 8px 12px; border-left: 3px solid #e2e8f0; margin-bottom: 6px; font-size: 13px; color: #475569; background: #f8fafc; border-radius: 0 6px 6px 0; }
+.alert-list li.alert-warn { border-left-color: #f59e0b; }
+.alert-list li.alert-danger { border-left-color: #ef4444; }
+.alert-list li.alert-info { border-left-color: #3b82f6; }
+.alert-list li.alert-ok { border-left-color: #22c55e; }
+
+/* Sprint comparison table */
+.comparison-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.comparison-table th { background: #f8fafc; text-align: left; padding: 10px 14px; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; }
+.comparison-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; }
+.delta-pos { color: #16a34a; font-weight: 600; }
+.delta-neg { color: #dc2626; font-weight: 600; }
+.delta-neutral { color: #94a3b8; font-weight: 600; }
+
+/* Grid toggle button */
+.grid-toggle { display: inline-block; margin-top: 16px; padding: 8px 16px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; color: #475569; }
+.grid-toggle:hover { background: #e2e8f0; }
+
+/* Mini distribution bar */
+.mini-dist { display: flex; height: 20px; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+.mini-dist span { display: block; min-width: 2px; }
+
 /* Responsive */
 @media (max-width: 768px) {
   .charts-row { grid-template-columns: 1fr; }
   .container { padding: 16px; }
   .nav { padding: 12px 16px; flex-wrap: wrap; }
+  .alerts-grid { grid-template-columns: 1fr; }
+  .sprint-stats { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -1173,19 +1211,336 @@ function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function renderOverview() {
-  const participations = PROFILES.map(p => p.avgParticipation).filter(v => v > 0);
-  const qualities = PROFILES.map(p => p.avgQuality).filter(v => v > 0);
-  const pCounts = distributionData(participations);
-  const qCounts = distributionData(qualities);
+// --- Helper: detect current sprint (most recent sprint with past-due assignments) ---
+function detectCurrentSprint() {
+  const now = new Date();
+  let maxSprint = 1;
+  ASSIGNMENTS.forEach(a => {
+    if (a.dueDate && new Date(a.dueDate) <= now) {
+      const s = parseInt(a.sprint) || 1;
+      if (s > maxSprint) maxSprint = s;
+    }
+  });
+  return maxSprint;
+}
 
-  let html = '<div class="charts-row">' +
-    renderBarChart('Participation Distribution (Avg per Student)', pCounts, participations.length) +
-    renderBarChart('Quality Distribution (Avg per Student)', qCounts, qualities.length) +
-    '</div>';
+// --- Helper: check for Bug 1 signature (flat 3/3 ai-discussion scores) ---
+function isFlatThreeSignature(qualityNotes) {
+  return qualityNotes === 'Writing: 3/5, Discussion: 3/5';
+}
 
+// --- Zone 1: Sprint Status ---
+function renderSprintStatus() {
+  const currentSprint = detectCurrentSprint();
+  const now = new Date();
+  const sprintAssignments = ASSIGNMENTS.filter(a => parseInt(a.sprint) === currentSprint);
+  const pastDueAssignments = sprintAssignments.filter(a => a.dueDate && new Date(a.dueDate) <= now);
+
+  // Submission rate: students with content for past-due assignments
+  let totalSlots = 0, submittedSlots = 0, analyzedSlots = 0, withContentSlots = 0;
+  let qualityScores = [];
+  let flatThreeCount = 0;
+
+  pastDueAssignments.forEach(a => {
+    PROFILES.forEach(p => {
+      totalSlots++;
+      const sa = p.assignments[a.key];
+      if (sa && sa.contentType && sa.contentType !== 'none') {
+        submittedSlots++;
+        withContentSlots++;
+        if (sa.quality != null) {
+          analyzedSlots++;
+          if (isFlatThreeSignature(sa.qualityNotes)) {
+            flatThreeCount++;
+          } else {
+            qualityScores.push(sa.quality);
+          }
+        }
+      }
+    });
+  });
+
+  const avgQuality = qualityScores.length > 0
+    ? (qualityScores.reduce((a, b) => a + b, 0) / qualityScores.length).toFixed(1)
+    : '-';
+  const qCounts = distributionData(qualityScores);
+  const qTotal = qualityScores.length;
+
+  let html = '<div class="zone-card">';
+  html += '<h3>Sprint ' + currentSprint + ' Status</h3>';
+  html += '<div class="sprint-stats">';
+  html += '<div class="stat-box"><div class="stat-value">' + pastDueAssignments.length + '</div><div class="stat-label">Past-Due Assignments</div></div>';
+  html += '<div class="stat-box"><div class="stat-value">' + submittedSlots + '/' + totalSlots + '</div><div class="stat-label">Submissions with Content</div></div>';
+  html += '<div class="stat-box"><div class="stat-value">' + analyzedSlots + '/' + withContentSlots + '</div><div class="stat-label">Analyzed</div></div>';
+  html += '<div class="stat-box"><div class="stat-value">' + avgQuality + '</div><div class="stat-label">Avg Quality (excl. flat 3s)</div></div>';
+  html += '</div>';
+
+  // Mini quality distribution bar
+  if (qTotal > 0) {
+    html += '<div style="margin-top:8px"><div style="font-size:12px;color:#64748b;margin-bottom:4px">Sprint ' + currentSprint + ' quality distribution (n=' + qTotal + ')</div>';
+    html += '<div class="mini-dist">';
+    for (let i = 1; i <= 5; i++) {
+      const pct = (qCounts[i] / qTotal * 100);
+      if (pct > 0) html += '<span style="width:' + pct + '%;background:' + COLORS[i] + '" title="' + LABELS[i] + ': ' + qCounts[i] + '"></span>';
+    }
+    html += '</div></div>';
+  }
+
+  if (flatThreeCount > 0) {
+    html += '<div style="margin-top:12px;font-size:13px;color:#d97706;background:#fef3c7;padding:8px 12px;border-radius:6px">⚠ ' + flatThreeCount + ' ai-discussion submissions scored flat 3/3 (Bug 1 signature — activity config may not have loaded)</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+// --- Zone 2: Alerts & Flags ---
+function renderAlerts() {
+  const currentSprint = detectCurrentSprint();
+  const now = new Date();
+
+  // --- Left column: Student alerts ---
+  let studentAlerts = [];
+
+  // 1. Students with 3+ consecutive missing submissions
+  const sortedAssignments = [...ASSIGNMENTS].sort((a, b) => {
+    if (a.sprint !== b.sprint) return (parseInt(a.sprint) || 0) - (parseInt(b.sprint) || 0);
+    return (parseInt(a.week) || 0) - (parseInt(b.week) || 0);
+  });
+  const pastDueAll = sortedAssignments.filter(a => a.dueDate && new Date(a.dueDate) <= now);
+
+  let consecutiveMissing = [];
+  PROFILES.forEach(p => {
+    let streak = 0, maxStreak = 0;
+    pastDueAll.forEach(a => {
+      const sa = p.assignments[a.key];
+      if (!sa || !sa.contentType || sa.contentType === 'none') {
+        streak++;
+        if (streak > maxStreak) maxStreak = streak;
+      } else {
+        streak = 0;
+      }
+    });
+    if (maxStreak >= 3) consecutiveMissing.push(p.id);
+  });
+
+  if (consecutiveMissing.length > 0) {
+    studentAlerts.push({ level: 'danger', text: consecutiveMissing.length + ' student(s) with 3+ consecutive missing submissions: ' + consecutiveMissing.join(', ') });
+  } else {
+    studentAlerts.push({ level: 'ok', text: 'No students with 3+ consecutive missing submissions' });
+  }
+
+  // 2. Students whose avg quality dropped Sprint 1 → Sprint 2 by 1+ points
+  if (currentSprint >= 2) {
+    let qualityDrops = [];
+    PROFILES.forEach(p => {
+      const s1Scores = [], s2Scores = [];
+      ASSIGNMENTS.forEach(a => {
+        const sa = p.assignments[a.key];
+        if (sa && sa.quality != null && !isFlatThreeSignature(sa.qualityNotes)) {
+          if (parseInt(a.sprint) === 1) s1Scores.push(sa.quality);
+          if (parseInt(a.sprint) === 2) s2Scores.push(sa.quality);
+        }
+      });
+      if (s1Scores.length > 0 && s2Scores.length > 0) {
+        const s1Avg = s1Scores.reduce((x, y) => x + y, 0) / s1Scores.length;
+        const s2Avg = s2Scores.reduce((x, y) => x + y, 0) / s2Scores.length;
+        if (s1Avg - s2Avg >= 1) qualityDrops.push(p.id);
+      }
+    });
+    if (qualityDrops.length > 0) {
+      studentAlerts.push({ level: 'warn', text: qualityDrops.length + ' student(s) dropped 1+ quality points S1→S2: ' + qualityDrops.join(', ') });
+    }
+  }
+
+  // 3. Students with zero analyzed submissions in current sprint
+  let zeroAnalyzed = [];
+  const currentSprintAssignments = ASSIGNMENTS.filter(a => parseInt(a.sprint) === currentSprint);
+  PROFILES.forEach(p => {
+    let hasAnalyzed = false;
+    currentSprintAssignments.forEach(a => {
+      const sa = p.assignments[a.key];
+      if (sa && sa.quality != null) hasAnalyzed = true;
+    });
+    if (!hasAnalyzed) zeroAnalyzed.push(p.id);
+  });
+  if (zeroAnalyzed.length > 0) {
+    studentAlerts.push({ level: 'warn', text: zeroAnalyzed.length + ' student(s) with zero analyzed submissions in Sprint ' + currentSprint });
+  }
+
+  // --- Right column: Data quality warnings ---
+  let dataAlerts = [];
+
+  // 1. Flat 3/3 ai-discussion scores
+  let flat33Count = 0;
+  ASSIGNMENTS.forEach(a => {
+    PROFILES.forEach(p => {
+      const sa = p.assignments[a.key];
+      if (sa && isFlatThreeSignature(sa.qualityNotes)) flat33Count++;
+    });
+  });
+  if (flat33Count > 0) {
+    dataAlerts.push({ level: 'warn', text: flat33Count + ' ai-discussion submissions with flat 3/3 scores (Bug 1 signature)' });
+  } else {
+    dataAlerts.push({ level: 'ok', text: 'No flat 3/3 ai-discussion scores detected' });
+  }
+
+  // 2. Unanalyzable submissions by type
+  let unanalyzable = { image: 0, pdf: 0, none: 0 };
+  let totalSubs = 0;
+  ASSIGNMENTS.forEach(a => {
+    PROFILES.forEach(p => {
+      const sa = p.assignments[a.key];
+      if (sa) {
+        totalSubs++;
+        if (sa.contentType === 'image') unanalyzable.image++;
+        else if (sa.contentType === 'pdf') unanalyzable.pdf++;
+        else if (sa.contentType === 'none' || !sa.contentType) unanalyzable.none++;
+      }
+    });
+  });
+  const unanalyzableTotal = unanalyzable.image + unanalyzable.pdf + unanalyzable.none;
+  const unanalyzablePct = totalSubs > 0 ? Math.round(unanalyzableTotal / totalSubs * 100) : 0;
+  if (unanalyzableTotal > 0) {
+    dataAlerts.push({ level: 'info', text: unanalyzableTotal + ' unanalyzable submissions (' + unanalyzablePct + '%) — image: ' + unanalyzable.image + ', pdf: ' + unanalyzable.pdf + ', none: ' + unanalyzable.none });
+  }
+
+  // 3. Short text submissions (< 50 chars, likely filename-as-content)
+  let shortText = 0;
+  ASSIGNMENTS.forEach(a => {
+    PROFILES.forEach(p => {
+      const sa = p.assignments[a.key];
+      if (sa && sa.contentType === 'text' && sa.qualityNotes && sa.qualityNotes.length < 50 && sa.quality != null && sa.quality <= 2) {
+        // Heuristic: low quality + short notes on text content might indicate filename-as-content
+        shortText++;
+      }
+    });
+  });
+
+  // 4. Download staleness
+  const lastUpdated = document.querySelector('.header p')?.textContent?.replace('Last updated: ', '') || '';
+  if (lastUpdated && lastUpdated !== 'Never') {
+    const updated = new Date(lastUpdated);
+    const hoursAgo = Math.round((now - updated) / (1000 * 60 * 60));
+    if (hoursAgo > 48) {
+      dataAlerts.push({ level: 'danger', text: 'Data is ' + hoursAgo + ' hours old — consider re-downloading' });
+    } else if (hoursAgo > 24) {
+      dataAlerts.push({ level: 'warn', text: 'Data is ' + hoursAgo + ' hours old' });
+    } else {
+      dataAlerts.push({ level: 'ok', text: 'Data is ' + hoursAgo + ' hour(s) old' });
+    }
+  }
+
+  let html = '<div class="zone-card"><h3>Alerts & Flags</h3><div class="alerts-grid">';
+  html += '<div><h4>Student Alerts</h4><ul class="alert-list">';
+  studentAlerts.forEach(a => { html += '<li class="alert-' + a.level + '">' + a.text + '</li>'; });
+  html += '</ul></div>';
+  html += '<div><h4>Data Quality</h4><ul class="alert-list">';
+  dataAlerts.forEach(a => { html += '<li class="alert-' + a.level + '">' + a.text + '</li>'; });
+  html += '</ul></div>';
+  html += '</div></div>';
+  return html;
+}
+
+// --- Zone 3: Sprint Comparison ---
+function renderSprintComparison() {
+  const sprints = [...new Set(ASSIGNMENTS.map(a => parseInt(a.sprint) || 0))].filter(s => s > 0).sort();
+  if (sprints.length < 1) return '';
+
+  // Collect per-sprint metrics
+  const metrics = {};
+  sprints.forEach(s => {
+    const sprintAssignments = ASSIGNMENTS.filter(a => parseInt(a.sprint) === s);
+    let withContent = 0, totalSlots = 0, analyzed = 0;
+    let realScores = [], high = 0, low = 0;
+    let unanalyzable = 0;
+
+    sprintAssignments.forEach(a => {
+      PROFILES.forEach(p => {
+        totalSlots++;
+        const sa = p.assignments[a.key];
+        if (sa && sa.contentType && sa.contentType !== 'none') {
+          withContent++;
+          if (sa.contentType === 'image' || sa.contentType === 'pdf') unanalyzable++;
+          if (sa.quality != null) {
+            analyzed++;
+            if (!isFlatThreeSignature(sa.qualityNotes)) {
+              realScores.push(sa.quality);
+              if (sa.quality >= 4) high++;
+              if (sa.quality <= 2) low++;
+            }
+          }
+        }
+      });
+    });
+
+    const avgQ = realScores.length > 0 ? (realScores.reduce((a, b) => a + b, 0) / realScores.length).toFixed(1) : '-';
+    const highPct = realScores.length > 0 ? Math.round(high / realScores.length * 100) : 0;
+    const lowPct = realScores.length > 0 ? Math.round(low / realScores.length * 100) : 0;
+    const contentPct = totalSlots > 0 ? Math.round(withContent / totalSlots * 100) : 0;
+
+    metrics[s] = { withContent, totalSlots, contentPct, analyzed, avgQ, highPct, lowPct, unanalyzable };
+  });
+
+  function deltaCell(val1, val2, suffix, higherIsBetter) {
+    if (val1 === '-' || val2 === '-') return '<td class="delta-neutral">—</td>';
+    const diff = parseFloat(val2) - parseFloat(val1);
+    if (Math.abs(diff) < 0.05) return '<td class="delta-neutral">—</td>';
+    const sign = diff > 0 ? '+' : '';
+    const cls = (higherIsBetter ? diff > 0 : diff < 0) ? 'delta-pos' : 'delta-neg';
+    return '<td class="' + cls + '">' + sign + (Number.isInteger(diff) ? diff : diff.toFixed(1)) + (suffix || '') + '</td>';
+  }
+
+  let html = '<div class="zone-card"><h3>Sprint Comparison</h3>';
+  html += '<table class="comparison-table"><thead><tr><th>Metric</th>';
+  sprints.forEach(s => { html += '<th>Sprint ' + s + '</th>'; });
+  if (sprints.length >= 2) html += '<th>Δ</th>';
+  html += '</tr></thead><tbody>';
+
+  // Row: Submissions with content
+  html += '<tr><td>Submissions with content</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].withContent + '/' + metrics[s].totalSlots + ' (' + metrics[s].contentPct + '%)</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].contentPct, metrics[sprints[sprints.length - 1]].contentPct, '%', true);
+  html += '</tr>';
+
+  // Row: Analyzed submissions
+  html += '<tr><td>Analyzed submissions</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].analyzed + '</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].analyzed, metrics[sprints[sprints.length - 1]].analyzed, '', true);
+  html += '</tr>';
+
+  // Row: Avg quality (real scores only)
+  html += '<tr><td>Avg quality (real scores)</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].avgQ + '</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].avgQ, metrics[sprints[sprints.length - 1]].avgQ, '', true);
+  html += '</tr>';
+
+  // Row: % scoring 4-5
+  html += '<tr><td>% scoring 4–5</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].highPct + '%</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].highPct, metrics[sprints[sprints.length - 1]].highPct, '%', true);
+  html += '</tr>';
+
+  // Row: % scoring 1-2
+  html += '<tr><td>% scoring 1–2</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].lowPct + '%</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].lowPct, metrics[sprints[sprints.length - 1]].lowPct, '%', false);
+  html += '</tr>';
+
+  // Row: Unanalyzable (img/pdf)
+  html += '<tr><td>Unanalyzable (image/pdf)</td>';
+  sprints.forEach(s => { html += '<td>' + metrics[s].unanalyzable + '</td>'; });
+  if (sprints.length >= 2) html += deltaCell(metrics[sprints[0]].unanalyzable, metrics[sprints[sprints.length - 1]].unanalyzable, '', false);
+  html += '</tr>';
+
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// --- Full Grid (moved from old overview) ---
+function renderFullGrid() {
   var totalCols = 3 + ASSIGNMENTS.length;
-  html += '<div class="table-card"><h3>All Students (' + PROFILES.length + ')</h3>';
+  let html = '<button class="grid-toggle" onclick="showingGrid=false;showView(\\'overview\\')">← Back to Overview</button>';
+  html += '<div class="table-card" style="margin-top:16px"><h3>All Students (' + PROFILES.length + ')</h3>';
   html += '<div style="max-height:700px;overflow-y:auto"><table><thead><tr>' +
     '<th>Student</th><th>Avg Participation</th><th>Avg Quality</th>';
   ASSIGNMENTS.forEach(a => {
@@ -1217,6 +1572,15 @@ function renderOverview() {
   });
 
   html += '</tbody></table></div></div>';
+  return html;
+}
+
+// --- Overview: 3-zone layout + toggle to full grid ---
+let showingGrid = false;
+function renderOverview() {
+  if (showingGrid) return renderFullGrid();
+  let html = renderSprintStatus() + renderAlerts() + renderSprintComparison();
+  html += '<button class="grid-toggle" onclick="showingGrid=true;showView(\\'overview\\')">Full Student Grid →</button>';
   return html;
 }
 
@@ -1281,7 +1645,7 @@ function renderAssignmentDetail(key) {
 
 function renderStudents(selectedId) {
   if (selectedId) return renderStudentDetail(selectedId);
-  return renderOverview(); // Students list is the overview table
+  return renderFullGrid(); // Students list shows the full grid
 }
 
 function renderStudentDetail(id) {
@@ -1356,22 +1720,60 @@ function findAnonIdByName(targetName, mapping) {
 
 /**
  * Load the activity config JSON for an assignment.
- * Tries common path patterns to find the right file.
+ * Tries exact path patterns first, then scans the activity directory for
+ * week-prefixed variants (e.g. assignment key "s2-orientation" matches
+ * activity file "s2-w5-orientation.json").
  */
 function loadActivityConfig(courseName, assignmentKey) {
+  const activityDir = path.join(__dirname, '..', 'activities', courseName);
+
+  // Static patterns: exact key and demo-discussion → demo-ai-discussion
   const patterns = [
-    // demo-discussion → demo-ai-discussion
-    `activities/${courseName}/${assignmentKey.replace('demo-discussion', 'demo-ai-discussion')}.json`,
-    `activities/${courseName}/${assignmentKey}.json`,
+    `${assignmentKey.replace('demo-discussion', 'demo-ai-discussion')}.json`,
+    `${assignmentKey}.json`,
   ];
 
-  for (const p of patterns) {
-    const fullPath = path.join(__dirname, '..', p);
+  for (const filename of patterns) {
+    const fullPath = path.join(activityDir, filename);
     if (fs.existsSync(fullPath)) {
+      console.log(`    ✓ Activity config found: activities/${courseName}/${filename}`);
       return JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
     }
   }
 
+  // Directory scan: strip the sprint prefix from the assignment key (e.g. "s2-orientation" → "orientation")
+  // and match against filenames with the week prefix stripped (e.g. "s2-w5-orientation.json" → "orientation")
+  const sprintPrefixMatch = assignmentKey.match(/^(s\d+)-(.+)$/);
+  if (sprintPrefixMatch && fs.existsSync(activityDir)) {
+    const sprintNum = sprintPrefixMatch[1]; // e.g. "s2"
+    const keySuffix = sprintPrefixMatch[2]; // e.g. "orientation"
+
+    const files = fs.readdirSync(activityDir).filter(f => f.endsWith('.json'));
+    for (const file of files) {
+      const basename = file.replace(/\.json$/, '');
+      // Match files starting with the same sprint, strip s{N}-w{N}- prefix
+      const weekMatch = basename.match(/^(s\d+)-w\d+-(.+)$/);
+      if (weekMatch && weekMatch[1] === sprintNum && weekMatch[2] === keySuffix) {
+        console.log(`    ✓ Activity config found (week-prefixed): activities/${courseName}/${file}`);
+        return JSON.parse(fs.readFileSync(path.join(activityDir, file), 'utf-8'));
+      }
+    }
+
+    // Also try demo-discussion → demo-ai-discussion with week prefix scan
+    if (keySuffix.includes('demo-discussion')) {
+      const altSuffix = keySuffix.replace('demo-discussion', 'demo-ai-discussion');
+      for (const file of files) {
+        const basename = file.replace(/\.json$/, '');
+        const weekMatch = basename.match(/^(s\d+)-w\d+-(.+)$/);
+        if (weekMatch && weekMatch[1] === sprintNum && weekMatch[2] === altSuffix) {
+          console.log(`    ✓ Activity config found (week-prefixed): activities/${courseName}/${file}`);
+          return JSON.parse(fs.readFileSync(path.join(activityDir, file), 'utf-8'));
+        }
+      }
+    }
+  }
+
+  console.log(`    ⚠ No activity config found for ${courseName}/${assignmentKey}`);
   return null;
 }
 

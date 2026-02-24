@@ -1,6 +1,6 @@
 ---
 purpose: Active learning gaps, proposed interventions, and their status — the working tracker
-last_updated: 2026-02-23
+last_updated: 2026-02-24
 updated_by: sathya
 status: active
 ---
@@ -81,13 +81,13 @@ Reframe evidence questions explicitly: "Describe a specific moment in the last 4
 
 ## Active Pipeline/Infrastructure Issues
 
-### PIPE-1: Conversation JSON Extraction [IN PROGRESS]
+### PIPE-1: Conversation JSON Extraction [FIXED]
 
 **Problem:** Dojo session and ChatGPT export JSONs stored as raw JSON text truncated to 5000 chars. Analysis LLM evaluates JSON syntax, not student thinking.
 
 **Fix:** Stage 3 prompt adds `extractConversationContent()` — detects 4 conversation formats, extracts [Student]/[AI] prefixed text, 15K char limit, new `conversation` contentType.
 
-**Status:** Stage 3 prompt submitted to Claude Code. Awaiting implementation and re-run.
+**Status:** Implemented. `extractConversationContent()` is live in submission-analyzer.js.
 
 ---
 
@@ -124,10 +124,10 @@ Reframe evidence questions explicitly: "Describe a specific moment in the last 4
 
 ---
 
-### PIPE-5: Dashboard Homepage Redesign [PENDING]
+### PIPE-5: Dashboard Homepage Redesign [IMPLEMENTED]
 
 **Problem:** Current dashboard is flat list of assignments. Need 3-zone architecture: current sprint status, alerts/flags, deeper analysis.
 
-**Fix:** Stage 1 prompt ready.
+**Fix:** 3-zone overview: (1) Sprint Status with submission rate, analysis coverage, avg quality, distribution bar; (2) Alerts & Flags with student alerts (consecutive missing, quality drops) and data quality warnings (flat 3/3 detection, unanalyzable counts, staleness); (3) Sprint Comparison table with color-coded deltas. Full student grid available via toggle. Applied to both main and anonymized dashboards.
 
-**Status:** Independent of Stages 2-3. Can be implemented anytime.
+**Status:** Implemented in `buildDashboardHTML()`. Both dashboards share the same rendering logic.

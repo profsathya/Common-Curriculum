@@ -1,6 +1,6 @@
 ---
 purpose: Reverse-chronological log of significant updates — what changed, when, by whom, why
-last_updated: 2026-02-23
+last_updated: 2026-02-24
 updated_by: sathya
 status: active
 ---
@@ -10,6 +10,14 @@ status: active
 Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
+
+## 2026-02-24 — [claude-code] Fixed loadActivityConfig() path resolution (Bug 1)
+
+`loadActivityConfig()` failed to find Sprint 2+ activity configs because it searched for exact assignment keys (e.g. `s2-orientation.json`) but activity files use week-prefixed names (e.g. `s2-w5-orientation.json`). Now scans the activity directory and matches by stripping the `s{N}-w{N}-` prefix. Fixes ~130 flat 3/3 scores across both courses.
+
+## 2026-02-24 — [claude-code] Dashboard 3-zone homepage redesign
+
+Replaced flat overview (charts + giant student grid) with 3-zone layout: (1) Sprint Status — current sprint progress, submission rate, analysis coverage, avg quality with distribution bar; (2) Alerts & Flags — consecutive missing submissions, quality drops, data quality warnings including Bug 1 signature detection; (3) Sprint Comparison — side-by-side metrics table with color-coded deltas. Full student grid accessible via toggle button. Applied to both main and anonymized dashboards.
 
 ## 2026-02-23 — [sathya] Context folder created
 
