@@ -1,6 +1,6 @@
 ---
 purpose: Course structure, frameworks, sprint design, grading — the stable design decisions and their rationale
-last_updated: 2026-02-23
+last_updated: 2026-02-24
 updated_by: sathya
 status: active
 ---
@@ -93,3 +93,4 @@ Sprint 2 adds:
 3. **Progressive disclosure** — Previous sprint content stays visible; new content builds on it
 4. **Discovery over instruction** — The 3Cs framework guides students to insights rather than telling them answers
 5. **Hand-written reflection** — Physical notebooks for reflections prevent AI bypass (trade-off: 60% of work is unanalyzable by script — see → pipeline.md)
+6. **Specificity over generality in assignments** — Generic instructions ("find sources," "research the domain") produce generic work. Assignments that name the specific domains, provide starting sources, and show concrete weak-vs-strong examples produce dramatically better student output. The Domain Learning Plan (ASSIGN-1) demonstrated this: providing a curated reference page with the 4 actual problem domains students are working in — with real sources, myth/reality framing, and investigation questions — sets a quality floor that "go find sources" never achieves. For this population, specificity is scaffolding. Design each assignment to be as specific to the actual student context as possible.

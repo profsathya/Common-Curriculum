@@ -11,6 +11,12 @@ Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
 
+## 2026-02-24 — [claude-code] Domain Learning Plan implemented (ASSIGN-1 closed)
+
+Built `s2-w7-domain-learning.html` (written artifact, 10 pts, 3 sections), `domain-research-reference.html` (4 problem domains with sources, myth/reality, investigation questions), and rubric. Closed ASSIGN-1 in assignment-updates.md. Added Design Principle #6 to course-design.md: specificity over generality — assignments that name the actual domains, provide real sources, and show concrete examples produce better work than generic instructions. For this population, specificity is scaffolding.
+
+---
+
 ## 2026-02-24 — [claude-code] Week 6 slides + context folder updates
 
 **Week 6 slides:** Replaced `cst395/sessions/week-6-class.html` with new version. 10 sections: title, 3 pattern slides (evidence vs. story, escape-hatch contingencies, projection), 12-min assumption sharpening, challenge demo, two 15-min challenge rounds, demo design with 5 beats, and weekly assignments. No instructor notes — clean student-facing version.
