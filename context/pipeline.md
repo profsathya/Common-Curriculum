@@ -1,6 +1,6 @@
 ---
 purpose: Technical infrastructure — what scripts do, known issues, recent changes
-last_updated: 2026-02-23
+last_updated: 2026-02-24
 updated_by: sathya
 status: active
 ---
@@ -48,6 +48,16 @@ All of the above
   → full: anonymous/{course}/ (PII-stripped copies for external sharing)
 ```
 
+## Activity Config Resolution (`loadActivityConfig`)
+
+For `ai-discussion` assignments, the pipeline loads activity config JSON files from `activities/{course}/` to get question context for grading. The function resolves assignment keys to filenames using:
+
+1. **Exact match**: `{assignmentKey}.json` (e.g. `s1-demo-ai-discussion.json`)
+2. **Demo special case**: `demo-discussion` → `demo-ai-discussion` substitution
+3. **Week-prefix scan**: Scans the directory and matches by stripping the `s{N}-w{N}-` prefix from filenames and the `s{N}-` prefix from assignment keys (e.g. assignment key `s2-orientation` matches file `s2-w5-orientation.json` because both reduce to `orientation` for the same sprint)
+
+When no config is found, the assignment gets an empty `questions` array, causing the grading prompt to fall back to flat 3/3 scores.
+
 ## Submission Types the Pipeline Handles
 
 | Canvas Type | contentType in data | Notes |
@@ -64,10 +74,11 @@ All of the above
 
 ## Three-Stage Improvement Plan
 
-### Stage 1: Dashboard Homepage Redesign [PENDING]
-- 3-zone architecture: current sprint status, alerts, deeper analysis
-- Independent of Stages 2-3
-- Prompt ready, not yet submitted
+### Stage 1: Dashboard Homepage Redesign [IMPLEMENTED]
+- 3-zone overview: Sprint Status, Alerts & Flags, Sprint Comparison
+- Full student grid accessible via toggle button
+- Applied to both main and anonymized dashboards
+- Includes Bug 1 signature detection (flat 3/3 scores) as data quality alert
 
 ### Stage 2: Custom Analysis Rubrics + Sonnet Upgrade [SUBMITTED]
 - Per-assignment-type rubrics (5 Whys chain progression, Discovery Doc partner evidence, etc.)
