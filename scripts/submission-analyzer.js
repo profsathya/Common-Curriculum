@@ -1994,6 +1994,232 @@ calcStats();
 }
 
 // ============================================
+// Step 4: Anonymized Export
+// ============================================
+
+/**
+ * Fields that may contain student names and should be stripped or replaced
+ * during anonymization. These appear in analysis.json, submission files,
+ * and dashboard data at various nesting levels.
+ */
+const NAME_FIELDS = new Set([
+  'name', 'studentName', 'displayName', 'authorName', 'partnerName',
+]);
+
+/**
+ * Deep-clone a JSON-serializable object, replacing any name fields
+ * with either a provided replacement value or removing them entirely.
+ *
+ * @param {*} obj - Object to anonymize
+ * @param {string|null} replacementId - If provided, name fields get this value; otherwise they are deleted
+ * @returns {*} Deep-cloned anonymized copy
+ */
+function anonymizeObject(obj, replacementId = null) {
+  if (obj === null || obj === undefined) return obj;
+  if (Array.isArray(obj)) {
+    return obj.map(item => anonymizeObject(item, replacementId));
+  }
+  if (typeof obj === 'object') {
+    const result = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (NAME_FIELDS.has(key) && typeof value === 'string') {
+        if (replacementId !== null) {
+          result[key] = replacementId;
+        }
+        // else: omit the field entirely
+      } else {
+        result[key] = anonymizeObject(value, replacementId);
+      }
+    }
+    return result;
+  }
+  return obj;
+}
+
+/**
+ * Anonymize analysis.json: strip name fields from all nested structures.
+ * Student summary keys and assignment student keys are already anonymous IDs.
+ */
+function anonymizeAnalysis(analysis) {
+  const anon = JSON.parse(JSON.stringify(analysis)); // deep clone
+
+  // Anonymize per-assignment student data
+  if (anon.assignments) {
+    for (const [assignmentKey, assignment] of Object.entries(anon.assignments)) {
+      if (assignment.students) {
+        for (const [anonId, studentData] of Object.entries(assignment.students)) {
+          anon.assignments[assignmentKey].students[anonId] = anonymizeObject(studentData, anonId);
+        }
+      }
+    }
+  }
+
+  // Anonymize discussion results
+  if (anon.discussions) {
+    for (const [assignmentKey, discussion] of Object.entries(anon.discussions)) {
+      if (discussion.results) {
+        for (const [anonId, result] of Object.entries(discussion.results)) {
+          anon.discussions[assignmentKey].results[anonId] = anonymizeObject(result, anonId);
+        }
+      }
+      if (discussion.studentData) {
+        for (const [anonId, data] of Object.entries(discussion.studentData)) {
+          anon.discussions[assignmentKey].studentData[anonId] = anonymizeObject(data, anonId);
+        }
+      }
+    }
+  }
+
+  // studentSummaries: keys are already anonymous IDs, values are text (no names to strip)
+
+  return anon;
+}
+
+/**
+ * Anonymize a single submission file: strip name fields from each student's record.
+ */
+function anonymizeSubmissionFile(submissions) {
+  const anon = {};
+  for (const [anonId, sub] of Object.entries(submissions)) {
+    anon[anonId] = anonymizeObject(sub, anonId);
+  }
+  return anon;
+}
+
+/**
+ * Generate anonymized dashboard HTML.
+ * Rebuilds the dashboard data with anonymous IDs in place of student names,
+ * then uses the same buildDashboardHTML function with modified data.
+ */
+function generateAnonymizedDashboardHTML(courseName, dataDir) {
+  const courseDataDir = path.join(dataDir, courseName);
+  const analysis = loadJson(path.join(courseDataDir, 'analysis.json'));
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
+  if (!analysis || !mapping) return null;
+
+  // Build profiles using anonymous IDs as names
+  const profiles = {};
+  Object.entries(mapping).forEach(([anonId]) => {
+    profiles[anonId] = {
+      name: anonId, // anonymous ID instead of real name
+      assignments: {},
+      avgParticipation: 0,
+      avgQuality: 0,
+      summary: (analysis.studentSummaries && analysis.studentSummaries[anonId]) || '',
+    };
+  });
+
+  const assignmentList = [];
+  Object.entries(analysis.assignments).forEach(([key, assignment]) => {
+    assignmentList.push({
+      key,
+      title: assignment.title,
+      type: assignment.type,
+      points: assignment.points,
+      sprint: assignment.sprint,
+      week: assignment.week,
+      dueDate: assignment.dueDate,
+    });
+
+    Object.entries(assignment.students || {}).forEach(([anonId, data]) => {
+      if (!profiles[anonId]) return;
+      profiles[anonId].assignments[key] = {
+        participation: data.participation,
+        quality: data.quality,
+        qualityNotes: data.qualityNotes,
+        contentType: data.contentType,
+      };
+    });
+  });
+
+  // Compute averages
+  Object.values(profiles).forEach(profile => {
+    const entries = Object.values(profile.assignments);
+    const participations = entries.map(e => e.participation).filter(p => p != null);
+    const qualities = entries.map(e => e.quality).filter(q => q != null);
+
+    profile.avgParticipation = participations.length > 0
+      ? Math.round((participations.reduce((a, b) => a + b, 0) / participations.length) * 10) / 10
+      : 0;
+    profile.avgQuality = qualities.length > 0
+      ? Math.round((qualities.reduce((a, b) => a + b, 0) / qualities.length) * 10) / 10
+      : 0;
+  });
+
+  assignmentList.sort((a, b) => {
+    if (a.sprint !== b.sprint) return (parseInt(a.sprint) || 0) - (parseInt(b.sprint) || 0);
+    return (parseInt(a.week) || 0) - (parseInt(b.week) || 0);
+  });
+
+  const dashboardData = {
+    course: `${COURSES[courseName].name} (Anonymized)`,
+    lastUpdated: analysis.lastUpdated,
+    assignments: assignmentList,
+    profiles: Object.entries(profiles)
+      .map(([anonId, p]) => ({ id: anonId, ...p }))
+      .sort((a, b) => a.id.localeCompare(b.id)), // sort by ID, not name
+  };
+
+  return buildDashboardHTML(dashboardData);
+}
+
+/**
+ * Generate anonymized export: analysis.json, dashboard.html, and submissions/.
+ * Runs automatically as part of --action=full and --action=dashboard.
+ */
+async function generateAnonymousExport(courseName, dataDir) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`GENERATING ANONYMIZED EXPORT: ${courseName.toUpperCase()}`);
+  console.log('='.repeat(60));
+
+  const courseDataDir = path.join(dataDir, courseName);
+  const anonDir = path.join(dataDir, 'anonymous', courseName);
+  ensureDir(anonDir);
+
+  // 1. Anonymize analysis.json
+  const analysis = loadJson(path.join(courseDataDir, 'analysis.json'));
+  if (analysis) {
+    const anonAnalysis = anonymizeAnalysis(analysis);
+    saveJson(path.join(anonDir, 'analysis.json'), anonAnalysis);
+    console.log('  ✓ Anonymized analysis.json');
+  } else {
+    console.log('  ⚠ No analysis.json found, skipping');
+  }
+
+  // 2. Anonymize dashboard HTML
+  const dashboardHtml = generateAnonymizedDashboardHTML(courseName, dataDir);
+  if (dashboardHtml) {
+    fs.writeFileSync(path.join(anonDir, 'dashboard.html'), dashboardHtml);
+    console.log('  ✓ Anonymized dashboard.html');
+  } else {
+    console.log('  ⚠ Could not generate anonymized dashboard, skipping');
+  }
+
+  // 3. Anonymize submission files
+  const submissionsDir = path.join(courseDataDir, 'submissions');
+  if (fs.existsSync(submissionsDir)) {
+    const anonSubsDir = path.join(anonDir, 'submissions');
+    ensureDir(anonSubsDir);
+
+    const files = fs.readdirSync(submissionsDir).filter(f => f.endsWith('.json'));
+    let count = 0;
+    for (const file of files) {
+      const submissions = loadJson(path.join(submissionsDir, file));
+      if (submissions) {
+        const anonSubs = anonymizeSubmissionFile(submissions);
+        saveJson(path.join(anonSubsDir, file), anonSubs);
+        count++;
+      }
+    }
+    console.log(`  ✓ Anonymized ${count} submission files`);
+  } else {
+    console.log('  ⚠ No submissions directory found, skipping');
+  }
+
+  console.log(`\n✓ Anonymized export complete: ${anonDir}`);
+}
+
+// ============================================
 // Post Grades to Canvas
 // ============================================
 
@@ -2095,8 +2321,8 @@ Usage:
 Actions:
   download    Download submissions from Canvas
   analyze     Analyze submissions with LLM (requires ANTHROPIC_API_KEY)
-  dashboard   Generate HTML dashboard from analysis
-  full        Run all three steps in sequence
+  dashboard   Generate HTML dashboard + anonymized export
+  full        Run all steps in sequence (download, analyze, dashboard, anonymize)
   post-grades Post grades from a reviewed JSON file to Canvas
 
 Options:
@@ -2165,6 +2391,7 @@ Environment Variables:
       }
       if (action === 'dashboard' || action === 'full') {
         await generateDashboard(c, dataDir, api);
+        await generateAnonymousExport(c, dataDir);
       }
     } catch (error) {
       console.error(`\n✗ Error processing ${c}: ${error.message}`);
