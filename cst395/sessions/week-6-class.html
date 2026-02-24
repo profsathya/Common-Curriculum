@@ -16,6 +16,10 @@
       --text-primary: #f1f5f9;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
+      --red-500: #ef4444;
+      --red-700: #b91c1c;
+      --amber-400: #fbbf24;
+      --green-400: #4ade80;
     }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; line-height: 1.6; font-size: 20px; }
     .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,0.1); z-index: 100; }
@@ -34,17 +38,28 @@
     .section-content { max-width: 1100px; width: 100%; }
     .section-label { font-size: 16px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--teal-400); margin-bottom: 16px; }
     h1 { font-size: clamp(40px, 7vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
-    h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
-    .subtitle { font-size: clamp(22px, 3vw, 28px); color: var(--text-secondary); max-width: 700px; }
-    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 32px; }
-    .activity-card h3 { font-size: 26px; color: var(--teal-400); margin-bottom: 16px; }
-    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 22px; }
-    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 22px; }
+    h2 { font-size: clamp(32px, 5vw, 44px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
+    .subtitle { font-size: clamp(20px, 3vw, 26px); color: var(--text-secondary); max-width: 750px; }
+    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 24px; }
+    .activity-card h3 { font-size: 24px; color: var(--teal-400); margin-bottom: 16px; }
+    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 20px; }
+    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 20px; }
     .activity-card li { margin-bottom: 12px; }
-    .highlight-quote { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 32px; text-align: center; }
+    .highlight-quote { padding: 28px 36px; border-radius: 12px; margin-top: 24px; text-align: center; }
     .highlight-quote p { font-size: 24px; font-weight: 500; margin: 0; }
-    .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+    .highlight-teal { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); }
+    .highlight-red { background: linear-gradient(135deg, var(--red-700) 0%, #991b1b 100%); }
+    .highlight-amber { background: linear-gradient(135deg, #92400e 0%, #78350f 100%); }
+    .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
     @media (max-width: 800px) { .two-column { grid-template-columns: 1fr; } }
+    .example-card { background: var(--bg-section); border-radius: 12px; padding: 24px; border: 2px solid transparent; }
+    .example-card.weak { border-color: rgba(239, 68, 68, 0.4); }
+    .example-card.strong { border-color: rgba(45, 212, 191, 0.4); }
+    .example-card .label { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600; }
+    .example-card.weak .label { color: var(--red-500); }
+    .example-card.strong .label { color: var(--teal-400); }
+    .example-card p { color: var(--text-secondary); font-size: 18px; margin-bottom: 8px; }
+    .example-card p em { color: var(--text-primary); font-style: italic; }
     .timer-container { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
     .timer-display { font-size: 72px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--teal-400); min-width: 160px; text-align: center; }
     .timer-btn { background: var(--teal-600); border: none; color: white; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -56,140 +71,277 @@
 </head>
 <body>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
   <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-    Live content — may be updated until and even during class
+    Live content — may be updated during class
   </div>
-
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST395</strong> · Week 6 Session</div>
-    <div class="nav-progress" id="navProgress">1 of 6</div>
+    <div class="nav-progress" id="navProgress">1 of 10</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
   </nav>
-
-  <!-- Section 1: Title -->
+  <!-- ============================================================ -->
+  <!-- SECTION 1: Title -->
+  <!-- ============================================================ -->
   <section class="section active" data-section="1">
     <div class="section-content" style="text-align: center;">
       <p class="section-label">Week 6 · Challenge + Demo Design</p>
-      <h1>Test Your<br><span style="color: var(--teal-400);">Assumptions</span></h1>
-      <p class="subtitle" style="margin: 0 auto;">Today your partner challenges what you think you know. Then we start designing the demo.</p>
+      <h1>What Do You<br><span style="color: var(--teal-400);">Actually Know?</span></h1>
+      <p class="subtitle" style="margin: 0 auto;">I read every assumption audit you submitted. Today we look at what I found — then your partner tells you where you're wrong.</p>
     </div>
   </section>
-
-  <!-- Section 2: Challenge Demo -->
+  <!-- ============================================================ -->
+  <!-- SECTION 2: Pattern #1 — Evidence vs. Story -->
+  <!-- ============================================================ -->
   <section class="section" data-section="2">
     <div class="section-content">
-      <p class="section-label">Guided Demo</p>
-      <h2>The Challenge Session</h2>
-      <p class="subtitle">Watch how to challenge assumptions productively. Then do it with your partner.</p>
+      <p class="section-label">Pattern #1 · From Your Submissions</p>
+      <h2>Evidence vs.<br><span style="color: var(--teal-400);">Your Story About the Evidence</span></h2>
+      <p class="subtitle">This showed up in almost every submission. You write "the evidence is..." and then state your interpretation.</p>
+      <div class="two-column">
+        <div class="example-card weak">
+          <div class="label">What one student wrote as "evidence"</div>
+          <p><em>"He'd rather watch movies than go to the gym."</em></p>
+          <p style="margin-top: 12px;">→ Conclusion: <em>"He needs to stop being lazy."</em></p>
+          <p style="margin-top: 16px; color: var(--red-500); font-size: 17px;">That's evidence he chooses rest sometimes. The word "lazy" is yours, not his. Preference ≠ character flaw.</p>
+        </div>
+        <div class="example-card strong">
+          <div class="label">What another student wrote</div>
+          <p><em>"He said he doesn't like the taste of plain water and described it as 'bland.' He mentioned liking the taste and fizz of diet soda."</em></p>
+          <p style="margin-top: 12px;">→ Then admitted: <em>"I'm assuming taste alone is the main barrier, but I don't yet have confirmation that caffeine or sweetness isn't also important."</em></p>
+          <p style="margin-top: 16px; color: var(--teal-400); font-size: 17px;">Quotes what was said. Flags what was guessed. That's the difference.</p>
+        </div>
+      </div>
+      <div class="highlight-quote highlight-teal" style="margin-top: 32px;">
+        <p>In industry, a client will rarely correct your story about them. They just stop returning your calls.<br>Your partner today <em>will</em> tell you — treat that as a gift.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================ -->
+  <!-- SECTION 3: Pattern #2 — Escape Hatch -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="3">
+    <div class="section-content">
+      <p class="section-label">Pattern #2 · From Your Submissions</p>
+      <h2>"If I'm Wrong, I'd<br><span style="color: var(--amber-400);">Change My Approach"</span></h2>
+      <p class="subtitle">That was the most common answer to "what changes if this assumption is false?" It's not an answer. It's an escape hatch.</p>
+      <div class="two-column">
+        <div class="example-card weak">
+          <div class="label">Escape hatch</div>
+          <p><em>"If this assumption is wrong, I would need to change my approach and focus on a different issue."</em></p>
+          <p style="margin-top: 16px; color: var(--red-500); font-size: 17px;">Change to what? Focus on which issue? This tells you nothing about what to do on Wednesday at 2pm.</p>
+        </div>
+        <div class="example-card strong">
+          <div class="label">Actual contingency</div>
+          <p><em>"If tradeoffs-first is wrong, the artifact changes from a keep/pause/reduce table to a weekly template with fixed commitments mapped first, then protected sleep and interview blocks."</em></p>
+          <p style="margin-top: 16px; color: var(--teal-400); font-size: 17px;">Two different artifacts. Two different approaches. When the assumption breaks, you already know where to go.</p>
+        </div>
+      </div>
+      <div class="activity-card" style="margin-top: 24px;">
+        <h3>Why this matters in 15 minutes</h3>
+        <p style="color: var(--text-primary);">Your partner is going to tell you something you got wrong. If your only plan is "I'll change my approach" — you'll freeze. If you've already thought about <em>specifically</em> what changes, you can pivot in real time.</p>
+        <p style="color: var(--text-primary); margin-top: 12px;">This is what professionals do. They don't hope they're right. They prepare for being wrong.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================ -->
+  <!-- SECTION 4: Pattern #3 — Projection -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="4">
+    <div class="section-content">
+      <p class="section-label">Pattern #3 · From Your Submissions</p>
+      <h2>You Built a Solution<br><span style="color: var(--amber-400);">For Yourself</span></h2>
+      <p class="subtitle">Several of you caught this. Most didn't. The ones who caught it are ahead.</p>
       <div class="activity-card">
-        <h3>Challenge Moves</h3>
+        <p style="color: var(--text-primary); font-size: 22px;">From your own words:</p>
+        <p style="color: var(--text-primary); font-size: 22px; margin-top: 20px; padding-left: 20px; border-left: 3px solid var(--amber-400);"><em>"I have no evidence. I just used my experience with the general dislike of apps from the popular opinion online."</em></p>
+        <p style="color: var(--text-primary); font-size: 22px; margin-top: 20px; padding-left: 20px; border-left: 3px solid var(--amber-400);"><em>"I think that my solution to push him might be interpretation because that's what I needed to fix a similar issue."</em></p>
+      </div>
+      <div class="highlight-quote highlight-amber" style="margin-top: 24px;">
+        <p>Projecting your experience onto someone else is the most natural thing in the world.<br>It's also the fastest way to build something nobody uses.</p>
+      </div>
+      <div class="activity-card" style="margin-top: 24px;">
+        <p style="color: var(--text-primary);">These students aren't ahead because they avoided projection. <strong>They're ahead because they named it.</strong> You can't fix what you don't see.</p>
+        <p style="color: var(--text-secondary); margin-top: 16px;">During the challenge: if your partner says something that <em>surprises</em> you — pay attention. That surprise is the distance between their reality and your projection.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================ -->
+  <!-- SECTION 5: Sharpen Assumptions (12 min) -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="5">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Preparation · 12 minutes</p>
+      <h2>Sharpen Your Assumptions</h2>
+      <p class="subtitle" style="margin: 0 auto;">On paper. No screens. No AI.</p>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay1">12:00</div>
+        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
+      </div>
+      <div class="activity-card" style="text-align: left;">
+        <h3>Write 3 assumptions you'll present to your partner</h3>
+        <p style="color: var(--text-primary);">If you did the Assumption Audit — pull your strongest 3 and rewrite them using what you just saw. If you didn't — build them now from what you remember of your discovery conversation.</p>
+        <p style="color: var(--text-primary); margin-top: 20px;">For each one, write three things:</p>
+        <ol>
+          <li><strong>The assumption</strong> — specific enough to be wrong. <span style="color: var(--text-muted);">"They have bad time management" = too vague. "They delay because the assignment looks simple from the title" = testable.</span></li>
+          <li><strong>What's evidence vs. what's your story?</strong> — Which part did your partner actually say? Which part did you fill in?</li>
+          <li><strong>If you're wrong, what specifically changes?</strong> — Not "I'd adjust." Name the different artifact, feature, or question you'd pursue.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================ -->
+  <!-- SECTION 6: Challenge Demo -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">Guided Demo · 5 minutes</p>
+      <h2>How the Challenge Works</h2>
+      <div class="activity-card">
+        <h3>The Move Set</h3>
+        <ol>
+          <li><strong>Read your assumption out loud</strong> — exactly as written. Don't soften it. Don't add qualifiers.</li>
+          <li><strong>Tell your partner what you're basing it on:</strong> "You said [X]. I assumed [Y]."</li>
+          <li><strong>Ask directly:</strong> "Am I right, wrong, or is it more complicated?"</li>
+          <li><strong>Write down what they say.</strong> Not later. Now. On the same paper.</li>
+        </ol>
+      </div>
+      <div class="two-column" style="margin-top: 24px;">
+        <div class="example-card" style="border-color: rgba(255,255,255,0.2);">
+          <div class="label" style="color: var(--text-secondary);">Example</div>
+          <p><em>"I assumed your main problem is that you eat when you're not hungry because of cravings. You told me you eat ahead of your meal prep sometimes. But I'm guessing the 'why' — I don't actually know if it's cravings, boredom, or something else."</em></p>
+          <p style="margin-top: 12px;"><em>"Am I right about cravings, or is something else going on?"</em></p>
+        </div>
+        <div class="example-card" style="border-color: rgba(255,255,255,0.2);">
+          <div class="label" style="color: var(--text-secondary);">What might come back</div>
+          <p>✅ <em>"Yeah, it's mostly cravings."</em> → Your assumption holds.</p>
+          <p>🔄 <em>"It's more that I'm bored when I'm studying."</em> → Close but different trigger. Your approach forks.</p>
+          <p>❌ <em>"Actually the real thing is I cook too much and feel guilty wasting it."</em> → Completely different problem. Everything changes.</p>
+        </div>
+      </div>
+      <div class="highlight-quote highlight-teal">
+        <p>The goal is not to be right. The goal is to find where you're wrong <em>before</em> you build.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================ -->
+  <!-- SECTION 7: Challenge Round 1 (15 min) -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="7">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Challenge Round 1 · You Present</p>
+      <h2>Present Your Assumptions</h2>
+      <p class="subtitle" style="margin: 0 auto;">Read each assumption. Let your partner respond. Write down what changes.</p>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay2">15:00</div>
+        <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
+      </div>
+      <div class="activity-card" style="text-align: left;">
+        <h3>Presenter: Read your 3 assumptions exactly as written</h3>
+        <ol>
+          <li>State the assumption</li>
+          <li>Say what evidence you're basing it on vs. what you guessed</li>
+          <li>Ask: "Am I right, wrong, or is it more complicated?"</li>
+          <li><strong>Write what your partner actually says — on the same paper, right next to the assumption</strong></li>
+        </ol>
+      </div>
+      <div class="activity-card" style="text-align: left;">
+        <h3>Partner / Stakeholder: Your job</h3>
         <ul>
-          <li><strong>Present your understanding:</strong> "Here's what I think your problem is..."</li>
-          <li><strong>Partner pushes back:</strong> "That's close, but you're missing..."</li>
-          <li><strong>Test assumptions:</strong> "I assumed X because you said Y. Am I right?"</li>
-          <li><strong>Find the gap:</strong> Where does your understanding break down?</li>
+          <li>If they got it right — say so, and say <em>what specifically</em> they understood</li>
+          <li>If they're close — explain what's missing. Don't just say "not quite"</li>
+          <li>If they're wrong — say it directly. <span style="color: var(--text-muted);">In industry, clients don't tell you you're wrong — they just stop calling. You're giving your partner something more valuable: honest correction.</span></li>
+          <li>If they projected their own experience onto you — tell them: <em>"That's your thing, not mine."</em></li>
         </ul>
       </div>
     </div>
   </section>
-
-  <!-- Section 3: Partner Challenge -->
-  <section class="section" data-section="3">
+  <!-- ============================================================ -->
+  <!-- SECTION 8: Switch Roles (15 min) -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="8">
     <div class="section-content" style="text-align: center;">
-      <p class="section-label">Activity</p>
-      <h2>Challenge Session</h2>
-      <p class="subtitle" style="margin: 0 auto;">Present your assumptions to your partner. Let them tell you where you're wrong.</p>
-
-      <div class="timer-container">
-        <div class="timer-display" id="timerDisplay1">20:00</div>
-        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start Challenge</button>
-        <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
-      </div>
-
-      <div class="activity-card" style="text-align: left;">
-        <h3>Round 1: You Present</h3>
-        <ol>
-          <li>Share your top 3 assumptions from your Assumption Audit</li>
-          <li>Your partner responds: right, wrong, or "it's more complicated"</li>
-          <li>Write down what changes about your approach</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 4: Switch -->
-  <section class="section" data-section="4">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Switch Roles</p>
+      <p class="section-label">Challenge Round 2 · Switch Roles</p>
       <h2>Your Partner Presents</h2>
-
       <div class="timer-container">
-        <div class="timer-display" id="timerDisplay2">20:00</div>
-        <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
-        <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
+        <div class="timer-display" id="timerDisplay3">15:00</div>
+        <button class="timer-btn" id="timerBtn3" onclick="toggleTimer(3)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(3)">Reset</button>
       </div>
-
-      <div class="highlight-quote">
-        <p>When you're the stakeholder being presented to: be honest. Polite feedback helps no one.</p>
+      <div class="activity-card" style="text-align: left;">
+        <h3>Same rules, reversed</h3>
+        <p style="color: var(--text-primary);">Your partner reads their assumptions about <em>your</em> problem. You respond honestly.</p>
+        <p style="color: var(--text-primary); margin-top: 16px;">As the stakeholder, remember: being "nice" by saying everything is right helps no one. The most useful thing you can do is be specific about where they're wrong.</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 5: Demo Design -->
-  <section class="section" data-section="5">
+  <!-- ============================================================ -->
+  <!-- SECTION 9: Demo Design -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="9">
     <div class="section-content">
-      <p class="section-label">Demo Design</p>
-      <h2>How Will You Show Your Process?</h2>
-      <p class="subtitle">Sprint 2's demo isn't a feature tour. It's showing how you understood someone.</p>
-
+      <p class="section-label">Second Half · Demo Design</p>
+      <h2>Sprint 2 Demo:<br><span style="color: var(--teal-400);">Showing Your Process</span></h2>
+      <p class="subtitle">The demo isn't a feature tour. It's showing how you understood someone — and what happened when you were wrong.</p>
       <div class="activity-card">
-        <h3>Demo Structure Preview</h3>
+        <h3>Demo Structure — 5 Beats</h3>
         <ol>
-          <li><strong>"Here's my partner and the problem I discovered."</strong></li>
-          <li><strong>"Here's what I learned that they didn't tell me directly."</strong></li>
-          <li><strong>"Here's what I built and the key decisions I made."</strong></li>
-          <li><strong>"Here's where I was wrong and what I changed."</strong></li>
-          <li><strong>"Here's what would be worse if I'd just handed this to AI."</strong></li>
+          <li><strong>"Here's my partner and the problem I discovered."</strong><br><span style="color: var(--text-muted);">Not what you assumed. What you actually learned.</span></li>
+          <li><strong>"Here's what I assumed — and where I was wrong."</strong><br><span style="color: var(--text-muted);">Today's challenge session gave you this. Use it.</span></li>
+          <li><strong>"Here's what I built and the key decisions I made."</strong><br><span style="color: var(--text-muted);">Why this approach and not a different one?</span></li>
+          <li><strong>"Here's what changed after the challenge."</strong><br><span style="color: var(--text-muted);">What did you revise, cut, or add based on what your partner told you?</span></li>
+          <li><strong>"Here's what would be worse if I'd just handed this to AI."</strong><br><span style="color: var(--text-muted);">What required your judgment, relationship, or understanding that a tool couldn't provide?</span></li>
         </ol>
       </div>
-
-      <div class="highlight-quote">
-        <p>Present as if a hiring committee asked you: "Show us how you solved a problem for someone."</p>
+      <div class="highlight-quote highlight-teal" style="margin-top: 24px;">
+        <p>Present as if a hiring committee asked: "Show us how you solved a problem for someone."<br>The strongest demos show where you were wrong and what you did about it.</p>
+      </div>
+      <div class="activity-card" style="margin-top: 24px;">
+        <h3>Remaining time: plan with your partner</h3>
+        <p style="color: var(--text-primary);">Use the rest of class to work together. You now have real feedback. Translate it into your build plan:</p>
+        <ul>
+          <li>What assumptions held? What broke?</li>
+          <li>What's your revised understanding of the problem?</li>
+          <li>What are you building this week, given what you now know?</li>
+          <li>What do you still need to find out?</li>
+        </ul>
       </div>
     </div>
   </section>
-
-  <!-- Section 6: This Week -->
-  <section class="section" data-section="6">
+  <!-- ============================================================ -->
+  <!-- SECTION 10: This Week -->
+  <!-- ============================================================ -->
+  <section class="section" data-section="10">
     <div class="section-content">
       <p class="section-label">This Week</p>
-      <h2>Before Next Wednesday</h2>
+      <h2>Before Next Class</h2>
       <div style="display: grid; gap: 20px; margin-top: 24px;">
         <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Prototype + Build Log</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Build your first prototype. Document your decisions in the Dojo — the log matters as much as what you build.</p>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">First Prototype + Build Log</p>
+            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Build your first working version. Document decisions in the Dojo — the log of <em>why</em> you made choices matters as much as what you built.</p>
           </div>
           <span style="color: #fbbf24; font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Thu, Feb 27</span>
         </div>
         <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Domain Learning Plan</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">What do you need to learn? What can you strategically ignore?</p>
+            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Weekly Reflection</p>
+            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">What changed in your understanding after today's challenge? What are you building differently?</p>
           </div>
-          <span style="color: var(--text-secondary); font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Feb 28</span>
+          <span style="color: var(--text-secondary); font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Mar 1</span>
         </div>
       </div>
       <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 18px; margin-top: 32px;">→ Sprint 2 Landing Page</a>
     </div>
   </section>
-
   <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
-
+  <!-- ============================================================ -->
+  <!-- NAVIGATION + TIMER SCRIPTS -->
+  <!-- ============================================================ -->
   <script>
     let currentSection = 1;
     const totalSections = document.querySelectorAll('.section').length;
@@ -198,12 +350,11 @@
     const navProgress = document.getElementById('navProgress');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
     const timers = {
-      1: { running: false, seconds: 1200, defaultSeconds: 1200, interval: null },
-      2: { running: false, seconds: 1200, defaultSeconds: 1200, interval: null }
+      1: { running: false, seconds: 720, defaultSeconds: 720, interval: null },
+      2: { running: false, seconds: 900, defaultSeconds: 900, interval: null },
+      3: { running: false, seconds: 900, defaultSeconds: 900, interval: null }
     };
-
     function goToSection(n) {
       if (n < 1 || n > totalSections) return;
       sections.forEach(s => s.classList.remove('active'));
@@ -214,14 +365,12 @@
       prevBtn.disabled = currentSection === 1;
       nextBtn.disabled = currentSection === totalSections;
     }
-
     prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
     nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
     });
-
     function toggleTimer(id) {
       const timer = timers[id];
       const btn = document.getElementById(`timerBtn${id}`);
@@ -230,21 +379,21 @@
         timer.interval = setInterval(() => {
           timer.seconds--;
           updateTimerDisplay(id);
-          if (timer.seconds <= 0) { clearInterval(timer.interval); btn.textContent = 'Done!'; timer.running = false; }
+          if (timer.seconds <= 0) { clearInterval(timer.interval); btn.textContent = 'Done'; timer.running = false;
+            document.getElementById(`timerDisplay${id}`).style.color = '#ef4444'; }
         }, 1000);
         btn.textContent = 'Pause'; timer.running = true;
       }
     }
-
     function resetTimer(id) {
       const timer = timers[id];
       clearInterval(timer.interval);
       timer.seconds = timer.defaultSeconds;
       timer.running = false;
-      document.getElementById(`timerBtn${id}`).textContent = id === 1 ? 'Start Challenge' : 'Start';
+      document.getElementById(`timerBtn${id}`).textContent = 'Start';
+      document.getElementById(`timerDisplay${id}`).style.color = 'var(--teal-400)';
       updateTimerDisplay(id);
     }
-
     function updateTimerDisplay(id) {
       const timer = timers[id];
       const mins = Math.floor(timer.seconds / 60);
@@ -252,7 +401,6 @@
       document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
     }
   </script>
-
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
     <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--teal-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>

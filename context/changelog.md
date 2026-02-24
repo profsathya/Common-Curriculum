@@ -11,6 +11,19 @@ Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
 
+## 2026-02-24 — [claude-code] Week 6 slides + context folder updates
+
+**Week 6 slides:** Replaced `cst395/sessions/week-6-class.html` with new version. 10 sections: title, 3 pattern slides (evidence vs. story, escape-hatch contingencies, projection), 12-min assumption sharpening, challenge demo, two 15-min challenge rounds, demo design with 5 beats, and weekly assignments. No instructor notes — clean student-facing version.
+
+**New context files:**
+- `design-uncertainty.md` — Input/output uncertainty framing: 3 student groups (~15% deep, ~25% working-through-it, ~60% surface compliance), why each needs different interventions, implications for optional work and in-class diagnostics.
+- `sprint2-findings.md` — AI-discussion rubric inflation (4.3 vs 2.1 avg), honest quality picture (student-authored avg 2.11, worse than Sprint 1's 2.38), per-student patterns, 3 assumption audit gaps (evidence≠inference, escape-hatch contingencies, projection), Dojo conversation richness vs. deliverable gap.
+- `pipeline-updates.md` — PIPE-7 through PIPE-10: rubric rework, remaining flat 3/3 scores, filename-as-text bug, deeper insight extraction.
+- `assignment-updates.md` — ASSIGN-1 (domain learning plan) and ASSIGN-2 (student-owned demo format with 5 beats, Demo Day logistics for Week 8).
+- `session-design.md` — Reusable session design principles: opening structure, feedback-from-submissions pattern, preparation scaffolding, challenge session structure, reliability framing.
+
+---
+
 ## 2026-02-24 — [claude-code] Fixed loadActivityConfig() path resolution (Bug 1)
 
 `loadActivityConfig()` failed to find Sprint 2+ activity configs because it searched for exact assignment keys (e.g. `s2-orientation.json`) but activity files use week-prefixed names (e.g. `s2-w5-orientation.json`). Now scans the activity directory and matches by stripping the `s{N}-w{N}-` prefix. Fixes ~130 flat 3/3 scores across both courses.
