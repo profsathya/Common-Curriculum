@@ -9,18 +9,20 @@ status: active
 
 ---
 
-## ASSIGN-1: Domain Learning Plan [PLANNED]
+## ASSIGN-1: Domain Learning Plan [IMPLEMENTED]
 
 **Problem:** Students treat partner problems as design exercises when they're actually domain problems. If a partner struggles with overeating, the student needs to know what behavioral science says about why food tracking alone usually fails. If procrastination, they need implementation intentions vs. willpower models.
 
 Without domain knowledge, students default to intuition and projection — "what would work for me" rather than "what does the research say works."
 
-**Plan:** Provide domain-specific scaffolding with:
-- Sample sources for common problem domains (time management, procrastination, overwhelm, overeating, motivation)
-- "Lessons you wouldn't know" — the non-obvious psychology/science behind each domain
-- Framing: "You wouldn't build a medical app without understanding medicine. Why would you build a behavior-change tool without understanding behavior change?"
+**What was built:**
+- `cst395/assignments/s2-w7-domain-learning.html` — Written artifact assignment (10 pts, due Sat Feb 28). Three sections: what science says (cite 2+ sources), connection to partner's specific situation, what changes in approach. Replaces earlier Dojo-transcript-based format with a written deliverable.
+- `cst395/assignments/domain-research-reference.html` — Interactive reference page covering 4 problem domains (procrastination ~60%, overwhelm ~20%, eating ~10%, exercise ~10%) plus implementation intentions as a cross-cutting concept. Each domain has myth/reality framing, non-obvious insights, reliable sources with links, and investigation questions specific to the partner relationship.
+- `config/rubrics/cst395/s2-domain-learning.txt` — Rubric: what science says (4 pts), connection to partner (3 pts), what changes (3 pts). Green/red flag guidance for each section.
 
-**Status:** Not yet designed. Target: Sprint 3 preparation materials.
+**Design decision:** Assignment is highly specific — names the exact domains students are likely working in, provides actual sources rather than telling students to "find sources," and gives concrete weak-vs-strong examples using real problem domains from the class. This follows the emerging principle that specificity drives depth (see Design Principles in course-design.md).
+
+**Status:** Implemented. Sprint 2, Week 7.
 
 ---
 
