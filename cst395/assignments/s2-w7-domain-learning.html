@@ -34,7 +34,7 @@
     }
     .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
     .section p { color: #4b5563; margin: 0 0 12px 0; }
-    .section ul { color: #4b5563; margin: 0; padding-left: 24px; }
+    .section ul, .section ol { color: #4b5563; margin: 0; padding-left: 24px; }
     .section li { margin-bottom: 8px; }
     .key-principle {
       background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
@@ -47,13 +47,27 @@
       padding: 20px; margin: 20px 0;
     }
     .prompt-box h4 { color: #0d9488; margin: 0 0 12px 0; font-size: 14px; }
-    .prompt-box ul { color: #115e59; padding-left: 20px; margin: 0; }
+    .prompt-box ul, .prompt-box ol { color: #115e59; padding-left: 20px; margin: 0; }
     .prompt-box li { margin-bottom: 8px; }
-    .dojo-link {
-      display: inline-block; background: #0d9488; color: white;
-      padding: 12px 24px; border-radius: 8px; text-decoration: none;
-      font-weight: 500; margin-top: 12px;
+    .warning-box {
+      background: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; margin: 20px 0;
+      border-radius: 0 8px 8px 0;
     }
+    .warning-box h4 { color: #991b1b; margin: 0 0 8px 0; font-size: 14px; }
+    .warning-box p, .warning-box li { color: #991b1b; }
+    .warning-box ul { margin: 0; padding-left: 20px; }
+    .example-weak {
+      background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+      padding: 16px; margin: 12px 0;
+    }
+    .example-weak h4 { color: #991b1b; margin: 0 0 8px 0; font-size: 14px; }
+    .example-weak p { color: #7f1d1d; margin: 0; font-size: 14px; }
+    .example-strong {
+      background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px;
+      padding: 16px; margin: 12px 0;
+    }
+    .example-strong h4 { color: #0d9488; margin: 0 0 8px 0; font-size: 14px; }
+    .example-strong p { color: #115e59; margin: 0; font-size: 14px; }
     .submission {
       background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
       color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
@@ -69,6 +83,22 @@
       color: white; padding: 12px 24px; border-radius: 8px;
       text-decoration: none; font-weight: 500; margin-top: 16px;
     }
+    .step-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #0d9488; color: white; font-weight: 700; font-size: 14px;
+      margin-right: 8px; flex-shrink: 0;
+    }
+    .step-header {
+      display: flex; align-items: center; margin-bottom: 12px;
+    }
+    .step-header h3 { margin: 0; font-size: 16px; color: #111827; }
+    .ai-note {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+      padding: 16px; margin: 16px 0;
+    }
+    .ai-note h4 { color: #1e40af; margin: 0 0 8px 0; font-size: 14px; }
+    .ai-note p { color: #1e3a5f; margin: 0; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -82,52 +112,120 @@
     <div class="header">
       <h1>Domain Learning Plan
         <span class="capability-tag">SDL</span>
+        <span class="capability-tag">IS</span>
       </h1>
-      <p>Sprint 2 · Due Saturday, February 28 · 5 points</p>
+      <p>Sprint 2 · Due Saturday, February 28 · 10 points</p>
+    </div>
+
+    <div class="hook">
+      <p class="hook__question">Your partner's problem lives in a domain you haven't studied.<br>What does science say about why this problem is actually hard?</p>
     </div>
 
     <div class="key-principle">
-      <p>"Strategic ignorance is a skill. Knowing what you DON'T need to learn is as important as knowing what you do."</p>
+      <p>If your partner struggles with procrastination and your solution is "a better planner" — you haven't learned the domain. You've just applied your assumptions with a tool on top.</p>
     </div>
 
     <div class="section">
-      <h2>Context</h2>
-      <p>You're solving a problem in your partner's world — which means you need to learn enough about their domain to build something valuable. But "learn everything" is a trap.</p>
-      <p>The skill is knowing <strong>what to learn</strong>, what to <strong>strategically ignore</strong>, and <strong>when you know enough to act</strong>.</p>
+      <h2>Why This Assignment Exists</h2>
+      <p>Most of you are building solutions for problems that have been studied for decades — procrastination, overwhelm, overeating, exercise consistency, motivation. Researchers have identified why these problems are hard, what interventions fail, and what non-obvious factors most people miss.</p>
+      <p>If you skip the domain research and just build from your own experience, you'll build something that solves the version of the problem you <em>imagine</em> — not the version your partner actually has.</p>
+      <p><strong>Start here:</strong> Read the <a href="domain-research-reference.html" style="color: #0d9488; font-weight: 500;">Domain Research Reference →</a> — it covers the science behind the most common problem domains in this class, with sources and non-obvious insights. Find the section that matches your partner's problem. Then go deeper.</p>
     </div>
 
     <div class="section">
       <h2>What You'll Do</h2>
-      <p>Open the Symbiotic Thinking Dojo. Work through your domain learning strategy. The AI will help you distinguish between essential knowledge and rabbit holes.</p>
 
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h3>Research the domain</h3>
+        </div>
+        <p>Read the Domain Research Reference section for your partner's problem. Then find at least <strong>2 additional reliable sources</strong> (academic papers, research summaries, expert-written articles — not Reddit, not AI-generated summaries). You can use AI to help you find and understand sources, but you need to actually read them.</p>
+        <p>What you're looking for: <strong>something that surprises you.</strong> Something that contradicts your assumption about why this problem exists or what will fix it. If nothing surprises you, you haven't gone deep enough.</p>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h3>Connect it to your partner's specific situation</h3>
+        </div>
+        <p>The research is general. Your partner is specific. The domain learning plan isn't a book report — it's about translating what science says into what it means for <em>this person</em> and <em>this problem</em>.</p>
+        <p>Go back to your discovery conversation and your assumption audit. What did your partner actually say? How does the research reframe that?</p>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h3>Write what changes</h3>
+        </div>
+        <p>State explicitly: what were you going to build before this research, and what are you going to build (or build differently) now? If the answer is "nothing changes" — either you already knew the science (cite it) or the research didn't go deep enough.</p>
+      </div>
+
+      <div class="ai-note">
+        <h4>💡 Using AI as a Research Partner</h4>
+        <p>You're encouraged to use AI (Claude, ChatGPT, the Dojo, etc.) to help you find sources, understand academic papers, and push your thinking deeper. A good prompt: <em>"I'm building a solution for someone who [partner's problem]. I've read that [what you found]. What am I missing? What do experts say about why simple solutions to this problem usually fail?"</em></p>
+        <p style="margin-top: 8px;">But the document you submit must be written by you, in your own words. The AI helps you think — it doesn't write the deliverable.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>What Good vs. Weak Looks Like</h2>
+
+      <div class="example-weak">
+        <h4>❌ Surface-level</h4>
+        <p><em>"My partner procrastinates. I learned that procrastination is bad for academic performance. I'm going to build a reminder app that sends notifications before assignments are due."</em></p>
+        <p style="margin-top: 8px;">No sources. No surprising insight. The "learning" is something everyone already knows. The solution doesn't connect to any research finding.</p>
+      </div>
+
+      <div class="example-strong">
+        <h4>✅ Research-informed</h4>
+        <p><em>"My partner procrastinates on assignments where they don't know how to start. I assumed this was a time management issue, but research by Sirois & Pychyl (2013) shows procrastination is primarily an emotion regulation problem — people avoid tasks that trigger negative feelings, not tasks they don't have time for. My partner said starting 'feels uncomfortable' — that's the emotional trigger, not poor scheduling.</em></p>
+        <p style="margin-top: 8px;"><em>This changes my approach. Instead of a planner (which addresses scheduling), I'm exploring something that reduces the emotional friction of starting — like breaking the first step into something so small it doesn't trigger the avoidance response. The research on implementation intentions (Gollwitzer, 1999) supports this for one-time actions but warns it doesn't work well for repeated behaviors, so I need to think about what sustains it beyond the first use."</em></p>
+        <p style="margin-top: 8px;">Specific sources. A finding that contradicts the initial assumption. The solution changes because of what was learned. Acknowledges limitations.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Your Document: Three Sections</h2>
       <div class="prompt-box">
-        <h4>Starting Guidance for Your Dojo Session:</h4>
-        <ul>
-          <li><strong>What do you need to learn</strong> about your partner's domain to solve this problem?</li>
-          <li><strong>For each learning gap:</strong> how will you learn it? (AI research, ask partner, observe, read, experiment?)</li>
-          <li><strong>What's "good enough" understanding</strong> vs. a rabbit hole?</li>
-          <li><strong>What can you strategically IGNORE</strong> without it hurting the solution?</li>
-          <li><strong>What did the challenge session in class</strong> reveal about gaps in your understanding?</li>
-        </ul>
+        <h4>Write a document (1-2 pages) with these three sections:</h4>
+        <ol>
+          <li><strong>What the science says that you didn't know.</strong> What did you learn about your partner's problem domain from research? Cite at least 2 sources. Focus on what surprised you, contradicted your assumptions, or revealed why this problem is harder than it appears.</li>
+          <li><strong>What this means for your partner specifically.</strong> Connect the research to what your partner actually told you. Reference specific things from your discovery conversation or assumption audit. How does the research reframe what you thought was going on?</li>
+          <li><strong>What changes in your approach.</strong> What were you planning to build? What are you planning now? Be specific — name the feature, design choice, or approach that's different because of what you learned. If nothing changes, explain why (with evidence).</li>
+        </ol>
       </div>
+    </div>
 
-      <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px; margin-top: 16px;">
-        <h4 style="color: #0d9488; margin: 0 0 8px 0; font-size: 14px;">Copy-paste this to start your Dojo session:</h4>
-        <p style="font-family: monospace; font-size: 14px; color: #134e4a; line-height: 1.6; margin: 0; white-space: pre-wrap;">I'm building something for my Sprint 2 partner and I need to learn about their domain — but I don't want to fall into a rabbit hole. Help me figure out what I actually need to learn vs. what I can strategically ignore. Push me to be specific about learning methods and "good enough" thresholds for each knowledge gap.</p>
-      </div>
-
-      <a href="https://symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
+    <div class="warning-box">
+      <h4>Red Flags</h4>
+      <ul>
+        <li>No sources cited, or sources are just AI-generated summaries with no original research</li>
+        <li>"I learned that [obvious thing everyone knows]" — no surprising or non-obvious insight</li>
+        <li>Research section and solution section are disconnected — the learning doesn't actually change anything</li>
+        <li>Generic research that could apply to anyone, with no connection to your specific partner's situation</li>
+        <li>Copy-pasted AI output presented as your own writing</li>
+      </ul>
     </div>
 
     <div class="submission">
       <h3>What to Submit</h3>
-      <p>Download the JSON from your Dojo session and upload to Canvas.</p>
+      <p>A written document with the three sections described above. 1–2 pages is the target — quality over length.</p>
       <div class="submission__format">
-        <strong>Format:</strong> JSON file download from Dojo session<br>
+        <strong>Format:</strong> PDF, Word doc, or Google Doc link<br>
         <strong>Due:</strong> Saturday, February 28<br>
-        <strong>Points:</strong> 5
+        <strong>Points:</strong> 10
       </div>
       <a data-assignment-key="s2-domain-learning" href="https://csumb.instructure.com/courses/33084/assignments/582880" target="_blank" class="submit-btn">Submit on Canvas →</a>
+    </div>
+
+    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-top: 16px;">
+      <h2 style="font-size: 18px; color: #111827; margin: 0 0 12px 0;">Resources</h2>
+      <ul style="color: #4b5563; margin: 0; padding-left: 24px;">
+        <li><a href="domain-research-reference.html" style="color: #0d9488;">Domain Research Reference</a> — science behind the most common problem domains in this class</li>
+        <li><a href="https://scholar.google.com" target="_blank" style="color: #0d9488;">Google Scholar</a> — for finding academic papers</li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/" target="_blank" style="color: #0d9488;">PubMed Central</a> — free access to research articles</li>
+      </ul>
     </div>
   </div>
 

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domain Research Reference | Sprint 2 | CST395</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 740px; margin: 0 auto; }
+    .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .breadcrumb a { color: #14b8a6; text-decoration: none; }
+    .page-header {
+      background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .page-header h1 { margin: 0; font-size: 22px; }
+    .page-header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+    .topic-nav {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .topic-nav a {
+      display: block; padding: 16px; border-radius: 12px; text-decoration: none;
+      border: 2px solid #e5e7eb; background: white; transition: all 0.2s;
+    }
+    .topic-nav a:hover { border-color: #14b8a6; background: #f0fdfa; }
+    .topic-nav__label { font-size: 15px; font-weight: 600; color: #111827; display: block; }
+    .topic-nav__pct { font-size: 13px; color: #6b7280; display: block; margin-top: 2px; }
+    .domain {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .domain__header {
+      padding: 20px 24px; cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between;
+      border-bottom: 1px solid transparent; transition: all 0.2s;
+    }
+    .domain__header:hover { background: #f9fafb; }
+    .domain__header h2 { margin: 0; font-size: 18px; color: #111827; }
+    .domain__header .pct-badge {
+      background: #f0fdfa; color: #0d9488; font-size: 12px; font-weight: 600;
+      padding: 4px 10px; border-radius: 12px; white-space: nowrap;
+    }
+    .domain__arrow {
+      font-size: 18px; color: #9ca3af; transition: transform 0.2s; margin-left: 12px;
+    }
+    .domain[open] .domain__arrow { transform: rotate(90deg); }
+    .domain[open] .domain__header { border-bottom-color: #e5e7eb; }
+    .domain__body { padding: 24px; }
+    .domain__body p { color: #4b5563; margin: 0 0 12px 0; }
+    .domain__body ul, .domain__body ol { color: #4b5563; margin: 0 0 12px 0; padding-left: 24px; }
+    .domain__body li { margin-bottom: 6px; }
+    .sub-section { margin-bottom: 20px; }
+    .sub-section h3 {
+      font-size: 15px; color: #0f766e; margin: 0 0 8px 0;
+      padding-bottom: 6px; border-bottom: 1px solid #e5e7eb;
+    }
+    .myth-box {
+      background: #fef2f2; border-left: 4px solid #ef4444;
+      padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0;
+    }
+    .myth-box strong { color: #991b1b; }
+    .myth-box p { color: #7f1d1d; margin: 0; font-size: 14px; }
+    .reality-box {
+      background: #f0fdfa; border-left: 4px solid #14b8a6;
+      padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0;
+    }
+    .reality-box strong { color: #0f766e; }
+    .reality-box p { color: #115e59; margin: 0; font-size: 14px; }
+    .insight-box {
+      background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin: 16px 0;
+    }
+    .insight-box h4 { color: #92400e; margin: 0 0 8px 0; font-size: 14px; }
+    .insight-box p { color: #78350f; margin: 0; font-size: 14px; }
+    .sources {
+      background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 16px; margin: 16px 0;
+    }
+    .sources h4 { color: #374151; margin: 0 0 10px 0; font-size: 14px; }
+    .sources ul { margin: 0; padding-left: 20px; }
+    .sources li { margin-bottom: 6px; font-size: 14px; }
+    .sources a { color: #0d9488; text-decoration: none; }
+    .sources a:hover { text-decoration: underline; }
+    .questions {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+      padding: 16px; margin: 16px 0;
+    }
+    .questions h4 { color: #1e40af; margin: 0 0 10px 0; font-size: 14px; }
+    .questions ul { margin: 0; padding-left: 20px; }
+    .questions li { margin-bottom: 6px; font-size: 14px; color: #1e3a5f; }
+    .cross-cutting {
+      background: white; border: 2px solid #14b8a6; border-radius: 12px;
+      padding: 24px; margin-bottom: 20px;
+    }
+    .cross-cutting h2 { font-size: 18px; color: #0f766e; margin: 0 0 16px 0; }
+    .cross-cutting p { color: #4b5563; margin: 0 0 12px 0; }
+    .how-to-use {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+    }
+    .how-to-use h2 { color: white; margin: 0 0 16px 0; font-size: 18px; }
+    .how-to-use ol { color: #d1d5db; padding-left: 24px; margin: 0; }
+    .how-to-use li { margin-bottom: 8px; }
+    .how-to-use strong { color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="../home.html">Home</a> /
+      <a href="../sprint-2.html">Sprint 2</a> /
+      Domain Research Reference
+    </p>
+
+    <div class="page-header">
+      <h1>Domain Research Reference</h1>
+      <p>What science says about the problems your partners actually have — and what most people get wrong about them.</p>
+    </div>
+
+    <div class="topic-nav">
+      <a href="#procrastination">
+        <span class="topic-nav__label">Procrastination & Task Avoidance</span>
+        <span class="topic-nav__pct">~60% of Sprint 2 partners</span>
+      </a>
+      <a href="#overwhelm">
+        <span class="topic-nav__label">Overwhelm & Overcommitment</span>
+        <span class="topic-nav__pct">~20% of Sprint 2 partners</span>
+      </a>
+      <a href="#eating">
+        <span class="topic-nav__label">Eating Behavior</span>
+        <span class="topic-nav__pct">~10% of Sprint 2 partners</span>
+      </a>
+      <a href="#exercise">
+        <span class="topic-nav__label">Exercise Consistency</span>
+        <span class="topic-nav__pct">~10% of Sprint 2 partners</span>
+      </a>
+    </div>
+
+    <!-- DOMAIN 1: PROCRASTINATION -->
+    <details class="domain" id="procrastination" open>
+      <summary class="domain__header">
+        <div><h2>Procrastination & Task Avoidance</h2></div>
+        <div style="display:flex;align-items:center;">
+          <span class="pct-badge">~60% of partners</span>
+          <span class="domain__arrow">▶</span>
+        </div>
+      </summary>
+      <div class="domain__body">
+        <div class="sub-section">
+          <h3>What Most People Think</h3>
+          <div class="myth-box">
+            <p><strong>Common assumption:</strong> Procrastination is a time management problem. If you just had a better schedule or planner, you'd stop procrastinating. Procrastinators are lazy or undisciplined.</p>
+          </div>
+        </div>
+        <div class="sub-section">
+          <h3>What the Science Actually Says</h3>
+          <div class="reality-box">
+            <p><strong>Key finding:</strong> Procrastination is an <em>emotion regulation</em> problem, not a time management problem. This is the single most important finding in procrastination research over the last 15 years.</p>
+          </div>
+          <p>When someone procrastinates, they're not failing to manage time — they're avoiding a negative emotion (anxiety, boredom, self-doubt, fear of failure) by choosing something that provides immediate emotional relief. The task feels bad, so the brain prioritizes short-term mood repair over long-term goals.</p>
+          <p><strong>Temporal discounting:</strong> The brain devalues rewards and consequences that are far in the future. The reward of completing a project next week feels less motivating than the immediate comfort of watching a video now. Brain imaging shows the prefrontal cortex activates for delayed rewards, but the limbic system dominates for immediate ones. When they compete, the limbic system usually wins.</p>
+          <p><strong>The shame-procrastination cycle:</strong> Procrastination → guilt/shame → negative emotion → need for mood repair → more procrastination. Researcher Joseph Ferrari (DePaul University) found that approximately 20% of adults are chronic procrastinators — and for them, shame-based interventions ("just try harder") make the cycle <em>worse</em>, not better.</p>
+          <p><strong>Bidirectional feedback loop:</strong> Better emotion regulation reduces procrastination, but increased procrastination also <em>diminishes</em> emotion regulation ability over time. It's a feedback loop, not a one-way cause.</p>
+        </div>
+        <div class="sub-section">
+          <h3>What This Means for Solutions</h3>
+          <p>If your partner procrastinates, a planner or schedule alone won't solve it. You need to address what makes <em>starting</em> feel bad. The question to ask: What emotion comes up when you think about starting? Is it the task itself, the fear of doing it wrong, the overwhelm of not knowing where to begin, or something else?</p>
+        </div>
+        <div class="insight-box">
+          <h4>💡 Non-Obvious Insight</h4>
+          <p>"Active procrastination" — deliberately working under deadline pressure because you perform better — is a real phenomenon. But research suggests it's actually <em>purposeful delay</em>, not procrastination. The distinction matters: purposeful delay is a strategy; procrastination is avoidance. If your partner says "I work better under pressure," that might be true, or it might be a rationalization. How do you tell the difference? Ask whether they <em>chose</em> the delay or just ended up there.</p>
+        </div>
+        <div class="sources">
+          <h4>📚 Reliable Sources to Start From</h4>
+          <ul>
+            <li>Sirois & Pychyl (2013). "Procrastination and the priority of short-term mood regulation." <em>Social and Personality Psychology Compass</em></li>
+            <li>Eckert et al. (2016). "Overcome procrastination: Enhancing emotion regulation skills reduce procrastination." <em>Learning and Individual Differences</em></li>
+            <li>Ferrari, J. R. (2010). <em>Still Procrastinating? The No-Regrets Guide to Getting It Done.</em> (Accessible, research-based book)</li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8980531/" target="_blank">"I'll Worry About It Tomorrow" — Fostering Emotion Regulation Skills to Overcome Procrastination</a> (PMC, free access)</li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7671960/" target="_blank">Emotion Regulation Difficulties and Academic Procrastination</a> (PMC, free access)</li>
+          </ul>
+        </div>
+        <div class="questions">
+          <h4>🔍 Questions Worth Investigating About Your Partner</h4>
+          <ul>
+            <li>What specific emotion does your partner feel right <em>before</em> they avoid a task? (Anxiety? Boredom? Self-doubt? Overwhelm?)</li>
+            <li>Has your partner tried planners/schedules before? What happened?</li>
+            <li>Does the procrastination happen equally across all tasks, or only certain types?</li>
+            <li>Is there a pattern to when they <em>do</em> start? What's different about those moments?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- DOMAIN 2: OVERWHELM -->
+    <details class="domain" id="overwhelm">
+      <summary class="domain__header">
+        <div><h2>Overwhelm & Overcommitment</h2></div>
+        <div style="display:flex;align-items:center;">
+          <span class="pct-badge">~20% of partners</span>
+          <span class="domain__arrow">▶</span>
+        </div>
+      </summary>
+      <div class="domain__body">
+        <div class="sub-section">
+          <h3>What Most People Think</h3>
+          <div class="myth-box">
+            <p><strong>Common assumption:</strong> The person needs to learn to say no, prioritize better, or just do less.</p>
+          </div>
+        </div>
+        <div class="sub-section">
+          <h3>What the Science Actually Says</h3>
+          <div class="reality-box">
+            <p><strong>Key finding:</strong> Overcommitment often isn't a planning failure — it's an <em>identity</em> issue. People who chronically overcommit often derive their self-worth from being needed, busy, or productive.</p>
+          </div>
+          <p>Telling someone to "do less" threatens their identity. Research on identity-based behavior change shows that change is more sustainable when it <em>aligns</em> with identity ("I protect my energy so I can do my best work") rather than contradicting it ("I should stop helping people").</p>
+          <p><strong>Cultural and family dimensions:</strong> For first-generation students, overcommitment may be driven by family obligation, cultural expectations around work ethic, or a felt need to prove the investment in their education was worth it. These aren't irrational — they're deeply held values. A solution that ignores them will be rejected.</p>
+          <p><strong>The planning fallacy:</strong> People systematically underestimate how long tasks will take, even when they have direct experience with similar tasks taking longer. This means someone who's overcommitted isn't just bad at saying no — they genuinely believed they had time for everything when they agreed to it. Solutions that address commitment <em>at the moment of agreeing</em> (not after) are more likely to work.</p>
+          <p><strong>Decision fatigue:</strong> The more decisions someone makes in a day, the worse their subsequent decisions become. An overcommitted person making hundreds of small priority decisions is depleting their capacity for the important ones. Reducing the <em>number</em> of daily decisions (through routines, pre-commitments, or environmental design) can be more effective than adding more planning tools.</p>
+        </div>
+        <div class="insight-box">
+          <h4>💡 Non-Obvious Insight</h4>
+          <p>Many overcommitted people have tried planners and time management tools — and they failed not because the tools were bad, but because the tools addressed <em>scheduling</em> (what to do when) rather than <em>commitment</em> (what to agree to in the first place). The intervention point isn't the calendar — it's the moment someone says "yes" to something new. What's happening in that moment? Social pressure? Fear of letting someone down? Automatic agreement as a habit?</p>
+        </div>
+        <div class="sources">
+          <h4>📚 Reliable Sources to Start From</h4>
+          <ul>
+            <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow.</em> — Chapter on planning fallacy</li>
+            <li>Buehler, Griffin & Ross (1994). "Exploring the planning fallacy." <em>Journal of Personality and Social Psychology</em></li>
+            <li>Oyserman, D. (2015). "Identity-based motivation." <em>Emerging Trends in the Social and Behavioral Sciences</em></li>
+            <li>Clear, J. (2018). <em>Atomic Habits.</em> — Chapter on identity-based habits</li>
+          </ul>
+        </div>
+        <div class="questions">
+          <h4>🔍 Questions Worth Investigating About Your Partner</h4>
+          <ul>
+            <li>What does your partner <em>get</em> from saying yes? (Feeling needed? Avoiding conflict? Genuine interest?)</li>
+            <li>When they try to say no, what happens? What feeling comes up?</li>
+            <li>Have they used planning tools before? What happened?</li>
+            <li>Is the overcommitment driven by internal values (work ethic, identity) or external pressure (family, financial, social)?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- DOMAIN 3: EATING -->
+    <details class="domain" id="eating">
+      <summary class="domain__header">
+        <div><h2>Eating Behavior</h2></div>
+        <div style="display:flex;align-items:center;">
+          <span class="pct-badge">~10% of partners</span>
+          <span class="domain__arrow">▶</span>
+        </div>
+      </summary>
+      <div class="domain__body">
+        <div class="sub-section">
+          <h3>What Most People Think</h3>
+          <div class="myth-box">
+            <p><strong>Common assumption:</strong> It's about willpower. If you just had more discipline, you'd eat less. Tracking calories or using an app should fix it.</p>
+          </div>
+        </div>
+        <div class="sub-section">
+          <h3>What the Science Actually Says</h3>
+          <div class="reality-box">
+            <p><strong>Key finding:</strong> Willpower is a limited, depletable resource — and emotional eating bypasses it entirely. The brain prioritizes emotional regulation over long-term health goals.</p>
+          </div>
+          <p>When someone is stressed, the brain releases cortisol, which increases cravings for high-calorie foods. This isn't a choice — it's a neurochemical response. Trying to use willpower to override it is like trying to hold your breath indefinitely.</p>
+          <p><strong>Emotional eating is a coping mechanism, not a character flaw.</strong> It provides genuine short-term emotional relief through dopamine release. The brain learns: feel bad → eat → feel better → repeat. Over time, this creates neural pathways that become nearly automatic. The "decision" to eat emotionally happens before conscious awareness kicks in.</p>
+          <p><strong>Restriction makes it worse:</strong> This is counterintuitive but well-established. Imposing strict food rules creates a cycle: restriction → deprivation → preoccupation with forbidden foods → emotional trigger → binge → guilt → more restriction. Food tracking apps can <em>trigger</em> this cycle in people prone to emotional eating.</p>
+          <p><strong>The real intervention targets are emotional awareness and alternative coping.</strong> Research on mindfulness-based approaches shows that "decentering" — observing the urge to eat without acting on it — is more effective than willpower-based restriction. The key skill is recognizing "I'm experiencing an urge to eat because I'm stressed" rather than "I'm hungry."</p>
+        </div>
+        <div class="insight-box">
+          <h4>💡 Non-Obvious Insight</h4>
+          <p>If your partner says they eat "when not hungry" or "to keep their mouth busy" — that's actually a sophisticated self-report. They already know the eating isn't hunger-driven. The question isn't "how do I stop them from eating" — it's "what are they <em>regulating</em> when they eat?" Boredom? Anxiety? The need for stimulation during studying? Each has a different intervention.</p>
+          <p style="margin-top: 8px;">Also: food is social, cultural, and tied to family identity. "My partner cooks too much and feels guilty wasting it" isn't a willpower problem — it's about values (not wasting food), habits (cooking quantities), and possibly family dynamics. Solutions that <em>respect</em> those values while addressing the behavior are fundamentally different from "eat less."</p>
+        </div>
+        <div class="sources">
+          <h4>📚 Reliable Sources to Start From</h4>
+          <ul>
+            <li>Macht, M. (2008). "How emotions affect eating: a five-way model." <em>Appetite</em></li>
+            <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1265074/full" target="_blank">The role of emotion in eating behavior and decisions</a> (Frontiers, free access)</li>
+            <li><a href="https://www.psychologytoday.com/us/blog/health-and-human-nature/202103/taming-the-emotional-side-eating" target="_blank">Taming the Emotional Side of Eating</a> (Psychology Today)</li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6137864/" target="_blank">Emotional eating and weight regulation: a qualitative study</a> (PMC, free access)</li>
+          </ul>
+        </div>
+        <div class="questions">
+          <h4>🔍 Questions Worth Investigating About Your Partner</h4>
+          <ul>
+            <li>When does your partner eat when not hungry? What's happening <em>emotionally</em> right before?</li>
+            <li>Have they tried restricting before? What happened?</li>
+            <li>Is the eating habitual (same time, same context) or triggered (emotional state)?</li>
+            <li>What other coping mechanisms do they use for stress/boredom? Why does food win?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- DOMAIN 4: EXERCISE -->
+    <details class="domain" id="exercise">
+      <summary class="domain__header">
+        <div><h2>Exercise Consistency</h2></div>
+        <div style="display:flex;align-items:center;">
+          <span class="pct-badge">~10% of partners</span>
+          <span class="domain__arrow">▶</span>
+        </div>
+      </summary>
+      <div class="domain__body">
+        <div class="sub-section">
+          <h3>What Most People Think</h3>
+          <div class="myth-box">
+            <p><strong>Common assumption:</strong> They need motivation. A workout plan or gym buddy will fix it. They're lazy if they'd rather watch movies.</p>
+          </div>
+        </div>
+        <div class="sub-section">
+          <h3>What the Science Actually Says</h3>
+          <div class="reality-box">
+            <p><strong>Key finding:</strong> Habit formation takes 2–5 months, not 21 days. The popular myth has been debunked by a 2024 systematic review. Individual variation ranges from 4 to 335 days.</p>
+          </div>
+          <p>For exercise specifically, one study found that at least 4 bouts per week for 6 weeks was the minimum to establish an exercise habit. Short-term "30-day challenges" are usually insufficient for lasting change.</p>
+          <p><strong>Intrinsic motivation predicts long-term adherence; extrinsic motivation predicts short-term adoption.</strong> People who exercise because they enjoy it or value it personally sustain the habit. People who exercise for external reasons (appearance, guilt, social pressure) start but don't persist. This is one of the most consistent findings in SDT research on exercise.</p>
+          <p><strong>Identity beats goals:</strong> Framing exercise in terms of identity ("I am an active person") rather than outcomes ("I want to lose weight") increased habit adherence by 32% in a recent study. When the behavior becomes part of who you are, motivation becomes internal rather than something you have to generate each day.</p>
+          <p><strong>Context stability is critical.</strong> Habits form faster in consistent environments — same time, same place, same preceding activity. The advice to "try different workouts to keep it interesting" actually works <em>against</em> habit formation. Variation may prevent boredom, but it undermines automaticity.</p>
+          <p><strong>"Motivation" is the wrong frame.</strong> Motivation naturally fluctuates. BJ Fogg's research: designing for low-motivation periods (reducing friction, making the behavior smaller) is more effective than trying to sustain high motivation. Make the behavior so small it requires almost no motivation to start.</p>
+        </div>
+        <div class="insight-box">
+          <h4>💡 Non-Obvious Insight</h4>
+          <p>If your partner says they "need motivation" to go to the gym — the research says motivation isn't the bottleneck. The bottleneck is usually one of: (1) the behavior is too complex (a full workout routine vs. just showing up), (2) the context isn't stable (no consistent time/place), (3) the activity isn't enjoyable (they're doing exercises they hate because they think they should), or (4) they're framing it as an outcome goal rather than an identity.</p>
+          <p style="margin-top: 8px;">Calling someone "lazy" because they prefer movies to the gym is interpreting preference as character flaw. They may not have found a form of movement they actually enjoy, or the gym environment itself may be aversive.</p>
+        </div>
+        <div class="sources">
+          <h4>📚 Reliable Sources to Start From</h4>
+          <ul>
+            <li>Lally et al. (2010). "How are habits formed: Modelling habit formation in the real world." <em>European Journal of Social Psychology</em></li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11641623/" target="_blank">Time to Form a Habit: Systematic Review and Meta-Analysis</a> (PMC, free access — 2024)</li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3441783/" target="_blank">Exercise, physical activity, and self-determination theory: A systematic review</a> (PMC, free access)</li>
+            <li>Gardner & Lally (2013). "Does intrinsic motivation strengthen physical activity habit?" <em>Journal of Behavioral Medicine</em></li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3505409/" target="_blank">Making health habitual: the psychology of habit-formation</a> (PMC, free access)</li>
+          </ul>
+        </div>
+        <div class="questions">
+          <h4>🔍 Questions Worth Investigating About Your Partner</h4>
+          <ul>
+            <li>Has your partner tried to establish an exercise routine before? How many times? What happened each time?</li>
+            <li>Do they <em>enjoy</em> any form of physical activity? (Not "should they" — do they actually enjoy one?)</li>
+            <li>What's their environment like? Is there a gym nearby? Do they have consistent free time?</li>
+            <li>Is the goal framed as outcome ("lose weight") or identity ("be active")?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- CROSS-CUTTING: IMPLEMENTATION INTENTIONS -->
+    <div class="cross-cutting">
+      <h2>Cross-Cutting Concept: Implementation Intentions</h2>
+      <p><strong>This applies to ALL of the above domains</strong> and is one of the most well-studied behavior change tools.</p>
+      <div class="sub-section">
+        <h3>The Core Idea</h3>
+        <p>An implementation intention is an if-then plan: "If [situation X] occurs, then I will do [action Y]." Unlike a goal intention ("I want to exercise more"), it specifies the exact when, where, and how. When you form this plan, the situation becomes a trigger that activates the response automatically — like delegating the decision to your environment.</p>
+      </div>
+      <div class="sub-section">
+        <h3>The Evidence</h3>
+        <p>A meta-analysis across 94 studies (8,000+ participants) found a medium-to-large effect (d = 0.65) on goal attainment. This is especially notable because most studies compared implementation intentions against groups that already had goal intentions — the if-then plan provides benefit <em>beyond</em> just wanting to do something.</p>
+      </div>
+      <div class="insight-box">
+        <h4>⚠️ The Limitation Your Partner Needs to Know</h4>
+        <p>Implementation intentions work well for <strong>one-time or bounded actions</strong> (getting a flu shot, sending an email, starting a workout). They work <strong>less well for complex, repeated behaviors</strong> that require sustained motivation. A gym study found that simple planning prompts (when/where will you exercise?) had <em>zero effect</em> on exercise frequency over two weeks. The cue loses distinctiveness when it applies to many possible moments.</p>
+        <p style="margin-top: 8px;"><strong>For your solution:</strong> Implementation intentions can be a component — but they're not sufficient alone for ongoing behavior change. They're most useful for the <em>start</em> of a behavior chain (getting to the gym door, opening the textbook, sitting down at the desk) rather than sustaining the behavior once started.</p>
+      </div>
+      <div class="sources">
+        <h4>📚 Key Sources</h4>
+        <ul>
+          <li>Gollwitzer, P. M. (1999). "Implementation intentions: Strong effects of simple plans." <em>American Psychologist</em></li>
+          <li>Gollwitzer & Sheeran (2006). "Implementation intentions and goal achievement: A meta-analysis." <em>Advances in Experimental Social Psychology</em></li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7872013/" target="_blank">The Limits of Simple Implementation Intentions: Evidence from a Field Experiment</a> (PMC, free access)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HOW TO USE -->
+    <div class="how-to-use">
+      <h2>How to Use This Reference</h2>
+      <ol>
+        <li><strong>Identify which domain cluster your partner's problem falls in.</strong> Most will be procrastination or overwhelm. Some overlap.</li>
+        <li><strong>Read the full section.</strong> Find at least one thing that surprises you or contradicts what you assumed.</li>
+        <li><strong>Go to at least 2 of the reliable sources.</strong> Don't just read this summary — look at the actual research. Use AI to help you understand papers if the academic language is dense, but make sure you can explain the key finding in your own words.</li>
+        <li><strong>Write down what you learned that changes your approach.</strong> If nothing changes, either you already knew this (unlikely) or you're not reading carefully enough.</li>
+        <li><strong>Bring this to your Domain Learning Plan.</strong> Your deliverable should show what you learned AND how it changes what you're building.</li>
+      </ol>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
