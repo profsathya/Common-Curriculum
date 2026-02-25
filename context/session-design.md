@@ -1,6 +1,6 @@
 ---
 purpose: Session design principles — patterns that work for in-class delivery, drawn from experience
-last_updated: 2026-02-24
+last_updated: 2026-02-25
 updated_by: sathya
 status: active
 ---
@@ -8,6 +8,24 @@ status: active
 # Session Design Principles
 
 Patterns that emerged from Week 6 design and earlier sessions. These are reusable — not specific to one week.
+
+---
+
+## Slide Design Principles
+
+Every in-class session slide deck should follow these structural rules:
+
+### 1. Outcome/Agenda Slide (slide 2, after title)
+
+Every session should have a dedicated slide immediately after the title that concisely presents what students will do in today's session. This sets expectations and gives students a map before they're in the middle of activities.
+
+### 2. One Key Point Per Slide
+
+Each slide should communicate ONE clear point, visible at the top without scrolling. The h2 heading or a prominent takeaway line immediately below it should convey this point. Additional details, examples, and instructions live below and support that one point. If the h2 itself states the key point clearly, no additional line is needed. If the h2 is a topic label (e.g., "Evidence Calibration"), add a distinct key takeaway line that states the actual point.
+
+### 3. Progressive Disclosure for Dense Content
+
+If a slide's content doesn't fit on a single screen and requires scrolling, reorganize it: present a sequence of short supporting points that build toward the key point — all visible without scrolling. Each supporting point should be clickable (using HTML `<details>/<summary>`) to expand into the full detail (quotes, examples, analysis). The expansion may cause scrolling, which is fine — the student chose to go deeper. The default collapsed view should stand on its own as a readable sequence.
 
 ---
 

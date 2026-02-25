@@ -436,24 +436,8 @@
         getStartedSection.style.display = 'block';
       }
 
-      // Framing section open/close logic:
-      // Before semester and Weeks 1-2: open
-      // Week 3+: alternating (odd weeks closed, even weeks open)
-      const framingContent = document.getElementById('framing-content');
-      const framingToggle = document.getElementById('framing-toggle');
-
-      let shouldBeOpen = false;
-      if (currentWeek === null || currentWeek <= 2) {
-        shouldBeOpen = true;
-      } else {
-        // Week 3+: even weeks open, odd weeks closed
-        shouldBeOpen = (currentWeek % 2 === 0);
-      }
-
-      if (shouldBeOpen) {
-        framingContent.classList.add('is-expanded');
-        framingToggle.setAttribute('aria-expanded', 'true');
-      }
+      // Framing section: always starts collapsed, students click to expand
+      // (aria-expanded="false" and no is-expanded class by default in HTML)
 
       // What You Should Be Learning section
       const dueSection = document.getElementById('due-this-week-section');
