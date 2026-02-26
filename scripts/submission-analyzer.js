@@ -696,8 +696,11 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
         participation = sub.late ? 3 : 4;
       }
 
-      // For images, PDFs, URLs, or empty submissions: participation only
-      if (!['text', 'conversation'].includes(sub.contentType) || !sub.content || sub.content.length < 20) {
+      // For images/PDFs with extracted content (from grading step), treat as analyzable text
+      const hasExtractedContent = (sub.contentType === 'image' || sub.contentType === 'pdf') && sub.extractedContent && sub.extractedContent.length > 20;
+
+      // For images, PDFs, URLs, or empty submissions: participation only (unless extracted content exists)
+      if (!hasExtractedContent && (!['text', 'conversation'].includes(sub.contentType) || !sub.content || sub.content.length < 20)) {
         assignmentAnalysis[anonId] = {
           participation,
           quality: null, // Can't assess quality without text
@@ -713,11 +716,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
 
       // Send text content to LLM for quality analysis
       try {
-        // For conversation content, add context about the format
-        let analysisContent = sub.content.substring(0, 3000);
-        if (sub.contentType === 'conversation' && sub.conversationMetadata) {
+        // Use extracted content for image/PDF submissions that went through grading
+        let analysisContent;
+        if (hasExtractedContent) {
+          analysisContent = `[Extracted from ${sub.contentType} submission: ${sub.attachmentFilename || 'file'}]\n\n${sub.extractedContent}`.substring(0, 4000);
+        } else if (sub.contentType === 'conversation' && sub.conversationMetadata) {
           const meta = sub.conversationMetadata;
           analysisContent = `[This is a ${meta.format} conversation with ${meta.userTurns || '?'} student turns and ${meta.userWordCount || '?'} student words]\n\n${sub.content}`.substring(0, 4000);
+        } else {
+          analysisContent = sub.content.substring(0, 3000);
         }
 
         const llmResult = await callLLM(apiKey, {
@@ -2681,6 +2688,7 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   }
 
   let posted = 0, skipped = 0, unchanged = 0;
+  const postedCanvasIds = new Set();
   for (const g of grades) {
     const label = g.studentName || g.anonId;
     if (!g.canvasId) { console.log(`  ⚠ Skip ${label} — no Canvas ID`); skipped++; continue; }
@@ -2694,6 +2702,7 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
     if (current && current.score === score) {
       console.log(`  — ${label}: already ${score} in Canvas, skipping`);
       unchanged++;
+      postedCanvasIds.add(g.canvasId);
       continue;
     }
 
@@ -2703,6 +2712,7 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
       await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: score, comment });
       console.log(`  ✓ ${label}: ${score}${current?.score != null ? ` (was ${current.score})` : ''}`);
       posted++;
+      postedCanvasIds.add(g.canvasId);
     } catch (err) {
       console.log(`  ✗ ${label}: ${err.message}`);
       skipped++;
@@ -2710,6 +2720,825 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
     await new Promise(r => setTimeout(r, 200));
   }
   console.log(`\nPosted: ${posted}, Unchanged: ${unchanged}, Skipped: ${skipped}`);
+
+  // Update grading JSON status for posted students
+  const gradingDataPath = path.join(dataDir, courseName, 'grading', `${assignmentKey}.json`);
+  const gradingData = loadJson(gradingDataPath);
+  if (gradingData && gradingData.grades && postedCanvasIds.size > 0) {
+    for (const entry of gradingData.grades) {
+      if (postedCanvasIds.has(entry.canvasId)) {
+        entry.status = 'posted';
+      }
+    }
+    saveJson(gradingDataPath, gradingData);
+    console.log(`  Updated grading status in ${gradingDataPath}`);
+  }
+}
+
+// ============================================
+// Step 4: Grade Submissions
+// ============================================
+
+async function callGradingLLM(apiKey, params) {
+  const { anonId, title, courseName, pointsPossible, rubric, content, contentType, mimeType, base64Data } = params;
+
+  const scoringGuide = `- ${pointsPossible}/${pointsPossible}: Submitted on time with genuine engagement, shows real thinking about their experience
+- ${Math.round(pointsPossible * 0.8)}/${pointsPossible}: Submitted but stays surface-level, generic, or doesn't connect to their actual experience
+- ${Math.round(pointsPossible * 0.6)}/${pointsPossible}: Minimal effort — very short, vague, or clearly rushing through
+- 0/${pointsPossible}: ONLY for: (a) clearly fake/junk submissions (random text, 'asdf', test entries), (b) entirely AI-generated with zero personal engagement, (c) submitted wrong/unrelated content`;
+
+  const basePrompt = `You are grading a student submission in a course focused on Self-Directed Learning and professional development. Your job is to assign a fair score and write ONE helpful comment.
+
+Assignment: "${title}" (${courseName})
+Points possible: ${pointsPossible}
+
+Grading rubric:
+${rubric}
+
+GRADING PHILOSOPHY: Be generous. These students are developing metacognitive and professional skills — many for the first time. Reward genuine effort and honesty. The goal is to encourage growth, not punish imperfection.
+
+SCORING GUIDE:
+${scoringGuide}
+
+COMMENT FORMAT: Write exactly ONE comment with two parts:
+1. One sentence acknowledging something specific they did well (even if small)
+2. One sentence with a specific, actionable suggestion for improvement
+
+Keep the total comment under 100 words. Be warm but direct. Reference specific things FROM their submission.`;
+
+  const isVision = contentType === 'image' || contentType === 'pdf';
+
+  let responseFormat;
+  if (isVision) {
+    responseFormat = `Respond in exactly this JSON format, nothing else:
+{"score": <0-${pointsPossible}>, "comment": "<your student-facing comment>", "flag": "<ok|insincere>", "confidence": "<high|low>", "extractedText": "<transcription or summary of what you read from the image/PDF, max 500 words. For handwritten work, transcribe as faithfully as possible. For printed PDFs, summarize the key content.>"}`;
+  } else {
+    responseFormat = `Respond in exactly this JSON format, nothing else:
+{"score": <0-${pointsPossible}>, "comment": "<your comment>", "flag": "<ok|insincere>", "confidence": "high"}`;
+  }
+
+  let messages;
+  if (isVision) {
+    const visionNote = `NOTE: This submission is a ${contentType === 'image' ? 'photograph (likely of handwritten work in a notebook)' : 'PDF document'}.
+
+Read the content carefully. If the handwriting is difficult to read, do your best and note any uncertainty. If you cannot read the content at all, set confidence to "low" and score to ${pointsPossible} (benefit of the doubt).`;
+
+    const sourceBlock = contentType === 'pdf'
+      ? { type: 'document', source: { type: 'base64', media_type: mimeType, data: base64Data } }
+      : { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64Data } };
+
+    messages = [{
+      role: 'user',
+      content: [
+        sourceBlock,
+        { type: 'text', text: `${basePrompt}\n\n${visionNote}\n\n${responseFormat}` },
+      ],
+    }];
+  } else {
+    messages = [{
+      role: 'user',
+      content: `${basePrompt}\n\nStudent submission:\n---\n${content}\n---\n\n${responseFormat}`,
+    }];
+  }
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: isVision ? 400 : 300,
+      messages,
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
+  }
+
+  const data = await response.json();
+  const text = data.content[0]?.text || '';
+
+  // Parse JSON from response — use greedy match for extractedText which may contain braces
+  const jsonMatch = text.match(/\{[\s\S]+\}/);
+  if (!jsonMatch) {
+    throw new Error('Could not parse grading LLM response as JSON');
+  }
+
+  const result = JSON.parse(jsonMatch[0]);
+  return {
+    score: Math.min(pointsPossible, Math.max(0, parseInt(result.score) || 0)),
+    comment: String(result.comment || '').substring(0, 500),
+    flag: result.flag === 'insincere' ? 'insincere' : 'ok',
+    confidence: result.confidence === 'low' ? 'low' : 'high',
+    extractedText: result.extractedText ? String(result.extractedText).substring(0, 2000) : undefined,
+  };
+}
+
+async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error('ANTHROPIC_API_KEY environment variable is required for grading');
+  }
+
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`GRADING SUBMISSIONS: ${courseName.toUpperCase()}`);
+  console.log('='.repeat(60));
+
+  const courseInfo = COURSES[courseName];
+  const courseDataDir = path.join(dataDir, courseName);
+  const submissionsDir = path.join(courseDataDir, 'submissions');
+  const gradingDir = path.join(courseDataDir, 'grading');
+  ensureDir(gradingDir);
+
+  const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json'));
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
+
+  if (!submissionIndex || !mapping) {
+    throw new Error(`No submission data found. Run download first: --action=download --course=${courseName}`);
+  }
+
+  // Build reverse lookup: anonId → { canvasId, name }
+  const anonToInfo = {};
+  Object.entries(mapping).forEach(([anonId, info]) => {
+    anonToInfo[anonId] = info;
+  });
+
+  const csvRows = loadCsv(path.join(__dirname, '..', courseInfo.csvFile));
+  const assignmentKeys = assignmentFilter
+    ? [assignmentFilter]
+    : Object.keys(submissionIndex).filter(k => !submissionIndex[k].error);
+
+  console.log(`\nGrading ${assignmentKeys.length} assignment(s)...\n`);
+
+  let totalGraded = 0, totalSkipped = 0, totalErrors = 0;
+  const gradedAssignmentKeys = [];
+
+  for (const assignmentKey of assignmentKeys) {
+    const indexEntry = submissionIndex[assignmentKey];
+    if (!indexEntry || indexEntry.error) continue;
+
+    // Skip quizzes
+    const csvRow = csvRows.find(r => r.key === assignmentKey);
+    if (csvRow && csvRow.canvasType === 'quiz') {
+      console.log(`  ${indexEntry.title} — skipped (quiz)`);
+      continue;
+    }
+
+    const subsPath = path.join(submissionsDir, `${assignmentKey}.json`);
+    const submissions = loadJson(subsPath);
+    if (!submissions) continue;
+
+    const pointsPossible = parseInt(indexEntry.points) || parseInt(csvRow?.points) || 5;
+    const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title, courseInfo.name);
+
+    // Load existing grading data
+    const gradingPath = path.join(gradingDir, `${assignmentKey}.json`);
+    const existingGrading = loadJson(gradingPath);
+    const existingGrades = {};
+    if (existingGrading && existingGrading.grades) {
+      for (const g of existingGrading.grades) {
+        existingGrades[g.anonId] = g;
+      }
+    }
+
+    console.log(`  ${indexEntry.title} (${assignmentKey}, ${pointsPossible} pts)`);
+
+    const grades = [];
+    let assignmentGraded = 0, assignmentSkipped = 0;
+
+    for (const [anonId, sub] of Object.entries(submissions)) {
+      const info = anonToInfo[anonId];
+      if (!info) continue;
+
+      // Check if already reviewed/posted in existing grading
+      const existing = existingGrades[anonId];
+      if (existing && (existing.status === 'reviewed' || existing.status === 'posted')) {
+        grades.push(existing);
+        assignmentSkipped++;
+        continue;
+      }
+
+      // Skip if Canvas score > 0 AND status is 'graded' (already meaningfully graded)
+      if (sub.score > 0 && sub.status === 'graded') {
+        grades.push({
+          anonId,
+          canvasId: info.canvasId,
+          studentName: info.name,
+          suggestedScore: sub.score,
+          suggestedComment: 'Already graded in Canvas.',
+          finalScore: sub.score,
+          finalComment: 'Already graded in Canvas.',
+          status: 'posted',
+          contentType: sub.contentType,
+          confidence: 'high',
+          flag: 'ok',
+          canvasCurrentScore: sub.score,
+          canvasCurrentStatus: sub.status,
+          internalNote: 'Pre-existing Canvas grade preserved.',
+        });
+        assignmentSkipped++;
+        continue;
+      }
+
+      // Skip if score === 0 AND missing === true (correct grade for no submission)
+      if (sub.missing === true && (sub.score === 0 || sub.score === null)) {
+        grades.push({
+          anonId,
+          canvasId: info.canvasId,
+          studentName: info.name,
+          suggestedScore: 0,
+          suggestedComment: 'No submission received.',
+          finalScore: 0,
+          finalComment: 'No submission received.',
+          status: 'pending',
+          contentType: 'none',
+          confidence: 'high',
+          flag: 'ok',
+          canvasCurrentScore: sub.score,
+          canvasCurrentStatus: sub.status,
+          internalNote: 'Missing submission.',
+        });
+        assignmentGraded++;
+        continue;
+      }
+
+      // Unsubmitted with no content
+      if (sub.status === 'unsubmitted' || (!sub.content && sub.contentType === 'none')) {
+        grades.push({
+          anonId,
+          canvasId: info.canvasId,
+          studentName: info.name,
+          suggestedScore: 0,
+          suggestedComment: 'No submission received.',
+          finalScore: 0,
+          finalComment: 'No submission received.',
+          status: 'pending',
+          contentType: 'none',
+          confidence: 'high',
+          flag: 'ok',
+          canvasCurrentScore: sub.score,
+          canvasCurrentStatus: sub.status,
+          internalNote: 'Unsubmitted.',
+        });
+        assignmentGraded++;
+        continue;
+      }
+
+      // Grade based on content type
+      const gradeEntry = {
+        anonId,
+        canvasId: info.canvasId,
+        studentName: info.name,
+        status: 'pending',
+        contentType: sub.contentType,
+        canvasCurrentScore: sub.score,
+        canvasCurrentStatus: sub.status,
+        late: sub.late || false,
+      };
+
+      if (sub.contentType === 'text' || sub.contentType === 'conversation' || sub.contentType === 'ai-discussion') {
+        // Text content — send to grading LLM
+        try {
+          let gradingContent = sub.content.substring(0, 3000);
+          if (sub.contentType === 'conversation' && sub.conversationMetadata) {
+            const meta = sub.conversationMetadata;
+            gradingContent = `[This is a ${meta.format} conversation with ${meta.userTurns || '?'} student turns and ${meta.userWordCount || '?'} student words]\n\n${sub.content}`.substring(0, 4000);
+          }
+
+          const result = await callGradingLLM(apiKey, {
+            anonId,
+            title: indexEntry.title,
+            courseName: courseInfo.name,
+            pointsPossible,
+            rubric,
+            content: gradingContent,
+            contentType: sub.contentType,
+          });
+
+          gradeEntry.suggestedScore = result.score;
+          gradeEntry.suggestedComment = result.comment;
+          gradeEntry.finalScore = result.score;
+          gradeEntry.finalComment = result.comment;
+          gradeEntry.confidence = result.confidence;
+          gradeEntry.flag = result.flag;
+          gradeEntry.internalNote = '';
+          assignmentGraded++;
+        } catch (err) {
+          console.error(`      ✗ Grading error for ${anonId}: ${err.message}`);
+          gradeEntry.suggestedScore = pointsPossible;
+          gradeEntry.suggestedComment = 'Grading error — please review manually.';
+          gradeEntry.finalScore = pointsPossible;
+          gradeEntry.finalComment = 'Grading error — please review manually.';
+          gradeEntry.confidence = 'low';
+          gradeEntry.flag = 'ok';
+          gradeEntry.internalNote = `LLM error: ${err.message}`;
+          totalErrors++;
+        }
+        await new Promise(r => setTimeout(r, 200));
+
+      } else if (sub.contentType === 'image' || sub.contentType === 'pdf') {
+        // Binary content — fetch and send as vision
+        if (!sub.attachmentUrl) {
+          gradeEntry.suggestedScore = pointsPossible;
+          gradeEntry.suggestedComment = 'File could not be accessed for review.';
+          gradeEntry.finalScore = pointsPossible;
+          gradeEntry.finalComment = 'File could not be accessed for review.';
+          gradeEntry.confidence = 'low';
+          gradeEntry.flag = 'ok';
+          gradeEntry.internalNote = 'No attachmentUrl — re-run download.';
+          assignmentGraded++;
+        } else {
+          try {
+            if (sub.attachments && sub.attachments > 1) {
+              console.log(`      ℹ ${anonId}: has multiple attachments, grading first only`);
+            }
+            const fileData = await api.downloadFileAsBase64(sub.attachmentUrl);
+            const result = await callGradingLLM(apiKey, {
+              anonId,
+              title: indexEntry.title,
+              courseName: courseInfo.name,
+              pointsPossible,
+              rubric,
+              contentType: sub.contentType,
+              mimeType: fileData.mimeType || sub.attachmentMimeType || (sub.contentType === 'pdf' ? 'application/pdf' : 'image/jpeg'),
+              base64Data: fileData.base64,
+            });
+
+            gradeEntry.suggestedScore = result.score;
+            gradeEntry.suggestedComment = result.comment;
+            gradeEntry.finalScore = result.score;
+            gradeEntry.finalComment = result.comment;
+            gradeEntry.confidence = result.confidence;
+            gradeEntry.flag = result.flag;
+            gradeEntry.extractedText = result.extractedText;
+            gradeEntry.internalNote = `File: ${sub.attachmentFilename || 'unknown'}, ${(fileData.size / 1024).toFixed(1)}KB`;
+            assignmentGraded++;
+          } catch (err) {
+            console.error(`      ✗ Download/grading error for ${anonId}: ${err.message}`);
+            gradeEntry.suggestedScore = pointsPossible;
+            gradeEntry.suggestedComment = 'File could not be accessed for review.';
+            gradeEntry.finalScore = pointsPossible;
+            gradeEntry.finalComment = 'File could not be accessed for review.';
+            gradeEntry.confidence = 'low';
+            gradeEntry.flag = 'ok';
+            gradeEntry.internalNote = `Download error: ${err.message}`;
+            totalErrors++;
+          }
+          await new Promise(r => setTimeout(r, 200));
+        }
+
+      } else {
+        // file, url, or other — benefit of the doubt
+        gradeEntry.suggestedScore = pointsPossible;
+        gradeEntry.suggestedComment = 'Submitted — content could not be assessed automatically. Please verify.';
+        gradeEntry.finalScore = pointsPossible;
+        gradeEntry.finalComment = 'Submitted — content could not be assessed automatically. Please verify.';
+        gradeEntry.confidence = 'low';
+        gradeEntry.flag = 'ok';
+        gradeEntry.internalNote = `Content type: ${sub.contentType}, not auto-gradeable.`;
+        assignmentGraded++;
+      }
+
+      grades.push(gradeEntry);
+    }
+
+    // Save grading data
+    const gradingData = {
+      assignmentKey,
+      title: indexEntry.title,
+      pointsPossible,
+      course: courseName,
+      generatedAt: new Date().toISOString(),
+      grades,
+    };
+    saveJson(gradingPath, gradingData);
+
+    totalGraded += assignmentGraded;
+    totalSkipped += assignmentSkipped;
+    gradedAssignmentKeys.push(assignmentKey);
+    console.log(`    → ${assignmentGraded} graded, ${assignmentSkipped} skipped (reviewed/posted/pre-graded)`);
+
+    // Backfill extracted content into submissions
+    let backfilled = 0;
+    for (const g of grades) {
+      if (g.extractedText && submissions[g.anonId]) {
+        const sub = submissions[g.anonId];
+        if (sub.contentType === 'image' || sub.contentType === 'pdf') {
+          sub.extractedContent = g.extractedText;
+          sub.extractedAt = new Date().toISOString();
+          sub.extractionConfidence = g.confidence;
+          backfilled++;
+        }
+      }
+    }
+    if (backfilled > 0) {
+      saveJson(subsPath, submissions);
+      console.log(`    → Backfilled extracted content for ${backfilled} image/PDF submissions`);
+    }
+  }
+
+  // Generate grading dashboards
+  console.log('\n  Generating grading dashboards...');
+  const dashboardDir = path.join(dataDir, 'dashboard');
+  ensureDir(dashboardDir);
+
+  // Build list of all graded assignments for navigation
+  const allGradedAssignments = [];
+  for (const key of gradedAssignmentKeys) {
+    const gData = loadJson(path.join(gradingDir, `${key}.json`));
+    if (gData) {
+      allGradedAssignments.push({
+        key,
+        title: gData.title,
+        pointsPossible: gData.pointsPossible,
+        totalStudents: gData.grades.length,
+        pendingCount: gData.grades.filter(g => g.status === 'pending').length,
+        reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
+      });
+    }
+  }
+
+  // Generate per-assignment dashboards
+  for (let i = 0; i < allGradedAssignments.length; i++) {
+    const aInfo = allGradedAssignments[i];
+    const gData = loadJson(path.join(gradingDir, `${aInfo.key}.json`));
+    if (!gData) continue;
+
+    const prevAssignment = i > 0 ? allGradedAssignments[i - 1] : null;
+    const nextAssignment = i < allGradedAssignments.length - 1 ? allGradedAssignments[i + 1] : null;
+    const submissionsData = loadJson(path.join(submissionsDir, `${aInfo.key}.json`)) || {};
+
+    const html = buildGradingDashboardHTML(gData, submissionsData, courseName, prevAssignment, nextAssignment);
+    const outputPath = path.join(dashboardDir, `${courseName}-grading-${aInfo.key}.html`);
+    fs.writeFileSync(outputPath, html);
+  }
+
+  // Generate index dashboard
+  const indexHtml = buildGradingIndexHTML(allGradedAssignments, courseName);
+  const indexPath = path.join(dashboardDir, `${courseName}-grading-index.html`);
+  fs.writeFileSync(indexPath, indexHtml);
+
+  console.log(`  → Generated ${allGradedAssignments.length} grading dashboard(s) + index`);
+
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('GRADING SUMMARY');
+  console.log('='.repeat(60));
+  console.log(`  Assignments graded: ${gradedAssignmentKeys.length}`);
+  console.log(`  Students graded: ${totalGraded}`);
+  console.log(`  Students skipped: ${totalSkipped}`);
+  console.log(`  Errors: ${totalErrors}`);
+  if (totalErrors > 0) {
+    console.log(`\n  ⚠ ${totalErrors} error(s) — affected students given benefit-of-doubt scores.`);
+  }
+  console.log(`\n✓ Grading complete. Results in ${gradingDir}`);
+  console.log(`  Dashboards in ${dashboardDir}`);
+}
+
+function buildGradingDashboardHTML(gradingData, submissionsData, courseName, prevAssignment, nextAssignment) {
+  const { assignmentKey, title, pointsPossible, grades, generatedAt } = gradingData;
+  const course = COURSES[courseName]?.name || courseName.toUpperCase();
+
+  // Compute stats
+  const pending = grades.filter(g => g.status === 'pending');
+  const reviewed = grades.filter(g => g.status === 'reviewed' || g.status === 'posted');
+  const flagged = grades.filter(g => g.flag === 'insincere');
+  const lowConf = grades.filter(g => g.confidence === 'low');
+  const withScores = grades.filter(g => g.suggestedScore != null);
+  const avgScore = withScores.length > 0
+    ? (withScores.reduce((a, g) => a + g.suggestedScore, 0) / withScores.length).toFixed(1)
+    : '—';
+
+  // Sort: lowest score first, then flagged, then low-confidence
+  const sortedGrades = [...grades].sort((a, b) => {
+    if (a.flag === 'insincere' && b.flag !== 'insincere') return -1;
+    if (b.flag === 'insincere' && a.flag !== 'insincere') return 1;
+    if (a.confidence === 'low' && b.confidence !== 'low') return -1;
+    if (b.confidence === 'low' && a.confidence !== 'low') return 1;
+    return (a.suggestedScore || 0) - (b.suggestedScore || 0);
+  });
+
+  const gradesJson = escapeForScript(JSON.stringify(sortedGrades));
+  const submissionsJson = escapeForScript(JSON.stringify(submissionsData));
+
+  const prevLink = prevAssignment ? `${courseName}-grading-${prevAssignment.key}.html` : '';
+  const nextLink = nextAssignment ? `${courseName}-grading-${nextAssignment.key}.html` : '';
+  const indexLink = `${courseName}-grading-index.html`;
+
+  const dateStr = generatedAt ? new Date(generatedAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }) : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} — Grading Review</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.5; }
+
+.header { background: linear-gradient(135deg, #1e293b, #334155); color: white; padding: 24px 32px; }
+.header h1 { font-size: 22px; font-weight: 700; }
+.header p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
+
+.stats-bar { display: flex; gap: 24px; padding: 16px 32px; background: white; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat .stat-value { font-size: 22px; font-weight: 700; color: #1e293b; }
+.stat .stat-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.controls { display: flex; gap: 12px; padding: 16px 32px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; align-items: center; flex-wrap: wrap; }
+.controls input[type="text"] { padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; width: 220px; font-family: inherit; }
+.controls button { padding: 8px 16px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-family: inherit; }
+.controls button:hover { background: #f1f5f9; }
+.controls button.primary { background: #1e293b; color: white; border-color: #1e293b; }
+.controls button.primary:hover { background: #334155; }
+.nav-links { margin-left: auto; display: flex; gap: 8px; }
+.nav-links a { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; color: #1e293b; text-decoration: none; font-size: 14px; }
+.nav-links a:hover { background: #f1f5f9; }
+.nav-links a.disabled { color: #94a3b8; pointer-events: none; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+thead th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 1; }
+td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+tr:hover { background: #f8fafc; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+.badge-insincere { background: #fef2f2; color: #dc2626; }
+.badge-low-conf { background: #fefce8; color: #ca8a04; }
+.badge-late { background: #fff7ed; color: #ea580c; }
+.badge-override { background: #fff7ed; color: #ea580c; }
+.badge-ok { background: #f0fdf4; color: #16a34a; }
+
+.content-preview { max-width: 300px; font-size: 13px; color: #64748b; cursor: pointer; }
+.content-preview .truncated { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.content-preview.expanded .truncated { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.content-preview .expand-hint { color: #3b82f6; font-size: 12px; }
+
+select.score-select { padding: 4px 8px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 14px; font-family: inherit; }
+textarea.comment-edit { width: 100%; min-height: 60px; padding: 6px 8px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; font-family: inherit; resize: vertical; }
+
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>${title} — Grading Review</h1>
+  <p>${course} · ${pointsPossible} points · Generated ${dateStr}</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-value">${grades.length}</div><div class="stat-label">Total</div></div>
+  <div class="stat"><div class="stat-value">${pending.length}</div><div class="stat-label">Need Review</div></div>
+  <div class="stat"><div class="stat-value">${reviewed.length}</div><div class="stat-label">Already Graded</div></div>
+  <div class="stat"><div class="stat-value">${avgScore}</div><div class="stat-label">Avg Suggested</div></div>
+  <div class="stat"><div class="stat-value">${flagged.length}</div><div class="stat-label">Flagged</div></div>
+  <div class="stat"><div class="stat-value">${lowConf.length}</div><div class="stat-label">Low Confidence</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Search students..." oninput="filterTable()">
+  <button class="primary" onclick="applyAll()">Apply All Suggestions</button>
+  <button onclick="downloadJSON()">Download Grades JSON</button>
+  <div class="nav-links">
+    <a href="${indexLink}">Index</a>
+    <a href="${prevLink}" class="${prevLink ? '' : 'disabled'}">&#9664; Prev</a>
+    <a href="${nextLink}" class="${nextLink ? '' : 'disabled'}">Next &#9654;</a>
+  </div>
+</div>
+
+<div class="container">
+<table>
+<thead>
+  <tr>
+    <th>Student</th>
+    <th>Content Preview</th>
+    <th>Score</th>
+    <th>Comment</th>
+    <th>Status</th>
+  </tr>
+</thead>
+<tbody id="gradeRows"></tbody>
+</table>
+</div>
+
+<script>
+const grades = JSON.parse('${gradesJson}');
+const submissions = JSON.parse('${submissionsJson}');
+const pointsPossible = ${pointsPossible};
+const assignmentKey = '${assignmentKey}';
+const courseName = '${courseName}';
+
+function getContentPreview(g) {
+  const sub = submissions[g.anonId];
+  if (!sub) return '<span style="color:#94a3b8">—</span>';
+
+  if (g.extractedText) {
+    return g.extractedText;
+  }
+
+  if (sub.contentType === 'text' || sub.contentType === 'conversation' || sub.contentType === 'ai-discussion') {
+    return sub.content || '';
+  }
+  if (sub.extractedContent) {
+    return sub.extractedContent;
+  }
+  if (sub.contentType === 'image') return '📷 Handwritten';
+  if (sub.contentType === 'pdf') return '📄 PDF';
+  if (sub.contentType === 'none' || !sub.content) return '<span style="color:#94a3b8">—</span>';
+  return sub.content || '';
+}
+
+function renderTable(filter) {
+  const tbody = document.getElementById('gradeRows');
+  tbody.innerHTML = '';
+  const lowerFilter = (filter || '').toLowerCase();
+
+  grades.forEach((g, idx) => {
+    if (lowerFilter && !g.studentName.toLowerCase().includes(lowerFilter) && !g.anonId.toLowerCase().includes(lowerFilter)) return;
+
+    const tr = document.createElement('tr');
+    tr.dataset.idx = idx;
+
+    // Student cell
+    let badges = '';
+    if (g.flag === 'insincere') badges += ' <span class="badge badge-insincere">INSINCERE</span>';
+    if (g.confidence === 'low') badges += ' <span class="badge badge-low-conf">LOW CONFIDENCE</span>';
+    if (g.late) badges += ' <span class="badge badge-late">LATE</span>';
+    if (g.canvasCurrentScore === 0 && g.suggestedScore > 0 && g.canvasCurrentStatus !== 'unsubmitted') {
+      badges += ' <span class="badge badge-override">OVERRIDE: Canvas has 0</span>';
+    }
+
+    const studentCell = document.createElement('td');
+    studentCell.innerHTML = '<strong>' + escapeHtml(g.studentName) + '</strong><br><span style="color:#64748b;font-size:12px">' + escapeHtml(g.anonId) + '</span>' + badges;
+    tr.appendChild(studentCell);
+
+    // Content preview cell
+    const contentCell = document.createElement('td');
+    contentCell.className = 'content-preview';
+    const preview = getContentPreview(g);
+    const isHtml = preview.startsWith('<');
+    if (isHtml) {
+      contentCell.innerHTML = preview;
+    } else {
+      const truncated = preview.length > 200 ? preview.substring(0, 200) + '...' : preview;
+      contentCell.innerHTML = '<div class="truncated">' + escapeHtml(truncated) + '</div>' +
+        (preview.length > 200 ? '<span class="expand-hint">Click to expand</span>' : '');
+      contentCell.dataset.fullText = preview;
+      contentCell.onclick = function() {
+        this.classList.toggle('expanded');
+        if (this.classList.contains('expanded')) {
+          this.querySelector('.truncated').textContent = this.dataset.fullText;
+          const hint = this.querySelector('.expand-hint');
+          if (hint) hint.textContent = 'Click to collapse';
+        } else {
+          this.querySelector('.truncated').textContent = truncated;
+          const hint = this.querySelector('.expand-hint');
+          if (hint) hint.textContent = 'Click to expand';
+        }
+      };
+    }
+    tr.appendChild(contentCell);
+
+    // Score cell
+    const scoreCell = document.createElement('td');
+    let scoreOptions = '';
+    for (let s = 0; s <= pointsPossible; s++) {
+      scoreOptions += '<option value="' + s + '"' + (s === g.finalScore ? ' selected' : '') + '>' + s + '</option>';
+    }
+    scoreCell.innerHTML = '<select class="score-select" data-idx="' + idx + '" onchange="updateScore(' + idx + ', this.value)">' + scoreOptions + '</select>';
+    tr.appendChild(scoreCell);
+
+    // Comment cell
+    const commentCell = document.createElement('td');
+    commentCell.innerHTML = '<textarea class="comment-edit" data-idx="' + idx + '" onchange="updateComment(' + idx + ', this.value)">' + escapeHtml(g.finalComment || '') + '</textarea>';
+    tr.appendChild(commentCell);
+
+    // Status cell
+    const statusCell = document.createElement('td');
+    const statusBadge = g.status === 'posted' ? 'badge-ok' : g.status === 'reviewed' ? 'badge-ok' : '';
+    statusCell.innerHTML = '<span class="badge ' + statusBadge + '">' + g.status.toUpperCase() + '</span>';
+    tr.appendChild(statusCell);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function updateScore(idx, value) {
+  grades[idx].finalScore = parseInt(value);
+}
+
+function updateComment(idx, value) {
+  grades[idx].finalComment = value;
+}
+
+function applyAll() {
+  grades.forEach((g, idx) => {
+    g.finalScore = g.suggestedScore;
+    g.finalComment = g.suggestedComment;
+  });
+  renderTable(document.getElementById('search').value);
+}
+
+function filterTable() {
+  renderTable(document.getElementById('search').value);
+}
+
+function downloadJSON() {
+  const output = grades.map(g => ({
+    anonId: g.anonId,
+    canvasId: g.canvasId,
+    studentName: g.studentName,
+    score: g.finalScore,
+    totalScore: g.finalScore,
+    comment: g.finalComment,
+  }));
+  const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = assignmentKey + '-grades.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Initial render
+renderTable();
+</script>
+</body>
+</html>`;
+}
+
+function buildGradingIndexHTML(assignments, courseName) {
+  const course = COURSES[courseName]?.name || courseName.toUpperCase();
+
+  const rows = assignments.map(a => {
+    const link = `${courseName}-grading-${a.key}.html`;
+    return `<tr>
+      <td><a href="${link}">${a.title}</a></td>
+      <td>${a.pointsPossible}</td>
+      <td>${a.reviewedCount}/${a.totalStudents}</td>
+      <td>${a.pendingCount}</td>
+      <td><a href="${link}">Review &rarr;</a></td>
+    </tr>`;
+  }).join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${course} — Grading Overview</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.5; }
+.header { background: linear-gradient(135deg, #1e293b, #334155); color: white; padding: 24px 32px; }
+.header h1 { font-size: 24px; font-weight: 700; }
+.header p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
+.container { max-width: 900px; margin: 0 auto; padding: 24px 32px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+th { background: #f8fafc; text-align: left; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; }
+td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; }
+tr:hover { background: #f8fafc; }
+a { color: #3b82f6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>${course} — Grading Overview</h1>
+  <p>Click an assignment to review and edit grades</p>
+</div>
+<div class="container">
+<table>
+<thead>
+  <tr>
+    <th>Assignment</th>
+    <th>Points</th>
+    <th>Graded</th>
+    <th>Pending</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+</div>
+</body>
+</html>`;
 }
 
 // ============================================
@@ -2901,7 +3730,8 @@ Actions:
   download    Download submissions from Canvas
   analyze     Analyze submissions with LLM (requires ANTHROPIC_API_KEY)
   dashboard   Generate HTML dashboard + anonymized export
-  full        Run all steps in sequence (download, analyze, dashboard, anonymize)
+  grade       Grade submissions with LLM (requires ANTHROPIC_API_KEY + Canvas API)
+  full        Run all steps in sequence (download, analyze, grade, dashboard)
   post-grades         Post grades from a reviewed JSON file to Canvas
   diagnose-downloads  Test Canvas file download for each content type (run after download)
 
@@ -2922,7 +3752,7 @@ Environment Variables:
   ensureDir(dataDir);
 
   const courses = course === 'both' ? ['cst349', 'cst395'] : [course];
-  const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades' || action === 'diagnose-downloads';
+  const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades' || action === 'diagnose-downloads' || action === 'grade';
 
   // Create API if credentials are available (required for download/post-grades, optional for dashboard)
   let api = null;
@@ -2944,10 +3774,16 @@ Environment Variables:
       console.error('Error: --assignment=<key> is required for post-grades');
       process.exit(1);
     }
-    const gradesFile = args.grades || path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    const gradesFile = args.grades || (() => {
+      // Try new grading directory first
+      const gradingPath = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
+      if (fs.existsSync(gradingPath)) return gradingPath;
+      // Fall back to legacy dashboard path
+      return path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    })();
     if (!fs.existsSync(gradesFile)) {
       console.error(`Grades file not found: ${gradesFile}`);
-      console.error('Download the grades JSON from the discussion dashboard first.');
+      console.error('Download the grades JSON from the grading dashboard first.');
       process.exit(1);
     }
     for (const c of courses) {
@@ -2968,6 +3804,9 @@ Environment Variables:
       }
       if (action === 'analyze' || action === 'full') {
         await analyzeSubmissions(c, dataDir, assignment);
+      }
+      if (action === 'grade' || action === 'full') {
+        await gradeSubmissions(api, c, dataDir, assignment);
       }
       if (action === 'dashboard' || action === 'full') {
         await generateDashboard(c, dataDir, api);
