@@ -98,7 +98,7 @@ function ensureDir(dirPath) {
 
 /** Escape a JSON string for safe embedding inside an HTML <script> block */
 function escapeForScript(str) {
-  return str.replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
 }
 
 function loadJson(filePath) {
