@@ -1,6 +1,6 @@
 ---
 purpose: Technical infrastructure — what scripts do, known issues, recent changes
-last_updated: 2026-02-24
+last_updated: 2026-02-26
 updated_by: sathya
 status: active
 ---
@@ -18,9 +18,11 @@ status: active
 |---|---|---|
 | `download` | Pulls submissions from Canvas API, stores per-assignment JSON files | After assignment due dates pass |
 | `analyze` | Runs submissions through Claude API for quality scoring | After download |
+| `grade` | LLM-based grading with vision for images/PDFs, generates review dashboard | After download |
 | `dashboard` | Generates HTML dashboard from analysis data | After analyze |
-| `full` | All three + anonymized export | Standard workflow |
-| `post-grades` | Pushes participation scores back to Canvas | Manual only, when ready |
+| `full` | download → analyze → grade → dashboard + anonymized export | Standard workflow |
+| `post-grades` | Pushes reviewed grades to Canvas from downloaded JSON | After instructor reviews grading dashboard |
+| `diagnose-downloads` | Tests Canvas file download for each content type | After download, to verify binary access |
 
 ### Usage
 ```bash
@@ -36,13 +38,20 @@ Requires `CANVAS_API_TOKEN` and `CANVAS_BASE_URL` environment variables for down
 Canvas API
   → download: submissions/*.json (per-assignment, keyed by anonymous ID)
   → submission-index.json (metadata: dates, types, counts)
-  → student-mapping.json (anonymous ID ↔ Canvas ID ↔ name — NEVER share this)
+  → id-mapping.json (anonymous ID ↔ Canvas ID ↔ name — NEVER share this)
 
 submissions/*.json
   → analyze: analysis.json (quality scores, student summaries, distributions)
+  → grade: grading/{assignmentKey}.json (suggested scores, comments, extracted text)
 
 analysis.json
   → dashboard: dashboard.html (interactive visualization)
+
+grading/*.json
+  → dashboard: grading dashboards (per-assignment review + index)
+  → instructor edits scores/comments in browser
+  → downloads {assignmentKey}-grades.json
+  → post-grades: pushes to Canvas, marks as posted in grading JSON
 
 All of the above
   → full: anonymous/{course}/ (PII-stripped copies for external sharing)
@@ -63,8 +72,8 @@ When no config is found, the assignment gets an empty `questions` array, causing
 | Canvas Type | contentType in data | Notes |
 |---|---|---|
 | `online_text_entry` | `text` | HTML stripped to plain text |
-| `online_upload` (image) | `image` | Filename only — unanalyzable |
-| `online_upload` (PDF) | `pdf` | Filename only — unanalyzable |
+| `online_upload` (image) | `image` | Grading step downloads binary and sends as vision to Claude for reading/grading. Extracted text backfilled into submissions for analysis. |
+| `online_upload` (PDF) | `pdf` | Same as image — sent as document content block via vision API. |
 | `online_upload` (JSON — Activity Engine) | `ai-discussion` | Full structured data with responses |
 | `online_upload` (JSON — Dojo session) | `conversation` | [Student]/[AI] prefixed text (Stage 3 fix) |
 | `online_upload` (JSON — ChatGPT export) | `conversation` | Detects 3 format variants (Stage 3 fix) |
@@ -98,9 +107,78 @@ When no config is found, the assignment gets an empty `questions` array, causing
 - Strips all name fields; preserves anonymous ID keys, scores, content
 - Does NOT copy student-mapping.json
 
+### Stage 5: Grading Pipeline with Vision [IMPLEMENTED]
+
+Addresses the "60% unanalyzable" problem. The `grade` action sends image/PDF submissions to Claude Sonnet via the vision API, reads handwritten work, and produces score suggestions + student-facing comments.
+
+**Key components:**
+- `callGradingLLM()` — Generous grading prompt with scoring guide. Text submissions get direct grading; image/PDF submissions are downloaded as base64 and sent as vision content blocks.
+- `gradeSubmissions()` — Orchestrates per-assignment grading. Skips quizzes, pre-graded students, and reviewed/posted entries. Saves to `grading/{assignmentKey}.json`.
+- **Grading dashboard HTML** — Interactive review page per assignment. Sorted lowest score first. Inline score/comment editing, "Apply All Suggestions" for bulk acceptance, "Download Grades JSON" for post-grades compatibility.
+- **Extracted text backfill** — When vision reads an image/PDF, the transcribed text is saved back into the submission JSON as `extractedContent`. Subsequent analysis runs can then quality-score these submissions instead of marking them "participation only".
+
+**Canvas file download fix (prerequisite):**
+Canvas file URLs 302-redirect to pre-signed S3/CDN URLs. The original `fetch` forwarded the Authorization Bearer header to S3, which rejected it. Fixed by using `redirect: 'manual'` and stripping auth on the CDN hop. Both `downloadFileContent()` (text) and `downloadFileAsBase64()` (binary) in `canvas-api.js` handle this.
+
+**Grading flow:**
+1. `--action=grade` produces suggested scores in `grading/*.json` + review dashboards
+2. Instructor opens dashboard, reviews/edits, downloads grades JSON
+3. `--action=post-grades --assignment=<key>` pushes to Canvas
+4. Grading JSON entries marked as `posted` to prevent re-grading
+
+**Skip logic:**
+- Skip if `canvasType === 'quiz'` (quizzes graded via Canvas directly)
+- Skip if Canvas score > 0 AND status is 'graded' (already meaningfully graded)
+- Do NOT skip if score === 0 on a submitted assignment (likely default/accidental)
+- Skip if grading JSON has status `reviewed` or `posted`
+- Re-grade entries with status `pending` (allows re-running to update suggestions)
+
+## AI Discussion Activity Engine
+
+The "Activity Engine" is a custom assignment format where students complete structured activities (writing prompts, AI discussion sessions) through interactive HTML pages hosted on GitHub Pages. The JSON export captures their responses.
+
+**How it works:**
+1. Student opens an activity page (e.g., Sprint 1 Demo Discussion) embedded in Canvas
+2. The page presents writing prompts and an AI discussion component (powered by Netlify Functions → Anthropic API)
+3. Student completes the activity; responses are saved as a JSON file
+4. Student downloads and uploads the JSON to Canvas as a file submission
+
+**What the JSON contains:**
+```json
+{
+  "activityId": "sprint-1-demo",
+  "studentName": "...",
+  "authorName": "...",
+  "responses": [
+    {
+      "questionType": "text",
+      "questionId": "q1",
+      "response": "Student's written answer..."
+    },
+    {
+      "questionType": "ai-discussion",
+      "questionId": "q2",
+      "messages": [
+        { "role": "user", "content": "..." },
+        { "role": "assistant", "content": "..." }
+      ]
+    }
+  ]
+}
+```
+
+**Pipeline handling:**
+- Download step detects Activity Engine JSON by checking for `activityId` + `responses` fields
+- If any response has `questionType === 'ai-discussion'`, contentType is set to `ai-discussion`
+- Analysis step uses specialized `analyzeDiscussionAssignment()` with partner matching and dual grading (writing quality + discussion quality scored separately)
+- Activity config files in `activities/{course}/` provide question context for the grading prompt
+- Config resolution: exact match → demo special case → week-prefix scan (→ pipeline.md#activity-config-resolution)
+
+**Partner matching:** For discussion-style activities, the pipeline identifies which students discussed with each other (via the AI discussion partner metadata) and can compare perspectives. This is unique to the Activity Engine format — ChatGPT/Dojo exports don't have partner information.
+
 ## Known Limitations
 
-1. **60% unanalyzable work**: Handwritten reflections submitted as photos/PDFs. Pipeline can't OCR them. Quality scores represent <40% of actual student work.
+1. ~~**60% unanalyzable work**: Handwritten reflections submitted as photos/PDFs. Pipeline can't OCR them.~~ **RESOLVED** by Stage 5 grading pipeline — vision API reads handwritten work and backfills extracted content for analysis.
 
 2. **Content truncation**: Non-conversation text submissions truncated to 5000 chars. Activity Engine JSON to 10,000. Conversations to 15,000 (Stage 3). Very long submissions lose tail content.
 
