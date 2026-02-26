@@ -308,16 +308,67 @@ class CanvasAPI {
   }
 
   /**
-   * Download a file by URL (for submission attachments)
+   * Download a file by URL (for submission attachments).
+   * Handles Canvas's redirect to CDN — the CDN must NOT receive the Bearer token.
    */
   async downloadFileContent(url) {
-    const response = await fetch(url, {
+    const initial = await fetch(url, {
       headers: { 'Authorization': `Bearer ${this.token}` },
+      redirect: 'manual',
     });
-    if (!response.ok) {
-      throw new Error(`Download failed (${response.status}): ${url}`);
+
+    let fileResponse;
+    if (initial.status === 301 || initial.status === 302) {
+      const cdnUrl = initial.headers.get('location');
+      if (!cdnUrl) throw new Error('Redirect with no Location header');
+      fileResponse = await fetch(cdnUrl); // No auth for CDN
+    } else if (initial.ok) {
+      fileResponse = initial;
+    } else {
+      throw new Error(`Download failed (${initial.status}): ${url}`);
     }
-    return response.text();
+
+    if (!fileResponse.ok) {
+      throw new Error(`File fetch failed (${fileResponse.status})`);
+    }
+
+    return fileResponse.text();
+  }
+
+  /**
+   * Download a file as base64, handling Canvas's redirect to CDN.
+   * Canvas file URLs typically 302-redirect to a pre-signed S3 URL.
+   * The S3 URL must NOT receive the Bearer token.
+   * Returns { base64, mimeType, size }
+   */
+  async downloadFileAsBase64(url) {
+    const initial = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${this.token}` },
+      redirect: 'manual',
+    });
+
+    let fileResponse;
+    if (initial.status === 301 || initial.status === 302) {
+      const cdnUrl = initial.headers.get('location');
+      if (!cdnUrl) throw new Error('Redirect with no Location header');
+      fileResponse = await fetch(cdnUrl);
+    } else if (initial.ok) {
+      fileResponse = initial;
+    } else {
+      throw new Error(`Download failed (${initial.status}): ${url}`);
+    }
+
+    if (!fileResponse.ok) {
+      throw new Error(`File fetch failed (${fileResponse.status})`);
+    }
+
+    const buffer = await fileResponse.arrayBuffer();
+    const contentType = fileResponse.headers.get('content-type') || '';
+    return {
+      base64: Buffer.from(buffer).toString('base64'),
+      mimeType: contentType,
+      size: buffer.byteLength,
+    };
   }
 }
 

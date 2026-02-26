@@ -390,6 +390,11 @@ async function downloadSubmissions(api, courseName, dataDir) {
           submissionType: sub.submission_type, // 'online_text_entry', 'online_upload', 'online_url', null
           contentType: 'none',
           content: null,
+          canvasComments: (sub.submission_comments || []).map(c => ({
+            author: c.author_name,
+            comment: c.comment,
+            createdAt: c.created_at,
+          })),
         };
 
         // Extract content based on submission type
@@ -401,6 +406,11 @@ async function downloadSubmissions(api, courseName, dataDir) {
         } else if (sub.submission_type === 'online_upload' && sub.attachments) {
           const attachment = sub.attachments[0]; // Primary attachment
           if (attachment) {
+            // Store attachment metadata for all upload types (grading needs these)
+            subData.attachmentUrl = attachment.url;
+            subData.attachmentMimeType = attachment['content-type'] || attachment.content_type || '';
+            subData.attachmentFilename = attachment.filename;
+
             const mime = attachment['content-type'] || attachment.content_type || '';
             if (IMAGE_MIME_TYPES.has(mime)) {
               subData.contentType = 'image';
@@ -2703,6 +2713,173 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
 }
 
 // ============================================
+// Diagnose Downloads
+// ============================================
+
+async function diagnoseDownloads(api, courseName, dataDir, assignmentFilter) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`DIAGNOSING DOWNLOADS: ${courseName.toUpperCase()}`);
+  console.log('='.repeat(60));
+
+  const courseDataDir = path.join(dataDir, courseName);
+  const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json'));
+  const mapping = loadJson(path.join(courseDataDir, 'id-mapping.json'));
+
+  if (!submissionIndex || !mapping) {
+    throw new Error(`No submission data found. Run --action=download first.`);
+  }
+
+  const assignmentKeys = assignmentFilter
+    ? [assignmentFilter]
+    : Object.keys(submissionIndex).filter(k => !submissionIndex[k].error);
+
+  const results = {};
+  let totalTests = 0, totalSuccess = 0, totalFail = 0, totalMissingUrl = 0;
+
+  for (const assignmentKey of assignmentKeys) {
+    const indexEntry = submissionIndex[assignmentKey];
+    if (!indexEntry || indexEntry.error) continue;
+
+    const subsPath = path.join(courseDataDir, 'submissions', `${assignmentKey}.json`);
+    const submissions = loadJson(subsPath);
+    if (!submissions) continue;
+
+    console.log(`\n  ${indexEntry.title} (${assignmentKey})`);
+
+    // Group by contentType
+    const byType = {};
+    for (const [anonId, sub] of Object.entries(submissions)) {
+      const ct = sub.contentType || 'none';
+      if (!byType[ct]) byType[ct] = [];
+      byType[ct].push({ anonId, ...sub });
+    }
+
+    const assignmentResults = {};
+
+    for (const [contentType, subs] of Object.entries(byType)) {
+      const count = subs.length;
+      // Pick first submitted student as sample
+      const sample = subs.find(s => s.status !== 'unsubmitted' && s.content !== null) || subs[0];
+      const result = { count, sampleStudent: sample.anonId, downloadStatus: 'SKIPPED', notes: '' };
+
+      if (contentType === 'text' || contentType === 'conversation' || contentType === 'ai-discussion') {
+        // Text content is already inline — just verify it exists
+        if (sample.content && sample.content.length > 0) {
+          result.downloadStatus = 'OK';
+          result.contentLength = sample.content.length;
+          result.notes = `Inline text, ${sample.content.length} chars. Preview: "${sample.content.substring(0, 150)}..."`;
+        } else {
+          result.downloadStatus = 'EMPTY';
+          result.notes = 'Content field is empty or null';
+        }
+        console.log(`    ${contentType}: ${count} subs — ${result.downloadStatus} (${result.contentLength || 0} chars)`);
+
+      } else if (contentType === 'image' || contentType === 'pdf') {
+        // These need binary download — test it
+        totalTests++;
+        if (!sample.attachmentUrl) {
+          result.downloadStatus = 'MISSING_URL';
+          result.notes = 'No attachmentUrl stored. Re-run --action=download to populate.';
+          totalMissingUrl++;
+          console.log(`    ${contentType}: ${count} subs — ⚠ MISSING_URL (need to re-download)`);
+        } else {
+          try {
+            console.log(`    ${contentType}: ${count} subs — testing download for ${sample.anonId}...`);
+            const fileData = await api.downloadFileAsBase64(sample.attachmentUrl);
+            result.downloadStatus = 'OK';
+            result.fileSize = fileData.size;
+            result.mimeType = fileData.mimeType;
+            result.base64Length = fileData.base64.length;
+            result.notes = `Downloaded ${(fileData.size / 1024).toFixed(1)}KB, mime=${fileData.mimeType}, base64=${fileData.base64.length} chars`;
+            totalSuccess++;
+            console.log(`    ✓ ${result.notes}`);
+          } catch (err) {
+            result.downloadStatus = 'DOWNLOAD_FAILED';
+            result.error = err.message;
+            result.notes = `Failed: ${err.message}`;
+            totalFail++;
+            console.log(`    ✗ Download failed: ${err.message}`);
+          }
+        }
+
+      } else if (contentType === 'file') {
+        // Generic file — test download if URL exists
+        totalTests++;
+        if (!sample.attachmentUrl) {
+          result.downloadStatus = 'MISSING_URL';
+          totalMissingUrl++;
+          console.log(`    ${contentType}: ${count} subs — ⚠ MISSING_URL`);
+        } else {
+          try {
+            const fileData = await api.downloadFileAsBase64(sample.attachmentUrl);
+            result.downloadStatus = 'OK';
+            result.fileSize = fileData.size;
+            result.mimeType = fileData.mimeType;
+            result.notes = `Downloaded ${(fileData.size / 1024).toFixed(1)}KB, mime=${fileData.mimeType}`;
+            totalSuccess++;
+            console.log(`    ✓ ${result.notes}`);
+          } catch (err) {
+            result.downloadStatus = 'DOWNLOAD_FAILED';
+            result.error = err.message;
+            totalFail++;
+            console.log(`    ✗ Download failed: ${err.message}`);
+          }
+        }
+
+      } else if (contentType === 'url') {
+        result.downloadStatus = 'N/A';
+        result.notes = `URL submission: ${sample.content || '(empty)'}`;
+        console.log(`    ${contentType}: ${count} subs — URL: ${sample.content || '(empty)'}`);
+
+      } else if (contentType === 'none') {
+        result.downloadStatus = 'MISSING';
+        result.notes = 'Unsubmitted or no content';
+        console.log(`    ${contentType}: ${count} subs — no submission`);
+      }
+
+      assignmentResults[contentType] = result;
+    }
+
+    results[assignmentKey] = {
+      title: indexEntry.title,
+      contentTypes: assignmentResults,
+    };
+  }
+
+  // Summary
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('DIAGNOSIS SUMMARY');
+  console.log('='.repeat(60));
+  console.log(`  Assignments scanned: ${Object.keys(results).length}`);
+  console.log(`  Binary download tests: ${totalTests}`);
+  console.log(`  Successes: ${totalSuccess}`);
+  console.log(`  Failures: ${totalFail}`);
+  console.log(`  Missing URLs (need re-download): ${totalMissingUrl}`);
+
+  if (totalFail > 0) {
+    console.log(`\n  ⚠ ${totalFail} download(s) FAILED — check errors above.`);
+    console.log(`  The redirect-safe download may need adjustment for your Canvas instance.`);
+  }
+  if (totalMissingUrl > 0) {
+    console.log(`\n  ⚠ ${totalMissingUrl} content type(s) missing attachmentUrl.`);
+    console.log(`  Run --action=download first to populate attachment metadata.`);
+  }
+  if (totalFail === 0 && totalMissingUrl === 0 && totalTests > 0) {
+    console.log(`\n  ✓ All binary downloads successful! Ready for grading pipeline.`);
+  }
+
+  // Save diagnosis
+  const diagnosisPath = path.join(courseDataDir, 'download-diagnosis.json');
+  saveJson(diagnosisPath, {
+    course: courseName,
+    diagnosedAt: new Date().toISOString(),
+    results,
+    summary: { totalTests, totalSuccess, totalFail, totalMissingUrl },
+  });
+  console.log(`\nDiagnosis saved to: ${diagnosisPath}`);
+}
+
+// ============================================
 // Main
 // ============================================
 
@@ -2725,7 +2902,8 @@ Actions:
   analyze     Analyze submissions with LLM (requires ANTHROPIC_API_KEY)
   dashboard   Generate HTML dashboard + anonymized export
   full        Run all steps in sequence (download, analyze, dashboard, anonymize)
-  post-grades Post grades from a reviewed JSON file to Canvas
+  post-grades         Post grades from a reviewed JSON file to Canvas
+  diagnose-downloads  Test Canvas file download for each content type (run after download)
 
 Options:
   --course=cst349|cst395|both    Course to process (default: both)
@@ -2744,7 +2922,7 @@ Environment Variables:
   ensureDir(dataDir);
 
   const courses = course === 'both' ? ['cst349', 'cst395'] : [course];
-  const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades';
+  const needsCanvas = action === 'download' || action === 'full' || action === 'post-grades' || action === 'diagnose-downloads';
 
   // Create API if credentials are available (required for download/post-grades, optional for dashboard)
   let api = null;
@@ -2794,6 +2972,9 @@ Environment Variables:
       if (action === 'dashboard' || action === 'full') {
         await generateDashboard(c, dataDir, api);
         await generateAnonymousExport(c, dataDir);
+      }
+      if (action === 'diagnose-downloads') {
+        await diagnoseDownloads(api, c, dataDir, assignment);
       }
     } catch (error) {
       console.error(`\n✗ Error processing ${c}: ${error.message}`);
