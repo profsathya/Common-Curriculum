@@ -2739,6 +2739,50 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
 // Step 4: Grade Submissions
 // ============================================
 
+/**
+ * Extract the first valid JSON object from an LLM response.
+ * Handles: bare JSON, markdown code fences (```json ... ```),
+ * explanatory text before/after, and nested braces in values like extractedText.
+ */
+function extractJsonFromLLMResponse(text, anonId) {
+  // Strip markdown code fences if present
+  let cleaned = text.replace(/```(?:json)?\s*\n?/g, '').replace(/\n?```/g, '');
+
+  // Find the first top-level { ... } block, handling nested braces
+  let start = cleaned.indexOf('{');
+  if (start === -1) {
+    console.error(`      ✗ JSON parse failed for ${anonId}: no '{' found in response`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+
+  let depth = 0;
+  let end = -1;
+  for (let i = start; i < cleaned.length; i++) {
+    if (cleaned[i] === '{') depth++;
+    else if (cleaned[i] === '}') {
+      depth--;
+      if (depth === 0) { end = i; break; }
+    }
+  }
+
+  if (end === -1) {
+    console.error(`      ✗ JSON parse failed for ${anonId}: unbalanced braces`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+
+  const jsonStr = cleaned.substring(start, end + 1);
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    console.error(`      ✗ JSON parse failed for ${anonId}: ${e.message}`);
+    console.error(`        Extracted block: ${jsonStr.substring(0, 300)}`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+}
+
 async function callGradingLLM(apiKey, params) {
   const { anonId, title, courseName, pointsPossible, rubric, content, contentType, mimeType, base64Data } = params;
 
@@ -2801,19 +2845,34 @@ Read the content carefully. If the handwriting is difficult to read, do your bes
     }];
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: isVision ? 400 : 300,
-      messages,
-    }),
+  const requestBody = JSON.stringify({
+    model: 'claude-sonnet-4-5-20250929',
+    max_tokens: isVision ? 400 : 300,
+    messages,
   });
+
+  // Retry loop for 429 rate limits — wait 60s per-minute limit, up to 3 retries
+  let response;
+  const maxRetries = 3;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: requestBody,
+    });
+
+    if (response.status === 429 && attempt < maxRetries) {
+      const waitSec = 60 * Math.pow(2, attempt); // 60s, 120s, 240s
+      console.log(`      ⏳ Rate limited (429) for ${anonId}, waiting ${waitSec}s (retry ${attempt + 1}/${maxRetries})...`);
+      await new Promise(r => setTimeout(r, waitSec * 1000));
+      continue;
+    }
+    break;
+  }
 
   if (!response.ok) {
     const errText = await response.text();
@@ -2823,19 +2882,30 @@ Read the content carefully. If the handwriting is difficult to read, do your bes
   const data = await response.json();
   const text = data.content[0]?.text || '';
 
-  // Parse JSON from response — use greedy match for extractedText which may contain braces
-  const jsonMatch = text.match(/\{[\s\S]+\}/);
-  if (!jsonMatch) {
-    throw new Error('Could not parse grading LLM response as JSON');
+  // Log token usage for pacing visibility
+  if (data.usage) {
+    const u = data.usage;
+    console.log(`      tokens [${anonId}]: ${u.input_tokens} in / ${u.output_tokens} out`);
   }
 
-  const result = JSON.parse(jsonMatch[0]);
+  // Parse JSON from response — handle code fences, explanatory text, nested braces
+  const parsed = extractJsonFromLLMResponse(text, anonId);
+  if (!parsed) {
+    return {
+      score: pointsPossible,
+      comment: 'Grading error — please review manually.',
+      flag: 'ok',
+      confidence: 'low',
+      internalNote: 'JSON parse failed. Raw LLM response logged to console.',
+    };
+  }
+
   return {
-    score: Math.min(pointsPossible, Math.max(0, parseInt(result.score) || 0)),
-    comment: String(result.comment || '').substring(0, 500),
-    flag: result.flag === 'insincere' ? 'insincere' : 'ok',
-    confidence: result.confidence === 'low' ? 'low' : 'high',
-    extractedText: result.extractedText ? String(result.extractedText).substring(0, 2000) : undefined,
+    score: Math.min(pointsPossible, Math.max(0, parseInt(parsed.score) || 0)),
+    comment: String(parsed.comment || '').substring(0, 500),
+    flag: parsed.flag === 'insincere' ? 'insincere' : 'ok',
+    confidence: parsed.confidence === 'low' ? 'low' : 'high',
+    extractedText: parsed.extractedText ? String(parsed.extractedText).substring(0, 2000) : undefined,
   };
 }
 
@@ -3039,7 +3109,8 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           gradeEntry.internalNote = `LLM error: ${err.message}`;
           totalErrors++;
         }
-        await new Promise(r => setTimeout(r, 200));
+        // Throttle: text/conversation ~2s between calls
+        await new Promise(r => setTimeout(r, 2000));
 
       } else if (sub.contentType === 'image' || sub.contentType === 'pdf') {
         // Binary content — fetch and send as vision
@@ -3089,7 +3160,8 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
             gradeEntry.internalNote = `Download error: ${err.message}`;
             totalErrors++;
           }
-          await new Promise(r => setTimeout(r, 200));
+          // Throttle: vision submissions ~10s (10K-50K+ input tokens from base64)
+          await new Promise(r => setTimeout(r, 10000));
         }
 
       } else {
