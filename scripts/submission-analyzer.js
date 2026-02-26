@@ -818,22 +818,116 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
   console.log(`\n✓ Analysis complete. ${totalCalls + summaryCalls} LLM calls total (${totalCalls} quality + ${summaryCalls} summaries).`);
 }
 
+/**
+ * Extract the first valid JSON object from an LLM response.
+ * Handles: bare JSON, markdown code fences (```json ... ```),
+ * explanatory text before/after, and nested braces in values like extractedText.
+ */
+function extractJsonFromLLMResponse(text, label) {
+  // Strip markdown code fences if present
+  let cleaned = text.replace(/```(?:json)?\s*\n?/g, '').replace(/\n?```/g, '');
+
+  // Find the first top-level { ... } block, handling nested braces
+  let start = cleaned.indexOf('{');
+  if (start === -1) {
+    console.error(`      ✗ JSON parse failed for ${label}: no '{' found in response`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+
+  let depth = 0;
+  let end = -1;
+  for (let i = start; i < cleaned.length; i++) {
+    if (cleaned[i] === '{') depth++;
+    else if (cleaned[i] === '}') {
+      depth--;
+      if (depth === 0) { end = i; break; }
+    }
+  }
+
+  if (end === -1) {
+    console.error(`      ✗ JSON parse failed for ${label}: unbalanced braces`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+
+  const jsonStr = cleaned.substring(start, end + 1);
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    console.error(`      ✗ JSON parse failed for ${label}: ${e.message}`);
+    console.error(`        Extracted block: ${jsonStr.substring(0, 300)}`);
+    console.error(`        Raw response: ${text.substring(0, 300)}`);
+    return null;
+  }
+}
+
+/**
+ * Shared wrapper for all Anthropic API calls.
+ * Handles rate limit retries, throttling, and token logging.
+ *
+ * @param {string} apiKey
+ * @param {object} requestBody - Full request body for /v1/messages
+ * @param {object} options
+ * @param {number} options.delayMs - Delay after successful call (default 1000)
+ * @param {number} options.maxRetries - Max retries on 429 (default 3)
+ * @param {string} options.label - Label for logging (e.g., "grade CST349-12")
+ * @returns {object} Parsed response data
+ */
+async function callAnthropicAPI(apiKey, requestBody, options = {}) {
+  const { delayMs = 1000, maxRetries = 3, label = '' } = options;
+
+  let response;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (response.status === 429 && attempt < maxRetries) {
+      const waitSec = 60 * (attempt + 1); // 60s, 120s, 180s
+      console.log(`      ⏳ Rate limited${label ? ` (${label})` : ''}, waiting ${waitSec}s (attempt ${attempt + 1}/${maxRetries})...`);
+      await new Promise(r => setTimeout(r, waitSec * 1000));
+      continue;
+    }
+    break;
+  }
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
+  }
+
+  const data = await response.json();
+
+  // Log token usage for pacing visibility
+  if (data.usage) {
+    const u = data.usage;
+    console.log(`      tokens${label ? ` [${label}]` : ''}: ${u.input_tokens} in / ${u.output_tokens} out`);
+  }
+
+  // Apply throttle delay after successful call
+  if (delayMs > 0) {
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  return data;
+}
+
 async function callLLM(apiKey, params) {
   const { studentId, assignmentTitle, rubric, content, courseName } = params;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 512,
-      messages: [{
-        role: 'user',
-        content: `You are evaluating a student submission for quality in a course designed around Self-Determination Theory, Symbiotic Thinking, and three core capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
+  const data = await callAnthropicAPI(apiKey, {
+    model: 'claude-sonnet-4-5-20250929',
+    max_tokens: 512,
+    messages: [{
+      role: 'user',
+      content: `You are evaluating a student submission for quality in a course designed around Self-Determination Theory, Symbiotic Thinking, and three core capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
 
 Assignment: "${assignmentTitle}" (${courseName})
 
@@ -854,16 +948,9 @@ Rate the quality of this submission from 1-5 using these levels:
 
 Respond in exactly this JSON format, nothing else:
 {"quality": <1-5>, "notes": "<2-3 sentences: what specific signals did you see or not see? Be concrete about what's present or missing, not generic.>"}`,
-      }],
-    }),
-  });
+    }],
+  }, { delayMs: 1000, label: `analyze ${studentId}` });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
-  }
-
-  const data = await response.json();
   const text = data.content[0]?.text || '';
 
   // Parse JSON from response
@@ -889,19 +976,12 @@ async function generateStudentSummary(apiKey, params) {
     return `- ${a.title} (S${a.sprint} W${a.week}): participation=${partLabel[a.participation] || a.participation}, ${qualLabel}${a.qualityNotes ? ' — ' + a.qualityNotes : ''}`;
   }).join('\n');
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 400,
-      messages: [{
-        role: 'user',
-        content: `You are helping an instructor understand a student in ${courseName}. This course develops three capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
+  const data = await callAnthropicAPI(apiKey, {
+    model: 'claude-sonnet-4-5-20250929',
+    max_tokens: 400,
+    messages: [{
+      role: 'user',
+      content: `You are helping an instructor understand a student in ${courseName}. This course develops three capabilities: Self-Directed Learning (SDL), Integrative Solver (IS), and Adaptive Builder (AB).
 
 Based on their assignment data below, write a 3-4 sentence qualitative summary that addresses:
 1. Engagement pattern: Are they doing the work on time? Is quality consistent or variable?
@@ -915,16 +995,9 @@ Assignment data:
 ${snapshot}
 
 Write the summary as plain text (no quotes, no label, no markdown).`,
-      }],
-    }),
-  });
+    }],
+  }, { delayMs: 1000, label: `summary ${studentId}` });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
-  }
-
-  const data = await response.json();
   const text = (data.content[0]?.text || '').trim();
   return text.substring(0, 400);
 }
@@ -1938,8 +2011,6 @@ async function analyzeDiscussionAssignment(courseName, dataDir, assignmentKey, i
         iterations: 0, takeaway: data.takeaway,
       };
     }
-
-    await new Promise(r => setTimeout(r, 500));
   }
 
   return { studentData, results };
@@ -1986,37 +2057,23 @@ Respond ONLY with valid JSON:
     userPrompt += `## OVERALL TAKEAWAY (boost scores if insightful, up to 5 max)\n> ${studentData.takeaway}\n`;
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }],
-    }),
-  });
+  const data = await callAnthropicAPI(apiKey, {
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1024,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userPrompt }],
+  }, { delayMs: 500, label: `discussion ${studentData.anonId}` });
 
-  if (!response.ok) {
-    throw new Error(`Claude API ${response.status}: ${(await response.text()).substring(0, 200)}`);
-  }
-
-  const data = await response.json();
   const text = data.content[0]?.text || '';
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error('Could not parse grading response');
+  const parsed = extractJsonFromLLMResponse(text, studentData.anonId);
+  if (!parsed) throw new Error('Could not parse grading response');
 
-  const result = JSON.parse(jsonMatch[0]);
   return {
-    writingScore: Math.min(5, Math.max(0, result.writingScore || 0)),
-    writingFeedback: String(result.writingFeedback || '').substring(0, 300),
-    discussionScore: Math.min(5, Math.max(0, result.discussionScore || 0)),
-    discussionFeedback: String(result.discussionFeedback || '').substring(0, 300),
-    overallNote: String(result.overallNote || '').substring(0, 300),
+    writingScore: Math.min(5, Math.max(0, parsed.writingScore || 0)),
+    writingFeedback: String(parsed.writingFeedback || '').substring(0, 300),
+    discussionScore: Math.min(5, Math.max(0, parsed.discussionScore || 0)),
+    discussionFeedback: String(parsed.discussionFeedback || '').substring(0, 300),
+    overallNote: String(parsed.overallNote || '').substring(0, 300),
   };
 }
 
@@ -2739,50 +2796,6 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
 // Step 4: Grade Submissions
 // ============================================
 
-/**
- * Extract the first valid JSON object from an LLM response.
- * Handles: bare JSON, markdown code fences (```json ... ```),
- * explanatory text before/after, and nested braces in values like extractedText.
- */
-function extractJsonFromLLMResponse(text, anonId) {
-  // Strip markdown code fences if present
-  let cleaned = text.replace(/```(?:json)?\s*\n?/g, '').replace(/\n?```/g, '');
-
-  // Find the first top-level { ... } block, handling nested braces
-  let start = cleaned.indexOf('{');
-  if (start === -1) {
-    console.error(`      ✗ JSON parse failed for ${anonId}: no '{' found in response`);
-    console.error(`        Raw response: ${text.substring(0, 300)}`);
-    return null;
-  }
-
-  let depth = 0;
-  let end = -1;
-  for (let i = start; i < cleaned.length; i++) {
-    if (cleaned[i] === '{') depth++;
-    else if (cleaned[i] === '}') {
-      depth--;
-      if (depth === 0) { end = i; break; }
-    }
-  }
-
-  if (end === -1) {
-    console.error(`      ✗ JSON parse failed for ${anonId}: unbalanced braces`);
-    console.error(`        Raw response: ${text.substring(0, 300)}`);
-    return null;
-  }
-
-  const jsonStr = cleaned.substring(start, end + 1);
-  try {
-    return JSON.parse(jsonStr);
-  } catch (e) {
-    console.error(`      ✗ JSON parse failed for ${anonId}: ${e.message}`);
-    console.error(`        Extracted block: ${jsonStr.substring(0, 300)}`);
-    console.error(`        Raw response: ${text.substring(0, 300)}`);
-    return null;
-  }
-}
-
 async function callGradingLLM(apiKey, params) {
   const { anonId, title, courseName, pointsPossible, rubric, content, contentType, mimeType, base64Data } = params;
 
@@ -2845,48 +2858,14 @@ Read the content carefully. If the handwriting is difficult to read, do your bes
     }];
   }
 
-  const requestBody = JSON.stringify({
+  const delayMs = isVision ? 10000 : 2000;
+  const data = await callAnthropicAPI(apiKey, {
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: isVision ? 400 : 300,
     messages,
-  });
+  }, { delayMs, label: `grade ${anonId}` });
 
-  // Retry loop for 429 rate limits — wait 60s per-minute limit, up to 3 retries
-  let response;
-  const maxRetries = 3;
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: requestBody,
-    });
-
-    if (response.status === 429 && attempt < maxRetries) {
-      const waitSec = 60 * Math.pow(2, attempt); // 60s, 120s, 240s
-      console.log(`      ⏳ Rate limited (429) for ${anonId}, waiting ${waitSec}s (retry ${attempt + 1}/${maxRetries})...`);
-      await new Promise(r => setTimeout(r, waitSec * 1000));
-      continue;
-    }
-    break;
-  }
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Anthropic API ${response.status}: ${errText.substring(0, 200)}`);
-  }
-
-  const data = await response.json();
   const text = data.content[0]?.text || '';
-
-  // Log token usage for pacing visibility
-  if (data.usage) {
-    const u = data.usage;
-    console.log(`      tokens [${anonId}]: ${u.input_tokens} in / ${u.output_tokens} out`);
-  }
 
   // Parse JSON from response — handle code fences, explanatory text, nested braces
   const parsed = extractJsonFromLLMResponse(text, anonId);
@@ -3109,8 +3088,6 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           gradeEntry.internalNote = `LLM error: ${err.message}`;
           totalErrors++;
         }
-        // Throttle: text/conversation ~2s between calls
-        await new Promise(r => setTimeout(r, 2000));
 
       } else if (sub.contentType === 'image' || sub.contentType === 'pdf') {
         // Binary content — fetch and send as vision
@@ -3160,8 +3137,6 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
             gradeEntry.internalNote = `Download error: ${err.message}`;
             totalErrors++;
           }
-          // Throttle: vision submissions ~10s (10K-50K+ input tokens from base64)
-          await new Promise(r => setTimeout(r, 10000));
         }
 
       } else {
@@ -3803,7 +3778,7 @@ Actions:
   analyze     Analyze submissions with LLM (requires ANTHROPIC_API_KEY)
   dashboard   Generate HTML dashboard + anonymized export
   grade       Grade submissions with LLM (requires ANTHROPIC_API_KEY + Canvas API)
-  full        Run all steps in sequence (download, analyze, grade, dashboard)
+  full        Run all steps in sequence (download, grade, analyze, dashboard)
   post-grades         Post grades from a reviewed JSON file to Canvas
   diagnose-downloads  Test Canvas file download for each content type (run after download)
 
@@ -3846,15 +3821,14 @@ Environment Variables:
       console.error('Error: --assignment=<key> is required for post-grades');
       process.exit(1);
     }
-    const gradesFile = args.grades || (() => {
-      // Try new grading directory first
-      const gradingPath = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
-      if (fs.existsSync(gradingPath)) return gradingPath;
-      // Fall back to legacy dashboard path
-      return path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
-    })();
+    // Check grading directory first, then legacy dashboard path
+    const gradingPath = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
+    const legacyPath = path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    const gradesFile = args.grades || (fs.existsSync(gradingPath) ? gradingPath : legacyPath);
     if (!fs.existsSync(gradesFile)) {
-      console.error(`Grades file not found: ${gradesFile}`);
+      console.error(`Grades file not found. Checked:`);
+      console.error(`  ${gradingPath}`);
+      console.error(`  ${legacyPath}`);
       console.error('Download the grades JSON from the grading dashboard first.');
       process.exit(1);
     }
@@ -3874,11 +3848,11 @@ Environment Variables:
       if (action === 'download' || action === 'full') {
         await downloadSubmissions(api, c, dataDir);
       }
-      if (action === 'analyze' || action === 'full') {
-        await analyzeSubmissions(c, dataDir, assignment);
-      }
       if (action === 'grade' || action === 'full') {
         await gradeSubmissions(api, c, dataDir, assignment);
+      }
+      if (action === 'analyze' || action === 'full') {
+        await analyzeSubmissions(c, dataDir, assignment);
       }
       if (action === 'dashboard' || action === 'full') {
         await generateDashboard(c, dataDir, api);
