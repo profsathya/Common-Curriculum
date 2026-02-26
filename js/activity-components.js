@@ -821,6 +821,60 @@ const ActivityComponents = (function() {
   }
 
   // ============================================
+  // AI Discussion — prompt building & response parsing
+  // ============================================
+
+  function buildDiscussionSystemPrompt(course, questionCount) {
+    return `You are a peer discussion facilitator for a university course${course ? ` (${course})` : ''}. Your role is to help students have deeper conversations about their reflections and work.
+
+Given a student's written response to a prompt, generate exactly ${questionCount} follow-up discussion questions. These questions will be used by a PARTNER who will ask them to the AUTHOR of the response in a face-to-face conversation.
+
+Guidelines for generating questions:
+- First, check if the response actually addresses the original prompt. If it doesn't, your observation should note this and at least one question should gently redirect — e.g., "The prompt asked about X, but your response focused on Y. Can you walk me through how those connect?"
+- Questions should probe deeper into the student's thinking, not quiz them
+- Ask "why" and "how" questions that encourage elaboration
+- Challenge assumptions gently — "What if..." or "Have you considered..."
+- Connect to concrete experiences — "Can you give me an example of..."
+- Avoid yes/no questions
+- Each question should explore a different angle of the response
+- Keep questions conversational and natural, not academic or stiff
+- Questions should be ones a thoughtful peer would ask, not a professor
+
+Also provide a brief observation (1-2 sentences) about a strength or interesting aspect of the response that the partner can use to open the conversation positively.
+
+Respond in this exact JSON format:
+{
+  "questions": ["Question 1?", "Question 2?", "Question 3?"],
+  "observation": "Brief positive observation about the response."
+}`;
+  }
+
+  function buildDiscussionUserMessage(prompt, responseText, context, questionCount) {
+    return `Original prompt the student was responding to:
+"${prompt}"
+
+${context ? `Activity context: ${context}\n\n` : ''}Student's written response:
+"${responseText}"
+
+Generate ${questionCount} discussion questions for the partner to ask.`;
+  }
+
+  function parseDiscussionJson(rawText) {
+    // Claude sometimes wraps JSON in markdown code blocks
+    try {
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+    } catch { /* fall through */ }
+    // Fallback: use the raw text as a single question
+    return {
+      questions: [rawText.trim()],
+      observation: 'Here are some thoughts on this response.',
+    };
+  }
+
+  // ============================================
   // AI Discussion (Enter → AI Questions → Discuss → Summarize)
   // ============================================
 
@@ -1113,18 +1167,20 @@ const ActivityComponents = (function() {
     // Get the AI endpoint from the activity config
     const aiEndpoint = question.aiEndpoint ||
       options.aiEndpoint ||
-      '/.netlify/functions/ai-discuss';
+      '/.netlify/functions/ai-proxy';
+
+    const course = options.courseTheme === 'cst349' ? 'CST349' : 'CST395';
+    const questionCount = question.numQuestions || 3;
+    const prompt = effectivePrompt || question.prompt;
 
     try {
       const fetchResponse = await fetch(aiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: responseText,
-          prompt: effectivePrompt || question.prompt,
-          context: question.aiContext || '',
-          course: options.courseTheme === 'cst349' ? 'CST349' : 'CST395',
-          numQuestions: question.numQuestions || 3,
+          system: buildDiscussionSystemPrompt(course, questionCount),
+          messages: [{ role: 'user', content: buildDiscussionUserMessage(prompt, responseText, question.aiContext || '', questionCount) }],
+          max_tokens: 512,
         }),
       });
 
@@ -1133,7 +1189,8 @@ const ActivityComponents = (function() {
         throw new Error(errData.error || `Request failed (${fetchResponse.status})`);
       }
 
-      const data = await fetchResponse.json();
+      const raw = await fetchResponse.json();
+      const data = parseDiscussionJson(raw.content);
 
       // Hide loading
       loadingEl.style.display = 'none';
@@ -1220,19 +1277,21 @@ const ActivityComponents = (function() {
 
     const aiEndpoint = question.aiEndpoint ||
       options.aiEndpoint ||
-      '/.netlify/functions/ai-discuss';
+      '/.netlify/functions/ai-proxy';
+
+    const course = options.courseTheme === 'cst349' ? 'CST349' : 'CST395';
+    const questionCount = question.numQuestions || 3;
+    const iterContext = (question.aiContext || '') +
+      '\n\nThis is iteration ' + (currentIterations + 1) + '. The student is refining their thinking. Push them to be more specific and go deeper.';
 
     try {
       const fetchResponse = await fetch(aiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: summaryText,
-          prompt: savedData.selectedPrompt || question.prompt,
-          context: (question.aiContext || '') +
-            '\n\nThis is iteration ' + (currentIterations + 1) + '. The student is refining their thinking. Push them to be more specific and go deeper.',
-          course: options.courseTheme === 'cst349' ? 'CST349' : 'CST395',
-          numQuestions: question.numQuestions || 3,
+          system: buildDiscussionSystemPrompt(course, questionCount),
+          messages: [{ role: 'user', content: buildDiscussionUserMessage(savedData.selectedPrompt || question.prompt, summaryText, iterContext, questionCount) }],
+          max_tokens: 512,
         }),
       });
 
@@ -1241,7 +1300,8 @@ const ActivityComponents = (function() {
         throw new Error(errData.error || 'Request failed (' + fetchResponse.status + ')');
       }
 
-      const data = await fetchResponse.json();
+      const raw = await fetchResponse.json();
+      const data = parseDiscussionJson(raw.content);
       loadingEl.style.display = 'none';
 
       // Replace observation and questions
