@@ -8,6 +8,31 @@ import { callAI, parseRoutingResponse, parseQ5Response } from './api.js';
 import { copyToClipboard, downloadJSON } from './data.js';
 
 // ============================================
+// Step Metadata & Icons
+// ============================================
+
+const STEPS = [
+  { num: 1, key: 'q1', label: 'Where You Are', color: '#2c5282' },
+  { num: 2, key: 'q2', label: 'Going Deeper', color: '#6b46c1' },
+  { num: 3, key: 'q3', label: 'Your Experience', color: '#b7791f' },
+  { num: 4, key: 'q4', label: 'Insights', color: '#276749' },
+  { num: 5, key: 'q5', label: 'Your Plan', color: '#c53030' },
+];
+
+const ICONS = {
+  1: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+  2: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  3: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg>',
+  4: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+  5: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+  check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+};
+
+function stepMeta(num) {
+  return STEPS[num - 1];
+}
+
+// ============================================
 // State
 // ============================================
 
@@ -85,38 +110,158 @@ function renderMarkdown(text) {
 }
 
 // ============================================
-// Step Rendering
+// Progress Bar
 // ============================================
 
-function getContainer() {
-  return document.getElementById('ci-form');
+function renderProgressBar() {
+  const bar = el('div', 'ci-progress');
+  bar.id = 'ci-progress';
+
+  const track = el('div', 'ci-progress__track');
+
+  STEPS.forEach((step, i) => {
+    const stepEl = el('div', 'ci-progress__step ci-progress__step--upcoming');
+    stepEl.dataset.step = step.num;
+    stepEl.innerHTML = `
+      <div class="ci-progress__dot" style="--step-color: ${step.color}">
+        <span class="ci-progress__icon">${ICONS[step.num]}</span>
+        <span class="ci-progress__check">${ICONS.check}</span>
+      </div>
+      <div class="ci-progress__label">${step.label}</div>
+    `;
+    track.appendChild(stepEl);
+
+    if (i < STEPS.length - 1) {
+      track.appendChild(el('div', 'ci-progress__connector'));
+    }
+  });
+
+  bar.appendChild(track);
+
+  const form = document.getElementById('ci-form');
+  form.parentNode.insertBefore(bar, form);
 }
 
-/**
- * Dim all previous steps.
- */
-function dimPreviousSteps() {
-  const steps = getContainer().querySelectorAll('.ci-step');
-  steps.forEach(s => {
-    if (!s.classList.contains('ci-step--active')) {
-      s.classList.add('ci-step--dimmed');
+function updateProgress(currentStep) {
+  document.querySelectorAll('.ci-progress__step').forEach(stepEl => {
+    const num = parseInt(stepEl.dataset.step);
+    stepEl.classList.remove(
+      'ci-progress__step--done',
+      'ci-progress__step--active',
+      'ci-progress__step--upcoming'
+    );
+    if (num < currentStep) {
+      stepEl.classList.add('ci-progress__step--done');
+    } else if (num === currentStep) {
+      stepEl.classList.add('ci-progress__step--active');
+    } else {
+      stepEl.classList.add('ci-progress__step--upcoming');
     }
+  });
+
+  document.querySelectorAll('.ci-progress__connector').forEach((conn, i) => {
+    conn.classList.toggle('ci-progress__connector--done', i < currentStep - 1);
   });
 }
 
-/**
- * Render a step: question text + response area.
- * For Q4/Q5, questionText comes from the previous AI reaction.
- */
+// ============================================
+// Timeline (Collapsed Completed Steps)
+// ============================================
+
+function getQuestionTextForStep(stepNum) {
+  if (stepNum === 1) return QUESTIONS.q1_situation.text;
+  if (stepNum === 2) return getQuestionText(state.selectedQuestions.q2);
+  if (stepNum === 3) return getQuestionText(state.selectedQuestions.q3);
+  return '';
+}
+
+function collapseStep(stepNum) {
+  const meta = stepMeta(stepNum);
+  const key = meta.key;
+  const response = state.responses[key] || '';
+  const excerpt = response.length > 120
+    ? response.substring(0, 120) + '\u2026'
+    : response;
+  const questionText = getQuestionTextForStep(stepNum);
+  const aiReaction = state.aiReactions[key] || '';
+
+  const item = el('div', 'ci-tl-item');
+  item.dataset.step = stepNum;
+  item.style.setProperty('--step-color', meta.color);
+
+  item.innerHTML = `
+    <div class="ci-tl-marker">
+      <div class="ci-tl-dot">${ICONS.check}</div>
+      <div class="ci-tl-line"></div>
+    </div>
+    <div class="ci-tl-card">
+      <div class="ci-tl-header">
+        <span class="ci-tl-icon">${ICONS[stepNum]}</span>
+        <span class="ci-tl-label">${meta.label}</span>
+        <span class="ci-tl-toggle">\u203A</span>
+      </div>
+      <div class="ci-tl-excerpt">\u201C${escapeHtml(excerpt)}\u201D</div>
+      <div class="ci-tl-details">
+        ${questionText ? `<div class="ci-tl-detail-row"><span class="ci-tl-detail-label">Question:</span> ${escapeHtml(questionText)}</div>` : ''}
+        <div class="ci-tl-detail-row"><span class="ci-tl-detail-label">Your response:</span> ${escapeHtml(response)}</div>
+        ${aiReaction ? `<div class="ci-tl-detail-row"><span class="ci-tl-detail-label">AI feedback:</span> ${escapeHtml(aiReaction)}</div>` : ''}
+      </div>
+    </div>
+  `;
+
+  // Toggle expand/collapse
+  const header = item.querySelector('.ci-tl-header');
+  const details = item.querySelector('.ci-tl-details');
+  const toggle = item.querySelector('.ci-tl-toggle');
+
+  header.addEventListener('click', () => {
+    const isOpen = details.classList.toggle('ci-tl-details--open');
+    toggle.classList.toggle('ci-tl-toggle--open', isOpen);
+  });
+
+  // Animate in
+  item.style.opacity = '0';
+  item.style.transform = 'translateY(10px)';
+  document.getElementById('ci-timeline').appendChild(item);
+
+  requestAnimationFrame(() => {
+    item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    item.style.opacity = '1';
+    item.style.transform = 'translateY(0)';
+  });
+}
+
+// ============================================
+// Step Rendering
+// ============================================
+
 function renderStep(stepNum, questionText) {
-  dimPreviousSteps();
+  const meta = stepMeta(stepNum);
+  const activeArea = document.getElementById('ci-active');
+
+  // Clear active area
+  activeArea.innerHTML = '';
+
+  // Update progress bar
+  updateProgress(stepNum);
 
   const step = el('div', 'ci-step ci-step--active');
   step.id = `ci-step-${stepNum}`;
   step.setAttribute('data-step', stepNum);
+  step.style.setProperty('--step-color', meta.color);
 
-  // Question display (Q4/Q5 don't have a separate question card)
-  if (stepNum <= 3) {
+  // Step label with icon
+  const label = el('div', 'ci-step-label');
+  label.style.setProperty('--step-color', meta.color);
+  label.innerHTML = `
+    <span class="ci-step-label__icon">${ICONS[stepNum]}</span>
+    <span class="ci-step-label__num">Step ${stepNum}</span>
+    <span class="ci-step-label__title">${meta.label}</span>
+  `;
+  step.appendChild(label);
+
+  // Question display (Q1-Q3 have explicit questions)
+  if (stepNum <= 3 && questionText) {
     const questionCard = el('div', 'ci-question');
     questionCard.innerHTML = `<p>${escapeHtml(questionText)}</p>`;
     step.appendChild(questionCard);
@@ -142,7 +287,7 @@ function renderStep(stepNum, questionText) {
   // Handle submit
   submitBtn.addEventListener('click', () => handleSubmit(stepNum, textarea, submitBtn, step));
 
-  getContainer().appendChild(step);
+  activeArea.appendChild(step);
 
   // Scroll into view
   step.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -241,17 +386,20 @@ function handleRoutingResponse(stepNum, rawContent, stepEl) {
 
   continueBtn.addEventListener('click', () => {
     continueBtn.remove();
-    stepEl.classList.remove('ci-step--active');
+
+    // Collapse into timeline
+    collapseStep(stepNum);
+
     state.currentStep = stepNum + 1;
 
     if (stepNum <= 2) {
-      // Q1→Q2 or Q2→Q3: load selected question from bank
+      // Q1->Q2 or Q2->Q3: load selected question from bank
       const nextKey = `q${stepNum + 1}`;
       const nextQId = state.selectedQuestions[nextKey];
       const nextQ = QUESTIONS[nextQId];
       renderStep(stepNum + 1, nextQ ? nextQ.text : '');
     } else {
-      // Q3→Q4: reaction's final sentence IS the prompt, just show textarea
+      // Q3->Q4: reaction's final sentence IS the prompt, just show textarea
       renderStep(4, '');
     }
   });
@@ -273,7 +421,10 @@ function handleQ4Response(rawContent, stepEl) {
 
   continueBtn.addEventListener('click', () => {
     continueBtn.remove();
-    stepEl.classList.remove('ci-step--active');
+
+    // Collapse into timeline
+    collapseStep(4);
+
     state.currentStep = 5;
     renderStep(5, '');
   });
@@ -286,6 +437,9 @@ function handleQ5Response(rawContent, stepEl) {
   state.invitationOption = invitationOption;
   state.timestamps.end = new Date().toISOString();
   state.complete = true;
+
+  // Mark all steps done in progress bar
+  updateProgress(6);
 
   // Render the deliverable card
   const card = el('div', 'ci-deliverable');
@@ -335,6 +489,22 @@ function showError(stepEl, message, onRetry) {
 // ============================================
 
 export function init() {
+  const form = document.getElementById('ci-form');
+
+  // Create timeline container (collapsed completed steps go here)
+  const timeline = el('div', 'ci-timeline');
+  timeline.id = 'ci-timeline';
+  form.appendChild(timeline);
+
+  // Create active step container (current step renders here)
+  const active = el('div', 'ci-active');
+  active.id = 'ci-active';
+  form.appendChild(active);
+
+  // Render sticky progress bar
+  renderProgressBar();
+
+  // Start step 1
   const q1 = QUESTIONS.q1_situation;
   renderStep(1, q1.text);
 }
