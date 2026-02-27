@@ -405,6 +405,302 @@ body {
    Responsive
    ============================================ */
 
+/* ============================================
+   Logo
+   ============================================ */
+
+.ci-logo {
+  display: block;
+  max-height: 64px;
+  margin: 0 auto 12px;
+}
+
+/* ============================================
+   Progress Bar (sticky)
+   ============================================ */
+
+.ci-progress {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--ci-surface);
+  border-bottom: 1px solid var(--ci-border);
+  padding: 16px 24px 12px;
+}
+
+.ci-progress__track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: var(--ci-max-width);
+  margin: 0 auto;
+}
+
+.ci-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ci-progress__dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ddd;
+  background: var(--ci-surface);
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.ci-progress__icon,
+.ci-progress__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ci-progress__check {
+  display: none;
+}
+
+.ci-progress__label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #bbb;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.ci-progress__connector {
+  flex: 1;
+  height: 2px;
+  background: #e0e0e0;
+  margin: 18px 6px 0;
+  transition: background 0.4s ease;
+  min-width: 16px;
+  max-width: 60px;
+}
+
+/* Progress states */
+
+.ci-progress__step--active .ci-progress__dot {
+  border-color: var(--step-color);
+  background: var(--step-color);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
+  animation: ci-dot-pulse 2s ease-in-out infinite;
+}
+
+.ci-progress__step--active .ci-progress__label {
+  color: var(--step-color);
+  font-weight: 600;
+}
+
+.ci-progress__step--done .ci-progress__dot {
+  border-color: var(--step-color);
+  background: var(--step-color);
+  color: #fff;
+}
+
+.ci-progress__step--done .ci-progress__icon {
+  display: none;
+}
+
+.ci-progress__step--done .ci-progress__check {
+  display: flex;
+}
+
+.ci-progress__step--done .ci-progress__label {
+  color: var(--step-color);
+}
+
+.ci-progress__connector--done {
+  background: var(--ci-accent);
+}
+
+@keyframes ci-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06); }
+  50% { box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.03); }
+}
+
+/* ============================================
+   Timeline (Collapsed Completed Steps)
+   ============================================ */
+
+.ci-timeline {
+  margin-bottom: 4px;
+}
+
+.ci-tl-item {
+  display: flex;
+  gap: 14px;
+}
+
+.ci-tl-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.ci-tl-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--step-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ci-tl-line {
+  width: 2px;
+  flex: 1;
+  background: var(--step-color);
+  opacity: 0.25;
+  min-height: 12px;
+}
+
+.ci-tl-card {
+  flex: 1;
+  background: var(--ci-surface);
+  border: 1px solid var(--ci-border);
+  border-radius: var(--ci-radius);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--step-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.ci-tl-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.ci-tl-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ci-tl-icon {
+  display: flex;
+  align-items: center;
+  color: var(--step-color);
+}
+
+.ci-tl-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--step-color);
+  flex: 1;
+}
+
+.ci-tl-toggle {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--ci-text-muted);
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.ci-tl-toggle--open {
+  transform: rotate(90deg);
+}
+
+.ci-tl-excerpt {
+  font-size: 13px;
+  color: var(--ci-text-muted);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.ci-tl-details {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ci-border);
+}
+
+.ci-tl-details--open {
+  display: block;
+}
+
+.ci-tl-detail-row {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  color: var(--ci-text);
+}
+
+.ci-tl-detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.ci-tl-detail-label {
+  font-weight: 600;
+  color: var(--ci-text-muted);
+}
+
+/* ============================================
+   Step Label (Active Step Header)
+   ============================================ */
+
+.ci-step-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--step-color, var(--ci-accent));
+}
+
+.ci-step-label__icon {
+  display: flex;
+  align-items: center;
+  color: var(--step-color, var(--ci-accent));
+}
+
+.ci-step-label__num {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--step-color, var(--ci-accent));
+  opacity: 0.6;
+}
+
+.ci-step-label__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--step-color, var(--ci-accent));
+}
+
+/* Active step card treatment */
+
+.ci-active .ci-step--active {
+  padding: 24px;
+  background: var(--ci-surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
 @media (max-width: 600px) {
   .ci-header {
     padding: 32px 16px 24px;
@@ -414,8 +710,38 @@ body {
     font-size: 20px;
   }
 
+  .ci-logo {
+    max-height: 48px;
+  }
+
   #ci-form {
     padding: 0 16px 60px;
+  }
+
+  .ci-progress {
+    padding: 12px 12px 8px;
+  }
+
+  .ci-progress__dot {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ci-progress__label {
+    font-size: 9px;
+  }
+
+  .ci-progress__connector {
+    margin-top: 15px;
+    min-width: 10px;
+  }
+
+  .ci-active .ci-step--active {
+    padding: 16px;
+  }
+
+  .ci-step-label__title {
+    font-size: 16px;
   }
 
   .ci-question,
@@ -437,5 +763,9 @@ body {
   .ci-actions__download {
     width: 100%;
     text-align: center;
+  }
+
+  .ci-tl-card {
+    padding: 10px 12px;
   }
 }
