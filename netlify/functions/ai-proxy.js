@@ -92,10 +92,22 @@ exports.handler = async (event) => {
     if (!apiResponse.ok) {
       const errorText = await apiResponse.text();
       console.error('Anthropic API error:', apiResponse.status, errorText);
+
+      // Parse Anthropic error for a user-useful message
+      let detail = '';
+      try {
+        const errJson = JSON.parse(errorText);
+        detail = errJson.error?.message || errorText;
+      } catch {
+        detail = errorText;
+      }
+
       return {
         statusCode: 502,
         headers: CORS_HEADERS,
-        body: JSON.stringify({ error: 'AI service temporarily unavailable. Please try again.' }),
+        body: JSON.stringify({
+          error: `AI service error (${apiResponse.status}): ${detail}`,
+        }),
       };
     }
 
