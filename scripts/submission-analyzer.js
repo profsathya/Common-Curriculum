@@ -98,7 +98,15 @@ function ensureDir(dirPath) {
 
 /** Escape a JSON string for safe embedding inside an HTML <script> block */
 function escapeForScript(str) {
-  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+  // For direct JS embedding: const X = ${json};
+  // Only need to prevent </script> tag closure
+  return str.replace(/<\//g, '<\\/');
+}
+
+function escapeForJsString(str) {
+  // For embedding inside a JS single-quoted string: JSON.parse('${json}')
+  // Must escape backslashes, single quotes, and </script>
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/<\//g, '<\\/');
 }
 
 function loadJson(filePath) {
@@ -1121,12 +1129,15 @@ async function generateDashboard(courseName, dataDir, api) {
       for (const file of gradingFiles) {
         const gData = loadJson(path.join(gradingDir, file));
         if (gData && gData.grades && gData.grades.length > 0) {
+          const submitted = gData.grades.filter(g => g.contentType !== 'none');
           allGradedAssignments.push({
             key: gData.assignmentKey || file.replace('.json', ''),
             title: gData.title,
             pointsPossible: gData.pointsPossible,
+            dueDate: gData.dueDate || null,
             totalStudents: gData.grades.length,
-            pendingCount: gData.grades.filter(g => g.status === 'pending').length,
+            submittedCount: submitted.length,
+            pendingCount: submitted.filter(g => g.status === 'pending').length,
             reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
           });
         }
@@ -2988,6 +2999,11 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 
     const pointsPossible = parseInt(indexEntry.points) || parseInt(csvRow?.points) || 5;
     const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title, courseInfo.name);
+    const assignmentDueDate = indexEntry.dueDate || csvRow?.dueDate || null;
+    const daysPastDue = assignmentDueDate
+      ? Math.floor((Date.now() - new Date(assignmentDueDate + 'T23:59:59').getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+    const graceExpired = daysPastDue !== null && daysPastDue > 15;
 
     // Load existing grading data
     const gradingPath = path.join(gradingDir, `${assignmentKey}.json`);
@@ -3038,8 +3054,12 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
         continue;
       }
 
-      // Skip if score === 0 AND missing === true (correct grade for no submission)
+      // Missing or unsubmitted: only assign zero if 15+ days past due
       if (sub.missing === true && (sub.score === 0 || sub.score === null)) {
+        if (!graceExpired) {
+          // Grace period active — skip, student can still submit late
+          continue;
+        }
         grades.push({
           anonId,
           canvasId: info.canvasId,
@@ -3054,7 +3074,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           flag: 'ok',
           canvasCurrentScore: sub.score,
           canvasCurrentStatus: sub.status,
-          internalNote: 'Missing submission.',
+          internalNote: 'Missing submission — grace period expired.',
         });
         assignmentGraded++;
         continue;
@@ -3062,6 +3082,10 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 
       // Unsubmitted with no content
       if (sub.status === 'unsubmitted' || (!sub.content && sub.contentType === 'none')) {
+        if (!graceExpired) {
+          // Grace period active — skip, student can still submit late
+          continue;
+        }
         grades.push({
           anonId,
           canvasId: info.canvasId,
@@ -3076,7 +3100,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           flag: 'ok',
           canvasCurrentScore: sub.score,
           canvasCurrentStatus: sub.status,
-          internalNote: 'Unsubmitted.',
+          internalNote: 'Unsubmitted — grace period expired.',
         });
         assignmentGraded++;
         continue;
@@ -3204,6 +3228,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
       title: indexEntry.title,
       pointsPossible,
       course: courseName,
+      dueDate: indexEntry.dueDate || csvRow?.dueDate || null,
       generatedAt: new Date().toISOString(),
       grades,
     };
@@ -3243,12 +3268,15 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
   for (const key of gradedAssignmentKeys) {
     const gData = loadJson(path.join(gradingDir, `${key}.json`));
     if (gData) {
+      const submitted = gData.grades.filter(g => g.contentType !== 'none');
       allGradedAssignments.push({
         key,
         title: gData.title,
         pointsPossible: gData.pointsPossible,
+        dueDate: gData.dueDate || null,
         totalStudents: gData.grades.length,
-        pendingCount: gData.grades.filter(g => g.status === 'pending').length,
+        submittedCount: submitted.length,
+        pendingCount: submitted.filter(g => g.status === 'pending').length,
         reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
       });
     }
@@ -3291,11 +3319,12 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 }
 
 function buildGradingDashboardHTML(gradingData, submissionsData, courseName, prevAssignment, nextAssignment) {
-  const { assignmentKey, title, pointsPossible, grades, generatedAt } = gradingData;
+  const { assignmentKey, title, pointsPossible, grades, generatedAt, dueDate } = gradingData;
   const course = COURSES[courseName]?.name || courseName.toUpperCase();
 
   // Compute stats
-  const pending = grades.filter(g => g.status === 'pending');
+  const submitted = grades.filter(g => g.contentType !== 'none');
+  const pending = submitted.filter(g => g.status === 'pending');
   const reviewed = grades.filter(g => g.status === 'reviewed' || g.status === 'posted');
   const flagged = grades.filter(g => g.flag === 'insincere');
   const lowConf = grades.filter(g => g.confidence === 'low');
@@ -3313,14 +3342,15 @@ function buildGradingDashboardHTML(gradingData, submissionsData, courseName, pre
     return (a.suggestedScore || 0) - (b.suggestedScore || 0);
   });
 
-  const gradesJson = escapeForScript(JSON.stringify(sortedGrades));
-  const submissionsJson = escapeForScript(JSON.stringify(submissionsData));
+  const gradesJson = escapeForJsString(JSON.stringify(sortedGrades));
+  const submissionsJson = escapeForJsString(JSON.stringify(submissionsData));
 
   const prevLink = prevAssignment ? `${courseName}-grading-${prevAssignment.key}.html` : '';
   const nextLink = nextAssignment ? `${courseName}-grading-${nextAssignment.key}.html` : '';
   const indexLink = `${courseName}-grading-index.html`;
 
   const dateStr = generatedAt ? new Date(generatedAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }) : '';
+  const dueDateStr = dueDate ? new Date(dueDate + 'T23:59:59').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -3381,11 +3411,11 @@ textarea.comment-edit { width: 100%; min-height: 60px; padding: 6px 8px; border:
 
 <div class="header">
   <h1>${title} — Grading Review</h1>
-  <p>${course} · ${pointsPossible} points · Generated ${dateStr}</p>
+  <p>${course} · ${pointsPossible} points${dueDateStr ? ` · Due ${dueDateStr}` : ''} · Generated ${dateStr}</p>
 </div>
 
 <div class="stats-bar">
-  <div class="stat"><div class="stat-value">${grades.length}</div><div class="stat-label">Total</div></div>
+  <div class="stat"><div class="stat-value">${submitted.length}/${grades.length}</div><div class="stat-label">Submitted</div></div>
   <div class="stat"><div class="stat-value">${pending.length}</div><div class="stat-label">Need Review</div></div>
   <div class="stat"><div class="stat-value">${reviewed.length}</div><div class="stat-label">Already Graded</div></div>
   <div class="stat"><div class="stat-value">${avgScore}</div><div class="stat-label">Avg Suggested</div></div>
@@ -3575,12 +3605,31 @@ renderTable();
 function buildGradingIndexHTML(assignments, courseName) {
   const course = COURSES[courseName]?.name || courseName.toUpperCase();
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const rows = assignments.map(a => {
     const link = `${courseName}-grading-${a.key}.html`;
+    let dueDateStr = '—';
+    let dueBadge = '';
+    if (a.dueDate) {
+      const due = new Date(a.dueDate + 'T23:59:59');
+      dueDateStr = due.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const daysUntilDue = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+      if (daysUntilDue < 0) {
+        dueBadge = ' <span style="color:#94a3b8;font-size:12px">(past)</span>';
+      } else if (daysUntilDue <= 3) {
+        dueBadge = ' <span style="color:#ea580c;font-size:12px;font-weight:600">(due soon)</span>';
+      } else {
+        dueBadge = ' <span style="color:#64748b;font-size:12px">(upcoming)</span>';
+      }
+    }
     return `<tr>
       <td><a href="${link}">${a.title}</a></td>
       <td>${a.pointsPossible}</td>
-      <td>${a.reviewedCount}/${a.totalStudents}</td>
+      <td>${dueDateStr}${dueBadge}</td>
+      <td>${a.submittedCount || 0}/${a.totalStudents}</td>
+      <td>${a.reviewedCount}/${a.submittedCount || 0}</td>
       <td>${a.pendingCount}</td>
       <td><a href="${link}">Review &rarr;</a></td>
     </tr>`;
@@ -3598,7 +3647,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .header { background: linear-gradient(135deg, #1e293b, #334155); color: white; padding: 24px 32px; }
 .header h1 { font-size: 24px; font-weight: 700; }
 .header p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
-.container { max-width: 900px; margin: 0 auto; padding: 24px 32px; }
+.container { max-width: 1000px; margin: 0 auto; padding: 24px 32px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 th { background: #f8fafc; text-align: left; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; }
 td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; }
@@ -3617,7 +3666,9 @@ a:hover { text-decoration: underline; }
 <thead>
   <tr>
     <th>Assignment</th>
-    <th>Points</th>
+    <th>Pts</th>
+    <th>Due Date</th>
+    <th>Submitted</th>
     <th>Graded</th>
     <th>Pending</th>
     <th></th>
