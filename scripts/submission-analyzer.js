@@ -2789,7 +2789,12 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   const assignmentConfig = config.assignments?.[assignmentKey];
   if (!assignmentConfig?.canvasId) throw new Error(`No canvasId for ${assignmentKey}`);
 
-  const grades = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
+  const raw = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
+  // Support both formats: grading JSON { grades: [...] } and flat array [...]
+  const grades = Array.isArray(raw) ? raw : raw.grades;
+  if (!grades || !Array.isArray(grades)) {
+    throw new Error(`Invalid grades file format: ${gradesFile}`);
+  }
   console.log(`\nPosting grades to Canvas (${courseName}/${assignmentKey})...`);
 
   // Fetch current Canvas submissions to check existing grades
