@@ -1109,6 +1109,50 @@ async function generateDashboard(courseName, dataDir, api) {
       await generateDiscussionDashboard(courseName, dataDir, key, api);
     }
   }
+
+  // Regenerate grading dashboards from existing grading JSON files
+  const gradingDir = path.join(courseDataDir, 'grading');
+  const submissionsDir = path.join(courseDataDir, 'submissions');
+  if (fs.existsSync(gradingDir)) {
+    const gradingFiles = fs.readdirSync(gradingDir).filter(f => f.endsWith('.json'));
+    if (gradingFiles.length > 0) {
+      console.log('\n  Regenerating grading dashboards...');
+      const allGradedAssignments = [];
+      for (const file of gradingFiles) {
+        const gData = loadJson(path.join(gradingDir, file));
+        if (gData && gData.grades && gData.grades.length > 0) {
+          allGradedAssignments.push({
+            key: gData.assignmentKey || file.replace('.json', ''),
+            title: gData.title,
+            pointsPossible: gData.pointsPossible,
+            totalStudents: gData.grades.length,
+            pendingCount: gData.grades.filter(g => g.status === 'pending').length,
+            reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
+          });
+        }
+      }
+
+      for (let i = 0; i < allGradedAssignments.length; i++) {
+        const aInfo = allGradedAssignments[i];
+        const gData = loadJson(path.join(gradingDir, `${aInfo.key}.json`));
+        if (!gData) continue;
+
+        const prevAssignment = i > 0 ? allGradedAssignments[i - 1] : null;
+        const nextAssignment = i < allGradedAssignments.length - 1 ? allGradedAssignments[i + 1] : null;
+        const submissionsData = loadJson(path.join(submissionsDir, `${aInfo.key}.json`)) || {};
+
+        const html = buildGradingDashboardHTML(gData, submissionsData, courseName, prevAssignment, nextAssignment);
+        const outputPath = path.join(dashboardDir, `${courseName}-grading-${aInfo.key}.html`);
+        fs.writeFileSync(outputPath, html);
+      }
+
+      const indexHtml = buildGradingIndexHTML(allGradedAssignments, courseName);
+      const indexPath = path.join(dashboardDir, `${courseName}-grading-index.html`);
+      fs.writeFileSync(indexPath, indexHtml);
+
+      console.log(`  → Regenerated ${allGradedAssignments.length} grading dashboard(s) + index`);
+    }
+  }
 }
 
 function buildDashboardHTML(data) {
