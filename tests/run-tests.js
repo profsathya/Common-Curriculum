@@ -9,3 +9,4 @@ require('./csv-parsing.test.js');
 require('./title-matching.test.js');
 require('./config-loading.test.js');
 require('./date-formatting.test.js');
+require('./content-validation.test.js');
