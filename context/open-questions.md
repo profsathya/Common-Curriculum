@@ -1,7 +1,7 @@
 ---
 purpose: Unresolved design tensions requiring discussion — the async conversation layer
-last_updated: 2026-02-23
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 status: active
 ---
 
@@ -78,6 +78,34 @@ These are design tensions without clear answers. If you have a perspective, add 
 **Tension:** Sprint 2 uses group-averaged reflections (20%) and check-ins (20%) to incentivize collaboration. But if one partner is deep and the other is surface, averaging punishes depth and rewards compliance. We won't have data on this until Sprint 2 grading is complete.
 
 **Watch for:** Does group averaging cause the deep student to carry the shallow student, or does it motivate the shallow student to step up? CST349 triads may show this more clearly than CST395 pairs.
+
+---
+
+## OQ-7: Metaphor Coherence vs. Migration Cost in CST395
+
+**Tension:** CST395 uses "Blueprint" (sprint pages), "Studio" (home page), and "Sprint" (config, CSV, URLs, most content) inconsistently. CST349 uses "Sprint" consistently. Students in both courses encounter "Sprint" as the dominant term. Cleaning this up fully requires a search-and-replace pass across many pages — but the inconsistency actively confuses students.
+
+**Options:**
+- **Immediate mapping:** Add a visible sentence where Blueprint/Studio appears ("Blueprint 1 = Sprint 1: Foundation") to bridge the gap without a full rename. Low cost, immediate clarity.
+- **Full standardize to Sprint:** Search-and-replace all Blueprint/Studio references with Sprint across CST395. Higher cost, but eliminates the debt permanently.
+- **Commit to the Studio metaphor:** Rename everything to Studio/Blueprint across CST395, updating URLs and config. Highest cost, but creates a distinctive course identity.
+
+**Current leaning:** Standardize on "Sprint" (instructor preference). Immediate mapping first, full rename pass as a separate task.
+
+---
+
+## OQ-8: Progressive Disclosure of Capabilities (SDL/IS/AB)
+
+**Tension:** All three capabilities (Self-Directed Learner, Integrative Solver, Adaptive Builder) are introduced simultaneously on `capabilities.html` with full four-sprint growth trajectories. But Sprint 1 primarily develops SDL and AB; IS becomes meaningful only in Sprint 2 when students work with partners. Introducing IS in Week 1 is framework without experience — violating Design Principle #2 (Experience before framework).
+
+**Options:**
+- **Phased reveal:** Sprint 1 pages focus on SDL and AB only. IS is introduced when Sprint 2 begins. Each capability's growth trajectory is revealed as it becomes relevant.
+- **Full upfront view with emphasis markers:** Keep the full architecture visible but visually emphasize "active this sprint" capabilities and grey out "coming later" ones.
+- **Keep as-is:** The overview is a reference document, not a lesson plan. Students who want the full picture can see it; most won't absorb it until they experience it.
+
+**Current leaning:** No decision yet. The "experience before framework" principle suggests phased reveal, but the overview page serves a different purpose than assignments.
+
+**Note:** This question does NOT involve renaming the capabilities or their definitions — those are settled. This is about *when* students first encounter each one.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 purpose: Onboarding guide for teammates joining the Common-Curriculum project
-last_updated: 2026-02-23
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 ---
 
 # Context Folder — Onboarding Guide
@@ -70,11 +70,13 @@ Check `open-questions.md` regularly. If you see a question where you disagree wi
 
 | File | What it captures | Who updates it |
 |---|---|---|
-| `course-design.md` | Course structure, frameworks, sprint design, grading | Anyone making design changes |
+| `course-design.md` | Course structure, frameworks, sprint design, grading, product experience principles | Anyone making design changes |
 | `evidence.md` | Anonymized findings from student data | Anyone running analysis |
 | `gaps-and-actions.md` | Active problems, interventions, status | Anyone working on fixes |
 | `pipeline.md` | Technical infrastructure, scripts, known issues | Anyone touching the code |
 | `open-questions.md` | Unresolved design tensions | Anyone with questions or opinions |
+| `terminology.md` | Canonical operational terms, allowed aliases, deprecated names | Anyone noticing naming drift |
+| `content-qa.md` | Definition of Done checklist for publishing pages | Anyone creating or revising content |
 | `changelog.md` | What changed, when, by whom, why | Everyone, every session |
 
 ## Ground Rules
