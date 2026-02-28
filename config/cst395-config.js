@@ -341,7 +341,7 @@ const CST395_CONFIG = {
     "s2-prototype": {
       canvasId: "582881",
       title: "S2: Prototype v1 + Build Log",
-      dueDate: "2026-03-01",
+      dueDate: "2026-03-08",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
@@ -353,7 +353,7 @@ const CST395_CONFIG = {
     "s2-reflection-5": {
       canvasId: "582882",
       title: "S2: Productive Reflection #5",
-      dueDate: "2026-03-03",
+      dueDate: "2026-03-08",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
