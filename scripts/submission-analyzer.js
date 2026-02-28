@@ -1121,6 +1121,7 @@ async function generateDashboard(courseName, dataDir, api) {
   // Regenerate grading dashboards from existing grading JSON files
   const gradingDir = path.join(courseDataDir, 'grading');
   const submissionsDir = path.join(courseDataDir, 'submissions');
+  const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json')) || {};
   if (fs.existsSync(gradingDir)) {
     const gradingFiles = fs.readdirSync(gradingDir).filter(f => f.endsWith('.json'));
     if (gradingFiles.length > 0) {
@@ -1130,11 +1131,12 @@ async function generateDashboard(courseName, dataDir, api) {
         const gData = loadJson(path.join(gradingDir, file));
         if (gData && gData.grades && gData.grades.length > 0) {
           const submitted = gData.grades.filter(g => g.contentType !== 'none');
+          const aKey = gData.assignmentKey || file.replace('.json', '');
           allGradedAssignments.push({
-            key: gData.assignmentKey || file.replace('.json', ''),
+            key: aKey,
             title: gData.title,
             pointsPossible: gData.pointsPossible,
-            dueDate: gData.dueDate || null,
+            dueDate: gData.dueDate || submissionIndex[aKey]?.dueDate || null,
             totalStudents: gData.grades.length,
             submittedCount: submitted.length,
             pendingCount: submitted.filter(g => g.status === 'pending').length,
@@ -1147,6 +1149,8 @@ async function generateDashboard(courseName, dataDir, api) {
         const aInfo = allGradedAssignments[i];
         const gData = loadJson(path.join(gradingDir, `${aInfo.key}.json`));
         if (!gData) continue;
+        // Backfill dueDate from submission-index if not in grading JSON
+        if (!gData.dueDate && aInfo.dueDate) gData.dueDate = aInfo.dueDate;
 
         const prevAssignment = i > 0 ? allGradedAssignments[i - 1] : null;
         const nextAssignment = i < allGradedAssignments.length - 1 ? allGradedAssignments[i + 1] : null;
@@ -3411,7 +3415,7 @@ textarea.comment-edit { width: 100%; min-height: 60px; padding: 6px 8px; border:
 
 <div class="header">
   <h1>${title} — Grading Review</h1>
-  <p>${course} · ${pointsPossible} points${dueDateStr ? ` · Due ${dueDateStr}` : ''} · Generated ${dateStr}</p>
+  <p>${course} · <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;font-size:13px">${assignmentKey}</code> · ${pointsPossible} points${dueDateStr ? ` · Due ${dueDateStr}` : ''} · Generated ${dateStr}</p>
 </div>
 
 <div class="stats-bar">
@@ -3625,7 +3629,7 @@ function buildGradingIndexHTML(assignments, courseName) {
       }
     }
     return `<tr>
-      <td><a href="${link}">${a.title}</a></td>
+      <td><a href="${link}">${a.title}</a><br><code style="font-size:11px;color:#94a3b8">${a.key}</code></td>
       <td>${a.pointsPossible}</td>
       <td>${dueDateStr}${dueBadge}</td>
       <td>${a.submittedCount || 0}/${a.totalStudents}</td>
@@ -3916,14 +3920,19 @@ Environment Variables:
       console.error('Error: --assignment=<key> is required for post-grades');
       process.exit(1);
     }
-    // Check grading directory first, then legacy dashboard path
-    const gradingPath = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
-    const legacyPath = path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
-    const gradesFile = args.grades || (fs.existsSync(gradingPath) ? gradingPath : legacyPath);
+    // Check grading directory first (both naming conventions), then legacy dashboard path
+    const gradingPath = path.join(dataDir, course, 'grading', `${assignment}.json`);
+    const gradingPathLegacy = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
+    const dashboardPath = path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    const gradesFile = args.grades
+      || (fs.existsSync(gradingPath) ? gradingPath : null)
+      || (fs.existsSync(gradingPathLegacy) ? gradingPathLegacy : null)
+      || dashboardPath;
     if (!fs.existsSync(gradesFile)) {
       console.error(`Grades file not found. Checked:`);
       console.error(`  ${gradingPath}`);
-      console.error(`  ${legacyPath}`);
+      console.error(`  ${gradingPathLegacy}`);
+      console.error(`  ${dashboardPath}`);
       console.error('Download the grades JSON from the grading dashboard first.');
       process.exit(1);
     }
