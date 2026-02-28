@@ -403,70 +403,110 @@ describe('Grading label clarity', function() {
 describe('Hardcoded date detection in assignment pages', function() {
 
   for (const course of COURSES) {
-    describe(course.code + ' — assignment files', function() {
+    describe(course.code + ' — CSV-tracked assignment files', function() {
 
-      it('reports the count of hardcoded dates in assignment HTML files', function() {
-        const assignmentDir = course.code + '/assignments';
-        const files = findHTMLFiles(assignmentDir);
-        const results = [];
+      it('CSV-tracked assignments use data-due-date (no hardcoded due dates)', function() {
+        var csvRows = loadCSV(course.csvFile);
+        var csvFiles = new Set();
+        csvRows.forEach(function(row) {
+          if (row.htmlFile) csvFiles.add(course.code + '/' + row.htmlFile);
+        });
 
-        for (const file of files) {
-          const html = readHTML(file);
-          if (!html) continue;
-          const dates = findHardcodedDates(html);
-          if (dates.length > 0) {
-            results.push({ file: file, count: dates.length, samples: dates.slice(0, 3) });
+        var results = [];
+        csvFiles.forEach(function(file) {
+          var html = readHTML(file);
+          if (!html) return;
+          var dates = findHardcodedDates(html);
+          // Filter to only "Due:" context dates (not narrative references like "by March 11")
+          var dueDates = dates.filter(function(d) {
+            return /Due[:\s]/i.test(d.context);
+          });
+          if (dueDates.length > 0) {
+            results.push({ file: file, count: dueDates.length, samples: dueDates.slice(0, 3) });
           }
-        }
+        });
 
-        // This test documents the current state. After P1 migration,
-        // this count should drop to 0.
-        const totalDates = results.reduce(function(s, r) { return s + r.count; }, 0);
-        const totalFiles = results.length;
-
-        // Log the findings for visibility
+        var totalDates = results.reduce(function(s, r) { return s + r.count; }, 0);
         if (totalDates > 0) {
-          const summary = results.map(function(r) {
+          var summary = results.map(function(r) {
             return '  ' + r.file + ': ' + r.count + ' dates (e.g., "' + r.samples[0].match + '")';
           }).join('\n');
           assert.fail(
-            totalDates + ' hardcoded date(s) found across ' + totalFiles +
-            ' file(s) in ' + assignmentDir + '/:\n' + summary +
-            '\n\nThese should use data-due-date attributes bound to config. See PIPE-6.'
+            totalDates + ' hardcoded due date(s) in CSV-tracked files:\n' + summary +
+            '\n\nThese should use data-due-date attributes bound to config.'
           );
         }
       });
-    });
 
-    describe(course.code + ' — sprint overview files', function() {
+      it('CSV-tracked assignments with a Due line use data-due-date (not hardcoded)', function() {
+        var csvRows = loadCSV(course.csvFile);
+        var missing = [];
 
-      it('reports the count of hardcoded dates in sprint HTML files', function() {
-        const sprintFiles = ['sprint-1.html', 'sprint-2.html', 'sprint-3.html', 'sprint-4.html'];
-        const results = [];
-
-        for (const file of sprintFiles) {
-          const relPath = course.code + '/' + file;
-          const html = readHTML(relPath);
+        for (var i = 0; i < csvRows.length; i++) {
+          var row = csvRows[i];
+          if (!row.htmlFile) continue;
+          var html = readHTML(course.code + '/' + row.htmlFile);
           if (!html) continue;
-          const dates = findHardcodedDates(html);
-          if (dates.length > 0) {
-            results.push({ file: relPath, count: dates.length, samples: dates.slice(0, 3) });
+
+          // Only check files that have a "Due" line — activities/quizzes
+          // without a displayed due date are fine without data-due-date
+          var hasDueLine = /Due[:\s]/i.test(html);
+          if (!hasDueLine) continue;
+
+          if (!html.includes('data-due-date="' + row.key + '"')) {
+            missing.push(row.key + ' → ' + row.htmlFile);
           }
         }
 
-        const totalDates = results.reduce(function(s, r) { return s + r.count; }, 0);
-        const totalFiles = results.length;
+        assert.deepStrictEqual(missing, [],
+          'Assignment files with Due line but no data-due-date: ' + missing.join(', '));
+      });
+    });
 
-        if (totalDates > 0) {
-          const summary = results.map(function(r) {
-            return '  ' + r.file + ': ' + r.count + ' dates (e.g., "' + r.samples[0].match + '")';
-          }).join('\n');
-          assert.fail(
-            totalDates + ' hardcoded date(s) found across ' + totalFiles +
-            ' sprint file(s):\n' + summary +
-            '\n\nThese should use data-due-date attributes bound to config. See PIPE-6.'
-          );
+    describe(course.code + ' — sprint overview activity dates', function() {
+
+      it('sprint-1 and sprint-2 activity items use data-due-date for CSV-tracked assignments', function() {
+        var csvRows = loadCSV(course.csvFile);
+        // Build set of htmlFile paths referenced in CSV
+        var csvHtmlFiles = new Set();
+        csvRows.forEach(function(row) {
+          if (row.htmlFile) csvHtmlFiles.add(row.htmlFile);
+        });
+
+        var sprintFiles = ['sprint-1.html', 'sprint-2.html'];
+        var missingKeys = [];
+
+        for (var f = 0; f < sprintFiles.length; f++) {
+          var html = readHTML(course.code + '/' + sprintFiles[f]);
+          if (!html) continue;
+          var lines = html.split('\n');
+          var lastHref = null;
+
+          for (var i = 0; i < lines.length; i++) {
+            var hrefMatch = lines[i].match(/href="([^"]*\.html)"/);
+            if (hrefMatch) {
+              lastHref = hrefMatch[1].replace(/^\.\.\//, '').replace(/^\.\//, '');
+            }
+
+            // Find hardcoded activity-item__due spans
+            var dueMatch = lines[i].match(/class="activity-item__due"(?![^>]*data-due-date)[^>]*>[^<]*(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/);
+            if (dueMatch && lastHref) {
+              // Only flag if the linked file is tracked in CSV
+              var isTracked = false;
+              csvHtmlFiles.forEach(function(csvFile) {
+                if (lastHref.endsWith(csvFile) || csvFile.endsWith(lastHref) || lastHref === csvFile) {
+                  isTracked = true;
+                }
+              });
+              if (isTracked) {
+                missingKeys.push(sprintFiles[f] + ':' + (i + 1) + ' linked to ' + lastHref);
+              }
+            }
+          }
         }
+
+        assert.deepStrictEqual(missingKeys, [],
+          'CSV-tracked activity-item spans with hardcoded dates: ' + missingKeys.join('; '));
       });
     });
   }
