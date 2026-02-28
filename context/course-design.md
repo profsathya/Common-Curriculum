@@ -1,7 +1,7 @@
 ---
 purpose: Course structure, frameworks, sprint design, grading — the stable design decisions and their rationale
-last_updated: 2026-02-24
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 status: active
 ---
 
@@ -86,6 +86,19 @@ Sprint 2 adds:
 - **Google Apps Script**: Peer conversation tracking and form automation
 - **Analysis Pipeline**: Node.js script that downloads Canvas submissions, runs them through Claude API for quality scoring, generates dashboards (see → pipeline.md)
 
+### Data Architecture: CSV as Single Source of Truth
+
+No assignment names, point values, or due dates should ever be hardcoded into HTML text.
+
+**Data flow:**
+1. `config/{course}-assignments.csv` — the single source of truth (instructor edits here)
+2. `scripts/canvas-sync.js` — updates Canvas via API and generates `config/{course}-config.js`
+3. HTML pages (views) use `data-due-date="[assignment-key]"` hooks; client-side JavaScript injects live data from the config file at render time
+
+**Why this matters:** A single CSV edit propagates to Canvas (API sync), config.js (script generation), and all HTML pages (data-binding) — no manual HTML edits needed for schedule changes. This applies the same engineering discipline we teach students in CST395.
+
+**Status:** Architecture agreed (2026-02-28). Currently 200+ hardcoded date strings remain across 84 HTML files. Migration tracked in → gaps-and-actions.md (GAP-7, PIPE-6).
+
 ## Design Principles
 
 1. **Identity before task** — "Who am I becoming?" frames every sprint before "What am I doing?"
@@ -94,3 +107,17 @@ Sprint 2 adds:
 4. **Discovery over instruction** — The 3Cs framework guides students to insights rather than telling them answers
 5. **Hand-written reflection** — Physical notebooks for reflections prevent AI bypass (trade-off: 60% of work is unanalyzable by script — see → pipeline.md)
 6. **Specificity over generality in assignments** — Generic instructions ("find sources," "research the domain") produce generic work. Assignments that name the specific domains, provide starting sources, and show concrete weak-vs-strong examples produce dramatically better student output. The Domain Learning Plan (ASSIGN-1) demonstrated this: providing a curated reference page with the 4 actual problem domains students are working in — with real sources, myth/reality framing, and investigation questions — sets a quality floor that "go find sources" never achieves. For this population, specificity is scaffolding. Design each assignment to be as specific to the actual student context as possible.
+
+## Product Experience Principles
+
+The curriculum is a digital product. Reducing navigation friction directly increases intellectual engagement. These principles govern the student-facing experience of interacting with course pages.
+
+1. **Actionability first** — The what, when, and how of an assignment must precede the "why." Every assignment page opens with a Quick Start block (time estimate, deliverable checklist, submission format, due date, grading weight) before the motivational framing. Students who know what to do can engage with why it matters; students hunting for logistics miss both.
+
+2. **Single source of truth** — Architecture decisions (dates, point values, assignment names) are centralized in the CSV config, not hardcoded in HTML. See Data Architecture section above. This prevents drift between what Canvas shows and what assignment pages say.
+
+3. **Minimum viable completeness** — No dead-end placeholders in active or upcoming sprints. If a page is linked from active content, it must contain at minimum: purpose (1 sentence), deliverable (1 sentence), success criteria (3-4 bullets), due date (from config), and submission link. Pages for future sprints use MVP briefs, not "Under Construction" banners.
+
+4. **Format explicitness** — Every assignment with a file upload specifies: accepted file types, filename pattern (e.g., `lastname-s1-five-whys.pdf`), and where to find/generate the file if it comes from an activity. "Upload your output" is never sufficient.
+
+*See → content-qa.md for the operational checklist that enforces these principles.*

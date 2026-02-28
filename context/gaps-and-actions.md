@@ -1,7 +1,7 @@
 ---
 purpose: Active learning gaps, proposed interventions, and their status — the working tracker
-last_updated: 2026-02-24
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 status: active
 ---
 
@@ -79,6 +79,60 @@ Reframe evidence questions explicitly: "Describe a specific moment in the last 4
 
 ---
 
+### GAP-6: Cognitive Overload & Finding Deliverables [ACTIVE]
+
+**Problem:** Students struggle to extract the actionable "what do I submit?" from assignment pages that lead with motivational framing. The purpose/rationale content is valuable, but when deliverable details, submission format, due date, and grading weight are buried below it, students skim past the reasoning to hunt for logistics — and miss both.
+
+**Evidence:** Cross-course content review (2026-02-28). Assignment pages vary widely: some lead with a Quick Start summary (effective), most bury submission details after 2-4 sections of scaffolding. Productive reflection time estimates (10-15 min) understate actual cognitive demand for multi-prompt exercises like CST395 W3 (closer to 30-40 min). Students who encounter inaccurate time estimates lose trust in the course's self-awareness.
+
+**Proposed Interventions:**
+1. Implement a universal Quick Start block at the top of every assignment page (time estimate, deliverable checklist, submission format/filename, due date, grading weight, 1-sentence "why")
+2. Calibrate time estimates to actual cognitive demand — test by writing answers yourself
+3. Add explicit quality signals ("what distinguishes good from adequate") to key assignments, starting with 5 Whys (directly addresses GAP-1 and GAP-3 simultaneously)
+
+**Status:** Principle agreed. Implementation planned for Priority 2 content updates.
+
+---
+
+### GAP-7: Flow Friction & Trust — Dates, Dead-Ends, Placeholders [ACTIVE]
+
+**Problem:** Students encounter trust-breaking friction in three forms: (1) hardcoded dates in HTML that can drift from Canvas/config when schedules shift, (2) "Under Construction" banners on pages linked from active sprint content, (3) placeholder pages for Sprint 3/4 that say "Don't do any work" without giving students any preview of what's coming.
+
+**Evidence:** 200+ hardcoded date strings found across 84 HTML files (both courses). 15 pages display "Under Construction" banners, including the CST349 concepts page (a core reference) and several CST395 Sprint 1 assignments (build-log, human-value-statement, presentation, peer-reflection, bridge-reflection). Sprint 3/4 placeholder pages exist in both courses with no content beyond the warning banner.
+
+**Proposed Interventions:**
+1. Replace all hardcoded dates with `data-due-date` attribute bindings; client-side JS injects dates from config at render time. CSV remains the single source of truth (CSV → config.js → HTML data-attributes).
+2. Build a validation script (`scripts/validate-content.js`) that flags hardcoded date strings and verifies all `data-due-date` keys exist in the CSV.
+3. Replace Sprint 3/4 placeholders with MVP briefs (Purpose, Deliverable, Success criteria, Due date from config, Submission link).
+4. Soften "Under Construction" banners on pages with substantial content to "This page may be updated — check back before your due date."
+
+**Status:** Architecture agreed. PIPE-6 tracks the automation. Content fixes planned for Priority 1.
+
+---
+
+### GAP-8: Terminology Debt — Inconsistent Metaphors Across CST395 [ACTIVE]
+
+**Problem:** CST395 uses competing metaphors inconsistently. Sprint pages are sometimes called "Blueprints," the home page uses "Studio" language, but URLs use `sprint-*.html`, and most content and all config files use "Sprint." Students in both courses encounter "Sprint" as the dominant term, making the Blueprint/Studio vocabulary confusing rather than clarifying.
+
+**Evidence:** Cross-course content review (2026-02-28). CST395 `home.html` uses Studio framing; `sprint-1.html` uses Blueprint in its title but Sprint in its content; config files and CSV use Sprint exclusively. CST349 uses Sprint consistently throughout.
+
+**Proposed Intervention:**
+1. Standardize on "Sprint" as the canonical term across both courses (aligns with config, CSV, URLs, and CST349)
+2. Add a mapping sentence where Blueprint/Studio language currently appears ("Blueprint 1 = Sprint 1") as immediate fix
+3. Full search-and-replace pass to remove orphaned metaphors
+
+**Status:** Decision made (instructor preference: keep "Sprint" as consistent term). Implementation planned for Priority 3.
+
+---
+
+## Operational / UX Gaps
+
+These gaps relate to the student experience of navigating the curriculum as a digital product, distinct from the pedagogical learning gaps above.
+
+*See also: → content-qa.md for the operational checklist that prevents these gaps from recurring.*
+
+---
+
 ## Active Pipeline/Infrastructure Issues
 
 ### PIPE-1: Conversation JSON Extraction [FIXED]
@@ -131,3 +185,24 @@ Reframe evidence questions explicitly: "Describe a specific moment in the last 4
 **Fix:** 3-zone overview: (1) Sprint Status with submission rate, analysis coverage, avg quality, distribution bar; (2) Alerts & Flags with student alerts (consecutive missing, quality drops) and data quality warnings (flat 3/3 detection, unanalyzable counts, staleness); (3) Sprint Comparison table with color-coded deltas. Full student grid available via toggle. Applied to both main and anonymized dashboards.
 
 **Status:** Implemented in `buildDashboardHTML()`. Both dashboards share the same rendering logic.
+
+---
+
+### PIPE-6: Automated Content QA / Due Date Consistency [PLANNED]
+
+**Problem:** Manually hardcoding due dates in HTML causes student confusion when dates shift. Currently 200+ date instances across 84 HTML files. Any schedule change requires manually updating every affected page — a process guaranteed to produce drift.
+
+**Proposed Intervention:**
+1. Replace all hardcoded HTML date strings with `data-due-date="[assignment-key]"` binding attributes.
+2. Add client-side JavaScript to each page that reads dates from the course config.js and injects them at render time.
+3. Build `scripts/validate-content.js` that:
+   - Flags any remaining hardcoded date strings (regex: `/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s\d{1,2}/` and variants)
+   - Verifies all `data-due-date` keys exist in the CSV
+   - Checks for broken internal links between assignment pages
+   - Can run as a pre-commit check or CI step
+
+**Data flow:** `config/{course}-assignments.csv` (single source of truth) → `scripts/canvas-sync.js` → `config/{course}-config.js` → HTML pages read via `data-due-date` attributes at render time.
+
+**Why this matters:** A single CSV edit propagates to Canvas (via API), config.js (via sync script), and all HTML pages (via data-binding) — no manual page edits needed for schedule changes.
+
+**Status:** Architecture agreed. Awaiting implementation.

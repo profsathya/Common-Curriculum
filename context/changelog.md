@@ -1,13 +1,39 @@
 ---
 purpose: Reverse-chronological log of significant updates — what changed, when, by whom, why
-last_updated: 2026-02-24
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 status: active
 ---
 
 # Changelog
 
 Most recent entries first. Each entry: date, who, what changed, why it matters.
+
+---
+
+## 2026-02-28 — [claude-code] Cross-course content review + context folder expansion
+
+**Trigger:** Comprehensive review of CST349 and CST395 from an average student's perspective, evaluating clarity, conciseness, and consistency. Synthesized findings from multiple independent reviews.
+
+**Context files updated:**
+- `gaps-and-actions.md` — Added GAP-6 (Cognitive Overload & Finding Deliverables), GAP-7 (Flow Friction & Trust — hardcoded dates, dead-end placeholders), GAP-8 (Terminology Debt — Sprint vs Blueprint/Studio inconsistency), PIPE-6 (Automated Content QA / Due Date Consistency)
+- `course-design.md` — Added "Product Experience Principles" section (Actionability First, Single Source of Truth, Minimum Viable Completeness, Format Explicitness) and "Data Architecture: CSV as Single Source of Truth" documentation
+- `open-questions.md` — Added OQ-7 (Metaphor Coherence vs Migration Cost in CST395) and OQ-8 (Progressive Disclosure of Capabilities — when to introduce SDL/IS/AB)
+
+**New context files created:**
+- `terminology.md` — Canonical terms map for operational vocabulary. Defines Sprint (not Blueprint/Studio), reflection numbering conventions (S1-R1), grading component labels (per-sprint vs overall), assignment type names. Explicitly scoped to operational terms — framework/pedagogy terms are off-limits without instructor approval.
+- `content-qa.md` — Definition of Done checklist for publishing any assignment or sprint page. Covers: Quick Start block requirements, date data-binding verification, dependency links, quality signals, reflection numbering, upload instruction specificity, styling consistency, and MVP brief format for incomplete pages. Linked to future PIPE-6 automation.
+
+**Key findings driving the prioritized action plan:**
+- 200+ hardcoded dates across 84 HTML files (both courses)
+- 15 pages with "Under Construction" banners, including active content
+- CST349 grading labels appear contradictory (per-sprint vs overall not distinguished)
+- CST395 uses Sprint/Blueprint/Studio inconsistently
+- Assignment pages bury deliverable details below motivational framing
+- Reflection numbering collides across sprints (multiple "#1" reflections)
+- Time estimates understate cognitive demand on several reflection assignments
+
+**Action plan:** P0 (context capture — this entry), P1 (trust-breaking: dates, grading, placeholders), P2 (usability: Quick Start blocks, upload instructions, quality signals), P3 (terminology/navigation: Sprint harmonization, cross-links, reflection numbering), P4 (tone: phrasing, time estimates, HVP threading).
 
 ---
 
