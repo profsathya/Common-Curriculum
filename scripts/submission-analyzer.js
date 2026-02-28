@@ -2814,8 +2814,11 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
     const label = g.studentName || g.anonId;
     if (!g.canvasId) { console.log(`  ⚠ Skip ${label} — no Canvas ID`); skipped++; continue; }
 
-    // Determine the score to post
-    const score = g.totalScore != null ? g.totalScore : g.score;
+    // Skip already-posted entries from grading JSON
+    if (g.status === 'posted') { unchanged++; postedCanvasIds.add(g.canvasId); continue; }
+
+    // Determine the score to post (support both grading JSON and downloaded grades formats)
+    const score = g.finalScore != null ? g.finalScore : (g.totalScore != null ? g.totalScore : g.score);
     if (score == null) { console.log(`  ⚠ Skip ${label} — no score in grades file`); skipped++; continue; }
 
     // Check if Canvas already has this exact grade
