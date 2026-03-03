@@ -8,7 +8,7 @@ updated_by: claude-code
 
 ## What This Is
 
-This folder is the **shared memory** for the Common-Curriculum project. It captures design decisions, evidence from student data, active issues, and open questions across two courses (CST395 and CST349) so that anyone — human or AI — can quickly understand the current state and contribute effectively.
+This folder is the **shared memory** for the Common-Curriculum project. It captures design decisions, evidence from student data, active issues, and open questions across two courses (CST395 and CST349) — as well as early-stage thinking on broader CTI 2.0 initiatives — so that anyone — human or AI — can quickly understand the current state and contribute effectively.
 
 ## How to Get Started
 
@@ -77,6 +77,7 @@ Check `open-questions.md` regularly. If you see a question where you disagree wi
 | `open-questions.md` | Unresolved design tensions | Anyone with questions or opinions |
 | `terminology.md` | Canonical operational terms, allowed aliases, deprecated names | Anyone noticing naming drift |
 | `content-qa.md` | Definition of Done checklist for publishing pages | Anyone creating or revising content |
+| `science-of-computing.md` | Early-stage concept: foundational computing reasoning for AI-augmented builders. Core problem, two layers, architectural fit, open questions. Broader than CST395/CST349 — shapes CTI 2.0 and SOSE. | Anyone working on Science of Computing investigation |
 | `changelog.md` | What changed, when, by whom, why | Everyone, every session |
 
 ## Ground Rules
