@@ -1139,7 +1139,7 @@ async function generateDashboard(courseName, dataDir, api) {
             dueDate: gData.dueDate || submissionIndex[aKey]?.dueDate || null,
             totalStudents: gData.grades.length,
             submittedCount: submitted.length,
-            pendingCount: submitted.filter(g => g.status === 'pending').length,
+            pendingCount: submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai').length,
             reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
           });
         }
@@ -3036,9 +3036,9 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
       const info = anonToInfo[anonId];
       if (!info) continue;
 
-      // Check if already reviewed/posted in existing grading
+      // Check if already graded/reviewed/posted in existing grading
       const existing = existingGrades[anonId];
-      if (existing && (existing.status === 'reviewed' || existing.status === 'posted')) {
+      if (existing && (existing.status === 'reviewed' || existing.status === 'posted' || existing.status === 'graded_by_ai')) {
         grades.push(existing);
         assignmentSkipped++;
         continue;
@@ -3155,6 +3155,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           gradeEntry.finalComment = result.comment;
           gradeEntry.confidence = result.confidence;
           gradeEntry.flag = result.flag;
+          gradeEntry.status = 'graded_by_ai';
           gradeEntry.internalNote = '';
           assignmentGraded++;
         } catch (err) {
@@ -3203,6 +3204,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
             gradeEntry.finalComment = result.comment;
             gradeEntry.confidence = result.confidence;
             gradeEntry.flag = result.flag;
+            gradeEntry.status = 'graded_by_ai';
             gradeEntry.extractedText = result.extractedText;
             gradeEntry.internalNote = `File: ${sub.attachmentFilename || 'unknown'}, ${(fileData.size / 1024).toFixed(1)}KB`;
             assignmentGraded++;
@@ -3249,7 +3251,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
     totalGraded += assignmentGraded;
     totalSkipped += assignmentSkipped;
     gradedAssignmentKeys.push(assignmentKey);
-    console.log(`    → ${assignmentGraded} graded, ${assignmentSkipped} skipped (reviewed/posted/pre-graded)`);
+    console.log(`    → ${assignmentGraded} graded, ${assignmentSkipped} skipped (ai-graded/reviewed/posted/pre-graded)`);
 
     // Backfill extracted content into submissions
     let backfilled = 0;
@@ -3288,7 +3290,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
         dueDate: gData.dueDate || null,
         totalStudents: gData.grades.length,
         submittedCount: submitted.length,
-        pendingCount: submitted.filter(g => g.status === 'pending').length,
+        pendingCount: submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai').length,
         reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
       });
     }
@@ -3336,7 +3338,7 @@ function buildGradingDashboardHTML(gradingData, submissionsData, courseName, pre
 
   // Compute stats
   const submitted = grades.filter(g => g.contentType !== 'none');
-  const pending = submitted.filter(g => g.status === 'pending');
+  const pending = submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai');
   const reviewed = grades.filter(g => g.status === 'reviewed' || g.status === 'posted');
   const flagged = grades.filter(g => g.flag === 'insincere');
   const lowConf = grades.filter(g => g.confidence === 'low');
@@ -3407,6 +3409,7 @@ tr:hover { background: #f8fafc; }
 .badge-late { background: #fff7ed; color: #ea580c; }
 .badge-override { background: #fff7ed; color: #ea580c; }
 .badge-ok { background: #f0fdf4; color: #16a34a; }
+.badge-ai { background: #eff6ff; color: #2563eb; }
 
 .content-preview { max-width: 300px; font-size: 13px; color: #64748b; cursor: pointer; }
 .content-preview .truncated { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -3555,7 +3558,7 @@ function renderTable(filter) {
 
     // Status cell
     const statusCell = document.createElement('td');
-    const statusBadge = g.status === 'posted' ? 'badge-ok' : g.status === 'reviewed' ? 'badge-ok' : '';
+    const statusBadge = g.status === 'posted' ? 'badge-ok' : g.status === 'reviewed' ? 'badge-ok' : g.status === 'graded_by_ai' ? 'badge-ai' : '';
     statusCell.innerHTML = '<span class="badge ' + statusBadge + '">' + g.status.toUpperCase() + '</span>';
     tr.appendChild(statusCell);
 
