@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Narrowing Move — Interactive Examples | CST395</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1419;
+      --bg-card: #1a2332;
+      --bg-hover: #1e2a3a;
+      --teal-400: #2dd4bf;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --text-1: #f1f5f9;
+      --text-2: #94a3b8;
+      --text-3: #64748b;
+      --amber-400: #fbbf24;
+      --amber-600: #d97706;
+      --red-500: #ef4444;
+      --green-400: #4ade80;
+      --green-600: #16a34a;
+      --purple-400: #c084fc;
+      --purple-600: #9333ea;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.7; font-size: 17px; }
+    .container { max-width: 780px; margin: 0 auto; padding: 24px 20px; }
+    .header { margin-bottom: 32px; }
+    .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+    .header h1 span { color: var(--teal-400); }
+    .header p { color: var(--text-2); font-size: 15px; line-height: 1.6; }
+    .chooser { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 32px; }
+    @media (max-width: 650px) { .chooser { grid-template-columns: 1fr; } }
+    .chooser-btn {
+      background: var(--bg-card); border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px; cursor: pointer; text-align: left;
+      transition: all 0.2s;
+    }
+    .chooser-btn:hover { border-color: rgba(255,255,255,0.2); background: var(--bg-hover); }
+    .chooser-btn.active { border-color: var(--teal-400); background: rgba(45,212,191,0.05); }
+    .chooser-btn .tag { font-size: 11px; color: var(--teal-400); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; font-weight: 600; }
+    .chooser-btn .title { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .chooser-btn .desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .progress-row { display: flex; gap: 4px; margin-bottom: 24px; align-items: center; }
+    .progress-dot { width: 32px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); transition: background 0.3s; }
+    .progress-dot.done { background: var(--teal-500); }
+    .progress-dot.active { background: var(--amber-400); }
+    .progress-label { font-size: 12px; color: var(--text-3); margin-left: 8px; }
+    .scenario { display: none; }
+    .scenario.active { display: block; }
+    .step { margin-bottom: 0; }
+    .step.hidden { display: none; }
+    .msg { border-radius: 10px; padding: 14px 18px; margin: 8px 0; font-size: 15px; line-height: 1.7; }
+    .msg .who { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 600; }
+    .msg-student { background: rgba(255,255,255,0.04); border-left: 3px solid var(--text-3); }
+    .msg-student .who { color: var(--text-3); }
+    .msg-ai { background: rgba(45,212,191,0.04); border-left: 3px solid var(--teal-500); }
+    .msg-ai .who { color: var(--teal-400); }
+    .msg-partner { background: rgba(251,191,36,0.04); border-left: 3px solid var(--amber-400); }
+    .msg-partner .who { color: var(--amber-400); }
+    .pause-box {
+      background: rgba(251,191,36,0.06); border: 1px dashed rgba(251,191,36,0.3);
+      border-radius: 10px; padding: 14px 18px; margin: 12px 0; text-align: center;
+    }
+    .pause-box p { color: var(--amber-400); font-weight: 600; font-size: 15px; margin: 0; }
+    .pause-box .sub { color: var(--text-3); font-weight: 400; font-size: 13px; margin-top: 4px; font-style: italic; }
+    .gate {
+      background: linear-gradient(135deg, rgba(147,51,234,0.08), rgba(147,51,234,0.03));
+      border: 1px solid rgba(147,51,234,0.25);
+      border-radius: 12px; padding: 20px; margin: 20px 0;
+    }
+    .gate-label { font-size: 11px; color: var(--purple-400); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 8px; }
+    .gate-question { font-size: 16px; color: var(--text-1); font-weight: 500; margin-bottom: 14px; line-height: 1.5; }
+    .gate textarea {
+      width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 10px 14px; color: var(--text-1); font-family: inherit;
+      font-size: 14px; line-height: 1.6; resize: vertical; min-height: 60px;
+      transition: border-color 0.2s;
+    }
+    .gate textarea:focus { outline: none; border-color: var(--purple-400); }
+    .gate textarea::placeholder { color: var(--text-3); }
+    .gate-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .gate-opt {
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 10px 14px; cursor: pointer; font-size: 14px;
+      color: var(--text-2); transition: all 0.2s; text-align: left;
+    }
+    .gate-opt:hover { border-color: rgba(255,255,255,0.2); color: var(--text-1); }
+    .gate-opt.selected { border-color: var(--purple-400); background: rgba(147,51,234,0.1); color: var(--text-1); }
+    .gate-btn {
+      background: var(--purple-600); border: none; color: white; padding: 10px 24px;
+      border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+      margin-top: 10px; transition: all 0.2s; opacity: 0.4; pointer-events: none;
+    }
+    .gate-btn.ready { opacity: 1; pointer-events: all; }
+    .gate-btn.ready:hover { background: #7c3aed; }
+    .reveal {
+      background: rgba(147,51,234,0.04); border-left: 3px solid var(--purple-400);
+      border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 12px 0;
+      font-size: 14px; color: var(--text-2); line-height: 1.7;
+    }
+    .reveal strong { color: var(--purple-400); }
+    .reveal.hidden { display: none; }
+    .mvp-box {
+      background: rgba(74,222,128,0.04); border: 2px solid rgba(74,222,128,0.25);
+      border-radius: 12px; padding: 20px; margin: 20px 0;
+    }
+    .mvp-box h3 { color: var(--green-400); font-size: 15px; margin-bottom: 10px; }
+    .mvp-box p { color: var(--text-2); margin-bottom: 6px; font-size: 14px; }
+    .mvp-box strong { color: var(--text-1); }
+    .takeaway {
+      background: linear-gradient(135deg, rgba(45,212,191,0.08), rgba(45,212,191,0.02));
+      border: 1px solid rgba(45,212,191,0.2); border-radius: 12px; padding: 20px; margin: 24px 0;
+    }
+    .takeaway h3 { color: var(--teal-400); font-size: 15px; margin-bottom: 8px; }
+    .takeaway p { color: var(--text-2); font-size: 14px; }
+    .round-label {
+      display: inline-block; padding: 4px 12px; border-radius: 16px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .round-label.dojo { background: var(--teal-600); color: white; }
+    .round-label.pause { background: var(--amber-600); color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>The Narrowing Move — <span>See How It Works</span></h1>
+      <p>Pick the scenario closest to your partner's problem. You'll step through a Dojo conversation — but at each step, you answer a question about the thinking before you see what happens next. This is exactly how your own session will work.</p>
+    </div>
+    <div class="chooser">
+      <div class="chooser-btn active" onclick="pickScenario('A')">
+        <div class="tag">Scenario A</div>
+        <div class="title">Task Delay</div>
+        <div class="desc">Pushes work off all week, mentally estimates how late he can start, calendars don't stick</div>
+      </div>
+      <div class="chooser-btn" onclick="pickScenario('B')">
+        <div class="tag">Scenario B</div>
+        <div class="title">Overcommitment</div>
+        <div class="desc">Too many clubs, wants sleep + interview prep, can't say no to social pressure</div>
+      </div>
+      <div class="chooser-btn" onclick="pickScenario('C')">
+        <div class="tag">Scenario C</div>
+        <div class="title">Job Search</div>
+        <div class="desc">Wants LeetCode + job apps but browses listings without ever applying</div>
+      </div>
+    </div>
+    <div class="progress-row" id="progressRow"></div>
+    <!-- ============================================================ -->
+    <!-- SCENARIO A: TASK DELAY                                       -->
+    <!-- ============================================================ -->
+    <div class="scenario active" id="scenarioA">
+      <div class="step" data-step="1">
+        <span class="round-label dojo">Round 1 — State What You Know</span>
+        <div class="msg msg-student">
+          <div class="who">Student</div>
+          My partner is a CS student who procrastinates. His hardest day is when he has to do everything he pushed off. He mentally estimates how long tasks take and uses that to justify delaying. He said "I've tried to create a calendar to section off my time" but it failed because "there's no real push for accountability." I think I need to build something that pushes him to start earlier.
+        </div>
+        <div class="gate" id="A-gate-1">
+          <div class="gate-label">Before you see the AI's response</div>
+          <div class="gate-question">The student says "I need to build something that pushes him to start earlier." What's the problem with jumping to that conclusion?</div>
+          <div class="gate-options">
+            <div class="gate-opt" onclick="selectOpt(this)">It's a solution before understanding the specific problem</div>
+            <div class="gate-opt" onclick="selectOpt(this)">The partner already tried calendars — "pushing" is the same idea</div>
+            <div class="gate-opt" onclick="selectOpt(this)">It assumes "starting earlier" is the right goal — maybe it's not about timing</div>
+            <div class="gate-opt" onclick="selectOpt(this)">All of the above</div>
+          </div>
+          <button class="gate-btn" onclick="revealNext('A', 1)">See what the AI catches →</button>
+        </div>
+        <div class="reveal hidden" id="A-reveal-1">
+          <strong>All of them.</strong> The student jumped to a solution type ("push to start earlier") based on a surface reading. The AI's job in Round 1 is to separate what the student <em>observed</em> from what they <em>assumed.</em> Watch how it redirects — it doesn't give answers, it asks what happens in the specific moment of decision.
+        </div>
+      </div>
+      <div class="step hidden" data-step="2">
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          "Pushes him to start earlier" — that's already a solution assumption. What if starting earlier isn't the right target? When he scans an assignment and decides to defer, what happens right after? Does he feel relief? Anxiety? Does he write the estimate down?
+        </div>
+        <div class="msg msg-student">
+          <div class="who">Student</div>
+          He said he feels fine in the moment — like a rational decision. The bad feeling comes later when it piles up. He doesn't write anything down, it's all in his head.
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          So there's a gap: the estimation feels rational in the moment, but creates anxiety all week. He knows the pattern. Awareness isn't the problem. You need the minute-by-minute — not the general story.
+        </div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #1</p>
+          <p class="sub">"Walk me through yesterday — when you got an assignment, what happened in the first 10 minutes? Step by step."</p>
+        </div>
+        <div class="gate" id="A-gate-2">
+          <div class="gate-label">Think about this</div>
+          <div class="gate-question">Why does the AI insist on "yesterday, minute by minute" instead of accepting the general pattern?</div>
+          <textarea placeholder="Write your thinking here..." oninput="enableBtn('A', 2, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('A', 2)">See why →</button>
+        </div>
+        <div class="reveal hidden" id="A-reveal-2">
+          <strong>General patterns hide the intervention point.</strong> "He procrastinates" is a label. "He opened Canvas, skimmed for 30 seconds, thought 'I can do this Thursday,' and closed the tab in under a minute" — that's a sequence with specific moments you can design for. You can't build for "procrastination." You can build for "the 30 seconds between skimming and closing Canvas."
+        </div>
+      </div>
+      <div class="step hidden" data-step="3">
+        <span class="round-label dojo">Round 2 — Find the Sub-Problems</span>
+        <div class="msg msg-partner">
+          <div class="who">What the partner said</div>
+          "Yesterday I got a Canvas notification, opened it on my phone, skimmed the requirements for about 30 seconds, thought 'this is maybe 2 hours, I could do it Thursday night.' Closed Canvas. The whole thing took less than a minute. Didn't think about it again until Wednesday when two more had stacked up."
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          Three distinct sub-problems:<br>
+          <strong>1. The 30-second skim:</strong> Reads just enough to estimate, not to understand. Estimate may be wrong.<br>
+          <strong>2. The "future self" handoff:</strong> Delegates to Thursday-him, assuming that version will have energy and no new work.<br>
+          <strong>3. Invisible accumulation:</strong> Nothing tracks what he deferred. By Wednesday, three things piled up.<br><br>
+          Before you pick — research says this isn't a discipline problem. Procrastination researchers found it's <strong>emotion regulation</strong>. People delay tasks that trigger negative emotions, and the "future self" estimate is systematically biased — we imagine a version more motivated than we'll actually be. This is also <strong>temporal discounting</strong>: the further away a deadline, the less real it feels.<br><br>
+          This means a reminder or "push" system won't work. He'll ignore it like the calendar.
+        </div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #2</p>
+          <p class="sub">"Of those three — the quick skim, handing it off to future-you, or not tracking what you've deferred — which one, if it disappeared, would change your week the most?"</p>
+        </div>
+        <div class="gate" id="A-gate-3">
+          <div class="gate-label">Your turn to narrow</div>
+          <div class="gate-question">Of the three sub-problems — which one do you think is the <em>trigger</em>? The first domino? And why?</div>
+          <textarea placeholder="Which one starts the chain, and why..." oninput="enableBtn('A', 3, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('A', 3)">See what the partner says →</button>
+        </div>
+        <div class="reveal hidden" id="A-reveal-3">
+          <strong>The partner is the tiebreaker — not you, not the AI.</strong> You might have a theory. But only the partner knows their experience. Watch — he picks the one the student didn't expect.
+        </div>
+      </div>
+      <div class="step hidden" data-step="4">
+        <span class="round-label dojo">Round 3 — Define What to Build</span>
+        <div class="msg msg-partner">
+          <div class="who">Partner's answer</div>
+          "The future-self thing. The skimming doesn't bother me, and I can see what's due on Canvas. The problem is I keep telling myself I'll do it later and <strong>I always believe myself, even though I'm always wrong about it.</strong>"
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          He's aware and still does it. So the intervention isn't awareness — it's friction between the decision and the action. Something that makes the "future self" handoff harder to do on autopilot. Don't default to "app." Think about how he actually operates — he skims on his phone, closes Canvas in under a minute.
+        </div>
+        <div class="msg msg-student">
+          <div class="who">Student</div>
+          What if he had to write down his commitment — task, when he'll do it, how long? So he can see the pile building.
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          That's designing for <em>accumulation</em>, but he said the <em>handoff</em> is the trigger. What if the tool forced a question: "You're telling future-you to do this Thursday. What's future-you giving up to make room?" That's the question he never asks. "Thursday" feels free. It's not.
+        </div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #3</p>
+          <p class="sub">"Would you actually use something that makes you pause and answer 'what is Thursday-you giving up?' — or would you skip it?"</p>
+        </div>
+        <div class="gate" id="A-gate-4">
+          <div class="gate-label">Design instinct check</div>
+          <div class="gate-question">The AI redirected from "make the pile visible" to "make the deferral harder." Why is that a better target?</div>
+          <div class="gate-options">
+            <div class="gate-opt" onclick="selectOpt(this)">Visibility is after the fact — friction is at the moment of decision</div>
+            <div class="gate-opt" onclick="selectOpt(this)">He already sees the pile on Canvas — another tracker won't change behavior</div>
+            <div class="gate-opt" onclick="selectOpt(this)">The partner said the handoff is the problem, so build for the handoff</div>
+            <div class="gate-opt" onclick="selectOpt(this)">All of these</div>
+          </div>
+          <button class="gate-btn" onclick="revealNext('A', 4)">See the surprise →</button>
+        </div>
+        <div class="reveal hidden" id="A-reveal-4">
+          <strong>All of them — and the partner is about to change the plan entirely.</strong> This is the most important moment: the partner's honest reaction to your idea matters more than the idea itself.
+        </div>
+      </div>
+      <div class="step hidden" data-step="5">
+        <div class="msg msg-partner">
+          <div class="who">Partner's honest reaction</div>
+          "A form or app? I'd probably skip it. But honestly — when you asked me that question just now, face to face, I actually stopped and thought about it. <strong>I wouldn't do that alone with a screen.</strong>"
+        </div>
+        <div class="gate" id="A-gate-5">
+          <div class="gate-label">Catch the insight</div>
+          <div class="gate-question">The partner just told you what form the solution needs to take. What is it?</div>
+          <textarea placeholder="What should the solution actually be..." oninput="enableBtn('A', 5, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('A', 5)">See the final MVP →</button>
+        </div>
+        <div class="reveal hidden" id="A-reveal-5">
+          <strong>Not an app. A person.</strong> The partner said a human question works where a screen doesn't. The intervention is social, not technical. The student's CS instinct was software. The partner's experience said otherwise.
+        </div>
+      </div>
+      <div class="step hidden" data-step="6">
+        <span class="round-label dojo">Round 4 — Locked MVP</span>
+        <div class="mvp-box">
+          <h3>Final MVP</h3>
+          <p><strong>Broad problem:</strong> Partner delays assignments all week, then crams.</p>
+          <p><strong>Specific component:</strong> The "future self" handoff — deciding to defer without questioning the cost.</p>
+          <p><strong>What I'm building:</strong> A daily 2-minute check-in via text. When he defers a task, he texts three things: the task, when he'll do it, and what that time was already claimed for. I respond: "Do you still want to make that trade?"</p>
+          <p><strong>How he uses it:</strong> Once daily via text when he gets new assignments.</p>
+          <p><strong>Measurable:</strong> Over 5 days, how many decisions change after check-in. If 2/5 change, something shifted.</p>
+        </div>
+        <div class="takeaway">
+          <h3>Carry this into your session</h3>
+          <p>Started thinking "productivity app." Ended with a text protocol. Three things made that happen: (1) the AI demanded minute-by-minute instead of the general story, (2) research on emotion regulation killed the "push harder" instinct, (3) the partner said "I'd think about it if someone asked me" — and that determined the form. <strong>Your partner will do the same if you ask the right questions.</strong></p>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================ -->
+    <!-- SCENARIO B: OVERCOMMITMENT                                   -->
+    <!-- ============================================================ -->
+    <div class="scenario" id="scenarioB">
+      <div class="step" data-step="1">
+        <span class="round-label dojo">Round 1 — State What You Know</span>
+        <div class="msg msg-student">
+          <div class="who">Student</div>
+          My partner is in too many clubs and activities. It's taking away from sleep and interview prep. They said it's "hard to deal with all of them." I think they need a system to prioritize — a keep/pause/reduce tradeoff exercise.
+        </div>
+        <div class="gate" id="B-gate-1">
+          <div class="gate-label">Before the AI responds</div>
+          <div class="gate-question">The partner already said they want more sleep and interview prep. If they know their priorities, why haven't they dropped anything? What might the real blocker be?</div>
+          <div class="gate-options">
+            <div class="gate-opt" onclick="selectOpt(this)">They don't actually know which to drop</div>
+            <div class="gate-opt" onclick="selectOpt(this)">They know, but the social cost of dropping things feels too high</div>
+            <div class="gate-opt" onclick="selectOpt(this)">Being "involved" is part of their identity</div>
+            <div class="gate-opt" onclick="selectOpt(this)">They haven't felt consequences hard enough</div>
+          </div>
+          <button class="gate-btn" onclick="revealNext('B', 1)">See →</button>
+        </div>
+        <div class="reveal hidden" id="B-reveal-1">
+          <strong>Social cost and identity.</strong> They <em>know</em> sleep and interviews matter more. A prioritization system solves a problem they don't have. The AI tests this immediately.
+        </div>
+      </div>
+      <div class="step hidden" data-step="2">
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          Does your partner not know their priorities — or do they know and can't act? Those lead to completely different solutions. They told you they want sleep and interviews. They <em>see</em> the cost. They just haven't made the cut. Why?
+        </div>
+        <div class="msg msg-student"><div class="who">Student</div>They said they "want to be part of a lot of things" and care about their commitments.</div>
+        <div class="msg msg-ai"><div class="who">Dojo AI</div>Are they staying because the clubs matter, or because leaving feels like failing? You need the specific daily experience — not the general overload.</div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #1</p>
+          <p class="sub">"Pick one evening last week where you wanted to do interview prep or sleep early but couldn't. What happened instead?"</p>
+        </div>
+        <div class="gate" id="B-gate-2">
+          <div class="gate-label">What to listen for</div>
+          <div class="gate-question">When the partner describes that evening, what specific moment should the student be looking for? Not the schedule — the decision point.</div>
+          <textarea placeholder="What's the decision moment..." oninput="enableBtn('B', 2, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('B', 2)">See the partner's story →</button>
+        </div>
+        <div class="reveal hidden" id="B-reveal-2">
+          <strong>The moment they chose to stay instead of leave.</strong> Not "I had a meeting" (schedule fact) — but "the meeting ended and I stayed because..." That's where the intervention lives.
+        </div>
+      </div>
+      <div class="step hidden" data-step="3">
+        <span class="round-label dojo">Round 2 — Find the Sub-Problems</span>
+        <div class="msg msg-partner">
+          <div class="who">Partner's answer</div>
+          "Tuesday, club meeting 6-8pm. I'm an officer so I had to go. After, members wanted to hang out. Stayed until 10pm because I felt bad saying no. Got home, too late for interview prep. <strong>I know I should have left, but I didn't want to be that person.</strong>"
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          "I didn't want to be that person." Two sub-problems:<br>
+          <strong>1. Role obligations:</strong> Officer status creates mandatory presence.<br>
+          <strong>2. Boundary moments:</strong> After the meeting, leaving requires overriding live social pressure.<br><br>
+          Research: this is <strong>commitment escalation</strong> — continuing because you've invested, not because it's valuable. Also <strong>identity-based decisions</strong>: "club officer" is who they are. A time-blocking tool won't work because at 8pm Tuesday, social pressure overrides any plan.
+        </div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #2</p>
+          <p class="sub">"Two things: the officer role that makes you show up, and the pressure to stay late. Which one, if it disappeared, would give you the most time back?"</p>
+        </div>
+        <div class="gate" id="B-gate-3">
+          <div class="gate-label">Anticipate the form</div>
+          <div class="gate-question">If the partner says the in-the-moment boundary is the problem (not the meetings themselves), what <em>kind</em> of solution does that point toward?</div>
+          <textarea placeholder="What category of solution..." oninput="enableBtn('B', 3, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('B', 3)">See Round 3 →</button>
+        </div>
+        <div class="reveal hidden" id="B-reveal-3">
+          <strong>Social skills, not scheduling.</strong> "I can't leave when I want to" isn't fixed by any calendar or tracker. The solution gives them either a practiced exit method or an external reason that makes leaving socially OK.
+        </div>
+      </div>
+      <div class="step hidden" data-step="4">
+        <span class="round-label dojo">Round 3 — Define What to Build</span>
+        <div class="msg msg-partner"><div class="who">Partner</div>"The in-the-moment thing. I don't mind meetings. It's the after. If I could just leave when the meeting ends, I'd gain like <strong>6 hours a week</strong>."</div>
+        <div class="msg msg-student"><div class="who">Student</div>Maybe prepared scripts — like "I've got something at 8, I need to head out"?</div>
+        <div class="msg msg-ai"><div class="who">Dojo AI</div>Scripts alone won't work — they know they should leave. What if before each meeting, they pre-commit to an exit time by texting you? You text at that time. External accountability for the exit, not just the arrival.</div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #3</p>
+          <p class="sub">"What if before each meeting you text me when you plan to leave, and I text you? Would that help or would you ignore it?"</p>
+        </div>
+        <div class="msg msg-partner">
+          <div class="who">Partner's reaction</div>
+          "If someone texted me I'd probably actually leave. It gives me an excuse — 'someone's expecting me.' <strong>The excuse matters more than the reminder.</strong>"
+        </div>
+        <div class="gate" id="B-gate-4">
+          <div class="gate-label">Catch the design insight</div>
+          <div class="gate-question">"The excuse matters more than the reminder." How should that one sentence change what gets built?</div>
+          <textarea placeholder="How does this change the design..." oninput="enableBtn('B', 4, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('B', 4)">See the final MVP →</button>
+        </div>
+        <div class="reveal hidden" id="B-reveal-4">
+          <strong>The system's job isn't reminding — it's providing social cover.</strong> The text is evidence: "Someone needs me." Design for making the excuse real, not for notification features.
+        </div>
+      </div>
+      <div class="step hidden" data-step="5">
+        <span class="round-label dojo">Round 4 — Locked MVP</span>
+        <div class="mvp-box">
+          <h3>Final MVP</h3>
+          <p><strong>Broad problem:</strong> Partner overcommitted, losing sleep + interview prep time.</p>
+          <p><strong>Specific component:</strong> The post-meeting social tail — can't exit when the meeting ends.</p>
+          <p><strong>What I'm building:</strong> Pre-commitment + exit protocol. Before each event, they text me exit time and what they're protecting. I text when time's up. It's both reminder and social excuse.</p>
+          <p><strong>How they use it:</strong> Before each club event for one week (~3-4 events).</p>
+          <p><strong>Measurable:</strong> Hours reclaimed after meetings. Currently ~6 hrs/week lost. Leave on time for 3/4 events = 4+ hours back.</p>
+        </div>
+        <div class="takeaway">
+          <h3>Carry this into your session</h3>
+          <p>Started with "prioritization system." Ended with "a text before each meeting." The partner's Tuesday story revealed the decision point was <em>after</em> meetings, not during. "The excuse matters more than the reminder" shaped the final design. <strong>Your partner's story will show you where the intervention actually lives.</strong></p>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================ -->
+    <!-- SCENARIO C: JOB SEARCH                                       -->
+    <!-- ============================================================ -->
+    <div class="scenario" id="scenarioC">
+      <div class="step" data-step="1">
+        <span class="round-label dojo">Round 1 — State What You Know</span>
+        <div class="msg msg-student">
+          <div class="who">Student</div>
+          My partner wants to apply to jobs and start LeetCode. He mentioned building a "system" for tracking applications. His time "isn't used best" but he's not rushed. He's also in CTI Accelerate, MINT, plans micro-internships. I'm thinking I'll build him a job application tracker.
+        </div>
+        <div class="gate" id="C-gate-1">
+          <div class="gate-label">Before the AI responds</div>
+          <div class="gate-question">The student wants to build a "tracker." But the partner also said his time "isn't used best." If the real problem is how time gets used, will a tracker fix that? What assumption is being skipped?</div>
+          <textarea placeholder="What's the hidden assumption..." oninput="enableBtn('C', 1, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('C', 1)">See what the AI catches →</button>
+        </div>
+        <div class="reveal hidden" id="C-reveal-1">
+          <strong>The student is building what the partner <em>asked for</em> instead of what the partner <em>needs.</em></strong> A tracker helps someone who's already applying. It doesn't help someone who hasn't started. The student needs to find out what happens when his partner tries to job search — and fails.
+        </div>
+      </div>
+      <div class="step hidden" data-step="2">
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          Your partner listed five things — LeetCode, applications, tracker, CTI, MINT, micro-internships. That's a wishlist, not a problem. You jumped to "tracker" because he asked for it. But "time isn't used best" means tracking isn't the bottleneck. Something prevents him from using the time he has. What does he do <em>instead</em> of job stuff?
+        </div>
+        <div class="msg msg-student"><div class="who">Student</div>We didn't get into that detail. I said nothing surprised me about his goals — they're in line with everyone in tech.</div>
+        <div class="msg msg-ai"><div class="who">Dojo AI</div>"Nothing surprised me" is a red flag. It means the conversation stayed surface. You know what he wants. You don't know what happens when he tries and fails.</div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #1</p>
+          <p class="sub">"When was the last time you sat down to work on job stuff? Walk me through what happened from the moment you opened your laptop."</p>
+        </div>
+        <div class="gate" id="C-gate-2">
+          <div class="gate-label">Why "nothing surprised me" matters</div>
+          <div class="gate-question">The AI flagged "nothing surprised me" as a problem. Why is surprise important in a discovery conversation?</div>
+          <div class="gate-options">
+            <div class="gate-opt" onclick="selectOpt(this)">If nothing surprises you, you only heard what you already believed</div>
+            <div class="gate-opt" onclick="selectOpt(this)">Your questions confirmed assumptions instead of challenging them</div>
+            <div class="gate-opt" onclick="selectOpt(this)">You didn't go deep enough to find the unexpected</div>
+            <div class="gate-opt" onclick="selectOpt(this)">All of the above</div>
+          </div>
+          <button class="gate-btn" onclick="revealNext('C', 2)">See the failed attempt →</button>
+        </div>
+        <div class="reveal hidden" id="C-reveal-2">
+          <strong>All of them.</strong> A good discovery should surprise you at least once. If everything matches your expectations, you're hearing the surface story. The specific failed attempt is where the real problem lives.
+        </div>
+      </div>
+      <div class="step hidden" data-step="3">
+        <span class="round-label dojo">Round 2 — Find the Sub-Problems</span>
+        <div class="msg msg-partner">
+          <div class="who">Partner's story</div>
+          "Had a free afternoon. Thought 'I should apply to jobs.' Opened LinkedIn, started browsing. Immediately overwhelmed — hundreds of results. Spent 20 minutes scrolling, opened a few listings, saw requirements I wasn't sure I met, eventually closed the tab. <strong>Ended up watching YouTube tutorials instead. Felt productive but wasn't job searching.</strong>"
+        </div>
+        <div class="msg msg-ai">
+          <div class="who">Dojo AI</div>
+          Three sub-problems:<br>
+          <strong>1. Overwhelm at entry:</strong> LinkedIn floods him with options he can't evaluate.<br>
+          <strong>2. Qualification uncertainty:</strong> Can't tell if he qualifies. Every listing is a "maybe." Too many maybes = paralysis.<br>
+          <strong>3. Productive-feeling substitute:</strong> YouTube tutorials feel like career development but avoid the actual task. This is <strong>productive procrastination.</strong><br><br>
+          Career research says the #1 barrier isn't motivation — it's <strong>role clarity.</strong> People who can't articulate what role they're seeking spend 3-4x longer browsing and apply less. Also: <strong>decision fatigue</strong> — after evaluating ~10 listings without applying, most people quit. Energy goes to evaluating, not applying.<br><br>
+          A tracker doesn't help if he never gets past browsing.
+        </div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #2</p>
+          <p class="sub">"Three things happened: too many options, not knowing if you qualify, and switching to YouTube. Which one — if it disappeared — would get you to actually submit an application?"</p>
+        </div>
+        <div class="gate" id="C-gate-3">
+          <div class="gate-label">Research changes the target</div>
+          <div class="gate-question">The AI introduced "role clarity" and "decision fatigue." How does this research change what the student should build? What's the difference between what the partner asked for (tracker) and what the research reveals?</div>
+          <textarea placeholder="How does research shift the solution..." oninput="enableBtn('C', 3, this)"></textarea>
+          <button class="gate-btn" onclick="revealNext('C', 3)">See Round 3 →</button>
+        </div>
+        <div class="reveal hidden" id="C-reveal-3">
+          <strong>The bottleneck is before tracking.</strong> He never gets to the point where tracking helps. The research says he's stuck at evaluation — 20 minutes scrolling, 0 applications. The solution targets those 20 minutes, not the nonexistent application list.
+        </div>
+      </div>
+      <div class="step hidden" data-step="4">
+        <span class="round-label dojo">Round 3 — Define What to Build</span>
+        <div class="msg msg-partner"><div class="who">Partner</div>"The qualification thing. If I knew which jobs I was qualified for, I'd apply. I don't want to waste time on something I have no shot at. Also, <strong>I don't really know how to read job listings</strong> — like which requirements are actually required vs. wish list."</div>
+        <div class="msg msg-ai"><div class="who">Dojo AI</div>"I don't know how to read job listings." That's the real problem. Not tracking. Not time. He doesn't have a mental model for evaluating fit.</div>
+        <div class="msg msg-student"><div class="who">Student</div>What if I built a tool where he pastes a listing and it breaks down must-haves vs. nice-to-haves?</div>
+        <div class="msg msg-ai"><div class="who">Dojo AI</div>Strong concept but copy-pasting every listing is high friction. He'll do it twice. What if it's simpler — a one-page reference based on his skills that he keeps open in a tab next to LinkedIn?</div>
+        <div class="pause-box">
+          <p>⏸ PARTNER PAUSE #3</p>
+          <p class="sub">"Two options: paste a listing into a tool, or a one-page cheat sheet you keep open while browsing. Which would you actually use next Tuesday?"</p>
+        </div>
+        <div class="gate" id="C-gate-4">
+          <div class="gate-label">Predict the partner</div>
+          <div class="gate-question">High-tech (paste + analyze) vs. low-tech (cheat sheet in a tab). Which will the partner pick?</div>
+          <div class="gate-options">
+            <div class="gate-opt" onclick="selectOpt(this)">Paste tool — it's more accurate and does the work</div>
+            <div class="gate-opt" onclick="selectOpt(this)">Cheat sheet — lower friction, works inside the browsing flow</div>
+            <div class="gate-opt" onclick="selectOpt(this)">Doesn't matter — both work equally</div>
+          </div>
+          <button class="gate-btn" onclick="revealNext('C', 4)">See →</button>
+        </div>
+        <div class="reveal hidden" id="C-reveal-4">
+          <strong>The cheat sheet.</strong> Accuracy doesn't matter if the tool interrupts the flow. He's already on LinkedIn — the solution works <em>inside</em> that, not alongside it. Lower friction almost always wins.
+        </div>
+      </div>
+      <div class="step hidden" data-step="5">
+        <span class="round-label dojo">Round 4 — Locked MVP</span>
+        <div class="msg msg-partner">
+          <div class="who">Partner</div>
+          "The cheat sheet. I don't want to copy-paste. <strong>If I could glance at something and know in 30 seconds whether to apply or skip, that would change everything.</strong> Especially if it's based on my resume."
+        </div>
+        <div class="mvp-box">
+          <h3>Final MVP</h3>
+          <p><strong>Broad problem:</strong> Partner browses job listings without applying.</p>
+          <p><strong>Specific component:</strong> Qualification uncertainty — can't quickly tell if a listing matches his level.</p>
+          <p><strong>What I'm building:</strong> Personalized "Job Listing Cheat Sheet" — one page based on his resume and target roles. Keywords that signal entry-level vs. senior, his skills mapped to common requirements, apply/skip/stretch decision framework. Evaluates any listing in under 30 seconds.</p>
+          <p><strong>How he uses it:</strong> Pinned tab next to LinkedIn. 3 dedicated search sessions this week.</p>
+          <p><strong>Measurable:</strong> Listings evaluated per session (currently ~10, 0 apps) and applications submitted. Goal: 3+ applications across 3 sessions.</p>
+        </div>
+        <div class="takeaway">
+          <h3>Carry this into your session</h3>
+          <p>Started with "job application tracker." Ended with "a one-page cheat sheet for reading listings." The partner never needed a tracking system — he needed to know how to read a listing in 30 seconds. Career research on role clarity explained why browsing fails. The low-friction form came from his actual workflow. <strong>Listen for the failed attempt. The solution lives in the part that broke down.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const scenarioSteps = { A: 6, B: 5, C: 5 };
+    let currentScenario = 'A';
+    let progress = { A: 1, B: 1, C: 1 };
+    function pickScenario(id) {
+      currentScenario = id;
+      document.querySelectorAll('.scenario').forEach(s => s.classList.remove('active'));
+      document.getElementById('scenario' + id).classList.add('active');
+      document.querySelectorAll('.chooser-btn').forEach((b, i) => {
+        b.classList.toggle('active', i === ['A','B','C'].indexOf(id));
+      });
+      updateProgress();
+      window.scrollTo({ top: document.querySelector('.chooser').offsetTop - 20, behavior: 'smooth' });
+    }
+    function updateProgress() {
+      const total = scenarioSteps[currentScenario];
+      const current = progress[currentScenario];
+      const row = document.getElementById('progressRow');
+      row.innerHTML = '';
+      for (let i = 1; i <= total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        if (i < current) dot.classList.add('done');
+        else if (i === current) dot.classList.add('active');
+        row.appendChild(dot);
+      }
+      const label = document.createElement('span');
+      label.className = 'progress-label';
+      label.textContent = `Step ${current} of ${total}`;
+      row.appendChild(label);
+    }
+    function selectOpt(el) {
+      const gate = el.closest('.gate');
+      gate.querySelectorAll('.gate-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      gate.querySelector('.gate-btn').classList.add('ready');
+    }
+    function enableBtn(scenario, gateNum, textarea) {
+      const btn = document.querySelector(`#${scenario}-gate-${gateNum} .gate-btn`);
+      btn.classList.toggle('ready', textarea.value.trim().length > 10);
+    }
+    function revealNext(scenario, gateNum) {
+      const reveal = document.getElementById(`${scenario}-reveal-${gateNum}`);
+      if (reveal) reveal.classList.remove('hidden');
+      const btn = document.querySelector(`#${scenario}-gate-${gateNum} .gate-btn`);
+      btn.textContent = '✓';
+      btn.style.background = 'var(--green-600)';
+      btn.style.pointerEvents = 'none';
+      btn.style.padding = '10px 16px';
+      const scenarioEl = document.getElementById('scenario' + scenario);
+      const steps = scenarioEl.querySelectorAll('.step');
+      const nextIdx = gateNum;
+      if (nextIdx < steps.length) {
+        steps[nextIdx].classList.remove('hidden');
+        progress[scenario] = nextIdx + 1;
+        updateProgress();
+        setTimeout(() => {
+          reveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+      }
+    }
+    updateProgress();
+  </script>
+  <footer style="text-align: center; padding: 32px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.06);">
+    <p style="margin: 0; font-size: 11px; color: var(--text-3);">
+      CST395 · Week 7 · Scenarios based on anonymized class data. Conversations are modeled, not transcripts.
+    </p>
+  </footer>
+</body>
+</html>
