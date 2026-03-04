@@ -362,30 +362,6 @@ const CST395_CONFIG = {
       week: 7,
       htmlFile: "assignments/s2-w7-productive-reflection.html"
     },
-    "s2-partner-feedback": {
-      canvasId: "582883",
-      title: "S2: Partner Feedback Documentation",
-      dueDate: "2026-03-06",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 7,
-      htmlFile: "assignments/s2-w7-partner-feedback.html"
-    },
-    "s2-design-rationale": {
-      canvasId: "582884",
-      title: "S2: Design Rationale Log",
-      dueDate: "2026-03-07",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 8,
-      htmlFile: "assignments/s2-w8-design-rationale.html"
-    },
     "s2-demo-prep": {
       canvasId: "582885",
       title: "S2: Final Prototype + Demo Prep",
