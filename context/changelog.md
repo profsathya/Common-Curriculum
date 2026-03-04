@@ -11,6 +11,20 @@ Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
 
+## 2026-03-03 — [sathya] Science of Computing concept capture
+
+**Trigger:** Two brainstorming sessions (CS Working Group prep + SOSE 2026 redesign, both March 2, 2026) produced a substantial body of early-stage thinking about foundational computing reasoning in an AI-augmented context. Captured here before it gets lost.
+
+**New context file created:**
+- `science-of-computing.md` — Full concept capture: the core problem (students building unsound systems with AI without knowing it), what Science of Computing is and isn't, relationship to SDL/IS/AB (different dimensions, not competing), two-layer model (universal computing literacy vs. practitioner depth), the bootstrapping problem (traditional CS sequence doesn't coexist with AI tools), CTI's Approach B (rethink what's worth learning), SOSE 2026 dependency and summer approach, tacit knowledge challenge with the CS team, CTI 2.0 architectural fit, illustrative Architect's Eye module, 7 decisions made so far, and 17 open questions (SOC-Q1 through SOC-Q17) organized by category (definitional, structural, SOSE-specific, validation, institutional).
+
+**Context files updated:**
+- `README.md` — Added `science-of-computing.md` to file purposes table and broadened scope description to include CTI 2.0 initiatives.
+
+**Why this matters:** This concept may shape CST395 Sprints 3–4, SOSE 2026 pre-work, and the broader CTI 2.0 learning experience architecture. Early-stage — nothing is settled — but the thinking needs a home so it can be referenced and built upon.
+
+---
+
 ## 2026-02-28 — [claude-code] Cross-course content review + context folder expansion
 
 **Trigger:** Comprehensive review of CST349 and CST395 from an average student's perspective, evaluating clarity, conciseness, and consistency. Synthesized findings from multiple independent reviews.
