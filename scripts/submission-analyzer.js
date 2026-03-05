@@ -3234,9 +3234,22 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
       }
 
       grades.push(gradeEntry);
+
+      // Incremental save after each LLM-graded student to preserve progress on timeout
+      if (gradeEntry.status === 'graded_by_ai') {
+        saveJson(gradingPath, {
+          assignmentKey,
+          title: indexEntry.title,
+          pointsPossible,
+          course: courseName,
+          dueDate: indexEntry.dueDate || csvRow?.dueDate || null,
+          generatedAt: new Date().toISOString(),
+          grades,
+        });
+      }
     }
 
-    // Save grading data
+    // Final save with all grades (including skipped/non-LLM entries)
     const gradingData = {
       assignmentKey,
       title: indexEntry.title,
