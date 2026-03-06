@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer Observation | Sprint 2 | CST395</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .breadcrumb a { color: #14b8a6; text-decoration: none; }
+    .header {
+      background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+    .capability-tag {
+      display: inline-block; background: rgba(255,255,255,0.2); color: white;
+      padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
+    }
+    .section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
+    .section h3 { font-size: 16px; color: #111827; margin: 16px 0 8px 0; }
+    .section p { color: #4b5563; margin: 0 0 12px 0; }
+    .section ul { color: #4b5563; margin: 0 0 12px 0; padding-left: 24px; }
+    .section li { margin-bottom: 8px; }
+    .context-box {
+      background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px;
+    }
+    .context-box p { color: #115e59; margin: 0 0 12px 0; }
+    .context-box p:last-child { margin-bottom: 0; }
+    .context-box strong { color: #0f766e; }
+    .in-class-note {
+      background: #fef3c7; border: 2px solid #fcd34d; border-radius: 12px;
+      padding: 20px; margin-bottom: 24px;
+    }
+    .in-class-note h3 { color: #92400e; margin: 0 0 8px 0; font-size: 16px; }
+    .in-class-note p { color: #a16207; margin: 0; }
+    .reference-card {
+      background: #1e293b; color: #e2e8f0; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px; font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace; font-size: 13px; line-height: 1.6;
+    }
+    .reference-card h3 { color: #38bdf8; margin: 0 0 16px 0; font-size: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .reference-card .lens { margin-bottom: 16px; }
+    .reference-card .lens-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .lens-desc { color: #94a3b8; }
+    .reference-card .stem { color: #a5b4fc; margin-left: 16px; }
+    .reference-card .tip { border-top: 1px solid #334155; padding-top: 16px; margin-top: 16px; }
+    .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .tip-step { color: #94a3b8; margin-left: 16px; }
+    .ai-moves {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px;
+      padding: 20px; margin: 20px 0;
+    }
+    .ai-moves h4 { color: #1e40af; margin: 0 0 12px 0; font-size: 14px; }
+    .ai-moves ul { color: #1e40af; padding-left: 20px; margin: 0; }
+    .ai-moves li { margin-bottom: 8px; font-style: italic; }
+    .submission {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+    }
+    .submission h3 { color: white; margin: 0 0 16px 0; }
+    .submission p { color: #d1d5db; margin: 0 0 16px 0; }
+    .submission__format {
+      background: rgba(255,255,255,0.1); padding: 12px 16px;
+      border-radius: 8px; font-size: 14px; color: #9ca3af;
+    }
+    .submit-btn {
+      display: inline-block; background: linear-gradient(135deg, #0d9488, #14b8a6);
+      color: white; padding: 12px 24px; border-radius: 8px;
+      text-decoration: none; font-weight: 500; margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="../home.html">Home</a> /
+      <a href="../sprint-2.html">Sprint 2</a> /
+      Peer Observation
+    </p>
+
+    <div class="header">
+      <h1>Demo Day &mdash; Peer Observation Form
+        <span class="capability-tag">IS</span>
+        <span class="capability-tag">AB</span>
+      </h1>
+      <p>Sprint 2 &middot; Completed in class on Demo Day, <span data-due-date="s2-peer-observation"></span> &middot; 5 points</p>
+    </div>
+
+    <div class="in-class-note">
+      <h3>In-Class Activity</h3>
+      <p>Use this form while you watch demos. Jot what you notice. The AI will occasionally ask you a question &mdash; you don't have to answer every one. Hit "Next Pair" between demos. Submit the full conversation at the end.</p>
+    </div>
+
+    <div class="context-box">
+      <p>You're learning to <strong>observe like an expert</strong>: noticing specifics, interpreting what they mean, and asking questions that make people think.</p>
+      <p>The AI is a quiet partner sitting next to you. It speaks rarely, only in single questions, and <strong>never evaluates your observations</strong>. Your own noticing is the primary cognitive work.</p>
+    </div>
+
+    <div class="reference-card">
+      <h3>THREE LENSES FOR WATCHING DEMOS</h3>
+
+      <div class="lens">
+        <span class="lens-label">NOTICE:</span> <span class="lens-desc">What specifically did they do or show?</span><br>
+        <span class="stem">"I saw..." / "They showed..." / "The partner said..."</span>
+      </div>
+
+      <div class="lens">
+        <span class="lens-label">INTERPRET:</span> <span class="lens-desc">What does that tell you?</span><br>
+        <span class="stem">"This suggests..." / "The gap between X and Y is..."</span><br>
+        <span class="stem">"They chose ___ over ___ because..."</span>
+      </div>
+
+      <div class="lens">
+        <span class="lens-label">ASK:</span> <span class="lens-desc">What would make them think?</span><br>
+        <span class="stem">"What tradeoff did you make between ___ and ___?"</span><br>
+        <span class="stem">"What changed after your partner told you ___?"</span><br>
+        <span class="stem">"What would you see if this worked? If it didn't?"</span><br>
+        <span class="stem">"What was the version you almost built instead?"</span><br>
+        <span class="stem">"What would your partner say is the part that</span><br>
+        <span class="stem">&nbsp;matters most &mdash; and is that what you focused on?"</span>
+      </div>
+
+      <div class="tip">
+        <span class="tip-label">HOW TO ASK A HARD QUESTION WITHOUT BEING A JERK:</span><br>
+        <span class="tip-step">1. Clarify: "Help me understand..."</span><br>
+        <span class="tip-step">2. Value: "I noticed you did ___, which makes sense because..."</span><br>
+        <span class="tip-step">3. Then ask: "The thing I'm curious about is..."</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>How This Works</h2>
+      <p>As you watch each demo pair, type what you notice into the text input. The AI will <strong>occasionally</strong> ask a single question to redirect your attention &mdash; toward specificity, evidence, tradeoffs, or a comparison you haven't made yet.</p>
+      <p>Each demo has two presentations: A presents what they built for B, then B presents what they built for A. Use "Next Pair" between demo pairs.</p>
+
+      <div class="ai-moves">
+        <h4>What the AI does (and doesn't do):</h4>
+        <ul>
+          <li>Asks ONE question at a time to point attention somewhere you haven't looked</li>
+          <li>Offers a stem with a blank when you're stuck ("Try: 'The gap I see is ___'")</li>
+          <li>Goes quieter as the session progresses &mdash; if you're already interpreting and drafting questions, it fades out</li>
+          <li>Never evaluates your observations &mdash; no "good catch," no "interesting," no praise</li>
+          <li>Never generates questions for you to ask the presenter</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>What to Watch For</h2>
+      <p>You don't need to check all of these &mdash; they're things worth noticing if they happen:</p>
+      <ul>
+        <li>Did the problem narrow from broad to specific? Where was the narrowing move?</li>
+        <li>Does the solution match the stakeholder's world, or does it reflect the builder's preferences?</li>
+        <li>Does the form fit where the stakeholder already lives (device, routine, environment)?</li>
+        <li>Did partner feedback actually change something, or just confirm the original plan?</li>
+        <li>What did the builder contribute that AI alone couldn't have?</li>
+        <li>Within a pair: did both partners narrow equally well?</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>After the Last Pair</h2>
+      <p>You'll answer one final question: <strong>"Across everything you watched today &mdash; what's one thing you want to do differently in Sprint 3?"</strong></p>
+      <p>Then submit your full conversation.</p>
+    </div>
+
+    <div class="submission">
+      <h3>What to Submit</h3>
+      <p>The full AI conversation (all pairs) plus your Sprint 3 takeaway. Submit the JSON download from the discussion.</p>
+      <div class="submission__format">
+        <strong>Format:</strong> JSON file download from AI-discussion activity<br>
+        <strong>Due:</strong> End of class, <span data-due-date="s2-peer-observation"></span><br>
+        <strong>Points:</strong> 5 (completion-based)
+      </div>
+      <a data-assignment-key="s2-peer-observation" href="#" target="_blank" class="submit-btn">Submit on Canvas &rarr;</a>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
