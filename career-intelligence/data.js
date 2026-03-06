@@ -1,62 +1,72 @@
 /**
- * Career Intelligence Form — Data Export Utilities
+ * Career Discovery Form v3 — Data Export Utilities
  */
-import { QUESTIONS } from './questions.js';
 import { CONFIG } from './config.js';
+import { STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 
 /**
  * Build the full export JSON from form state.
  */
 export function buildExportData(state) {
-  const conversation = [];
-
-  for (let step = 1; step <= 5; step++) {
-    const key = `q${step}`;
-    if (!state.responses[key]) continue;
-
-    const questionId = step <= 3
-      ? state.selectedQuestions[key]
-      : null;
-
-    const entry = {
-      step,
-      question_id: questionId,
-      question_text: questionId && QUESTIONS[questionId]
-        ? QUESTIONS[questionId].text
-        : (step === 4 ? '(Prompted by Q3 reaction)' : '(Prompted by Q4 synthesis)'),
-      student_response: state.responses[key],
-      ai_reaction: state.aiReactions[key] || '',
-      timestamp: state.timestamps[`${key}_submit`] || null,
-    };
-
-    if (step <= 2) {
-      entry.routing = {
-        next_question_id: state.selectedQuestions[`q${step + 1}`] || null,
-        rationale: state.routingRationales[`q${step + 1}`] || '',
-      };
+  // Group conversation entries by stage
+  const stageEntries = { 1: [], 2: [], 3: [] };
+  for (const entry of state.conversation) {
+    const s = entry.stage;
+    if (s >= 1 && s <= 3) {
+      stageEntries[s].push(entry);
     }
-
-    conversation.push(entry);
   }
 
+  function formatExchanges(entries) {
+    return entries.map(e => {
+      if (e.role === 'student') {
+        const obj = { role: 'student', content: e.content, timestamp: e.timestamp };
+        if (e.skipped) obj.skipped = true;
+        return obj;
+      }
+      return {
+        role: 'ai',
+        reaction: e.reaction || '',
+        follow_up: e.follow_up || null,
+        phase: e.phase,
+      };
+    });
+  }
+
+  const q3 = state.selectedQ3 ? STAGE_3_BANK[state.selectedQ3] : null;
+
   return {
-    timestamp_start: state.timestamps.start || null,
-    timestamp_end: state.timestamps.end || null,
+    timestamp_start: state.timestamps.start,
+    timestamp_end: state.timestamps.end,
     duration_seconds: state.timestamps.start && state.timestamps.end
       ? Math.round((new Date(state.timestamps.end) - new Date(state.timestamps.start)) / 1000)
       : null,
-    path_taken: {
-      q1: state.selectedQuestions.q1,
-      q2: state.selectedQuestions.q2,
-      q3: state.selectedQuestions.q3,
+    stages: {
+      stage_1: {
+        question: STAGE_1_QUESTION,
+        exchanges: formatExchanges(stageEntries[1]),
+      },
+      stage_2: {
+        question: STAGE_2_QUESTION,
+        exchanges: formatExchanges(stageEntries[2]),
+      },
+      stage_3: {
+        question_id: state.selectedQ3,
+        question: q3 ? q3.text : '',
+        exchanges: formatExchanges(stageEntries[3]),
+      },
     },
-    conversation,
-    invitation_option: state.invitationOption,
+    synthesis: state.synthesisText,
+    synthesis_reaction: {
+      student_response: state.synthesisReaction || null,
+      ai_adjustment: state.synthesisAdjustment || null,
+      skipped: !state.synthesisReaction,
+    },
     metadata: {
       form_version: CONFIG.form_version,
       model_used: CONFIG.model,
-      total_input_tokens: state.tokenUsage?.input || 0,
-      total_output_tokens: state.tokenUsage?.output || 0,
+      total_input_tokens: state.tokenUsage.input,
+      total_output_tokens: state.tokenUsage.output,
     },
   };
 }
@@ -69,7 +79,6 @@ export async function copyToClipboard(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch {
-    // Fallback for older browsers
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
@@ -96,7 +105,7 @@ export function downloadJSON(state) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `career-intelligence-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `career-discovery-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
