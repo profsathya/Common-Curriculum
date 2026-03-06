@@ -419,7 +419,15 @@ Worth noticing:
     function load() {
       try {
         const s = localStorage.getItem(STORAGE_KEY);
-        if (s) { state = JSON.parse(s); return true; }
+        if (s) {
+          state = JSON.parse(s);
+          // Migrate pairs from old chat-based format
+          state.pairs.forEach(function(p) {
+            if (!p.nudges) p.nudges = [];
+            if (p.notes === undefined) p.notes = '';
+          });
+          return true;
+        }
       } catch(e) {}
       return false;
     }
