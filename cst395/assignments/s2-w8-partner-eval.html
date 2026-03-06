@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Partner Evaluation | Sprint 2 | CST395</title>
+  <title>Peer Observation | Sprint 2 Demo Day | CST395</title>
   <style>
     * { box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+      margin: 0; padding: 0; background: #f9fafb; color: #111827; line-height: 1.7;
     }
-    .container { max-width: 700px; margin: 0 auto; }
+    .container { max-width: 700px; margin: 0 auto; padding: 24px; }
     .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
     .breadcrumb a { color: #14b8a6; text-decoration: none; }
     .header {
@@ -23,55 +23,171 @@
       display: inline-block; background: rgba(255,255,255,0.2); color: white;
       padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
     }
-    .section {
+
+    /* Name gate */
+    .name-gate {
       background: white; border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 24px; margin-bottom: 16px;
+      padding: 24px; margin-bottom: 16px; text-align: center;
     }
-    .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
-    .section p { color: #4b5563; margin: 0 0 12px 0; }
-    .section ol { color: #4b5563; margin: 0; padding-left: 24px; }
-    .section li { margin-bottom: 8px; }
-    .context-box {
-      background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 12px;
-      padding: 24px; margin-bottom: 24px;
+    .name-gate h2 { font-size: 18px; margin: 0 0 12px 0; }
+    .name-gate p { color: #6b7280; margin: 0 0 16px 0; }
+    .name-gate input {
+      width: 100%; max-width: 300px; padding: 10px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 16px; text-align: center;
     }
-    .context-box p { color: #115e59; margin: 0 0 12px 0; }
-    .context-box p:last-child { margin-bottom: 0; }
-    .context-box strong { color: #0f766e; }
-    .in-class-note {
-      background: #fef3c7; border: 2px solid #fcd34d; border-radius: 12px;
-      padding: 20px; margin-bottom: 24px;
+    .name-gate input:focus { border-color: #14b8a6; outline: none; }
+    .name-gate button {
+      display: block; margin: 16px auto 0; padding: 10px 32px;
+      background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
+      border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
     }
-    .in-class-note h3 { color: #92400e; margin: 0 0 8px 0; font-size: 16px; }
-    .in-class-note p { color: #a16207; margin: 0; }
-    .ai-moves {
-      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px;
-      padding: 20px; margin: 20px 0;
+    .name-gate button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Reference card */
+    .reference-card {
+      background: #1e293b; color: #e2e8f0; border-radius: 12px;
+      padding: 20px; margin-bottom: 16px;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace; font-size: 12px; line-height: 1.5;
     }
-    .ai-moves h4 { color: #1e40af; margin: 0 0 12px 0; font-size: 14px; }
-    .ai-moves ul { color: #1e40af; padding-left: 20px; margin: 0; }
-    .ai-moves li { margin-bottom: 8px; font-style: italic; }
-    .coming-soon {
-      border: 2px dashed #14b8a6; background: #f0fdfa; border-radius: 12px;
-      padding: 24px; margin-bottom: 16px;
+    .reference-card summary {
+      cursor: pointer; color: #38bdf8; font-weight: 700; font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      list-style: none; user-select: none;
     }
-    .coming-soon h3 { color: #0f766e; margin: 0 0 8px 0; font-size: 16px; }
-    .coming-soon p { color: #115e59; margin: 0; }
-    .submission {
+    .reference-card summary::-webkit-details-marker { display: none; }
+    .reference-card summary::before { content: '\25B6  '; font-size: 10px; }
+    .reference-card[open] summary::before { content: '\25BC  '; }
+    .reference-card .lens { margin-top: 12px; margin-bottom: 12px; }
+    .reference-card .lens-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .lens-desc { color: #94a3b8; }
+    .reference-card .stem { color: #a5b4fc; margin-left: 16px; display: block; }
+    .reference-card .tip { border-top: 1px solid #334155; padding-top: 12px; margin-top: 12px; }
+    .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .tip-step { color: #94a3b8; margin-left: 16px; display: block; }
+
+    /* Pair header */
+    .pair-header {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 16px 20px; margin-bottom: 16px; display: flex;
+      align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .pair-header__label { font-weight: 700; color: #0f766e; font-size: 16px; white-space: nowrap; }
+    .pair-header__names {
+      flex: 1; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 14px; background: #f9fafb;
+    }
+    .pair-header__names:focus { border-color: #14b8a6; outline: none; }
+
+    /* Chat area */
+    .chat-area {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      margin-bottom: 16px; overflow: hidden;
+    }
+    .chat-messages {
+      min-height: 200px; max-height: 400px; overflow-y: auto;
+      padding: 16px;
+    }
+    .chat-msg {
+      margin-bottom: 12px; padding: 10px 14px; border-radius: 10px;
+      max-width: 85%; font-size: 14px; line-height: 1.5; word-wrap: break-word;
+    }
+    .chat-msg--student {
+      background: #e0f2fe; color: #0c4a6e; margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-msg--ai {
+      background: #f0fdf4; color: #14532d; margin-right: auto;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg--system {
+      background: #fef3c7; color: #92400e; margin: 8px auto;
+      text-align: center; font-size: 13px; font-style: italic;
+      max-width: 90%; border-radius: 8px;
+    }
+    .chat-msg--ai .typing-indicator span {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      background: #86efac; margin: 0 2px;
+      animation: typing 1s infinite;
+    }
+    .chat-msg--ai .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-msg--ai .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-3px); }
+    }
+    .chat-input-row {
+      display: flex; border-top: 1px solid #e5e7eb; background: #f9fafb;
+    }
+    .chat-input {
+      flex: 1; padding: 14px 16px; border: none; font-size: 14px;
+      font-family: inherit; background: transparent; resize: none;
+      min-height: 48px; max-height: 120px;
+    }
+    .chat-input:focus { outline: none; }
+    .chat-input::placeholder { color: #9ca3af; }
+    .chat-send {
+      padding: 14px 20px; border: none; background: transparent;
+      color: #14b8a6; font-weight: 700; cursor: pointer; font-size: 14px;
+      align-self: flex-end;
+    }
+    .chat-send:hover { color: #0f766e; }
+    .chat-send:disabled { color: #d1d5db; cursor: not-allowed; }
+
+    /* Action buttons */
+    .actions {
+      display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 20px; border-radius: 8px; font-size: 14px;
+      font-weight: 600; cursor: pointer; border: none; flex: 1; min-width: 140px;
+    }
+    .btn--next {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white;
+    }
+    .btn--next:hover { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+    .btn--finish {
+      background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
+    }
+    .btn--finish:hover { background: linear-gradient(135deg, #0d6b63, #0d9488); }
+
+    /* Final section */
+    .final-section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px; display: none;
+    }
+    .final-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
+    .final-section p { color: #4b5563; margin: 0 0 16px 0; }
+    .final-section textarea {
+      width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;
+    }
+    .final-section textarea:focus { border-color: #14b8a6; outline: none; }
+
+    /* Download/submit */
+    .submit-section {
       background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+      color: white; padding: 24px; border-radius: 12px; margin-top: 16px; display: none;
     }
-    .submission h3 { color: white; margin: 0 0 16px 0; }
-    .submission p { color: #d1d5db; margin: 0 0 16px 0; }
-    .submission__format {
-      background: rgba(255,255,255,0.1); padding: 12px 16px;
-      border-radius: 8px; font-size: 14px; color: #9ca3af;
+    .submit-section h3 { color: white; margin: 0 0 12px 0; }
+    .submit-section p { color: #d1d5db; margin: 0 0 16px 0; }
+    .btn--download {
+      display: inline-block; padding: 12px 24px; border-radius: 8px;
+      background: linear-gradient(135deg, #0d9488, #14b8a6); color: white;
+      font-weight: 600; font-size: 14px; cursor: pointer; border: none;
+      text-decoration: none; margin-right: 12px;
     }
-    .submit-btn {
-      display: inline-block; background: linear-gradient(135deg, #0d9488, #14b8a6);
-      color: white; padding: 12px 24px; border-radius: 8px;
-      text-decoration: none; font-weight: 500; margin-top: 16px;
+    .submit-link {
+      display: inline-block; padding: 12px 24px; border-radius: 8px;
+      background: rgba(255,255,255,0.1); color: white;
+      font-weight: 500; font-size: 14px; text-decoration: none;
     }
+
+    /* Pair counter */
+    .pair-counter {
+      font-size: 13px; color: #6b7280; text-align: center; margin-bottom: 16px;
+    }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -79,65 +195,95 @@
     <p class="breadcrumb">
       <a href="../home.html">Home</a> /
       <a href="../sprint-2.html">Sprint 2</a> /
-      Partner Evaluation
+      Peer Observation
     </p>
 
     <div class="header">
-      <h1>Partner Evaluation
+      <h1>Demo Day &mdash; Peer Observation
         <span class="capability-tag">IS</span>
+        <span class="capability-tag">AB</span>
       </h1>
-      <p>Sprint 2 · Completed in class on Demo Day, March 11 · 5 points</p>
+      <p>Sprint 2 &middot; Demo Day &middot; 5 points (completion)</p>
     </div>
 
-    <div class="in-class-note">
-      <h3>In-Class Activity</h3>
-      <p>This evaluation is completed in class on Demo Day (Wednesday, March 11) after watching your partner's demo presentation.</p>
+    <!-- Name gate -->
+    <div id="name-gate" class="name-gate">
+      <h2>Before You Begin</h2>
+      <p>Enter your name to start observing.</p>
+      <input type="text" id="student-name" placeholder="Your name" autocomplete="name">
+      <button id="start-btn" disabled>Start Observing</button>
     </div>
 
-    <div class="context-box">
-      <p>This is the ultimate Sprint 2 evidence: <strong>your partner's own assessment of whether you understood them</strong>.</p>
-      <p>Be honest — this helps both of you learn.</p>
-    </div>
+    <!-- Activity area (hidden until name entered) -->
+    <div id="activity" class="hidden">
 
-    <div class="section">
-      <h2>How This Works</h2>
-      <p>The AI pushes beyond generic positive feedback:</p>
+      <!-- Reference card (collapsible) -->
+      <details class="reference-card" open>
+        <summary>THREE LENSES FOR WATCHING DEMOS</summary>
+        <div class="lens">
+          <span class="lens-label">NOTICE:</span> <span class="lens-desc">What specifically did they do or show?</span>
+          <span class="stem">"I saw..." / "They showed..." / "The partner said..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">INTERPRET:</span> <span class="lens-desc">What does that tell you?</span>
+          <span class="stem">"This suggests..." / "The gap between X and Y is..."</span>
+          <span class="stem">"They chose ___ over ___ because..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">ASK:</span> <span class="lens-desc">What would make them think?</span>
+          <span class="stem">"What tradeoff did you make between ___ and ___?"</span>
+          <span class="stem">"What changed after your partner told you ___?"</span>
+          <span class="stem">"What would you see if this worked? If it didn't?"</span>
+          <span class="stem">"What was the version you almost built instead?"</span>
+          <span class="stem">"What would your partner say is the part that matters most &mdash; and is that what you focused on?"</span>
+        </div>
+        <div class="tip">
+          <span class="tip-label">HOW TO ASK A HARD QUESTION WITHOUT BEING A JERK:</span>
+          <span class="tip-step">1. Clarify: "Help me understand..."</span>
+          <span class="tip-step">2. Value: "I noticed you did ___, which makes sense because..."</span>
+          <span class="tip-step">3. Then ask: "The thing I'm curious about is..."</span>
+        </div>
+      </details>
 
-      <div class="ai-moves">
-        <h4>The AI will push you with moves like:</h4>
-        <ul>
-          <li>"You rated their understanding 4/5 — what's missing for a 5? Be specific."</li>
-          <li>"You said the solution 'addressed your need.' But is there a difference between what you asked for and what you actually needed? Did they get the deeper thing?"</li>
-          <li>"What surprised you about their approach — something they saw about your situation that you didn't see yourself?"</li>
-        </ul>
+      <!-- Pair header -->
+      <div class="pair-header">
+        <span class="pair-header__label" id="pair-label">Pair 1</span>
+        <input type="text" class="pair-header__names" id="pair-names"
+               placeholder="Names or numbers (e.g. Alex & Jordan)">
       </div>
-    </div>
 
-    <div class="section">
-      <h2>What You'll Submit (Evaluating Your Partner)</h2>
-      <ol>
-        <li><strong>Did your partner understand your problem?</strong> (Rate 1-5 + explain)</li>
-        <li><strong>Did the solution address your actual need or your stated want?</strong> What's the difference?</li>
-        <li><strong>What surprised you about their approach</strong> — something they saw that you didn't see yourself?</li>
-        <li><strong>Would you use what they built?</strong> Why or why not?</li>
-        <li><strong>What's one thing they did that showed genuine understanding of you as a person</strong>, not just your problem?</li>
-      </ol>
-    </div>
+      <div class="pair-counter" id="pair-counter"></div>
 
-    <div class="coming-soon">
-      <h3>Interactive Activity</h3>
-      <p>The interactive activity will be available on Demo Day. You'll complete it in class after watching your partner's presentation.</p>
-    </div>
-
-    <div class="submission">
-      <h3>What to Submit</h3>
-      <p>Complete the interactive activity in class and download your responses as JSON.</p>
-      <div class="submission__format">
-        <strong>Format:</strong> JSON file download from AI-discussion activity<br>
-        <strong>Due:</strong> In class, <span data-due-date="s2-partner-eval"></span><br>
-        <strong>Points:</strong> 5
+      <!-- Chat -->
+      <div class="chat-area">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="chat-input" rows="1"
+                    placeholder="Type what you notice..."></textarea>
+          <button class="chat-send" id="send-btn" disabled>Send</button>
+        </div>
       </div>
-      <a data-assignment-key="s2-partner-eval" href="https://csumb.instructure.com/courses/33084/assignments/582887" target="_blank" class="submit-btn">Submit on Canvas →</a>
+
+      <!-- Action buttons -->
+      <div class="actions">
+        <button class="btn btn--next" id="next-pair-btn">Next Pair &rarr;</button>
+        <button class="btn btn--finish" id="finish-btn">Finish Observations</button>
+      </div>
+
+      <!-- Final takeaway (shown after finish) -->
+      <div class="final-section" id="final-section">
+        <h2>Sprint 3 Takeaway</h2>
+        <p>Across everything you watched today &mdash; what's one thing you want to do differently in Sprint 3?</p>
+        <textarea id="takeaway-input" placeholder="What I want to do differently..."></textarea>
+      </div>
+
+      <!-- Download/submit (shown after takeaway) -->
+      <div class="submit-section" id="submit-section">
+        <h3>Submit Your Observations</h3>
+        <p>Download your full conversation (all pairs + takeaway) and upload to Canvas.</p>
+        <button class="btn--download" id="download-btn">Download JSON</button>
+        <a class="submit-link" data-assignment-key="s2-partner-eval" href="#" target="_blank">Submit on Canvas &rarr;</a>
+      </div>
     </div>
   </div>
 
@@ -146,5 +292,429 @@
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ── Config ──
+    const AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+    const AI_MODEL = 'claude-haiku-4-5-20251001';
+    const STORAGE_KEY = 'cst395-s2-partner-eval';
+
+    const SYSTEM_PROMPT = `You are a quiet observation partner for a student watching Sprint 2 demo presentations in CST395. Each demo is a pair: Student A presents what they built for B, then B presents what they built for A.
+
+YOUR ROLE: You sit next to the student and occasionally ask ONE short question that redirects their attention. You are not a coach, not a grader, not a conversation partner. You are a thinking prompt.
+
+=== ABSOLUTE RULES ===
+
+1. NEVER evaluate the student's observation. No "good observation," "sharp eye," "that's interesting," "you're onto something." Zero valence. Zero praise. Zero judgment. If you signal quality, the student will optimize for your approval instead of their own thinking. This is the single most important rule.
+
+2. ONE sentence per response. Occasionally two if you need a brief bridge ("You've seen both directions now.") before a question. Never three. Never a paragraph.
+
+3. ALWAYS a question, almost never a statement. Your job is to point attention somewhere the student hasn't looked yet.
+
+4. NEVER generate a question for them to ask the presenter. If they ask "what should I ask?", respond: "What caught your eye that you don't have an explanation for yet?"
+
+5. NEVER respond while they're mid-observation for the same presenter. If they type multiple notes in quick succession, let them accumulate. Respond only after a natural pause (they've stopped typing for a moment) or after they explicitly signal they want input.
+
+6. At NATURAL BREAKPOINTS (between the two presenters in a pair, between pairs, or when the student explicitly asks for help sharpening a question), you may give slightly longer responses — up to 2-3 sentences — that connect observations or help the student sharpen their own draft question.
+
+=== HOW TO RESPOND BASED ON WHAT THEY TYPED ===
+
+If they typed a SURFACE OBSERVATION (describing what happened, naming the solution):
+Ask one question that pushes toward specificity or interpretation.
+- "What problem was that solving?"
+- "Who was that built for — and where does that person encounter the problem?"
+- "What did they start with before they narrowed to that?"
+- "What was on the screen when their partner reacted?"
+
+If they typed an INTERPRETATION (analyzing why something worked or didn't, seeing a gap):
+Ask one question that pushes toward evidence or tradeoffs.
+- "What evidence did they show for that?"
+- "What would you need to see to believe that claim?"
+- "What did they give up by going that direction?"
+
+If they typed a DRAFT QUESTION (something they want to ask):
+Do NOT improve it. Instead, ask one meta-question about their question:
+- "What are you hoping to learn from that?"
+- "If they answered 'yes,' would that tell you anything new?"
+- "What's the version of that question their partner would ask?"
+
+If they seem STUCK (very short notes, long pauses, or "I don't know what to write"):
+Offer a stem, not a question. A stem has a blank they fill in:
+- "Try this: 'The gap I see between what they said and what they showed is ___'"
+- "Try: 'What tradeoff did you make between ___ and ___?'"
+
+=== PAIR-SPECIFIC GUIDANCE ===
+
+Each demo has two sequential presentations within a pair. After the first presenter (A→B), you may prompt ONCE: "Now watch what B built for A."
+
+After the second presenter (B→A), you may prompt ONCE: "Both directions done. Was there a contrast?"
+
+Do NOT elaborate beyond that. Let the student's own notes drive the comparison.
+
+=== TRANSITION BETWEEN PAIRS ===
+
+When the student starts a new pair, respond only: "New pair. What do you notice first?"
+
+After the third or fourth pair, you may go quieter — if the student is already writing interpretive notes and draft questions without prompting, your job is done. Respond less. This is deliberate fading.
+
+=== WHAT YOU KNOW ABOUT THESE DEMOS (for context, not for lecturing) ===
+
+Sprint 2 context: Students spent 4 weeks with an assigned partner. They did discovery conversations, assumption audits, domain learning, and narrowed from a broad problem to one specific MVP. They built a v1 prototype and their partner started using it.
+
+Things worth noticing (use these to choose WHERE to point attention, never list them):
+- Did the problem narrow from broad to specific? Where was the narrowing move?
+- Did the builder's preferences show up, or does the solution match the stakeholder's world?
+- Does the form fit where the stakeholder already lives (device, routine, environment)?
+- Did partner feedback actually change something, or just confirm the original plan?
+- What did the builder contribute that AI alone couldn't have?
+- Within a pair: did both partners narrow equally well?
+
+=== END OF SESSION ===
+
+After the last pair, ask ONE question: "Across everything you watched today — what's one thing you want to do differently in Sprint 3?"
+
+Then: "Submit your notes. The full conversation goes with them."`;
+
+    // ── State ──
+    let state = {
+      studentName: '',
+      startedAt: null,
+      pairs: [],       // [{names:'', messages:[{role,text,timestamp}]}]
+      currentPair: -1,
+      takeaway: '',
+      finished: false,
+      downloadedAt: null,
+    };
+
+    // ── DOM refs ──
+    const $ = id => document.getElementById(id);
+    const nameInput = $('student-name');
+    const startBtn = $('start-btn');
+    const nameGate = $('name-gate');
+    const activity = $('activity');
+    const pairLabel = $('pair-label');
+    const pairNames = $('pair-names');
+    const pairCounter = $('pair-counter');
+    const chatMessages = $('chat-messages');
+    const chatInput = $('chat-input');
+    const sendBtn = $('send-btn');
+    const nextPairBtn = $('next-pair-btn');
+    const finishBtn = $('finish-btn');
+    const finalSection = $('final-section');
+    const takeawayInput = $('takeaway-input');
+    const submitSection = $('submit-section');
+    const downloadBtn = $('download-btn');
+
+    // ── Persistence ──
+    function save() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+    function load() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) { state = JSON.parse(s); return true; }
+      } catch(e) {}
+      return false;
+    }
+
+    // ── Rendering ──
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function renderMessages() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) { chatMessages.innerHTML = ''; return; }
+      chatMessages.innerHTML = pair.messages.map(m => {
+        const cls = m.role === 'student' ? 'chat-msg--student'
+                  : m.role === 'ai' ? 'chat-msg--ai'
+                  : 'chat-msg--system';
+        return `<div class="chat-msg ${cls}">${escapeHtml(m.text)}</div>`;
+      }).join('');
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function updatePairUI() {
+      const n = state.currentPair + 1;
+      pairLabel.textContent = `Pair ${n}`;
+      pairNames.value = state.pairs[state.currentPair]?.names || '';
+      pairCounter.textContent = state.pairs.length > 1
+        ? `Observing pair ${n} of ${state.pairs.length}`
+        : '';
+      renderMessages();
+    }
+
+    function showTypingIndicator() {
+      const el = document.createElement('div');
+      el.className = 'chat-msg chat-msg--ai';
+      el.id = 'typing-indicator';
+      el.innerHTML = '<span class="typing-indicator"><span></span><span></span><span></span></span>';
+      chatMessages.appendChild(el);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const el = $('typing-indicator');
+      if (el) el.remove();
+    }
+
+    // ── AI call ──
+    async function getAIResponse(pair) {
+      // Build messages array from pair conversation
+      const messages = [];
+      // Include pair context
+      let pairContext = `[Pair ${state.currentPair + 1}`;
+      if (pair.names) pairContext += `: ${pair.names}`;
+      pairContext += `] [Total pairs observed so far: ${state.pairs.length}]`;
+
+      const conversationMessages = pair.messages
+        .filter(m => m.role === 'student' || m.role === 'ai')
+        .map(m => ({
+          role: m.role === 'student' ? 'user' : 'assistant',
+          content: m.text,
+        }));
+
+      // Prepend pair context to the first user message
+      if (conversationMessages.length > 0 && conversationMessages[0].role === 'user') {
+        conversationMessages[0].content = pairContext + '\n\n' + conversationMessages[0].content;
+      }
+
+      try {
+        const resp = await fetch(AI_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: SYSTEM_PROMPT,
+            messages: conversationMessages,
+            model: AI_MODEL,
+            max_tokens: 200,
+          }),
+        });
+        if (!resp.ok) return null;
+        const data = await resp.json();
+        return data.content || null;
+      } catch(e) {
+        console.error('AI call failed:', e);
+        return null;
+      }
+    }
+
+    // ── Actions ──
+    function addMessage(role, text) {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+      pair.messages.push({ role, text, timestamp: new Date().toISOString() });
+      save();
+      renderMessages();
+    }
+
+    async function handleSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      sendBtn.disabled = true;
+
+      addMessage('student', text);
+
+      // Decide whether AI should respond
+      // AI responds after each student message (the system prompt handles fading logic)
+      showTypingIndicator();
+      const aiText = await getAIResponse(state.pairs[state.currentPair]);
+      removeTypingIndicator();
+
+      if (aiText) {
+        addMessage('ai', aiText);
+      }
+      sendBtn.disabled = false;
+      chatInput.focus();
+    }
+
+    function startNewPair() {
+      // Save current pair names
+      if (state.currentPair >= 0) {
+        state.pairs[state.currentPair].names = pairNames.value.trim();
+      }
+
+      state.currentPair = state.pairs.length;
+      state.pairs.push({
+        names: '',
+        messages: [],
+        startedAt: new Date().toISOString(),
+      });
+
+      // System message for transitions
+      if (state.currentPair === 0) {
+        addMessage('system', 'Observation started. Type what you notice as you watch.');
+      } else {
+        addMessage('system', `Pair ${state.currentPair + 1} started.`);
+        // AI transition message
+        addMessage('ai', 'New pair. What do you notice first?');
+      }
+
+      save();
+      updatePairUI();
+      pairNames.value = '';
+      pairNames.focus();
+    }
+
+    function handleNextPair() {
+      // Save current pair names
+      if (state.currentPair >= 0) {
+        state.pairs[state.currentPair].names = pairNames.value.trim();
+      }
+      startNewPair();
+    }
+
+    function handleFinish() {
+      // Save current pair names
+      if (state.currentPair >= 0) {
+        state.pairs[state.currentPair].names = pairNames.value.trim();
+      }
+      state.finished = true;
+      save();
+
+      // Disable chat
+      chatInput.disabled = true;
+      sendBtn.disabled = true;
+      nextPairBtn.disabled = true;
+      finishBtn.disabled = true;
+      nextPairBtn.style.opacity = '0.5';
+      finishBtn.style.opacity = '0.5';
+
+      // Show final section
+      finalSection.style.display = 'block';
+      takeawayInput.value = state.takeaway || '';
+      takeawayInput.focus();
+
+      // Show submit when takeaway is typed
+      takeawayInput.addEventListener('input', function() {
+        state.takeaway = this.value;
+        save();
+        if (this.value.trim().length > 10) {
+          submitSection.style.display = 'block';
+        }
+      });
+
+      // If already has takeaway, show submit
+      if (state.takeaway && state.takeaway.trim().length > 10) {
+        submitSection.style.display = 'block';
+      }
+    }
+
+    function buildExport() {
+      return {
+        activityId: 'cst395-s2-partner-eval',
+        version: '1.0',
+        course: 'CST395',
+        studentName: state.studentName,
+        startedAt: state.startedAt,
+        submittedAt: new Date().toISOString(),
+        totalPairs: state.pairs.length,
+        pairs: state.pairs.map((p, i) => ({
+          pairNumber: i + 1,
+          names: p.names || `Pair ${i + 1}`,
+          startedAt: p.startedAt,
+          messages: p.messages,
+        })),
+        sprint3Takeaway: state.takeaway,
+      };
+    }
+
+    function handleDownload() {
+      const data = buildExport();
+      state.downloadedAt = new Date().toISOString();
+      save();
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      a.download = `peer-observation-${safeName}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ── Auto-resize textarea ──
+    chatInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      sendBtn.disabled = !this.value.trim();
+    });
+
+    // Enter to send (Shift+Enter for newline)
+    chatInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (this.value.trim()) handleSend();
+      }
+    });
+
+    // Pair names auto-save
+    pairNames.addEventListener('input', function() {
+      if (state.currentPair >= 0) {
+        state.pairs[state.currentPair].names = this.value;
+        save();
+      }
+    });
+
+    // ── Init ──
+    nameInput.addEventListener('input', function() {
+      startBtn.disabled = !this.value.trim();
+    });
+    nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) startBtn.click();
+    });
+
+    startBtn.addEventListener('click', function() {
+      state.studentName = nameInput.value.trim();
+      state.startedAt = new Date().toISOString();
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+      save();
+      startNewPair();
+    });
+
+    nextPairBtn.addEventListener('click', handleNextPair);
+    finishBtn.addEventListener('click', handleFinish);
+    downloadBtn.addEventListener('click', handleDownload);
+
+    // Restore saved state
+    if (load() && state.studentName) {
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+
+      if (state.finished) {
+        chatInput.disabled = true;
+        sendBtn.disabled = true;
+        nextPairBtn.disabled = true;
+        finishBtn.disabled = true;
+        nextPairBtn.style.opacity = '0.5';
+        finishBtn.style.opacity = '0.5';
+        finalSection.style.display = 'block';
+        takeawayInput.value = state.takeaway || '';
+        if (state.takeaway && state.takeaway.trim().length > 10) {
+          submitSection.style.display = 'block';
+        }
+        takeawayInput.addEventListener('input', function() {
+          state.takeaway = this.value;
+          save();
+          if (this.value.trim().length > 10) {
+            submitSection.style.display = 'block';
+          }
+        });
+      }
+
+      updatePairUI();
+    }
+  })();
+  </script>
 </body>
 </html>
