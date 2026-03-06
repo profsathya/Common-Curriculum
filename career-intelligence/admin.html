@@ -282,9 +282,13 @@
 
 <div class="admin-body" id="admin-content">
   <noscript><p>JavaScript is required to render this page.</p></noscript>
+  <p id="admin-loading" style="color:var(--muted);font-size:14px;">Loading content...</p>
 </div>
 
 <script type="module">
+// Remove loading message once module executes
+const loadingMsg = document.getElementById('admin-loading');
+if (loadingMsg) loadingMsg.remove();
 import { STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 import { CONFIG } from './config.js';
@@ -500,6 +504,20 @@ promptSection.appendChild(makeCard('Prompt', 'bg-synth', 'Full System Prompt', `
 `, true));
 container.appendChild(promptSection);
 
+</script>
+
+<script>
+// Fallback: if module script fails to load, show an error message
+window.addEventListener('load', () => {
+  const content = document.getElementById('admin-content');
+  const loading = document.getElementById('admin-loading');
+  if (loading) {
+    loading.innerHTML = '<strong>Failed to load content.</strong> ES modules may not be supported. ' +
+      'Make sure you are serving this page via HTTP (not opening the file directly). ' +
+      'Try: <code>python3 -m http.server</code> in the career-intelligence folder, then visit <code>http://localhost:8000/admin.html</code>';
+    loading.style.color = '#c53030';
+  }
+});
 </script>
 </body>
 </html>

@@ -238,14 +238,27 @@ function appendInputArea(container) {
   area.appendChild(btnRow);
   container.appendChild(area);
 
+  // Character count hint
+  const hint = el('div', 'ci-char-hint', '');
+  area.appendChild(hint);
+
+  const MIN_CHARS = 20;
+
   // Enable submit when content is long enough
   textarea.addEventListener('input', () => {
-    submitBtn.disabled = textarea.value.trim().length < 20;
+    const len = textarea.value.trim().length;
+    submitBtn.disabled = len < MIN_CHARS;
+    if (len > 0 && len < MIN_CHARS) {
+      hint.textContent = `${MIN_CHARS - len} more characters needed`;
+      hint.style.display = '';
+    } else {
+      hint.style.display = 'none';
+    }
   });
 
   submitBtn.addEventListener('click', () => {
     const text = textarea.value.trim();
-    if (text.length < 20) return;
+    if (text.length < MIN_CHARS) return;
     handleSubmit(text, area);
   });
 
@@ -717,6 +730,7 @@ function showCompletionActions() {
 // ============================================
 
 export function init() {
+  console.log(`Career Discovery Form v${CONFIG.form_version} loaded`);
   renderProgressBar();
   renderStageStart(1, STAGE_1_QUESTION);
 }
