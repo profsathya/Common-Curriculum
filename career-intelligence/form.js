@@ -245,7 +245,7 @@ function appendInputArea(container) {
   const MIN_CHARS = 20;
 
   // Enable submit when content is long enough
-  textarea.addEventListener('input', () => {
+  function checkInput() {
     const len = textarea.value.trim().length;
     submitBtn.disabled = len < MIN_CHARS;
     if (len > 0 && len < MIN_CHARS) {
@@ -254,7 +254,12 @@ function appendInputArea(container) {
     } else {
       hint.style.display = 'none';
     }
-  });
+  }
+
+  textarea.addEventListener('input', checkInput);
+  textarea.addEventListener('keyup', checkInput);
+  textarea.addEventListener('change', checkInput);
+  textarea.addEventListener('paste', () => setTimeout(checkInput, 0));
 
   submitBtn.addEventListener('click', () => {
     const text = textarea.value.trim();
