@@ -386,22 +386,11 @@ const CST395_CONFIG = {
       week: 8,
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
-    "s2-peer-observation": {
+    "s2-partner-eval": {
+      canvasId: "582887",
       title: "S2: Peer Observation",
       dueDate: "2026-03-11",
       type: "ai-discussion",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 8,
-      htmlFile: "assignments/s2-w8-peer-observation.html"
-    },
-    "s2-partner-eval": {
-      canvasId: "582887",
-      title: "S2: Partner Evaluation",
-      dueDate: "2026-03-11",
-      type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Demonstration",
       points: 5,
