@@ -1,14 +1,13 @@
 /**
- * Career Discovery Form v3 — Data Export Utilities
+ * Career Discovery Form v4 — Data Export Utilities
  */
 import { CONFIG } from './config.js';
-import { STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
+import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 
 /**
  * Build the full export JSON from form state.
  */
 export function buildExportData(state) {
-  // Group conversation entries by stage
   const stageEntries = { 1: [], 2: [], 3: [] };
   for (const entry of state.conversation) {
     const s = entry.stage;
@@ -24,12 +23,14 @@ export function buildExportData(state) {
         if (e.skipped) obj.skipped = true;
         return obj;
       }
-      return {
+      const obj = {
         role: 'ai',
         reaction: e.reaction || '',
         follow_up: e.follow_up || null,
         phase: e.phase,
       };
+      if (e.transition) obj.transition = e.transition;
+      return obj;
     });
   }
 
@@ -43,20 +44,24 @@ export function buildExportData(state) {
       : null,
     stages: {
       stage_1: {
+        frame: STAGE_1_FRAME,
         question: STAGE_1_QUESTION,
         exchanges: formatExchanges(stageEntries[1]),
       },
       stage_2: {
         question: STAGE_2_QUESTION,
+        transition_in: state.transitions.s1_to_s2 || null,
         exchanges: formatExchanges(stageEntries[2]),
       },
       stage_3: {
         question_id: state.selectedQ3,
         question: q3 ? q3.text : '',
+        transition_in: state.transitions.s2_to_s3 || null,
         exchanges: formatExchanges(stageEntries[3]),
       },
     },
-    synthesis: state.synthesisText,
+    brief: state.briefText,
+    pitch: state.pitchText,
     synthesis_reaction: {
       student_response: state.synthesisReaction || null,
       ai_adjustment: state.synthesisAdjustment || null,
@@ -69,31 +74,6 @@ export function buildExportData(state) {
       total_output_tokens: state.tokenUsage.output,
     },
   };
-}
-
-/**
- * Copy text to clipboard.
- */
-export async function copyToClipboard(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-      document.execCommand('copy');
-      return true;
-    } catch {
-      return false;
-    } finally {
-      document.body.removeChild(textarea);
-    }
-  }
 }
 
 /**
