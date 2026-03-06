@@ -65,73 +65,90 @@
     .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
     .reference-card .tip-step { color: #94a3b8; margin-left: 16px; display: block; }
 
-    /* Pair header */
-    .pair-header {
-      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 16px 20px; margin-bottom: 16px; display: flex;
-      align-items: center; justify-content: space-between; gap: 12px;
+    /* Tab bar */
+    .tab-bar {
+      display: flex; gap: 0; margin-bottom: 16px; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      border-bottom: 2px solid #e5e7eb;
     }
-    .pair-header__label { font-weight: 700; color: #0f766e; font-size: 16px; white-space: nowrap; }
-    .pair-header__names {
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 10px 18px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; background: none; color: #6b7280; white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab:hover { color: #0f766e; }
+    .tab--active {
+      color: #0f766e; font-weight: 700;
+      border-bottom-color: #14b8a6;
+    }
+    .tab--add {
+      color: #14b8a6; font-weight: 600; font-size: 13px;
+    }
+    .tab--add:hover { color: #0f766e; }
+
+    /* Notepad card */
+    .notepad-card {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .pair-names-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .pair-names-row label {
+      font-weight: 600; color: #0f766e; font-size: 14px; white-space: nowrap;
+    }
+    .pair-names-input {
       flex: 1; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px;
       font-size: 14px; background: #f9fafb;
     }
-    .pair-header__names:focus { border-color: #14b8a6; outline: none; }
+    .pair-names-input:focus { border-color: #14b8a6; outline: none; }
 
-    /* Chat area */
-    .chat-area {
-      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
-      margin-bottom: 16px; overflow: hidden;
+    .notes-textarea {
+      width: 100%; min-height: 250px; padding: 14px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;
+      line-height: 1.7; background: white; color: #111827;
     }
-    .chat-messages {
-      min-height: 200px; max-height: 400px; overflow-y: auto;
-      padding: 16px;
+    .notes-textarea:focus { border-color: #14b8a6; outline: none; }
+    .notes-textarea::placeholder { color: #9ca3af; }
+    .word-count {
+      text-align: right; font-size: 12px; color: #9ca3af; margin-top: 4px;
     }
-    .chat-msg {
-      margin-bottom: 12px; padding: 10px 14px; border-radius: 10px;
-      max-width: 85%; font-size: 14px; line-height: 1.5; word-wrap: break-word;
+
+    /* Push my thinking button */
+    .nudge-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 8px 16px;
+      border: 2px solid #14b8a6; border-radius: 8px;
+      background: white; color: #0f766e; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, color 0.15s;
     }
-    .chat-msg--student {
-      background: #e0f2fe; color: #0c4a6e; margin-left: auto;
-      border-bottom-right-radius: 4px;
+    .nudge-btn:hover { background: #f0fdfa; }
+    .nudge-btn:disabled {
+      border-color: #d1d5db; color: #9ca3af; cursor: not-allowed;
+      background: #f9fafb;
     }
-    .chat-msg--ai {
-      background: #f0fdf4; color: #14532d; margin-right: auto;
-      border-bottom-left-radius: 4px;
+    .nudge-btn .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid #d1d5db; border-top-color: #14b8a6;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
     }
-    .chat-msg--system {
-      background: #fef3c7; color: #92400e; margin: 8px auto;
-      text-align: center; font-size: 13px; font-style: italic;
-      max-width: 90%; border-radius: 8px;
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* AI nudge boxes */
+    .nudge-box {
+      background: #f0fdf4; border-left: 3px solid #14b8a6;
+      border-radius: 0 8px 8px 0; padding: 12px 16px;
+      margin-top: 12px;
     }
-    .chat-msg--ai .typing-indicator span {
-      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-      background: #86efac; margin: 0 2px;
-      animation: typing 1s infinite;
+    .nudge-box__label {
+      font-size: 11px; color: #6b7280; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
     }
-    .chat-msg--ai .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .chat-msg--ai .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typing {
-      0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
-      30% { opacity: 1; transform: translateY(-3px); }
+    .nudge-box__text {
+      font-size: 13px; color: #14532d; line-height: 1.6; margin: 0;
     }
-    .chat-input-row {
-      display: flex; border-top: 1px solid #e5e7eb; background: #f9fafb;
-    }
-    .chat-input {
-      flex: 1; padding: 14px 16px; border: none; font-size: 14px;
-      font-family: inherit; background: transparent; resize: none;
-      min-height: 48px; max-height: 120px;
-    }
-    .chat-input:focus { outline: none; }
-    .chat-input::placeholder { color: #9ca3af; }
-    .chat-send {
-      padding: 14px 20px; border: none; background: transparent;
-      color: #14b8a6; font-weight: 700; cursor: pointer; font-size: 14px;
-      align-self: flex-end;
-    }
-    .chat-send:hover { color: #0f766e; }
-    .chat-send:disabled { color: #d1d5db; cursor: not-allowed; }
 
     /* Action buttons */
     .actions {
@@ -149,6 +166,7 @@
       background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
     }
     .btn--finish:hover { background: linear-gradient(135deg, #0d6b63, #0d9488); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* Final section */
     .final-section {
@@ -182,12 +200,16 @@
       font-weight: 500; font-size: 14px; text-decoration: none;
     }
 
-    /* Pair counter */
-    .pair-counter {
-      font-size: 13px; color: #6b7280; text-align: center; margin-bottom: 16px;
-    }
-
     .hidden { display: none !important; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container { padding: 16px; }
+      .notepad-card { padding: 16px; }
+      .notes-textarea { min-height: 200px; font-size: 16px; }
+      .tab { padding: 8px 14px; font-size: 13px; }
+      .pair-names-row { flex-direction: column; align-items: stretch; gap: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -218,7 +240,7 @@
     <div id="activity" class="hidden">
 
       <!-- Reference card (collapsible) -->
-      <details class="reference-card" open>
+      <details class="reference-card" id="reference-card" open>
         <summary>THREE LENSES FOR WATCHING DEMOS</summary>
         <div class="lens">
           <span class="lens-label">NOTICE:</span> <span class="lens-desc">What specifically did they do or show?</span>
@@ -245,27 +267,28 @@
         </div>
       </details>
 
-      <!-- Pair header -->
-      <div class="pair-header">
-        <span class="pair-header__label" id="pair-label">Pair 1</span>
-        <input type="text" class="pair-header__names" id="pair-names"
-               placeholder="Names or numbers (e.g. Alex & Jordan)">
-      </div>
+      <!-- Tab bar -->
+      <div class="tab-bar" id="tab-bar"></div>
 
-      <div class="pair-counter" id="pair-counter"></div>
-
-      <!-- Chat -->
-      <div class="chat-area">
-        <div class="chat-messages" id="chat-messages"></div>
-        <div class="chat-input-row">
-          <textarea class="chat-input" id="chat-input" rows="1"
-                    placeholder="Type what you notice..."></textarea>
-          <button class="chat-send" id="send-btn" disabled>Send</button>
+      <!-- Notepad -->
+      <div class="notepad-card" id="notepad-card">
+        <div class="pair-names-row">
+          <label for="pair-names">Names:</label>
+          <input type="text" class="pair-names-input" id="pair-names"
+                 placeholder="e.g. Alex & Jordan">
         </div>
+
+        <textarea class="notes-textarea" id="notes-textarea"
+                  placeholder="Type what you notice as you watch. Use the lenses above if you need a starting point."></textarea>
+        <div class="word-count" id="word-count">0 words</div>
+
+        <button class="nudge-btn" id="nudge-btn">Push my thinking</button>
+
+        <div id="nudge-container"></div>
       </div>
 
       <!-- Action buttons -->
-      <div class="actions">
+      <div class="actions" id="actions">
         <button class="btn btn--next" id="next-pair-btn">Next Pair &rarr;</button>
         <button class="btn btn--finish" id="finish-btn">Finish Observations</button>
       </div>
@@ -277,10 +300,10 @@
         <textarea id="takeaway-input" placeholder="What I want to do differently..."></textarea>
       </div>
 
-      <!-- Download/submit (shown after takeaway) -->
+      <!-- Download/submit -->
       <div class="submit-section" id="submit-section">
         <h3>Submit Your Observations</h3>
-        <p>Download your full conversation (all pairs + takeaway) and upload to Canvas.</p>
+        <p>Download your notes (all pairs + takeaway) and upload to Canvas.</p>
         <button class="btn--download" id="download-btn">Download JSON</button>
         <a class="submit-link" data-assignment-key="s2-partner-eval" href="#" target="_blank">Submit on Canvas &rarr;</a>
       </div>
@@ -299,91 +322,52 @@
 
     // ── Config ──
     const AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
-    const AI_MODEL = 'claude-haiku-4-5-20251001';
+    const AI_MODEL = 'claude-sonnet-4-6';
     const STORAGE_KEY = 'cst395-s2-partner-eval';
+    const MAX_NUDGES_PER_PAIR = 3;
+    const MIN_WORDS_FOR_TRANSITION_NUDGE = 20;
+    const SAVE_DEBOUNCE_MS = 500;
 
     const SYSTEM_PROMPT = `You are a quiet observation partner for a student watching Sprint 2 demo presentations in CST395. Each demo is a pair: Student A presents what they built for B, then B presents what they built for A.
 
-YOUR ROLE: You sit next to the student and occasionally ask ONE short question that redirects their attention. You are not a coach, not a grader, not a conversation partner. You are a thinking prompt.
+The student has been taking notes while watching. They are now asking you for ONE nudge to push their thinking. Read their notes and respond with a single question that points their attention somewhere they haven't looked yet.
 
-=== ABSOLUTE RULES ===
+=== RULES ===
 
-1. NEVER evaluate the student's observation. No "good observation," "sharp eye," "that's interesting," "you're onto something." Zero valence. Zero praise. Zero judgment. If you signal quality, the student will optimize for your approval instead of their own thinking. This is the single most important rule.
+1. ONE question only. One or two sentences maximum. Never a paragraph.
 
-2. ONE sentence per response. Occasionally two if you need a brief bridge ("You've seen both directions now.") before a question. Never three. Never a paragraph.
+2. NEVER evaluate their notes. No "good observation," "interesting," "you're onto something." Zero praise. Zero judgment.
 
-3. ALWAYS a question, almost never a statement. Your job is to point attention somewhere the student hasn't looked yet.
+3. NEVER generate a question for them to ask the presenter. Your job is to push THEIR thinking, not hand them a question.
 
-4. NEVER generate a question for them to ask the presenter. If they ask "what should I ask?", respond: "What caught your eye that you don't have an explanation for yet?"
+4. Read their notes and identify what cognitive level they're at:
+   - If mostly SURFACE (naming what happened): ask what problem it was solving, or who it was for, or what they started with before narrowing
+   - If INTERPRETIVE (analyzing gaps, tradeoffs): ask for evidence, or what would need to be true for their interpretation to hold
+   - If they have a DRAFT QUESTION: ask a meta-question about it — "What would that answer tell you?" or "If they said yes, would you learn anything new?"
+   - If STUCK or very thin notes: offer a stem with a blank — "Try: 'The gap between what they said and what they showed is ___'"
 
-5. NEVER respond while they're mid-observation for the same presenter. If they type multiple notes in quick succession, let them accumulate. Respond only after a natural pause (they've stopped typing for a moment) or after they explicitly signal they want input.
+5. If the nudge type is "transition" (moving to next pair): frame your question as a bridge — something to carry forward. "Before you move on — [question]"
 
-6. At NATURAL BREAKPOINTS (between the two presenters in a pair, between pairs, or when the student explicitly asks for help sharpening a question), you may give slightly longer responses — up to 2-3 sentences — that connect observations or help the student sharpen their own draft question.
+6. If this is their 3rd nudge for this pair, make it a sharper version — they've been thinking about this pair for a while.
 
-=== HOW TO RESPOND BASED ON WHAT THEY TYPED ===
+=== CONTEXT (for choosing where to point attention, never lecture about these) ===
 
-If they typed a SURFACE OBSERVATION (describing what happened, naming the solution):
-Ask one question that pushes toward specificity or interpretation.
-- "What problem was that solving?"
-- "Who was that built for — and where does that person encounter the problem?"
-- "What did they start with before they narrowed to that?"
-- "What was on the screen when their partner reacted?"
+Sprint 2: Students spent 4 weeks with an assigned partner. Did discovery, assumption audits, domain learning, narrowed to one specific MVP, built v1, partner started using it.
 
-If they typed an INTERPRETATION (analyzing why something worked or didn't, seeing a gap):
-Ask one question that pushes toward evidence or tradeoffs.
-- "What evidence did they show for that?"
-- "What would you need to see to believe that claim?"
-- "What did they give up by going that direction?"
-
-If they typed a DRAFT QUESTION (something they want to ask):
-Do NOT improve it. Instead, ask one meta-question about their question:
-- "What are you hoping to learn from that?"
-- "If they answered 'yes,' would that tell you anything new?"
-- "What's the version of that question their partner would ask?"
-
-If they seem STUCK (very short notes, long pauses, or "I don't know what to write"):
-Offer a stem, not a question. A stem has a blank they fill in:
-- "Try this: 'The gap I see between what they said and what they showed is ___'"
-- "Try: 'What tradeoff did you make between ___ and ___?'"
-
-=== PAIR-SPECIFIC GUIDANCE ===
-
-Each demo has two sequential presentations within a pair. After the first presenter (A→B), you may prompt ONCE: "Now watch what B built for A."
-
-After the second presenter (B→A), you may prompt ONCE: "Both directions done. Was there a contrast?"
-
-Do NOT elaborate beyond that. Let the student's own notes drive the comparison.
-
-=== TRANSITION BETWEEN PAIRS ===
-
-When the student starts a new pair, respond only: "New pair. What do you notice first?"
-
-After the third or fourth pair, you may go quieter — if the student is already writing interpretive notes and draft questions without prompting, your job is done. Respond less. This is deliberate fading.
-
-=== WHAT YOU KNOW ABOUT THESE DEMOS (for context, not for lecturing) ===
-
-Sprint 2 context: Students spent 4 weeks with an assigned partner. They did discovery conversations, assumption audits, domain learning, and narrowed from a broad problem to one specific MVP. They built a v1 prototype and their partner started using it.
-
-Things worth noticing (use these to choose WHERE to point attention, never list them):
-- Did the problem narrow from broad to specific? Where was the narrowing move?
-- Did the builder's preferences show up, or does the solution match the stakeholder's world?
-- Does the form fit where the stakeholder already lives (device, routine, environment)?
-- Did partner feedback actually change something, or just confirm the original plan?
-- What did the builder contribute that AI alone couldn't have?
-- Within a pair: did both partners narrow equally well?
-
-=== END OF SESSION ===
-
-After the last pair, ask ONE question: "Across everything you watched today — what's one thing you want to do differently in Sprint 3?"
-
-Then: "Submit your notes. The full conversation goes with them."`;
+Worth noticing:
+- Narrowing quality (broad → specific, where was the cut?)
+- Projection vs. reality (builder's preference vs. stakeholder's world)
+- Form-to-context fit (does the solution live where the stakeholder already is?)
+- Partner influence (did feedback change something, or just confirm?)
+- Human value (what did the builder contribute that AI couldn't?)
+- Pair contrast (did both partners narrow equally well?)`;
 
     // ── State ──
     let state = {
       studentName: '',
       startedAt: null,
-      pairs: [],       // [{names:'', messages:[{role,text,timestamp}]}]
-      currentPair: -1,
+      pairs: [],
+      currentPair: 0,
       takeaway: '',
       finished: false,
       downloadedAt: null,
@@ -395,21 +379,41 @@ Then: "Submit your notes. The full conversation goes with them."`;
     const startBtn = $('start-btn');
     const nameGate = $('name-gate');
     const activity = $('activity');
-    const pairLabel = $('pair-label');
+    const tabBar = $('tab-bar');
     const pairNames = $('pair-names');
-    const pairCounter = $('pair-counter');
-    const chatMessages = $('chat-messages');
-    const chatInput = $('chat-input');
-    const sendBtn = $('send-btn');
+    const notesTextarea = $('notes-textarea');
+    const wordCountEl = $('word-count');
+    const nudgeBtn = $('nudge-btn');
+    const nudgeContainer = $('nudge-container');
     const nextPairBtn = $('next-pair-btn');
     const finishBtn = $('finish-btn');
     const finalSection = $('final-section');
     const takeawayInput = $('takeaway-input');
     const submitSection = $('submit-section');
     const downloadBtn = $('download-btn');
+    const referenceCard = $('reference-card');
+
+    // ── Helpers ──
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
 
     // ── Persistence ──
+    let saveTimer = null;
     function save() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+      }, SAVE_DEBOUNCE_MS);
+    }
+    function saveNow() {
+      clearTimeout(saveTimer);
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
     }
     function load() {
@@ -420,69 +424,131 @@ Then: "Submit your notes. The full conversation goes with them."`;
       return false;
     }
 
-    // ── Rendering ──
-    function escapeHtml(s) {
-      const d = document.createElement('div');
-      d.textContent = s;
-      return d.innerHTML;
+    // ── Tab rendering ──
+    function renderTabs() {
+      tabBar.innerHTML = '';
+      state.pairs.forEach(function(pair, i) {
+        const tab = document.createElement('button');
+        tab.className = 'tab' + (i === state.currentPair ? ' tab--active' : '');
+        const label = pair.names ? pair.names : 'Pair ' + (i + 1);
+        tab.textContent = label;
+        tab.addEventListener('click', function() {
+          switchToPair(i);
+        });
+        tabBar.appendChild(tab);
+      });
+
+      if (!state.finished) {
+        const addTab = document.createElement('button');
+        addTab.className = 'tab tab--add';
+        addTab.textContent = '+ New Pair';
+        addTab.addEventListener('click', function() {
+          saveCurrent();
+          addNewPair();
+        });
+        tabBar.appendChild(addTab);
+      }
     }
 
-    function renderMessages() {
+    // ── Nudge rendering ──
+    function renderNudges() {
       const pair = state.pairs[state.currentPair];
-      if (!pair) { chatMessages.innerHTML = ''; return; }
-      chatMessages.innerHTML = pair.messages.map(m => {
-        const cls = m.role === 'student' ? 'chat-msg--student'
-                  : m.role === 'ai' ? 'chat-msg--ai'
-                  : 'chat-msg--system';
-        return `<div class="chat-msg ${cls}">${escapeHtml(m.text)}</div>`;
+      if (!pair) { nudgeContainer.innerHTML = ''; return; }
+
+      nudgeContainer.innerHTML = pair.nudges.map(function(n) {
+        const label = n.trigger === 'transition' ? 'AI nudge (transition)' : 'AI nudge';
+        return '<div class="nudge-box">' +
+          '<div class="nudge-box__label">' + label + '</div>' +
+          '<p class="nudge-box__text">' + escapeHtml(n.text) + '</p>' +
+          '</div>';
       }).join('');
-      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function updatePairUI() {
-      const n = state.currentPair + 1;
-      pairLabel.textContent = `Pair ${n}`;
-      pairNames.value = state.pairs[state.currentPair]?.names || '';
-      pairCounter.textContent = state.pairs.length > 1
-        ? `Observing pair ${n} of ${state.pairs.length}`
-        : '';
-      renderMessages();
+    // ── Update nudge button state ──
+    function updateNudgeBtn() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair || state.finished) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = 'Push my thinking';
+        return;
+      }
+      const requestedCount = pair.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+      if (requestedCount >= MAX_NUDGES_PER_PAIR) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = "You've got enough to work with. Trust your observations.";
+      } else {
+        nudgeBtn.disabled = false;
+        nudgeBtn.innerHTML = 'Push my thinking';
+      }
     }
 
-    function showTypingIndicator() {
-      const el = document.createElement('div');
-      el.className = 'chat-msg chat-msg--ai';
-      el.id = 'typing-indicator';
-      el.innerHTML = '<span class="typing-indicator"><span></span><span></span><span></span></span>';
-      chatMessages.appendChild(el);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+    // ── Word count ──
+    function updateWordCount() {
+      const wc = wordCount(notesTextarea.value);
+      wordCountEl.textContent = wc + ' word' + (wc !== 1 ? 's' : '');
     }
 
-    function removeTypingIndicator() {
-      const el = $('typing-indicator');
-      if (el) el.remove();
+    // ── Save current pair data from inputs ──
+    function saveCurrent() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+      pair.names = pairNames.value.trim();
+      pair.notes = notesTextarea.value;
+      saveNow();
+    }
+
+    // ── Switch to pair by index ──
+    function switchToPair(index) {
+      saveCurrent();
+      state.currentPair = index;
+      saveNow();
+      loadPairUI();
+    }
+
+    // ── Load current pair into UI ──
+    function loadPairUI() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+      pairNames.value = pair.names || '';
+      notesTextarea.value = pair.notes || '';
+      updateWordCount();
+      renderNudges();
+      updateNudgeBtn();
+      renderTabs();
+
+      if (state.finished) {
+        notesTextarea.disabled = true;
+        pairNames.disabled = true;
+        nudgeBtn.disabled = true;
+      } else {
+        notesTextarea.disabled = false;
+        pairNames.disabled = false;
+        notesTextarea.focus();
+      }
+    }
+
+    // ── Add new pair ──
+    function addNewPair() {
+      state.pairs.push({
+        names: '',
+        notes: '',
+        nudges: [],
+        startedAt: new Date().toISOString(),
+      });
+      state.currentPair = state.pairs.length - 1;
+      saveNow();
+      loadPairUI();
+      pairNames.focus();
     }
 
     // ── AI call ──
-    async function getAIResponse(pair) {
-      // Build messages array from pair conversation
-      const messages = [];
-      // Include pair context
-      let pairContext = `[Pair ${state.currentPair + 1}`;
-      if (pair.names) pairContext += `: ${pair.names}`;
-      pairContext += `] [Total pairs observed so far: ${state.pairs.length}]`;
-
-      const conversationMessages = pair.messages
-        .filter(m => m.role === 'student' || m.role === 'ai')
-        .map(m => ({
-          role: m.role === 'student' ? 'user' : 'assistant',
-          content: m.text,
-        }));
-
-      // Prepend pair context to the first user message
-      if (conversationMessages.length > 0 && conversationMessages[0].role === 'user') {
-        conversationMessages[0].content = pairContext + '\n\n' + conversationMessages[0].content;
-      }
+    async function getAINudge(pair, trigger) {
+      const context = '[Pair ' + (state.currentPair + 1) +
+        (pair.names ? ': ' + pair.names : '') + ']' +
+        ' [Nudge type: ' + trigger + ']' +
+        ' [Previous nudges this pair: ' + pair.nudges.length + ']' +
+        ' [Total pairs observed: ' + state.pairs.length + ']\n\n' +
+        'Student\'s notes:\n' + pair.notes;
 
       try {
         const resp = await fetch(AI_ENDPOINT, {
@@ -490,9 +556,9 @@ Then: "Submit your notes. The full conversation goes with them."`;
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             system: SYSTEM_PROMPT,
-            messages: conversationMessages,
+            messages: [{ role: 'user', content: context }],
             model: AI_MODEL,
-            max_tokens: 200,
+            max_tokens: 150,
           }),
         });
         if (!resp.ok) return null;
@@ -504,96 +570,97 @@ Then: "Submit your notes. The full conversation goes with them."`;
       }
     }
 
-    // ── Actions ──
-    function addMessage(role, text) {
+    // ── Handle "Push my thinking" click ──
+    async function handleNudgeRequest() {
       const pair = state.pairs[state.currentPair];
       if (!pair) return;
-      pair.messages.push({ role, text, timestamp: new Date().toISOString() });
-      save();
-      renderMessages();
-    }
 
-    async function handleSend() {
-      const text = chatInput.value.trim();
-      if (!text) return;
+      // Sync notes first
+      pair.notes = notesTextarea.value;
+      saveNow();
 
-      chatInput.value = '';
-      chatInput.style.height = 'auto';
-      sendBtn.disabled = true;
+      // Show loading state
+      nudgeBtn.disabled = true;
+      nudgeBtn.innerHTML = '<span class="spinner"></span> thinking\u2026';
 
-      addMessage('student', text);
+      const text = await getAINudge(pair, 'requested');
 
-      // Decide whether AI should respond
-      // AI responds after each student message (the system prompt handles fading logic)
-      showTypingIndicator();
-      const aiText = await getAIResponse(state.pairs[state.currentPair]);
-      removeTypingIndicator();
-
-      if (aiText) {
-        addMessage('ai', aiText);
-      }
-      sendBtn.disabled = false;
-      chatInput.focus();
-    }
-
-    function startNewPair() {
-      // Save current pair names
-      if (state.currentPair >= 0) {
-        state.pairs[state.currentPair].names = pairNames.value.trim();
+      if (text) {
+        pair.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'requested',
+        });
+        saveNow();
+        renderNudges();
       }
 
-      state.currentPair = state.pairs.length;
-      state.pairs.push({
-        names: '',
-        messages: [],
-        startedAt: new Date().toISOString(),
-      });
-
-      // System message for transitions
-      if (state.currentPair === 0) {
-        addMessage('system', 'Observation started. Type what you notice as you watch.');
-      } else {
-        addMessage('system', `Pair ${state.currentPair + 1} started.`);
-        // AI transition message
-        addMessage('ai', 'New pair. What do you notice first?');
-      }
-
-      save();
-      updatePairUI();
-      pairNames.value = '';
-      pairNames.focus();
+      updateNudgeBtn();
     }
 
-    function handleNextPair() {
-      // Save current pair names
-      if (state.currentPair >= 0) {
-        state.pairs[state.currentPair].names = pairNames.value.trim();
+    // ── Handle transition nudge (at "Next Pair") ──
+    async function handleTransitionNudge() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return false;
+
+      pair.notes = notesTextarea.value;
+      const wc = wordCount(pair.notes);
+      if (wc < MIN_WORDS_FOR_TRANSITION_NUDGE) return false;
+
+      // Show loading on next-pair button
+      nextPairBtn.disabled = true;
+      nextPairBtn.textContent = 'thinking\u2026';
+
+      const text = await getAINudge(pair, 'transition');
+
+      if (text) {
+        pair.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'transition',
+        });
+        saveNow();
+        renderNudges();
       }
-      startNewPair();
+
+      nextPairBtn.disabled = false;
+      nextPairBtn.innerHTML = 'Next Pair &rarr;';
+      return true;
     }
 
+    // ── Handle Next Pair ──
+    async function handleNextPair() {
+      saveCurrent();
+      await handleTransitionNudge();
+
+      // Brief pause so student sees the transition nudge
+      await new Promise(function(r) { setTimeout(r, 1500); });
+
+      addNewPair();
+    }
+
+    // ── Handle Finish ──
     function handleFinish() {
-      // Save current pair names
-      if (state.currentPair >= 0) {
-        state.pairs[state.currentPair].names = pairNames.value.trim();
-      }
+      saveCurrent();
       state.finished = true;
-      save();
+      saveNow();
 
-      // Disable chat
-      chatInput.disabled = true;
-      sendBtn.disabled = true;
+      notesTextarea.disabled = true;
+      pairNames.disabled = true;
+      nudgeBtn.disabled = true;
       nextPairBtn.disabled = true;
       finishBtn.disabled = true;
-      nextPairBtn.style.opacity = '0.5';
-      finishBtn.style.opacity = '0.5';
 
-      // Show final section
+      renderTabs();
+
       finalSection.style.display = 'block';
       takeawayInput.value = state.takeaway || '';
       takeawayInput.focus();
 
-      // Show submit when takeaway is typed
+      setupTakeawayListener();
+    }
+
+    function setupTakeawayListener() {
       takeawayInput.addEventListener('input', function() {
         state.takeaway = this.value;
         save();
@@ -601,71 +668,91 @@ Then: "Submit your notes. The full conversation goes with them."`;
           submitSection.style.display = 'block';
         }
       });
-
-      // If already has takeaway, show submit
       if (state.takeaway && state.takeaway.trim().length > 10) {
         submitSection.style.display = 'block';
       }
     }
 
+    // ── Export ──
     function buildExport() {
       return {
         activityId: 'cst395-s2-partner-eval',
-        version: '1.0',
+        version: '2.0',
         course: 'CST395',
         studentName: state.studentName,
         startedAt: state.startedAt,
         submittedAt: new Date().toISOString(),
         totalPairs: state.pairs.length,
-        pairs: state.pairs.map((p, i) => ({
-          pairNumber: i + 1,
-          names: p.names || `Pair ${i + 1}`,
-          startedAt: p.startedAt,
-          messages: p.messages,
-        })),
+        pairs: state.pairs.map(function(p, i) {
+          const wc = wordCount(p.notes);
+          return {
+            pairNumber: i + 1,
+            names: p.names || 'Pair ' + (i + 1),
+            startedAt: p.startedAt,
+            notes: p.notes,
+            wordCount: wc,
+            nudges: p.nudges,
+            nudgeCount: p.nudges.length,
+          };
+        }),
         sprint3Takeaway: state.takeaway,
+        analytics: {
+          totalWords: state.pairs.reduce(function(sum, p) {
+            return sum + wordCount(p.notes);
+          }, 0),
+          totalNudgesRequested: state.pairs.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+          }, 0),
+          totalTransitionNudges: state.pairs.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'transition'; }).length;
+          }, 0),
+        },
       };
     }
 
     function handleDownload() {
       const data = buildExport();
       state.downloadedAt = new Date().toISOString();
-      save();
+      saveNow();
 
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-      a.download = `peer-observation-${safeName}.json`;
+      a.download = 'peer-observation-' + safeName + '.json';
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    // ── Auto-resize textarea ──
-    chatInput.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-      sendBtn.disabled = !this.value.trim();
-    });
+    // ── Event listeners ──
 
-    // Enter to send (Shift+Enter for newline)
-    chatInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        if (this.value.trim()) handleSend();
-      }
-    });
-
-    // Pair names auto-save
-    pairNames.addEventListener('input', function() {
-      if (state.currentPair >= 0) {
-        state.pairs[state.currentPair].names = this.value;
+    // Notes auto-save
+    notesTextarea.addEventListener('input', function() {
+      const pair = state.pairs[state.currentPair];
+      if (pair) {
+        pair.notes = this.value;
         save();
       }
+      updateWordCount();
     });
 
-    // ── Init ──
+    // Pair names auto-save + tab label update
+    pairNames.addEventListener('input', function() {
+      const pair = state.pairs[state.currentPair];
+      if (pair) {
+        pair.names = this.value.trim();
+        save();
+        renderTabs();
+      }
+    });
+
+    nudgeBtn.addEventListener('click', handleNudgeRequest);
+    nextPairBtn.addEventListener('click', handleNextPair);
+    finishBtn.addEventListener('click', handleFinish);
+    downloadBtn.addEventListener('click', handleDownload);
+
+    // ── Name gate ──
     nameInput.addEventListener('input', function() {
       startBtn.disabled = !this.value.trim();
     });
@@ -678,41 +765,36 @@ Then: "Submit your notes. The full conversation goes with them."`;
       state.startedAt = new Date().toISOString();
       nameGate.classList.add('hidden');
       activity.classList.remove('hidden');
-      save();
-      startNewPair();
+      saveNow();
+      addNewPair();
+
+      // Collapse reference card on mobile
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
     });
 
-    nextPairBtn.addEventListener('click', handleNextPair);
-    finishBtn.addEventListener('click', handleFinish);
-    downloadBtn.addEventListener('click', handleDownload);
-
-    // Restore saved state
+    // ── Init / restore ──
     if (load() && state.studentName) {
       nameGate.classList.add('hidden');
       activity.classList.remove('hidden');
 
       if (state.finished) {
-        chatInput.disabled = true;
-        sendBtn.disabled = true;
+        notesTextarea.disabled = true;
+        pairNames.disabled = true;
+        nudgeBtn.disabled = true;
         nextPairBtn.disabled = true;
         finishBtn.disabled = true;
-        nextPairBtn.style.opacity = '0.5';
-        finishBtn.style.opacity = '0.5';
         finalSection.style.display = 'block';
         takeawayInput.value = state.takeaway || '';
-        if (state.takeaway && state.takeaway.trim().length > 10) {
-          submitSection.style.display = 'block';
-        }
-        takeawayInput.addEventListener('input', function() {
-          state.takeaway = this.value;
-          save();
-          if (this.value.trim().length > 10) {
-            submitSection.style.display = 'block';
-          }
-        });
+        setupTakeawayListener();
       }
 
-      updatePairUI();
+      loadPairUI();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
     }
   })();
   </script>
