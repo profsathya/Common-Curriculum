@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Career Discovery v3 — Admin Preview</title>
+  <title>Career Discovery v4 — Admin Preview</title>
   <style>
     :root {
       --bg: #fafafa;
@@ -163,7 +163,7 @@
 
     .config-grid {
       display: grid;
-      grid-template-columns: 160px 1fr;
+      grid-template-columns: 180px 1fr;
       gap: 8px 16px;
       font-size: 14px;
     }
@@ -237,6 +237,7 @@
     .bg-s3 { background: var(--s3-color); }
     .bg-synth { background: var(--synth-color); }
     .bg-gray { background: #888; }
+    .bg-pitch { background: #c53030; }
 
     .file-ref {
       font-family: 'SF Mono', 'Fira Code', monospace;
@@ -256,6 +257,16 @@
       margin-top: 12px;
     }
 
+    .data-callout {
+      font-size: 13px;
+      padding: 10px 14px;
+      background: #f0fdf4;
+      border-left: 3px solid #276749;
+      border-radius: 0 6px 6px 0;
+      margin-top: 8px;
+      color: #276749;
+    }
+
     @media (max-width: 700px) {
       .admin-header { padding: 16px; }
       .admin-body { padding: 16px 16px 60px; }
@@ -267,7 +278,7 @@
 <body>
 
 <header class="admin-header">
-  <h1>Career Discovery v3 — Admin Preview</h1>
+  <h1>Career Discovery v4 — Admin Preview</h1>
   <p>Read-only view of all stages, question bank, system prompt, and configuration.
     To edit, modify <span class="file-ref">questions.js</span>, <span class="file-ref">prompts.js</span>, and <span class="file-ref">config.js</span> and push.</p>
   <nav class="admin-nav">
@@ -276,6 +287,7 @@
     <a href="#stage1">Stage 1</a>
     <a href="#stage2">Stage 2</a>
     <a href="#stage3">Stage 3</a>
+    <a href="#synthesis">Synthesis</a>
     <a href="#prompt">System Prompt</a>
   </nav>
 </header>
@@ -289,7 +301,7 @@
 // Remove loading message once module executes
 const loadingMsg = document.getElementById('admin-loading');
 if (loadingMsg) loadingMsg.remove();
-import { STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
+import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 import { CONFIG } from './config.js';
 
@@ -302,14 +314,12 @@ const $ = (tag, cls, html) => {
 
 const container = document.getElementById('admin-content');
 
-/* ======= Helper: highlight placeholders in prompt text ======= */
 function highlightPrompt(text) {
   return text
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/\{([^}]+)\}/g, '<span class="placeholder">{$1}</span>');
 }
 
-/* ======= Helper: build a collapsible card ======= */
 function makeCard(badgeText, badgeClass, title, body, startOpen = false) {
   const card = $('div', 'card');
   const header = $('div', 'card-header');
@@ -344,7 +354,7 @@ const flowSection = $('div', 'section');
 flowSection.id = 'flow';
 flowSection.innerHTML = `
   <h2 class="section-title">Conversation Flow</h2>
-  <p class="section-subtitle">3 stages with AI deepening, synthesis, and optional reaction</p>
+  <p class="section-subtitle">3 stages with AI deepening, transitions, two-part synthesis, and optional pitch</p>
   <div class="flow">
     <div>
       <div class="flow-step bg-s1">Stage 1</div>
@@ -357,13 +367,23 @@ flowSection.innerHTML = `
     </div>
     <span class="flow-arrow">&rarr;</span>
     <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Transition</div>
+      <span class="flow-label">AI-generated</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
       <div class="flow-step bg-s2">Stage 2</div>
-      <span class="flow-label">Fixed Q</span>
+      <span class="flow-label">Data-layered</span>
     </div>
     <span class="flow-arrow">&rarr;</span>
     <div>
       <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">AI Deepening</div>
-      <span class="flow-label">0-2 follow-ups</span>
+      <span class="flow-label">Up to 3 layers</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Transition</div>
+      <span class="flow-label">AI-generated</span>
     </div>
     <span class="flow-arrow">&rarr;</span>
     <div>
@@ -377,25 +397,28 @@ flowSection.innerHTML = `
     </div>
     <span class="flow-arrow">&rarr;</span>
     <div>
-      <div class="flow-step bg-synth">Synthesis</div>
-      <span class="flow-label">Deliverable</span>
+      <div class="flow-step bg-synth">Brief</div>
+      <span class="flow-label">Collapsible</span>
     </div>
     <span class="flow-arrow">&rarr;</span>
     <div>
       <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Reaction?</div>
       <span class="flow-label">Optional</span>
     </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-pitch">Pitch</div>
+      <span class="flow-label">Separate</span>
+    </div>
   </div>
   <p style="font-size:13px;color:var(--muted);">
-    Stages 1 and 2 use fixed questions. Stage 3 question is selected by the AI from a bank of 5 based on
-    what information gap remains. Within each stage, the AI may ask 0-2 follow-up questions to draw out specifics.
-    After Stage 3, the AI generates a personalized synthesis. The student can optionally react to the synthesis
-    for a brief AI adjustment before downloading.
+    Stage 1 has a framing line. Stage 2 uses data-layered deepening (skills-based hiring, authenticity).
+    AI generates personalized transitions between stages. Synthesis outputs two parts: Career Intelligence Brief
+    (collapsible sections) and Pitch assessment (separate "Want to Go Deeper?" section).
   </p>
   <div class="note">
-    <strong>AI Deepening rules:</strong> Max 2 follow-ups per stage. After 2, a "Continue" button appears.
-    If the student submits a 3rd response, the AI must advance. Stage 2 deepening has specific guidance
-    (recruiter perspective &rarr; what stands out &rarr; what's hard to fake).
+    <strong>Key v4 changes:</strong> Two-part synthesis, AI-generated transitions, data-layered Stage 2 deepening,
+    collapsible brief sections, exponential backoff for synthesis calls, escaped newline fix.
   </div>
 `;
 container.appendChild(flowSection);
@@ -413,6 +436,10 @@ configSection.innerHTML = `
     <span class="config-val">${esc(CONFIG.model)}</span>
     <span class="config-key">Max Tokens</span>
     <span class="config-val">${CONFIG.max_tokens}</span>
+    <span class="config-key">Synthesis Timeout</span>
+    <span class="config-val">${CONFIG.synthesis_timeout_ms}ms</span>
+    <span class="config-key">Retry Delays</span>
+    <span class="config-val">[${CONFIG.retry_delays.join(', ')}]ms</span>
     <span class="config-key">Form Version</span>
     <span class="config-val">${esc(CONFIG.form_version)}</span>
     <span class="config-key">Dates Placeholder</span>
@@ -428,9 +455,12 @@ const s1Section = $('div', 'section');
 s1Section.id = 'stage1';
 s1Section.innerHTML = `
   <h2 class="section-title">Stage 1 — Your Situation</h2>
-  <p class="section-subtitle">Fixed question, always shown first.
+  <p class="section-subtitle">Frame text + fixed question.
     From <span class="file-ref">questions.js</span></p>
 `;
+s1Section.appendChild(makeCard('Frame', 'bg-s1', 'Stage 1 Frame', `
+  <div class="question-text" style="border-left-color:var(--s1-color);font-style:italic">${esc(STAGE_1_FRAME)}</div>
+`, true));
 s1Section.appendChild(makeCard('Stage 1', 'bg-s1', 'Opening Question', `
   <div class="question-text" style="border-left-color:var(--s1-color)">${esc(STAGE_1_QUESTION)}</div>
 `, true));
@@ -441,15 +471,19 @@ const s2Section = $('div', 'section');
 s2Section.id = 'stage2';
 s2Section.innerHTML = `
   <h2 class="section-title">Stage 2 — Their Perspective</h2>
-  <p class="section-subtitle">Fixed question (recruiter perspective). AI deepening pushes toward the "hard to fake" insight.
+  <p class="section-subtitle">Data-layered recruiter perspective with three deepening layers.
     From <span class="file-ref">questions.js</span></p>
 `;
 s2Section.appendChild(makeCard('Stage 2', 'bg-s2', 'Recruiter Perspective Question', `
   <div class="question-text" style="border-left-color:var(--s2-color)">${esc(STAGE_2_QUESTION)}</div>
-  <div class="note">
-    <strong>Deepening arc:</strong> Surface-level &rarr; "put yourself in the chair with 300 applications" &rarr;
-    "companies are finding applications that aren't genuinely the applicant's work" &rarr; "what could you do that's hard to fake?"
-    &rarr; If the student arrives at the insight on their own, affirm and advance.
+  <div class="data-callout">
+    <strong>Data sources:</strong> Entry-level postings down 15% (Handshake 2025), applications per posting up 30% (NACE 2025)
+  </div>
+  <div class="note" style="margin-top:16px">
+    <strong>Three deepening layers:</strong><br>
+    <strong>Layer 1 — Skills-based hiring:</strong> 70% of employers shifted to skills-based hiring; fewer than 40% of seniors know.<br>
+    <strong>Layer 2 — Authenticity:</strong> Growing number of AI-generated applications; recruiters looking for signals of authenticity.<br>
+    <strong>Layer 3 — Insight confirmed:</strong> Student gets it on their own — affirm and advance.
   </div>
 `, true));
 container.appendChild(s2Section);
@@ -459,26 +493,24 @@ const s3Section = $('div', 'section');
 s3Section.id = 'stage3';
 s3Section.innerHTML = `
   <h2 class="section-title">Stage 3 — Your Direction</h2>
-  <p class="section-subtitle">AI selects one of 5 questions based on information gap.
+  <p class="section-subtitle">AI selects one of 5 questions based on information gap. AI-generated transition precedes the question.
     From <span class="file-ref">questions.js</span></p>
 `;
 
-/* Routing table */
 s3Section.appendChild(makeCard('Routing', 'bg-s3', 'Stage 2 → Stage 3 Question Selection', `
   <p style="font-size:13px;color:var(--muted);margin:0 0 8px;">
     When advancing from Stage 2, the AI selects the Stage 3 question that fills the biggest information gap:
   </p>
   <table class="routing-table">
-    <tr><th>ID</th><th>When to select</th></tr>
-    <tr><td><code>q3_a</code></td><td>Surface-level on motivation — told you what, not why</td></tr>
-    <tr><td><code>q3_b</code></td><td>Narrow and strategic — clear plan but tunnel vision</td></tr>
-    <tr><td><code>q3_c</code></td><td>Has real experiences but doesn't see their own value</td></tr>
-    <tr><td><code>q3_d</code></td><td>Disengaged, giving minimal responses</td></tr>
-    <tr><td><code>q3_e</code></td><td>Abstract throughout — needs a concrete experience to ground synthesis</td></tr>
+    <tr><th>ID</th><th>Label</th><th>When to select</th></tr>
+    <tr><td><code>q3_a</code></td><td>Motivation</td><td>Surface-level on motivation — told you what, not why</td></tr>
+    <tr><td><code>q3_b</code></td><td>Broaden</td><td>Narrow and strategic — clear plan but tunnel vision</td></tr>
+    <tr><td><code>q3_c</code></td><td>Value</td><td>Has real experiences but doesn't see their own value</td></tr>
+    <tr><td><code>q3_d</code></td><td>Re-engage</td><td>Disengaged, giving minimal responses</td></tr>
+    <tr><td><code>q3_e</code></td><td>Ground</td><td>Abstract throughout — needs a concrete experience</td></tr>
   </table>
 `, true));
 
-/* Question cards */
 const q3ids = ['q3_a', 'q3_b', 'q3_c', 'q3_d', 'q3_e'];
 q3ids.forEach(id => {
   const q = STAGE_3_BANK[id];
@@ -488,12 +520,45 @@ q3ids.forEach(id => {
 });
 container.appendChild(s3Section);
 
+/* ======= Synthesis Structure ======= */
+const synthSection = $('div', 'section');
+synthSection.id = 'synthesis';
+synthSection.innerHTML = `
+  <h2 class="section-title">Two-Part Synthesis</h2>
+  <p class="section-subtitle">AI generates a Career Intelligence Brief and a separate pitch assessment</p>
+`;
+synthSection.appendChild(makeCard('Part 1', 'bg-synth', 'Career Intelligence Brief (Collapsible Card)', `
+  <p style="font-size:13px;color:var(--muted);margin:0 0 12px;">
+    Four collapsible sections. First section expanded by default. Each shows a preview line when collapsed.
+  </p>
+  <table class="routing-table">
+    <tr><th>Section</th><th>Content</th><th>Default</th></tr>
+    <tr><td><strong>Where You Are</strong></td><td>2-3 sentences. Honest situation read.</td><td>Expanded</td></tr>
+    <tr><td><strong>What I See</strong></td><td>2-3 observations + woven human+AI point (replaces "What Just Happened")</td><td>Collapsed</td></tr>
+    <tr><td><strong>A Direction Worth Exploring</strong></td><td>1-2 specific role types/niches</td><td>Collapsed</td></tr>
+    <tr><td><strong>Your First Move</strong></td><td>One actionable step for this week</td><td>Collapsed</td></tr>
+  </table>
+  <div class="note" style="margin-top:12px">
+    <strong>No more "What Just Happened" section.</strong> The human+AI insight is now woven into "What I See" as ONE specific sentence using the student's actual example.
+  </div>
+`, true));
+synthSection.appendChild(makeCard('Part 2', 'bg-pitch', 'Pitch: "Want to Go Deeper?" (Separate Section)', `
+  <p style="font-size:13px;color:var(--muted);margin:0 0 12px;">
+    Appears after the brief + optional reaction step. Separate visual treatment — lighter background, smaller text.
+  </p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>Opening:</strong> "What you just experienced was a 15-minute version of a process we've been developing."</p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>"Good next step if:"</strong> 2-3 personalized bullet points from THIS conversation</p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>"Not best use of time if:"</strong> Strategic approach already in place, different need (grad school, gap), already getting callbacks</p>
+  <p style="font-size:13px;margin:0;"><strong>CTA:</strong> Session dates + link, or "dates coming soon" message</p>
+`, true));
+container.appendChild(synthSection);
+
 /* ======= System Prompt ======= */
 const promptSection = $('div', 'section');
 promptSection.id = 'prompt';
 promptSection.innerHTML = `
   <h2 class="section-title">System Prompt</h2>
-  <p class="section-subtitle">Single prompt handles all stages, deepening, routing, synthesis, and adjustment.
+  <p class="section-subtitle">Single prompt handles all stages, deepening with data layers, transitions, two-part synthesis, and adjustment.
     From <span class="file-ref">prompts.js</span></p>
 `;
 promptSection.appendChild(makeCard('Prompt', 'bg-synth', 'Full System Prompt', `

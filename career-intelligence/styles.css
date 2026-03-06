@@ -1,8 +1,8 @@
 /**
- * Career Discovery Form v3 — Styles
+ * Career Discovery Form v4 — Styles
  *
- * Design: clean, calm, conversational. No gamification.
- * Students are anxious — this should feel like a thoughtful conversation.
+ * Clean, calm, conversational. Collapsible brief sections,
+ * transition text, pitch section, synthesis loading.
  */
 
 /* ============================================
@@ -19,8 +19,6 @@
   --ci-accent-light: #ebf4ff;
   --ci-reaction-bg: #f7f7f5;
   --ci-reaction-border: #d4d0c8;
-  --ci-deliverable-bg: #fffff0;
-  --ci-deliverable-border: #d4a844;
   --ci-error-bg: #fff5f5;
   --ci-error-border: #c53030;
   --ci-student-bg: #eef2ff;
@@ -248,6 +246,37 @@ body {
   color: var(--step-color, var(--ci-accent));
 }
 
+/* Stage frame text */
+
+.ci-stage-frame {
+  margin-bottom: 8px;
+}
+
+.ci-stage-frame p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ci-text-muted);
+  font-style: italic;
+}
+
+/* Transition text between stages */
+
+.ci-transition {
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--step-color, var(--ci-accent));
+  background: #f8fafc;
+  border-radius: 0 var(--ci-radius) var(--ci-radius) 0;
+}
+
+.ci-transition p {
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ci-text-muted);
+  line-height: 1.55;
+}
+
 /* ============================================
    Question Card
    ============================================ */
@@ -427,6 +456,7 @@ body {
   gap: 6px;
   padding: 20px 24px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .ci-loading__dot {
@@ -445,20 +475,27 @@ body {
   animation-delay: 0.4s;
 }
 
+.ci-loading__message {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+}
+
 @keyframes ci-pulse {
   0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
   40% { opacity: 1; transform: scale(1); }
 }
 
 /* ============================================
-   Deliverable Card (Synthesis)
+   Synthesis Section
    ============================================ */
 
 .ci-synthesis-section {
   margin-top: 32px;
 }
-
-/* Synthesis header */
 
 .ci-synth-header {
   text-align: center;
@@ -478,130 +515,131 @@ body {
   margin: 0;
 }
 
-/* Deliverable container */
+/* ============================================
+   Collapsible Brief Card
+   ============================================ */
 
-.ci-deliverable {
+.ci-brief-card {
   background: var(--ci-surface);
-  border: 1px solid var(--ci-border);
-  border-radius: var(--ci-radius);
-  padding: 8px 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 24px 0;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.ci-deliverable--visible {
+.ci-brief-card--visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Individual section cards within the synthesis */
-
-.ci-synth-card {
-  padding: 20px 24px;
-  border-left: 4px solid var(--card-color, #4a5568);
-  margin: 16px 20px;
-  background: var(--ci-bg);
-  border-radius: 0 var(--ci-radius) var(--ci-radius) 0;
+.ci-brief-section {
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.ci-synth-card:first-child {
-  margin-top: 12px;
+.ci-brief-section:last-child {
+  border-bottom: none;
 }
 
-.ci-synth-card:last-child {
-  margin-bottom: 12px;
+.ci-brief-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
 }
 
-.ci-synth-card h2 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 0 10px;
-  color: var(--card-color, var(--ci-text));
+.ci-brief-section__header:hover {
+  background: #f8fafc;
+}
+
+.ci-brief-section__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-brief-section__icon {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.ci-synth-card__icon {
-  display: inline-flex;
-  align-items: center;
-  color: var(--card-color, var(--ci-text));
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.ci-synth-card p {
-  margin: 0 0 10px;
+.ci-brief-section__title {
   font-size: 15px;
-  line-height: 1.65;
+  font-weight: 600;
+  color: var(--ci-text);
+  margin: 0;
 }
 
-.ci-synth-card p:last-child {
+.ci-brief-section__preview {
+  font-size: 13px;
+  color: var(--ci-text-muted);
+  margin: 4px 0 0;
+  display: block;
+  line-height: 1.4;
+}
+
+.ci-brief-section__toggle {
+  font-size: 18px;
+  color: #999;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.ci-brief-section--expanded .ci-brief-section__toggle {
+  transform: rotate(180deg);
+}
+
+.ci-brief-section--expanded .ci-brief-section__preview {
+  display: none;
+}
+
+.ci-brief-section__content {
+  padding: 0 20px 16px;
+  display: none;
+  color: #333;
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.ci-brief-section--expanded .ci-brief-section__content {
+  display: block;
+}
+
+.ci-brief-section__content p {
+  margin: 0 0 10px;
+}
+
+.ci-brief-section__content p:last-child {
   margin-bottom: 0;
 }
 
-.ci-synth-card ul {
+.ci-brief-section__content ul {
   margin: 8px 0;
   padding-left: 20px;
 }
 
-.ci-synth-card li {
-  font-size: 15px;
-  line-height: 1.65;
+.ci-brief-section__content li {
   margin-bottom: 4px;
   color: var(--ci-text-muted);
 }
 
-.ci-synth-card strong {
+.ci-brief-section__content strong {
   color: var(--ci-text);
 }
 
-/* Legacy deliverable styles for any content outside cards */
-
-.ci-deliverable h2 {
-  font-size: 17px;
-  font-weight: 600;
-  margin: 20px 24px 8px;
-  color: var(--ci-text);
-}
-
-.ci-deliverable p {
-  margin: 0 0 10px;
-  padding: 0 24px;
-  font-size: 15px;
-  line-height: 1.65;
-}
-
-.ci-deliverable p:last-child {
-  margin-bottom: 0;
-}
-
-.ci-deliverable ul {
-  margin: 8px 0;
-  padding-left: 44px;
-}
-
-.ci-deliverable li {
-  font-size: 15px;
-  line-height: 1.65;
-  margin-bottom: 4px;
-  color: var(--ci-text-muted);
-}
-
-.ci-deliverable strong {
-  color: var(--ci-text);
-}
-
-/* "Is This For You?" section styling */
-
-.ci-fit-positive {
-  color: var(--ci-accent);
-  font-weight: 600;
-}
-
-.ci-fit-negative {
-  color: var(--ci-text-muted);
-  font-weight: 600;
+.ci-brief-section__content h3 {
+  display: none; /* section title is already in the header */
 }
 
 /* ============================================
@@ -682,6 +720,112 @@ body {
   background: #1e3a5f;
 }
 
+.ci-actions__deeper {
+  padding: 12px 24px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  background: var(--ci-surface);
+  color: var(--ci-accent);
+  border: 1px solid var(--ci-accent);
+}
+
+.ci-actions__deeper:hover:not(:disabled) {
+  background: var(--ci-accent-light);
+}
+
+.ci-actions__deeper:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Pitch Section — "Want to Go Deeper?"
+   ============================================ */
+
+.ci-pitch-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--ci-radius);
+  padding: 24px;
+  margin-top: 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-pitch-section--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-pitch-section__opening {
+  font-size: 15px;
+  color: #475569;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.ci-pitch-section__content {
+  margin-bottom: 16px;
+}
+
+.ci-pitch-section__content p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.ci-pitch-section__content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.ci-pitch-section__content li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.ci-pitch-fit {
+  color: #276749;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ci-pitch-nofit {
+  color: var(--ci-text-muted);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ci-pitch-section__cta {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ci-pitch-section__cta p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.ci-pitch-section__cta a {
+  color: var(--ci-accent);
+  text-decoration: underline;
+}
+
+.ci-pitch-section .ci-actions {
+  margin-top: 16px;
+}
+
 /* ============================================
    Error
    ============================================ */
@@ -711,6 +855,21 @@ body {
 }
 
 .ci-error__retry:hover {
+  opacity: 0.85;
+}
+
+.ci-error__download {
+  padding: 8px 16px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  background: var(--ci-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+}
+
+.ci-error__download:hover {
   opacity: 0.85;
 }
 
@@ -777,15 +936,6 @@ body {
     padding: 16px 18px;
   }
 
-  .ci-deliverable {
-    padding: 4px 0;
-  }
-
-  .ci-synth-card {
-    margin: 12px 12px;
-    padding: 16px 16px;
-  }
-
   .ci-student-response {
     margin-left: 12px;
     padding: 12px 16px;
@@ -810,7 +960,8 @@ body {
     flex-direction: column;
   }
 
-  .ci-actions__download {
+  .ci-actions__download,
+  .ci-actions__deeper {
     width: 100%;
     text-align: center;
   }
@@ -821,5 +972,25 @@ body {
 
   .ci-adjustment {
     padding: 12px 16px;
+  }
+
+  .ci-brief-section__header {
+    padding: 14px 16px;
+  }
+
+  .ci-brief-section__content {
+    padding: 0 16px 14px;
+  }
+
+  .ci-transition {
+    padding: 10px 14px;
+  }
+
+  .ci-pitch-section {
+    padding: 18px;
+  }
+
+  .ci-synth-header__title {
+    font-size: 18px;
   }
 }
