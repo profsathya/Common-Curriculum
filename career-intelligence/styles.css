@@ -458,11 +458,33 @@ body {
   margin-top: 32px;
 }
 
+/* Synthesis header */
+
+.ci-synth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.ci-synth-header__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--ci-text);
+}
+
+.ci-synth-header__subtitle {
+  font-size: 14px;
+  color: var(--ci-text-muted);
+  margin: 0;
+}
+
+/* Deliverable container */
+
 .ci-deliverable {
-  background: var(--ci-deliverable-bg);
-  border: 2px solid var(--ci-deliverable-border);
+  background: var(--ci-surface);
+  border: 1px solid var(--ci-border);
   border-radius: var(--ci-radius);
-  padding: 28px 28px 24px;
+  padding: 8px 0;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -473,19 +495,79 @@ body {
   transform: translateY(0);
 }
 
-.ci-deliverable h2 {
-  font-size: 17px;
+/* Individual section cards within the synthesis */
+
+.ci-synth-card {
+  padding: 20px 24px;
+  border-left: 4px solid var(--card-color, #4a5568);
+  margin: 16px 20px;
+  background: var(--ci-bg);
+  border-radius: 0 var(--ci-radius) var(--ci-radius) 0;
+}
+
+.ci-synth-card:first-child {
+  margin-top: 12px;
+}
+
+.ci-synth-card:last-child {
+  margin-bottom: 12px;
+}
+
+.ci-synth-card h2 {
+  font-size: 16px;
   font-weight: 600;
-  margin: 20px 0 8px;
+  margin: 0 0 10px;
+  color: var(--card-color, var(--ci-text));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ci-synth-card__icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--card-color, var(--ci-text));
+  flex-shrink: 0;
+}
+
+.ci-synth-card p {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.ci-synth-card p:last-child {
+  margin-bottom: 0;
+}
+
+.ci-synth-card ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.ci-synth-card li {
+  font-size: 15px;
+  line-height: 1.65;
+  margin-bottom: 4px;
+  color: var(--ci-text-muted);
+}
+
+.ci-synth-card strong {
   color: var(--ci-text);
 }
 
-.ci-deliverable h2:first-child {
-  margin-top: 0;
+/* Legacy deliverable styles for any content outside cards */
+
+.ci-deliverable h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 20px 24px 8px;
+  color: var(--ci-text);
 }
 
 .ci-deliverable p {
   margin: 0 0 10px;
+  padding: 0 24px;
   font-size: 15px;
   line-height: 1.65;
 }
@@ -496,7 +578,7 @@ body {
 
 .ci-deliverable ul {
   margin: 8px 0;
-  padding-left: 20px;
+  padding-left: 44px;
 }
 
 .ci-deliverable li {
@@ -504,13 +586,6 @@ body {
   line-height: 1.65;
   margin-bottom: 4px;
   color: var(--ci-text-muted);
-}
-
-.ci-deliverable hr {
-  border: none;
-  border-top: 1px solid var(--ci-deliverable-border);
-  margin: 24px 0;
-  opacity: 0.5;
 }
 
 .ci-deliverable strong {
@@ -698,9 +773,17 @@ body {
   }
 
   .ci-question,
-  .ci-reaction,
-  .ci-deliverable {
+  .ci-reaction {
     padding: 16px 18px;
+  }
+
+  .ci-deliverable {
+    padding: 4px 0;
+  }
+
+  .ci-synth-card {
+    margin: 12px 12px;
+    padding: 16px 16px;
   }
 
   .ci-student-response {

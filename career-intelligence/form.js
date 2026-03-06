@@ -74,19 +74,44 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+// Section icons for synthesis headings
+const SECTION_ICONS = {
+  'Where You Are': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  'What I See In What You Shared': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  'A Direction Worth Exploring': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>',
+  'Your First Move': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',
+  'What Just Happened': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+  'Is This For You?': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+};
+
+const SECTION_COLORS = {
+  'Where You Are': '#2c5282',
+  'What I See In What You Shared': '#6b46c1',
+  'A Direction Worth Exploring': '#b7791f',
+  'Your First Move': '#276749',
+  'What Just Happened': '#4a5568',
+  'Is This For You?': '#c53030',
+};
+
 function renderMarkdown(text) {
   const lines = text.split('\n');
   const result = [];
   let inList = false;
+  let inSection = false;
 
   for (const line of lines) {
     if (line.match(/^---+\s*$/)) {
       if (inList) { result.push('</ul>'); inList = false; }
-      result.push('<hr>');
+      if (inSection) { result.push('</div>'); inSection = false; }
     } else if (line.match(/^## /)) {
       if (inList) { result.push('</ul>'); inList = false; }
+      if (inSection) { result.push('</div>'); }
       const heading = escapeHtml(line.slice(3));
-      result.push(`<h2>${heading}</h2>`);
+      const icon = SECTION_ICONS[heading] || '';
+      const color = SECTION_COLORS[heading] || '#4a5568';
+      result.push(`<div class="ci-synth-card" style="--card-color: ${color}">`);
+      result.push(`<h2>${icon ? `<span class="ci-synth-card__icon">${icon}</span>` : ''}${heading}</h2>`);
+      inSection = true;
     } else if (line.match(/^- /)) {
       if (!inList) { result.push('<ul>'); inList = true; }
       const content = escapeHtml(line.slice(2)).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -99,6 +124,7 @@ function renderMarkdown(text) {
     }
   }
   if (inList) result.push('</ul>');
+  if (inSection) result.push('</div>');
   return result.join('\n');
 }
 
@@ -576,8 +602,19 @@ async function handleSkip() {
 // ============================================
 
 function renderSynthesis(synthesisMarkdown) {
+  state.timestamps.end = new Date().toISOString();
+  state.complete = true;
+
   const form = getForm();
   const section = el('div', 'ci-synthesis-section');
+
+  // Synthesis header
+  const synthHeader = el('div', 'ci-synth-header');
+  synthHeader.innerHTML = `
+    <h2 class="ci-synth-header__title">Your Career Discovery Summary</h2>
+    <p class="ci-synth-header__subtitle">Based on everything you shared across all three stages</p>
+  `;
+  section.appendChild(synthHeader);
 
   // Deliverable card
   const card = el('div', 'ci-deliverable');
@@ -588,9 +625,19 @@ function renderSynthesis(synthesisMarkdown) {
 
   requestAnimationFrame(() => card.classList.add('ci-deliverable--visible'));
 
+  // Download button — immediately available
+  const actions = el('div', 'ci-actions');
+  const downloadBtn = el('button', 'ci-actions__download', 'Download session (JSON)');
+  downloadBtn.addEventListener('click', () => {
+    state.currentStage = 'complete';
+    downloadJSON(state);
+  });
+  actions.appendChild(downloadBtn);
+  section.appendChild(actions);
+
   form.appendChild(section);
 
-  // Synthesis reaction area
+  // Optional reaction area below download
   renderSynthesisReactionArea(section);
 
   section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -613,7 +660,7 @@ function postProcessSynthesisHtml(html) {
 function renderSynthesisReactionArea(container) {
   const area = el('div', 'ci-synthesis-reaction');
   area.innerHTML = `
-    <p class="ci-synthesis-reaction__prompt">Does anything here surprise you or feel off? Tell me what — I'll adjust. If it looks right, you can skip to the summary.</p>
+    <p class="ci-synthesis-reaction__prompt">Does anything here surprise you or feel off? Tell me what and I'll adjust.</p>
   `;
 
   const textarea = document.createElement('textarea');
@@ -624,12 +671,9 @@ function renderSynthesisReactionArea(container) {
 
   const btnRow = el('div', 'ci-btn-row');
 
-  const submitBtn = el('button', 'ci-submit', 'Submit');
+  const submitBtn = el('button', 'ci-submit', 'Submit feedback');
   submitBtn.disabled = true;
   btnRow.appendChild(submitBtn);
-
-  const skipBtn = el('button', 'ci-skip', 'Looks good \u2014 show me the summary');
-  btnRow.appendChild(skipBtn);
 
   area.appendChild(btnRow);
   container.appendChild(area);
@@ -644,7 +688,6 @@ function renderSynthesisReactionArea(container) {
 
     textarea.disabled = true;
     submitBtn.disabled = true;
-    skipBtn.disabled = true;
 
     state.synthesisReaction = text;
 
@@ -688,21 +731,11 @@ function renderSynthesisReactionArea(container) {
       });
 
       renderSynthesisAdjustment(state.synthesisAdjustment);
-      showCompletionActions();
 
     } catch (error) {
       loading.remove();
       showError(area, error.message);
-      // Show completion actions even on error
-      showCompletionActions();
     }
-  });
-
-  skipBtn.addEventListener('click', () => {
-    area.remove();
-    state.synthesisReaction = null;
-    state.synthesisAdjustment = null;
-    showCompletionActions();
   });
 }
 
@@ -712,22 +745,6 @@ function renderSynthesisAdjustment(adjustmentText) {
   adj.innerHTML = `<p>${escapeHtml(adjustmentText)}</p>`;
   section.appendChild(adj);
   requestAnimationFrame(() => adj.classList.add('ci-adjustment--visible'));
-}
-
-function showCompletionActions() {
-  state.timestamps.end = new Date().toISOString();
-  state.currentStage = 'complete';
-  state.complete = true;
-
-  const section = document.querySelector('.ci-synthesis-section');
-  const actions = el('div', 'ci-actions');
-
-  const downloadBtn = el('button', 'ci-actions__download', 'Download session (JSON)');
-  downloadBtn.addEventListener('click', () => downloadJSON(state));
-  actions.appendChild(downloadBtn);
-
-  section.appendChild(actions);
-  actions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ============================================
