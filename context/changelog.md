@@ -1,13 +1,23 @@
 ---
 purpose: Reverse-chronological log of significant updates — what changed, when, by whom, why
-last_updated: 2026-02-28
-updated_by: claude-code
+last_updated: 2026-03-07
+updated_by: sathya
 status: active
 ---
 
 # Changelog
 
 Most recent entries first. Each entry: date, who, what changed, why it matters.
+
+---
+
+## 2026-03-07 — [sathya] Sprint 3 live design component + contingency planning
+
+**Created:** `context/sprint3-contingency.md` — Instructor-facing planning document with three execution scenarios for Weeks 10–12 based on Week 9 outcomes (Scenario A: simulation-first, B: regroup + build, C: domain bridge). Includes hybrid approach notes and arc narrative protection guidance.
+
+**Updated:** `cst395/sprint-3.html` — Replaced Week 10 content with a "Course Design — Live" component: teal-bordered banner with pulsing green dot, three expandable scenario cards (green/amber/purple), and a decision-note strip pointing to Mar 22. Replaced Weeks 11 and 12 with simpler amber tentative banners + dashed-border stub assignment boxes. Added `@keyframes` pulse animation and `toggleS3Scenario()` JS function.
+
+**Rationale:** Sprint 3 is deliberately iterative — Week 9 observations drive Week 10 structure. Making the contingency planning visible to students models Adaptive Building (AB) in real time: build something, get signal, adjust. Week 10 gets the visually distinct live-design treatment because that's where the actual decision lives. Weeks 11–12 use quieter banners to avoid visual noise overwhelming the live decision point.
 
 ---
 

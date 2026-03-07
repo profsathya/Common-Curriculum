@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 3: Complexity | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    @keyframes s3Pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .s3-pulse-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: s3Pulse 2s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -180,76 +195,110 @@
         <div class="week-section__header-left">
           <span class="week-section__number">10</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">AI Simulation + Expert Session 1</h3>
+            <h3 class="week-section__title">AI Simulation + Expert Access</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-10-content">
-        <!-- Tentative Banner -->
-        <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
-          <strong style="color: #92400e;">⚠️ Tentative</strong>
-          <span style="color: #a16207;"> — Plan confirmed after Week 9. Check back after Mar 19.</span>
-        </div>
-
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> AI simulation is how you find the questions only a human expert can answer.
+          <strong>Concepts:</strong> AI simulation as a learning tool — finding the questions only a human expert can answer. Expert access used strategically, not generally.
         </p>
 
-        <div class="in-class-plan" style="border-left: 3px solid #f97316;">
-          <p class="in-class-plan__label">📅 In-Class (Wednesday, Mar 26) · <strong style="color: #c2410c;">Piranavan Selvanandan — Session 1</strong></p>
-          <h4 class="in-class-plan__title">Testing Your Problem Framing</h4>
-          <div class="in-class-plan__content">
-            <p>Each student comes having run an AI simulation of their user and their solution. You'll surface what the simulation confirmed and — more importantly — the questions it couldn't answer. Piranavan responds to problem framings and tells you what the simulation gets wrong.</p>
+        <!-- Live Design Banner -->
+        <div style="border: 2px solid #14b8a6; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
+          <!-- Header bar -->
+          <div style="background: linear-gradient(135deg, #0f766e, #0d9488); padding: 14px 20px;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+              <span class="s3-pulse-dot"></span>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #a7f3d0;">Course Design — Live</span>
+            </div>
+            <p style="margin: 0; color: white; font-size: 16px; font-weight: 600; line-height: 1.4;">Week 10 is being designed based on what Week 9 reveals</p>
           </div>
-        </div>
 
-        <!-- Stub activities — no links -->
-        <div class="activity-item activity-item--assignment" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🥋 Dojo</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>AI User Simulation — design a persona, run your prototype against it, find the gaps</em>
-              </h4>
+          <!-- Body -->
+          <div style="background: #f0fdfa; padding: 20px;">
+            <p style="margin: 0 0 16px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
+              This is <strong>Adaptive Building</strong> in action — the same process you're being asked to demonstrate in your demos. Three possible paths depending on what happens in Week 9 class. The decision and reasoning will be posted by Saturday Mar 22.
+            </p>
+
+            <!-- Scenario Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+
+              <!-- Scenario A -->
+              <div id="s3-scenario-a" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('a')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #16a34a;">🟢 Path A</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #14532d;">If Week 9 lands well</h4>
+                  </div>
+                  <span id="s3-scenario-a-toggle" style="font-size: 12px; color: #16a34a; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #166534; line-height: 1.5;">Strong problem stakes, genuine Bhutan context engagement. Students move straight to AI persona simulation before Piranavan joins.</p>
+                <div id="s3-scenario-a-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #86efac; font-size: 13px; color: #166534; line-height: 1.6;">
+                  <strong>Week 10:</strong> Simulation-First. Build a detailed clinical persona, run your prototype against it, surface what the simulation confirms and — more importantly — the questions it can't answer. Come to class with 2 specific questions for Piranavan, grounded in what the simulation couldn't resolve. He responds to your problem framings and tells you what the simulation gets wrong.
+                </div>
+              </div>
+
+              <!-- Scenario B -->
+              <div id="s3-scenario-b" style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('b')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #ca8a04;">🟡 Path B</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #713f12;">If execution hit friction</h4>
+                  </div>
+                  <span id="s3-scenario-b-toggle" style="font-size: 12px; color: #ca8a04; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #854d0e; line-height: 1.5;">Problem stakes incomplete or still domain-level. Accelerated re-staking in pairs, then Piranavan validates. Simulation moves async.</p>
+                <div id="s3-scenario-b-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fcd34d; font-size: 13px; color: #854d0e; line-height: 1.6;">
+                  <strong>Week 10:</strong> Regroup + Build. First 20 min — pairs challenge each other's stakes using the strong/weak exemplar. Every student leaves with a moment-level stake, not a domain-level one. Piranavan joins after re-staking for domain validation. Simulation moves to async homework. Remaining class time: structured build session.
+                </div>
+              </div>
+
+              <!-- Scenario C -->
+              <div id="s3-scenario-c" style="background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('c')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #7c3aed;">🟣 Path C</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #3b0764;">If the design assumption was wrong</h4>
+                  </div>
+                  <span id="s3-scenario-c-toggle" style="font-size: 12px; color: #7c3aed; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #581c87; line-height: 1.5;">Genuine engagement but domain distance stalled rather than energized. Structured domain immersion first, then Piranavan as bridge-builder.</p>
+                <div id="s3-scenario-c-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d8b4fe; font-size: 13px; color: #581c87; line-height: 1.6;">
+                  <strong>Week 10:</strong> Domain Bridge. 30 min structured domain immersion — three short real clinical scenarios, students identify the decision point in each. Piranavan joins as bridge-builder, not evaluator. Second half: re-stake with new clinical context. This path isn't a failure — some of the best learning happens when the original design doesn't hold.
+                </div>
+              </div>
+            </div>
+
+            <!-- Decision Note -->
+            <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #374151; line-height: 1.6;">
+              📌 <strong>Decision posted by Saturday Mar 22.</strong> It'll say which path (or hybrid) we're taking and exactly why — including what I observed in Week 9 that drove the call. This is the same process you're being asked to demonstrate in your demos: build something, get signal, adjust.
             </div>
           </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is">IS</span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
         </div>
 
-        <div class="activity-item activity-item--reflection" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Weekly Build Reflection #2 — what changed after the expert session</em>
-              </h4>
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Mar 22</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🥋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Dojo — AI User Simulation (structure depends on path)</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS · AB</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #2</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Build v1 submission — link + one decision + one known failure mode</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
             </div>
           </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
         </div>
-
-        <div class="activity-item activity-item--assignment" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Build v1 submission — link + one decision + one known failure mode</em>
-              </h4>
-            </div>
-          </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab">AB</span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <p style="color: var(--gray-500); font-size: 13px; font-style: italic; margin-top: 12px;">Assignment details released after Week 9.</p>
       </div>
     </div>
 
@@ -259,57 +308,36 @@
         <div class="week-section__header-left">
           <span class="week-section__number">11</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Expert Session 2 + Peer Pressure Test</h3>
+            <h3 class="week-section__title">Build + Pressure Test</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-11-content">
-        <!-- Tentative Banner -->
-        <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
-          <strong style="color: #92400e;">⚠️ Tentative</strong>
-          <span style="color: #a16207;"> — Plan confirmed after Week 10.</span>
-        </div>
-
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> Your peers know when the framing is vague. So does your user.
+          <strong>Concepts:</strong> MVP discipline — simplicity is a design decision, not a shortcut. Peer pressure reveals what expert review misses.
         </p>
 
-        <div class="in-class-plan" style="border-left: 3px solid #f97316;">
-          <p class="in-class-plan__label">📅 In-Class (Wednesday, Apr 2) · <strong style="color: #c2410c;">Piranavan Selvanandan — Session 2</strong></p>
-          <h4 class="in-class-plan__title">Piranavan Session 2 + Peer Pressure Test</h4>
-          <div class="in-class-plan__content">
-            <p>Your current build goes in front of Piranavan and in front of a classmate role-playing your specific user. Two different kinds of pressure. Two different failure modes.</p>
-          </div>
+        <!-- Tentative Banner -->
+        <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
+          <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 10.</strong>
+          <span style="color: #78350f;"> What won't change: Piranavan joins for a second session, and you demo your current build to a peer role-playing your specific user. Two different kinds of pressure. Two different failure modes.</span>
         </div>
 
-        <!-- Stub activities — no links -->
-        <div class="activity-item activity-item--reflection" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Weekly Build Reflection #3</em>
-              </h4>
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Week 10</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #3</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
             </div>
-          </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
-
-        <div class="activity-item activity-item--assignment" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Build v2 submission — what changed from v1 and why</em>
-              </h4>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Build v2 submission — what changed from v1 and why</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · SDL</span>
             </div>
-          </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab">AB</span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
           </div>
         </div>
       </div>
@@ -321,73 +349,40 @@
         <div class="week-section__header-left">
           <span class="week-section__number">12</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Sprint 3 Demo Day</h3>
+            <h3 class="week-section__title">Demo Day</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-12-content">
-        <!-- Tentative Banner -->
-        <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
-          <strong style="color: #92400e;">⚠️ Tentative</strong>
-          <span style="color: #a16207;"> — Plan confirmed after Week 10.</span>
-        </div>
-
         <p class="week-section__concepts">
           <strong>Concepts:</strong> The demo shows the arc, not just the endpoint. Delta matters more than final state.
         </p>
 
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class (Wednesday, Apr 9)</p>
-          <h4 class="in-class-plan__title">Sprint 3 Demo Day</h4>
-          <div class="in-class-plan__content">
-            <p>Live demo required — slides alone are not sufficient. Show where you started (week 9), what changed your thinking, what exists now, and one known limitation.</p>
-          </div>
+        <!-- Tentative Banner -->
+        <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
+          <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 11.</strong>
+          <span style="color: #78350f;"> What won't change: Wednesday Apr 9, live demo required. The demo shows the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation. Slides alone are not sufficient.</span>
         </div>
 
-        <!-- Stub activities — no links -->
-        <div class="activity-item activity-item--assignment" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Demo + Arc narrative</em>
-              </h4>
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Week 11</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Demo + Arc narrative</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
             </div>
-          </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab">AB</span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <div class="activity-item activity-item--assignment" style="opacity: 0.8;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">💬 AI-Discussion</span>
-              <h4 class="activity-item__title" style="color: var(--gray-500);">
-                <em>Sprint 3 Peer Observation</em>
-              </h4>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">💬</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Sprint 3 Peer Observation</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS</span>
             </div>
-          </div>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <div class="bridge-section" style="opacity: 0.8;">
-          <p class="bridge-section__label">🌉 Sprint Transition</p>
-          <div class="activity-item activity-item--bridge">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">Bridge Reflection</span>
-                <h4 class="activity-item__title" style="color: var(--gray-500);">
-                  <em>Sprint 3→4: What does Sprint 3 tell you about whether you're ready for Sprint 4?</em>
-                </h4>
-              </div>
-            </div>
-            <div class="activity-item__capabilities">
-              <span class="capability-badge capability-badge--sdl">SDL</span>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">🌉</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Bridge Reflection — Sprint 3→4: What does Sprint 3 tell you about whether you're ready for Sprint 4?</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
             </div>
           </div>
         </div>
@@ -413,6 +408,21 @@
       populateDueDates(CST395_CONFIG);
       initSprintPageWithLoom(CST395_CONFIG);
     });
+  </script>
+
+  <!-- Scenario Toggle Script -->
+  <script>
+    function toggleS3Scenario(id) {
+      var detail = document.getElementById('s3-scenario-' + id + '-detail');
+      var toggle = document.getElementById('s3-scenario-' + id + '-toggle');
+      if (detail.style.display === 'none' || !detail.style.display) {
+        detail.style.display = 'block';
+        toggle.textContent = '− less';
+      } else {
+        detail.style.display = 'none';
+        toggle.textContent = '+ more';
+      }
+    }
   </script>
 
   <!-- Feedback Footer -->
