@@ -3,78 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bridge Reflection | Sprint 2 → Sprint 3 | CST349</title>
+    <title>Bridge Reflection: Five Claims, Honestly | Sprint 2 → Sprint 3 | CST349</title>
     <style>
         * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+            margin: 0;
+            padding: 24px;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.7;
         }
         .container { max-width: 700px; margin: 0 auto; }
         .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
         .breadcrumb a { color: #6366f1; text-decoration: none; }
+
         .header {
             background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
-            color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
         }
         .header h1 { margin: 0; font-size: 22px; }
         .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+        .capability-tag {
+            display: inline-block; background: rgba(255,255,255,0.2); color: white;
+            padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 4px;
+        }
+
         .bridge-visual {
-            display: flex; align-items: center; justify-content: center;
-            gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
         .bridge-visual__sprint {
-            background: white; border-radius: 12px; padding: 16px 24px;
-            text-align: center; min-width: 140px;
+            background: white;
+            border-radius: 12px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 140px;
         }
         .bridge-visual__sprint.s2 { border: 2px solid #6366f1; }
         .bridge-visual__sprint.s3 { border: 2px solid #10b981; }
         .bridge-visual__sprint .label { font-size: 12px; color: #6b7280; }
-        .bridge-visual__sprint .title { font-weight: 600; }
+        .bridge-visual__sprint .title { font-weight: 600; font-size: 14px; }
         .bridge-visual__sprint.s2 .title { color: #4338ca; }
         .bridge-visual__sprint.s3 .title { color: #065f46; }
+        .bridge-visual__sprint .desc { font-size: 12px; color: #6b7280; margin-top: 4px; }
         .bridge-visual__arrow { font-size: 28px; color: #6366f1; }
+
         .context-box {
             background: #eef2ff; border: 1px solid #c7d2fe;
             border-radius: 12px; padding: 24px; margin-bottom: 24px;
         }
         .context-box p { color: #3730a3; margin: 0; }
         .context-box strong { color: #4338ca; }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card h2 { margin: 0 0 16px 0; font-size: 18px; }
+        .card p { color: #4b5563; margin: 0 0 16px 0; }
+
+        .prompt-section {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            border-left: 3px solid #6366f1;
+        }
+        .prompt-section__number {
+            display: inline-block;
+            background: #6366f1;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 24px;
+            margin-right: 8px;
+        }
+        .prompt-section__question { font-weight: 600; color: #111827; margin-bottom: 8px; }
+
         .notebook-reminder {
-            display: flex; align-items: center; gap: 16px;
-            background: #fef3c7; border: 1px solid #fcd34d;
-            border-radius: 12px; padding: 20px; margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
         }
         .notebook-reminder__icon { font-size: 40px; }
         .notebook-reminder__text h3 { margin: 0 0 4px 0; color: #92400e; font-size: 16px; }
         .notebook-reminder__text p { margin: 0; color: #a16207; font-size: 14px; }
-        .card {
-            background: white; border: 1px solid #e5e7eb;
-            border-radius: 12px; padding: 24px; margin-bottom: 16px;
-        }
-        .card h2 { margin: 0 0 16px 0; font-size: 18px; }
-        .card p { color: #4b5563; margin: 0 0 16px 0; }
-        .prompt-section {
-            background: #f9fafb; border-radius: 8px; padding: 20px;
-            margin: 16px 0; border-left: 3px solid #6366f1;
-        }
-        .prompt-section__number {
-            display: inline-block; background: #6366f1; color: white;
-            width: 24px; height: 24px; border-radius: 50%;
-            text-align: center; font-size: 12px; line-height: 24px; margin-right: 8px;
-        }
-        .prompt-section__question { font-weight: 600; color: #111827; margin-bottom: 8px; }
-        .prompt-section__hint { font-size: 14px; color: #6b7280; margin: 0; }
+
         .submission {
             background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-            color: white; padding: 24px; border-radius: 12px;
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
         }
         .submission h3 { color: white; margin: 0 0 12px 0; }
         .submission p { color: #d1d5db; margin: 0 0 8px 0; font-size: 14px; }
-        .submission__format {
-            background: rgba(255,255,255,0.1); padding: 12px 16px;
-            border-radius: 8px; margin-top: 12px;
-        }
+        .submission__format { background: rgba(255,255,255,0.1); padding: 12px 16px; border-radius: 8px; margin-top: 12px; }
     </style>
 </head>
 <body>
@@ -86,8 +128,90 @@
         </p>
 
         <div class="header">
-            <h1>Bridge Reflection</h1>
-            <p>Sprint 2 → Sprint 3 · Due <span data-due-date="s2-bridge-reflection-2"></span> · ~20 minutes</p>
+            <h1>Bridge Reflection: Five Claims, Honestly
+                <span class="capability-tag">SDL</span>
+                <span class="capability-tag">IS</span>
+                <span class="capability-tag">AB</span>
+            </h1>
+            <p>Sprint 2 → Sprint 3 · Due <span data-due-date="s2-bridge-reflection-2"></span> · ~30 minutes · Complete this before the Claims Discussion</p>
+        </div>
+
+        <div style="background: #1e1b4b; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
+            <p style="margin: 0 0 16px 0; color: #a5b4fc; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">The Five Claims</p>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); border-radius: 10px; padding: 14px 16px; flex: 1;">
+                    <div style="font-size: 10px; font-weight: 700; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Claim 1 · Slow Down</div>
+                    <div style="color: white; font-size: 13px; font-weight: 600; margin-bottom: 4px;">Stay in the Question</div>
+                    <div style="color: #94a3b8; font-size: 12px; line-height: 1.5;">Slow down — ask why, and stay in the question long enough to actually go somewhere. Speed is how we avoid difficulty. The students who grew most this sprint weren't faster — they were willing to sit with a question until it opened up.</div>
+                </div>
+                <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); border-radius: 10px; padding: 14px 16px; flex: 1;">
+                    <div style="font-size: 10px; font-weight: 700; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Claim 2 · Know Yourself</div>
+                    <div style="color: white; font-size: 13px; font-weight: 600; margin-bottom: 4px;">Accurate Starting Point</div>
+                    <div style="color: #94a3b8; font-size: 12px; line-height: 1.5;">Know your actual strengths and weaknesses — not the ones you wish you had, and not the ones the assignment asked for. Growth requires an accurate starting point.</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #4f46e5; font-size: 16px; margin: 4px 0;">↓</div>
+
+            <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; text-align: center;">
+                <div style="font-size: 10px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Claim 3 · Challenge Your Assumptions</div>
+                <div style="color: white; font-size: 13px; font-weight: 600; margin-bottom: 4px;">Test Your First Read</div>
+                <div style="color: #94a3b8; font-size: 12px; line-height: 1.5;">Your first read on a situation is usually a projection. Testing it — through peers, through your mentor, through people with experience you don't have — is where learning actually starts.</div>
+            </div>
+
+            <div style="text-align: center; color: #4f46e5; font-size: 16px; margin: 4px 0;">↓</div>
+
+            <div style="display: flex; gap: 8px;">
+                <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 16px; flex: 1;">
+                    <div style="font-size: 10px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Claim 4 · Take the Lead</div>
+                    <div style="color: white; font-size: 13px; font-weight: 600; margin-bottom: 4px;">Own Your Growth</div>
+                    <div style="color: #94a3b8; font-size: 12px; line-height: 1.5;">Own your growth rather than comply with assignments. Compliance produces completed forms. Leading produces a person who changes. Did you decide what to work on, or did the course decide for you?</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 16px; flex: 1;">
+                    <div style="font-size: 10px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Claim 5 · Use AI to Go Deeper</div>
+                    <div style="color: white; font-size: 13px; font-weight: 600; margin-bottom: 4px;">Deeper, Not Faster</div>
+                    <div style="color: #94a3b8; font-size: 12px; line-height: 1.5;">AI amplifies what you bring to it. If you brought shallow thinking, it returned polished shallow thinking. Can you point to a moment where you pushed back on what AI gave you — or asked it something harder than it expected?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notebook-reminder">
+            <span class="notebook-reminder__icon">📓</span>
+            <div class="notebook-reminder__text">
+                <h3>Handwritten Reflection</h3>
+                <p>Write by hand in your reflection notebook. Photograph your pages and upload to Canvas.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Reflection Prompts</h2>
+            <p>For each claim: write 2-3 honest sentences about your actual Sprint 1-2 work. Not what you wish you did — what you actually did. The Claims Discussion that follows will push you further on each one.</p>
+
+            <div class="prompt-section">
+                <span class="prompt-section__number">1</span>
+                <p class="prompt-section__question">Slow Down: Where in Sprints 1-2 did you slow down when you wanted to move on? If the answer is nowhere, name that honestly.</p>
+            </div>
+
+            <div class="prompt-section">
+                <span class="prompt-section__number">2</span>
+                <p class="prompt-section__question">Know Yourself: What did you learn about yourself that you didn't know at Week 1? Is it specific enough that someone else could verify it?</p>
+            </div>
+
+            <div class="prompt-section">
+                <span class="prompt-section__number">3</span>
+                <p class="prompt-section__question">Challenge Your Assumptions: Name one assumption you held about your own growth that got challenged — by your mentor, your group, or a peer conversation. What changed?</p>
+            </div>
+
+            <div class="prompt-section">
+                <span class="prompt-section__number">4</span>
+                <p class="prompt-section__question">Take the Lead: Look at your Sprint 2 goals. Did you set them, or did you complete what was given to you? What's the difference between those two things for you?</p>
+            </div>
+
+            <div class="prompt-section">
+                <span class="prompt-section__number">5</span>
+                <p class="prompt-section__question">Use AI to Go Deeper, Not Faster: Take your highest-quality Sprint 2 submission. Remove every sentence the AI suggested, organized, or phrased. What remains? Is it enough to build from?</p>
+            </div>
         </div>
 
         <div class="bridge-visual">
@@ -103,44 +227,7 @@
         </div>
 
         <div class="context-box">
-            <p>You've demonstrated growth with evidence validated by your group. Now the challenge shifts: <strong>can you apply the SDL method you've developed to a completely different domain?</strong> Sprint 3 asks you to prove the process works beyond your original skill.</p>
-        </div>
-
-        <div class="notebook-reminder">
-            <span class="notebook-reminder__icon">📓</span>
-            <div class="notebook-reminder__text">
-                <h3>Handwritten Reflection</h3>
-                <p>Write in your notebook while the demo is fresh. Photograph and upload to Canvas as a file.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Reflection Prompts</h2>
-            <p>Write about each of these. Be honest — this is for your transition, not for a grade.</p>
-
-            <div class="prompt-section">
-                <span class="prompt-section__number">1</span>
-                <p class="prompt-section__question">What did working with others teach you about your own growth?</p>
-                <p class="prompt-section__hint">How was your self-assessment different from what your group saw? What did external accountability add that solo work couldn't?</p>
-            </div>
-
-            <div class="prompt-section">
-                <span class="prompt-section__number">2</span>
-                <p class="prompt-section__question">What did the demo reveal this time?</p>
-                <p class="prompt-section__hint">Compare this demo to Sprint 1's. What was easier? What was harder? What did the 5-slide format force you to confront?</p>
-            </div>
-
-            <div class="prompt-section">
-                <span class="prompt-section__number">3</span>
-                <p class="prompt-section__question">What's the SDL method you've developed?</p>
-                <p class="prompt-section__hint">After two sprints, you have a process for self-directed learning. What is it? Could you describe it to someone else?</p>
-            </div>
-
-            <div class="prompt-section">
-                <span class="prompt-section__number">4</span>
-                <p class="prompt-section__question">What will you carry into Sprint 3?</p>
-                <p class="prompt-section__hint">Sprint 3 asks you to apply your method to a technical curiosity. What from Sprints 1 and 2 prepares you for that? What scares you about it?</p>
-            </div>
+            <p>These five claims aren't opinions — they're patterns from two sprints of watching students grow (or not grow). <strong>The Claims Discussion will push you on each one.</strong> This reflection is your preparation: write honestly so the discussion has something real to work with.</p>
         </div>
 
         <div class="submission">
@@ -149,8 +236,7 @@
             <div class="submission__format">
                 <strong>Format:</strong> File upload (photo of handwritten reflection)<br>
                 <strong>Due:</strong> <span data-due-date="s2-bridge-reflection-2"></span><br>
-                <strong>Points:</strong> 5<br>
-                <strong>Group:</strong> Sprint 2: Productive Reflections
+                <strong>Points:</strong> 5
             </div>
             <a data-assignment-key="s2-bridge-reflection-2" href="https://csumb.instructure.com/courses/32911/assignments/582801" target="_blank" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
                 Submit on Canvas →
