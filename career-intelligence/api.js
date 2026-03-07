@@ -1,88 +1,141 @@
 /**
- * Career Intelligence Form — API Layer
+ * Career Discovery Form v4 — API Layer
+ *
+ * Features:
+ * - Exponential backoff retry for failed requests
+ * - Configurable timeout (longer for synthesis calls)
+ * - Resilient JSON parsing with newline normalization
  */
 import { CONFIG } from './config.js';
 
 /**
- * Send a prompt + student response to the AI proxy and return raw text.
+ * Send the full conversation history to the AI proxy.
+ * @param {string} systemPrompt - The system prompt
+ * @param {Array<{role: string, content: string}>} messages - Full conversation history
+ * @param {Object} [options] - Optional settings
+ * @param {number} [options.timeout] - Request timeout in ms
+ * @param {boolean} [options.isSynthesis] - Whether this is a synthesis call (enables longer timeout + retries)
  */
-export async function callAI(systemPrompt, userMessage) {
-  const response = await fetch(CONFIG.api_endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userMessage }],
-      model: CONFIG.model,
-      max_tokens: CONFIG.max_tokens,
-    }),
-  });
+export async function callAI(systemPrompt, messages, options = {}) {
+  const timeout = options.timeout || (options.isSynthesis ? CONFIG.synthesis_timeout_ms : 30000);
+  const retryDelays = options.isSynthesis ? CONFIG.retry_delays : [];
+  let lastError = null;
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.error || `Request failed (${response.status})`);
+  // Attempt the call, with retries for synthesis
+  const maxAttempts = 1 + retryDelays.length;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    if (attempt > 0) {
+      const delay = retryDelays[attempt - 1];
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+      const response = await fetch(CONFIG.api_endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system: systemPrompt,
+          messages: messages,
+          model: CONFIG.model,
+          max_tokens: CONFIG.max_tokens,
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error || `Request failed (${response.status})`);
+      }
+
+      const data = await response.json();
+      return {
+        content: data.content,
+        usage: data.usage || { input_tokens: 0, output_tokens: 0 },
+      };
+
+    } catch (error) {
+      lastError = error;
+      // Only retry on network/timeout errors for synthesis, not on 4xx errors
+      if (error.name === 'AbortError') {
+        lastError = new Error('Request timed out — the server took too long to respond.');
+      }
+      if (attempt < maxAttempts - 1) {
+        continue; // retry
+      }
+    }
   }
 
-  const data = await response.json();
-  return {
-    content: data.content,
-    usage: data.usage || { input_tokens: 0, output_tokens: 0 },
-  };
+  throw lastError;
 }
 
 /**
- * Parse a JSON response from Claude with a resilient fallback chain.
- * Returns { student_reaction, next_question_id, routing_rationale }.
+ * Parse a JSON phase response from the AI with resilient fallback.
+ * Normalizes escaped newlines in long-form fields (brief, pitch, synthesis).
  */
-export function parseRoutingResponse(raw, defaultNextId) {
+export function parsePhaseResponse(raw) {
+  let parsed = null;
+
   // Attempt 1: raw parse
   try {
-    const parsed = JSON.parse(raw);
-    if (parsed.student_reaction) return parsed;
+    const candidate = JSON.parse(raw);
+    if (candidate.phase) parsed = candidate;
   } catch { /* continue */ }
 
   // Attempt 2: strip markdown code fences
-  try {
-    const stripped = raw.replace(/^```(?:json)?\s*/m, '').replace(/```\s*$/m, '');
-    const parsed = JSON.parse(stripped);
-    if (parsed.student_reaction) return parsed;
-  } catch { /* continue */ }
+  if (!parsed) {
+    try {
+      const stripped = raw.replace(/^```(?:json)?\s*/m, '').replace(/```\s*$/m, '');
+      const candidate = JSON.parse(stripped);
+      if (candidate.phase) parsed = candidate;
+    } catch { /* continue */ }
+  }
 
   // Attempt 3: regex extract JSON object
-  try {
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (match) {
-      const parsed = JSON.parse(match[0]);
-      if (parsed.student_reaction) return parsed;
-    }
-  } catch { /* continue */ }
+  if (!parsed) {
+    try {
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) {
+        const candidate = JSON.parse(match[0]);
+        if (candidate.phase) parsed = candidate;
+      }
+    } catch { /* continue */ }
+  }
 
-  // Fallback: use full text as reaction, default routing
-  return {
-    student_reaction: raw.trim(),
-    next_question_id: defaultNextId,
-    routing_rationale: 'Fallback — could not parse JSON from AI response.',
-  };
+  // Fallback: treat as advance with raw text as reaction
+  if (!parsed) {
+    return {
+      reaction: raw.trim(),
+      follow_up: null,
+      phase: 'advance',
+    };
+  }
+
+  // Normalize escaped newlines in long-form text fields
+  normalizeNewlines(parsed, 'synthesis');
+  normalizeNewlines(parsed, 'brief');
+  normalizeNewlines(parsed, 'pitch');
+  normalizeNewlines(parsed, 'reaction');
+  normalizeNewlines(parsed, 'transition');
+
+  // When phase is synthesis and both reaction and brief exist, discard reaction
+  if (parsed.phase === 'synthesis' && parsed.brief) {
+    parsed.reaction = null;
+  }
+
+  return parsed;
 }
 
 /**
- * Parse Q5 response: strip INVITATION_OPTION line, return { text, invitationOption }.
+ * Replace literal \n sequences (backslash + n) with actual newlines.
+ * Handles both single-escaped and double-escaped variants.
  */
-export function parseQ5Response(raw) {
-  const lines = raw.split('\n');
-  let invitationOption = 'A';
-
-  const filtered = lines.filter(line => {
-    const match = line.match(/^INVITATION_OPTION:\s*([ABC])/i);
-    if (match) {
-      invitationOption = match[1].toUpperCase();
-      return false;
-    }
-    return true;
-  });
-
-  return {
-    text: filtered.join('\n').trimEnd(),
-    invitationOption,
-  };
+function normalizeNewlines(obj, key) {
+  if (typeof obj[key] === 'string') {
+    obj[key] = obj[key].replace(/\\n/g, '\n');
+  }
 }

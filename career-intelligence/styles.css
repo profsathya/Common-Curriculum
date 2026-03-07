@@ -1,8 +1,8 @@
 /**
- * Career Intelligence Form — Styles
+ * Career Discovery Form v4 — Styles
  *
- * Design: clean, calm, conversational. No gamification.
- * Students are anxious — this should feel like a thoughtful conversation.
+ * Clean, calm, conversational. Collapsible brief sections,
+ * transition text, pitch section, synthesis loading.
  */
 
 /* ============================================
@@ -19,10 +19,10 @@
   --ci-accent-light: #ebf4ff;
   --ci-reaction-bg: #f7f7f5;
   --ci-reaction-border: #d4d0c8;
-  --ci-deliverable-bg: #fffff0;
-  --ci-deliverable-border: #d4a844;
   --ci-error-bg: #fff5f5;
   --ci-error-border: #c53030;
+  --ci-student-bg: #eef2ff;
+  --ci-student-border: #c7d2fe;
   --ci-radius: 8px;
   --ci-max-width: 680px;
   --ci-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -71,348 +71,16 @@ body {
   margin: 0;
 }
 
-#ci-form {
-  max-width: var(--ci-max-width);
-  margin: 0 auto;
-  padding: 0 24px 80px;
-}
-
-/* ============================================
-   Steps
-   ============================================ */
-
-.ci-step {
-  margin-bottom: 32px;
-  transition: opacity 0.4s ease;
-}
-
-.ci-step--dimmed {
-  opacity: 0.45;
-  pointer-events: none;
-}
-
-.ci-step--active {
-  opacity: 1;
-}
-
-/* ============================================
-   Question Card
-   ============================================ */
-
-.ci-question {
-  background: var(--ci-surface);
-  border: 1px solid var(--ci-border);
-  border-radius: var(--ci-radius);
-  padding: 20px 24px;
-  margin-bottom: 16px;
-}
-
-.ci-question p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-/* ============================================
-   Textarea
-   ============================================ */
-
-.ci-textarea {
-  width: 100%;
-  padding: 16px;
-  font-family: var(--ci-font);
-  font-size: 15px;
-  line-height: 1.6;
-  border: 1px solid var(--ci-border);
-  border-radius: var(--ci-radius);
-  background: var(--ci-surface);
-  color: var(--ci-text);
-  resize: vertical;
-  min-height: 120px;
-  transition: border-color 0.2s;
-  outline: none;
-}
-
-.ci-textarea:focus {
-  border-color: var(--ci-accent);
-  box-shadow: 0 0 0 3px var(--ci-accent-light);
-}
-
-.ci-textarea::placeholder {
-  color: #999;
-  font-style: italic;
-}
-
-.ci-textarea:disabled {
-  background: #f5f5f5;
-  color: var(--ci-text-muted);
-}
-
-/* ============================================
-   Buttons
-   ============================================ */
-
-.ci-submit,
-.ci-continue {
-  display: block;
-  margin-top: 12px;
-  padding: 12px 32px;
-  font-family: var(--ci-font);
-  font-size: 15px;
-  font-weight: 500;
-  border: none;
-  border-radius: var(--ci-radius);
-  cursor: pointer;
-  transition: background-color 0.2s, opacity 0.2s;
-}
-
-.ci-submit {
-  background: var(--ci-accent);
-  color: #fff;
-}
-
-.ci-submit:hover:not(:disabled) {
-  background: #1e3a5f;
-}
-
-.ci-submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.ci-continue {
-  background: var(--ci-accent);
-  color: #fff;
-  margin-top: 16px;
-}
-
-.ci-continue:hover {
-  background: #1e3a5f;
-}
-
-/* ============================================
-   AI Reaction
-   ============================================ */
-
-.ci-reaction {
-  background: var(--ci-reaction-bg);
-  border: 1px solid var(--ci-reaction-border);
-  border-radius: var(--ci-radius);
-  padding: 20px 24px;
-  margin-top: 16px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.ci-reaction--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ci-reaction p {
-  margin: 0 0 8px;
-  font-size: 15px;
-  line-height: 1.65;
-}
-
-.ci-reaction p:last-child {
-  margin-bottom: 0;
-}
-
-.ci-reaction--synthesis {
-  background: var(--ci-surface);
-  border-color: var(--ci-accent);
-  border-width: 2px;
-}
-
-.ci-reaction--synthesis h2 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 16px 0 8px;
-  color: var(--ci-accent);
-}
-
-.ci-reaction--synthesis h2:first-child {
-  margin-top: 0;
-}
-
-.ci-reaction--synthesis hr {
-  border: none;
-  border-top: 1px solid var(--ci-border);
-  margin: 20px 0;
-}
-
-/* ============================================
-   Loading Indicator
-   ============================================ */
-
-.ci-loading {
-  display: flex;
-  gap: 6px;
-  padding: 20px 24px;
-  align-items: center;
-}
-
-.ci-loading__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ci-text-muted);
-  animation: ci-pulse 1.4s infinite both;
-}
-
-.ci-loading__dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.ci-loading__dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes ci-pulse {
-  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
-  40% { opacity: 1; transform: scale(1); }
-}
-
-/* ============================================
-   Deliverable Card (Q5 Output)
-   ============================================ */
-
-.ci-deliverable {
-  background: var(--ci-deliverable-bg);
-  border: 2px solid var(--ci-deliverable-border);
-  border-radius: var(--ci-radius);
-  padding: 28px 28px 24px;
-  margin-top: 20px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.ci-deliverable--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ci-deliverable h2 {
-  font-size: 17px;
-  font-weight: 600;
-  margin: 20px 0 8px;
-  color: var(--ci-text);
-}
-
-.ci-deliverable h2:first-child {
-  margin-top: 0;
-}
-
-.ci-deliverable p {
-  margin: 0 0 10px;
-  font-size: 15px;
-  line-height: 1.65;
-}
-
-.ci-deliverable p:last-child {
-  margin-bottom: 0;
-}
-
-.ci-deliverable hr {
-  border: none;
-  border-top: 1px solid var(--ci-deliverable-border);
-  margin: 24px 0;
-  opacity: 0.5;
-}
-
-.ci-deliverable strong {
-  color: var(--ci-text);
-}
-
-/* ============================================
-   Action Buttons
-   ============================================ */
-
-.ci-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.ci-actions__copy,
-.ci-actions__download {
-  padding: 10px 20px;
-  font-family: var(--ci-font);
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--ci-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.ci-actions__copy {
-  background: var(--ci-accent);
-  color: #fff;
-  border: none;
-}
-
-.ci-actions__copy:hover {
-  background: #1e3a5f;
-}
-
-.ci-actions__download {
-  background: transparent;
-  color: var(--ci-accent);
-  border: 1px solid var(--ci-accent);
-}
-
-.ci-actions__download:hover {
-  background: var(--ci-accent-light);
-}
-
-/* ============================================
-   Error
-   ============================================ */
-
-.ci-error {
-  background: var(--ci-error-bg);
-  border: 1px solid var(--ci-error-border);
-  border-radius: var(--ci-radius);
-  padding: 16px 20px;
-  margin-top: 16px;
-}
-
-.ci-error p {
-  margin: 0 0 12px;
-  font-size: 14px;
-}
-
-.ci-error__retry {
-  padding: 8px 16px;
-  font-family: var(--ci-font);
-  font-size: 14px;
-  background: var(--ci-error-border);
-  color: #fff;
-  border: none;
-  border-radius: var(--ci-radius);
-  cursor: pointer;
-}
-
-.ci-error__retry:hover {
-  opacity: 0.85;
-}
-
-/* ============================================
-   Responsive
-   ============================================ */
-
-/* ============================================
-   Logo
-   ============================================ */
-
 .ci-logo {
   display: block;
   max-height: 48px;
   margin: 0 auto 8px;
+}
+
+#ci-form {
+  max-width: var(--ci-max-width);
+  margin: 0 auto;
+  padding: 0 24px 80px;
 }
 
 /* ============================================
@@ -483,8 +151,8 @@ body {
   background: #e0e0e0;
   margin: 18px 6px 0;
   transition: background 0.4s ease;
-  min-width: 16px;
-  max-width: 60px;
+  min-width: 24px;
+  max-width: 80px;
 }
 
 /* Progress states */
@@ -530,135 +198,25 @@ body {
 }
 
 /* ============================================
-   Timeline (Collapsed Completed Steps)
+   Stages
    ============================================ */
 
-.ci-timeline {
-  margin-bottom: 4px;
+.ci-stage {
+  margin-bottom: 24px;
+  transition: opacity 0.4s ease;
 }
 
-.ci-tl-item {
-  display: flex;
-  gap: 14px;
+.ci-stage--done {
+  opacity: 0.55;
 }
 
-.ci-tl-marker {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  width: 28px;
+.ci-stage--active {
+  opacity: 1;
 }
 
-.ci-tl-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--step-color);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+/* Stage header */
 
-.ci-tl-line {
-  width: 2px;
-  flex: 1;
-  background: var(--step-color);
-  opacity: 0.25;
-  min-height: 12px;
-}
-
-.ci-tl-card {
-  flex: 1;
-  background: var(--ci-surface);
-  border: 1px solid var(--ci-border);
-  border-radius: var(--ci-radius);
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  border-left: 3px solid var(--step-color);
-  transition: box-shadow 0.2s ease;
-}
-
-.ci-tl-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.ci-tl-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.ci-tl-icon {
-  display: flex;
-  align-items: center;
-  color: var(--step-color);
-}
-
-.ci-tl-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--step-color);
-  flex: 1;
-}
-
-.ci-tl-toggle {
-  font-size: 18px;
-  font-weight: 300;
-  color: var(--ci-text-muted);
-  transition: transform 0.2s ease;
-  display: flex;
-  align-items: center;
-}
-
-.ci-tl-toggle--open {
-  transform: rotate(90deg);
-}
-
-.ci-tl-excerpt {
-  font-size: 13px;
-  color: var(--ci-text-muted);
-  font-style: italic;
-  margin-top: 4px;
-  line-height: 1.5;
-}
-
-.ci-tl-details {
-  display: none;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--ci-border);
-}
-
-.ci-tl-details--open {
-  display: block;
-}
-
-.ci-tl-detail-row {
-  font-size: 13px;
-  line-height: 1.6;
-  margin-bottom: 8px;
-  color: var(--ci-text);
-}
-
-.ci-tl-detail-row:last-child {
-  margin-bottom: 0;
-}
-
-.ci-tl-detail-label {
-  font-weight: 600;
-  color: var(--ci-text-muted);
-}
-
-/* ============================================
-   Step Label (Active Step Header)
-   ============================================ */
-
-.ci-step-label {
+.ci-stage-header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -667,13 +225,13 @@ body {
   border-bottom: 2px solid var(--step-color, var(--ci-accent));
 }
 
-.ci-step-label__icon {
+.ci-stage-header__icon {
   display: flex;
   align-items: center;
   color: var(--step-color, var(--ci-accent));
 }
 
-.ci-step-label__num {
+.ci-stage-header__num {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -682,19 +240,652 @@ body {
   opacity: 0.6;
 }
 
-.ci-step-label__title {
+.ci-stage-header__title {
   font-size: 18px;
   font-weight: 600;
   color: var(--step-color, var(--ci-accent));
 }
 
-/* Active step card treatment */
+/* Stage frame text */
 
-.ci-active .ci-step--active {
-  padding: 24px;
+.ci-stage-frame {
+  margin-bottom: 8px;
+}
+
+.ci-stage-frame p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ci-text-muted);
+  font-style: italic;
+}
+
+/* Transition text between stages */
+
+.ci-transition {
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--step-color, var(--ci-accent));
+  background: #f8fafc;
+  border-radius: 0 var(--ci-radius) var(--ci-radius) 0;
+}
+
+.ci-transition p {
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ci-text-muted);
+  line-height: 1.55;
+}
+
+/* ============================================
+   Question Card
+   ============================================ */
+
+.ci-question {
   background: var(--ci-surface);
+  border: 1px solid var(--ci-border);
+  border-radius: var(--ci-radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.ci-question p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ============================================
+   Student Response Bubble
+   ============================================ */
+
+.ci-student-response {
+  background: var(--ci-student-bg);
+  border: 1px solid var(--ci-student-border);
+  border-radius: var(--ci-radius);
+  padding: 16px 20px;
+  margin: 12px 0 12px 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ci-student-response--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-student-response p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ============================================
+   AI Reaction
+   ============================================ */
+
+.ci-reaction {
+  background: var(--ci-reaction-bg);
+  border: 1px solid var(--ci-reaction-border);
+  border-radius: var(--ci-radius);
+  padding: 20px 24px;
+  margin: 12px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-reaction--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-reaction p {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.ci-reaction p:last-child {
+  margin-bottom: 0;
+}
+
+.ci-follow-up {
+  font-style: italic;
+  color: var(--ci-accent);
+}
+
+/* ============================================
+   Textarea
+   ============================================ */
+
+.ci-textarea {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--ci-font);
+  font-size: 15px;
+  line-height: 1.6;
+  border: 1px solid var(--ci-border);
+  border-radius: var(--ci-radius);
+  background: var(--ci-surface);
+  color: var(--ci-text);
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.ci-textarea:focus {
+  border-color: var(--ci-accent);
+  box-shadow: 0 0 0 3px var(--ci-accent-light);
+}
+
+.ci-textarea::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.ci-textarea:disabled {
+  background: #f5f5f5;
+  color: var(--ci-text-muted);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.ci-btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.ci-submit {
+  padding: 12px 32px;
+  font-family: var(--ci-font);
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  background: var(--ci-accent);
+  color: #fff;
+}
+
+.ci-submit:hover:not(:disabled) {
+  background: #1e3a5f;
+}
+
+.ci-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ci-skip {
+  padding: 12px 24px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--ci-border);
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background: transparent;
+  color: var(--ci-text-muted);
+}
+
+.ci-skip:hover:not(:disabled) {
+  background: #f0f0f0;
+  color: var(--ci-text);
+}
+
+.ci-skip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Loading Indicator
+   ============================================ */
+
+.ci-loading {
+  display: flex;
+  gap: 6px;
+  padding: 20px 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ci-loading__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ci-text-muted);
+  animation: ci-pulse 1.4s infinite both;
+}
+
+.ci-loading__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.ci-loading__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.ci-loading__message {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+@keyframes ci-pulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   Synthesis Section
+   ============================================ */
+
+.ci-synthesis-section {
+  margin-top: 32px;
+}
+
+.ci-synth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.ci-synth-header__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--ci-text);
+}
+
+.ci-synth-header__subtitle {
+  font-size: 14px;
+  color: var(--ci-text-muted);
+  margin: 0;
+}
+
+/* ============================================
+   Collapsible Brief Card
+   ============================================ */
+
+.ci-brief-card {
+  background: var(--ci-surface);
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 24px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-brief-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-brief-section {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ci-brief-section:last-child {
+  border-bottom: none;
+}
+
+.ci-brief-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.ci-brief-section__header:hover {
+  background: #f8fafc;
+}
+
+.ci-brief-section__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-brief-section__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ci-brief-section__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ci-text);
+  margin: 0;
+}
+
+.ci-brief-section__preview {
+  font-size: 13px;
+  color: var(--ci-text-muted);
+  margin: 4px 0 0;
+  display: block;
+  line-height: 1.4;
+}
+
+.ci-brief-section__toggle {
+  font-size: 18px;
+  color: #999;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.ci-brief-section--expanded .ci-brief-section__toggle {
+  transform: rotate(180deg);
+}
+
+.ci-brief-section--expanded .ci-brief-section__preview {
+  display: none;
+}
+
+.ci-brief-section__content {
+  padding: 0 20px 16px;
+  display: none;
+  color: #333;
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.ci-brief-section--expanded .ci-brief-section__content {
+  display: block;
+}
+
+.ci-brief-section__content p {
+  margin: 0 0 10px;
+}
+
+.ci-brief-section__content p:last-child {
+  margin-bottom: 0;
+}
+
+.ci-brief-section__content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.ci-brief-section__content li {
+  margin-bottom: 4px;
+  color: var(--ci-text-muted);
+}
+
+.ci-brief-section__content strong {
+  color: var(--ci-text);
+}
+
+.ci-brief-section__content h3 {
+  display: none; /* section title is already in the header */
+}
+
+/* ============================================
+   Synthesis Reaction Area
+   ============================================ */
+
+.ci-synthesis-reaction {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: var(--ci-surface);
+  border: 1px solid var(--ci-border);
+  border-radius: var(--ci-radius);
+}
+
+.ci-synthesis-reaction__prompt {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ci-text);
+}
+
+.ci-synthesis-reaction .ci-textarea {
+  min-height: 80px;
+}
+
+/* ============================================
+   Synthesis Adjustment
+   ============================================ */
+
+.ci-adjustment {
+  background: var(--ci-reaction-bg);
+  border: 1px solid var(--ci-reaction-border);
+  border-left: 3px solid var(--ci-accent);
+  border-radius: var(--ci-radius);
+  padding: 16px 20px;
+  margin-top: 16px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-adjustment--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-adjustment p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
+
+.ci-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ci-actions__download {
+  padding: 12px 24px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background: var(--ci-accent);
+  color: #fff;
+  border: none;
+}
+
+.ci-actions__download:hover {
+  background: #1e3a5f;
+}
+
+.ci-actions__deeper {
+  padding: 12px 24px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  background: var(--ci-surface);
+  color: var(--ci-accent);
+  border: 1px solid var(--ci-accent);
+}
+
+.ci-actions__deeper:hover:not(:disabled) {
+  background: var(--ci-accent-light);
+}
+
+.ci-actions__deeper:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Pitch Section — "Want to Go Deeper?"
+   ============================================ */
+
+.ci-pitch-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--ci-radius);
+  padding: 24px;
+  margin-top: 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-pitch-section--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-pitch-section__opening {
+  font-size: 15px;
+  color: #475569;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.ci-pitch-section__content {
+  margin-bottom: 16px;
+}
+
+.ci-pitch-section__content p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.ci-pitch-section__content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.ci-pitch-section__content li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.ci-pitch-fit {
+  color: #276749;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ci-pitch-nofit {
+  color: var(--ci-text-muted);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ci-pitch-section__cta {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ci-pitch-section__cta p {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.ci-pitch-section__cta a {
+  color: var(--ci-accent);
+  text-decoration: underline;
+}
+
+.ci-pitch-section .ci-actions {
+  margin-top: 16px;
+}
+
+/* ============================================
+   Error
+   ============================================ */
+
+.ci-error {
+  background: var(--ci-error-bg);
+  border: 1px solid var(--ci-error-border);
+  border-radius: var(--ci-radius);
+  padding: 16px 20px;
+  margin-top: 16px;
+}
+
+.ci-error p {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.ci-error__retry {
+  padding: 8px 16px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  background: var(--ci-error-border);
+  color: #fff;
+  border: none;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+}
+
+.ci-error__retry:hover {
+  opacity: 0.85;
+}
+
+.ci-error__download {
+  padding: 8px 16px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  background: var(--ci-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--ci-radius);
+  cursor: pointer;
+}
+
+.ci-error__download:hover {
+  opacity: 0.85;
+}
+
+/* ============================================
+   Input Area
+   ============================================ */
+
+.ci-input-area {
+  margin-top: 16px;
+}
+
+.ci-char-hint {
+  font-size: 12px;
+  color: var(--ci-text-muted);
+  margin-top: 6px;
+  display: none;
 }
 
 /* ============================================
@@ -733,21 +924,21 @@ body {
 
   .ci-progress__connector {
     margin-top: 15px;
-    min-width: 10px;
+    min-width: 16px;
   }
 
-  .ci-active .ci-step--active {
-    padding: 16px;
-  }
-
-  .ci-step-label__title {
+  .ci-stage-header__title {
     font-size: 16px;
   }
 
   .ci-question,
-  .ci-reaction,
-  .ci-deliverable {
+  .ci-reaction {
     padding: 16px 18px;
+  }
+
+  .ci-student-response {
+    margin-left: 12px;
+    padding: 12px 16px;
   }
 
   .ci-textarea {
@@ -755,17 +946,51 @@ body {
     font-size: 16px; /* Prevents iOS zoom */
   }
 
-  .ci-actions {
+  .ci-btn-row {
     flex-direction: column;
   }
 
-  .ci-actions__copy,
-  .ci-actions__download {
+  .ci-submit,
+  .ci-skip {
     width: 100%;
     text-align: center;
   }
 
-  .ci-tl-card {
-    padding: 10px 12px;
+  .ci-actions {
+    flex-direction: column;
+  }
+
+  .ci-actions__download,
+  .ci-actions__deeper {
+    width: 100%;
+    text-align: center;
+  }
+
+  .ci-synthesis-reaction {
+    padding: 16px;
+  }
+
+  .ci-adjustment {
+    padding: 12px 16px;
+  }
+
+  .ci-brief-section__header {
+    padding: 14px 16px;
+  }
+
+  .ci-brief-section__content {
+    padding: 0 16px 14px;
+  }
+
+  .ci-transition {
+    padding: 10px 14px;
+  }
+
+  .ci-pitch-section {
+    padding: 18px;
+  }
+
+  .ci-synth-header__title {
+    font-size: 18px;
   }
 }

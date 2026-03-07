@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Career Intelligence — Admin Preview</title>
+  <title>Career Discovery v4 — Admin Preview</title>
   <style>
     :root {
       --bg: #fafafa;
@@ -13,11 +13,10 @@
       --border: #e0e0e0;
       --accent: #2c5282;
       --accent-light: #ebf4ff;
-      --q1-color: #2c5282;
-      --q2-color: #6b46c1;
-      --q3-color: #b7791f;
-      --q4-color: #276749;
-      --q5-color: #c53030;
+      --s1-color: #2c5282;
+      --s2-color: #6b46c1;
+      --s3-color: #b7791f;
+      --synth-color: #276749;
       --radius: 8px;
       --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     }
@@ -34,7 +33,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- Layout --- */
     .admin-header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -70,15 +68,11 @@
       padding: 32px 32px 80px;
     }
 
-    /* --- Section --- */
     .section { margin-bottom: 48px; }
     .section-title {
       font-size: 18px;
       font-weight: 600;
       margin: 0 0 4px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
     .section-subtitle {
       color: var(--muted);
@@ -86,7 +80,6 @@
       margin: 0 0 16px;
     }
 
-    /* --- Cards --- */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -133,7 +126,6 @@
     }
     .card-body.open { display: block; }
 
-    /* --- Question text --- */
     .question-text {
       font-size: 15px;
       line-height: 1.65;
@@ -144,10 +136,7 @@
       margin-bottom: 12px;
     }
 
-    /* --- Prompt text --- */
-    .prompt-block {
-      margin-top: 8px;
-    }
+    .prompt-block { margin-top: 8px; }
     .prompt-label {
       font-size: 12px;
       font-weight: 600;
@@ -170,10 +159,48 @@
       max-height: 500px;
       overflow-y: auto;
     }
-    .prompt-text .highlight { color: #ffd43b; }
     .prompt-text .placeholder { color: #63b3ed; }
 
-    /* --- Routing table --- */
+    .config-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 8px 16px;
+      font-size: 14px;
+    }
+    .config-key {
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .config-val {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .flow-step {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .flow-arrow {
+      font-size: 18px;
+      color: var(--muted);
+    }
+    .flow-label {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      text-align: center;
+    }
+
     .routing-table {
       width: 100%;
       border-collapse: collapse;
@@ -205,61 +232,13 @@
       white-space: nowrap;
     }
 
-    /* --- Config --- */
-    .config-grid {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 8px 16px;
-      font-size: 14px;
-    }
-    .config-key {
-      font-weight: 600;
-      color: var(--muted);
-    }
-    .config-val {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 13px;
-    }
+    .bg-s1 { background: var(--s1-color); }
+    .bg-s2 { background: var(--s2-color); }
+    .bg-s3 { background: var(--s3-color); }
+    .bg-synth { background: var(--synth-color); }
+    .bg-gray { background: #888; }
+    .bg-pitch { background: #c53030; }
 
-    /* --- Flow diagram --- */
-    .flow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-    .flow-step {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #fff;
-    }
-    .flow-arrow {
-      font-size: 18px;
-      color: var(--muted);
-    }
-    .flow-label {
-      font-size: 11px;
-      color: var(--muted);
-      display: block;
-      text-align: center;
-    }
-
-    /* --- Badge colors --- */
-    .bg-q1 { background: var(--q1-color); }
-    .bg-q2 { background: var(--q2-color); }
-    .bg-q3 { background: var(--q3-color); }
-    .bg-q4 { background: var(--q4-color); }
-    .bg-q5 { background: var(--q5-color); }
-    .border-q1 { border-left-color: var(--q1-color); }
-    .border-q2 { border-left-color: var(--q2-color); }
-    .border-q3 { border-left-color: var(--q3-color); }
-    .border-q4 { border-left-color: var(--q4-color); }
-    .border-q5 { border-left-color: var(--q5-color); }
-
-    /* --- File reference --- */
     .file-ref {
       font-family: 'SF Mono', 'Fira Code', monospace;
       font-size: 12px;
@@ -267,6 +246,25 @@
       background: #f0f0f0;
       padding: 2px 8px;
       border-radius: 4px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 12px 16px;
+      background: var(--accent-light);
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+
+    .data-callout {
+      font-size: 13px;
+      padding: 10px 14px;
+      background: #f0fdf4;
+      border-left: 3px solid #276749;
+      border-radius: 0 6px 6px 0;
+      margin-top: 8px;
+      color: #276749;
     }
 
     @media (max-width: 700px) {
@@ -280,27 +278,31 @@
 <body>
 
 <header class="admin-header">
-  <h1>Career Intelligence Form — Admin Preview</h1>
-  <p>Read-only view of all questions, routing logic, and AI prompts.
-    To edit, modify <span class="file-ref">questions.js</span> and <span class="file-ref">prompts.js</span> and push.</p>
+  <h1>Career Discovery v4 — Admin Preview</h1>
+  <p>Read-only view of all stages, question bank, system prompt, and configuration.
+    To edit, modify <span class="file-ref">questions.js</span>, <span class="file-ref">prompts.js</span>, and <span class="file-ref">config.js</span> and push.</p>
   <nav class="admin-nav">
     <a href="#flow">Flow</a>
     <a href="#config">Config</a>
-    <a href="#q1">Q1 — Situation</a>
-    <a href="#q2">Q2 — Adaptive</a>
-    <a href="#q3">Q3 — Adaptive</a>
-    <a href="#q4">Q4 — Synthesis</a>
-    <a href="#q5">Q5 — Final</a>
+    <a href="#stage1">Stage 1</a>
+    <a href="#stage2">Stage 2</a>
+    <a href="#stage3">Stage 3</a>
+    <a href="#synthesis">Synthesis</a>
+    <a href="#prompt">System Prompt</a>
   </nav>
 </header>
 
 <div class="admin-body" id="admin-content">
   <noscript><p>JavaScript is required to render this page.</p></noscript>
+  <p id="admin-loading" style="color:var(--muted);font-size:14px;">Loading content...</p>
 </div>
 
 <script type="module">
-import { QUESTIONS } from './questions.js';
-import { PROMPTS } from './prompts.js';
+// Remove loading message once module executes
+const loadingMsg = document.getElementById('admin-loading');
+if (loadingMsg) loadingMsg.remove();
+import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
+import { SYSTEM_PROMPT } from './prompts.js';
 import { CONFIG } from './config.js';
 
 const $ = (tag, cls, html) => {
@@ -312,87 +314,12 @@ const $ = (tag, cls, html) => {
 
 const container = document.getElementById('admin-content');
 
-/* ======= Conversation Flow ======= */
-const flowSection = $('div', 'section');
-flowSection.id = 'flow';
-flowSection.innerHTML = `
-  <h2 class="section-title">Conversation Flow</h2>
-  <p class="section-subtitle">How the 5-step adaptive conversation works</p>
-  <div class="flow">
-    <div>
-      <div class="flow-step bg-q1">Q1</div>
-      <span class="flow-label">Fixed</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q1" style="background:#888;font-size:11px;padding:6px 10px;">AI Routes</div>
-      <span class="flow-label">JSON</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q2">Q2</div>
-      <span class="flow-label">1 of 5</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q2" style="background:#888;font-size:11px;padding:6px 10px;">AI Routes</div>
-      <span class="flow-label">JSON</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q3">Q3</div>
-      <span class="flow-label">1 of 5</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q4">Q4</div>
-      <span class="flow-label">Synthesis</span>
-    </div>
-    <span class="flow-arrow">&rarr;</span>
-    <div>
-      <div class="flow-step bg-q5">Q5</div>
-      <span class="flow-label">Final</span>
-    </div>
-  </div>
-  <p style="font-size:13px;color:var(--muted);">
-    Q1 is always the same question. Based on the student's response, the AI selects
-    one of 5 possible Q2 questions. After Q2, the AI selects one of 5 Q3 questions.
-    Q4 synthesizes the full conversation. Q5 delivers the final output with an invitation.
-  </p>
-`;
-container.appendChild(flowSection);
-
-/* ======= Config ======= */
-const configSection = $('div', 'section');
-configSection.id = 'config';
-configSection.innerHTML = `
-  <h2 class="section-title">Configuration</h2>
-  <p class="section-subtitle">From <span class="file-ref">config.js</span></p>
-  <div class="config-grid">
-    <span class="config-key">API Endpoint</span>
-    <span class="config-val">${CONFIG.api_endpoint}</span>
-    <span class="config-key">Model</span>
-    <span class="config-val">${CONFIG.model}</span>
-    <span class="config-key">Max Tokens</span>
-    <span class="config-val">${CONFIG.max_tokens}</span>
-    <span class="config-key">Form Version</span>
-    <span class="config-val">${CONFIG.form_version}</span>
-    <span class="config-key">Dates Placeholder</span>
-    <span class="config-val">${CONFIG.dates_placeholder}</span>
-    <span class="config-key">Link Placeholder</span>
-    <span class="config-val">${CONFIG.link_placeholder}</span>
-  </div>
-`;
-container.appendChild(configSection);
-
-/* ======= Helper: highlight placeholders in prompt text ======= */
 function highlightPrompt(text) {
   return text
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/\{([^}]+)\}/g, '<span class="placeholder">{$1}</span>');
 }
 
-/* ======= Helper: build a collapsible card ======= */
 function makeCard(badgeText, badgeClass, title, body, startOpen = false) {
   const card = $('div', 'card');
   const header = $('div', 'card-header');
@@ -416,127 +343,246 @@ function makeCard(badgeText, badgeClass, title, body, startOpen = false) {
   return card;
 }
 
-/* ======= Q1 Section ======= */
-const q1Section = $('div', 'section');
-q1Section.id = 'q1';
-q1Section.innerHTML = `
-  <h2 class="section-title">Step 1 — Situation Check</h2>
-  <p class="section-subtitle">Fixed question, always shown first.
+function esc(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/* ======= Conversation Flow ======= */
+const flowSection = $('div', 'section');
+flowSection.id = 'flow';
+flowSection.innerHTML = `
+  <h2 class="section-title">Conversation Flow</h2>
+  <p class="section-subtitle">3 stages with AI deepening, transitions, two-part synthesis, and optional pitch</p>
+  <div class="flow">
+    <div>
+      <div class="flow-step bg-s1">Stage 1</div>
+      <span class="flow-label">Fixed Q</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">AI Deepening</div>
+      <span class="flow-label">0-2 follow-ups</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Transition</div>
+      <span class="flow-label">AI-generated</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-s2">Stage 2</div>
+      <span class="flow-label">Data-layered</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">AI Deepening</div>
+      <span class="flow-label">Up to 3 layers</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Transition</div>
+      <span class="flow-label">AI-generated</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-s3">Stage 3</div>
+      <span class="flow-label">1 of 5</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">AI Deepening</div>
+      <span class="flow-label">0-2 follow-ups</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-synth">Brief</div>
+      <span class="flow-label">Collapsible</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-gray" style="font-size:11px;padding:6px 10px;">Reaction?</div>
+      <span class="flow-label">Optional</span>
+    </div>
+    <span class="flow-arrow">&rarr;</span>
+    <div>
+      <div class="flow-step bg-pitch">Pitch</div>
+      <span class="flow-label">Separate</span>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);">
+    Stage 1 has a framing line. Stage 2 uses data-layered deepening (skills-based hiring, authenticity).
+    AI generates personalized transitions between stages. Synthesis outputs two parts: Career Intelligence Brief
+    (collapsible sections) and Pitch assessment (separate "Want to Go Deeper?" section).
+  </p>
+  <div class="note">
+    <strong>Key v4 changes:</strong> Two-part synthesis, AI-generated transitions, data-layered Stage 2 deepening,
+    collapsible brief sections, exponential backoff for synthesis calls, escaped newline fix.
+  </div>
+`;
+container.appendChild(flowSection);
+
+/* ======= Config ======= */
+const configSection = $('div', 'section');
+configSection.id = 'config';
+configSection.innerHTML = `
+  <h2 class="section-title">Configuration</h2>
+  <p class="section-subtitle">From <span class="file-ref">config.js</span></p>
+  <div class="config-grid">
+    <span class="config-key">API Endpoint</span>
+    <span class="config-val">${esc(CONFIG.api_endpoint)}</span>
+    <span class="config-key">Model</span>
+    <span class="config-val">${esc(CONFIG.model)}</span>
+    <span class="config-key">Max Tokens</span>
+    <span class="config-val">${CONFIG.max_tokens}</span>
+    <span class="config-key">Synthesis Timeout</span>
+    <span class="config-val">${CONFIG.synthesis_timeout_ms}ms</span>
+    <span class="config-key">Retry Delays</span>
+    <span class="config-val">[${CONFIG.retry_delays.join(', ')}]ms</span>
+    <span class="config-key">Form Version</span>
+    <span class="config-val">${esc(CONFIG.form_version)}</span>
+    <span class="config-key">Dates Placeholder</span>
+    <span class="config-val">${esc(CONFIG.dates_placeholder)}</span>
+    <span class="config-key">Link Placeholder</span>
+    <span class="config-val">${esc(CONFIG.link_placeholder)}</span>
+  </div>
+`;
+container.appendChild(configSection);
+
+/* ======= Stage 1 ======= */
+const s1Section = $('div', 'section');
+s1Section.id = 'stage1';
+s1Section.innerHTML = `
+  <h2 class="section-title">Stage 1 — Your Situation</h2>
+  <p class="section-subtitle">Frame text + fixed question.
     From <span class="file-ref">questions.js</span></p>
 `;
-q1Section.appendChild(makeCard('Q1', 'bg-q1', 'q1_situation', `
-  <div class="question-text border-q1">${QUESTIONS.q1_situation.text}</div>
-  <div class="prompt-block">
-    <div class="prompt-label">System Prompt &mdash; sent to AI after student responds</div>
-    <div class="prompt-text">${highlightPrompt(PROMPTS.q1)}</div>
+s1Section.appendChild(makeCard('Frame', 'bg-s1', 'Stage 1 Frame', `
+  <div class="question-text" style="border-left-color:var(--s1-color);font-style:italic">${esc(STAGE_1_FRAME)}</div>
+`, true));
+s1Section.appendChild(makeCard('Stage 1', 'bg-s1', 'Opening Question', `
+  <div class="question-text" style="border-left-color:var(--s1-color)">${esc(STAGE_1_QUESTION)}</div>
+`, true));
+container.appendChild(s1Section);
+
+/* ======= Stage 2 ======= */
+const s2Section = $('div', 'section');
+s2Section.id = 'stage2';
+s2Section.innerHTML = `
+  <h2 class="section-title">Stage 2 — Their Perspective</h2>
+  <p class="section-subtitle">Data-layered recruiter perspective with three deepening layers.
+    From <span class="file-ref">questions.js</span></p>
+`;
+s2Section.appendChild(makeCard('Stage 2', 'bg-s2', 'Recruiter Perspective Question', `
+  <div class="question-text" style="border-left-color:var(--s2-color)">${esc(STAGE_2_QUESTION)}</div>
+  <div class="data-callout">
+    <strong>Data sources:</strong> Entry-level postings down 15% (Handshake 2025), applications per posting up 30% (NACE 2025)
+  </div>
+  <div class="note" style="margin-top:16px">
+    <strong>Three deepening layers:</strong><br>
+    <strong>Layer 1 — Skills-based hiring:</strong> 70% of employers shifted to skills-based hiring; fewer than 40% of seniors know.<br>
+    <strong>Layer 2 — Authenticity:</strong> Growing number of AI-generated applications; recruiters looking for signals of authenticity.<br>
+    <strong>Layer 3 — Insight confirmed:</strong> Student gets it on their own — affirm and advance.
   </div>
 `, true));
+container.appendChild(s2Section);
 
-/* Routing table */
-q1Section.appendChild(makeCard('Routing', 'bg-q1', 'Q1 → Q2 Routing Options', `
+/* ======= Stage 3 ======= */
+const s3Section = $('div', 'section');
+s3Section.id = 'stage3';
+s3Section.innerHTML = `
+  <h2 class="section-title">Stage 3 — Your Direction</h2>
+  <p class="section-subtitle">AI selects one of 5 questions based on information gap. AI-generated transition precedes the question.
+    From <span class="file-ref">questions.js</span></p>
+`;
+
+s3Section.appendChild(makeCard('Routing', 'bg-s3', 'Stage 2 → Stage 3 Question Selection', `
   <p style="font-size:13px;color:var(--muted);margin:0 0 8px;">
-    After reading the Q1 response, the AI picks one Q2 question:
+    When advancing from Stage 2, the AI selects the Stage 3 question that fills the biggest information gap:
   </p>
   <table class="routing-table">
-    <tr><th>ID</th><th>When to use</th></tr>
-    <tr><td><code>q2_active_unfocused</code></td><td>Student is actively searching but without clear strategy</td></tr>
-    <tr><td><code>q2_alternative_path</code></td><td>Considering grad school, military, or non-employment path</td></tr>
-    <tr><td><code>q2_paralyzed</code></td><td>Expresses anxiety, overwhelm, or paralysis</td></tr>
-    <tr><td><code>q2_underemployed</code></td><td>Has a job/plan that's clearly settling</td></tr>
-    <tr><td><code>q2_strategic</code></td><td>Already has a thoughtful, specific plan</td></tr>
+    <tr><th>ID</th><th>Label</th><th>When to select</th></tr>
+    <tr><td><code>q3_a</code></td><td>Motivation</td><td>Surface-level on motivation — told you what, not why</td></tr>
+    <tr><td><code>q3_b</code></td><td>Broaden</td><td>Narrow and strategic — clear plan but tunnel vision</td></tr>
+    <tr><td><code>q3_c</code></td><td>Value</td><td>Has real experiences but doesn't see their own value</td></tr>
+    <tr><td><code>q3_d</code></td><td>Re-engage</td><td>Disengaged, giving minimal responses</td></tr>
+    <tr><td><code>q3_e</code></td><td>Ground</td><td>Abstract throughout — needs a concrete experience</td></tr>
   </table>
 `, true));
-container.appendChild(q1Section);
 
-/* ======= Q2 Section ======= */
-const q2Section = $('div', 'section');
-q2Section.id = 'q2';
-q2Section.innerHTML = `
-  <h2 class="section-title">Step 2 — Adaptive Deep-Dive</h2>
-  <p class="section-subtitle">One of 5 questions selected by AI routing.
-    From <span class="file-ref">questions.js</span></p>
-`;
-
-const q2ids = ['q2_active_unfocused','q2_alternative_path','q2_paralyzed','q2_underemployed','q2_strategic'];
-q2ids.forEach(id => {
-  q2Section.appendChild(makeCard('Q2', 'bg-q2', id, `
-    <div class="question-text border-q2">${QUESTIONS[id].text}</div>
-  `));
-});
-q2Section.appendChild(makeCard('Prompt', 'bg-q2', 'Q2 System Prompt (shared by all Q2 variants)', `
-  <div class="prompt-block">
-    <div class="prompt-label">System Prompt &mdash; includes Q1 context via template variables</div>
-    <div class="prompt-text">${highlightPrompt(PROMPTS.q2)}</div>
-  </div>
-`));
-
-/* Q2 → Q3 routing */
-q2Section.appendChild(makeCard('Routing', 'bg-q2', 'Q2 → Q3 Routing Options', `
-  <table class="routing-table">
-    <tr><th>ID</th><th>When to use</th></tr>
-    <tr><td><code>q3_credentials_only</code></td><td>No differentiating experiences yet</td></tr>
-    <tr><td><code>q3_has_experience_unframed</code></td><td>Mentioned experience but generically</td></tr>
-    <tr><td><code>q3_strong_self_knowledge</code></td><td>Self-aware but not market-connected</td></tr>
-    <tr><td><code>q3_avoidant_needs_grounding</code></td><td>Vague/deflective, needs concrete anchor</td></tr>
-    <tr><td><code>q3_already_strategic</code></td><td>Already strategic, push toward intangible value</td></tr>
-  </table>
-`));
-container.appendChild(q2Section);
-
-/* ======= Q3 Section ======= */
-const q3Section = $('div', 'section');
-q3Section.id = 'q3';
-q3Section.innerHTML = `
-  <h2 class="section-title">Step 3 — Experience Probe</h2>
-  <p class="section-subtitle">One of 5 questions selected by AI routing.
-    From <span class="file-ref">questions.js</span></p>
-`;
-
-const q3ids = ['q3_credentials_only','q3_has_experience_unframed','q3_strong_self_knowledge','q3_avoidant_needs_grounding','q3_already_strategic'];
+const q3ids = ['q3_a', 'q3_b', 'q3_c', 'q3_d', 'q3_e'];
 q3ids.forEach(id => {
-  q3Section.appendChild(makeCard('Q3', 'bg-q3', id, `
-    <div class="question-text border-q3">${QUESTIONS[id].text}</div>
+  const q = STAGE_3_BANK[id];
+  s3Section.appendChild(makeCard(q.label, 'bg-s3', `${id} — ${q.label}`, `
+    <div class="question-text" style="border-left-color:var(--s3-color)">${esc(q.text)}</div>
   `));
 });
-q3Section.appendChild(makeCard('Prompt', 'bg-q3', 'Q3 System Prompt (shared by all Q3 variants)', `
-  <div class="prompt-block">
-    <div class="prompt-label">System Prompt &mdash; includes Q1+Q2 context</div>
-    <div class="prompt-text">${highlightPrompt(PROMPTS.q3)}</div>
-  </div>
-`));
-container.appendChild(q3Section);
+container.appendChild(s3Section);
 
-/* ======= Q4 Section ======= */
-const q4Section = $('div', 'section');
-q4Section.id = 'q4';
-q4Section.innerHTML = `
-  <h2 class="section-title">Step 4 — Synthesis</h2>
-  <p class="section-subtitle">AI generates non-obvious career insights from full conversation.
-    No question bank — the Q3 AI reaction's last sentence becomes the Q4 prompt.</p>
+/* ======= Synthesis Structure ======= */
+const synthSection = $('div', 'section');
+synthSection.id = 'synthesis';
+synthSection.innerHTML = `
+  <h2 class="section-title">Two-Part Synthesis</h2>
+  <p class="section-subtitle">AI generates a Career Intelligence Brief and a separate pitch assessment</p>
 `;
-q4Section.appendChild(makeCard('Prompt', 'bg-q4', 'Q4 System Prompt — the key synthesis step', `
-  <div class="prompt-block">
-    <div class="prompt-label">System Prompt &mdash; full conversation context, plain-text output</div>
-    <div class="prompt-text">${highlightPrompt(PROMPTS.q4)}</div>
+synthSection.appendChild(makeCard('Part 1', 'bg-synth', 'Career Intelligence Brief (Collapsible Card)', `
+  <p style="font-size:13px;color:var(--muted);margin:0 0 12px;">
+    Four collapsible sections. First section expanded by default. Each shows a preview line when collapsed.
+  </p>
+  <table class="routing-table">
+    <tr><th>Section</th><th>Content</th><th>Default</th></tr>
+    <tr><td><strong>Where You Are</strong></td><td>2-3 sentences. Honest situation read.</td><td>Expanded</td></tr>
+    <tr><td><strong>What I See</strong></td><td>2-3 observations + woven human+AI point (replaces "What Just Happened")</td><td>Collapsed</td></tr>
+    <tr><td><strong>A Direction Worth Exploring</strong></td><td>1-2 specific role types/niches</td><td>Collapsed</td></tr>
+    <tr><td><strong>Your First Move</strong></td><td>One actionable step for this week</td><td>Collapsed</td></tr>
+  </table>
+  <div class="note" style="margin-top:12px">
+    <strong>No more "What Just Happened" section.</strong> The human+AI insight is now woven into "What I See" as ONE specific sentence using the student's actual example.
   </div>
 `, true));
-container.appendChild(q4Section);
+synthSection.appendChild(makeCard('Part 2', 'bg-pitch', 'Pitch: "Want to Go Deeper?" (Separate Section)', `
+  <p style="font-size:13px;color:var(--muted);margin:0 0 12px;">
+    Appears after the brief + optional reaction step. Separate visual treatment — lighter background, smaller text.
+  </p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>Opening:</strong> "What you just experienced was a 15-minute version of a process we've been developing."</p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>"Good next step if:"</strong> 2-3 personalized bullet points from THIS conversation</p>
+  <p style="font-size:13px;margin:0 0 8px;"><strong>"Not best use of time if:"</strong> Strategic approach already in place, different need (grad school, gap), already getting callbacks</p>
+  <p style="font-size:13px;margin:0;"><strong>CTA:</strong> Session dates + link, or "dates coming soon" message</p>
+`, true));
+container.appendChild(synthSection);
 
-/* ======= Q5 Section ======= */
-const q5Section = $('div', 'section');
-q5Section.id = 'q5';
-q5Section.innerHTML = `
-  <h2 class="section-title">Step 5 — Final Deliverable</h2>
-  <p class="section-subtitle">Student reacts to synthesis, AI generates structured output + invitation.</p>
+/* ======= System Prompt ======= */
+const promptSection = $('div', 'section');
+promptSection.id = 'prompt';
+promptSection.innerHTML = `
+  <h2 class="section-title">System Prompt</h2>
+  <p class="section-subtitle">Single prompt handles all stages, deepening with data layers, transitions, two-part synthesis, and adjustment.
+    From <span class="file-ref">prompts.js</span></p>
 `;
-q5Section.appendChild(makeCard('Prompt', 'bg-q5', 'Q5 System Prompt — final structured output', `
+promptSection.appendChild(makeCard('Prompt', 'bg-synth', 'Full System Prompt', `
   <div class="prompt-block">
-    <div class="prompt-label">System Prompt &mdash; generates deliverable sections + invitation A/B/C</div>
-    <div class="prompt-text">${highlightPrompt(PROMPTS.q5)}</div>
+    <div class="prompt-label">System Prompt &mdash; sent with every AI call</div>
+    <div class="prompt-text">${highlightPrompt(SYSTEM_PROMPT)}</div>
   </div>
 `, true));
-container.appendChild(q5Section);
+container.appendChild(promptSection);
 
+</script>
+
+<script>
+// Fallback: if module script fails to load, show an error message
+window.addEventListener('load', () => {
+  const content = document.getElementById('admin-content');
+  const loading = document.getElementById('admin-loading');
+  if (loading) {
+    loading.innerHTML = '<strong>Failed to load content.</strong> ES modules may not be supported. ' +
+      'Make sure you are serving this page via HTTP (not opening the file directly). ' +
+      'Try: <code>python3 -m http.server</code> in the career-intelligence folder, then visit <code>http://localhost:8000/admin.html</code>';
+    loading.style.color = '#c53030';
+  }
+});
 </script>
 </body>
 </html>
