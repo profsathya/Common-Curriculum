@@ -39,7 +39,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-superagency-challenge.html"
     },
     "s1-problem-analysis": {
-      canvasId: "580903",
+      canvasId: "144732",
       title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
       type: "quiz",
@@ -79,7 +79,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-solution-architecture": {
-      canvasId: "580904",
+      canvasId: "144733",
       title: "S1: Solution Architecture",
       dueDate: "2026-02-02",
       type: "quiz",
@@ -132,7 +132,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-reflection-2": {
-      canvasId: "580905",
+      canvasId: "144734",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
@@ -164,7 +164,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/sprint-1-demo.html"
     },
     "s1-w3-design-decision": {
-      canvasId: "581583",
+      canvasId: "144806",
       title: "S1: Design Decision Analysis",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -177,7 +177,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/design-decision-analysis.html"
     },
     "s1-w3-dojo-depth": {
-      canvasId: "581584",
+      canvasId: "144807",
       title: "S1: Dojo Depth Session",
       dueDate: "2026-02-08",
       type: "quiz",
@@ -197,7 +197,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-w3-reflection": {
-      canvasId: "581585",
+      canvasId: "144808",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "quiz",
@@ -401,7 +401,7 @@ const CST395_CONFIG = {
 
     // Sprint 3
     "s3-claims-dojo": {
-      canvasId: "",
+      canvasId: "584778",
       title: "S3 Prep: Claims in Practice",
       dueDate: "2026-03-14",
       type: "ai-discussion",
@@ -413,7 +413,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w9-claims-discussion.html"
     },
     "s3-problem-stake": {
-      canvasId: "",
+      canvasId: "584779",
       title: "S3: Problem Stake Brief",
       dueDate: "2026-03-23",
       type: "assignment",
@@ -425,7 +425,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w9-problem-stake.html"
     },
     "s3-reflection-6": {
-      canvasId: "",
+      canvasId: "584780",
       title: "S3: Weekly Build Reflection #1",
       dueDate: "2026-03-21",
       type: "handwritten-reflection",
