@@ -393,6 +393,17 @@ const CST349_CONFIG = {
       week: 8,
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
+    "s2-claims-discussion": {
+      title: "S2: Claims in Practice",
+      dueDate: "2026-03-13",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 8,
+      htmlFile: "assignments/s2-w8-claims-discussion.html"
+    },
 
     // Sprint 3
     "s3-curiosity-inventory": {
