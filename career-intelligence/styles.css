@@ -703,24 +703,107 @@ body {
   flex-wrap: wrap;
 }
 
-.ci-actions__download {
-  padding: 12px 24px;
+/* ============================================
+   AI Pitch Text (auto-shown after reaction)
+   ============================================ */
+
+.ci-pitch-text {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--ci-radius);
+  padding: 20px 24px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-pitch-text--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-pitch-text p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.ci-pitch-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Program Button + Description
+   ============================================ */
+
+.ci-program-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 24px;
   font-family: var(--ci-font);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   border-radius: var(--ci-radius);
   cursor: pointer;
-  transition: background-color 0.2s;
-  background: var(--ci-accent);
-  color: #fff;
-  border: none;
+  transition: background-color 0.2s, border-color 0.2s;
+  background: var(--ci-surface);
+  color: var(--ci-accent);
+  border: 1px solid var(--ci-accent);
+  text-align: center;
 }
 
-.ci-actions__download:hover {
-  background: #1e3a5f;
+.ci-program-btn:hover {
+  background: var(--ci-accent-light);
 }
 
-.ci-actions__deeper {
+.ci-program-desc {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--ci-radius);
+  padding: 24px;
+  margin-top: 16px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ci-program-desc--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ci-program-desc h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ci-text);
+  margin: 0 0 4px;
+}
+
+.ci-program-desc__meta {
+  font-size: 13px;
+  color: var(--ci-text-muted);
+  margin: 0 0 16px;
+}
+
+.ci-program-desc p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.ci-program-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Copy Brief Button
+   ============================================ */
+
+.ci-copy-btn {
   padding: 12px 24px;
   font-family: var(--ci-font);
   font-size: 14px;
@@ -733,97 +816,44 @@ body {
   border: 1px solid var(--ci-accent);
 }
 
-.ci-actions__deeper:hover:not(:disabled) {
+.ci-copy-btn:hover {
   background: var(--ci-accent-light);
 }
 
-.ci-actions__deeper:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.ci-copy-btn--success {
+  background: #276749;
+  color: #fff;
+  border-color: #276749;
+}
+
+.ci-copy-btn--success:hover {
+  background: #276749;
 }
 
 /* ============================================
-   Pitch Section — "Want to Go Deeper?"
+   Sign Up Button (Primary CTA)
    ============================================ */
 
-.ci-pitch-section {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+.ci-signup-btn {
+  padding: 12px 24px;
+  font-family: var(--ci-font);
+  font-size: 14px;
+  font-weight: 500;
   border-radius: var(--ci-radius);
-  padding: 24px;
-  margin-top: 24px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background: var(--ci-accent);
+  color: #fff;
+  border: none;
 }
 
-.ci-pitch-section--visible {
-  opacity: 1;
-  transform: translateY(0);
+.ci-signup-btn:hover:not(:disabled) {
+  background: #1e3a5f;
 }
 
-.ci-pitch-section__opening {
-  font-size: 15px;
-  color: #475569;
-  margin: 0 0 16px;
-  line-height: 1.6;
-}
-
-.ci-pitch-section__content {
-  margin-bottom: 16px;
-}
-
-.ci-pitch-section__content p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #475569;
-  margin: 0 0 8px;
-}
-
-.ci-pitch-section__content ul {
-  margin: 8px 0;
-  padding-left: 20px;
-}
-
-.ci-pitch-section__content li {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #475569;
-  margin-bottom: 4px;
-}
-
-.ci-pitch-fit {
-  color: #276749;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.ci-pitch-nofit {
-  color: var(--ci-text-muted);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.ci-pitch-section__cta {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #e2e8f0;
-}
-
-.ci-pitch-section__cta p {
-  font-size: 14px;
-  color: #475569;
-  margin: 0;
-  line-height: 1.6;
-}
-
-.ci-pitch-section__cta a {
-  color: var(--ci-accent);
-  text-decoration: underline;
-}
-
-.ci-pitch-section .ci-actions {
-  margin-top: 16px;
+.ci-signup-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ============================================
@@ -960,8 +990,8 @@ body {
     flex-direction: column;
   }
 
-  .ci-actions__download,
-  .ci-actions__deeper {
+  .ci-copy-btn,
+  .ci-signup-btn {
     width: 100%;
     text-align: center;
   }
@@ -986,7 +1016,11 @@ body {
     padding: 10px 14px;
   }
 
-  .ci-pitch-section {
+  .ci-pitch-text {
+    padding: 16px 18px;
+  }
+
+  .ci-program-desc {
     padding: 18px;
   }
 

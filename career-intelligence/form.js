@@ -4,11 +4,11 @@
  * 3 stages with AI deepening, transitions, two-part synthesis
  * (Career Brief + Pitch), optional reaction, collapsible brief sections.
  */
-import { CONFIG } from './config.js';
+import { CONFIG, PROGRAM_CONFIG } from './config.js';
 import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 import { callAI, parsePhaseResponse } from './api.js';
-import { downloadJSON } from './data.js';
+import { downloadJSON, generateBriefText } from './data.js';
 
 // ============================================
 // Stage Metadata & Icons
@@ -59,6 +59,7 @@ const state = {
   transitions: { s1_to_s2: null, s2_to_s3: null },
   timestamps: { start: new Date().toISOString(), end: null },
   tokenUsage: { input: 0, output: 0 },
+  tracking: [],
   complete: false,
 };
 
@@ -851,114 +852,99 @@ function renderSynthesisAdjustment(adjustmentText) {
 }
 
 // ============================================
-// Post-Reaction: "Want to Go Deeper?" + Download
+// Post-Reaction: Pitch + Program + Copy + Sign Up
 // ============================================
+
+function trackEvent(eventName) {
+  state.tracking.push({ event: eventName, timestamp: new Date().toISOString() });
+}
 
 function renderPostReactionActions() {
   state.timestamps.end = new Date().toISOString();
-  state.currentStage = 'pitch';
-
-  const section = document.querySelector('.ci-synthesis-section');
-  const actions = el('div', 'ci-actions');
-
-  const deeperBtn = el('button', 'ci-actions__deeper', 'Want to go deeper?');
-  actions.appendChild(deeperBtn);
-
-  const downloadBtn = el('button', 'ci-actions__download', 'Download session (JSON)');
-  downloadBtn.addEventListener('click', () => {
-    state.complete = true;
-    downloadJSON(state);
-  });
-  actions.appendChild(downloadBtn);
-
-  section.appendChild(actions);
-
-  deeperBtn.addEventListener('click', () => {
-    deeperBtn.disabled = true;
-    deeperBtn.textContent = 'Showing details...';
-    renderPitchSection(section);
-  });
-
-  actions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// ============================================
-// Pitch Section: "Want to Go Deeper?"
-// ============================================
-
-function renderPitchSection(container) {
   state.currentStage = 'complete';
   state.complete = true;
 
-  const pitchEl = el('div', 'ci-pitch-section');
+  const section = document.querySelector('.ci-synthesis-section');
 
-  const opening = el('p', 'ci-pitch-section__opening');
-  opening.textContent = "What you just experienced was a 15-minute version of a process we've been developing. Here's what the full experience looks like.";
-  pitchEl.appendChild(opening);
-
+  // 1. Show AI pitch text automatically
   if (state.pitchText) {
-    const pitchContent = el('div', 'ci-pitch-section__content');
-    pitchContent.innerHTML = renderPitchMarkdown(state.pitchText);
-    pitchEl.appendChild(pitchContent);
+    const pitchEl = el('div', 'ci-pitch-text');
+    pitchEl.innerHTML = renderMarkdown(state.pitchText);
+    section.appendChild(pitchEl);
+    requestAnimationFrame(() => pitchEl.classList.add('ci-pitch-text--visible'));
   }
 
-  // Session info
-  const cta = el('div', 'ci-pitch-section__cta');
-  const dates = CONFIG.dates_placeholder;
-  const link = CONFIG.link_placeholder;
-  if (dates && dates !== '[DATES TBD]' && link && link !== '[LINK TBD]') {
-    cta.innerHTML = `<p>We're running two focused sessions on <strong>${escapeHtml(dates)}</strong> that go deeper — strategic market mapping, value proposition development, and building an experimental approach to your search. <a href="${escapeHtml(link)}" target="_blank">Sign up here</a>.</p>`;
+  // 2. "Learn about CTI's career programs" button
+  const programBtn = el('button', 'ci-program-btn', "Learn about CTI's career programs for graduating seniors");
+  section.appendChild(programBtn);
+
+  // 3. Program description (hidden until button click)
+  const programDesc = el('div', 'ci-program-desc');
+  programDesc.innerHTML = `
+    <h3>${escapeHtml(PROGRAM_CONFIG.program_name)}</h3>
+    <p class="ci-program-desc__meta">${escapeHtml(PROGRAM_CONFIG.dates)} · ${escapeHtml(PROGRAM_CONFIG.session_times)}</p>
+    ${renderMarkdown(PROGRAM_CONFIG.description)}
+  `;
+  programDesc.style.display = 'none';
+  section.appendChild(programDesc);
+
+  programBtn.addEventListener('click', () => {
+    trackEvent('program_button_clicked');
+    programBtn.style.display = 'none';
+    programDesc.style.display = '';
+    requestAnimationFrame(() => programDesc.classList.add('ci-program-desc--visible'));
+    programDesc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // 4. Action buttons: Copy Brief + Sign Up
+  const actions = el('div', 'ci-actions ci-final-actions');
+
+  const copyBtn = el('button', 'ci-copy-btn', 'Copy Brief to Clipboard');
+  copyBtn.addEventListener('click', async () => {
+    trackEvent('copy_brief_clicked');
+    const briefText = generateBriefText(state);
+    try {
+      await navigator.clipboard.writeText(briefText);
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('ci-copy-btn--success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy Brief to Clipboard';
+        copyBtn.classList.remove('ci-copy-btn--success');
+      }, 2500);
+    } catch {
+      // Fallback for browsers without clipboard API
+      const ta = document.createElement('textarea');
+      ta.value = briefText;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('ci-copy-btn--success');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy Brief to Clipboard';
+        copyBtn.classList.remove('ci-copy-btn--success');
+      }, 2500);
+    }
+  });
+  actions.appendChild(copyBtn);
+
+  if (PROGRAM_CONFIG.google_form_url) {
+    const signUpBtn = el('button', 'ci-signup-btn', 'Sign Up for Career Intelligence');
+    signUpBtn.addEventListener('click', () => {
+      trackEvent('signup_button_clicked');
+      window.open(PROGRAM_CONFIG.google_form_url, '_blank');
+    });
+    actions.appendChild(signUpBtn);
   } else {
-    cta.innerHTML = `<p>Dates coming soon. Check back for session details.</p>`;
+    const comingSoon = el('button', 'ci-signup-btn ci-signup-btn--disabled', 'Sign Up — Coming Soon');
+    comingSoon.disabled = true;
+    actions.appendChild(comingSoon);
   }
-  pitchEl.appendChild(cta);
 
-  // Download at bottom of pitch
-  const actions = el('div', 'ci-actions');
-  const downloadBtn = el('button', 'ci-actions__download', 'Download session (JSON)');
-  downloadBtn.addEventListener('click', () => downloadJSON(state));
-  actions.appendChild(downloadBtn);
-  pitchEl.appendChild(actions);
-
-  container.appendChild(pitchEl);
-  requestAnimationFrame(() => pitchEl.classList.add('ci-pitch-section--visible'));
-  pitchEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function renderPitchMarkdown(text) {
-  let html = '';
-  const lines = text.split('\n');
-  let inList = false;
-
-  for (const line of lines) {
-    if (line.match(/^---+\s*$/)) {
-      if (inList) { html += '</ul>'; inList = false; }
-      continue;
-    }
-
-    const fitMatch = line.match(/^This might be a good next step if:/i);
-    const nofitMatch = line.match(/^This probably isn't the best use of your time if:/i);
-
-    if (fitMatch) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<p class="ci-pitch-fit">${escapeHtml(line)}</p>`;
-    } else if (nofitMatch) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<p class="ci-pitch-nofit">${escapeHtml(line)}</p>`;
-    } else if (line.match(/^- /)) {
-      if (!inList) { html += '<ul>'; inList = true; }
-      const content = escapeHtml(line.slice(2)).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      html += `<li>${content}</li>`;
-    } else {
-      if (inList) { html += '</ul>'; inList = false; }
-      const processed = escapeHtml(line).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      if (processed.trim()) {
-        html += `<p>${processed}</p>`;
-      }
-    }
-  }
-  if (inList) html += '</ul>';
-  return html;
+  section.appendChild(actions);
+  actions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ============================================
