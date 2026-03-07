@@ -162,38 +162,39 @@
       background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white;
     }
     .btn--next:hover { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
-    .btn--finish {
+    .btn--save {
       background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
     }
-    .btn--finish:hover { background: linear-gradient(135deg, #0d6b63, #0d9488); }
+    .btn--save:hover { background: linear-gradient(135deg, #0d6b63, #0d9488); }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* Final section */
-    .final-section {
+    /* Takeaway section */
+    .takeaway-section {
       background: white; border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 24px; margin-bottom: 16px; display: none;
+      padding: 24px; margin-bottom: 16px;
     }
-    .final-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
-    .final-section p { color: #4b5563; margin: 0 0 16px 0; }
-    .final-section textarea {
+    .takeaway-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
+    .takeaway-section p { color: #4b5563; margin: 0 0 16px 0; }
+    .takeaway-section textarea {
       width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e5e7eb;
       border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;
     }
-    .final-section textarea:focus { border-color: #14b8a6; outline: none; }
+    .takeaway-section textarea:focus { border-color: #14b8a6; outline: none; }
 
-    /* Download/submit */
+    /* Download confirmation */
+    .download-confirm {
+      display: inline-block; margin-left: 12px; color: #059669; font-size: 13px;
+      font-weight: 600; opacity: 0; transition: opacity 0.3s;
+    }
+    .download-confirm--visible { opacity: 1; }
+
+    /* Submit section */
     .submit-section {
       background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-      color: white; padding: 24px; border-radius: 12px; margin-top: 16px; display: none;
+      color: white; padding: 24px; border-radius: 12px; margin-top: 16px;
     }
     .submit-section h3 { color: white; margin: 0 0 12px 0; }
     .submit-section p { color: #d1d5db; margin: 0 0 16px 0; }
-    .btn--download {
-      display: inline-block; padding: 12px 24px; border-radius: 8px;
-      background: linear-gradient(135deg, #0d9488, #14b8a6); color: white;
-      font-weight: 600; font-size: 14px; cursor: pointer; border: none;
-      text-decoration: none; margin-right: 12px;
-    }
     .submit-link {
       display: inline-block; padding: 12px 24px; border-radius: 8px;
       background: rgba(255,255,255,0.1); color: white;
@@ -290,21 +291,21 @@
       <!-- Action buttons -->
       <div class="actions" id="actions">
         <button class="btn btn--next" id="next-pair-btn">Next Pair &rarr;</button>
-        <button class="btn btn--finish" id="finish-btn">Finish Observations</button>
+        <button class="btn btn--save" id="download-btn">&#x2B07; Download JSON</button>
+        <span class="download-confirm" id="download-confirm">&#x2713; Downloaded</span>
       </div>
 
-      <!-- Final takeaway (shown after finish) -->
-      <div class="final-section" id="final-section">
+      <!-- Sprint 3 Takeaway (always available) -->
+      <div class="takeaway-section" id="takeaway-section">
         <h2>Sprint 3 Takeaway</h2>
         <p>Across everything you watched today &mdash; what's one thing you want to do differently in Sprint 3?</p>
         <textarea id="takeaway-input" placeholder="What I want to do differently..."></textarea>
       </div>
 
-      <!-- Download/submit -->
+      <!-- Submit to Canvas (always visible) -->
       <div class="submit-section" id="submit-section">
         <h3>Submit Your Observations</h3>
-        <p>Download your notes (all pairs + takeaway) and upload to Canvas.</p>
-        <button class="btn--download" id="download-btn">Download JSON</button>
+        <p>Download your notes (all pairs + takeaway) and upload the JSON file to Canvas.</p>
         <a class="submit-link" data-assignment-key="s2-partner-eval" href="https://csumb.instructure.com/courses/33084/assignments/582887" target="_blank">Submit on Canvas &rarr;</a>
       </div>
     </div>
@@ -386,11 +387,9 @@ Worth noticing:
     const nudgeBtn = $('nudge-btn');
     const nudgeContainer = $('nudge-container');
     const nextPairBtn = $('next-pair-btn');
-    const finishBtn = $('finish-btn');
-    const finalSection = $('final-section');
     const takeawayInput = $('takeaway-input');
-    const submitSection = $('submit-section');
     const downloadBtn = $('download-btn');
+    const downloadConfirm = $('download-confirm');
     const referenceCard = $('reference-card');
 
     // ── Helpers ──
@@ -446,16 +445,14 @@ Worth noticing:
         tabBar.appendChild(tab);
       });
 
-      if (!state.finished) {
-        const addTab = document.createElement('button');
-        addTab.className = 'tab tab--add';
-        addTab.textContent = '+ New Pair';
-        addTab.addEventListener('click', function() {
-          saveCurrent();
-          addNewPair();
-        });
-        tabBar.appendChild(addTab);
-      }
+      const addTab = document.createElement('button');
+      addTab.className = 'tab tab--add';
+      addTab.textContent = '+ New Pair';
+      addTab.addEventListener('click', function() {
+        saveCurrent();
+        addNewPair();
+      });
+      tabBar.appendChild(addTab);
     }
 
     // ── Nudge rendering ──
@@ -475,7 +472,7 @@ Worth noticing:
     // ── Update nudge button state ──
     function updateNudgeBtn() {
       const pair = state.pairs[state.currentPair];
-      if (!pair || state.finished) {
+      if (!pair) {
         nudgeBtn.disabled = true;
         nudgeBtn.textContent = 'Push my thinking';
         return;
@@ -524,15 +521,9 @@ Worth noticing:
       updateNudgeBtn();
       renderTabs();
 
-      if (state.finished) {
-        notesTextarea.disabled = true;
-        pairNames.disabled = true;
-        nudgeBtn.disabled = true;
-      } else {
-        notesTextarea.disabled = false;
-        pairNames.disabled = false;
-        notesTextarea.focus();
-      }
+      notesTextarea.disabled = false;
+      pairNames.disabled = false;
+      notesTextarea.focus();
     }
 
     // ── Add new pair ──
@@ -647,38 +638,14 @@ Worth noticing:
       addNewPair();
     }
 
-    // ── Handle Finish ──
-    function handleFinish() {
-      saveCurrent();
-      state.finished = true;
-      saveNow();
-
-      notesTextarea.disabled = true;
-      pairNames.disabled = true;
-      nudgeBtn.disabled = true;
-      nextPairBtn.disabled = true;
-      finishBtn.disabled = true;
-
-      renderTabs();
-
-      finalSection.style.display = 'block';
-      takeawayInput.value = state.takeaway || '';
-      takeawayInput.focus();
-
-      setupTakeawayListener();
-    }
-
-    function setupTakeawayListener() {
-      takeawayInput.addEventListener('input', function() {
-        state.takeaway = this.value;
-        save();
-        if (this.value.trim().length > 10) {
-          submitSection.style.display = 'block';
-        }
-      });
-      if (state.takeaway && state.takeaway.trim().length > 10) {
-        submitSection.style.display = 'block';
-      }
+    // ── Download confirmation flash ──
+    let downloadConfirmTimer = null;
+    function flashDownloadConfirm() {
+      downloadConfirm.classList.add('download-confirm--visible');
+      clearTimeout(downloadConfirmTimer);
+      downloadConfirmTimer = setTimeout(function() {
+        downloadConfirm.classList.remove('download-confirm--visible');
+      }, 3000);
     }
 
     // ── Export ──
@@ -719,6 +686,8 @@ Worth noticing:
     }
 
     function handleDownload() {
+      saveCurrent();
+      state.takeaway = takeawayInput.value;
       const data = buildExport();
       state.downloadedAt = new Date().toISOString();
       saveNow();
@@ -731,6 +700,8 @@ Worth noticing:
       a.download = 'peer-observation-' + safeName + '.json';
       a.click();
       URL.revokeObjectURL(url);
+
+      flashDownloadConfirm();
     }
 
     // ── Event listeners ──
@@ -757,8 +728,13 @@ Worth noticing:
 
     nudgeBtn.addEventListener('click', handleNudgeRequest);
     nextPairBtn.addEventListener('click', handleNextPair);
-    finishBtn.addEventListener('click', handleFinish);
     downloadBtn.addEventListener('click', handleDownload);
+
+    // Takeaway auto-save
+    takeawayInput.addEventListener('input', function() {
+      state.takeaway = this.value;
+      save();
+    });
 
     // ── Name gate ──
     nameInput.addEventListener('input', function() {
@@ -787,17 +763,7 @@ Worth noticing:
       nameGate.classList.add('hidden');
       activity.classList.remove('hidden');
 
-      if (state.finished) {
-        notesTextarea.disabled = true;
-        pairNames.disabled = true;
-        nudgeBtn.disabled = true;
-        nextPairBtn.disabled = true;
-        finishBtn.disabled = true;
-        finalSection.style.display = 'block';
-        takeawayInput.value = state.takeaway || '';
-        setupTakeawayListener();
-      }
-
+      takeawayInput.value = state.takeaway || '';
       loadPairUI();
 
       if (window.innerWidth <= 600) {
