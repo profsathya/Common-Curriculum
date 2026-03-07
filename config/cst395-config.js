@@ -377,7 +377,7 @@ const CST395_CONFIG = {
     "s2-bridge-reflection-2": {
       canvasId: "582886",
       title: "S2: Sprint 2→3 Bridge Reflection",
-      dueDate: "2026-03-10",
+      dueDate: "2026-03-13",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
@@ -397,6 +397,164 @@ const CST395_CONFIG = {
       sprint: 2,
       week: 8,
       htmlFile: "assignments/s2-w8-partner-eval.html"
+    },
+
+    // Sprint 3
+    "s3-claims-dojo": {
+      canvasId: "placeholder",
+      title: "S3 Prep: Claims in Practice",
+      dueDate: "2026-03-14",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-claims-discussion.html"
+    },
+    "s3-goal-setting": {
+      canvasId: "placeholder",
+      title: "S3: Goal Setting — My Problem My Claim",
+      dueDate: "2026-03-21",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 10,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-goal-setting.html"
+    },
+    "s3-reflection-6": {
+      canvasId: "placeholder",
+      title: "S3: Productive Reflection #6",
+      dueDate: "2026-03-21",
+      type: "handwritten-reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-reflection.html"
+    },
+    "s3-problem-framing": {
+      canvasId: "placeholder",
+      title: "S3: Problem Framing Brief",
+      dueDate: "2026-03-24",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 15,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-problem-framing.html"
+    },
+    "s3-value-constraints": {
+      canvasId: "placeholder",
+      title: "S3: Value + Constraints Analysis",
+      dueDate: "2026-03-26",
+      type: "dojo",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 10,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-value-constraints.html"
+    },
+    "s3-reflection-7": {
+      canvasId: "placeholder",
+      title: "S3: Productive Reflection #7",
+      dueDate: "2026-03-28",
+      type: "handwritten-reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-reflection.html"
+    },
+    "s3-solution-approach": {
+      canvasId: "placeholder",
+      title: "S3: Solution Approach",
+      dueDate: "2026-03-31",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 15,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-solution-approach.html"
+    },
+    "s3-cross-critique": {
+      canvasId: "placeholder",
+      title: "S3: Cross-Domain Critique",
+      dueDate: "2026-04-02",
+      type: "dojo",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 10,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-cross-critique.html"
+    },
+    "s3-reflection-8": {
+      canvasId: "placeholder",
+      title: "S3: Productive Reflection #8",
+      dueDate: "2026-04-04",
+      type: "handwritten-reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-reflection.html"
+    },
+    "s3-build-log": {
+      canvasId: "placeholder",
+      title: "S3: Build Log + Mid-Sprint Check",
+      dueDate: "2026-04-07",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 15,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-build-log.html"
+    },
+    "s3-demo-prep": {
+      canvasId: "placeholder",
+      title: "S3: Demo Preparation",
+      dueDate: "2026-04-07",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 10,
+      sprint: 3,
+      week: 12,
+      htmlFile: "assignments/s3-w12-demo-prep.html"
+    },
+    "s3-peer-observation": {
+      canvasId: "placeholder",
+      title: "S3: Peer Observation",
+      dueDate: "2026-04-09",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 12,
+      htmlFile: "assignments/s3-w12-peer-observation.html"
+    },
+    "s3-bridge-reflection": {
+      canvasId: "placeholder",
+      title: "S3: Sprint 3→4 Bridge Reflection",
+      dueDate: "2026-04-11",
+      type: "handwritten-reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3",
+      points: 5,
+      sprint: 3,
+      week: 12,
+      htmlFile: "assignments/s3-w12-bridge-reflection.html"
     }
   },
 
