@@ -457,25 +457,10 @@ function processAIResponse(parsed, stageEl) {
     renderAIBubble(stageEl, parsed.reaction, parsed.follow_up);
     appendInputArea(stageEl);
 
-  } else if (parsed.phase === 'advance') {
-    state.conversation.push({
-      role: 'ai',
-      content: parsed.reaction || '',
-      stage: stage,
-      phase: 'advance',
-      reaction: parsed.reaction || '',
-      follow_up: null,
-      next_question_id: parsed.next_question_id || null,
-      transition: parsed.transition || null,
-    });
-
-    if (parsed.reaction) {
-      renderAIBubble(stageEl, parsed.reaction, null);
-    }
-
-    advanceFromStage(stage, parsed.next_question_id, parsed.transition);
-
   } else if (parsed.phase === 'synthesis') {
+    // Handle synthesis BEFORE advance — the AI may return synthesis directly
+    // from Stage 3 instead of returning "advance" first. This must be caught
+    // before the advance handler to prevent raw JSON rendering as a bubble.
     const briefText = parsed.brief || parsed.synthesis || '';
     const pitchText = parsed.pitch || '';
 
@@ -495,6 +480,25 @@ function processAIResponse(parsed, stageEl) {
     updateProgress(4);
 
     renderBrief(briefText);
+    return; // Do NOT fall through to advance or any other handler
+
+  } else if (parsed.phase === 'advance') {
+    state.conversation.push({
+      role: 'ai',
+      content: parsed.reaction || '',
+      stage: stage,
+      phase: 'advance',
+      reaction: parsed.reaction || '',
+      follow_up: null,
+      next_question_id: parsed.next_question_id || null,
+      transition: parsed.transition || null,
+    });
+
+    if (parsed.reaction) {
+      renderAIBubble(stageEl, parsed.reaction, null);
+    }
+
+    advanceFromStage(stage, parsed.next_question_id, parsed.transition);
 
   } else if (parsed.phase === 'synthesis_adjusted') {
     state.synthesisAdjustment = parsed.reaction;
@@ -530,6 +534,9 @@ function advanceFromStage(stage, nextQuestionId, transition) {
 }
 
 async function requestSynthesis() {
+  // Guard: don't request if synthesis was already generated inline
+  if (state.briefText || state.currentStage === 'synthesis') return;
+
   state.currentStage = 'synthesis';
   updateProgress(4);
 
