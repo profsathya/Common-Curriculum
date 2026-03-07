@@ -413,7 +413,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w9-claims-discussion.html"
     },
     "s3-problem-stake": {
-      canvasId: "",
+      canvasId: "584779",
       title: "S3: Problem Stake Brief",
       dueDate: "2026-03-23",
       type: "assignment",
@@ -425,7 +425,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w9-problem-stake.html"
     },
     "s3-reflection-6": {
-      canvasId: "",
+      canvasId: "584780",
       title: "S3: Weekly Build Reflection #1",
       dueDate: "2026-03-21",
       type: "handwritten-reflection",
