@@ -305,9 +305,10 @@ function extractConversationContent(jsonData) {
 // Step 1: Download Submissions
 // ============================================
 
-async function downloadSubmissions(api, courseName, dataDir) {
+async function downloadSubmissions(api, courseName, dataDir, { forceDownload = false } = {}) {
   console.log(`\n${'='.repeat(60)}`);
   console.log(`DOWNLOADING SUBMISSIONS: ${courseName.toUpperCase()}`);
+  if (forceDownload) console.log('(force-download: re-downloading all assignments)');
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
@@ -354,15 +355,45 @@ async function downloadSubmissions(api, courseName, dataDir) {
   const submissionsDir = path.join(courseDataDir, 'submissions');
   ensureDir(submissionsDir);
 
+  const gradingDir = path.join(courseDataDir, 'grading');
+
   const assignments = csvRows.filter(row => row.canvasId && row.canvasId !== 'null');
   console.log(`\nProcessing ${assignments.length} assignments with Canvas IDs...\n`);
 
   const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json')) || {};
 
+  let totalSkipped = 0, totalIncremental = 0, totalFull = 0;
+
   for (const row of assignments) {
     const assignmentKey = row.key;
     const canvasId = row.canvasId;
     const isQuiz = row.canvasType === 'quiz';
+    const indexEntry = submissionIndex[assignmentKey];
+
+    // --- Incremental download: skip settled assignments ---
+    if (!forceDownload && indexEntry && !indexEntry.error && indexEntry.downloadedAt) {
+      const dueDate = row.dueDate || indexEntry.dueDate;
+      if (dueDate) {
+        const daysPastDue = Math.floor(
+          (Date.now() - new Date(dueDate + 'T23:59:59').getTime()) / (1000 * 60 * 60 * 24)
+        );
+        // Assignment is settled: past grace period (15 days) and already fully graded
+        if (daysPastDue > 15) {
+          const gradingPath = path.join(gradingDir, `${assignmentKey}.json`);
+          const existingGrading = loadJson(gradingPath);
+          const allGraded = existingGrading && existingGrading.grades &&
+            existingGrading.grades.length > 0 &&
+            existingGrading.grades.every(g =>
+              g.status === 'reviewed' || g.status === 'posted' || g.status === 'graded_by_ai'
+            );
+          if (allGraded) {
+            console.log(`  ${row.title} (${assignmentKey}) — skipped (settled: past due + graded)`);
+            totalSkipped++;
+            continue;
+          }
+        }
+      }
+    }
 
     console.log(`  ${row.title} (${assignmentKey})...`);
 
@@ -382,12 +413,56 @@ async function downloadSubmissions(api, courseName, dataDir) {
         submissions = await api.listSubmissions(courseId, canvasId);
       }
 
-      const assignmentSubs = {};
+      // --- Incremental download: detect new/updated submissions ---
+      // Compare Canvas submitted_at timestamps against what we last downloaded.
+      // If nothing changed, skip the expensive content extraction entirely.
+      const previousLastSubmittedAt = indexEntry?.lastSubmittedAt || null;
+      const existingSubsPath = path.join(submissionsDir, `${assignmentKey}.json`);
+      const existingSubs = loadJson(existingSubsPath) || {};
+
+      // Build a map of previous submitted_at per student for fine-grained comparison
+      const prevSubmittedAtMap = {};
+      for (const [anonId, sub] of Object.entries(existingSubs)) {
+        if (sub.submittedAt) prevSubmittedAtMap[anonId] = sub.submittedAt;
+      }
+
+      // Find the latest submitted_at from Canvas to compare against index
+      let latestSubmittedAt = null;
+      for (const sub of submissions) {
+        if (sub.submitted_at && (!latestSubmittedAt || sub.submitted_at > latestSubmittedAt)) {
+          latestSubmittedAt = sub.submitted_at;
+        }
+      }
+
+      // Quick check: if no submissions have changed since last download, skip entirely
+      if (!forceDownload && previousLastSubmittedAt && latestSubmittedAt &&
+          latestSubmittedAt <= previousLastSubmittedAt &&
+          Object.keys(existingSubs).length > 0) {
+        console.log(`    → no new submissions since last download, skipped`);
+        totalSkipped++;
+        continue;
+      }
+
+      // Determine which students need content re-extraction
+      const needsContentExtraction = (sub) => {
+        if (forceDownload) return true;
+        const anonId = canvasToAnon[sub.user_id];
+        if (!anonId) return true;
+        const prevTimestamp = prevSubmittedAtMap[anonId];
+        // New submission or updated submission
+        if (!prevTimestamp || !sub.submitted_at) return true;
+        return sub.submitted_at !== prevTimestamp;
+      };
+
+      // Start with existing submissions as the base (for incremental merge)
+      const assignmentSubs = !forceDownload ? { ...existingSubs } : {};
+      let newOrUpdated = 0;
 
       for (const sub of submissions) {
         const anonId = canvasToAnon[sub.user_id];
         if (!anonId) continue; // Skip non-student submissions (e.g., test students)
 
+        // Always update lightweight metadata (status, score, late, missing, comments)
         const subData = {
           anonId,
           status: sub.workflow_state, // 'submitted', 'graded', 'unsubmitted', 'pending_review'
@@ -404,6 +479,22 @@ async function downloadSubmissions(api, courseName, dataDir) {
             createdAt: c.created_at,
           })),
         };
+
+        // For unchanged submissions, preserve existing content to avoid re-downloading files
+        if (!needsContentExtraction(sub) && existingSubs[anonId]) {
+          const prev = existingSubs[anonId];
+          subData.contentType = prev.contentType;
+          subData.content = prev.content;
+          if (prev.attachmentUrl) subData.attachmentUrl = prev.attachmentUrl;
+          if (prev.attachmentMimeType) subData.attachmentMimeType = prev.attachmentMimeType;
+          if (prev.attachmentFilename) subData.attachmentFilename = prev.attachmentFilename;
+          if (prev.activityData) subData.activityData = prev.activityData;
+          if (prev.conversationMetadata) subData.conversationMetadata = prev.conversationMetadata;
+          assignmentSubs[anonId] = subData;
+          continue;
+        }
+
+        newOrUpdated++;
 
         // Extract content based on submission type
         if (sub.submission_type === 'online_text_entry' && sub.body) {
@@ -560,15 +651,24 @@ async function downloadSubmissions(api, courseName, dataDir) {
         totalSubmissions: Object.keys(assignmentSubs).length,
         hasAiDiscussion,
         downloadedAt: new Date().toISOString(),
+        lastSubmittedAt: latestSubmittedAt,
       };
 
       // Save assignment submissions
       saveJson(path.join(submissionsDir, `${assignmentKey}.json`), assignmentSubs);
-      console.log(`    → ${Object.keys(assignmentSubs).length} submissions (${Object.values(assignmentSubs).filter(s => s.content).length} with content)`);
+
+      if (newOrUpdated > 0) {
+        console.log(`    → ${Object.keys(assignmentSubs).length} submissions (${newOrUpdated} new/updated, ${Object.values(assignmentSubs).filter(s => s.content).length} with content)`);
+        totalIncremental++;
+      } else {
+        console.log(`    → ${Object.keys(assignmentSubs).length} submissions (metadata refreshed, no new content)`);
+        totalFull++;
+      }
 
     } catch (error) {
       console.error(`    ✗ Error: ${error.message}`);
       submissionIndex[assignmentKey] = {
+        ...submissionIndex[assignmentKey],
         title: row.title,
         error: error.message,
         downloadedAt: new Date().toISOString(),
@@ -577,7 +677,7 @@ async function downloadSubmissions(api, courseName, dataDir) {
   }
 
   saveJson(path.join(courseDataDir, 'submission-index.json'), submissionIndex);
-  console.log(`\n✓ Download complete. Data saved to ${courseDataDir}`);
+  console.log(`\n✓ Download complete. ${totalSkipped} skipped, ${totalIncremental} with new submissions, ${totalFull} metadata-only. Data saved to ${courseDataDir}`);
 }
 
 // ============================================
@@ -3910,6 +4010,7 @@ Options:
   --data-dir=<path>              Path to private data repo (default: ../Common-Curriculum-Data)
   --assignment=<key>             Analyze a single assignment / post grades for it
   --grades=<path>                Grades JSON file to post (for post-grades action)
+  --force-download               Re-download all assignments (skip incremental optimization)
 
 Environment Variables:
   CANVAS_API_TOKEN   Canvas API token (required for download, post-grades)
@@ -3974,7 +4075,7 @@ Environment Variables:
 
     try {
       if (action === 'download' || action === 'full') {
-        await downloadSubmissions(api, c, dataDir);
+        await downloadSubmissions(api, c, dataDir, { forceDownload: !!args['force-download'] });
       }
       if (action === 'grade' || action === 'full') {
         await gradeSubmissions(api, c, dataDir, assignment);
