@@ -30,6 +30,11 @@ on:
         required: false
         default: ''
         type: string
+      force_download:
+        description: 'Force re-download all assignments (skip incremental optimization)'
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: analyze-${{ github.ref }}-${{ inputs.course }}
@@ -73,17 +78,23 @@ jobs:
           INPUT_ACTION: ${{ inputs.action }}
           INPUT_COURSE: ${{ inputs.course }}
           INPUT_ASSIGNMENT: ${{ inputs.assignment }}
+          INPUT_FORCE_DOWNLOAD: ${{ inputs.force_download }}
         run: |
           echo "=============================================="
           echo "Submission Analyzer: ${INPUT_ACTION}"
           echo "Course: ${INPUT_COURSE}"
           echo "Assignment: ${INPUT_ASSIGNMENT:-all}"
+          echo "Force download: ${INPUT_FORCE_DOWNLOAD:-false}"
           echo "=============================================="
 
           ARGS="--action=${INPUT_ACTION} --course=${INPUT_COURSE} --data-dir=./data-repo"
 
           if [ -n "${INPUT_ASSIGNMENT}" ]; then
             ARGS="$ARGS --assignment=${INPUT_ASSIGNMENT}"
+          fi
+
+          if [ "${INPUT_FORCE_DOWNLOAD}" = "true" ]; then
+            ARGS="$ARGS --force-download"
           fi
 
           node scripts/submission-analyzer.js $ARGS
