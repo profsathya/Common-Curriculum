@@ -1,5 +1,5 @@
 /**
- * Career Discovery Form v4 — UI & State Machine
+ * Career Discovery Form v5 — UI & State Machine
  *
  * 3 stages with AI deepening, transitions, two-part synthesis
  * (Career Brief + Pitch), optional reaction, collapsible brief sections.
@@ -302,7 +302,45 @@ function renderStudentBubble(container, text) {
   return bubble;
 }
 
+function textContainsSynthesisData(text) {
+  if (typeof text !== 'string') return false;
+  return (
+    (text.includes('"brief"') && (text.includes('"pitch"') || text.includes('"phase"'))) ||
+    (text.includes('"Where You Are"') && text.includes('"What I See"')) ||
+    (text.includes('"A Direction Worth Exploring"') && text.includes('"First Move"'))
+  );
+}
+
+function textLooksSynthesisLike(text) {
+  if (typeof text !== 'string') return false;
+  const markers = [
+    '## Where You Are', '## What I See',
+    '## A Direction Worth Exploring', '## Your First Move',
+    '## Your Situation', '## Your Strongest Positioning',
+  ];
+  return markers.filter(m => text.includes(m)).length >= 2;
+}
+
 function renderAIBubble(container, reaction, followUp) {
+  // GUARD: Block synthesis data from rendering as a conversation bubble
+  if (textContainsSynthesisData(reaction) || textLooksSynthesisLike(reaction)) {
+    try {
+      const parsed = JSON.parse(reaction);
+      if (parsed.brief || parsed.pitch) {
+        state.briefText = state.briefText || parsed.brief || '';
+        state.pitchText = state.pitchText || parsed.pitch || '';
+        if (!document.querySelector('.ci-synthesis-section')) {
+          renderBrief(state.briefText);
+        }
+        return;
+      }
+    } catch {
+      // Not valid JSON but looks like synthesis markdown — block it
+      console.warn('Blocked synthesis content from rendering as bubble');
+      return;
+    }
+  }
+
   const bubble = el('div', 'ci-reaction');
   let html = `<p>${escapeHtml(reaction)}</p>`;
   if (followUp) {
@@ -484,6 +522,26 @@ function processAIResponse(parsed, stageEl) {
     return; // Do NOT fall through to advance or any other handler
 
   } else if (parsed.phase === 'advance') {
+    // GUARD: Check if synthesis data is piggybacking on an advance response
+    if (parsed.brief || parsed.pitch) {
+      state.briefText = parsed.brief || '';
+      state.pitchText = parsed.pitch || '';
+      state.currentStage = 'synthesis';
+
+      state.conversation.push({
+        role: 'ai',
+        content: state.briefText,
+        stage: 'synthesis',
+        phase: 'synthesis',
+      });
+
+      stageEl.classList.remove('ci-stage--active');
+      stageEl.classList.add('ci-stage--done');
+      updateProgress(4);
+      renderBrief(state.briefText);
+      return;
+    }
+
     state.conversation.push({
       role: 'ai',
       content: parsed.reaction || '',
@@ -705,8 +763,14 @@ function renderBrief(briefMarkdown) {
       const icon = BRIEF_ICONS[s.title] || '';
       const color = BRIEF_COLORS[s.title] || '#4a5568';
 
-      // Extract first sentence for preview
-      const firstSentence = s.content.split(/(?<=[.!?])\s/)[0] || '';
+      // Extract first sentence for preview, stripping markdown markers
+      const stripped = s.content
+        .replace(/\*\*\*(.*?)\*\*\*/g, '$1')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        .replace(/__(.*?)__/g, '$1')
+        .replace(/_(.*?)_/g, '$1');
+      const firstSentence = stripped.split(/(?<=[.!?])\s/)[0] || '';
 
       const headerEl = el('div', 'ci-brief-section__header');
       headerEl.style.setProperty('--section-color', color);
@@ -874,7 +938,15 @@ function renderPostReactionActions() {
     requestAnimationFrame(() => pitchEl.classList.add('ci-pitch-text--visible'));
   }
 
-  // 2. "Learn about CTI's career programs" button
+  // 2. Bridge sentence connecting synthesis to program
+  const bridge = el('p', 'ci-bridge-text',
+    'The direction identified in your brief above is a starting point. ' +
+    'The Career Intelligence Program helps you build a full strategy around it — ' +
+    'mapping the market, developing your positioning, and running real experiments to test what works.'
+  );
+  section.appendChild(bridge);
+
+  // 3. "Learn about CTI's career programs" button
   const programBtn = el('button', 'ci-program-btn', "Learn about CTI's career programs for graduating seniors");
   section.appendChild(programBtn);
 
