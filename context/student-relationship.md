@@ -20,7 +20,7 @@ Every new assignment and activity HTML file should open with a personal framing 
 1. **A short video** (target ~1–1.5 min, phone camera acceptable, no production needed)
    - instructor looking at camera, in his own voice, not scripted
    - Content: why he built this activity, what he hopes students discover
-   - Hosted on Loom; link inserted as `LOOM_VIDEO_URL_PLACEHOLDER` until recorded
+   - Hosted on Loom; embedded inline via `LOOM_VIDEO_ID_PLACEHOLDER` until recorded
 
 2. **2–4 sentences of written framing** in instructor's voice
    - Not institutional ("this activity develops your metacognitive skills")
@@ -35,19 +35,22 @@ Every new assignment and activity HTML file should open with a personal framing 
 
 ## HTML Component
 
-Insert immediately after `<div class="container">` and before `<p class="breadcrumb">` in every new assignment file. Use course accent color: teal `#14b8a6` for CST395, blue `#3b82f6` for CST349.
+Insert immediately **after** `<p class="breadcrumb">` (below the Home / Sprint 2 / … line) and before the assignment title/content in every new assignment file. Use course accent color: teal `#14b8a6` for CST395, blue `#3b82f6` for CST349.
 
 ```html
 <!-- WHY THIS BLOCK -->
-<div style="background: #f0fdfa; border-left: 4px solid #14b8a6; border-radius: 8px; padding: 20px 24px; margin-bottom: 24px; display: flex; gap: 20px; align-items: flex-start;">
-    <a href="LOOM_VIDEO_URL_PLACEHOLDER" target="_blank" rel="noopener" style="flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none;">
-        <div style="width: 72px; height: 72px; background: #14b8a6; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+<div style="background: #f0fdfa; border-left: 4px solid #14b8a6; border-radius: 12px; padding: 24px; margin-bottom: 28px; box-shadow: 0 2px 8px rgba(20, 184, 166, 0.12); display: flex; gap: 24px; align-items: flex-start;">
+    <div style="flex-shrink: 0; width: 220px;">
+        <div style="position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.15);">
+            <div style="position: relative; padding-top: 56.25%; background: #0d9488;">
+                <!-- Loom embed: replace LOOM_VIDEO_ID_PLACEHOLDER with the Loom video ID -->
+                <iframe src="https://www.loom.com/embed/LOOM_VIDEO_ID_PLACEHOLDER" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+            </div>
         </div>
-        <span style="font-size: 11px; color: #0f766e; font-weight: 600; text-align: center; line-height: 1.3;">Watch before<br>you start</span>
-    </a>
-    <div>
-        <p style="margin: 0 0 8px 0; font-size: 15px; color: #134e4a; line-height: 1.6;">[WRITTEN_FRAMING — instructor's voice, 2–4 sentences]</p>
+        <p style="margin: 8px 0 0 0; font-size: 11px; color: #0f766e; font-weight: 600; text-align: center;">~1 min &middot; Why I built this</p>
+    </div>
+    <div style="padding-top: 4px;">
+        <p style="margin: 0 0 10px 0; font-size: 15px; color: #134e4a; line-height: 1.6;">[WRITTEN_FRAMING — instructor's voice, 2–4 sentences]</p>
         <p style="margin: 0; font-size: 13px; color: #0f766e; font-style: italic;">— Prof. Sathya</p>
     </div>
 </div>
@@ -67,6 +70,6 @@ If these three questions don't have clear answers, the activity design should be
 
 ## Workflow Rule
 
-* `LOOM_VIDEO_URL_PLACEHOLDER` stays in the file until instructor records and provides the URL
-* When the URL is ready, run a targeted Claude Code prompt to replace the placeholder in the specific file(s)
+* `LOOM_VIDEO_ID_PLACEHOLDER` stays in the iframe `src` until instructor records and provides the Loom video ID (the part after `loom.com/share/`)
+* When the ID is ready, run a targeted Claude Code prompt to replace the placeholder in the specific file(s)
 * Written framing must be drafted by instructor, not generated — it is his voice, not a course document
