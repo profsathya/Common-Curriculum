@@ -121,7 +121,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-sprint-plan": {
-      canvasId: "581427",
+      canvasId: "144791",
       title: "S1: Sprint Plan v1",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -160,7 +160,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-learning-log": {
-      canvasId: "581428",
+      canvasId: "144792",
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -180,7 +180,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-reflection-3": {
-      canvasId: "581429",
+      canvasId: "144793",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "reflection",
@@ -394,6 +394,7 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
     "s2-claims-discussion": {
+      canvasId: "585103",
       title: "S2: Claims in Practice",
       dueDate: "2026-03-13",
       type: "ai-discussion",
