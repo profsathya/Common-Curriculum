@@ -11,6 +11,12 @@ Most recent entries first. Each entry: date, who, what changed, why it matters.
 
 ---
 
+## 2026-03-10 — sathya
+
+Added `student-relationship.md` to capture the "Why This" design principle: every assignment gets a personal instructor framing block (video + 2–4 sentences in instructor's voice) at the top, before the activity content. No gate/checkbox. Applied first to Sprint 2 Week 8 bridge reflections and claims discussions in both courses. See `student-relationship.md` for HTML component spec and content framework.
+
+---
+
 ## 2026-03-07 — [sathya] Sprint 3 live design component + contingency planning
 
 **Created:** `context/sprint3-contingency.md` — Instructor-facing planning document with three execution scenarios for Weeks 10–12 based on Week 9 outcomes (Scenario A: simulation-first, B: regroup + build, C: domain bridge). Includes hybrid approach notes and arc narrative protection guidance.
