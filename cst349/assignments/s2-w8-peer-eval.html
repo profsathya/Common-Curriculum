@@ -87,6 +87,12 @@
       color: #6366f1; font-weight: 600; font-size: 13px;
     }
     .tab--add:hover { color: #4338ca; }
+    .tab__delete {
+      margin-left: 6px; padding: 0 4px; border: none; background: none;
+      color: #d1d5db; font-size: 14px; line-height: 1; cursor: pointer;
+      border-radius: 4px; vertical-align: middle;
+    }
+    .tab__delete:hover { color: #ef4444; background: #fef2f2; }
 
     /* Notepad card */
     .notepad-card {
@@ -428,6 +434,23 @@ Worth noticing:
       return false;
     }
 
+    // ── Delete member ──
+    function deleteMember(index) {
+      const member = state.members[index];
+      const label = member.name || 'Member ' + (index + 1);
+      if (!confirm('Delete "' + label + '"? This cannot be undone.')) return;
+      state.members.splice(index, 1);
+      if (state.currentMember >= state.members.length) {
+        state.currentMember = Math.max(0, state.members.length - 1);
+      }
+      saveNow();
+      if (state.members.length === 0) {
+        addNewMember();
+      } else {
+        loadMemberUI();
+      }
+    }
+
     // ── Tab rendering ──
     function renderTabs() {
       tabBar.innerHTML = '';
@@ -436,9 +459,21 @@ Worth noticing:
         tab.className = 'tab' + (i === state.currentMember ? ' tab--active' : '');
         const label = member.name ? member.name : 'Member ' + (i + 1);
         tab.textContent = label;
-        tab.addEventListener('click', function() {
+        tab.addEventListener('click', function(e) {
+          if (e.target.classList.contains('tab__delete')) return;
           switchToMember(i);
         });
+        if (state.members.length > 1) {
+          const del = document.createElement('button');
+          del.className = 'tab__delete';
+          del.innerHTML = '&times;';
+          del.title = 'Delete ' + label;
+          del.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deleteMember(i);
+          });
+          tab.appendChild(del);
+        }
         tabBar.appendChild(tab);
       });
 
