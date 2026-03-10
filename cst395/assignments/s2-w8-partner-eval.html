@@ -87,6 +87,12 @@
       color: #14b8a6; font-weight: 600; font-size: 13px;
     }
     .tab--add:hover { color: #0f766e; }
+    .tab__delete {
+      margin-left: 6px; padding: 0 4px; border: none; background: none;
+      color: #d1d5db; font-size: 14px; line-height: 1; cursor: pointer;
+      border-radius: 4px; vertical-align: middle;
+    }
+    .tab__delete:hover { color: #ef4444; background: #fef2f2; }
 
     /* Notepad card */
     .notepad-card {
@@ -431,6 +437,23 @@ Worth noticing:
       return false;
     }
 
+    // ── Delete pair ──
+    function deletePair(index) {
+      const pair = state.pairs[index];
+      const label = pair.names || 'Pair ' + (index + 1);
+      if (!confirm('Delete "' + label + '"? This cannot be undone.')) return;
+      state.pairs.splice(index, 1);
+      if (state.currentPair >= state.pairs.length) {
+        state.currentPair = Math.max(0, state.pairs.length - 1);
+      }
+      saveNow();
+      if (state.pairs.length === 0) {
+        addNewPair();
+      } else {
+        loadPairUI();
+      }
+    }
+
     // ── Tab rendering ──
     function renderTabs() {
       tabBar.innerHTML = '';
@@ -439,9 +462,21 @@ Worth noticing:
         tab.className = 'tab' + (i === state.currentPair ? ' tab--active' : '');
         const label = pair.names ? pair.names : 'Pair ' + (i + 1);
         tab.textContent = label;
-        tab.addEventListener('click', function() {
+        tab.addEventListener('click', function(e) {
+          if (e.target.classList.contains('tab__delete')) return;
           switchToPair(i);
         });
+        if (state.pairs.length > 1) {
+          const del = document.createElement('button');
+          del.className = 'tab__delete';
+          del.innerHTML = '&times;';
+          del.title = 'Delete ' + label;
+          del.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deletePair(i);
+          });
+          tab.appendChild(del);
+        }
         tabBar.appendChild(tab);
       });
 
