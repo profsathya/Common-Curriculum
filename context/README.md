@@ -78,6 +78,7 @@ Check `open-questions.md` regularly. If you see a question where you disagree wi
 | `terminology.md` | Canonical operational terms, allowed aliases, deprecated names | Anyone noticing naming drift |
 | `content-qa.md` | Definition of Done checklist for publishing pages | Anyone creating or revising content |
 | `science-of-computing.md` | Early-stage concept: foundational computing reasoning for AI-augmented builders. Core problem, two layers, architectural fit, open questions. Broader than CST395/CST349 — shapes CTI 2.0 and SOSE. | Anyone working on Science of Computing investigation |
+| `student-relationship.md` | Design principle for instructor presence layer ("Why This" block) in assignment pages | Anyone creating new assignment HTML |
 | `changelog.md` | What changed, when, by whom, why | Everyone, every session |
 
 ## Ground Rules
