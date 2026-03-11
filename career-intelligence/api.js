@@ -106,6 +106,30 @@ export function parsePhaseResponse(raw) {
     } catch { /* continue */ }
   }
 
+  // Attempt 4: fix literal newlines inside JSON string values.
+  // The AI sometimes returns JSON with unescaped newlines in long-form
+  // fields (brief, pitch), which makes JSON.parse fail.
+  if (!parsed) {
+    try {
+      const fixed = fixJsonStringNewlines(raw);
+      const candidate = JSON.parse(fixed);
+      if (candidate.phase) parsed = candidate;
+    } catch { /* continue */ }
+  }
+
+  // Attempt 5: combine fence-stripping + newline fix
+  if (!parsed) {
+    try {
+      const stripped = raw.replace(/^```(?:json)?\s*/m, '').replace(/```\s*$/m, '');
+      const match = stripped.match(/\{[\s\S]*\}/);
+      if (match) {
+        const fixed = fixJsonStringNewlines(match[0]);
+        const candidate = JSON.parse(fixed);
+        if (candidate.phase) parsed = candidate;
+      }
+    } catch { /* continue */ }
+  }
+
   // Fallback: treat as advance with raw text as reaction
   if (!parsed) {
     return {
@@ -138,4 +162,39 @@ function normalizeNewlines(obj, key) {
   if (typeof obj[key] === 'string') {
     obj[key] = obj[key].replace(/\\n/g, '\n');
   }
+}
+
+/**
+ * Fix literal (unescaped) newlines, carriage returns, and tabs inside
+ * JSON string values. Walks character-by-character tracking whether
+ * we're inside a quoted string, and escapes only those literals.
+ */
+function fixJsonStringNewlines(str) {
+  let inString = false;
+  let escaped = false;
+  let result = '';
+  for (const ch of str) {
+    if (escaped) {
+      result += ch;
+      escaped = false;
+      continue;
+    }
+    if (ch === '\\' && inString) {
+      escaped = true;
+      result += ch;
+      continue;
+    }
+    if (ch === '"') {
+      inString = !inString;
+      result += ch;
+      continue;
+    }
+    if (inString) {
+      if (ch === '\n') { result += '\\n'; continue; }
+      if (ch === '\r') { result += '\\r'; continue; }
+      if (ch === '\t') { result += '\\t'; continue; }
+    }
+    result += ch;
+  }
+  return result;
 }
