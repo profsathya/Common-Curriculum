@@ -128,6 +128,9 @@ function renderProgressBar() {
   const bar = el('div', 'ci-progress');
   bar.id = 'ci-progress';
 
+  const label = el('div', 'ci-progress__label-top', '3 Stages');
+  bar.appendChild(label);
+
   const track = el('div', 'ci-progress__track');
 
   STAGES.forEach((stage, i) => {
