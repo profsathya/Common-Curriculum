@@ -10,7 +10,7 @@ export const CONFIG = {
   retry_delays: [2000, 4000, 8000],
   dates_placeholder: 'Summer 2026 (exact dates TBD)',
   link_placeholder: 'https://forms.gle/QduKtjX7fhLi8nuC9',
-  placeholder_text: 'Take your time — the more specific you are, the more useful the response will be.',
+  placeholder_text: 'Take your time — the more specific you are, the more useful the response will be. (Minimum 20 characters)',
 };
 
 export const PROGRAM_CONFIG = {
