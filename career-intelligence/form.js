@@ -379,23 +379,43 @@ function textLooksSynthesisLike(text) {
 }
 
 function renderAIBubble(container, reaction, followUp) {
-  // GUARD: Block synthesis data from rendering as a conversation bubble
+  // GUARD: Block synthesis data from rendering as a conversation bubble.
+  // When the AI returns synthesis inline (during Stage 3 instead of a
+  // separate synthesis call), we must extract the brief/pitch and render
+  // the brief properly — otherwise requestSynthesis() fires again and
+  // the AI says "already generated."
   if (textContainsSynthesisData(reaction) || textLooksSynthesisLike(reaction)) {
-    try {
-      const parsed = JSON.parse(reaction);
-      if (parsed.brief || parsed.pitch) {
-        state.briefText = state.briefText || parsed.brief || '';
-        state.pitchText = state.pitchText || parsed.pitch || '';
-        if (!document.querySelector('.ci-synthesis-section')) {
-          renderBrief(state.briefText);
-        }
-        return;
-      }
-    } catch {
-      // Not valid JSON but looks like synthesis markdown — block it
-      console.warn('Blocked synthesis content from rendering as bubble');
-      return;
+    let synthesisHandled = false;
+
+    // Use the resilient parser (handles literal newlines, code fences, etc.)
+    const parsed = parsePhaseResponse(reaction);
+    if (parsed.brief || parsed.pitch) {
+      state.briefText = state.briefText || parsed.brief || '';
+      state.pitchText = state.pitchText || parsed.pitch || '';
+      synthesisHandled = true;
     }
+
+    // If not parseable as JSON but looks like synthesis markdown, use directly
+    if (!synthesisHandled && textLooksSynthesisLike(reaction)) {
+      state.briefText = state.briefText || reaction;
+      synthesisHandled = true;
+    }
+
+    // Render the brief if we extracted content and it hasn't been rendered yet
+    if (synthesisHandled && state.briefText && !document.querySelector('.ci-synthesis-section')) {
+      state.currentStage = 'synthesis';
+      saveState();
+
+      const stageEl = getActiveStageEl();
+      if (stageEl) {
+        stageEl.classList.remove('ci-stage--active');
+        stageEl.classList.add('ci-stage--done');
+      }
+      updateProgress(4);
+      renderBrief(state.briefText);
+    }
+
+    return; // Never render synthesis data as a conversation bubble
   }
 
   const bubble = el('div', 'ci-reaction');
