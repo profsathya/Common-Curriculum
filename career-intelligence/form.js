@@ -258,7 +258,7 @@ function appendInputArea(container) {
 
   // Skip button after 2 follow-ups
   if (state.followUpCount >= 2) {
-    const skipBtn = el('button', 'ci-skip', 'Continue to next stage');
+    const skipBtn = el('button', 'ci-skip', "I've shared enough — let's move on");
     skipBtn.addEventListener('click', () => handleSkip());
     btnRow.appendChild(skipBtn);
   }
