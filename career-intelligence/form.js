@@ -1006,7 +1006,7 @@ function renderPostReactionActions() {
   actions.appendChild(copyBtn);
 
   if (PROGRAM_CONFIG.google_form_url) {
-    const signUpBtn = el('button', 'ci-signup-btn', 'Sign Up for Career Intelligence');
+    const signUpBtn = el('button', 'ci-signup-btn', 'Sign Up for Career Intelligence — Part I');
     signUpBtn.addEventListener('click', () => {
       trackEvent('signup_button_clicked');
       window.open(PROGRAM_CONFIG.google_form_url, '_blank');

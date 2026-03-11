@@ -101,13 +101,13 @@ Structure the "pitch" in markdown:
 
 ---
 
-This might be a good next step if:
+CTI's Career Intelligence program might be a good next step if:
 [2-3 bullet points grounded in THIS student's specific conversation — reference actual gaps or opportunities surfaced. NOT generic program benefits.]
 
-This probably isn't the best use of your time if:
+CTI's Career Intelligence program probably isn't the best use of your time if:
 - You already have a strategic, targeted approach with specific companies in mind
 - Your situation calls for something other than job search strategy right now (grad school apps, a planned gap, etc.)
-- You're already getting callbacks and interviews and the issue is something else
+- You're busy and can't invest 3–4 hours per week for two weeks
 
 ---
 

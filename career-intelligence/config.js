@@ -14,13 +14,17 @@ export const CONFIG = {
 };
 
 export const PROGRAM_CONFIG = {
-  program_name: 'Career Intelligence',
-  dates: 'Summer 2026 (exact dates TBD)',
-  session_times: 'Two 90-minute sessions',
+  program_name: 'Career Intelligence — Part I',
+  dates: 'Start date: March 17 or March 24',
+  session_times: 'Two weeks — about 3.5 hours per week',
   description: [
     'Career Intelligence is a program designed for graduating seniors who want to go beyond the standard job search.',
     '',
-    'Over two focused sessions, you\'ll work through:',
+    '• Two weeks — about 3.5 hours per week',
+    '• 1.5 hours of synchronous session and 2 hours of asynchronous work',
+    '• Start date: March 17 or March 24',
+    '',
+    'Over the program, you\'ll work through:',
     '• Strategic market mapping — understanding where your skills meet real demand',
     '• Value proposition development — articulating what makes you distinct, not just qualified',
     '• An experimental approach to your search — testing directions instead of guessing',
