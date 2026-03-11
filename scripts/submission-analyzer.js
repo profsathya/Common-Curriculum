@@ -749,6 +749,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     if (indexEntry.hasAiDiscussion) {
       console.log(`    → AI-discussion detected, using partner matching & dual grading`);
       if (!analysis.discussions) analysis.discussions = {};
+
+      // Skip if already analyzed
+      if (analysis.discussions[assignmentKey]?.analyzedAt) {
+        console.log(`    → Already analyzed (${analysis.discussions[assignmentKey].analyzedAt}), skipping`);
+        const existingStudentCount = Object.keys(analysis.discussions[assignmentKey].results || {}).length;
+        totalStudents += existingStudentCount;
+        continue;
+      }
+
       try {
         const discResult = await analyzeDiscussionAssignment(courseName, dataDir, assignmentKey, indexEntry);
         if (discResult) {
@@ -785,9 +794,19 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
       continue;
     }
 
+    const existingAssignment = analysis.assignments[assignmentKey];
+    const existingStudents = existingAssignment?.students || {};
     const assignmentAnalysis = {};
+    let assignmentSkipped = 0;
 
     for (const [anonId, sub] of Object.entries(submissions)) {
+      // Skip if already analyzed with a quality score or explicit null (participation-only)
+      const existingStudent = existingStudents[anonId];
+      if (existingStudent?.analyzedAt) {
+        assignmentAnalysis[anonId] = existingStudent;
+        assignmentSkipped++;
+        continue;
+      }
       // Determine participation score
       let participation = 1; // Default: no submission
       if (sub.missing) {
@@ -877,7 +896,7 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     const analyzed = Object.values(assignmentAnalysis);
     const withQuality = analyzed.filter(a => a.quality !== null);
     totalStudents += analyzed.length;
-    console.log(`    → ${analyzed.length} students, ${withQuality.length} analyzed by LLM, ${totalCalls} API calls so far`);
+    console.log(`    → ${analyzed.length} students, ${withQuality.length} analyzed by LLM, ${assignmentSkipped} skipped (cached), ${totalCalls} API calls so far`);
   }
 
   // Generate per-student qualitative summaries
@@ -887,7 +906,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
 
   if (!analysis.studentSummaries) analysis.studentSummaries = {};
 
+  let summariesSkipped = 0;
+
   for (const anonId of allAnonIds) {
+    // Skip if summary already exists
+    if (analysis.studentSummaries[anonId] && analysis.studentSummaries[anonId] !== 'Summary not available.') {
+      summariesSkipped++;
+      continue;
+    }
+
     // Collect this student's data across all assignments
     const studentData = [];
     for (const [key, assignment] of Object.entries(analysis.assignments)) {
@@ -919,7 +946,7 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
       analysis.studentSummaries[anonId] = 'Summary not available.';
     }
   }
-  console.log(`  → Generated ${summaryCalls} student summaries`);
+  console.log(`  → Generated ${summaryCalls} student summaries, ${summariesSkipped} skipped (cached)`);
 
   analysis.lastUpdated = new Date().toISOString();
   saveJson(analysisPath, analysis);
