@@ -46,6 +46,8 @@ const BRIEF_COLORS = {
 // State
 // ============================================
 
+const STORAGE_KEY = 'ci-form-state';
+
 const state = {
   currentStage: 1,
   followUpCount: 0,
@@ -62,6 +64,58 @@ const state = {
   tracking: [],
   complete: false,
 };
+
+// ============================================
+// LocalStorage Persistence
+// ============================================
+
+const PERSISTED_KEYS = [
+  'currentStage', 'followUpCount', 'messages', 'conversation',
+  'selectedQ3', 'briefText', 'pitchText', 'synthesisReaction',
+  'synthesisAdjustment', 'transitions', 'timestamps', 'tokenUsage',
+  'tracking', 'complete',
+];
+
+function saveState() {
+  try {
+    const snapshot = {};
+    for (const key of PERSISTED_KEYS) {
+      snapshot[key] = state[key];
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+  } catch {
+    // Storage full or unavailable — silently ignore
+  }
+}
+
+function loadSavedState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const snapshot = JSON.parse(raw);
+    // Basic validity check — must have conversation entries
+    if (!snapshot.conversation || snapshot.conversation.length === 0) return null;
+    return snapshot;
+  } catch {
+    return null;
+  }
+}
+
+function applySavedState(snapshot) {
+  for (const key of PERSISTED_KEYS) {
+    if (key in snapshot) {
+      state[key] = snapshot[key];
+    }
+  }
+}
+
+function clearSavedState() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Ignore
+  }
+}
 
 // ============================================
 // Helpers
@@ -496,6 +550,7 @@ function processAIResponse(parsed, stageEl) {
     });
 
     state.followUpCount++;
+    saveState();
     renderAIBubble(stageEl, parsed.reaction, parsed.follow_up);
     appendInputArea(stageEl);
 
@@ -520,6 +575,7 @@ function processAIResponse(parsed, stageEl) {
     stageEl.classList.remove('ci-stage--active');
     stageEl.classList.add('ci-stage--done');
     updateProgress(4);
+    saveState();
 
     renderBrief(briefText);
     return; // Do NOT fall through to advance or any other handler
@@ -541,6 +597,7 @@ function processAIResponse(parsed, stageEl) {
       stageEl.classList.remove('ci-stage--active');
       stageEl.classList.add('ci-stage--done');
       updateProgress(4);
+      saveState();
       renderBrief(state.briefText);
       return;
     }
@@ -560,6 +617,7 @@ function processAIResponse(parsed, stageEl) {
       renderAIBubble(stageEl, parsed.reaction, null);
     }
 
+    saveState();
     advanceFromStage(stage, parsed.next_question_id, parsed.transition);
 
   } else if (parsed.phase === 'synthesis_adjusted') {
@@ -572,6 +630,7 @@ function processAIResponse(parsed, stageEl) {
       phase: 'synthesis_adjusted',
     });
 
+    saveState();
     renderSynthesisAdjustment(parsed.reaction);
     renderPostReactionActions();
   }
@@ -640,6 +699,7 @@ async function requestSynthesis() {
       phase: 'synthesis',
     });
 
+    saveState();
     renderBrief(briefText);
 
   } catch (error) {
@@ -679,6 +739,7 @@ async function handleSkip() {
   if (stage === 1) {
     state.currentStage = 2;
     state.followUpCount = 0;
+    saveState();
     renderStageStart(2, STAGE_2_QUESTION, null);
     return;
   }
@@ -892,6 +953,7 @@ function renderSynthesisReactionArea(container) {
         phase: 'synthesis_adjusted',
       });
 
+      saveState();
       renderSynthesisAdjustment(state.synthesisAdjustment);
       renderPostReactionActions();
 
@@ -906,6 +968,7 @@ function renderSynthesisReactionArea(container) {
     area.remove();
     state.synthesisReaction = null;
     state.synthesisAdjustment = null;
+    saveState();
     renderPostReactionActions();
   });
 }
@@ -930,6 +993,7 @@ function renderPostReactionActions() {
   state.timestamps.end = new Date().toISOString();
   state.currentStage = 'complete';
   state.complete = true;
+  saveState();
 
   const section = document.querySelector('.ci-synthesis-section');
 
@@ -1023,11 +1087,165 @@ function renderPostReactionActions() {
 }
 
 // ============================================
+// Restore from Saved State
+// ============================================
+
+function restoreFromSaved() {
+  renderProgressBar();
+
+  const form = getForm();
+  let lastRenderedStage = 0;
+
+  // Walk through conversation entries and rebuild the UI
+  for (const entry of state.conversation) {
+    const stageNum = typeof entry.stage === 'number' ? entry.stage : null;
+
+    // Render new stage header when we encounter a new stage number
+    if (stageNum && stageNum > lastRenderedStage) {
+      // Close the previous stage
+      const prev = getActiveStageEl();
+      if (prev) {
+        prev.classList.remove('ci-stage--active');
+        prev.classList.add('ci-stage--done');
+      }
+
+      const meta = STAGES[stageNum - 1];
+      const stageEl = el('div', 'ci-stage ci-stage--active');
+      stageEl.dataset.stage = stageNum;
+      stageEl.style.setProperty('--step-color', meta.color);
+
+      const header = el('div', 'ci-stage-header');
+      header.innerHTML = `
+        <span class="ci-stage-header__icon">${ICONS[stageNum]}</span>
+        <span class="ci-stage-header__num">Stage ${stageNum}</span>
+        <span class="ci-stage-header__title">${meta.label}</span>
+      `;
+      stageEl.appendChild(header);
+
+      // Add transition text if available
+      const transKey = stageNum === 2 ? 's1_to_s2' : stageNum === 3 ? 's2_to_s3' : null;
+      const transText = transKey && state.transitions[transKey];
+      if (transText) {
+        const trans = el('div', 'ci-transition');
+        trans.innerHTML = `<p>${escapeHtml(transText)}</p>`;
+        stageEl.appendChild(trans);
+      }
+
+      // Stage 1 frame text
+      if (stageNum === 1) {
+        const frame = el('div', 'ci-stage-frame');
+        frame.innerHTML = `<p>${escapeHtml(STAGE_1_FRAME)}</p>`;
+        stageEl.appendChild(frame);
+      }
+
+      // Question card
+      let questionText = '';
+      if (stageNum === 1) questionText = STAGE_1_QUESTION;
+      else if (stageNum === 2) questionText = STAGE_2_QUESTION;
+      else if (stageNum === 3 && state.selectedQ3) questionText = STAGE_3_BANK[state.selectedQ3]?.text || '';
+      const qCard = el('div', 'ci-question');
+      qCard.innerHTML = `<p>${escapeHtml(questionText)}</p>`;
+      stageEl.appendChild(qCard);
+
+      form.appendChild(stageEl);
+      lastRenderedStage = stageNum;
+    }
+
+    const stageEl = getActiveStageEl();
+
+    if (entry.role === 'student' && stageEl && !entry.skipped) {
+      const bubble = el('div', 'ci-student-response ci-student-response--visible');
+      bubble.innerHTML = `<p>${escapeHtml(entry.content)}</p>`;
+      stageEl.appendChild(bubble);
+    } else if (entry.role === 'ai' && entry.stage !== 'synthesis' && stageEl) {
+      if (entry.reaction) {
+        const bubble = el('div', 'ci-reaction ci-reaction--visible');
+        let html = `<p>${escapeHtml(entry.reaction)}</p>`;
+        if (entry.follow_up) {
+          html += `<p class="ci-follow-up">${escapeHtml(entry.follow_up)}</p>`;
+        }
+        bubble.innerHTML = html;
+        stageEl.appendChild(bubble);
+      }
+    }
+  }
+
+  // Update progress bar
+  if (state.complete || state.currentStage === 'complete' || state.currentStage === 'synthesis') {
+    updateProgress(4);
+  } else if (typeof state.currentStage === 'number') {
+    updateProgress(state.currentStage);
+  }
+
+  // Render the appropriate end state
+  if (state.briefText) {
+    // Mark last stage as done
+    const lastStage = getActiveStageEl();
+    if (lastStage) {
+      lastStage.classList.remove('ci-stage--active');
+      lastStage.classList.add('ci-stage--done');
+    }
+
+    // Render brief
+    renderBrief(state.briefText);
+
+    // If form was already complete, render the post-reaction section
+    if (state.complete) {
+      // Remove the reaction area that renderBrief added
+      const reactionArea = document.querySelector('.ci-synthesis-reaction');
+      if (reactionArea) reactionArea.remove();
+
+      if (state.synthesisAdjustment) {
+        renderSynthesisAdjustment(state.synthesisAdjustment);
+      }
+      renderPostReactionActions();
+    }
+  } else if (typeof state.currentStage === 'number') {
+    // Still in a conversational stage — show input
+    const stageEl = getActiveStageEl();
+    if (stageEl) {
+      appendInputArea(stageEl);
+    }
+  }
+}
+
+// ============================================
 // Initialize
 // ============================================
 
 export function init() {
   console.log(`Career Discovery Form v${CONFIG.form_version} loaded`);
-  renderProgressBar();
-  renderStageStart(1, STAGE_1_QUESTION, null);
+
+  const saved = loadSavedState();
+
+  if (saved && !saved.complete) {
+    // Show a resume prompt
+    const form = getForm();
+    const resumeBar = el('div', 'ci-resume-prompt');
+    resumeBar.innerHTML = `
+      <p>You have a session in progress. Would you like to pick up where you left off?</p>
+      <div class="ci-btn-row">
+        <button class="ci-submit ci-resume-btn">Resume</button>
+        <button class="ci-skip ci-restart-btn">Start Fresh</button>
+      </div>
+    `;
+    form.appendChild(resumeBar);
+
+    resumeBar.querySelector('.ci-resume-btn').addEventListener('click', () => {
+      resumeBar.remove();
+      applySavedState(saved);
+      restoreFromSaved();
+    });
+
+    resumeBar.querySelector('.ci-restart-btn').addEventListener('click', () => {
+      resumeBar.remove();
+      clearSavedState();
+      renderProgressBar();
+      renderStageStart(1, STAGE_1_QUESTION, null);
+    });
+  } else {
+    if (saved && saved.complete) clearSavedState();
+    renderProgressBar();
+    renderStageStart(1, STAGE_1_QUESTION, null);
+  }
 }
