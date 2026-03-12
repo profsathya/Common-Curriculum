@@ -822,6 +822,21 @@ function parseBriefSections(markdown) {
 }
 
 function renderBrief(briefMarkdown) {
+  // Safety net: if briefMarkdown is raw JSON (e.g. the full API response
+  // leaked through instead of the extracted brief field), parse it and
+  // extract the "brief" field before rendering.
+  if (typeof briefMarkdown === 'string' && briefMarkdown.trimStart().startsWith('{')) {
+    const extracted = parsePhaseResponse(briefMarkdown);
+    if (extracted.brief) {
+      briefMarkdown = extracted.brief;
+      state.briefText = briefMarkdown;
+      if (extracted.pitch && !state.pitchText) {
+        state.pitchText = extracted.pitch;
+      }
+      saveState();
+    }
+  }
+
   const form = getForm();
   const section = el('div', 'ci-synthesis-section');
 

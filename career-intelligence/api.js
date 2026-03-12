@@ -53,8 +53,20 @@ export async function callAI(systemPrompt, messages, options = {}) {
       }
 
       const data = await response.json();
+      // Normalize content to a string — the proxy may return it as:
+      // - A plain string (already good)
+      // - An array of content blocks [{type: "text", text: "..."}] (Anthropic API format)
+      let content = data.content;
+      if (Array.isArray(content)) {
+        content = content
+          .filter(block => block.type === 'text')
+          .map(block => block.text)
+          .join('');
+      } else if (typeof content !== 'string') {
+        content = String(content);
+      }
       return {
-        content: data.content,
+        content,
         usage: data.usage || { input_tokens: 0, output_tokens: 0 },
       };
 
