@@ -2957,6 +2957,13 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
       continue;
     }
 
+    // Never downgrade an existing Canvas score
+    if (current && current.score != null && current.score > score) {
+      console.log(`  ⚠ ${label}: Canvas has ${current.score}, skipping lower score ${score}`);
+      skipped++;
+      continue;
+    }
+
     const comment = buildGradeComment(g);
 
     try {
