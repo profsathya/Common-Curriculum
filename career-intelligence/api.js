@@ -153,15 +153,30 @@ export function parsePhaseResponse(raw) {
       if (raw.includes(heading)) { hasMarkers = true; break; }
     }
     if (hasMarkers && raw.includes('"brief"')) {
-      // This looks like a synthesis response with broken JSON.
-      // Return a synthesis phase with the raw text so that
-      // extractBriefByMarkers in form.js can handle extraction.
+      // Extract the brief content directly — never pass raw JSON through.
+      const brief = extractBriefValue(raw);
       return {
         reaction: null,
         follow_up: null,
         phase: 'synthesis',
-        brief: raw, // renderBrief's safety net will extract via markers
-        pitch: null,
+        brief: brief || raw,
+        pitch: extractPitchValue(raw),
+      };
+    }
+  }
+
+  // Attempt 7: regex extraction of the "brief" field value from JSON-like string.
+  // Even when the JSON structure is broken, we can grab the value after "brief": "
+  // up to the next JSON field boundary.
+  if (!parsed && typeof raw === 'string' && raw.includes('"brief"')) {
+    const brief = extractBriefValue(raw);
+    if (brief) {
+      return {
+        reaction: null,
+        follow_up: null,
+        phase: 'synthesis',
+        brief,
+        pitch: extractPitchValue(raw),
       };
     }
   }
@@ -198,6 +213,84 @@ function normalizeNewlines(obj, key) {
   if (typeof obj[key] === 'string') {
     obj[key] = obj[key].replace(/\\n/g, '\n');
   }
+}
+
+/**
+ * Extract the value of the "brief" key from a JSON-like string using regex.
+ * Works even when the JSON is malformed (unescaped quotes, etc.) by finding
+ * "brief": " and reading until the next JSON field boundary.
+ * Returns the unescaped brief text, or null if not found.
+ */
+export function extractBriefValue(raw) {
+  // Find "brief" : "...
+  const briefKeyMatch = raw.match(/"brief"\s*:\s*"/);
+  if (!briefKeyMatch) return null;
+
+  const valueStart = briefKeyMatch.index + briefKeyMatch[0].length;
+
+  // Find the end: look for ", "pitch": or ", "phase": or ", "reaction": etc.
+  // or a closing "} at the end. We scan for these JSON field boundary patterns.
+  const FIELD_BOUNDARIES = [
+    /",\s*"pitch"\s*:/,
+    /",\s*"phase"\s*:/,
+    /",\s*"reaction"\s*:/,
+    /",\s*"follow_up"\s*:/,
+    /",\s*"next_question_id"\s*:/,
+    /",\s*"synthesis"\s*:/,
+  ];
+
+  let end = raw.length;
+  for (const boundary of FIELD_BOUNDARIES) {
+    const match = raw.substring(valueStart).match(boundary);
+    if (match) {
+      end = Math.min(end, valueStart + match.index);
+    }
+  }
+
+  // Also check for trailing "} or "\n}
+  const trailingMatch = raw.substring(valueStart).match(/"\s*}\s*$/);
+  if (trailingMatch) {
+    end = Math.min(end, valueStart + trailingMatch.index);
+  }
+
+  let value = raw.substring(valueStart, end);
+  // Unescape JSON string escapes
+  value = value.replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  return value.trim() || null;
+}
+
+/**
+ * Extract the value of the "pitch" key from a JSON-like string using regex.
+ */
+function extractPitchValue(raw) {
+  const pitchKeyMatch = raw.match(/"pitch"\s*:\s*"/);
+  if (!pitchKeyMatch) return null;
+
+  const valueStart = pitchKeyMatch.index + pitchKeyMatch[0].length;
+
+  const FIELD_BOUNDARIES = [
+    /",\s*"brief"\s*:/,
+    /",\s*"phase"\s*:/,
+    /",\s*"reaction"\s*:/,
+    /",\s*"follow_up"\s*:/,
+  ];
+
+  let end = raw.length;
+  for (const boundary of FIELD_BOUNDARIES) {
+    const match = raw.substring(valueStart).match(boundary);
+    if (match) {
+      end = Math.min(end, valueStart + match.index);
+    }
+  }
+
+  const trailingMatch = raw.substring(valueStart).match(/"\s*}\s*$/);
+  if (trailingMatch) {
+    end = Math.min(end, valueStart + trailingMatch.index);
+  }
+
+  let value = raw.substring(valueStart, end);
+  value = value.replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  return value.trim() || null;
 }
 
 /**

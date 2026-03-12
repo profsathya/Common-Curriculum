@@ -7,7 +7,7 @@
 import { CONFIG, PROGRAM_CONFIG } from './config.js';
 import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
-import { callAI, parsePhaseResponse, fixJsonStringNewlines } from './api.js';
+import { callAI, parsePhaseResponse, fixJsonStringNewlines, extractBriefValue } from './api.js';
 import { downloadJSON, generateBriefText } from './data.js';
 
 // ============================================
@@ -405,7 +405,16 @@ function renderAIBubble(container, reaction, followUp) {
       }
     }
 
-    // Try 3: If the text IS synthesis markdown (not JSON-wrapped), use directly
+    // Try 3: Direct regex extraction of "brief" field value (nuclear option)
+    if (!synthesisHandled) {
+      const directBrief = extractBriefValue(reaction);
+      if (directBrief) {
+        state.briefText = state.briefText || directBrief;
+        synthesisHandled = true;
+      }
+    }
+
+    // Try 4: If the text IS synthesis markdown (not JSON-wrapped), use directly
     if (!synthesisHandled && textLooksSynthesisLike(reaction) && !reaction.trimStart().startsWith('{')) {
       state.briefText = state.briefText || reaction;
       synthesisHandled = true;
@@ -952,6 +961,16 @@ function renderBrief(briefMarkdown) {
       }
     }
 
+    // Strategy 4 (nuclear): regex extraction of the "brief" field value.
+    // This is the last resort — it finds "brief": " in the raw string and
+    // reads until the next JSON field boundary.
+    if (!extracted || !extracted.brief) {
+      const directBrief = extractBriefValue(briefMarkdown);
+      if (directBrief) {
+        extracted = { brief: directBrief };
+      }
+    }
+
     if (extracted && extracted.brief) {
       briefMarkdown = extracted.brief;
       // Normalize any remaining \\n to actual newlines
@@ -964,6 +983,18 @@ function renderBrief(briefMarkdown) {
           ? extracted.pitch.replace(/\\n/g, '\n')
           : extracted.pitch;
       }
+      saveState();
+    } else {
+      // Absolute last resort: strip JSON structural characters to prevent
+      // rendering raw JSON. This loses some formatting but is far better
+      // than showing raw JSON to the user.
+      briefMarkdown = briefMarkdown
+        .replace(/^\s*\{/, '').replace(/\}\s*$/, '')
+        .replace(/"(?:reaction|follow_up|phase|next_question_id)"\s*:\s*(?:null|"[^"]*")\s*,?\s*/g, '')
+        .replace(/"brief"\s*:\s*"/, '').replace(/"pitch"\s*:\s*".*$/, '')
+        .replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\')
+        .trim();
+      state.briefText = briefMarkdown;
       saveState();
     }
   }
