@@ -142,6 +142,30 @@ export function parsePhaseResponse(raw) {
     } catch { /* continue */ }
   }
 
+  // Attempt 6: marker-based extraction for synthesis responses with
+  // unescaped quotes. The AI's specific advice (e.g. Replace "X" with "Y")
+  // contains unescaped double quotes that break JSON structure. Extract
+  // the brief using ## section headings as anchors instead.
+  if (!parsed && typeof raw === 'string') {
+    const FIRST_HEADINGS = ['## Where You Are', '## Your Situation'];
+    let hasMarkers = false;
+    for (const heading of FIRST_HEADINGS) {
+      if (raw.includes(heading)) { hasMarkers = true; break; }
+    }
+    if (hasMarkers && raw.includes('"brief"')) {
+      // This looks like a synthesis response with broken JSON.
+      // Return a synthesis phase with the raw text so that
+      // extractBriefByMarkers in form.js can handle extraction.
+      return {
+        reaction: null,
+        follow_up: null,
+        phase: 'synthesis',
+        brief: raw, // renderBrief's safety net will extract via markers
+        pitch: null,
+      };
+    }
+  }
+
   // Fallback: treat as advance with raw text as reaction
   if (!parsed) {
     return {
