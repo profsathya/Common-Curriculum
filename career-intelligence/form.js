@@ -7,7 +7,7 @@
 import { CONFIG, PROGRAM_CONFIG } from './config.js';
 import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
-import { callAI, parsePhaseResponse } from './api.js';
+import { callAI, parsePhaseResponse, fixJsonStringNewlines } from './api.js';
 import { downloadJSON, generateBriefText } from './data.js';
 
 // ============================================
@@ -387,7 +387,7 @@ function renderAIBubble(container, reaction, followUp) {
   if (textContainsSynthesisData(reaction) || textLooksSynthesisLike(reaction)) {
     let synthesisHandled = false;
 
-    // Use the resilient parser (handles literal newlines, code fences, etc.)
+    // Try 1: Use the resilient JSON parser
     const parsed = parsePhaseResponse(reaction);
     if (parsed.brief || parsed.pitch) {
       state.briefText = state.briefText || parsed.brief || '';
@@ -395,8 +395,18 @@ function renderAIBubble(container, reaction, followUp) {
       synthesisHandled = true;
     }
 
-    // If not parseable as JSON but looks like synthesis markdown, use directly
-    if (!synthesisHandled && textLooksSynthesisLike(reaction)) {
+    // Try 2: Marker-based extraction (handles unescaped quotes that break JSON)
+    if (!synthesisHandled) {
+      const markerResult = extractBriefByMarkers(reaction);
+      if (markerResult && markerResult.brief) {
+        state.briefText = state.briefText || markerResult.brief;
+        state.pitchText = state.pitchText || markerResult.pitch || '';
+        synthesisHandled = true;
+      }
+    }
+
+    // Try 3: If the text IS synthesis markdown (not JSON-wrapped), use directly
+    if (!synthesisHandled && textLooksSynthesisLike(reaction) && !reaction.trimStart().startsWith('{')) {
       state.briefText = state.briefText || reaction;
       synthesisHandled = true;
     }
@@ -415,7 +425,9 @@ function renderAIBubble(container, reaction, followUp) {
       renderBrief(state.briefText);
     }
 
-    return; // Never render synthesis data as a conversation bubble
+    // If extraction failed entirely and it's JSON-wrapped, DON'T set briefText
+    // to raw JSON — let requestSynthesis() retry instead.
+    return;
   }
 
   const bubble = el('div', 'ci-reaction');
@@ -706,8 +718,18 @@ async function requestSynthesis() {
 
     loading.remove();
 
-    const briefText = parsed.brief || parsed.synthesis || parsed.reaction || result.content;
-    const pitchText = parsed.pitch || '';
+    // Extract brief text — never fall back to raw reaction/content, as that
+    // may be the full JSON response string. If parsing extracted the brief
+    // field, use it. Otherwise let renderBrief's safety net handle it.
+    let briefText = parsed.brief || parsed.synthesis || '';
+    let pitchText = parsed.pitch || '';
+
+    // If the parser failed to extract a brief (all attempts returned the
+    // fallback), pass the raw content so renderBrief's safety net can
+    // try its own extraction strategies.
+    if (!briefText && result.content) {
+      briefText = result.content;
+    }
 
     state.briefText = briefText;
     state.pitchText = pitchText;
@@ -821,17 +843,126 @@ function parseBriefSections(markdown) {
   return sections;
 }
 
+function extractBriefByMarkers(raw) {
+  // Find the brief markdown content using ## section headings as anchors.
+  // This bypasses JSON parsing entirely — works even when the AI's prose
+  // contains unescaped double quotes that break JSON structure.
+  const FIRST_HEADINGS = ['## Where You Are', '## Your Situation'];
+  let start = -1;
+  for (const heading of FIRST_HEADINGS) {
+    const idx = raw.indexOf(heading);
+    if (idx !== -1) { start = idx; break; }
+  }
+  if (start === -1) return null;
+
+  // Find where the brief content ends. The brief is followed by either:
+  // - The "pitch" JSON field: ...", "pitch": "..."
+  // - End of JSON object: ..."}
+  // We look for patterns that signal we've left the brief's markdown.
+  // Since quotes may be unescaped, we look for JSON key patterns after
+  // the last known brief section (## Your First Move).
+  let end = raw.length;
+
+  // Look for common JSON field boundaries after the brief content.
+  // These patterns include the closing quote of the brief value + next key.
+  const BOUNDARIES = [
+    /",\s*"pitch"\s*:/,
+    /",\s*"phase"\s*:/,
+    /",\s*"reaction"\s*:/,
+    /",\s*"follow_up"\s*:/,
+    /",\s*"next_question_id"\s*:/,
+  ];
+
+  // Search for boundaries, but only AFTER we've seen enough content
+  // (at least past the first heading) to avoid false matches
+  const searchFrom = start + 50;
+  for (const boundary of BOUNDARIES) {
+    const match = raw.substring(searchFrom).match(boundary);
+    if (match) {
+      const boundaryPos = searchFrom + match.index;
+      if (boundaryPos > start) {
+        end = Math.min(end, boundaryPos);
+      }
+    }
+  }
+
+  // Also check for the JSON closing pattern at the very end
+  const trailingClose = raw.match(/"\s*}\s*$/);
+  if (trailingClose) {
+    const closePos = raw.length - trailingClose[0].length;
+    if (closePos > start) {
+      end = Math.min(end, closePos);
+    }
+  }
+
+  let brief = raw.substring(start, end);
+  // Unescape JSON string escapes: \\n → newline, \\" → ", \\\\ → \\
+  brief = brief.replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+
+  // Extract pitch the same way if present
+  let pitch = null;
+  const pitchKeyIdx = raw.indexOf('"pitch"', end);
+  if (pitchKeyIdx !== -1) {
+    // Find the pitch value start (after "pitch": ")
+    const pitchValMatch = raw.substring(pitchKeyIdx).match(/"pitch"\s*:\s*"/);
+    if (pitchValMatch) {
+      const pitchStart = pitchKeyIdx + pitchValMatch[0].length;
+      // Pitch ends at the next JSON field or end of object
+      let pitchEnd = raw.length;
+      const pitchBoundaries = [/",\s*"(?:phase|reaction|brief|follow_up)"\s*:/, /"\s*}\s*$/];
+      for (const pb of pitchBoundaries) {
+        const pm = raw.substring(pitchStart).match(pb);
+        if (pm) {
+          pitchEnd = Math.min(pitchEnd, pitchStart + pm.index);
+        }
+      }
+      pitch = raw.substring(pitchStart, pitchEnd);
+      pitch = pitch.replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    }
+  }
+
+  return { brief, pitch };
+}
+
 function renderBrief(briefMarkdown) {
-  // Safety net: if briefMarkdown is raw JSON (e.g. the full API response
-  // leaked through instead of the extracted brief field), parse it and
+  // Safety net: if briefMarkdown is raw JSON or contains JSON-wrapped content,
   // extract the "brief" field before rendering.
   if (typeof briefMarkdown === 'string' && briefMarkdown.trimStart().startsWith('{')) {
-    const extracted = parsePhaseResponse(briefMarkdown);
-    if (extracted.brief) {
+    let extracted = null;
+
+    // Strategy 1: direct JSON.parse (works when JSON is well-formed)
+    try {
+      extracted = JSON.parse(briefMarkdown);
+    } catch { /* continue */ }
+
+    // Strategy 2: fix literal newlines inside string values, then parse
+    if (!extracted) {
+      try {
+        extracted = JSON.parse(fixJsonStringNewlines(briefMarkdown));
+      } catch { /* continue */ }
+    }
+
+    // Strategy 3: marker-based extraction — bypasses JSON parsing entirely.
+    // Handles unescaped double quotes in the AI's prose advice that break
+    // JSON structure (e.g. Replace "X" with "Y" in resume bullets).
+    if (!extracted || !extracted.brief) {
+      const markerResult = extractBriefByMarkers(briefMarkdown);
+      if (markerResult && markerResult.brief) {
+        extracted = markerResult;
+      }
+    }
+
+    if (extracted && extracted.brief) {
       briefMarkdown = extracted.brief;
+      // Normalize any remaining \\n to actual newlines
+      if (typeof briefMarkdown === 'string') {
+        briefMarkdown = briefMarkdown.replace(/\\n/g, '\n');
+      }
       state.briefText = briefMarkdown;
       if (extracted.pitch && !state.pitchText) {
-        state.pitchText = extracted.pitch;
+        state.pitchText = typeof extracted.pitch === 'string'
+          ? extracted.pitch.replace(/\\n/g, '\n')
+          : extracted.pitch;
       }
       saveState();
     }
