@@ -5,12 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 3: Complexity | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    @keyframes s3Pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .s3-pulse-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: s3Pulse 2s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
-<!-- Under Construction Banner -->
-<div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin: 16px; text-align: center;">
-  <span style="font-size: 1.1em;">🚧 <strong>Under Construction</strong> — This page is being refined. Don't do any work until this banner is removed.</span>
-</div>
   <div class="container">
 
     <!-- Sprint Header -->
@@ -19,107 +30,160 @@
         <a href="home.html">Home</a> / <span>Sprint 3</span>
       </nav>
       <h1 class="sprint-header__title">Sprint 3: Complexity</h1>
-      <p class="sprint-header__subtitle">"Navigating Ambiguity" — Tackling unfamiliar territory without easy access</p>
+      <p class="sprint-header__subtitle">"Build narrow. Test fast. Expand." — Solving for a real person in a domain you have to learn</p>
       <div class="sprint-header__meta">
-        <span class="sprint-header__tag">Weeks 9-12</span>
-        <span class="sprint-header__tag">Medium Scaffolding</span>
-        <span class="sprint-header__tag">Stakeholder: External Entity</span>
+        <span class="sprint-header__tag">Weeks 9–12</span>
+        <span class="sprint-header__tag">External Stakeholder</span>
+        <span class="sprint-header__tag">Concepts: Human Value, Abstraction</span>
       </div>
+    </div>
+
+    <!-- Sprint Intro -->
+    <div style="background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
+      <p style="margin: 0 0 12px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
+        The Ministry of Health of Bhutan has a 28-page clinical guideline for managing multidrug-resistant organisms — bacteria that resist most antibiotics. Globally, antibiotic resistance kills 1.27 million people per year. The guideline exists. The problem: no one working in a busy ER, an isolation ward, or a cleaning role can pause to read and interpret it in the moment they need it.
+      </p>
+      <p style="margin: 0 0 12px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
+        <strong>Piranavan Selvanandan</strong>, a technical consultant approached by contacts in Bhutan to make this guideline actionable, is bringing this challenge directly to you. He'll work with you in Weeks 10 and 11.
+      </p>
+      <p style="margin: 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
+        Your job is not to solve the whole problem. Find one specific human moment where the guideline fails the person who needs it. Design a human process that addresses that moment. Build something that supports that process. Iterate.
+      </p>
     </div>
 
     <!-- Sprint Learning Outcomes -->
     <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
       <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
       <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Entered an unfamiliar domain or industry</li>
-        <li>Built understanding without direct stakeholder access</li>
-        <li>Created value at the intersection of your capabilities and their needs</li>
-        <li>Chosen simplicity over sophistication</li>
-        <li>Demonstrated adaptability when plans don't work</li>
+        <li>Staked out at least one specific problem and designed a human-first solution that is supported by one or more technical features</li>
+        <li>Used AI simulation to stress-test your design before expert access</li>
+        <li>Iterated based on real expert feedback from Piranavan</li>
+        <li>Demonstrated the arc: where you started vs. where you ended up, and what changed your thinking</li>
       </ul>
+    </div>
+
+    <!-- Grading -->
+    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-6); font-size: 14px;">
+      <strong style="color: #92400e;">Sprint 3 Grading:</strong>
+      <span style="color: #a16207;">Goals 20% (individual) · Weekly Reflections 20% (individual) · Demo 40% (individual) · Engagement 20%</span>
+    </div>
+
+    <!-- Differentiation Rule -->
+    <div style="background: #faf5ff; border: 1px solid #a855f7; border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; font-size: 14px;">
+      <strong style="color: #6b21a8;">🚦 The Differentiation Rule:</strong>
+      <span style="color: #581c87; margin-left: 6px;">No two students may work on problems that are more than 50% similar. In Week 9, you'll pitch your candidate problem in one sentence. The class decides if there's a collision. If there is, both students have 48 hours to differentiate their framing. First to stake a clear, specific claim owns the territory.</span>
+    </div>
+
+    <!-- Before Week 9 Sequence -->
+    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;">
+      <p style="margin: 0 0 6px 0; color: #a5b4fc; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Before Week 9 Class</p>
+      <h3 style="margin: 0 0 16px 0; color: white; font-size: 18px;">Transition + Preparation Sequence</h3>
+      <p style="margin: 0 0 16px 0; color: #c7d2fe; font-size: 14px; line-height: 1.6;">Three things to do between Demo Day and Week 9. Do them in order — each one builds on the previous.</p>
+
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+          <div>
+            <span style="font-size: 11px; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">1 · 📓 Handwritten Reflection · Submitted</span>
+            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s2-w8-bridge-reflection.html" style="color: white; text-decoration: none;">What I've Actually Been Building Toward</a></h4>
+          </div>
+          <span style="color: #fbbf24; font-size: 13px; white-space: nowrap;" data-due-date="s2-bridge-reflection-2"></span>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Five foundational claims about this course. After reading each one, write 2-3 honest sentences connecting it to your actual Sprint 1-2 work. Handwritten, photographed.</p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+          <div>
+            <span style="font-size: 11px; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">2 · 💬 AI-Discussion · Submitted</span>
+            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s3-w9-claims-discussion.html" style="color: white; text-decoration: none;">Claims in Practice</a></h4>
+          </div>
+          <span style="color: #fbbf24; font-size: 13px; white-space: nowrap;" data-due-date="s3-claims-dojo"></span>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Structured AI-discussion that takes your handwritten reflection and pushes you to find specific evidence in your Sprint 1-2 work for each claim.</p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+          <div>
+            <span style="font-size: 11px; color: #86efac; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">3 · 📖 Reading · No Submission</span>
+            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s3-w9-primer.html" style="color: white; text-decoration: none;">Sprint 3 Domain Primer</a></h4>
+          </div>
+          <span style="color: #86efac; font-size: 13px; white-space: nowrap;">Tue, Mar 17</span>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Read pages 1-8 of the Bhutan MDRO guideline and skim the rest. Come to class with one part you think is particularly hard for a clinical worker to act on.</p>
+      </div>
     </div>
 
     <!-- Week 9 -->
     <div class="week-section" data-week="9">
-      <button class="week-section__header" data-collapse-toggle="week-9-content" aria-expanded="false">
+      <button class="week-section__header" data-collapse-toggle="week-9-content" aria-expanded="true">
         <div class="week-section__header-left">
           <span class="week-section__number">9</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Entering Unfamiliar Territory</h3>
+            <h3 class="week-section__title">Problem Stake Day</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
-      <div class="week-section__content" id="week-9-content">
+      <div class="week-section__content" id="week-9-content" style="display: block;">
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> Domain selection strategy. Assessing problem tractability. Working with constraints.
+          <strong>Concepts:</strong> Staking a problem is a design act. Vague problems produce vague solutions.
         </p>
 
-        <!-- Activity: Domain Selection -->
+        <!-- In-Class -->
+        <div class="in-class-plan">
+          <p class="in-class-plan__label">📅 In-Class (Wednesday, Mar 19)</p>
+          <h4 class="in-class-plan__title">Collaborative Prompting + Problem Staking</h4>
+          <div class="in-class-plan__content">
+            <ul>
+              <li>Collaborative prompting session (individual → pair → quad → class → professor runs it live)</li>
+              <li>Piranavan introduction and context</li>
+              <li>Problem pitch round: stake your territory</li>
+              <li>First build: design the human process, then touch the computer</li>
+            </ul>
+          </div>
+          <div style="margin-top: 12px;">
+            <a href="sessions/week-9-class.html" style="color: var(--cst395-primary-dark, #0d9488); text-decoration: none; font-weight: 600; font-size: 14px;">View Session Slides →</a>
+          </div>
+        </div>
+
+        <!-- Assignment: Problem Stake Brief -->
         <div class="activity-item activity-item--assignment">
           <div class="activity-item__header">
             <div>
               <span class="activity-item__type">📋 Assignment</span>
               <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Domain Selection</a>
+                <a href="assignments/s3-w9-problem-stake.html">S3: Problem Stake Brief</a>
               </h4>
             </div>
-            <span class="activity-item__due" data-due-date="s3-domain-selection">Wed, Mar 26</span>
+            <span class="activity-item__due" data-due-date="s3-problem-stake"></span>
           </div>
           <p class="activity-item__description">
-            Choose an unfamiliar domain or external organization to work with. Document why you selected it, what makes it challenging, and your initial hypotheses about their needs.
+            Who is your user, what is the specific moment, what constraint makes it hard in Bhutan's context. 300 words max. This is a design claim, not a reflection.
           </p>
           <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
+            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
+            <span class="capability-badge capability-badge--sdl">SDL</span>
           </div>
         </div>
 
-        <!-- Activity: Reflection 1 -->
+        <!-- Reflection: Weekly Build Reflection #1 -->
         <div class="activity-item activity-item--reflection">
           <div class="activity-item__header">
             <div>
               <span class="activity-item__type">🪞 Reflection</span>
               <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Productive Reflection #1</a>
+                <a href="assignments/s3-w9-reflection.html">S3: Weekly Build Reflection #1</a>
               </h4>
             </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-1">Fri, Mar 28</span>
+            <span class="activity-item__due" data-due-date="s3-reflection-6"></span>
           </div>
           <p class="activity-item__description">
-            What's your relationship with ambiguity? How do you typically respond when you don't have clear information?
+            What human moment are you designing for? Describe the person as if you've watched them work. Handwritten, photographed.
           </p>
           <div class="activity-item__capabilities">
             <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
           </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Navigating Ambiguity</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>How to make progress without perfect information</li>
-              <li>The value of constraints</li>
-              <li>Domain selection workshop</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="9">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Comfort with Uncertainty</h4>
-          <p class="peer-conversation__prompt">
-            "What scares you about this sprint? What's your backup plan if your first approach doesn't work?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to support someone facing uncertainty without solving for them</p>
         </div>
       </div>
     </div>
@@ -130,81 +194,109 @@
         <div class="week-section__header-left">
           <span class="week-section__number">10</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Stakeholder Discovery Without Access</h3>
+            <h3 class="week-section__title">AI Simulation + Expert Access</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-10-content">
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> Secondary research. Proxy validation. Building understanding from public information.
+          <strong>Concepts:</strong> AI simulation as a learning tool — finding the questions only a human expert can answer. Expert access used strategically, not generally.
         </p>
 
-        <!-- Activity: Stakeholder Research -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Stakeholder Research</a>
-              </h4>
+        <!-- Live Design Banner -->
+        <div style="border: 2px solid #14b8a6; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
+          <!-- Header bar -->
+          <div style="background: linear-gradient(135deg, #0f766e, #0d9488); padding: 14px 20px;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+              <span class="s3-pulse-dot"></span>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #a7f3d0;">Course Design — Live</span>
             </div>
-            <span class="activity-item__due" data-due-date="s3-stakeholder-research">Wed, Apr 2</span>
+            <p style="margin: 0; color: white; font-size: 16px; font-weight: 600; line-height: 1.4;">Week 10 is being designed based on what Week 9 reveals</p>
           </div>
-          <p class="activity-item__description">
-            Document your research process. What sources did you use? How did you validate your assumptions without direct access? What proxies did you find?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
 
-        <!-- Activity: Reflection 2 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Productive Reflection #2</a>
-              </h4>
+          <!-- Body -->
+          <div style="background: #f0fdfa; padding: 20px;">
+            <p style="margin: 0 0 16px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
+              This is <strong>Adaptive Building</strong> in action — the same process you're being asked to demonstrate in your demos. Three possible paths depending on what happens in Week 9 class. The decision and reasoning will be posted by Saturday Mar 22.
+            </p>
+
+            <!-- Scenario Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+
+              <!-- Scenario A -->
+              <div id="s3-scenario-a" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('a')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #16a34a;">🟢 Path A</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #14532d;">If Week 9 lands well</h4>
+                  </div>
+                  <span id="s3-scenario-a-toggle" style="font-size: 12px; color: #16a34a; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #166534; line-height: 1.5;">Strong problem stakes, genuine Bhutan context engagement. Students move straight to AI persona simulation before Piranavan joins.</p>
+                <div id="s3-scenario-a-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #86efac; font-size: 13px; color: #166534; line-height: 1.6;">
+                  <strong>Week 10:</strong> Simulation-First. Build a detailed clinical persona, run your prototype against it, surface what the simulation confirms and — more importantly — the questions it can't answer. Come to class with 2 specific questions for Piranavan, grounded in what the simulation couldn't resolve. He responds to your problem framings and tells you what the simulation gets wrong.
+                </div>
+              </div>
+
+              <!-- Scenario B -->
+              <div id="s3-scenario-b" style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('b')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #ca8a04;">🟡 Path B</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #713f12;">If execution hit friction</h4>
+                  </div>
+                  <span id="s3-scenario-b-toggle" style="font-size: 12px; color: #ca8a04; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #854d0e; line-height: 1.5;">Problem stakes incomplete or still domain-level. Accelerated re-staking in pairs, then Piranavan validates. Simulation moves async.</p>
+                <div id="s3-scenario-b-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fcd34d; font-size: 13px; color: #854d0e; line-height: 1.6;">
+                  <strong>Week 10:</strong> Regroup + Build. First 20 min — pairs challenge each other's stakes using the strong/weak exemplar. Every student leaves with a moment-level stake, not a domain-level one. Piranavan joins after re-staking for domain validation. Simulation moves to async homework. Remaining class time: structured build session.
+                </div>
+              </div>
+
+              <!-- Scenario C -->
+              <div id="s3-scenario-c" style="background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('c')">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #7c3aed;">🟣 Path C</span>
+                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #3b0764;">If the design assumption was wrong</h4>
+                  </div>
+                  <span id="s3-scenario-c-toggle" style="font-size: 12px; color: #7c3aed; white-space: nowrap; font-weight: 500;">+ more</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #581c87; line-height: 1.5;">Genuine engagement but domain distance stalled rather than energized. Structured domain immersion first, then Piranavan as bridge-builder.</p>
+                <div id="s3-scenario-c-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d8b4fe; font-size: 13px; color: #581c87; line-height: 1.6;">
+                  <strong>Week 10:</strong> Domain Bridge. 30 min structured domain immersion — three short real clinical scenarios, students identify the decision point in each. Piranavan joins as bridge-builder, not evaluator. Second half: re-stake with new clinical context. This path isn't a failure — some of the best learning happens when the original design doesn't hold.
+                </div>
+              </div>
             </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-2">Fri, Apr 4</span>
-          </div>
-          <p class="activity-item__description">
-            How confident are you in your understanding? What's your confidence based on? What would change your mind?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
+
+            <!-- Decision Note -->
+            <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #374151; line-height: 1.6;">
+              📌 <strong>Decision posted by Saturday Mar 22.</strong> It'll say which path (or hybrid) we're taking and exactly why — including what I observed in Week 9 that drove the call. This is the same process you're being asked to demonstrate in your demos: build something, get signal, adjust.
+            </div>
           </div>
         </div>
 
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Research Without Access</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Secondary research techniques</li>
-              <li>Finding proxy validators</li>
-              <li>Research sharing session</li>
-            </ul>
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Mar 22</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🥋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Dojo — AI User Simulation (structure depends on path)</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS · AB</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #2</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Build v1 submission — link + one decision + one known failure mode</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
+            </div>
           </div>
-          <div class="class-recording" data-loom="10">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Validating Assumptions</h4>
-          <p class="peer-conversation__prompt">
-            "Walk me through what you think you know. I'll try to find holes in your reasoning."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to stress-test someone's thinking without being adversarial</p>
         </div>
       </div>
     </div>
@@ -215,82 +307,37 @@
         <div class="week-section__header-left">
           <span class="week-section__number">11</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Simple Over Sophisticated</h3>
+            <h3 class="week-section__title">Build + Pressure Test</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-11-content">
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> Minimum viable value. Resisting feature creep. The discipline of simplicity.
+          <strong>Concepts:</strong> MVP discipline — simplicity is a design decision, not a shortcut. Peer pressure reveals what expert review misses.
         </p>
 
-        <!-- Activity: MVP -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Minimum Viable Product</a>
-              </h4>
+        <!-- Tentative Banner -->
+        <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
+          <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 10.</strong>
+          <span style="color: #78350f;"> What won't change: Piranavan joins for a second session, and you demo your current build to a peer role-playing your specific user. Two different kinds of pressure. Two different failure modes.</span>
+        </div>
+
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Week 10</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #3</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
             </div>
-            <span class="activity-item__due" data-due-date="s3-mvp">Wed, Apr 9</span>
-          </div>
-          <p class="activity-item__description">
-            Build the simplest thing that could create real value. Document what you chose NOT to build and why.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
-
-        <!-- Activity: Build Log -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Build Log</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Build Log Entry</a>
-              </h4>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Build v2 submission — what changed from v1 and why</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · SDL</span>
             </div>
-            <span class="activity-item__due" data-due-date="s3-build-log">Fri, Apr 11</span>
           </div>
-          <p class="activity-item__description">
-            What temptations did you resist? How did you decide what was essential vs. nice-to-have?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">The Discipline of Simplicity</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Why simple is harder than complex</li>
-              <li>Identifying core value</li>
-              <li>MVP review session</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="11">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Scope Challenge</h4>
-          <p class="peer-conversation__prompt">
-            "What would you cut if you had half the time? What if you had a quarter? What's the absolute core?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to help someone find focus through constraint</p>
         </div>
       </div>
     </div>
@@ -301,103 +348,40 @@
         <div class="week-section__header-left">
           <span class="week-section__number">12</span>
           <div class="week-section__title-group">
-            <h3 class="week-section__title">Value at the Intersection</h3>
+            <h3 class="week-section__title">Demo Day</h3>
           </div>
         </div>
         <span class="week-section__toggle">▼</span>
       </button>
       <div class="week-section__content" id="week-12-content">
         <p class="week-section__concepts">
-          <strong>Concepts:</strong> Presenting without direct validation. Confidence vs. arrogance. Learning from uncertainty.
+          <strong>Concepts:</strong> The demo shows the arc, not just the endpoint. Delta matters more than final state.
         </p>
 
-        <!-- Activity: Presentation -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Solution Presentation</a>
-              </h4>
+        <!-- Tentative Banner -->
+        <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
+          <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 11.</strong>
+          <span style="color: #78350f;"> What won't change: Wednesday Apr 9, live demo required. The demo shows the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation. Slides alone are not sufficient.</span>
+        </div>
+
+        <!-- Stub Assignments -->
+        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Week 11</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">📋</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Demo + Arc narrative</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
             </div>
-            <span class="activity-item__due" data-due-date="s3-presentation">Wed, Apr 16</span>
-          </div>
-          <p class="activity-item__description">
-            Present your solution and your reasoning. Be clear about what you know, what you assume, and what you don't know.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- Activity: Human Value Statement -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-3-placeholder.html">Human Value Statement</a>
-              </h4>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <span style="font-size: 13px; color: #9ca3af;">💬</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Sprint 3 Peer Observation</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS</span>
             </div>
-            <span class="activity-item__due" data-due-date="s3-human-value">Thu, Apr 17</span>
-          </div>
-          <p class="activity-item__description">
-            How did navigating ambiguity reveal your unique value? What judgment calls did you make that AI couldn't?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Presentations & Complexity Reflection</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Sprint 3 presentations</li>
-              <li>Lessons from navigating ambiguity</li>
-              <li>Preparing for full autonomy</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="12">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Uncertainty Reflection</h4>
-          <p class="peer-conversation__prompt">
-            "What did you learn about yourself from this sprint? How are you different from someone who hasn't navigated this kind of ambiguity?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to help someone recognize their own growth</p>
-        </div>
-
-        <!-- Bridge Reflection -->
-        <div class="bridge-section">
-          <p class="bridge-section__label">🌉 Sprint Transition</p>
-          <div class="activity-item activity-item--bridge">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">Bridge Reflection</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/sprint-3-placeholder.html">Complexity → Mastery</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s3-bridge">Fri, Apr 18</span>
-            </div>
-            <p class="activity-item__description">
-              Sprint 4 is fully autonomous. You define the problem, you choose the stakeholder, you set the scope. What have you learned that prepares you for this?
-            </p>
-            <div class="activity-item__capabilities">
-              <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">🌉</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Bridge Reflection — Sprint 3→4: What does Sprint 3 tell you about whether you're ready for Sprint 4?</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
             </div>
           </div>
         </div>
@@ -408,9 +392,7 @@
     <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
       <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">What Comes Next</h3>
       <p style="margin: 0; color: var(--gray-600);">
-        <strong>Sprint 4: Mastery</strong> — Full autonomy. You define everything.
-        This is the capstone: prove to yourself that you can identify opportunities and create value independently.
-        Stakeholder: Your choice.
+        <strong>Sprint 4: Mastery</strong> — No curated options. You find the stakeholder, define the problem, and build the solution from scratch. Sprint 3 was scaffolded: the domain was given, the expert was provided, the document was there. Sprint 4 is what you do when none of that is handed to you.
       </p>
     </div>
 
@@ -422,8 +404,24 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       addDemoBannerIfNeeded();
+      populateDueDates(CST395_CONFIG);
       initSprintPageWithLoom(CST395_CONFIG);
     });
+  </script>
+
+  <!-- Scenario Toggle Script -->
+  <script>
+    function toggleS3Scenario(id) {
+      var detail = document.getElementById('s3-scenario-' + id + '-detail');
+      var toggle = document.getElementById('s3-scenario-' + id + '-toggle');
+      if (detail.style.display === 'none' || !detail.style.display) {
+        detail.style.display = 'block';
+        toggle.textContent = '− less';
+      } else {
+        detail.style.display = 'none';
+        toggle.textContent = '+ more';
+      }
+    }
   </script>
 
   <!-- Feedback Footer -->

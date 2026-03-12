@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Partner Evaluation | Sprint 2 | CST395</title>
+  <title>Peer Observation | Sprint 2 Demo Day | CST395</title>
   <style>
     * { box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+      margin: 0; padding: 0; background: #f9fafb; color: #111827; line-height: 1.7;
     }
-    .container { max-width: 700px; margin: 0 auto; }
+    .container { max-width: 700px; margin: 0 auto; padding: 24px; }
     .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
     .breadcrumb a { color: #14b8a6; text-decoration: none; }
     .header {
@@ -23,54 +23,199 @@
       display: inline-block; background: rgba(255,255,255,0.2); color: white;
       padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
     }
-    .section {
+
+    /* Name gate */
+    .name-gate {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px; text-align: center;
+    }
+    .name-gate h2 { font-size: 18px; margin: 0 0 12px 0; }
+    .name-gate p { color: #6b7280; margin: 0 0 16px 0; }
+    .name-gate input {
+      width: 100%; max-width: 300px; padding: 10px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 16px; text-align: center;
+    }
+    .name-gate input:focus { border-color: #14b8a6; outline: none; }
+    .name-gate button {
+      display: block; margin: 16px auto 0; padding: 10px 32px;
+      background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
+      border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    .name-gate button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Reference card */
+    .reference-card {
+      background: #1e293b; color: #e2e8f0; border-radius: 12px;
+      padding: 20px; margin-bottom: 16px;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace; font-size: 12px; line-height: 1.5;
+    }
+    .reference-card summary {
+      cursor: pointer; color: #38bdf8; font-weight: 700; font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      list-style: none; user-select: none;
+    }
+    .reference-card summary::-webkit-details-marker { display: none; }
+    .reference-card summary::before { content: '\25B6  '; font-size: 10px; }
+    .reference-card[open] summary::before { content: '\25BC  '; }
+    .reference-card .lens { margin-top: 12px; margin-bottom: 12px; }
+    .reference-card .lens-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .lens-desc { color: #94a3b8; }
+    .reference-card .stem { color: #a5b4fc; margin-left: 16px; display: block; }
+    .reference-card .tip { border-top: 1px solid #334155; padding-top: 12px; margin-top: 12px; }
+    .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .tip-step { color: #94a3b8; margin-left: 16px; display: block; }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex; gap: 0; margin-bottom: 16px; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 10px 18px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; background: none; color: #6b7280; white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab:hover { color: #0f766e; }
+    .tab--active {
+      color: #0f766e; font-weight: 700;
+      border-bottom-color: #14b8a6;
+    }
+    .tab--add {
+      color: #14b8a6; font-weight: 600; font-size: 13px;
+    }
+    .tab--add:hover { color: #0f766e; }
+    .tab__delete {
+      margin-left: 6px; padding: 0 4px; border: none; background: none;
+      color: #d1d5db; font-size: 14px; line-height: 1; cursor: pointer;
+      border-radius: 4px; vertical-align: middle;
+    }
+    .tab__delete:hover { color: #ef4444; background: #fef2f2; }
+
+    /* Notepad card */
+    .notepad-card {
       background: white; border: 1px solid #e5e7eb; border-radius: 12px;
       padding: 24px; margin-bottom: 16px;
     }
-    .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
-    .section p { color: #4b5563; margin: 0 0 12px 0; }
-    .section ol { color: #4b5563; margin: 0; padding-left: 24px; }
-    .section li { margin-bottom: 8px; }
-    .context-box {
-      background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 12px;
-      padding: 24px; margin-bottom: 24px;
+    .pair-names-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
     }
-    .context-box p { color: #115e59; margin: 0 0 12px 0; }
-    .context-box p:last-child { margin-bottom: 0; }
-    .context-box strong { color: #0f766e; }
-    .in-class-note {
-      background: #fef3c7; border: 2px solid #fcd34d; border-radius: 12px;
-      padding: 20px; margin-bottom: 24px;
+    .pair-names-row label {
+      font-weight: 600; color: #0f766e; font-size: 14px; white-space: nowrap;
     }
-    .in-class-note h3 { color: #92400e; margin: 0 0 8px 0; font-size: 16px; }
-    .in-class-note p { color: #a16207; margin: 0; }
-    .ai-moves {
-      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px;
-      padding: 20px; margin: 20px 0;
+    .pair-names-input {
+      flex: 1; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 14px; background: #f9fafb;
     }
-    .ai-moves h4 { color: #1e40af; margin: 0 0 12px 0; font-size: 14px; }
-    .ai-moves ul { color: #1e40af; padding-left: 20px; margin: 0; }
-    .ai-moves li { margin-bottom: 8px; font-style: italic; }
-    .coming-soon {
-      border: 2px dashed #14b8a6; background: #f0fdfa; border-radius: 12px;
+    .pair-names-input:focus { border-color: #14b8a6; outline: none; }
+
+    .notes-textarea {
+      width: 100%; min-height: 250px; padding: 14px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;
+      line-height: 1.7; background: white; color: #111827;
+    }
+    .notes-textarea:focus { border-color: #14b8a6; outline: none; }
+    .notes-textarea::placeholder { color: #9ca3af; }
+    .word-count {
+      text-align: right; font-size: 12px; color: #9ca3af; margin-top: 4px;
+    }
+
+    /* Push my thinking button */
+    .nudge-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 8px 16px;
+      border: 2px solid #14b8a6; border-radius: 8px;
+      background: white; color: #0f766e; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .nudge-btn:hover { background: #f0fdfa; }
+    .nudge-btn:disabled {
+      border-color: #d1d5db; color: #9ca3af; cursor: not-allowed;
+      background: #f9fafb;
+    }
+    .nudge-btn .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid #d1d5db; border-top-color: #14b8a6;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* AI nudge boxes */
+    .nudge-box {
+      background: #f0fdf4; border-left: 3px solid #14b8a6;
+      border-radius: 0 8px 8px 0; padding: 12px 16px;
+      margin-top: 12px;
+    }
+    .nudge-box__label {
+      font-size: 11px; color: #6b7280; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .nudge-box__text {
+      font-size: 13px; color: #14532d; line-height: 1.6; margin: 0;
+    }
+
+    /* Action buttons */
+    .actions {
+      display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 20px; border-radius: 8px; font-size: 14px;
+      font-weight: 600; cursor: pointer; border: none; flex: 1; min-width: 140px;
+    }
+    .btn--next {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white;
+    }
+    .btn--next:hover { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+    .btn--save {
+      background: linear-gradient(135deg, #0f766e, #14b8a6); color: white;
+    }
+    .btn--save:hover { background: linear-gradient(135deg, #0d6b63, #0d9488); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Takeaway section */
+    .takeaway-section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
       padding: 24px; margin-bottom: 16px;
     }
-    .coming-soon h3 { color: #0f766e; margin: 0 0 8px 0; font-size: 16px; }
-    .coming-soon p { color: #115e59; margin: 0; }
-    .submission {
+    .takeaway-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
+    .takeaway-section p { color: #4b5563; margin: 0 0 16px 0; }
+    .takeaway-section textarea {
+      width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;
+    }
+    .takeaway-section textarea:focus { border-color: #14b8a6; outline: none; }
+
+    /* Download confirmation */
+    .download-confirm {
+      display: inline-block; margin-left: 12px; color: #059669; font-size: 13px;
+      font-weight: 600; opacity: 0; transition: opacity 0.3s;
+    }
+    .download-confirm--visible { opacity: 1; }
+
+    /* Submit section */
+    .submit-section {
       background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+      color: white; padding: 24px; border-radius: 12px; margin-top: 16px;
     }
-    .submission h3 { color: white; margin: 0 0 16px 0; }
-    .submission p { color: #d1d5db; margin: 0 0 16px 0; }
-    .submission__format {
-      background: rgba(255,255,255,0.1); padding: 12px 16px;
-      border-radius: 8px; font-size: 14px; color: #9ca3af;
+    .submit-section h3 { color: white; margin: 0 0 12px 0; }
+    .submit-section p { color: #d1d5db; margin: 0 0 16px 0; }
+    .submit-link {
+      display: inline-block; padding: 12px 24px; border-radius: 8px;
+      background: rgba(255,255,255,0.1); color: white;
+      font-weight: 500; font-size: 14px; text-decoration: none;
     }
-    .submit-btn {
-      display: inline-block; background: linear-gradient(135deg, #0d9488, #14b8a6);
-      color: white; padding: 12px 24px; border-radius: 8px;
-      text-decoration: none; font-weight: 500; margin-top: 16px;
+
+    .hidden { display: none !important; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container { padding: 16px; }
+      .notepad-card { padding: 16px; }
+      .notes-textarea { min-height: 200px; font-size: 16px; }
+      .tab { padding: 8px 14px; font-size: 13px; }
+      .pair-names-row { flex-direction: column; align-items: stretch; gap: 6px; }
     }
   </style>
 </head>
@@ -79,65 +224,96 @@
     <p class="breadcrumb">
       <a href="../home.html">Home</a> /
       <a href="../sprint-2.html">Sprint 2</a> /
-      Partner Evaluation
+      Peer Observation
     </p>
 
     <div class="header">
-      <h1>Partner Evaluation
+      <h1>Demo Day &mdash; Peer Observation
         <span class="capability-tag">IS</span>
+        <span class="capability-tag">AB</span>
       </h1>
-      <p>Sprint 2 · Completed in class on Demo Day, March 11 · 5 points</p>
+      <p>Sprint 2 &middot; Demo Day &middot; 5 points (completion)</p>
     </div>
 
-    <div class="in-class-note">
-      <h3>In-Class Activity</h3>
-      <p>This evaluation is completed in class on Demo Day (Wednesday, March 11) after watching your partner's demo presentation.</p>
+    <!-- Name gate -->
+    <div id="name-gate" class="name-gate">
+      <h2>Before You Begin</h2>
+      <p>Enter your name to start observing.</p>
+      <input type="text" id="student-name" placeholder="Your name" autocomplete="name">
+      <button id="start-btn" disabled>Start Observing</button>
     </div>
 
-    <div class="context-box">
-      <p>This is the ultimate Sprint 2 evidence: <strong>your partner's own assessment of whether you understood them</strong>.</p>
-      <p>Be honest — this helps both of you learn.</p>
-    </div>
+    <!-- Activity area (hidden until name entered) -->
+    <div id="activity" class="hidden">
 
-    <div class="section">
-      <h2>How This Works</h2>
-      <p>The AI pushes beyond generic positive feedback:</p>
+      <!-- Reference card (collapsible) -->
+      <details class="reference-card" id="reference-card" open>
+        <summary>THREE LENSES FOR WATCHING DEMOS</summary>
+        <div class="lens">
+          <span class="lens-label">NOTICE:</span> <span class="lens-desc">What specifically did they do or show?</span>
+          <span class="stem">"I saw..." / "They showed..." / "The partner said..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">INTERPRET:</span> <span class="lens-desc">What does that tell you?</span>
+          <span class="stem">"This suggests..." / "The gap between X and Y is..."</span>
+          <span class="stem">"They chose ___ over ___ because..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">ASK:</span> <span class="lens-desc">What would make them think?</span>
+          <span class="stem">"What tradeoff did you make between ___ and ___?"</span>
+          <span class="stem">"What changed after your partner told you ___?"</span>
+          <span class="stem">"What would you see if this worked? If it didn't?"</span>
+          <span class="stem">"What was the version you almost built instead?"</span>
+          <span class="stem">"What would your partner say is the part that matters most &mdash; and is that what you focused on?"</span>
+        </div>
+        <div class="tip">
+          <span class="tip-label">HOW TO ASK A HARD QUESTION WITHOUT BEING A JERK:</span>
+          <span class="tip-step">1. Clarify: "Help me understand..."</span>
+          <span class="tip-step">2. Value: "I noticed you did ___, which makes sense because..."</span>
+          <span class="tip-step">3. Then ask: "The thing I'm curious about is..."</span>
+        </div>
+      </details>
 
-      <div class="ai-moves">
-        <h4>The AI will push you with moves like:</h4>
-        <ul>
-          <li>"You rated their understanding 4/5 — what's missing for a 5? Be specific."</li>
-          <li>"You said the solution 'addressed your need.' But is there a difference between what you asked for and what you actually needed? Did they get the deeper thing?"</li>
-          <li>"What surprised you about their approach — something they saw about your situation that you didn't see yourself?"</li>
-        </ul>
+      <!-- Tab bar -->
+      <div class="tab-bar" id="tab-bar"></div>
+
+      <!-- Notepad -->
+      <div class="notepad-card" id="notepad-card">
+        <div class="pair-names-row">
+          <label for="pair-names">Names:</label>
+          <input type="text" class="pair-names-input" id="pair-names"
+                 placeholder="e.g. Alex & Jordan">
+        </div>
+
+        <textarea class="notes-textarea" id="notes-textarea"
+                  placeholder="Type what you notice as you watch. Use the lenses above if you need a starting point."></textarea>
+        <div class="word-count" id="word-count">0 words</div>
+
+        <button class="nudge-btn" id="nudge-btn">Push my thinking</button>
+
+        <div id="nudge-container"></div>
       </div>
-    </div>
 
-    <div class="section">
-      <h2>What You'll Submit (Evaluating Your Partner)</h2>
-      <ol>
-        <li><strong>Did your partner understand your problem?</strong> (Rate 1-5 + explain)</li>
-        <li><strong>Did the solution address your actual need or your stated want?</strong> What's the difference?</li>
-        <li><strong>What surprised you about their approach</strong> — something they saw that you didn't see yourself?</li>
-        <li><strong>Would you use what they built?</strong> Why or why not?</li>
-        <li><strong>What's one thing they did that showed genuine understanding of you as a person</strong>, not just your problem?</li>
-      </ol>
-    </div>
-
-    <div class="coming-soon">
-      <h3>Interactive Activity</h3>
-      <p>The interactive activity will be available on Demo Day. You'll complete it in class after watching your partner's presentation.</p>
-    </div>
-
-    <div class="submission">
-      <h3>What to Submit</h3>
-      <p>Complete the interactive activity in class and download your responses as JSON.</p>
-      <div class="submission__format">
-        <strong>Format:</strong> JSON file download from AI-discussion activity<br>
-        <strong>Due:</strong> In class, Wednesday, March 11<br>
-        <strong>Points:</strong> 5
+      <!-- Action buttons -->
+      <div class="actions" id="actions">
+        <button class="btn btn--next" id="next-pair-btn">Next Pair &rarr;</button>
+        <button class="btn btn--save" id="download-btn">&#x2B07; Download JSON</button>
+        <span class="download-confirm" id="download-confirm">&#x2713; Downloaded</span>
       </div>
-      <a data-assignment-key="s2-partner-eval" href="https://csumb.instructure.com/courses/33084/assignments/582887" target="_blank" class="submit-btn">Submit on Canvas →</a>
+
+      <!-- Sprint 3 Takeaway (always available) -->
+      <div class="takeaway-section" id="takeaway-section">
+        <h2>Sprint 3 Takeaway</h2>
+        <p>Across everything you watched today &mdash; what's one thing you want to do differently in Sprint 3?</p>
+        <textarea id="takeaway-input" placeholder="What I want to do differently..."></textarea>
+      </div>
+
+      <!-- Submit to Canvas (always visible) -->
+      <div class="submit-section" id="submit-section">
+        <h3>Submit Your Observations</h3>
+        <p>Download your notes (all pairs + takeaway) and upload the JSON file to Canvas.</p>
+        <a class="submit-link" data-assignment-key="s2-partner-eval" href="https://csumb.instructure.com/courses/33084/assignments/582887" target="_blank">Submit on Canvas &rarr;</a>
+      </div>
     </div>
   </div>
 
@@ -146,5 +322,490 @@
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ── Config ──
+    const AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+    const AI_MODEL = 'claude-sonnet-4-6';
+    const STORAGE_KEY = 'cst395-s2-partner-eval';
+    const MAX_NUDGES_PER_PAIR = 3;
+    const MIN_WORDS_FOR_TRANSITION_NUDGE = 20;
+    const SAVE_DEBOUNCE_MS = 500;
+
+    const SYSTEM_PROMPT = `You are a quiet observation partner for a student watching Sprint 2 demo presentations in CST395. Each demo is a pair: Student A presents what they built for B, then B presents what they built for A.
+
+The student has been taking notes while watching. They are now asking you for ONE nudge to push their thinking. Read their notes and respond with a single question that points their attention somewhere they haven't looked yet.
+
+=== RULES ===
+
+1. ONE question only. One or two sentences maximum. Never a paragraph.
+
+2. NEVER evaluate their notes. No "good observation," "interesting," "you're onto something." Zero praise. Zero judgment.
+
+3. NEVER generate a question for them to ask the presenter. Your job is to push THEIR thinking, not hand them a question.
+
+4. Read their notes and identify what cognitive level they're at:
+   - If mostly SURFACE (naming what happened): ask what problem it was solving, or who it was for, or what they started with before narrowing
+   - If INTERPRETIVE (analyzing gaps, tradeoffs): ask for evidence, or what would need to be true for their interpretation to hold
+   - If they have a DRAFT QUESTION: ask a meta-question about it — "What would that answer tell you?" or "If they said yes, would you learn anything new?"
+   - If STUCK or very thin notes: offer a stem with a blank — "Try: 'The gap between what they said and what they showed is ___'"
+
+5. If the nudge type is "transition" (moving to next pair): frame your question as a bridge — something to carry forward. "Before you move on — [question]"
+
+6. If this is their 3rd nudge for this pair, make it a sharper version — they've been thinking about this pair for a while.
+
+=== CONTEXT (for choosing where to point attention, never lecture about these) ===
+
+Sprint 2: Students spent 4 weeks with an assigned partner. Did discovery, assumption audits, domain learning, narrowed to one specific MVP, built v1, partner started using it.
+
+Worth noticing:
+- Narrowing quality (broad → specific, where was the cut?)
+- Projection vs. reality (builder's preference vs. stakeholder's world)
+- Form-to-context fit (does the solution live where the stakeholder already is?)
+- Partner influence (did feedback change something, or just confirm?)
+- Human value (what did the builder contribute that AI couldn't?)
+- Pair contrast (did both partners narrow equally well?)`;
+
+    // ── State ──
+    let state = {
+      studentName: '',
+      startedAt: null,
+      pairs: [],
+      currentPair: 0,
+      takeaway: '',
+      finished: false,
+      downloadedAt: null,
+    };
+
+    // ── DOM refs ──
+    const $ = id => document.getElementById(id);
+    const nameInput = $('student-name');
+    const startBtn = $('start-btn');
+    const nameGate = $('name-gate');
+    const activity = $('activity');
+    const tabBar = $('tab-bar');
+    const pairNames = $('pair-names');
+    const notesTextarea = $('notes-textarea');
+    const wordCountEl = $('word-count');
+    const nudgeBtn = $('nudge-btn');
+    const nudgeContainer = $('nudge-container');
+    const nextPairBtn = $('next-pair-btn');
+    const takeawayInput = $('takeaway-input');
+    const downloadBtn = $('download-btn');
+    const downloadConfirm = $('download-confirm');
+    const referenceCard = $('reference-card');
+
+    // ── Helpers ──
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    // ── Persistence ──
+    let saveTimer = null;
+    function save() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+      }, SAVE_DEBOUNCE_MS);
+    }
+    function saveNow() {
+      clearTimeout(saveTimer);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+    function load() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) {
+          state = JSON.parse(s);
+          // Migrate pairs from old chat-based format
+          state.pairs.forEach(function(p) {
+            if (!p.nudges) p.nudges = [];
+            if (p.notes === undefined) p.notes = '';
+          });
+          return true;
+        }
+      } catch(e) {}
+      return false;
+    }
+
+    // ── Delete pair ──
+    function deletePair(index) {
+      const pair = state.pairs[index];
+      const label = pair.names || 'Pair ' + (index + 1);
+      if (!confirm('Delete "' + label + '"? This cannot be undone.')) return;
+      state.pairs.splice(index, 1);
+      if (state.currentPair >= state.pairs.length) {
+        state.currentPair = Math.max(0, state.pairs.length - 1);
+      }
+      saveNow();
+      if (state.pairs.length === 0) {
+        addNewPair();
+      } else {
+        loadPairUI();
+      }
+    }
+
+    // ── Tab rendering ──
+    function renderTabs() {
+      tabBar.innerHTML = '';
+      state.pairs.forEach(function(pair, i) {
+        const tab = document.createElement('button');
+        tab.className = 'tab' + (i === state.currentPair ? ' tab--active' : '');
+        const label = pair.names ? pair.names : 'Pair ' + (i + 1);
+        tab.textContent = label;
+        tab.addEventListener('click', function(e) {
+          if (e.target.classList.contains('tab__delete')) return;
+          switchToPair(i);
+        });
+        if (state.pairs.length > 1) {
+          const del = document.createElement('button');
+          del.className = 'tab__delete';
+          del.innerHTML = '&times;';
+          del.title = 'Delete ' + label;
+          del.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deletePair(i);
+          });
+          tab.appendChild(del);
+        }
+        tabBar.appendChild(tab);
+      });
+
+      const addTab = document.createElement('button');
+      addTab.className = 'tab tab--add';
+      addTab.textContent = '+ New Pair';
+      addTab.addEventListener('click', function() {
+        saveCurrent();
+        addNewPair();
+      });
+      tabBar.appendChild(addTab);
+    }
+
+    // ── Nudge rendering ──
+    function renderNudges() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) { nudgeContainer.innerHTML = ''; return; }
+
+      nudgeContainer.innerHTML = pair.nudges.map(function(n) {
+        const label = n.trigger === 'transition' ? 'AI nudge (transition)' : 'AI nudge';
+        return '<div class="nudge-box">' +
+          '<div class="nudge-box__label">' + label + '</div>' +
+          '<p class="nudge-box__text">' + escapeHtml(n.text) + '</p>' +
+          '</div>';
+      }).join('');
+    }
+
+    // ── Update nudge button state ──
+    function updateNudgeBtn() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = 'Push my thinking';
+        return;
+      }
+      const requestedCount = pair.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+      if (requestedCount >= MAX_NUDGES_PER_PAIR) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = "You've got enough to work with. Trust your observations.";
+      } else {
+        nudgeBtn.disabled = false;
+        nudgeBtn.innerHTML = 'Push my thinking';
+      }
+    }
+
+    // ── Word count ──
+    function updateWordCount() {
+      const wc = wordCount(notesTextarea.value);
+      wordCountEl.textContent = wc + ' word' + (wc !== 1 ? 's' : '');
+    }
+
+    // ── Save current pair data from inputs ──
+    function saveCurrent() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+      pair.names = pairNames.value.trim();
+      pair.notes = notesTextarea.value;
+      saveNow();
+    }
+
+    // ── Switch to pair by index ──
+    function switchToPair(index) {
+      saveCurrent();
+      state.currentPair = index;
+      saveNow();
+      loadPairUI();
+    }
+
+    // ── Load current pair into UI ──
+    function loadPairUI() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+      pairNames.value = pair.names || '';
+      notesTextarea.value = pair.notes || '';
+      updateWordCount();
+      renderNudges();
+      updateNudgeBtn();
+      renderTabs();
+
+      notesTextarea.disabled = false;
+      pairNames.disabled = false;
+      notesTextarea.focus();
+    }
+
+    // ── Add new pair ──
+    function addNewPair() {
+      state.pairs.push({
+        names: '',
+        notes: '',
+        nudges: [],
+        startedAt: new Date().toISOString(),
+      });
+      state.currentPair = state.pairs.length - 1;
+      saveNow();
+      loadPairUI();
+      pairNames.focus();
+    }
+
+    // ── AI call ──
+    async function getAINudge(pair, trigger) {
+      const context = '[Pair ' + (state.currentPair + 1) +
+        (pair.names ? ': ' + pair.names : '') + ']' +
+        ' [Nudge type: ' + trigger + ']' +
+        ' [Previous nudges this pair: ' + pair.nudges.length + ']' +
+        ' [Total pairs observed: ' + state.pairs.length + ']\n\n' +
+        'Student\'s notes:\n' + pair.notes;
+
+      try {
+        const resp = await fetch(AI_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: SYSTEM_PROMPT,
+            messages: [{ role: 'user', content: context }],
+            model: AI_MODEL,
+            max_tokens: 150,
+          }),
+        });
+        if (!resp.ok) return null;
+        const data = await resp.json();
+        return data.content || null;
+      } catch(e) {
+        console.error('AI call failed:', e);
+        return null;
+      }
+    }
+
+    // ── Handle "Push my thinking" click ──
+    async function handleNudgeRequest() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return;
+
+      // Sync notes first
+      pair.notes = notesTextarea.value;
+      saveNow();
+
+      // Show loading state
+      nudgeBtn.disabled = true;
+      nudgeBtn.innerHTML = '<span class="spinner"></span> thinking\u2026';
+
+      const text = await getAINudge(pair, 'requested');
+
+      if (text) {
+        pair.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'requested',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      updateNudgeBtn();
+    }
+
+    // ── Handle transition nudge (at "Next Pair") ──
+    async function handleTransitionNudge() {
+      const pair = state.pairs[state.currentPair];
+      if (!pair) return false;
+
+      pair.notes = notesTextarea.value;
+      const wc = wordCount(pair.notes);
+      if (wc < MIN_WORDS_FOR_TRANSITION_NUDGE) return false;
+
+      // Show loading on next-pair button
+      nextPairBtn.disabled = true;
+      nextPairBtn.textContent = 'thinking\u2026';
+
+      const text = await getAINudge(pair, 'transition');
+
+      if (text) {
+        pair.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'transition',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      nextPairBtn.disabled = false;
+      nextPairBtn.innerHTML = 'Next Pair &rarr;';
+      return true;
+    }
+
+    // ── Handle Next Pair ──
+    async function handleNextPair() {
+      saveCurrent();
+      await handleTransitionNudge();
+
+      // Brief pause so student sees the transition nudge
+      await new Promise(function(r) { setTimeout(r, 1500); });
+
+      addNewPair();
+    }
+
+    // ── Download confirmation flash ──
+    let downloadConfirmTimer = null;
+    function flashDownloadConfirm() {
+      downloadConfirm.classList.add('download-confirm--visible');
+      clearTimeout(downloadConfirmTimer);
+      downloadConfirmTimer = setTimeout(function() {
+        downloadConfirm.classList.remove('download-confirm--visible');
+      }, 3000);
+    }
+
+    // ── Export ──
+    function buildExport() {
+      return {
+        activityId: 'cst395-s2-partner-eval',
+        version: '2.0',
+        course: 'CST395',
+        studentName: state.studentName,
+        startedAt: state.startedAt,
+        submittedAt: new Date().toISOString(),
+        totalPairs: state.pairs.length,
+        pairs: state.pairs.map(function(p, i) {
+          const wc = wordCount(p.notes);
+          return {
+            pairNumber: i + 1,
+            names: p.names || 'Pair ' + (i + 1),
+            startedAt: p.startedAt,
+            notes: p.notes,
+            wordCount: wc,
+            nudges: p.nudges,
+            nudgeCount: p.nudges.length,
+          };
+        }),
+        sprint3Takeaway: state.takeaway,
+        analytics: {
+          totalWords: state.pairs.reduce(function(sum, p) {
+            return sum + wordCount(p.notes);
+          }, 0),
+          totalNudgesRequested: state.pairs.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+          }, 0),
+          totalTransitionNudges: state.pairs.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'transition'; }).length;
+          }, 0),
+        },
+      };
+    }
+
+    function handleDownload() {
+      saveCurrent();
+      state.takeaway = takeawayInput.value;
+      const data = buildExport();
+      state.downloadedAt = new Date().toISOString();
+      saveNow();
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      a.download = 'peer-observation-' + safeName + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      flashDownloadConfirm();
+    }
+
+    // ── Event listeners ──
+
+    // Notes auto-save
+    notesTextarea.addEventListener('input', function() {
+      const pair = state.pairs[state.currentPair];
+      if (pair) {
+        pair.notes = this.value;
+        save();
+      }
+      updateWordCount();
+    });
+
+    // Pair names auto-save + tab label update
+    pairNames.addEventListener('input', function() {
+      const pair = state.pairs[state.currentPair];
+      if (pair) {
+        pair.names = this.value.trim();
+        save();
+        renderTabs();
+      }
+    });
+
+    nudgeBtn.addEventListener('click', handleNudgeRequest);
+    nextPairBtn.addEventListener('click', handleNextPair);
+    downloadBtn.addEventListener('click', handleDownload);
+
+    // Takeaway auto-save
+    takeawayInput.addEventListener('input', function() {
+      state.takeaway = this.value;
+      save();
+    });
+
+    // ── Name gate ──
+    nameInput.addEventListener('input', function() {
+      startBtn.disabled = !this.value.trim();
+    });
+    nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) startBtn.click();
+    });
+
+    startBtn.addEventListener('click', function() {
+      state.studentName = nameInput.value.trim();
+      state.startedAt = new Date().toISOString();
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+      saveNow();
+      addNewPair();
+
+      // Collapse reference card on mobile
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    });
+
+    // ── Init / restore ──
+    if (load() && state.studentName) {
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+
+      takeawayInput.value = state.takeaway || '';
+      loadPairUI();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

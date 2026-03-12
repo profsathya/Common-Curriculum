@@ -1,6 +1,6 @@
 ---
 purpose: Reverse-chronological log of significant updates — what changed, when, by whom, why
-last_updated: 2026-02-24
+last_updated: 2026-03-07
 updated_by: sathya
 status: active
 ---
@@ -8,6 +8,59 @@ status: active
 # Changelog
 
 Most recent entries first. Each entry: date, who, what changed, why it matters.
+
+---
+
+## 2026-03-10 — sathya
+
+Added `student-relationship.md` to capture the "Why This" design principle: every assignment gets a personal instructor framing block (video + 2–4 sentences in instructor's voice) at the top, before the activity content. No gate/checkbox. Applied first to Sprint 2 Week 8 bridge reflections and claims discussions in both courses. See `student-relationship.md` for HTML component spec and content framework.
+
+---
+
+## 2026-03-07 — [sathya] Sprint 3 live design component + contingency planning
+
+**Created:** `context/sprint3-contingency.md` — Instructor-facing planning document with three execution scenarios for Weeks 10–12 based on Week 9 outcomes (Scenario A: simulation-first, B: regroup + build, C: domain bridge). Includes hybrid approach notes and arc narrative protection guidance.
+
+**Updated:** `cst395/sprint-3.html` — Replaced Week 10 content with a "Course Design — Live" component: teal-bordered banner with pulsing green dot, three expandable scenario cards (green/amber/purple), and a decision-note strip pointing to Mar 22. Replaced Weeks 11 and 12 with simpler amber tentative banners + dashed-border stub assignment boxes. Added `@keyframes` pulse animation and `toggleS3Scenario()` JS function.
+
+**Rationale:** Sprint 3 is deliberately iterative — Week 9 observations drive Week 10 structure. Making the contingency planning visible to students models Adaptive Building (AB) in real time: build something, get signal, adjust. Week 10 gets the visually distinct live-design treatment because that's where the actual decision lives. Weeks 11–12 use quieter banners to avoid visual noise overwhelming the live decision point.
+## 2026-03-03 — [sathya] Science of Computing concept capture
+
+**Trigger:** Two brainstorming sessions (CS Working Group prep + SOSE 2026 redesign, both March 2, 2026) produced a substantial body of early-stage thinking about foundational computing reasoning in an AI-augmented context. Captured here before it gets lost.
+
+**New context file created:**
+- `science-of-computing.md` — Full concept capture: the core problem (students building unsound systems with AI without knowing it), what Science of Computing is and isn't, relationship to SDL/IS/AB (different dimensions, not competing), two-layer model (universal computing literacy vs. practitioner depth), the bootstrapping problem (traditional CS sequence doesn't coexist with AI tools), CTI's Approach B (rethink what's worth learning), SOSE 2026 dependency and summer approach, tacit knowledge challenge with the CS team, CTI 2.0 architectural fit, illustrative Architect's Eye module, 7 decisions made so far, and 17 open questions (SOC-Q1 through SOC-Q17) organized by category (definitional, structural, SOSE-specific, validation, institutional).
+
+**Context files updated:**
+- `README.md` — Added `science-of-computing.md` to file purposes table and broadened scope description to include CTI 2.0 initiatives.
+
+**Why this matters:** This concept may shape CST395 Sprints 3–4, SOSE 2026 pre-work, and the broader CTI 2.0 learning experience architecture. Early-stage — nothing is settled — but the thinking needs a home so it can be referenced and built upon.
+
+---
+
+## 2026-02-28 — [claude-code] Cross-course content review + context folder expansion
+
+**Trigger:** Comprehensive review of CST349 and CST395 from an average student's perspective, evaluating clarity, conciseness, and consistency. Synthesized findings from multiple independent reviews.
+
+**Context files updated:**
+- `gaps-and-actions.md` — Added GAP-6 (Cognitive Overload & Finding Deliverables), GAP-7 (Flow Friction & Trust — hardcoded dates, dead-end placeholders), GAP-8 (Terminology Debt — Sprint vs Blueprint/Studio inconsistency), PIPE-6 (Automated Content QA / Due Date Consistency)
+- `course-design.md` — Added "Product Experience Principles" section (Actionability First, Single Source of Truth, Minimum Viable Completeness, Format Explicitness) and "Data Architecture: CSV as Single Source of Truth" documentation
+- `open-questions.md` — Added OQ-7 (Metaphor Coherence vs Migration Cost in CST395) and OQ-8 (Progressive Disclosure of Capabilities — when to introduce SDL/IS/AB)
+
+**New context files created:**
+- `terminology.md` — Canonical terms map for operational vocabulary. Defines Sprint (not Blueprint/Studio), reflection numbering conventions (S1-R1), grading component labels (per-sprint vs overall), assignment type names. Explicitly scoped to operational terms — framework/pedagogy terms are off-limits without instructor approval.
+- `content-qa.md` — Definition of Done checklist for publishing any assignment or sprint page. Covers: Quick Start block requirements, date data-binding verification, dependency links, quality signals, reflection numbering, upload instruction specificity, styling consistency, and MVP brief format for incomplete pages. Linked to future PIPE-6 automation.
+
+**Key findings driving the prioritized action plan:**
+- 200+ hardcoded dates across 84 HTML files (both courses)
+- 15 pages with "Under Construction" banners, including active content
+- CST349 grading labels appear contradictory (per-sprint vs overall not distinguished)
+- CST395 uses Sprint/Blueprint/Studio inconsistently
+- Assignment pages bury deliverable details below motivational framing
+- Reflection numbering collides across sprints (multiple "#1" reflections)
+- Time estimates understate cognitive demand on several reflection assignments
+
+**Action plan:** P0 (context capture — this entry), P1 (trust-breaking: dates, grading, placeholders), P2 (usability: Quick Start blocks, upload instructions, quality signals), P3 (terminology/navigation: Sprint harmonization, cross-links, reflection numbering), P4 (tone: phrasing, time estimates, HVP threading).
 
 ---
 

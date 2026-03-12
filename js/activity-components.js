@@ -893,7 +893,7 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
 
     if (question.partnerInstructions) {
       const instructions = createElement('div', 'activity-ai-discussion__instructions');
-      instructions.innerHTML = `<strong>Partner instructions:</strong> ${question.partnerInstructions}`;
+      instructions.innerHTML = `<strong>Instructions:</strong> ${question.partnerInstructions}`;
       container.appendChild(instructions);
     }
 

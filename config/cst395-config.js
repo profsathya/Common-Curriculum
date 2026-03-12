@@ -39,7 +39,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-superagency-challenge.html"
     },
     "s1-problem-analysis": {
-      canvasId: "580903",
+      canvasId: "144732",
       title: "S1: Problem Analysis (5 Whys)",
       dueDate: "2026-01-28",
       type: "quiz",
@@ -79,7 +79,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-solution-architecture": {
-      canvasId: "580904",
+      canvasId: "144733",
       title: "S1: Solution Architecture",
       dueDate: "2026-02-02",
       type: "quiz",
@@ -132,7 +132,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s1-w1-productive-reflection.html"
     },
     "s1-reflection-2": {
-      canvasId: "580905",
+      canvasId: "144734",
       title: "S1: Productive Reflection #2",
       dueDate: "2026-01-30",
       type: "quiz",
@@ -164,7 +164,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/sprint-1-demo.html"
     },
     "s1-w3-design-decision": {
-      canvasId: "581583",
+      canvasId: "144806",
       title: "S1: Design Decision Analysis",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -177,7 +177,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/design-decision-analysis.html"
     },
     "s1-w3-dojo-depth": {
-      canvasId: "581584",
+      canvasId: "144807",
       title: "S1: Dojo Depth Session",
       dueDate: "2026-02-08",
       type: "quiz",
@@ -197,7 +197,7 @@ const CST395_CONFIG = {
       ]
     },
     "s1-w3-reflection": {
-      canvasId: "581585",
+      canvasId: "144808",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "quiz",
@@ -341,11 +341,11 @@ const CST395_CONFIG = {
     "s2-prototype": {
       canvasId: "582881",
       title: "S2: Prototype v1 + Build Log",
-      dueDate: "2026-03-01",
+      dueDate: "2026-03-09",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 10,
+      points: 20,
       sprint: 2,
       week: 7,
       htmlFile: "assignments/s2-w7-prototype.html"
@@ -353,7 +353,7 @@ const CST395_CONFIG = {
     "s2-reflection-5": {
       canvasId: "582882",
       title: "S2: Productive Reflection #5",
-      dueDate: "2026-03-03",
+      dueDate: "2026-03-06",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
@@ -361,30 +361,6 @@ const CST395_CONFIG = {
       sprint: 2,
       week: 7,
       htmlFile: "assignments/s2-w7-productive-reflection.html"
-    },
-    "s2-partner-feedback": {
-      canvasId: "582883",
-      title: "S2: Partner Feedback Documentation",
-      dueDate: "2026-03-06",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 7,
-      htmlFile: "assignments/s2-w7-partner-feedback.html"
-    },
-    "s2-design-rationale": {
-      canvasId: "582884",
-      title: "S2: Design Rationale Log",
-      dueDate: "2026-03-07",
-      type: "assignment",
-      canvasType: "assignment",
-      assignmentGroup: "Sprint 2: Check-in/Engagement",
-      points: 5,
-      sprint: 2,
-      week: 8,
-      htmlFile: "assignments/s2-w8-design-rationale.html"
     },
     "s2-demo-prep": {
       canvasId: "582885",
@@ -401,7 +377,7 @@ const CST395_CONFIG = {
     "s2-bridge-reflection-2": {
       canvasId: "582886",
       title: "S2: Sprint 2→3 Bridge Reflection",
-      dueDate: "2026-03-10",
+      dueDate: "2026-03-13",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Productive Reflections",
@@ -412,15 +388,53 @@ const CST395_CONFIG = {
     },
     "s2-partner-eval": {
       canvasId: "582887",
-      title: "S2: Partner Evaluation",
+      title: "S2: Peer Observation",
       dueDate: "2026-03-11",
-      type: "assignment",
+      type: "ai-discussion",
       canvasType: "assignment",
       assignmentGroup: "Sprint 2: Demonstration",
       points: 5,
       sprint: 2,
       week: 8,
       htmlFile: "assignments/s2-w8-partner-eval.html"
+    },
+
+    // Sprint 3
+    "s3-claims-dojo": {
+      canvasId: "584778",
+      title: "S3 Prep: Claims in Practice",
+      dueDate: "2026-03-14",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Goal Setting",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-claims-discussion.html"
+    },
+    "s3-problem-stake": {
+      canvasId: "584779",
+      title: "S3: Problem Stake Brief",
+      dueDate: "2026-03-23",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Goal Setting",
+      points: 10,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-problem-stake.html"
+    },
+    "s3-reflection-6": {
+      canvasId: "584780",
+      title: "S3: Weekly Build Reflection #1",
+      dueDate: "2026-03-21",
+      type: "handwritten-reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Productive Reflections",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-reflection.html"
     }
   },
 

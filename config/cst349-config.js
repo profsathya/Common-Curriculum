@@ -121,7 +121,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-sprint-plan": {
-      canvasId: "581427",
+      canvasId: "144791",
       title: "S1: Sprint Plan v1",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -160,7 +160,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-learning-log": {
-      canvasId: "581428",
+      canvasId: "144792",
       title: "S1: Learning Log (Week 3)",
       dueDate: "2026-02-07",
       type: "quiz",
@@ -180,7 +180,7 @@ const CST349_CONFIG = {
       ]
     },
     "s1-reflection-3": {
-      canvasId: "581429",
+      canvasId: "144793",
       title: "S1: Productive Reflection #3",
       dueDate: "2026-02-09",
       type: "reflection",
@@ -283,7 +283,7 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "activities/s2-evidence-design.html"
+      htmlFile: "assignments/s2-w5-evidence-design.html"
     },
     "s2-triad-checkin-1": {
       canvasId: "582793",
@@ -393,62 +393,52 @@ const CST349_CONFIG = {
       week: 8,
       htmlFile: "assignments/s2-w8-bridge-reflection.html"
     },
+    "s2-claims-discussion": {
+      canvasId: "585103",
+      title: "S2: Claims in Practice",
+      dueDate: "2026-03-13",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 2: Check-in/Engagement",
+      points: 5,
+      sprint: 2,
+      week: 8,
+      htmlFile: "assignments/s2-w8-claims-discussion.html"
+    },
 
     // Sprint 3
-    "s3-curiosity-inventory": {
-      title: "S3: Curiosity Inventory",
-      dueDate: "2026-03-26",
-      type: "assignment"
-    },
-    "s3-transfer-plan": {
-      title: "S3: Transfer Plan",
-      dueDate: "2026-03-26",
-      type: "assignment"
-    },
     "s3-reflection-7": {
       title: "S3: Productive Reflection #7",
       dueDate: "2026-03-28",
-      type: "reflection"
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Productive Reflections",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-reflection.html"
     },
-    "s3-learning-log": {
-      title: "S3: Learning Log",
-      dueDate: "2026-04-02",
-      type: "assignment"
+    "s3-info-diet-audit": {
+      title: "S3: Information Diet Audit + First Signal",
+      dueDate: "2026-03-26",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Goal Setting",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-info-diet-audit.html"
     },
-    "s3-reflection-8": {
-      title: "S3: Productive Reflection #8",
-      dueDate: "2026-04-04",
-      type: "reflection"
-    },
-    "s3-mini-project": {
-      title: "S3: Mini-Project",
-      dueDate: "2026-04-09",
-      type: "assignment"
-    },
-    "s3-iteration-doc": {
-      title: "S3: Iteration After Struggle",
-      dueDate: "2026-04-09",
-      type: "assignment"
-    },
-    "s3-reflection-9": {
-      title: "S3: Productive Reflection #9",
-      dueDate: "2026-04-11",
-      type: "reflection"
-    },
-    "s3-presentation": {
-      title: "S3: Transfer Presentation",
-      dueDate: "2026-04-16",
-      type: "assignment"
-    },
-    "s3-peer-eval": {
-      title: "S3: Peer Evaluation",
-      dueDate: "2026-04-17",
-      type: "assignment"
-    },
-    "s3-bridge": {
-      title: "Bridge Reflection: Transfer → Proving It",
-      dueDate: "2026-04-18",
-      type: "bridge"
+    "s3-goal-setting": {
+      title: "S3: Sprint 3 Goal Setting",
+      dueDate: "2026-03-26",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Goal Setting",
+      points: 5,
+      sprint: 3,
+      week: 9,
+      htmlFile: "assignments/s3-w9-goal-setting.html"
     },
 
     // Sprint 4
@@ -636,10 +626,10 @@ const CST349_CONFIG = {
     6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "Evidence & Outreach" },
     7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Stretch Challenge" },
     8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Validated Demonstration" },
-    9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Curiosity Mapping" },
-    10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Following the Thread" },
-    11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Building Something" },
-    12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Transfer Demonstration" },
+    9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "You Are What You Read" },
+    10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Finding What Matters" },
+    11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Making a Claim" },
+    12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Demo Day — Your Futures Brief" },
     13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Evidence Audit" },
     14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Portfolio Construction" },
     15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Defense Preparation" },
@@ -650,7 +640,7 @@ const CST349_CONFIG = {
   sprints: {
     1: { name: "Beyond Technical", theme: "Soft skill gap identification & development", focus: "Goal Setting, Planning", scaffolding: "High" },
     2: { name: "Accountable Growth", theme: "Deepen skill with external accountability", focus: "Ambiguity, Iteration", scaffolding: "Medium" },
-    3: { name: "Transfer", theme: "Apply SDL to technical curiosity", focus: "Evaluation, Collaboration", scaffolding: "Low" },
+    3: { name: "Transfer", theme: "Futures thinking — reading the future of your field", focus: "Evaluation, Collaboration", scaffolding: "Low" },
     4: { name: "Proving It", theme: "Portfolio defense & synthesis", focus: "All dimensions integrated", scaffolding: "Full autonomy" }
   },
 

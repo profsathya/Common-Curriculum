@@ -98,7 +98,15 @@ function ensureDir(dirPath) {
 
 /** Escape a JSON string for safe embedding inside an HTML <script> block */
 function escapeForScript(str) {
-  return str.replace(/<\//g, '<\\/').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+  // For direct JS embedding: const X = ${json};
+  // Only need to prevent </script> tag closure
+  return str.replace(/<\//g, '<\\/');
+}
+
+function escapeForJsString(str) {
+  // For embedding inside a JS single-quoted string: JSON.parse('${json}')
+  // Must escape backslashes, single quotes, and </script>
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/<\//g, '<\\/');
 }
 
 function loadJson(filePath) {
@@ -297,9 +305,10 @@ function extractConversationContent(jsonData) {
 // Step 1: Download Submissions
 // ============================================
 
-async function downloadSubmissions(api, courseName, dataDir) {
+async function downloadSubmissions(api, courseName, dataDir, { forceDownload = false } = {}) {
   console.log(`\n${'='.repeat(60)}`);
   console.log(`DOWNLOADING SUBMISSIONS: ${courseName.toUpperCase()}`);
+  if (forceDownload) console.log('(force-download: re-downloading all assignments)');
   console.log('='.repeat(60));
 
   const courseInfo = COURSES[courseName];
@@ -346,15 +355,45 @@ async function downloadSubmissions(api, courseName, dataDir) {
   const submissionsDir = path.join(courseDataDir, 'submissions');
   ensureDir(submissionsDir);
 
+  const gradingDir = path.join(courseDataDir, 'grading');
+
   const assignments = csvRows.filter(row => row.canvasId && row.canvasId !== 'null');
   console.log(`\nProcessing ${assignments.length} assignments with Canvas IDs...\n`);
 
   const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json')) || {};
 
+  let totalSkipped = 0, totalIncremental = 0, totalFull = 0;
+
   for (const row of assignments) {
     const assignmentKey = row.key;
     const canvasId = row.canvasId;
     const isQuiz = row.canvasType === 'quiz';
+    const indexEntry = submissionIndex[assignmentKey];
+
+    // --- Incremental download: skip settled assignments ---
+    if (!forceDownload && indexEntry && !indexEntry.error && indexEntry.downloadedAt) {
+      const dueDate = row.dueDate || indexEntry.dueDate;
+      if (dueDate) {
+        const daysPastDue = Math.floor(
+          (Date.now() - new Date(dueDate + 'T23:59:59').getTime()) / (1000 * 60 * 60 * 24)
+        );
+        // Assignment is settled: past grace period (15 days) and already fully graded
+        if (daysPastDue > 15) {
+          const gradingPath = path.join(gradingDir, `${assignmentKey}.json`);
+          const existingGrading = loadJson(gradingPath);
+          const allGraded = existingGrading && existingGrading.grades &&
+            existingGrading.grades.length > 0 &&
+            existingGrading.grades.every(g =>
+              g.status === 'reviewed' || g.status === 'posted' || g.status === 'graded_by_ai'
+            );
+          if (allGraded) {
+            console.log(`  ${row.title} (${assignmentKey}) — skipped (settled: past due + graded)`);
+            totalSkipped++;
+            continue;
+          }
+        }
+      }
+    }
 
     console.log(`  ${row.title} (${assignmentKey})...`);
 
@@ -374,12 +413,56 @@ async function downloadSubmissions(api, courseName, dataDir) {
         submissions = await api.listSubmissions(courseId, canvasId);
       }
 
-      const assignmentSubs = {};
+      // --- Incremental download: detect new/updated submissions ---
+      // Compare Canvas submitted_at timestamps against what we last downloaded.
+      // If nothing changed, skip the expensive content extraction entirely.
+      const previousLastSubmittedAt = indexEntry?.lastSubmittedAt || null;
+      const existingSubsPath = path.join(submissionsDir, `${assignmentKey}.json`);
+      const existingSubs = loadJson(existingSubsPath) || {};
+
+      // Build a map of previous submitted_at per student for fine-grained comparison
+      const prevSubmittedAtMap = {};
+      for (const [anonId, sub] of Object.entries(existingSubs)) {
+        if (sub.submittedAt) prevSubmittedAtMap[anonId] = sub.submittedAt;
+      }
+
+      // Find the latest submitted_at from Canvas to compare against index
+      let latestSubmittedAt = null;
+      for (const sub of submissions) {
+        if (sub.submitted_at && (!latestSubmittedAt || sub.submitted_at > latestSubmittedAt)) {
+          latestSubmittedAt = sub.submitted_at;
+        }
+      }
+
+      // Quick check: if no submissions have changed since last download, skip entirely
+      if (!forceDownload && previousLastSubmittedAt && latestSubmittedAt &&
+          latestSubmittedAt <= previousLastSubmittedAt &&
+          Object.keys(existingSubs).length > 0) {
+        console.log(`    → no new submissions since last download, skipped`);
+        totalSkipped++;
+        continue;
+      }
+
+      // Determine which students need content re-extraction
+      const needsContentExtraction = (sub) => {
+        if (forceDownload) return true;
+        const anonId = canvasToAnon[sub.user_id];
+        if (!anonId) return true;
+        const prevTimestamp = prevSubmittedAtMap[anonId];
+        // New submission or updated submission
+        if (!prevTimestamp || !sub.submitted_at) return true;
+        return sub.submitted_at !== prevTimestamp;
+      };
+
+      // Start with existing submissions as the base (for incremental merge)
+      const assignmentSubs = !forceDownload ? { ...existingSubs } : {};
+      let newOrUpdated = 0;
 
       for (const sub of submissions) {
         const anonId = canvasToAnon[sub.user_id];
         if (!anonId) continue; // Skip non-student submissions (e.g., test students)
 
+        // Always update lightweight metadata (status, score, late, missing, comments)
         const subData = {
           anonId,
           status: sub.workflow_state, // 'submitted', 'graded', 'unsubmitted', 'pending_review'
@@ -396,6 +479,22 @@ async function downloadSubmissions(api, courseName, dataDir) {
             createdAt: c.created_at,
           })),
         };
+
+        // For unchanged submissions, preserve existing content to avoid re-downloading files
+        if (!needsContentExtraction(sub) && existingSubs[anonId]) {
+          const prev = existingSubs[anonId];
+          subData.contentType = prev.contentType;
+          subData.content = prev.content;
+          if (prev.attachmentUrl) subData.attachmentUrl = prev.attachmentUrl;
+          if (prev.attachmentMimeType) subData.attachmentMimeType = prev.attachmentMimeType;
+          if (prev.attachmentFilename) subData.attachmentFilename = prev.attachmentFilename;
+          if (prev.activityData) subData.activityData = prev.activityData;
+          if (prev.conversationMetadata) subData.conversationMetadata = prev.conversationMetadata;
+          assignmentSubs[anonId] = subData;
+          continue;
+        }
+
+        newOrUpdated++;
 
         // Extract content based on submission type
         if (sub.submission_type === 'online_text_entry' && sub.body) {
@@ -552,15 +651,24 @@ async function downloadSubmissions(api, courseName, dataDir) {
         totalSubmissions: Object.keys(assignmentSubs).length,
         hasAiDiscussion,
         downloadedAt: new Date().toISOString(),
+        lastSubmittedAt: latestSubmittedAt,
       };
 
       // Save assignment submissions
       saveJson(path.join(submissionsDir, `${assignmentKey}.json`), assignmentSubs);
-      console.log(`    → ${Object.keys(assignmentSubs).length} submissions (${Object.values(assignmentSubs).filter(s => s.content).length} with content)`);
+
+      if (newOrUpdated > 0) {
+        console.log(`    → ${Object.keys(assignmentSubs).length} submissions (${newOrUpdated} new/updated, ${Object.values(assignmentSubs).filter(s => s.content).length} with content)`);
+        totalIncremental++;
+      } else {
+        console.log(`    → ${Object.keys(assignmentSubs).length} submissions (metadata refreshed, no new content)`);
+        totalFull++;
+      }
 
     } catch (error) {
       console.error(`    ✗ Error: ${error.message}`);
       submissionIndex[assignmentKey] = {
+        ...submissionIndex[assignmentKey],
         title: row.title,
         error: error.message,
         downloadedAt: new Date().toISOString(),
@@ -569,7 +677,7 @@ async function downloadSubmissions(api, courseName, dataDir) {
   }
 
   saveJson(path.join(courseDataDir, 'submission-index.json'), submissionIndex);
-  console.log(`\n✓ Download complete. Data saved to ${courseDataDir}`);
+  console.log(`\n✓ Download complete. ${totalSkipped} skipped, ${totalIncremental} with new submissions, ${totalFull} metadata-only. Data saved to ${courseDataDir}`);
 }
 
 // ============================================
@@ -641,6 +749,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     if (indexEntry.hasAiDiscussion) {
       console.log(`    → AI-discussion detected, using partner matching & dual grading`);
       if (!analysis.discussions) analysis.discussions = {};
+
+      // Skip if already analyzed
+      if (analysis.discussions[assignmentKey]?.analyzedAt) {
+        console.log(`    → Already analyzed (${analysis.discussions[assignmentKey].analyzedAt}), skipping`);
+        const existingStudentCount = Object.keys(analysis.discussions[assignmentKey].results || {}).length;
+        totalStudents += existingStudentCount;
+        continue;
+      }
+
       try {
         const discResult = await analyzeDiscussionAssignment(courseName, dataDir, assignmentKey, indexEntry);
         if (discResult) {
@@ -677,9 +794,19 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
       continue;
     }
 
+    const existingAssignment = analysis.assignments[assignmentKey];
+    const existingStudents = existingAssignment?.students || {};
     const assignmentAnalysis = {};
+    let assignmentSkipped = 0;
 
     for (const [anonId, sub] of Object.entries(submissions)) {
+      // Skip if already analyzed with a quality score or explicit null (participation-only)
+      const existingStudent = existingStudents[anonId];
+      if (existingStudent?.analyzedAt) {
+        assignmentAnalysis[anonId] = existingStudent;
+        assignmentSkipped++;
+        continue;
+      }
       // Determine participation score
       let participation = 1; // Default: no submission
       if (sub.missing) {
@@ -769,7 +896,7 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
     const analyzed = Object.values(assignmentAnalysis);
     const withQuality = analyzed.filter(a => a.quality !== null);
     totalStudents += analyzed.length;
-    console.log(`    → ${analyzed.length} students, ${withQuality.length} analyzed by LLM, ${totalCalls} API calls so far`);
+    console.log(`    → ${analyzed.length} students, ${withQuality.length} analyzed by LLM, ${assignmentSkipped} skipped (cached), ${totalCalls} API calls so far`);
   }
 
   // Generate per-student qualitative summaries
@@ -779,7 +906,15 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
 
   if (!analysis.studentSummaries) analysis.studentSummaries = {};
 
+  let summariesSkipped = 0;
+
   for (const anonId of allAnonIds) {
+    // Skip if summary already exists
+    if (analysis.studentSummaries[anonId] && analysis.studentSummaries[anonId] !== 'Summary not available.') {
+      summariesSkipped++;
+      continue;
+    }
+
     // Collect this student's data across all assignments
     const studentData = [];
     for (const [key, assignment] of Object.entries(analysis.assignments)) {
@@ -811,7 +946,7 @@ async function analyzeSubmissions(courseName, dataDir, assignmentFilter) {
       analysis.studentSummaries[anonId] = 'Summary not available.';
     }
   }
-  console.log(`  → Generated ${summaryCalls} student summaries`);
+  console.log(`  → Generated ${summaryCalls} student summaries, ${summariesSkipped} skipped (cached)`);
 
   analysis.lastUpdated = new Date().toISOString();
   saveJson(analysisPath, analysis);
@@ -1107,6 +1242,57 @@ async function generateDashboard(courseName, dataDir, api) {
   if (analysis.discussions) {
     for (const key of Object.keys(analysis.discussions)) {
       await generateDiscussionDashboard(courseName, dataDir, key, api);
+    }
+  }
+
+  // Regenerate grading dashboards from existing grading JSON files
+  const gradingDir = path.join(courseDataDir, 'grading');
+  const submissionsDir = path.join(courseDataDir, 'submissions');
+  const submissionIndex = loadJson(path.join(courseDataDir, 'submission-index.json')) || {};
+  if (fs.existsSync(gradingDir)) {
+    const gradingFiles = fs.readdirSync(gradingDir).filter(f => f.endsWith('.json'));
+    if (gradingFiles.length > 0) {
+      console.log('\n  Regenerating grading dashboards...');
+      const allGradedAssignments = [];
+      for (const file of gradingFiles) {
+        const gData = loadJson(path.join(gradingDir, file));
+        if (gData && gData.grades && gData.grades.length > 0) {
+          const submitted = gData.grades.filter(g => g.contentType !== 'none');
+          const aKey = gData.assignmentKey || file.replace('.json', '');
+          allGradedAssignments.push({
+            key: aKey,
+            title: gData.title,
+            pointsPossible: gData.pointsPossible,
+            dueDate: gData.dueDate || submissionIndex[aKey]?.dueDate || null,
+            totalStudents: gData.grades.length,
+            submittedCount: submitted.length,
+            pendingCount: submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai').length,
+            reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
+          });
+        }
+      }
+
+      for (let i = 0; i < allGradedAssignments.length; i++) {
+        const aInfo = allGradedAssignments[i];
+        const gData = loadJson(path.join(gradingDir, `${aInfo.key}.json`));
+        if (!gData) continue;
+        // Backfill dueDate from submission-index if not in grading JSON
+        if (!gData.dueDate && aInfo.dueDate) gData.dueDate = aInfo.dueDate;
+
+        const prevAssignment = i > 0 ? allGradedAssignments[i - 1] : null;
+        const nextAssignment = i < allGradedAssignments.length - 1 ? allGradedAssignments[i + 1] : null;
+        const submissionsData = loadJson(path.join(submissionsDir, `${aInfo.key}.json`)) || {};
+
+        const html = buildGradingDashboardHTML(gData, submissionsData, courseName, prevAssignment, nextAssignment);
+        const outputPath = path.join(dashboardDir, `${courseName}-grading-${aInfo.key}.html`);
+        fs.writeFileSync(outputPath, html);
+      }
+
+      const indexHtml = buildGradingIndexHTML(allGradedAssignments, courseName);
+      const indexPath = path.join(dashboardDir, `${courseName}-grading-index.html`);
+      fs.writeFileSync(indexPath, indexHtml);
+
+      console.log(`  → Regenerated ${allGradedAssignments.length} grading dashboard(s) + index`);
     }
   }
 }
@@ -2730,7 +2916,12 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   const assignmentConfig = config.assignments?.[assignmentKey];
   if (!assignmentConfig?.canvasId) throw new Error(`No canvasId for ${assignmentKey}`);
 
-  const grades = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
+  const raw = JSON.parse(fs.readFileSync(gradesFile, 'utf-8'));
+  // Support both formats: grading JSON { grades: [...] } and flat array [...]
+  const grades = Array.isArray(raw) ? raw : raw.grades;
+  if (!grades || !Array.isArray(grades)) {
+    throw new Error(`Invalid grades file format: ${gradesFile}`);
+  }
   console.log(`\nPosting grades to Canvas (${courseName}/${assignmentKey})...`);
 
   // Fetch current Canvas submissions to check existing grades
@@ -2750,8 +2941,11 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
     const label = g.studentName || g.anonId;
     if (!g.canvasId) { console.log(`  ⚠ Skip ${label} — no Canvas ID`); skipped++; continue; }
 
-    // Determine the score to post
-    const score = g.totalScore != null ? g.totalScore : g.score;
+    // Skip already-posted entries from grading JSON
+    if (g.status === 'posted') { unchanged++; postedCanvasIds.add(g.canvasId); continue; }
+
+    // Determine the score to post (support both grading JSON and downloaded grades formats)
+    const score = g.finalScore != null ? g.finalScore : (g.totalScore != null ? g.totalScore : g.score);
     if (score == null) { console.log(`  ⚠ Skip ${label} — no score in grades file`); skipped++; continue; }
 
     // Check if Canvas already has this exact grade
@@ -2760,6 +2954,13 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
       console.log(`  — ${label}: already ${score} in Canvas, skipping`);
       unchanged++;
       postedCanvasIds.add(g.canvasId);
+      continue;
+    }
+
+    // Never downgrade an existing Canvas score
+    if (current && current.score != null && current.score > score) {
+      console.log(`  ⚠ ${label}: Canvas has ${current.score}, skipping lower score ${score}`);
+      skipped++;
       continue;
     }
 
@@ -2944,6 +3145,11 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 
     const pointsPossible = parseInt(indexEntry.points) || parseInt(csvRow?.points) || 5;
     const rubric = loadRubric(assignmentKey, csvRow?.type || 'assignment', indexEntry.title, courseInfo.name);
+    const assignmentDueDate = indexEntry.dueDate || csvRow?.dueDate || null;
+    const daysPastDue = assignmentDueDate
+      ? Math.floor((Date.now() - new Date(assignmentDueDate + 'T23:59:59').getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+    const graceExpired = daysPastDue !== null && daysPastDue > 15;
 
     // Load existing grading data
     const gradingPath = path.join(gradingDir, `${assignmentKey}.json`);
@@ -2964,9 +3170,9 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
       const info = anonToInfo[anonId];
       if (!info) continue;
 
-      // Check if already reviewed/posted in existing grading
+      // Check if already graded/reviewed/posted in existing grading
       const existing = existingGrades[anonId];
-      if (existing && (existing.status === 'reviewed' || existing.status === 'posted')) {
+      if (existing && (existing.status === 'reviewed' || existing.status === 'posted' || existing.status === 'graded_by_ai')) {
         grades.push(existing);
         assignmentSkipped++;
         continue;
@@ -2994,8 +3200,12 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
         continue;
       }
 
-      // Skip if score === 0 AND missing === true (correct grade for no submission)
+      // Missing or unsubmitted: only assign zero if 15+ days past due
       if (sub.missing === true && (sub.score === 0 || sub.score === null)) {
+        if (!graceExpired) {
+          // Grace period active — skip, student can still submit late
+          continue;
+        }
         grades.push({
           anonId,
           canvasId: info.canvasId,
@@ -3010,7 +3220,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           flag: 'ok',
           canvasCurrentScore: sub.score,
           canvasCurrentStatus: sub.status,
-          internalNote: 'Missing submission.',
+          internalNote: 'Missing submission — grace period expired.',
         });
         assignmentGraded++;
         continue;
@@ -3018,6 +3228,10 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 
       // Unsubmitted with no content
       if (sub.status === 'unsubmitted' || (!sub.content && sub.contentType === 'none')) {
+        if (!graceExpired) {
+          // Grace period active — skip, student can still submit late
+          continue;
+        }
         grades.push({
           anonId,
           canvasId: info.canvasId,
@@ -3032,7 +3246,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           flag: 'ok',
           canvasCurrentScore: sub.score,
           canvasCurrentStatus: sub.status,
-          internalNote: 'Unsubmitted.',
+          internalNote: 'Unsubmitted — grace period expired.',
         });
         assignmentGraded++;
         continue;
@@ -3075,6 +3289,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
           gradeEntry.finalComment = result.comment;
           gradeEntry.confidence = result.confidence;
           gradeEntry.flag = result.flag;
+          gradeEntry.status = 'graded_by_ai';
           gradeEntry.internalNote = '';
           assignmentGraded++;
         } catch (err) {
@@ -3123,6 +3338,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
             gradeEntry.finalComment = result.comment;
             gradeEntry.confidence = result.confidence;
             gradeEntry.flag = result.flag;
+            gradeEntry.status = 'graded_by_ai';
             gradeEntry.extractedText = result.extractedText;
             gradeEntry.internalNote = `File: ${sub.attachmentFilename || 'unknown'}, ${(fileData.size / 1024).toFixed(1)}KB`;
             assignmentGraded++;
@@ -3152,14 +3368,28 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
       }
 
       grades.push(gradeEntry);
+
+      // Incremental save after each LLM-graded student to preserve progress on timeout
+      if (gradeEntry.status === 'graded_by_ai') {
+        saveJson(gradingPath, {
+          assignmentKey,
+          title: indexEntry.title,
+          pointsPossible,
+          course: courseName,
+          dueDate: indexEntry.dueDate || csvRow?.dueDate || null,
+          generatedAt: new Date().toISOString(),
+          grades,
+        });
+      }
     }
 
-    // Save grading data
+    // Final save with all grades (including skipped/non-LLM entries)
     const gradingData = {
       assignmentKey,
       title: indexEntry.title,
       pointsPossible,
       course: courseName,
+      dueDate: indexEntry.dueDate || csvRow?.dueDate || null,
       generatedAt: new Date().toISOString(),
       grades,
     };
@@ -3168,7 +3398,7 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
     totalGraded += assignmentGraded;
     totalSkipped += assignmentSkipped;
     gradedAssignmentKeys.push(assignmentKey);
-    console.log(`    → ${assignmentGraded} graded, ${assignmentSkipped} skipped (reviewed/posted/pre-graded)`);
+    console.log(`    → ${assignmentGraded} graded, ${assignmentSkipped} skipped (ai-graded/reviewed/posted/pre-graded)`);
 
     // Backfill extracted content into submissions
     let backfilled = 0;
@@ -3199,12 +3429,15 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
   for (const key of gradedAssignmentKeys) {
     const gData = loadJson(path.join(gradingDir, `${key}.json`));
     if (gData) {
+      const submitted = gData.grades.filter(g => g.contentType !== 'none');
       allGradedAssignments.push({
         key,
         title: gData.title,
         pointsPossible: gData.pointsPossible,
+        dueDate: gData.dueDate || null,
         totalStudents: gData.grades.length,
-        pendingCount: gData.grades.filter(g => g.status === 'pending').length,
+        submittedCount: submitted.length,
+        pendingCount: submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai').length,
         reviewedCount: gData.grades.filter(g => g.status === 'reviewed' || g.status === 'posted').length,
       });
     }
@@ -3247,11 +3480,12 @@ async function gradeSubmissions(api, courseName, dataDir, assignmentFilter) {
 }
 
 function buildGradingDashboardHTML(gradingData, submissionsData, courseName, prevAssignment, nextAssignment) {
-  const { assignmentKey, title, pointsPossible, grades, generatedAt } = gradingData;
+  const { assignmentKey, title, pointsPossible, grades, generatedAt, dueDate } = gradingData;
   const course = COURSES[courseName]?.name || courseName.toUpperCase();
 
   // Compute stats
-  const pending = grades.filter(g => g.status === 'pending');
+  const submitted = grades.filter(g => g.contentType !== 'none');
+  const pending = submitted.filter(g => g.status === 'pending' || g.status === 'graded_by_ai');
   const reviewed = grades.filter(g => g.status === 'reviewed' || g.status === 'posted');
   const flagged = grades.filter(g => g.flag === 'insincere');
   const lowConf = grades.filter(g => g.confidence === 'low');
@@ -3269,14 +3503,15 @@ function buildGradingDashboardHTML(gradingData, submissionsData, courseName, pre
     return (a.suggestedScore || 0) - (b.suggestedScore || 0);
   });
 
-  const gradesJson = escapeForScript(JSON.stringify(sortedGrades));
-  const submissionsJson = escapeForScript(JSON.stringify(submissionsData));
+  const gradesJson = escapeForJsString(JSON.stringify(sortedGrades));
+  const submissionsJson = escapeForJsString(JSON.stringify(submissionsData));
 
   const prevLink = prevAssignment ? `${courseName}-grading-${prevAssignment.key}.html` : '';
   const nextLink = nextAssignment ? `${courseName}-grading-${nextAssignment.key}.html` : '';
   const indexLink = `${courseName}-grading-index.html`;
 
   const dateStr = generatedAt ? new Date(generatedAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }) : '';
+  const dueDateStr = dueDate ? new Date(dueDate + 'T23:59:59').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -3321,6 +3556,7 @@ tr:hover { background: #f8fafc; }
 .badge-late { background: #fff7ed; color: #ea580c; }
 .badge-override { background: #fff7ed; color: #ea580c; }
 .badge-ok { background: #f0fdf4; color: #16a34a; }
+.badge-ai { background: #eff6ff; color: #2563eb; }
 
 .content-preview { max-width: 300px; font-size: 13px; color: #64748b; cursor: pointer; }
 .content-preview .truncated { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -3337,11 +3573,11 @@ textarea.comment-edit { width: 100%; min-height: 60px; padding: 6px 8px; border:
 
 <div class="header">
   <h1>${title} — Grading Review</h1>
-  <p>${course} · ${pointsPossible} points · Generated ${dateStr}</p>
+  <p>${course} · <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;font-size:13px">${assignmentKey}</code> · ${pointsPossible} points${dueDateStr ? ` · Due ${dueDateStr}` : ''} · Generated ${dateStr}</p>
 </div>
 
 <div class="stats-bar">
-  <div class="stat"><div class="stat-value">${grades.length}</div><div class="stat-label">Total</div></div>
+  <div class="stat"><div class="stat-value">${submitted.length}/${grades.length}</div><div class="stat-label">Submitted</div></div>
   <div class="stat"><div class="stat-value">${pending.length}</div><div class="stat-label">Need Review</div></div>
   <div class="stat"><div class="stat-value">${reviewed.length}</div><div class="stat-label">Already Graded</div></div>
   <div class="stat"><div class="stat-value">${avgScore}</div><div class="stat-label">Avg Suggested</div></div>
@@ -3469,7 +3705,7 @@ function renderTable(filter) {
 
     // Status cell
     const statusCell = document.createElement('td');
-    const statusBadge = g.status === 'posted' ? 'badge-ok' : g.status === 'reviewed' ? 'badge-ok' : '';
+    const statusBadge = g.status === 'posted' ? 'badge-ok' : g.status === 'reviewed' ? 'badge-ok' : g.status === 'graded_by_ai' ? 'badge-ai' : '';
     statusCell.innerHTML = '<span class="badge ' + statusBadge + '">' + g.status.toUpperCase() + '</span>';
     tr.appendChild(statusCell);
 
@@ -3531,12 +3767,31 @@ renderTable();
 function buildGradingIndexHTML(assignments, courseName) {
   const course = COURSES[courseName]?.name || courseName.toUpperCase();
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const rows = assignments.map(a => {
     const link = `${courseName}-grading-${a.key}.html`;
+    let dueDateStr = '—';
+    let dueBadge = '';
+    if (a.dueDate) {
+      const due = new Date(a.dueDate + 'T23:59:59');
+      dueDateStr = due.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const daysUntilDue = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+      if (daysUntilDue < 0) {
+        dueBadge = ' <span style="color:#94a3b8;font-size:12px">(past)</span>';
+      } else if (daysUntilDue <= 3) {
+        dueBadge = ' <span style="color:#ea580c;font-size:12px;font-weight:600">(due soon)</span>';
+      } else {
+        dueBadge = ' <span style="color:#64748b;font-size:12px">(upcoming)</span>';
+      }
+    }
     return `<tr>
-      <td><a href="${link}">${a.title}</a></td>
+      <td><a href="${link}">${a.title}</a><br><code style="font-size:11px;color:#94a3b8">${a.key}</code></td>
       <td>${a.pointsPossible}</td>
-      <td>${a.reviewedCount}/${a.totalStudents}</td>
+      <td>${dueDateStr}${dueBadge}</td>
+      <td>${a.submittedCount || 0}/${a.totalStudents}</td>
+      <td>${a.reviewedCount}/${a.submittedCount || 0}</td>
       <td>${a.pendingCount}</td>
       <td><a href="${link}">Review &rarr;</a></td>
     </tr>`;
@@ -3554,7 +3809,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .header { background: linear-gradient(135deg, #1e293b, #334155); color: white; padding: 24px 32px; }
 .header h1 { font-size: 24px; font-weight: 700; }
 .header p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
-.container { max-width: 900px; margin: 0 auto; padding: 24px 32px; }
+.container { max-width: 1000px; margin: 0 auto; padding: 24px 32px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 th { background: #f8fafc; text-align: left; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; }
 td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; }
@@ -3573,7 +3828,9 @@ a:hover { text-decoration: underline; }
 <thead>
   <tr>
     <th>Assignment</th>
-    <th>Points</th>
+    <th>Pts</th>
+    <th>Due Date</th>
+    <th>Submitted</th>
     <th>Graded</th>
     <th>Pending</th>
     <th></th>
@@ -3787,6 +4044,7 @@ Options:
   --data-dir=<path>              Path to private data repo (default: ../Common-Curriculum-Data)
   --assignment=<key>             Analyze a single assignment / post grades for it
   --grades=<path>                Grades JSON file to post (for post-grades action)
+  --force-download               Re-download all assignments (skip incremental optimization)
 
 Environment Variables:
   CANVAS_API_TOKEN   Canvas API token (required for download, post-grades)
@@ -3821,14 +4079,19 @@ Environment Variables:
       console.error('Error: --assignment=<key> is required for post-grades');
       process.exit(1);
     }
-    // Check grading directory first, then legacy dashboard path
-    const gradingPath = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
-    const legacyPath = path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
-    const gradesFile = args.grades || (fs.existsSync(gradingPath) ? gradingPath : legacyPath);
+    // Check grading directory first (both naming conventions), then legacy dashboard path
+    const gradingPath = path.join(dataDir, course, 'grading', `${assignment}.json`);
+    const gradingPathLegacy = path.join(dataDir, course, 'grading', `${assignment}-grades.json`);
+    const dashboardPath = path.join(dataDir, 'dashboard', `${course}-${assignment}-grades.json`);
+    const gradesFile = args.grades
+      || (fs.existsSync(gradingPath) ? gradingPath : null)
+      || (fs.existsSync(gradingPathLegacy) ? gradingPathLegacy : null)
+      || dashboardPath;
     if (!fs.existsSync(gradesFile)) {
       console.error(`Grades file not found. Checked:`);
       console.error(`  ${gradingPath}`);
-      console.error(`  ${legacyPath}`);
+      console.error(`  ${gradingPathLegacy}`);
+      console.error(`  ${dashboardPath}`);
       console.error('Download the grades JSON from the grading dashboard first.');
       process.exit(1);
     }
@@ -3846,7 +4109,7 @@ Environment Variables:
 
     try {
       if (action === 'download' || action === 'full') {
-        await downloadSubmissions(api, c, dataDir);
+        await downloadSubmissions(api, c, dataDir, { forceDownload: !!args['force-download'] });
       }
       if (action === 'grade' || action === 'full') {
         await gradeSubmissions(api, c, dataDir, assignment);

@@ -1,142 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peer Evaluation | Sprint 2 | CST349</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
-        }
-        .container { max-width: 700px; margin: 0 auto; }
-        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
-        .breadcrumb a { color: #6366f1; text-decoration: none; }
-        .header {
-            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
-            color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
-        }
-        .header h1 { margin: 0; font-size: 22px; }
-        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
-        .context-box {
-            background: #eef2ff; border: 1px solid #c7d2fe;
-            border-radius: 12px; padding: 24px; margin-bottom: 24px;
-        }
-        .context-box p { color: #3730a3; margin: 0 0 12px 0; }
-        .context-box p:last-child { margin-bottom: 0; }
-        .context-box strong { color: #4338ca; }
-        .card {
-            background: white; border: 1px solid #e5e7eb;
-            border-radius: 12px; padding: 24px; margin-bottom: 16px;
-        }
-        .card h2 { margin: 0 0 16px 0; font-size: 18px; }
-        .card p { color: #4b5563; margin: 0 0 16px 0; }
-        .eval-item {
-            background: #f9fafb; border-radius: 8px; padding: 20px;
-            margin: 16px 0; border-left: 3px solid #6366f1;
-        }
-        .eval-item__label {
-            display: inline-block; background: #6366f1; color: white;
-            padding: 2px 10px; border-radius: 12px; font-size: 12px;
-            font-weight: 600; margin-bottom: 8px;
-        }
-        .eval-item__question { font-weight: 600; color: #111827; margin-bottom: 8px; }
-        .eval-item__hint { font-size: 14px; color: #6b7280; margin: 0; }
-        .important-note {
-            background: #fef3c7; border: 1px solid #fcd34d;
-            border-radius: 8px; padding: 16px; margin-bottom: 24px;
-        }
-        .important-note h4 { margin: 0 0 8px 0; color: #92400e; font-size: 14px; }
-        .important-note p { margin: 0; color: #a16207; font-size: 14px; }
-        .submission {
-            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-            color: white; padding: 24px; border-radius: 12px;
-        }
-        .submission h3 { color: white; margin: 0 0 12px 0; }
-        .submission p { color: #d1d5db; margin: 0 0 8px 0; font-size: 14px; }
-        .submission__format {
-            background: rgba(255,255,255,0.1); padding: 12px 16px;
-            border-radius: 8px; margin-top: 12px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer Observation | Sprint 2 Demo Day | CST349</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 0; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 700px; margin: 0 auto; padding: 24px; }
+    .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .breadcrumb a { color: #6366f1; text-decoration: none; }
+    .header {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+    .capability-tag {
+      display: inline-block; background: rgba(255,255,255,0.2); color: white;
+      padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
+    }
+
+    /* Name gate */
+    .name-gate {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px; text-align: center;
+    }
+    .name-gate h2 { font-size: 18px; margin: 0 0 12px 0; }
+    .name-gate p { color: #6b7280; margin: 0 0 16px 0; }
+    .name-gate input {
+      width: 100%; max-width: 300px; padding: 10px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 16px; text-align: center;
+    }
+    .name-gate input:focus { border-color: #6366f1; outline: none; }
+    .name-gate button {
+      display: block; margin: 16px auto 0; padding: 10px 32px;
+      background: linear-gradient(135deg, #4338ca, #6366f1); color: white;
+      border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    .name-gate button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Reference card */
+    .reference-card {
+      background: #1e293b; color: #e2e8f0; border-radius: 12px;
+      padding: 20px; margin-bottom: 16px;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace; font-size: 12px; line-height: 1.5;
+    }
+    .reference-card summary {
+      cursor: pointer; color: #38bdf8; font-weight: 700; font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      list-style: none; user-select: none;
+    }
+    .reference-card summary::-webkit-details-marker { display: none; }
+    .reference-card summary::before { content: '\25B6  '; font-size: 10px; }
+    .reference-card[open] summary::before { content: '\25BC  '; }
+    .reference-card .lens { margin-top: 12px; margin-bottom: 12px; }
+    .reference-card .lens-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .lens-desc { color: #94a3b8; }
+    .reference-card .stem { color: #a5b4fc; margin-left: 16px; display: block; }
+    .reference-card .tip { border-top: 1px solid #334155; padding-top: 12px; margin-top: 12px; }
+    .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .tip-step { color: #94a3b8; margin-left: 16px; display: block; }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex; gap: 0; margin-bottom: 16px; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 10px 18px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; background: none; color: #6b7280; white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab:hover { color: #4338ca; }
+    .tab--active {
+      color: #4338ca; font-weight: 700;
+      border-bottom-color: #6366f1;
+    }
+    .tab--add {
+      color: #6366f1; font-weight: 600; font-size: 13px;
+    }
+    .tab--add:hover { color: #4338ca; }
+    .tab__delete {
+      margin-left: 6px; padding: 0 4px; border: none; background: none;
+      color: #d1d5db; font-size: 14px; line-height: 1; cursor: pointer;
+      border-radius: 4px; vertical-align: middle;
+    }
+    .tab__delete:hover { color: #ef4444; background: #fef2f2; }
+
+    /* Notepad card */
+    .notepad-card {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .member-name-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .member-name-row label {
+      font-weight: 600; color: #4338ca; font-size: 14px; white-space: nowrap;
+    }
+    .member-name-input {
+      flex: 1; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 14px; background: #f9fafb;
+    }
+    .member-name-input:focus { border-color: #6366f1; outline: none; }
+
+    .notes-textarea {
+      width: 100%; min-height: 250px; padding: 14px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;
+      line-height: 1.7; background: white; color: #111827;
+    }
+    .notes-textarea:focus { border-color: #6366f1; outline: none; }
+    .notes-textarea::placeholder { color: #9ca3af; }
+    .word-count {
+      text-align: right; font-size: 12px; color: #9ca3af; margin-top: 4px;
+    }
+
+    /* Push my thinking button */
+    .nudge-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 8px 16px;
+      border: 2px solid #6366f1; border-radius: 8px;
+      background: white; color: #4338ca; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .nudge-btn:hover { background: #eef2ff; }
+    .nudge-btn:disabled {
+      border-color: #d1d5db; color: #9ca3af; cursor: not-allowed;
+      background: #f9fafb;
+    }
+    .nudge-btn .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid #d1d5db; border-top-color: #6366f1;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* AI nudge boxes */
+    .nudge-box {
+      background: #eef2ff; border-left: 3px solid #6366f1;
+      border-radius: 0 8px 8px 0; padding: 12px 16px;
+      margin-top: 12px;
+    }
+    .nudge-box__label {
+      font-size: 11px; color: #6b7280; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .nudge-box__text {
+      font-size: 13px; color: #312e81; line-height: 1.6; margin: 0;
+    }
+
+    /* Action buttons */
+    .actions {
+      display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 20px; border-radius: 8px; font-size: 14px;
+      font-weight: 600; cursor: pointer; border: none; flex: 1; min-width: 140px;
+    }
+    .btn--next {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white;
+    }
+    .btn--next:hover { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+    .btn--save {
+      background: linear-gradient(135deg, #4338ca, #6366f1); color: white;
+    }
+    .btn--save:hover { background: linear-gradient(135deg, #3730a3, #4f46e5); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Takeaway section */
+    .takeaway-section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .takeaway-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
+    .takeaway-section p { color: #4b5563; margin: 0 0 16px 0; }
+    .takeaway-section textarea {
+      width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;
+    }
+    .takeaway-section textarea:focus { border-color: #6366f1; outline: none; }
+
+    /* Download confirmation */
+    .download-confirm {
+      display: inline-block; margin-left: 12px; color: #059669; font-size: 13px;
+      font-weight: 600; opacity: 0; transition: opacity 0.3s;
+    }
+    .download-confirm--visible { opacity: 1; }
+
+    /* Submit section */
+    .submit-section {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: white; padding: 24px; border-radius: 12px; margin-top: 16px;
+    }
+    .submit-section h3 { color: white; margin: 0 0 12px 0; }
+    .submit-section p { color: #d1d5db; margin: 0 0 16px 0; }
+    .submit-link {
+      display: inline-block; padding: 12px 24px; border-radius: 8px;
+      background: rgba(255,255,255,0.1); color: white;
+      font-weight: 500; font-size: 14px; text-decoration: none;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container { padding: 16px; }
+      .notepad-card { padding: 16px; }
+      .notes-textarea { min-height: 200px; font-size: 16px; }
+      .tab { padding: 8px 14px; font-size: 13px; }
+      .member-name-row { flex-direction: column; align-items: stretch; gap: 6px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <p class="breadcrumb">
-            <a href="../home.html">Home</a> /
-            <a href="../sprint-2.html">Sprint 2</a> /
-            Peer Evaluation
-        </p>
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="../home.html">Home</a> /
+      <a href="../sprint-2.html">Sprint 2</a> /
+      Peer Observation
+    </p>
 
-        <div class="header">
-            <h1>Peer Evaluation</h1>
-            <p>Evaluate your group members · Wednesday, March 11 (in class)</p>
-        </div>
-
-        <div class="context-box">
-            <p>After watching your group members' demos, evaluate each person's <strong>evidence of growth</strong> and their <strong>contribution to the group</strong>. Be honest and specific — your feedback helps them and informs the instructor's grading.</p>
-        </div>
-
-        <div class="card">
-            <h2>For Each Group Member</h2>
-            <p>Complete the following evaluation for each member of your triad (not yourself).</p>
-
-            <div class="eval-item">
-                <span class="eval-item__label">Demo Quality</span>
-                <p class="eval-item__question">How convincing was their evidence of growth? (1-5)</p>
-                <p class="eval-item__hint">5 = undeniable evidence, clear before/after, external validation. 1 = vague claims, no real evidence.</p>
-            </div>
-
-            <div class="eval-item">
-                <span class="eval-item__label">Demo Quality</span>
-                <p class="eval-item__question">What was the strongest piece of evidence in their demo?</p>
-                <p class="eval-item__hint">Point to something specific. What made you believe they actually grew?</p>
-            </div>
-
-            <div class="eval-item">
-                <span class="eval-item__label">Demo Quality</span>
-                <p class="eval-item__question">What was missing or unconvincing?</p>
-                <p class="eval-item__hint">Be constructive. What would have made their demo stronger?</p>
-            </div>
-
-            <div class="eval-item">
-                <span class="eval-item__label">Group Contribution</span>
-                <p class="eval-item__question">How did this person contribute to YOUR growth? (1-5)</p>
-                <p class="eval-item__hint">5 = significantly helped me grow through feedback, accountability, support. 1 = no meaningful contribution to my growth.</p>
-            </div>
-
-            <div class="eval-item">
-                <span class="eval-item__label">Group Contribution</span>
-                <p class="eval-item__question">Give a specific example of how they helped (or didn't help) the group.</p>
-                <p class="eval-item__hint">What did they actually do? Be concrete.</p>
-            </div>
-        </div>
-
-        <div class="important-note">
-            <h4>Honesty Matters</h4>
-            <p>Your evaluations are confidential. Giving everyone a 5 doesn't help anyone. Honest feedback — even when it's tough — is how groups improve. Your evaluations contribute to the Check-in/Engagement grade.</p>
-        </div>
-
-        <div class="submission">
-            <h3>What to Submit</h3>
-            <p>Complete the evaluation for each group member during class. Submit individually.</p>
-            <div class="submission__format">
-                <strong>Format:</strong> File upload (completed evaluation form)<br>
-                <strong>Due:</strong> Wednesday, March 11 (in class)<br>
-                <strong>Points:</strong> 5<br>
-                <strong>Group:</strong> Sprint 2: Check-in/Engagement
-            </div>
-            <a data-assignment-key="s2-peer-eval" href="https://csumb.instructure.com/courses/32911/assignments/582800" target="_blank" style="display: inline-block; margin-top: 16px; padding: 12px 24px; background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                Submit on Canvas →
-            </a>
-        </div>
+    <div class="header">
+      <h1>Demo Day &mdash; Peer Observation
+        <span class="capability-tag">SDL</span>
+        <span class="capability-tag">IS</span>
+      </h1>
+      <p>Sprint 2 &middot; Demo Day &middot; 5 points (completion)</p>
     </div>
 
-    <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
-        <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-            Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
-        </p>
-    </footer>
+    <!-- Name gate -->
+    <div id="name-gate" class="name-gate">
+      <h2>Before You Begin</h2>
+      <p>Enter your name to start observing.</p>
+      <input type="text" id="student-name" placeholder="Your name" autocomplete="name">
+      <button id="start-btn" disabled>Start Observing</button>
+    </div>
+
+    <!-- Activity area (hidden until name entered) -->
+    <div id="activity" class="hidden">
+
+      <!-- Reference card (collapsible) -->
+      <details class="reference-card" id="reference-card" open>
+        <summary>THREE LENSES FOR WATCHING DEMOS</summary>
+        <div class="lens">
+          <span class="lens-label">NOTICE:</span> <span class="lens-desc">What specific evidence of growth did they show? Before/after?</span>
+          <span class="stem">"I saw..." / "They showed..." / "Their evidence was..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">INTERPRET:</span> <span class="lens-desc">Was the evidence behavioral and verifiable, or a feeling/claim?</span>
+          <span class="stem">"This suggests..." / "The gap between their claim and evidence is..."</span>
+          <span class="stem">"The before/after shows..."</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">ASK:</span> <span class="lens-desc">What question would sharpen or test their evidence?</span>
+          <span class="stem">"What would someone outside your group say about this evidence?"</span>
+          <span class="stem">"If you removed the AI-assisted parts, what growth remains?"</span>
+          <span class="stem">"What changed between Sprint 1 and now &mdash; and how do you know?"</span>
+        </div>
+        <div class="tip">
+          <span class="tip-label">HOW TO ASK A HARD QUESTION WITHOUT BEING A JERK:</span>
+          <span class="tip-step">1. Clarify: "Help me understand..."</span>
+          <span class="tip-step">2. Value: "I noticed you did ___, which makes sense because..."</span>
+          <span class="tip-step">3. Then ask: "The thing I'm curious about is..."</span>
+        </div>
+      </details>
+
+      <!-- Tab bar -->
+      <div class="tab-bar" id="tab-bar"></div>
+
+      <!-- Notepad -->
+      <div class="notepad-card" id="notepad-card">
+        <div class="member-name-row">
+          <label for="member-name">Name:</label>
+          <input type="text" class="member-name-input" id="member-name"
+                 placeholder="e.g. Alex">
+        </div>
+
+        <textarea class="notes-textarea" id="notes-textarea"
+                  placeholder="Type what you notice as you watch. Use the lenses above if you need a starting point."></textarea>
+        <div class="word-count" id="word-count">0 words</div>
+
+        <button class="nudge-btn" id="nudge-btn">Push my thinking</button>
+
+        <div id="nudge-container"></div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="actions" id="actions">
+        <button class="btn btn--next" id="next-member-btn">Next Group Member &rarr;</button>
+        <button class="btn btn--save" id="download-btn">&#x2B07; Download JSON</button>
+        <span class="download-confirm" id="download-confirm">&#x2713; Downloaded</span>
+      </div>
+
+      <!-- Sprint 3 Takeaway (always available) -->
+      <div class="takeaway-section" id="takeaway-section">
+        <h2>Sprint 3 Takeaway</h2>
+        <p>Across all the demos you observed today &mdash; what's one thing you want to do differently in Sprint 3?</p>
+        <textarea id="takeaway-input" placeholder="What I want to do differently..."></textarea>
+      </div>
+
+      <!-- Submit to Canvas (always visible) -->
+      <div class="submit-section" id="submit-section">
+        <h3>Submit Your Observations</h3>
+        <p>Download your notes (all group members + takeaway) and upload the JSON file to Canvas.</p>
+        <a class="submit-link" data-assignment-key="s2-peer-eval" href="https://csumb.instructure.com/courses/32911/assignments/582800" target="_blank">Submit on Canvas &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ── Config ──
+    const AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+    const AI_MODEL = 'claude-sonnet-4-6';
+    const STORAGE_KEY = 'cst349-s2-peer-eval';
+    const MAX_NUDGES_PER_MEMBER = 3;
+    const MIN_WORDS_FOR_TRANSITION_NUDGE = 20;
+    const SAVE_DEBOUNCE_MS = 500;
+
+    const SYSTEM_PROMPT = `You are a quiet observation partner for a student watching Sprint 2 demo presentations in CST349 (Professional Seminar). Each demo is an individual presentation to the group (groups of 3) showing evidence of SDL (Self-Directed Learning) growth.
+
+The student has been taking notes while watching. They are now asking you for ONE nudge to push their thinking. Read their notes and respond with a single question that points their attention somewhere they haven't looked yet.
+
+=== RULES ===
+
+1. ONE question only. One or two sentences maximum. Never a paragraph.
+
+2. NEVER evaluate their notes. No "good observation," "interesting," "you're onto something." Zero praise. Zero judgment.
+
+3. NEVER generate a question for them to ask the presenter. Your job is to push THEIR thinking, not hand them a question.
+
+4. Read their notes and identify what cognitive level they're at:
+   - If mostly SURFACE (naming what happened): ask what evidence would need to exist for the growth to be real, or whether they're seeing a claim vs. proof
+   - If INTERPRETIVE (analyzing evidence quality, before/after gaps): ask for what's missing, or what alternative explanation fits the same evidence
+   - If they have a DRAFT QUESTION: ask a meta-question about it — "What would that answer tell you?" or "If they said yes, would you learn anything new?"
+   - If STUCK or very thin notes: offer a stem with a blank — "Try: 'The gap between their claim and their evidence is ___'"
+
+5. If the nudge type is "transition" (moving to next group member): frame your question as a bridge — something to carry forward. "Before you move on — [question]"
+
+6. If this is their 3rd nudge for this group member, make it a sharper version — they've been thinking about this person for a while.
+
+=== CONTEXT (for choosing where to point attention, never lecture about these) ===
+
+Sprint 2: Students worked in groups of 3 with external accountability. Each student developed a specific soft skill with evidence validated by their group and by networking with professionals.
+
+Worth noticing:
+- Evidence quality (verifiable behavior vs. vague claims about growth)
+- Before/after clarity (is the baseline real? is the current state measurable?)
+- External validation (did someone outside confirm the growth, or is it only self-reported?)
+- Group influence (did accountability change their approach, or did they work alone anyway?)
+- AI contribution (how much of what they're showing is AI-polished vs. genuinely theirs?)
+- Honesty signals (do they acknowledge what didn't work, or is everything positive?)`;
+
+    // ── State ──
+    let state = {
+      studentName: '',
+      startedAt: null,
+      members: [],
+      currentMember: 0,
+      takeaway: '',
+      finished: false,
+      downloadedAt: null,
+    };
+
+    // ── DOM refs ──
+    const $ = id => document.getElementById(id);
+    const nameInput = $('student-name');
+    const startBtn = $('start-btn');
+    const nameGate = $('name-gate');
+    const activity = $('activity');
+    const tabBar = $('tab-bar');
+    const memberName = $('member-name');
+    const notesTextarea = $('notes-textarea');
+    const wordCountEl = $('word-count');
+    const nudgeBtn = $('nudge-btn');
+    const nudgeContainer = $('nudge-container');
+    const nextMemberBtn = $('next-member-btn');
+    const takeawayInput = $('takeaway-input');
+    const downloadBtn = $('download-btn');
+    const downloadConfirm = $('download-confirm');
+    const referenceCard = $('reference-card');
+
+    // ── Helpers ──
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    // ── Persistence ──
+    let saveTimer = null;
+    function save() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+      }, SAVE_DEBOUNCE_MS);
+    }
+    function saveNow() {
+      clearTimeout(saveTimer);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+    function load() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) {
+          state = JSON.parse(s);
+          state.members.forEach(function(m) {
+            if (!m.nudges) m.nudges = [];
+            if (m.notes === undefined) m.notes = '';
+          });
+          return true;
+        }
+      } catch(e) {}
+      return false;
+    }
+
+    // ── Delete member ──
+    function deleteMember(index) {
+      const member = state.members[index];
+      const label = member.name || 'Member ' + (index + 1);
+      if (!confirm('Delete "' + label + '"? This cannot be undone.')) return;
+      state.members.splice(index, 1);
+      if (state.currentMember >= state.members.length) {
+        state.currentMember = Math.max(0, state.members.length - 1);
+      }
+      saveNow();
+      if (state.members.length === 0) {
+        addNewMember();
+      } else {
+        loadMemberUI();
+      }
+    }
+
+    // ── Tab rendering ──
+    function renderTabs() {
+      tabBar.innerHTML = '';
+      state.members.forEach(function(member, i) {
+        const tab = document.createElement('button');
+        tab.className = 'tab' + (i === state.currentMember ? ' tab--active' : '');
+        const label = member.name ? member.name : 'Member ' + (i + 1);
+        tab.textContent = label;
+        tab.addEventListener('click', function(e) {
+          if (e.target.classList.contains('tab__delete')) return;
+          switchToMember(i);
+        });
+        if (state.members.length > 1) {
+          const del = document.createElement('button');
+          del.className = 'tab__delete';
+          del.innerHTML = '&times;';
+          del.title = 'Delete ' + label;
+          del.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deleteMember(i);
+          });
+          tab.appendChild(del);
+        }
+        tabBar.appendChild(tab);
+      });
+
+      const addTab = document.createElement('button');
+      addTab.className = 'tab tab--add';
+      addTab.textContent = '+ New Group Member';
+      addTab.addEventListener('click', function() {
+        saveCurrent();
+        addNewMember();
+      });
+      tabBar.appendChild(addTab);
+    }
+
+    // ── Nudge rendering ──
+    function renderNudges() {
+      const member = state.members[state.currentMember];
+      if (!member) { nudgeContainer.innerHTML = ''; return; }
+
+      nudgeContainer.innerHTML = member.nudges.map(function(n) {
+        const label = n.trigger === 'transition' ? 'AI nudge (transition)' : 'AI nudge';
+        return '<div class="nudge-box">' +
+          '<div class="nudge-box__label">' + label + '</div>' +
+          '<p class="nudge-box__text">' + escapeHtml(n.text) + '</p>' +
+          '</div>';
+      }).join('');
+    }
+
+    // ── Update nudge button state ──
+    function updateNudgeBtn() {
+      const member = state.members[state.currentMember];
+      if (!member) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = 'Push my thinking';
+        return;
+      }
+      const requestedCount = member.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+      if (requestedCount >= MAX_NUDGES_PER_MEMBER) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = "You've got enough to work with. Trust your observations.";
+      } else {
+        nudgeBtn.disabled = false;
+        nudgeBtn.innerHTML = 'Push my thinking';
+      }
+    }
+
+    // ── Word count ──
+    function updateWordCount() {
+      const wc = wordCount(notesTextarea.value);
+      wordCountEl.textContent = wc + ' word' + (wc !== 1 ? 's' : '');
+    }
+
+    // ── Save current member data from inputs ──
+    function saveCurrent() {
+      const member = state.members[state.currentMember];
+      if (!member) return;
+      member.name = memberName.value.trim();
+      member.notes = notesTextarea.value;
+      saveNow();
+    }
+
+    // ── Switch to member by index ──
+    function switchToMember(index) {
+      saveCurrent();
+      state.currentMember = index;
+      saveNow();
+      loadMemberUI();
+    }
+
+    // ── Load current member into UI ──
+    function loadMemberUI() {
+      const member = state.members[state.currentMember];
+      if (!member) return;
+      memberName.value = member.name || '';
+      notesTextarea.value = member.notes || '';
+      updateWordCount();
+      renderNudges();
+      updateNudgeBtn();
+      renderTabs();
+
+      notesTextarea.disabled = false;
+      memberName.disabled = false;
+      notesTextarea.focus();
+    }
+
+    // ── Add new member ──
+    function addNewMember() {
+      state.members.push({
+        name: '',
+        notes: '',
+        nudges: [],
+        startedAt: new Date().toISOString(),
+      });
+      state.currentMember = state.members.length - 1;
+      saveNow();
+      loadMemberUI();
+      memberName.focus();
+    }
+
+    // ── AI call ──
+    async function getAINudge(member, trigger) {
+      const context = '[Group Member ' + (state.currentMember + 1) +
+        (member.name ? ': ' + member.name : '') + ']' +
+        ' [Nudge type: ' + trigger + ']' +
+        ' [Previous nudges this member: ' + member.nudges.length + ']' +
+        ' [Total members observed: ' + state.members.length + ']\n\n' +
+        'Student\'s notes:\n' + member.notes;
+
+      try {
+        const resp = await fetch(AI_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: SYSTEM_PROMPT,
+            messages: [{ role: 'user', content: context }],
+            model: AI_MODEL,
+            max_tokens: 150,
+          }),
+        });
+        if (!resp.ok) return null;
+        const data = await resp.json();
+        return data.content || null;
+      } catch(e) {
+        console.error('AI call failed:', e);
+        return null;
+      }
+    }
+
+    // ── Handle "Push my thinking" click ──
+    async function handleNudgeRequest() {
+      const member = state.members[state.currentMember];
+      if (!member) return;
+
+      member.notes = notesTextarea.value;
+      saveNow();
+
+      nudgeBtn.disabled = true;
+      nudgeBtn.innerHTML = '<span class="spinner"></span> thinking\u2026';
+
+      const text = await getAINudge(member, 'requested');
+
+      if (text) {
+        member.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'requested',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      updateNudgeBtn();
+    }
+
+    // ── Handle transition nudge (at "Next Group Member") ──
+    async function handleTransitionNudge() {
+      const member = state.members[state.currentMember];
+      if (!member) return false;
+
+      member.notes = notesTextarea.value;
+      const wc = wordCount(member.notes);
+      if (wc < MIN_WORDS_FOR_TRANSITION_NUDGE) return false;
+
+      nextMemberBtn.disabled = true;
+      nextMemberBtn.textContent = 'thinking\u2026';
+
+      const text = await getAINudge(member, 'transition');
+
+      if (text) {
+        member.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'transition',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      nextMemberBtn.disabled = false;
+      nextMemberBtn.innerHTML = 'Next Group Member &rarr;';
+      return true;
+    }
+
+    // ── Handle Next Group Member ──
+    async function handleNextMember() {
+      saveCurrent();
+      await handleTransitionNudge();
+
+      await new Promise(function(r) { setTimeout(r, 1500); });
+
+      addNewMember();
+    }
+
+    // ── Download confirmation flash ──
+    let downloadConfirmTimer = null;
+    function flashDownloadConfirm() {
+      downloadConfirm.classList.add('download-confirm--visible');
+      clearTimeout(downloadConfirmTimer);
+      downloadConfirmTimer = setTimeout(function() {
+        downloadConfirm.classList.remove('download-confirm--visible');
+      }, 3000);
+    }
+
+    // ── Export ──
+    function buildExport() {
+      return {
+        activityId: 'cst349-s2-peer-eval',
+        version: '2.0',
+        course: 'CST349',
+        studentName: state.studentName,
+        startedAt: state.startedAt,
+        submittedAt: new Date().toISOString(),
+        totalMembers: state.members.length,
+        members: state.members.map(function(m, i) {
+          const wc = wordCount(m.notes);
+          return {
+            memberNumber: i + 1,
+            name: m.name || 'Member ' + (i + 1),
+            startedAt: m.startedAt,
+            notes: m.notes,
+            wordCount: wc,
+            nudges: m.nudges,
+            nudgeCount: m.nudges.length,
+          };
+        }),
+        sprint3Takeaway: state.takeaway,
+        analytics: {
+          totalWords: state.members.reduce(function(sum, m) {
+            return sum + wordCount(m.notes);
+          }, 0),
+          totalNudgesRequested: state.members.reduce(function(sum, m) {
+            return sum + m.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+          }, 0),
+          totalTransitionNudges: state.members.reduce(function(sum, m) {
+            return sum + m.nudges.filter(function(n) { return n.trigger === 'transition'; }).length;
+          }, 0),
+        },
+      };
+    }
+
+    function handleDownload() {
+      saveCurrent();
+      state.takeaway = takeawayInput.value;
+      const data = buildExport();
+      state.downloadedAt = new Date().toISOString();
+      saveNow();
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      a.download = 'peer-observation-' + safeName + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      flashDownloadConfirm();
+    }
+
+    // ── Event listeners ──
+
+    notesTextarea.addEventListener('input', function() {
+      const member = state.members[state.currentMember];
+      if (member) {
+        member.notes = this.value;
+        save();
+      }
+      updateWordCount();
+    });
+
+    memberName.addEventListener('input', function() {
+      const member = state.members[state.currentMember];
+      if (member) {
+        member.name = this.value.trim();
+        save();
+        renderTabs();
+      }
+    });
+
+    nudgeBtn.addEventListener('click', handleNudgeRequest);
+    nextMemberBtn.addEventListener('click', handleNextMember);
+    downloadBtn.addEventListener('click', handleDownload);
+
+    takeawayInput.addEventListener('input', function() {
+      state.takeaway = this.value;
+      save();
+    });
+
+    // ── Name gate ──
+    nameInput.addEventListener('input', function() {
+      startBtn.disabled = !this.value.trim();
+    });
+    nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) startBtn.click();
+    });
+
+    startBtn.addEventListener('click', function() {
+      state.studentName = nameInput.value.trim();
+      state.startedAt = new Date().toISOString();
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+      saveNow();
+      addNewMember();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    });
+
+    // ── Init / restore ──
+    if (load() && state.studentName) {
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+
+      takeawayInput.value = state.takeaway || '';
+      loadMemberUI();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

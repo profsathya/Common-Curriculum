@@ -486,6 +486,184 @@ async function validateConfig(api, courseName) {
 }
 
 /**
+ * Parse a CSV line handling quoted fields with commas.
+ * (Same logic as sync-csv-to-config.js parseCSVLine.)
+ */
+function parseCSVLine(line) {
+  const values = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      values.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  values.push(current.trim());
+  return values;
+}
+
+/**
+ * Load a CSV file into an array of row objects keyed by header names.
+ */
+function loadCsvRows(csvPath) {
+  if (!fs.existsSync(csvPath)) return [];
+  const content = fs.readFileSync(csvPath, 'utf-8');
+  const lines = content.trim().split('\n');
+  if (lines.length < 2) return [];
+
+  const headers = parseCSVLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const values = parseCSVLine(line);
+    const row = {};
+    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
+    rows.push(row);
+  }
+  return rows;
+}
+
+/**
+ * Action: Validate CSV ↔ Config consistency (no changes, no Canvas API)
+ *
+ * Compares every field that exists in both the CSV and the JS config
+ * to detect drift. Returns { ok, mismatches } where mismatches is an
+ * array of { key, field, csv, config } objects.
+ *
+ * Designed to run as Step 0 of full-sync: if mismatches are found,
+ * the pipeline halts so you can decide which value is correct before
+ * generate-config overwrites the config.
+ */
+function validateConsistency(courseName) {
+  const courseInfo = COURSES[courseName];
+  const csvPath = path.join(process.cwd(), courseInfo.csvFile);
+  const csvRows = loadCsvRows(csvPath);
+
+  let config;
+  try {
+    const loaded = loadConfig(courseInfo.configFile, courseInfo.configVar);
+    config = loaded.config;
+  } catch (err) {
+    // Config doesn't exist yet — first-time setup, nothing to compare
+    return { ok: true, mismatches: [], warnings: [`Config not found: ${courseInfo.configFile} (first run?)`] };
+  }
+
+  // Fields that exist in both CSV and config and should match
+  const fieldsToCheck = ['canvasId', 'title', 'dueDate', 'points', 'canvasType', 'assignmentGroup'];
+  const mismatches = [];
+  const warnings = [];
+
+  for (const row of csvRows) {
+    const key = row.key;
+    if (!key) continue;
+
+    const configEntry = config.assignments[key];
+    if (!configEntry) {
+      warnings.push(`CSV key "${key}" not in config (will be added by generate-config)`);
+      continue;
+    }
+
+    for (const field of fieldsToCheck) {
+      const csvVal = (row[field] || '').toString();
+      const configVal = (configEntry[field] || '').toString();
+
+      // Skip empty CSV fields — config may have defaults
+      if (!csvVal && !configVal) continue;
+
+      if (csvVal !== configVal) {
+        mismatches.push({ key, field, csv: csvVal, config: configVal });
+      }
+    }
+  }
+
+  // Check for config keys not in CSV (orphaned entries)
+  const csvKeys = new Set(csvRows.map(r => r.key));
+  for (const key of Object.keys(config.assignments)) {
+    if (!csvKeys.has(key)) {
+      warnings.push(`Config key "${key}" not in CSV (orphaned — will not be updated)`);
+    }
+  }
+
+  return { ok: mismatches.length === 0, mismatches, warnings };
+}
+
+/**
+ * Action: Run validate-consistency for one or both courses and report.
+ * Returns true if consistent, false if mismatches found.
+ */
+function runValidateConsistency(course) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('Validate CSV ↔ Config Consistency');
+  console.log('='.repeat(60));
+
+  const courses = course === 'both' ? ['cst349', 'cst395'] : [course];
+  let allOk = true;
+
+  for (const c of courses) {
+    console.log(`\n${c.toUpperCase()}:`);
+    const { ok, mismatches, warnings } = validateConsistency(c);
+
+    if (warnings.length > 0) {
+      warnings.forEach(w => console.log(`  ⚠ ${w}`));
+    }
+
+    if (ok) {
+      console.log(`  ✓ CSV and config are consistent`);
+    } else {
+      allOk = false;
+      console.log(`  ✗ Found ${mismatches.length} mismatch(es):\n`);
+
+      // Group by key for readability
+      const byKey = {};
+      mismatches.forEach(m => {
+        if (!byKey[m.key]) byKey[m.key] = [];
+        byKey[m.key].push(m);
+      });
+
+      for (const [key, fields] of Object.entries(byKey)) {
+        console.log(`    ${key}:`);
+        fields.forEach(m => {
+          console.log(`      ${m.field}: CSV="${m.csv}" ≠ config="${m.config}"`);
+        });
+      }
+    }
+  }
+
+  if (!allOk) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log('ACTION REQUIRED:');
+    console.log('  CSV and config are out of sync. Before running full-sync,');
+    console.log('  decide which value is correct for each mismatch above.');
+    console.log('');
+    console.log('  • If CSV is correct: run generate-config to overwrite config');
+    console.log('    node scripts/canvas-sync.js --action=generate-config');
+    console.log('');
+    console.log('  • If config is correct: update the CSV to match, then run');
+    console.log('    generate-config to confirm they agree.');
+    console.log('');
+    console.log('  To skip this check: --skip-consistency-check');
+    console.log('─'.repeat(60));
+  } else {
+    console.log('\n✓ All courses consistent — safe to proceed');
+  }
+
+  return allOk;
+}
+
+/**
  * Action: Rename Canvas assignments to match config titles
  * Uses fuzzy matching to find corresponding assignments
  */
@@ -1506,11 +1684,23 @@ async function updateHtmlLinks() {
  * Action: Full sync pipeline
  * Runs: generate-config → create-assignments → create-quizzes → fetch-assignments → writeback-csv → update-html-links
  */
-async function fullSync(api, course, dryRun = true, limit = 0) {
+async function fullSync(api, course, dryRun = true, limit = 0, skipConsistencyCheck = false) {
   console.log(`\n${'#'.repeat(60)}`);
   console.log('FULL SYNC PIPELINE');
   console.log(`Course: ${course} | Dry Run: ${dryRun} | Limit: ${limit || 'none'}`);
   console.log('#'.repeat(60));
+
+  // Step 0: Pre-flight consistency check
+  if (!skipConsistencyCheck) {
+    const consistent = runValidateConsistency(course);
+    if (!consistent) {
+      console.log('\n✗ Pipeline halted — resolve mismatches before syncing.');
+      console.log('  Or re-run with --skip-consistency-check to proceed anyway.');
+      return [{ step: 'Validate Consistency', success: false, error: 'CSV ↔ config mismatches found' }];
+    }
+  } else {
+    console.log('\n⚠ Consistency check skipped (--skip-consistency-check)');
+  }
 
   const steps = [
     { name: 'Generate Config', action: 'generate-config' },
@@ -1638,7 +1828,7 @@ async function main() {
   }
 
   // Actions that don't require Canvas API (or manage their own)
-  const localOnlyActions = ['sync-html-links', 'generate-config', 'writeback-csv', 'update-html-links', 'analyze-submissions', 'post-grades'];
+  const localOnlyActions = ['sync-html-links', 'generate-config', 'writeback-csv', 'update-html-links', 'analyze-submissions', 'post-grades', 'validate-consistency'];
 
   // Initialize API only if needed
   let api = null;
@@ -1773,8 +1963,12 @@ async function main() {
         await updateHtmlLinks();
         break;
 
+      case 'validate-consistency':
+        runValidateConsistency(course);
+        break;
+
       case 'full-sync':
-        await fullSync(api, course, dryRun, limit);
+        await fullSync(api, course, dryRun, limit, args['skip-consistency-check'] === 'true');
         break;
 
       case 'analyze-submissions': {
@@ -1809,7 +2003,7 @@ async function main() {
 
       default:
         console.error(`Unknown action: ${action}`);
-        console.error('Valid actions: full-sync, generate-config, create-assignments, create-quizzes, update-assignments, fetch-assignments, writeback-csv, update-html-links, validate-config, list-courses, list-groups, rename-assignments, sync-html-links, analyze-submissions, post-grades');
+        console.error('Valid actions: full-sync, generate-config, create-assignments, create-quizzes, update-assignments, fetch-assignments, writeback-csv, update-html-links, validate-config, validate-consistency, list-courses, list-groups, rename-assignments, sync-html-links, analyze-submissions, post-grades');
         process.exit(1);
     }
   } catch (error) {

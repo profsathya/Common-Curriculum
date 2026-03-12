@@ -30,6 +30,16 @@ on:
         required: false
         default: ''
         type: string
+      force_download:
+        description: 'Force re-download all assignments (skip incremental optimization)'
+        required: false
+        default: false
+        type: boolean
+      grades_json:
+        description: 'Paste reviewed grades JSON here (for post-grades action only)'
+        required: false
+        default: ''
+        type: string
 
 concurrency:
   group: analyze-${{ github.ref }}-${{ inputs.course }}
@@ -41,7 +51,7 @@ permissions:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: Checkout public repo
@@ -65,6 +75,27 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Write pasted grades JSON
+        if: inputs.action == 'post-grades' && inputs.grades_json != ''
+        env:
+          INPUT_COURSE: ${{ inputs.course }}
+          INPUT_ASSIGNMENT: ${{ inputs.assignment }}
+          GRADES_JSON: ${{ inputs.grades_json }}
+        run: |
+          if [ -z "${INPUT_ASSIGNMENT}" ]; then
+            echo "Error: --assignment is required when pasting grades JSON"
+            exit 1
+          fi
+          COURSES="${INPUT_COURSE}"
+          if [ "${COURSES}" = "both" ]; then
+            COURSES="cst349 cst395"
+          fi
+          for c in $COURSES; do
+            mkdir -p "data-repo/${c}/grading"
+            echo "${GRADES_JSON}" > "data-repo/${c}/grading/${INPUT_ASSIGNMENT}.json"
+            echo "✓ Wrote grades JSON to data-repo/${c}/grading/${INPUT_ASSIGNMENT}.json"
+          done
+
       - name: Run Submission Analyzer
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
@@ -73,17 +104,23 @@ jobs:
           INPUT_ACTION: ${{ inputs.action }}
           INPUT_COURSE: ${{ inputs.course }}
           INPUT_ASSIGNMENT: ${{ inputs.assignment }}
+          INPUT_FORCE_DOWNLOAD: ${{ inputs.force_download }}
         run: |
           echo "=============================================="
           echo "Submission Analyzer: ${INPUT_ACTION}"
           echo "Course: ${INPUT_COURSE}"
           echo "Assignment: ${INPUT_ASSIGNMENT:-all}"
+          echo "Force download: ${INPUT_FORCE_DOWNLOAD:-false}"
           echo "=============================================="
 
           ARGS="--action=${INPUT_ACTION} --course=${INPUT_COURSE} --data-dir=./data-repo"
 
           if [ -n "${INPUT_ASSIGNMENT}" ]; then
             ARGS="$ARGS --assignment=${INPUT_ASSIGNMENT}"
+          fi
+
+          if [ "${INPUT_FORCE_DOWNLOAD}" = "true" ]; then
+            ARGS="$ARGS --force-download"
           fi
 
           node scripts/submission-analyzer.js $ARGS

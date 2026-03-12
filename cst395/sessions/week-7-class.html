@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Week 7: Feedback + Iteration | CST395</title>
+  <title>Week 7: The Narrowing Move | CST395</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -16,6 +16,13 @@
       --text-primary: #f1f5f9;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
+      --red-500: #ef4444;
+      --red-700: #b91c1c;
+      --amber-400: #fbbf24;
+      --amber-600: #d97706;
+      --green-400: #4ade80;
+      --green-700: #15803d;
+      --purple-400: #c084fc;
     }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; line-height: 1.6; font-size: 20px; }
     .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,0.1); z-index: 100; }
@@ -34,15 +41,20 @@
     .section-content { max-width: 1100px; width: 100%; }
     .section-label { font-size: 16px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--teal-400); margin-bottom: 16px; }
     h1 { font-size: clamp(40px, 7vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
-    h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
-    .subtitle { font-size: clamp(22px, 3vw, 28px); color: var(--text-secondary); max-width: 700px; }
-    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 32px; }
-    .activity-card h3 { font-size: 26px; color: var(--teal-400); margin-bottom: 16px; }
-    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 22px; }
-    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 22px; }
-    .activity-card li { margin-bottom: 12px; }
-    .highlight-quote { background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 32px; text-align: center; }
-    .highlight-quote p { font-size: 24px; font-weight: 500; margin: 0; }
+    h2 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
+    .subtitle { font-size: clamp(20px, 3vw, 24px); color: var(--text-secondary); max-width: 750px; }
+    .card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 24px; }
+    .card h3 { font-size: 22px; color: var(--teal-400); margin-bottom: 16px; }
+    .card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 20px; }
+    .highlight { padding: 24px 32px; border-radius: 12px; margin-top: 24px; }
+    .highlight p { font-size: 22px; font-weight: 500; margin: 0; text-align: center; }
+    .hl-teal { background: linear-gradient(135deg, var(--teal-700), var(--teal-600)); }
+    .hl-red { background: linear-gradient(135deg, var(--red-700), #991b1b); }
+    .hl-amber { background: linear-gradient(135deg, #92400e, #78350f); }
+    .hl-green { background: linear-gradient(135deg, var(--green-700), #166534); }
+    .hl-purple { background: linear-gradient(135deg, #6b21a8, #7e22ce); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
     .timer-container { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
     .timer-display { font-size: 72px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--teal-400); min-width: 160px; text-align: center; }
     .timer-btn { background: var(--teal-600); border: none; color: white; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -50,148 +62,314 @@
     .timer-btn.reset { background: rgba(255,255,255,0.1); }
     .click-hint { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
     .click-hint kbd { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; }
+    .sprint-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .sprint-row:last-child { border-bottom: none; }
+    .sprint-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .sprint-badge.s1 { background: rgba(45,212,191,0.15); color: var(--teal-400); }
+    .sprint-badge.s2 { background: rgba(251,191,36,0.15); color: var(--amber-400); }
+    .sprint-badge.s3 { background: rgba(192,132,252,0.15); color: var(--purple-400); }
+    .sprint-badge.s4 { background: rgba(74,222,128,0.15); color: var(--green-400); }
+    .sprint-desc { color: var(--text-secondary); font-size: 18px; }
+    .sprint-desc strong { color: var(--text-primary); }
+    .done-check { color: var(--teal-400); }
+    .current-mark { color: var(--amber-400); font-weight: 600; }
+    .future-mark { color: var(--text-muted); }
+    .round-marker { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .round-dojo { background: var(--teal-600); color: white; }
+    .round-pause { background: var(--amber-600); color: white; }
+    .point-callout { background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(251,191,36,0.03)); border: 2px solid rgba(251,191,36,0.3); border-radius: 16px; padding: 28px; margin-top: 24px; text-align: center; }
+    .point-callout .pts { font-size: 64px; font-weight: 700; color: var(--amber-400); line-height: 1; }
+    .point-callout .pts-label { font-size: 18px; color: var(--text-secondary); margin-top: 8px; }
   </style>
 </head>
 <body>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
   <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
     Live content — may be updated until and even during class
   </div>
-
   <nav class="nav-bar">
-    <div class="nav-title"><strong>CST395</strong> · Week 7 Session</div>
-    <div class="nav-progress" id="navProgress">1 of 6</div>
+    <div class="nav-title"><strong>CST395</strong> · Week 7</div>
+    <div class="nav-progress" id="navProgress">1 / 13</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
   </nav>
-
-  <!-- Section 1: Title -->
+  <!-- ==================== 1: TITLE ==================== -->
   <section class="section active" data-section="1">
     <div class="section-content" style="text-align: center;">
-      <p class="section-label">Week 7 · Feedback + Iteration</p>
-      <h1>Show Your Partner<br><span style="color: var(--teal-400);">What You Built</span></h1>
-      <p class="subtitle" style="margin: 0 auto;">Today you get the most important feedback: does your partner feel understood?</p>
+      <p class="section-label">Week 7 · Tuesday, March 4</p>
+      <h1>The Narrowing Move</h1>
+      <p class="subtitle" style="margin: 0 auto;">The hardest skill in problem solving — and the one that separates class projects from real work.</p>
     </div>
   </section>
-
-  <!-- Section 2: Feedback Framing -->
+  <!-- ==================== 2: WHERE WE'RE GOING ==================== -->
   <section class="section" data-section="2">
     <div class="section-content">
-      <p class="section-label">Before We Start</p>
-      <h2>How to Give Useful Feedback</h2>
-      <div class="activity-card">
-        <h3>As the Partner Being Shown a Prototype</h3>
-        <ul>
-          <li><strong>Don't be polite.</strong> "It's nice" helps no one. Say what's actually true.</li>
-          <li><strong>Point to specifics.</strong> "This part feels right because..." or "This misses the mark because..."</li>
-          <li><strong>Distinguish want vs. need.</strong> "I asked for X, but what I actually need is Y"</li>
-          <li><strong>Notice surprises.</strong> "I didn't expect you to include this — and it matters because..."</li>
-        </ul>
+      <p class="section-label">The Destination</p>
+      <h2>Two Questions You Need to Answer by May</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3 style="font-size: 18px;">🚀 Superagency</h3>
+          <p style="font-size: 20px; color: var(--text-primary); font-weight: 500;">"What problems are now within my reach that I would not have attempted before?"</p>
+          <p style="font-size: 16px; margin-top: 12px;">AI expands what's possible for you. But only if you can identify worthwhile problems, break them down, and maintain direction through complexity.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: 18px;">✨ Human Value Proposition</h3>
+          <p style="font-size: 20px; color: var(--text-primary); font-weight: 500;">"What did I specifically contribute that AI could not have done alone?"</p>
+          <p style="font-size: 16px; margin-top: 12px;">Superagency without human value is just delegation. You need to articulate the judgment, context, and integration that only you provide.</p>
+        </div>
       </div>
-      <div class="highlight-quote">
-        <p>The best feedback isn't about the solution. It's about whether they understood the problem.</p>
+      <div class="highlight hl-teal" style="margin-top: 24px;">
+        <p>These aren't philosophical questions. By the end of the semester, you answer them <em>with evidence from things you actually built.</em></p>
       </div>
     </div>
   </section>
-
-  <!-- Section 3: Present Prototype -->
+  <!-- ==================== 3: THE SPRINT ARC ==================== -->
   <section class="section" data-section="3">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Activity</p>
-      <h2>Prototype Presentation</h2>
-      <p class="subtitle" style="margin: 0 auto;">Show your prototype to your partner. Watch their reaction carefully.</p>
-
+    <div class="section-content">
+      <p class="section-label">The Path</p>
+      <h2>Each Sprint Builds on the Last</h2>
+      <div class="card" style="padding: 24px 28px;">
+        <div class="sprint-row">
+          <span class="sprint-badge s1">Sprint 1</span>
+          <span class="done-check">✓</span>
+          <span class="sprint-desc"><strong>Foundation — Yourself.</strong> Identify and solve your own problem. Establish your baseline.</span>
+        </div>
+        <div class="sprint-row">
+          <span class="sprint-badge s2">Sprint 2</span>
+          <span class="current-mark">→</span>
+          <span class="sprint-desc"><strong>Mirror — A Partner.</strong> Understand and solve someone else's problem. Learn to see what they can't tell you directly.</span>
+        </div>
+        <div class="sprint-row">
+          <span class="sprint-badge s3">Sprint 3</span>
+          <span class="future-mark">○</span>
+          <span class="sprint-desc"><strong>Complexity — External Stakeholder.</strong> Solve for someone whose context you don't fully know. Ambiguity gets real.</span>
+        </div>
+        <div class="sprint-row">
+          <span class="sprint-badge s4">Sprint 4</span>
+          <span class="future-mark">○</span>
+          <span class="sprint-desc"><strong>Mastery — Full Autonomy.</strong> Independently identify, scope, and deliver real value. Portfolio defense.</span>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-top: 20px;">Sprints 3 and 4 are where the real-world, portfolio-worthy work happens. But they only work if you've built the muscles in Sprints 1 and 2. You can't solve for a stranger if you haven't learned to solve for someone you know.</p>
+    </div>
+  </section>
+  <!-- ==================== 4: HONEST TALK ==================== -->
+  <section class="section" data-section="4">
+    <div class="section-content">
+      <p class="section-label">Where We Actually Are</p>
+      <h2>Let's Be Honest</h2>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">I know some of this has felt like busy work. Reflections, audits, learning plans — they can feel like hoops to jump through when you want to just <em>build</em> something.</p>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">I also know the submission rates dropped hard this past week. Some of you are behind on Domain Learning and Demo Design. That's data I can see.</p>
+      <p style="color: var(--text-primary); font-size: 20px; margin-bottom: 20px;">Here's what I want you to understand: every one of those "exercises" is building a specific muscle. Discovery taught you to <em>listen for what people don't say directly.</em> The Assumption Audit taught you to <em>separate evidence from story.</em> Domain Learning teaches you to <em>let science redirect your instincts.</em></p>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">These are not academic exercises. They're the exact capabilities that make you valuable in a world where AI can write code, generate designs, and produce content. What AI can't do is sit across from a person, hear what they're actually struggling with, and narrow it to something buildable. That's a human skill. And it only develops if you do the reps.</p>
+      <div class="highlight hl-amber">
+        <p>The pivot we need to make ourselves useful in the age of AI requires fundamental capability building. That takes time and reps. Sprints 3 and 4 are where it pays off — but only if the foundation is there.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 5: WHAT'S DIFFERENT TODAY ==================== -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Today's Session</p>
+      <h2>Today I'm Going to<br>Guide You Through It</h2>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">I've put together a structured activity that walks you through the hardest move in problem solving — going from "I understand my partner's situation" to "I'm building THIS specific thing, for THIS specific reason, and here's how I'll know if it worked."</p>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">Two parts:</p>
+      <div class="two-col">
+        <div class="card">
+          <h3 style="font-size: 18px; color: var(--purple-400);">Part 1: See How It Works</h3>
+          <p style="font-size: 17px;">Interactive examples built from real problems in this class. You pick the one closest to your partner's problem and step through the narrowing process. 10 minutes.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: 18px; color: var(--teal-400);">Part 2: Do It Yourself</h3>
+          <p style="font-size: 17px;">Open the Dojo. AI guides your thinking in 4 rounds. Your partner checks your thinking at 3 pause points. You walk out with a locked MVP statement.</p>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 17px; margin-top: 20px;">If you're behind on Domain Learning — that's OK for today. The Dojo will weave research into the conversation so you learn as you narrow. But you'll need to go deeper before you build. This catches you up, it doesn't replace the work.</p>
+    </div>
+  </section>
+  <!-- ==================== 6: THE STAKES ==================== -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">What This Leads To</p>
+      <h2>Prototype v1 + Build Log</h2>
+      <div class="point-callout">
+        <div class="pts">20 pts</div>
+        <div class="pts-label">The most heavily weighted assignment in Sprint 2</div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-top: 20px;">This isn't just "turn in a prototype." The Build Log is where you show the thinking. Every decision you made — what form the solution takes, why you narrowed to this component, what research informed your design, what your partner said that changed your direction — that's the substance.</p>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-top: 12px;">Today's session — the narrowing, the partner conversations, the domain learning the AI pushes you on — is directly building the material for this assignment. What happens in the next hour is your build log's backbone.</p>
+      <div class="highlight hl-green" style="margin-top: 20px;">
+        <p>Due: Monday, March 9. Your partner should be <em>using</em> what you built before Demo Day.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 7: THE ARC OF TODAY ==================== -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">Sprint 2 · Where You Are</p>
+      <h2>The Arc to Demo Day</h2>
+      <div class="card" style="padding: 20px 28px;">
+        <div class="sprint-row"><span class="done-check">✓</span><span class="sprint-desc">Discovery Deep Dive — What's your partner's world?</span></div>
+        <div class="sprint-row"><span class="done-check">✓</span><span class="sprint-desc">Assumption Audit — What's evidence vs. story?</span></div>
+        <div class="sprint-row"><span class="done-check">✓</span><span class="sprint-desc">Challenge Session — Where were you wrong?</span></div>
+        <div class="sprint-row"><span style="color: var(--text-muted);">○</span><span class="sprint-desc" style="color: var(--text-muted);">Domain Learning — What does science say? <span style="font-size: 14px; color: var(--amber-400);">(catch up this week if behind)</span></span></div>
+        <div class="sprint-row"><span class="current-mark">→</span><span class="sprint-desc"><strong style="color: var(--amber-400);">TODAY: The Narrowing Move</strong> — From understanding to one buildable thing</span></div>
+        <div class="sprint-row"><span class="future-mark">○</span><span class="sprint-desc">This week: Build v1 — Prototype + Build Log (20 pts, Mon Mar 9)</span></div>
+        <div class="sprint-row"><span class="future-mark">○</span><span class="sprint-desc">Next Wednesday: Demo Day — Show what you built. Partner validates live.</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 8: PART 1 — EXAMPLES ==================== -->
+  <section class="section" data-section="8">
+    <div class="section-content">
+      <p class="section-label">Part 1 · 10 minutes</p>
+      <h2>See the Narrowing Move<br>Before You Do It</h2>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 20px;">I've built three examples from real problems in this class. Pick the scenario closest to your partner's situation. Step through it — you'll answer questions about the thinking before you see what happens next.</p>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 20px;">This isn't a reading exercise. Each step asks you to identify the thinking move before it reveals the answer. Pay attention to where the student's first instinct was wrong and what changed it.</p>
       <div class="timer-container">
-        <div class="timer-display" id="timerDisplay1">15:00</div>
-        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start Presentation</button>
+        <div class="timer-display" id="timerDisplay1">10:00</div>
+        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
         <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
       </div>
-
-      <div class="activity-card" style="text-align: left;">
-        <h3>Presentation Flow</h3>
-        <ol>
-          <li>Show your prototype (5 min)</li>
-          <li>Partner reacts and asks questions (5 min)</li>
-          <li>Document: what surprised them? Where were you right/wrong? (5 min)</li>
-        </ol>
+      <div style="text-align: center; margin-top: 16px;">
+        <a href="week-7-narrowing-examples.html" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #7e22ce, #9333ea); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 20px;">Open Interactive Examples →</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 15px; text-align: center; margin-top: 12px;">Three scenarios: Task Delay, Overcommitment, Job Search. Pick one.</p>
+    </div>
+  </section>
+  <!-- ==================== 9: PART 2 — DOJO INTRO ==================== -->
+  <section class="section" data-section="9">
+    <div class="section-content">
+      <p class="section-label">Part 2 · Your Turn</p>
+      <h2>Now Do It With Your Problem</h2>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 16px;">Same structure you just saw — but with your partner's actual problem. The Dojo will guide you through 4 rounds. Your partner will check your thinking 3 times.</p>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 16px;">Go to <strong style="color: var(--teal-400);">CST395: S2 - Practice Dojo - Learn and Solve</strong> in the Symbiotic Thinking Dojo tool.</p>
+      <div class="card">
+        <h3 style="font-size: 18px;">How This Works</h3>
+        <p style="font-size: 17px;">Open the Dojo. The AI will ask you about your partner's problem, challenge your first instinct, help you find the sub-problems, push you on what research says, and help you define exactly what to build.</p>
+        <p style="font-size: 17px;">At three points, it will tell you to <strong style="color: var(--amber-400);">stop and go talk to your partner.</strong> It won't continue until you report back what they said.</p>
+        <p style="font-size: 17px;">These pauses aren't optional. The AI pushes your logic. Your partner is the only person who knows if your logic matches their reality.</p>
+      </div>
+      <div class="highlight hl-teal" style="margin-top: 20px;">
+        <p>AI pushes the thinking. Partner provides the truth. Neither works alone.</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 4: Switch -->
-  <section class="section" data-section="4">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Switch Roles</p>
-      <h2>Your Partner Presents</h2>
-      <p class="subtitle" style="margin: 0 auto;">Now you're the stakeholder. Give honest feedback about how well they understood you.</p>
-
+  <!-- ==================== 10: DOJO LAUNCH ==================== -->
+  <section class="section" data-section="10">
+    <div class="section-content">
+      <p class="section-label">Activity · 40 minutes</p>
+      <h2>Open the Dojo</h2>
       <div class="timer-container">
-        <div class="timer-display" id="timerDisplay2">15:00</div>
+        <div class="timer-display" id="timerDisplay2">40:00</div>
         <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
         <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
       </div>
-
-      <div class="highlight-quote">
-        <p>When you see their prototype: does it address what you said, or what you actually need? There's a difference.</p>
+      <div style="text-align: center; margin-top: 16px;">
+        <a href="https://dojo.symbioticthinking.ai" target="_blank" style="display: inline-block; background: linear-gradient(135deg, var(--teal-600), var(--teal-500)); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 20px;">Open Symbiotic Thinking Dojo →</a>
+      </div>
+      <div style="display: grid; gap: 12px; margin-top: 28px;">
+        <div style="background: var(--bg-section); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-dojo">Round 1 · ~8 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Describe your partner's problem. AI challenges your first instinct — are you projecting?</p>
+        </div>
+        <div style="background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-pause">Pause 1 · ~5 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;"><strong style="color: var(--amber-400);">Close the tab.</strong> Ask partner: "Walk me through the last time this happened — minute by minute."</p>
+        </div>
+        <div style="background: var(--bg-section); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-dojo">Round 2 · ~8 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Report what partner said. AI helps decompose into sub-problems + pushes you on what research says.</p>
+        </div>
+        <div style="background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-pause">Pause 2 · ~5 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;"><strong style="color: var(--amber-400);">Close the tab.</strong> Name the sub-problems. Ask: "Which one, if it disappeared, would change things most?"</p>
+        </div>
+        <div style="background: var(--bg-section); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-dojo">Round 3 · ~8 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Define what to build. AI pushes on form — match your partner's life, not your CS instincts.</p>
+        </div>
+        <div style="background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-pause">Pause 3 · ~5 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;"><strong style="color: var(--amber-400);">Close the tab.</strong> Describe what you'd build. Ask: "Would you use this? How would we know it worked?"</p>
+        </div>
+        <div style="background: var(--bg-section); border-radius: 10px; padding: 16px 20px;">
+          <span class="round-marker round-dojo">Round 4 · ~5 min</span>
+          <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Lock your MVP statement. Specific component, what you're building, how they use it, measurable outcome.</p>
+        </div>
       </div>
     </div>
   </section>
-
-  <!-- Section 5: Demo Check -->
-  <section class="section" data-section="5">
+  <!-- ==================== 11: IF STUCK ==================== -->
+  <section class="section" data-section="11">
     <div class="section-content">
-      <p class="section-label">Demo Prep Check</p>
-      <h2>Demo Day is Next Week</h2>
-      <div class="activity-card">
-        <h3>Are You Ready?</h3>
-        <ul>
-          <li>Can you articulate the problem you discovered (not just what they said)?</li>
-          <li>Can you point to specific decisions shaped by your understanding of them?</li>
-          <li>Can you show where you were wrong and what you changed?</li>
-          <li>Can you explain what would be worse if AI did this alone?</li>
-        </ul>
-        <p style="color: var(--text-primary); font-weight: 500; margin-top: 16px;">If you can't answer these yet, you have one week to get there.</p>
+      <p class="section-label">While You're Working</p>
+      <h2>If You Get Stuck</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3 style="font-size: 17px; color: var(--amber-400);">Partner can't describe it minute-by-minute</h3>
+          <p style="font-size: 16px;">Ask: "What did you do <em>instead</em> of the thing you were supposed to do? What happened right before that?" People remember avoidance behavior more clearly than the trigger.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: 17px; color: var(--amber-400);">Everything still feels too broad</h3>
+          <p style="font-size: 16px;">The "last Tuesday at 3pm" test: Can you name the specific time and place your partner would use what you're building? If not, it's still too broad.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: 17px; color: var(--amber-400);">You can't think of a measurable outcome</h3>
+          <p style="font-size: 16px;">Ask partner: "If this worked perfectly, what would be <em>different</em> about next Thursday compared to last Thursday?" Their answer is your outcome.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size: 17px; color: var(--amber-400);">Partner says "yeah, sure" to everything</h3>
+          <p style="font-size: 16px;">They're being polite. Try: "I'm going to describe two options — tell me which you'd actually open on a Tuesday night when you're tired." Forced choice reveals real preference.</p>
+        </div>
       </div>
     </div>
   </section>
-
-  <!-- Section 6: This Week -->
-  <section class="section" data-section="6">
+  <!-- ==================== 12: LOCK & ASSIGNMENTS ==================== -->
+  <section class="section" data-section="12">
+    <div class="section-content">
+      <p class="section-label">Before You Leave</p>
+      <h2>Lock Your MVP</h2>
+      <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 16px;">If you finished the Dojo session — read your MVP statement to your partner one final time. If they nod, you're locked.</p>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 20px;">If you're not fully through the rounds, write where you are and what you still need to resolve. You can finish the Dojo conversation tonight.</p>
+      <div class="card">
+        <h3>Write these down before you leave</h3>
+        <p><strong style="color: var(--text-primary);">1. Your MVP statement</strong> — specific component, what you're building, how your partner uses it, measurable outcome. If it takes more than 3 sentences, it's still too broad.</p>
+        <p><strong style="color: var(--text-primary);">2. What form does v1 take?</strong> — Not "an app." The specific thing: a Google Sheet, a daily text protocol, a physical card, a decision flowchart.</p>
+        <p><strong style="color: var(--text-primary);">3. When does your partner start using it?</strong> — Agree right now, while you're sitting next to them.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 13: THIS WEEK ==================== -->
+  <section class="section" data-section="13">
     <div class="section-content">
       <p class="section-label">This Week</p>
-      <h2>Before Demo Day (Mar 11)</h2>
+      <h2>Two Things Before Demo Day</h2>
       <div style="display: grid; gap: 20px; margin-top: 24px;">
         <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Partner Feedback Documentation</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Process what happened today — not just what they said, but what it tells you.</p>
+            <p style="color: var(--purple-400); font-weight: 600; margin-bottom: 6px; font-size: 20px;">S2: Productive Reflection #5</p>
+            <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">What happened during the narrowing? What did your partner say that surprised you? Where did the AI push you that your own thinking wouldn't have gone?</p>
           </div>
-          <span style="color: #fbbf24; font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Mar 6</span>
+          <span style="color: var(--text-secondary); font-size: 16px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Fri, Mar 6</span>
         </div>
-        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background: rgba(251,191,36,0.05); border: 2px solid rgba(251,191,36,0.25); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Design Rationale Log</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Document your decisions — show HOW you thought, not just what you built.</p>
+            <p style="color: var(--amber-400); font-weight: 600; margin-bottom: 6px; font-size: 20px;">S2: Prototype v1 + Build Log <span style="background: rgba(251,191,36,0.2); padding: 2px 10px; border-radius: 12px; font-size: 14px; margin-left: 8px;">20 pts</span></p>
+            <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Build the MVP you locked today. Your partner should be using it before Demo Day. Log every decision — what you chose, what you rejected, why. The log IS your demo material.</p>
           </div>
-          <span style="color: var(--text-secondary); font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Mar 7</span>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <p style="color: var(--teal-400); font-weight: 600; margin-bottom: 6px; font-size: 24px;">Final Prototype + Demo Prep</p>
-            <p style="color: var(--text-secondary); font-size: 20px; margin: 0;">Iterate your solution and prepare to present. 5 minutes to a hiring committee.</p>
-          </div>
-          <span style="color: #fbbf24; font-size: 20px; font-weight: 500; white-space: nowrap; margin-left: 24px;">Sat, Mar 8</span>
+          <span style="color: #fbbf24; font-size: 16px; font-weight: 600; white-space: nowrap; margin-left: 24px;">Mon, Mar 9</span>
         </div>
       </div>
-      <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 18px; margin-top: 32px;">→ Sprint 2 Landing Page</a>
+      <div style="margin-top: 24px; padding: 20px; background: var(--bg-section); border-radius: 12px;">
+        <p style="color: var(--text-secondary); font-size: 16px; margin: 0;"><strong style="color: var(--text-primary);">If you're behind on Domain Learning:</strong> Do it this week as part of your build process. When you're deciding what form your solution should take, look up what research says about why your partner's problem is hard. That research will directly improve what you build — and it goes in your build log.</p>
+      </div>
+      <a href="../sprint-2.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--teal-400); text-decoration: none; font-size: 18px; margin-top: 24px;">→ Sprint 2 Landing Page</a>
     </div>
   </section>
-
   <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
-
   <script>
     let currentSection = 1;
     const totalSections = document.querySelectorAll('.section').length;
@@ -200,61 +378,37 @@
     const navProgress = document.getElementById('navProgress');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
     const timers = {
-      1: { running: false, seconds: 900, defaultSeconds: 900, interval: null },
-      2: { running: false, seconds: 900, defaultSeconds: 900, interval: null }
+      1: { running: false, seconds: 600, defaultSeconds: 600, interval: null },
+      2: { running: false, seconds: 2400, defaultSeconds: 2400, interval: null }
     };
-
     function goToSection(n) {
       if (n < 1 || n > totalSections) return;
       sections.forEach(s => s.classList.remove('active'));
       document.querySelector(`[data-section="${n}"]`).classList.add('active');
       currentSection = n;
       progressFill.style.width = `${(currentSection / totalSections) * 100}%`;
-      navProgress.textContent = `${currentSection} of ${totalSections}`;
+      navProgress.textContent = `${currentSection} / ${totalSections}`;
       prevBtn.disabled = currentSection === 1;
       nextBtn.disabled = currentSection === totalSections;
     }
-
     prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
     nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
     });
-
     function toggleTimer(id) {
-      const timer = timers[id];
-      const btn = document.getElementById(`timerBtn${id}`);
-      if (timer.running) { clearInterval(timer.interval); btn.textContent = 'Resume'; timer.running = false; }
+      const t = timers[id], btn = document.getElementById(`timerBtn${id}`);
+      if (t.running) { clearInterval(t.interval); btn.textContent = 'Resume'; t.running = false; }
       else {
-        timer.interval = setInterval(() => {
-          timer.seconds--;
-          updateTimerDisplay(id);
-          if (timer.seconds <= 0) { clearInterval(timer.interval); btn.textContent = 'Done!'; timer.running = false; }
-        }, 1000);
-        btn.textContent = 'Pause'; timer.running = true;
+        t.interval = setInterval(() => { t.seconds--; updateTimerDisplay(id); if (t.seconds <= 0) { clearInterval(t.interval); btn.textContent = 'Done!'; t.running = false; } }, 1000);
+        btn.textContent = 'Pause'; t.running = true;
       }
     }
-
-    function resetTimer(id) {
-      const timer = timers[id];
-      clearInterval(timer.interval);
-      timer.seconds = timer.defaultSeconds;
-      timer.running = false;
-      document.getElementById(`timerBtn${id}`).textContent = id === 1 ? 'Start Presentation' : 'Start';
-      updateTimerDisplay(id);
-    }
-
-    function updateTimerDisplay(id) {
-      const timer = timers[id];
-      const mins = Math.floor(timer.seconds / 60);
-      const secs = timer.seconds % 60;
-      document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
+    function resetTimer(id) { const t = timers[id]; clearInterval(t.interval); t.seconds = t.defaultSeconds; t.running = false; document.getElementById(`timerBtn${id}`).textContent = 'Start'; updateTimerDisplay(id); }
+    function updateTimerDisplay(id) { const t = timers[id]; document.getElementById(`timerDisplay${id}`).textContent = `${Math.floor(t.seconds/60)}:${(t.seconds%60).toString().padStart(2,'0')}`; }
   </script>
-
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
     <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--teal-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>

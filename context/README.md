@@ -1,14 +1,14 @@
 ---
 purpose: Onboarding guide for teammates joining the Common-Curriculum project
-last_updated: 2026-02-23
-updated_by: sathya
+last_updated: 2026-02-28
+updated_by: claude-code
 ---
 
 # Context Folder — Onboarding Guide
 
 ## What This Is
 
-This folder is the **shared memory** for the Common-Curriculum project. It captures design decisions, evidence from student data, active issues, and open questions across two courses (CST395 and CST349) so that anyone — human or AI — can quickly understand the current state and contribute effectively.
+This folder is the **shared memory** for the Common-Curriculum project. It captures design decisions, evidence from student data, active issues, and open questions across two courses (CST395 and CST349) — as well as early-stage thinking on broader CTI 2.0 initiatives — so that anyone — human or AI — can quickly understand the current state and contribute effectively.
 
 ## How to Get Started
 
@@ -70,11 +70,15 @@ Check `open-questions.md` regularly. If you see a question where you disagree wi
 
 | File | What it captures | Who updates it |
 |---|---|---|
-| `course-design.md` | Course structure, frameworks, sprint design, grading | Anyone making design changes |
+| `course-design.md` | Course structure, frameworks, sprint design, grading, product experience principles | Anyone making design changes |
 | `evidence.md` | Anonymized findings from student data | Anyone running analysis |
 | `gaps-and-actions.md` | Active problems, interventions, status | Anyone working on fixes |
 | `pipeline.md` | Technical infrastructure, scripts, known issues | Anyone touching the code |
 | `open-questions.md` | Unresolved design tensions | Anyone with questions or opinions |
+| `terminology.md` | Canonical operational terms, allowed aliases, deprecated names | Anyone noticing naming drift |
+| `content-qa.md` | Definition of Done checklist for publishing pages | Anyone creating or revising content |
+| `science-of-computing.md` | Early-stage concept: foundational computing reasoning for AI-augmented builders. Core problem, two layers, architectural fit, open questions. Broader than CST395/CST349 — shapes CTI 2.0 and SOSE. | Anyone working on Science of Computing investigation |
+| `student-relationship.md` | Design principle for instructor presence layer ("Why This" block) in assignment pages | Anyone creating new assignment HTML |
 | `changelog.md` | What changed, when, by whom, why | Everyone, every session |
 
 ## Ground Rules

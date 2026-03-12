@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Week 8: Sprint 2 Demo | CST349</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg-dark: #0f1419;
+      --bg-primary: #0f172a;
       --bg-section: #1a2332;
       --indigo-400: #818cf8;
       --indigo-500: #6366f1;
@@ -15,229 +14,325 @@
       --indigo-700: #4338ca;
       --violet-400: #a78bfa;
       --violet-500: #8b5cf6;
+      --emerald-400: #34d399;
       --amber-400: #fbbf24;
-      --amber-500: #f59e0b;
+      --rose-400: #fb7185;
       --text-primary: #f1f5f9;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
+      --border: rgba(255,255,255,0.08);
     }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; line-height: 1.6; font-size: 20px; }
-    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,0.1); z-index: 100; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--indigo-500), var(--violet-500)); transition: width 0.3s ease; }
-    .nav-bar { position: fixed; top: 0; left: 0; right: 0; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 20, 25, 0.9); backdrop-filter: blur(8px); z-index: 99; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .nav-title { font-size: 16px; color: var(--text-secondary); }
-    .nav-title strong { color: var(--indigo-400); }
-    .nav-progress { font-size: 16px; color: var(--text-muted); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary); color: var(--text-primary);
+      height: 100vh; overflow: hidden;
+    }
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 100; }
+    .progress-fill { height: 100%; background: var(--indigo-500); transition: width 0.3s ease; width: 0%; }
+    .nav-bar {
+      position: fixed; top: 3px; left: 0; right: 0; height: 52px;
+      background: rgba(15,23,42,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 99;
+    }
+    .nav-title { font-size: 14px; color: var(--text-secondary); }
+    .nav-title strong { color: var(--text-primary); }
+    .nav-progress { font-size: 13px; color: var(--text-muted); }
     .nav-controls { display: flex; gap: 8px; }
-    .nav-btn { background: rgba(255,255,255,0.1); border: none; color: var(--text-primary); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; transition: all 0.2s; }
-    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .nav-btn {
+      padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-secondary); font-size: 13px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.06); color: var(--text-primary); }
     .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .section { min-height: 100vh; padding: 80px 48px 40px; display: none; animation: fadeIn 0.4s ease; }
-    .section.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .section-content { max-width: 1100px; width: 100%; }
-    .section-label { font-size: 16px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--indigo-400); margin-bottom: 16px; }
-    h1 { font-size: clamp(40px, 7vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
-    h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 600; line-height: 1.3; margin-bottom: 20px; }
-    .subtitle { font-size: clamp(22px, 3vw, 28px); color: var(--text-secondary); max-width: 700px; }
-    .activity-card { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-top: 24px; }
-    .activity-card h3 { font-size: 24px; color: var(--indigo-400); margin-bottom: 16px; }
-    .activity-card p { color: var(--text-secondary); margin-bottom: 12px; font-size: 20px; }
-    .activity-card ul, .activity-card ol { color: var(--text-secondary); padding-left: 28px; font-size: 20px; }
-    .activity-card li { margin-bottom: 10px; }
-    .highlight-quote { background: linear-gradient(135deg, var(--indigo-700) 0%, var(--indigo-600) 100%); padding: 28px 36px; border-radius: 12px; margin-top: 24px; text-align: center; }
-    .highlight-quote p { font-size: 24px; font-weight: 500; margin: 0; }
-    .timer-container { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
-    .timer-display { font-size: 72px; font-weight: 700; font-family: 'SF Mono', 'Consolas', monospace; color: var(--indigo-400); min-width: 160px; text-align: center; }
-    .timer-btn { background: var(--indigo-600); border: none; color: white; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
-    .timer-btn:hover { background: var(--indigo-500); }
-    .timer-btn.reset { background: rgba(255,255,255,0.1); }
-    .click-hint { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-    .click-hint kbd { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; }
-    .demo-point { background: var(--bg-section); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
-    .demo-point .demo-number { display: inline-block; background: var(--indigo-600); color: white; width: 36px; height: 36px; border-radius: 50%; text-align: center; line-height: 36px; font-weight: 700; font-size: 18px; margin-bottom: 12px; }
-    .demo-point h4 { font-size: 20px; color: var(--text-primary); margin-bottom: 8px; }
-    .demo-point p { font-size: 17px; color: var(--text-secondary); margin: 0; }
+    .section {
+      display: none; position: fixed; top: 55px; left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+    }
+    .section.active { display: flex; align-items: center; justify-content: center; }
+    .section-content { max-width: 860px; width: 100%; padding: 32px 24px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 12px; }
+    h1 { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+    h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+    h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
+    h4 { font-size: 16px; font-weight: 600; color: var(--indigo-400); margin-bottom: 6px; }
+    .subtitle { font-size: 20px; color: var(--text-secondary); max-width: 600px; line-height: 1.5; margin-bottom: 24px; }
+    .activity-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    }
+    .activity-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .activity-card ul li { color: var(--text-secondary); font-size: 18px; padding-left: 20px; position: relative; }
+    .activity-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--indigo-400); }
+    .activity-card ul li strong { color: var(--text-primary); }
+    .highlight-quote {
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1));
+      border: 1px solid rgba(99,102,241,0.3); border-radius: 12px;
+      padding: 20px 24px; margin-top: 16px;
+    }
+    .highlight-quote p { font-size: 18px; color: var(--text-primary); font-style: italic; line-height: 1.6; }
+    .timer-container { display: flex; align-items: center; gap: 16px; justify-content: center; margin: 24px 0; }
+    .timer-display { font-size: 64px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--indigo-400); letter-spacing: -2px; }
+    .timer-btn {
+      padding: 10px 24px; border-radius: 8px; border: none; font-size: 16px; font-weight: 600; cursor: pointer;
+      background: var(--indigo-600); color: white; transition: background 0.15s;
+    }
+    .timer-btn:hover { background: var(--indigo-700); }
+    .timer-btn.reset { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+    .timer-btn.reset:hover { background: rgba(255,255,255,0.12); }
+    .demo-point {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .demo-number {
+      background: var(--indigo-600); color: white;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .demo-point p { color: var(--text-secondary); font-size: 15px; line-height: 1.5; margin-top: 4px; }
+    .insight-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;
+    }
+    .insight-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .insight-card .insight-icon { font-size: 28px; margin-bottom: 10px; }
+    .insight-card h4 { font-size: 15px; color: var(--indigo-400); margin-bottom: 8px; }
+    .insight-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .stat-row {
+      display: flex; gap: 16px; margin-bottom: 20px;
+    }
+    .stat-box {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; flex: 1; text-align: center;
+    }
+    .stat-box .stat-num { font-size: 32px; font-weight: 700; color: var(--indigo-400); }
+    .stat-box .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .share-prompt {
+      background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+      border: 1px solid rgba(99,102,241,0.4); border-radius: 12px;
+      padding: 20px 24px; margin-top: 20px;
+    }
+    .share-prompt p { font-size: 20px; color: var(--text-primary); font-weight: 500; }
+    .share-prompt .prompt-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--indigo-400); margin-bottom: 8px; }
+    .next-up-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .next-up-badge {
+      background: rgba(99,102,241,0.2); color: var(--indigo-400);
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-top: 2px;
+    }
+    .next-up-card h4 { font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+    .next-up-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .peer-tool-callout {
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3);
+      border-radius: 10px; padding: 14px 18px; margin-top: 12px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .peer-tool-callout p { font-size: 15px; color: var(--emerald-400); }
+    .click-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--text-muted); }
+    .click-hint kbd { background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 4px; font-family: inherit; }
+    .live-banner {
+      position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101;
+      background: linear-gradient(135deg, #f59e0b, #d97706); color: white;
+      padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 36px; }
+      h2 { font-size: 28px; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .stat-row { flex-direction: column; }
+      .timer-display { font-size: 48px; }
+    }
   </style>
 </head>
 <body>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <div style="position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-    Live content — may be updated until and even during class
-  </div>
+  <div class="live-banner">Live content — may be updated until and even during class</div>
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST349</strong> · Week 8 Session</div>
-    <div class="nav-progress" id="navProgress">1 / 8</div>
+    <div class="nav-progress" id="navProgress">1 / 6</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
       <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
   </nav>
-
   <!-- Section 1: Title -->
   <section class="section active" data-section="1">
     <div class="section-content" style="text-align: center;">
-      <p class="section-label">Week 8 · Sprint 2 Demonstration</p>
+      <p class="section-label">Week 8 · Sprint 2 Demo Day</p>
       <h1>What Did You<br><span style="color: var(--indigo-400);">Actually Learn?</span></h1>
-      <p class="subtitle" style="margin: 0 auto;">Show the trajectory of your learning — not just what you did, but what it taught you.</p>
+      <p class="subtitle" style="margin: 0 auto;">Today you show the arc — not just what you did, but what changed your thinking along the way.</p>
     </div>
   </section>
-
-  <!-- Section 2: Opening Reflection -->
+  <!-- Section 2: Networking Summary -->
   <section class="section" data-section="2">
+    <div class="section-content">
+      <p class="section-label">Looking Back · Networking Event</p>
+      <h2>What the Professionals Told You</h2>
+      <p class="subtitle">22 of you submitted a report. Here's what came through.</p>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-icon">🤖</div>
+          <h4>AI is a tool, not a threat — if you know how to use it</h4>
+          <p>Almost every professional brought up AI unprompted. Senior engineers use it heavily. The ones who thrive know when to push back on it.</p>
+          <p style="margin-top: 10px; font-style: italic; color: var(--indigo-400); font-size: 13px;">"Become AI native" &nbsp;·&nbsp; "Be suspicious. Read it."</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">💬</div>
+          <h4>Communication matters as much as code</h4>
+          <p>Nearly every student said this surprised them. Technical skill is assumed. What distinguishes you is how you think out loud and work with others.</p>
+          <p style="margin-top: 10px; font-style: italic; color: var(--indigo-400); font-size: 13px;">"Most programming is done with others — the better you communicate, the better it helps you."</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🎯</div>
+          <h4>Initiative is what gets you noticed</h4>
+          <p>Class projects get you in the door. What you built independently, the questions you asked, the problems you chased — that's what makes you memorable.</p>
+          <p style="margin-top: 10px; font-style: italic; color: var(--indigo-400); font-size: 13px;">"We don't just hire people who can code — we hire people who can think."</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🔄</div>
+          <h4>Your assumptions were wrong in useful ways</h4>
+          <p>Students expected AI skepticism, technical skill to dominate, credentials to matter most. Every one of those assumptions got challenged.</p>
+          <p style="margin-top: 10px; font-style: italic; color: var(--indigo-400); font-size: 13px;">"10% skill, 90% personality"</p>
+        </div>
+      </div>
+      <div class="share-prompt">
+        <div class="prompt-label">Share with the room</div>
+        <p>What's one thing you heard — or didn't get to hear — that landed differently now than it would have in Week 1?</p>
+      </div>
+    </div>
+  </section>
+  <!-- Section 3: Opening Reflection -->
+  <section class="section" data-section="3">
     <div class="section-content" style="text-align: center;">
-      <p class="section-label">Opening · 5 minutes</p>
-      <h2>Handwritten Reflection</h2>
+      <p class="section-label">Opening · 3 minutes</p>
+      <h2>One Sentence</h2>
       <p class="subtitle" style="margin: 0 auto;">In your notebook. No talking.</p>
       <div class="timer-container">
-        <div class="timer-display" id="timerDisplay1">5:00</div>
+        <div class="timer-display" id="timerDisplay1">3:00</div>
         <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
         <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
       </div>
       <div class="highlight-quote">
-        <p style="font-style: italic;">"In one sentence, what do you understand about yourself as a learner that you didn't understand 8 weeks ago?"</p>
+        <p style="font-style: italic; font-size: 22px;">"What is one thing you want to demonstrate to your group today?"</p>
       </div>
+      <p style="color: var(--text-muted); font-size: 15px; margin-top: 16px;">Not what you hope they think of you. What you actually want to show them.</p>
     </div>
   </section>
-
-  <!-- Section 3: How Today Works -->
-  <section class="section" data-section="3">
+  <!-- Section 4: How Today Works -->
+  <section class="section" data-section="4">
     <div class="section-content">
       <p class="section-label">Structure</p>
       <h2>How Today Works</h2>
       <div class="activity-card">
         <h3>The Format</h3>
         <ul>
-          <li>You'll present in <strong>combined groups of 6</strong> (two groups together)</li>
-          <li>Each person gets <strong>~4 minutes to present</strong>, <strong>~2 minutes for questions/feedback</strong> from the group</li>
-          <li>After all presentations: <strong>written peer evaluation</strong></li>
-          <li>Then: <strong>Bridge Reflection</strong> to close the sprint</li>
+          <li>You'll present in <strong>combined groups of 5–7</strong> (two groups together)</li>
+          <li>Each person gets <strong>4–6 minutes to present</strong></li>
+          <li>Then <strong>2–3 minutes of questions</strong> from the group</li>
+          <li>While someone presents, everyone else is <strong>taking live notes</strong> using the Peer Observation tool</li>
         </ul>
       </div>
+      <div class="peer-tool-callout">
+        <span style="font-size: 22px;">📋</span>
+        <p><strong>Open the Peer Observation tool now</strong> — it's in the Sprint 2 assignments. Use the three lenses (Notice / Interpret / Ask) while each person presents. The "Push my thinking" button is there when your notes get thin.</p>
+      </div>
       <div class="highlight-quote">
-        <p>You're presenting to people who weren't in your group. They don't know your journey. Make it clear.</p>
+        <p>The questions you ask after each demo are part of your communication skills practice — not a courtesy. Use the ASK lens: what question would actually test their evidence?</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 4: What You're Presenting -->
-  <section class="section" data-section="4">
+  <!-- Section 5: What You're Presenting -->
+  <section class="section" data-section="5">
     <div class="section-content">
       <p class="section-label">Demo Focus</p>
       <h2>What You're Presenting</h2>
-      <p class="subtitle">The demo is NOT "show your skill improvement." It's "show the trajectory of your learning across two sprints."</p>
-      <div style="display: grid; gap: 16px; margin-top: 28px;">
+      <p class="subtitle">Five slides. Show the trajectory — not just what you did, but what changed your thinking.</p>
+      <div style="display: grid; gap: 12px; margin-top: 24px;">
         <div class="demo-point">
           <div class="demo-number">1</div>
-          <h4>The skill and the starting point</h4>
-          <p>What you committed to, and what Sprint 1 taught you about your learning process. If you changed skills, explain what the change itself taught you.</p>
+          <div>
+            <h4>The quality &amp; why it matters</h4>
+            <p>Name the specific quality you developed. Why does it matter — not in general, but to you and your career?</p>
+          </div>
         </div>
         <div class="demo-point">
           <div class="demo-number">2</div>
-          <h4>The evidence you promised</h4>
-          <p>In Week 5 you defined what evidence would demonstrate progress. What actually happened — where you met it, where you fell short, and what that gap teaches you.</p>
+          <div>
+            <h4>Your starting point</h4>
+            <p>Where were you at the beginning of Sprint 2? Be honest about your baseline. Use the evidence you designed in Week 5.</p>
+          </div>
         </div>
         <div class="demo-point">
           <div class="demo-number">3</div>
-          <h4>What changed with accountability and external input</h4>
-          <p>Specific examples from your group and the networking event. Not "it was helpful" — what specifically shifted?</p>
+          <div>
+            <h4>What you did</h4>
+            <p>Specific actions — not just "I practiced." What exactly, when, how often? What did your group help with? What did you try that didn't work?</p>
+          </div>
         </div>
         <div class="demo-point">
           <div class="demo-number">4</div>
-          <h4>What you still don't know</h4>
-          <p>Honest gap identification. What are you still uncertain about in how you learn?</p>
+          <div>
+            <h4>Evidence of growth</h4>
+            <p>Before/after comparisons, external feedback, concrete examples with dates. What would convince a skeptic? Is this evidence of growth — or just effort?</p>
+          </div>
+        </div>
+        <div class="demo-point">
+          <div class="demo-number">5</div>
+          <div>
+            <h4>Your trajectory / what's next</h4>
+            <p>Honest assessment of where you are and where you're going. What will you continue working on? What did this sprint teach you about how you grow?</p>
+          </div>
         </div>
       </div>
       <div class="highlight-quote">
-        <p>The strongest demos aren't the ones that show the most growth. They're the ones that show the most honest self-assessment.</p>
+        <p>The strongest demos aren't the most polished. They're the most honest.</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 5: Presentations -->
-  <section class="section" data-section="5">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Presentations · 70 minutes</p>
-      <h2>Demonstrations</h2>
-      <p class="subtitle" style="margin: 0 auto;">~4 min present + ~2 min feedback per person.</p>
-      <div class="timer-container">
-        <div class="timer-display" id="timerDisplay2">70:00</div>
-        <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
-        <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
-      </div>
-      <div class="activity-card" style="text-align: left;">
-        <h3>Audience Role</h3>
-        <ul>
-          <li>Listen for <strong>evidence</strong>, not just claims</li>
-          <li>Does their self-assessment seem <strong>honest</strong>?</li>
-          <li>Did they measure themselves against what they said they'd demonstrate in <strong>Week 5</strong>?</li>
-          <li>What's one thing they might <strong>not be seeing</strong> about their own growth?</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 6: Peer Evaluation -->
+  <!-- Section 6: What's Coming -->
   <section class="section" data-section="6">
     <div class="section-content">
-      <p class="section-label">Evaluation · 15 minutes</p>
-      <h2>Peer Evaluation</h2>
-      <p class="subtitle">Written evaluation of your <strong>group partners</strong> — the people you worked with all sprint, not the combined presentation group.</p>
-      <div class="timer-container">
-        <div class="timer-display" id="timerDisplay3">15:00</div>
-        <button class="timer-btn" id="timerBtn3" onclick="toggleTimer(3)">Start</button>
-        <button class="timer-btn reset" onclick="resetTimer(3)">Reset</button>
+      <p class="section-label">After Today</p>
+      <h2>What's Coming Up</h2>
+      <p class="subtitle">Three things to complete before Sprint 3 begins.</p>
+      <div class="next-up-card">
+        <div class="next-up-badge">After class</div>
+        <div>
+          <h4>Peer Observation → download &amp; submit</h4>
+          <p>Complete your Sprint 3 takeaway in the tool — one thing you want to do differently — then download the JSON and upload to Canvas.</p>
+        </div>
       </div>
-      <div class="activity-card">
-        <h3>Evaluate On</h3>
-        <ul>
-          <li>Is the <strong>evidence</strong> convincing?</li>
-          <li>Is the <strong>self-assessment</strong> honest?</li>
-          <li>Did they measure against their <strong>Week 5 evidence criteria</strong>?</li>
-          <li>What's one thing they're <strong>not seeing</strong> about their own growth?</li>
-        </ul>
+      <div class="next-up-card">
+        <div class="next-up-badge">Before Sunday</div>
+        <div>
+          <h4>Bridge Reflection — handwritten</h4>
+          <p>Five claims about this course. Two or three honest sentences for each, connected to actual Sprint 1–2 work. Not what you intended — what you did. Photograph and upload to Canvas. Do this before the Claims Discussion.</p>
+        </div>
+      </div>
+      <div class="next-up-card">
+        <div class="next-up-badge">Before Sunday</div>
+        <div>
+          <h4>Claims Discussion — AI-discussion</h4>
+          <p>Work through the five claims with AI pushing back on vague acknowledgments. Download the JSON and upload to Canvas. This only works if you've done the handwritten reflection first.</p>
+        </div>
       </div>
       <div class="highlight-quote">
-        <p>Be honest. Praise without substance doesn't help anyone. Criticism without specifics doesn't either.</p>
+        <p><strong>Sprint 3</strong> asks you to read the future of your field and make a specific, defensible claim about where it's going. <strong>Sprint 4</strong> asks you to start building toward that future. The arc you've been building starts to matter for your career — not just this course.</p>
       </div>
     </div>
   </section>
-
-  <!-- Section 7: Bridge Reflection -->
-  <section class="section" data-section="7">
-    <div class="section-content">
-      <p class="section-label">Bridge Reflection · 10 minutes</p>
-      <h2>Sprint 2 → 3<br><span style="color: var(--indigo-400);">Bridge Reflection</span></h2>
-      <p class="subtitle">Handwritten in class. This is the transition to Sprint 3.</p>
-      <div class="timer-container">
-        <div class="timer-display" id="timerDisplay4">10:00</div>
-        <button class="timer-btn" id="timerBtn4" onclick="toggleTimer(4)">Start</button>
-        <button class="timer-btn reset" onclick="resetTimer(4)">Reset</button>
-      </div>
-      <div class="activity-card">
-        <h3>Prompts</h3>
-        <ol>
-          <li style="margin-bottom: 16px;"><em>"You've now developed a skill alone (Sprint 1) and with group accountability plus external input (Sprint 2). Which produced more growth? Why?"</em></li>
-          <li style="margin-bottom: 16px;"><em>"Sprint 3 asks you to apply your SDL process to something new — futures thinking and building your professional network. Does your process actually work, or did it only work for this specific skill?"</em></li>
-          <li><em>"What's one thing about how you learn that you'd bet money on at this point? What's one thing you're still unsure about?"</em></li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 8: What Comes Next -->
-  <section class="section" data-section="8">
-    <div class="section-content" style="text-align: center;">
-      <p class="section-label">Looking Ahead</p>
-      <h2>What Comes Next</h2>
-      <div class="activity-card" style="text-align: left;">
-        <h3>Sprint 3: Transfer</h3>
-        <p style="color: var(--text-primary); font-size: 22px;">You've built a self-directed learning process across two sprints. Sprint 3 tests whether it transfers.</p>
-        <p style="color: var(--text-primary); font-size: 22px;">New domain, new challenge, same question: <strong>can you learn what you need to learn without someone telling you how?</strong></p>
-      </div>
-    </div>
-  </section>
-
   <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
   <script>
     let currentSection = 1;
@@ -248,12 +343,9 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const timers = {
-      1: { running: false, seconds: 300, defaultSeconds: 300, interval: null },
-      2: { running: false, seconds: 4200, defaultSeconds: 4200, interval: null },
-      3: { running: false, seconds: 900, defaultSeconds: 900, interval: null },
-      4: { running: false, seconds: 600, defaultSeconds: 600, interval: null }
+      1: { running: false, seconds: 180, defaultSeconds: 180, interval: null }
     };
-    const timerLabels = { 1: 'Start', 2: 'Start', 3: 'Start', 4: 'Start' };
+    const timerLabels = { 1: 'Start' };
     function goToSection(n) {
       if (n < 1 || n > totalSections) return;
       sections.forEach(s => s.classList.remove('active'));
@@ -301,6 +393,7 @@
       const secs = timer.seconds % 60;
       document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
     }
+    goToSection(1);
   </script>
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
     <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
