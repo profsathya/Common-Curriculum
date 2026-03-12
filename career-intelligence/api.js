@@ -181,7 +181,7 @@ function normalizeNewlines(obj, key) {
  * JSON string values. Walks character-by-character tracking whether
  * we're inside a quoted string, and escapes only those literals.
  */
-function fixJsonStringNewlines(str) {
+export function fixJsonStringNewlines(str) {
   let inString = false;
   let escaped = false;
   let result = '';

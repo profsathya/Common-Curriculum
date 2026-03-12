@@ -7,7 +7,7 @@
 import { CONFIG, PROGRAM_CONFIG } from './config.js';
 import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
-import { callAI, parsePhaseResponse } from './api.js';
+import { callAI, parsePhaseResponse, fixJsonStringNewlines } from './api.js';
 import { downloadJSON, generateBriefText } from './data.js';
 
 // ============================================
@@ -706,8 +706,18 @@ async function requestSynthesis() {
 
     loading.remove();
 
-    const briefText = parsed.brief || parsed.synthesis || parsed.reaction || result.content;
-    const pitchText = parsed.pitch || '';
+    // Extract brief text — never fall back to raw reaction/content, as that
+    // may be the full JSON response string. If parsing extracted the brief
+    // field, use it. Otherwise let renderBrief's safety net handle it.
+    let briefText = parsed.brief || parsed.synthesis || '';
+    let pitchText = parsed.pitch || '';
+
+    // If the parser failed to extract a brief (all attempts returned the
+    // fallback), pass the raw content so renderBrief's safety net can
+    // try its own extraction strategies.
+    if (!briefText && result.content) {
+      briefText = result.content;
+    }
 
     state.briefText = briefText;
     state.pitchText = pitchText;
@@ -823,15 +833,45 @@ function parseBriefSections(markdown) {
 
 function renderBrief(briefMarkdown) {
   // Safety net: if briefMarkdown is raw JSON (e.g. the full API response
-  // leaked through instead of the extracted brief field), parse it and
-  // extract the "brief" field before rendering.
+  // leaked through instead of the extracted brief field), extract the
+  // "brief" field before rendering. Uses multiple extraction strategies.
   if (typeof briefMarkdown === 'string' && briefMarkdown.trimStart().startsWith('{')) {
-    const extracted = parsePhaseResponse(briefMarkdown);
-    if (extracted.brief) {
+    let extracted = null;
+
+    // Strategy 1: direct JSON.parse
+    try {
+      extracted = JSON.parse(briefMarkdown);
+    } catch { /* continue */ }
+
+    // Strategy 2: fix literal newlines inside string values, then parse
+    if (!extracted) {
+      try {
+        extracted = JSON.parse(fixJsonStringNewlines(briefMarkdown));
+      } catch { /* continue */ }
+    }
+
+    // Strategy 3: regex extract the "brief" field value directly
+    if (!extracted) {
+      const briefMatch = briefMarkdown.match(/"brief"\s*:\s*"([\s\S]*?)"\s*(?:,\s*"(?:pitch|phase|reaction|follow_up)"|}\s*$)/);
+      if (briefMatch) {
+        const rawBrief = briefMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+        if (rawBrief.includes('## ')) {
+          extracted = { brief: rawBrief };
+        }
+      }
+    }
+
+    if (extracted && extracted.brief) {
       briefMarkdown = extracted.brief;
+      // Normalize any remaining \\n to actual newlines
+      if (typeof briefMarkdown === 'string') {
+        briefMarkdown = briefMarkdown.replace(/\\n/g, '\n');
+      }
       state.briefText = briefMarkdown;
       if (extracted.pitch && !state.pitchText) {
-        state.pitchText = extracted.pitch;
+        state.pitchText = typeof extracted.pitch === 'string'
+          ? extracted.pitch.replace(/\\n/g, '\n')
+          : extracted.pitch;
       }
       saveState();
     }
