@@ -16,7 +16,7 @@ import { downloadJSON, generateBriefText } from './data.js';
 
 const STAGES = [
   { num: 1, label: 'Your Situation', color: '#2c5282' },
-  { num: 2, label: 'Their Perspective', color: '#6b46c1' },
+  { num: 2, label: 'Recruiter Perspective', color: '#6b46c1' },
   { num: 3, label: 'Your Direction', color: '#b7791f' },
 ];
 
