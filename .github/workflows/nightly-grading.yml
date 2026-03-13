@@ -39,6 +39,7 @@ jobs:
           node-version: '20'
 
       - name: "CST349 — Download, Grade, Analyze, Dashboard"
+        id: cst349
         continue-on-error: true
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
@@ -47,6 +48,7 @@ jobs:
         run: node scripts/submission-analyzer.js --action=full --course=cst349 --data-dir=./data-repo
 
       - name: "CST395 — Download, Grade, Analyze, Dashboard"
+        id: cst395
         continue-on-error: true
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
@@ -76,4 +78,14 @@ jobs:
             echo "✓ Results pushed to data repo"
           else
             echo "No changes to push"
+          fi
+
+      - name: Fail if both courses errored
+        if: always()
+        run: |
+          echo "CST349: ${{ steps.cst349.outcome }}"
+          echo "CST395: ${{ steps.cst395.outcome }}"
+          if [[ "${{ steps.cst349.outcome }}" == "failure" && "${{ steps.cst395.outcome }}" == "failure" ]]; then
+            echo "Both courses failed — flagging run as failed"
+            exit 1
           fi
