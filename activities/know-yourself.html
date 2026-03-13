@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Know Yourself | Peer Interview</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 0; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 700px; margin: 0 auto; padding: 24px; }
+
+    .header {
+      background: linear-gradient(135deg, #92400e 0%, #d97706 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+
+    /* Name gate */
+    .name-gate {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px; text-align: center;
+    }
+    .name-gate h2 { font-size: 18px; margin: 0 0 12px 0; }
+    .name-gate p { color: #6b7280; margin: 0 0 16px 0; }
+    .name-gate input {
+      width: 100%; max-width: 300px; padding: 10px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 16px; text-align: center;
+    }
+    .name-gate input:focus { border-color: #d97706; outline: none; }
+    .name-gate button {
+      display: block; margin: 16px auto 0; padding: 10px 32px;
+      background: linear-gradient(135deg, #92400e, #d97706); color: white;
+      border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    .name-gate button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Reference card */
+    .reference-card {
+      background: #1e293b; color: #e2e8f0; border-radius: 12px;
+      padding: 20px; margin-bottom: 16px;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace; font-size: 12px; line-height: 1.5;
+    }
+    .reference-card summary {
+      cursor: pointer; color: #fbbf24; font-weight: 700; font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      list-style: none; user-select: none;
+    }
+    .reference-card summary::-webkit-details-marker { display: none; }
+    .reference-card summary::before { content: '\25B6  '; font-size: 10px; }
+    .reference-card[open] summary::before { content: '\25BC  '; }
+    .reference-card .lens { margin-top: 12px; margin-bottom: 12px; }
+    .reference-card .lens-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .lens-desc { color: #94a3b8; }
+    .reference-card .stem { color: #fcd34d; margin-left: 16px; display: block; }
+    .reference-card .tip { border-top: 1px solid #334155; padding-top: 12px; margin-top: 12px; }
+    .reference-card .tip-label { color: #fbbf24; font-weight: 700; }
+    .reference-card .tip-step { color: #94a3b8; margin-left: 16px; display: block; }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex; gap: 0; margin-bottom: 16px; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 10px 18px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; background: none; color: #6b7280; white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab:hover { color: #92400e; }
+    .tab--active {
+      color: #92400e; font-weight: 700;
+      border-bottom-color: #d97706;
+    }
+    .tab--add {
+      color: #d97706; font-weight: 600; font-size: 13px;
+    }
+    .tab--add:hover { color: #92400e; }
+    .tab__delete {
+      margin-left: 6px; padding: 0 4px; border: none; background: none;
+      color: #d1d5db; font-size: 14px; line-height: 1; cursor: pointer;
+      border-radius: 4px; vertical-align: middle;
+    }
+    .tab__delete:hover { color: #ef4444; background: #fef2f2; }
+
+    /* Notepad card */
+    .notepad-card {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .partner-name-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .partner-name-row label {
+      font-weight: 600; color: #92400e; font-size: 14px; white-space: nowrap;
+    }
+    .partner-name-input {
+      flex: 1; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 14px; background: #f9fafb;
+    }
+    .partner-name-input:focus { border-color: #d97706; outline: none; }
+
+    .notes-textarea {
+      width: 100%; min-height: 250px; padding: 14px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;
+      line-height: 1.7; background: white; color: #111827;
+    }
+    .notes-textarea:focus { border-color: #d97706; outline: none; }
+    .notes-textarea::placeholder { color: #9ca3af; }
+    .word-count {
+      text-align: right; font-size: 12px; color: #9ca3af; margin-top: 4px;
+    }
+
+    /* Push my thinking button */
+    .nudge-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 8px 16px;
+      border: 2px solid #d97706; border-radius: 8px;
+      background: white; color: #92400e; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .nudge-btn:hover { background: #fffbeb; }
+    .nudge-btn:disabled {
+      border-color: #d1d5db; color: #9ca3af; cursor: not-allowed;
+      background: #f9fafb;
+    }
+    .nudge-btn .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid #d1d5db; border-top-color: #d97706;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* AI nudge boxes */
+    .nudge-box {
+      background: #fffbeb; border-left: 3px solid #d97706;
+      border-radius: 0 8px 8px 0; padding: 12px 16px;
+      margin-top: 12px;
+    }
+    .nudge-box__label {
+      font-size: 11px; color: #6b7280; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .nudge-box__text {
+      font-size: 13px; color: #78350f; line-height: 1.6; margin: 0;
+    }
+
+    /* Action buttons */
+    .actions {
+      display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 20px; border-radius: 8px; font-size: 14px;
+      font-weight: 600; cursor: pointer; border: none; flex: 1; min-width: 140px;
+    }
+    .btn--next {
+      background: linear-gradient(135deg, #b45309, #d97706); color: white;
+    }
+    .btn--next:hover { background: linear-gradient(135deg, #92400e, #b45309); }
+    .btn--save {
+      background: linear-gradient(135deg, #1e3a5f, #2563eb); color: white;
+    }
+    .btn--save:hover { background: linear-gradient(135deg, #1e3a5f, #1d4ed8); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Reflection section */
+    .reflection-section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .reflection-section h2 { font-size: 18px; margin: 0 0 12px 0; color: #111827; }
+    .reflection-section p { color: #4b5563; margin: 0 0 16px 0; }
+    .reflection-section textarea {
+      width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;
+    }
+    .reflection-section textarea:focus { border-color: #d97706; outline: none; }
+
+    /* Download confirmation */
+    .download-confirm {
+      display: inline-block; margin-left: 12px; color: #059669; font-size: 13px;
+      font-weight: 600; opacity: 0; transition: opacity 0.3s;
+    }
+    .download-confirm--visible { opacity: 1; }
+
+    .hidden { display: none !important; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container { padding: 16px; }
+      .notepad-card { padding: 16px; }
+      .notes-textarea { min-height: 200px; font-size: 16px; }
+      .tab { padding: 8px 14px; font-size: 13px; }
+      .partner-name-row { flex-direction: column; align-items: stretch; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>Know Yourself &mdash; Peer Interview</h1>
+      <p>Interview your partner to uncover skills and strengths they don&rsquo;t put on a resume.</p>
+    </div>
+
+    <!-- Name gate -->
+    <div id="name-gate" class="name-gate">
+      <h2>Before You Begin</h2>
+      <p>Enter your name to start interviewing.</p>
+      <input type="text" id="student-name" placeholder="Your name" autocomplete="name">
+      <button id="start-btn" disabled>Start Interviewing</button>
+    </div>
+
+    <!-- Activity area (hidden until name entered) -->
+    <div id="activity" class="hidden">
+
+      <!-- Reference card (collapsible) -->
+      <details class="reference-card" id="reference-card" open>
+        <summary>INTERVIEW GUIDE &mdash; UNCOVERING HIDDEN SKILLS</summary>
+        <div class="lens">
+          <span class="lens-label">LISTEN FOR ACTIONS:</span>
+          <span class="lens-desc">What did they actually do, not what they say they are?</span>
+          <span class="stem">"Walk me through what you actually did when..."</span>
+          <span class="stem">"What happened next?"</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">NAME THE SKILL:</span>
+          <span class="lens-desc">They may not recognize it &mdash; your job is to spot and name it.</span>
+          <span class="stem">"That sounds like [conflict resolution / project management / translating between technical and non-technical people]..."</span>
+          <span class="stem">"You keep mentioning ___ &mdash; do you realize that's a skill?"</span>
+        </div>
+        <div class="lens">
+          <span class="lens-label">DIG DEEPER:</span>
+          <span class="lens-desc">One example is a coincidence. Two is a pattern. Push for a second example.</span>
+          <span class="stem">"Has anything like that happened in a different context?"</span>
+          <span class="stem">"When else have you done something similar?"</span>
+        </div>
+        <div class="tip">
+          <span class="tip-label">WHERE TO LOOK FOR HIDDEN SKILLS:</span>
+          <span class="tip-step">&bull; Jobs/roles they think &ldquo;don't count&rdquo; (retail, food service, tutoring, family responsibilities)</span>
+          <span class="tip-step">&bull; Problems they solved that nobody asked them to solve</span>
+          <span class="tip-step">&bull; Things people come to them for help with</span>
+          <span class="tip-step">&bull; Situations where they adapted or figured it out on the fly</span>
+        </div>
+      </details>
+
+      <!-- Tab bar -->
+      <div class="tab-bar" id="tab-bar"></div>
+
+      <!-- Notepad -->
+      <div class="notepad-card" id="notepad-card">
+        <div class="partner-name-row">
+          <label for="partner-name">Interviewing:</label>
+          <input type="text" class="partner-name-input" id="partner-name"
+                 placeholder="Partner's name">
+        </div>
+
+        <textarea class="notes-textarea" id="notes-textarea"
+                  placeholder="Write down what your partner shares. Focus on specific stories and actions &mdash; what they did, not what they say they are. Note any skills you spot that they might not recognize."></textarea>
+        <div class="word-count" id="word-count">0 words</div>
+
+        <button class="nudge-btn" id="nudge-btn">Push my thinking</button>
+
+        <div id="nudge-container"></div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="actions" id="actions">
+        <button class="btn btn--next" id="next-partner-btn">Next Partner &rarr;</button>
+        <button class="btn btn--save" id="download-btn">&#x2B07; Download JSON</button>
+        <span class="download-confirm" id="download-confirm">&#x2713; Downloaded</span>
+      </div>
+
+      <!-- Reflection -->
+      <div class="reflection-section" id="reflection-section">
+        <h2>Your Reflection</h2>
+        <p>After interviewing your partners &mdash; what skill or strength did you hear about yourself today that you hadn&rsquo;t thought of as a &ldquo;real&rdquo; skill before?</p>
+        <textarea id="reflection-input" placeholder="Something I learned about myself..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">Know Yourself &middot; v1.0</p>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ── Config ──
+    const AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+    const AI_MODEL = 'claude-sonnet-4-6';
+    const STORAGE_KEY = 'know-yourself-peer-interview';
+    const MAX_NUDGES_PER_PARTNER = 3;
+    const MIN_WORDS_FOR_TRANSITION_NUDGE = 20;
+    const SAVE_DEBOUNCE_MS = 500;
+
+    const SYSTEM_PROMPT = `You are an interview coach sitting beside a student who is interviewing a classmate in a breakout room. The interviewer is trying to uncover skills and strengths their partner doesn't typically put on a resume or CV — things like problem-solving in everyday life, leadership in informal settings, translating between groups, teaching themselves new things, or managing chaos.
+
+The interviewer has been taking notes on what their partner shared. They are now asking you for ONE nudge to push their thinking deeper. Read their notes and respond with a single question or observation that helps them dig further.
+
+=== RULES ===
+
+1. ONE question or observation only. One or two sentences maximum. Never a paragraph.
+
+2. NEVER evaluate their notes. No "great observation," "interesting," "you're doing well." Zero praise. Zero judgment.
+
+3. Your job is to help the INTERVIEWER see skills they haven't named yet, or push them to ask a follow-up that gets past surface-level answers. You are not coaching the interviewee.
+
+4. Read their notes and identify what's there:
+   - If notes are mostly SURFACE (listing facts, job titles, activities): nudge them to ask for a specific story — "What actually happened?" or "What did they do when things went wrong?"
+   - If notes capture a STORY but no skill is named: point at the skill hiding in the story — "There's a skill in that story they probably don't see. What is it?"
+   - If a SKILL IS NAMED but only once: push for a pattern — "One example could be a coincidence. Ask if they've done something similar in a completely different context."
+   - If notes are RICH (multiple stories, skills named): push for the unexpected — "What's the skill here that would surprise an employer? The one that doesn't obviously match their major?"
+   - If STUCK or very thin notes: offer a concrete starter — "Try asking: 'What's something people come to you for help with that has nothing to do with school?'"
+
+5. If the nudge type is "transition" (moving to next partner): frame it as a bridge — "Before you switch — [observation or question about what they've captured so far]."
+
+6. If this is their 3rd nudge for this partner, make it sharper — they've been exploring this person for a while. Push toward synthesis: what's the one skill this person should absolutely be talking about in interviews?
+
+=== CONTEXT ===
+
+This is a "Know Yourself" activity where students interview each other to surface skills that don't make it onto resumes. Many students undervalue skills from non-academic experiences — jobs they think "don't count," family responsibilities, self-taught abilities, community roles, or informal leadership. The interviewer's job is to listen for actions and name the skills their partner can't see.
+
+Skills to listen for (never lecture about these, just use them to identify what's in the notes):
+- Problem-solving under constraints (time, money, information)
+- Translating between audiences (technical/non-technical, languages, cultures)
+- Teaching or explaining without being asked to
+- Organizing people or processes informally
+- Adapting when plans fall apart
+- Navigating ambiguity or making decisions without clear instructions
+- Advocating for others or mediating conflict
+- Building trust quickly with strangers`;
+
+    // ── State ──
+    let state = {
+      studentName: '',
+      startedAt: null,
+      partners: [],
+      currentPartner: 0,
+      reflection: '',
+      finished: false,
+      downloadedAt: null,
+    };
+
+    // ── DOM refs ──
+    const $ = id => document.getElementById(id);
+    const nameInput = $('student-name');
+    const startBtn = $('start-btn');
+    const nameGate = $('name-gate');
+    const activity = $('activity');
+    const tabBar = $('tab-bar');
+    const partnerName = $('partner-name');
+    const notesTextarea = $('notes-textarea');
+    const wordCountEl = $('word-count');
+    const nudgeBtn = $('nudge-btn');
+    const nudgeContainer = $('nudge-container');
+    const nextPartnerBtn = $('next-partner-btn');
+    const reflectionInput = $('reflection-input');
+    const downloadBtn = $('download-btn');
+    const downloadConfirm = $('download-confirm');
+    const referenceCard = $('reference-card');
+
+    // ── Helpers ──
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    // ── Persistence ──
+    let saveTimer = null;
+    function save() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+      }, SAVE_DEBOUNCE_MS);
+    }
+    function saveNow() {
+      clearTimeout(saveTimer);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+    function load() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) {
+          state = JSON.parse(s);
+          state.partners.forEach(function(p) {
+            if (!p.nudges) p.nudges = [];
+            if (p.notes === undefined) p.notes = '';
+          });
+          return true;
+        }
+      } catch(e) {}
+      return false;
+    }
+
+    // ── Delete partner ──
+    function deletePartner(index) {
+      const partner = state.partners[index];
+      const label = partner.name || 'Partner ' + (index + 1);
+      if (!confirm('Delete "' + label + '"? This cannot be undone.')) return;
+      state.partners.splice(index, 1);
+      if (state.currentPartner >= state.partners.length) {
+        state.currentPartner = Math.max(0, state.partners.length - 1);
+      }
+      saveNow();
+      if (state.partners.length === 0) {
+        addNewPartner();
+      } else {
+        loadPartnerUI();
+      }
+    }
+
+    // ── Tab rendering ──
+    function renderTabs() {
+      tabBar.innerHTML = '';
+      state.partners.forEach(function(partner, i) {
+        const tab = document.createElement('button');
+        tab.className = 'tab' + (i === state.currentPartner ? ' tab--active' : '');
+        const label = partner.name ? partner.name : 'Partner ' + (i + 1);
+        tab.textContent = label;
+        tab.addEventListener('click', function(e) {
+          if (e.target.classList.contains('tab__delete')) return;
+          switchToPartner(i);
+        });
+        if (state.partners.length > 1) {
+          const del = document.createElement('button');
+          del.className = 'tab__delete';
+          del.innerHTML = '&times;';
+          del.title = 'Delete ' + label;
+          del.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deletePartner(i);
+          });
+          tab.appendChild(del);
+        }
+        tabBar.appendChild(tab);
+      });
+
+      const addTab = document.createElement('button');
+      addTab.className = 'tab tab--add';
+      addTab.textContent = '+ New Partner';
+      addTab.addEventListener('click', function() {
+        saveCurrent();
+        addNewPartner();
+      });
+      tabBar.appendChild(addTab);
+    }
+
+    // ── Nudge rendering ──
+    function renderNudges() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) { nudgeContainer.innerHTML = ''; return; }
+
+      nudgeContainer.innerHTML = partner.nudges.map(function(n) {
+        const label = n.trigger === 'transition' ? 'AI nudge (transition)' : 'AI nudge';
+        return '<div class="nudge-box">' +
+          '<div class="nudge-box__label">' + label + '</div>' +
+          '<p class="nudge-box__text">' + escapeHtml(n.text) + '</p>' +
+          '</div>';
+      }).join('');
+    }
+
+    // ── Update nudge button state ──
+    function updateNudgeBtn() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = 'Push my thinking';
+        return;
+      }
+      const requestedCount = partner.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+      if (requestedCount >= MAX_NUDGES_PER_PARTNER) {
+        nudgeBtn.disabled = true;
+        nudgeBtn.textContent = "You've got enough to work with. Trust your observations.";
+      } else {
+        nudgeBtn.disabled = false;
+        nudgeBtn.innerHTML = 'Push my thinking';
+      }
+    }
+
+    // ── Word count ──
+    function updateWordCount() {
+      const wc = wordCount(notesTextarea.value);
+      wordCountEl.textContent = wc + ' word' + (wc !== 1 ? 's' : '');
+    }
+
+    // ── Save current partner data from inputs ──
+    function saveCurrent() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) return;
+      partner.name = partnerName.value.trim();
+      partner.notes = notesTextarea.value;
+      saveNow();
+    }
+
+    // ── Switch to partner by index ──
+    function switchToPartner(index) {
+      saveCurrent();
+      state.currentPartner = index;
+      saveNow();
+      loadPartnerUI();
+    }
+
+    // ── Load current partner into UI ──
+    function loadPartnerUI() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) return;
+      partnerName.value = partner.name || '';
+      notesTextarea.value = partner.notes || '';
+      updateWordCount();
+      renderNudges();
+      updateNudgeBtn();
+      renderTabs();
+
+      notesTextarea.disabled = false;
+      partnerName.disabled = false;
+      notesTextarea.focus();
+    }
+
+    // ── Add new partner ──
+    function addNewPartner() {
+      state.partners.push({
+        name: '',
+        notes: '',
+        nudges: [],
+        startedAt: new Date().toISOString(),
+      });
+      state.currentPartner = state.partners.length - 1;
+      saveNow();
+      loadPartnerUI();
+      partnerName.focus();
+    }
+
+    // ── AI call ──
+    async function getAINudge(partner, trigger) {
+      const context = '[Partner ' + (state.currentPartner + 1) +
+        (partner.name ? ': ' + partner.name : '') + ']' +
+        ' [Nudge type: ' + trigger + ']' +
+        ' [Previous nudges this partner: ' + partner.nudges.length + ']' +
+        ' [Total partners interviewed: ' + state.partners.length + ']\n\n' +
+        'Interviewer\'s notes:\n' + partner.notes;
+
+      try {
+        const resp = await fetch(AI_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: SYSTEM_PROMPT,
+            messages: [{ role: 'user', content: context }],
+            model: AI_MODEL,
+            max_tokens: 150,
+          }),
+        });
+        if (!resp.ok) return null;
+        const data = await resp.json();
+        return data.content || null;
+      } catch(e) {
+        console.error('AI call failed:', e);
+        return null;
+      }
+    }
+
+    // ── Handle "Push my thinking" click ──
+    async function handleNudgeRequest() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) return;
+
+      partner.notes = notesTextarea.value;
+      saveNow();
+
+      nudgeBtn.disabled = true;
+      nudgeBtn.innerHTML = '<span class="spinner"></span> thinking\u2026';
+
+      const text = await getAINudge(partner, 'requested');
+
+      if (text) {
+        partner.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'requested',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      updateNudgeBtn();
+    }
+
+    // ── Handle transition nudge (at "Next Partner") ──
+    async function handleTransitionNudge() {
+      const partner = state.partners[state.currentPartner];
+      if (!partner) return false;
+
+      partner.notes = notesTextarea.value;
+      const wc = wordCount(partner.notes);
+      if (wc < MIN_WORDS_FOR_TRANSITION_NUDGE) return false;
+
+      nextPartnerBtn.disabled = true;
+      nextPartnerBtn.textContent = 'thinking\u2026';
+
+      const text = await getAINudge(partner, 'transition');
+
+      if (text) {
+        partner.nudges.push({
+          text: text,
+          timestamp: new Date().toISOString(),
+          trigger: 'transition',
+        });
+        saveNow();
+        renderNudges();
+      }
+
+      nextPartnerBtn.disabled = false;
+      nextPartnerBtn.innerHTML = 'Next Partner &rarr;';
+      return true;
+    }
+
+    // ── Handle Next Partner ──
+    async function handleNextPartner() {
+      saveCurrent();
+      await handleTransitionNudge();
+
+      await new Promise(function(r) { setTimeout(r, 1500); });
+
+      addNewPartner();
+    }
+
+    // ── Download confirmation flash ──
+    let downloadConfirmTimer = null;
+    function flashDownloadConfirm() {
+      downloadConfirm.classList.add('download-confirm--visible');
+      clearTimeout(downloadConfirmTimer);
+      downloadConfirmTimer = setTimeout(function() {
+        downloadConfirm.classList.remove('download-confirm--visible');
+      }, 3000);
+    }
+
+    // ── Export ──
+    function buildExport() {
+      return {
+        activityId: 'know-yourself-peer-interview',
+        version: '1.0',
+        studentName: state.studentName,
+        startedAt: state.startedAt,
+        submittedAt: new Date().toISOString(),
+        totalPartners: state.partners.length,
+        partners: state.partners.map(function(p, i) {
+          const wc = wordCount(p.notes);
+          return {
+            partnerNumber: i + 1,
+            name: p.name || 'Partner ' + (i + 1),
+            startedAt: p.startedAt,
+            notes: p.notes,
+            wordCount: wc,
+            nudges: p.nudges,
+            nudgeCount: p.nudges.length,
+          };
+        }),
+        reflection: state.reflection,
+        analytics: {
+          totalWords: state.partners.reduce(function(sum, p) {
+            return sum + wordCount(p.notes);
+          }, 0),
+          totalNudgesRequested: state.partners.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'requested'; }).length;
+          }, 0),
+          totalTransitionNudges: state.partners.reduce(function(sum, p) {
+            return sum + p.nudges.filter(function(n) { return n.trigger === 'transition'; }).length;
+          }, 0),
+        },
+      };
+    }
+
+    function handleDownload() {
+      saveCurrent();
+      state.reflection = reflectionInput.value;
+      const data = buildExport();
+      state.downloadedAt = new Date().toISOString();
+      saveNow();
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      a.download = 'know-yourself-' + safeName + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      flashDownloadConfirm();
+    }
+
+    // ── Event listeners ──
+
+    notesTextarea.addEventListener('input', function() {
+      const partner = state.partners[state.currentPartner];
+      if (partner) {
+        partner.notes = this.value;
+        save();
+      }
+      updateWordCount();
+    });
+
+    partnerName.addEventListener('input', function() {
+      const partner = state.partners[state.currentPartner];
+      if (partner) {
+        partner.name = this.value.trim();
+        save();
+        renderTabs();
+      }
+    });
+
+    nudgeBtn.addEventListener('click', handleNudgeRequest);
+    nextPartnerBtn.addEventListener('click', handleNextPartner);
+    downloadBtn.addEventListener('click', handleDownload);
+
+    reflectionInput.addEventListener('input', function() {
+      state.reflection = this.value;
+      save();
+    });
+
+    // ── Name gate ──
+    nameInput.addEventListener('input', function() {
+      startBtn.disabled = !this.value.trim();
+    });
+    nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) startBtn.click();
+    });
+
+    startBtn.addEventListener('click', function() {
+      state.studentName = nameInput.value.trim();
+      state.startedAt = new Date().toISOString();
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+      saveNow();
+      addNewPartner();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    });
+
+    // ── Init / restore ──
+    if (load() && state.studentName) {
+      nameGate.classList.add('hidden');
+      activity.classList.remove('hidden');
+
+      reflectionInput.value = state.reflection || '';
+      loadPartnerUI();
+
+      if (window.innerWidth <= 600) {
+        referenceCard.removeAttribute('open');
+      }
+    }
+  })();
+  </script>
+</body>
+</html>
