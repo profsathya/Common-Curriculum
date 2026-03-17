@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 9: You Are What You Read | CST349</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-section: #1a2332;
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --indigo-700: #4338ca;
+      --violet-400: #a78bfa;
+      --violet-500: #8b5cf6;
+      --emerald-400: #34d399;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --rose-400: #fb7185;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary); color: var(--text-primary);
+      height: 100vh; overflow: hidden;
+    }
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 100; }
+    .progress-fill { height: 100%; background: var(--indigo-500); transition: width 0.3s ease; width: 0%; }
+    .nav-bar {
+      position: fixed; top: 3px; left: 0; right: 0; height: 52px;
+      background: rgba(15,23,42,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 99;
+    }
+    .nav-title { font-size: 14px; color: var(--text-secondary); }
+    .nav-title strong { color: var(--text-primary); }
+    .nav-progress { font-size: 13px; color: var(--text-muted); }
+    .nav-controls { display: flex; gap: 8px; }
+    .nav-btn {
+      padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-secondary); font-size: 13px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .section {
+      display: none; position: fixed; top: 55px; left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+    }
+    .section.active { display: flex; align-items: center; justify-content: center; }
+    .section-content { max-width: 860px; width: 100%; padding: 32px 24px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 12px; }
+    h1 { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+    h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+    h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
+    h4 { font-size: 16px; font-weight: 600; color: var(--indigo-400); margin-bottom: 6px; }
+    .subtitle { font-size: 20px; color: var(--text-secondary); max-width: 600px; line-height: 1.5; margin-bottom: 24px; }
+    .activity-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    }
+    .activity-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .activity-card ul li { color: var(--text-secondary); font-size: 18px; padding-left: 20px; position: relative; }
+    .activity-card ul li::before { content: '\2192'; position: absolute; left: 0; color: var(--indigo-400); }
+    .activity-card ul li strong { color: var(--text-primary); }
+    .highlight-quote {
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1));
+      border: 1px solid rgba(99,102,241,0.3); border-radius: 12px;
+      padding: 20px 24px; margin-top: 16px;
+    }
+    .highlight-quote p { font-size: 18px; color: var(--text-primary); font-style: italic; line-height: 1.6; }
+    .highlight-amber {
+      background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
+      border: 1px solid rgba(251,191,36,0.3); border-radius: 12px;
+      padding: 20px 24px; margin-top: 16px;
+    }
+    .highlight-amber p { font-size: 18px; color: var(--text-primary); line-height: 1.6; }
+    .timer-container { display: flex; align-items: center; gap: 16px; justify-content: center; margin: 24px 0; }
+    .timer-display { font-size: 64px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--indigo-400); letter-spacing: -2px; }
+    .timer-btn {
+      padding: 10px 24px; border-radius: 8px; border: none; font-size: 16px; font-weight: 600; cursor: pointer;
+      background: var(--indigo-600); color: white; transition: background 0.15s;
+    }
+    .timer-btn:hover { background: var(--indigo-700); }
+    .timer-btn.reset { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+    .timer-btn.reset:hover { background: rgba(255,255,255,0.12); }
+    .insight-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;
+    }
+    .insight-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .insight-card h4 { font-size: 15px; color: var(--indigo-400); margin-bottom: 8px; }
+    .insight-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .share-prompt {
+      background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+      border: 1px solid rgba(99,102,241,0.4); border-radius: 12px;
+      padding: 20px 24px; margin-top: 20px;
+    }
+    .share-prompt p { font-size: 20px; color: var(--text-primary); font-weight: 500; }
+    .share-prompt .prompt-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--indigo-400); margin-bottom: 8px; }
+    .next-up-card {
+      background: var(--bg-section); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .next-up-badge {
+      background: rgba(99,102,241,0.2); color: var(--indigo-400);
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-top: 2px;
+    }
+    .next-up-card h4 { font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+    .next-up-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .click-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--text-muted); }
+    .click-hint kbd { background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 4px; font-family: inherit; }
+    .live-banner {
+      position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101;
+      background: linear-gradient(135deg, #f59e0b, #d97706); color: white;
+      padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .domain-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .domain-table th {
+      text-align: left; padding: 10px 14px; font-size: 14px; font-weight: 600;
+      color: var(--indigo-400); border-bottom: 2px solid rgba(99,102,241,0.3);
+    }
+    .domain-table td {
+      padding: 10px 14px; font-size: 16px; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .domain-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .domain-table td:first-child { color: var(--text-primary); font-weight: 600; }
+    /* Venn diagram */
+    .venn-container {
+      position: relative; width: 520px; height: 420px; margin: 24px auto 0;
+    }
+    .venn-circle {
+      position: absolute; border-radius: 50%; border: 2px solid;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .venn-label {
+      position: absolute; font-size: 12px; color: var(--text-secondary);
+      text-align: center; line-height: 1.3; pointer-events: none;
+    }
+    .venn-label strong { color: var(--text-primary); font-size: 13px; display: block; margin-bottom: 2px; }
+    .venn-intersect {
+      position: absolute; font-size: 11px; text-align: center;
+      line-height: 1.3; pointer-events: none;
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 36px; }
+      h2 { font-size: 28px; }
+      .insight-grid, .two-col { grid-template-columns: 1fr; }
+      .timer-display { font-size: 48px; }
+      .venn-container { transform: scale(0.7); transform-origin: top center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="live-banner">Live content — may be updated until and even during class</div>
+  <nav class="nav-bar">
+    <div class="nav-title"><strong>CST349</strong> · Week 9</div>
+    <div class="nav-progress" id="navProgress">1 / 14</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" disabled>← Prev</button>
+      <button class="nav-btn" id="nextBtn">Next →</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 1: TITLE ==================== -->
+  <section class="section active" data-section="1">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Sprint 3 · Week 9 · Mar 19</p>
+      <h1>You Are What<br>You <span style="color: var(--indigo-400);">Read</span></h1>
+      <p class="subtitle" style="margin: 0 auto;">Looking back to look forward. The ground has shifted.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 2: AGENDA ==================== -->
+  <section class="section" data-section="2">
+    <div class="section-content">
+      <p class="section-label">What We're Doing Today</p>
+      <h2>Agenda</h2>
+      <div style="display: grid; gap: 12px; margin-top: 20px;">
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: baseline; gap: 16px;">
+          <span style="color: var(--indigo-400); font-weight: 700; font-size: 22px; min-width: 24px;">1</span>
+          <div>
+            <p style="color: var(--text-primary); font-size: 18px; font-weight: 500; margin: 0;">What SDL should mean to you now</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 0;">8 min</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: baseline; gap: 16px;">
+          <span style="color: var(--indigo-400); font-weight: 700; font-size: 22px; min-width: 24px;">2</span>
+          <div>
+            <p style="color: var(--text-primary); font-size: 18px; font-weight: 500; margin: 0;">Sprint 3 + 4 — where we're going</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 0;">12 min</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: baseline; gap: 16px;">
+          <span style="color: var(--indigo-400); font-weight: 700; font-size: 22px; min-width: 24px;">3</span>
+          <div>
+            <p style="color: var(--text-primary); font-size: 18px; font-weight: 500; margin: 0;">Looking back: find signals you already lived through</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 0;">25 min</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: baseline; gap: 16px;">
+          <span style="color: var(--indigo-400); font-weight: 700; font-size: 22px; min-width: 24px;">4</span>
+          <div>
+            <p style="color: var(--text-primary); font-size: 18px; font-weight: 500; margin: 0;">Share what you found — class discussion</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 0;">15 min</p>
+          </div>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: baseline; gap: 16px;">
+          <span style="color: var(--indigo-400); font-weight: 700; font-size: 22px; min-width: 24px;">5</span>
+          <div>
+            <p style="color: var(--text-primary); font-size: 18px; font-weight: 500; margin: 0;">Peer conversations</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 0;">20 min</p>
+          </div>
+        </div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 15px; margin-top: 20px; text-align: center;">We start with what you already know. Then we build forward.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 3: THE SDL ARC ==================== -->
+  <section class="section" data-section="3">
+    <div class="section-content">
+      <p class="section-label">First Half → Second Half</p>
+      <h2>SDL isn't a checklist. It's a different relationship with not-knowing.</h2>
+      <div class="two-col" style="margin-top: 20px;">
+        <div>
+          <p style="font-size: 13px; font-weight: 600; color: var(--indigo-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Sprint 1–2 emphasis</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--indigo-400); font-weight: 600; font-size: 15px;">1. Goals</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Set specific, testable targets</p>
+            </div>
+            <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--indigo-400); font-weight: 600; font-size: 15px;">2. Planning</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Design the path, not just the destination</p>
+            </div>
+            <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--indigo-400); font-weight: 600; font-size: 15px;">3. Ambiguity</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Work productively without clarity</p>
+            </div>
+            <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--indigo-400); font-weight: 600; font-size: 15px;">4. Metacognition</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Notice what you're doing while you're doing it</p>
+            </div>
+            <div style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--indigo-400); font-weight: 600; font-size: 15px;">5. Iteration</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Revise based on evidence, not just effort</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 13px; font-weight: 600; color: var(--amber-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Sprint 3 activating now</p>
+          <div style="display: grid; gap: 8px;">
+            <div style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--amber-400); font-weight: 600; font-size: 15px;">6. Evaluation</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Judge quality — yours and others'</p>
+            </div>
+            <div style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); border-radius: 8px; padding: 12px 16px;">
+              <span style="color: var(--amber-400); font-weight: 600; font-size: 15px;">7. Collaboration</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Learn with and from others deliberately</p>
+            </div>
+          </div>
+          <p style="font-size: 13px; font-weight: 600; color: var(--emerald-400); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 12px;">All sprints</p>
+          <div style="background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3); border-radius: 8px; padding: 12px 16px;">
+            <span style="color: var(--emerald-400); font-weight: 600; font-size: 15px;">8. AI Use</span>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0;">Use AI as a tool, not a crutch</p>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-quote" style="margin-top: 20px;">
+        <p style="font-style: normal;">The trigger for SDL is knowing what you need to learn. But what determines <strong>what</strong> you decide to learn? That's what Sprint 3 is about.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4: SPRINT 3 + 4 OVERVIEW ==================== -->
+  <section class="section" data-section="4">
+    <div class="section-content">
+      <p class="section-label">The Second Half</p>
+      <h2>Sprint 3 tells you where. Sprint 4 tells you what to do about it.</h2>
+      <div class="two-col" style="margin-top: 20px;">
+        <div class="activity-card">
+          <h4 style="color: var(--indigo-400); font-size: 14px; margin-bottom: 8px;">SPRINT 3: TRANSFER</h4>
+          <h3 style="margin-bottom: 8px;">Weeks 9–12</h3>
+          <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.6;">Futures thinking. Read the environment. Find signals. Make a specific, defensible claim about where your field is going.</p>
+        </div>
+        <div class="activity-card">
+          <h4 style="color: var(--violet-400); font-size: 14px; margin-bottom: 8px;">SPRINT 4: PROVING IT</h4>
+          <h3 style="margin-bottom: 8px;">Weeks 13–16</h3>
+          <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.6;">You claimed where your field is going. Now develop one skill to prepare for that future. The claim from Sprint 3 is the input for Sprint 4.</p>
+        </div>
+      </div>
+      <div style="text-align: center; margin: 20px 0;">
+        <div style="display: inline-flex; align-items: center; gap: 16px; background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 24px;">
+          <span style="color: var(--indigo-400); font-weight: 600;">Sprint 3 Claim</span>
+          <span style="color: var(--text-muted); font-size: 24px;">→</span>
+          <span style="color: var(--violet-400); font-weight: 600;">Sprint 4 Direction</span>
+        </div>
+      </div>
+      <div class="highlight-quote">
+        <p style="font-style: normal;">A vague Sprint 3 claim gives Sprint 4 nothing to build on. A specific one gives you a real direction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5: THREE CIRCLES (VENN) ==================== -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Why SDL Direction Matters</p>
+      <h2>What you choose to learn is shaped by three things.</h2>
+      <div class="venn-container">
+        <!-- Three circles via SVG -->
+        <svg viewBox="0 0 520 420" width="520" height="420" style="position: absolute; top: 0; left: 0;">
+          <!-- Interest circle (top-left) -->
+          <circle cx="200" cy="170" r="140" fill="rgba(99,102,241,0.12)" stroke="var(--indigo-400)" stroke-width="2"/>
+          <!-- Need circle (top-right) -->
+          <circle cx="320" cy="170" r="140" fill="rgba(251,191,36,0.10)" stroke="var(--amber-400)" stroke-width="2"/>
+          <!-- Good-at circle (bottom-center) -->
+          <circle cx="260" cy="280" r="140" fill="rgba(52,211,153,0.10)" stroke="var(--emerald-400)" stroke-width="2"/>
+        </svg>
+        <!-- Circle labels (outer regions) -->
+        <div class="venn-label" style="top: 52px; left: 80px; width: 100px;">
+          <strong style="color: var(--indigo-400);">Interest</strong>
+          Sustains the learning
+        </div>
+        <div class="venn-label" style="top: 52px; right: 40px; width: 100px;">
+          <strong style="color: var(--amber-400);">Need</strong>
+          Makes it valuable
+        </div>
+        <div class="venn-label" style="bottom: 18px; left: 50%; transform: translateX(-50%); width: 110px;">
+          <strong style="color: var(--emerald-400);">Good At</strong>
+          Makes it usable
+        </div>
+        <!-- Solo regions -->
+        <div class="venn-intersect" style="top: 100px; left: 112px; width: 80px; color: var(--text-muted);">Hobby</div>
+        <div class="venn-intersect" style="top: 100px; right: 78px; width: 80px; color: var(--text-muted); font-size: 10px;">Someone will fill it</div>
+        <div class="venn-intersect" style="bottom: 68px; left: 50%; transform: translateX(-50%); width: 90px; color: var(--text-muted); font-size: 10px;">Skills without purpose</div>
+        <!-- Two-way intersections -->
+        <div class="venn-intersect" style="top: 118px; left: 228px; width: 64px; color: var(--text-secondary); font-size: 10px;">Relevant but replaceable</div>
+        <div class="venn-intersect" style="top: 228px; left: 140px; width: 70px; color: var(--text-secondary); font-size: 10px;">Fulfilling but not useful enough</div>
+        <div class="venn-intersect" style="top: 228px; right: 108px; width: 70px; color: var(--text-secondary); font-size: 10px;">Sustainable but draining</div>
+        <!-- Center: all three -->
+        <div class="venn-intersect" style="top: 185px; left: 50%; transform: translateX(-50%); width: 90px;">
+          <strong style="color: var(--text-primary); font-size: 13px;">Work that sustains itself</strong>
+        </div>
+      </div>
+      <div class="highlight-amber" style="margin-top: 16px;">
+        <p>The overlap is where work feels like yours. Sprint 3 helps you find where the world needs are shifting — so you can aim for the overlap, not just the intersection you happened to land in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6: FINDING A JOB VS THE JOB ==================== -->
+  <section class="section" data-section="6">
+    <div class="section-content">
+      <p class="section-label">The Targeting Problem</p>
+      <h2>Shooting at the flock vs. aiming at one bird.</h2>
+      <div class="two-col" style="margin-top: 20px;">
+        <div class="activity-card" style="border-color: rgba(251,146,146,0.3);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="font-size: 11px; background: rgba(251,113,133,0.15); color: var(--rose-400); padding: 4px 10px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Volume strategy</span>
+          </div>
+          <h3 style="color: var(--rose-400); margin-bottom: 10px;">Finding <em>A</em> Job</h3>
+          <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.6; margin: 0;">Random applications. Any open role. Skills that match a job description. Hoping to get noticed.</p>
+        </div>
+        <div class="activity-card" style="border-color: rgba(52,211,153,0.3);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="font-size: 11px; background: rgba(52,211,153,0.15); color: var(--emerald-400); padding: 4px 10px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Direction strategy</span>
+          </div>
+          <h3 style="color: var(--emerald-400); margin-bottom: 10px;">Finding <em>THE</em> Job</h3>
+          <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.6; margin: 0;">Strategic focus. You know which field is moving, which role is emerging, which skill is becoming rare. You're building toward a specific intersection.</p>
+        </div>
+      </div>
+      <div class="highlight-quote" style="margin-top: 20px;">
+        <p style="font-style: normal;">The professionals who stay relevant aren't the ones who learned the most. They're the ones who noticed where the ground was shifting — before it shifted under them. That's what Sprint 3 builds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7: LOOKING BACK — SETUP ==================== -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">The Activity · Why 2010–2020</p>
+      <h2>You already lived through a decade of signals. You just didn't call them that.</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <ul>
+          <li>We're looking at <strong>2010–2020</strong> — not AI, not the last 2 years</li>
+          <li>Many of you were 6–14 years old during this decade. You didn't observe it as analysts. But it happened around you — in your family's work, in your neighborhood, in what disappeared and what appeared.</li>
+          <li>Your job: find <strong>one signal</strong> from that decade in a domain you've been assigned. Name the <strong>driver</strong> underneath it.</li>
+        </ul>
+      </div>
+      <p style="font-size: 15px; color: var(--text-secondary); margin-top: 16px; margin-bottom: 8px;"><strong style="color: var(--text-primary);">Two tools available — your choice:</strong></p>
+      <div class="two-col" style="margin-top: 8px;">
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <h4 style="font-size: 13px; margin-bottom: 8px;">AI Prompt (starter)</h4>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; font-family: 'SF Mono', Consolas, monospace; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px;">I'm looking at [your domain] between 2010 and 2020. Describe three specific things that changed in that industry during that decade, from the perspective of someone who worked in it. For each change: what was a signal that it was coming before it happened, and what underlying force was driving it?</p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+          <h4 style="font-size: 13px; margin-bottom: 8px;">Google Search</h4>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Try: "[your domain] industry changes 2010 2020" or "[your domain] disruption 2010s"</p>
+          <h4 style="font-size: 13px; margin: 12px 0 8px;">Reference Doc</h4>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;"><a href="[SIGNAL_CARDS_DOC_LINK]" target="_blank" style="color: var(--indigo-400);">Signal Cards Doc →</a> — use to check depth and find inspiration. Finding something not in it is fine if you can explain the driver.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 8: GROUP DOMAIN ASSIGNMENTS ==================== -->
+  <section class="section" data-section="8">
+    <div class="section-content">
+      <p class="section-label">Your Domain</p>
+      <h2>Three options. Pick one. Go deep on it.</h2>
+      <table class="domain-table">
+        <thead>
+          <tr><th>Group</th><th>Option A</th><th>Option B</th><th>Option C</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Retail</td><td>Entertainment</td><td>Transportation</td></tr>
+          <tr><td>2</td><td>Manufacturing</td><td>Healthcare</td><td>Education</td></tr>
+          <tr><td>3</td><td>Retail</td><td>Manufacturing</td><td>Transportation</td></tr>
+          <tr><td>4</td><td>Entertainment</td><td>Healthcare</td><td>Education</td></tr>
+          <tr><td>5</td><td>Retail</td><td>Healthcare</td><td>Education</td></tr>
+          <tr><td>6</td><td>Manufacturing</td><td>Entertainment</td><td>Transportation</td></tr>
+          <tr><td>7</td><td>Retail</td><td>Entertainment</td><td>Education</td></tr>
+          <tr><td>8</td><td>Manufacturing</td><td>Healthcare</td><td>Transportation</td></tr>
+          <tr><td>9</td><td>Entertainment</td><td>Healthcare</td><td>Retail</td></tr>
+        </tbody>
+      </table>
+      <p style="color: var(--text-muted); font-size: 14px; margin-top: 16px;">You pick one from your three. Different groups may end up in the same domain — that's fine. Your signals won't be identical.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 9: ROUND 1 — INDIVIDUAL ==================== -->
+  <section class="section" data-section="9">
+    <div class="section-content">
+      <p class="section-label">Round 1 · Individual · 5 min</p>
+      <h2>One signal. Notebook first.</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <ul>
+          <li><strong>Choose your domain</strong> from your group's three options</li>
+          <li>Use the AI prompt, Google search, or signal cards doc to find <strong>one specific change</strong> in that domain between 2010–2020</li>
+          <li>Write in your notebook:
+            <div style="margin-top: 10px; display: grid; gap: 8px; padding-left: 4px;">
+              <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px 14px;">
+                <p style="color: var(--text-primary); font-size: 16px; margin: 0;"><strong style="color: var(--indigo-400);">The signal</strong> — what specifically changed, and approximately when it became visible</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px 14px;">
+                <p style="color: var(--text-primary); font-size: 16px; margin: 0;"><strong style="color: var(--indigo-400);">The driver</strong> — the underlying force that made it happen</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="highlight-quote" style="margin-top: 16px;">
+        <p style="font-style: normal; font-size: 16px;">The test for a good signal: Could someone working in that industry have seen this coming if they were paying attention? What would they have noticed first?</p>
+      </div>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay1">5:00</div>
+        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 10: ROUND 2 — PAIRS ==================== -->
+  <section class="section" data-section="10">
+    <div class="section-content">
+      <p class="section-label">Round 2 · Pairs · 5 min</p>
+      <h2>Same domain, same decade — did you find the same thing?</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 12px;">Turn to your neighbor (can be from a different group):</p>
+        <ul>
+          <li><strong>Share your signal</strong></li>
+          <li>Where do you <strong>agree on the driver?</strong> Where do you disagree?</li>
+          <li>The disagreement is more interesting than the agreement — <strong>write it down</strong></li>
+        </ul>
+      </div>
+      <div class="share-prompt" style="margin-top: 16px;">
+        <div class="prompt-label">One question to push each other</div>
+        <p>"What would have to be true for that NOT to have happened?" — that's how you test a driver.</p>
+      </div>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay2">5:00</div>
+        <button class="timer-btn" id="timerBtn2" onclick="toggleTimer(2)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(2)">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 11: ROUND 3 — GROUPS ==================== -->
+  <section class="section" data-section="11">
+    <div class="section-content">
+      <p class="section-label">Round 3 · Your Group · 10 min</p>
+      <h2>Pick the one signal your group is most willing to defend.</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 12px;">Pool all signals from your group members. Then:</p>
+        <ul>
+          <li>Pick the one that's <strong>most defensible</strong> — not most dramatic, most defensible</li>
+          <li>Agree on <strong>one driver statement in one sentence</strong></li>
+          <li>Prepare to present: <strong>signal</strong> (what + when), <strong>driver</strong> (why it was inevitable once it started)</li>
+        </ul>
+      </div>
+      <div class="highlight-quote" style="margin-top: 16px;">
+        <p style="font-style: normal; font-size: 16px;">The constraint: you have to be able to say "Even if [something else] hadn't happened, this signal would still have appeared because of [driver]."</p>
+      </div>
+      <div class="timer-container">
+        <div class="timer-display" id="timerDisplay3">10:00</div>
+        <button class="timer-btn" id="timerBtn3" onclick="toggleTimer(3)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(3)">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 12: CLASS SHARE-BACK ==================== -->
+  <section class="section" data-section="12">
+    <div class="section-content">
+      <p class="section-label">What We Found · Class Discussion · 15 min</p>
+      <h2>Six domains, one decade. What do the drivers have in common?</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 12px;"><strong>Each group: 60 seconds.</strong> Signal + driver. No explanation of how you found it.</p>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 17px; margin-top: 20px; margin-bottom: 8px;">After all groups share, two questions:</p>
+      <div style="display: grid; gap: 12px; margin-top: 8px;">
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">1.</strong> "What driver kept appearing across different domains under different names?"</p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">2.</strong> "If you were 25 years old in 2012 and paying close attention — what would you have done differently to prepare for 2020?"</p>
+        </div>
+      </div>
+      <div class="highlight-quote" style="margin-top: 20px;">
+        <p style="font-style: normal; font-size: 16px;">That second question is Sprint 3. You just described the practice of futures thinking using a decade you can evaluate in hindsight. Now you build that practice for the next decade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 13: PEER CONVERSATION ==================== -->
+  <section class="section" data-section="13">
+    <div class="section-content">
+      <p class="section-label">Interview Practice · Sprint 3</p>
+      <h2>Explaining what you found to someone who wasn't looking.</h2>
+      <div class="activity-card" style="margin-top: 16px;">
+        <h3 style="font-size: 17px; margin-bottom: 10px;">This sprint's skill</h3>
+        <p style="color: var(--text-secondary); font-size: 17px; margin-bottom: 0;">How to explain technical concepts — specifically, how to describe a signal or trend to someone who doesn't already share your context.</p>
+      </div>
+      <div class="share-prompt" style="margin-top: 16px;">
+        <div class="prompt-label">Today's prompt</div>
+        <p style="font-size: 18px;">"Walk your partner through the signal you found. Their job: ask the one question that most challenges your driver. Your job: answer it without retreating to 'it's complicated.'"</p>
+      </div>
+      <div class="activity-card" style="margin-top: 16px;">
+        <ul>
+          <li><strong>Pairing:</strong> you'll be partnered with someone from a different group — someone who worked on a different domain. They haven't seen your signal. That's the point.</li>
+          <li><strong>Skill being practiced:</strong> making a claim and defending it under skeptical questioning from someone with no prior context — which is every technical interview.</li>
+          <li><strong>No submission.</strong> This counts toward your engagement grade. If you skip it, that's on you.</li>
+        </ul>
+      </div>
+      <p style="color: var(--text-muted); font-size: 14px; margin-top: 16px; text-align: center;">~3 min per pair — instructor directs rotation</p>
+    </div>
+  </section>
+
+  <!-- ==================== 14: WRAP + WHAT'S DUE ==================== -->
+  <section class="section" data-section="14">
+    <div class="section-content">
+      <p class="section-label">Before You Leave</p>
+      <h2>What Sprint 3 asks of you.</h2>
+      <p class="subtitle">Three things due before Week 10:</p>
+      <div class="next-up-card">
+        <div class="next-up-badge">Thu Mar 19</div>
+        <div>
+          <h4>Information Diet Audit + First Signal</h4>
+          <p>Your honest audit of what you actually consume, plus one candidate signal from your focus area — <strong>not the one from class today</strong>. A new one you find yourself.</p>
+        </div>
+      </div>
+      <div class="next-up-card">
+        <div class="next-up-badge">Fri Mar 20</div>
+        <div>
+          <h4>Reflection #7</h4>
+          <p>What did the looking-back activity reveal about what you've been paying attention to? Handwritten, photographed.</p>
+        </div>
+      </div>
+      <div class="next-up-card">
+        <div class="next-up-badge">Mon Mar 23</div>
+        <div>
+          <h4>Sprint 3 Goal Setting</h4>
+          <p>Your focus area for the sprint, your intake targets, first-attempt answers to the three Futures Brief questions.</p>
+        </div>
+      </div>
+      <div class="highlight-quote" style="margin-top: 20px;">
+        <p style="font-style: normal;">The signal you find on your own this week — not the one the group helped you find — is the first real test of whether you can do this.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="click-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
+
+  <script>
+    let currentSection = 1;
+    const totalSections = document.querySelectorAll('.section').length;
+    const sections = document.querySelectorAll('.section');
+    const progressFill = document.getElementById('progressFill');
+    const navProgress = document.getElementById('navProgress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const timers = {
+      1: { running: false, seconds: 300, defaultSeconds: 300, interval: null },
+      2: { running: false, seconds: 300, defaultSeconds: 300, interval: null },
+      3: { running: false, seconds: 600, defaultSeconds: 600, interval: null }
+    };
+    const timerLabels = { 1: 'Start', 2: 'Start', 3: 'Start' };
+    function goToSection(n) {
+      if (n < 1 || n > totalSections) return;
+      sections.forEach(s => s.classList.remove('active'));
+      document.querySelector(`[data-section="${n}"]`).classList.add('active');
+      currentSection = n;
+      progressFill.style.width = `${(currentSection / totalSections) * 100}%`;
+      navProgress.textContent = `${currentSection} / ${totalSections}`;
+      prevBtn.disabled = currentSection === 1;
+      nextBtn.disabled = currentSection === totalSections;
+    }
+    prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
+    nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
+    });
+    function toggleTimer(id) {
+      const timer = timers[id];
+      const btn = document.getElementById(`timerBtn${id}`);
+      if (timer.running) {
+        clearInterval(timer.interval);
+        btn.textContent = 'Resume';
+        timer.running = false;
+      } else {
+        timer.interval = setInterval(() => {
+          timer.seconds--;
+          updateTimerDisplay(id);
+          if (timer.seconds <= 0) { clearInterval(timer.interval); btn.textContent = 'Done!'; timer.running = false; }
+        }, 1000);
+        btn.textContent = 'Pause';
+        timer.running = true;
+      }
+    }
+    function resetTimer(id) {
+      const timer = timers[id];
+      clearInterval(timer.interval);
+      timer.seconds = timer.defaultSeconds;
+      timer.running = false;
+      document.getElementById(`timerBtn${id}`).textContent = timerLabels[id];
+      updateTimerDisplay(id);
+    }
+    function updateTimerDisplay(id) {
+      const timer = timers[id];
+      const mins = Math.floor(timer.seconds / 60);
+      const secs = timer.seconds % 60;
+      document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    goToSection(1);
+  </script>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--indigo-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
