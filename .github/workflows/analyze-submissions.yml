@@ -24,6 +24,7 @@ on:
           - grade             # Grade submissions (requires download)
           - dashboard         # Generate dashboard only
           - post-grades       # Post reviewed grades to Canvas
+          - fix-double-grades # Fix s2-reflection-4/5 grades (×2)
           - diagnose-downloads  # Test file download capabilities
       assignment:
         description: 'Single assignment key to analyze (optional, blank = all)'
@@ -96,7 +97,17 @@ jobs:
             echo "✓ Wrote grades JSON to data-repo/${c}/grading/${INPUT_ASSIGNMENT}.json"
           done
 
+      - name: Fix double grades (reflection-4/5)
+        if: inputs.action == 'fix-double-grades'
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+          CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
+        run: |
+          echo "Running grade fix for s2-reflection-4 and s2-reflection-5..."
+          node scripts/fix-double-reflection-grades.js --post
+
       - name: Run Submission Analyzer
+        if: inputs.action != 'fix-double-grades'
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
