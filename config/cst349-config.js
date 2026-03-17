@@ -626,7 +626,7 @@ const CST349_CONFIG = {
     6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "Evidence & Outreach" },
     7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Stretch Challenge" },
     8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Validated Demonstration" },
-    9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "You Are What You Read" },
+    9: { start: "2026-03-15", end: "2026-03-28", sprint: 3, title: "You Are What You Read" },
     10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Finding What Matters" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Making a Claim" },
     12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Demo Day — Your Futures Brief" },
