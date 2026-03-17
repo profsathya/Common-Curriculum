@@ -16,13 +16,19 @@
  * Requires: CANVAS_API_TOKEN and CANVAS_BASE_URL environment variables.
  */
 
+const fs = require('fs');
 const path = require('path');
 const { CanvasAPI } = require('./canvas-api.js');
 
-// Load CST349 config to get Canvas IDs
-const configPath = path.join(__dirname, '..', 'config', 'cst349-config.js');
-require(configPath);
-const config = CST349_CONFIG;
+// Load CST349 config (same pattern as submission-analyzer.js)
+function loadConfig(configPath) {
+  const content = fs.readFileSync(configPath, 'utf-8');
+  const match = content.match(/const\s+\w+\s*=\s*(\{[\s\S]*\});/);
+  if (!match) throw new Error(`Could not parse config: ${configPath}`);
+  return new Function(`return ${match[1]}`)();
+}
+
+const config = loadConfig(path.join(__dirname, '..', 'config', 'cst349-config.js'));
 
 const COURSE_ID = config.canvasBaseUrl.match(/courses\/(\d+)/)?.[1];
 if (!COURSE_ID) {
