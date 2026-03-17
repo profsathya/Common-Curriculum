@@ -87,13 +87,11 @@ async function main() {
       }
 
       const newScore = score * 2;
-      const comment = `Grade corrected: assignment was graded out of 5 instead of 10. Original score ${score}/5 → ${newScore}/10.`;
 
       if (POST) {
         try {
           await api.gradeSubmission(COURSE_ID, canvasId, sub.user_id, {
             grade: newScore,
-            comment,
           });
           console.log(`  ✓ User ${sub.user_id}: ${score} → ${newScore}`);
           updated++;
