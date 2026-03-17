@@ -2929,8 +2929,13 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
   const submissions = await api.listSubmissions(courseId, assignmentConfig.canvasId);
   const currentGrades = {};
   for (const sub of submissions) {
+    // Use the highest of score/grade/entered_score — Canvas may return score=null
+    // for grades that are entered but not yet "posted to students"
+    const candidates = [sub.score, sub.grade != null ? Number(sub.grade) : null, sub.entered_score]
+      .filter(v => v != null && !isNaN(v));
+    const knownScore = candidates.length > 0 ? Math.max(...candidates) : null;
     currentGrades[String(sub.user_id)] = {
-      score: sub.score,
+      score: knownScore,
       graded: sub.workflow_state === 'graded',
     };
   }
