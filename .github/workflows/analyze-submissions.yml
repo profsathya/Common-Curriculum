@@ -97,13 +97,22 @@ jobs:
             echo "✓ Wrote grades JSON to data-repo/${c}/grading/${INPUT_ASSIGNMENT}.json"
           done
 
-      - name: Fix double grades (reflection-4/5)
+      - name: Fix double grades — dry run (reflection-4/5)
         if: inputs.action == 'fix-double-grades'
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
         run: |
-          echo "Running grade fix for s2-reflection-4 and s2-reflection-5..."
+          echo "=== DRY RUN — previewing changes ==="
+          node scripts/fix-double-reflection-grades.js
+
+      - name: Fix double grades — apply (reflection-4/5)
+        if: inputs.action == 'fix-double-grades'
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+          CANVAS_BASE_URL: ${{ secrets.CANVAS_BASE_URL }}
+        run: |
+          echo "=== POSTING to Canvas ==="
           node scripts/fix-double-reflection-grades.js --post
 
       - name: Run Submission Analyzer
