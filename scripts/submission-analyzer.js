@@ -2902,6 +2902,8 @@ function buildGradeComment(g) {
 
   // General grades — assemble from whatever fields are present
   const parts = [];
+  if (g.finalComment) parts.push(g.finalComment);
+  else if (g.suggestedComment) parts.push(g.suggestedComment);
   if (g.feedback) parts.push(g.feedback);
   if (g.qualityNotes) parts.push(g.qualityNotes);
   if (g.comment) parts.push(g.comment);
@@ -2937,6 +2939,7 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
     currentGrades[String(sub.user_id)] = {
       score: knownScore,
       graded: sub.workflow_state === 'graded',
+      hasComment: Array.isArray(sub.submission_comments) && sub.submission_comments.length > 0,
     };
   }
 
@@ -2955,7 +2958,8 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
 
     // Check if Canvas already has this exact grade
     const current = currentGrades[String(g.canvasId)];
-    if (current && current.score === score) {
+    const comment = buildGradeComment(g);
+    if (current && current.score === score && (current.hasComment || !comment)) {
       console.log(`  — ${label}: already ${score} in Canvas, skipping`);
       unchanged++;
       postedCanvasIds.add(g.canvasId);
@@ -2968,8 +2972,6 @@ async function postGradesToCanvas(api, courseName, dataDir, assignmentKey, grade
       skipped++;
       continue;
     }
-
-    const comment = buildGradeComment(g);
 
     try {
       await api.gradeSubmission(courseId, assignmentConfig.canvasId, g.canvasId, { grade: score, comment });
