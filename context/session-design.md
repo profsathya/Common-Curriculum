@@ -29,6 +29,29 @@ If a slide's content doesn't fit on a single screen and requires scrolling, reor
 
 ---
 
+## Flexibility Over Scripting
+
+Session slides should support live delivery, not script it. The instructor needs room to adjust pacing, emphasis, and structure in real time based on what's happening in the room.
+
+### What each slide should answer
+
+- **"What is the point of this segment?"** — the key idea or purpose, visible at the top.
+- **"What should students be doing?"** — if it's an activity, the instructions are unambiguous: what to do, where to put it, how long.
+
+Slides should NOT answer "What does the instructor say?" That's the instructor's job.
+
+### Timer slides vs. narrative slides
+
+Timer slides anchor activity blocks — they're fine with clear instructions and a countdown. But **narrative/framing slides should be sparse**: a key question or concept, not paragraphs of instructor script. If a slide requires the instructor to read or paraphrase multiple paragraphs to deliver it, the slide is over-scripted. Reduce to the single takeaway the instructor can riff on.
+
+This strengthens the existing "One Key Point Per Slide" principle: the key point should be something the instructor can say in their own words while the slide shows the anchor. The slide and the instructor should complement each other, not duplicate each other.
+
+### Improvisational moments need space, not containment
+
+Personal stories, live AI demonstrations, and class synthesis are all improvisational — they change based on the room. Slides should set up these moments (signal what's about to happen, orient students) but not try to contain the content. A slide that says "Watch how I'd start. Then you continue." is better than three paragraphs describing what the instructor will demonstrate.
+
+---
+
 ## Opening Structure
 
 **Start with universal skill framing before diving into assignment-specific feedback.**
