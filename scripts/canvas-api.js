@@ -297,14 +297,26 @@ class CanvasAPI {
    * Grade a submission and optionally post a comment
    */
   async gradeSubmission(courseId, assignmentId, userId, { grade, comment } = {}) {
-    const body = {};
-    if (grade !== undefined) body.submission = { posted_grade: grade };
-    if (comment) body.comment = { text_comment: comment };
+    const url = `${this.baseUrl}/api/v1/courses/${courseId}/assignments/${assignmentId}/submissions/${userId}`;
+    const params = new URLSearchParams();
+    if (grade !== undefined) params.append('submission[posted_grade]', grade);
+    if (comment) params.append('comment[text_comment]', comment);
 
-    return this.request(
-      `/courses/${courseId}/assignments/${assignmentId}/submissions/${userId}`,
-      { method: 'PUT', body: JSON.stringify(body) }
-    );
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Canvas API error (${response.status}): ${error}`);
+    }
+
+    return response.json();
   }
 
   /**
