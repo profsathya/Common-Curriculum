@@ -515,7 +515,7 @@ const CST349_CONFIG = {
     6: null,  // Week 6
     7: null,  // Week 7
     8: null,  // Week 8
-    9: null,  // Week 9
+    9: "https://www.loom.com/share/51ff5e025774426a87cdd42a1d5430fc",  // Week 9
     10: null, // Week 10
     11: null, // Week 11
     12: null, // Week 12
