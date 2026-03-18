@@ -2902,6 +2902,8 @@ function buildGradeComment(g) {
 
   // General grades — assemble from whatever fields are present
   const parts = [];
+  if (g.finalComment) parts.push(g.finalComment);
+  else if (g.suggestedComment) parts.push(g.suggestedComment);
   if (g.feedback) parts.push(g.feedback);
   if (g.qualityNotes) parts.push(g.qualityNotes);
   if (g.comment) parts.push(g.comment);
