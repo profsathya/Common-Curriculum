@@ -408,8 +408,9 @@ const CST349_CONFIG = {
 
     // Sprint 3
     "s3-reflection-7": {
+      canvasId: "586014",
       title: "S3: Productive Reflection #7",
-      dueDate: "2026-03-28",
+      dueDate: "2026-03-20",
       type: "reflection",
       canvasType: "assignment",
       assignmentGroup: "Sprint 3: Productive Reflections",
@@ -419,8 +420,9 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s3-w9-reflection.html"
     },
     "s3-info-diet-audit": {
+      canvasId: "586015",
       title: "S3: Information Diet Audit + First Signal",
-      dueDate: "2026-03-26",
+      dueDate: "2026-03-19",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 3: Goal Setting",
@@ -430,8 +432,9 @@ const CST349_CONFIG = {
       htmlFile: "assignments/s3-w9-info-diet-audit.html"
     },
     "s3-goal-setting": {
+      canvasId: "586016",
       title: "S3: Sprint 3 Goal Setting",
-      dueDate: "2026-03-26",
+      dueDate: "2026-03-23",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 3: Goal Setting",
