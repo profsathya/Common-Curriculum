@@ -558,6 +558,46 @@ const CST395_CONFIG = {
         }
       },
       portfolioConnection: "This IS your portfolio piece. Sprint 2's demo answers: 'Can I solve a real problem for a real person and prove the value of my judgment?'"
+    },
+    9: {
+      narrative: "New domain, new stakes. You're entering a problem space you don't own — the Bhutan MDRO guideline. Your job is to find one specific human moment where the guideline fails the person who needs it.",
+      connection: "Sprint 1 was your problem. Sprint 2 was your partner's. Sprint 3 is a stranger's — in a clinical domain you have to learn. The distance is the point.",
+      insight: "Vague problems produce vague solutions. 'Making the guideline more accessible' is not a stake. 'A ward nurse needs to know X in 4 minutes between handoffs' is.",
+      employerLink: {
+        text: "Entering unfamiliar domains and quickly identifying actionable problems is what employers mean by Analytical Thinking and Initiative — the ability to make progress without someone telling you where to start.",
+        source: null
+      },
+      portfolioConnection: "Your Problem Stake Brief is the foundation of your Sprint 3 demo. The specificity of your stake determines the quality of everything that follows."
+    },
+    10: {
+      narrative: "Your stake is a first draft. This week you defend it — first against AI, then against a classmate, then against the expert. Each round sharpens what you actually know vs. what you're guessing.",
+      connection: "Last week you staked a claim. This week Piranavan tells you what you got wrong about the clinical reality. The gap between your assumption and his correction is where the real design work lives.",
+      insight: "If you have no questions for the expert, you haven't thought hard enough about what you don't know. The best stakes come from students who can name their assumptions precisely enough to test them.",
+      employerLink: {
+        text: "This builds what employers call Critical Thinking and Collaboration — testing your ideas against expert knowledge and adjusting, not defending a position that's already been disproven.",
+        source: null
+      },
+      portfolioConnection: "Your demo will show the delta: what your stake looked like before expert feedback vs. after. That arc — not the final product — is what demonstrates growth."
+    },
+    11: {
+      narrative: "Build week. You've sharpened the problem. Now design the human process first, then touch the computer. Piranavan joins for a second session — this time you demo what you've built.",
+      connection: "Week 9 you found the moment. Week 10 you pressure-tested it. Now build something simple enough to test and specific enough to fail in useful ways.",
+      insight: "Simplicity is a design decision, not a shortcut. If your solution requires the nurse to learn a new system during a 4-minute handoff, you've designed for yourself, not for her.",
+      employerLink: {
+        text: "MVP discipline — building the smallest thing that tests your core assumption — is Creative Problem Solving in its most practical form. Employers value people who ship, not people who plan.",
+        source: null
+      },
+      portfolioConnection: "Build v2 shows iteration: what changed from v1, why, and what evidence drove the change. This is the core of your demo arc."
+    },
+    12: {
+      narrative: "Demo Day. Show the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation.",
+      connection: "The demo isn't a product presentation. It's proof that you can enter an unfamiliar domain, find a specific human moment, and build something that addresses it — while being honest about what you still don't know.",
+      insight: "Delta matters more than final state. A student who started with 'make the guideline accessible' and ended with a specific nurse-facing decision tool has a better demo than someone whose polished product never changed from Week 9.",
+      employerLink: {
+        text: "This is the full stack of professional skills: domain learning, stakeholder engagement, iterative building, and honest self-assessment. Sprint 3's demo answers: 'Can I solve a problem in a domain I had to learn?'",
+        source: null
+      },
+      portfolioConnection: "Sprint 3 demo is your strongest portfolio piece yet — it shows you can operate in ambiguity with real stakes and real constraints."
     }
   },
 
@@ -573,8 +613,8 @@ const CST395_CONFIG = {
     6: { start: "2026-02-22", end: "2026-02-28", sprint: 2, title: "Discovery & Domain Learning" },
     7: { start: "2026-03-01", end: "2026-03-07", sprint: 2, title: "Building & Iteration" },
     8: { start: "2026-03-08", end: "2026-03-14", sprint: 2, title: "Value Through Another's Eyes" },
-    9: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Entering Unfamiliar Territory" },
-    10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Stakeholder Discovery Without Access" },
+    9: { start: "2026-03-15", end: "2026-03-21", sprint: 3, title: "Entering Unfamiliar Territory" },
+    10: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Stakeholder Discovery Without Access" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Simple Over Sophisticated" },
     12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Value at the Intersection" },
     13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Autonomous Problem Definition" },
