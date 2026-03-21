@@ -614,6 +614,46 @@ const CST349_CONFIG = {
         }
       },
       portfolioConnection: "This IS your portfolio evidence for SDL Dimensions 1, 3, 4, and 7. Your slides become artifacts you'll reference in Sprint 4's defense."
+    },
+    9: {
+      narrative: "New sprint, new question: where is your field going? Futures thinking starts with an honest audit of what you actually consume — not what you think you should.",
+      connection: "Sprint 1 was about what you need to learn. Sprint 2 was about proving you actually did. Sprint 3 asks whether you can read the direction your field is heading — before someone tells you.",
+      insight: "Most information diets are optimized for engagement, not understanding. If you can't name three sources you've read in the last month that shaped how you think about tech, your diet is noise.",
+      employerLink: {
+        text: "Strategic awareness — understanding industry direction and positioning yourself for it — is what separates people who react to change from people who anticipate it.",
+        source: null
+      },
+      portfolioConnection: "Your Information Diet Audit becomes the honest baseline for your Futures Brief. What you consume shapes what you can see."
+    },
+    10: {
+      narrative: "You've audited what you read. Now learn to see what matters in it. Signals are indicators of directional change. Noise is just news. The difference determines whether your futures claim has substance.",
+      connection: "Last week you looked at your inputs. This week you practice reading them differently — asking not 'what happened?' but 'what does this mean for where things are going?'",
+      insight: "A signal isn't just interesting news. It's a change that implies a direction. 'Company X launched a product' is noise. 'Three companies in different sectors all shifted to the same approach' might be a signal. The driver underneath is what makes it meaningful.",
+      employerLink: {
+        text: "Pattern recognition across information sources is what employers mean by Analytical Thinking — not analyzing a dataset, but connecting dots across different inputs to see what others miss.",
+        source: null
+      },
+      portfolioConnection: "Your Signal Log entries feed directly into your Futures Brief. Weak signals produce a weak claim. Specific, sourced signals give your claim substance."
+    },
+    11: {
+      narrative: "You've found signals. Now make a claim — specific enough to be wrong. 'AI will change things' is not a claim. 'Entry-level front-end roles will require prompt engineering fluency within 2 years' is.",
+      connection: "Signals without a claim are just a reading list. This week you take a position: given what you've seen, what do you believe about the near future of your focus area? And what would prove you wrong?",
+      insight: "Vague claims protect you from being wrong. Specific claims make you useful. In an interview, 'I think AI will be important' says nothing. 'I think X will happen because of Y, and here's what would change my mind' says everything.",
+      employerLink: {
+        text: "Making and defending specific claims under questioning is the core of technical interviews. This week's practice — drafting a claim, having a partner try to break it — is direct interview preparation.",
+        source: null
+      },
+      portfolioConnection: "Your draft claim becomes the centerpiece of your Futures Brief. Sprint 4 builds on this claim — a vague one gives Sprint 4 nothing to work with."
+    },
+    12: {
+      narrative: "Demo Day. Present your Futures Brief — not just your claim, but the arc of how you got there. What did you start with in Week 9? What changed your mind? What do you believe now and why?",
+      connection: "The full arc: information audit → signal finding → driver identification → claim → defense. Your demo tells this story in 4-5 minutes.",
+      insight: "The best demos don't just state a conclusion. They show the moments where your thinking shifted — where a signal surprised you, where a driver changed your framing, where peer challenge forced you to sharpen. That's the evidence that you can actually think about the future, not just guess.",
+      employerLink: {
+        text: "Presenting a well-reasoned position and responding to challenge is what employers evaluate in every senior interview. Your Futures Brief demo practices exactly this — with real content you care about.",
+        source: null
+      },
+      portfolioConnection: "Sprint 3 demo feeds Sprint 4 directly. Your claim becomes the basis for choosing what skill to develop next. The quality of your claim determines the quality of your Sprint 4."
     }
   },
 
