@@ -437,7 +437,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w9-reflection.html"
     },
     "s3-stake-defense": {
-      canvasId: "",
+      canvasId: "[CANVAS_ID]",
       title: "S3: Problem Stake Defense",
       dueDate: "2026-03-24",
       type: "dojo",
