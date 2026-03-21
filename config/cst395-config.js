@@ -442,7 +442,7 @@ const CST395_CONFIG = {
       dueDate: "2026-03-24",
       type: "dojo",
       canvasType: "assignment",
-      assignmentGroup: "Sprint 3: Problem Stake",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
       points: 10,
       sprint: 3,
       week: 10,
