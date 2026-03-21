@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem Stake Defense | Sprint 3 | CST395</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .breadcrumb a { color: #14b8a6; text-decoration: none; }
+    .header {
+      background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+      color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+    .capability-tag {
+      display: inline-block; background: rgba(255,255,255,0.2); color: white;
+      padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
+    }
+    .hook {
+      background: #f0fdfa; border: 2px solid #5eead4; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; text-align: center;
+    }
+    .hook__question { font-size: 18px; color: #0d9488; font-weight: 500; margin: 0; }
+    .section {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 24px; margin-bottom: 16px;
+    }
+    .section h2 { font-size: 18px; color: #111827; margin: 0 0 16px 0; }
+    .section h3 { font-size: 16px; color: #111827; margin: 16px 0 12px 0; }
+    .section p { color: #4b5563; margin: 0 0 12px 0; }
+    .section ul, .section ol { color: #4b5563; margin: 0; padding-left: 24px; }
+    .section li { margin-bottom: 8px; }
+    .prompt-box {
+      background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 12px;
+      padding: 20px; margin: 20px 0;
+    }
+    .prompt-box h4 { color: #0d9488; margin: 0 0 12px 0; font-size: 14px; }
+    .warning-box {
+      background: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning-box h4 { color: #991b1b; margin: 0 0 8px 0; font-size: 14px; }
+    .warning-box p, .warning-box li { color: #991b1b; }
+    .warning-box ul { margin: 0; padding-left: 20px; }
+    .dojo-link {
+      display: inline-block; background: #0d9488; color: white;
+      padding: 12px 24px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; margin-top: 12px;
+    }
+    .submission {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+    }
+    .submission h3 { color: white; margin: 0 0 16px 0; }
+    .submission p { color: #d1d5db; margin: 0 0 16px 0; }
+    .submission__format {
+      background: rgba(255,255,255,0.1); padding: 12px 16px;
+      border-radius: 8px; font-size: 14px; color: #9ca3af;
+    }
+    .submit-btn {
+      display: inline-block; background: linear-gradient(135deg, #0d9488, #14b8a6);
+      color: white; padding: 12px 24px; border-radius: 8px;
+      text-decoration: none; font-weight: 500; margin-top: 16px;
+    }
+    /* Exemplar gate component */
+    .exemplar-gate {
+      background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px; position: relative;
+    }
+    .exemplar-gate__label {
+      display: inline-block; background: #f59e0b; color: #78350f;
+      padding: 3px 12px; border-radius: 20px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .exemplar-gate__title {
+      font-size: 17px; font-weight: 700; color: #92400e; margin: 0 0 4px 0;
+    }
+    .exemplar-gate__subtitle {
+      font-size: 13px; color: #a16207; margin: 0 0 16px 0;
+    }
+    .exemplar-gate__sample {
+      background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+    }
+    .exemplar-gate__sample strong { color: #92400e; }
+    .exemplar-gate__sample em { color: #6b7280; font-style: italic; }
+    .exemplar-gate__detail {
+      display: none; background: white; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 16px; margin-bottom: 16px; font-size: 14px; color: #374151; line-height: 1.7;
+      border-top: 2px dashed #fcd34d;
+    }
+    .exemplar-gate__detail.visible { display: block; }
+    .exemplar-gate__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .exemplar-gate__btn-detail {
+      background: white; border: 2px solid #f59e0b; color: #92400e;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-detail:hover { background: #fef3c7; }
+    .exemplar-gate__btn-detail.expanded {
+      background: #fef3c7; border-color: #d97706;
+    }
+    .exemplar-gate__btn-continue {
+      background: #f59e0b; border: none; color: #78350f;
+      padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .exemplar-gate__btn-continue:hover { background: #d97706; color: white; }
+    .assignment-gated { display: none; }
+    .assignment-gated.revealed { display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="../home.html">Home</a> /
+      <a href="../sprint-3.html">Sprint 3</a> /
+      Problem Stake Defense
+    </p>
+
+    <div class="header">
+      <h1>Problem Stake Defense
+        <span class="capability-tag">IS</span>
+        <span class="capability-tag">SDL</span>
+      </h1>
+      <p>Sprint 3 · Due <span data-due-date="s3-stake-defense"></span> · 10 points</p>
+    </div>
+
+    <!-- Why This Block -->
+    <div style="background: #f0fdfa; border-left: 4px solid #14b8a6; border-radius: 12px; padding: 24px; margin-bottom: 28px; box-shadow: 0 2px 8px rgba(20, 184, 166, 0.12); display: flex; gap: 24px; align-items: flex-start;">
+      <div style="flex-shrink: 0; width: 220px;">
+        <div style="position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.15);">
+          <div style="position: relative; padding-top: 56.25%; background: #0d9488;">
+            <!-- Loom embed: replace LOOM_VIDEO_URL_PLACEHOLDER with the Loom video ID -->
+            <iframe src="LOOM_VIDEO_URL_PLACEHOLDER" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+          </div>
+        </div>
+        <p style="margin: 8px 0 0 0; font-size: 11px; color: #0f766e; font-weight: 600; text-align: center;">~1 min &middot; Why I built this</p>
+      </div>
+      <div style="padding-top: 4px;">
+        <p style="margin: 0 0 10px 0; font-size: 15px; color: #134e4a; line-height: 1.6;">Your Problem Stake Brief is a starting point — a first draft of a design claim. This Dojo session pressure-tests that draft. The AI will speak as your clinical worker and ask you questions you haven't thought of yet. More importantly, it'll train you to ask those questions of someone else — which is exactly what you'll do in class.</p>
+        <p style="margin: 0; font-size: 13px; color: #0f766e; font-style: italic;">— Prof. Sathya</p>
+      </div>
+    </div>
+
+    <div class="hook">
+      <p class="hook__question">You wrote a Problem Stake Brief. Now defend it.</p>
+    </div>
+
+    <div class="section">
+      <h2>Context</h2>
+      <p>In class this week, you'll sit across from a classmate and present your stake. They'll write down questions for you. Then Prof. Sathya and Piranavan will look at those questions and tell you whether they're the right ones to ask. After that, you'll interview each other using those sharpened questions.</p>
+      <p>This Dojo session prepares you for both sides of that conversation — defending your own stake and questioning someone else's.</p>
+    </div>
+
+    <div class="section">
+      <h2>What You'll Do</h2>
+      <p>Open the Symbiotic Thinking Dojo. Select the <strong>Sprint 3: Problem Stake Defense</strong> practice session. The session has two parts:</p>
+
+      <h3>Part 1 — Sharpen Your Stake (~20 min)</h3>
+      <ul>
+        <li>Present your Problem Stake Brief</li>
+        <li><strong>@advocate</strong> speaks as your clinical worker — demands specifics about their reality</li>
+        <li><strong>@framer</strong> blocks you from jumping to solutions before the problem is clear</li>
+        <li><strong>@auditor</strong> helps you separate what you know from what you're guessing</li>
+        <li>You'll leave with a clear list of assumptions and questions for the expert</li>
+      </ul>
+
+      <h3>Part 2 — Practice Interrogating (~10 min)</h3>
+      <ul>
+        <li>Read a sample problem stake from a fictional student</li>
+        <li>Write 2-3 questions you'd ask them</li>
+        <li><strong>@advocate</strong> and <strong>@framer</strong> critique your questions — not the stake</li>
+        <li>You'll learn to spot where specificity hides assumption</li>
+      </ul>
+    </div>
+
+    <!-- Exemplar Gate -->
+    <div class="exemplar-gate">
+      <span class="exemplar-gate__label">What Good Looks Like</span>
+      <h3 class="exemplar-gate__title">What a strong Dojo session looks like vs. a weak one</h3>
+      <p class="exemplar-gate__subtitle">This shows the quality of interaction — not what to copy.</p>
+
+      <div class="exemplar-gate__sample">
+        <strong>Strong example:</strong><br><br>
+        <strong>Student:</strong> "My user is a ward nurse at a district hospital in Mongar. She handles patient transfers from isolation. During handoff, she has about 4 minutes and needs to know whether to continue contact precautions or de-escalate."<br><br>
+        <strong>The Advocate:</strong> "You say I have 4 minutes. What am I doing during those 4 minutes — just waiting? Or am I checking vitals, updating charts, prepping the bed? Because if I'm doing three things at once, I don't have 4 minutes for your solution. I have 30 seconds."<br><br>
+        <strong>Student:</strong> "That's fair — I'm guessing about the 4 minutes. I actually don't know how handoff works in a district hospital. That's an assumption I need to check with Piranavan."<br><br>
+        <strong>The Auditor:</strong> "Good. You caught it. What else in your stake depends on assumptions about her workflow that you haven't verified?"<br><br>
+        <em>Why this works: The student gets pushed, acknowledges a gap honestly, and names it as a question for the expert. The session produces self-awareness about assumptions — not just a polished-sounding brief.</em>
+      </div>
+
+      <div id="defense-detail" class="exemplar-gate__detail">
+        <strong>Weak example:</strong><br><br>
+        <strong>Student:</strong> "My user is a nurse. The guideline is hard to use."<br><br>
+        <strong>Sensei:</strong> "Which nurse? Where? When in their day does this hit?"<br><br>
+        <strong>Student:</strong> "Just nurses in general in Bhutan."<br><br>
+        <em>[Session goes in circles because there's nothing specific to pressure-test]</em><br><br>
+        <em>Why this fails: No specific user, no moment, no sequence. The Dojo can't pressure-test what doesn't exist. If your stake is still at this level, the Dojo will help you build it — but you'll get more out of the session if you draft your Problem Stake Brief first.</em>
+      </div>
+
+      <div class="exemplar-gate__actions">
+        <button id="defense-btn-detail" class="exemplar-gate__btn-detail" onclick="toggleDetail('defense')">Show me more detail</button>
+        <button id="defense-btn-continue" class="exemplar-gate__btn-continue" onclick="revealAssignment('defense')">I've read this — continue ↓</button>
+      </div>
+    </div>
+
+    <div id="defense-gated" class="assignment-gated">
+      <div class="section">
+        <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px; margin-top: 16px;">
+          <h4 style="color: #0d9488; margin: 0 0 8px 0; font-size: 14px;">Copy-paste this to start your Dojo session:</h4>
+          <p style="font-family: monospace; font-size: 14px; color: #134e4a; line-height: 1.6; margin: 0; white-space: pre-wrap;">I'm working on my Sprint 3 Problem Stake for the Bhutan MDRO guideline challenge. I need to sharpen my stake — pressure-test my user, my moment, and my pain point — and then practice interrogating someone else's stake before class.</p>
+        </div>
+
+        <a href="https://dojo.symbioticthinking.ai" target="_blank" class="dojo-link">Open Symbiotic Thinking Dojo →</a>
+      </div>
+
+      <!-- Notebook Prep -->
+      <div class="section">
+        <h2>Notebook Prep — Bring to Class</h2>
+        <p>Before class, prepare one page in your notebook with this structure:</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+          <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px;">
+            <h4 style="color: #0f766e; margin: 0 0 10px 0; font-size: 14px;">When I Defend</h4>
+            <ul style="font-size: 13px; color: #134e4a; padding-left: 18px; margin: 0;">
+              <li style="margin-bottom: 6px;">What I said about my user that held up</li>
+              <li style="margin-bottom: 6px;">What got challenged</li>
+              <li>What I need to change before I build</li>
+            </ul>
+          </div>
+          <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 16px;">
+            <h4 style="color: #0f766e; margin: 0 0 10px 0; font-size: 14px;">When I Interview</h4>
+            <ul style="font-size: 13px; color: #134e4a; padding-left: 18px; margin: 0;">
+              <li style="margin-bottom: 6px;">Questions I asked (write these BEFORE asking them)</li>
+              <li style="margin-bottom: 6px;">What I noticed about their stake</li>
+              <li>Something from their stake that made me rethink mine</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #92400e; text-align: center;">
+          <strong>After both rounds — one sentence:</strong> What is my stake now?
+        </div>
+
+        <p style="margin-top: 12px;">Bring this notebook page to class. You'll fill it in during the paired interview session.</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>What We're NOT Looking For</h4>
+        <ul>
+          <li>A session where you agreed with everything the AI said and polished your brief without changing anything</li>
+          <li>"My stake is perfect" with no assumptions listed</li>
+          <li>No questions for the expert — if you have no questions, you haven't thought hard enough about what you don't know</li>
+          <li>A Part 2 where you asked soft questions ("tell me more about your user") instead of probing ones ("how do you know the nurse does that?")</li>
+        </ul>
+      </div>
+
+      <div class="submission">
+        <h3>What to Submit</h3>
+        <p>Download the JSON from your Dojo session and upload to Canvas.</p>
+        <div class="submission__format">
+          <strong>Format:</strong> JSON file download from Dojo session<br>
+          <strong>Due:</strong> <span data-due-date="s3-stake-defense"></span><br>
+          <strong>Points:</strong> 10
+        </div>
+        <a data-assignment-key="s3-stake-defense" href="#" target="_blank" class="submit-btn">Submit on Canvas →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #14b8a6;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+
+<script>
+function toggleDetail(id) {
+  var detail = document.getElementById(id + '-detail');
+  var btn = document.getElementById(id + '-btn-detail');
+  if (detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    btn.textContent = 'Show me more detail';
+    btn.classList.remove('expanded');
+  } else {
+    detail.classList.add('visible');
+    btn.textContent = 'Hide extra detail';
+    btn.classList.add('expanded');
+  }
+}
+function revealAssignment(id) {
+  document.getElementById(id + '-gated').classList.add('revealed');
+  var btn = document.getElementById(id + '-btn-continue');
+  btn.textContent = '✓ Tools & submission below';
+  btn.style.background = '#86efac';
+  btn.style.color = '#065f46';
+  btn.style.cursor = 'default';
+  document.getElementById(id + '-gated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+<script src="../../config/cst395-config.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof populateDueDates === 'function' && typeof CST395_CONFIG !== 'undefined') {
+    populateDueDates(CST395_CONFIG);
+  }
+  if (typeof populateCanvasLinks === 'function' && typeof CST395_CONFIG !== 'undefined') {
+    populateCanvasLinks(CST395_CONFIG);
+  }
+});
+</script>
+</body>
+</html>

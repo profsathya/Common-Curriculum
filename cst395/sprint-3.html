@@ -5,21 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 3: Complexity | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
-  <style>
-    @keyframes s3Pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .s3-pulse-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: #4ade80;
-      border-radius: 50%;
-      animation: s3Pulse 2s ease-in-out infinite;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -204,97 +189,72 @@
           <strong>Concepts:</strong> AI simulation as a learning tool — finding the questions only a human expert can answer. Expert access used strategically, not generally.
         </p>
 
-        <!-- Live Design Banner -->
-        <div style="border: 2px solid #14b8a6; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
-          <!-- Header bar -->
-          <div style="background: linear-gradient(135deg, #0f766e, #0d9488); padding: 14px 20px;">
-            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-              <span class="s3-pulse-dot"></span>
-              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #a7f3d0;">Course Design — Live</span>
-            </div>
-            <p style="margin: 0; color: white; font-size: 16px; font-weight: 600; line-height: 1.4;">Week 10 is being designed based on what Week 9 reveals</p>
+        <!-- Resolved Decision Block -->
+        <div style="border-left: 4px solid #22c55e; background: #f0fdf4; border-radius: 0 12px 12px 0; padding: 20px 24px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span style="font-size: 18px;">✅</span>
+            <h4 style="margin: 0; font-size: 16px; color: #14532d;">Week 10 Plan — Confirmed</h4>
           </div>
+          <p style="margin: 0 0 16px 0; color: #166534; font-size: 14px; line-height: 1.7;">
+            Here's what I observed in Week 9: The collaborative prompting session surfaced good instincts, but most problem stakes are still at the domain level ("making the guideline more accessible") rather than the moment level ("a ward nurse needs to know X in the 4 minutes between handoffs"). The live AI session also revealed a pacing challenge — AI thinking time created dead air, so we pivoted to individual AI work followed by peer conversations. Both adaptations worked, but the stakes need another pass before build work starts.
+          </p>
+          <p style="margin: 0; color: #166534; font-size: 14px; line-height: 1.7;">
+            This is a <strong>Path B hybrid</strong>: engaged students who need one more sharpening round before building. Here's how Week 10 works:
+          </p>
+        </div>
 
-          <!-- Body -->
-          <div style="background: #f0fdfa; padding: 20px;">
-            <p style="margin: 0 0 16px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
-              This is <strong>Adaptive Building</strong> in action — the same process you're being asked to demonstrate in your demos. Three possible paths depending on what happens in Week 9 class. The decision and reasoning will be posted by Saturday Mar 22.
-            </p>
-
-            <!-- Scenario Cards Grid -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
-
-              <!-- Scenario A -->
-              <div id="s3-scenario-a" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('a')">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <div>
-                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #16a34a;">🟢 Path A</span>
-                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #14532d;">If Week 9 lands well</h4>
-                  </div>
-                  <span id="s3-scenario-a-toggle" style="font-size: 12px; color: #16a34a; white-space: nowrap; font-weight: 500;">+ more</span>
-                </div>
-                <p style="margin: 0; font-size: 13px; color: #166534; line-height: 1.5;">Strong problem stakes, genuine Bhutan context engagement. Students move straight to AI persona simulation before Piranavan joins.</p>
-                <div id="s3-scenario-a-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #86efac; font-size: 13px; color: #166534; line-height: 1.6;">
-                  <strong>Week 10:</strong> Simulation-First. Build a detailed clinical persona, run your prototype against it, surface what the simulation confirms and — more importantly — the questions it can't answer. Come to class with 2 specific questions for Piranavan, grounded in what the simulation couldn't resolve. He responds to your problem framings and tells you what the simulation gets wrong.
-                </div>
-              </div>
-
-              <!-- Scenario B -->
-              <div id="s3-scenario-b" style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('b')">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <div>
-                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #ca8a04;">🟡 Path B</span>
-                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #713f12;">If execution hit friction</h4>
-                  </div>
-                  <span id="s3-scenario-b-toggle" style="font-size: 12px; color: #ca8a04; white-space: nowrap; font-weight: 500;">+ more</span>
-                </div>
-                <p style="margin: 0; font-size: 13px; color: #854d0e; line-height: 1.5;">Problem stakes incomplete or still domain-level. Accelerated re-staking in pairs, then Piranavan validates. Simulation moves async.</p>
-                <div id="s3-scenario-b-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fcd34d; font-size: 13px; color: #854d0e; line-height: 1.6;">
-                  <strong>Week 10:</strong> Regroup + Build. First 20 min — pairs challenge each other's stakes using the strong/weak exemplar. Every student leaves with a moment-level stake, not a domain-level one. Piranavan joins after re-staking for domain validation. Simulation moves to async homework. Remaining class time: structured build session.
-                </div>
-              </div>
-
-              <!-- Scenario C -->
-              <div id="s3-scenario-c" style="background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 10px; padding: 14px; position: relative; cursor: pointer;" onclick="toggleS3Scenario('c')">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <div>
-                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #7c3aed;">🟣 Path C</span>
-                    <h4 style="margin: 4px 0 6px 0; font-size: 14px; color: #3b0764;">If the design assumption was wrong</h4>
-                  </div>
-                  <span id="s3-scenario-c-toggle" style="font-size: 12px; color: #7c3aed; white-space: nowrap; font-weight: 500;">+ more</span>
-                </div>
-                <p style="margin: 0; font-size: 13px; color: #581c87; line-height: 1.5;">Genuine engagement but domain distance stalled rather than energized. Structured domain immersion first, then Piranavan as bridge-builder.</p>
-                <div id="s3-scenario-c-detail" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d8b4fe; font-size: 13px; color: #581c87; line-height: 1.6;">
-                  <strong>Week 10:</strong> Domain Bridge. 30 min structured domain immersion — three short real clinical scenarios, students identify the decision point in each. Piranavan joins as bridge-builder, not evaluator. Second half: re-stake with new clinical context. This path isn't a failure — some of the best learning happens when the original design doesn't hold.
-                </div>
-              </div>
-            </div>
-
-            <!-- Decision Note -->
-            <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #374151; line-height: 1.6;">
-              📌 <strong>Decision posted by Saturday Mar 22.</strong> It'll say which path (or hybrid) we're taking and exactly why — including what I observed in Week 9 that drove the call. This is the same process you're being asked to demonstrate in your demos: build something, get signal, adjust.
-            </div>
+        <!-- In-Class Plan -->
+        <div class="in-class-plan">
+          <p class="in-class-plan__label">📅 In-Class (Wednesday, Mar 25)</p>
+          <h4 class="in-class-plan__title">Stake Defense + Expert Validation</h4>
+          <p style="margin: 0 0 12px 0; color: #6b7280; font-size: 13px;">Piranavan Selvanandan joins — Session 1</p>
+          <div class="in-class-plan__content">
+            <ol>
+              <li>If you haven't completed the Problem Stake Defense Dojo, do it now (first 20 min)</li>
+              <li>Pair up. Each person presents their stake to the other. The listener writes 2-3 questions — NOT about whether the stake is good, but about where the gaps are.</li>
+              <li>Each pair comes to the check-in station (Prof. Sathya + Piranavan). Both students present. We give feedback on your QUESTIONS — are you asking the right things? Piranavan corrects clinical assumptions on the spot. (~5 min per pair)</li>
+              <li>Pairs leave with expert-sharpened questions and run the full interview with each other.</li>
+              <li>Remaining time: start your first build iteration. Design the human process first, then touch the computer.</li>
+            </ol>
+          </div>
+          <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #134e4a; line-height: 1.6;">
+            📓 <strong>Bring your notebook</strong> with the interview structure from the <a href="assignments/s3-w10-stake-defense.html" style="color: #0d9488; font-weight: 600;">Dojo assignment page</a>. You'll use it during the paired interview.
           </div>
         </div>
 
-        <!-- Stub Assignments -->
+        <!-- Confirmed Dojo Assignment -->
+        <div class="activity-item" style="border-left: 3px solid #14b8a6;">
+          <div class="activity-item__header">
+            <div>
+              <span class="activity-item__type">🥋 Dojo</span>
+              <h4 class="activity-item__title">
+                <a href="assignments/s3-w10-stake-defense.html">Problem Stake Defense</a>
+              </h4>
+            </div>
+            <span class="activity-item__due" data-due-date="s3-stake-defense"></span>
+          </div>
+          <p class="activity-item__description">
+            Sharpen your stake with @advocate and @framer, then practice interrogating a sample stake. Complete before class.
+          </p>
+          <div class="activity-item__capabilities">
+            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
+            <span class="capability-badge capability-badge--sdl">SDL</span>
+          </div>
+        </div>
+
+        <!-- Tentative Assignments -->
         <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
-          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Mar 22</p>
+          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Tentative — confirmed after Week 10 class</p>
           <div style="display: grid; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-              <span style="font-size: 13px; color: #9ca3af;">🥋</span>
-              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Dojo — AI User Simulation (structure depends on path)</span>
-              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS · AB</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
-              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #2</span>
-              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
               <span style="font-size: 13px; color: #9ca3af;">📋</span>
               <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Build v1 submission — link + one decision + one known failure mode</span>
               <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+              <span style="font-size: 13px; color: #9ca3af;">🪞</span>
+              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #2</span>
+              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
             </div>
           </div>
         </div>
@@ -361,7 +321,7 @@
         <!-- Tentative Banner -->
         <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
           <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 11.</strong>
-          <span style="color: #78350f;"> What won't change: Wednesday Apr 9, live demo required. The demo shows the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation. Slides alone are not sufficient.</span>
+          <span style="color: #78350f;"> What won't change: Wednesday Apr 15, live demo required. The demo shows the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation. Slides alone are not sufficient.</span>
         </div>
 
         <!-- Stub Assignments -->
@@ -409,20 +369,6 @@
     });
   </script>
 
-  <!-- Scenario Toggle Script -->
-  <script>
-    function toggleS3Scenario(id) {
-      var detail = document.getElementById('s3-scenario-' + id + '-detail');
-      var toggle = document.getElementById('s3-scenario-' + id + '-toggle');
-      if (detail.style.display === 'none' || !detail.style.display) {
-        detail.style.display = 'block';
-        toggle.textContent = '− less';
-      } else {
-        detail.style.display = 'none';
-        toggle.textContent = '+ more';
-      }
-    }
-  </script>
 
   <!-- Feedback Footer -->
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
