@@ -435,6 +435,18 @@ const CST395_CONFIG = {
       sprint: 3,
       week: 9,
       htmlFile: "assignments/s3-w9-reflection.html"
+    },
+    "s3-stake-defense": {
+      canvasId: "",
+      title: "S3: Problem Stake Defense",
+      dueDate: "2026-03-24",
+      type: "dojo",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Problem Stake",
+      points: 10,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-stake-defense.html"
     }
   },
 
