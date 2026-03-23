@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint 3 Goal Check-In — Week 10 | CST349</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0; padding: 24px; background: #f9fafb; color: #111827; line-height: 1.7;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .breadcrumb { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .header {
+            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px;
+        }
+        .header h1 { margin: 0; font-size: 22px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 15px; }
+        .capability-tag {
+            display: inline-block; background: rgba(255,255,255,0.2); color: white;
+            padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 4px;
+        }
+        .section {
+            background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+            padding: 24px; margin-bottom: 16px;
+        }
+        .section h2 {
+            font-size: 12px; font-weight: 700; color: #4338ca; text-transform: uppercase;
+            letter-spacing: 0.06em; margin: 0 0 16px 0;
+        }
+        .section h3 { font-size: 16px; color: #111827; margin: 0 0 8px 0; }
+        .section p { color: #4b5563; margin: 0 0 12px 0; font-size: 14px; }
+        label {
+            display: block; font-weight: 600; color: #111827; font-size: 14px; margin-bottom: 4px;
+        }
+        .hint {
+            display: block; font-size: 13px; color: #6b7280; margin-bottom: 8px; font-weight: 400;
+        }
+        textarea {
+            width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 12px;
+            font-family: inherit; font-size: 14px; line-height: 1.6; resize: vertical;
+            background: #fafafa; transition: border-color 0.2s;
+        }
+        textarea:focus { outline: none; border-color: #6366f1; background: white; }
+        .field-group { margin-bottom: 20px; }
+        .field-group:last-child { margin-bottom: 0; }
+
+        /* Intake Grid */
+        .intake-grid { width: 100%; border-collapse: collapse; margin: 12px 0 16px; }
+        .intake-grid th {
+            font-size: 12px; font-weight: 700; color: #4338ca; text-transform: uppercase;
+            letter-spacing: 0.04em; padding: 8px 10px; text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .intake-grid td { padding: 8px 10px; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+        .intake-grid td:first-child { color: #374151; }
+        .intake-grid input[type="number"] {
+            width: 64px; border: 1px solid #d1d5db; border-radius: 6px;
+            padding: 6px 8px; font-size: 14px; font-family: inherit;
+            text-align: center; background: #fafafa;
+        }
+        .intake-grid input[type="number"]:focus { outline: none; border-color: #6366f1; background: white; }
+        .intake-grid .remaining {
+            width: 64px; display: inline-block; text-align: center;
+            padding: 6px 8px; background: #f3f4f6; border-radius: 6px;
+            font-weight: 600; color: #4338ca; font-size: 14px;
+        }
+
+        /* Copy button */
+        .copy-btn {
+            display: block; width: 100%; padding: 14px 24px;
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+            color: white; border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: opacity 0.2s;
+        }
+        .copy-btn:hover { opacity: 0.9; }
+        .copy-btn:active { opacity: 0.8; }
+        .copy-confirm {
+            text-align: center; font-size: 14px; font-weight: 600;
+            color: #059669; margin-top: 10px; min-height: 20px;
+        }
+
+        /* Why This block */
+        .why-this {
+            background: #eef2ff; border-left: 4px solid #6366f1; border-radius: 0 12px 12px 0;
+            padding: 20px 24px; margin-bottom: 24px;
+        }
+        .why-this p { margin: 0 0 10px 0; font-size: 15px; color: #312e81; line-height: 1.6; }
+        .why-this .sig { font-size: 13px; color: #4338ca; font-style: italic; margin: 0; }
+
+        /* Submission */
+        .submission {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white; padding: 24px; border-radius: 12px; margin-top: 24px;
+        }
+        .submission h3 { color: white; margin: 0 0 12px 0; }
+        .submission p { color: #d1d5db; margin: 0 0 8px 0; font-size: 14px; }
+        .submission__format {
+            background: rgba(255,255,255,0.1); padding: 12px 16px;
+            border-radius: 8px; margin-top: 12px; font-size: 14px; color: #9ca3af;
+        }
+        .submit-btn {
+            display: inline-block; margin-top: 16px; padding: 12px 24px;
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+            color: white; border-radius: 8px; text-decoration: none; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="breadcrumb">
+            <a href="../home.html">Home</a> /
+            <a href="../sprint-3.html">Sprint 3</a> /
+            Week 10 Check-In
+        </p>
+
+        <div class="header">
+            <h1>Sprint 3 Goal Check-In &mdash; Week 10
+                <span class="capability-tag">SDL</span>
+            </h1>
+            <p>Sprint 3 &middot; Due <span data-due-date="s3-w10-checkin"></span> &middot; 5 points</p>
+        </div>
+
+        <!-- Why This -->
+        <div class="why-this">
+            <!-- PLACEHOLDER: Replace LOOM_VIDEO_URL_PLACEHOLDER with Loom embed URL -->
+            <p>You set goals in Week 9. This is your first honest check &mdash; not whether you're "on track" in some abstract sense, but what you've actually consumed, what you learned from it, and where your intake targets stand. The numbers don't lie.</p>
+            <p class="sig">&mdash; Prof. Sathya</p>
+        </div>
+
+        <!-- Section 1: Focus Area -->
+        <div class="section">
+            <h2>Section 1: Focus Area</h2>
+            <div class="field-group">
+                <label for="focus-area">What focus area did you choose?</label>
+                <span class="hint">Copy from your goal-setting submission &mdash; this anchors everything below.</span>
+                <textarea id="focus-area" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- Section 2: Intake Progress -->
+        <div class="section">
+            <h2>Section 2: Intake Progress</h2>
+            <table class="intake-grid">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>My target</th>
+                        <th>Done so far</th>
+                        <th>Still to go</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Articles/reports</td>
+                        <td><input type="number" id="target-articles" min="0" value="0"></td>
+                        <td><input type="number" id="done-articles" min="0" value="0"></td>
+                        <td><span class="remaining" id="remaining-articles">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Podcasts/talks</td>
+                        <td><input type="number" id="target-podcasts" min="0" value="0"></td>
+                        <td><input type="number" id="done-podcasts" min="0" value="0"></td>
+                        <td><span class="remaining" id="remaining-podcasts">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Different sources</td>
+                        <td><input type="number" id="target-sources" min="0" value="0"></td>
+                        <td><input type="number" id="done-sources" min="0" value="0"></td>
+                        <td><span class="remaining" id="remaining-sources">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>New sources (never used before)</td>
+                        <td><input type="number" id="target-new" min="0" value="0"></td>
+                        <td><input type="number" id="done-new" min="0" value="0"></td>
+                        <td><span class="remaining" id="remaining-new">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="field-group">
+                <label for="new-source">Name one source you consumed this week that you've never used before</label>
+                <span class="hint">Name and link. If you didn't find a new source this week, say that.</span>
+                <textarea id="new-source" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- Section 3: What You Learned -->
+        <div class="section">
+            <h2>Section 3: What You Learned</h2>
+            <div class="field-group">
+                <label for="surprised">What did you consume this week that surprised you or that you didn't know?</label>
+                <span class="hint">Be specific &mdash; name the source, what it said, and why it caught your attention.</span>
+                <textarea id="surprised" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Section 4: Three Questions — Progress -->
+        <div class="section">
+            <h2>Section 4: Three Questions &mdash; Progress</h2>
+            <p>These map to the three questions from your goal-setting assignment. Compare to your Week 9 first-attempt answers.</p>
+
+            <div class="field-group">
+                <label for="q1">Q1: What do you know vs. assume about your focus area right now?</label>
+                <span class="hint">Compare to your Week 9 first-attempt answer. Has anything shifted?</span>
+                <textarea id="q1" rows="2"></textarea>
+            </div>
+            <div class="field-group">
+                <label for="q2">Q2: What's changing in your space that could reshape it in 2&ndash;3 years?</label>
+                <span class="hint">Not "AI will change everything." What specifically have you noticed?</span>
+                <textarea id="q2" rows="2"></textarea>
+            </div>
+            <div class="field-group">
+                <label for="q3">Q3: What would you need to be able to do that you can't do now?</label>
+                <span class="hint">If the changes you're noticing play out, what skill gap opens?</span>
+                <textarea id="q3" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- Copy Button -->
+        <button class="copy-btn" onclick="copyToClipboard()">Copy all responses to clipboard</button>
+        <p class="copy-confirm" id="copy-confirm"></p>
+
+        <!-- Submission -->
+        <div class="submission">
+            <h3>What to Submit</h3>
+            <p>Use the copy button above, then paste into the Canvas submission box.</p>
+            <div class="submission__format">
+                <strong>Format:</strong> Text (copy from form above, paste into Canvas)<br>
+                <strong>Due:</strong> <span data-due-date="s3-w10-checkin"></span><br>
+                <strong>Points:</strong> 5
+            </div>
+            <a data-assignment-key="s3-w10-checkin" href="#" target="_blank" class="submit-btn">Submit on Canvas &rarr;</a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
+        <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+            Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+        </p>
+    </footer>
+
+    <script>
+    // Auto-calculate remaining
+    var categories = ['articles', 'podcasts', 'sources', 'new'];
+    categories.forEach(function(cat) {
+        var targetEl = document.getElementById('target-' + cat);
+        var doneEl = document.getElementById('done-' + cat);
+        function update() {
+            var target = parseInt(targetEl.value) || 0;
+            var done = parseInt(doneEl.value) || 0;
+            document.getElementById('remaining-' + cat).textContent = Math.max(0, target - done);
+        }
+        targetEl.addEventListener('input', update);
+        doneEl.addEventListener('input', update);
+    });
+
+    function getVal(id) { return document.getElementById(id).value.trim(); }
+    function getNum(id) { return parseInt(document.getElementById(id).value) || 0; }
+
+    function copyToClipboard() {
+        var lines = [];
+        lines.push('SPRINT 3 GOAL CHECK-IN \u2014 WEEK 10');
+        lines.push('');
+        lines.push('FOCUS AREA: ' + getVal('focus-area'));
+        lines.push('');
+        lines.push('INTAKE PROGRESS:');
+        categories.forEach(function(cat) {
+            var labels = { articles: 'Articles/reports', podcasts: 'Podcasts/talks', sources: 'Different sources', 'new': 'New sources' };
+            var t = getNum('target-' + cat), d = getNum('done-' + cat);
+            lines.push('  ' + labels[cat] + ': target=' + t + ', done=' + d + ', remaining=' + Math.max(0, t - d));
+        });
+        lines.push('');
+        lines.push('NEW SOURCE THIS WEEK: ' + getVal('new-source'));
+        lines.push('');
+        lines.push('WHAT SURPRISED ME: ' + getVal('surprised'));
+        lines.push('');
+        lines.push('THREE QUESTIONS PROGRESS:');
+        lines.push('Q1 (know vs assume): ' + getVal('q1'));
+        lines.push('Q2 (what\'s changing): ' + getVal('q2'));
+        lines.push('Q3 (skill gap): ' + getVal('q3'));
+
+        var text = lines.join('\n');
+        navigator.clipboard.writeText(text).then(function() {
+            var confirm = document.getElementById('copy-confirm');
+            confirm.textContent = 'Copied \u2014 paste into Canvas';
+            setTimeout(function() { confirm.textContent = ''; }, 3000);
+        });
+    }
+    </script>
+
+    <script src="../../config/cst349-config.js"></script>
+    <script src="../../js/components.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof populateDueDates === 'function' && typeof CST349_CONFIG !== 'undefined') {
+            populateDueDates(CST349_CONFIG);
+        }
+        if (typeof populateCanvasLinks === 'function' && typeof CST349_CONFIG !== 'undefined') {
+            populateCanvasLinks(CST349_CONFIG);
+        }
+    });
+    </script>
+</body>
+</html>
