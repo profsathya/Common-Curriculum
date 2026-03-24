@@ -447,6 +447,66 @@ const CST395_CONFIG = {
       sprint: 3,
       week: 10,
       htmlFile: "assignments/s3-w10-stake-defense.html"
+    },
+    "s3-build-plan-v1": {
+      canvasId: "586994",
+      title: "S3: Build Plan v1",
+      dueDate: "2026-03-27",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 10,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-build-plan.html"
+    },
+    "s3-build-v1": {
+      canvasId: "586995",
+      title: "S3: Build v1",
+      dueDate: "2026-03-27",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 10,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-build-v1.html"
+    },
+    "s3-build-review": {
+      canvasId: "586996",
+      title: "S3: Build Review",
+      dueDate: "2026-03-31",
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Productive Reflections",
+      points: 10,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-build-review.html"
+    },
+    "s3-revised-plan": {
+      canvasId: "586997",
+      title: "S3: Revised Plan",
+      dueDate: "2026-04-05",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 5,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-revised-plan.html"
+    },
+    "s3-build-v2": {
+      canvasId: "586998",
+      title: "S3: Build v2",
+      dueDate: "2026-04-07",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 10,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-build-v2.html"
     }
   },
 
