@@ -85,51 +85,75 @@
       .why-this__video { width: 100%; max-width: 280px; }
     }
 
-    /* Progress Bar */
-    .umpire-progress {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; margin-bottom: 36px; padding: 20px 0;
-      position: relative; flex-wrap: wrap;
+    /* 3Cs Progress Bar */
+    .threecs-progress {
+      display: flex; align-items: stretch; justify-content: center;
+      gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
     }
-    .umpire-progress__phase {
+    .threecs-group {
+      flex: 1; min-width: 180px;
+      border: 2px solid #e5e7eb; border-radius: 12px;
+      padding: 12px 10px 14px; text-align: center;
+      background: white; position: relative;
+    }
+    .threecs-group--active {
+      border-color: #14b8a6; background: #f0fdfa;
+    }
+    .threecs-group--locked {
+      border-color: #e5e7eb; background: #f9fafb; opacity: 0.7;
+    }
+    .threecs-group__label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; margin: 0 0 10px 0;
+    }
+    .threecs-group--active .threecs-group__label { color: #0f766e; }
+    .threecs-group--locked .threecs-group__label { color: #9ca3af; }
+    .threecs-group__phases {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .threecs-phase {
       display: flex; flex-direction: column; align-items: center;
-      cursor: pointer; text-decoration: none; position: relative; z-index: 1;
-      padding: 0 6px;
+      text-decoration: none; padding: 0 4px;
     }
-    .umpire-progress__circle {
-      width: 36px; height: 36px; border-radius: 50%;
+    .threecs-phase__circle {
+      width: 32px; height: 32px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: white;
-      margin-bottom: 6px; transition: all 0.2s;
+      font-size: 12px; font-weight: 700; color: white; margin-bottom: 4px;
     }
-    .umpire-progress__circle--published { background: #14b8a6; }
-    .umpire-progress__circle--in-progress {
+    .threecs-phase__circle--published { background: #14b8a6; }
+    .threecs-phase__circle--in-progress {
       background: transparent; border: 3px solid #14b8a6; color: #14b8a6;
       animation: pulse-ring 2s ease-in-out infinite;
     }
-    .umpire-progress__circle--locked { background: #d1d5db; color: #9ca3af; }
+    .threecs-phase__circle--locked { background: #d1d5db; color: #9ca3af; }
     @keyframes pulse-ring {
       0%, 100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.3); }
       50% { box-shadow: 0 0 0 8px rgba(20,184,166,0); }
     }
-    .umpire-progress__label {
-      font-size: 11px; font-weight: 600; text-align: center; max-width: 80px; line-height: 1.3;
+    .threecs-phase__name {
+      font-size: 10px; font-weight: 600; line-height: 1.2;
     }
-    .umpire-progress__label--published { color: #0f766e; }
-    .umpire-progress__label--in-progress { color: #14b8a6; }
-    .umpire-progress__label--locked { color: #9ca3af; }
-    .umpire-progress__week {
-      font-size: 10px; color: #9ca3af; margin-top: 2px;
+    .threecs-phase__name--published { color: #0f766e; }
+    .threecs-phase__name--in-progress { color: #14b8a6; }
+    .threecs-phase__name--locked { color: #9ca3af; }
+    .threecs-connector {
+      width: 16px; height: 2px; margin-bottom: 16px; border-radius: 2px; flex-shrink: 0;
     }
-    .umpire-progress__connector {
-      width: 32px; height: 3px; margin-bottom: 24px;
-      border-radius: 2px; flex-shrink: 0;
+    .threecs-connector--done { background: #14b8a6; }
+    .threecs-connector--pending { background: #e5e7eb; }
+    .threecs-arrow {
+      display: flex; align-items: center; font-size: 20px; color: #d1d5db;
+      margin-bottom: 14px; flex-shrink: 0;
     }
-    .umpire-progress__connector--done { background: #14b8a6; }
-    .umpire-progress__connector--pending { background: #e5e7eb; }
-    @media (max-width: 500px) {
-      .umpire-progress__connector { width: 16px; }
-      .umpire-progress__label { font-size: 10px; max-width: 60px; }
+    .threecs-arrow--active { color: #14b8a6; }
+    .threecs-nonlinear {
+      text-align: center; font-size: 12px; color: #6b7280; font-style: italic;
+      margin: 0 0 32px 0; line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .threecs-progress { flex-direction: column; align-items: center; }
+      .threecs-group { min-width: 0; width: 100%; max-width: 300px; }
+      .threecs-arrow { transform: rotate(90deg); }
     }
 
     /* Phase sections */
@@ -207,7 +231,7 @@
     }
     details[open] .phase-toggle { transform: rotate(180deg); }
 
-    /* Content cards */
+    /* Content cards — standard layout: Video, Reflection, Key Points */
     .content-card {
       background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px;
       padding: 20px; margin-bottom: 16px;
@@ -243,6 +267,22 @@
     }
     .placeholder-image__icon { font-size: 32px; opacity: 0.5; }
     .placeholder-image__text { font-size: 13px; }
+
+    /* Key Points / Takeaways box */
+    .key-points {
+      background: #f0fdfa; border: 1px solid #99f6e4; border-left: 4px solid #14b8a6;
+      border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 16px;
+    }
+    .key-points__title {
+      font-size: 12px; font-weight: 700; color: #0f766e; text-transform: uppercase;
+      letter-spacing: 0.04em; margin: 0 0 8px 0;
+    }
+    .key-points ul {
+      margin: 0; padding-left: 18px; color: #134e4a; font-size: 14px; line-height: 1.7;
+    }
+    .key-points li { margin-bottom: 4px; }
+    .key-points li:last-child { margin-bottom: 0; }
+    .key-points .placeholder-text { margin: 0; }
 
     /* Callout box */
     .callout {
@@ -289,40 +329,25 @@
 // ===== DATA: Update these to publish new content =====
 
 const changelog = [
-  { date: 'March 24, 2026', text: 'Published Phase U: Interactive guideline map + "Starting from Zero" narration' },
+  { date: 'March 24, 2026', text: 'Published Phase U+M (Context): Interactive guideline map + "Starting from Zero" narration' },
   { date: 'March 22, 2026', text: 'Page created, structure published' }
 ];
-const comingNext = 'Phase M (Map) \u2014 gap research, push/pull analysis';
+const comingNext = 'Phase P (Plan) \u2014 picking a specific person, designing the human process before touching technology';
 
 const phases = [
-  { id: 'understand', letter: 'U', label: 'U \u2014 Understand', status: 'published', week: 'Week 9', date: 'Mar 24' },
-  { id: 'map', letter: 'M', label: 'M \u2014 Map', status: 'in-progress', week: 'Week 10', date: null },
-  { id: 'plan', letter: 'P', label: 'P \u2014 Plan', status: 'locked', week: 'After Week 10', date: null },
-  { id: 'implement', letter: 'I', label: 'I \u2014 Implement', status: 'locked', week: 'Week 11', date: null },
-  { id: 'review', letter: 'RE', label: 'R+E \u2014 Review', status: 'locked', week: 'Week 12', date: null }
+  { id: 'understand', letter: 'U', name: 'Understand', status: 'published', group: 'context' },
+  { id: 'map', letter: 'M', name: 'Map', status: 'published', group: 'context' },
+  { id: 'plan', letter: 'P', name: 'Plan', status: 'locked', group: 'choices' },
+  { id: 'implement', letter: 'I', name: 'Implement', status: 'locked', group: 'choices' },
+  { id: 'review', letter: 'R', name: 'Review', status: 'locked', group: 'confirmation' },
+  { id: 'evaluate', letter: 'E', name: 'Evaluate', status: 'locked', group: 'confirmation' }
 ];
 
-// ===== RENDER: Last Updated Banner =====
-(function renderBanner() {
-  const banner = document.querySelector('.last-updated-banner');
-  if (!banner) return;
-  const inner = banner.querySelector('.last-updated-banner__inner');
-  if (!inner || !changelog.length) return;
-
-  const dateEl = inner.querySelector('.last-updated-banner__date');
-  dateEl.textContent = 'Last updated: ' + changelog[0].date;
-
-  const logEl = inner.querySelector('.last-updated-banner__log');
-  logEl.innerHTML = '';
-  changelog.slice(0, 3).forEach(function(entry) {
-    const li = document.createElement('li');
-    li.textContent = entry.date + ' \u2014 ' + entry.text;
-    logEl.appendChild(li);
-  });
-
-  const nextEl = inner.querySelector('.last-updated-banner__next');
-  nextEl.textContent = 'Coming next: ' + comingNext;
-})();
+const groups = [
+  { id: 'context', label: 'Context', phases: ['understand', 'map'] },
+  { id: 'choices', label: 'Choices', phases: ['plan', 'implement'] },
+  { id: 'confirmation', label: 'Confirmation', phases: ['review', 'evaluate'] }
+];
 </script>
 
 <!-- Last Updated Banner -->
@@ -363,119 +388,104 @@ const phases = [
     </div>
   </div>
 
-  <!-- UMPIRE Progress Bar (rendered by script) -->
-  <div class="umpire-progress" id="umpire-progress"></div>
+  <!-- 3Cs + UMPIRE Progress Bar (rendered by script) -->
+  <div class="threecs-progress" id="threecs-progress"></div>
+  <p class="threecs-nonlinear">&#8617; You may return to Context from Choices, or to Context/Choices from Confirmation &mdash; the cycle is not strictly linear.</p>
 
-  <!-- ========== PHASE U: UNDERSTAND (Published) ========== -->
-  <div class="phase-section phase-section--published" id="phase-understand">
+  <!-- ========== PHASE U+M: CONTEXT (Published) ========== -->
+  <div class="phase-section phase-section--published" id="phase-context">
     <details open>
       <summary>
-        <span class="phase-badge phase-badge--published">U</span>
+        <span class="phase-badge phase-badge--published" style="font-size: 11px;">U+M</span>
         <div class="phase-header-text">
-          <h2>Understand <span class="phase-tag phase-tag--published">Published Mar 24</span></h2>
+          <h2>Context: Understand + Map <span class="phase-tag phase-tag--published">Published</span></h2>
         </div>
         <span class="phase-toggle">&#9662;</span>
       </summary>
       <div class="phase-content">
 
-        <!-- Section 1: Starting from Zero -->
-        <div class="content-card">
-          <p class="content-card__type">Section 1 &middot; Text</p>
-          <h3>Starting from Zero</h3>
-          <!-- PLACEHOLDER: Section 1 narration — replace this div with actual content -->
-          <div class="placeholder-text">
-            Content coming: narration about entering an unfamiliar domain, first instincts, and why the first framing is never the real one.
-          </div>
-        </div>
+        <!-- === UNDERSTAND === -->
+        <h3 style="font-size: 15px; font-weight: 700; color: #0f766e; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 16px 0; padding-bottom: 8px; border-bottom: 2px solid #ccfbf1;">U &mdash; Understand</h3>
 
-        <!-- Section 2: Building the Map with AI -->
+        <!-- U: Video -->
         <div class="content-card">
-          <p class="content-card__type">Section 2 &middot; Video + Interactive Artifact</p>
-          <h3>Building the Map with AI</h3>
-          <!-- PLACEHOLDER: Section 2 video — replace this div with Loom embed -->
+          <p class="content-card__type">Video</p>
+          <h3>Starting from Zero</h3>
+          <!-- PLACEHOLDER: Replace with Loom embed -->
           <div class="placeholder-video">
             <span class="placeholder-video__icon">&#9654;</span>
-            <span class="placeholder-video__text">Video: AI session recording &mdash; building the interactive guideline map with ChatGPT</span>
-          </div>
-          <!-- PLACEHOLDER: Section 2 artifact link — update href when artifact is ready -->
-          <a href="#" class="artifact-link">Open Interactive Guideline Map &rarr;</a>
-          <div class="callout" style="margin-top: 16px;">
-            <strong>Notice what I did NOT do:</strong> I did not try to solve anything yet. I spent the class session understanding the document's structure, its assumptions, and its logic. The U phase is about building a mental model of the problem space before you touch solutions.
+            <span class="placeholder-video__text">Video: entering an unfamiliar domain &mdash; first instincts, why the first framing is never the real one</span>
           </div>
         </div>
 
-        <!-- Section 3: What I Noticed -->
+        <!-- U: Reflection -->
         <div class="content-card">
-          <p class="content-card__type">Section 3 &middot; Handwritten Reflection</p>
+          <p class="content-card__type">Written Reflection</p>
           <h3>What I Noticed</h3>
-          <!-- PLACEHOLDER: Section 3 image — replace this div with <img> tag -->
+          <!-- PLACEHOLDER: Replace with photo or narration -->
           <div class="placeholder-image">
             <span class="placeholder-image__icon">&#128247;</span>
             <span class="placeholder-image__text">Handwritten reflection &mdash; photo coming</span>
           </div>
-          <!-- PLACEHOLDER: Section 3 typed summary — replace with actual observations -->
-          <p style="margin-top: 12px; font-size: 14px; color: #6b7280; font-style: italic;">Key observations from the reflection will be summarized here.</p>
         </div>
 
-        <!-- Your Turn callout -->
-        <div class="your-turn">
-          <h4>Your Turn</h4>
-          <p>Your Problem Stake Brief is your version of this phase. You're identifying one specific moment where the guideline fails someone. I mapped the whole document &mdash; you're staking one territory within it.</p>
-          <a href="assignments/s3-w9-problem-stake.html">View Problem Stake Brief Assignment &rarr;</a>
-        </div>
-
-      </div>
-    </details>
-  </div>
-
-  <!-- ========== PHASE M: MAP (In Progress) ========== -->
-  <div class="phase-section phase-section--in-progress" id="phase-map">
-    <details>
-      <summary>
-        <span class="phase-badge phase-badge--in-progress">M</span>
-        <div class="phase-header-text">
-          <h2>Map <span class="phase-tag phase-tag--in-progress">In progress &mdash; check back soon</span></h2>
-        </div>
-        <span class="phase-toggle">&#9662;</span>
-      </summary>
-      <div class="phase-content">
-
-        <!-- Section 4: Filling the Gaps -->
-        <div class="content-card">
-          <p class="content-card__type">Section 4 &middot; Video</p>
-          <h3>Filling the Gaps</h3>
-          <!-- PLACEHOLDER: Section 4 video — replace with Loom embed -->
+        <!-- U: Key Points -->
+        <div class="key-points">
+          <p class="key-points__title">Key Points / Takeaways</p>
           <div class="placeholder-text">
-            Video coming: AI session researching infection epidemiology data and Bhutan technology infrastructure &mdash; including the moment where I hit a wall and need the domain expert.
+            Key takeaways from the Understand phase will be listed here &mdash; what changed about my framing of the problem after the first session.
           </div>
         </div>
 
-        <!-- Section 5: The Push/Pull Insight -->
+        <div class="callout" style="margin-top: 20px;">
+          <strong>Notice what I did NOT do:</strong> I did not try to solve anything yet. I spent the class session understanding the document's structure, its assumptions, and its logic. The U phase is about building a mental model of the problem space before you touch solutions.
+        </div>
+
+        <!-- Divider between U and M -->
+        <hr style="border: none; border-top: 2px solid #ccfbf1; margin: 28px 0;">
+
+        <!-- === MAP === -->
+        <h3 style="font-size: 15px; font-weight: 700; color: #0f766e; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 16px 0; padding-bottom: 8px; border-bottom: 2px solid #ccfbf1;">M &mdash; Map</h3>
+
+        <!-- M: Video -->
         <div class="content-card">
-          <p class="content-card__type">Section 5 &middot; Text + Interactive Diagram</p>
+          <p class="content-card__type">Video</p>
+          <h3>Building the Map with AI</h3>
+          <!-- PLACEHOLDER: Replace with Loom embed -->
+          <div class="placeholder-video">
+            <span class="placeholder-video__icon">&#9654;</span>
+            <span class="placeholder-video__text">Video: AI session recording &mdash; building the interactive guideline map with ChatGPT, researching infection epidemiology data and Bhutan technology infrastructure</span>
+          </div>
+          <!-- PLACEHOLDER: Update href when artifact is ready -->
+          <a href="#" class="artifact-link">Open Interactive Guideline Map &rarr;</a>
+        </div>
+
+        <!-- M: Reflection -->
+        <div class="content-card">
+          <p class="content-card__type">Written Reflection</p>
           <h3>The Push/Pull Insight</h3>
-          <!-- PLACEHOLDER: Section 5 content — replace with text and diagram link -->
+          <!-- PLACEHOLDER: Replace with text and diagram link -->
           <div class="placeholder-text">
             Coming: How the touchpoint analysis reveals two distinct failure modes &mdash; "I know but I forget" vs. "I don't know and can't look it up" &mdash; and why that leads to two different product hypotheses.
           </div>
           <p style="margin-top: 12px; font-size: 13px; color: #6b7280;">Framing informed by Tim Harford's <em>Adapt</em> &mdash; complex problems in unfamiliar domains can't be solved by planning, they have to be solved by experimenting.</p>
         </div>
 
-        <!-- Section 6: Questions for Piranavan -->
-        <div class="content-card">
-          <p class="content-card__type">Section 6 &middot; List + Handwritten Notes</p>
-          <h3>Questions for Piranavan</h3>
-          <!-- PLACEHOLDER: Section 6 content — replace with question list and photo -->
+        <!-- M: Key Points -->
+        <div class="key-points">
+          <p class="key-points__title">Key Points / Takeaways</p>
           <div class="placeholder-text">
-            Coming: My actual list of questions for the domain expert, and what I need him to confirm or correct about my map.
+            Key takeaways from the Map phase will be listed here &mdash; what I learned about separating what I know from what I'm guessing, and the questions for the domain expert.
           </div>
         </div>
 
         <!-- Your Turn callout -->
         <div class="your-turn">
           <h4>Your Turn</h4>
-          <p>Your Dojo session does the same thing &mdash; pressure-tests your stake by separating what you know from what you're guessing. Your questions for Piranavan should be as specific as mine.</p>
-          <a href="assignments/s3-w10-stake-defense.html">View Problem Stake Defense Assignment &rarr;</a>
+          <p>Your Problem Stake Brief is your Understand phase &mdash; identifying one specific moment where the guideline fails someone. Your Dojo session is your Map phase &mdash; pressure-testing your stake by separating what you know from what you're guessing.</p>
+          <a href="assignments/s3-w9-problem-stake.html">View Problem Stake Brief &rarr;</a>
+          <span style="margin: 0 8px; color: #99f6e4;">|</span>
+          <a href="assignments/s3-w10-stake-defense.html">View Problem Stake Defense &rarr;</a>
         </div>
 
       </div>
@@ -487,7 +497,7 @@ const phases = [
     <div class="phase-locked">
       <span class="phase-badge phase-badge--locked">P</span>
       <div class="phase-header-text">
-        <h2>Plan <span class="phase-tag phase-tag--locked">Coming after Week 10</span></h2>
+        <h2>Plan <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
       </div>
     </div>
     <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">What Piranavan changed, picking a specific person, and designing the human process before touching technology.</p>
@@ -498,18 +508,29 @@ const phases = [
     <div class="phase-locked">
       <span class="phase-badge phase-badge--locked">I</span>
       <div class="phase-header-text">
-        <h2>Implement <span class="phase-tag phase-tag--locked">Coming after Week 11</span></h2>
+        <h2>Implement <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
       </div>
     </div>
     <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">Building v1, testing with the expert, and what broke.</p>
   </div>
 
-  <!-- ========== PHASE R+E: REVIEW + EVALUATE (Locked) ========== -->
+  <!-- ========== PHASE R: REVIEW (Locked) ========== -->
   <div class="phase-section phase-section--locked" id="phase-review">
     <div class="phase-locked">
-      <span class="phase-badge phase-badge--locked">RE</span>
+      <span class="phase-badge phase-badge--locked">R</span>
       <div class="phase-header-text">
-        <h2>Review + Evaluate <span class="phase-tag phase-tag--locked">Coming Week 12</span></h2>
+        <h2>Review <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">Did it work? What would I change about the approach?</p>
+  </div>
+
+  <!-- ========== PHASE E: EVALUATE (Locked) ========== -->
+  <div class="phase-section phase-section--locked" id="phase-evaluate">
+    <div class="phase-locked">
+      <span class="phase-badge phase-badge--locked">E</span>
+      <div class="phase-header-text">
+        <h2>Evaluate <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
       </div>
     </div>
     <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">The arc from Week 9 to now, what I'd do differently, and what this means for Sprint 4.</p>
@@ -526,28 +547,56 @@ const phases = [
 </div>
 
 <script>
-// ===== RENDER: UMPIRE Progress Bar =====
+// ===== RENDER: 3Cs + UMPIRE Progress Bar =====
 (function renderProgressBar() {
-  var container = document.getElementById('umpire-progress');
+  var container = document.getElementById('threecs-progress');
   if (!container) return;
+
+  var phaseMap = {};
+  phases.forEach(function(p) { phaseMap[p.id] = p; });
+
   var html = '';
-  phases.forEach(function(phase, i) {
-    var circleClass = 'umpire-progress__circle--' + phase.status;
-    var labelClass = 'umpire-progress__label--' + phase.status;
-    html += '<a class="umpire-progress__phase" href="#phase-' + phase.id + '">';
-    html += '<span class="umpire-progress__circle ' + circleClass + '">' + phase.letter + '</span>';
-    html += '<span class="umpire-progress__label ' + labelClass + '">' + phase.label + '</span>';
-    html += '<span class="umpire-progress__week">' + phase.week + '</span>';
-    html += '</a>';
-    if (i < phases.length - 1) {
-      var connectorDone = (phase.status === 'published') ? 'umpire-progress__connector--done' : 'umpire-progress__connector--pending';
-      html += '<div class="umpire-progress__connector ' + connectorDone + '"></div>';
+  groups.forEach(function(group, gi) {
+    // Determine group status: active if any phase is published or in-progress
+    var hasActive = group.phases.some(function(pid) {
+      var s = phaseMap[pid].status;
+      return s === 'published' || s === 'in-progress';
+    });
+    var groupClass = hasActive ? 'threecs-group--active' : 'threecs-group--locked';
+
+    html += '<div class="threecs-group ' + groupClass + '">';
+    html += '<p class="threecs-group__label">' + group.label + '</p>';
+    html += '<div class="threecs-group__phases">';
+
+    group.phases.forEach(function(pid, pi) {
+      var phase = phaseMap[pid];
+      var circleClass = 'threecs-phase__circle--' + phase.status;
+      var nameClass = 'threecs-phase__name--' + phase.status;
+
+      html += '<a class="threecs-phase" href="#phase-' + (group.id === 'context' ? 'context' : phase.id) + '">';
+      html += '<span class="threecs-phase__circle ' + circleClass + '">' + phase.letter + '</span>';
+      html += '<span class="threecs-phase__name ' + nameClass + '">' + phase.name + '</span>';
+      html += '</a>';
+
+      if (pi < group.phases.length - 1) {
+        var connDone = (phase.status === 'published') ? 'threecs-connector--done' : 'threecs-connector--pending';
+        html += '<div class="threecs-connector ' + connDone + '"></div>';
+      }
+    });
+
+    html += '</div></div>';
+
+    // Arrow between groups
+    if (gi < groups.length - 1) {
+      var arrowActive = hasActive ? 'threecs-arrow--active' : '';
+      html += '<div class="threecs-arrow ' + arrowActive + '">&rarr;</div>';
     }
   });
+
   container.innerHTML = html;
 })();
 
-// ===== RENDER: Last Updated Banner (deferred to ensure DOM ready) =====
+// ===== RENDER: Last Updated Banner =====
 document.addEventListener('DOMContentLoaded', function() {
   var banner = document.querySelector('.last-updated-banner__inner');
   if (!banner || !changelog.length) return;
