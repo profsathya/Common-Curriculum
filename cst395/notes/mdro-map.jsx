@@ -464,15 +464,156 @@ export default function MDROGuidelineMap() {
           </div>
         </div>
 
+        {/* ─── WHERE FAILURES HIT HARDEST ─────────────────────────────── */}
+        <div className="rounded-2xl border border-rose-200 bg-rose-50/30 p-5 md:p-7 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-widest text-rose-500">Prioritization layer</p>
+          <h2 className="mt-1 text-xl font-bold text-slate-900">Where Failures Hit Hardest</h2>
+          <p className="mt-1 text-sm text-slate-600">
+            Research from similar healthcare settings tells us where infections actually concentrate. The guideline's weak spots tell us where the policy doesn't help enough. The intersection is where the highest-value design problems sit.
+          </p>
+
+          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {/* Research column */}
+            <div className="rounded-xl border border-rose-200 bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-rose-600">Where infections concentrate (research)</p>
+              <p className="mt-2 text-xs text-slate-500 italic">From evidence across lower-resource hospital settings similar to Bhutan's</p>
+              <div className="mt-3 space-y-1.5">
+                {[
+                  { driver: 'Weak hand hygiene reliability', note: 'The single most evidence-backed transmission route' },
+                  { driver: 'Inconsistent environmental cleaning', note: 'Surfaces and shared equipment become silent carriers' },
+                  { driver: 'Device-associated infections in ICU/HDU', note: 'Invasive devices create direct pathways for resistant organisms' },
+                  { driver: 'Crowding and congestion', note: 'Raises transmission probability and degrades execution quality' },
+                  { driver: 'Delayed microbiology and surveillance', note: 'Late culture results mean late precautions' },
+                  { driver: 'Inappropriate broad-spectrum antibiotic use', note: 'Creates selection pressure that amplifies resistance' },
+                  { driver: 'Poor transfer continuity', note: 'Risk status vanishes at handoffs between units and facilities' },
+                ].map((item, i) => (
+                  <div key={i} className="rounded-lg border border-rose-100 bg-rose-50/50 px-3 py-2">
+                    <div className="text-xs font-semibold text-slate-800">{item.driver}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{item.note}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 rounded-lg bg-rose-100/60 px-3 py-2 text-xs text-rose-900">
+                <span className="font-bold">Key framing:</span> The problem is not one bad organism. It's vulnerable workflows + crowded systems + imperfect information flow + incomplete execution — all at the same time.
+              </div>
+            </div>
+
+            {/* Guideline weak spots column */}
+            <div className="rounded-xl border border-amber-200 bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-600">Where the guideline doesn't help enough</p>
+              <p className="mt-2 text-xs text-slate-500 italic">Policy gaps and packaging problems in the Bhutan MDRO guideline</p>
+              <div className="mt-3 space-y-1.5">
+                {[
+                  { gap: 'Nurse shift handover', note: 'No defined workflow for passing MDRO status between shifts' },
+                  { gap: 'Interruption-heavy bedside execution', note: 'Assumes compliance but doesn\'t address how sequence breaks under pressure' },
+                  { gap: 'Support-staff assignment briefing', note: 'Cleaning protocols exist but no start-of-shift risk communication process' },
+                  { gap: 'Role-specific micro-decisions', note: 'Policy is comprehensive but not packaged as checklists or decision aids for the moment of work' },
+                  { gap: 'Admission risk → empiric treatment pathway', note: 'The link from recognizing risk to choosing therapy isn\'t a compact frontline tool' },
+                  { gap: 'Cross-team review at culture return', note: 'Strong on who is responsible, weaker on a single coordinated workflow' },
+                  { gap: 'Discharge signal visibility', note: 'Clear policy, but MDRO status can become invisible after the patient leaves' },
+                ].map((item, i) => (
+                  <div key={i} className="rounded-lg border border-amber-100 bg-amber-50/50 px-3 py-2">
+                    <div className="text-xs font-semibold text-slate-800">{item.gap}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{item.note}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 rounded-lg bg-amber-100/60 px-3 py-2 text-xs text-amber-900">
+                <span className="font-bold">Core interpretation:</span> The guideline is strong as a policy reference and weak as a moment-of-work support tool.
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-xl border-2 border-rose-300 bg-white px-4 py-3">
+            <p className="text-sm font-bold text-slate-900">The highest-value design problems sit at the intersection:</p>
+            <p className="mt-1 text-xs text-slate-600 leading-relaxed">
+              Where research says infections actually happen (left column) AND where the guideline doesn't adequately support the person in that moment (right column). A touchpoint that scores "Weak" on coverage AND sits on a high-burden pathway is a stronger design target than one that scores "Weak" but affects a low-frequency scenario.
+            </p>
+          </div>
+        </div>
+
+        {/* ─── DESIGN CONSTRAINTS ─────────────────────────────────────── */}
+        <div className="rounded-2xl border border-purple-200 bg-purple-50/30 p-5 md:p-7 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-widest text-purple-500">Implementation reality</p>
+          <h2 className="mt-1 text-xl font-bold text-slate-900">Design Constraints: What Bhutan Can Actually Support</h2>
+          <p className="mt-1 text-sm text-slate-600">
+            Your solution has to work in this setting. Bhutan has real digital infrastructure at referral hospitals, but don't assume uniform maturity everywhere.
+          </p>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="rounded-xl border border-purple-200 bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-600">You can assume exists (at referral hospitals)</p>
+              <div className="mt-2 space-y-1">
+                {['Hospital/patient information systems', 'Electronic medical record elements', 'Laboratory information systems', 'Disease surveillance systems', 'Telemedicine and patient-facing digital services', 'Imaging and lab capacity'].map((item, i) => (
+                  <div key={i} className="rounded-lg border border-emerald-100 bg-emerald-50/50 px-2.5 py-1.5 text-xs text-slate-700">{item}</div>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl border border-purple-200 bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-rose-600">You should not assume</p>
+              <div className="mt-2 space-y-1">
+                {['Consistent implementation across all hospitals', 'Universal bedside digital workflow support', 'Barcode-based medication systems everywhere', 'Real-time cross-facility status visibility', 'Same digital maturity at district vs referral hospitals'].map((item, i) => (
+                  <div key={i} className="rounded-lg border border-rose-100 bg-rose-50/50 px-2.5 py-1.5 text-xs text-slate-700">{item}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-purple-600">Implementation ladder — from simplest to most complex</p>
+            <p className="mt-1 text-xs text-slate-500">The question is not "what is theoretically possible?" — it's "what is reliable enough to support workflow in Bhutan now?"</p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {[
+                { level: '1', label: 'Paper-based cue', example: 'Laminated card, pocket reference' },
+                { level: '2', label: 'Wall / door visual aid', example: 'Room-entry signage, precaution poster' },
+                { level: '3', label: 'Shift handoff template', example: 'Structured form for status transfer' },
+                { level: '4', label: 'Digital flag in existing system', example: 'Alert in patient record or lab system' },
+                { level: '5', label: 'Lab-result escalation workflow', example: 'Automated notification on MDRO-positive culture' },
+                { level: '6', label: 'Transfer-status visibility', example: 'Cross-facility MDRO status tracking' },
+              ].map((item) => (
+                <div key={item.level} className="flex-1 min-w-[140px] rounded-xl border border-purple-200 bg-white p-3">
+                  <div className="flex items-center gap-2">
+                    <span className="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-purple-700 text-white text-[10px] font-bold">{item.level}</span>
+                    <span className="text-xs font-semibold text-slate-800">{item.label}</span>
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-500">{item.example}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ─── DESIGN RULE ────────────────────────────────────────────── */}
+        <div className="rounded-2xl border-2 border-slate-800 bg-slate-900 p-5 md:p-7 shadow-lg">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Core design principle</p>
+          <h2 className="mt-2 text-xl font-bold text-white leading-snug">
+            Do not add more guidance.<br />
+            Add support where the policy assumes the human will remember correctly under pressure.
+          </h2>
+          <p className="mt-3 text-sm text-slate-400 leading-relaxed">
+            The operational formula for your design:
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
+            {['Moment in workflow', '→', 'What they need to remember', '→', 'Whether the policy supports it', '→', 'Likely failure if missed', '→', 'Your intervention'].map((step, i) => (
+              <span key={i} className={step === '→' ? 'text-slate-500 font-bold' : 'rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-slate-200 font-medium'}>{step}</span>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-slate-500">
+            Staff do not need the whole MDRO guideline in the middle of the day. They need small, role-specific supports at the moments where failure is most likely.
+          </p>
+        </div>
+
         {/* ─── HOW TO USE THIS ────────────────────────────────────────── */}
         <div className="rounded-2xl border-2 border-dashed border-teal-300 bg-teal-50/40 p-5 md:p-7">
           <p className="text-xs font-bold uppercase tracking-widest text-teal-600">Sprint 3 starting point</p>
           <h2 className="mt-1 text-xl font-bold text-slate-900">How to Use This Map</h2>
           <div className="mt-3 space-y-2 text-sm text-slate-700 leading-relaxed">
             <p><span className="font-bold">1. Orient:</span> Read the overall policy logic and skim the 8 sections to get the system picture. Don't try to memorize — just get the shape.</p>
-            <p><span className="font-bold">2. Pick a role:</span> Choose doctor, nurse, or support staff. Read their day arc first (how the shift flows), then look at the touchpoints (where the guideline intersects their real work).</p>
-            <p><span className="font-bold">3. Find your moment:</span> Look for a touchpoint with a "Partial" or "Weak" coverage badge and a design gap that interests you. That's a real human moment where the guideline fails the person who needs it.</p>
-            <p><span className="font-bold">4. Stake your problem:</span> Use the touchpoint details — what they need to remember, the failure risk, the gap — to write a specific problem statement. Vague problems produce vague solutions.</p>
+            <p><span className="font-bold">2. Understand the stakes:</span> Read "Where Failures Hit Hardest." This tells you where infections actually concentrate and where the guideline leaves gaps. Use this to aim at high-impact problems, not just interesting ones.</p>
+            <p><span className="font-bold">3. Pick a role:</span> Choose doctor, nurse, or support staff. Read their day arc first (how the shift flows), then look at the touchpoints (where the guideline intersects their real work).</p>
+            <p><span className="font-bold">4. Find your moment:</span> Look for a touchpoint that sits on a high-burden pathway AND has a "Partial" or "Weak" coverage badge. That intersection is where design effort matters most.</p>
+            <p><span className="font-bold">5. Check your constraints:</span> Before designing a solution, check the implementation ladder. What level can Bhutan's system reliably support? A laminated door card that gets used beats an app that doesn't get built.</p>
+            <p><span className="font-bold">6. Stake your problem:</span> Use the touchpoint details — what they need to remember, the failure risk, the gap — to write a specific problem statement. Apply the design rule: don't add guidance, add support at the memory-failure point.</p>
           </div>
         </div>
 
