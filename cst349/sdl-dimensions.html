@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SDL Dimensions | CST349</title>
+  <title>UMPIRE: How Self-Directed Learners Think | CST349</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
   <style>
     :root {
@@ -14,16 +14,27 @@
       --indigo-600: #4f46e5;
       --indigo-700: #4338ca;
     }
-    .dimension-card {
+
+    /* Phase cards */
+    .phase-card {
       background: white;
       border: 1px solid var(--gray-200);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
       margin-bottom: var(--space-4);
     }
-    .dimension-card__number {
-      width: 32px;
-      height: 32px;
+    .phase-card--highlight {
+      border-left: 4px solid var(--indigo-500);
+    }
+    .phase-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .phase-card__letter {
+      width: 36px;
+      height: 36px;
       background: var(--indigo-100);
       color: var(--indigo-700);
       border-radius: 50%;
@@ -31,39 +42,108 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
+      flex-shrink: 0;
     }
-    .dimension-card__header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      margin-bottom: var(--space-3);
-    }
-    .dimension-card__title {
+    .phase-card__title {
       font-size: var(--text-lg);
       font-weight: 600;
       color: var(--gray-900);
       margin: 0;
     }
-    .dimension-card__question {
+    .phase-card__question {
       font-style: italic;
       color: var(--indigo-600);
       margin: 0 0 var(--space-3) 0;
       font-size: var(--text-base);
     }
-    .dimension-card__description {
+    .phase-card__description {
       color: var(--gray-600);
-      margin: 0 0 var(--space-3) 0;
+      margin: 0;
       line-height: 1.6;
     }
-    .dimension-card__sprints {
-      display: inline-block;
+    .phase-card__note {
       background: var(--indigo-50);
-      color: var(--indigo-700);
-      padding: 4px 12px;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
       font-size: var(--text-sm);
-      font-weight: 500;
+      color: var(--indigo-700);
+      line-height: 1.5;
+    }
+
+    /* Cycle visualization */
+    .cycle-viz {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      padding: var(--space-4) 0;
+    }
+    .cycle-viz__step {
+      background: var(--indigo-100);
+      color: var(--indigo-700);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      white-space: nowrap;
+    }
+    .cycle-viz__arrow {
+      color: var(--indigo-500);
+      font-size: var(--text-lg);
+    }
+    .cycle-viz__return {
+      width: 100%;
+      text-align: center;
+      color: var(--indigo-500);
+      font-size: var(--text-sm);
+      font-style: italic;
+      margin-top: var(--space-2);
+    }
+
+    /* Mapping grid */
+    .mapping-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+    }
+    .mapping-grid__phase {
+      font-weight: 600;
+      color: var(--indigo-700);
+      white-space: nowrap;
+    }
+    .mapping-grid__desc {
+      color: var(--gray-600);
+    }
+
+    /* Dimensions mapping */
+    .dim-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    @media (max-width: 600px) {
+      .dim-map { grid-template-columns: 1fr; }
+    }
+    .dim-map__item {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      font-size: var(--text-sm);
+    }
+    .dim-map__old {
+      color: var(--gray-500);
+      font-size: var(--text-xs);
+      margin: 0 0 4px 0;
+    }
+    .dim-map__new {
+      color: var(--indigo-700);
+      font-weight: 600;
+      margin: 0;
     }
   </style>
 </head>
@@ -73,135 +153,188 @@
     <!-- Header -->
     <div style="margin-bottom: var(--space-6);">
       <nav style="font-size: var(--text-sm); color: var(--gray-500); margin-bottom: var(--space-2);">
-        <a href="home.html" style="color: var(--indigo-600);">Home</a> / <span>SDL Dimensions</span>
+        <a href="home.html" style="color: var(--indigo-600);">Home</a> / <span>UMPIRE</span>
       </nav>
-      <h1 style="font-size: var(--text-2xl); font-weight: 700; color: var(--gray-900); margin: 0;">The 8 Dimensions of Self-Directed Learning</h1>
-      <p style="color: var(--gray-600); margin: var(--space-2) 0 0 0;">The capability that determines your adaptability and value</p>
+      <h1 style="font-size: var(--text-2xl); font-weight: 700; color: var(--gray-900); margin: 0;">UMPIRE: How Self-Directed Learners Think</h1>
+      <p style="color: var(--gray-600); margin: var(--space-2) 0 0 0;">A thinking cycle, not a checklist</p>
     </div>
 
     <!-- Intro -->
     <div style="background: var(--indigo-50); border: 1px solid var(--indigo-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
+      <p style="margin: 0 0 var(--space-3) 0; color: var(--gray-700); line-height: 1.7;">
+        <strong>UMPIRE</strong> is how good learners think when they face something they don't know yet. It's not six separate assignments or six weeks of class &mdash; it's a cycle you run every time you encounter a real problem, a new domain, or a gap in your understanding.
+      </p>
       <p style="margin: 0; color: var(--gray-700); line-height: 1.7;">
-        <strong>Self-Directed Learning (SDL)</strong> isn't a single skill — it's a cluster of 8 interconnected capabilities. Across the four sprints, you'll develop evidence for each dimension, building toward your final portfolio defense where you must convince a skeptical audience that you can learn anything you need to learn.
+        The six phases are sequential on paper, but messy in practice. You'll often loop back from Plan to Map when you realize you missed something, or from Review back to Understand when the problem turns out to be different than you thought. That's the cycle working, not failing.
       </p>
     </div>
 
-    <!-- Dimension 1 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">1</div>
-        <h2 class="dimension-card__title">Identify Learning Goals</h2>
+    <!-- Cycle Visualization -->
+    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
+      <h2 style="font-size: var(--text-xs); font-weight: 700; color: var(--indigo-700); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-3) 0; text-align: center;">The Cycle</h2>
+      <div class="cycle-viz">
+        <span class="cycle-viz__step">U &mdash; Understand</span>
+        <span class="cycle-viz__arrow">&rarr;</span>
+        <span class="cycle-viz__step">M &mdash; Map</span>
+        <span class="cycle-viz__arrow">&rarr;</span>
+        <span class="cycle-viz__step">P &mdash; Plan</span>
+        <span class="cycle-viz__arrow">&rarr;</span>
+        <span class="cycle-viz__step">I &mdash; Implement</span>
+        <span class="cycle-viz__arrow">&rarr;</span>
+        <span class="cycle-viz__step">R &mdash; Review</span>
+        <span class="cycle-viz__arrow">&rarr;</span>
+        <span class="cycle-viz__step">E &mdash; Evaluate</span>
       </div>
-      <p class="dimension-card__question">"Can you name what you need to learn?"</p>
-      <p class="dimension-card__description">
-        Before you can learn anything, you must recognize what you don't know. This means moving beyond vague feelings of inadequacy to specific, actionable gaps. It requires honesty about your current state and clarity about where you need to be.
-      </p>
-      <span class="dimension-card__sprints">Primary: Sprint 1</span>
+      <p class="cycle-viz__return">&larr; then back to Understand, with what you now know &rarr;</p>
     </div>
 
-    <!-- Dimension 2 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">2</div>
-        <h2 class="dimension-card__title">Design Learning Plan</h2>
+    <!-- Phase U -->
+    <div class="phase-card">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">U</div>
+        <h2 class="phase-card__title">Understand</h2>
       </div>
-      <p class="dimension-card__question">"Can you create a path to learning it?"</p>
-      <p class="dimension-card__description">
-        Knowing what to learn isn't enough — you need a strategy. This dimension is about breaking down complex skills into learnable chunks, identifying resources and practice opportunities, and creating accountability structures that work for you.
+      <p class="phase-card__question">"What's the real problem, question, or gap?"</p>
+      <p class="phase-card__description">
+        Before you can learn anything, you have to name what you don't know &mdash; specifically, not vaguely. "I need to get better at coding" isn't understanding. "I can't write a recursive function without looking at examples every time" is. This phase is about honesty: separating what you actually know from what you assume you know.
       </p>
-      <span class="dimension-card__sprints">Primary: Sprint 1</span>
     </div>
 
-    <!-- Dimension 3 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">3</div>
-        <h2 class="dimension-card__title">Navigate Ambiguity</h2>
+    <!-- Phase M -->
+    <div class="phase-card phase-card--highlight">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">M</div>
+        <h2 class="phase-card__title">Map</h2>
       </div>
-      <p class="dimension-card__question">"Can you learn when requirements are unclear?"</p>
-      <p class="dimension-card__description">
-        Real learning rarely comes with clear instructions. This dimension is about making progress without perfect information, tolerating uncertainty, and knowing when to seek clarity versus when to experiment and iterate.
+      <p class="phase-card__question">"What do I already know? What don't I know? Where are the resources?"</p>
+      <p class="phase-card__description">
+        Mapping is the phase most people skip &mdash; and it's the one that determines whether everything after it works. Before you make a plan, you need to survey the territory: what's in your head already, what's out there to find, what sources are credible, what's noise. Skipping Map means you plan from assumptions instead of from evidence.
       </p>
-      <span class="dimension-card__sprints">Primary: Sprints 2-3</span>
-    </div>
-
-    <!-- Dimension 4 -->
-    <div class="dimension-card" style="border-left: 4px solid var(--indigo-500);">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">4</div>
-        <h2 class="dimension-card__title">Metacognitive Awareness</h2>
+      <div class="phase-card__note">
+        <strong>Why this phase matters most:</strong> Students consistently jump from "I have a problem" straight to "I'll Google it and start working." The Map phase is the intervention &mdash; the moment where you slow down, take stock of what you actually know vs. what you're guessing, and figure out where to look before you start doing. Every sprint in this course will push you to practice this explicitly.
       </div>
-      <p class="dimension-card__question">"Do you know what you don't know?"</p>
-      <p class="dimension-card__description">
-        The foundation of all learning. This is your ability to observe your own thinking, recognize confusion versus understanding, calibrate confidence, and notice when you're stuck. Without metacognition, you can't improve — you just repeat the same mistakes.
-      </p>
-      <span class="dimension-card__sprints">Developed: All Sprints</span>
     </div>
 
-    <!-- Dimension 5 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">5</div>
-        <h2 class="dimension-card__title">Learn Through Iteration</h2>
+    <!-- Phase P -->
+    <div class="phase-card">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">P</div>
+        <h2 class="phase-card__title">Plan</h2>
       </div>
-      <p class="dimension-card__question">"Can you improve through failure?"</p>
-      <p class="dimension-card__description">
-        Learning isn't linear. This dimension is about treating failures as data, adjusting based on what doesn't work, and persisting through the discomfort of not being good at something yet. The question isn't whether you'll fail — it's whether you'll learn from it.
+      <p class="phase-card__question">"What's my approach? What will I try first?"</p>
+      <p class="phase-card__description">
+        A plan doesn't need to be perfect &mdash; it needs to be specific enough to act on and honest enough to abandon when it stops working. This phase is about breaking a learning challenge into steps, choosing your first move, and deciding what "good enough" looks like before you start.
       </p>
-      <span class="dimension-card__sprints">Primary: Sprints 2-4</span>
     </div>
 
-    <!-- Dimension 6 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">6</div>
-        <h2 class="dimension-card__title">Evaluate Critically</h2>
+    <!-- Phase I -->
+    <div class="phase-card">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">I</div>
+        <h2 class="phase-card__title">Implement</h2>
       </div>
-      <p class="dimension-card__question">"Can you judge the quality of your learning?"</p>
-      <p class="dimension-card__description">
-        Self-assessment is hard. This dimension is about developing calibrated judgment — knowing when your work is actually good versus just feeling good, seeking external validation appropriately, and distinguishing between activity and actual learning.
+      <p class="phase-card__question">"Do the work. Follow the plan &mdash; and notice when you deviate."</p>
+      <p class="phase-card__description">
+        This is the phase everyone's comfortable with: actually doing the thing. But in UMPIRE, implementation comes with a metacognitive requirement. You don't just execute &mdash; you pay attention to when the plan stops fitting reality. The gap between your plan and what actually happens is where the most learning lives.
       </p>
-      <span class="dimension-card__sprints">Primary: Sprints 3-4</span>
     </div>
 
-    <!-- Dimension 7 -->
-    <div class="dimension-card">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">7</div>
-        <h2 class="dimension-card__title">Collaborate Effectively</h2>
+    <!-- Phase R -->
+    <div class="phase-card">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">R</div>
+        <h2 class="phase-card__title">Review</h2>
       </div>
-      <p class="dimension-card__question">"Can you learn from and with others?"</p>
-      <p class="dimension-card__description">
-        Learning is social. This dimension is about extracting value from peer conversations, giving and receiving feedback productively, and knowing when to seek help versus when to struggle independently. The best learners know how to leverage their network.
+      <p class="phase-card__question">"Did it work? What would I change?"</p>
+      <p class="phase-card__description">
+        Review is not "I'm done, it's fine." It's the honest look back at what you actually produced versus what you intended. Did you learn what you set out to learn? Did the approach work? What failed, and why? Review requires you to distinguish between activity (I did stuff) and progress (I actually moved forward).
       </p>
-      <span class="dimension-card__sprints">Primary: Sprint 3</span>
     </div>
 
-    <!-- Dimension 8 -->
-    <div class="dimension-card" style="border-left: 4px solid var(--indigo-500);">
-      <div class="dimension-card__header">
-        <div class="dimension-card__number">8</div>
-        <h2 class="dimension-card__title">Leverage AI Effectively</h2>
+    <!-- Phase E -->
+    <div class="phase-card">
+      <div class="phase-card__header">
+        <div class="phase-card__letter">E</div>
+        <h2 class="phase-card__title">Evaluate</h2>
       </div>
-      <p class="dimension-card__question">"Can you use AI without offloading your thinking?"</p>
-      <p class="dimension-card__description">
-        AI can accelerate learning or replace it — the difference is how you use it. This dimension is about using AI as a thought partner rather than an answer machine, maintaining your own reasoning while leveraging AI's capabilities, and knowing when AI helps versus when it hinders genuine learning.
+      <p class="phase-card__question">"What did I learn about my learning? How does this change my approach next time?"</p>
+      <p class="phase-card__description">
+        The phase that separates people who get better from people who just get busier. Evaluate isn't about this problem &mdash; it's about the next one. What did this cycle teach you about how you learn? What will you do differently the next time you run UMPIRE? This is where metacognition becomes a habit.
       </p>
-      <span class="dimension-card__sprints">Developed: All Sprints</span>
     </div>
 
-    <!-- Summary -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
+    <!-- Where the 8 Dimensions Went -->
+    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
+      <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin: 0 0 var(--space-2) 0;">Where the 8 Dimensions Went</h3>
+      <p style="color: var(--gray-600); font-size: var(--text-sm); margin: 0 0 var(--space-4) 0; line-height: 1.6;">
+        The original 8 SDL dimensions aren't gone &mdash; they're embedded in the UMPIRE phases. Instead of tracking 8 separate skills, you practice all of them every time you run the cycle.
+      </p>
+      <div class="dim-map">
+        <div class="dim-map__item">
+          <p class="dim-map__old">1. Identify Learning Goals</p>
+          <p class="dim-map__new">U &mdash; Understand</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">2. Design Learning Plan</p>
+          <p class="dim-map__new">M &mdash; Map + P &mdash; Plan</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">3. Navigate Ambiguity</p>
+          <p class="dim-map__new">M &mdash; Map (surveying unknown territory)</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">4. Metacognitive Awareness</p>
+          <p class="dim-map__new">Entire cycle (especially R + E)</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">5. Learn Through Iteration</p>
+          <p class="dim-map__new">The cycle itself (loop back)</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">6. Evaluate Critically</p>
+          <p class="dim-map__new">R &mdash; Review + E &mdash; Evaluate</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">7. Collaborate Effectively</p>
+          <p class="dim-map__new">Every phase (peers sharpen your thinking)</p>
+        </div>
+        <div class="dim-map__item">
+          <p class="dim-map__old">8. Leverage AI Effectively</p>
+          <p class="dim-map__new">Every phase (AI as thought partner, not answer machine)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint Mapping -->
+    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
+      <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin: 0 0 var(--space-2) 0;">UMPIRE Across the Semester</h3>
+      <p style="color: var(--gray-600); font-size: var(--text-sm); margin: 0 0 var(--space-4) 0; line-height: 1.6;">
+        Each sprint emphasizes different phases, but you run the whole cycle every time. By Sprint 4, the cycle should feel natural &mdash; not because we made it easy, but because you've practiced it enough.
+      </p>
+      <div class="mapping-grid">
+        <span class="mapping-grid__phase">Sprint 1</span>
+        <span class="mapping-grid__desc">U + M + P &mdash; Identifying gaps, mapping your starting point, making a plan</span>
+        <span class="mapping-grid__phase">Sprint 2</span>
+        <span class="mapping-grid__desc">P + I &mdash; Planning with accountability, implementing with evidence</span>
+        <span class="mapping-grid__phase">Sprint 3</span>
+        <span class="mapping-grid__desc">M + I + R &mdash; Mapping your information landscape, implementing change, reviewing what shifted</span>
+        <span class="mapping-grid__phase">Sprint 4</span>
+        <span class="mapping-grid__desc">I + R + E &mdash; Implementing your defense, reviewing your evidence, evaluating your growth</span>
+      </div>
+    </div>
+
+    <!-- The Test -->
+    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
       <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">The Test</h3>
       <p style="margin: 0; color: var(--gray-600); line-height: 1.6;">
-        In your final portfolio defense, you'll need to demonstrate evidence for each dimension. The question isn't "did you complete activities?" but <strong>"can you convince a skeptical audience that you can learn anything you need to learn?"</strong>
+        In your final portfolio defense, you won't walk through the UMPIRE phases like a checklist. Instead, you'll tell the story of how your thinking changed across the semester &mdash; and the evidence should make it obvious that you've been running this cycle. The question isn't "did you complete activities?" but <strong>"can you convince a skeptical audience that you can learn anything you need to learn?"</strong>
       </p>
     </div>
 
     <!-- CTA -->
     <div style="text-align: center; padding: var(--space-6);">
       <a href="sprint-1.html" style="display: inline-block; background: linear-gradient(135deg, var(--indigo-600) 0%, var(--indigo-700) 100%); color: white; padding: var(--space-3) var(--space-6); border-radius: var(--radius-lg); text-decoration: none; font-weight: 600;">
-        Start Building Evidence →
+        Start Building Evidence &rarr;
       </a>
     </div>
 

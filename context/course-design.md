@@ -24,6 +24,13 @@ Both serve a population that is 56% first-generation and 45% community college t
 - **Competence**: Each sprint builds on demonstrated capability, not assumed readiness
 - **Relatedness**: Partner/group work and peer conversations create accountability
 
+**UMPIRE** — The operational thinking cycle shared across both courses:
+- Understand → Map → Plan → Implement → Review → Evaluate
+- Not week labels or assignment names — a cycle students run every time they face a real problem
+- In CST395, UMPIRE structures project work (problem → solution → reflection)
+- In CST349, UMPIRE structures self-directed learning (gap → exploration → evidence → growth)
+- See sdl-dimensions.html for the student-facing explanation
+
 **Symbiotic Thinking Framework** — Three interdependent layers:
 - **Mindset**: Creating vs. consuming spectrum (are you directing the AI or following it?)
 - **Metacognition**: 3Cs framework — Context (what's the situation?), Choices (what are my options?), Confirmation (how do I verify?)
@@ -44,14 +51,17 @@ Both serve a population that is 56% first-generation and 45% community college t
 |---|---|---|---|
 | 1: Beyond Technical | Identify a soft skill gap | Solo | Self-assessment, 5 Whys on personal gap |
 | 2: Accountable Growth | External accountability | Triads | Group rules, peer evaluation, evidence of change |
-| 3: Transfer | Technical curiosity | TBD | Connecting SDL to domain learning |
-| 4: Proving It | Portfolio defense | Solo | Synthesizing evidence across sprints |
+| 3: Information Diet | Changing what you consume | Solo + Reading Partners | Mapping your information landscape, implementing change, reviewing what shifted (UMPIRE: M+I+R) |
+| 4: Proving It | Portfolio defense | Solo | Implementing defense, reviewing evidence, evaluating growth (UMPIRE: I+R+E) |
 
 ## Key Frameworks Students Use
 
 **UMPIRE**: Understand → Map → Plan → Implement → Review → Evaluate
+- The shared operational engine of both CST395 and CST349
 - Students currently skip Review and Evaluate (see → evidence.md, Gap 3)
 - The Review/Evaluate steps are where quality improvement happens
+- **Map is the hardest phase to teach**: students consistently jump from "I have a problem" straight to "I'll start working." Map is the intervention — the moment where you slow down, take stock of what you know vs. what you're guessing, and figure out where to look before you start doing. Every sprint pushes Map practice explicitly.
+- Not week labels — a cycle students run at any scale (single assignment, full sprint, career decision)
 
 **3Cs**: Context → Choices → Confirmation
 - Metacognitive scaffolding for AI interaction
