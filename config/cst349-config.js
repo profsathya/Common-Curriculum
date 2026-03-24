@@ -504,6 +504,56 @@ const CST349_CONFIG = {
       title: "Final Reflection",
       dueDate: "2026-05-16",
       type: "bridge"
+    },
+
+    // Sprint 3
+    "s3-w10-checkin": {
+      canvasId: "586958",
+      title: "S3: Goal Check-In Week 10",
+      dueDate: "2026-03-25",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 5,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-goal-checkin.html"
+    },
+    "s3-reflection-8": {
+      canvasId: "586959",
+      title: "S3: Productive Reflection #8",
+      dueDate: "2026-03-27",
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Productive Reflections",
+      points: 5,
+      sprint: 3,
+      week: 10,
+      htmlFile: "assignments/s3-w10-productive-reflection.html"
+    },
+    "s3-w11-checkin": {
+      canvasId: "586960",
+      title: "S3: Goal Check-In Week 11",
+      dueDate: "2026-04-08",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 5,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-goal-checkin.html"
+    },
+    "s3-reflection-9": {
+      canvasId: "586961",
+      title: "S3: Productive Reflection #9",
+      dueDate: "2026-04-10",
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Productive Reflections",
+      points: 5,
+      sprint: 3,
+      week: 11,
+      htmlFile: "assignments/s3-w11-productive-reflection.html"
     }
   },
 
