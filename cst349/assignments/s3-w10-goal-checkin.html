@@ -224,6 +224,7 @@
         <!-- Copy Button -->
         <button class="copy-btn" onclick="copyToClipboard()">Copy all responses to clipboard</button>
         <p class="copy-confirm" id="copy-confirm"></p>
+        <textarea id="copy-output" readonly style="display:none; width:100%; min-height:180px; margin-top:10px; border:1px solid #d1d5db; border-radius:8px; padding:12px; font-family:inherit; font-size:13px; line-height:1.6; background:#f9fafb; color:#374151; resize:vertical;"></textarea>
 
         <!-- Submission -->
         <div class="submission">
@@ -285,32 +286,27 @@
         lines.push('Q3 (skill gap): ' + getVal('q3'));
 
         var text = lines.join('\n');
+        var confirm = document.getElementById('copy-confirm');
 
-        function onSuccess() {
-            var confirm = document.getElementById('copy-confirm');
-            confirm.textContent = 'Copied \u2014 paste into Canvas';
-            confirm.style.color = '#059669';
-            setTimeout(function() { confirm.textContent = ''; }, 3000);
-        }
-        function onFail() {
-            var confirm = document.getElementById('copy-confirm');
-            confirm.textContent = 'Auto-copy failed \u2014 text selected below, use Ctrl+C / Cmd+C';
-            confirm.style.color = '#dc2626';
-            // Fallback: create a temporary textarea with the text pre-selected
-            var ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:200px;z-index:9999;font-size:14px;padding:12px;';
-            document.body.appendChild(ta);
-            ta.focus();
-            ta.select();
-            try { document.execCommand('copy'); onSuccess(); document.body.removeChild(ta); }
-            catch(e) { /* textarea stays visible for manual copy */ }
-        }
+        // Always show the output textarea so students can select + copy manually
+        var output = document.getElementById('copy-output');
+        output.style.display = 'block';
+        output.value = text;
+        output.focus();
+        output.select();
 
+        // Try auto-copy, but the textarea is there either way
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(onSuccess).catch(onFail);
+            navigator.clipboard.writeText(text).then(function() {
+                confirm.textContent = 'Copied \u2014 paste into Canvas';
+                confirm.style.color = '#059669';
+            }).catch(function() {
+                confirm.textContent = 'Select the text below and copy with Ctrl+C / Cmd+C';
+                confirm.style.color = '#4338ca';
+            });
         } else {
-            onFail();
+            try { document.execCommand('copy'); confirm.textContent = 'Copied \u2014 paste into Canvas'; confirm.style.color = '#059669'; }
+            catch(e) { confirm.textContent = 'Select the text below and copy with Ctrl+C / Cmd+C'; confirm.style.color = '#4338ca'; }
         }
     }
     </script>
