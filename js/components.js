@@ -516,10 +516,17 @@ function renderAssignmentRow(item, config, isPastDue) {
 
 /**
  * Render 4 sprint pills showing progression (multi-line, matching prototype).
+ * Clicking any pill except the current page's sprint navigates to that sprint page.
+ * @param {Object} config - Course config
+ * @param {number} currentSprint - The sprint that is currently active (by date)
+ * @param {string} containerId - ID of container
+ * @param {number} [pageSprint] - The sprint this page represents (defaults to currentSprint)
  */
-function renderJourneyPills(config, currentSprint, containerId) {
+function renderJourneyPills(config, currentSprint, containerId, pageSprint) {
   var container = document.getElementById(containerId);
   if (!container) return;
+
+  if (pageSprint === undefined) pageSprint = currentSprint;
 
   var html = '<div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--theme-dark,#0d9488);margin-bottom:8px;">Your journey</div>';
   html += '<div style="display:flex;gap:6px;margin-bottom:10px;">';
@@ -530,6 +537,7 @@ function renderJourneyPills(config, currentSprint, containerId) {
 
     var isCurrent = i === currentSprint;
     var isPast = i < currentSprint;
+    var isThisPage = i === pageSprint;
 
     var bg, textColor, subColor, border;
     if (isCurrent) {
@@ -551,43 +559,19 @@ function renderJourneyPills(config, currentSprint, containerId) {
 
     var stakeholder = sprint.stakeholder || '';
     var statusLabel = isPast ? '\u2713 Sprint ' + i : (isCurrent ? '\u2605 Sprint ' + i : 'Sprint ' + i);
+    var navigable = !isThisPage;
 
-    html += '<button ' +
-      'style="flex:1;padding:10px 8px;background:' + bg + ';border:' + border + ';border-radius:10px;cursor:' + (isPast ? 'pointer' : 'default') + ';text-align:center;font-family:inherit;transition:all 0.15s;" ' +
-      (isPast ? 'onclick="toggleSprintSummary(' + i + ')"' : '') + '>' +
+    html += '<' + (navigable ? 'a href="sprint-' + i + '.html"' : 'div') + ' ' +
+      'style="flex:1;padding:10px 8px;background:' + bg + ';border:' + border + ';border-radius:10px;cursor:' + (navigable ? 'pointer' : 'default') + ';text-align:center;font-family:inherit;transition:all 0.15s;text-decoration:none;display:block;" ' +
+      '>' +
         '<div style="font-size:11px;font-weight:700;color:' + subColor + ';letter-spacing:0.04em;text-transform:uppercase;">' + statusLabel + '</div>' +
         '<div style="font-size:14px;font-weight:600;color:' + textColor + ';margin-top:2px;">' + sprint.name + '</div>' +
         '<div style="font-size:11px;color:' + subColor + ';margin-top:2px;">' + stakeholder + '</div>' +
-    '</button>';
+    '</' + (navigable ? 'a' : 'div') + '>';
   }
 
   html += '</div>';
-
-  // Summary panels (hidden by default)
-  for (var j = 1; j <= 4; j++) {
-    var summaries = config.sprintSummaries ? config.sprintSummaries[j] : null;
-    if (summaries && j < currentSprint) {
-      html += '<div id="sprint-summary-' + j + '" style="display:none;margin:0 0 10px;padding:14px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;">' +
-        '<div style="font-size:13px;line-height:1.65;color:#374151;margin-bottom:8px;">' + summaries.summary + '</div>' +
-        '<div style="font-size:12px;color:var(--theme-dark,#0d9488);font-style:italic;">' + summaries.capabilities + '</div>' +
-      '</div>';
-    }
-  }
-
   container.innerHTML = html;
-}
-
-function toggleSprintSummary(sprintNum) {
-  var el = document.getElementById('sprint-summary-' + sprintNum);
-  if (!el) return;
-  // Close other summaries
-  for (var i = 1; i <= 4; i++) {
-    if (i !== sprintNum) {
-      var other = document.getElementById('sprint-summary-' + i);
-      if (other) other.style.display = 'none';
-    }
-  }
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
 // ============================================
