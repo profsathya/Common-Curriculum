@@ -420,14 +420,22 @@
   <script>
     // Initialize page when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-      // Add demo banner if viewing directly (not in iframe)
-      addDemoBannerIfNeeded();
+      // Redirect to current sprint page during active semester
+      // (skip redirect if date simulator is active or hash has other content)
+      var resolved = getResolvedCurrentWeek(CST395_CONFIG);
+      if (resolved.week && !window.location.hash.includes('testDate')) {
+        var sprint = CST395_CONFIG.weekDates[resolved.week].sprint;
+        if (sprint) {
+          window.location.replace('sprint-' + sprint + '.html#zone-b');
+          return;
+        }
+      }
 
-      // Initialize with CST395 config
+      // Pre-semester fallback: show the full home page
+      addDemoBannerIfNeeded();
       initHomePage(CST395_CONFIG);
 
-      // Get current week (null if before semester or on weekends between weeks)
-      const currentWeek = getEffectiveCurrentWeek();
+      var currentWeek = resolved.week;
 
       // Get Started section: visible before semester starts and during Weeks 1-2
       const getStartedSection = document.getElementById('get-started-section');
