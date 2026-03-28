@@ -5,546 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 3: Complexity | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    :root {
+      --theme-primary: #14b8a6;
+      --theme-dark: #0d9488;
+      --theme-light: #f0fdfa;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Sprint Header -->
-    <div class="sprint-header">
-      <nav class="sprint-header__breadcrumb">
-        <a href="home.html">Home</a> / <span>Sprint 3</span>
-      </nav>
-      <h1 class="sprint-header__title">Sprint 3: Complexity</h1>
-      <p class="sprint-header__subtitle">"Build narrow. Test fast. Expand." — Solving for a real person in a domain you have to learn</p>
-      <div class="sprint-header__meta">
-        <span class="sprint-header__tag">Weeks 9–12</span>
-        <span class="sprint-header__tag">External Stakeholder</span>
-        <span class="sprint-header__tag">Concepts: Human Value, Abstraction</span>
-      </div>
-    </div>
+    <!-- Sticky Week Counter -->
+    <div id="sticky-counter"></div>
 
-    <!-- Sprint Intro -->
-    <div style="background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
-      <p style="margin: 0 0 12px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
-        The Ministry of Health of Bhutan has a 28-page clinical guideline for managing multidrug-resistant organisms — bacteria that resist most antibiotics. Globally, antibiotic resistance kills 1.27 million people per year. The guideline exists. The problem: no one working in a busy ER, an isolation ward, or a cleaning role can pause to read and interpret it in the moment they need it.
-      </p>
-      <p style="margin: 0 0 12px 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
-        <strong>Piranavan Selvanandan</strong>, a technical consultant approached by contacts in Bhutan to make this guideline actionable, is bringing this challenge directly to you. He'll work with you in Weeks 10 and 11.
-      </p>
-      <p style="margin: 0; color: #134e4a; font-size: 14px; line-height: 1.7;">
-        Your job is not to solve the whole problem. Find one specific human moment where the guideline fails the person who needs it. Design a human process that addresses that moment. Build something that supports that process. Iterate.
-      </p>
-    </div>
+    <!-- Zone A Card -->
+    <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+      <!-- Journey Pills (always visible, never collapse) -->
+      <div id="journey-pills" style="padding:14px 16px 10px;background:white;"></div>
 
-    <!-- Instructor Notes Feature Card -->
-    <div style="background: white; border: 2px solid #14b8a6; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 16px;">
-      <span style="font-size: 24px; flex-shrink: 0; margin-top: 2px;">&#128211;</span>
-      <div style="flex: 1;">
-        <h3 style="margin: 0 0 6px 0; font-size: 16px; font-weight: 700; color: #0f766e;">AI-Native Solution Engineering Notes</h3>
-        <p style="margin: 0 0 12px 0; font-size: 14px; color: #4b5563; line-height: 1.6;">Prof. Sathya is solving the same problem alongside you &mdash; same UMPIRE process, same tools, published as he goes. Including the dead ends.</p>
-        <a href="sprint-3-notes.html" style="display: inline-block; background: #14b8a6; color: white; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">View Notes &rarr;</a>
-      </div>
-    </div>
-
-    <!-- Sprint Learning Outcomes -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Staked out at least one specific problem and designed a human-first solution that is supported by one or more technical features</li>
-        <li>Used AI simulation to stress-test your design before expert access</li>
-        <li>Iterated based on real expert feedback from Piranavan</li>
-        <li>Demonstrated the arc: where you started vs. where you ended up, and what changed your thinking</li>
-      </ul>
-    </div>
-
-    <!-- Grading -->
-    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-6); font-size: 14px;">
-      <strong style="color: #92400e;">Sprint 3 Grading:</strong>
-      <span style="color: #a16207;">Goals 20% (individual) · Weekly Reflections 20% (individual) · Demo 40% (individual) · Engagement 20%</span>
-    </div>
-
-    <!-- Differentiation Rule -->
-    <div style="background: #faf5ff; border: 1px solid #a855f7; border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; font-size: 14px;">
-      <strong style="color: #6b21a8;">🚦 The Differentiation Rule:</strong>
-      <span style="color: #581c87; margin-left: 6px;">No two students may work on problems that are more than 50% similar. In Week 9, you'll pitch your candidate problem in one sentence. The class decides if there's a collision. If there is, both students have 48 hours to differentiate their framing. First to stake a clear, specific claim owns the territory.</span>
-    </div>
-
-    <!-- Before Week 9 Sequence -->
-    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;">
-      <p style="margin: 0 0 6px 0; color: #a5b4fc; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Before Week 9 Class</p>
-      <h3 style="margin: 0 0 16px 0; color: white; font-size: 18px;">Transition + Preparation Sequence</h3>
-      <p style="margin: 0 0 16px 0; color: #c7d2fe; font-size: 14px; line-height: 1.6;">Three things to do between Demo Day and Week 9. Do them in order — each one builds on the previous.</p>
-
-      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; margin-bottom: 10px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 11px; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">1 · 📓 Handwritten Reflection · Submitted</span>
-            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s2-w8-bridge-reflection.html" style="color: white; text-decoration: none;">What I've Actually Been Building Toward</a></h4>
-          </div>
-          <span style="color: #fbbf24; font-size: 13px; white-space: nowrap;" data-due-date="s2-bridge-reflection-2"></span>
+      <!-- Sprint Header (always visible) -->
+      <div style="padding:0 16px 12px;">
+        <nav style="font-size:12px;color:#6b7280;margin-bottom:4px;">
+          <a href="home.html" style="color:#6b7280;text-decoration:none;">Home</a> / Sprint 3
+        </nav>
+        <h1 style="font-size:20px;font-weight:700;color:#111827;margin:0 0 4px 0;">Sprint 3: Complexity</h1>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 8px 0;">"Build narrow. Test fast. Expand." &mdash; Solving for a real person in a domain you have to learn</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Weeks 9-12</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Scaffolding: Medium</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Stakeholder: External entity</span>
         </div>
-        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Five foundational claims about this course. After reading each one, write 2-3 honest sentences connecting it to your actual Sprint 1-2 work. Handwritten, photographed.</p>
       </div>
 
-      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; margin-bottom: 10px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 11px; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">2 · 💬 AI-Discussion · Submitted</span>
-            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s3-w9-claims-discussion.html" style="color: white; text-decoration: none;">Claims in Practice</a></h4>
-          </div>
-          <span style="color: #fbbf24; font-size: 13px; white-space: nowrap;" data-due-date="s3-claims-dojo"></span>
-        </div>
-        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Structured AI-discussion that takes your handwritten reflection and pushes you to find specific evidence in your Sprint 1-2 work for each claim.</p>
-      </div>
-
-      <div style="background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; padding: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 11px; color: #86efac; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">3 · 📖 Reading · No Submission</span>
-            <h4 style="margin: 6px 0 4px 0; color: white; font-size: 15px;"><a href="assignments/s3-w9-primer.html" style="color: white; text-decoration: none;">Sprint 3 Domain Primer</a></h4>
-          </div>
-          <span style="color: #86efac; font-size: 13px; white-space: nowrap;">Tue, Mar 17</span>
-        </div>
-        <p style="margin: 8px 0 0 0; color: #c7d2fe; font-size: 13px; line-height: 1.6;">Read pages 1-8 of the Bhutan MDRO guideline and skim the rest. Come to class with one part you think is particularly hard for a clinical worker to act on.</p>
-      </div>
-    </div>
-
-    <!-- Week 9 -->
-    <div class="week-section" data-week="9">
-      <button class="week-section__header" data-collapse-toggle="week-9-content" aria-expanded="true">
-        <div class="week-section__header-left">
-          <span class="week-section__number">9</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Problem Stake Day</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
+      <!-- Collapse Toggle -->
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 context, grading, weeks';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; context, grading, weeks</span>
+        <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;">&#9660;</span>
       </button>
-      <div class="week-section__content" id="week-9-content" style="display: block;">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Staking a problem is a design act. Vague problems produce vague solutions.
-        </p>
 
-        <!-- In-Class -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class (Wednesday, Mar 19)</p>
-          <h4 class="in-class-plan__title">Collaborative Prompting + Problem Staking</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Collaborative prompting session (individual → pair → quad → class → professor runs it live)</li>
-              <li>Piranavan introduction and context</li>
-              <li>Problem pitch round: stake your territory</li>
-              <li>First build: design the human process, then touch the computer</li>
-            </ul>
-          </div>
-          <div style="margin-top: 12px;">
-            <a href="sessions/week-9-class.html" style="color: var(--cst395-primary-dark, #0d9488); text-decoration: none; font-weight: 600; font-size: 14px;">View Session Slides →</a>
-          </div>
-          <div class="class-recording" data-loom="9">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
+      <!-- Collapsible Details -->
+      <div id="sprint-details" style="display:none;padding:16px;border-top:1px solid #e5e7eb;">
 
-        <!-- Assignment: Problem Stake Brief -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w9-problem-stake.html">S3: Problem Stake Brief</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-problem-stake"></span>
-          </div>
-          <p class="activity-item__description">
-            Who is your user, what is the specific moment, what constraint makes it hard in Bhutan's context. 300 words max. This is a design claim, not a reflection.
+        <!-- MDRO Context -->
+        <div style="background:#f0fdfa;border:1px solid #14b8a6;border-radius:8px;padding:16px;margin-bottom:16px;">
+          <p style="margin:0 0 10px 0;color:#134e4a;font-size:14px;line-height:1.7;">
+            The Ministry of Health of Bhutan has a 28-page clinical guideline for managing multidrug-resistant organisms &mdash; bacteria that resist most antibiotics. Globally, antibiotic resistance kills 1.27 million people per year. The guideline exists. The problem: no one working in a busy ER, an isolation ward, or a cleaning role can pause to read and interpret it in the moment they need it.
           </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
+          <p style="margin:0 0 10px 0;color:#134e4a;font-size:14px;line-height:1.7;">
+            <strong>Piranavan Selvanandan</strong>, a technical consultant approached by contacts in Bhutan to make this guideline actionable, is bringing this challenge directly to you. He'll work with you in Weeks 10 and 11.
+          </p>
+          <p style="margin:0;color:#134e4a;font-size:14px;line-height:1.7;">
+            Your job is not to solve the whole problem. Find one specific human moment where the guideline fails the person who needs it. Design a human process that addresses that moment. Build something that supports that process. Iterate.
+          </p>
+        </div>
+
+        <!-- Instructor Notes Link -->
+        <div style="background:white;border:2px solid #14b8a6;border-radius:8px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:20px;">&#128211;</span>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:#0f766e;">AI-Native Solution Engineering Notes</div>
+            <div style="font-size:13px;color:#4b5563;margin-top:2px;">Prof. Sathya is solving the same problem alongside you &mdash; same UMPIRE process, same tools, published as he goes.</div>
+          </div>
+          <a href="sprint-3-notes.html" style="background:#14b8a6;color:white;padding:6px 14px;border-radius:6px;text-decoration:none;font-weight:600;font-size:12px;white-space:nowrap;">View Notes &rarr;</a>
+        </div>
+
+        <!-- Learning Outcomes -->
+        <h2 style="font-size:16px;font-weight:600;margin:0 0 12px 0;">By Sprint End, You Will Have:</h2>
+        <ul style="margin:0 0 16px 0;padding-left:20px;color:#4b5563;font-size:14px;line-height:1.6;">
+          <li>Staked out at least one specific problem and designed a human-first solution supported by technical features</li>
+          <li>Used AI simulation to stress-test your design before expert access</li>
+          <li>Iterated based on real expert feedback from Piranavan</li>
+          <li>Demonstrated the arc: where you started vs. where you ended up, and what changed your thinking</li>
+        </ul>
+
+        <!-- Grading -->
+        <h3 style="font-size:14px;font-weight:600;margin:0 0 8px 0;color:#374151;">Sprint 3 Grading</h3>
+        <div style="font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:16px;">
+          <p style="margin:0 0 8px 0;">Goals 20% &middot; Reflections 20% &middot; Demo 40% &middot; Engagement 20%</p>
+        </div>
+
+        <!-- Differentiation Rule -->
+        <div style="background:#faf5ff;border:1px solid #a855f7;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;">
+          <strong style="color:#6b21a8;">&#128678; The Differentiation Rule:</strong>
+          <span style="color:#581c87;margin-left:4px;">No two students may work on problems that are more than 50% similar. In Week 9, you'll pitch your candidate problem in one sentence. The class decides if there's a collision.</span>
+        </div>
+
+        <!-- Before Week 9 Transition Sequence -->
+        <div style="background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);border-radius:8px;padding:16px;margin-bottom:8px;">
+          <p style="margin:0 0 4px 0;color:#a5b4fc;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Before Week 9 Class</p>
+          <h4 style="margin:0 0 12px 0;color:white;font-size:16px;">Transition + Preparation Sequence</h4>
+          <p style="margin:0 0 12px 0;color:#c7d2fe;font-size:13px;line-height:1.6;">Three things to do between Demo Day and Week 9. Do them in order.</p>
+
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#a5b4fc;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">1 &middot; Handwritten Reflection</span>
+            <h5 style="margin:4px 0;color:white;font-size:14px;"><a href="assignments/s2-w8-bridge-reflection.html" style="color:white;text-decoration:none;">What I've Actually Been Building Toward</a></h5>
+            <p style="margin:4px 0 0;color:#c7d2fe;font-size:12px;line-height:1.5;">Five foundational claims about this course. Connect each to your actual Sprint 1-2 work. Handwritten, photographed.</p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#a5b4fc;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">2 &middot; AI-Discussion</span>
+            <h5 style="margin:4px 0;color:white;font-size:14px;"><a href="assignments/s3-w9-claims-discussion.html" style="color:white;text-decoration:none;">Claims in Practice</a></h5>
+            <p style="margin:4px 0 0;color:#c7d2fe;font-size:12px;line-height:1.5;">Structured AI-discussion that pushes you to find specific evidence in your Sprint 1-2 work for each claim.</p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.05);border:1px dashed rgba(255,255,255,0.2);border-radius:8px;padding:12px;">
+            <span style="font-size:11px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">3 &middot; Reading &middot; No Submission</span>
+            <h5 style="margin:4px 0;color:white;font-size:14px;"><a href="assignments/s3-w9-primer.html" style="color:white;text-decoration:none;">Sprint 3 Domain Primer</a></h5>
+            <p style="margin:4px 0 0;color:#c7d2fe;font-size:12px;line-height:1.5;">Read pages 1-8 of the Bhutan MDRO guideline and skim the rest. Come to class with one part you think is particularly hard for a clinical worker to act on.</p>
           </div>
         </div>
 
-        <!-- Reflection: Weekly Build Reflection #1 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w9-reflection.html">S3: Weekly Build Reflection #1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-6"></span>
-          </div>
-          <p class="activity-item__description">
-            What human moment are you designing for? Describe the person as if you've watched them work. Handwritten, photographed.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- Week 10 -->
-    <div class="week-section" data-week="10">
-      <button class="week-section__header" data-collapse-toggle="week-10-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">10</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">AI Simulation + Expert Access</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-10-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> AI simulation as a learning tool — finding the questions only a human expert can answer. Expert access used strategically, not generally.
-        </p>
-
-        <!-- Confirmed Dojo Assignment (due day before class) -->
-        <div class="activity-item" style="border-left: 3px solid #14b8a6;">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F94B; Dojo</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-stake-defense.html">Problem Stake Defense</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-stake-defense"></span>
-          </div>
-          <p class="activity-item__description">
-            Sharpen your stake with @advocate and @framer, then practice interrogating a sample stake. Complete before class.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">&#x25CF;</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">&#x1F4C5; In-Class (Wednesday, Mar 25)</p>
-          <h4 class="in-class-plan__title">Stake Defense + Expert Access</h4>
-          <p style="margin: 0 0 16px 0; color: #4b5563; font-size: 14px; line-height: 1.6;">Piranavan Selvanandan joins for Session 1. You'll defend your stake in a peer interview, get feedback on your questions, and have the chance to go 1-on-1 with Piranavan.</p>
-
-          <!-- Session Flow Visual -->
-          <div style="background: #f0fdfa; border: 2px solid #14b8a6; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
-            <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #0f766e;">How the session progresses</p>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;">
-              <!-- Dojo Catch-Up -->
-              <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 100px;">
-                <div style="font-size: 18px; margin-bottom: 2px;">&#x1F94B;</div>
-                <div style="font-size: 12px; font-weight: 600; color: #0f766e;">Dojo Catch-Up</div>
-                <div style="font-size: 11px; color: #6b7280;">~20 min</div>
-              </div>
-              <span style="font-size: 16px; color: #14b8a6; font-weight: 700;">&rarr;</span>
-              <!-- Question Workshop -->
-              <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 100px;">
-                <div style="font-size: 18px; margin-bottom: 2px;">&#x1F3A4;</div>
-                <div style="font-size: 12px; font-weight: 600; color: #0f766e;">Question Workshop</div>
-                <div style="font-size: 11px; color: #6b7280;">Observed</div>
-              </div>
-              <span style="font-size: 16px; color: #14b8a6; font-weight: 700;">&rarr;</span>
-              <!-- Flexible middle zone -->
-              <div style="background: #f5f3ff; border: 2px dashed #c4b5fd; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
-                <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 100px;">
-                  <div style="font-size: 18px; margin-bottom: 2px;">&#x1F91D;</div>
-                  <div style="font-size: 12px; font-weight: 600; color: #0f766e;">Peer Interview</div>
-                  <div style="font-size: 11px; color: #6b7280;">Your pace</div>
-                </div>
-                <span style="font-size: 16px; color: #7c3aed; font-weight: 700;">&harr;</span>
-                <div style="background: white; border: 1px solid #ddd6fe; border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 100px;">
-                  <div style="font-size: 18px; margin-bottom: 2px;">&#x1F30F;</div>
-                  <div style="font-size: 12px; font-weight: 600; color: #7c3aed;">Piranavan 1-on-1</div>
-                  <div style="font-size: 11px; color: #6b7280;">~5 min each</div>
-                </div>
-              </div>
-              <span style="font-size: 16px; color: #14b8a6; font-weight: 700;">&rarr;</span>
-              <!-- Build Plan -->
-              <div style="background: white; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 100px;">
-                <div style="font-size: 18px; margin-bottom: 2px;">&#x1F4CB;</div>
-                <div style="font-size: 12px; font-weight: 600; color: #0f766e;">Build Plan v1</div>
-                <div style="font-size: 11px; color: #6b7280;">Start drafting</div>
-              </div>
-            </div>
-            <p style="margin: 10px 0 0 0; font-size: 11px; color: #6b7280; text-align: center; line-height: 1.5;">The dashed box is flexible &mdash; do part of your peer interview, see Piranavan, then continue the interview. Move at your own pace.</p>
-          </div>
-
-          <!-- Class Flow Details -->
-          <div class="in-class-plan__content">
-
-            <!-- Phase 1: Dojo Catch-Up -->
-            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
-              <div style="min-width: 52px; text-align: right; font-size: 13px; font-weight: 700; color: #6b7280; padding-top: 2px;">~20 min</div>
-              <div style="width: 3px; border-radius: 2px; background: #6b7280; flex-shrink: 0; align-self: stretch;"></div>
-              <div>
-                <div style="font-weight: 600; font-size: 15px; color: #111827;">Dojo Catch-Up</div>
-                <p style="margin: 4px 0 0 0; font-size: 14px; color: #4b5563; line-height: 1.5;">If you haven't completed the <a href="assignments/s3-w10-stake-defense.html" style="color: #0d9488; font-weight: 600;">Problem Stake Defense Dojo</a>, (Note: if you didn't use the special practice dojo built for this assignment, please redo the activity) do it now. If you already have, start pairing up immediately.</p>
-              </div>
-            </div>
-
-            <!-- Phase 2: Question Workshop (observed) -->
-            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
-              <div style="min-width: 52px; text-align: right; font-size: 13px; font-weight: 700; color: #0f766e; padding-top: 2px;">~20 min</div>
-              <div style="width: 3px; border-radius: 2px; background: #0f766e; flex-shrink: 0; align-self: stretch;"></div>
-              <div>
-                <div style="font-weight: 600; font-size: 15px; color: #111827;">Question Workshop <span style="font-size: 12px; font-weight: 400; color: #6b7280;">(observed by Prof. Sathya + Jeremy)</span></div>
-                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; line-height: 1.6; margin-top: 8px;">
-                  Pair up with a partner. Student A presents their stake (~60&ndash;90 sec). Student B listens, then writes 2&ndash;3 questions in their notebook (60 sec). Student B shares their questions &mdash; you'll get feedback on the <em>questions</em>, not the stake. Are they probing assumptions? Or just asking for more detail? Swap roles and repeat. ~15 min per pair.
-                </div>
-                <p style="margin: 8px 0 0 0; font-size: 13px; color: #0f766e; font-weight: 600;">Outcome: sharpened questions ready to use in the peer interview.</p>
-              </div>
-            </div>
-
-            <!-- Phase 3: Flexible middle — Peer Interview + Piranavan -->
-            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
-              <div style="min-width: 52px; text-align: right; font-size: 13px; font-weight: 700; color: #0f766e; padding-top: 2px;">~55 min</div>
-              <div style="width: 3px; border-radius: 2px; background: #7c3aed; flex-shrink: 0; align-self: stretch;"></div>
-              <div>
-                <div style="font-weight: 600; font-size: 15px; color: #111827;">Peer Interview + Expert Access <span style="font-size: 12px; font-weight: 400; color: #6b7280;">(flexible &mdash; your pace)</span></div>
-                <p style="margin: 4px 0 8px 0; font-size: 13px; color: #4b5563; line-height: 1.5;">These two activities run in parallel. You can start your peer interview, pause to see Piranavan when it's your turn, then continue the interview after.</p>
-                <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
-                  <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; line-height: 1.6;">
-                    <span style="font-weight: 600; color: #111827;">&#x1F91D; Peer Interview:</span> Run the full interview with your partner using the sharpened questions from the workshop. Use your notebook to capture what holds up and what gets challenged. You can split this before and after your Piranavan slot.
-                  </div>
-                  <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #374151; line-height: 1.6;">
-                    <span style="font-weight: 600; color: #7c3aed;">&#x1F30F; Piranavan (Zoom):</span> Go 1-on-1 with Piranavan. Present your stake, ask specific questions, or both. ~5 min each. He can speak to clinical workflow, tech infrastructure in Bhutan, deployment realism, staffing, device access &mdash; not limited to medical topics. Not everyone will reach him during class &mdash; overflow students sign up for a next-day appointment.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Phase 4: Build Plan v1 -->
-            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0;">
-              <div style="min-width: 52px; text-align: right; font-size: 13px; font-weight: 700; color: #0f766e; padding-top: 2px;">Rest</div>
-              <div style="width: 3px; border-radius: 2px; background: #0f766e; flex-shrink: 0; align-self: stretch;"></div>
-              <div>
-                <div style="font-weight: 600; font-size: 15px; color: #111827;">Start Your Build Plan v1</div>
-                <p style="margin: 4px 0 0 0; font-size: 14px; color: #4b5563; line-height: 1.5;">Start drafting your <a href="assignments/s3-w10-build-plan.html" style="color: #0d9488; font-weight: 600;">Build Plan v1</a>: your user + moment, what you're building, what has to go right, and what could go wrong. Design the human process first &mdash; touch the computer after you've designed the process on paper.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Key Principle -->
-          <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin-top: 16px; font-size: 13px; color: #4b5563; line-height: 1.6;">
-            <span style="font-weight: 600; color: #111827;">Key principle:</span> We're evaluating question quality, not your stake. A partner who asks &ldquo;how do you know the nurse does that?&rdquo; is more useful than one who says &ldquo;that sounds great.&rdquo;
-          </div>
-
-          <!-- Notebook Reminder -->
-          <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #134e4a; line-height: 1.6;">
-            &#x1F4D3; <strong>Bring your notebook</strong> with the interview structure from the <a href="assignments/s3-w10-stake-defense.html" style="color: #0d9488; font-weight: 600;">Dojo assignment page</a>. You'll fill it in during the paired interview.
-          </div>
-
-          <div class="class-recording" data-loom="10">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Assignment: Build Plan v1 -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-build-plan.html">S3: Build Plan v1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-build-plan-v1"></span>
-          </div>
-          <p class="activity-item__description">
-            Your user + moment, what you're building, what has to go right, what could go wrong. 150 words max.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">&#x25CF;</span></span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- Assignment: Build v1 -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-build-v1.html">S3: Build v1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-build-v1"></span>
-          </div>
-          <p class="activity-item__description">
-            Link or screenshot of what you built + one design decision + one known failure. Unfinished is fine. Not started is not.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">&#x25CF;</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- Spring break note -->
-        <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 12px 16px; margin: 8px 0; font-size: 13px; color: #134e4a; line-height: 1.6;">
-          &#x1F4C5; Spring break starts March 30. The Build Review is designed to take 15&ndash;20 minutes.
-        </div>
-
-        <!-- Reflection: Build Review -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1FA9E; Review</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-build-review.html">S3: Build Review</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-build-review"></span>
-          </div>
-          <p class="activity-item__description">
-            Self-test your build, run an AI challenge with a specific prompt, identify which critique landed, and name one change for v2.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">&#x25CF;</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
-
-        <!-- Stub: Weekly Build Reflection #2 -->
-        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
-          <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
-            <span style="font-size: 13px; color: #9ca3af;">&#x1FA9E;</span>
-            <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #2</span>
-            <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 11 -->
-    <div class="week-section" data-week="11">
-      <button class="week-section__header" data-collapse-toggle="week-11-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">11</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Build + Pressure Test</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-11-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> MVP discipline — simplicity is a design decision, not a shortcut. Peer pressure reveals what expert review misses.
-        </p>
-
-        <!-- Spring break note -->
-        <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #134e4a; line-height: 1.6;">
-          &#x1F4C5; Revised Plan is due during spring break (April 5). It's intentionally short &mdash; 100 words. Build v2 is due the Tuesday after break.
-        </div>
-
-        <!-- Assignment: Revised Plan -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w11-revised-plan.html">S3: Revised Plan</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-revised-plan"></span>
-          </div>
-          <p class="activity-item__description">
-            What's changing from v1 to v2 and why. What feedback drove the change. 100 words max.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">&#x25CF;</span></span>
-          </div>
-        </div>
-
-        <!-- Assignment: Build v2 -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w11-build-v2.html">S3: Build v2</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-build-v2"></span>
-          </div>
-          <p class="activity-item__description">
-            Revised build link/screenshot + what changed from v1 + one remaining limitation. Show the arc: v1 &rarr; Review &rarr; v2.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">&#x25CF;</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- Stub: Weekly Build Reflection #3 -->
-        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
-          <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
-            <span style="font-size: 13px; color: #9ca3af;">&#x1FA9E;</span>
-            <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Weekly Build Reflection #3</span>
-            <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 12 -->
-    <div class="week-section" data-week="12">
-      <button class="week-section__header" data-collapse-toggle="week-12-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">12</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Demo Day</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-12-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> The demo shows the arc, not just the endpoint. Delta matters more than final state.
-        </p>
-
-        <!-- Tentative Banner -->
-        <div style="background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
-          <strong style="color: #92400e;">⏳ Tentative — plan confirmed after Week 11.</strong>
-          <span style="color: #78350f;"> What won't change: Wednesday Apr 15, live demo required. The demo shows the arc — where you started in Week 9, what changed your thinking, what exists now, and one known limitation. Slides alone are not sufficient.</span>
-        </div>
-
-        <!-- Stub Assignments -->
-        <div style="border: 2px dashed #d1d5db; border-radius: 10px; padding: 16px 20px; background: #f9fafb;">
-          <p style="margin: 0 0 12px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7280;">Assignments — confirmed after Week 11</p>
-          <div style="display: grid; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-              <span style="font-size: 13px; color: #9ca3af;">📋</span>
-              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Demo + Arc narrative</span>
-              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">AB · IS</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-              <span style="font-size: 13px; color: #9ca3af;">💬</span>
-              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Sprint 3 Peer Observation</span>
-              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">IS</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
-              <span style="font-size: 13px; color: #9ca3af;">🌉</span>
-              <span style="font-size: 14px; color: #6b7280; font-style: italic; flex: 1;">Bridge Reflection — Sprint 3→4: What does Sprint 3 tell you about whether you're ready for Sprint 4?</span>
-              <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.04em;">SDL</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- What's Next -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">What Comes Next</h3>
-      <p style="margin: 0; color: var(--gray-600);">
-        <strong>Sprint 4: Mastery</strong> — No curated options. You find the stakeholder, define the problem, and build the solution from scratch. Sprint 3 was scaffolded: the domain was given, the expert was provided, the document was there. Sprint 4 is what you do when none of that is handed to you.
-      </p>
-    </div>
+    <!-- Zone B: Weekly Briefing -->
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
@@ -552,15 +129,42 @@
   <script src="../config/cst395-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 3;
+    var CONFIG = CST395_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
-      populateDueDates(CST395_CONFIG);
-      initSprintPageWithLoom(CST395_CONFIG);
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) {
+        displayWeek = currentWeek;
+      } else if (currentSprint > SPRINT_NUM) {
+        displayWeek = sprintWeeks[sprintWeeks.length - 1];
+      } else {
+        displayWeek = sprintWeeks[0];
+      }
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills');
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-
-  <!-- Feedback Footer -->
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
     <p style="margin: 0; font-size: 12px; color: #9ca3af;">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
