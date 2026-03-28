@@ -231,7 +231,7 @@ function getSimulatedDate() {
 
 /**
  * Initialize the hidden date simulator overlay.
- * Toggle with Ctrl+Shift+D (Cmd+Shift+D on Mac).
+ * Toggle with Alt+Shift+D.
  */
 function initDateSimulator() {
   // Create overlay element
@@ -270,10 +270,10 @@ function initDateSimulator() {
     window.location.reload();
   });
 
-  // Toggle visibility with Ctrl+Shift+D / Cmd+Shift+D
+  // Toggle visibility with Alt+Shift+D (no browser conflicts)
   document.addEventListener('keydown', function(e) {
     if (e.key === 'd' || e.key === 'D') {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+      if (e.altKey && e.shiftKey) {
         e.preventDefault();
         overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
       }
