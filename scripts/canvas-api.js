@@ -6,9 +6,13 @@
  */
 
 class CanvasAPI {
-  constructor(baseUrl, token) {
+  constructor(baseUrl, token, options = {}) {
     this.baseUrl = baseUrl?.replace(/\/$/, ''); // Remove trailing slash
     this.token = token;
+    this.maxRetries = options.maxRetries ?? 3;
+    this.baseDelay = options.baseDelay ?? 1000; // ms
+    this.maxConcurrent = options.maxConcurrent ?? 5;
+    this._activeRequests = 0;
 
     if (!this.baseUrl || !this.token) {
       throw new Error(
@@ -19,12 +23,78 @@ class CanvasAPI {
   }
 
   /**
+   * Wait until the number of active requests drops below maxConcurrent.
+   */
+  async _acquireConcurrencySlot() {
+    while (this._activeRequests >= this.maxConcurrent) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    this._activeRequests++;
+  }
+
+  _releaseConcurrencySlot() {
+    this._activeRequests--;
+  }
+
+  /**
+   * Determine whether a failed response should be retried.
+   */
+  static isRetryable(status) {
+    return status === 403 || status === 429 || status >= 500;
+  }
+
+  /**
+   * Execute a fetch with exponential backoff retry on transient errors.
+   * Respects Canvas Retry-After header when present.
+   */
+  async fetchWithRetry(url, options = {}) {
+    let lastError;
+
+    for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
+      await this._acquireConcurrencySlot();
+      try {
+        const response = await fetch(url, options);
+
+        if (response.ok || response.status === 301 || response.status === 302) {
+          return response;
+        }
+
+        if (!CanvasAPI.isRetryable(response.status) || attempt === this.maxRetries) {
+          const error = await response.text();
+          throw new Error(`Canvas API error (${response.status}): ${error}`);
+        }
+
+        // Determine backoff delay — honour Retry-After if Canvas sends one
+        const retryAfter = response.headers.get('Retry-After');
+        const delay = retryAfter
+          ? parseInt(retryAfter, 10) * 1000
+          : this.baseDelay * Math.pow(2, attempt);
+
+        lastError = new Error(`Canvas API error (${response.status})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } catch (err) {
+        // Network-level errors (ECONNRESET, timeouts) are retryable
+        if (err.message.startsWith('Canvas API error') || attempt === this.maxRetries) {
+          throw err;
+        }
+        lastError = err;
+        const delay = this.baseDelay * Math.pow(2, attempt);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } finally {
+        this._releaseConcurrencySlot();
+      }
+    }
+
+    throw lastError;
+  }
+
+  /**
    * Make an authenticated request to the Canvas API
    */
   async request(endpoint, options = {}) {
     const url = `${this.baseUrl}/api/v1${endpoint}`;
 
-    const response = await fetch(url, {
+    const response = await this.fetchWithRetry(url, {
       ...options,
       headers: {
         'Authorization': `Bearer ${this.token}`,
@@ -32,11 +102,6 @@ class CanvasAPI {
         ...options.headers,
       },
     });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Canvas API error (${response.status}): ${error}`);
-    }
 
     return response.json();
   }
@@ -49,17 +114,12 @@ class CanvasAPI {
     let url = `${this.baseUrl}/api/v1${endpoint}`;
 
     while (url) {
-      const response = await fetch(url, {
+      const response = await this.fetchWithRetry(url, {
         headers: {
           'Authorization': `Bearer ${this.token}`,
           'Content-Type': 'application/json',
         },
       });
-
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Canvas API error (${response.status}): ${error}`);
-      }
 
       const data = await response.json();
       results.push(...data);
@@ -302,7 +362,7 @@ class CanvasAPI {
     if (grade !== undefined) params.append('submission[posted_grade]', grade);
     if (comment) params.append('comment[text_comment]', comment);
 
-    const response = await fetch(url, {
+    const response = await this.fetchWithRetry(url, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${this.token}`,
@@ -310,11 +370,6 @@ class CanvasAPI {
       },
       body: params.toString(),
     });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Canvas API error (${response.status}): ${error}`);
-    }
 
     return response.json();
   }
@@ -324,7 +379,7 @@ class CanvasAPI {
    * Handles Canvas's redirect to CDN — the CDN must NOT receive the Bearer token.
    */
   async downloadFileContent(url) {
-    const initial = await fetch(url, {
+    const initial = await this.fetchWithRetry(url, {
       headers: { 'Authorization': `Bearer ${this.token}` },
       redirect: 'manual',
     });
@@ -333,15 +388,9 @@ class CanvasAPI {
     if (initial.status === 301 || initial.status === 302) {
       const cdnUrl = initial.headers.get('location');
       if (!cdnUrl) throw new Error('Redirect with no Location header');
-      fileResponse = await fetch(cdnUrl); // No auth for CDN
-    } else if (initial.ok) {
-      fileResponse = initial;
+      fileResponse = await this.fetchWithRetry(cdnUrl); // No auth for CDN
     } else {
-      throw new Error(`Download failed (${initial.status}): ${url}`);
-    }
-
-    if (!fileResponse.ok) {
-      throw new Error(`File fetch failed (${fileResponse.status})`);
+      fileResponse = initial;
     }
 
     return fileResponse.text();
@@ -354,7 +403,7 @@ class CanvasAPI {
    * Returns { base64, mimeType, size }
    */
   async downloadFileAsBase64(url) {
-    const initial = await fetch(url, {
+    const initial = await this.fetchWithRetry(url, {
       headers: { 'Authorization': `Bearer ${this.token}` },
       redirect: 'manual',
     });
@@ -363,15 +412,9 @@ class CanvasAPI {
     if (initial.status === 301 || initial.status === 302) {
       const cdnUrl = initial.headers.get('location');
       if (!cdnUrl) throw new Error('Redirect with no Location header');
-      fileResponse = await fetch(cdnUrl);
-    } else if (initial.ok) {
-      fileResponse = initial;
+      fileResponse = await this.fetchWithRetry(cdnUrl);
     } else {
-      throw new Error(`Download failed (${initial.status}): ${url}`);
-    }
-
-    if (!fileResponse.ok) {
-      throw new Error(`File fetch failed (${fileResponse.status})`);
+      fileResponse = initial;
     }
 
     const buffer = await fileResponse.arrayBuffer();

@@ -26,6 +26,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { parseArgs, loadConfig: sharedLoadConfig, extractCourseId } = require('./utils.js');
 
 // ---------------------------------------------------------------------------
 // Config (matches analyze-submissions.js)
@@ -42,25 +43,9 @@ const COURSES = {
   },
 };
 
-function parseArgs() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || true;
-  });
-  return args;
-}
-
 function loadConfig(configFile, configVarName) {
   const configPath = path.join(process.cwd(), configFile);
-  const content = fs.readFileSync(configPath, 'utf-8');
-  const fn = new Function(content + `\nreturn ${configVarName};`);
-  return fn();
-}
-
-function extractCourseId(canvasBaseUrl) {
-  const match = canvasBaseUrl.match(/\/courses\/(\d+)/);
-  return match ? match[1] : null;
+  return sharedLoadConfig(configPath, configVarName).config;
 }
 
 // ---------------------------------------------------------------------------

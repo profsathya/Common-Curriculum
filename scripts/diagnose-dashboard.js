@@ -9,36 +9,10 @@
 
 const fs = require('fs');
 const path = require('path');
-
-function parseArgs() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || true;
-  });
-  return args;
-}
-
-function loadJson(filePath) {
-  if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-}
+const { parseArgs, loadJson, loadCsvFile } = require('./utils.js');
 
 function loadCsv(csvPath) {
-  const content = fs.readFileSync(csvPath, 'utf-8');
-  const lines = content.trim().split('\n');
-  if (lines.length < 2) return [];
-  const headers = lines[0].split(',').map(h => h.trim());
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    const values = line.split(',').map(v => v.trim());
-    const row = {};
-    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
-    rows.push(row);
-  }
-  return rows;
+  return loadCsvFile(csvPath);
 }
 
 const args = parseArgs();

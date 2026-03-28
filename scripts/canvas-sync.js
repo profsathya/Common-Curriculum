@@ -19,6 +19,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const { CanvasAPI } = require('./canvas-api.js');
+const { parseArgs: sharedParseArgs, parseCSVLine: sharedParseCSVLine, loadCsvFile, loadConfig: sharedLoadConfig, extractCourseId: sharedExtractCourseId } = require('./utils.js');
 
 // Course configurations
 const COURSES = {
@@ -44,25 +45,10 @@ const GITHUB_PAGES_BASE_URL = 'https://profsathya.github.io/Common-Curriculum';
  * CSV is the source of truth for what should be created
  */
 function loadCsvKeys(csvPath) {
-  if (!fs.existsSync(csvPath)) {
-    return new Set();
-  }
-  const content = fs.readFileSync(csvPath, 'utf-8');
-  const lines = content.trim().split('\n');
-  if (lines.length < 2) return new Set();
-
-  // Parse header to find key column index
-  const headers = lines[0].split(',').map(h => h.trim());
-  const keyIndex = headers.indexOf('key');
-  if (keyIndex === -1) return new Set();
-
+  const rows = loadCsvFile(csvPath);
   const keys = new Set();
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    const values = line.split(',');
-    const key = values[keyIndex]?.trim();
-    if (key) keys.add(key);
+  for (const row of rows) {
+    if (row.key) keys.add(row.key);
   }
   return keys;
 }
@@ -71,12 +57,7 @@ function loadCsvKeys(csvPath) {
  * Parse command line arguments
  */
 function parseArgs() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || true;
-  });
-  return args;
+  return sharedParseArgs();
 }
 
 /**
@@ -84,28 +65,14 @@ function parseArgs() {
  */
 function loadConfig(configFile, configVarName) {
   const configPath = path.join(process.cwd(), configFile);
-  const content = fs.readFileSync(configPath, 'utf-8');
-
-  // Use Function constructor to execute the config and return the config object
-  // This handles const/let declarations properly
-  try {
-    const fn = new Function(content + `\nreturn ${configVarName};`);
-    const config = fn();
-    return { config, rawContent: content, configPath };
-  } catch (err) {
-    throw new Error(`Could not parse config from ${configFile}: ${err.message}`);
-  }
+  return sharedLoadConfig(configPath, configVarName);
 }
 
 /**
  * Extract course ID from Canvas URL
  */
 function extractCourseId(canvasBaseUrl) {
-  const match = canvasBaseUrl.match(/\/courses\/(\d+)/);
-  if (!match) {
-    throw new Error(`Could not extract course ID from URL: ${canvasBaseUrl}`);
-  }
-  return match[1];
+  return sharedExtractCourseId(canvasBaseUrl);
 }
 
 /**
@@ -487,53 +454,16 @@ async function validateConfig(api, courseName) {
 
 /**
  * Parse a CSV line handling quoted fields with commas.
- * (Same logic as sync-csv-to-config.js parseCSVLine.)
  */
 function parseCSVLine(line) {
-  const values = [];
-  let current = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (char === ',' && !inQuotes) {
-      values.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  values.push(current.trim());
-  return values;
+  return sharedParseCSVLine(line);
 }
 
 /**
  * Load a CSV file into an array of row objects keyed by header names.
  */
 function loadCsvRows(csvPath) {
-  if (!fs.existsSync(csvPath)) return [];
-  const content = fs.readFileSync(csvPath, 'utf-8');
-  const lines = content.trim().split('\n');
-  if (lines.length < 2) return [];
-
-  const headers = parseCSVLine(lines[0]);
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    const values = parseCSVLine(line);
-    const row = {};
-    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
-    rows.push(row);
-  }
-  return rows;
+  return loadCsvFile(csvPath);
 }
 
 /**

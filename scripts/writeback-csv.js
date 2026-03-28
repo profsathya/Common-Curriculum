@@ -15,6 +15,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { parseArgs, parseCSVLine, parseCSV: sharedParseCSV, loadConfig: sharedLoadConfig } = require('./utils.js');
 
 // ============================================
 // Configuration
@@ -40,50 +41,14 @@ const courses = [
 // ============================================
 
 function parseCSV(csvText) {
+  // writeback-csv needs { headers, rows } format
   const lines = csvText.trim().split('\n');
   if (lines.length < 2) return { headers: [], rows: [] };
 
   const headers = parseCSVLine(lines[0]);
-  const rows = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-
-    const values = parseCSVLine(line);
-    const row = {};
-    headers.forEach((header, index) => {
-      row[header] = values[index] || '';
-    });
-    rows.push(row);
-  }
+  const rows = sharedParseCSV(csvText);
 
   return { headers, rows };
-}
-
-function parseCSVLine(line) {
-  const values = [];
-  let current = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (char === ',' && !inQuotes) {
-      values.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  values.push(current.trim());
-  return values;
 }
 
 function escapeCSVValue(value) {
@@ -108,15 +73,7 @@ function loadConfig(configFile, configVarName) {
   if (!fs.existsSync(configPath)) {
     return null;
   }
-
-  const content = fs.readFileSync(configPath, 'utf-8');
-
-  try {
-    const fn = new Function(content + `\nreturn ${configVarName};`);
-    return fn();
-  } catch (err) {
-    throw new Error(`Could not parse config from ${configFile}: ${err.message}`);
-  }
+  return sharedLoadConfig(configPath, configVarName).config;
 }
 
 // ============================================
@@ -202,15 +159,6 @@ function writebackCsvForCourse(course, dryRun = true) {
 // ============================================
 // CLI
 // ============================================
-
-function parseArgs() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || true;
-  });
-  return args;
-}
 
 function main() {
   const args = parseArgs();
