@@ -16,51 +16,20 @@
 
 const fs = require('fs');
 const path = require('path');
+const { parseArgs, parseCSVLine, loadCsvFile, loadConfig: sharedLoadConfig } = require('./utils.js');
 
 const ROOT = path.resolve(__dirname, '..');
 
 // ============================================
-// CSV / Config loading (same as canvas-sync)
+// CSV / Config loading (delegates to shared utils)
 // ============================================
 
-function parseCSVLine(line) {
-  const values = [];
-  let current = '';
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') { current += '"'; i++; }
-      else { inQuotes = !inQuotes; }
-    } else if (char === ',' && !inQuotes) {
-      values.push(current.trim()); current = '';
-    } else { current += char; }
-  }
-  values.push(current.trim());
-  return values;
-}
-
 function loadCSV(csvFile) {
-  const content = fs.readFileSync(path.join(ROOT, csvFile), 'utf-8');
-  const lines = content.trim().split('\n');
-  if (lines.length < 2) return [];
-  const headers = parseCSVLine(lines[0]);
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    const values = parseCSVLine(line);
-    const row = {};
-    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
-    rows.push(row);
-  }
-  return rows;
+  return loadCsvFile(path.join(ROOT, csvFile));
 }
 
 function loadConfig(configFile, configVar) {
-  const content = fs.readFileSync(path.join(ROOT, configFile), 'utf-8');
-  const fn = new Function(content + '\nreturn ' + configVar + ';');
-  return fn();
+  return sharedLoadConfig(path.join(ROOT, configFile), configVar).config;
 }
 
 // ============================================
@@ -316,11 +285,7 @@ const COURSES = {
 };
 
 function main() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || 'true';
-  });
+  const args = parseArgs();
 
   const target = args.target || 'assignments';
   const courseArg = args.course || 'both';

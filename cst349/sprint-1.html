@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sprint 1: Beyond Technical | CST349</title>
+  <title>Beyond Technical | CST349</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
   <style>
     :root {
-      --indigo-50: #eef2ff;
-      --indigo-100: #e0e7ff;
-      --indigo-200: #c7d2fe;
-      --indigo-500: #6366f1;
-      --indigo-600: #4f46e5;
-      --indigo-700: #4338ca;
+      --theme-primary: #3b82f6;
+      --theme-dark: #2563eb;
+      --theme-light: #eff6ff;
     }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Hook Box -->
-    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: var(--space-5); border-radius: var(--radius-lg); margin-bottom: var(--space-5); text-align: center;">
-      <p style="font-size: var(--text-xl); font-weight: 600; margin: 0 0 var(--space-3) 0; line-height: 1.4;">Technical skills get you hired.<br>What keeps you employed?</p>
-      <p style="font-size: var(--text-base); color: rgba(255, 255, 255, 0.8); margin: 0; max-width: 550px; margin: 0 auto;">The gap between "good enough to hire" and "impossible to replace" is rarely about code. This sprint, you'll find out what's actually holding you back.</p>
-    </div>
+    <!-- Sticky Week Counter -->
+    <div id="sticky-counter"></div>
+
+    <!-- Zone A -->
+    <div id="journey-pills"></div>
 
     <!-- Sprint Header -->
-    <div class="sprint-header" style="background: linear-gradient(135deg, var(--indigo-600) 0%, var(--indigo-700) 100%);">
+    <div class="sprint-header">
       <nav class="sprint-header__breadcrumb">
         <a href="home.html">Home</a> / <span>Sprint 1</span>
       </nav>
@@ -34,454 +31,36 @@
       <p class="sprint-header__subtitle">"Why broader skills matter" — Identifying and developing your soft skill gap</p>
       <div class="sprint-header__meta">
         <span class="sprint-header__tag">Weeks 1-4</span>
-        <span class="sprint-header__tag">High Scaffolding</span>
-        <span class="sprint-header__tag">SDL Focus: Goal Setting, Planning</span>
+        <span class="sprint-header__tag">Scaffolding: High</span>
       </div>
     </div>
 
-    <!-- Sprint Learning Outcomes -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Identified a meaningful soft skill gap (not a trivial optimization)</li>
-        <li>Applied 5 Whys to understand the root barrier</li>
-        <li>Created and executed a 4-week development plan</li>
-        <li>Demonstrated skill development with evidence</li>
-        <li>Calibrated self-perception against peer perception</li>
-      </ul>
-    </div>
-
-    <!-- Week 1 -->
-    <div class="week-section" data-week="1">
-      <button class="week-section__header" data-collapse-toggle="week-1-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">1</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Orientation & Self-Assessment</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
+    <!-- Collapsible Sprint Details -->
+    <div style="margin-bottom: 16px;">
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('span').textContent=show?'Hide details ▲':'Sprint details — context, grading, weeks ▼'" style="width:100%;padding:10px 16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;font-family:inherit;text-align:left;">
+        Sprint details — context, grading, weeks <span>▼</span>
       </button>
-      <div class="week-section__content" id="week-1-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> The uncomfortable truth: technical skills alone aren't enough. Introduction to SDL and the meta-habit of slowing down.
-        </p>
-
-        <!-- Prep Activity -->
-        <div class="activity-item" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(99, 102, 241, 0.2);">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type" style="color: var(--indigo-600);">🎯 Prep Activity</span>
-              <h4 class="activity-item__title">
-                <a href="activities/self-assessment-prep.html">Self-Assessment Prep</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" style="color: var(--indigo-600);">Before Self-Assessment</span>
-          </div>
-          <p class="activity-item__description">
-            Interactive activity to prepare you for the Skills Self-Assessment. Explores what soft skills mean and how to be honest in self-evaluation.
-          </p>
-        </div>
-
-        <!-- Activity: Self-Assessment -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w1-skills-self-assessment.html">Skills Self-Assessment</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-self-assessment"></span>
-          </div>
-          <p class="activity-item__description">
-            Rate yourself on 10 'beyond technical' skills. Identify your biggest gap — where the difference between current and needed is largest.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 1: Identify Goals</span>
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 4: Metacognition</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 1 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w1-productive-reflection.html">Productive Reflection #1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-reflection-1"></span>
-          </div>
-          <p class="activity-item__description">
-            What skill did you identify? What makes it hard to admit you need to develop this?
-          </p>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Course Introduction & Norms</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Course philosophy and SDL introduction</li>
-              <li>Reflection notebook distribution</li>
-              <li>Peer conversation norms establishment</li>
-            </ul>
-            <a href="sessions/week-1-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="1">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Establishing Norms + Behavioral Interview Practice</h4>
-          <p class="peer-conversation__prompt">
-            Core question: "Tell me about a time when you struggled with a skill gap."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to answer behavioral questions thoughtfully</p>
-          <p style="color: var(--gray-500); font-size: var(--text-sm); margin-top: var(--space-3);">
-            See the <a href="sessions/week-1-class.html" target="_blank" style="color: var(--indigo-600);">Session Slides</a> for the Conversation Guide with depth ladder prompts to help you go deeper.
-          </p>
+      <div id="sprint-details" style="display:none;background:white;border:1px solid #e5e7eb;border-radius:0 0 8px 8px;padding:20px;margin-top:-1px;">
+        <h2 style="font-size:16px;font-weight:600;margin:0 0 12px 0;">By Sprint End, You Will Have:</h2>
+        <ul style="margin:0 0 16px 0;padding-left:20px;color:#4b5563;font-size:14px;line-height:1.6;">
+          <li>Identified a meaningful soft skill gap through honest self-assessment</li>
+          <li>Applied 5 Whys to find the root cause behind the gap</li>
+          <li>Created a 4-week development plan targeting one skill</li>
+          <li>Demonstrated skill development with evidence</li>
+          <li>Calibrated self-perception against peer perception</li>
+        </ul>
+        <h3 style="font-size:14px;font-weight:600;margin:0 0 8px 0;color:#374151;">Grading</h3>
+        <div style="font-size:13px;color:#6b7280;line-height:1.6;">
+          <strong>Goal Setting (30%)</strong> — Self-assessment and development plan<br>
+          <strong>Productive Reflections (30%)</strong> — Weekly reflections showing growth<br>
+          <strong>Demonstration (40%)</strong> — Evidence of skill development
         </div>
       </div>
     </div>
 
-    <!-- Week 2 -->
-    <div class="week-section" data-week="2">
-      <button class="week-section__header" data-collapse-toggle="week-2-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">2</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Identifying Your Growth Edge</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-2-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Moving from vague awareness to specific understanding. Applying 5 Whys to skill gaps.
-        </p>
-
-        <!-- Pause Box -->
-        <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: var(--space-4); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: var(--space-4);">
-          <p style="font-size: var(--text-xs); font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-2) 0;">Pause and Notice</p>
-          <p style="font-size: var(--text-base); color: var(--gray-800); font-weight: 500; margin: 0; line-height: 1.6;">Pick the gap that stings a little. If it feels safe and easy to admit, it's probably not the skill that's actually holding you back.</p>
-        </div>
-
-        <!-- Activity: Skills Revision -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-skills-revision.html">Skills Assessment Revision</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-skills-revision"></span>
-          </div>
-          <p class="activity-item__description">
-            Dig past "communication" or other surface answers. What's really underneath your gap? Reframe with you as the protagonist.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 1: Identify Goals</span>
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 4: Metacognition</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 2 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-productive-reflection.html">Productive Reflection #2</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-reflection-2"></span>
-          </div>
-          <p class="activity-item__description">
-            What did the 5 Whys reveal? What's the real barrier? How will you use AI to support (not replace) your learning?
-          </p>
-        </div>
-
-        <!-- Activity: 5 Whys -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-five-whys.html">5 Whys Analysis</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-five-whys"></span>
-          </div>
-          <p class="activity-item__description">
-            Apply 5 Whys to your skill gap. Why don't you have this skill? Why? Go deeper until you find the root barrier.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 1: Identify Goals</span>
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 4: Metacognition</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">5 Whys & Planning</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>5 Whys technique practice</li>
-              <li>UMPIRE framework introduction</li>
-              <li>Sprint planning workshop</li>
-            </ul>
-            <a href="sessions/week-2-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="2">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (Interview Practice)</p>
-          <h4 class="peer-conversation__title">Articulating Reasoning + Probing Follow-ups</h4>
-          <p class="peer-conversation__prompt">
-            "'Walk me through your 5 Whys. Why did you stop where you stopped?' Partner asks follow-up questions until they truly understand the reasoning."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to explain your reasoning under questioning</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 3 -->
-    <div class="week-section" data-week="3">
-      <button class="week-section__header" data-collapse-toggle="week-3-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">3</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Active Learning</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-3-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Doing the work. Tracking progress. Distinguishing activity from learning.
-        </p>
-
-        <!-- Activity: Learning Log -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-learning-log.html">Learning Log (Week 3)</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-learning-log"></span>
-          </div>
-          <p class="activity-item__description">
-            Document what you're doing: what you did, what you learned, what's still confusing. At least 3 entries.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 4: Metacognition</span>
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 5: Iteration</span>
-          </div>
-        </div>
-
-        <!-- Activity: Sprint Plan -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-sprint-plan.html">Sprint Plan v1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-sprint-plan"></span>
-          </div>
-          <p class="activity-item__description">
-            Plan for your Sprint 1 Demo (Feb 11): What will you show? What actions this week? What evidence will you collect? Use UMPIRE to structure.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="background: var(--indigo-100); color: var(--indigo-700); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">SDL 2: Design Plan</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 3 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-productive-reflection.html">Productive Reflection #3</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-reflection-3"></span>
-          </div>
-          <p class="activity-item__description">
-            What's working? What's not? Do you need to adjust your plan? Be honest.
-          </p>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Progress Check & Peer Feedback</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Learning log review</li>
-              <li>Distinguishing activity from learning</li>
-              <li>Peer check-in and honest feedback</li>
-            </ul>
-            <a href="sessions/week-3-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="3">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (Interview Practice)</p>
-          <h4 class="peer-conversation__title">Giving and Receiving Honest Feedback</h4>
-          <p class="peer-conversation__prompt">
-            "'Based on your learning log, what evidence do you have that you're actually improving — not just doing activities?' Challenge each other constructively."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to receive critical feedback without defensiveness</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 4 -->
-    <div class="week-section" data-week="4">
-      <button class="week-section__header" data-collapse-toggle="week-4-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">4</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Demonstration & Synthesis</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-4-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> What did I actually learn? Articulating growth honestly. Preparing for Sprint 2.
-        </p>
-
-        <!-- Activity: Demo Discussion (in-class) -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 In-Class Activity</span>
-              <h4 class="activity-item__title">
-                <a href="activities/sprint-1-demo.html">Sprint 1 Demo Discussion</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-demo-discussion"></span> · 2:00 PM PST
-          </div>
-          <p class="activity-item__description">
-            Handwritten demo (30 min) → partner types your answers into the AI-facilitated discussion tool → AI generates probing questions → face-to-face discussion → download JSON and upload to Canvas.
-          </p>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Sprint 1 Demo + Sprint 2 Launch</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Handwritten demo: 1 required question + choose 1 of 2 (30 min)</li>
-              <li>Partner review: AI-facilitated peer discussion (30 min)</li>
-              <li>Sprint 2 preview and getting started</li>
-            </ul>
-            <a href="sessions/week-4-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="4">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Sprint 2 Assignments -->
-        <div class="bridge-section">
-          <p class="bridge-section__label">🌉 Sprint 2 Starts This Week</p>
-          <div class="activity-item activity-item--bridge">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">Bridge Reflection</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/s2-w5-bridge-reflection.html">Sprint 1→2 Bridge Reflection</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-bridge-reflection-1"></span>
-            </div>
-            <p class="activity-item__description">
-              What did Sprint 1 teach you about how you learn? What will you do differently when collaborating with a group?
-            </p>
-          </div>
-          <div class="activity-item activity-item--assignment" style="margin-top: var(--space-3);">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">📚 Learning Activity</span>
-                <h4 class="activity-item__title">
-                  <a href="activities/s2-orientation.html">Sprint 2 Orientation</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-orientation"></span>
-            </div>
-            <p class="activity-item__description">
-              Learn what Sprint 2 is about — the shift to group work, grading structure, and expectations.
-            </p>
-          </div>
-          <div class="activity-item activity-item--assignment" style="margin-top: var(--space-3);">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">📋 Assignment</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/s2-w5-goal-setting.html">Sprint 2 Goal Setting</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-goal-setting"></span>
-            </div>
-            <p class="activity-item__description">
-              What will you accomplish in Sprint 2? Set specific, measurable goals.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- What's Next -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">What Comes Next</h3>
-      <p style="margin: 0 0 var(--space-3) 0; color: var(--gray-600);">
-        <strong>Sprint 2: Accountable Growth</strong> — You've started developing a skill on your own. Now deepen it with external accountability from a professional mentor.
-      </p>
-      <p style="margin: 0; color: var(--indigo-700); font-weight: 500; font-style: italic;">
-        You've identified a gap and started a plan. Now the question is: Can you stick to it when no one is forcing you?
-      </p>
-    </div>
+    <!-- Zone B: Weekly Briefing (rendered by JS) -->
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
@@ -489,14 +68,42 @@
   <script src="../config/cst349-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 1;
+    var CONFIG = CST349_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
-      populateDueDates(CST349_CONFIG);
-      initSprintPageWithLoom(CST349_CONFIG);
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) {
+        displayWeek = currentWeek;
+      } else if (currentSprint > SPRINT_NUM) {
+        displayWeek = sprintWeeks[sprintWeeks.length - 1];
+      } else {
+        displayWeek = sprintWeeks[0];
+      }
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills');
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-  <!-- Feedback Footer -->
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
     <p style="margin: 0; font-size: 12px; color: #9ca3af;">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>

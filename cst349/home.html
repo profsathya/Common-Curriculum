@@ -480,11 +480,21 @@
   <script src="../js/components.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Redirect to current sprint page during active semester
+      var resolved = getResolvedCurrentWeek(CST349_CONFIG);
+      if (resolved.week && !window.location.hash.includes('testDate')) {
+        var sprint = CST349_CONFIG.weekDates[resolved.week].sprint;
+        if (sprint) {
+          window.location.replace('sprint-' + sprint + '.html#zone-b');
+          return;
+        }
+      }
+
+      // Pre-semester fallback: show the full home page
       addDemoBannerIfNeeded();
       initHomePage(CST349_CONFIG);
 
-      // Get current week (null if before semester or on weekends between weeks)
-      const currentWeek = getCST349EffectiveCurrentWeek();
+      var currentWeek = resolved.week;
 
       // Get Started section: visible before semester starts and during Weeks 1-2
       const getStartedSection = document.getElementById('get-started-section');

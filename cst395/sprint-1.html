@@ -5,9 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 1: Foundation | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    :root {
+      --theme-primary: #14b8a6;
+      --theme-dark: #0d9488;
+      --theme-light: #f0fdfa;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- Sticky Week Counter -->
+    <div id="sticky-counter"></div>
+
+    <!-- Zone A -->
+    <div id="journey-pills"></div>
 
     <!-- Sprint Header -->
     <div class="sprint-header">
@@ -15,487 +28,59 @@
         <a href="home.html">Home</a> / <span>Sprint 1</span>
       </nav>
       <h1 class="sprint-header__title">Sprint 1: Foundation</h1>
-      <p class="sprint-header__subtitle">"Superagency Over Self" — Building capability by solving your own problem</p>
+      <p class="sprint-header__subtitle">"Superagency Over Self" — Prove you can change your own reality</p>
       <div class="sprint-header__meta">
         <span class="sprint-header__tag">Weeks 1-4</span>
-        <span class="sprint-header__tag">High Scaffolding</span>
+        <span class="sprint-header__tag">Scaffolding: High</span>
         <span class="sprint-header__tag">Stakeholder: Yourself</span>
       </div>
     </div>
 
-    <!-- Sprint Learning Outcomes -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Identified something you've wanted to change but felt was beyond your capacity</li>
-        <li>Applied 5 Whys to find the real barrier (not just the surface symptom)</li>
-        <li>Designed and built a solution using AI as a cognitive partner</li>
-        <li>Articulated your specific Human Value contribution</li>
-        <li>Presented value (not features) to peers</li>
-      </ul>
-    </div>
-
-    <!-- Week 1 -->
-    <div class="week-section" data-week="1">
-      <button class="week-section__header" data-collapse-toggle="week-1-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">1</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Orientation & Problem Discovery</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
+    <!-- Collapsible Sprint Details -->
+    <div style="margin-bottom: 16px;">
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('span').textContent=show?'Hide details ▲':'Sprint details — context, grading, weeks ▼'" style="width:100%;padding:10px 16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;font-family:inherit;text-align:left;">
+        Sprint details — context, grading, weeks <span>▼</span>
       </button>
-      <div class="week-section__content" id="week-1-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> AI as cognitive partner (not tool). Superagency mindset: your limits are not fixed. Meta-habits: Slow Down, Know Yourself, Take the Lead.
-        </p>
-
-        <!-- Prep Activity -->
-        <div class="activity-item" style="background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(20, 184, 166, 0.05)); border: 1px solid rgba(13, 148, 136, 0.2);">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type" style="color: var(--teal-600);">🎯 Prep Activity</span>
-              <h4 class="activity-item__title">
-                <a href="activities/superagency-prep.html">Superagency Prep</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" style="color: var(--teal-600);">Before Superagency Challenge</span>
-          </div>
-          <p class="activity-item__description">
-            Interactive activity to prepare you for the Superagency Challenge. Explores what superagency means and how to identify problems worth solving.
-          </p>
-        </div>
-
-        <!-- Activity: Superagency Challenge -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w1-superagency-challenge.html">Superagency Challenge</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-superagency-challenge"></span>
-          </div>
-          <p class="activity-item__description">
-            Identify 2-3 things you've wanted to change or would like to change now to increase your productivity or overall wellness that you feel unsure about being able to tackle. Select one.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 1 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w1-productive-reflection.html">Productive Reflection #1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-reflection-1">Fri, Jan 23</span>
-          </div>
-          <p class="activity-item__description">
-            10 min thinking BEFORE any AI interaction. What have you already tried? What do you actually know?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Course Introduction & Peer Norms</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Course philosophy: AI as cognitive partner</li>
-              <li>The Superagency mindset introduction</li>
-              <li>Peer conversation practice: Establishing norms</li>
-            </ul>
-            <a href="sessions/week-1-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #0d9488, #0f766e); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <!-- Class Recording -->
-          <div class="class-recording" data-loom="1">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Establishing Norms</h4>
-          <p class="peer-conversation__prompt">
-            Core question: "What's the bottleneck when conversations fail?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to create conditions for understanding</p>
-          <p style="color: var(--gray-500); font-size: var(--text-sm); margin-top: var(--space-3);">
-            See the <a href="sessions/week-1-class.html" target="_blank" style="color: var(--teal-600);">Session Slides</a> for the Conversation Guide with depth ladder prompts to help you go deeper.
-          </p>
-          <p style="margin-top: var(--space-3);">
-            <a href="assignments/s1-w1-peer-reflection.html" style="color: var(--teal-600); font-size: var(--text-sm);">
-              📋 Complete Peer Conversation Reflection →
-            </a>
-          </p>
+      <div id="sprint-details" style="display:none;background:white;border:1px solid #e5e7eb;border-radius:0 0 8px 8px;padding:20px;margin-top:-1px;">
+        <h2 style="font-size:16px;font-weight:600;margin:0 0 12px 0;">By Sprint End, You Will Have:</h2>
+        <ul style="margin:0 0 16px 0;padding-left:20px;color:#4b5563;font-size:14px;line-height:1.6;">
+          <li>Identified something you've wanted to change but felt was beyond your capacity</li>
+          <li>Applied 5 Whys to find the real barrier (not just the surface symptom)</li>
+          <li>Designed and built a solution using AI as a cognitive partner</li>
+          <li>Articulated your specific Human Value contribution</li>
+          <li>Presented value (not features) to peers</li>
+        </ul>
+        <h3 style="font-size:14px;font-weight:600;margin:0 0 8px 0;color:#374151;">Grading</h3>
+        <div style="font-size:13px;color:#6b7280;line-height:1.6;">
+          <p style="margin:0 0 8px 0;"><strong>Goal Setting: 15 points</strong></p>
+          <ul style="margin:0 0 12px 0;padding-left:20px;">
+            <li>Superagency Challenge — 5 points</li>
+            <li>Problem Analysis — 5 points</li>
+            <li>Solution Architecture — 5 points</li>
+          </ul>
+          <p style="margin:0 0 8px 0;"><strong>Productive Reflections: 25 points</strong></p>
+          <ul style="margin:0 0 12px 0;padding-left:20px;">
+            <li>Reflection 1 — 5 points</li>
+            <li>Reflection 2 — 5 points</li>
+            <li>Reflection 3 — 5 points</li>
+            <li>Dojo — 5 points</li>
+            <li>Solution Architecture — 5 points</li>
+          </ul>
+          <p style="margin:0 0 8px 0;"><strong>Check-in/Engagement: 5 points</strong></p>
+          <ul style="margin:0 0 12px 0;padding-left:20px;">
+            <li>Design Decision Analysis — 5 points</li>
+          </ul>
+          <p style="margin:0 0 8px 0;"><strong>Demonstration: 10 points</strong></p>
+          <ul style="margin:0 0 0 0;padding-left:20px;">
+            <li>Demo Discussion — 10 points</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <!-- Week 2 -->
-    <div class="week-section" data-week="2">
-      <button class="week-section__header" data-collapse-toggle="week-2-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">2</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Understanding Before Building</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-2-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Willpower vs. Design thinking. UMPIRE framework: Understand and Map/Match phases. 5 Whys technique. Problem vs. symptom distinction.
-        </p>
-
-        <!-- Activity: Challenge Revision -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-challenge-revision.html">Challenge Revision</a>
-              </h4>
-            </div>
-            <span class="activity-item__due">Fri, Jan 24</span>
-          </div>
-          <p class="activity-item__description">
-            Keep & Clarify, Reframe, or Replace your challenge — with specificity about what you need to learn and what "solved" looks like.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- Activity: Problem Analysis -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-five-whys.html">Problem Analysis (5 Whys)</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-problem-analysis"></span>
-          </div>
-          <p class="activity-item__description">
-            Apply 5 Whys to your chosen challenge. Why have previous attempts failed? Draft problem statement.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 2 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w2-productive-reflection.html">Productive Reflection #2</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-reflection-2"></span>
-          </div>
-          <p class="activity-item__description">
-            What did you discover by asking 'why' repeatedly? What was the real barrier?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- Activity: Solution Architecture (moved from Week 3) -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-solution-architecture.html">Solution Architecture</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-solution-architecture"></span>
-          </div>
-          <p class="activity-item__description">
-            Design human process first, then identify tech support. Use Symbiotic Thinking Dojo to help draft your architecture.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">You Are the Stakeholder</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Willpower vs. Design thinking</li>
-              <li>5 Whys technique to find design opportunities</li>
-              <li>Solution Architecture preview with Dojo prompt</li>
-            </ul>
-            <a href="sessions/week-2-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #0d9488, #0f766e); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="2">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Understanding Reasoning</h4>
-          <p class="peer-conversation__prompt">
-            "Walk me through why you stopped where you stopped. What was your thinking at each step?" Partner asks follow-up questions until they truly understand the reasoning.
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to understand someone's reasoning process (not just their conclusion)</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 3 -->
-    <div class="week-section" data-week="3">
-      <button class="week-section__header" data-collapse-toggle="week-3-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">3</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Building with Evidence</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-3-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Stakeholder knowledge as design advantage. Connecting self-knowledge to design decisions. Demo preparation.
-        </p>
-
-        <!-- Activity: Design Decision Analysis -->
-        <div class="activity-item" style="background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(20, 184, 166, 0.05)); border: 1px solid rgba(13, 148, 136, 0.2);">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type" style="color: var(--teal-600);">🎯 Interactive Activity</span>
-              <h4 class="activity-item__title">
-                <a href="activities/design-decision-analysis.html">Design Decision Analysis</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-w3-design-decision"></span>
-          </div>
-          <p class="activity-item__description">
-            Interactive quiz connecting self-knowledge to design decisions. Forces the connection: "I know [X] about myself, which is why my experiment does [Y]."
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- Activity: Dojo Depth Session -->
-        <div class="activity-item activity-item--dojo">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🥋 Dojo Session</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-dojo-depth.html">Dojo Depth Session</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-w3-dojo-depth"></span>
-          </div>
-          <p class="activity-item__description">
-            Work with Framer to develop your design story, then pass through Reflector's quality rubric. Reflector won't approve shallow answers.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 3 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s1-w3-productive-reflection.html">Productive Reflection #3</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-w3-reflection"></span>
-          </div>
-          <p class="activity-item__description">
-            Demo preparation: Draft your demo answers. Preview the Human Value Statement. Identify what's still weak.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Stakeholder Knowledge as Design Advantage</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>AI demonstration: What AI can (and can't) do</li>
-              <li>Diagnosis: What was missing in Solution Architecture responses</li>
-              <li>The Connection Formula: self-knowledge → friction → experiment</li>
-              <li>Demo preview and Human Value introduction</li>
-              <li>Design Decision Analysis quiz + Peer conversation</li>
-            </ul>
-            <a href="sessions/week-3-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #0d9488, #0f766e); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="3">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Stakeholder-Informed Decisions</h4>
-          <p class="peer-conversation__prompt">
-            "What's one design decision you made that reflects something you know about yourself? What would a stranger designing for you have gotten wrong?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to articulate the connection between self-knowledge and design</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 4 -->
-    <div class="week-section" data-week="4">
-      <button class="week-section__header" data-collapse-toggle="week-4-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">4</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Reflection & Human Value</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-4-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> UMPIRE: Reflect and Evaluate phases. Human Value Proposition: What did YOU contribute that AI couldn't?
-        </p>
-
-        <!-- Activity: Demo Discussion (in-class) -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 In-Class Activity</span>
-              <h4 class="activity-item__title">
-                <a href="activities/sprint-1-demo.html">Sprint 1 Demo Discussion</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s1-demo-discussion"></span> · 4:00 PM PST
-          </div>
-          <p class="activity-item__description">
-            Handwritten demo (30 min) → partner types your answers into the AI-facilitated discussion tool → AI generates probing questions → face-to-face discussion → download JSON and upload to Canvas.
-          </p>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Sprint 1 Demo + Sprint 2 Launch</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Handwritten demo: 1 required question + choose 1 of 2 (30 min)</li>
-              <li>Partner review: AI-facilitated peer discussion (30 min)</li>
-              <li>Sprint 2 preview and getting started</li>
-            </ul>
-            <a href="sessions/week-4-class.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: linear-gradient(135deg, #0d9488, #0f766e); color: #ffffff !important; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">
-              📺 Open Session Slides →
-            </a>
-          </div>
-          <div class="class-recording" data-loom="4">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Sprint 2 Assignments -->
-        <div class="bridge-section">
-          <p class="bridge-section__label">🌉 Sprint 2 Starts This Week</p>
-          <div class="activity-item activity-item--bridge">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">Bridge Reflection</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/s2-w5-bridge-reflection.html">Sprint 1→2 Bridge Reflection</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-bridge-reflection-1"></span>
-            </div>
-            <p class="activity-item__description">
-              What connected Sprint 1 to Sprint 2 for you? What do you want to carry forward, and what do you want to leave behind?
-            </p>
-          </div>
-          <div class="activity-item activity-item--assignment" style="margin-top: var(--space-3);">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">📚 Learning Activity</span>
-                <h4 class="activity-item__title">
-                  <a href="activities/s2-orientation.html">Sprint 2 Orientation</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-orientation"></span>
-            </div>
-            <p class="activity-item__description">
-              Learn what Sprint 2 is about — the shift to partner work, grading structure, and two-part goal setting.
-            </p>
-          </div>
-          <div class="activity-item activity-item--assignment" style="margin-top: var(--space-3);">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">📋 Assignment</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/s2-w5-goal-setting-part1.html">Sprint 2 Goal Setting: Part I</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s2-goal-setting-part1"></span>
-            </div>
-            <p class="activity-item__description">
-              What will you accomplish in Sprint 2? Set specific, measurable goals.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- What's Next -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">What Comes Next</h3>
-      <p style="margin: 0; color: var(--gray-600);">
-        <strong>Sprint 2: Mirror</strong> — You've solved your own problem. Can you solve someone else's?
-        You'll identify a close acquaintance with a real challenge and apply everything you learned in Sprint 1 to their situation.
-        Stakeholder: Someone you know.
-      </p>
-    </div>
+    <!-- Zone B: Weekly Briefing (rendered by JS) -->
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
@@ -503,14 +88,43 @@
   <script src="../config/cst395-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 1;
+    var CONFIG = CST395_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
-      populateDueDates(CST395_CONFIG);
-      initSprintPageWithLoom(CST395_CONFIG);
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      // Determine which week to show for this sprint page
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) {
+        displayWeek = currentWeek;
+      } else if (currentSprint > SPRINT_NUM) {
+        displayWeek = sprintWeeks[sprintWeeks.length - 1]; // Show last week of past sprint
+      } else {
+        displayWeek = sprintWeeks[0]; // Show first week of future sprint
+      }
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills');
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-  <!-- Feedback Footer -->
   <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
     <p style="margin: 0; font-size: 12px; color: #9ca3af;">
       Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>

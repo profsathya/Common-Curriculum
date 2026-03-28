@@ -1,20 +1,14 @@
 /**
  * CSV Parsing Tests
  *
- * Tests the parseCSVLine() function from scripts/sync-csv-to-config.js
- * which properly handles quoted fields, versus the naive line.split(',')
- * approach used in scripts/canvas-sync.js's loadCsvKeys().
+ * Tests the parseCSVLine() and parseCSV() functions from scripts/utils.js
+ * which properly handle quoted fields, versus the naive line.split(',') approach.
  */
 
 const { describe, it } = require('node:test');
 const assert = require('node:assert/strict');
-const { buildFunctions } = require('./helpers');
 
-// Extract parseCSVLine and parseCSV from sync-csv-to-config.js
-const { parseCSVLine, parseCSV } = buildFunctions(
-  'scripts/sync-csv-to-config.js',
-  ['parseCSVLine', 'parseCSV']
-);
+const { parseCSVLine, parseCSV } = require('../scripts/utils.js');
 
 // ============================================
 // parseCSVLine tests

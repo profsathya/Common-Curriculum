@@ -17,57 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
-
-// ============================================
-// CSV Parsing (reuse from csv-loader.js)
-// ============================================
-
-function parseCSV(csvText) {
-  const lines = csvText.trim().split('\n');
-  if (lines.length < 2) return [];
-
-  const headers = lines[0].split(',').map(h => h.trim());
-  const rows = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-
-    const values = parseCSVLine(line);
-    const row = {};
-    headers.forEach((header, index) => {
-      row[header] = values[index] || '';
-    });
-    rows.push(row);
-  }
-
-  return rows;
-}
-
-function parseCSVLine(line) {
-  const values = [];
-  let current = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (char === ',' && !inQuotes) {
-      values.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  values.push(current.trim());
-  return values;
-}
+const { parseCSVLine, parseCSV } = require('./utils.js');
 
 // ============================================
 // Config File Parsing
@@ -123,7 +73,7 @@ function serializeAssignment(key, assignment, indent = '    ') {
   const fieldOrder = [
     'canvasId', 'title', 'dueDate', 'type',
     'canvasType', 'quizType', 'assignmentGroup', 'points',
-    'sprint', 'week', 'htmlFile',
+    'sprint', 'week', 'htmlFile', 'briefing',
     'questions'
   ];
 
@@ -244,6 +194,11 @@ function syncCsvToConfig(csvPath, configPath) {
       if (row.sprint) assignments[key].sprint = parseInt(row.sprint, 10);
       if (row.week) assignments[key].week = parseInt(row.week, 10);
       if (row.htmlFile) assignments[key].htmlFile = row.htmlFile;
+      if (row.briefing) {
+        assignments[key].briefing = row.briefing;
+      } else {
+        delete assignments[key].briefing;
+      }
 
       updated++;
     } else {
@@ -262,6 +217,7 @@ function syncCsvToConfig(csvPath, configPath) {
       if (row.sprint) assignments[key].sprint = parseInt(row.sprint, 10);
       if (row.week) assignments[key].week = parseInt(row.week, 10);
       if (row.htmlFile) assignments[key].htmlFile = row.htmlFile;
+      if (row.briefing) assignments[key].briefing = row.briefing;
 
       added++;
     }

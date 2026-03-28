@@ -23,6 +23,7 @@
 const fs = require('fs');
 const path = require('path');
 const { CanvasAPI } = require('./canvas-api.js');
+const { parseArgs, parseCSVLine, loadCsvFile, extractCourseId, ensureDir, loadJson, saveJson } = require('./utils.js');
 
 // ============================================
 // Configuration
@@ -51,15 +52,6 @@ const IMAGE_MIME_TYPES = new Set([
 // Utility Functions
 // ============================================
 
-function parseArgs() {
-  const args = {};
-  process.argv.slice(2).forEach(arg => {
-    const [key, value] = arg.replace(/^--/, '').split('=');
-    args[key] = value || true;
-  });
-  return args;
-}
-
 function loadConfig(configPath) {
   const content = fs.readFileSync(configPath, 'utf-8');
   const match = content.match(/const\s+\w+\s*=\s*(\{[\s\S]*\});/);
@@ -67,33 +59,8 @@ function loadConfig(configPath) {
   return new Function(`return ${match[1]}`)();
 }
 
-function extractCourseId(canvasBaseUrl) {
-  const match = canvasBaseUrl.match(/\/courses\/(\d+)/);
-  if (!match) throw new Error(`Could not extract course ID from URL: ${canvasBaseUrl}`);
-  return match[1];
-}
-
 function loadCsv(csvPath) {
-  const content = fs.readFileSync(csvPath, 'utf-8');
-  const lines = content.trim().split('\n');
-  if (lines.length < 2) return [];
-  const headers = lines[0].split(',').map(h => h.trim());
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    const values = line.split(',').map(v => v.trim());
-    const row = {};
-    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
-    rows.push(row);
-  }
-  return rows;
-}
-
-function ensureDir(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
+  return loadCsvFile(csvPath);
 }
 
 /** Escape a JSON string for safe embedding inside an HTML <script> block */
@@ -107,16 +74,6 @@ function escapeForJsString(str) {
   // For embedding inside a JS single-quoted string: JSON.parse('${json}')
   // Must escape backslashes, single quotes, and </script>
   return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/<\//g, '<\\/');
-}
-
-function loadJson(filePath) {
-  if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-}
-
-function saveJson(filePath, data) {
-  ensureDir(path.dirname(filePath));
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n');
 }
 
 /**
@@ -150,40 +107,6 @@ function parseQuizReportCSV(csvText) {
     rows.push({ id, answers });
   }
   return rows;
-}
-
-/** Parse a single CSV line respecting quoted fields */
-function parseCSVLine(line) {
-  const result = [];
-  let current = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (inQuotes) {
-      if (ch === '"') {
-        if (i + 1 < line.length && line[i + 1] === '"') {
-          current += '"';
-          i++; // skip escaped quote
-        } else {
-          inQuotes = false;
-        }
-      } else {
-        current += ch;
-      }
-    } else {
-      if (ch === '"') {
-        inQuotes = true;
-      } else if (ch === ',') {
-        result.push(current.trim());
-        current = '';
-      } else {
-        current += ch;
-      }
-    }
-  }
-  result.push(current.trim());
-  return result;
 }
 
 function loadRubric(assignmentKey, assignmentType, assignmentTitle, courseName) {
