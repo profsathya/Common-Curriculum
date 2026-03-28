@@ -36,7 +36,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 1,
       week: 1,
-      htmlFile: "assignments/s1-w1-superagency-challenge.html"
+      htmlFile: "assignments/s1-w1-superagency-challenge.html",
+      briefing: "Pick something you've wanted to change but felt was beyond you. This choice drives the entire sprint — the more honest you are here, the more useful every assignment after this becomes."
     },
     "s1-problem-analysis": {
       canvasId: "144732",
@@ -50,6 +51,7 @@ const CST395_CONFIG = {
       sprint: 1,
       week: 2,
       htmlFile: "assignments/s1-w2-five-whys.html",
+      briefing: "The first answer to 'why' is almost never the real answer. This analysis changes what you build — students who rush it build solutions to the wrong problem.",
       questions: [
         {
           "type": "essay",
@@ -90,6 +92,7 @@ const CST395_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-solution-architecture.html",
+      briefing: "You're turning your root cause into a design. The key question: what's the human process that needs to change, and where exactly can technology reduce friction?",
       questions: [
         {
           "type": "essay",
@@ -129,7 +132,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 1,
       week: 1,
-      htmlFile: "assignments/s1-w1-productive-reflection.html"
+      htmlFile: "assignments/s1-w1-productive-reflection.html",
+      briefing: "Your first reflection captures your starting assumptions. You'll look back at this in Week 4 and see how much your thinking changed — that delta is the point."
     },
     "s1-reflection-2": {
       canvasId: "144734",
@@ -143,6 +147,7 @@ const CST395_CONFIG = {
       sprint: 1,
       week: 2,
       htmlFile: "assignments/s1-w2-productive-reflection.html",
+      briefing: "Handwritten reflection after the 5 Whys session. What shifted? If nothing shifted, that's worth examining too — it might mean you didn't push hard enough.",
       questions: [
         {
           "type": "file_upload",
@@ -161,7 +166,8 @@ const CST395_CONFIG = {
       points: 10,
       sprint: 1,
       week: 4,
-      htmlFile: "activities/sprint-1-demo.html"
+      htmlFile: "activities/sprint-1-demo.html",
+      briefing: "Show the arc: problem → 5 Whys → root cause → solution → what you learned. The demo tells a story about how your thinking changed, not just what you built."
     },
     "s1-w3-design-decision": {
       canvasId: "144806",
@@ -174,7 +180,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 1,
       week: 3,
-      htmlFile: "activities/design-decision-analysis.html"
+      htmlFile: "activities/design-decision-analysis.html",
+      briefing: "Document one key design decision and why you made it. This becomes demo material — employers want to see how you decided, not just what you produced."
     },
     "s1-w3-dojo-depth": {
       canvasId: "144807",
@@ -188,6 +195,7 @@ const CST395_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-dojo-depth.html",
+      briefing: "Take your solution through the Dojo. The AI pushes on whether your solution addresses the root cause you found or just the surface symptom you started with.",
       questions: [
         {
           "type": "file_upload",
@@ -208,6 +216,7 @@ const CST395_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-productive-reflection.html",
+      briefing: "What's working, what isn't, and what you'd change. The Build Log from this week produces the deepest thinking in the dataset — give it real attention.",
       questions: [
         {
           "type": "file_upload",
@@ -228,7 +237,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 4,
-      htmlFile: "assignments/s2-w5-bridge-reflection.html"
+      htmlFile: "assignments/s2-w5-bridge-reflection.html",
+      briefing: "Sprint 1 was your problem. Sprint 2 is someone else's. This reflection bridges the two — what habit from Sprint 1 do you need to carry forward?"
     },
     "s2-orientation": {
       canvasId: "582113",
@@ -240,7 +250,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 4,
-      htmlFile: "activities/s2-orientation.html"
+      htmlFile: "activities/s2-orientation.html",
+      briefing: "Meet your partner and begin understanding their world. The orientation frames what you're trying to do — don't skip it."
     },
     "s2-goal-setting-part1": {
       canvasId: "582114",
@@ -252,7 +263,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 4,
-      htmlFile: "assignments/s2-w5-goal-setting-part1.html"
+      htmlFile: "assignments/s2-w5-goal-setting-part1.html",
+      briefing: "What do you want to learn about solving problems for someone else? These goals shape how you approach discovery."
     },
     "s2-goal-setting-part2": {
       canvasId: "582115",
@@ -264,7 +276,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-goal-setting-part2.html"
+      htmlFile: "assignments/s2-w5-goal-setting-part2.html",
+      briefing: "Now that you've met your partner, set goals that are specific to what you've learned about their situation."
     },
     "s2-discovery-doc": {
       canvasId: "582875",
@@ -276,7 +289,8 @@ const CST395_CONFIG = {
       points: 10,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-discovery-doc.html"
+      htmlFile: "assignments/s2-w5-discovery-doc.html",
+      briefing: "Go deeper than their first answer. What they told you and what they actually need are almost never the same thing — the Discovery Doc is where you find the gap."
     },
     "s2-assumption-audit": {
       canvasId: "582876",
@@ -288,7 +302,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-assumption-audit.html"
+      htmlFile: "assignments/s2-w6-assumption-audit.html",
+      briefing: "List what you think you know about your partner's problem, then mark each as confirmed, assumed, or unknown. The assumptions you don't examine are the ones that break your solution."
     },
     "s2-reflection-4": {
       canvasId: "582877",
@@ -300,7 +315,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-productive-reflection.html"
+      htmlFile: "assignments/s2-w6-productive-reflection.html",
+      briefing: "What surprised you about your partner's situation? If nothing surprised you, you may not have listened carefully enough."
     },
     "s2-prep-w6": {
       canvasId: "582878",
@@ -312,7 +328,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-prep.html"
+      htmlFile: "assignments/s2-w6-prep.html",
+      briefing: "Preparation for the narrowing session. Come ready to explain what you've learned and where your understanding is weakest."
     },
     "s2-demo-design": {
       canvasId: "582879",
@@ -324,7 +341,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-demo-design.html"
+      htmlFile: "assignments/s2-w6-demo-design.html",
+      briefing: "Plan your demo structure. The 5-move demo tells: here's my partner, here's what I learned, here's what I built, here's where I was wrong, here's my human value."
     },
     "s2-domain-learning": {
       canvasId: "582880",
@@ -336,7 +354,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-domain-learning.html"
+      htmlFile: "assignments/s2-w7-domain-learning.html",
+      briefing: "Research the science behind your partner's problem. The research changes your solution direction — that change is what makes the demo compelling."
     },
     "s2-prototype": {
       canvasId: "582881",
@@ -348,7 +367,8 @@ const CST395_CONFIG = {
       points: 20,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-prototype.html"
+      htmlFile: "assignments/s2-w7-prototype.html",
+      briefing: "Build v1 and document your reasoning in the Build Log. The log matters more than the prototype — it's evidence of how you think."
     },
     "s2-reflection-5": {
       canvasId: "582882",
@@ -360,7 +380,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-productive-reflection.html"
+      htmlFile: "assignments/s2-w7-productive-reflection.html",
+      briefing: "What's the gap between what you planned and what you built? That gap is your learning — name it honestly."
     },
     "s2-demo-prep": {
       canvasId: "582885",
@@ -372,7 +393,8 @@ const CST395_CONFIG = {
       points: 10,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-demo-prep.html"
+      htmlFile: "assignments/s2-w8-demo-prep.html",
+      briefing: "Final prototype plus demo preparation. Your partner should have seen this and given you their honest reaction before Demo Day."
     },
     "s2-bridge-reflection-2": {
       canvasId: "582886",
@@ -384,7 +406,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-bridge-reflection.html"
+      htmlFile: "assignments/s2-w8-bridge-reflection.html",
+      briefing: "Five foundational claims about this course. Connect each to your actual Sprint 1-2 work — honestly, not optimistically."
     },
     "s2-partner-eval": {
       canvasId: "582887",
@@ -396,7 +419,8 @@ const CST395_CONFIG = {
       points: 5,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-partner-eval.html"
+      htmlFile: "assignments/s2-w8-partner-eval.html",
+      briefing: "Observe other demos through the NOTICE/INTERPRET/ASK lens. The gap between what the presenter claims and what you observe is the skill you're developing."
     },
 
     // Sprint 3
@@ -689,6 +713,40 @@ const CST395_CONFIG = {
     2: { name: "Mirror", theme: "Learning Through Others", stakeholder: "Close acquaintance", scaffolding: "Medium-High" },
     3: { name: "Complexity", theme: "Navigating Ambiguity", stakeholder: "External entity", scaffolding: "Medium" },
     4: { name: "Mastery", theme: "Full Autonomy", stakeholder: "Your choice", scaffolding: "Low" }
+  },
+
+  sprintSummaries: {
+    1: {
+      summary: "You identified a personal challenge, used 5 Whys to find the root cause, and built a solution. The key lesson: the first answer to 'why' is almost never the real problem \u2014 and your solution changes fundamentally when you find the actual root.",
+      capabilities: "SDL emerged as the primary capability \u2014 you learned to direct your own problem-solving rather than waiting for instructions."
+    },
+    2: {
+      summary: "You solved a real problem for your partner \u2014 someone whose world you had to learn before you could build anything useful. Discovery, assumption-testing, and iteration replaced guessing.",
+      capabilities: "Integrative Solver became visible \u2014 you combined domain knowledge, partner insight, and your own judgment to build something your partner couldn't have specified themselves."
+    },
+    3: {
+      summary: "Bhutan's MDRO clinical guideline \u2014 28 pages that exist but can't be acted on in the moments that matter. You're finding one specific human moment where it fails and designing a solution.",
+      capabilities: "All three capabilities converge: SDL (learning an unfamiliar domain), IS (integrating clinical reality with design), AB (iterating based on expert feedback)."
+    },
+    4: {
+      summary: "No curated options. You find the stakeholder, define the problem, and build the solution from scratch. Everything from Sprints 1\u20133 applies \u2014 but nobody sets it up for you.",
+      capabilities: "This is the transfer test. Can you do this without scaffolding?"
+    }
+  },
+
+  weeklyQuestions: {
+    1: "What's something you've wanted to change but convinced yourself was 'just the way it is'?",
+    2: "If your first answer to 'why' was right, why haven't you solved this already?",
+    3: "What would be worse about your solution if you'd handed the whole thing to AI?",
+    4: "What changed between Week 1 and now \u2014 and can you prove it?",
+    5: "What did your partner tell you that you didn't already expect?",
+    6: "Which of your assumptions about your partner's problem would be most dangerous if wrong?",
+    7: "If your partner used this without you there to explain it, would it actually help?",
+    8: "What would be worse about your demo if AI had done it alone?",
+    9: "If you can't describe your user's specific moment in one sentence, you don't have a stake \u2014 you have a topic.",
+    10: "If you have no questions for the expert, you haven't thought hard enough about what you don't know.",
+    11: "What changed between your plan and your build \u2014 and what does that gap teach you about how you think?",
+    12: "What would be worse about your solution if you'd just handed this problem to AI on day one?"
   },
 
   // Peer Conversation Settings

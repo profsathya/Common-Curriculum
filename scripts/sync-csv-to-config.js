@@ -73,7 +73,7 @@ function serializeAssignment(key, assignment, indent = '    ') {
   const fieldOrder = [
     'canvasId', 'title', 'dueDate', 'type',
     'canvasType', 'quizType', 'assignmentGroup', 'points',
-    'sprint', 'week', 'htmlFile',
+    'sprint', 'week', 'htmlFile', 'briefing',
     'questions'
   ];
 
@@ -194,6 +194,11 @@ function syncCsvToConfig(csvPath, configPath) {
       if (row.sprint) assignments[key].sprint = parseInt(row.sprint, 10);
       if (row.week) assignments[key].week = parseInt(row.week, 10);
       if (row.htmlFile) assignments[key].htmlFile = row.htmlFile;
+      if (row.briefing) {
+        assignments[key].briefing = row.briefing;
+      } else {
+        delete assignments[key].briefing;
+      }
 
       updated++;
     } else {
@@ -212,6 +217,7 @@ function syncCsvToConfig(csvPath, configPath) {
       if (row.sprint) assignments[key].sprint = parseInt(row.sprint, 10);
       if (row.week) assignments[key].week = parseInt(row.week, 10);
       if (row.htmlFile) assignments[key].htmlFile = row.htmlFile;
+      if (row.briefing) assignments[key].briefing = row.briefing;
 
       added++;
     }

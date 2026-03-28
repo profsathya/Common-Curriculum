@@ -36,7 +36,8 @@ const CST349_CONFIG = {
       points: 10,
       sprint: 1,
       week: 1,
-      htmlFile: "assignments/s1-w1-skills-self-assessment.html"
+      htmlFile: "assignments/s1-w1-skills-self-assessment.html",
+      briefing: "Rate yourself honestly across 8 SDL dimensions. This becomes your baseline — you'll compare against it in every sprint. Accuracy matters more than looking good."
     },
     "s1-reflection-1": {
       canvasId: "144470",
@@ -49,7 +50,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 1,
       week: 1,
-      htmlFile: "assignments/s1-w1-productive-reflection.html"
+      htmlFile: "assignments/s1-w1-productive-reflection.html",
+      briefing: "Your first reflection captures where you think you are. The value comes later when you compare this to where you actually end up."
     },
     "s1-skills-revision": {
       canvasId: "144730",
@@ -63,6 +65,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 2,
       htmlFile: "assignments/s1-w2-skills-revision.html",
+      briefing: "After a week of class, revisit your self-assessment. What did you rate too high? Too low? The revision is evidence of metacognition.",
       questions: [
         {
           "type": "essay",
@@ -92,6 +95,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 2,
       htmlFile: "assignments/s1-w2-five-whys.html",
+      briefing: "Apply 5 Whys to one skill gap you identified. Surface-level answers sound like 'I need to practice more.' Real root causes sound like 'I avoid situations where this skill matters.'",
       questions: [
         {
           "type": "essay",
@@ -132,6 +136,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-sprint-plan.html",
+      briefing: "Your plan for developing one skill over the sprint. The plan itself matters less than whether you can explain why you chose this sequence of steps.",
       questions: [
         {
           "type": "file_upload",
@@ -151,6 +156,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 2,
       htmlFile: "assignments/s1-w2-productive-reflection.html",
+      briefing: "Handwritten reflection on what shifted this week. If you're writing what you think the instructor wants to hear, start over.",
       questions: [
         {
           "type": "file_upload",
@@ -171,6 +177,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-learning-log.html",
+      briefing: "Document what you actually did this week versus what you planned. The gap between plan and reality is the most useful data in this course.",
       questions: [
         {
           "type": "file_upload",
@@ -191,6 +198,7 @@ const CST349_CONFIG = {
       sprint: 1,
       week: 3,
       htmlFile: "assignments/s1-w3-productive-reflection.html",
+      briefing: "Third reflection — what's your honest assessment of whether your sprint plan is working? If it isn't, what would you change?",
       questions: [
         {
           "type": "file_upload",
@@ -209,7 +217,8 @@ const CST349_CONFIG = {
       points: 10,
       sprint: 1,
       week: 4,
-      htmlFile: "activities/sprint-1-demo.html"
+      htmlFile: "activities/sprint-1-demo.html",
+      briefing: "Present your growth arc to your group. Not what you did — what changed in how you think about this skill. Evidence required."
     },
 
     // Sprint 2
@@ -223,7 +232,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 4,
-      htmlFile: "assignments/s2-w5-bridge-reflection.html"
+      htmlFile: "assignments/s2-w5-bridge-reflection.html",
+      briefing: "What actually worked in Sprint 1? What was just going through the motions? Carry the real lessons forward, drop the performance."
     },
     "s2-orientation": {
       canvasId: "582109",
@@ -235,7 +245,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 4,
-      htmlFile: "activities/s2-orientation.html"
+      htmlFile: "activities/s2-orientation.html",
+      briefing: "Sprint 2 adds external accountability — your group. The orientation explains why this changes the dynamic."
     },
     "s2-goal-setting": {
       canvasId: "582110",
@@ -247,7 +258,8 @@ const CST349_CONFIG = {
       points: 10,
       sprint: 2,
       week: 4,
-      htmlFile: "assignments/s2-w5-goal-setting.html"
+      htmlFile: "assignments/s2-w5-goal-setting.html",
+      briefing: "Set goals that build on Sprint 1 findings. If you're picking the same goal with the same plan, ask why Sprint 1 didn't work."
     },
     "s2-group-rules": {
       canvasId: "582790",
@@ -259,7 +271,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-group-rules.html"
+      htmlFile: "assignments/s2-w5-group-rules.html",
+      briefing: "Establish how your group will hold each other accountable. Vague rules produce vague accountability."
     },
     "s2-reflection-4": {
       canvasId: "582791",
@@ -271,7 +284,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-productive-reflection.html"
+      htmlFile: "assignments/s2-w5-productive-reflection.html",
+      briefing: "First group-context reflection. How does having others watching change your effort? Be honest about whether it helps or creates pressure to perform."
     },
     "s2-evidence-design": {
       canvasId: "582792",
@@ -283,7 +297,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 5,
-      htmlFile: "assignments/s2-w5-evidence-design.html"
+      htmlFile: "assignments/s2-w5-evidence-design.html",
+      briefing: "Design what evidence of growth will look like for your specific goal. If you can't describe it concretely, your goal may be too vague."
     },
     "s2-triad-checkin-1": {
       canvasId: "582793",
@@ -295,7 +310,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-triad-checkin.html"
+      htmlFile: "assignments/s2-w6-triad-checkin.html",
+      briefing: "First structured check-in with your group. Share progress honestly — what you did, what you skipped, what surprised you."
     },
     "s2-reflection-5": {
       canvasId: "582794",
@@ -307,7 +323,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-productive-reflection.html"
+      htmlFile: "assignments/s2-w6-productive-reflection.html",
+      briefing: "What's different about how you're approaching your goal compared to Sprint 1? If nothing changed, that's worth examining."
     },
     "s2-networking-prep": {
       canvasId: "582795",
@@ -319,7 +336,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 6,
-      htmlFile: "assignments/s2-w6-networking-prep.html"
+      htmlFile: "assignments/s2-w6-networking-prep.html",
+      briefing: "Prepare for the networking event. Come with questions that test your assumptions about what the industry actually values."
     },
     "s2-networking-report": {
       canvasId: "582796",
@@ -331,7 +349,8 @@ const CST349_CONFIG = {
       points: 10,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-networking-report.html"
+      htmlFile: "assignments/s2-w7-networking-report.html",
+      briefing: "What did you learn from professionals that challenged or confirmed your assumptions? Specific quotes or moments, not vague takeaways."
     },
     "s2-reflection-6": {
       canvasId: "582797",
@@ -343,7 +362,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-productive-reflection.html"
+      htmlFile: "assignments/s2-w7-productive-reflection.html",
+      briefing: "Post-networking reflection. Did anything you heard change your Sprint 2 goal or approach?"
     },
     "s2-demo-slides": {
       canvasId: "582798",
@@ -355,7 +375,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 7,
-      htmlFile: "assignments/s2-w7-demo-slides.html"
+      htmlFile: "assignments/s2-w7-demo-slides.html",
+      briefing: "Build your demo around evidence, not claims. Each slide should show something observable, not just say you grew."
     },
     "s2-demo": {
       canvasId: "582799",
@@ -367,7 +388,8 @@ const CST349_CONFIG = {
       points: 10,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-demo.html"
+      htmlFile: "assignments/s2-w8-demo.html",
+      briefing: "Present growth evidence to your combined group. The audience looks for the gap between what you claim and what you show — prepare for that."
     },
     "s2-peer-eval": {
       canvasId: "582800",
@@ -379,7 +401,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-peer-eval.html"
+      htmlFile: "assignments/s2-w8-peer-eval.html",
+      briefing: "Observe other demos. Use the NOTICE/INTERPRET/ASK framework. Your observations help others see what they can't see about themselves."
     },
     "s2-bridge-reflection-2": {
       canvasId: "582801",
@@ -391,7 +414,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-bridge-reflection.html"
+      htmlFile: "assignments/s2-w8-bridge-reflection.html",
+      briefing: "Five claims about what this course has taught you so far. Connect each to specific moments, not general feelings."
     },
     "s2-claims-discussion": {
       canvasId: "585103",
@@ -403,7 +427,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 2,
       week: 8,
-      htmlFile: "assignments/s2-w8-claims-discussion.html"
+      htmlFile: "assignments/s2-w8-claims-discussion.html",
+      briefing: "AI-structured conversation pushing you to find real evidence for each claim. The AI won't let you get away with vague assertions."
     },
 
     // Sprint 3
@@ -735,6 +760,40 @@ const CST349_CONFIG = {
     2: { name: "Accountable Growth", theme: "Deepen skill with external accountability", focus: "Ambiguity, Iteration", scaffolding: "Medium" },
     3: { name: "Transfer", theme: "Futures thinking — reading the future of your field", focus: "Evaluation, Collaboration", scaffolding: "Low" },
     4: { name: "Proving It", theme: "Portfolio defense & synthesis", focus: "All dimensions integrated", scaffolding: "Full autonomy" }
+  },
+
+  sprintSummaries: {
+    1: {
+      summary: "You assessed your skills honestly, identified a gap, and made a plan to address it. The key lesson: most people can name what they're bad at but very few can design a path out.",
+      capabilities: "SDL dimensions 1\u20134 (Goals, Planning, Ambiguity, Metacognition) were the primary focus."
+    },
+    2: {
+      summary: "You worked on your skill development with external accountability from your group. Networking with professionals tested whether your self-assessment matched industry reality.",
+      capabilities: "SDL dimensions 5\u20136 (Iteration, Evaluation) became visible \u2014 could you adjust your plan based on what was actually working?"
+    },
+    3: {
+      summary: "You're auditing your information diet and building the habit of reading broadly about your field. The claim you make at the end becomes the input for Sprint 4.",
+      capabilities: "SDL dimensions 6\u20138 (Evaluate, Collaborate, AI Use) \u2014 can you think critically about what you consume and form defensible opinions?"
+    },
+    4: {
+      summary: "Develop one skill to prepare for the future you identified in Sprint 3. Portfolio defense shows the full arc across all four sprints.",
+      capabilities: "All 8 SDL dimensions integrated. The portfolio defense is the transfer test."
+    }
+  },
+
+  weeklyQuestions: {
+    1: "How do you know your self-assessment is accurate and not just what you want to believe?",
+    2: "If 5 Whys on your skill gap leads to 'I need more practice,' you stopped too early. What's underneath that?",
+    3: "Your sprint plan describes what you'll do. Can you explain why this sequence and not a different one?",
+    4: "What changed between your Week 1 self-assessment and now \u2014 and what's your evidence?",
+    5: "Your group is watching. Does that make you try harder or just perform trying harder?",
+    6: "What did the networking event reveal that your self-assessment missed?",
+    7: "If someone watched you this week without hearing your explanation, what would they see you actually doing?",
+    8: "Your demo shows evidence of growth. Would a skeptic be convinced?",
+    9: "What does your actual information diet tell you about what you've been optimizing for \u2014 understanding, or engagement?",
+    10: "What did you consume this week that you wouldn't have encountered before this sprint?",
+    11: "Has anything you've read or listened to actually changed something you think or do? Name it specifically.",
+    12: "What do you believe differently now than you did four weeks ago \u2014 and what would you tell someone who disagrees?"
   },
 
   // SDL Dimensions
