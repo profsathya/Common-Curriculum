@@ -106,10 +106,8 @@ function formatDate(dateString) {
  * @param {Object} config - The course config object
  */
 function highlightCurrentWeek(config) {
-  // Use test week if set, otherwise calculate from date
-  const currentWeek = typeof getEffectiveCurrentWeek === 'function'
-    ? getEffectiveCurrentWeek()
-    : getCurrentWeekFromConfig(config);
+  const resolved = getResolvedCurrentWeek(config);
+  const currentWeek = resolved.week;
 
   if (!currentWeek) {
     console.log('No current week found (outside semester dates)');
@@ -139,20 +137,500 @@ function highlightCurrentWeek(config) {
  * @returns {number|null} Week number or null
  */
 function getCurrentWeekFromConfig(config) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  return getResolvedCurrentWeek(config).week;
+}
 
-  for (const [weekNum, dates] of Object.entries(config.weekDates)) {
-    // Add time component to ensure local timezone parsing
-    const start = new Date(dates.start + 'T00:00:00');
-    const end = new Date(dates.end + 'T23:59:59.999');
+/**
+ * Resolve the current week, never returning null after semester starts.
+ *
+ * Rule 1: Never return null after the semester has started. If today falls
+ *         between defined weeks (spring break, weekend gaps), return the
+ *         most recent week whose start date has passed.
+ * Rule 2: "Current week" = last week whose start date <= today.
+ *
+ * @param {Object} config - The course config object
+ * @param {Date} [overrideDate] - Optional date override (for date simulator)
+ * @returns {{ week: number|null, isGap: boolean, gapMessage: string|null }}
+ */
+function getResolvedCurrentWeek(config, overrideDate) {
+  const today = overrideDate || getSimulatedDate() || new Date();
+  today.setHours(12, 0, 0, 0); // Noon to avoid timezone edge cases
 
-    if (today >= start && today <= end) {
-      return parseInt(weekNum);
+  const weeks = Object.entries(config.weekDates)
+    .map(([num, data]) => ({
+      num: parseInt(num),
+      start: new Date(data.start + 'T00:00:00'),
+      end: new Date(data.end + 'T23:59:59.999'),
+      data
+    }))
+    .sort((a, b) => a.num - b.num);
+
+  if (weeks.length === 0) return { week: null, isGap: false, gapMessage: null };
+
+  // Before semester
+  if (today < weeks[0].start) {
+    return { week: null, isGap: false, gapMessage: null };
+  }
+
+  // After semester
+  if (today > weeks[weeks.length - 1].end) {
+    return { week: weeks[weeks.length - 1].num, isGap: false, gapMessage: null };
+  }
+
+  // Check if today is within a defined week range
+  for (const w of weeks) {
+    if (today >= w.start && today <= w.end) {
+      return { week: w.num, isGap: false, gapMessage: null };
     }
   }
 
+  // We're in a gap — find the most recent week whose start has passed
+  let lastPassed = null;
+  let nextWeek = null;
+  for (let i = 0; i < weeks.length; i++) {
+    if (weeks[i].start <= today) {
+      lastPassed = weeks[i];
+    } else {
+      nextWeek = weeks[i];
+      break;
+    }
+  }
+
+  if (!lastPassed) {
+    return { week: null, isGap: false, gapMessage: null };
+  }
+
+  // Build gap message
+  let gapMessage = null;
+  if (nextWeek) {
+    const nextStart = nextWeek.start;
+    const formatted = nextStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    gapMessage = `Break \u2014 Week ${nextWeek.num} starts ${formatted}`;
+  }
+
+  return { week: lastPassed.num, isGap: true, gapMessage };
+}
+
+// ============================================
+// Date Simulator
+// ============================================
+
+/**
+ * Read a simulated date from the URL hash.
+ * Format: #testDate=2026-03-31
+ * @returns {Date|null}
+ */
+function getSimulatedDate() {
+  var hash = window.location.hash;
+  var match = hash.match(/testDate=(\d{4}-\d{2}-\d{2})/);
+  if (match) {
+    return new Date(match[1] + 'T12:00:00');
+  }
   return null;
+}
+
+/**
+ * Initialize the hidden date simulator overlay.
+ * Toggle with Ctrl+Shift+D (Cmd+Shift+D on Mac).
+ */
+function initDateSimulator() {
+  // Create overlay element
+  var overlay = document.createElement('div');
+  overlay.id = 'date-simulator';
+  overlay.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:8px;padding:8px 12px;font-size:12px;color:#6b7280;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:none;font-family:system-ui,sans-serif;';
+
+  var simDate = getSimulatedDate();
+  var label = simDate
+    ? 'Simulating: ' + simDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : 'Live';
+
+  overlay.innerHTML =
+    '<div style="display:flex;align-items:center;gap:8px;">' +
+      '<span style="font-weight:600;">' + label + '</span>' +
+      '<input type="date" id="sim-date-input" style="font-size:12px;border:1px solid #d1d5db;border-radius:4px;padding:2px 4px;"' +
+        (simDate ? ' value="' + simDate.toISOString().slice(0, 10) + '"' : '') + '>' +
+      '<button id="sim-date-reset" style="font-size:11px;padding:2px 8px;border:1px solid #d1d5db;border-radius:4px;background:white;cursor:pointer;">Reset</button>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Wire up events
+  var input = document.getElementById('sim-date-input');
+  var resetBtn = document.getElementById('sim-date-reset');
+
+  input.addEventListener('change', function() {
+    if (input.value) {
+      window.location.hash = 'testDate=' + input.value;
+      window.location.reload();
+    }
+  });
+
+  resetBtn.addEventListener('click', function() {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.location.reload();
+  });
+
+  // Toggle visibility with Ctrl+Shift+D / Cmd+Shift+D
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'd' || e.key === 'D') {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+        e.preventDefault();
+        overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+  });
+}
+
+// ============================================
+// Sprint Briefing (Zone B)
+// ============================================
+
+/**
+ * Get assignment groups for Zone B rendering.
+ * @param {Object} config - Course config
+ * @param {number} weekNum - Current week number
+ * @param {Date} [todayDate] - Optional date override
+ * @returns {{ stillDue: Array, thisWeek: Array, comingUp: Array }}
+ */
+function getAssignmentGroups(config, weekNum, todayDate) {
+  var today = todayDate || getSimulatedDate() || new Date();
+  today.setHours(12, 0, 0, 0);
+
+  var twoWeeksAgo = new Date(today);
+  twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+  var sevenDaysOut = new Date(today);
+  sevenDaysOut.setDate(sevenDaysOut.getDate() + 7);
+
+  var weekData = config.weekDates[weekNum];
+  var currentSprint = weekData ? weekData.sprint : null;
+
+  var stillDue = [];
+  var thisWeek = [];
+  var comingUp = [];
+
+  for (var key in config.assignments) {
+    var a = config.assignments[key];
+    if (!a.dueDate) continue;
+    var due = new Date(a.dueDate + 'T23:59:59');
+    var aWeek = a.week || 0;
+    var aSprint = a.sprint || 0;
+
+    // Only consider assignments in the current sprint
+    if (currentSprint && aSprint !== currentSprint) continue;
+
+    if (aWeek === weekNum) {
+      thisWeek.push({ key: key, dueDate: a.dueDate, title: a.title, type: a.type, htmlFile: a.htmlFile, canvasId: a.canvasId, briefing: a.briefing });
+    } else if (due < today && due > twoWeeksAgo && aWeek < weekNum) {
+      stillDue.push({ key: key, dueDate: a.dueDate, title: a.title, type: a.type, htmlFile: a.htmlFile, canvasId: a.canvasId, briefing: a.briefing });
+    } else if (due > today && due <= sevenDaysOut && aWeek > weekNum) {
+      comingUp.push({ key: key, dueDate: a.dueDate, title: a.title, type: a.type, htmlFile: a.htmlFile, canvasId: a.canvasId, briefing: a.briefing });
+    }
+  }
+
+  var sortByDate = function(a, b) { return new Date(a.dueDate) - new Date(b.dueDate); };
+  stillDue.sort(sortByDate);
+  thisWeek.sort(sortByDate);
+  comingUp.sort(sortByDate);
+
+  return { stillDue: stillDue, thisWeek: thisWeek, comingUp: comingUp };
+}
+
+/**
+ * Render the Zone B sprint briefing for a specific week.
+ * @param {Object} config - Course config
+ * @param {number} weekNum - Week number to render
+ * @param {string} containerId - ID of container element
+ * @param {Object} [options] - Optional settings
+ */
+function renderSprintBriefing(config, weekNum, containerId, options) {
+  options = options || {};
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  var weekData = config.weekDates[weekNum];
+  if (!weekData) {
+    container.innerHTML = '<p style="color:#6b7280;padding:16px;">No data for this week.</p>';
+    return;
+  }
+
+  var resolved = getResolvedCurrentWeek(config);
+  var groups = getAssignmentGroups(config, weekNum);
+  var weeklyQuestion = config.weeklyQuestions ? config.weeklyQuestions[weekNum] : null;
+  var sprintData = config.sprints[weekData.sprint];
+
+  var html = '';
+
+  // Gap banner
+  if (resolved.isGap && resolved.week === weekNum) {
+    html += '<div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:14px;color:#92400e;">' +
+      resolved.gapMessage +
+    '</div>';
+  }
+
+  // Weekly question
+  if (weeklyQuestion) {
+    html += '<div style="background:var(--theme-light,#f0fdfa);border-left:3px solid var(--theme-primary,#14b8a6);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">' +
+      '<p style="font-size:12px;font-weight:600;color:var(--theme-dark,#0d9488);text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px 0;">This Week\'s Question</p>' +
+      '<p style="font-size:15px;color:#1e293b;margin:0;font-style:italic;line-height:1.5;">' + weeklyQuestion + '</p>' +
+    '</div>';
+  }
+
+  // Still-due indicator (collapsed)
+  if (groups.stillDue.length > 0) {
+    html += '<div style="margin-bottom:12px;">' +
+      '<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=this.nextElementSibling.style.display===\'none\'?\'+\':\'\u2212\'" ' +
+      'style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;font-family:inherit;">' +
+        groups.stillDue.length + ' item' + (groups.stillDue.length > 1 ? 's' : '') + ' from earlier weeks still need attention' +
+        '<span style="font-size:16px;color:#9ca3af;">+</span>' +
+      '</button>' +
+      '<div style="display:none;padding:8px 0;">';
+    groups.stillDue.forEach(function(item) {
+      html += renderAssignmentRow(item, config);
+    });
+    html += '</div></div>';
+  }
+
+  // This week's assignments
+  if (groups.thisWeek.length > 0) {
+    html += '<div style="margin-bottom:16px;">' +
+      '<h3 style="font-size:14px;font-weight:600;color:#374151;margin:0 0 8px 0;">This Week</h3>';
+    groups.thisWeek.forEach(function(item) {
+      html += renderAssignmentRow(item, config);
+    });
+    html += '</div>';
+  } else {
+    html += '<p style="color:#6b7280;font-size:14px;padding:8px 0;">No assignments due this week.</p>';
+  }
+
+  // Coming up
+  if (groups.comingUp.length > 0) {
+    html += '<div style="margin-bottom:16px;">' +
+      '<h3 style="font-size:13px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px 0;">Coming Up</h3>';
+    groups.comingUp.forEach(function(item) {
+      html += renderAssignmentRow(item, config, true);
+    });
+    html += '</div>';
+  }
+
+  // Session link (if loom video or session slides exist)
+  var loomUrl = config.loomVideos ? config.loomVideos[weekNum] : null;
+  if (loomUrl) {
+    html += '<div style="margin-top:16px;padding:12px 16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;">' +
+      '<a href="' + loomUrl + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--theme-dark,#0d9488);font-weight:600;font-size:14px;text-decoration:none;">' +
+        'Watch Class Recording \u2192' +
+      '</a>' +
+    '</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+/**
+ * Render a single assignment row with expandable briefing.
+ */
+function renderAssignmentRow(item, config, dimmed) {
+  var displayTitle = item.title.replace(/^S\d+:\s*/, '');
+  var url = item.htmlFile || (config.canvasBaseUrl + '/assignments/' + item.canvasId);
+  var dotColors = { assignment: '#3b82f6', reflection: '#a855f7', quiz: '#14b8a6', dojo: '#14b8a6', bridge: '#f59e0b', peer: '#22c55e' };
+  var dotColor = dotColors[item.type] || '#6b7280';
+  var opacity = dimmed ? 'opacity:0.7;' : '';
+  var briefingId = 'briefing-' + item.key;
+
+  var html = '<div style="' + opacity + 'margin-bottom:4px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:6px;cursor:pointer;transition:background 0.15s;" ' +
+    'onmouseover="this.style.background=\'#f9fafb\'" onmouseout="this.style.background=\'transparent\'"' +
+    (item.briefing ? ' onclick="var b=document.getElementById(\'' + briefingId + '\');b.style.display=b.style.display===\'none\'?\'block\':\'none\'"' : '') + '>' +
+      '<div style="display:flex;align-items:center;gap:8px;min-width:0;">' +
+        '<span style="width:8px;height:8px;border-radius:50%;background:' + dotColor + ';flex-shrink:0;"></span>' +
+        '<a href="' + url + '" target="_blank" style="color:#1e293b;text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" onclick="event.stopPropagation()">' + displayTitle + '</a>' +
+      '</div>' +
+      '<span style="font-size:12px;color:#9ca3af;flex-shrink:0;margin-left:12px;">' + formatDate(item.dueDate) + '</span>' +
+    '</div>';
+
+  if (item.briefing) {
+    html += '<div id="' + briefingId + '" style="display:none;padding:4px 12px 10px 28px;font-size:13px;color:#64748b;line-height:1.5;">' +
+      item.briefing +
+    '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// ============================================
+// Journey Pills
+// ============================================
+
+/**
+ * Render 4 sprint pills showing progression.
+ * @param {Object} config - Course config
+ * @param {number} currentSprint - Current sprint number
+ * @param {string} containerId - ID of container
+ */
+function renderJourneyPills(config, currentSprint, containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  var html = '<div style="display:flex;gap:6px;margin-bottom:16px;">';
+
+  for (var i = 1; i <= 4; i++) {
+    var sprint = config.sprints[i];
+    if (!sprint) continue;
+
+    var isCurrent = i === currentSprint;
+    var isPast = i < currentSprint;
+    var isFuture = i > currentSprint;
+
+    var bg, color, border, cursor;
+    if (isCurrent) {
+      bg = 'var(--theme-primary, #14b8a6)';
+      color = 'white';
+      border = 'none';
+      cursor = 'default';
+    } else if (isPast) {
+      bg = 'var(--theme-light, #f0fdfa)';
+      color = 'var(--theme-dark, #0d9488)';
+      border = '1px solid var(--theme-primary, #14b8a6)';
+      cursor = 'pointer';
+    } else {
+      bg = '#f9fafb';
+      color = '#9ca3af';
+      border = '1px solid #e5e7eb';
+      cursor = 'default';
+    }
+
+    var pillId = 'sprint-pill-' + i;
+    var summaryId = 'sprint-summary-' + i;
+
+    html += '<button id="' + pillId + '" ' +
+      'style="flex:1;padding:8px 4px;border-radius:8px;font-size:12px;font-weight:600;background:' + bg + ';color:' + color + ';border:' + border + ';cursor:' + cursor + ';font-family:inherit;transition:all 0.2s;" ' +
+      (isPast ? 'onclick="toggleSprintSummary(' + i + ')"' : '') +
+      '>' +
+      'S' + i + ': ' + sprint.name +
+    '</button>';
+  }
+
+  html += '</div>';
+
+  // Summary panels (hidden by default)
+  for (var j = 1; j <= 4; j++) {
+    var summaries = config.sprintSummaries ? config.sprintSummaries[j] : null;
+    if (summaries && j < currentSprint) {
+      html += '<div id="sprint-summary-' + j + '" style="display:none;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:12px;">' +
+        '<p style="font-size:14px;color:#374151;margin:0 0 8px 0;line-height:1.5;">' + summaries.summary + '</p>' +
+        '<p style="font-size:12px;color:#6b7280;margin:0;"><strong>Capabilities:</strong> ' + summaries.capabilities + '</p>' +
+      '</div>';
+    }
+  }
+
+  container.innerHTML = html;
+}
+
+function toggleSprintSummary(sprintNum) {
+  var el = document.getElementById('sprint-summary-' + sprintNum);
+  if (!el) return;
+  // Close other summaries
+  for (var i = 1; i <= 4; i++) {
+    if (i !== sprintNum) {
+      var other = document.getElementById('sprint-summary-' + i);
+      if (other) other.style.display = 'none';
+    }
+  }
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// ============================================
+// Week Navigation
+// ============================================
+
+/**
+ * Render prev/next week arrows constrained to the current sprint.
+ * @param {Object} config - Course config
+ * @param {number} currentWeek - Current week number
+ * @param {number} sprintNum - Sprint number
+ * @param {string} containerId - ID of container
+ * @param {Function} onNavigate - Callback when week changes: onNavigate(newWeekNum)
+ */
+function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNavigate) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  // Find week range for this sprint
+  var sprintWeeks = [];
+  for (var num in config.weekDates) {
+    if (config.weekDates[num].sprint === sprintNum) {
+      sprintWeeks.push(parseInt(num));
+    }
+  }
+  sprintWeeks.sort(function(a, b) { return a - b; });
+
+  var weekData = config.weekDates[currentWeek];
+  var weekTitle = weekData ? weekData.title : 'Week ' + currentWeek;
+  var minWeek = sprintWeeks[0] || currentWeek;
+  var maxWeek = sprintWeeks[sprintWeeks.length - 1] || currentWeek;
+
+  var prevDisabled = currentWeek <= minWeek;
+  var nextDisabled = currentWeek >= maxWeek;
+
+  var btnStyle = 'padding:6px 12px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;border:1px solid #e5e7eb;background:white;color:#374151;';
+  var disabledStyle = 'opacity:0.3;cursor:default;';
+
+  container.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+      '<button id="week-nav-prev" style="' + btnStyle + (prevDisabled ? disabledStyle : '') + '"' +
+        (prevDisabled ? ' disabled' : '') + '>\u2190 Prev</button>' +
+      '<div style="text-align:center;">' +
+        '<span style="font-size:13px;font-weight:600;color:#374151;">Week ' + currentWeek + '</span>' +
+        '<span style="font-size:12px;color:#9ca3af;display:block;">' + weekTitle + '</span>' +
+      '</div>' +
+      '<button id="week-nav-next" style="' + btnStyle + (nextDisabled ? disabledStyle : '') + '"' +
+        (nextDisabled ? ' disabled' : '') + '>Next \u2192</button>' +
+    '</div>';
+
+  // Wire up navigation
+  if (onNavigate) {
+    var prevBtn = document.getElementById('week-nav-prev');
+    var nextBtn = document.getElementById('week-nav-next');
+    if (prevBtn && !prevDisabled) {
+      prevBtn.addEventListener('click', function() { onNavigate(currentWeek - 1); });
+    }
+    if (nextBtn && !nextDisabled) {
+      nextBtn.addEventListener('click', function() { onNavigate(currentWeek + 1); });
+    }
+  }
+}
+
+// ============================================
+// Sticky Week Counter
+// ============================================
+
+/**
+ * Render a minimal sticky progress bar at the top of the page.
+ * @param {Object} config - Course config
+ * @param {number} weekNum - Current week number
+ * @param {string} containerId - ID of container
+ */
+function renderStickyWeekCounter(config, weekNum, containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  var weekData = config.weekDates[weekNum];
+  var sprintNum = weekData ? weekData.sprint : 1;
+  var sprintData = config.sprints[sprintNum];
+  var sprintName = sprintData ? sprintData.name : 'Sprint ' + sprintNum;
+  var progress = (weekNum / 16) * 100;
+
+  container.style.cssText = 'position:sticky;top:0;z-index:10;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #e5e7eb;padding:8px 16px 0;margin:-16px -16px 16px -16px;';
+
+  container.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:6px;">' +
+      '<span style="font-weight:600;color:#374151;">Week ' + weekNum + ' of 16</span>' +
+      '<span style="color:#6b7280;">Sprint ' + sprintNum + ': ' + sprintName + '</span>' +
+    '</div>' +
+    '<div style="height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden;">' +
+      '<div style="height:100%;width:' + progress + '%;background:var(--theme-primary,#14b8a6);border-radius:2px;transition:width 0.3s;"></div>' +
+    '</div>';
 }
 
 // ============================================
@@ -366,9 +844,7 @@ function renderWeeklyLearning(config, weekNum, containerId, lookingAheadContaine
  * @param {Object} config - The course config object
  */
 function updateStatusBanner(config) {
-  const currentWeek = typeof getEffectiveCurrentWeek === 'function'
-    ? getEffectiveCurrentWeek()
-    : getCurrentWeekFromConfig(config);
+  const currentWeek = getResolvedCurrentWeek(config).week;
 
   const titleEl = document.getElementById('status-title');
   const subtitleEl = document.getElementById('status-subtitle');
@@ -445,9 +921,7 @@ function initHomePage(config) {
   updateStatusBanner(config);
 
   // Update dynamic content
-  const currentWeek = typeof getEffectiveCurrentWeek === 'function'
-    ? getEffectiveCurrentWeek()
-    : getCurrentWeekFromConfig(config);
+  const currentWeek = getResolvedCurrentWeek(config).week;
 
   if (currentWeek) {
     renderDueThisWeek(config, currentWeek, 'due-this-week');

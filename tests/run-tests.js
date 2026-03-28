@@ -12,3 +12,4 @@ require('./date-formatting.test.js');
 require('./content-validation.test.js');
 require('./synthesis-parsing.test.js');
 require('./canvas-api.test.js');
+require('./week-resolution.test.js');
