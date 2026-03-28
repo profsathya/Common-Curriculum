@@ -335,19 +335,12 @@ const changelog = [
 ];
 const comingNext = 'Phase I (Implement) \u2014 coming after Week 11. Building v1, testing with the expert, and what broke';
 
-const phases = [
-  { id: 'understand', letter: 'U', name: 'Understand', status: 'published', group: 'context' },
-  { id: 'map', letter: 'M', name: 'Map', status: 'published', group: 'context' },
-  { id: 'plan', letter: 'P', name: 'Plan', status: 'published', group: 'choices' },
-  { id: 'implement', letter: 'I', name: 'Implement', status: 'locked', group: 'choices' },
-  { id: 'review', letter: 'R', name: 'Review', status: 'locked', group: 'confirmation' },
-  { id: 'evaluate', letter: 'E', name: 'Evaluate', status: 'locked', group: 'confirmation' }
-];
-
-const groups = [
-  { id: 'context', label: 'Context', phases: ['understand', 'map'] },
-  { id: 'choices', label: 'Choices', phases: ['plan', 'implement'] },
-  { id: 'confirmation', label: 'Confirmation', phases: ['review', 'evaluate'] }
+const sections = [
+  { id: 'context', label: 'U+M', title: 'Context: Understand + Map', status: 'published', contentId: 'phase-context' },
+  { id: 'plan', label: 'P', title: 'Plan', status: 'published', contentId: 'phase-plan' },
+  { id: 'implement', label: 'I', title: 'Implement', status: 'locked', contentId: 'phase-implement' },
+  { id: 'review', label: 'R', title: 'Review', status: 'locked', contentId: 'phase-review' },
+  { id: 'evaluate', label: 'E', title: 'Evaluate', status: 'locked', contentId: 'phase-evaluate' }
 ];
 </script>
 
@@ -388,21 +381,12 @@ const groups = [
     </div>
   </div>
 
-  <!-- 3Cs + UMPIRE Progress Bar (rendered by script) -->
-  <div class="threecs-progress" id="threecs-progress"></div>
-  <p class="threecs-nonlinear">&#8617; You may return to Context from Choices, or to Context/Choices from Confirmation &mdash; the cycle is not strictly linear.</p>
+  <!-- Phase Box Navigation (rendered by script) -->
+  <div id="section-nav"></div>
 
   <!-- ========== PHASE U+M: CONTEXT (Published) ========== -->
-  <div class="phase-section phase-section--published" id="phase-context">
-    <details open>
-      <summary>
-        <span class="phase-badge phase-badge--published" style="font-size: 11px;">U+M</span>
-        <div class="phase-header-text">
-          <h2>Context: Understand + Map <span class="phase-tag phase-tag--published">Published</span></h2>
-        </div>
-        <span class="phase-toggle">&#9662;</span>
-      </summary>
-      <div class="phase-content">
+  <div class="phase-section phase-section--published" id="phase-context" style="display:none;">
+    <div class="phase-content">
 
         <!-- Video -->
         <div class="content-card">
@@ -447,21 +431,12 @@ const groups = [
           <a href="assignments/s3-w10-stake-defense.html">View Problem Stake Defense &rarr;</a>
         </div>
 
-      </div>
-    </details>
+    </div>
   </div>
 
   <!-- ========== PHASE P: PLAN (Published) ========== -->
-  <div class="phase-section phase-section--published" id="phase-plan">
-    <details open>
-      <summary>
-        <span class="phase-badge phase-badge--published">P</span>
-        <div class="phase-header-text">
-          <h2>Plan <span class="phase-tag phase-tag--published">Published</span></h2>
-        </div>
-        <span class="phase-toggle">&#9662;</span>
-      </summary>
-      <div class="phase-content">
+  <div class="phase-section phase-section--published" id="phase-plan" style="display:none;">
+    <div class="phase-content">
 
         <!-- Video -->
         <div class="content-card">
@@ -507,42 +482,13 @@ const groups = [
           <a href="assignments/s3-w10-stake-defense.html">View Problem Stake Defense Assignment &rarr;</a>
         </div>
 
-      </div>
-    </details>
+    </div>
   </div>
 
-  <!-- ========== PHASE I: IMPLEMENT (Locked) ========== -->
-  <div class="phase-section phase-section--locked" id="phase-implement">
-    <div class="phase-locked">
-      <span class="phase-badge phase-badge--locked">I</span>
-      <div class="phase-header-text">
-        <h2>Implement <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
-      </div>
-    </div>
-    <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">Building v1, testing with the expert, and what broke.</p>
-  </div>
-
-  <!-- ========== PHASE R: REVIEW (Locked) ========== -->
-  <div class="phase-section phase-section--locked" id="phase-review">
-    <div class="phase-locked">
-      <span class="phase-badge phase-badge--locked">R</span>
-      <div class="phase-header-text">
-        <h2>Review <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
-      </div>
-    </div>
-    <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">Did it work? What would I change about the approach?</p>
-  </div>
-
-  <!-- ========== PHASE E: EVALUATE (Locked) ========== -->
-  <div class="phase-section phase-section--locked" id="phase-evaluate">
-    <div class="phase-locked">
-      <span class="phase-badge phase-badge--locked">E</span>
-      <div class="phase-header-text">
-        <h2>Evaluate <span class="phase-tag phase-tag--locked">Coming soon</span></h2>
-      </div>
-    </div>
-    <p style="font-size: 13px; color: #9ca3af; margin: 8px 0 0 20px; padding-left: 46px;">The arc from Week 9 to now, what I'd do differently, and what this means for Sprint 4.</p>
-  </div>
+  <!-- Locked sections: content added when published -->
+  <div id="phase-implement" style="display:none;"></div>
+  <div id="phase-review" style="display:none;"></div>
+  <div id="phase-evaluate" style="display:none;"></div>
 
   <!-- Footer -->
   <div class="page-footer">
@@ -555,75 +501,78 @@ const groups = [
 </div>
 
 <script>
-// ===== RENDER: 3Cs + UMPIRE Progress Bar =====
-(function renderProgressBar() {
-  var container = document.getElementById('threecs-progress');
-  if (!container) return;
-
-  var phaseMap = {};
-  phases.forEach(function(p) { phaseMap[p.id] = p; });
-
-  var html = '';
-  groups.forEach(function(group, gi) {
-    // Determine group status: active if any phase is published or in-progress
-    var hasActive = group.phases.some(function(pid) {
-      var s = phaseMap[pid].status;
-      return s === 'published' || s === 'in-progress';
-    });
-    var groupClass = hasActive ? 'threecs-group--active' : 'threecs-group--locked';
-
-    html += '<div class="threecs-group ' + groupClass + '">';
-    html += '<p class="threecs-group__label">' + group.label + '</p>';
-    html += '<div class="threecs-group__phases">';
-
-    group.phases.forEach(function(pid, pi) {
-      var phase = phaseMap[pid];
-      var circleClass = 'threecs-phase__circle--' + phase.status;
-      var nameClass = 'threecs-phase__name--' + phase.status;
-
-      html += '<a class="threecs-phase" href="#phase-' + (group.id === 'context' ? 'context' : phase.id) + '">';
-      html += '<span class="threecs-phase__circle ' + circleClass + '">' + phase.letter + '</span>';
-      html += '<span class="threecs-phase__name ' + nameClass + '">' + phase.name + '</span>';
-      html += '</a>';
-
-      if (pi < group.phases.length - 1) {
-        var connDone = (phase.status === 'published') ? 'threecs-connector--done' : 'threecs-connector--pending';
-        html += '<div class="threecs-connector ' + connDone + '"></div>';
-      }
-    });
-
-    html += '</div></div>';
-
-    // Arrow between groups
-    if (gi < groups.length - 1) {
-      var arrowActive = hasActive ? 'threecs-arrow--active' : '';
-      html += '<div class="threecs-arrow ' + arrowActive + '">&rarr;</div>';
+// ===== Section Navigation =====
+function showSection(sectionId) {
+  sections.forEach(function(s) {
+    var el = document.getElementById(s.contentId);
+    if (el) el.style.display = s.id === sectionId ? 'block' : 'none';
+    var btn = document.getElementById('nav-' + s.id);
+    if (btn) {
+      btn.style.outline = s.id === sectionId ? '2px solid #0f766e' : 'none';
+      btn.style.outlineOffset = s.id === sectionId ? '2px' : '0';
     }
   });
+  try { localStorage.setItem('cst395-notes-last-section', sectionId); } catch(e) {}
+}
 
-  container.innerHTML = html;
-})();
+function renderSectionNav() {
+  var nav = document.getElementById('section-nav');
+  if (!nav) return;
+  var html = '<div style="display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap;">';
+  sections.forEach(function(s) {
+    var isLocked = s.status === 'locked';
+    var bg = isLocked ? '#f3f4f6' : '#14b8a6';
+    var color = isLocked ? '#9ca3af' : 'white';
+    var cursor = isLocked ? 'default' : 'pointer';
+    var opacity = isLocked ? '0.7' : '1';
+    var border = isLocked ? '1.5px solid #e5e7eb' : '1.5px solid #0d9488';
+    var pulse = s.status === 'in-progress' ? 'animation:pulse-ring 2s ease-in-out infinite;background:transparent;border:2px solid #14b8a6;color:#14b8a6;' : '';
+    html += '<button id="nav-' + s.id + '" ' +
+      (isLocked ? '' : 'onclick="showSection(\'' + s.id + '\')" ') +
+      'style="flex:1;min-width:100px;padding:10px 12px;border-radius:10px;border:' + border + ';background:' + bg + ';color:' + color + ';cursor:' + cursor + ';opacity:' + opacity + ';font-family:inherit;text-align:center;transition:all 0.15s;' + pulse + '">' +
+        '<div style="font-size:14px;font-weight:700;">' + s.label + '</div>' +
+        '<div style="font-size:11px;margin-top:2px;opacity:0.85;">' + s.title + '</div>' +
+      (isLocked ? '<div style="font-size:10px;margin-top:4px;font-style:italic;">Coming soon</div>' : '') +
+    '</button>';
+  });
+  html += '</div>';
+  nav.innerHTML = html;
+}
 
-// ===== RENDER: Last Updated Banner =====
+// ===== Initialize =====
 document.addEventListener('DOMContentLoaded', function() {
-  var banner = document.querySelector('.last-updated-banner__inner');
-  if (!banner || !changelog.length) return;
+  renderSectionNav();
 
-  var dateEl = banner.querySelector('.last-updated-banner__date');
-  if (dateEl) dateEl.textContent = 'Last updated: ' + changelog[0].date;
+  // Determine which section to show
+  var lastSection = null;
+  try { lastSection = localStorage.getItem('cst395-notes-last-section'); } catch(e) {}
 
-  var logEl = banner.querySelector('.last-updated-banner__log');
-  if (logEl) {
-    logEl.innerHTML = '';
-    changelog.slice(0, 3).forEach(function(entry) {
-      var li = document.createElement('li');
-      li.textContent = entry.date + ' \u2014 ' + entry.text;
-      logEl.appendChild(li);
-    });
+  // Validate: must exist and not be locked
+  var valid = sections.some(function(s) { return s.id === lastSection && s.status !== 'locked'; });
+  if (!valid) {
+    var first = sections.find(function(s) { return s.status !== 'locked'; });
+    lastSection = first ? first.id : sections[0].id;
   }
 
-  var nextEl = banner.querySelector('.last-updated-banner__next');
-  if (nextEl) nextEl.textContent = 'Coming next: ' + comingNext;
+  showSection(lastSection);
+
+  // Render changelog banner
+  var banner = document.querySelector('.last-updated-banner__inner');
+  if (banner && changelog.length) {
+    var dateEl = banner.querySelector('.last-updated-banner__date');
+    if (dateEl) dateEl.textContent = 'Last updated: ' + changelog[0].date;
+    var logEl = banner.querySelector('.last-updated-banner__log');
+    if (logEl) {
+      logEl.innerHTML = '';
+      changelog.slice(0, 3).forEach(function(entry) {
+        var li = document.createElement('li');
+        li.textContent = entry.date + ' \u2014 ' + entry.text;
+        logEl.appendChild(li);
+      });
+    }
+    var nextEl = banner.querySelector('.last-updated-banner__next');
+    if (nextEl) nextEl.textContent = 'Coming next: ' + comingNext;
+  }
 });
 </script>
 

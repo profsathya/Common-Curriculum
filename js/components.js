@@ -338,10 +338,6 @@ function getAssignmentGroups(config, weekNum, todayDate) {
 
 /**
  * Render the Zone B sprint briefing for a specific week.
- * @param {Object} config - Course config
- * @param {number} weekNum - Week number to render
- * @param {string} containerId - ID of container element
- * @param {Object} [options] - Optional settings
  */
 function renderSprintBriefing(config, weekNum, containerId, options) {
   options = options || {};
@@ -357,69 +353,118 @@ function renderSprintBriefing(config, weekNum, containerId, options) {
   var resolved = getResolvedCurrentWeek(config);
   var groups = getAssignmentGroups(config, weekNum);
   var weeklyQuestion = config.weeklyQuestions ? config.weeklyQuestions[weekNum] : null;
-  var sprintData = config.sprints[weekData.sprint];
+  var content = config.weeklyContent ? config.weeklyContent[weekNum] : null;
+  var nextContent = config.weeklyContent ? config.weeklyContent[weekNum + 1] : null;
 
   var html = '';
 
   // Gap banner
   if (resolved.isGap && resolved.week === weekNum) {
-    html += '<div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:14px;color:#92400e;">' +
-      resolved.gapMessage +
+    html += '<div style="padding:10px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;margin-bottom:16px;text-align:center;">' +
+      '<span style="font-size:13px;font-weight:600;color:#92400e;">\uD83C\uDF34 ' + resolved.gapMessage + '</span>' +
     '</div>';
+  }
+
+  // Looking back / looking forward cards
+  var lookBack = content ? content.connection : null;
+  var lookForward = nextContent ? nextContent.narrative : null;
+  if (lookBack || lookForward) {
+    html += '<div style="display:flex;gap:10px;margin-bottom:16px;">';
+    if (lookBack) {
+      html += '<div style="flex:1;padding:10px;background:#f9fafb;border-radius:8px;">' +
+        '<div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">\u2190 Looking back</div>' +
+        '<div style="font-size:13px;color:#4b5563;line-height:1.55;">' + lookBack + '</div>' +
+      '</div>';
+    }
+    if (lookForward) {
+      html += '<div style="flex:1;padding:10px;background:var(--theme-light,#f0fdfa);border-radius:8px;">' +
+        '<div style="font-size:10px;font-weight:700;color:var(--theme-dark,#0d9488);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Looking ahead \u2192</div>' +
+        '<div style="font-size:13px;color:var(--theme-dark,#115e59);line-height:1.55;">' + lookForward + '</div>' +
+      '</div>';
+    }
+    html += '</div>';
   }
 
   // Weekly question
   if (weeklyQuestion) {
-    html += '<div style="background:var(--theme-light,#f0fdfa);border-left:3px solid var(--theme-primary,#14b8a6);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">' +
-      '<p style="font-size:12px;font-weight:600;color:var(--theme-dark,#0d9488);text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px 0;">This Week\'s Question</p>' +
-      '<p style="font-size:15px;color:#1e293b;margin:0;font-style:italic;line-height:1.5;">' + weeklyQuestion + '</p>' +
+    html += '<div style="padding:14px;border-radius:8px;margin-bottom:16px;background:linear-gradient(135deg,var(--theme-light,#f0fdfa),#ccfbf1);border-left:4px solid var(--theme-primary,#14b8a6);">' +
+      '<div style="font-size:11px;font-weight:700;color:var(--theme-dark,#0d9488);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px;">This week\'s question</div>' +
+      '<div style="font-size:15px;font-weight:500;color:#134e4a;line-height:1.5;font-style:italic;">\u201C' + weeklyQuestion + '\u201D</div>' +
     '</div>';
   }
 
-  // Still-due indicator (collapsed)
+  // Assignment groups header
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+    '<div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#374151;">What you need to do</div>' +
+    '<span style="font-size:11px;color:#9ca3af;">Click any item for context</span>' +
+  '</div>';
+
+  // Still-due indicator (collapsed, amber count circle)
   if (groups.stillDue.length > 0) {
+    var sdId = 'still-due-list-' + weekNum;
     html += '<div style="margin-bottom:12px;">' +
-      '<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\';this.querySelector(\'span\').textContent=this.nextElementSibling.style.display===\'none\'?\'+\':\'\u2212\'" ' +
-      'style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;font-family:inherit;">' +
-        groups.stillDue.length + ' item' + (groups.stillDue.length > 1 ? 's' : '') + ' from earlier weeks still need attention' +
-        '<span style="font-size:16px;color:#9ca3af;">+</span>' +
+      '<button onclick="var el=document.getElementById(\'' + sdId + '\');var show=el.style.display===\'none\';el.style.display=show?\'block\':\'none\';this.querySelector(\'.sd-chev\').style.transform=show?\'rotate(180deg)\':\'rotate(0)\'" ' +
+      'style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.15s;">' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:10px;background:#fef3c7;font-size:11px;font-weight:700;color:#92400e;">' + groups.stillDue.length + '</span>' +
+          '<span style="font-size:13px;color:#6b7280;">' + groups.stillDue.length + ' item' + (groups.stillDue.length > 1 ? 's' : '') + ' from earlier weeks still need attention</span>' +
+        '</div>' +
+        '<span class="sd-chev" style="font-size:12px;color:#9ca3af;transition:transform 0.2s;">\u25BE</span>' +
       '</button>' +
-      '<div style="display:none;padding:8px 0;">';
+      '<div id="' + sdId + '" style="display:none;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;overflow:hidden;">';
     groups.stillDue.forEach(function(item) {
-      html += renderAssignmentRow(item, config);
+      html += renderAssignmentRow(item, config, true);
     });
     html += '</div></div>';
   }
 
   // This week's assignments
   if (groups.thisWeek.length > 0) {
-    html += '<div style="margin-bottom:16px;">' +
-      '<h3 style="font-size:14px;font-weight:600;color:#374151;margin:0 0 8px 0;">This Week</h3>';
+    html += '<div style="margin-bottom:12px;">' +
+      '<div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#4b5563;padding:6px 14px;">This week</div>' +
+      '<div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">';
     groups.thisWeek.forEach(function(item) {
       html += renderAssignmentRow(item, config);
     });
-    html += '</div>';
+    html += '</div></div>';
   } else {
     html += '<p style="color:#6b7280;font-size:14px;padding:8px 0;">No assignments due this week.</p>';
   }
 
   // Coming up
   if (groups.comingUp.length > 0) {
-    html += '<div style="margin-bottom:16px;">' +
-      '<h3 style="font-size:13px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px 0;">Coming Up</h3>';
+    html += '<div style="margin-bottom:12px;">' +
+      '<div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--theme-dark,#0d9488);padding:6px 14px;">Coming up next</div>' +
+      '<div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">';
     groups.comingUp.forEach(function(item) {
-      html += renderAssignmentRow(item, config, true);
+      html += renderAssignmentRow(item, config);
     });
-    html += '</div>';
+    html += '</div></div>';
   }
 
-  // Session link (if loom video or session slides exist)
+  // Session info card
   var loomUrl = config.loomVideos ? config.loomVideos[weekNum] : null;
-  if (loomUrl) {
-    html += '<div style="margin-top:16px;padding:12px 16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;">' +
-      '<a href="' + loomUrl + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--theme-dark,#0d9488);font-weight:600;font-size:14px;text-decoration:none;">' +
-        'Watch Class Recording \u2192' +
-      '</a>' +
+  html += '<div style="padding:12px;background:#f9fafb;border-radius:8px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">' +
+    '<div>' +
+      '<div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em;">In-class session</div>' +
+      '<div style="font-size:14px;font-weight:500;color:#374151;margin-top:2px;">' + (weekData.title || 'Week ' + weekNum) + '</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:8px;">' +
+    (loomUrl ? '<a href="' + loomUrl + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Recording \u2192</a>' : '') +
+    '</div>' +
+  '</div>';
+
+  // Why This block
+  if (content && content.narrative) {
+    html += '<div style="padding:12px;border-radius:8px;border:1px solid var(--theme-light,#ccfbf1);background:white;">' +
+      '<div style="display:flex;align-items:flex-start;gap:12px;">' +
+        '<div style="width:48px;height:48px;border-radius:8px;background:var(--theme-light,#ccfbf1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">\uD83C\uDFA5</div>' +
+        '<div>' +
+          '<div style="font-size:12px;font-weight:700;color:var(--theme-dark,#0d9488);margin-bottom:4px;">Why this week matters</div>' +
+          '<div style="font-size:13px;color:#4b5563;line-height:1.55;font-style:italic;">' + content.narrative + '</div>' +
+          '<div style="margin-top:6px;font-size:12px;color:var(--theme-dark,#0d9488);">\u2014 Prof. Sathya</div>' +
+        '</div>' +
+      '</div>' +
     '</div>';
   }
 
@@ -429,28 +474,35 @@ function renderSprintBriefing(config, weekNum, containerId, options) {
 /**
  * Render a single assignment row with expandable briefing.
  */
-function renderAssignmentRow(item, config, dimmed) {
+function renderAssignmentRow(item, config, isPastDue) {
   var displayTitle = item.title.replace(/^S\d+:\s*/, '');
   var url = item.htmlFile || (config.canvasBaseUrl + '/assignments/' + item.canvasId);
-  var dotColors = { assignment: '#3b82f6', reflection: '#a855f7', quiz: '#14b8a6', dojo: '#14b8a6', bridge: '#f59e0b', peer: '#22c55e' };
-  var dotColor = dotColors[item.type] || '#6b7280';
-  var opacity = dimmed ? 'opacity:0.7;' : '';
+  var typeIcons = { assignment: '\uD83D\uDCCB', reflection: '\uD83E\uDE9E', quiz: '\uD83D\uDCDD', dojo: '\uD83E\uDD4B', peer: '\uD83D\uDC65', 'ai-discussion': '\uD83D\uDCAC', bridge: '\uD83C\uDF09', 'handwritten-reflection': '\uD83E\uDE9E' };
+  var typeColors = { assignment: '#3b82f6', reflection: '#a855f7', quiz: '#14b8a6', dojo: '#14b8a6', peer: '#22c55e', 'ai-discussion': '#14b8a6', bridge: '#f59e0b', 'handwritten-reflection': '#a855f7' };
+  var icon = typeIcons[item.type] || '\uD83D\uDCCB';
+  var tc = typeColors[item.type] || '#6b7280';
   var briefingId = 'briefing-' + item.key;
+  var chevId = 'chev-' + item.key;
 
-  var html = '<div style="' + opacity + 'margin-bottom:4px;">' +
-    '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:6px;cursor:pointer;transition:background 0.15s;" ' +
+  var html = '<div style="border-bottom:1px solid #f3f4f6;">';
+
+  // Row button
+  html += '<div style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:' + (item.briefing ? 'pointer' : 'default') + ';transition:background 0.15s;" ' +
     'onmouseover="this.style.background=\'#f9fafb\'" onmouseout="this.style.background=\'transparent\'"' +
-    (item.briefing ? ' onclick="var b=document.getElementById(\'' + briefingId + '\');b.style.display=b.style.display===\'none\'?\'block\':\'none\'"' : '') + '>' +
-      '<div style="display:flex;align-items:center;gap:8px;min-width:0;">' +
-        '<span style="width:8px;height:8px;border-radius:50%;background:' + dotColor + ';flex-shrink:0;"></span>' +
-        '<a href="' + url + '" target="_blank" style="color:#1e293b;text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" onclick="event.stopPropagation()">' + displayTitle + '</a>' +
-      '</div>' +
-      '<span style="font-size:12px;color:#9ca3af;flex-shrink:0;margin-left:12px;">' + formatDate(item.dueDate) + '</span>' +
-    '</div>';
+    (item.briefing ? ' onclick="var b=document.getElementById(\'' + briefingId + '\');var show=b.style.display===\'none\';b.style.display=show?\'block\':\'none\';document.getElementById(\'' + chevId + '\').style.transform=show?\'rotate(180deg)\':\'rotate(0)\'"' : '') + '>' +
+      '<span style="font-size:15px;flex-shrink:0;">' + icon + '</span>' +
+      '<a href="' + url + '" target="_blank" onclick="event.stopPropagation()" style="flex:1;font-size:14px;font-weight:500;color:' + (isPastDue ? '#6b7280' : '#1f2937') + ';text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + displayTitle + '</a>' +
+      '<span style="font-size:12px;color:' + (isPastDue ? '#ef4444' : '#9ca3af') + ';white-space:nowrap;margin-right:8px;font-weight:' + (isPastDue ? '600' : '400') + ';">' + formatDate(item.dueDate) + '</span>' +
+      '<span style="font-size:11px;color:' + tc + ';font-weight:600;background:' + tc + '15;padding:2px 8px;border-radius:4px;white-space:nowrap;">' + (item.type || 'assignment') + '</span>' +
+      (item.briefing ? '<span id="' + chevId + '" style="font-size:14px;color:#9ca3af;transition:transform 0.2s;flex-shrink:0;">\u25BE</span>' : '') +
+  '</div>';
 
+  // Expandable briefing
   if (item.briefing) {
-    html += '<div id="' + briefingId + '" style="display:none;padding:4px 12px 10px 28px;font-size:13px;color:#64748b;line-height:1.5;">' +
-      item.briefing +
+    html += '<div id="' + briefingId + '" style="display:none;padding:0 14px 14px 39px;border-left:3px solid ' + tc + ';margin-left:14px;">' +
+      '<div style="font-weight:600;font-size:11px;color:' + tc + ';letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">How this connects</div>' +
+      '<div style="font-size:13px;line-height:1.65;color:#4b5563;">' + item.briefing + '</div>' +
+      '<div style="margin-top:8px;"><a href="' + url + '" target="_blank" style="font-size:11px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Open full assignment \u2192</a></div>' +
     '</div>';
   }
 
@@ -463,16 +515,14 @@ function renderAssignmentRow(item, config, dimmed) {
 // ============================================
 
 /**
- * Render 4 sprint pills showing progression.
- * @param {Object} config - Course config
- * @param {number} currentSprint - Current sprint number
- * @param {string} containerId - ID of container
+ * Render 4 sprint pills showing progression (multi-line, matching prototype).
  */
 function renderJourneyPills(config, currentSprint, containerId) {
   var container = document.getElementById(containerId);
   if (!container) return;
 
-  var html = '<div style="display:flex;gap:6px;margin-bottom:16px;">';
+  var html = '<div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--theme-dark,#0d9488);margin-bottom:8px;">Your journey</div>';
+  html += '<div style="display:flex;gap:6px;margin-bottom:10px;">';
 
   for (var i = 1; i <= 4; i++) {
     var sprint = config.sprints[i];
@@ -480,34 +530,34 @@ function renderJourneyPills(config, currentSprint, containerId) {
 
     var isCurrent = i === currentSprint;
     var isPast = i < currentSprint;
-    var isFuture = i > currentSprint;
 
-    var bg, color, border, cursor;
+    var bg, textColor, subColor, border;
     if (isCurrent) {
       bg = 'var(--theme-primary, #14b8a6)';
-      color = 'white';
-      border = 'none';
-      cursor = 'default';
+      textColor = 'white';
+      subColor = 'rgba(255,255,255,0.85)';
+      border = '1.5px solid var(--theme-dark, #0d9488)';
     } else if (isPast) {
       bg = 'var(--theme-light, #f0fdfa)';
-      color = 'var(--theme-dark, #0d9488)';
-      border = '1px solid var(--theme-primary, #14b8a6)';
-      cursor = 'pointer';
+      textColor = 'var(--theme-dark, #115e59)';
+      subColor = 'var(--theme-dark, #0d9488)';
+      border = '1.5px solid var(--theme-primary, #5eead4)';
     } else {
       bg = '#f9fafb';
-      color = '#9ca3af';
-      border = '1px solid #e5e7eb';
-      cursor = 'default';
+      textColor = '#9ca3af';
+      subColor = '#9ca3af';
+      border = '1.5px solid #e5e7eb';
     }
 
-    var pillId = 'sprint-pill-' + i;
-    var summaryId = 'sprint-summary-' + i;
+    var stakeholder = sprint.stakeholder || '';
+    var statusLabel = isPast ? '\u2713 Sprint ' + i : (isCurrent ? '\u2605 Sprint ' + i : 'Sprint ' + i);
 
-    html += '<button id="' + pillId + '" ' +
-      'style="flex:1;padding:8px 4px;border-radius:8px;font-size:12px;font-weight:600;background:' + bg + ';color:' + color + ';border:' + border + ';cursor:' + cursor + ';font-family:inherit;transition:all 0.2s;" ' +
-      (isPast ? 'onclick="toggleSprintSummary(' + i + ')"' : '') +
-      '>' +
-      'S' + i + ': ' + sprint.name +
+    html += '<button ' +
+      'style="flex:1;padding:10px 8px;background:' + bg + ';border:' + border + ';border-radius:10px;cursor:' + (isPast ? 'pointer' : 'default') + ';text-align:center;font-family:inherit;transition:all 0.15s;" ' +
+      (isPast ? 'onclick="toggleSprintSummary(' + i + ')"' : '') + '>' +
+        '<div style="font-size:11px;font-weight:700;color:' + subColor + ';letter-spacing:0.04em;text-transform:uppercase;">' + statusLabel + '</div>' +
+        '<div style="font-size:14px;font-weight:600;color:' + textColor + ';margin-top:2px;">' + sprint.name + '</div>' +
+        '<div style="font-size:11px;color:' + subColor + ';margin-top:2px;">' + stakeholder + '</div>' +
     '</button>';
   }
 
@@ -517,9 +567,9 @@ function renderJourneyPills(config, currentSprint, containerId) {
   for (var j = 1; j <= 4; j++) {
     var summaries = config.sprintSummaries ? config.sprintSummaries[j] : null;
     if (summaries && j < currentSprint) {
-      html += '<div id="sprint-summary-' + j + '" style="display:none;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:12px;">' +
-        '<p style="font-size:14px;color:#374151;margin:0 0 8px 0;line-height:1.5;">' + summaries.summary + '</p>' +
-        '<p style="font-size:12px;color:#6b7280;margin:0;"><strong>Capabilities:</strong> ' + summaries.capabilities + '</p>' +
+      html += '<div id="sprint-summary-' + j + '" style="display:none;margin:0 0 10px;padding:14px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;">' +
+        '<div style="font-size:13px;line-height:1.65;color:#374151;margin-bottom:8px;">' + summaries.summary + '</div>' +
+        '<div style="font-size:12px;color:var(--theme-dark,#0d9488);font-style:italic;">' + summaries.capabilities + '</div>' +
       '</div>';
     }
   }
@@ -569,23 +619,37 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
   var weekTitle = weekData ? weekData.title : 'Week ' + currentWeek;
   var minWeek = sprintWeeks[0] || currentWeek;
   var maxWeek = sprintWeeks[sprintWeeks.length - 1] || currentWeek;
+  var prevWeek = currentWeek - 1;
+  var nextWeek = currentWeek + 1;
 
   var prevDisabled = currentWeek <= minWeek;
   var nextDisabled = currentWeek >= maxWeek;
 
-  var btnStyle = 'padding:6px 12px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;border:1px solid #e5e7eb;background:white;color:#374151;';
-  var disabledStyle = 'opacity:0.3;cursor:default;';
+  // Format date range
+  var dateRange = '';
+  if (weekData) {
+    var s = new Date(weekData.start + 'T12:00:00');
+    var e = new Date(weekData.end + 'T12:00:00');
+    var fmt = function(d) { return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); };
+    dateRange = fmt(s) + ' \u2013 ' + fmt(e);
+  }
+
+  var btnBase = 'padding:6px 12px;border-radius:6px;font-size:14px;font-weight:600;font-family:inherit;border:1px solid;transition:all 0.15s;';
+  var btnActive = btnBase + 'cursor:pointer;background:white;border-color:var(--theme-primary,#5eead4);color:var(--theme-dark,#0d9488);';
+  var btnDis = btnBase + 'cursor:default;background:#f9fafb;border-color:#e5e7eb;color:#d1d5db;';
 
   container.innerHTML =
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
-      '<button id="week-nav-prev" style="' + btnStyle + (prevDisabled ? disabledStyle : '') + '"' +
-        (prevDisabled ? ' disabled' : '') + '>\u2190 Prev</button>' +
-      '<div style="text-align:center;">' +
-        '<span style="font-size:13px;font-weight:600;color:#374151;">Week ' + currentWeek + '</span>' +
-        '<span style="font-size:12px;color:#9ca3af;display:block;">' + weekTitle + '</span>' +
+    '<div style="padding:10px 16px;background:linear-gradient(135deg,var(--theme-light,#f0fdfa),white);border:1px solid var(--theme-light,#ccfbf1);border-radius:12px;margin-bottom:16px;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+        '<button id="week-nav-prev" style="' + (prevDisabled ? btnDis : btnActive) + '"' +
+          (prevDisabled ? ' disabled' : '') + '>\u2190 Week ' + prevWeek + '</button>' +
+        '<div style="text-align:center;">' +
+          '<div style="font-size:16px;font-weight:700;color:#1f2937;">Week ' + currentWeek + ': ' + weekTitle + '</div>' +
+          '<div style="font-size:12px;color:#9ca3af;margin-top:2px;">' + dateRange + '</div>' +
+        '</div>' +
+        '<button id="week-nav-next" style="' + (nextDisabled ? btnDis : btnActive) + '"' +
+          (nextDisabled ? ' disabled' : '') + '>Week ' + nextWeek + ' \u2192</button>' +
       '</div>' +
-      '<button id="week-nav-next" style="' + btnStyle + (nextDisabled ? disabledStyle : '') + '"' +
-        (nextDisabled ? ' disabled' : '') + '>Next \u2192</button>' +
     '</div>';
 
   // Wire up navigation
