@@ -131,3 +131,14 @@ The curriculum is a digital product. Reducing navigation friction directly incre
 4. **Format explicitness** — Every assignment with a file upload specifies: accepted file types, filename pattern (e.g., `lastname-s1-five-whys.pdf`), and where to find/generate the file if it comes from an activity. "Upload your output" is never sufficient.
 
 *See → content-qa.md for the operational checklist that enforces these principles.*
+
+## Information Architecture (Sprint Pages)
+
+Sprint pages use a two-zone architecture separating orientation (Zone A) from weekly tactical content (Zone B). All weekly content renders dynamically from config data. See `context/information-architecture.md` for full rationale and design principles.
+
+Key decisions:
+- Home pages redirect to current sprint page
+- "What do I need to do" answered in 5 seconds (Layer 1), with progressive disclosure for context (Layer 2) and full assignment detail (Layer 3)
+- No gating — context is available by choice, not forced as prerequisite
+- Week logic never returns null — spring break and gaps show the most recent valid week with a banner
+- Past-due assignments shown as collapsed indicator, not open list
