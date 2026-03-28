@@ -19,28 +19,32 @@
     <!-- Sticky Week Counter -->
     <div id="sticky-counter"></div>
 
-    <!-- Zone A -->
-    <div id="journey-pills"></div>
+    <!-- Zone A Card -->
+    <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+      <!-- Journey Pills (always visible, never collapse) -->
+      <div id="journey-pills" style="padding:14px 16px 10px;background:white;"></div>
 
-    <!-- Sprint Header -->
-    <div class="sprint-header">
-      <nav class="sprint-header__breadcrumb">
-        <a href="home.html">Home</a> / <span>Sprint 1</span>
-      </nav>
-      <h1 class="sprint-header__title">Sprint 1: Beyond Technical</h1>
-      <p class="sprint-header__subtitle">"Why broader skills matter" — Identifying and developing your soft skill gap</p>
-      <div class="sprint-header__meta">
-        <span class="sprint-header__tag">Weeks 1-4</span>
-        <span class="sprint-header__tag">Scaffolding: High</span>
+      <!-- Sprint Header (always visible) -->
+      <div style="padding:0 16px 12px;">
+        <nav style="font-size:12px;color:#6b7280;margin-bottom:4px;">
+          <a href="home.html" style="color:#6b7280;text-decoration:none;">Home</a> / Sprint 1
+        </nav>
+        <h1 style="font-size:20px;font-weight:700;color:#111827;margin:0 0 4px 0;">Sprint 1: Beyond Technical</h1>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 8px 0;">"Why broader skills matter" — Identifying and developing your soft skill gap</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Weeks 1-4</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Scaffolding: High</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Collapsible Sprint Details -->
-    <div style="margin-bottom: 16px;">
-      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('span').textContent=show?'Hide details ▲':'Sprint details — context, grading, weeks ▼'" style="width:100%;padding:10px 16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;font-family:inherit;text-align:left;">
-        Sprint details — context, grading, weeks <span>▼</span>
+      <!-- Collapse Toggle -->
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 context, grading, weeks';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; context, grading, weeks</span>
+        <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark,#2563eb);font-weight:600;">&#9660;</span>
       </button>
-      <div id="sprint-details" style="display:none;background:white;border:1px solid #e5e7eb;border-radius:0 0 8px 8px;padding:20px;margin-top:-1px;">
+
+      <!-- Collapsible Details -->
+      <div id="sprint-details" style="display:none;padding:16px;border-top:1px solid #e5e7eb;">
         <h2 style="font-size:16px;font-weight:600;margin:0 0 12px 0;">By Sprint End, You Will Have:</h2>
         <ul style="margin:0 0 16px 0;padding-left:20px;color:#4b5563;font-size:14px;line-height:1.6;">
           <li>Identified a meaningful soft skill gap through honest self-assessment</li>
@@ -58,7 +62,7 @@
       </div>
     </div>
 
-    <!-- Zone B: Weekly Briefing (rendered by JS) -->
+    <!-- Zone B: Weekly Briefing -->
     <div id="week-nav"></div>
     <div id="zone-b"></div>
 
