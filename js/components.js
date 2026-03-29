@@ -646,7 +646,7 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
         '<button id="week-nav-next" style="' + (nextDisabled ? btnDis : btnActive) + '"' +
           (nextDisabled ? ' disabled' : '') + '>Week ' + nextWeek + ' \u2192</button>' +
       '</div>' +
-      (prevSprintLink || nextSprintLink ? '<div style="display:flex;justify-content:space-between;">' + prevSprintLink + nextSprintLink + '</div>' : '') +
+      (prevSprintLink || nextSprintLink ? '<div style="display:flex;justify-content:' + (prevSprintLink && nextSprintLink ? 'space-between' : (nextSprintLink ? 'flex-end' : 'flex-start')) + ';">' + prevSprintLink + nextSprintLink + '</div>' : '') +
     '</div>';
 
   // Wire up navigation
