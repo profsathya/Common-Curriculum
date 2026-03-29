@@ -1075,7 +1075,7 @@ function addNavigationIfNeeded() {
       { label: 'S4', href: 'sprint-4.html' },
       { label: 'Overview', href: 'overview.html' },
       { label: 'SDL Dimensions', href: 'sdl-dimensions.html' },
-      { label: 'Portfolio', href: 'portfolio.html' }
+      { label: 'Concepts', href: 'concepts.html' }
     ];
   } else {
     return; // Unknown course, skip nav
