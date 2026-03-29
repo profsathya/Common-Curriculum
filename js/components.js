@@ -1105,7 +1105,6 @@ function addNavigationIfNeeded() {
 function addDemoBannerIfNeeded() {
   addNavigationIfNeeded();
 }
-}
 
 // ============================================
 // Class Recording (Loom) Links
