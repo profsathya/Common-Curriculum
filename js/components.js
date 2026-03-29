@@ -622,6 +622,18 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
   var btnActive = btnBase + 'cursor:pointer;background:white;border-color:var(--theme-primary,#5eead4);color:var(--theme-dark,#0d9488);';
   var btnDis = btnBase + 'cursor:default;background:#f9fafb;border-color:#e5e7eb;color:#d1d5db;';
 
+  // Cross-sprint links
+  var prevSprintLink = '';
+  var nextSprintLink = '';
+  if (prevDisabled && sprintNum > 1) {
+    var ps = config.sprints[sprintNum - 1];
+    if (ps) prevSprintLink = '<div style="text-align:left;margin-top:4px;"><a href="sprint-' + (sprintNum - 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">\u2190 Sprint ' + (sprintNum - 1) + ': ' + ps.name + '</a></div>';
+  }
+  if (nextDisabled && sprintNum < 4) {
+    var ns = config.sprints[sprintNum + 1];
+    if (ns) nextSprintLink = '<div style="text-align:right;margin-top:4px;"><a href="sprint-' + (sprintNum + 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">Sprint ' + (sprintNum + 1) + ': ' + ns.name + ' \u2192</a></div>';
+  }
+
   container.innerHTML =
     '<div style="padding:10px 16px;background:linear-gradient(135deg,var(--theme-light,#f0fdfa),white);border:1px solid var(--theme-light,#ccfbf1);border-radius:12px;margin-bottom:16px;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;">' +
@@ -634,6 +646,7 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
         '<button id="week-nav-next" style="' + (nextDisabled ? btnDis : btnActive) + '"' +
           (nextDisabled ? ' disabled' : '') + '>Week ' + nextWeek + ' \u2192</button>' +
       '</div>' +
+      (prevSprintLink || nextSprintLink ? '<div style="display:flex;justify-content:space-between;">' + prevSprintLink + nextSprintLink + '</div>' : '') +
     '</div>';
 
   // Wire up navigation
