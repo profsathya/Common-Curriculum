@@ -7,390 +7,135 @@
   <link rel="stylesheet" href="../css/shared-styles.css">
   <style>
     :root {
-      --purple-50: #f3e8ff;
-      --purple-100: #e9d5ff;
-      --purple-200: #d8b4fe;
-      --purple-500: #a855f7;
-      --purple-600: #9333ea;
-      --purple-700: #7e22ce;
-    }
-    .week-card {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      margin-bottom: var(--space-4);
-      overflow: hidden;
-    }
-    .week-card__header {
-      background: var(--purple-50);
-      padding: var(--space-4);
-      border-bottom: 1px solid var(--gray-200);
-    }
-    .week-card__title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--gray-900);
-      margin: 0;
-    }
-    .week-card__subtitle {
-      font-size: var(--text-sm);
-      color: var(--purple-600);
-      margin: var(--space-1) 0 0 0;
-    }
-    .week-card__content {
-      padding: var(--space-4);
-    }
-    .assignment-item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      padding: var(--space-3);
-      background: var(--gray-50);
-      border-radius: var(--radius-md);
-      margin-bottom: var(--space-2);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .assignment-item:hover {
-      background: var(--purple-50);
-    }
-    .assignment-item:last-child {
-      margin-bottom: 0;
-    }
-    .assignment-item__icon {
-      width: 32px;
-      height: 32px;
-      background: var(--purple-100);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .assignment-item__content {
-      flex: 1;
-    }
-    .assignment-item__title {
-      font-weight: 500;
-      color: var(--gray-900);
-      margin: 0;
-    }
-    .assignment-item__meta {
-      font-size: var(--text-sm);
-      color: var(--gray-500);
-      margin: 2px 0 0 0;
-    }
-    .umpire-tag {
-      display: inline-block;
-      background: var(--purple-100);
-      color: var(--purple-700);
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
-      font-size: var(--text-xs);
-      font-weight: 500;
+      --theme-primary: #3b82f6;
+      --theme-dark: #2563eb;
+      --theme-light: #eff6ff;
     }
   </style>
 </head>
 <body>
-<!-- Under Construction Banner -->
-<div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin: 16px; text-align: center;">
-  <span style="font-size: 1.1em;"><strong>Under Construction</strong> &mdash; This page is being refined. Content and assignments may change. Don't do any work until this banner is removed.</span>
-</div>
   <div class="container">
 
-    <!-- Header -->
-    <div style="margin-bottom: var(--space-6);">
-      <nav style="font-size: var(--text-sm); color: var(--gray-500); margin-bottom: var(--space-2);">
-        <a href="home.html" style="color: var(--purple-600);">Home</a> / <span>Sprint 4</span>
-      </nav>
-      <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
-        <span style="background: var(--purple-100); color: var(--purple-700); padding: 4px 12px; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: 600;">SPRINT 4</span>
-        <span style="color: var(--gray-500); font-size: var(--text-sm);">Weeks 13&ndash;16</span>
+    <div id="sticky-counter"></div>
+
+    <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+      <div id="journey-pills" style="padding:14px 16px 10px;background:white;"></div>
+
+      <div style="padding:0 16px 12px;">
+        <nav style="font-size:12px;color:#6b7280;margin-bottom:4px;">
+          <a href="home.html" style="color:#6b7280;text-decoration:none;">Home</a> / Sprint 4
+        </nav>
+        <h1 style="font-size:20px;font-weight:700;color:#111827;margin:0 0 4px 0;">Sprint 4: Proving It</h1>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 8px 0;">Implement your defense. Review your evidence. Evaluate your growth.</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Weeks 13-16</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Full Autonomy</span>
+        </div>
       </div>
-      <h1 style="font-size: var(--text-2xl); font-weight: 700; color: var(--gray-900); margin: 0;">Proving It</h1>
-      <p style="color: var(--gray-600); margin: var(--space-2) 0 0 0;">Implement your defense. Review your evidence. Evaluate your growth.</p>
-    </div>
 
-    <!-- Payoff Box -->
-    <div style="background: linear-gradient(135deg, var(--purple-50) 0%, #e9d5ff 100%); border: 2px solid var(--purple-500); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-5);">
-      <p style="font-size: var(--text-xs); font-weight: 700; color: var(--purple-700); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-2) 0;">By Sprint End, You Will Be Able To:</p>
-      <p style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-800); margin: 0; line-height: 1.5;">Defend your value without being defensive.</p>
-      <p style="font-size: var(--text-sm); color: var(--gray-600); margin: var(--space-2) 0 0 0;">Support claims with evidence. Acknowledge weaknesses before others point them out. Stay composed when challenged.</p>
-    </div>
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 context, grading, weeks';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; context, grading, weeks</span>
+        <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark);font-weight:600;">&#9660;</span>
+      </button>
 
-    <!-- Sprint Overview -->
-    <div style="background: var(--purple-50); border: 1px solid var(--purple-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h2 style="font-size: var(--text-lg); font-weight: 600; color: var(--purple-700); margin: 0 0 var(--space-3) 0;">The I&ndash;R&ndash;E Arc</h2>
-      <p style="margin: 0 0 var(--space-3) 0; color: var(--gray-700); line-height: 1.6;">
-        Sprints 1&ndash;3 built the first half of the <a href="sdl-dimensions.html" style="color: var(--purple-700); font-weight: 500;">UMPIRE cycle</a>: you learned to Understand your gaps, Map your landscape, and Plan your approach. This sprint completes the cycle. You'll <strong>Implement</strong> your portfolio defense, <strong>Review</strong> your evidence honestly, and <strong>Evaluate</strong> what changed about how you learn.
-      </p>
-      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
-        <span class="umpire-tag">I &mdash; Implement</span>
-        <span class="umpire-tag">R &mdash; Review</span>
-        <span class="umpire-tag">E &mdash; Evaluate</span>
-        <span style="background: white; color: var(--gray-600); padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs);">Interview Skill: Defend Your Work</span>
-      </div>
-    </div>
-
-    <!-- Interview Skill Focus -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-left: 4px solid var(--purple-500); border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-6);">
-      <h3 style="font-size: var(--text-base); font-weight: 600; color: var(--gray-900); margin: 0 0 var(--space-2) 0;">Interview Skill: Defend Your Work</h3>
-      <p style="color: var(--gray-600); margin: 0; font-size: var(--text-sm); line-height: 1.6;">
-        Portfolio defense practice: support claims with evidence, acknowledge weaknesses honestly, respond to tough questions with composure. This is the culmination of all your interview skill practice &mdash; defending your work under pressure while maintaining intellectual honesty.
-      </p>
-    </div>
-
-    <!-- Week 13: Implement -->
-    <div class="week-card">
-      <div class="week-card__header">
-        <h2 class="week-card__title">Week 13: Implement &mdash; Build Your Defense</h2>
-        <p class="week-card__subtitle">UMPIRE phase: Implement</p>
-      </div>
-      <div class="week-card__content">
-        <p style="color: var(--gray-600); margin: 0 0 var(--space-4) 0; font-size: var(--text-sm);">
-          You've spent 12 weeks building evidence. Now you organize it into a defense. This isn't about creating something new &mdash; it's about selecting your strongest evidence and connecting it into a coherent story about how your learning changed.
-        </p>
-
-        <!-- Mental Model Visualization -->
-        <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-4);">
-          <p style="font-size: var(--text-xs); font-weight: 700; color: var(--purple-700); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-3) 0;">The Mental Shift</p>
-          <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-3); flex-wrap: wrap; text-align: center;">
-            <div style="background: white; border: 1px solid var(--gray-300); border-radius: var(--radius-md); padding: var(--space-3); min-width: 100px;">
-              <div style="font-size: var(--text-sm); font-weight: 500; color: var(--gray-600);">Assignment Pile</div>
-            </div>
-            <div style="font-size: var(--text-xl); color: var(--purple-500);">&rarr;</div>
-            <div style="background: white; border: 1px solid var(--gray-300); border-radius: var(--radius-md); padding: var(--space-3); min-width: 100px;">
-              <div style="font-size: var(--text-sm); font-weight: 500; color: var(--gray-600);">Evidence Selection</div>
-            </div>
-            <div style="font-size: var(--text-xl); color: var(--purple-500);">&rarr;</div>
-            <div style="background: var(--purple-50); border: 1px solid var(--purple-200); border-radius: var(--radius-md); padding: var(--space-3); min-width: 100px;">
-              <div style="font-size: var(--text-sm); font-weight: 500; color: var(--purple-700);">Coherent Narrative</div>
-            </div>
-          </div>
-          <p style="font-size: var(--text-xs); color: var(--gray-500); text-align: center; margin: var(--space-3) 0 0 0;">This week, you move from "things I did" to "story I can tell"</p>
+      <div id="sprint-details" style="display:none;padding:16px;border-top:1px solid #e5e7eb;">
+        <!-- Under Construction note -->
+        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#92400e;">
+          <strong>Under Construction</strong> &mdash; This sprint's detailed content is being developed. The structure and weekly assignments will appear as the sprint approaches.
         </div>
 
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">📋</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Evidence Inventory</p>
-            <p class="assignment-item__meta">Goal Setting &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">📁</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Portfolio Draft</p>
-            <p class="assignment-item__meta">Demonstration &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">📖</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">UMPIRE Story Arc</p>
-            <p class="assignment-item__meta">Productive Reflection &bull; 5 points</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Week 14: Review -->
-    <div class="week-card">
-      <div class="week-card__header">
-        <h2 class="week-card__title">Week 14: Review &mdash; Pressure-Test Your Evidence</h2>
-        <p class="week-card__subtitle">UMPIRE phase: Review</p>
-      </div>
-      <div class="week-card__content">
-        <p style="color: var(--gray-600); margin: 0 0 var(--space-4) 0; font-size: var(--text-sm);">
-          Defending your work means more than presenting it. You need to anticipate tough questions, acknowledge weaknesses before others point them out, and stay composed when challenged. Mock defenses with peers prepare you for the real thing.
-        </p>
-
-        <!-- Contrast Grid -->
-        <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-4);">
-          <p style="font-size: var(--text-xs); font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-3) 0;">Know the Difference</p>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
-            <div style="background: #f0fdf4; border: 1px solid #22c55e; border-radius: var(--radius-sm); padding: var(--space-3);">
-              <p style="font-size: var(--text-xs); font-weight: 600; color: #16a34a; margin: 0 0 var(--space-2) 0;">STRONG DEFENSE</p>
-              <p style="font-size: var(--text-sm); color: var(--gray-700); margin: 0; line-height: 1.5;">"My weakest area is probably Review &mdash; I kept skipping it in Sprint 2. But by Sprint 3, I built a check-in habit. Here's the evidence of that shift..."</p>
-            </div>
-            <div style="background: #fef2f2; border: 1px solid #ef4444; border-radius: var(--radius-sm); padding: var(--space-3);">
-              <p style="font-size: var(--text-xs); font-weight: 600; color: #dc2626; margin: 0 0 var(--space-2) 0;">WEAK DEFENSE</p>
-              <p style="font-size: var(--text-sm); color: var(--gray-700); margin: 0; line-height: 1.5;">"I didn't have time to develop that area. The assignment was confusing. I think I did fine on everything..."</p>
-            </div>
-          </div>
-          <p style="font-size: var(--text-xs); color: var(--gray-500); text-align: center; margin: var(--space-3) 0 0 0;">Strong defense acknowledges weakness and pivots to learning. Weak defense makes excuses.</p>
+        <!-- Learning Outcomes -->
+        <div style="margin-bottom:16px;">
+          <h2 style="font-size:16px;font-weight:600;margin:0 0 8px 0;">By Sprint End, You Will Be Able To:</h2>
+          <p style="font-size:15px;font-weight:600;color:#1f2937;margin:0 0 6px 0;">Defend your value without being defensive.</p>
+          <p style="font-size:13px;color:#4b5563;margin:0 0 12px 0;">Support claims with evidence. Acknowledge weaknesses before others point them out. Stay composed when challenged.</p>
         </div>
 
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">🎯</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Defense Outline</p>
-            <p class="assignment-item__meta">Goal Setting &bull; 5 points</p>
+        <!-- I-R-E Arc -->
+        <div style="margin-bottom:16px;">
+          <h3 style="font-size:14px;font-weight:600;color:#1f2937;margin:0 0 6px 0;">The I&ndash;R&ndash;E Arc</h3>
+          <p style="font-size:13px;color:#4b5563;margin:0 0 8px 0;">
+            Sprints 1&ndash;3 built the first half of the UMPIRE cycle: you learned to Understand your gaps, Map your landscape, and Plan your approach. This sprint completes the cycle. You'll <strong>Implement</strong> your portfolio defense, <strong>Review</strong> your evidence honestly, and <strong>Evaluate</strong> what changed about how you learn.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span style="font-size:11px;padding:3px 8px;border-radius:4px;background:var(--theme-light);color:var(--theme-dark);font-weight:500;">I &mdash; Implement</span>
+            <span style="font-size:11px;padding:3px 8px;border-radius:4px;background:var(--theme-light);color:var(--theme-dark);font-weight:500;">R &mdash; Review</span>
+            <span style="font-size:11px;padding:3px 8px;border-radius:4px;background:var(--theme-light);color:var(--theme-dark);font-weight:500;">E &mdash; Evaluate</span>
+            <span style="font-size:11px;padding:3px 8px;border-radius:4px;background:#f3f4f6;color:#6b7280;">Interview Skill: Defend Your Work</span>
           </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">🗣️</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Peer Mock Defense</p>
-            <p class="assignment-item__meta">Check-in/Engagement &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">📝</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Anticipate Challenges</p>
-            <p class="assignment-item__meta">Productive Reflection &bull; 5 points</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Check Yourself Gate -->
-    <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-4);">
-      <p style="font-size: var(--text-sm); font-weight: 700; color: #16a34a; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-3) 0;">Check Yourself Before Defense</p>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-700); font-size: var(--text-sm);">
-        <li style="margin-bottom: var(--space-2);">If asked "What's your weakest evidence?" &mdash; do you have an honest answer ready?</li>
-        <li style="margin-bottom: var(--space-2);">Can you walk through one UMPIRE cycle from the semester and explain what you'd do differently?</li>
-        <li style="margin-bottom: 0;">Have you practiced defending at least once with a peer who pushed back?</li>
-      </ul>
-    </div>
-
-    <!-- Week 15: Evaluate -->
-    <div class="week-card">
-      <div class="week-card__header">
-        <h2 class="week-card__title">Week 15: Evaluate &mdash; Portfolio Defense</h2>
-        <p class="week-card__subtitle">UMPIRE phase: Evaluate</p>
-      </div>
-      <div class="week-card__content">
-        <p style="color: var(--gray-600); margin: 0 0 var(--space-4) 0; font-size: var(--text-sm);">
-          The portfolio defense is a 15&ndash;20 minute conversation where you make the case for your growth as a self-directed learner. You'll present your evidence, respond to questions, and demonstrate the thinking habits you've developed. This is what all 15 weeks have been building toward.
-        </p>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">🎤</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Portfolio Defense</p>
-            <p class="assignment-item__meta">Demonstration &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">✅</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Defense Check-in</p>
-            <p class="assignment-item__meta">Check-in/Engagement &bull; 5 points</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Week 16 -->
-    <div class="week-card">
-      <div class="week-card__header">
-        <h2 class="week-card__title">Week 16: Synthesis &amp; Forward</h2>
-        <p class="week-card__subtitle">The cycle continues after the course ends</p>
-      </div>
-      <div class="week-card__content">
-        <p style="color: var(--gray-600); margin: 0 0 var(--space-4) 0; font-size: var(--text-sm);">
-          The course ends, but UMPIRE doesn't. This final week is about consolidating what you've learned into habits that persist, identifying where in the cycle you're still weakest, and recognizing that the next problem you face is another chance to run the cycle better.
-        </p>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">🔮</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Forward Plan</p>
-            <p class="assignment-item__meta">Goal Setting &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">📝</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Final Reflection: The UMPIRE Journey</p>
-            <p class="assignment-item__meta">Productive Reflection &bull; 5 points</p>
-          </div>
-        </a>
-
-        <a href="assignments/sprint-4-placeholder.html" class="assignment-item">
-          <div class="assignment-item__icon">👥</div>
-          <div class="assignment-item__content">
-            <p class="assignment-item__title">Peer Celebration &amp; Feedback</p>
-            <p class="assignment-item__meta">Check-in/Engagement &bull; 5 points</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Portfolio Defense Format -->
-    <div style="background: white; border: 2px solid var(--purple-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--purple-700); margin: 0 0 var(--space-3) 0;">Portfolio Defense Format</h3>
-      <div style="display: grid; gap: var(--space-3);">
-        <div style="display: flex; gap: var(--space-3);">
-          <span style="font-weight: 600; color: var(--purple-600); min-width: 80px;">Duration:</span>
-          <span style="color: var(--gray-700);">15&ndash;20 minutes (10 min presentation, 5&ndash;10 min Q&amp;A)</span>
         </div>
-        <div style="display: flex; gap: var(--space-3);">
-          <span style="font-weight: 600; color: var(--purple-600); min-width: 80px;">Format:</span>
-          <span style="color: var(--gray-700);">One-on-one with instructor</span>
+
+        <!-- Portfolio Defense Format -->
+        <div style="margin-bottom:16px;">
+          <h3 style="font-size:14px;font-weight:600;color:#1f2937;margin:0 0 8px 0;">Portfolio Defense Format</h3>
+          <div style="font-size:13px;color:#4b5563;">
+            <p style="margin:0 0 4px 0;"><strong>Duration:</strong> 15&ndash;20 minutes (10 min presentation, 5&ndash;10 min Q&amp;A)</p>
+            <p style="margin:0 0 4px 0;"><strong>Format:</strong> One-on-one with instructor</p>
+            <p style="margin:0 0 4px 0;"><strong>Evidence:</strong> Physical notebook + digital portfolio artifacts</p>
+            <p style="margin:0;"><strong>Focus:</strong> Tell the story of how your thinking changed &mdash; using the UMPIRE phases as your evidence structure</p>
+          </div>
         </div>
-        <div style="display: flex; gap: var(--space-3);">
-          <span style="font-weight: 600; color: var(--purple-600); min-width: 80px;">Evidence:</span>
-          <span style="color: var(--gray-700);">Physical notebook + digital portfolio artifacts</span>
-        </div>
-        <div style="display: flex; gap: var(--space-3);">
-          <span style="font-weight: 600; color: var(--purple-600); min-width: 80px;">Focus:</span>
-          <span style="color: var(--gray-700);">Tell the story of how your thinking changed &mdash; using the UMPIRE phases as your evidence structure</span>
+
+        <!-- UMPIRE Growth Summary -->
+        <div style="margin-bottom:0;">
+          <h3 style="font-size:14px;font-weight:600;color:#1f2937;margin:0 0 8px 0;">Your Defense Should Show Growth Across the UMPIRE Cycle</h3>
+          <div style="font-size:13px;color:#4b5563;line-height:1.7;">
+            <div><span style="color:var(--theme-dark);font-weight:600;">U</span> &mdash; How you identify what you don't know</div>
+            <div><span style="color:var(--theme-dark);font-weight:600;">M</span> &mdash; How you survey before you act</div>
+            <div><span style="color:var(--theme-dark);font-weight:600;">P</span> &mdash; How you create actionable plans</div>
+            <div><span style="color:var(--theme-dark);font-weight:600;">I</span> &mdash; How you execute and notice when plans break</div>
+            <div><span style="color:var(--theme-dark);font-weight:600;">R</span> &mdash; How you distinguish activity from progress</div>
+            <div><span style="color:var(--theme-dark);font-weight:600;">E</span> &mdash; How you learn about your own learning</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- UMPIRE Summary -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin: 0 0 var(--space-3) 0;">Your Defense Should Show Growth Across the UMPIRE Cycle</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-2);">
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">U</span> &mdash; How you identify what you don't know
-        </div>
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">M</span> &mdash; How you survey before you act
-        </div>
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">P</span> &mdash; How you create actionable plans
-        </div>
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">I</span> &mdash; How you execute and notice when plans break
-        </div>
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">R</span> &mdash; How you distinguish activity from progress
-        </div>
-        <div style="padding: var(--space-2); background: white; border-radius: var(--radius-sm); font-size: var(--text-sm);">
-          <span style="color: var(--purple-600); font-weight: 600;">E</span> &mdash; How you learn about your own learning
-        </div>
-      </div>
-      <p style="margin: var(--space-3) 0 0 0; font-size: var(--text-sm); color: var(--gray-600);">
-        <a href="sdl-dimensions.html" style="color: var(--purple-600);">Review the full UMPIRE cycle &rarr;</a>
-      </p>
-    </div>
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
-  <!-- Scripts -->
   <script src="../config/cst349-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 4;
+    var CONFIG = CST349_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderStickyWeekCounter(CONFIG, weekNum, 'sticky-counter');
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
+      addNavigationIfNeeded();
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) displayWeek = currentWeek;
+      else if (currentSprint > SPRINT_NUM) displayWeek = sprintWeeks[sprintWeeks.length - 1];
+      else displayWeek = sprintWeeks[0];
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills', SPRINT_NUM);
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-  <!-- Feedback Footer -->
-  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
-    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+  <footer style="text-align:center;padding:24px 16px;margin-top:40px;border-top:1px solid #e5e7eb;">
+    <p style="margin:0;font-size:12px;color:#9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color:#6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
 

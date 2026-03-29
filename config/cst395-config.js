@@ -682,6 +682,34 @@ const CST395_CONFIG = {
         source: null
       },
       portfolioConnection: "Sprint 3 demo is your strongest portfolio piece yet — it shows you can operate in ambiguity with real stakes and real constraints."
+    },
+    13: {
+      narrative: "Full autonomy. You find the stakeholder, define the problem, and set the constraints. Nobody hands you the domain.",
+      connection: "Sprint 3 gave you a domain, an expert, and a document. Sprint 4 gives you nothing. The question: can you do this without scaffolding?",
+      insight: "The hardest part isn't building. It's choosing what to build and for whom \u2014 without someone telling you where to start.",
+      employerLink: { text: "Autonomous problem definition is what separates senior from junior. This sprint tests whether you can create the conditions for your own work.", source: null },
+      portfolioConnection: "Your stakeholder choice and problem definition become the foundation of your Sprint 4 portfolio piece."
+    },
+    14: {
+      narrative: "Independent execution. You're building without checkpoints. The process you learned in Sprints 1\u20133 is now yours to apply.",
+      connection: "Last week you defined the problem. This week you execute on it \u2014 using every method you've practiced, but without someone structuring it for you.",
+      insight: "If your process this week looks identical to Sprint 1, you haven't grown. If it looks nothing like it, you may have abandoned what worked.",
+      employerLink: { text: "Independent execution with good judgment is the defining trait of people who get promoted.", source: null },
+      portfolioConnection: "Document your process decisions. The 'why I did it this way' matters more than the output."
+    },
+    15: {
+      narrative: "Integration and refinement. Connect your Sprint 4 work to the full semester arc.",
+      connection: "You've built something independently. Now step back: what does this sprint prove about what you can do that you couldn't before?",
+      insight: "The portfolio defense isn't about Sprint 4 alone. It's about the arc from Sprint 1 to now.",
+      employerLink: { text: "The ability to synthesize across experiences and articulate your growth trajectory is what makes a portfolio defense compelling.", source: null },
+      portfolioConnection: "This week's reflection becomes the narrative thread of your final defense."
+    },
+    16: {
+      narrative: "Demonstration and reflection. Present the full arc: what you attempted, what changed, and what you can do now that you couldn't before.",
+      connection: "Everything converges. Four sprints, four stakeholders, one story about becoming someone who can solve problems beyond their reach.",
+      insight: "The best demos don't showcase perfection. They show honest growth with evidence at every turn.",
+      employerLink: { text: "This IS your portfolio. The defense answers the question every employer asks: 'What can you do, and how do you know?'", source: null },
+      portfolioConnection: "This is the capstone. Your defense is the final artifact."
     }
   },
 
@@ -746,7 +774,11 @@ const CST395_CONFIG = {
     9: "If you can't describe your user's specific moment in one sentence, you don't have a stake \u2014 you have a topic.",
     10: "If you have no questions for the expert, you haven't thought hard enough about what you don't know.",
     11: "What changed between your plan and your build \u2014 and what does that gap teach you about how you think?",
-    12: "What would be worse about your solution if you'd just handed this problem to AI on day one?"
+    12: "What would be worse about your solution if you'd just handed this problem to AI on day one?",
+    13: "You chose the stakeholder, defined the problem, and set the constraints. What makes this harder than Sprint 3?",
+    14: "If your solution works but you can't explain why your judgment mattered, what have you actually demonstrated?",
+    15: "What would break about your solution if someone else tried to use your process without you?",
+    16: "Four sprints. What can you attempt now that you couldn't before \u2014 and what's your evidence?"
   },
 
   // Peer Conversation Settings

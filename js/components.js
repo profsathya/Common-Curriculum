@@ -622,6 +622,18 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
   var btnActive = btnBase + 'cursor:pointer;background:white;border-color:var(--theme-primary,#5eead4);color:var(--theme-dark,#0d9488);';
   var btnDis = btnBase + 'cursor:default;background:#f9fafb;border-color:#e5e7eb;color:#d1d5db;';
 
+  // Cross-sprint links
+  var prevSprintLink = '';
+  var nextSprintLink = '';
+  if (prevDisabled && sprintNum > 1) {
+    var ps = config.sprints[sprintNum - 1];
+    if (ps) prevSprintLink = '<div style="text-align:left;margin-top:4px;"><a href="sprint-' + (sprintNum - 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">\u2190 Sprint ' + (sprintNum - 1) + ': ' + ps.name + '</a></div>';
+  }
+  if (nextDisabled && sprintNum < 4) {
+    var ns = config.sprints[sprintNum + 1];
+    if (ns) nextSprintLink = '<div style="text-align:right;margin-top:4px;"><a href="sprint-' + (sprintNum + 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">Sprint ' + (sprintNum + 1) + ': ' + ns.name + ' \u2192</a></div>';
+  }
+
   container.innerHTML =
     '<div style="padding:10px 16px;background:linear-gradient(135deg,var(--theme-light,#f0fdfa),white);border:1px solid var(--theme-light,#ccfbf1);border-radius:12px;margin-bottom:16px;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;">' +
@@ -634,6 +646,7 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
         '<button id="week-nav-next" style="' + (nextDisabled ? btnDis : btnActive) + '"' +
           (nextDisabled ? ' disabled' : '') + '>Week ' + nextWeek + ' \u2192</button>' +
       '</div>' +
+      (prevSprintLink || nextSprintLink ? '<div style="display:flex;justify-content:space-between;">' + prevSprintLink + nextSprintLink + '</div>' : '') +
     '</div>';
 
   // Wire up navigation
@@ -1026,23 +1039,72 @@ function isInIframe() {
 }
 
 /**
- * Add demo banner if not in iframe (for testing outside Canvas)
+ * Add navigation bar when not in iframe (public site).
+ * Replaces the old demo banner with a compact course navigation.
  */
-function addDemoBannerIfNeeded() {
-  if (!isInIframe()) {
-    const banner = document.createElement('div');
-    banner.className = 'demo-banner';
-    banner.innerHTML = `
-      <strong>Demo Mode</strong>
-      You're viewing this page directly. In Canvas, this will be embedded via iframe.
-      Canvas assignment links will open in new tabs instead of navigating Canvas.
-    `;
+function addNavigationIfNeeded() {
+  if (isInIframe()) return;
 
-    const container = document.querySelector('.container');
-    if (container) {
-      container.insertBefore(banner, container.firstChild);
-    }
+  var path = window.location.pathname;
+  var currentPage = path.split('/').pop() || 'home.html';
+  var isCst395 = path.includes('cst395');
+  var isCst349 = path.includes('cst349');
+
+  var courseName, themeColor, links;
+  if (isCst395) {
+    courseName = 'CST395: AI-Native Solution Engineering';
+    themeColor = '#0d9488';
+    links = [
+      { label: 'Home', href: 'home.html' },
+      { label: 'S1', href: 'sprint-1.html' },
+      { label: 'S2', href: 'sprint-2.html' },
+      { label: 'S3', href: 'sprint-3.html' },
+      { label: 'S4', href: 'sprint-4.html' },
+      { label: 'Overview', href: 'overview.html' },
+      { label: 'Capabilities', href: 'capabilities.html' },
+      { label: 'Concepts', href: 'concepts.html' }
+    ];
+  } else if (isCst349) {
+    courseName = 'CST349: Professional Seminar';
+    themeColor = '#2563eb';
+    links = [
+      { label: 'Home', href: 'home.html' },
+      { label: 'S1', href: 'sprint-1.html' },
+      { label: 'S2', href: 'sprint-2.html' },
+      { label: 'S3', href: 'sprint-3.html' },
+      { label: 'S4', href: 'sprint-4.html' },
+      { label: 'Overview', href: 'overview.html' },
+      { label: 'SDL Dimensions', href: 'sdl-dimensions.html' },
+      { label: 'Concepts', href: 'concepts.html' }
+    ];
+  } else {
+    return; // Unknown course, skip nav
   }
+
+  var nav = document.createElement('div');
+  nav.style.cssText = 'position:sticky;top:0;z-index:11;background:rgba(255,255,255,0.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #e5e7eb;padding:0 16px;font-family:system-ui,sans-serif;';
+
+  var linksHtml = links.map(function(l) {
+    var isCurrent = currentPage === l.href;
+    return '<a href="' + l.href + '" style="color:' + (isCurrent ? themeColor : '#4b5563') + ';text-decoration:none;font-size:13px;font-weight:' + (isCurrent ? '700' : '400') + ';transition:color 0.15s;" onmouseover="this.style.color=\'' + themeColor + '\'" onmouseout="this.style.color=\'' + (isCurrent ? themeColor : '#4b5563') + '\'">' + l.label + '</a>';
+  }).join('<span style="color:#d1d5db;margin:0 4px;">\u00B7</span>');
+
+  nav.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;height:40px;max-width:760px;margin:0 auto;">' +
+      '<span style="font-size:13px;font-weight:700;color:' + themeColor + ';">' + courseName + '</span>' +
+      '<div>' + linksHtml + '</div>' +
+    '</div>' +
+    '<div style="max-width:760px;margin:0 auto;padding-bottom:6px;">' +
+      '<span style="font-size:11px;color:#9ca3af;">Viewing outside Canvas \u2014 some links may behave differently</span>' +
+    '</div>';
+
+  document.body.insertBefore(nav, document.body.firstChild);
+}
+
+// Backward compatibility alias
+function addDemoBannerIfNeeded() {
+  addNavigationIfNeeded();
+}
 }
 
 // ============================================

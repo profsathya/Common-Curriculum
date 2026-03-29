@@ -5,423 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sprint 4: Mastery | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    :root {
+      --theme-primary: #14b8a6;
+      --theme-dark: #0d9488;
+      --theme-light: #f0fdfa;
+    }
+  </style>
 </head>
 <body>
-<!-- Under Construction Banner -->
-<div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px 16px; margin: 16px; text-align: center;">
-  <span style="font-size: 1.1em;">🚧 <strong>Under Construction</strong> — This page is being refined. Don't do any work until this banner is removed.</span>
-</div>
   <div class="container">
 
-    <!-- Sprint Header -->
-    <div class="sprint-header">
-      <nav class="sprint-header__breadcrumb">
-        <a href="home.html">Home</a> / <span>Sprint 4</span>
-      </nav>
-      <h1 class="sprint-header__title">Sprint 4: Mastery</h1>
-      <p class="sprint-header__subtitle">"Full Autonomy" — Define your own problem and create real value</p>
-      <div class="sprint-header__meta">
-        <span class="sprint-header__tag">Weeks 13-16</span>
-        <span class="sprint-header__tag">Low Scaffolding</span>
-        <span class="sprint-header__tag">Stakeholder: Your Choice</span>
-      </div>
-    </div>
+    <div id="sticky-counter"></div>
 
-    <!-- Sprint Learning Outcomes -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Independently identified a valuable problem to solve</li>
-        <li>Chosen and validated an appropriate stakeholder</li>
-        <li>Planned and executed your own process</li>
-        <li>Created demonstrable value</li>
-        <li>Reflected on your full journey from dependence to autonomy</li>
-      </ul>
-    </div>
+    <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+      <div id="journey-pills" style="padding:14px 16px 10px;background:white;"></div>
 
-    <!-- Week 13 -->
-    <div class="week-section" data-week="13">
-      <button class="week-section__header" data-collapse-toggle="week-13-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">13</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Autonomous Problem Definition</h3>
-          </div>
+      <div style="padding:0 16px 12px;">
+        <nav style="font-size:12px;color:#6b7280;margin-bottom:4px;">
+          <a href="home.html" style="color:#6b7280;text-decoration:none;">Home</a> / Sprint 4
+        </nav>
+        <h1 style="font-size:20px;font-weight:700;color:#111827;margin:0 0 4px 0;">Sprint 4: Mastery</h1>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 8px 0;">"Full Autonomy" &mdash; Define your own problem and create real value</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Weeks 13-16</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Low Scaffolding</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Stakeholder: Your Choice</span>
         </div>
-        <span class="week-section__toggle">▼</span>
+      </div>
+
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 context, grading, weeks';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; context, grading, weeks</span>
+        <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark);font-weight:600;">&#9660;</span>
       </button>
-      <div class="week-section__content" id="week-13-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Problem identification. Opportunity recognition. Self-directed scoping.
-        </p>
 
-        <!-- Activity: Problem Definition -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Problem Definition</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-problem-definition">Wed, Apr 23</span>
-          </div>
-          <p class="activity-item__description">
-            Define the problem you will solve, the stakeholder you will serve, and why this matters. This is entirely your choice—justify it.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-          </div>
+      <div id="sprint-details" style="display:none;padding:16px;border-top:1px solid #e5e7eb;">
+        <!-- Under Construction note -->
+        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#92400e;">
+          <strong>Under Construction</strong> &mdash; This sprint's detailed content is being developed. The structure and weekly assignments will appear as the sprint approaches.
         </div>
 
-        <!-- Activity: Reflection 1 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Productive Reflection #1</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-reflection-1">Fri, Apr 25</span>
-          </div>
-          <p class="activity-item__description">
-            Why this problem? What draws you to it? How does it connect to what you've learned in previous sprints?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Autonomous Launch</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Problem pitches and peer feedback</li>
-              <li>Scope calibration</li>
-              <li>Final sprint kickoff</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="13">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Problem Validation</h4>
-          <p class="peer-conversation__prompt">
-            "Pitch your problem to me. I'll tell you if I'd want to solve it and why or why not."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to give honest feedback about someone's direction</p>
+        <!-- Learning Outcomes -->
+        <div style="margin-bottom:16px;">
+          <h2 style="font-size:16px;font-weight:600;margin:0 0 8px 0;">By Sprint End, You Will Have:</h2>
+          <ul style="margin:0;padding-left:20px;color:#4b5563;font-size:14px;">
+            <li>Independently identified a valuable problem to solve</li>
+            <li>Chosen and validated an appropriate stakeholder</li>
+            <li>Planned and executed your own process</li>
+            <li>Created demonstrable value</li>
+            <li>Reflected on your full journey from dependence to autonomy</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <!-- Week 14 -->
-    <div class="week-section" data-week="14">
-      <button class="week-section__header" data-collapse-toggle="week-14-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">14</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Independent Execution</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-14-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Self-management. Adapting your own process. Working without scaffolding.
-        </p>
-
-        <!-- Activity: Execution Plan -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Execution Plan</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-execution-plan">Wed, Apr 30</span>
-          </div>
-          <p class="activity-item__description">
-            Document your approach. How will you tackle this? What from previous sprints are you applying? What are you doing differently?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- Activity: Reflection 2 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Productive Reflection #2</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-reflection-2">Fri, May 2</span>
-          </div>
-          <p class="activity-item__description">
-            How does it feel to work without structure? What habits from previous sprints are helping? What's harder than expected?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Progress Check-In</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Brief progress updates</li>
-              <li>Problem-solving workshop</li>
-              <li>Peer support and accountability</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="14">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Accountability Partner</h4>
-          <p class="peer-conversation__prompt">
-            "What did you commit to last week? Did you do it? What's blocking you? What will you commit to this week?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to hold someone accountable without judgment</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 15 -->
-    <div class="week-section" data-week="15">
-      <button class="week-section__header" data-collapse-toggle="week-15-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">15</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Integration & Refinement</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-15-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Finishing strong. Polish vs. perfection. Knowing when you're done.
-        </p>
-
-        <!-- Activity: Final Solution -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Final Solution</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-final-solution">Wed, May 7</span>
-          </div>
-          <p class="activity-item__description">
-            Complete your solution. Document what you built, how it creates value, and what you learned in the process.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--ab capability-badge--primary">AB<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-            <span class="capability-badge capability-badge--is">IS</span>
-          </div>
-        </div>
-
-        <!-- Activity: Build Log -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Build Log</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Build Log Entry</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-build-log">Fri, May 9</span>
-          </div>
-          <p class="activity-item__description">
-            Final documentation of your journey. Key decisions, pivots, breakthroughs.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Final Push</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Working session</li>
-              <li>Presentation preparation</li>
-              <li>Peer feedback on demos</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="15">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">👥 Peer Conversation (In-Class Wednesday)</p>
-          <h4 class="peer-conversation__title">Demo Rehearsal</h4>
-          <p class="peer-conversation__prompt">
-            Practice your final presentation with your partner. Get honest feedback on what's compelling and what's not.
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> How to give presentation feedback that actually helps</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 16 -->
-    <div class="week-section" data-week="16">
-      <button class="week-section__header" data-collapse-toggle="week-16-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">16</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Demonstration & Reflection</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">▼</span>
-      </button>
-      <div class="week-section__content" id="week-16-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Showcasing your work. Reflecting on your journey. Looking forward.
-        </p>
-
-        <!-- Activity: Final Presentation -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">📋 Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Final Presentation</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-final-presentation">Wed, May 14</span>
-          </div>
-          <p class="activity-item__description">
-            Present your capstone project. Demonstrate the value you created and reflect on your journey.
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--is capability-badge--primary">IS<span class="badge-dot">●</span></span>
-            <span class="capability-badge capability-badge--sdl">SDL</span>
-            <span class="capability-badge capability-badge--ab">AB</span>
-          </div>
-        </div>
-
-        <!-- Activity: Portfolio Reflection -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">🪞 Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/sprint-4-placeholder.html">Portfolio Reflection</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s4-portfolio">Thu, May 15</span>
-          </div>
-          <p class="activity-item__description">
-            Compile your four sprint artifacts into a portfolio. What story do they tell about your growth?
-          </p>
-          <div class="activity-item__capabilities">
-            <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-          </div>
-        </div>
-
-        <!-- In-Class Plan -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">📅 In-Class Plan (Wednesday)</p>
-          <h4 class="in-class-plan__title">Final Presentations</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Capstone presentations</li>
-              <li>Celebration of growth</li>
-              <li>Looking forward</li>
-            </ul>
-          </div>
-          <div class="class-recording" data-loom="16">
-            <span class="class-recording__icon">🎥</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Course Reflection -->
-        <div class="bridge-section">
-          <p class="bridge-section__label">🎓 Course Completion</p>
-          <div class="activity-item activity-item--bridge">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">Final Reflection</span>
-                <h4 class="activity-item__title">
-                  <a href="assignments/sprint-4-placeholder.html">Full Journey Reflection</a>
-                </h4>
-              </div>
-              <span class="activity-item__due" data-due-date="s4-course-reflection">Fri, May 16</span>
-            </div>
-            <p class="activity-item__description">
-              Look back at Sprint 1. Who were you then? Who are you now? What capabilities have you developed? How will you continue to grow?
-            </p>
-            <div class="activity-item__capabilities">
-              <span class="capability-badge capability-badge--sdl capability-badge--primary">SDL<span class="badge-dot">●</span></span>
-              <span class="capability-badge capability-badge--is">IS</span>
-              <span class="capability-badge capability-badge--ab">AB</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Course Complete -->
-    <div style="background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); color: white; border-radius: var(--radius-lg); padding: var(--space-6); margin-top: var(--space-6); text-align: center;">
-      <h3 style="font-size: var(--text-xl); font-weight: 700; margin: 0 0 var(--space-3) 0;">Congratulations!</h3>
-      <p style="margin: 0; opacity: 0.9;">
-        You've completed the journey from guided discovery to full autonomy.
-        You now have the capability to identify opportunities, learn rapidly, build solutions, and create value—
-        with AI as your cognitive partner, not your replacement.
-      </p>
-    </div>
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
-  <!-- Scripts -->
   <script src="../config/cst395-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 4;
+    var CONFIG = CST395_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderStickyWeekCounter(CONFIG, weekNum, 'sticky-counter');
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
-      initSprintPageWithLoom(CST395_CONFIG);
+      addNavigationIfNeeded();
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) displayWeek = currentWeek;
+      else if (currentSprint > SPRINT_NUM) displayWeek = sprintWeeks[sprintWeeks.length - 1];
+      else displayWeek = sprintWeeks[0];
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills', SPRINT_NUM);
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-  <!-- Feedback Footer -->
-  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
-    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+  <footer style="text-align:center;padding:24px 16px;margin-top:40px;border-top:1px solid #e5e7eb;">
+    <p style="margin:0;font-size:12px;color:#9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color:#6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
 

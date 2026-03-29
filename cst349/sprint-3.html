@@ -3,510 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sprint 3: Future | CST349</title>
+  <title>Sprint 3: Transfer | CST349</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    :root {
+      --theme-primary: #3b82f6;
+      --theme-dark: #2563eb;
+      --theme-light: #eff6ff;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- Sprint Header -->
-    <div class="sprint-header" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap;">
-      <div style="flex: 1; min-width: 260px;">
-        <nav class="sprint-header__breadcrumb">
-          <a href="home.html">Home</a> / <span>Sprint 3</span>
+    <!-- Sticky Week Counter -->
+    <div id="sticky-counter"></div>
+
+    <!-- Zone A Card -->
+    <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+      <!-- Journey Pills (always visible, never collapse) -->
+      <div id="journey-pills" style="padding:14px 16px 10px;background:white;"></div>
+
+      <!-- Sprint Header (always visible) -->
+      <div style="padding:0 16px 12px;">
+        <nav style="font-size:12px;color:#6b7280;margin-bottom:4px;">
+          <a href="home.html" style="color:#6b7280;text-decoration:none;">Home</a> / Sprint 3
         </nav>
-        <h1 class="sprint-header__title">Sprint 3: Future</h1>
-        <p class="sprint-header__subtitle">"Where is this going?" &mdash; Reading the future of your field with honest eyes</p>
-        <div class="sprint-header__meta">
-          <span class="sprint-header__tag">Weeks 9&ndash;12</span>
-          <span class="sprint-header__tag">Low Scaffolding</span>
-          <span class="sprint-header__tag">SDL Focus: Evaluation, Collaboration</span>
+        <h1 style="font-size:20px;font-weight:700;color:#111827;margin:0 0 4px 0;">Sprint 3: Future</h1>
+        <p style="font-size:14px;color:#4b5563;margin:0 0 8px 0;">"Where is this going?" &mdash; Reading the future of your field with honest eyes</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Weeks 9-12</span>
+          <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Scaffolding: Low</span>
         </div>
       </div>
-      <!-- Loom video thumbnail – replace href and background-image when recording is ready -->
-      <a href="https://www.loom.com/share/8ae9363ee2c1416fa57a45690fc706ab" target="_blank" class="sprint-header__video" style="flex-shrink: 0; width: 200px; height: 120px; border-radius: 10px; background: url('https://cdn.loom.com/sessions/thumbnails/8ae9363ee2c1416fa57a45690fc706ab-with-play.gif') center/cover no-repeat, rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.15s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-        <!-- Play button icon -->
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-          <circle cx="24" cy="24" r="23" fill="rgba(255,255,255,0.9)"/>
-          <polygon points="20,16 20,32 34,24" fill="#ea580c"/>
-        </svg>
-        <span style="position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,0.85); font-size: 11px; font-weight: 600;">Why this sprint?</span>
-      </a>
-    </div>
 
-    <!-- Sprint Introduction -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <p style="color: var(--gray-600); margin: 0 0 var(--space-4) 0;">
-        Every person in tech will navigate change faster than any course can cover. The professionals who stay relevant aren't the ones who memorize trends &mdash; they're the ones who build habits of reading broadly, thinking critically about what they consume, and adjusting what they do based on what they learn.
-      </p>
-      <p style="color: var(--gray-600); margin: 0 0 var(--space-6) 0;">
-        Sprint 3 starts with an honest look at your actual information diet and challenges you to change it. The claim you make at the end of this sprint becomes the input for Sprint 4, where you develop one skill to prepare for the future you identified.
-      </p>
+      <!-- Collapse Toggle -->
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 context, grading, weeks';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; context, grading, weeks</span>
+        <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark,#2563eb);font-weight:600;">&#9660;</span>
+      </button>
 
-      <h2 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">By Sprint End, You Will Have:</h2>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li>Audited your actual information diet &mdash; what you consume vs. what you think you consume</li>
-        <li>Found and regularly consumed new sources outside your usual habits</li>
-        <li>Formed an opinion based on something you read or listened to that you wouldn't have encountered before this sprint</li>
-        <li>Made a specific claim about what you believe differently now and what you plan to do about it</li>
-      </ul>
-    </div>
+      <!-- Collapsible Details -->
+      <div id="sprint-details" style="display:none;padding:16px;border-top:1px solid #e5e7eb;">
+        <p style="font-size:13px;color:#6b7280;margin:0 0 12px 0;">
+          Every person in tech will navigate change faster than any course can cover. Sprint 3 starts with an honest look at your actual information diet and challenges you to change it. The claim you make at the end becomes the input for Sprint 4.
+        </p>
 
-    <!-- Grading Structure -->
-    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-6); font-size: 14px;">
-      <strong style="color: #92400e;">Sprint 3 Grading:</strong>
-      <span style="color: #a16207;">Goals 20% (individual) &middot; Reflections 20% (individual) &middot; Demo 40% (individual) &middot; Engagement 20%</span>
-      <p style="margin: 8px 0 0 0; color: #92400e; font-size: 13px;">Note: Reflections are individual this sprint &mdash; no group averaging. Sprint 3 is a transfer test.</p>
-    </div>
+        <h2 style="font-size:16px;font-weight:600;margin:0 0 12px 0;">By Sprint End, You Will Have:</h2>
+        <ul style="margin:0 0 16px 0;padding-left:20px;color:#4b5563;font-size:14px;line-height:1.6;">
+          <li>Audited your actual information diet &mdash; what you consume vs. what you think you consume</li>
+          <li>Found and regularly consumed new sources outside your usual habits</li>
+          <li>Formed an opinion based on something you wouldn't have encountered before this sprint</li>
+          <li>Made a specific claim about what you believe differently now and what you plan to do about it</li>
+        </ul>
 
-    <!-- Coursera note -->
-    <div style="font-size: 13px; color: var(--gray-500); margin-bottom: var(--space-6); padding: 0 var(--space-2);">
-      Optional resource: <a href="https://www.coursera.org/specializations/futures-thinking" target="_blank" style="color: #6366f1;">Coursera Futures Thinking Specialization</a>. Not required &mdash; everything needed will be covered in class. One quick check-in around Week 10.
-    </div>
+        <h3 style="font-size:14px;font-weight:600;margin:0 0 8px 0;color:#374151;">Grading</h3>
+        <div style="font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:16px;">
+          <strong>Goals 20%</strong> (individual) &middot; <strong>Reflections 20%</strong> (individual) &middot; <strong>Demo 40%</strong> (individual) &middot; <strong>Engagement 20%</strong><br>
+          <span style="font-size:12px;">Note: Reflections are individual this sprint &mdash; no group averaging. Sprint 3 is a transfer test.</span>
+        </div>
 
-    <!-- Before Week 9: Transition Sequence -->
-    <div style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); color: white; border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <h3 style="color: white; font-size: var(--text-lg); font-weight: 600; margin: 0 0 4px 0;">Before Week 9</h3>
-      <p style="color: var(--gray-400); font-size: 14px; margin: 0 0 var(--space-4) 0;">Three things to do between Demo Day and Week 9, in order:</p>
+        <div style="font-size:12px;color:#6b7280;margin-bottom:16px;">
+          Optional resource: <a href="https://www.coursera.org/specializations/futures-thinking" target="_blank" style="color:#6366f1;">Coursera Futures Thinking Specialization</a>. Not required &mdash; everything needed will be covered in class.
+        </div>
 
-      <!-- 1. Bridge Reflection -->
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">1. &#x1F4D3; Handwritten Reflection &middot; Submitted</span>
-            <h4 style="margin: 4px 0; font-size: 15px;">
-              <a href="assignments/s2-w8-bridge-reflection.html" style="color: white; text-decoration: none;">"What I've Actually Been Building Toward" &rarr;</a>
+        <!-- Before Week 9: Transition Sequence -->
+        <div style="background:#111827;color:white;border-radius:10px;padding:16px;margin-bottom:0;">
+          <h3 style="color:white;font-size:15px;font-weight:600;margin:0 0 4px 0;">Before Week 9</h3>
+          <p style="color:#9ca3af;font-size:13px;margin:0 0 12px 0;">Three things to do between Demo Day and Week 9, in order:</p>
+
+          <!-- 1. Bridge Reflection -->
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#fbbf24;font-weight:600;">1. Handwritten Reflection &middot; Submitted</span>
+            <h4 style="margin:4px 0;font-size:14px;">
+              <a href="assignments/s2-w8-bridge-reflection.html" style="color:white;text-decoration:none;">"What I've Actually Been Building Toward" &rarr;</a>
             </h4>
-            <p style="margin: 0; color: #94a3b8; font-size: 13px;">Five foundational claims. Write 2&ndash;3 honest sentences connecting each to actual Sprint 1&ndash;2 work. Handwritten, photographed.</p>
+            <p style="margin:0;color:#94a3b8;font-size:12px;">Five foundational claims. Write 2&ndash;3 honest sentences connecting each to actual Sprint 1&ndash;2 work. Handwritten, photographed.</p>
           </div>
-          <span style="color: #94a3b8; font-size: 13px; white-space: nowrap;" data-due-date="s2-bridge-reflection-2"></span>
-        </div>
-      </div>
 
-      <!-- 2. Claims Discussion -->
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">2. &#x1F4AC; AI-Discussion &middot; Submitted</span>
-            <h4 style="margin: 4px 0; font-size: 15px;">
-              <a href="assignments/s2-w8-claims-discussion.html" style="color: white; text-decoration: none;">"Claims in Practice" &rarr;</a>
+          <!-- 2. Claims Discussion -->
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#fbbf24;font-weight:600;">2. AI-Discussion &middot; Submitted</span>
+            <h4 style="margin:4px 0;font-size:14px;">
+              <a href="assignments/s2-w8-claims-discussion.html" style="color:white;text-decoration:none;">"Claims in Practice" &rarr;</a>
             </h4>
-            <p style="margin: 0; color: #94a3b8; font-size: 13px;">Structured AI-discussion pushing for specific evidence in Sprint 1&ndash;2 work for each claim.</p>
+            <p style="margin:0;color:#94a3b8;font-size:12px;">Structured AI-discussion pushing for specific evidence in Sprint 1&ndash;2 work for each claim.</p>
           </div>
-          <span style="color: #94a3b8; font-size: 13px; white-space: nowrap;" data-due-date="s2-claims-discussion"></span>
-        </div>
-      </div>
 
-      <!-- 3. Primer Reading -->
-      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">3. &#x1F4D6; Reading &middot; No Submission</span>
-            <h4 style="margin: 4px 0; font-size: 15px;">
-              <a href="assignments/s3-primer-reading.html" style="color: white; text-decoration: none;">"Sprint 3 Primer: The Shifting Ground" &rarr;</a>
+          <!-- 3. Primer Reading -->
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;">
+            <span style="font-size:11px;color:#fbbf24;font-weight:600;">3. Reading &middot; No Submission</span>
+            <h4 style="margin:4px 0;font-size:14px;">
+              <a href="assignments/s3-primer-reading.html" style="color:white;text-decoration:none;">"Sprint 3 Primer: The Shifting Ground" &rarr;</a>
             </h4>
-            <p style="margin: 0; color: #94a3b8; font-size: 13px;">Read IEEE Spectrum article about AI reshaping entry-level engineering careers. Come to class ready to answer: "What assumption about your career did you hold before reading this that you're less sure about now?"</p>
-          </div>
-          <span style="color: #94a3b8; font-size: 13px; white-space: nowrap;">Before Week 9 class</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 9: You Are What You Read -->
-    <div class="week-section" data-week="9">
-      <button class="week-section__header" data-collapse-toggle="week-9-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">9</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">You Are What You Read</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">&#x25BC;</span>
-      </button>
-      <div class="week-section__content" id="week-9-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Most information diets are optimized for engagement, not understanding. Futures thinking starts with an honest audit.
-        </p>
-
-        <!-- In-Class -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">&#x1F4C5; In-Class (Wednesday)</p>
-          <h4 class="in-class-plan__title">Information Diet Audit &amp; Futures Thinking Introduction</h4>
-          <div class="in-class-plan__content">
-            <ul>
-              <li>Opening: "What's one thing happening in tech right now that you think will matter in 5 years? How did you find out about it?"</li>
-              <li>Introduce futures thinking framework: signals vs. noise, drivers</li>
-              <li>Instructor live demo: scan one source together, narrate signal vs. noise thinking</li>
-              <li>Partner activity: 10 min, one source, share one candidate signal</li>
-            </ul>
-          </div>
-          <div style="margin-top: 12px;">
-            <a href="sessions/week-9-class.html" target="_blank" style="color: var(--indigo-600, #4f46e5); text-decoration: none; font-weight: 600; font-size: 14px;">View Session Slides →</a>
-          </div>
-          <div class="class-recording" data-loom="9">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">&#x1F465; Peer Conversation (Interview Practice)</p>
-          <h4 class="peer-conversation__title">Information Diet Honest Audit</h4>
-          <p class="peer-conversation__prompt">
-            "Walk your group through your actual information diet &mdash; not what you think you should be consuming, what you actually consume. What patterns do they notice? What's missing that surprises them?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> Describing your own practices honestly to someone with a different vantage point (Technical Interview Practice: explaining the unfamiliar)</p>
-        </div>
-
-        <!-- Info Diet Audit -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w9-info-diet-audit.html">S3: Information Diet Audit + First Signal</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-info-diet-audit"></span>
-          </div>
-          <p class="activity-item__description">
-            Formalized audit write-up: what you actually consume, what patterns you see, what's missing. Part 2 (First Signal) is optional this week &mdash; you'll do signal-finding formally in Week 10.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; margin-right: 8px;">SDL 3: Ambiguity</span>
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 6: Evaluate</span>
-          </div>
-        </div>
-
-        <!-- Reflection #7 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1FA9E; Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w9-reflection.html">S3: Productive Reflection #7</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-7"></span>
-          </div>
-          <p class="activity-item__description">
-            What did your audit reveal that surprised you? Not what you wish you consumed &mdash; what does the pattern tell you about what you've been paying attention to?
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; margin-right: 8px;">SDL 4: Metacognition</span>
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 6: Evaluate</span>
-          </div>
-        </div>
-
-        <!-- Goal Setting -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w9-goal-setting.html">S3: Sprint 3 Goal Setting</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-goal-setting"></span>
-          </div>
-          <p class="activity-item__description">
-            Three commitments: (1) Choose your focus area &mdash; what you care about or want to be working on for the next 5&ndash;10 years. (2) Set your own intake targets &mdash; how many articles, podcasts, and new sources you'll consume this sprint. (3) Write first-attempt answers to three questions your Futures Brief will ultimately answer.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; margin-right: 8px;">SDL 1: Goals</span>
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 2: Planning</span>
+            <p style="margin:0;color:#94a3b8;font-size:12px;">Read IEEE Spectrum article about AI reshaping entry-level engineering careers. Come ready to answer: "What assumption about your career did you hold before reading this that you're less sure about now?"</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Week 10: Start Changing -->
-    <div class="week-section" data-week="10">
-      <button class="week-section__header" data-collapse-toggle="week-10-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">10</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Start Changing</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">&#x25BC;</span>
-      </button>
-      <div class="week-section__content" id="week-10-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Reading something new is easy. Doing it in the presence of someone who will ask you about it makes it real.
-        </p>
-
-        <!-- In-Class -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">&#x1F4C5; In-Class (Wednesday, Mar 25)</p>
-          <h4 class="in-class-plan__title">Reading Partners + Check-Ins</h4>
-          <div class="in-class-plan__content">
-            <p style="margin: 0 0 12px 0;">After a brief intro, you'll choose one of two tracks for the session:</p>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-              <!-- Reading Partner track -->
-              <div style="background: white; border: 2px solid #7dd3fc; border-radius: 10px; padding: 16px;">
-                <div style="font-weight: 700; font-size: 15px; color: #0c4a6e; margin-bottom: 8px;">&#x1F4D6; Reading Partner</div>
-                <ol style="margin: 0; padding-left: 18px; font-size: 13px; color: var(--gray-700); line-height: 1.6;">
-                  <li>Share your reading goal with a partner</li>
-                  <li>Read or listen together in class</li>
-                  <li>Report back to the <em>same</em> partner before you leave</li>
-                </ol>
-                <p style="margin: 8px 0 0 0; font-size: 12px; color: var(--gray-500);">The loop closes same day &mdash; you start and finish with the same person.</p>
-              </div>
-
-              <!-- Student-Led Session track -->
-              <div style="background: white; border: 2px solid #7dd3fc; border-radius: 10px; padding: 16px;">
-                <div style="font-weight: 700; font-size: 15px; color: #0c4a6e; margin-bottom: 8px;">&#x1F9D1;&#x200D;&#x1F4BB; Student-Led Session</div>
-                <p style="margin: 0; font-size: 13px; color: var(--gray-700); line-height: 1.6;">Career prep connected to your Sprint 3 goals: LeetCode practice, mock interviews, resume reviews, or peer accountability.</p>
-              </div>
-            </div>
-
-            <div style="background: #fefce8; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #92400e; line-height: 1.5;">
-              <strong>Check-in (~4 min):</strong> At some point during class you'll have a brief check-in where we'll ask two questions: (1) What did you set as your information diet goal? (2) How do you think this is going to help you expand your horizon?
-            </div>
-          </div>
-          <div class="class-recording" data-loom="10">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">&#x1F465; Peer Conversation (Interview Practice)</p>
-          <h4 class="peer-conversation__title">What Did You Just Learn?</h4>
-          <p class="peer-conversation__prompt">
-            "You and your partner both consumed something new during class. What did you read or listen to? What surprised you? What does it make you think about your focus area that you didn't think about before?"
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> Articulating new learning to a peer &mdash; translating intake into insight in real time.</p>
-        </div>
-
-        <!-- Goal Check-In Week 10 -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-goal-checkin.html">S3: Goal Check-In &mdash; Week 10</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-w10-checkin"></span>
-          </div>
-          <p class="activity-item__description">
-            First honest check against your Sprint 3 goals. Update your intake numbers, name a new source, and track how your three questions are evolving. Interactive form &mdash; fill out and copy to Canvas.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 1: Goals</span>
-          </div>
-        </div>
-
-        <!-- Reflection #8 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1FA9E; Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w10-productive-reflection.html">S3: Productive Reflection #8</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-8"></span>
-          </div>
-          <p class="activity-item__description">
-            What did you consume this week that you wouldn't have before this sprint? Name the source. What surprised you? If nothing new &mdash; what got in the way?
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 4: Metacognition</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 11: What's Different Now? -->
-    <div class="week-section" data-week="11">
-      <button class="week-section__header" data-collapse-toggle="week-11-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">11</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">What's Different Now?</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">&#x25BC;</span>
-      </button>
-      <div class="week-section__content" id="week-11-content">
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> Anyone can say they'll read more. The test is whether what you consumed actually changed something you do or think.
-        </p>
-
-        <!-- In-Class -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">&#x1F4C5; In-Class (Wednesday, Apr 8)</p>
-          <h4 class="in-class-plan__title">Reading Partners + Check-Ins &mdash; Round 2</h4>
-          <div class="in-class-plan__content">
-            <p style="margin: 0 0 12px 0;">Same two tracks as Week 10 &mdash; Reading Partner or Student-Led Session.</p>
-
-            <div style="background: #fefce8; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #92400e; line-height: 1.5;">
-              <strong>Check-in focus this week:</strong> What are you actually doing differently because of what you've consumed? Not plans &mdash; what has already changed?
-            </div>
-          </div>
-          <div class="class-recording" data-loom="11">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Peer Conversation -->
-        <div class="peer-conversation">
-          <p class="peer-conversation__label">&#x1F465; Peer Conversation (Interview Practice)</p>
-          <h4 class="peer-conversation__title">What Changed?</h4>
-          <p class="peer-conversation__prompt">
-            "What are you doing differently now compared to Week 9? Not what you plan to do &mdash; what have you already changed? Your partner's job: push on whether this is a real change or a stated intention."
-          </p>
-          <p class="peer-conversation__skill"><strong>Skill:</strong> Distinguishing genuine behavioral change from aspirational statements &mdash; honest self-assessment under peer scrutiny.</p>
-        </div>
-
-        <!-- Goal Check-In Week 11 -->
-        <div class="activity-item activity-item--assignment">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1F4CB; Assignment</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w11-goal-checkin.html">S3: Goal Check-In &mdash; Week 11</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-w11-checkin"></span>
-          </div>
-          <p class="activity-item__description">
-            Second check-in. Same intake tracker, plus a new question: what are you actually doing differently because of what you've consumed? Interactive form &mdash; fill out and copy to Canvas.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 1: Goals</span>
-          </div>
-        </div>
-
-        <!-- Reflection #9 -->
-        <div class="activity-item activity-item--reflection">
-          <div class="activity-item__header">
-            <div>
-              <span class="activity-item__type">&#x1FA9E; Reflection</span>
-              <h4 class="activity-item__title">
-                <a href="assignments/s3-w11-productive-reflection.html">S3: Productive Reflection #9</a>
-              </h4>
-            </div>
-            <span class="activity-item__due" data-due-date="s3-reflection-9"></span>
-          </div>
-          <p class="activity-item__description">
-            What are you actually doing differently because of what you've been consuming? Not plans &mdash; what have you already changed? If the answer is "nothing yet," say that and say why.
-          </p>
-          <div class="activity-item__capabilities">
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; margin-right: 8px;">SDL 4: Metacognition</span>
-            <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 5: Iteration</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week 12: Demo Day -->
-    <div class="week-section" data-week="12">
-      <button class="week-section__header" data-collapse-toggle="week-12-content" aria-expanded="false">
-        <div class="week-section__header-left">
-          <span class="week-section__number">12</span>
-          <div class="week-section__title-group">
-            <h3 class="week-section__title">Demo Day &mdash; Your Futures Brief</h3>
-          </div>
-        </div>
-        <span class="week-section__toggle">&#x25BC;</span>
-      </button>
-      <div class="week-section__content" id="week-12-content">
-
-        <p class="week-section__concepts">
-          <strong>Concepts:</strong> The demo shows your arc, not just your conclusion. What did you start with in Week 9, what changed, and what do you believe now?
-        </p>
-
-        <!-- In-Class -->
-        <div class="in-class-plan">
-          <p class="in-class-plan__label">&#x1F4C5; In-Class (Wednesday)</p>
-          <h4 class="in-class-plan__title">Futures Brief Presentations</h4>
-          <div class="in-class-plan__content">
-            <p style="margin: 0 0 8px 0; color: var(--gray-700); font-size: 14px;"><strong>Format (4&ndash;5 min):</strong></p>
-            <ol style="margin: 0; padding-left: 20px;">
-              <li><strong>Before</strong> &mdash; What was your information diet like before this sprint? What did you consume and where did your understanding of your field come from?</li>
-              <li><strong>Now</strong> &mdash; What do you consume now? What new sources did you find? What did you learn from them?</li>
-              <li><strong>What changed</strong> &mdash; One thing you believe differently now because of what you consumed, and why</li>
-              <li><strong>Going forward</strong> &mdash; What do you plan to do differently going forward? Not vague &mdash; what specific habit, source, or practice are you committing to?</li>
-            </ol>
-          </div>
-          <div class="class-recording" data-loom="12">
-            <span class="class-recording__icon">&#x1F3A5;</span>
-            <a href="#" class="class-recording__link">Watch Class Recording</a>
-            <span class="class-recording__no-recording">No recording available for this session</span>
-          </div>
-        </div>
-
-        <!-- Stub activities (reduced opacity) -->
-        <div style="opacity: 0.5;">
-          <div class="activity-item activity-item--assignment">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">&#x1F4CB; Assignment</span>
-                <h4 class="activity-item__title">S3: Futures Brief (written version, 400&ndash;500 words, submitted before class)</h4>
-              </div>
-            </div>
-            <p class="activity-item__description">
-              Your arc: before vs. now vs. going forward. What you consumed, what changed your thinking, and what specific habit or practice you're committing to.
-            </p>
-            <div class="activity-item__capabilities">
-              <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 6: Evaluate</span>
-            </div>
-          </div>
-
-          <div class="activity-item activity-item--peer">
-            <div class="activity-item__header">
-              <div>
-                <span class="activity-item__type">&#x1F465; Peer Evaluation</span>
-                <h4 class="activity-item__title">S3: Sprint 3 Peer Evaluation (in-class)</h4>
-              </div>
-            </div>
-            <div class="activity-item__capabilities">
-              <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 7: Collaborate</span>
-            </div>
-          </div>
-
-          <div class="bridge-section">
-            <p class="bridge-section__label">&#x1F309; Sprint Transition</p>
-            <div class="activity-item activity-item--bridge">
-              <div class="activity-item__header">
-                <div>
-                  <span class="activity-item__type">Bridge Reflection</span>
-                  <h4 class="activity-item__title">S3: Sprint 3&rarr;4 Bridge Reflection</h4>
-                </div>
-              </div>
-              <p class="activity-item__description">
-                Three sprints of SDL evidence. Here's what I claimed about where my field is going. Here's the skill I need to develop to be ready for it.
-              </p>
-              <div class="activity-item__capabilities">
-                <span style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;">SDL 4: Metacognition</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- What Comes Next -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">What Comes Next</h3>
-      <p style="margin: 0 0 var(--space-3) 0; color: var(--gray-600);">
-        <strong>Sprint 4: Proving It</strong> &mdash; You claimed where your field is going. Now develop one skill that prepares you for that future. Not mastery &mdash; a meaningful first step and a learning plan. The portfolio defense becomes: "Here's what I claimed, here's what I chose to learn, here's my evidence that SDL is now something I do, not something I performed."
-      </p>
-      <p style="margin: 0; color: var(--gray-600); font-style: italic;">
-        "A vague Sprint 3 claim gives Sprint 4 nothing to build on. An honest one gives you a real direction."
-      </p>
-    </div>
+    <!-- Zone B: Weekly Briefing -->
+    <div id="week-nav"></div>
+    <div id="zone-b"></div>
 
   </div>
 
@@ -514,17 +112,43 @@
   <script src="../config/cst349-config.js"></script>
   <script src="../js/components.js"></script>
   <script>
+    var SPRINT_NUM = 3;
+    var CONFIG = CST349_CONFIG;
+
+    function renderWeek(weekNum) {
+      renderStickyWeekCounter(CONFIG, weekNum, 'sticky-counter');
+      renderWeekNavigation(CONFIG, weekNum, SPRINT_NUM, 'week-nav', renderWeek);
+      renderSprintBriefing(CONFIG, weekNum, 'zone-b');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      addDemoBannerIfNeeded();
-      populateDueDates(CST349_CONFIG);
-      initSprintPageWithLoom(CST349_CONFIG);
+      addNavigationIfNeeded();
+      var resolved = getResolvedCurrentWeek(CONFIG);
+      var currentWeek = resolved.week || 1;
+      var weekData = CONFIG.weekDates[currentWeek];
+      var currentSprint = weekData ? weekData.sprint : 1;
+
+      var sprintWeeks = [];
+      for (var w in CONFIG.weekDates) {
+        if (CONFIG.weekDates[w].sprint === SPRINT_NUM) sprintWeeks.push(parseInt(w));
+      }
+      sprintWeeks.sort(function(a, b) { return a - b; });
+
+      var displayWeek;
+      if (currentSprint === SPRINT_NUM) displayWeek = currentWeek;
+      else if (currentSprint > SPRINT_NUM) displayWeek = sprintWeeks[sprintWeeks.length - 1];
+      else displayWeek = sprintWeeks[0];
+
+      renderStickyWeekCounter(CONFIG, displayWeek, 'sticky-counter');
+      renderJourneyPills(CONFIG, currentSprint, 'journey-pills', SPRINT_NUM);
+      renderWeek(displayWeek);
+      initDateSimulator();
     });
   </script>
 
-  <!-- Feedback Footer -->
-  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid #e5e7eb;">
-    <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: #6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+  <footer style="text-align:center;padding:24px 16px;margin-top:40px;border-top:1px solid #e5e7eb;">
+    <p style="margin:0;font-size:12px;color:#9ca3af;">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color:#6366f1;">https://forms.gle/ssHfShC6QECbW7WQ6</a>
     </p>
   </footer>
 
