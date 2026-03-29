@@ -631,7 +631,7 @@ function renderWeekNavigation(config, currentWeek, sprintNum, containerId, onNav
   }
   if (nextDisabled && sprintNum < 4) {
     var ns = config.sprints[sprintNum + 1];
-    if (ns) nextSprintLink = '<div style="text-align:right;margin-top:4px;"><a href="sprint-' + (sprintNum + 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">Sprint ' + (sprintNum + 1) + ': ' + ns.name + ' \u2192</a></div>';
+    if (ns) nextSprintLink = '<div style="text-align:right;margin-top:4px;margin-left:auto;"><a href="sprint-' + (sprintNum + 1) + '.html" style="font-size:12px;color:#9ca3af;text-decoration:none;">Sprint ' + (sprintNum + 1) + ': ' + ns.name + ' \u2192</a></div>';
   }
 
   container.innerHTML =
