@@ -442,7 +442,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 9,
-      htmlFile: "assignments/s3-w9-reflection.html"
+      htmlFile: "assignments/s3-w9-reflection.html",
+      briefing: "What did your audit reveal that surprised you? Not what you wish your diet looked like — what does the actual pattern tell you about what you've been paying attention to?"
     },
     "s3-info-diet-audit": {
       canvasId: "586015",
@@ -454,7 +455,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 9,
-      htmlFile: "assignments/s3-w9-info-diet-audit.html"
+      htmlFile: "assignments/s3-w9-info-diet-audit.html",
+      briefing: "Document what you actually consume, not what you wish you consumed. The patterns you find are the starting point for change."
     },
     "s3-goal-setting": {
       canvasId: "586016",
@@ -466,7 +468,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 9,
-      htmlFile: "assignments/s3-w9-goal-setting.html"
+      htmlFile: "assignments/s3-w9-goal-setting.html",
+      briefing: "Three commitments: your focus area, your intake targets, and first-attempt answers to the questions your Futures Brief will answer."
     },
 
     // Sprint 4
@@ -542,7 +545,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 10,
-      htmlFile: "assignments/s3-w10-goal-checkin.html"
+      htmlFile: "assignments/s3-w10-goal-checkin.html",
+      briefing: "First honest check against your Sprint 3 goals. Update your intake numbers, name a new source, and track how your three questions are evolving."
     },
     "s3-reflection-8": {
       canvasId: "586959",
@@ -554,7 +558,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 10,
-      htmlFile: "assignments/s3-w10-productive-reflection.html"
+      htmlFile: "assignments/s3-w10-productive-reflection.html",
+      briefing: "What did you consume this week that you wouldn't have before this sprint? Name the source. What surprised you? If nothing new — what got in the way?"
     },
     "s3-w11-checkin": {
       canvasId: "586960",
@@ -566,7 +571,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 11,
-      htmlFile: "assignments/s3-w11-goal-checkin.html"
+      htmlFile: "assignments/s3-w11-goal-checkin.html",
+      briefing: "Second check-in. Same structure as Week 10 but the bar is higher — has anything you consumed actually changed something you think or do?"
     },
     "s3-reflection-9": {
       canvasId: "586961",
@@ -578,7 +584,8 @@ const CST349_CONFIG = {
       points: 5,
       sprint: 3,
       week: 11,
-      htmlFile: "assignments/s3-w11-productive-reflection.html"
+      htmlFile: "assignments/s3-w11-productive-reflection.html",
+      briefing: "The transfer test: can you point to something specific you believe differently now because of what you read or listened to this sprint?"
     }
   },
 
@@ -729,6 +736,34 @@ const CST349_CONFIG = {
         source: null
       },
       portfolioConnection: "Sprint 3 demo feeds Sprint 4 directly. Your claim becomes the basis for choosing what skill to develop next. The quality of your claim determines the quality of your Sprint 4."
+    },
+    13: {
+      narrative: "Evidence audit. Before you build a defense, take stock of what you actually have across all three sprints.",
+      connection: "Sprint 3 ended with a claim about your field's future. Sprint 4 asks: can you prove you've grown across all four sprints?",
+      insight: "The gap between what you claim and what you can show is the most useful data in this sprint.",
+      employerLink: { text: "Portfolio construction is a skill employers evaluate directly. Can you curate evidence that tells a coherent story?", source: null },
+      portfolioConnection: "This week's audit becomes the raw material for your defense."
+    },
+    14: {
+      narrative: "Portfolio construction. Select, organize, and narrate the evidence that tells your growth story.",
+      connection: "Last week you inventoried. This week you build the narrative arc.",
+      insight: "A portfolio isn't a collection of assignments. It's a curated argument about who you've become.",
+      employerLink: { text: "Every hiring manager asks 'tell me about yourself.' Your portfolio IS that answer, backed by evidence.", source: null },
+      portfolioConnection: "The portfolio you build this week is what you defend next week."
+    },
+    15: {
+      narrative: "Defense preparation. Practice defending your portfolio against honest challenge.",
+      connection: "You've built the portfolio. Now prepare for the questions that test whether you understand your own growth.",
+      insight: "The defense isn't about winning. It's about demonstrating that you know what you know and can name what you don't.",
+      employerLink: { text: "Defending your work under questioning is the core skill of technical interviews, design reviews, and promotion conversations.", source: null },
+      portfolioConnection: "Your defense draft becomes the final version after peer feedback."
+    },
+    16: {
+      narrative: "Final defense. Present your growth arc across all four sprints with evidence.",
+      connection: "Everything converges: self-assessment, accountable growth, futures thinking, and now proof.",
+      insight: "The best defenses don't claim perfection. They show an honest arc of change with specific evidence at each turn.",
+      employerLink: { text: "This IS a behavioral interview. You're proving you can reflect, adapt, and articulate your own development.", source: null },
+      portfolioConnection: "This is your portfolio. The defense is the final artifact."
     }
   },
 
@@ -793,7 +828,11 @@ const CST349_CONFIG = {
     9: "What does your actual information diet tell you about what you've been optimizing for \u2014 understanding, or engagement?",
     10: "What did you consume this week that you wouldn't have encountered before this sprint?",
     11: "Has anything you've read or listened to actually changed something you think or do? Name it specifically.",
-    12: "What do you believe differently now than you did four weeks ago \u2014 and what would you tell someone who disagrees?"
+    12: "What do you believe differently now than you did four weeks ago \u2014 and what would you tell someone who disagrees?",
+    13: "What evidence do you actually have \u2014 not what you wish you had, but what exists right now?",
+    14: "If someone looked at your portfolio without your narration, what story would it tell?",
+    15: "What\u2019s the weakest part of your defense \u2014 and what would you say if someone pointed it out?",
+    16: "Four sprints. What changed about how you learn, not just what you learned?"
   },
 
   // SDL Dimensions
