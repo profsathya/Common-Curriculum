@@ -329,19 +329,18 @@
 // ===== DATA: Update these to publish new content =====
 
 const changelog = [
-  { date: 'March 28, 2026', text: 'Published Phase P+I: Plan &amp; Implement \u2014 takeaways and Your Turn' },
-  { date: 'March 26, 2026', text: 'Published Phase P: Plan \u2014 takeaways and Your Turn' },
-  { date: 'March 24, 2026', text: 'Published Phase U+M (Context): Interactive guideline map + "Starting from Zero" narration' },
+  { date: 'March 30, 2026', text: 'Restructured navigation: Context / Choices / Confirmation. Choices section now has Part I-III tabs.' },
+  { date: 'March 28, 2026', text: 'Published Choices Part II: Plan &amp; Implement \u2014 takeaways and Your Turn' },
+  { date: 'March 26, 2026', text: 'Published Choices Part I: Plan \u2014 takeaways and Your Turn' },
+  { date: 'March 24, 2026', text: 'Published Context: Interactive guideline map + "Starting from Zero" narration' },
   { date: 'March 22, 2026', text: 'Page created, structure published' }
 ];
-const comingNext = 'Phase R+E (Review + Evaluate) \u2014 coming Week 12. Did it work? What would I change? The arc from Week 9 to now.';
+const comingNext = 'Confirmation (Review + Evaluate) \u2014 coming Week 12. Did it work? What would I change? The arc from Week 9 to now.';
 
 const sections = [
-  { id: 'context', label: 'U+M', title: 'Context: Understand + Map', status: 'published', contentId: 'phase-context' },
-  { id: 'plan', label: 'P', title: 'Plan', status: 'published', contentId: 'phase-plan' },
-  { id: 'plan-implement', label: 'P+I', title: 'Plan + Implement', status: 'published', contentId: 'phase-pi' },
-  { id: 'review', label: 'R', title: 'Review', status: 'locked', contentId: 'phase-review' },
-  { id: 'evaluate', label: 'E', title: 'Evaluate', status: 'locked', contentId: 'phase-evaluate' }
+  { id: 'context', label: 'U+M', title: 'Context', subtitle: 'Understanding the problem space before touching solutions', status: 'published', contentId: 'phase-context' },
+  { id: 'choices', label: 'P+I', title: 'Choices', subtitle: 'Making decisions and building \u2014 then letting AI break them', status: 'published', contentId: 'phase-choices' },
+  { id: 'confirmation', label: 'R+E', title: 'Confirmation', subtitle: 'Did it work? What would you change?', status: 'locked', contentId: 'phase-confirmation' }
 ];
 </script>
 
@@ -436,9 +435,15 @@ const sections = [
     </div>
   </div>
 
-  <!-- ========== PHASE P: PLAN (Published) ========== -->
-  <div class="phase-section phase-section--published" id="phase-plan" style="display:none;">
+  <!-- ========== CHOICES: P+I (Published, with Part I/II/III tabs) ========== -->
+  <div class="phase-section phase-section--published" id="phase-choices" style="display:none;">
     <div class="phase-content">
+
+      <!-- Sub-tabs for Part I / Part II / Part III -->
+      <div id="choices-tabs" style="display:flex;gap:4px;margin-bottom:20px;"></div>
+
+      <!-- Part I: Plan -->
+      <div id="choices-part-1">
 
         <!-- Video -->
         <div class="content-card">
@@ -485,12 +490,10 @@ const sections = [
           <a href="assignments/s3-w10-stake-defense.html">View Problem Stake Defense Assignment &rarr;</a>
         </div>
 
-    </div>
-  </div>
+      </div>
 
-  <!-- ========== PHASE P+I: PLAN + IMPLEMENT (Published) ========== -->
-  <div class="phase-section phase-section--published" id="phase-pi" style="display:none;">
-    <div class="phase-content">
+      <!-- Part II: Plan + Implement -->
+      <div id="choices-part-2" style="display:none;">
 
       <!-- Video -->
       <div class="content-card">
@@ -538,12 +541,51 @@ const sections = [
         <a href="assignments/s3-w10-build-v1.html">View Build v1 Assignment &rarr;</a>
       </div>
 
+      </div>
+
+      <!-- Part III: Implement -->
+      <div id="choices-part-3" style="display:none;">
+
+        <!-- Video -->
+        <div class="content-card">
+          <p class="content-card__type">Video</p>
+          <h3>Implement: Building, Testing, Iterating</h3>
+          <div style="position: relative; padding-top: 56.25%; background: #111827; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.15);">
+            <iframe src="https://www.loom.com/embed/348fb6305abb4e4bb40b33a1b5cad91f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+          </div>
+        </div>
+
+        <!-- Handwritten Reflection (PDF) -->
+        <div class="content-card">
+          <p class="content-card__type">Handwritten Reflection</p>
+          <h3>Implementation: What Changed and Why</h3>
+          <a href="notes/CST395%20MDRO%20-%20(P)%20Implement.pdf" target="_blank" class="artifact-link" style="margin-top: 0; margin-bottom: 12px;">Open Handwritten PDF &rarr;</a>
+          <p style="margin-top: 12px; font-size: 14px; color: #4b5563; line-height: 1.6;">Covers: what changed from the plan to the build, what broke, and what the iteration revealed about the original assumptions.</p>
+        </div>
+
+        <!-- Takeaways (placeholder) -->
+        <div class="content-card">
+          <p class="content-card__type">Takeaways</p>
+          <div class="placeholder-text">
+            Takeaways will be added after the video is reviewed. Check back soon.
+          </div>
+        </div>
+
+        <!-- Your Turn (placeholder) -->
+        <div class="your-turn">
+          <h4>Your Turn</h4>
+          <div class="placeholder-text">
+            Your Turn guidance coming soon.
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
-  <!-- Locked sections: content added when published -->
-  <div id="phase-review" style="display:none;"></div>
-  <div id="phase-evaluate" style="display:none;"></div>
+  <!-- Locked section: content added when published -->
+  <div id="phase-confirmation" style="display:none;"></div>
 
   <!-- Footer -->
   <div class="page-footer">
@@ -567,13 +609,31 @@ function showSection(sectionId) {
       btn.style.outlineOffset = s.id === sectionId ? '2px' : '0';
     }
   });
+  // Show/hide choices sub-tabs
+  var tabs = document.getElementById('choices-tabs');
+  if (tabs) tabs.style.display = sectionId === 'choices' ? 'flex' : 'none';
   try { localStorage.setItem('cst395-notes-last-section', sectionId); } catch(e) {}
+}
+
+// Sub-tabs within Choices section
+function showChoicesPart(partNum) {
+  for (var i = 1; i <= 3; i++) {
+    var el = document.getElementById('choices-part-' + i);
+    if (el) el.style.display = i === partNum ? 'block' : 'none';
+    var tab = document.getElementById('choices-tab-' + i);
+    if (tab) {
+      tab.style.background = i === partNum ? '#0d9488' : 'white';
+      tab.style.color = i === partNum ? 'white' : '#0d9488';
+    }
+  }
+  try { localStorage.setItem('cst395-notes-last-part', String(partNum)); } catch(e) {}
 }
 
 function renderSectionNav() {
   var nav = document.getElementById('section-nav');
   if (!nav) return;
-  var html = '<div style="display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap;">';
+
+  var html = '<div style="display:flex;gap:8px;margin-bottom:24px;">';
   sections.forEach(function(s) {
     var isLocked = s.status === 'locked';
     var bg = isLocked ? '#f3f4f6' : '#14b8a6';
@@ -581,12 +641,12 @@ function renderSectionNav() {
     var cursor = isLocked ? 'default' : 'pointer';
     var opacity = isLocked ? '0.7' : '1';
     var border = isLocked ? '1.5px solid #e5e7eb' : '1.5px solid #0d9488';
-    var pulse = s.status === 'in-progress' ? 'animation:pulse-ring 2s ease-in-out infinite;background:transparent;border:2px solid #14b8a6;color:#14b8a6;' : '';
     html += '<button id="nav-' + s.id + '" ' +
       (isLocked ? '' : 'onclick="showSection(\'' + s.id + '\')" ') +
-      'style="flex:1;min-width:100px;padding:10px 12px;border-radius:10px;border:' + border + ';background:' + bg + ';color:' + color + ';cursor:' + cursor + ';opacity:' + opacity + ';font-family:inherit;text-align:center;transition:all 0.15s;' + pulse + '">' +
-        '<div style="font-size:14px;font-weight:700;">' + s.label + '</div>' +
-        '<div style="font-size:11px;margin-top:2px;opacity:0.85;">' + s.title + '</div>' +
+      'style="flex:1;padding:12px 14px;border-radius:10px;border:' + border + ';background:' + bg + ';color:' + color + ';cursor:' + cursor + ';opacity:' + opacity + ';font-family:inherit;text-align:center;transition:all 0.15s;">' +
+        '<div style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;opacity:0.85;">' + s.label + '</div>' +
+        '<div style="font-size:15px;font-weight:700;margin-top:2px;">' + s.title + '</div>' +
+        '<div style="font-size:11px;margin-top:4px;opacity:0.8;line-height:1.3;">' + s.subtitle + '</div>' +
       (isLocked ? '<div style="font-size:10px;margin-top:4px;font-style:italic;">Coming soon</div>' : '') +
     '</button>';
   });
@@ -594,22 +654,45 @@ function renderSectionNav() {
   nav.innerHTML = html;
 }
 
+function renderChoicesTabs() {
+  var tabs = document.getElementById('choices-tabs');
+  if (!tabs) return;
+  var parts = [
+    { num: 1, label: 'Part I: Plan' },
+    { num: 2, label: 'Part II: Plan + Implement' },
+    { num: 3, label: 'Part III: Implement' }
+  ];
+  var html = '';
+  parts.forEach(function(p) {
+    html += '<button id="choices-tab-' + p.num + '" onclick="showChoicesPart(' + p.num + ')" ' +
+      'style="padding:6px 14px;border-radius:6px;border:1.5px solid #0d9488;background:white;color:#0d9488;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all 0.15s;">' +
+      p.label + '</button>';
+  });
+  tabs.innerHTML = html;
+}
+
 // ===== Initialize =====
 document.addEventListener('DOMContentLoaded', function() {
   renderSectionNav();
+  renderChoicesTabs();
 
   // Determine which section to show
   var lastSection = null;
   try { lastSection = localStorage.getItem('cst395-notes-last-section'); } catch(e) {}
-
-  // Validate: must exist and not be locked
   var valid = sections.some(function(s) { return s.id === lastSection && s.status !== 'locked'; });
   if (!valid) {
     var first = sections.find(function(s) { return s.status !== 'locked'; });
     lastSection = first ? first.id : sections[0].id;
   }
-
   showSection(lastSection);
+
+  // Determine which Choices sub-tab to show
+  var lastPart = 3; // Default to latest part
+  try {
+    var stored = localStorage.getItem('cst395-notes-last-part');
+    if (stored && parseInt(stored) >= 1 && parseInt(stored) <= 3) lastPart = parseInt(stored);
+  } catch(e) {}
+  showChoicesPart(lastPart);
 
   // Render changelog banner
   var banner = document.querySelector('.last-updated-banner__inner');
