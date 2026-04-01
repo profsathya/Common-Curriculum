@@ -444,13 +444,17 @@ function renderSprintBriefing(config, weekNum, containerId, options) {
 
   // Session info card
   var loomUrl = config.loomVideos ? config.loomVideos[weekNum] : null;
-  html += '<div style="padding:12px;background:#f9fafb;border-radius:8px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">' +
-    '<div>' +
-      '<div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em;">In-class session</div>' +
-      '<div style="font-size:14px;font-weight:500;color:#374151;margin-top:2px;">' + (weekData.title || 'Week ' + weekNum) + '</div>' +
-    '</div>' +
-    '<div style="display:flex;gap:8px;">' +
-    (loomUrl ? '<a href="' + loomUrl + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Recording \u2192</a>' : '') +
+  var sessionFile = 'sessions/week-' + weekNum + '-class.html';
+  html += '<div style="padding:12px;background:#f9fafb;border-radius:8px;margin-bottom:16px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+      '<div>' +
+        '<div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em;">In-class session</div>' +
+        '<div style="font-size:14px;font-weight:500;color:#374151;margin-top:2px;">' + (weekData.title || 'Week ' + weekNum) + '</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:12px;align-items:center;">' +
+        '<a href="' + sessionFile + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Session Slides \u2192</a>' +
+        (loomUrl ? '<a href="' + loomUrl + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Recording \u2192</a>' : '') +
+      '</div>' +
     '</div>' +
   '</div>';
 
