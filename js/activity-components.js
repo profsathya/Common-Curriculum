@@ -1474,30 +1474,40 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
 
     // Source responses (read-only display of partner's earlier answers)
     const sourceIds = question.sourceQuestions || [];
-    const allResponses = options.getAllResponses ? options.getAllResponses() : {};
 
     const sourcesBox = createElement('div', 'activity-qft__sources');
-    sourcesBox.innerHTML = '<div class="activity-qft__sources-label">Your partner\'s responses (from earlier questions):</div>';
 
-    let hasSourceContent = false;
-    sourceIds.forEach(srcId => {
-      const resp = allResponses[srcId];
-      if (resp && resp.answer) {
-        hasSourceContent = true;
-        const text = typeof resp.answer === 'string' ? resp.answer : (resp.answer.text || resp.answer.enteredResponse || JSON.stringify(resp.answer));
-        const srcEl = createElement('div', 'activity-qft__source-item');
-        // Look up the question config for label
-        const srcConfig = options.questionConfig?.[srcId];
-        const label = srcConfig ? (srcConfig.prompt || srcId).substring(0, 80) + (srcConfig.prompt?.length > 80 ? '...' : '') : srcId;
-        srcEl.innerHTML = '<div class="activity-qft__source-label">' + escapeHtml(label) + '</div>' +
-          '<div class="activity-qft__source-text">' + escapeHtml(text) + '</div>';
-        sourcesBox.appendChild(srcEl);
+    function refreshSourcesPanel() {
+      const currentResponses = options.getAllResponses ? options.getAllResponses() : {};
+      sourcesBox.innerHTML = '<div class="activity-qft__sources-label">Your partner\'s responses (from earlier questions):</div>';
+      let found = false;
+      sourceIds.forEach(srcId => {
+        const resp = currentResponses[srcId];
+        if (resp && resp.answer) {
+          found = true;
+          const text = typeof resp.answer === 'string' ? resp.answer : (resp.answer.text || resp.answer.enteredResponse || JSON.stringify(resp.answer));
+          const srcEl = createElement('div', 'activity-qft__source-item');
+          const srcConfig = options.questionConfig?.[srcId];
+          const label = srcConfig ? (srcConfig.prompt || srcId).substring(0, 80) + (srcConfig.prompt?.length > 80 ? '...' : '') : srcId;
+          srcEl.innerHTML = '<div class="activity-qft__source-label">' + escapeHtml(label) + '</div>' +
+            '<div class="activity-qft__source-text">' + escapeHtml(text) + '</div>';
+          sourcesBox.appendChild(srcEl);
+        }
+      });
+      if (!found) {
+        sourcesBox.innerHTML += '<p style="color:#9ca3af;font-size:13px;font-style:italic;">Complete the earlier questions first to see your partner\'s responses here.</p>';
       }
-    });
-
-    if (!hasSourceContent) {
-      sourcesBox.innerHTML += '<p style="color:#9ca3af;font-size:13px;font-style:italic;">Complete the earlier questions first to see your partner\'s responses here.</p>';
     }
+
+    refreshSourcesPanel();
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) refreshSourcesPanel();
+      }, { threshold: 0.1 });
+      observer.observe(sourcesBox);
+    }
+
     container.appendChild(sourcesBox);
 
     // Prompt
@@ -1622,10 +1632,12 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       const aiEndpoint = question.aiEndpoint || options.aiEndpoint || '/.netlify/functions/ai-proxy';
       const course = options.courseTheme === 'cst349' ? 'CST349' : 'CST395';
 
-      // Build source text
+      // Build source text from fresh responses
+      refreshSourcesPanel();
+      const freshResponses = options.getAllResponses ? options.getAllResponses() : {};
       let sourceText = '';
       sourceIds.forEach(srcId => {
-        const resp = allResponses[srcId];
+        const resp = freshResponses[srcId];
         if (resp?.answer) {
           const t = typeof resp.answer === 'string' ? resp.answer : (resp.answer.text || resp.answer.enteredResponse || '');
           if (t) sourceText += t + '\n\n';
@@ -1666,6 +1678,10 @@ If questions need work: explain specifically what's weak and suggest better alte
         notesLabel.style.display = 'block';
         notesTextarea.style.display = 'block';
         saveBtn.style.display = 'inline-block';
+
+        // Persist to savedData so subsequent save handler can read it
+        savedData.aiFeedback = feedback;
+        savedData.questions = qs;
 
         // Auto-save questions + feedback
         const answer = {
