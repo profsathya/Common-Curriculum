@@ -1,0 +1,80 @@
+{
+  "activityId": "cst395-s3-demo-ai-discussion",
+  "version": "1.0",
+  "versionNotes": "Sprint 3 demo — partner entry + QFT discussion for MDRO design challenge",
+  "course": "CST395",
+  "title": "Sprint 3 Demo: AI-Facilitated Peer Discussion",
+  "description": "Your partner has written their Sprint 3 reflection on paper. Enter their responses below, then formulate follow-up questions and discuss them face-to-face.",
+
+  "settings": {
+    "maxRetries": 3,
+    "showHintsAfterAttempt": 2,
+    "requireAtLeastOneOpenEnded": false,
+    "aiEndpoint": "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy"
+  },
+
+  "roster": [
+    "Cimino, Victoria",
+    "De Vries, Matthijs",
+    "Fedeli, Joseph",
+    "Fletes, Carlos",
+    "Kofler, Edwin",
+    "Martinez, Daniel",
+    "Medina, Angel",
+    "Metke, Austin",
+    "Meza, Christian",
+    "Morales, Augustin",
+    "Niazi, Abdul",
+    "Olaoye, Oluwatobiloba",
+    "Orta, Daniel",
+    "Orta, David",
+    "Palacios, Roberto",
+    "Park, Justin",
+    "Sanchez-Pereyra, Eduardo",
+    "Stewart, Van",
+    "Trujillo, Nathan",
+    "Valdez, Angel"
+  ],
+
+  "questions": [
+    {
+      "id": "q1-human-moment",
+      "type": "partner-entry",
+      "prompt": "What was the specific human moment you designed for in the MDRO challenge? Describe the person, the situation, and the constraint that made it hard — then explain what changed between your Week 9 stake and your final design.",
+      "partnerInstructions": "Read your partner's written response carefully, then type it below as accurately as you can. Don't paraphrase — capture their actual words.",
+      "placeholder": "Type your partner's written response here...",
+      "minLength": 80
+    },
+    {
+      "id": "q2-choose-one",
+      "type": "partner-entry",
+      "prompt": "Choose 1 of 2 questions below, then enter your partner's response:",
+      "selectorLabel": "Which question did your partner respond to?",
+      "questionOptions": [
+        "Describe a design decision where you chose X over Y. What made you choose it — and what would be worse about your solution if you'd gone the other way?",
+        "What changed between your v1 build and your v2? What specific feedback, test, or realization caused the change — and how is the solution better for the person who uses it?"
+      ],
+      "partnerInstructions": "First select which question the author chose, then type their written response below.",
+      "placeholder": "Type your partner's response to their chosen question here...",
+      "minLength": 60
+    },
+    {
+      "id": "qft-followup",
+      "type": "qft-discussion",
+      "prompt": "Based on your partner's responses above, write 3-4 follow-up questions you want to ask them face-to-face. Use the QFT rules below — tag each question as Open or Closed.",
+      "sourceQuestions": ["q1-human-moment", "q2-choose-one"],
+      "qftMin": 3,
+      "qftMax": 4,
+      "requireMix": true,
+      "aiContext": "This is a Sprint 3 demo discussion in CST395 (AI-Native Solution Engineering). Sprint 3 focused on the Bhutan MDRO clinical guideline challenge — students entered an unfamiliar domain (clinical infection control), found a specific human moment where the 28-page guideline fails the person who needs it, and designed a solution through iteration with AI tools and expert feedback from Piranavan. The student should show evidence of genuine iteration (v1 to v2 changes), specific design decisions with reasoning, and understanding of the clinical context. Look for whether they designed for the actual user or for themselves.",
+      "aiEndpoint": "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy"
+    },
+    {
+      "id": "q4-reflection",
+      "type": "open-ended",
+      "prompt": "After this conversation with your partner, what's one thing about their approach to the MDRO challenge that made you rethink something about your own design process or solution?",
+      "placeholder": "Reflect on the full conversation you just had...",
+      "minLength": 80
+    }
+  ]
+}
