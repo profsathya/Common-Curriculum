@@ -287,6 +287,10 @@ const ActivityEngine = (function() {
 
     questionsContainer.innerHTML = '';
 
+    // Build question config map for cross-question references (e.g., QFT sources)
+    const questionConfigMap = {};
+    config.questions.forEach(q => { questionConfigMap[q.id] = q; });
+
     config.questions.forEach((question, index) => {
       const questionEl = ActivityComponents.renderQuestion(question, index, {
         maxRetries: question.maxRetries || config.settings?.maxRetries || 5,
@@ -296,7 +300,9 @@ const ActivityEngine = (function() {
         onAnswer: (answer, isCorrect) => handleAnswer(question.id, answer, isCorrect),
         onSkip: () => handleSkip(question.id),
         courseTheme: courseTheme,
-        aiEndpoint: config.settings?.aiEndpoint || null
+        aiEndpoint: config.settings?.aiEndpoint || null,
+        getAllResponses: () => state.responses,
+        questionConfig: questionConfigMap
       });
       questionsContainer.appendChild(questionEl);
     });
@@ -534,6 +540,24 @@ const ActivityEngine = (function() {
           if (a.iterations && a.iterations > 1) {
             md += `**AI Guidance Rounds:** ${a.iterations}\n\n`;
           }
+        } else if (question.type === 'partner-entry') {
+          const a = response.answer;
+          if (a.selectedPrompt && a.selectedPrompt !== question.prompt) {
+            md += `**Selected question:** ${a.selectedPrompt}\n\n`;
+          }
+          md += `**Response:**\n> ${a.text || 'N/A'}\n\n`;
+        } else if (question.type === 'qft-discussion') {
+          const a = response.answer;
+          if (a.questions && a.questions.length > 0) {
+            md += `**Follow-up Questions:**\n`;
+            a.questions.forEach((q, i) => { md += `${i + 1}. [${(q.type || 'open').toUpperCase()}] ${q.text}\n`; });
+            md += `\n`;
+          }
+          if (a.aiFeedback) {
+            md += `**AI Assessment:** ${a.aiFeedback.assessment || 'N/A'}\n`;
+            md += `**AI Feedback:** ${a.aiFeedback.overallFeedback || 'N/A'}\n\n`;
+          }
+          md += `**Discussion Notes:**\n> ${a.discussionNotes || 'N/A'}\n\n`;
         } else if (question.type === 'match-following') {
           md += `**Matches:** ${JSON.stringify(response.answer)}\n`;
           md += `**Attempts:** ${response.attempts}\n\n`;

@@ -70,6 +70,12 @@ const ActivityComponents = (function() {
       case 'ai-discussion':
         content = renderAiDiscussion(question, options);
         break;
+      case 'partner-entry':
+        content = renderPartnerEntry(question, options);
+        break;
+      case 'qft-discussion':
+        content = renderQftDiscussion(question, options);
+        break;
       default:
         content = createElement('div', 'activity-question__error', `Unknown question type: ${question.type}`);
     }
@@ -1094,7 +1100,7 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       }
 
       const fullAnswer = {
-        enteredResponse: savedData.enteredResponse || textarea.value.trim(),
+        enteredResponse: savedData.enteredResponse || options.response?.answer?.enteredResponse || textarea.value.trim(),
         selectedOption: savedData.selectedOption ?? null,
         selectedPrompt: savedData.selectedPrompt || question.prompt,
         aiQuestions: savedData.aiQuestions || [],
@@ -1323,10 +1329,10 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       savedData.observation = data.observation || '';
       savedData.iterations = currentIterations + 1;
 
-      // Save state — fall back to textarea DOM value if savedData.enteredResponse is stale
-      const enterTextarea = document.querySelector(`#ai-enter-${question.id} textarea`);
+      // Save state — use preserved enteredResponse from savedData or options.response
+      const preservedResponse = savedData.enteredResponse || options.response?.answer?.enteredResponse || '';
       const fullAnswer = {
-        enteredResponse: savedData.enteredResponse || (enterTextarea && enterTextarea.value.trim()) || '',
+        enteredResponse: preservedResponse,
         selectedOption: savedData.selectedOption ?? null,
         selectedPrompt: savedData.selectedPrompt || question.prompt,
         aiQuestions: data.questions,
@@ -1359,6 +1365,386 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       digDeeperBtn.disabled = false;
       digDeeperBtn.innerHTML = (question.digDeeperText || 'Dig deeper with AI guidance') + ' &rarr;';
     }
+  }
+
+  // ============================================
+  // Partner Entry Question Type
+  // ============================================
+
+  function renderPartnerEntry(question, options) {
+    const container = createElement('div', 'activity-partner-entry');
+    const savedData = options.response?.answer || {};
+
+    // Partner instructions
+    if (question.partnerInstructions) {
+      const instructions = createElement('div', 'activity-partner-entry__instructions');
+      instructions.innerHTML = question.partnerInstructions;
+      container.appendChild(instructions);
+    }
+
+    // Prompt
+    const promptEl = createElement('div', 'activity-question__prompt');
+    promptEl.innerHTML = question.prompt;
+    container.appendChild(promptEl);
+
+    // Optional selector dropdown
+    let selectorEl = null;
+    if (question.questionOptions && question.questionOptions.length > 0) {
+      const selectorWrap = createElement('div', 'activity-partner-entry__selector');
+      const label = createElement('label', 'activity-partner-entry__selector-label');
+      label.textContent = question.selectorLabel || 'Which question did your partner respond to?';
+      selectorWrap.appendChild(label);
+
+      selectorEl = document.createElement('select');
+      selectorEl.className = 'activity-ai-discussion__selector-dropdown';
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = '';
+      defaultOpt.textContent = '— Select —';
+      selectorEl.appendChild(defaultOpt);
+      question.questionOptions.forEach((opt, i) => {
+        const o = document.createElement('option');
+        o.value = i;
+        o.textContent = opt;
+        if (savedData.selectedOption === i) o.selected = true;
+        selectorEl.appendChild(o);
+      });
+      selectorWrap.appendChild(selectorEl);
+      container.appendChild(selectorWrap);
+    }
+
+    // Textarea
+    const textarea = document.createElement('textarea');
+    textarea.className = 'activity-open-ended__textarea';
+    textarea.placeholder = question.placeholder || 'Enter response here...';
+    textarea.value = savedData.text || '';
+    textarea.rows = 6;
+    container.appendChild(textarea);
+
+    // Character count
+    const minLength = question.minLength || 0;
+    const charCount = createElement('div', 'activity-open-ended__char-count');
+    const updateCount = () => {
+      const len = textarea.value.trim().length;
+      charCount.textContent = minLength > 0
+        ? `${len} / ${minLength} min characters`
+        : `${len} characters`;
+      charCount.style.color = (minLength > 0 && len < minLength) ? '#ef4444' : '#6b7280';
+    };
+    updateCount();
+    textarea.addEventListener('input', updateCount);
+    container.appendChild(charCount);
+
+    // Save button
+    const saveBtn = createElement('button', 'activity-open-ended__save-btn', 'Save Response');
+    if (savedData.text) {
+      saveBtn.textContent = 'Update Response';
+    }
+    saveBtn.addEventListener('click', () => {
+      const text = textarea.value.trim();
+      if (minLength > 0 && text.length < minLength) {
+        alert(`Please write at least ${minLength} characters.`);
+        return;
+      }
+      const selectedIdx = selectorEl ? parseInt(selectorEl.value) : null;
+      const answer = {
+        text: text,
+        selectedOption: isNaN(selectedIdx) ? null : selectedIdx,
+        selectedPrompt: (selectedIdx !== null && !isNaN(selectedIdx) && question.questionOptions)
+          ? question.questionOptions[selectedIdx]
+          : question.prompt
+      };
+      options.onAnswer(answer, null);
+      updateQuestionStatus(question.id, { answer, attempts: 1, correct: null, skipped: false });
+      saveBtn.textContent = 'Update Response';
+    });
+    container.appendChild(saveBtn);
+
+    return container;
+  }
+
+  // ============================================
+  // QFT Discussion Question Type
+  // ============================================
+
+  function renderQftDiscussion(question, options) {
+    const container = createElement('div', 'activity-qft');
+    const savedData = options.response?.answer || {};
+    const qftMin = question.qftMin || 3;
+    const qftMax = question.qftMax || 4;
+
+    // Source responses (read-only display of partner's earlier answers)
+    const sourceIds = question.sourceQuestions || [];
+    const allResponses = options.getAllResponses ? options.getAllResponses() : {};
+
+    const sourcesBox = createElement('div', 'activity-qft__sources');
+    sourcesBox.innerHTML = '<div class="activity-qft__sources-label">Your partner\'s responses (from earlier questions):</div>';
+
+    let hasSourceContent = false;
+    sourceIds.forEach(srcId => {
+      const resp = allResponses[srcId];
+      if (resp && resp.answer) {
+        hasSourceContent = true;
+        const text = typeof resp.answer === 'string' ? resp.answer : (resp.answer.text || resp.answer.enteredResponse || JSON.stringify(resp.answer));
+        const srcEl = createElement('div', 'activity-qft__source-item');
+        // Look up the question config for label
+        const srcConfig = options.questionConfig?.[srcId];
+        const label = srcConfig ? (srcConfig.prompt || srcId).substring(0, 80) + (srcConfig.prompt?.length > 80 ? '...' : '') : srcId;
+        srcEl.innerHTML = '<div class="activity-qft__source-label">' + escapeHtml(label) + '</div>' +
+          '<div class="activity-qft__source-text">' + escapeHtml(text) + '</div>';
+        sourcesBox.appendChild(srcEl);
+      }
+    });
+
+    if (!hasSourceContent) {
+      sourcesBox.innerHTML += '<p style="color:#9ca3af;font-size:13px;font-style:italic;">Complete the earlier questions first to see your partner\'s responses here.</p>';
+    }
+    container.appendChild(sourcesBox);
+
+    // Prompt
+    if (question.prompt) {
+      const promptEl = createElement('div', 'activity-question__prompt');
+      promptEl.innerHTML = question.prompt || `Write ${qftMin}-${qftMax} follow-up questions for your partner based on their responses above.`;
+      container.appendChild(promptEl);
+    }
+
+    // QFT rules (simplified)
+    const rules = createElement('div', 'activity-qft__rules');
+    rules.innerHTML =
+      '<div class="activity-qft__rules-title">Question Formulation Technique (QFT) — Quick Rules</div>' +
+      '<ul>' +
+        '<li><strong>Ask questions, don\'t make statements</strong> — if it\'s really an opinion, rephrase it as a question</li>' +
+        '<li><strong>Tag each question as Open or Closed</strong> — Open questions need explanation; Closed questions have short/yes-no answers</li>' +
+        (question.requireMix ? '<li><strong>Include at least one of each type</strong> — a mix reveals more than all-open or all-closed</li>' : '') +
+      '</ul>';
+    container.appendChild(rules);
+
+    // Question input rows
+    const questionsWrap = createElement('div', 'activity-qft__questions-wrap');
+    const savedQuestions = savedData.questions || [];
+
+    for (let i = 0; i < qftMax; i++) {
+      const row = createElement('div', 'activity-qft__question-input');
+      const numLabel = createElement('span', 'activity-qft__question-num', `${i + 1}.`);
+      row.appendChild(numLabel);
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'activity-qft__question-text';
+      input.placeholder = i < qftMin ? `Question ${i + 1} (required)` : `Question ${i + 1} (optional)`;
+      input.value = savedQuestions[i]?.text || '';
+      row.appendChild(input);
+
+      const typeSelect = document.createElement('select');
+      typeSelect.className = 'activity-qft__type-select';
+      typeSelect.innerHTML = '<option value="">Type</option><option value="open">Open</option><option value="closed">Closed</option>';
+      if (savedQuestions[i]?.type) typeSelect.value = savedQuestions[i].type;
+      row.appendChild(typeSelect);
+
+      questionsWrap.appendChild(row);
+    }
+    container.appendChild(questionsWrap);
+
+    // Validation message
+    const validation = createElement('div', 'activity-qft__validation');
+    container.appendChild(validation);
+
+    // Get AI Feedback button
+    const aiBtn = createElement('button', 'activity-qft__ai-btn', 'Get AI Feedback on Your Questions');
+    container.appendChild(aiBtn);
+
+    // AI feedback area
+    const feedbackArea = createElement('div', 'activity-qft__feedback-area');
+    feedbackArea.style.display = savedData.aiFeedback ? 'block' : 'none';
+    container.appendChild(feedbackArea);
+
+    // Restore saved AI feedback
+    if (savedData.aiFeedback) {
+      renderQftFeedback(feedbackArea, savedData.aiFeedback);
+    }
+
+    // Discussion notes
+    const notesLabel = createElement('div', 'activity-qft__notes-label', 'Discussion notes — summarize your conversation after asking these questions face-to-face:');
+    notesLabel.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'block' : 'none';
+    container.appendChild(notesLabel);
+
+    const notesTextarea = document.createElement('textarea');
+    notesTextarea.className = 'activity-qft__notes-textarea';
+    notesTextarea.placeholder = 'After discussing your questions with your partner face-to-face, summarize the key insights here...';
+    notesTextarea.value = savedData.discussionNotes || '';
+    notesTextarea.rows = 5;
+    notesTextarea.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'block' : 'none';
+    container.appendChild(notesTextarea);
+
+    // Save button
+    const saveBtn = createElement('button', 'activity-open-ended__save-btn', savedData.discussionNotes ? 'Update Response' : 'Save Response');
+    saveBtn.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'inline-block' : 'none';
+    container.appendChild(saveBtn);
+
+    // Collect questions helper
+    function collectQuestions() {
+      const rows = questionsWrap.querySelectorAll('.activity-qft__question-input');
+      const qs = [];
+      rows.forEach(row => {
+        const text = row.querySelector('.activity-qft__question-text').value.trim();
+        const type = row.querySelector('.activity-qft__type-select').value;
+        if (text) qs.push({ text, type: type || 'open' });
+      });
+      return qs;
+    }
+
+    // Validate questions
+    function validateQuestions(qs) {
+      if (qs.length < qftMin) return `Write at least ${qftMin} questions.`;
+      if (question.requireMix) {
+        const hasOpen = qs.some(q => q.type === 'open');
+        const hasClosed = qs.some(q => q.type === 'closed');
+        if (!hasOpen || !hasClosed) return 'Include at least one Open and one Closed question.';
+      }
+      const untyped = qs.filter(q => !q.type || q.type === '');
+      if (untyped.length > 0) return 'Select a type (Open/Closed) for each question.';
+      return null;
+    }
+
+    // AI Feedback handler
+    aiBtn.addEventListener('click', async () => {
+      const qs = collectQuestions();
+      const err = validateQuestions(qs);
+      if (err) {
+        validation.textContent = err;
+        validation.style.display = 'block';
+        return;
+      }
+      validation.style.display = 'none';
+
+      aiBtn.disabled = true;
+      aiBtn.textContent = 'Getting feedback...';
+
+      const aiEndpoint = question.aiEndpoint || options.aiEndpoint || '/.netlify/functions/ai-proxy';
+      const course = options.courseTheme === 'cst349' ? 'CST349' : 'CST395';
+
+      // Build source text
+      let sourceText = '';
+      sourceIds.forEach(srcId => {
+        const resp = allResponses[srcId];
+        if (resp?.answer) {
+          const t = typeof resp.answer === 'string' ? resp.answer : (resp.answer.text || resp.answer.enteredResponse || '');
+          if (t) sourceText += t + '\n\n';
+        }
+      });
+
+      const systemPrompt = `You are an AI facilitator for ${course}. A student has written follow-up questions for their partner based on the partner's responses. Evaluate the quality of their questions using the Question Formulation Technique (QFT).
+
+Respond with valid JSON only (no markdown wrapping):
+{
+  "assessment": "strong" or "needs_improvement",
+  "overallFeedback": "1-2 sentences about the overall quality",
+  "questionFeedback": [{"question": "the question text", "feedback": "specific feedback"}],
+  "suggestedQuestions": ["optional additional question suggestions"]
+}
+
+If questions are strong: affirm what makes them effective and suggest 1-2 complementary questions.
+If questions need work: explain specifically what's weak and suggest better alternatives.`;
+
+      const userMsg = `Context: ${question.aiContext || ''}\n\nPartner's responses:\n${sourceText}\n\nStudent's follow-up questions:\n${qs.map((q, i) => `${i + 1}. [${q.type.toUpperCase()}] ${q.text}`).join('\n')}`;
+
+      try {
+        const resp = await fetch(aiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: systemPrompt,
+            messages: [{ role: 'user', content: userMsg }],
+            max_tokens: 700
+          })
+        });
+        if (!resp.ok) throw new Error('Request failed (' + resp.status + ')');
+        const raw = await resp.json();
+        const feedback = parseDiscussionJson(raw.content);
+
+        feedbackArea.style.display = 'block';
+        renderQftFeedback(feedbackArea, feedback);
+        notesLabel.style.display = 'block';
+        notesTextarea.style.display = 'block';
+        saveBtn.style.display = 'inline-block';
+
+        // Auto-save questions + feedback
+        const answer = {
+          questions: qs,
+          aiFeedback: feedback,
+          discussionNotes: notesTextarea.value.trim(),
+          phase: 'discuss'
+        };
+        options.onAnswer(answer, null);
+
+      } catch (error) {
+        console.error('QFT AI error:', error);
+        feedbackArea.style.display = 'block';
+        feedbackArea.innerHTML = '<div class="activity-ai-discussion__error"><p><strong>Could not get feedback.</strong> ' + escapeHtml(error.message) + '</p>' +
+          '<p style="margin-top:8px;font-size:13px;">You can still proceed with the discussion — ask your questions face-to-face and take notes below.</p>' +
+          '<button class="activity-ai-discussion__retry-btn" onclick="this.parentElement.style.display=\'none\'">Dismiss</button></div>';
+        notesLabel.style.display = 'block';
+        notesTextarea.style.display = 'block';
+        saveBtn.style.display = 'inline-block';
+      }
+
+      aiBtn.disabled = false;
+      aiBtn.textContent = 'Get AI Feedback on Your Questions';
+    });
+
+    // Save handler
+    saveBtn.addEventListener('click', () => {
+      const notes = notesTextarea.value.trim();
+      if (notes.length < 20) {
+        alert('Please write at least a brief summary of your discussion (minimum 20 characters).');
+        return;
+      }
+      const answer = {
+        questions: collectQuestions(),
+        aiFeedback: savedData.aiFeedback || null,
+        discussionNotes: notes,
+        phase: 'complete'
+      };
+      options.onAnswer(answer, null);
+      updateQuestionStatus(question.id, { answer, attempts: 1, correct: null, skipped: false });
+      saveBtn.textContent = 'Update Response';
+    });
+
+    return container;
+  }
+
+  function renderQftFeedback(container, feedback) {
+    let html = '';
+    const badge = feedback.assessment === 'strong'
+      ? '<span class="activity-qft__assessment activity-qft__assessment--strong">Strong questions</span>'
+      : '<span class="activity-qft__assessment activity-qft__assessment--needs-work">Needs improvement</span>';
+
+    html += badge;
+    if (feedback.overallFeedback) {
+      html += '<p class="activity-qft__overall-feedback">' + escapeHtml(feedback.overallFeedback) + '</p>';
+    }
+
+    if (feedback.questionFeedback && feedback.questionFeedback.length > 0) {
+      html += '<div class="activity-qft__feedback-list">';
+      feedback.questionFeedback.forEach(qf => {
+        html += '<div class="activity-qft__feedback-item">' +
+          '<div class="activity-qft__feedback-q">' + escapeHtml(qf.question) + '</div>' +
+          '<div class="activity-qft__feedback-text">' + escapeHtml(qf.feedback) + '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (feedback.suggestedQuestions && feedback.suggestedQuestions.length > 0) {
+      html += '<div class="activity-qft__suggestions">' +
+        '<div class="activity-qft__suggestions-label">Suggested additional questions:</div>' +
+        '<ul>';
+      feedback.suggestedQuestions.forEach(sq => {
+        html += '<li>' + escapeHtml(sq) + '</li>';
+      });
+      html += '</ul></div>';
+    }
+
+    container.innerHTML = html;
   }
 
   function escapeHtml(text) {
