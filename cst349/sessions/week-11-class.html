@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 11: Demo Prep + Co-Design Sprint 4 | CST349</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-section: #1a2332;
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --indigo-700: #4338ca;
+      --violet-400: #a78bfa;
+      --emerald-400: #34d399;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --rose-400: #fb7185;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-primary); color: var(--text-primary); height: 100vh; overflow: hidden; }
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 100; }
+    .progress-fill { height: 100%; background: var(--indigo-500); transition: width 0.3s ease; width: 0%; }
+    .nav-bar { position: fixed; top: 3px; left: 0; right: 0; height: 52px; background: rgba(15,23,42,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 99; }
+    .nav-title { font-size: 14px; color: var(--text-secondary); }
+    .nav-title strong { color: var(--text-primary); }
+    .nav-progress { font-size: 13px; color: var(--text-muted); }
+    .nav-controls { display: flex; gap: 8px; }
+    .nav-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.15s; }
+    .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .section { display: none; position: fixed; top: 55px; left: 0; right: 0; bottom: 0; overflow-y: auto; }
+    .section.active { display: flex; align-items: center; justify-content: center; }
+    .section-content { max-width: 860px; width: 100%; padding: 32px 24px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 12px; }
+    h1 { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+    h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+    .subtitle { font-size: 20px; color: var(--text-secondary); max-width: 600px; line-height: 1.5; margin-bottom: 24px; }
+    .activity-card { background: var(--bg-section); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .activity-card p { color: var(--text-secondary); font-size: 18px; line-height: 1.7; }
+    .highlight-quote { background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1)); border: 1px solid rgba(99,102,241,0.3); border-radius: 12px; padding: 20px 24px; margin-top: 16px; }
+    .highlight-quote p { font-size: 18px; color: var(--text-primary); line-height: 1.6; }
+    .highlight-amber { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1)); border: 1px solid rgba(251,191,36,0.3); border-radius: 12px; padding: 20px 24px; margin-top: 16px; }
+    .highlight-amber p { font-size: 18px; color: var(--text-primary); line-height: 1.6; }
+    .timer-container { display: flex; align-items: center; gap: 16px; justify-content: center; margin: 24px 0; }
+    .timer-display { font-size: 64px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--indigo-400); letter-spacing: -2px; }
+    .timer-btn { padding: 10px 24px; border-radius: 8px; border: none; font-size: 16px; font-weight: 600; cursor: pointer; background: var(--indigo-600); color: white; transition: background 0.15s; }
+    .timer-btn:hover { background: var(--indigo-700); }
+    .timer-btn.reset { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+    .timer-btn.reset:hover { background: rgba(255,255,255,0.12); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .click-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--text-muted); }
+    .click-hint kbd { background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 4px; font-family: inherit; }
+    .live-banner { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 101; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    @media (max-width: 640px) { h1 { font-size: 36px; } h2 { font-size: 28px; } .two-col { grid-template-columns: 1fr; } .timer-display { font-size: 48px; } }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="live-banner">Live content &mdash; may be updated until and even during class</div>
+  <nav class="nav-bar">
+    <div class="nav-title"><strong>CST349</strong> &middot; Week 11</div>
+    <div class="nav-progress" id="navProgress">1 / 7</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" disabled>&larr; Prev</button>
+      <button class="nav-btn" id="nextBtn">Next &rarr;</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 1: TITLE ==================== -->
+  <section class="section active" data-section="1">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Sprint 3 &middot; Week 11 &middot; Apr 8</p>
+      <h1>Two Parts Today</h1>
+      <p class="subtitle" style="margin: 0 auto;">Part A: Prepare for Demo Day. Part B: Help design Sprint 4.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 2: PART A INTRO ==================== -->
+  <section class="section" data-section="2">
+    <div class="section-content">
+      <p class="section-label">Part A &middot; ~40 min</p>
+      <h2>Sprint 3 Demo Prep</h2>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 24px;">These are the exact questions you will answer handwritten on Demo Day next week. Today you practice.</p>
+      <div class="activity-card">
+        <h3 style="color: var(--indigo-400);">Q1</h3>
+        <p style="color: var(--text-primary); margin: 0;">Name one specific thing you believe differently about your focus area now compared to Week 9. What did you read, watch, or listen to that caused the shift?</p>
+      </div>
+      <div class="activity-card">
+        <h3 style="color: var(--indigo-400);">Q2 &mdash; Choose One</h3>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 16px; margin-bottom: 12px;">
+          <p style="color: var(--amber-400); font-size: 14px; font-weight: 600; margin: 0 0 6px;">Option A</p>
+          <p style="color: var(--text-primary); margin: 0;">Describe a source you found during Sprint 3 that you plan to keep consuming after this course ends. What makes it worth your time when most sources aren't?</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 16px;">
+          <p style="color: var(--amber-400); font-size: 14px; font-weight: 600; margin: 0 0 6px;">Option B</p>
+          <p style="color: var(--text-primary); margin: 0;">What pattern or signal did you spot across multiple sources that no single source stated explicitly? Walk through the pieces that led you to see it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3: QFT LESSON ==================== -->
+  <section class="section" data-section="3">
+    <div class="section-content">
+      <p class="section-label">Skill</p>
+      <h2>Asking Better Questions</h2>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 24px;">Strengthening our ability to ask good questions given some information is a foundational skill in the age of AI, whether you are talking to a human or working with AI. The quality of those questions will determine how useful the conversation is &mdash; for both of you and what value you are bringing to the table.</p>
+
+      <div class="activity-card">
+        <h3 style="color: var(--indigo-400);">QFT Rules</h3>
+        <div style="display: grid; gap: 10px;">
+          <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px 16px;">
+            <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">1.</strong> Write as many questions as you can</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px 16px;">
+            <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">2.</strong> Do not stop to discuss, judge, or answer any question</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px 16px;">
+            <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">3.</strong> Write every question exactly as it comes to you</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px 16px;">
+            <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">4.</strong> Change any statements into questions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top: 20px;">
+        <div class="activity-card">
+          <h3 style="color: var(--amber-400);">Closed</h3>
+          <p style="color: var(--text-primary); font-style: italic;">"Did your information diet actually change during Sprint 3?"</p>
+          <p style="color: var(--text-muted); margin: 0;">Yes/no</p>
+        </div>
+        <div class="activity-card">
+          <h3 style="color: var(--emerald-400);">Open</h3>
+          <p style="color: var(--text-primary); font-style: italic;">"What is the most surprising thing you started consuming that you never would have before this sprint?"</p>
+          <p style="color: var(--text-muted); margin: 0;">Has to explain</p>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 16px; margin-top: 16px; text-align: center;">Neither is better. Closed questions establish facts. Open questions explore reasoning. Tag each: <strong>(O)</strong> or <strong>(C)</strong>. Circle your priority question.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 4: ACTIVITY TIME ==================== -->
+  <section class="section" data-section="4">
+    <div class="section-content">
+      <p class="section-label">Practice</p>
+      <h2>Demo Prep Activity</h2>
+      <div style="display: grid; gap: 10px; margin-top: 20px;">
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">1.</strong> Think about your responses <span style="color: var(--text-muted);">(5 min)</span></p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">2.</strong> Pair up &mdash; Partner A shares, Partner B listens and notes question triggers <span style="color: var(--text-muted);">(5 min)</span></p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">3.</strong> Partner B writes 3-4 QFT questions, tags O/C, circles priority <span style="color: var(--text-muted);">(3 min)</span></p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">4.</strong> Partner B asks questions, Partner A responds <span style="color: var(--text-muted);">(4 min)</span></p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">5.</strong> Switch roles &mdash; compressed <span style="color: var(--text-muted);">(4 min)</span></p>
+        </div>
+        <div style="background: var(--bg-section); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px;">
+          <p style="color: var(--text-primary); font-size: 17px; margin: 0;"><strong style="color: var(--indigo-400);">6.</strong> Set 1-2 specific goals for strengthening responses before Demo Day <span style="color: var(--text-muted);">(4 min)</span></p>
+        </div>
+      </div>
+      <div class="timer-container" style="margin-top: 24px;">
+        <div class="timer-display" id="timerDisplay1">25:00</div>
+        <button class="timer-btn" id="timerBtn1" onclick="toggleTimer(1)">Start</button>
+        <button class="timer-btn reset" onclick="resetTimer(1)">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5: TRANSITION ==================== -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Part B &middot; ~35 min</p>
+      <h2>Co-Design Sprint 4</h2>
+      <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 20px;">Sprint 4 is weeks 13-16. It ends with a demo and a portfolio defense. The defense covers your entire journey.</p>
+      <div class="two-col" style="margin-top: 20px;">
+        <div class="activity-card">
+          <h3 style="color: var(--emerald-400);">What's Fixed</h3>
+          <p style="margin: 0;">There will be a demo. There will be a defense. The work has to create real value.</p>
+        </div>
+        <div class="activity-card">
+          <h3 style="color: var(--violet-400);">What's Open</h3>
+          <p style="margin: 0;">Almost everything else. I want to design this with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6: ACTIVITY LINK ==================== -->
+  <section class="section" data-section="6">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Do This Now</p>
+      <h2>Open the Co-Design Activity</h2>
+      <div style="margin: 32px 0;">
+        <a href="../activities/s3-w11-codesign.html" style="display: inline-block; background: linear-gradient(135deg, var(--indigo-600), var(--indigo-500)); color: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 22px; box-shadow: 0 4px 16px rgba(99,102,241,0.3);">Open Co-Design Activity &rarr;</a>
+      </div>
+      <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 12px;"><strong style="color: var(--indigo-400);">4 aspects.</strong> For each: reflect individually, then discuss with a partner.</p>
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 12px;"><strong style="color: var(--indigo-400);">Switch partners</strong> after Aspect 2.</p>
+        <p style="color: var(--text-primary); font-size: 18px; margin-bottom: 0;"><strong style="color: var(--indigo-400);">Submit</strong> your responses on Canvas when done.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7: CLOSE ==================== -->
+  <section class="section" data-section="7">
+    <div class="section-content">
+      <p class="section-label">Wrap</p>
+      <h2>What Happens Next</h2>
+      <div style="display: grid; gap: 12px; margin-top: 20px;">
+        <div class="activity-card">
+          <p style="color: var(--text-primary); margin: 0;"><strong style="color: var(--indigo-400);">Demo Day is next week</strong> &mdash; come with handwritten responses ready</p>
+        </div>
+        <div class="activity-card">
+          <p style="color: var(--text-primary); margin: 0;"><strong style="color: var(--amber-400);">Sprint 4 design</strong> will be posted based on your input today</p>
+        </div>
+      </div>
+      <div style="margin-top: 24px;">
+        <a href="../sprint-3.html" style="color: var(--indigo-400); text-decoration: none; font-size: 18px;">&rarr; Sprint 3 Landing Page</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="click-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> arrow keys to navigate</div>
+
+  <script>
+    let currentSection = 1;
+    const totalSections = document.querySelectorAll('.section').length;
+    const sections = document.querySelectorAll('.section');
+    const progressFill = document.getElementById('progressFill');
+    const navProgress = document.getElementById('navProgress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const timers = {
+      1: { running: false, seconds: 1500, defaultSeconds: 1500, interval: null }
+    };
+    function goToSection(n) {
+      if (n < 1 || n > totalSections) return;
+      sections.forEach(s => s.classList.remove('active'));
+      document.querySelector(`[data-section="${n}"]`).classList.add('active');
+      currentSection = n;
+      progressFill.style.width = `${(currentSection / totalSections) * 100}%`;
+      navProgress.textContent = `${currentSection} / ${totalSections}`;
+      prevBtn.disabled = currentSection === 1;
+      nextBtn.disabled = currentSection === totalSections;
+    }
+    prevBtn.addEventListener('click', () => goToSection(currentSection - 1));
+    nextBtn.addEventListener('click', () => goToSection(currentSection + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSection(currentSection + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSection(currentSection - 1); }
+    });
+    function toggleTimer(id) {
+      const timer = timers[id];
+      const btn = document.getElementById(`timerBtn${id}`);
+      if (timer.running) {
+        clearInterval(timer.interval);
+        btn.textContent = 'Resume';
+        timer.running = false;
+      } else {
+        timer.interval = setInterval(() => {
+          timer.seconds--;
+          updateTimerDisplay(id);
+          if (timer.seconds <= 0) { clearInterval(timer.interval); btn.textContent = 'Done!'; timer.running = false; }
+        }, 1000);
+        btn.textContent = 'Pause';
+        timer.running = true;
+      }
+    }
+    function resetTimer(id) {
+      const timer = timers[id];
+      clearInterval(timer.interval);
+      timer.seconds = timer.defaultSeconds;
+      timer.running = false;
+      document.getElementById(`timerBtn${id}`).textContent = 'Start';
+      updateTimerDisplay(id);
+    }
+    function updateTimerDisplay(id) {
+      const timer = timers[id];
+      const mins = Math.floor(timer.seconds / 60);
+      const secs = timer.seconds % 60;
+      document.getElementById(`timerDisplay${id}`).textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    goToSection(1);
+  </script>
+
+  <script src="../../config/cst349-config.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof populateDueDates === 'function' && typeof CST349_CONFIG !== 'undefined') {
+      populateDueDates(CST349_CONFIG);
+    }
+  });
+  </script>
+
+  <footer style="text-align: center; padding: 24px 16px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
+      Please provide (anonymous) feedback: <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" style="color: var(--indigo-400);">https://forms.gle/ssHfShC6QECbW7WQ6</a>
+    </p>
+  </footer>
+</body>
+</html>
