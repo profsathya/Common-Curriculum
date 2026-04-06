@@ -655,6 +655,7 @@ const CST395_CONFIG = {
     },
     10: {
       narrative: "Your stake is a first draft. This week you defend it — first against AI, then against a classmate, then against the expert. Each round sharpens what you actually know vs. what you're guessing.",
+      sessionDescription: "Piranavan Selvanandan joined class for a live stakeholder session. Students defended their problem stakes against expert clinical feedback, identified gaps in their assumptions about the MDRO domain, and began translating corrections into revised build plans. No slides — the session was a live working conversation with the stakeholder.",
       connection: "Last week you staked a claim. This week Piranavan tells you what you got wrong about the clinical reality. The gap between your assumption and his correction is where the real design work lives.",
       insight: "If you have no questions for the expert, you haven't thought hard enough about what you don't know. The best stakes come from students who can name their assumptions precisely enough to test them.",
       employerLink: {

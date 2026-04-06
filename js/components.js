@@ -445,6 +445,7 @@ function renderSprintBriefing(config, weekNum, containerId, options) {
   // Session info card
   var loomUrl = config.loomVideos ? config.loomVideos[weekNum] : null;
   var sessionFile = 'sessions/week-' + weekNum + '-class.html';
+  var sessionDesc = content ? content.sessionDescription : null;
   html += '<div style="padding:12px;background:#f9fafb;border-radius:8px;margin-bottom:16px;">' +
     '<div style="display:flex;justify-content:space-between;align-items:center;">' +
       '<div>' +
@@ -452,10 +453,11 @@ function renderSprintBriefing(config, weekNum, containerId, options) {
         '<div style="font-size:14px;font-weight:500;color:#374151;margin-top:2px;">' + (weekData.title || 'Week ' + weekNum) + '</div>' +
       '</div>' +
       '<div style="display:flex;gap:12px;align-items:center;">' +
-        '<a href="' + sessionFile + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Session Slides \u2192</a>' +
+        (sessionDesc ? '' : '<a href="' + sessionFile + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Session Slides \u2192</a>') +
         (loomUrl ? '<a href="' + loomUrl + '" target="_blank" style="font-size:12px;color:var(--theme-dark,#0d9488);font-weight:600;text-decoration:none;">Recording \u2192</a>' : '') +
       '</div>' +
     '</div>' +
+    (sessionDesc ? '<div style="font-size:13px;color:#4b5563;line-height:1.55;margin-top:8px;">' + sessionDesc + '</div>' : '') +
   '</div>';
 
   // Why This block
