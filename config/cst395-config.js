@@ -668,6 +668,7 @@ const CST395_CONFIG = {
     },
     10: {
       narrative: "Your stake is a first draft. This week you defend it — first against AI, then against a classmate, then against the expert. Each round sharpens what you actually know vs. what you're guessing.",
+      sessionDescription: "Piranavan Selvanandan joined class for Session 1. The session ran in four phases: (1) Dojo catch-up for students who hadn't completed the Problem Stake Defense (~20 min), (2) Question Workshop in pairs — Student A presents their stake, Student B writes 2-3 probing questions, then swap (~20 min, observed by Prof. Sathya and Jeremy), (3) Peer Interview + Expert Access running in parallel — students ran full interviews with sharpened questions while rotating through 1-on-1 sessions with Piranavan on Zoom (~5 min each, covering clinical workflow, tech infrastructure in Bhutan, deployment realism), and (4) students began drafting Build Plan v1. No slides — the session was a live working conversation with the stakeholder.",
       connection: "Last week you staked a claim. This week Piranavan tells you what you got wrong about the clinical reality. The gap between your assumption and his correction is where the real design work lives.",
       insight: "If you have no questions for the expert, you haven't thought hard enough about what you don't know. The best stakes come from students who can name their assumptions precisely enough to test them.",
       employerLink: {
