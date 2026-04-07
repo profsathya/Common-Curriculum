@@ -589,7 +589,7 @@ const CST349_CONFIG = {
     },
     "s3-w11-codesign": {
       canvasId: "",
-      title: "S3: Sprint 4 Co-Design Activity",
+      title: "Sprint 4 Co-Design Activity",
       dueDate: "2026-04-08",
       type: "activity",
       canvasType: "assignment",
@@ -598,6 +598,19 @@ const CST349_CONFIG = {
       sprint: 3,
       week: 11,
       htmlFile: "activities/s3-w11-codesign.html"
+    },
+    "s3-demo-discussion": {
+      canvasId: "",
+      title: "S3: Sprint 3 Demo Discussion",
+      dueDate: "2026-04-15",
+      type: "ai-discussion",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Demonstration",
+      points: 10,
+      sprint: 3,
+      week: 12,
+      htmlFile: "activities/sprint-3-demo.html",
+      briefing: "Demo Day. Your partner enters your handwritten responses, formulates follow-up questions, and you discuss face-to-face. The conversation is the assessment."
     }
   },
 
