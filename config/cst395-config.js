@@ -533,7 +533,7 @@ const CST395_CONFIG = {
       htmlFile: "assignments/s3-w11-build-v2.html"
     },
     "s3-w11-codesign": {
-      canvasId: "",
+      canvasId: "588227",
       title: "Sprint 4 Co-Design Activity",
       dueDate: "2026-04-08",
       type: "activity",
@@ -545,7 +545,7 @@ const CST395_CONFIG = {
       htmlFile: "activities/s3-w11-codesign.html"
     },
     "s3-solution-brief": {
-      canvasId: "",
+      canvasId: "588228",
       title: "S3: Solution Brief",
       dueDate: "2026-04-14",
       type: "assignment",
@@ -558,7 +558,7 @@ const CST395_CONFIG = {
       briefing: "This goes to your stakeholder. Write it for them not for me. If Piranavan reads this can he understand what you built and give you useful feedback in 2 minutes?"
     },
     "s3-demo-discussion": {
-      canvasId: "",
+      canvasId: "588229",
       title: "S3: Sprint 3 Demo Discussion",
       dueDate: "2026-04-15",
       type: "ai-discussion",

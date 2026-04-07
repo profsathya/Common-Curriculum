@@ -588,7 +588,7 @@ const CST349_CONFIG = {
       briefing: "The transfer test: can you point to something specific you believe differently now because of what you read or listened to this sprint?"
     },
     "s3-w11-codesign": {
-      canvasId: "",
+      canvasId: "588225",
       title: "Sprint 4 Co-Design Activity",
       dueDate: "2026-04-08",
       type: "activity",
@@ -600,7 +600,7 @@ const CST349_CONFIG = {
       htmlFile: "activities/s3-w11-codesign.html"
     },
     "s3-demo-discussion": {
-      canvasId: "",
+      canvasId: "588226",
       title: "S3: Sprint 3 Demo Discussion",
       dueDate: "2026-04-15",
       type: "ai-discussion",
