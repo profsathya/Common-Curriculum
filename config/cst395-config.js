@@ -531,6 +531,18 @@ const CST395_CONFIG = {
       sprint: 3,
       week: 11,
       htmlFile: "assignments/s3-w11-build-v2.html"
+    },
+    "s3-w11-codesign": {
+      canvasId: "",
+      title: "S3: Sprint 4 Co-Design Activity",
+      dueDate: "2026-04-08",
+      type: "activity",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 3: Check-in/Engagement",
+      points: 10,
+      sprint: 3,
+      week: 11,
+      htmlFile: "activities/s3-w11-codesign.html"
     }
   },
 
