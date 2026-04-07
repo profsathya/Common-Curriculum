@@ -326,6 +326,74 @@ const ActivityComponents = (function() {
 
     container.appendChild(saveBtn);
 
+    // --- AI Feedback button (optional, shows when 50+ chars) ---
+    const aiFeedbackBtn = createElement('button', 'activity-open__ai-feedback-btn', 'Get AI Feedback');
+    aiFeedbackBtn.style.display = 'none';
+    aiFeedbackBtn.style.marginTop = '8px';
+    aiFeedbackBtn.style.background = 'transparent';
+    aiFeedbackBtn.style.border = '1px solid #94a3b8';
+    aiFeedbackBtn.style.color = '#94a3b8';
+    aiFeedbackBtn.style.padding = '8px 16px';
+    aiFeedbackBtn.style.borderRadius = '6px';
+    aiFeedbackBtn.style.cursor = 'pointer';
+    aiFeedbackBtn.style.fontSize = '14px';
+
+    const aiFeedbackBox = createElement('div', 'activity-open__ai-feedback-box');
+    aiFeedbackBox.style.display = 'none';
+    aiFeedbackBox.style.marginTop = '12px';
+    aiFeedbackBox.style.padding = '16px';
+    aiFeedbackBox.style.background = '#f0f9ff';
+    aiFeedbackBox.style.border = '1px solid #bae6fd';
+    aiFeedbackBox.style.borderRadius = '8px';
+    aiFeedbackBox.style.fontSize = '14px';
+    aiFeedbackBox.style.lineHeight = '1.6';
+    aiFeedbackBox.style.color = '#1e293b';
+
+    // Show/hide AI feedback button based on char count
+    const updateAiFeedbackVisibility = () => {
+      aiFeedbackBtn.style.display = textarea.value.length >= 50 ? 'inline-block' : 'none';
+    };
+    textarea.addEventListener('input', updateAiFeedbackVisibility);
+    updateAiFeedbackVisibility();
+
+    aiFeedbackBtn.addEventListener('click', async () => {
+      const text = textarea.value.trim();
+      if (text.length < 50) return;
+
+      aiFeedbackBtn.disabled = true;
+      aiFeedbackBtn.textContent = 'Getting feedback...';
+      aiFeedbackBox.style.display = 'block';
+      aiFeedbackBox.textContent = 'Thinking...';
+
+      const aiEndpoint = question.aiEndpoint ||
+        options.aiEndpoint ||
+        'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+      try {
+        const resp = await fetch(aiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: 'You are a supportive educational coach. Give constructive, encouraging feedback on this student reflection to help deepen their thinking. Do NOT grade or score. Ask 1-2 follow-up questions that could help them reflect more deeply. Keep your response to 3-4 sentences.',
+            messages: [{ role: 'user', content: `Question prompt: ${question.prompt}\n\nStudent response: ${text}` }],
+            max_tokens: 300,
+          }),
+        });
+
+        if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
+        const data = await resp.json();
+        aiFeedbackBox.innerHTML = `<strong>AI Feedback:</strong><br>${escapeHtml(data.content || data.text || '')}`;
+      } catch (err) {
+        aiFeedbackBox.innerHTML = `<em>Could not get feedback right now. Try again later.</em>`;
+      }
+
+      aiFeedbackBtn.disabled = false;
+      aiFeedbackBtn.textContent = 'Get AI Feedback';
+    });
+
+    container.appendChild(aiFeedbackBtn);
+    container.appendChild(aiFeedbackBox);
+
     return container;
   }
 
