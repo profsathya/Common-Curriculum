@@ -351,14 +351,14 @@ const ActivityComponents = (function() {
 
     // Show/hide AI feedback button based on char count
     const updateAiFeedbackVisibility = () => {
-      aiFeedbackBtn.style.display = textarea.value.length >= 50 ? 'inline-block' : 'none';
+      aiFeedbackBtn.style.display = textarea.value.length >= 150 ? 'inline-block' : 'none';
     };
     textarea.addEventListener('input', updateAiFeedbackVisibility);
     updateAiFeedbackVisibility();
 
     aiFeedbackBtn.addEventListener('click', async () => {
       const text = textarea.value.trim();
-      if (text.length < 50) return;
+      if (text.length < 150) return;
 
       aiFeedbackBtn.disabled = true;
       aiFeedbackBtn.textContent = 'Getting feedback...';
