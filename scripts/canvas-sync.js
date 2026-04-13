@@ -880,7 +880,9 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
   // Load CSV to determine which assignments should be created
   // CSV is the source of truth - only create what's been reviewed in CSV
   const csvPath = path.join(process.cwd(), courseInfo.csvFile);
-  const csvKeys = loadCsvKeys(csvPath);
+  const csvRows = loadCsvFile(csvPath);
+  const csvRowByKey = new Map(csvRows.filter(r => r.key).map(r => [r.key, r]));
+  const csvKeys = new Set(csvRowByKey.keys());
   console.log(`Found ${csvKeys.size} assignments in CSV (source of truth)`);
 
   // Fuzzy match to find what's missing
@@ -939,6 +941,7 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
 
   for (const item of itemsToProcess) {
     const entry = item.configEntry;
+    const csvRow = csvRowByKey.get(item.key) || {};
 
     // Build assignment data for Canvas API
     const assignmentData = {
@@ -946,6 +949,25 @@ async function createAssignments(api, courseName, dryRun = true, limit = 0) {
       submission_types: ['online_text_entry', 'online_upload'],
       published: false, // Create as draft
     };
+
+    // Per-row submission type override from CSV.
+    // Multiple types can be pipe-separated (e.g., "online_upload|online_text_entry").
+    // If the column is empty/missing, keep the default above.
+    if (csvRow.submissionTypes) {
+      assignmentData.submission_types = csvRow.submissionTypes
+        .split('|')
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    // Per-row allowed file extensions from CSV (pipe-separated).
+    // Only meaningful when submission_types includes 'online_upload'.
+    if (csvRow.allowedExtensions) {
+      assignmentData.allowed_extensions = csvRow.allowedExtensions
+        .split('|')
+        .map(s => s.trim().replace(/^\./, ''))
+        .filter(Boolean);
+    }
 
     // Add due date if specified
     if (entry.dueDate) {

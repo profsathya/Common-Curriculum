@@ -611,6 +611,34 @@ const CST349_CONFIG = {
       week: 12,
       htmlFile: "activities/sprint-3-demo.html",
       briefing: "Demo Day. Your partner enters your handwritten responses, formulates follow-up questions, and you discuss face-to-face. The conversation is the assessment."
+    },
+
+    // Sprint 4
+    "s4-w13-retrospective": {
+      canvasId: "",
+      title: "S4: Three-Sprint Retrospective",
+      dueDate: "2026-04-24",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 4: Diagnosis",
+      points: 20,
+      sprint: 4,
+      week: 13,
+      htmlFile: "assignments/s4-w13-three-sprint-retrospective.html",
+      briefing: "Honestly evaluate your growth across 8 SDL dimensions over Sprints 1-3. No AI — this is your own self-assessment."
+    },
+    "s4-w13-gap-statement": {
+      canvasId: "",
+      title: "S4: Gap Statement",
+      dueDate: "2026-04-24",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 4: Diagnosis",
+      points: 20,
+      sprint: 4,
+      week: 13,
+      htmlFile: "assignments/s4-w13-gap-statement.html",
+      briefing: "Identify one real gap from Sprints 1-3 that becomes your Sprint 4 focus. Be specific — vague gaps get rejected."
     }
   },
 
