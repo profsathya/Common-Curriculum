@@ -808,10 +808,10 @@ const CST349_CONFIG = {
     10: { start: "2026-03-29", end: "2026-04-04", sprint: 3, title: "Finding What Matters" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Making a Claim" },
     12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Demo Day — Your Futures Brief" },
-    13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Evidence Audit" },
-    14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Portfolio Construction" },
-    15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Defense Preparation" },
-    16: { start: "2026-05-10", end: "2026-05-16", sprint: 4, title: "Final Defense" }
+    13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Diagnose" },
+    14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Close, phase 1" },
+    15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Defense begins" },
+    16: { start: "2026-05-10", end: "2026-05-16", sprint: 4, title: "Defense continues" }
   },
 
   // Sprint info
