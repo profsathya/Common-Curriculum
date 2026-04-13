@@ -4,6 +4,22 @@
  */
 
 /* ============================================
+   Box-sizing reset (scoped to the activity subtree)
+   ============================================
+   Ensures textareas, inputs, and buttons rendered by the activity engine
+   respect `width: 100%` inside their container — padding and borders are
+   included in the computed width. Without this, elements like
+   .activity-open__textarea overflow on activity pages that do not load
+   design-system.css (which has its own global box-sizing: border-box rule).
+   Scoped to `.activity *` so it only affects engine-rendered content. */
+.activity,
+.activity *,
+.activity *::before,
+.activity *::after {
+  box-sizing: border-box;
+}
+
+/* ============================================
    CSS Variables (Theme Support)
    ============================================ */
 
