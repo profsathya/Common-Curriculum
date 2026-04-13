@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 12: Demo Day | CST395</title>
+  <style>
+    :root {
+      --bg-dark: #0f1419;
+      --bg-section: #1a2332;
+      --bg-card: #1e2a38;
+      --teal-300: #5eead4;
+      --teal-400: #2dd4bf;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+      --green-400: #4ade80;
+      --purple-400: #c084fc;
+      --rose-400: #fb7185;
+      --border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top nav (matches W11 pattern) */
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 100; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal-500), var(--teal-400)); width: 100%; }
+    .nav-bar {
+      position: fixed; top: 3px; left: 0; right: 0; height: 52px;
+      background: rgba(15,20,25,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; z-index: 99;
+    }
+    .nav-title { font-size: 14px; color: var(--text-secondary); }
+    .nav-title strong { color: var(--teal-400); }
+    .nav-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-muted); }
+    .nav-total { color: var(--teal-300); font-weight: 600; }
+
+    .live-banner {
+      position: fixed; top: 68px; left: 50%; transform: translateX(-50%); z-index: 98;
+      background: linear-gradient(135deg, #f59e0b, #d97706); color: white;
+      padding: 6px 18px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Main stage */
+    .stage {
+      flex: 1;
+      padding: 72px 40px 24px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .stage-header { text-align: center; margin-bottom: 22px; }
+    .stage-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--teal-400);
+      background: rgba(20,184,166,0.12);
+      border: 1px solid rgba(20,184,166,0.3);
+      padding: 4px 12px; border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .stage-title {
+      font-size: 42px; font-weight: 800; line-height: 1.1;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #f1f5f9, #5eead4);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stage-subtitle { font-size: 16px; color: var(--text-secondary); }
+    .stage-subtitle strong { color: var(--teal-300); font-weight: 600; }
+
+    /* 8-step grid */
+    .steps-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .step-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal-500);
+      border-radius: 12px;
+      padding: 16px 18px 14px;
+      display: flex; flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .step-card--accent-amber { border-left-color: var(--amber-500); }
+    .step-card--accent-purple { border-left-color: var(--purple-400); }
+    .step-card--accent-green { border-left-color: var(--green-400); }
+    .step-card--accent-rose { border-left-color: var(--rose-400); }
+
+    .step-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(20,184,166,0.15);
+      color: var(--teal-300);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
+      border: 1px solid rgba(20,184,166,0.3);
+    }
+    .step-card--accent-amber .step-num { background: rgba(245,158,11,0.15); color: var(--amber-400); border-color: rgba(245,158,11,0.3); }
+    .step-card--accent-purple .step-num { background: rgba(192,132,252,0.15); color: var(--purple-400); border-color: rgba(192,132,252,0.3); }
+    .step-card--accent-green .step-num { background: rgba(74,222,128,0.15); color: var(--green-400); border-color: rgba(74,222,128,0.3); }
+    .step-card--accent-rose .step-num { background: rgba(251,113,133,0.15); color: var(--rose-400); border-color: rgba(251,113,133,0.3); }
+
+    .step-time {
+      font-size: 12px; font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 12px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .step-title {
+      font-size: 16px; font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .step-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+      overflow: hidden;
+    }
+    .step-body strong { color: var(--text-primary); }
+    .step-body .q-label {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--teal-300);
+      margin-bottom: 3px;
+    }
+    .step-body .q-opt {
+      font-size: 11px; color: var(--amber-400);
+      font-weight: 600; margin-top: 6px; margin-bottom: 1px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .step-body .q-text {
+      font-size: 12px; color: var(--text-secondary); line-height: 1.45;
+    }
+
+    /* Bottom timing strip */
+    .stage-foot {
+      margin-top: 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(20,184,166,0.06);
+      border: 1px solid rgba(20,184,166,0.18);
+      border-radius: 10px;
+    }
+    .stage-foot__item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+    .stage-foot__item strong { color: var(--teal-300); font-weight: 600; }
+    .stage-foot__sep { color: var(--text-muted); }
+    .stage-foot a { color: var(--teal-400); text-decoration: none; font-weight: 500; }
+    .stage-foot a:hover { color: var(--teal-300); text-decoration: underline; }
+
+    /* Fallback for narrower viewports — the page is designed for 1080p
+       but shouldn't completely break on laptops */
+    @media (max-width: 1400px) {
+      .steps-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .stage-title { font-size: 34px; }
+      .step-title { font-size: 15px; }
+      .step-body { font-size: 12px; }
+      .stage { padding: 68px 24px 16px; }
+    }
+    @media (max-width: 1100px) {
+      .steps-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+      body { overflow: auto; height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+  <div class="live-banner">Live content &mdash; may be updated until and even during class</div>
+
+  <nav class="nav-bar">
+    <div class="nav-title"><strong>CST395</strong> &middot; Week 12 &middot; Demo Day</div>
+    <div class="nav-right">
+      <span>Sprint 3 &middot; Apr 15</span>
+      <span class="nav-total">~7 min per presenter</span>
+    </div>
+  </nav>
+
+  <main class="stage">
+    <div class="stage-header">
+      <span class="stage-label">Sprint 3 &middot; Demo Day &middot; CST395</span>
+      <h1 class="stage-title">The 8-step flow, per presenter</h1>
+      <p class="stage-subtitle">Timebox every step. Keep it moving. <strong>The audience prepares to ask the sharper question &mdash; not the easy one.</strong></p>
+    </div>
+
+    <div class="steps-grid">
+
+      <!-- Step 1 -->
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-num">1</div>
+          <div class="step-time">~15 sec</div>
+        </div>
+        <div class="step-title">Open your project</div>
+        <div class="step-body">
+          Your build, your code, your design files &mdash; loaded and ready <em>before</em> the clock starts. <strong>No setup theater</strong>, no "let me just find the right window." Be ready or be skipped.
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card step-card--accent-amber">
+        <div class="step-head">
+          <div class="step-num">2</div>
+          <div class="step-time">30 sec</div>
+        </div>
+        <div class="step-title">What did you build &amp; why?</div>
+        <div class="step-body">
+          One sentence on the problem. One sentence on who it's for. One sentence on what you built. <strong>If you need a warm-up</strong>, you haven't compressed your thinking enough yet.
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card step-card--accent-purple">
+        <div class="step-head">
+          <div class="step-num">3</div>
+          <div class="step-time">~2 min</div>
+        </div>
+        <div class="step-title">Live demo of the working product</div>
+        <div class="step-body">
+          Walk through the actual product doing the actual thing it was designed for. <strong>Show the thing</strong> &mdash; not slides <em>about</em> the thing. Narrate the key user moments as you click.
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card step-card--accent-green">
+        <div class="step-head">
+          <div class="step-num">4</div>
+          <div class="step-time">~90 sec</div>
+        </div>
+        <div class="step-title">Code you're proud of</div>
+        <div class="step-body">
+          Open one file. Point to one function, one component, one design decision. Explain <em>why</em> you're proud of it. The bar: <strong>could you defend this choice if I pushed back?</strong>
+        </div>
+      </div>
+
+      <!-- Step 5: Q1 -->
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-num">5</div>
+          <div class="step-time">~1 min</div>
+        </div>
+        <div class="step-title">Q1 &middot; The human moment</div>
+        <div class="step-body">
+          <span class="q-label">Q1</span>
+          <div class="q-text">What was the specific human moment you designed for in the MDRO challenge? Name the person, their role, the situation they're in, and the constraint that made it hard for them.</div>
+        </div>
+      </div>
+
+      <!-- Step 6: Q2 -->
+      <div class="step-card">
+        <div class="step-head">
+          <div class="step-num">6</div>
+          <div class="step-time">~1 min</div>
+        </div>
+        <div class="step-title">Q2 &middot; Choose one</div>
+        <div class="step-body">
+          <span class="q-opt">Option A</span>
+          <div class="q-text">What changed between your Week 9 problem stake and your final design? What specific feedback, test, or realization caused the biggest shift?</div>
+          <span class="q-opt">Option B</span>
+          <div class="q-text">A design decision where you chose one approach over another. Why this one &mdash; and what would be worse if you'd gone the other way?</div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="step-card step-card--accent-amber">
+        <div class="step-head">
+          <div class="step-num">7</div>
+          <div class="step-time">~1 min</div>
+        </div>
+        <div class="step-title">Audience feedback</div>
+        <div class="step-body">
+          Each audience member: <strong>one thing that worked</strong> + <strong>one suggestion</strong>. Not a debate. Not five things. The constraint makes you choose what matters. Presenter: listen, don't defend.
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="step-card step-card--accent-rose">
+        <div class="step-head">
+          <div class="step-num">8</div>
+          <div class="step-time">~15 sec</div>
+        </div>
+        <div class="step-title">Next presenter</div>
+        <div class="step-body">
+          Swap. The next person should already be loaded and ready. <strong>No transitions, no chit-chat</strong> &mdash; we keep the rhythm and protect everyone's demo time.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stage-foot">
+      <div class="stage-foot__item">&#9201; <strong>Total per presenter:</strong> about 7 minutes</div>
+      <div class="stage-foot__sep">&middot;</div>
+      <div class="stage-foot__item">&#128161; <strong>Q1 &amp; Q2</strong> are the same ones you practiced in Week 11 &mdash; this is the real thing</div>
+      <div class="stage-foot__sep">&middot;</div>
+      <div class="stage-foot__item"><a href="../sprint-3.html">&rarr; Sprint 3 landing</a></div>
+    </div>
+  </main>
+
+  <script src="../../config/cst395-config.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof populateDueDates === 'function' && typeof CST395_CONFIG !== 'undefined') {
+        populateDueDates(CST395_CONFIG);
+      }
+    });
+  </script>
+</body>
+</html>
