@@ -481,7 +481,16 @@ const ActivityEngine = (function() {
     config.questions.forEach((question, index) => {
       const response = state.responses[question.id];
 
-      md += `### Q${index + 1}: ${question.prompt || question.template || 'Question'}\n\n`;
+      // Instructional sections are read-only — render the heading without
+      // a "Q" prefix or response quote, since there's no student answer.
+      if (question.type === 'instructional') {
+        const heading = question.sectionTitle || question.prompt || 'Instruction';
+        md += `### ${index + 1}. ${heading}\n\n`;
+        md += `*(Read-only section — no response required)*\n\n`;
+        return;
+      }
+
+      md += `### Q${index + 1}: ${question.sectionTitle || question.prompt || question.template || 'Question'}\n\n`;
 
       if (!response || response.skipped) {
         md += `*Skipped*\n\n`;

@@ -76,6 +76,9 @@ const ActivityComponents = (function() {
       case 'qft-discussion':
         content = renderQftDiscussion(question, options);
         break;
+      case 'instructional':
+        content = renderInstructional(question, options);
+        break;
       default:
         content = createElement('div', 'activity-question__error', `Unknown question type: ${question.type}`);
     }
@@ -326,6 +329,18 @@ const ActivityComponents = (function() {
 
     container.appendChild(saveBtn);
 
+    // --- AI Sparring Partner panel (opt-in via question.aiSparringPartner) ---
+    // When configured, shows a "Think this through with AI" button that opens
+    // an inline conversation where the AI acts as a reflection sparring partner:
+    // asking questions back, never writing the student's answer, pushing toward
+    // harder honesty. If aiSparringPartner is set, the default AI Feedback button
+    // below is suppressed to avoid confusing dual-button UI.
+    if (question.aiSparringPartner) {
+      const sparringPanel = renderSparringPartner(question, textarea, options);
+      container.appendChild(sparringPanel);
+      return container;
+    }
+
     // --- AI Feedback button (optional, shows when 50+ chars) ---
     const aiFeedbackBtn = createElement('button', 'activity-open__ai-feedback-btn', 'Get AI Feedback');
     aiFeedbackBtn.style.display = 'none';
@@ -395,6 +410,232 @@ const ActivityComponents = (function() {
     container.appendChild(aiFeedbackBox);
 
     return container;
+  }
+
+  // ============================================
+  // Instructional (read-only, no input)
+  // ============================================
+
+  function renderInstructional(question, options) {
+    const container = createElement('div', 'activity-question__content activity-instructional');
+
+    if (question.prompt) {
+      const prompt = createElement('p', 'activity-question__prompt activity-instructional__prompt', question.prompt);
+      container.appendChild(prompt);
+    }
+
+    // Auto-mark as answered so progress counter reflects that this section
+    // has been reached. The student doesn't need to click anything.
+    if (!options.response || options.response.answer === null) {
+      // Defer so engine bindings are ready
+      setTimeout(() => {
+        if (options.onAnswer) {
+          options.onAnswer('(read)', null);
+        }
+      }, 0);
+    }
+
+    return container;
+  }
+
+  // ============================================
+  // AI Sparring Partner (opt-in inline conversation)
+  // ============================================
+  //
+  // Attaches a secondary button + expandable panel next to an open-ended
+  // textarea. Clicking the button opens a multi-turn conversation with the
+  // AI, configured via a sparring-partner system prompt to ask questions
+  // back rather than produce answers. Conversation history lives in memory
+  // only — it is not persisted to student state or the export (the student's
+  // final typed answer in the main textarea is what gets saved).
+
+  const DEFAULT_SPARRING_SYSTEM_PROMPT =
+    "You are a reflection sparring partner helping a student look back on an assignment they already completed. " +
+    "Your job is to help them think more honestly — NOT to write their answer for them. " +
+    "Rules you must follow:\n" +
+    "1. Ask questions back. Never supply the student's answer, draft sentences for them, or give templates they could paste in.\n" +
+    "2. Push toward harder honesty, not easier framing. When you notice hedging, vague language, self-flattering conclusions, or the comfortable answer, gently call it out and ask a sharper question.\n" +
+    "3. Be a thinking partner, not an answer generator. Short, focused, Socratic. Keep each response to 2-4 sentences with at most 2 questions.\n" +
+    "4. Don't list bullet points of possible answers, don't offer frameworks, don't summarize their thinking back to them at length. Your value is the question, not the content.\n" +
+    "5. If the student tries to get you to write their answer, decline warmly and redirect with a question.\n" +
+    "6. Tone: warm, direct, curious. Not soft, not preachy.";
+
+  function renderSparringPartner(question, textarea, options) {
+    const spConfig = (typeof question.aiSparringPartner === 'object' && question.aiSparringPartner !== null)
+      ? question.aiSparringPartner
+      : {};
+    const buttonLabel = spConfig.buttonLabel || 'Think this through with AI';
+    const systemPrompt = spConfig.systemPrompt || DEFAULT_SPARRING_SYSTEM_PROMPT;
+
+    const wrapper = createElement('div', 'activity-sparring');
+
+    const toggleBtn = createElement('button', 'activity-sparring__toggle-btn');
+    toggleBtn.type = 'button';
+    toggleBtn.innerHTML = '<span class="activity-sparring__toggle-icon">&#9776;</span> ' + escapeHtml(buttonLabel) + ' <span class="activity-sparring__toggle-hint">(optional)</span>';
+
+    const panel = createElement('div', 'activity-sparring__panel');
+    panel.style.display = 'none';
+
+    const header = createElement('div', 'activity-sparring__header');
+    header.innerHTML =
+      '<div class="activity-sparring__header-title">Sparring partner</div>' +
+      '<div class="activity-sparring__header-sub">Asks questions back. Will not write your answer for you. Close anytime — nothing from this conversation is saved or submitted.</div>';
+    panel.appendChild(header);
+
+    const history = createElement('div', 'activity-sparring__history');
+    panel.appendChild(history);
+
+    const loading = createElement('div', 'activity-sparring__loading');
+    loading.style.display = 'none';
+    loading.innerHTML = '<span class="activity-sparring__spinner"></span> Thinking...';
+    panel.appendChild(loading);
+
+    const errorEl = createElement('div', 'activity-sparring__error');
+    errorEl.style.display = 'none';
+    panel.appendChild(errorEl);
+
+    const inputRow = createElement('div', 'activity-sparring__input-row');
+    const replyInput = document.createElement('textarea');
+    replyInput.className = 'activity-sparring__reply-input';
+    replyInput.rows = 2;
+    replyInput.placeholder = 'Reply to the sparring partner...';
+    inputRow.appendChild(replyInput);
+
+    const sendBtn = createElement('button', 'activity-sparring__send-btn', 'Send');
+    sendBtn.type = 'button';
+    inputRow.appendChild(sendBtn);
+    panel.appendChild(inputRow);
+
+    const closeBtn = createElement('button', 'activity-sparring__close-btn', 'Close conversation');
+    closeBtn.type = 'button';
+    panel.appendChild(closeBtn);
+
+    wrapper.appendChild(toggleBtn);
+    wrapper.appendChild(panel);
+
+    // Conversation state is in-memory only
+    let messages = []; // { role: 'user'|'assistant', content: string }
+    let started = false;
+
+    function appendBubble(role, content) {
+      const bubble = createElement('div', 'activity-sparring__bubble activity-sparring__bubble--' + role);
+      const labelText = role === 'user' ? 'You' : 'Sparring partner';
+      bubble.innerHTML = '<div class="activity-sparring__bubble-label">' + labelText + '</div>' +
+        '<div class="activity-sparring__bubble-content">' + escapeHtml(content).replace(/\n/g, '<br>') + '</div>';
+      history.appendChild(bubble);
+      history.scrollTop = history.scrollHeight;
+    }
+
+    async function sendToAi(userMessage, isOpening) {
+      loading.style.display = 'flex';
+      errorEl.style.display = 'none';
+      sendBtn.disabled = true;
+      replyInput.disabled = true;
+
+      const aiEndpoint = question.aiEndpoint ||
+        options.aiEndpoint ||
+        'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+      // Build conversation history for the API
+      const apiMessages = [];
+      if (isOpening) {
+        // First turn: frame the conversation with the question prompt + student's draft
+        const draft = textarea.value.trim();
+        const openingContent =
+          'The reflection question the student is thinking about:\n"' + (question.prompt || '') + '"\n\n' +
+          (draft
+            ? 'The student\'s current draft answer:\n"""\n' + draft + '\n"""\n\nAsk 1-2 probing questions that push them toward more honest, specific self-assessment. Do not rewrite their draft or suggest wording.'
+            : 'The student has not written a draft yet. Ask 1-2 opening questions to help them start thinking honestly about this. Do not offer template answers.');
+        apiMessages.push({ role: 'user', content: openingContent });
+      } else {
+        // Subsequent turns: replay the conversation
+        // First message establishes context; rest is the dialogue
+        const draft = textarea.value.trim();
+        const contextMsg =
+          'The reflection question the student is thinking about:\n"' + (question.prompt || '') + '"\n\n' +
+          (draft ? 'The student\'s current draft answer:\n"""\n' + draft + '\n"""' : 'The student has not written a draft yet.');
+        apiMessages.push({ role: 'user', content: contextMsg });
+        messages.forEach(m => apiMessages.push({ role: m.role, content: m.content }));
+        apiMessages.push({ role: 'user', content: userMessage });
+      }
+
+      try {
+        const resp = await fetch(aiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: systemPrompt,
+            messages: apiMessages,
+            max_tokens: 350,
+          }),
+        });
+
+        if (!resp.ok) {
+          const errData = await resp.json().catch(() => ({}));
+          throw new Error(errData.error || ('Request failed (' + resp.status + ')'));
+        }
+
+        const data = await resp.json();
+        const aiText = (data.content || data.text || '').trim();
+        if (!aiText) {
+          throw new Error('Empty response from AI');
+        }
+
+        if (!isOpening) {
+          messages.push({ role: 'user', content: userMessage });
+        }
+        messages.push({ role: 'assistant', content: aiText });
+        if (!isOpening) {
+          appendBubble('user', userMessage);
+        }
+        appendBubble('assistant', aiText);
+      } catch (err) {
+        console.error('Sparring partner error:', err);
+        errorEl.textContent = 'Could not reach the sparring partner right now. You can try again, or just keep going on your own.';
+        errorEl.style.display = 'block';
+      } finally {
+        loading.style.display = 'none';
+        sendBtn.disabled = false;
+        replyInput.disabled = false;
+        replyInput.focus();
+      }
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = panel.style.display !== 'none';
+      if (isOpen) {
+        panel.style.display = 'none';
+        toggleBtn.classList.remove('activity-sparring__toggle-btn--active');
+        return;
+      }
+      panel.style.display = 'block';
+      toggleBtn.classList.add('activity-sparring__toggle-btn--active');
+      if (!started) {
+        started = true;
+        sendToAi(null, true);
+      }
+    });
+
+    sendBtn.addEventListener('click', () => {
+      const userMessage = replyInput.value.trim();
+      if (!userMessage) return;
+      replyInput.value = '';
+      sendToAi(userMessage, false);
+    });
+
+    replyInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      panel.style.display = 'none';
+      toggleBtn.classList.remove('activity-sparring__toggle-btn--active');
+    });
+
+    return wrapper;
   }
 
   // ============================================
