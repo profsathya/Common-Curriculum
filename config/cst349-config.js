@@ -642,7 +642,7 @@ const CST349_CONFIG = {
     },
     "s4-lookback-1-five-whys": {
       canvasId: "",
-      title: "S4: Look-back 1 - 5 Whys",
+      title: "S4: Look-back 1 \u2014 5 Whys (Extra Credit)",
       dueDate: "2026-04-28",
       type: "assignment",
       canvasType: "assignment",
@@ -651,7 +651,7 @@ const CST349_CONFIG = {
       sprint: 4,
       week: 13,
       htmlFile: "assignments/s4-w13-lookback-1-five-whys.html",
-      briefing: "Revisit your Sprint 1 Five Whys analysis meta-evaluatively — what was the assignment actually trying to develop in you?"
+      briefing: "Extra credit recovery. Revisit your Sprint 1 5 Whys honestly. Check-in with Prof. Sathya in class to get credit for this submission."
     }
   },
 
