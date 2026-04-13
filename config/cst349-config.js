@@ -639,6 +639,19 @@ const CST349_CONFIG = {
       week: 13,
       htmlFile: "assignments/s4-w13-gap-statement.html",
       briefing: "Identify one real gap from Sprints 1-3 that becomes your Sprint 4 focus. Be specific — vague gaps get rejected."
+    },
+    "s4-lookback-1-five-whys": {
+      canvasId: "",
+      title: "S4: Look-back 1 - 5 Whys",
+      dueDate: "2026-04-28",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Extra Credit: Look Back",
+      points: 10,
+      sprint: 4,
+      week: 13,
+      htmlFile: "assignments/s4-w13-lookback-1-five-whys.html",
+      briefing: "Revisit your Sprint 1 Five Whys analysis meta-evaluatively — what was the assignment actually trying to develop in you?"
     }
   },
 
