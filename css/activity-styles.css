@@ -769,21 +769,25 @@
   cursor: not-allowed;
 }
 
+/* Secondary "Submit on Canvas" button — outlined in theme color so it
+   reads as a step-2 action next to the primary "Download Responses" button. */
 .activity__canvas-link {
   display: inline-block;
-  margin-top: 16px;
+  margin-top: 12px;
   padding: 12px 24px;
-  background: #3b82f6;
-  color: white;
+  background: white;
+  color: var(--activity-primary, #3b82f6);
   text-decoration: none;
+  border: 2px solid var(--activity-primary, #3b82f6);
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .activity__canvas-link:hover {
-  background: #2563eb;
+  background: var(--activity-primary, #3b82f6);
+  color: white;
 }
 
 /* ============================================
@@ -1150,6 +1154,36 @@
   font-weight: 600;
   color: #374151;
   margin-bottom: 6px;
+}
+
+/* Partner-entry textareas use the inconsistent class
+   `activity-open-ended__textarea` (with `-ended`) which is not styled by
+   the standard `.activity-open__textarea` rules. Without this rule the
+   textarea collapses to its default ~167px (cols=20) instead of filling
+   the question container. Scoped to .activity-partner-entry to avoid
+   affecting any other context that might use the same class name. */
+.activity-partner-entry .activity-open-ended__textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 120px;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.activity-partner-entry .activity-open-ended__textarea:focus {
+  outline: none;
+  border-color: var(--activity-primary);
+}
+
+.activity-partner-entry .activity-open-ended__textarea::placeholder {
+  color: #94a3b8;
 }
 
 /* ============================================

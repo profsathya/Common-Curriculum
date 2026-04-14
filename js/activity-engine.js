@@ -194,8 +194,8 @@ const ActivityEngine = (function() {
             </button>
 
             ${canvasAssignmentUrl ? `
-              <a href="${canvasAssignmentUrl}" target="_blank" class="activity__canvas-link" id="activity-canvas-link">
-                Upload to Canvas →
+              <a href="${canvasAssignmentUrl}" target="_blank" rel="noopener noreferrer" class="activity__canvas-link" id="activity-canvas-link">
+                Submit on Canvas →
               </a>
             ` : ''}
           </div>
