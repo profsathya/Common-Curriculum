@@ -573,7 +573,7 @@ const CST395_CONFIG = {
 
     // Sprint 4
     "s4-goal-statement": {
-      canvasId: "",
+      canvasId: "588985",
       title: "S4: Sprint 4 Goal Statement",
       dueDate: "2026-04-22",
       type: "assignment",
@@ -586,7 +586,7 @@ const CST395_CONFIG = {
       briefing: "Set your Sprint 4 direction. Whether continuing solo or pair-merging with a classmate, ground your next four weeks in what Sprint 3 actually taught you."
     },
     "s4-lookback-1-problem-selection": {
-      canvasId: "",
+      canvasId: "588986",
       title: "S4: Look-back 1 — Problem Selection (Extra Credit)",
       dueDate: "2026-04-28",
       type: "assignment",
