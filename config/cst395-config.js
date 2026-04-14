@@ -569,6 +569,34 @@ const CST395_CONFIG = {
       week: 12,
       htmlFile: "activities/sprint-3-demo.html",
       briefing: "Demo Day. Your partner enters your handwritten responses, formulates follow-up questions, and you discuss face-to-face. The conversation is the assessment."
+    },
+
+    // Sprint 4
+    "s4-goal-statement": {
+      canvasId: "",
+      title: "S4: Sprint 4 Goal Statement",
+      dueDate: "2026-04-22",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 4: Goal Setting",
+      points: 10,
+      sprint: 4,
+      week: 13,
+      htmlFile: "assignments/s4-w13-goal-statement.html",
+      briefing: "Set your Sprint 4 direction. Whether continuing solo or pair-merging with a classmate, ground your next four weeks in what Sprint 3 actually taught you."
+    },
+    "s4-lookback-1-problem-selection": {
+      canvasId: "",
+      title: "S4: Look-back 1 — Problem Selection (Extra Credit)",
+      dueDate: "2026-04-28",
+      type: "assignment",
+      canvasType: "assignment",
+      assignmentGroup: "Extra Credit: Look Back",
+      points: 10,
+      sprint: 4,
+      week: 13,
+      htmlFile: "assignments/s4-w13-lookback-1-problem-selection.html",
+      briefing: "Extra credit recovery. Revisit your Sprint 1 or Sprint 2 problem/partner-need selection as a judgment call. Check-in with Prof. Sathya in class to get credit for this submission."
     }
   },
 
