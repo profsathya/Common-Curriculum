@@ -592,7 +592,7 @@ const CST395_CONFIG = {
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Extra Credit: Look Back",
-      points: 10,
+      points: 5,
       sprint: 4,
       week: 13,
       htmlFile: "assignments/s4-w13-lookback-1-problem-selection.html",
