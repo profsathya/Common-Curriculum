@@ -35,9 +35,16 @@ const ActivityComponents = (function() {
     wrapper.setAttribute('data-question-id', question.id);
     wrapper.setAttribute('data-question-type', question.type);
 
+    if (question.optional) {
+      wrapper.setAttribute('data-optional', 'true');
+    }
+
     const header = createElement('div', 'activity-question__header');
     header.innerHTML = `
-      <span class="activity-question__number">Q${index + 1}</span>
+      <div class="activity-question__header-left">
+        <span class="activity-question__number">Q${index + 1}</span>
+        ${question.optional ? '<span class="activity-question__optional-chip">Optional</span>' : ''}
+      </div>
       <span class="activity-question__status" id="status-${question.id}"></span>
     `;
     wrapper.appendChild(header);

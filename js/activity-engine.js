@@ -278,9 +278,20 @@ const ActivityEngine = (function() {
   }
 
   function updateProgress() {
-    const answered = Object.keys(state.responses).length;
-    const total = config.questions.length;
-    const percent = (answered / total) * 100;
+    // Count required vs optional separately so optional questions don't
+    // drag down the progress bar or make the counter misleading.
+    const requiredQuestions = config.questions.filter(q => !q.optional);
+    const optionalQuestions = config.questions.filter(q => q.optional);
+
+    const requiredAnswered = requiredQuestions.filter(q => state.responses[q.id]).length;
+    const optionalAnswered = optionalQuestions.filter(q => state.responses[q.id]).length;
+
+    const requiredTotal = requiredQuestions.length;
+    const optionalTotal = optionalQuestions.length;
+
+    const percent = requiredTotal > 0
+      ? (requiredAnswered / requiredTotal) * 100
+      : ((requiredAnswered + optionalAnswered) / config.questions.length) * 100;
 
     const progressFill = document.getElementById('activity-progress-fill');
     const progressText = document.getElementById('activity-progress-text');
@@ -289,7 +300,11 @@ const ActivityEngine = (function() {
       progressFill.style.width = `${percent}%`;
     }
     if (progressText) {
-      progressText.textContent = `${answered} of ${total} questions answered`;
+      if (optionalTotal > 0) {
+        progressText.textContent = `${requiredAnswered} of ${requiredTotal} required · ${optionalAnswered} of ${optionalTotal} optional answered`;
+      } else {
+        progressText.textContent = `${requiredAnswered} of ${requiredTotal} questions answered`;
+      }
     }
   }
 
@@ -490,12 +505,13 @@ const ActivityEngine = (function() {
         return;
       }
 
-      md += `### Q${index + 1}: ${question.sectionTitle || question.prompt || question.template || 'Question'}\n\n`;
+      const optionalTag = question.optional ? ' *(optional)*' : '';
+      md += `### Q${index + 1}: ${question.sectionTitle || question.prompt || question.template || 'Question'}${optionalTag}\n\n`;
 
       if (!response || response.skipped) {
-        md += `*Skipped*\n\n`;
+        md += question.optional ? `*Skipped (optional)*\n\n` : `*Skipped*\n\n`;
       } else if (response.answer === null) {
-        md += `*Not attempted*\n\n`;
+        md += question.optional ? `*Not attempted (optional)*\n\n` : `*Not attempted*\n\n`;
       } else {
         if (question.type === 'open-ended') {
           md += `> ${response.answer}\n\n`;
