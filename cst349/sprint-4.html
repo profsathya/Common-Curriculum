@@ -11,6 +11,20 @@
       --theme-dark: #2563eb;
       --theme-light: #eff6ff;
     }
+    /* Expandable "Why this matters" inside callouts */
+    .why-details { margin-top: 10px; }
+    .why-details > summary {
+      list-style: none;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      user-select: none;
+      padding: 2px 0;
+    }
+    .why-details > summary::-webkit-details-marker { display: none; }
+    .why-details > summary::marker { content: ''; }
+    .why-details > summary:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -36,31 +50,64 @@
           <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280;">Scaffolding: Full autonomy</span>
         </div>
 
+        <!-- Grading chip strip (always visible) -->
+        <div style="margin-top:10px;font-size:13px;color:#6b7280;line-height:1.55;">
+          <strong style="color:#374151;">Grading:</strong>
+          Goals 20% &middot; Reflections 20% &middot; Demo / Defense 40% &middot; Engagement 20%
+        </div>
+
         <!-- Sprint context callout: three distinct blocks (always visible) -->
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px;">
 
           <!-- Block A: The Sprint 4 goal -->
           <div style="background:#eff6ff;border:1px solid #3b82f6;border-left:4px solid #2563eb;border-radius:8px;padding:14px 16px;">
             <p style="margin:0 0 6px 0;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#1d4ed8;">The Sprint 4 Goal</p>
-            <p style="margin:0;color:#1e3a5f;font-size:13px;line-height:1.6;">
-              Sprint 4 is about using honest self-evaluation to find one real gap in your learning from Sprints 1&ndash;3 &mdash; and closing it in two weeks with real evidence. The gap is yours to choose. The evidence has to be real.
-            </p>
+            <p style="margin:0 0 10px 0;font-size:16px;font-weight:600;color:#1e3a5f;line-height:1.45;">Pick your gap. Close it in 2 weeks. Bring real evidence.</p>
+            <ul style="margin:0;padding-left:18px;color:#1e3a5f;font-size:14px;line-height:1.55;">
+              <li>You choose which learning gap from Sprints 1&ndash;3 is worth closing</li>
+              <li>You have 2 weeks to close it &mdash; scope accordingly</li>
+              <li>Evidence has to be real, not performative</li>
+            </ul>
+            <details class="why-details">
+              <summary style="color:#1d4ed8;">Why this matters &rarr;</summary>
+              <div style="margin-top:8px;padding:10px 12px;background:rgba(255,255,255,0.55);border-left:3px solid #93c5fd;border-radius:4px;font-size:13px;color:#1e3a5f;line-height:1.6;">
+                Senior-level work is choosing your own problem and being honest about where you stand. This sprint trains the muscle employers and grad programs look for: can you self-diagnose and self-correct without a rubric telling you what to fix?
+              </div>
+            </details>
           </div>
 
           <!-- Block B: The Defense -->
           <div style="background:#fff7ed;border:1px solid #fb923c;border-left:4px solid #ea580c;border-radius:8px;padding:14px 16px;">
             <p style="margin:0 0 6px 0;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#c2410c;">The Defense</p>
-            <p style="margin:0;color:#7c2d12;font-size:13px;line-height:1.6;">
-              At the end of the sprint, you'll defend two things in front of the class: (1) the gap you found and why, and (2) what you did about it with evidence. Defenses are 3 minutes plus 2 minutes of Q&amp;A. The defense covers your whole semester journey, not just Sprint 4 &mdash; Sprint 4 work is the freshest evidence in a longer story.
-            </p>
+            <p style="margin:0 0 10px 0;font-size:16px;font-weight:600;color:#7c2d12;line-height:1.45;">3 min + 2 min Q&amp;A &mdash; your whole semester, defended.</p>
+            <ul style="margin:0;padding-left:18px;color:#7c2d12;font-size:14px;line-height:1.55;">
+              <li>Defend two things: the gap you named, and what you did about it</li>
+              <li>Covers the full four-sprint arc, not just Sprint 4</li>
+              <li>Sprint 4 work is the freshest evidence in a longer story</li>
+            </ul>
+            <details class="why-details">
+              <summary style="color:#c2410c;">Why this matters &rarr;</summary>
+              <div style="margin-top:8px;padding:10px 12px;background:rgba(255,255,255,0.55);border-left:3px solid #fdba74;border-radius:4px;font-size:13px;color:#7c2d12;line-height:1.6;">
+                You walk out of this class with a 5-minute pitch about the builder you're becoming. Reusable for interviews, grad school, or LinkedIn. The defense is the class deliverable &mdash; the pitch is yours.
+              </div>
+            </details>
           </div>
 
-          <!-- Block C: Extra credit recovery -->
+          <!-- Block C: Optional Look-backs -->
           <div style="background:#ecfdf5;border:1px solid #10b981;border-left:4px solid #059669;border-radius:8px;padding:14px 16px;">
-            <p style="margin:0 0 6px 0;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#047857;">Extra Credit Recovery</p>
-            <p style="margin:0;color:#064e3b;font-size:13px;line-height:1.6;">
-              If you've fallen behind on grades, Sprint 4 is your real chance to recover. There will be a set of optional look-back assignments that let you earn back up to 50% of points you lost on prior assignments. Each look-back asks you to revisit one piece of Sprint 1&ndash;3 work honestly and answer questions about what you actually got from it (or didn't). They're due across the rest of the semester through May 23, 2026. More details coming as they're available &mdash; watch the Sprint 4 page.
-            </p>
+            <p style="margin:0 0 6px 0;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#047857;">Optional Look-backs</p>
+            <p style="margin:0 0 10px 0;font-size:16px;font-weight:600;color:#064e3b;line-height:1.45;">Honest reflection on Sprint 1&ndash;3 work &mdash; 10 pts each. For anyone.</p>
+            <ul style="margin:0;padding-left:18px;color:#064e3b;font-size:14px;line-height:1.55;">
+              <li>Revisit one piece of earlier work and answer what you actually got from it (or didn't)</li>
+              <li>Any student can do them &mdash; stretch your grade, or stretch your thinking</li>
+              <li>Due through May 23, 2026</li>
+            </ul>
+            <details class="why-details">
+              <summary style="color:#047857;">Why this matters &rarr;</summary>
+              <div style="margin-top:8px;padding:10px 12px;background:rgba(255,255,255,0.55);border-left:3px solid #6ee7b7;border-radius:4px;font-size:13px;color:#064e3b;line-height:1.6;">
+                If you're behind on points, these recover up to 50% of lost points. If you're ahead, doing them strengthens your defense &mdash; the insights you surface here are the freshest evidence of what you've grown into.
+              </div>
+            </details>
           </div>
 
         </div>
@@ -72,8 +119,8 @@
       </div>
 
       <!-- Collapse Toggle -->
-      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 outcomes, grading, groups';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
-        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; outcomes, grading, groups</span>
+      <button id="sprint-details-toggle" onclick="var d=document.getElementById('sprint-details');var show=d.style.display==='none';d.style.display=show?'block':'none';this.querySelector('.toggle-text').textContent=show?'Hide details':'Sprint details \u2014 outcomes, groups';this.querySelector('.toggle-arrow').textContent=show?'\u25B2':'\u25BC'" style="width:100%;display:flex;justify-content:center;align-items:center;gap:6px;padding:8px 16px;background:#f9fafb;border:none;border-top:1px solid #e5e7eb;cursor:pointer;font-family:inherit;">
+        <span class="toggle-text" style="font-size:12px;color:#6b7280;">Sprint details &mdash; outcomes, groups</span>
         <span class="toggle-arrow" style="font-size:12px;color:var(--theme-dark,#2563eb);font-weight:600;">&#9660;</span>
       </button>
 
@@ -87,12 +134,6 @@
           <li>Closed the gap in two weeks with concrete evidence of the work</li>
           <li>Defended both the diagnosis and the work in front of the class in a 3+2 minute format</li>
         </ul>
-
-        <h3 style="font-size:14px;font-weight:600;margin:0 0 8px 0;color:#374151;">Grading</h3>
-        <div style="font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:16px;">
-          <strong>Goals 20%</strong> &middot; <strong>Reflections 20%</strong> &middot; <strong>Demo / Defense 40%</strong> &middot; <strong>Engagement 20%</strong><br>
-          <span style="font-size:12px;">The defense is cumulative &mdash; it covers the arc across all four sprints, not just Sprint 4.</span>
-        </div>
 
         <!-- S4 Groups note -->
         <div style="background:#f0f9ff;border:1px solid #7dd3fc;border-radius:8px;padding:12px 14px;margin-bottom:0;">
