@@ -768,10 +768,10 @@ const CST395_CONFIG = {
     10: { start: "2026-03-22", end: "2026-03-28", sprint: 3, title: "Stakeholder Discovery Without Access" },
     11: { start: "2026-04-05", end: "2026-04-11", sprint: 3, title: "Simple Over Sophisticated" },
     12: { start: "2026-04-12", end: "2026-04-18", sprint: 3, title: "Value at the Intersection" },
-    13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Autonomous Problem Definition" },
-    14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Independent Execution" },
-    15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Integration & Refinement" },
-    16: { start: "2026-05-10", end: "2026-05-16", sprint: 4, title: "Demonstration & Reflection" }
+    13: { start: "2026-04-19", end: "2026-04-25", sprint: 4, title: "Goal-set + Foundation" },
+    14: { start: "2026-04-26", end: "2026-05-02", sprint: 4, title: "Build + SDL" },
+    15: { start: "2026-05-03", end: "2026-05-09", sprint: 4, title: "Iterate + Capabilities" },
+    16: { start: "2026-05-10", end: "2026-05-16", sprint: 4, title: "Defend" }
   },
 
   // Sprint info
