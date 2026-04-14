@@ -25,10 +25,259 @@
     .why-details > summary::-webkit-details-marker { display: none; }
     .why-details > summary::marker { content: ''; }
     .why-details > summary:hover { text-decoration: underline; }
+
+    /* ============================================
+       Sprint 4 Welcome Banner (Prof. Sathya)
+       ============================================ */
+    .s4-welcome {
+      border: 1px solid var(--theme-primary);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: white;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      transition: box-shadow 0.15s ease;
+    }
+    .s4-welcome:hover {
+      box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+    }
+    .s4-welcome__row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      background: var(--theme-light);
+    }
+    .s4-welcome--expanded .s4-welcome__row {
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .s4-welcome__video-wrap {
+      flex-shrink: 0;
+      width: 180px;
+      position: relative;
+      cursor: default;
+    }
+    .s4-welcome__video-wrap::before {
+      content: '';
+      display: block;
+      padding-top: 56.25%; /* 16:9 */
+    }
+    .s4-welcome__video-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 6px;
+      background: #000;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .s4-welcome__headline {
+      flex: 1;
+      min-width: 0;
+    }
+    .s4-welcome__headline-text {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #1f2937;
+    }
+    .s4-welcome__sig {
+      display: inline-block;
+      margin-top: 4px;
+      color: var(--theme-dark);
+      font-weight: 600;
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .s4-welcome__chevron {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--theme-dark);
+      padding-left: 6px;
+    }
+    .s4-welcome__chevron-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .s4-welcome__chevron-icon {
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+    .s4-welcome--expanded .s4-welcome__chevron-icon {
+      transform: rotate(180deg);
+    }
+    .s4-welcome__expanded {
+      display: none;
+      padding: 18px 22px 22px;
+      background: white;
+    }
+    .s4-welcome--expanded .s4-welcome__expanded {
+      display: block;
+    }
+    .s4-welcome__h {
+      margin: 18px 0 8px 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--theme-dark);
+      line-height: 1.35;
+    }
+    .s4-welcome__h:first-child {
+      margin-top: 0;
+    }
+    .s4-welcome__body {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #374151;
+    }
+    .s4-welcome__pullquote {
+      margin: 12px 0;
+      padding: 12px 18px;
+      background: var(--theme-light);
+      border-left: 4px solid var(--theme-primary);
+      border-radius: 0 6px 6px 0;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 1.6;
+      color: #1e3a5f;
+      quotes: none;
+    }
+    .s4-welcome__closing {
+      margin-top: 18px;
+      color: var(--theme-dark);
+      font-weight: 500;
+    }
+    .s4-welcome__gate {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      cursor: default;
+    }
+    .s4-welcome--acknowledged .s4-welcome__gate {
+      display: none;
+    }
+    .s4-welcome__btn {
+      flex: 1 1 auto;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .s4-welcome__btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .s4-welcome__btn--primary {
+      background: var(--theme-primary);
+      color: white;
+      border: 1px solid var(--theme-dark);
+    }
+    .s4-welcome__btn--primary:hover {
+      background: var(--theme-dark);
+    }
+    .s4-welcome__btn--secondary {
+      background: white;
+      color: var(--theme-dark);
+      border: 1px solid var(--theme-primary);
+    }
+    .s4-welcome__btn--secondary:hover {
+      background: var(--theme-light);
+    }
+    @media (max-width: 600px) {
+      .s4-welcome__row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .s4-welcome__video-wrap {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .s4-welcome__chevron {
+        flex-direction: row;
+        justify-content: center;
+        padding-left: 0;
+        padding-top: 8px;
+        border-top: 1px solid rgba(37,99,235,0.15);
+        gap: 8px;
+      }
+      .s4-welcome__gate {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- ============================================
+         Sprint 4 Welcome Banner (Prof. Sathya)
+         Must be the very first block students see.
+         Collapsed = horizontal row (video + headline + chevron).
+         Expanded = full message + "I understand" / "I have questions" gate.
+         ============================================ -->
+    <div id="sprint4-welcome-banner" class="s4-welcome" role="region" aria-label="Sprint 4 welcome from Prof. Sathya" onclick="toggleSprint4Banner(event)">
+      <div class="s4-welcome__row">
+        <!-- TODO: replace with real Loom share URL -->
+        <div class="s4-welcome__video-wrap" onclick="event.stopPropagation();">
+          <iframe src="https://www.loom.com/share/PLACEHOLDER" title="Sprint 4 welcome from Prof. Sathya" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="s4-welcome__headline">
+          <p class="s4-welcome__headline-text">
+            I have made significant effort to learn from the first three sprint experience about what is working and what is not, and what is helping my students to come up with sprint 4 design that will serve your learning best. Please watch the video.
+            <span class="s4-welcome__sig">~ Prof. Sathya</span>
+          </p>
+        </div>
+        <div class="s4-welcome__chevron" aria-hidden="true">
+          <span class="s4-welcome__chevron-label">Click to expand</span>
+          <span class="s4-welcome__chevron-icon">&#x25BC;</span>
+        </div>
+      </div>
+
+      <div class="s4-welcome__expanded" id="sprint4-welcome-expanded">
+        <h3 class="s4-welcome__h">Industry expectations are shifting:</h3>
+        <p class="s4-welcome__body">Every conversation I am having (and many you noticed at the virtual networking event) and seems to have not settled yet.</p>
+        <blockquote class="s4-welcome__pullquote">One thing is for sure: the relative value of technical skills are going down rapidly because of advancements in AI capabilities.</blockquote>
+        <p class="s4-welcome__body">When this happens, the best approach is to</p>
+
+        <h3 class="s4-welcome__h">Develop Self-Directed Learning Capability:</h3>
+        <p class="s4-welcome__body">That is what this course is all about. What do I know well? What do I need to know? How do I learn? What do I need to learn? How do I verify that I have learned?</p>
+
+        <p class="s4-welcome__body">In order to develop this, the engine you need working is built on:</p>
+
+        <h3 class="s4-welcome__h">Three Habits and 4 Practices</h3>
+        <p class="s4-welcome__body">Habits: Slow Down, Know Yourself and Take the Lead. Practices/Techniques: Writing, Reading, Listening and Talking (they all are a form of conversation).</p>
+
+        <p class="s4-welcome__body s4-welcome__closing">This is my best estimation. Hope you find this helpful and make them your own &#x1F64F;</p>
+
+        <div class="s4-welcome__gate" id="sprint4-gate-buttons" onclick="event.stopPropagation();">
+          <button type="button" class="s4-welcome__btn s4-welcome__btn--primary" onclick="acknowledgeSprint4('understood', event)">I understand</button>
+          <button type="button" class="s4-welcome__btn s4-welcome__btn--secondary" onclick="acknowledgeSprint4('questions', event)">I have questions</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         Gated content: the rest of the Sprint 4 page.
+         Hidden (display:none) until student clicks one of the gate buttons above.
+         On return visits (localStorage key set), this is visible on load.
+         ============================================ -->
+    <div id="sprint4-gated-content" style="display:none;">
 
     <!-- Sticky Week Counter -->
     <div id="sticky-counter"></div>
@@ -122,10 +371,6 @@
 
         </div>
 
-        <!-- Why this sprint? video -->
-        <div style="margin-top:12px;">
-          <a href="#" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#2563eb;font-weight:600;text-decoration:none;">&#127909; Watch: Why this sprint? (Loom) &rarr;</a>
-        </div>
       </div>
 
       <!-- Collapse Toggle -->
@@ -158,6 +403,9 @@
     <!-- Zone B: Week Navigation + Weekly Content -->
     <div id="week-nav"></div>
     <div id="zone-b"></div>
+
+    </div>
+    <!-- /#sprint4-gated-content -->
 
   </div>
 
@@ -260,6 +508,73 @@
       renderSprint4Week(weekNum, 'zone-b');
     }
 
+    // ============================================
+    // Sprint 4 Welcome Banner + Acknowledgment Gate
+    // ============================================
+    var S4_ACK_KEY = 'cst349-sprint4-ack-v1';
+
+    function setSprint4BannerExpanded(expanded) {
+      var banner = document.getElementById('sprint4-welcome-banner');
+      if (!banner) return;
+      if (expanded) {
+        banner.classList.add('s4-welcome--expanded');
+      } else {
+        banner.classList.remove('s4-welcome--expanded');
+      }
+      var label = banner.querySelector('.s4-welcome__chevron-label');
+      if (label) label.textContent = expanded ? 'Click to collapse' : 'Click to expand';
+    }
+
+    function toggleSprint4Banner(evt) {
+      var banner = document.getElementById('sprint4-welcome-banner');
+      if (!banner) return;
+      setSprint4BannerExpanded(!banner.classList.contains('s4-welcome--expanded'));
+    }
+
+    function acknowledgeSprint4(choice, evt) {
+      if (evt && typeof evt.stopPropagation === 'function') {
+        evt.stopPropagation();
+      }
+      try {
+        localStorage.setItem(S4_ACK_KEY, choice);
+      } catch (e) { /* localStorage unavailable — proceed without persistence */ }
+
+      var banner = document.getElementById('sprint4-welcome-banner');
+      if (banner) banner.classList.add('s4-welcome--acknowledged');
+
+      var gated = document.getElementById('sprint4-gated-content');
+      if (gated) gated.style.display = '';
+
+      // Auto-collapse the banner so the sprint content is immediately visible
+      setSprint4BannerExpanded(false);
+
+      // "I have questions" also opens the anonymous feedback form in a new tab
+      if (choice === 'questions') {
+        var w = window.open('https://forms.gle/ssHfShC6QECbW7WQ6', '_blank', 'noopener,noreferrer');
+        if (w) { try { w.opener = null; } catch (e) {} }
+      }
+    }
+
+    function initSprint4Banner() {
+      var banner = document.getElementById('sprint4-welcome-banner');
+      var gated = document.getElementById('sprint4-gated-content');
+      if (!banner || !gated) return;
+
+      var prior = null;
+      try { prior = localStorage.getItem(S4_ACK_KEY); } catch (e) {}
+
+      if (prior) {
+        // Already acknowledged: collapsed banner on top, rest of page visible, no gate buttons
+        banner.classList.add('s4-welcome--acknowledged');
+        gated.style.display = '';
+        setSprint4BannerExpanded(false);
+      } else {
+        // First visit: banner expanded with gate buttons; rest of page hidden
+        gated.style.display = 'none';
+        setSprint4BannerExpanded(true);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       addNavigationIfNeeded();
       var resolved = getResolvedCurrentWeek(CONFIG);
@@ -283,6 +598,9 @@
       renderJourneyPills(CONFIG, currentSprint, 'journey-pills', SPRINT_NUM);
       renderWeek(displayWeek);
       initDateSimulator();
+
+      // Initialize the welcome banner + gate last, so the gated content is fully populated first
+      initSprint4Banner();
     });
   </script>
 
