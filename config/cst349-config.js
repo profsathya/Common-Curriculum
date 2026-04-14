@@ -615,7 +615,7 @@ const CST349_CONFIG = {
 
     // Sprint 4
     "s4-w13-retrospective": {
-      canvasId: "",
+      canvasId: "588978",
       title: "S4: Three-Sprint Retrospective",
       dueDate: "2026-04-24",
       type: "assignment",
@@ -628,7 +628,7 @@ const CST349_CONFIG = {
       briefing: "Honestly evaluate your growth across 8 SDL dimensions over Sprints 1-3. No AI — this is your own self-assessment."
     },
     "s4-w13-gap-statement": {
-      canvasId: "",
+      canvasId: "588979",
       title: "S4: Gap Statement",
       dueDate: "2026-04-24",
       type: "assignment",
@@ -641,8 +641,8 @@ const CST349_CONFIG = {
       briefing: "Identify one real gap from Sprints 1-3 that becomes your Sprint 4 focus. Be specific — vague gaps get rejected."
     },
     "s4-lookback-1-five-whys": {
-      canvasId: "",
-      title: "S4: Look-back 1 \u2014 5 Whys (Extra Credit)",
+      canvasId: "588980",
+      title: "S4: Look-back 1 — 5 Whys (Extra Credit)",
       dueDate: "2026-04-28",
       type: "assignment",
       canvasType: "assignment",
