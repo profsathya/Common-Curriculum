@@ -74,6 +74,7 @@ const ActivityEngine = (function() {
       responses: {},
       currentQuestionIndex: 0,
       name: null,
+      partnerName: null,
       downloadedAt: null,
       device: {
         type: isMobile() ? 'mobile' : 'desktop',
@@ -146,6 +147,44 @@ const ActivityEngine = (function() {
 
   function renderActivity(container) {
     const themeColor = courseTheme === 'cst395' ? 'teal' : 'indigo';
+    const roster = Array.isArray(config.roster) ? config.roster : [];
+    const rosterPresent = roster.length > 0;
+
+    // Build partner-selector HTML if a roster is configured. Some activities
+    // (e.g. solo reflections) don't have a partner — those simply omit roster.
+    const partnerSelectorHtml = rosterPresent ? `
+      <section class="activity__partner-selector" id="activity-partner-selector">
+        <label for="activity-partner-select" class="activity__partner-label">
+          Whose responses are you entering? <span class="activity__partner-required">required</span>
+        </label>
+        <select id="activity-partner-select" class="activity__partner-select" autocomplete="off">
+          <option value="">— Select your partner —</option>
+          ${roster.map(name => `<option value="${escapeHtmlAttr(name)}">${escapeHtmlText(name)}</option>`).join('')}
+        </select>
+        <p class="activity__partner-hint">Pick the classmate whose written responses you're transcribing below. Your own name goes at the bottom of the page when you submit.</p>
+      </section>
+    ` : '';
+
+    // Build student-name input. If a roster is configured, render a dropdown
+    // (consistent data, no typos). Otherwise, fall back to free text.
+    const studentNameInputHtml = rosterPresent ? `
+      <select
+        id="activity-name-input"
+        class="activity__name-input"
+        autocomplete="off"
+      >
+        <option value="">— Select your name —</option>
+        ${roster.map(name => `<option value="${escapeHtmlAttr(name)}">${escapeHtmlText(name)}</option>`).join('')}
+      </select>
+    ` : `
+      <input
+        type="text"
+        id="activity-name-input"
+        class="activity__name-input"
+        placeholder="Enter your full name"
+        autocomplete="name"
+      >
+    `;
 
     container.innerHTML = `
       <div class="activity" data-theme="${themeColor}">
@@ -164,6 +203,8 @@ const ActivityEngine = (function() {
           </div>
         </div>
 
+        ${partnerSelectorHtml}
+
         <main class="activity__questions" id="activity-questions">
           <!-- Questions rendered here -->
         </main>
@@ -171,23 +212,21 @@ const ActivityEngine = (function() {
         <footer class="activity__footer" id="activity-footer">
           <div class="activity__submit-section">
             <h3 class="activity__submit-title">Ready to submit?</h3>
-            <p class="activity__submit-text">Enter your name exactly as it appears in Canvas, then download your responses.</p>
+            <p class="activity__submit-text">${rosterPresent ? 'Pick your name, then download your responses.' : 'Enter your name exactly as it appears in Canvas, then download your responses.'}</p>
 
             <div class="activity__name-input-wrapper">
               <label for="activity-name-input" class="activity__name-label">Your Name</label>
-              <input
-                type="text"
-                id="activity-name-input"
-                class="activity__name-input"
-                placeholder="Enter your full name"
-                autocomplete="name"
-              >
+              ${studentNameInputHtml}
             </div>
 
             <div class="activity__warning" id="activity-name-warning">
               <strong>Important:</strong> Make sure your name is correct before downloading.
               If you change your name after downloading, all responses will be cleared and you'll need to redo the activity.
             </div>
+
+            <p class="activity__download-hint activity__download-hint--blocked" id="activity-download-hint">
+              Still needed: complete your responses.
+            </p>
 
             <button class="activity__download-btn" id="activity-download-btn" disabled>
               Download Responses
@@ -210,10 +249,10 @@ const ActivityEngine = (function() {
     // Set up name input listener
     const nameInput = document.getElementById('activity-name-input');
     const downloadBtn = document.getElementById('activity-download-btn');
+    const partnerSelect = document.getElementById('activity-partner-select');
 
-    nameInput.addEventListener('input', (e) => {
-      const name = e.target.value.trim();
-      downloadBtn.disabled = name.length < 2;
+    function handleNameChange() {
+      const name = nameInput.value.trim();
 
       // Check if name changed after download
       if (state.downloadedAt && state.name && name !== state.name) {
@@ -228,23 +267,61 @@ const ActivityEngine = (function() {
           saveState();
           renderActivity(container);
           renderQuestions();
+          return;
         } else {
           // Restore original name
           nameInput.value = state.name;
         }
       }
-    });
+
+      // Persist current draft of the name so partial typing survives reloads
+      if (name.length >= 2) {
+        state.name = name;
+        saveState();
+      }
+      updateDownloadButtonState();
+    }
+
+    nameInput.addEventListener('input', handleNameChange);
+    nameInput.addEventListener('change', handleNameChange);
+
+    if (partnerSelect) {
+      partnerSelect.addEventListener('change', () => {
+        state.partnerName = partnerSelect.value || null;
+        saveState();
+        updateDownloadButtonState();
+      });
+      // Restore previously selected partner
+      if (state.partnerName) {
+        partnerSelect.value = state.partnerName;
+      }
+    }
 
     downloadBtn.addEventListener('click', handleDownload);
 
     // Restore name if previously entered
     if (state.name) {
       nameInput.value = state.name;
-      downloadBtn.disabled = false;
     }
 
     // Render questions
     renderQuestions();
+
+    // Initial download button state (based on restored state)
+    updateDownloadButtonState();
+  }
+
+  // Small HTML escapers used by renderActivity (separate from the engine
+  // because activity-components.js has its own; we only need them here for
+  // the roster-driven dropdowns to be safe against names with quotes / <).
+  function escapeHtmlText(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+  function escapeHtmlAttr(s) {
+    return escapeHtmlText(s).replace(/"/g, '&quot;');
   }
 
   function renderQuestions() {
@@ -314,10 +391,101 @@ const ActivityEngine = (function() {
   }
 
   // ============================================
+  // Download Gating (require full responses before download)
+  // ============================================
+
+  /**
+   * Determine whether a question has been "substantially" answered, based on
+   * its type. Used to gate the Download button so students can't export an
+   * empty/half-filled JSON. Optional questions are NEVER required.
+   */
+  function isQuestionSubstantiallyAnswered(question, response) {
+    if (!response) return false;
+    if (response.skipped) return false;
+    var ans = response.answer;
+    if (ans === null || ans === undefined) return false;
+
+    switch (question.type) {
+      case 'partner-entry': {
+        var text = (ans && typeof ans === 'object') ? (ans.text || '') : '';
+        var min = question.minLength || 1;
+        return text.trim().length >= min;
+      }
+      case 'qft-discussion': {
+        if (!ans || typeof ans !== 'object') return false;
+        var qs = Array.isArray(ans.questions) ? ans.questions.filter(function(q) { return q && q.text && q.text.trim().length > 0; }) : [];
+        var qftMin = question.qftMin || 3;
+        if (qs.length < qftMin) return false;
+        var notes = (ans.discussionNotes || '').trim();
+        if (notes.length < 20) return false;
+        return true;
+      }
+      case 'open-ended': {
+        var v = (typeof ans === 'string') ? ans : '';
+        var minOpen = question.minLength || 1;
+        return v.trim().length >= minOpen;
+      }
+      case 'instructional':
+        // Instructional sections never need an answer
+        return true;
+      default:
+        // multiple-choice, fill-blank-*, match-following, ai-discussion, etc.
+        return ans !== null && ans !== '';
+    }
+  }
+
+  /**
+   * Recompute whether the Download Responses button should be enabled.
+   * Enabled iff: student name >= 2 chars AND partner selected (when roster
+   * present) AND every required question is substantially answered.
+   * Also surfaces a tooltip / hint message explaining what's still missing.
+   */
+  function updateDownloadButtonState() {
+    var btn = document.getElementById('activity-download-btn');
+    if (!btn) return;
+
+    var nameInput = document.getElementById('activity-name-input');
+    var partnerSelect = document.getElementById('activity-partner-select');
+    var hint = document.getElementById('activity-download-hint');
+
+    var name = nameInput ? nameInput.value.trim() : '';
+    var partner = partnerSelect ? partnerSelect.value : (state.partnerName || '');
+    var rosterPresent = Array.isArray(config.roster) && config.roster.length > 0;
+
+    var missing = [];
+    if (name.length < 2) missing.push('your name');
+    if (rosterPresent && !partner) missing.push('your partner');
+
+    var requiredQuestions = config.questions.filter(function(q) { return !q.optional && q.type !== 'instructional'; });
+    var unansweredCount = 0;
+    requiredQuestions.forEach(function(q) {
+      if (!isQuestionSubstantiallyAnswered(q, state.responses[q.id])) {
+        unansweredCount++;
+      }
+    });
+    if (unansweredCount > 0) {
+      missing.push(unansweredCount + ' unfinished question' + (unansweredCount === 1 ? '' : 's'));
+    }
+
+    var canDownload = missing.length === 0;
+    btn.disabled = !canDownload;
+
+    if (hint) {
+      if (canDownload) {
+        hint.textContent = 'All set — download your responses.';
+        hint.className = 'activity__download-hint activity__download-hint--ready';
+      } else {
+        hint.textContent = 'Still needed: ' + missing.join(', ') + '.';
+        hint.className = 'activity__download-hint activity__download-hint--blocked';
+      }
+    }
+  }
+
+  // ============================================
   // Event Handlers
   // ============================================
 
-  function handleAnswer(questionId, answer, isCorrect) {
+  function handleAnswer(questionId, answer, isCorrect, isAutoSave) {
     if (!state.responses[questionId]) {
       state.responses[questionId] = {
         answer: null,
@@ -328,13 +496,18 @@ const ActivityEngine = (function() {
     }
 
     state.responses[questionId].answer = answer;
-    state.responses[questionId].attempts++;
+    // Autosave (debounced typing, blur events) shouldn't inflate the
+    // attempts counter. Only explicit save-button clicks count as attempts.
+    if (!isAutoSave) {
+      state.responses[questionId].attempts++;
+    }
     state.responses[questionId].correct = isCorrect;
     state.responses[questionId].skipped = false;
 
     saveState();
     updateProgress();
     checkCompletion();
+    updateDownloadButtonState();
   }
 
   function handleSkip(questionId) {
@@ -366,6 +539,7 @@ const ActivityEngine = (function() {
 
   function handleDownload() {
     const nameInput = document.getElementById('activity-name-input');
+    const partnerSelect = document.getElementById('activity-partner-select');
     const name = nameInput.value.trim();
 
     if (name.length < 2) {
@@ -373,8 +547,23 @@ const ActivityEngine = (function() {
       return;
     }
 
-    // Save name and download timestamp
+    // Defensive: re-run the gate before exporting. The button should already
+    // be disabled if anything is missing, but this guards against state drift.
+    var requiredQuestions = config.questions.filter(function(q) { return !q.optional && q.type !== 'instructional'; });
+    var missing = requiredQuestions.filter(function(q) { return !isQuestionSubstantiallyAnswered(q, state.responses[q.id]); });
+    if (missing.length > 0) {
+      alert('Please finish all required questions before downloading. ' + missing.length + ' still needs work.');
+      updateDownloadButtonState();
+      return;
+    }
+    if (Array.isArray(config.roster) && config.roster.length > 0 && partnerSelect && !partnerSelect.value) {
+      alert('Please select your partner from the dropdown at the top of the page before downloading.');
+      return;
+    }
+
+    // Save name, partner, and download timestamp
     state.name = name;
+    if (partnerSelect) state.partnerName = partnerSelect.value || null;
     state.downloadedAt = new Date().toISOString();
     saveState();
 
@@ -453,7 +642,8 @@ const ActivityEngine = (function() {
 
       // Student info
       studentName: state.name,
-      authorName: state.authorName || null,
+      partnerName: state.partnerName || null,
+      authorName: state.authorName || state.partnerName || null,
       submittedAt: state.downloadedAt,
 
       // Device info
@@ -482,7 +672,9 @@ const ActivityEngine = (function() {
   function generateMarkdown(responses) {
     let md = `# ${config.title}\n\n`;
     md += `**Student:** ${state.name}\n`;
-    if (state.authorName) {
+    if (state.partnerName) {
+      md += `**Partner:** ${state.partnerName}\n`;
+    } else if (state.authorName) {
       md += `**Author:** ${state.authorName}\n`;
     }
     md += `**Submitted:** ${new Date(state.downloadedAt).toLocaleString()}\n`;
