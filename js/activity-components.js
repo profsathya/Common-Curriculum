@@ -305,6 +305,19 @@ const ActivityComponents = (function() {
       saveBtn.textContent = 'Update Response';
     }
 
+    // Debounced autosave: persists a draft on every keystroke (600ms after
+    // last input) and on blur. Doesn't enforce minLength and doesn't bump
+    // the attempts counter — that's reserved for the explicit Save click.
+    let openAutosaveTimer = null;
+    function openAutosave() {
+      if (openAutosaveTimer) clearTimeout(openAutosaveTimer);
+      openAutosaveTimer = setTimeout(function() {
+        if (typeof options.onAnswer === 'function') {
+          options.onAnswer(textarea.value.trim(), null, true);
+        }
+      }, 600);
+    }
+
     textarea.addEventListener('input', () => {
       const count = textarea.value.length;
       document.getElementById(`charcount-${question.id}`).textContent = count;
@@ -315,7 +328,10 @@ const ActivityComponents = (function() {
       } else {
         charCount.classList.remove('activity-open__charcount--insufficient');
       }
+
+      openAutosave();
     });
+    textarea.addEventListener('blur', openAutosave);
 
     saveBtn.addEventListener('click', () => {
       const value = textarea.value.trim();
@@ -1755,20 +1771,45 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
     if (savedData.text) {
       saveBtn.textContent = 'Update Response';
     }
-    saveBtn.addEventListener('click', () => {
+
+    // Build the answer payload from current field state.
+    function currentAnswer() {
       const text = textarea.value.trim();
-      if (minLength > 0 && text.length < minLength) {
-        alert(`Please write at least ${minLength} characters.`);
-        return;
-      }
       const selectedIdx = selectorEl ? parseInt(selectorEl.value) : null;
-      const answer = {
+      return {
         text: text,
         selectedOption: isNaN(selectedIdx) ? null : selectedIdx,
         selectedPrompt: (selectedIdx !== null && !isNaN(selectedIdx) && question.questionOptions)
           ? question.questionOptions[selectedIdx]
           : question.prompt
       };
+    }
+
+    // ---- Autosave on blur + debounced typing. Doesn't enforce minLength
+    // (that's only required for the explicit Save click) and doesn't bump
+    // the attempts counter on the engine side.
+    let pesAutosaveTimer = null;
+    function pesAutosave() {
+      if (pesAutosaveTimer) clearTimeout(pesAutosaveTimer);
+      pesAutosaveTimer = setTimeout(function() {
+        if (typeof options.onAnswer === 'function') {
+          options.onAnswer(currentAnswer(), null, true);
+        }
+      }, 600);
+    }
+    textarea.addEventListener('input', pesAutosave);
+    textarea.addEventListener('blur', pesAutosave);
+    if (selectorEl) {
+      selectorEl.addEventListener('change', pesAutosave);
+    }
+
+    saveBtn.addEventListener('click', () => {
+      const text = textarea.value.trim();
+      if (minLength > 0 && text.length < minLength) {
+        alert(`Please write at least ${minLength} characters.`);
+        return;
+      }
+      const answer = currentAnswer();
       options.onAnswer(answer, null);
       updateQuestionStatus(question.id, { answer, attempts: 1, correct: null, skipped: false });
       saveBtn.textContent = 'Update Response';
@@ -1888,9 +1929,10 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       renderQftFeedback(feedbackArea, savedData.aiFeedback);
     }
 
-    // Discussion notes
+    // Discussion notes — ALWAYS visible. AI feedback is optional, so the
+    // notes textarea + Save Response button must be available regardless of
+    // whether the student clicked "Get AI Feedback" first.
     const notesLabel = createElement('div', 'activity-qft__notes-label', 'Discussion notes — summarize your conversation after asking these questions face-to-face:');
-    notesLabel.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'block' : 'none';
     container.appendChild(notesLabel);
 
     const notesTextarea = document.createElement('textarea');
@@ -1898,12 +1940,11 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
     notesTextarea.placeholder = 'After discussing your questions with your partner face-to-face, summarize the key insights here...';
     notesTextarea.value = savedData.discussionNotes || '';
     notesTextarea.rows = 5;
-    notesTextarea.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'block' : 'none';
     container.appendChild(notesTextarea);
 
-    // Save button
+    // Save button — also always visible. The AI feedback path stays as an
+    // optional helper above; saving never depends on it.
     const saveBtn = createElement('button', 'activity-open-ended__save-btn', savedData.discussionNotes ? 'Update Response' : 'Save Response');
-    saveBtn.style.display = savedData.aiFeedback || savedData.discussionNotes ? 'inline-block' : 'none';
     container.appendChild(saveBtn);
 
     // Collect questions helper
@@ -1930,6 +1971,36 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       if (untyped.length > 0) return 'Select a type (Open/Closed) for each question.';
       return null;
     }
+
+    // ---- Autosave: persist a draft on every blur / change without
+    // requiring an explicit save click. Doesn't bump attempts (engine
+    // skips the increment when isAutoSave is true).
+    let autosaveTimer = null;
+    function autosaveDraft() {
+      if (autosaveTimer) clearTimeout(autosaveTimer);
+      autosaveTimer = setTimeout(function() {
+        const answer = {
+          questions: collectQuestions(),
+          aiFeedback: savedData.aiFeedback || null,
+          discussionNotes: notesTextarea.value.trim(),
+          phase: savedData.phase || 'draft'
+        };
+        savedData.questions = answer.questions;
+        savedData.discussionNotes = answer.discussionNotes;
+        if (typeof options.onAnswer === 'function') {
+          options.onAnswer(answer, null, true);
+        }
+      }, 600);
+    }
+    questionsWrap.querySelectorAll('.activity-qft__question-text').forEach(function(el) {
+      el.addEventListener('input', autosaveDraft);
+      el.addEventListener('blur', autosaveDraft);
+    });
+    questionsWrap.querySelectorAll('.activity-qft__type-select').forEach(function(el) {
+      el.addEventListener('change', autosaveDraft);
+    });
+    notesTextarea.addEventListener('input', autosaveDraft);
+    notesTextarea.addEventListener('blur', autosaveDraft);
 
     // AI Feedback handler
     aiBtn.addEventListener('click', async () => {
@@ -1991,22 +2062,19 @@ If questions need work: explain specifically what's weak and suggest better alte
 
         feedbackArea.style.display = 'block';
         renderQftFeedback(feedbackArea, feedback);
-        notesLabel.style.display = 'block';
-        notesTextarea.style.display = 'block';
-        saveBtn.style.display = 'inline-block';
 
         // Persist to savedData so subsequent save handler can read it
         savedData.aiFeedback = feedback;
         savedData.questions = qs;
 
-        // Auto-save questions + feedback
+        // Auto-save questions + feedback (does not increment attempts)
         const answer = {
           questions: qs,
           aiFeedback: feedback,
           discussionNotes: notesTextarea.value.trim(),
           phase: 'discuss'
         };
-        options.onAnswer(answer, null);
+        options.onAnswer(answer, null, true);
 
       } catch (error) {
         console.error('QFT AI error:', error);
@@ -2014,9 +2082,6 @@ If questions need work: explain specifically what's weak and suggest better alte
         feedbackArea.innerHTML = '<div class="activity-ai-discussion__error"><p><strong>Could not get feedback.</strong> ' + escapeHtml(error.message) + '</p>' +
           '<p style="margin-top:8px;font-size:13px;">You can still proceed with the discussion — ask your questions face-to-face and take notes below.</p>' +
           '<button class="activity-ai-discussion__retry-btn" onclick="this.parentElement.style.display=\'none\'">Dismiss</button></div>';
-        notesLabel.style.display = 'block';
-        notesTextarea.style.display = 'block';
-        saveBtn.style.display = 'inline-block';
       }
 
       aiBtn.disabled = false;
