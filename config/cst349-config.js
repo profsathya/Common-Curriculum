@@ -617,7 +617,7 @@ const CST349_CONFIG = {
     "s4-w13-retrospective": {
       canvasId: "588978",
       title: "S4: Three-Sprint Retrospective",
-      dueDate: "2026-04-24",
+      dueDate: "2026-04-22",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 4: Goal Setting",
@@ -630,7 +630,7 @@ const CST349_CONFIG = {
     "s4-w13-gap-statement": {
       canvasId: "588979",
       title: "S4: Gap Statement",
-      dueDate: "2026-04-24",
+      dueDate: "2026-04-26",
       type: "assignment",
       canvasType: "assignment",
       assignmentGroup: "Sprint 4: Goal Setting",
