@@ -250,20 +250,32 @@
   gap: 10px;
 }
 
-/* "Optional" chip shown next to the question number when a question
-   has { optional: true } in its config. Styled as a quiet neutral pill
-   so it reads as informational, not loud. */
+/* Optional questions — engine-level visual differentiation.
+   Any question with { optional: true } in its config gets this treatment
+   (the engine sets [data-optional="true"] on the wrapper and renders an
+   "Optional" chip). Goal: students immediately see these are skippable,
+   so the required core of the form reads clearly as the required core. */
+.activity-question[data-optional="true"] {
+  background: #fffbeb;                 /* warm cream — reads as bonus, not blocked */
+  border: 2px dashed #f59e0b;          /* dashed amber — universal "not required" cue */
+  box-shadow: none;                    /* drop the card shadow so it sits back */
+}
+.activity-question[data-optional="true"] .activity-question__number {
+  color: #b45309;                      /* amber number to match the optional frame */
+}
+/* "Optional" pill — prominent enough to catch the eye before the prompt. */
 .activity-question__optional-chip {
   display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 9px;
-  border-radius: 12px;
-  background: #f1f5f9;
-  color: #475569;
-  border: 1px solid #e2e8f0;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f59e0b;
+  color: #78350f;
+  border: 1px solid #d97706;
+  box-shadow: 0 1px 2px rgba(180, 83, 9, 0.18);
 }
 
 .activity-question__info-block {
