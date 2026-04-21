@@ -599,7 +599,7 @@ const CST395_CONFIG = {
       briefing: "Extra credit recovery. Revisit your Sprint 1 or Sprint 2 problem/partner-need selection as a judgment call. Check-in with Prof. Sathya in class to get credit for this submission."
     },
     "s4-framework-symbiotic-thinking": {
-      canvasId: "",
+      canvasId: "589782",
       title: "S4: Framework Track — Symbiotic Thinking",
       dueDate: "2026-04-26",
       type: "reflection",
