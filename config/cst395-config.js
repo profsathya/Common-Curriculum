@@ -703,7 +703,7 @@ const CST395_CONFIG = {
       briefing: "Written solution brief documenting how you addressed your Sprint 4 goal. Due May 20 after finals week — extra time to finish the writing."
     },
     "s4-framework-sdl-is-ab": {
-      canvasId: "",
+      canvasId: "590207",
       title: "S4: Framework Track — SDL / IS / AB Mapping",
       dueDate: "2026-05-03",
       type: "reflection",
@@ -716,7 +716,7 @@ const CST395_CONFIG = {
       briefing: "Second framework activity. Map your own Sprint 1-3 evidence to the three capabilities: Self-Directed Learner, Integrative Solver, Adaptive Builder. Nine specific moments that become defense material."
     },
     "s4-lookback-2-assumption-audit": {
-      canvasId: "",
+      canvasId: "590208",
       title: "S4: Look-back 2 — Assumption Audit (Extra Credit)",
       dueDate: "2026-05-03",
       type: "assignment",
@@ -729,7 +729,7 @@ const CST395_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 2 Assumption Audit. Did you separate observation from interpretation, or did you write what felt true? Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-3-solution-brief": {
-      canvasId: "",
+      canvasId: "590209",
       title: "S4: Look-back 3 — Sprint 3 Solution Brief (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
@@ -742,7 +742,7 @@ const CST395_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 3 Solution Brief. What you actually contributed vs. what AI did. Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-4-build-iteration": {
-      canvasId: "",
+      canvasId: "590210",
       title: "S4: Look-back 4 — Build v1→v2 Iteration (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
@@ -755,7 +755,7 @@ const CST395_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 3 Build v1, Build Review, and Revised Plan as one arc. What you didn't know, what testing revealed, what you changed. Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-5-meta": {
-      canvasId: "",
+      canvasId: "590211",
       title: "S4: Look-back 5 — Look-back on your Look-backs (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
