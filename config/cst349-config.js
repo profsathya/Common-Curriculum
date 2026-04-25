@@ -732,7 +732,7 @@ const CST349_CONFIG = {
       briefing: "PDF of your defense slides (10 pts) + in-class defense presentation (8 pts). Due noon Wed May 13 — before the final class."
     },
     "s4-lookback-2-pr3": {
-      canvasId: "",
+      canvasId: "590198",
       title: "S4: Look-back 2 — Productive Reflection #3 (Extra Credit)",
       dueDate: "2026-05-03",
       type: "assignment",
@@ -745,7 +745,7 @@ const CST349_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 1 W3 Productive Reflection — was your plan actually working then, and were you honest about it? Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-3-networking": {
-      canvasId: "",
+      canvasId: "590199",
       title: "S4: Look-back 3 — Networking Event (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
@@ -758,7 +758,7 @@ const CST349_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 2 Networking Event Prep + Report. Did you test assumptions, or perform the exercise? Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-4-info-diet": {
-      canvasId: "",
+      canvasId: "590200",
       title: "S4: Look-back 4 — Information Diet Audit (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
@@ -771,7 +771,7 @@ const CST349_CONFIG = {
       briefing: "Extra credit recovery. Revisit Sprint 3 Information Diet Audit. What you actually consumed, what you said you'd change, what changed. Append to your Sprint 4 Look-backs Google Doc. PDF."
     },
     "s4-lookback-5-meta": {
-      canvasId: "",
+      canvasId: "590201",
       title: "S4: Look-back 5 — Look-back on your Look-backs (Extra Credit)",
       dueDate: "2026-05-20",
       type: "assignment",
