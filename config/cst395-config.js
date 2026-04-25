@@ -609,7 +609,7 @@ const CST395_CONFIG = {
       sprint: 4,
       week: 13,
       htmlFile: "assignments/s4-w13-framework-symbiotic-thinking.html",
-      briefing: "First of three framework pieces in Sprint 4. Name what symbiotic thinking is — and find your own Sprint 1-3 evidence of when it worked and when it didn't."
+      briefing: "First framework activity in Sprint 4. Name what symbiotic thinking is — and find your own Sprint 1-3 evidence of when it worked and when it didn't."
     },
     "s4-w13-engagement": {
       canvasId: "590154",
@@ -701,6 +701,19 @@ const CST395_CONFIG = {
       week: 15,
       htmlFile: "assignments/s4-solution-brief.html",
       briefing: "Written solution brief documenting how you addressed your Sprint 4 goal. Due May 20 after finals week — extra time to finish the writing."
+    },
+    "s4-framework-sdl-is-ab": {
+      canvasId: "",
+      title: "S4: Framework Track — SDL / IS / AB Mapping",
+      dueDate: "2026-05-03",
+      type: "reflection",
+      canvasType: "assignment",
+      assignmentGroup: "Sprint 4: Productive Reflections",
+      points: 5,
+      sprint: 4,
+      week: 14,
+      htmlFile: "assignments/s4-w14-framework-sdl-is-ab.html",
+      briefing: "Second framework activity. Map your own Sprint 1-3 evidence to the three capabilities: Self-Directed Learner, Integrative Solver, Adaptive Builder. Nine specific moments that become defense material."
     }
   },
 
