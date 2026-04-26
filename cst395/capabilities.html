@@ -3,216 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capabilities | CST395</title>
+  <title>The Three Capabilities | CST395</title>
   <link rel="stylesheet" href="../css/shared-styles.css">
+  <style>
+    /* Page intro */
+    .page-intro {
+      background: white;
+      border: 1px solid var(--gray-200, #e5e7eb);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .page-intro p { margin: 0; color: #374151; line-height: 1.7; }
+
+    /* Outcomes block (mirrors overview.html .destination-box / .two-col) */
+    .outcomes-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 600px) {
+      .outcomes-row { grid-template-columns: 1fr; }
+    }
+    .outcome-box {
+      padding: 18px 20px;
+      border-radius: 10px;
+    }
+    .outcome-box.superagency {
+      background: #f0fdfa;
+      border-left: 4px solid #14b8a6;
+    }
+    .outcome-box.human-value {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+    }
+    .outcome-box .label {
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .outcome-box.superagency .label { color: #0f766e; }
+    .outcome-box.human-value .label { color: #166534; }
+    .outcome-box .question {
+      margin: 0;
+      font-size: 15px;
+      font-style: italic;
+      line-height: 1.55;
+    }
+    .outcome-box.superagency .question { color: #115e59; }
+    .outcome-box.human-value .question { color: #166534; }
+
+    /* Pedagogy section inside each capability — same visual language as
+       capability-detail__section but with a subtle accent so external
+       readers can see "this is how we develop it" at a glance. */
+    .pedagogy-section {
+      margin-top: 16px;
+      padding: 16px 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid #64748b;
+      border-radius: 8px;
+    }
+    .pedagogy-section h3 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pedagogy-section p {
+      margin: 0;
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Foundations: collapsible <details> blocks */
+    .foundations-heading {
+      margin: 32px 0 12px 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .foundations details {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .foundations details[open] {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .foundations summary {
+      padding: 14px 18px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      transition: background 0.15s ease;
+    }
+    .foundations summary:hover { background: #f9fafb; }
+    .foundations summary::-webkit-details-marker { display: none; }
+    .foundations summary::before {
+      content: '▶';
+      flex-shrink: 0;
+      font-size: 11px;
+      color: #6b7280;
+      transition: transform 0.2s ease;
+    }
+    .foundations details[open] summary::before {
+      transform: rotate(90deg);
+    }
+    .foundations summary .title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #111827;
+    }
+    .foundations summary .terms {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .foundations .details-body {
+      padding: 4px 18px 20px 18px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    /* Techniques cards (from overview.html) */
+    .technique-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) {
+      .technique-grid { grid-template-columns: 1fr; }
+    }
+    .technique-item {
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .technique-item.reading {
+      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+      border-left: 4px solid #14b8a6;
+    }
+    .technique-item.writing {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-left: 4px solid #22c55e;
+    }
+    .technique-item.talking {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-left: 4px solid #3b82f6;
+    }
+    .technique-item.listening {
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+      border-left: 4px solid #8b5cf6;
+    }
+    .technique-item h3 { margin: 0 0 8px 0; font-size: 16px; }
+    .technique-item.reading h3 { color: #0f766e; }
+    .technique-item.writing h3 { color: #166534; }
+    .technique-item.talking h3 { color: #1e40af; }
+    .technique-item.listening h3 { color: #6b21a8; }
+    .technique-item p { margin: 0 0 8px 0; font-size: 14px; color: #374151; }
+    .technique-item .where { margin: 0; font-size: 13px; color: #6b7280; font-style: italic; }
+    .foundations-intro {
+      margin: 0 0 4px 0;
+      color: #374151;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Habits cards (from overview.html) */
+    .habit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) {
+      .habit-grid { grid-template-columns: 1fr; }
+    }
+    .habit-item {
+      padding: 16px;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .habit-item .icon { font-size: 28px; margin-bottom: 8px; }
+    .habit-item h3 { margin: 0 0 8px 0; font-size: 16px; color: #c2410c; }
+    .habit-item p { margin: 0 0 8px 0; font-size: 14px; color: #374151; }
+    .habit-item .where { margin: 0; font-size: 12px; color: #9a3412; font-style: italic; }
+
+    /* "Built from" capability mappings (from overview.html capabilities-card) */
+    .built-from-list { margin-top: 16px; }
+    .built-from-item {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .built-from-item:last-child { margin-bottom: 0; }
+    .built-from-item.sdl {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+    }
+    .built-from-item.is {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+    }
+    .built-from-item.ab {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+    }
+    .built-from-badge {
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .built-from-badge.sdl { background: #3b82f6; }
+    .built-from-badge.is { background: #22c55e; }
+    .built-from-badge.ab { background: #f97316; }
+    .built-from-content h4 { margin: 0 0 4px 0; font-size: 15px; color: #111827; }
+    .built-from-content p { margin: 0 0 6px 0; font-size: 14px; color: #374151; }
+    .built-from-content .built-from { margin: 0; font-size: 13px; color: #6b7280; }
+    .built-from-content .built-from strong { color: #374151; }
+
+    /* "How They Work Together" loop block */
+    .loop-card {
+      background: var(--gray-50, #f9fafb);
+      border: 1px solid var(--gray-200, #e5e7eb);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+    .loop-card h3 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .loop-card p {
+      margin: 0 0 12px 0;
+      color: #374151;
+    }
+    .loop-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #374151;
+      line-height: 1.7;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-
-    <!-- Page Header -->
-    <div class="sprint-header">
-      <nav class="sprint-header__breadcrumb">
-        <a href="home.html">Home</a> / <span>Capabilities</span>
-      </nav>
-      <h1 class="sprint-header__title">The Three Capabilities</h1>
-      <p class="sprint-header__subtitle">What you're developing throughout the course</p>
-    </div>
-
-    <!-- Introduction -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
-      <p style="margin: 0; color: var(--gray-600); line-height: 1.7;">
-        CST395 is designed around three core capabilities that together enable you to create value in an AI-augmented world.
-        These aren't separate skills—they work together. Every sprint activity develops multiple capabilities,
-        with different emphases at different stages of your journey.
-      </p>
-    </div>
-
-    <!-- SDL -->
-    <div class="capability-detail">
-      <div class="capability-detail__header">
-        <div class="capability-detail__badge capability-detail__badge--sdl">SDL</div>
-        <div>
-          <h2 class="capability-detail__name">Self-Directed Learner</h2>
-          <p class="capability-detail__tagline">Developing a meta-learning architecture for rapid expertise</p>
-        </div>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">What It Means</h3>
-        <p>
-          Self-Directed Learners develop a meta-learning architecture—a systematic approach to acquiring
-          expertise in unfamiliar domains rapidly. This capability requires more than desire to learn;
-          it's knowing what you need to learn versus what you can strategically ignore, and using AI as
-          learning infrastructure to build the required just-in-time depth.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Example in Action</h3>
-        <p>
-          When a student starts work on building patient communication tools, they need to understand
-          medical terminology, HIPAA privacy regulations, clinical workflows, patient psychology under
-          stress, and how different age groups interact with technology—in days or weeks, not semesters.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">How It Shows Up in the Course</h3>
-        <ul class="capability-detail__list">
-          <li><strong>Productive Reflections</strong> — Structured thinking before AI interaction</li>
-          <li><strong>Domain Learning</strong> — Rapidly understanding unfamiliar territory (Sprint 2-4)</li>
-          <li><strong>5 Whys Analysis</strong> — Going deeper to find root causes</li>
-          <li><strong>Build Logs</strong> — Documenting what you're learning as you work</li>
-          <li><strong>Bridge Reflections</strong> — Synthesizing learning between sprints</li>
-        </ul>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Growth Trajectory</h3>
-        <p>
-          <strong>Sprint 1:</strong> Learn about yourself and your own challenges<br>
-          <strong>Sprint 2:</strong> Learn about someone else's domain<br>
-          <strong>Sprint 3:</strong> Learn from limited information and indirect sources<br>
-          <strong>Sprint 4:</strong> Independently identify what you need to learn
-        </p>
-      </div>
-    </div>
-
-    <!-- IS -->
-    <div class="capability-detail">
-      <div class="capability-detail__header">
-        <div class="capability-detail__badge capability-detail__badge--is">IS</div>
-        <div>
-          <h2 class="capability-detail__name">Integrative Solver</h2>
-          <p class="capability-detail__tagline">Operating at intersections where human value concentrates</p>
-        </div>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">What It Means</h3>
-        <p>
-          Integrative Solvers apply self-directed learning capacity across domains, developing T-shaped
-          (or even m-shaped) expertise—deep knowledge in one technical area combined with broad
-          boundary-crossing competencies. In the AI age, the horizontal bar becomes critical: they operate
-          at intersections between systems of knowledge where AI struggles but human value concentrates.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Example in Action</h3>
-        <p>
-          When analyzing customer complaints, an Integrative Solver doesn't just build the requested
-          sentiment analysis dashboard. They spend time with the complaint handlers, discovering that
-          50 patients generate 60% of complaints—but nobody realized this because complaints were filed
-          by date, not patient. They bridge from technical capability to human workflow, delivering
-          simple frequency analysis that creates more value than a sophisticated tool.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">How It Shows Up in the Course</h3>
-        <ul class="capability-detail__list">
-          <li><strong>Stakeholder Interviews</strong> — Learning to ask the right questions</li>
-          <li><strong>Domain Bridging</strong> — Connecting technical solutions to human workflows</li>
-          <li><strong>Peer Conversations</strong> — Weekly structured practice crossing perspectives</li>
-          <li><strong>Human Value Statements</strong> — Articulating your unique contribution</li>
-          <li><strong>Proxy Validation</strong> — Getting feedback when direct access is limited</li>
-        </ul>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Growth Trajectory</h3>
-        <p>
-          <strong>Sprint 1:</strong> Understanding yourself as stakeholder<br>
-          <strong>Sprint 2:</strong> Deep engagement with someone you know—bridging to their domain<br>
-          <strong>Sprint 3:</strong> Building understanding without easy access—connecting indirect sources<br>
-          <strong>Sprint 4:</strong> Independently integrating across multiple stakeholder domains
-        </p>
-      </div>
-    </div>
-
-    <!-- AB -->
-    <div class="capability-detail">
-      <div class="capability-detail__header">
-        <div class="capability-detail__badge capability-detail__badge--ab">AB</div>
-        <div>
-          <h2 class="capability-detail__name">Adaptive Builder</h2>
-          <p class="capability-detail__tagline">Executing through cycles of building, testing, and adapting</p>
-        </div>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">What It Means</h3>
-        <p>
-          Adaptive Builders synthesize self-directed learning and integrative solving to execute, developing
-          through cycles of building, testing, learning from failures, and adapting. They exercise restraint
-          in complexity, discovering through iteration that simple solutions executed well often deliver more
-          value than sophisticated ones.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Example in Action</h3>
-        <p>
-          An Adaptive Builder starts with basic frequency analysis rather than ambitious sentiment analysis,
-          testing whether it solves the core problem. Through iteration, they learn to meet user needs without
-          over-engineering. The cycle teaches them to distinguish symptoms from root causes and to iterate
-          toward value rather than complexity.
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">How It Shows Up in the Course</h3>
-        <ul class="capability-detail__list">
-          <li><strong>UMPIRE Framework</strong> — Structured approach to problem-solving</li>
-          <li><strong>3Cs (Context-Choices-Confirmation)</strong> — Effective AI interactions</li>
-          <li><strong>Build Logs</strong> — Documenting iterations and pivots</li>
-          <li><strong>Human Value Statements</strong> — Identifying what YOU contributed</li>
-          <li><strong>Sprint Demonstrations</strong> — Showing working solutions, not plans</li>
-        </ul>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">Growth Trajectory</h3>
-        <p>
-          <strong>Sprint 1:</strong> Build with high guidance—learn the iteration cycle<br>
-          <strong>Sprint 2:</strong> Build for someone else—adapt based on their feedback<br>
-          <strong>Sprint 3:</strong> Build with constraints—iterate with limited information<br>
-          <strong>Sprint 4:</strong> Build with full autonomy—own your iteration process
-        </p>
-      </div>
-
-      <div class="capability-detail__section">
-        <h3 class="capability-detail__section-title">The Human Value Question</h3>
-        <p>
-          Every sprint ends with a Human Value Statement where you articulate what YOU specifically contributed
-          that AI couldn't. This isn't about competing with AI—it's about understanding where human judgment,
-          taste, and direction are essential. Examples include:
-        </p>
-        <ul class="capability-detail__list">
-          <li>Deciding what problem was worth solving</li>
-          <li>Understanding the nuances of stakeholder needs</li>
-          <li>Making tradeoffs between competing priorities</li>
-          <li>Knowing when "good enough" was actually good enough</li>
-          <li>Recognizing when the technical solution missed the human point</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- How They Work Together -->
-    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-3) 0;">How They Work Together</h3>
-      <p style="margin: 0 0 var(--space-3) 0; color: var(--gray-600);">
-        These capabilities aren't separate—they're integrated:
-      </p>
-      <ul style="margin: 0; padding-left: var(--space-5); color: var(--gray-600);">
-        <li><strong>SDL → IS:</strong> Self-directed learning capacity applied across domains enables integrative solving</li>
-        <li><strong>IS → AB:</strong> Bridging technical capability to human workflow informs what to build and how to iterate</li>
-        <li><strong>AB → SDL:</strong> Building cycles reveal new learning gaps, driving the next round of self-directed inquiry</li>
-        <li><strong>All three:</strong> Creating real value requires learning rapidly, connecting across boundaries, and iterating toward simplicity</li>
-      </ul>
-    </div>
-
+    <!-- Body content injected in Step B + Step C -->
   </div>
 
   <!-- Scripts -->
