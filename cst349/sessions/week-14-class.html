@@ -66,6 +66,24 @@
     .datapoint-closer--accent { color: var(--text-primary); font-size: 22px; }
     .datapoint-closer--accent strong { color: var(--amber-400); }
 
+    /* ============ Numbered question cards (slides 6 + 7) ============ */
+    .agenda { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .agenda-step { display: flex; align-items: flex-start; gap: 18px; background: var(--bg-section); border: 1px solid var(--border); border-left: 4px solid var(--indigo-500); border-radius: 12px; padding: 18px 22px; }
+    .agenda-num { flex-shrink: 0; width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--indigo-600), var(--indigo-500)); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; box-shadow: 0 2px 8px rgba(99,102,241,0.3); }
+    .agenda-body { flex: 1; }
+    .agenda-detail { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+    .agenda-detail strong { color: var(--text-primary); font-weight: 600; }
+    .agenda-source { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--indigo-300); margin-bottom: 6px; }
+
+    /* ============ Focal quote (slides 6 + 7 gap statement) + closing (slide 8) ============ */
+    .prompt-card { background: linear-gradient(135deg, rgba(99,102,241,0.16), rgba(139,92,246,0.08)); border: 1px solid rgba(129,140,248,0.45); border-radius: 20px; padding: 40px 44px; text-align: center; box-shadow: 0 8px 48px rgba(99,102,241,0.20); }
+    .prompt-label { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--indigo-300); margin-bottom: 18px; }
+    .prompt-text { font-size: 30px; font-weight: 600; color: var(--text-primary); line-height: 1.35; letter-spacing: -0.005em; }
+    .prompt-text--large { font-size: 42px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+    .prompt-instruction { margin-top: 28px; font-size: 18px; color: var(--text-secondary); line-height: 1.65; max-width: 680px; margin-left: auto; margin-right: auto; }
+    .prompt-instruction strong { color: var(--text-primary); font-weight: 600; }
+    .quote-intro { font-size: 14px; color: var(--text-muted); margin-bottom: 14px; font-style: italic; }
+
     /* ============ Emphasis pill ============ */
     .emphasis-pill { display: inline-block; font-weight: 800; color: var(--amber-400); background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.35); padding: 2px 10px; border-radius: 6px; }
 
@@ -74,6 +92,11 @@
       h2 { font-size: 28px; }
       .lede { font-size: 19px; }
       .datapoint__text { font-size: 16px; }
+      .prompt-text { font-size: 22px; }
+      .prompt-text--large { font-size: 30px; }
+    }
+    @media (max-width: 560px) {
+      .agenda-step { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -81,7 +104,7 @@
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <nav class="nav-bar">
     <div class="nav-title"><strong>CST349</strong> &middot; Week 14</div>
-    <div class="nav-progress" id="navProgress">1 / 4</div>
+    <div class="nav-progress" id="navProgress">1 / 8</div>
     <div class="nav-controls">
       <button class="nav-btn" id="prevBtn" disabled>&larr; Prev</button>
       <button class="nav-btn" id="nextBtn">Next &rarr;</button>
@@ -167,7 +190,103 @@
     </div>
   </section>
 
-  <!-- ==================== Slides 5-8 to come in checkpoint 3 ==================== -->
+  <!-- ==================== 5: YOUR DEFENSE ==================== -->
+  <section class="section" data-section="5">
+    <div class="section-content">
+      <p class="section-label">Your defense</p>
+      <h2>The defense is asking one thing: do you know how to grow?</h2>
+      <p class="lede">It&rsquo;s not a status report. It&rsquo;s evidence &mdash; across one semester &mdash; that you can <strong>spot a real gap, name it cleanly, and close it on purpose.</strong></p>
+      <p class="body-text">Today is the rehearsal. We&rsquo;re going to look at two real Gap Statement drafts from this class and pressure-test them out loud, the way your defense panel will.</p>
+      <p class="body-text">Pair up. The questions on the next two slides stay on screen &mdash; work through them together.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 6: PRESSURE-TEST GAP STATEMENT 1 ==================== -->
+  <section class="section" data-section="6">
+    <div class="section-content" style="max-width: 1000px;">
+      <p class="section-label">From this class &middot; 1 of 2</p>
+      <h2>Pressure-test this gap.</h2>
+
+      <div class="prompt-card">
+        <p class="quote-intro">From an early Gap Statement draft this week &mdash;</p>
+        <p class="prompt-text">&ldquo;I can ship code I wrote myself, but when AI hands me a working solution I don&rsquo;t fully understand, I either trust it blindly or freeze. I want to learn how to <em>direct</em> AI output instead of just receiving it.&rdquo;</p>
+      </div>
+
+      <div class="agenda">
+        <div class="agenda-step">
+          <div class="agenda-num">1</div>
+          <div class="agenda-body">
+            <span class="agenda-source">McKinsey</span>
+            <p class="agenda-detail">McKinsey says the work shifts from <strong>doing the writing and analysis</strong> to <strong>directing and judging it</strong>. Does this gap actually point at that shift, or does it stop short? What would &ldquo;directing&rdquo; look like as a measurable behavior in Sprint 4?</p>
+          </div>
+        </div>
+        <div class="agenda-step">
+          <div class="agenda-num">2</div>
+          <div class="agenda-body">
+            <span class="agenda-source">Anthropic &middot; 81k-user survey</span>
+            <p class="agenda-detail">Experienced AI users <strong>collaborate</strong>; newcomers <strong>hand work over</strong>. Where on that spectrum is the writer of this gap right now &mdash; and what&rsquo;s one concrete move that would shift them one step toward collaborator?</p>
+          </div>
+        </div>
+        <div class="agenda-step">
+          <div class="agenda-num">3</div>
+          <div class="agenda-body">
+            <span class="agenda-source">Stanford &middot; Brynjolfsson</span>
+            <p class="agenda-detail">22&ndash;25-year-old hiring is down ~14% in AI-exposed jobs. If a hiring manager read only this gap statement, would they believe this person is the kind of new grad they still want to bet on? What&rsquo;s missing that would make them sure?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7: PRESSURE-TEST GAP STATEMENT 2 ==================== -->
+  <section class="section" data-section="7">
+    <div class="section-content" style="max-width: 1000px;">
+      <p class="section-label">From this class &middot; 2 of 2</p>
+      <h2>Pressure-test this one.</h2>
+
+      <div class="prompt-card">
+        <p class="quote-intro">From another Gap Statement draft this week &mdash;</p>
+        <p class="prompt-text">&ldquo;I learn fast on assigned work, but when nobody tells me what to study next, I drift for weeks before picking a direction. I want to get faster at choosing what to learn when no syllabus exists.&rdquo;</p>
+      </div>
+
+      <div class="agenda">
+        <div class="agenda-step">
+          <div class="agenda-num">1</div>
+          <div class="agenda-body">
+            <span class="agenda-source">Deloitte</span>
+            <p class="agenda-detail">70% of leaders name <strong>&ldquo;fast and nimble&rdquo;</strong> as their team strategy. &ldquo;Drift for weeks&rdquo; is the opposite of nimble. What&rsquo;s the smallest unit of decision-making this person could practice in Sprint 4 &mdash; one week? One day?</p>
+          </div>
+        </div>
+        <div class="agenda-step">
+          <div class="agenda-num">2</div>
+          <div class="agenda-body">
+            <span class="agenda-source">WEF &middot; Future of Jobs</span>
+            <p class="agenda-detail">39% of skills will be different by 2030, and <strong>curiosity + lifelong learning</strong> rank in the top growing skill clusters. Does this gap statement set up a habit they can repeat, or only solve this one drift cycle?</p>
+          </div>
+        </div>
+        <div class="agenda-step">
+          <div class="agenda-num">3</div>
+          <div class="agenda-body">
+            <span class="agenda-source">LinkedIn &middot; Skills on the Rise 2026</span>
+            <p class="agenda-detail">Adaptability, strategic thinking, innovative thinking &mdash; 7 of the top 10 fastest-growing skills are human-centric. Which of those is this gap really about? Naming it precisely is half the work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 8: GOING FORWARD ==================== -->
+  <section class="section" data-section="8">
+    <div class="section-content" style="text-align: center;">
+      <p class="section-label">Going forward</p>
+      <h2 style="margin-bottom: 28px;">The whole course in one line.</h2>
+
+      <div class="prompt-card">
+        <p class="prompt-text prompt-text--large">Spot the gap. Close it. Find the next one.</p>
+        <p class="prompt-instruction">This semester was rep four. <strong>Rep five</strong> comes next semester. <strong>Rep six</strong> the semester after. <strong>A hundred more</strong> after graduation. The rules of work will keep changing &mdash; that&rsquo;s the only thing they do. The reps don&rsquo;t stop. The skill <em>is</em> the practice.</p>
+      </div>
+    </div>
+  </section>
 
   <div class="click-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> arrow keys to navigate</div>
 
