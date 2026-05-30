@@ -4,7 +4,7 @@
  * 3 stages with AI deepening, transitions, two-part synthesis
  * (Career Brief + Pitch), optional reaction, collapsible brief sections.
  */
-import { CONFIG, PROGRAM_CONFIG } from './config.js';
+import { CONFIG } from './config.js';
 import { STAGE_1_FRAME, STAGE_1_QUESTION, STAGE_2_QUESTION, STAGE_3_BANK } from './questions.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 import { callAI, parsePhaseResponse, fixJsonStringNewlines, extractBriefValue } from './api.js';
@@ -1201,37 +1201,7 @@ function renderPostReactionActions() {
     requestAnimationFrame(() => pitchEl.classList.add('ci-pitch-text--visible'));
   }
 
-  // 2. Bridge sentence connecting synthesis to program
-  const bridge = el('p', 'ci-bridge-text',
-    'The direction identified in your brief above is a starting point. ' +
-    'The Career Intelligence Program helps you build a full strategy around it — ' +
-    'mapping the market, developing your positioning, and running real experiments to test what works.'
-  );
-  section.appendChild(bridge);
-
-  // 3. "Learn about CTI's career programs" button
-  const programBtn = el('button', 'ci-program-btn', "Learn about CTI's career programs for graduating seniors");
-  section.appendChild(programBtn);
-
-  // 3. Program description (hidden until button click)
-  const programDesc = el('div', 'ci-program-desc');
-  programDesc.innerHTML = `
-    <h3>${escapeHtml(PROGRAM_CONFIG.program_name)}</h3>
-    <p class="ci-program-desc__meta">${escapeHtml(PROGRAM_CONFIG.dates)} · ${escapeHtml(PROGRAM_CONFIG.session_times)}</p>
-    ${renderMarkdown(PROGRAM_CONFIG.description)}
-  `;
-  programDesc.style.display = 'none';
-  section.appendChild(programDesc);
-
-  programBtn.addEventListener('click', () => {
-    trackEvent('program_button_clicked');
-    programBtn.style.display = 'none';
-    programDesc.style.display = '';
-    requestAnimationFrame(() => programDesc.classList.add('ci-program-desc--visible'));
-    programDesc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-
-  // 4. Action buttons: Copy Brief + Download JSON
+  // 2. Action buttons: Copy Brief + Download JSON
   const actions = el('div', 'ci-actions ci-final-actions');
 
   const copyBtn = el('button', 'ci-copy-btn', 'Copy Brief to Clipboard');
