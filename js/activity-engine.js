@@ -212,7 +212,7 @@ const ActivityEngine = (function() {
         <footer class="activity__footer" id="activity-footer">
           <div class="activity__submit-section">
             <h3 class="activity__submit-title">Ready to submit?</h3>
-            <p class="activity__submit-text">${rosterPresent ? 'Pick your name, then copy your responses.' : 'Enter your name exactly as it appears in Canvas, then copy your responses.'}</p>
+            <p class="activity__submit-text">${rosterPresent ? exportPromptForRoster() : exportPromptForName()}</p>
 
             <div class="activity__name-input-wrapper">
               <label for="activity-name-input" class="activity__name-label">Your Name</label>
@@ -229,7 +229,7 @@ const ActivityEngine = (function() {
             </p>
 
             <button class="activity__download-btn" id="activity-download-btn" disabled>
-              Copy responses into clipboard
+              ${exportButtonLabel()}
             </button>
 
             ${canvasAssignmentUrl ? `
@@ -473,7 +473,7 @@ const ActivityEngine = (function() {
 
     if (hint) {
       if (canDownload) {
-        hint.textContent = 'All set — copy your responses.';
+        hint.textContent = getExportMode() === 'json' ? 'All set - copy your JSON.' : 'All set — copy your responses.';
         hint.className = 'activity__download-hint activity__download-hint--ready';
       } else {
         hint.textContent = 'Still needed: ' + missing.join(', ') + '.';
@@ -570,6 +570,8 @@ const ActivityEngine = (function() {
     saveState();
 
     const exportData = generateExport();
+    const exportMode = getExportMode();
+    const exportPayload = exportPayloadForMode(exportData, exportMode);
     const btn = document.getElementById('activity-download-btn');
 
     // Only mark the CTA as "Copied ✓" when the clipboard write actually succeeds.
@@ -581,16 +583,43 @@ const ActivityEngine = (function() {
       btn.disabled = true;
     }
 
-    copyMarkdownToClipboard(exportData.markdown)
+    copyMarkdownToClipboard(exportPayload)
       .then(function() {
         markMainButtonCopied();
-        showExportModal(exportData, name, true, markMainButtonCopied);
+        showExportModal(exportData, name, true, markMainButtonCopied, exportPayload, exportMode);
       })
       .catch(function() {
         // Leave btn / nameInput as they were (enabled, original label) so the
         // student can retry from the main CTA after dismissing the modal.
-        showExportModal(exportData, name, false, markMainButtonCopied);
+        showExportModal(exportData, name, false, markMainButtonCopied, exportPayload, exportMode);
       });
+  }
+
+  function getExportMode() {
+    return config && config.settings && config.settings.exportMode === 'json' ? 'json' : 'markdown';
+  }
+
+  function exportButtonLabel() {
+    if (config && config.settings && config.settings.exportButtonText) {
+      return config.settings.exportButtonText;
+    }
+    return getExportMode() === 'json' ? 'Copy JSON into clipboard' : 'Copy responses into clipboard';
+  }
+
+  function exportPromptForRoster() {
+    return getExportMode() === 'json'
+      ? 'Pick your name, then copy or download your JSON responses.'
+      : 'Pick your name, then copy your responses.';
+  }
+
+  function exportPromptForName() {
+    return getExportMode() === 'json'
+      ? 'Enter your name exactly as it appears in Canvas, then copy or download your JSON responses.'
+      : 'Enter your name exactly as it appears in Canvas, then copy your responses.';
+  }
+
+  function exportPayloadForMode(exportData, mode) {
+    return mode === 'json' ? JSON.stringify(exportData, null, 2) : exportData.markdown;
   }
 
   function copyMarkdownToClipboard(markdown) {
@@ -612,7 +641,7 @@ const ActivityEngine = (function() {
     URL.revokeObjectURL(jsonUrl);
   }
 
-  function showExportModal(exportData, name, copied, onLaterCopySuccess) {
+  function showExportModal(exportData, name, copied, onLaterCopySuccess, exportPayload, exportMode) {
     // Remove any prior modal (defensive: re-entrancy if the user clicks the main button twice)
     const existing = document.getElementById('activity-export-modal');
     if (existing) existing.parentNode.removeChild(existing);
@@ -626,7 +655,10 @@ const ActivityEngine = (function() {
     const card = document.createElement('div');
     card.style.cssText = 'background:white;border-radius:12px;max-width:720px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;';
 
-    const heading = copied ? 'Copied to clipboard ✓' : 'Copy your responses';
+    const isJsonExport = exportMode === 'json';
+    const heading = copied
+      ? (isJsonExport ? 'JSON copied to clipboard ✓' : 'Copied to clipboard ✓')
+      : (isJsonExport ? 'Copy your JSON responses' : 'Copy your responses');
     const fallbackNote = copied
       ? ''
       : '<p style="margin:0 0 12px 0;padding:10px 14px;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;font-size:13px;color:#92400e;">Your browser blocked automatic copy — press <strong>Cmd/Ctrl+C</strong> to copy the selected text below.</p>';
@@ -636,18 +668,18 @@ const ActivityEngine = (function() {
       '<h2 style="margin:0 0 12px 0;font-size:20px;font-weight:700;color:#0f172a;">' + heading + '</h2>' +
       fallbackNote +
       '<textarea id="activity-export-modal-textarea" readonly rows="15" style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;padding:12px;border:1px solid #e2e8f0;border-radius:8px;resize:vertical;box-sizing:border-box;"></textarea>' +
-      '<p style="margin:12px 0 16px 0;font-size:14px;color:#334155;">Now paste into your Sprint 4 Google Doc (Cmd/Ctrl+V) and export as PDF.</p>' +
+      '<p style="margin:12px 0 16px 0;font-size:14px;color:#334155;">' + (isJsonExport ? 'Upload this JSON to the Canvas assignment.' : 'Now paste into your Sprint 4 Google Doc (Cmd/Ctrl+V) and export as PDF.') + '</p>' +
       '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">' +
-        '<button type="button" id="activity-export-modal-copy" style="background:#14b8a6;color:white;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">Copy again</button>' +
+        '<button type="button" id="activity-export-modal-copy" style="background:#14b8a6;color:white;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">' + (isJsonExport ? 'Copy JSON again' : 'Copy again') + '</button>' +
         '<span id="activity-export-modal-flash" style="font-size:13px;color:#0f766e;font-weight:600;opacity:0;transition:opacity 0.2s;">Copied ✓</span>' +
-        '<a href="#" id="activity-export-modal-json" style="margin-left:auto;font-size:13px;color:#64748b;text-decoration:underline;">Download JSON backup</a>' +
+        '<a href="#" id="activity-export-modal-json" style="margin-left:auto;font-size:13px;color:#64748b;text-decoration:underline;">' + (isJsonExport ? 'Download JSON file' : 'Download JSON backup') + '</a>' +
       '</div>';
 
     overlay.appendChild(card);
     document.body.appendChild(overlay);
 
     const textarea = document.getElementById('activity-export-modal-textarea');
-    textarea.value = exportData.markdown;
+    textarea.value = exportPayload;
 
     if (!copied) {
       // Auto-select so Cmd/Ctrl+C is the only remaining step in fallback mode.
@@ -671,7 +703,7 @@ const ActivityEngine = (function() {
 
     const flash = document.getElementById('activity-export-modal-flash');
     document.getElementById('activity-export-modal-copy').addEventListener('click', function() {
-      copyMarkdownToClipboard(exportData.markdown)
+      copyMarkdownToClipboard(exportPayload)
         .then(function() {
           flash.style.opacity = '1';
           setTimeout(function() { flash.style.opacity = '0'; }, 1500);
@@ -955,6 +987,13 @@ const ActivityEngine = (function() {
      */
     _copyMarkdownToClipboard(markdown) {
       return copyMarkdownToClipboard(markdown);
+    },
+
+    /**
+     * Exposed for tests so config-driven JSON export behavior stays stable.
+     */
+    _exportPayloadForMode(exportData, mode) {
+      return exportPayloadForMode(exportData, mode);
     }
   };
 })();
