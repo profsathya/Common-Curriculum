@@ -6,6 +6,12 @@ This repo holds course content students actually see — Canvas pages, activitie
 
 **Your change counts only when it is on `main`.** Merge your own PR in the same sitting, delete the branch, then open the file on `main` and confirm your change is there. Work left on an unmerged branch is invisible — a weekly report flags strays to their owners, but don't rely on it.
 
+An interactive version of the how-to guides lives on the site: [cti2.0/guidebooks/](https://profsathya.github.io/Common-Curriculum/cti2.0/guidebooks/) — pick your task, pick your tool, follow the steps.
+
+## Generated content — do not hand-edit
+
+Parts of this repo are **build outputs from the `applying-ai-at-work` repo** (the "Applying AI at Work" De Anza courses): the hosted pages and activity JSON under `deanza/…` and `activities/deanza/…`. Their source of truth is Markdown in `applying-ai-at-work`; a protected workflow regenerates the files here. Hand-edits will be silently overwritten on the next publish. To change that content, work in `applying-ai-at-work` (plain-English request to Codex, "stop before Canvas", review, merge). See that repo's README.
+
 ## Before you change assignments
 
 Assignment definitions follow a **CSV-first pipeline** (see [README.md](README.md)): `config/*.csv` is the source of truth, scripts generate the Canvas-side configuration, and GitHub Actions sync to Canvas. Practical consequences:

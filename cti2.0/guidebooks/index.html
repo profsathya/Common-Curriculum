@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTI Guidebook — Updating Our Repos</title>
+  <link rel="stylesheet" href="../../css/design-system.css">
+  <link rel="stylesheet" href="../cti-styles.css">
+  <style>
+    :root { /* fallbacks if design-system.css is unavailable */
+      --gray-100:#f3f4f6; --gray-200:#e5e7eb; --gray-500:#6b7280; --gray-600:#4b5563;
+      --gray-700:#374151; --gray-800:#1f2937; --space-1:4px; --space-2:8px; --space-3:12px;
+      --space-4:16px; --space-5:24px; --text-sm:14px; --radius-lg:12px; --radius-full:999px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+           color: var(--gray-800); background:#fafaf9; margin:0; line-height:1.55; }
+    .wrap { max-width: 880px; margin: 0 auto; padding: var(--space-5) var(--space-4) 64px; }
+    .hero { background: var(--cti-gradient, linear-gradient(135deg,#d97706,#f59e0b));
+            color:#fff; border-radius: var(--radius-lg); padding: 28px 24px; margin-bottom: var(--space-5); }
+    .hero h1 { margin:0 0 6px; font-size: 26px; }
+    .hero p { margin:0; opacity:.95; }
+    .rule { background:#fff; border:2px solid var(--cti-primary,#f59e0b); border-radius: var(--radius-lg);
+            padding: 14px 18px; margin-bottom: var(--space-5); font-size: 15px; }
+    .rule strong { color: var(--cti-primary-dark,#d97706); }
+    h2.q { font-size: 18px; margin: 26px 0 10px; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap: var(--space-3); }
+    .card { background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius-lg);
+            padding: 14px 16px; cursor:pointer; transition: all .15s ease; text-align:left; font: inherit; }
+    .card:hover { border-color: var(--cti-primary,#f59e0b); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .card.sel { border-color: var(--cti-primary-dark,#d97706); background: var(--cti-primary-light,#fef3c7); }
+    .card h3 { margin:0 0 4px; font-size:15px; }
+    .card p { margin:0; font-size:13px; color: var(--gray-600); }
+    .hint { background: var(--cti-primary-light,#fef3c7); border-radius: var(--radius-lg);
+            padding: 12px 16px; margin: 14px 0; font-size: 14px; }
+    .steps { background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius-lg);
+             padding: 18px 20px; margin-top: 14px; }
+    .steps ol { margin: 8px 0 0; padding-left: 22px; }
+    .steps li { margin-bottom: 12px; }
+    .steps .finish { background:#ecfdf5; border:1px solid #10b981; border-radius:8px; padding:10px 12px; margin-top:14px; font-size:14px; }
+    .trap { background:#fef2f2; border:1px solid #ef4444; border-radius:8px; padding:10px 12px; margin-top:12px; font-size:14px; }
+    .say { background: var(--gray-100); border-radius:6px; padding: 8px 10px; font-size: 14px;
+           font-style: italic; margin: 6px 0; display:block; }
+    .hidden { display:none; }
+    footer { margin-top: 40px; font-size: 13px; color: var(--gray-500); border-top:1px solid var(--gray-200); padding-top: 14px; }
+    a { color: var(--cti-primary-dark,#d97706); }
+    .reset { background:none; border:none; color: var(--gray-500); text-decoration:underline; cursor:pointer; font-size:13px; margin-top:10px; padding:0; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Updating Our Repos — a guided walkthrough</h1>
+    <p>Pick what you're trying to do, pick the tool you're in, follow the steps. Two minutes, no git knowledge needed.</p>
+  </div>
+
+  <div class="rule">
+    <strong>The one rule:</strong> your update is real only when it shows on <strong>main</strong> — the official copy everyone sees on GitHub. Every path below ends with the same check: open the file on GitHub and see your words. If they're not there, your work is parked where nobody can see it.
+  </div>
+
+  <h2 class="q">1 · What are you trying to do?</h2>
+  <div class="cards" id="tasks">
+    <button class="card" data-task="note"><h3>Add a note or update</h3><p>Meeting notes, a conversation worth keeping, project updates</p></button>
+    <button class="card" data-task="standup"><h3>Post my weekly stand-up</h3><p>Your team-status update</p></button>
+    <button class="card" data-task="decision"><h3>Record a team decision</h3><p>Something we settled that should stay visible</p></button>
+    <button class="card" data-task="course"><h3>Change course content</h3><p>Canvas pages, activities, assignments</p></button>
+    <button class="card" data-task="smallfix"><h3>Fix something small</h3><p>A typo, a date, a broken link</p></button>
+    <button class="card" data-task="unsure"><h3>Not sure where it goes</h3><p>Show me the map</p></button>
+  </div>
+
+  <!-- destination hints per task -->
+  <div class="hint hidden" id="hint-note"><strong>Where it goes:</strong> a file under <code>conversations/</code> in the team repo (<code>cti-chief-of-staff</code>), listed in <code>Conversations.md</code>. When unsure, this is always a safe home — filing perfectly matters less than capturing it.</div>
+  <div class="hint hidden" id="hint-standup"><strong>Where it goes:</strong> <code>team-status/&lt;your-name&gt;.md</code> in the team repo. Fastest path: open Athena (claude.ai) and say <em>“I want to do my weekly stand-up”</em> — she runs the format and gives you the hand-off. Then continue below with the tool you're in.</div>
+  <div class="hint hidden" id="hint-decision"><strong>Where it goes:</strong> <code>Decisions.md</code> (append at the end, with the date). <strong>This is a root file:</strong> open the PR but <em>don't merge it yourself</em> — tag two teammates and wait for their sign-off. Everything else below still applies.</div>
+  <div class="hint hidden" id="hint-unsure">
+    <strong>The map:</strong> team thinking, meeting notes, decisions, status → team repo (<code>cti-chief-of-staff</code>). Course content students see → <code>Common-Curriculum</code> or, for the “Applying AI at Work” (De Anza) courses, the <code>applying-ai-at-work</code> repo. Live Google Docs stay in Drive — link them, don't copy them. Inside the team repo: your status → <code>team-status/</code>; a settled decision → <code>Decisions.md</code>; everything still moving → <code>conversations/</code>. <em>When in doubt: <code>conversations/</code>, and pick “Add a note or update” above.</em>
+  </div>
+
+  <!-- course content: special routes, no tool picker -->
+  <div class="hidden" id="course-routes">
+    <h2 class="q">Which course?</h2>
+    <div class="cards">
+      <div class="card" style="cursor:default"><h3>CST 349 / CST 395 / Career Intelligence</h3>
+        <p style="font-size:13.5px; color:var(--gray-700)">Lives in <code>Common-Curriculum</code>. Assignment titles, dates, and points come from <code>config/*.csv</code> — edit the CSV, never the generated files, then follow the README's create/update steps. Page and activity HTML is edited directly. Branch → PR → merge → then check the <strong>Actions</strong> tab: Canvas sync is the extra last step in this repo.</p></div>
+      <div class="card" style="cursor:default"><h3>Applying AI at Work (De Anza)</h3>
+        <p style="font-size:13.5px; color:var(--gray-700)">Source of truth is the <code>applying-ai-at-work</code> repo (Markdown), built with Codex. Say what you want in plain English and add <em>“stop before Canvas.”</em> Review, merge to main, and the protected workflow publishes to Canvas and regenerates the hosted pages. <strong>Never hand-edit</strong> <code>deanza/…</code> files in Common-Curriculum — they're generated and will be overwritten.</p></div>
+    </div>
+  </div>
+
+  <!-- small fix: straight to github.com steps -->
+  <div class="hidden" id="tool-pick-wrap">
+    <h2 class="q">2 · Which tool are you in?</h2>
+    <div class="cards" id="tools">
+      <button class="card" data-tool="chat"><h3>claude.ai chat</h3><p>Talking with Athena in the browser or app</p></button>
+      <button class="card" data-tool="code"><h3>claude.ai/code</h3><p>Claude Code on the web</p></button>
+      <button class="card" data-tool="cowork"><h3>Claude Cowork</h3><p>Desktop app with a local copy</p></button>
+      <button class="card" data-tool="github"><h3>github.com</h3><p>Just the browser, no AI</p></button>
+    </div>
+  </div>
+
+  <div class="steps hidden" id="steps-chat">
+    <strong>From claude.ai chat</strong> — chat can read everything but <em>cannot edit the repo</em>. Many updates have been lost to this misunderstanding. Two ways to make it real:
+    <ol>
+      <li>Work the update through with Athena until it says what you want.</li>
+      <li>Say: <span class="say">"Give me a hand-off prompt for Claude Code."</span> You get one message containing the text, the file, and the merge instructions.</li>
+      <li>Open <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a>, pick the repo, paste the prompt.</li>
+      <li>Before closing, say: <span class="say">"Open the PR, merge it, delete the branch, and show me the file on main."</span></li>
+    </ol>
+    <div class="finish">✅ <strong>Finish line:</strong> open the repo on github.com, find your file, see your words on main. (For a short edit, skipping Claude entirely and using the github.com path is also fine.)</div>
+  </div>
+
+  <div class="steps hidden" id="steps-code">
+    <strong>From claude.ai/code</strong> — the main path for team updates.
+    <ol>
+      <li>Pick the repo, then say what you want in your own words. No file paths or git words needed.</li>
+      <li><strong>Read what Claude wrote.</strong> Check names, dates, and anything attributed to you or a teammate. You own what lands in team memory.</li>
+      <li>Say the whole ceremony in one sentence: <span class="say">"Open the PR, merge it, delete the branch, and show me the file on main."</span></li>
+      <li>Click the link Claude gives you and confirm your words are there.</li>
+    </ol>
+    <div class="trap">⚠️ <strong>The trap:</strong> every session works on a new branch. If the session ends before the PR merges, your work looks done in chat but is invisible in the repo. If it happens: new session, say <em>"find my branch from earlier today, open the PR, and merge it."</em></div>
+    <div class="finish">✅ <strong>Finish line:</strong> your words visible on main, on github.com.</div>
+  </div>
+
+  <div class="steps hidden" id="steps-cowork">
+    <strong>From Claude Cowork</strong> — good for longer working sessions (setup for the repos comes from Sathya).
+    <ol>
+      <li>Start with: <span class="say">"Pull the latest before we work."</span> Stale copies create conflicts.</li>
+      <li>Work and review as usual — names, dates, claims.</li>
+      <li>Getting it to GitHub has a quirk: git inside Cowork can jam the repo. So say: <span class="say">"Give me the Terminal commands to commit this on a branch, push it, and open the PR."</span> Paste them into Terminal (Mac: Applications → Utilities → Terminal).</li>
+      <li>Open the PR link GitHub prints, merge it, delete the branch.</li>
+      <li>If you must stop midway: post in Slack which file you touched and on which machine — unsaved local edits are invisible to everyone, including the weekly report.</li>
+    </ol>
+    <div class="finish">✅ <strong>Finish line:</strong> your words visible on main, on github.com.</div>
+  </div>
+
+  <div class="steps hidden" id="steps-github">
+    <strong>Directly on github.com</strong> — best for small changes; no AI involved.
+    <ol>
+      <li>Open the repo, click into the file, click the <strong>pencil icon</strong>. (New file: open the folder → Add file → Create new file.)</li>
+      <li>Make the edit, click <strong>Commit changes…</strong>, write one plain sentence about what changed.</li>
+      <li>Choose <strong>"Create a new branch and start a pull request"</strong> → <strong>Propose changes</strong> → <strong>Create pull request</strong>.</li>
+      <li>Then all three, every time: <strong>Merge pull request → Confirm merge → Delete branch</strong>.</li>
+    </ol>
+    <div class="trap">⚠️ <strong>The trap:</strong> people stop after "Create pull request." That is not the end — until you click <strong>Merge</strong>, the change is parked and invisible. If an edit of yours ever vanished, this is why.</div>
+    <div class="finish">✅ <strong>Finish line:</strong> back on the file with the branch picker showing <strong>main</strong> — your change is there.</div>
+  </div>
+
+  <button class="reset hidden" id="reset" onclick="reset()">↺ start over</button>
+
+  <footer>
+    Canonical text lives in the team repo: <code>cti-chief-of-staff/docs/</code> (plus <code>CONTRIBUTING.md</code> for norms). If this page and those files ever disagree, the repo wins — and tell Sathya so this page gets fixed. Forgot to merge something once? It's fine — a weekly report finds stray branches and messages their owners. Nothing in git is ever truly lost.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var task = null, tool = null;
+  var hints = { note: 'hint-note', standup: 'hint-standup', decision: 'hint-decision', unsure: 'hint-unsure' };
+
+  function hideAll() {
+    document.querySelectorAll('.hint, #course-routes, #tool-pick-wrap, .steps').forEach(function (el) { el.classList.add('hidden'); });
+  }
+  function show(id) { var el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+
+  function render() {
+    hideAll();
+    if (!task) return;
+    document.getElementById('reset').classList.remove('hidden');
+    if (hints[task]) show(hints[task]);
+    if (task === 'course') { show('course-routes'); return; }
+    if (task === 'smallfix') { show('steps-github'); return; }
+    if (task === 'unsure') { /* map only; picking a card re-routes */ }
+    show('tool-pick-wrap');
+    if (tool) show('steps-' + tool);
+    var target = tool ? document.getElementById('steps-' + tool) : document.getElementById('tool-pick-wrap');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.querySelectorAll('#tasks .card').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      task = btn.getAttribute('data-task'); tool = null;
+      document.querySelectorAll('#tasks .card').forEach(function (b) { b.classList.remove('sel'); });
+      document.querySelectorAll('#tools .card').forEach(function (b) { b.classList.remove('sel'); });
+      btn.classList.add('sel'); render();
+    });
+  });
+  document.querySelectorAll('#tools .card').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tool = btn.getAttribute('data-tool');
+      document.querySelectorAll('#tools .card').forEach(function (b) { b.classList.remove('sel'); });
+      btn.classList.add('sel'); render();
+    });
+  });
+  window.reset = function () {
+    task = null; tool = null;
+    document.querySelectorAll('.card').forEach(function (b) { b.classList.remove('sel'); });
+    document.getElementById('reset').classList.add('hidden');
+    hideAll();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+})();
+</script>
+</body>
+</html>
