@@ -44,21 +44,56 @@
     footer { margin-top: 40px; font-size: 13px; color: var(--gray-500); border-top:1px solid var(--gray-200); padding-top: 14px; }
     a { color: var(--cti-primary-dark,#d97706); }
     .reset { background:none; border:none; color: var(--gray-500); text-decoration:underline; cursor:pointer; font-size:13px; margin-top:10px; padding:0; }
+    .stage-h { font-size: 21px; margin: 40px 0 4px; color: var(--cti-primary-dark,#d97706); }
+    .stage-sub { color: var(--gray-600); font-size: 14.5px; margin: 0 0 16px; }
+    .box { background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px 18px; margin-top: 14px; }
+    .box ul, .box ol { margin: 6px 0 0; padding-left: 20px; }
+    .box li { margin-bottom: 8px; }
+    .stage-nav { display:flex; flex-wrap:wrap; gap: var(--space-2); margin-top: 14px; }
+    .stage-nav a { background:rgba(255,255,255,.18); color:#fff; text-decoration:none; padding:6px 14px; border-radius: var(--radius-full,999px); font-size:14px; font-weight:600; }
+    .stage-nav a:hover { background:rgba(255,255,255,.3); }
+    .mini { cursor: default; }
+    .mini:hover { border-color: var(--gray-200); box-shadow: none; }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="hero">
-    <h1>Updating Our Repos — a guided walkthrough</h1>
-    <p>Pick what you're trying to do, pick the tool you're in, follow the steps. Two minutes, no git knowledge needed.</p>
+    <h1>CTI Team Guidebook — Working with AI</h1>
+    <p>We practice what we design for students: directing AI while growing your own judgment and reach — Superagency with Human Value. Three stages: get set up, learn the one workflow we all share, then make AI work your way.</p>
+    <div class="stage-nav">
+      <a href="#setup">1 · Get set up</a>
+      <a href="#collaborate">2 · Collaborate: update our repos</a>
+      <a href="#tinker">3 · Make it yours</a>
+    </div>
   </div>
+
+  <h2 class="stage-h" id="setup">1 · Get set up — tools and choices</h2>
+  <p class="stage-sub">You don't need everything. Start small; add a tool when a real task demands it. A fine week-one setup is chat + claude.ai/code.</p>
+  <div class="cards">
+    <div class="card mini"><h3>claude.ai chat + Athena</h3><p>Where everyone starts: reading, thinking, drafting, "what's the state of X." No install. Ask Sathya for the Athena project link.</p></div>
+    <div class="card mini"><h3>claude.ai/code</h3><p>When your words should land in a repo. Browser-based. Most people need this in week one.</p></div>
+    <div class="card mini"><h3>Claude Cowork</h3><p>Desktop app, for many-file or longer working sessions. Repo setup comes from Sathya.</p></div>
+    <div class="card mini"><h3>Claude in Chrome</h3><p>When the work lives in websites — GitHub clicks, Canvas pages, Docs. Pairs with Cowork.</p></div>
+  </div>
+  <div class="box"><strong>Access checklist:</strong>
+    <ol>
+      <li>Claude account with team access — Sathya.</li>
+      <li>Athena project on claude.ai — Sathya shares the link.</li>
+      <li>GitHub account + invite to the team repos — send Sathya your username.</li>
+      <li>Slack — where questions go.</li>
+    </ol>
+  </div>
+
+  <h2 class="stage-h" id="collaborate">2 · Collaborate — updating our repos</h2>
+  <p class="stage-sub">The one workflow we all do the same way. It's how your work becomes visible to the team — and the only part of this page with fixed steps.</p>
 
   <div class="rule">
     <strong>The one rule:</strong> your update is real only when it shows on <strong>main</strong> — the official copy everyone sees on GitHub. Every path below ends with the same check: open the file on GitHub and see your words. If they're not there, your work is parked where nobody can see it.
   </div>
 
-  <h2 class="q">1 · What are you trying to do?</h2>
+  <h2 class="q">Step 1 — what are you trying to do?</h2>
   <div class="cards" id="tasks">
     <button class="card" data-task="note"><h3>Add a note or update</h3><p>Meeting notes, a conversation worth keeping, project updates</p></button>
     <button class="card" data-task="standup"><h3>Post my weekly stand-up</h3><p>Your team-status update</p></button>
@@ -89,7 +124,7 @@
 
   <!-- small fix: straight to github.com steps -->
   <div class="hidden" id="tool-pick-wrap">
-    <h2 class="q">2 · Which tool are you in?</h2>
+    <h2 class="q">Step 2 — which tool are you in?</h2>
     <div class="cards" id="tools">
       <button class="card" data-tool="chat"><h3>claude.ai chat</h3><p>Talking with Athena in the browser or app</p></button>
       <button class="card" data-tool="code"><h3>claude.ai/code</h3><p>Claude Code on the web</p></button>
@@ -160,6 +195,25 @@
   </div>
 
   <button class="reset hidden" id="reset" onclick="reset()">↺ start over</button>
+
+  <h2 class="stage-h" id="tinker">3 · Make it yours — experiment and tinker</h2>
+  <p class="stage-sub">Past the shared floor, your workflow is yours to design. No recipes here — principles. This is the same thing we ask of students, so the team practices it too.</p>
+  <div class="cards">
+    <div class="card mini"><h3>Tinker on real work</h3><p>Pick something you actually do every week, not a demo. The test is whether next Tuesday is easier.</p></div>
+    <div class="card mini"><h3>Start where it hurts</h3><p>The task you dread, repeat, or postpone is the best first candidate.</p></div>
+    <div class="card mini"><h3>You stay the judge</h3><p>AI drafts, you decide. If you can't evaluate the output, shrink the task until you can. You're building judgment, not just output.</p></div>
+    <div class="card mini"><h3>Small loops</h3><p>Change one thing, run it a week, keep or drop. A clean failure teaches more than a setup you never revisit.</p></div>
+    <div class="card mini"><h3>Show your work</h3><p>Bring one experiment to your stand-up. A shared failure is a team asset; a private success is just yours.</p></div>
+    <div class="card mini"><h3>Know the lines</h3><p>No student data in personal AI tools. No passwords or payments through AI. Shared repos follow the floor rules above.</p></div>
+  </div>
+  <div class="box"><strong>Three good first tinkers:</strong>
+    <ul>
+      <li>Make a Claude Project for one recurring task, with your own instructions. Refine them each time it misses.</li>
+      <li>Let Claude in Chrome do one browser chore while you watch.</li>
+      <li>Have Claude draft your weekly stand-up from your notes, then correct it by hand — the corrections show you what it doesn't know about your work.</li>
+    </ul>
+    <p style="margin:10px 0 0; font-size:14px;">Then say what you tried in your stand-up: <em>"one thing I tried with AI this week."</em> Experiments that prove out for one person often become team practice — that's how most of our current setup came to be.</p>
+  </div>
 
   <footer>
     Canonical text lives in the team repo: <code>cti-chief-of-staff/docs/</code> (plus <code>CONTRIBUTING.md</code> for norms). If this page and those files ever disagree, the repo wins — and tell Sathya so this page gets fixed. Forgot to merge something once? It's fine — a weekly report finds stray branches and messages their owners. Nothing in git is ever truly lost.
