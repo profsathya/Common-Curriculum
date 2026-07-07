@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall 2026 — Course Vision</title>
+<style>
+  :root{
+    --ink:#1a2332; --ink2:#4a5568; --line:#e2e8f0; --bg:#f7fafc; --card:#ffffff;
+    --navy:#1f3a5f; --teal:#0d7a72; --amber:#b7791f; --red:#b03a2e; --green:#276749;
+    --chip:#edf2f7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; padding:0 0 80px;}
+  .wrap{max-width:980px; margin:0 auto; padding:0 20px;}
+  header{background:var(--navy); color:#fff; padding:34px 0 26px; margin-bottom:0;}
+  header h1{font-size:1.5rem; font-weight:650; letter-spacing:.2px;}
+  header .sub{opacity:.85; font-size:.95rem; margin-top:6px; max-width:760px;}
+  .northstar{background:#16283f; color:#fff; padding:18px 0 22px; border-top:1px solid rgba(255,255,255,.12);}
+  .northstar .label{font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; opacity:.7;}
+  .northstar p{font-size:1.06rem; max-width:800px; margin-top:6px; font-weight:500;}
+  .northstar .bar{font-size:.88rem; opacity:.8; margin-top:8px; max-width:800px; font-weight:400;}
+
+  nav{position:sticky; top:0; z-index:10; background:var(--card); border-bottom:1px solid var(--line); box-shadow:0 1px 4px rgba(0,0,0,.04);}
+  .tabs{display:flex; gap:4px; max-width:980px; margin:0 auto; padding:0 20px;}
+  .tab{appearance:none; border:none; background:none; font:inherit; font-weight:600; font-size:.95rem; color:var(--ink2); padding:14px 18px 12px; cursor:pointer; border-bottom:3px solid transparent;}
+  .tab:hover{color:var(--navy);}
+  .tab.active{color:var(--navy); border-bottom-color:var(--teal);}
+  .panel{display:none; padding-top:26px;}
+  .panel.active{display:block;}
+
+  .lvl{margin:30px 0 10px;}
+  .lvl h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.14em; color:var(--teal); font-weight:700;}
+  .lvl .lvl-sub{font-size:.9rem; color:var(--ink2); margin-top:2px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; margin-top:12px; overflow:hidden;}
+  .card-head{display:flex; align-items:center; gap:12px; padding:14px 18px; cursor:pointer; user-select:none;}
+  .card-head:hover{background:#fbfdff;}
+  .card-head .arrow{color:var(--ink2); font-size:.8rem; transition:transform .15s; flex:none;}
+  .card.open .arrow{transform:rotate(90deg);}
+  .card-head h3{font-size:1.02rem; font-weight:650; flex:1;}
+  .card-head .one{display:block; font-size:.86rem; color:var(--ink2); font-weight:400; margin-top:2px;}
+  .pill{flex:none; font-size:.7rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; white-space:nowrap;}
+  .p-decided{background:#e6f4ea; color:var(--green);}
+  .p-design{background:#fff4e0; color:var(--amber);}
+  .p-queued{background:var(--chip); color:var(--ink2);}
+  .p-sathya{background:#fdecea; color:var(--red);}
+  .card-body{display:none; border-top:1px solid var(--line); padding:16px 18px 18px;}
+  .card.open .card-body{display:block;}
+  .q{margin-top:14px;}
+  .q:first-child{margin-top:0;}
+  .q h4{font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; color:var(--teal); margin-bottom:4px;}
+  .q p, .q li{font-size:.92rem; color:var(--ink);}
+  .q ul{padding-left:20px; margin-top:2px;}
+  .q li{margin-top:3px;}
+  .tasks{list-style:none; padding-left:0 !important;}
+  .tasks li{display:flex; gap:9px; align-items:baseline; padding:5px 0; border-bottom:1px dashed var(--line); font-size:.92rem;}
+  .tasks li:last-child{border-bottom:none;}
+  .t-open::before{content:"○"; color:var(--ink2);}
+  .t-done::before{content:"●"; color:var(--green);}
+  .t-flag::before{content:"◆"; color:var(--red);}
+  .t-flag{color:var(--red); font-weight:550;}
+  .note{font-size:.82rem; color:var(--ink2); background:var(--chip); border-radius:8px; padding:10px 14px; margin-top:16px;}
+  .legend{display:flex; flex-wrap:wrap; gap:14px; margin-top:18px; font-size:.8rem; color:var(--ink2);}
+  .legend span::before{margin-right:5px;}
+  footer{margin-top:44px; font-size:.8rem; color:var(--ink2); border-top:1px solid var(--line); padding-top:14px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Fall 2026 — Course Vision</h1>
+    <div class="sub">CST286 · Physics of Computing (new build) &nbsp;·&nbsp; CST349 · Professional Seminar (re-run refresh) &nbsp;·&nbsp; CST499 · Capstone (support only, Paige leads). A living map: what we want for students, how the design gets there, what we measure, and the tasks each piece implies.</div>
+  </div>
+</header>
+<div class="northstar">
+  <div class="wrap">
+    <div class="label">North star — above all the scaffolding</div>
+    <p>Students find something they genuinely care about — deep, not the comfort default — and follow through on it, past their comfort zone.</p>
+    <div class="bar">Honest bar: one real rep of surface&nbsp;→&nbsp;deeper&nbsp;→&nbsp;sustained pursuit — a reusable method for life, not "find your calling in 15 weeks." The shallow first answer is a <em>door</em>, never a wrong answer.</div>
+  </div>
+</div>
+
+<nav>
+  <div class="tabs">
+    <button class="tab active" data-panel="common">Common Foundation</button>
+    <button class="tab" data-panel="cst286">CST286 · Physics of Computing</button>
+    <button class="tab" data-panel="cst349">CST349 · Professional Seminar</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ COMMON ============ -->
+<section id="common" class="panel active">
+
+  <div class="lvl"><h2>Level 1 · Identity &amp; growth</h2><div class="lvl-sub">Who the student becomes — the layer everything else serves.</div></div>
+
+  <div class="card open">
+    <div class="card-head"><span class="arrow">▶</span><h3>Caring built from evidence, proven by follow-through<span class="one">The north star, made teachable — three design guards raise the floor without dictating content.</span></h3><span class="pill p-design">In design</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>Move each student from a surface interest ("I like video games" / "the cookie") to a specific question or stake they own, then through sustained pursuit past friction. Identity question ("what does the evidence say I care about, and who would I become chasing it?"), not a preference question.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li><strong>Build caring from evidence</strong> — surface moments they lost track of time or got annoyed enough to act; AI as first mirror, peer/instructor as second; what-questions, not why-questions.</li>
+        <li><strong>Force specificity until a real stake appears</strong> — "video games" → for whom, why, to what end — where shallow either deepens or reveals itself.</li>
+        <li><strong>Follow-through past friction is the graded spine</strong> — shallow caring doesn't survive the stretch, so sincerity is never policed up front.</li>
+        <li><strong>Validate the door</strong> — the first answer is a fine start; "let's find what's underneath," never "pick something deeper." Protects first-gen / transfer students who carry identity threat (~56% first-gen, ~45% transfer, 60+ feeder institutions).</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Movement across Goal Plan revisions (start → mid → final): vague interest → specific, staked, tractable pursuit.</li>
+        <li>Follow-through visible in artifacts: measurable weekly milestones set, measured, and adapted (missed milestone = data, not failure).</li>
+        <li>Self-check deltas — beginning vs. end of course.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">North-star framing + three guards + "door" refinement captured (6/30)</li>
+        <li class="t-open">Pressure-test the design once more against both course arcs</li>
+        <li class="t-open">Define the milestone loop as a student-facing structure (Goal Plan + sprint reflections)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 2 · Transferable capabilities</h2><div class="lvl-sub">What they carry into every future course and job.</div></div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Frameworks that fade into judgment<span class="one">SDL · Symbiotic Thinking · UMPIRE · 3Cs — sequenced, not front-loaded (CF-3).</span></h3><span class="pill p-queued">CF-3 · queued</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>Students internalize self-directed learning, working with AI as a thinking partner (creating vs. consuming), and disciplined problem-solving — as judgment they own, not checklists they fill in. Scaffold fades by compression: fewer, more general principles replace templates as students progress.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>One shared concepts reference both courses point at (single source, no drift).</li>
+        <li><strong>Sequencing fix:</strong> master 5 Whys / UMPIRE before meeting 3Cs — never every framework in Sprint 1 (GAP-5: conceptual overload is documented).</li>
+        <li>UMPIRE with design pressure on <em>Map</em> (students jump to doing) and <em>Review/Evaluate</em> (where quality lives; students skip them).</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Artifact-embedded pressure tests: the artifact itself asks "what's missing in this evidence?"</li>
+        <li>Rubrics score the student's contribution — claims, evidence, connections — never the AI's conversation arc (4.3 vs 2.1 lesson from spring).</li>
+        <li>Declining scaffold reliance across the three Goal Plan revisions.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-open">Build shared concepts reference (CF-3)</li>
+        <li class="t-open">Design the framework sequence per course (what appears in which sprint)</li>
+        <li class="t-open">Shallow-vs-deep exemplar pairs, starting with 5 Whys (CF-5, used in Sprint 1 of both)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>AI partnership with productive struggle intact<span class="one">Shared Sprint 0 both courses adopt (CF-4) — struggle on judgment, never on mechanics.</span></h3><span class="pill p-queued">CF-4 · queued</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>Every student starts with working AI habits: AI as partner, not answer machine. Struggle lands on judgment (what to claim, cut, count as evidence) — never on mechanics or English (for ESL / first-gen students, fighting their English is a barrier, not a struggle).</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>Shared Sprint 0 module: AI-free phases as architecture, Dojo norms with a self-check, hand-written reflection policy (prevents AI bypass).</li>
+        <li>Intake gated on completed work, run in Canvas (not open forms).</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Sprint 0 self-check completion + quality.</li>
+        <li>Reflection authenticity (hand-written policy trade-off accepted: ~60% unanalyzable by script — humans read them).</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-open">Build shared Sprint 0 module (CF-4)</li>
+        <li class="t-open">Add intake questions: optional phone + explicit consent to text from TA + other courses this term (decided 7/2 — ask students, don't scrape SIS; transparency that we may reach out there)</li>
+        <li class="t-open">Adapt for CST286 (named Sprint 0 exists) and CST349 (needs the equivalent)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 3 · Student experience</h2><div class="lvl-sub">The floor every page stands on — friction is an equity issue for this population.</div></div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>One shared course shell<span class="one">Every page in both courses inherits it (CF-1) — recommended first build.</span></h3><span class="pill p-queued">CF-1 · next up</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>A student always knows what to do, how long it takes, and why it matters — before any motivational framing. Specificity is scaffolding; actionability first.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>One page template: header <strong>without the CTI logo</strong> (CSUMB courses, not CTI programs — decided), Quick Start block (deliverable, time, format/filename, due date, weight, one-line why), learning goals that lead with value and name the skill, consistent "Sprint" terminology, two-zone sprint pages.</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>GAP-6/7 signals gone: no placeholders, no dead ends, no hardcoded stale dates, calibrated time estimates.</li>
+        <li>Fewer "where do I submit / what do I do" questions in session + Slack.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">No-CTI-logo rule decided (6/30)</li>
+        <li class="t-open">Draft shell standard against CST395 as model (agreed next build step)</li>
+        <li class="t-open">Apply to CST286 skeleton + CST349 refresh</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>One human-readable schedule, propagated by Cowork<span class="one">Browser-viewable HTML schedule per course; Cowork writes to Canvas only with approval (CF-2).</span></h3><span class="pill p-decided">Direction decided</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>One canonical source for dates / weights / names that Sathya can eyeball in a browser — anti-drift without a brittle script or an unreviewable CSV.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li><code>schedule.html</code> per course in git: plain table (assignment, sprint/week, due, points, link). The table IS the data.</li>
+        <li>Change flow: edit table → Cowork shows diff vs Canvas → <strong>Sathya approves</strong> → Cowork writes → read-back verify report.</li>
+        <li>Retired: CSV-as-source, canvas-sync.js, sync-csv-to-config.js, nightly GitHub Actions.</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul><li>Zero drift between schedule page and Canvas (verify pass on every change).</li><li>Zero GAP-7 date bugs reaching students.</li></ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">Direction confirmed: human-readable HTML, Cowork propagation (7/2)</li>
+        <li class="t-open">Build schedule.html template (part of CF-1/CF-2 build)</li>
+        <li class="t-open">Populate Fall dates both courses; retire old pipeline; disable nightly workflows</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 4 · Operations &amp; the human safety net</h2><div class="lvl-sub">Don't lose anyone as the semester progresses.</div></div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Daily playbook loop: automate mechanics, keep judgment human<span class="one">Scheduled Cowork task reads the playbook daily — nudges run alone; grades and outreach wait for Sathya.</span></h3><span class="pill p-sathya">Needs Sathya</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>Superagency + human value in our own process: AI drafts, human judges. Every student who drifts gets noticed early — by a person, not just a system. The same struggle-on-judgment principle the courses teach, applied to how we run them.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>Daily scheduled task driven by <code>daily-playbook-v0.md</code> (the playbook, not code, is the source of truth; Sathya edits it anytime).</li>
+        <li><strong>A-series (fully automated):</strong> asset-framed template nudges + reminders, rate-capped, all logged.</li>
+        <li><strong>H-series (human-in-the-loop):</strong> H1 grading drafts → Sathya reviews → post + verify; H2 weekly attention list; H3 TA action items — the human connection layer: drafted personal text/Slack/email, 1-on-1 invites with questions tailored to the student's Goal Plan, catch-in-class plans. TA outcomes feed next week's list.</li>
+        <li>Review is async between runs; approved items advance on the next run.</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Recovery rate: students who respond / resubmit after nudge or TA contact.</li>
+        <li>Nobody unreached: every 2+-missing student has a logged human touch within a week.</li>
+        <li>Grading turnaround time with judgment intact.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">v0 playbook drafted: daily loop, A1/A2/A3, H1/H2/H3, guards (7/2)</li>
+        <li class="t-flag">Sathya: data-boundary decision (packets hold names + phones — sync across machines or local-only?)</li>
+        <li class="t-flag">Sathya: bless / rewrite A1 + A2 message templates</li>
+        <li class="t-open">Decide TA delivery channel (email / Slack)</li>
+        <li class="t-open">Archive or delete Common-Curriculum-Data; disable nightly-grading.yml + analyze-submissions.yml</li>
+        <li class="t-open">Schedule the daily task in Cowork (only after the above)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="legend"><span class="t-done">done / decided</span><span class="t-open">open</span><span class="t-flag">needs Sathya</span></div>
+</section>
+
+<!-- ============ CST286 ============ -->
+<section id="cst286" class="panel">
+
+  <div class="lvl"><h2>Level 1 · Identity &amp; growth</h2><div class="lvl-sub">New build · only the home-page skeleton exists.</div></div>
+
+  <div class="card open">
+    <div class="card-head"><span class="arrow">▶</span><h3>"I can open the black box"<span class="one">From charge and motion to a machine you built yourself — curiosity within structure.</span></h3><span class="pill p-design">In design</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>A student who has climbed every level of abstraction — physics → logic → architecture — stops seeing computers (and by extension, technical systems) as magic. Identity shift: from consumer of technology to someone who builds understanding from first principles, with AI as thinking partner the whole way.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>The arc IS the pedagogy: each sprint climbs one abstraction level, experience before framework at every step.</li>
+        <li>North star appears as <strong>curiosity within structure</strong> + an open final stretch — "Synthesis &amp; Proof" + extra credit are the student's room to chase what caught them.</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Final synthesis: can the student trace the full chain (charge → gate → computer) in their own words and artifact?</li>
+        <li>What students choose in the open stretch — evidence of caring beyond the requirement.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-open">Overview / identity page: "who am I becoming" + the physics-up arc mapped to the framework</li>
+        <li class="t-open">Design the open final stretch as a north-star rep (evidence → specificity → follow-through)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 2 · The learning arc</h2><div class="lvl-sub">S0–S4, each sprint one level of abstraction.</div></div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Sprint 0 · Orientation &amp; AI Partnership <span class="one">Weeks 1–2 · gentle ramp so the physics doesn't start cold.</span></h3><span class="pill p-queued">Skeleton only</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Tools, cohort, and AI-partner habits in place before content begins; the journey ahead visible.</p></div>
+      <div class="q"><h4>How</h4><p>Adopts the shared CF-4 module (Symbiotic Thinking track, starter prompt templates, Dojo norms) + course setup, team, Slack.</p></div>
+      <div class="q"><h4>Measure</h4><p>Setup completion; Sprint 0 self-check; intake completed (incl. text-consent + other-courses questions).</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Build S0 pages/activities from CF-4 base (after foundation)</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Sprint 1 · The Physical World <span class="one">Weeks 3–6 · physics: motion, energy, charge, sensing.</span></h3><span class="pill p-queued">Skeleton only</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Model motion and energy; explain charge and current; explain how devices sense the world (accelerometer, gyroscope, GPS); simulate a physical system in code.</p></div>
+      <div class="q"><h4>How</h4><p>Experience-before-framework hooks (Energy Skate Park, sensor learning tracks) → UMPIRE cycle → exemplars → AI-free phases where judgment is being built.</p></div>
+      <div class="q"><h4>Measure</h4><p>Working simulation artifact with embedded pressure-test ("what's missing in this evidence?"); explanation quality scored on student contribution.</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Sprint page + activities + assignments (after foundation)</li><li class="t-open">Pick/verify the anchor experiences (Skate Park, accelerometer track)</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Sprint 2 · Logic &amp; Circuits <span class="one">Charge to gates — the electrical foundations logic is built on.</span></h3><span class="pill p-queued">Skeleton only</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>From electric charge to working logic: Ohm's law, batteries, transistor-as-switch, gates from physics.</p></div>
+      <div class="q"><h4>How / Measure / Tasks</h4><p>Same pattern as S1 — experience hook → UMPIRE → artifact with pressure-test. Build after foundation.</p><ul class="tasks"><li class="t-open">Sprint page + activities + assignments</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Sprint 3 · Building a Computer <span class="one">NAND to computer — architecture from a single gate.</span></h3><span class="pill p-queued">Skeleton only</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Student builds a computer up from NAND: gates → adders → memory → a machine they can explain end-to-end.</p></div>
+      <div class="q"><h4>How / Measure / Tasks</h4><p>The build is the assessment; each layer's artifact carries its own pressure-test.</p><ul class="tasks"><li class="t-open">Sprint page + build sequence + assignments</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Sprint 4 · Synthesis &amp; Proof <span class="one">Two-week wrap: prove it — and chase what caught you.</span></h3><span class="pill p-queued">Skeleton only</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Integration: trace the whole chain in one artifact; the open stretch (+ extra credit) is where curiosity gets room — the course's north-star rep.</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Design synthesis artifact + open-stretch structure (evidence → specificity → follow-through)</li></ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 3 · Build checklist</h2></div>
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Everything CST286 still needs<span class="one">Phase 2 — starts when the common foundation is done.</span></h3><span class="pill p-queued">Phase 2</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">Course-map skeleton (home.html, S0–S4)</li>
+        <li class="t-open">Adopt CF-1 shell (includes removing CTI logo from home.html)</li>
+        <li class="t-open">Overview / identity page</li>
+        <li class="t-open">Sprint pages S0–S4 + activities + assignments</li>
+        <li class="t-open">schedule.html with Fall dates (CF-2 flow)</li>
+        <li class="t-open">Concepts reference (from CF-3)</li>
+        <li class="t-open">Wire into daily playbook (rosters, assignment keys)</li>
+      </ul></div>
+      <div class="note">Model to reuse: CST395 (fully built, same framework family). Rationale lives in <code>context/course-design.md</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CST349 ============ -->
+<section id="cst349" class="panel">
+
+  <div class="lvl"><h2>Level 1 · Identity &amp; growth</h2><div class="lvl-sub">Re-run refresh · fully built in spring; ~58 students · 2 units · SDL.</div></div>
+
+  <div class="card open">
+    <div class="card-head"><span class="arrow">▶</span><h3>The north-star spine: surface → deeper → sustained<span class="one">CST349 is where the caring-and-follow-through rep lives most directly.</span></h3><span class="pill p-design">In design</span></div>
+    <div class="card-body">
+      <div class="q"><h4>What we're trying to achieve</h4><p>Each student runs one honest rep: start from a real (possibly shallow) interest, deepen it into a staked question, and pursue it past friction across the semester — learning a reusable method for directing their own growth.</p></div>
+      <div class="q"><h4>How</h4><ul>
+        <li>Identity before task: "who am I becoming?" opens the course.</li>
+        <li>Goal Plan revised at start / mid / end — the carried-forward artifact where movement is visible.</li>
+        <li>Measurable weekly milestones (the 100-miles model): set → measure the gap → adapt the next one. Missed milestones are data.</li>
+      </ul></div>
+      <div class="q"><h4>What we measure</h4><ul>
+        <li>Movement across the three Goal Plan revisions (vague → specific → staked → pursued).</li>
+        <li>Milestone loop compliance-with-substance: adapted milestones, not abandoned ones.</li>
+        <li>Evidence-of-change stated as a specific behavioral moment (GAP-4 fix), not feelings.</li>
+      </ul></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-open">Redesign Goal Plan + sprint reflections around the milestone loop</li>
+        <li class="t-open">State the success standard to students (progress via milestones, not attainment)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 2 · Fix what spring taught us</h2><div class="lvl-sub">Documented gaps, each with an intervention and a measure (from <code>context/gaps-and-actions.md</code>).</div></div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>GAP-1/3 · Students describe instead of analyze<span class="one">~70% of 5 Whys chains circle or rephrase; no quality reference point exists.</span></h3><span class="pill p-design">Refresh target</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Students recognize deeper-vs-sideways before producing — analysis, not description.</p></div>
+      <div class="q"><h4>How</h4><ul><li>Bad-chain vs good-chain exemplars students <em>diagnose</em> first (recognition before production; feeds CF-5).</li><li>Teach the "level change" move: "what would have to be structurally different for this problem to disappear?"</li><li>Pre-submission revision check embedded in the assignment.</li></ul></div>
+      <div class="q"><h4>Measure</h4><p>% of chains that deepen (spring baseline: ~30% deepen). Target: clear movement, measured by the contribution-scoring rubric.</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Build 5 Whys exemplar pairs (CF-5)</li><li class="t-open">Add diagnose-first activity to Sprint 1</li><li class="t-open">Embed revision check in the assignment page</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>GAP-4 · Evidence read as feelings<span class="one">"I feel more confident" isn't evidence of change.</span></h3><span class="pill p-design">Refresh target</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>Students point to a specific behavioral moment as evidence ("last Tuesday I did X where I would have done Y").</p></div>
+      <div class="q"><h4>How</h4><p>Reframe the evidence-of-change prompt to demand a moment, not a feeling; exemplar pair shows the difference.</p></div>
+      <div class="q"><h4>Measure</h4><p>Share of reflections citing a concrete moment.</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Rewrite the prompt + add exemplar</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>GAP-5/6/7 · Overload &amp; friction<span class="one">Too many frameworks in Sprint 1; students can't find deliverables; placeholders and stale dates burn trust.</span></h3><span class="pill p-design">Refresh target</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Achieve</h4><p>A student always knows the next action; cognitive load spent on the work, not on navigating it. Trust: nothing on a page is broken, stale, or dead-ended.</p></div>
+      <div class="q"><h4>How</h4><ul><li>Reduce Sprint 1 framework load (sequencing from CF-3).</li><li>Universal Quick Start + recalibrated time estimates (CF-1 shell).</li><li>Replace placeholders / hardcoded dates with MVP briefs; dates come from schedule.html (CF-2).</li></ul></div>
+      <div class="q"><h4>Measure</h4><p>On-time submission rate; "where/what do I submit" questions; zero stale-date reports.</p></div>
+      <div class="q"><h4>Tasks</h4><ul class="tasks"><li class="t-open">Apply CF-1 shell across ~60 assignment pages</li><li class="t-open">Sprint 1 framework diet</li><li class="t-open">Placeholder sweep → MVP briefs</li></ul></div>
+    </div>
+  </div>
+
+  <div class="lvl"><h2>Level 3 · Re-run checklist</h2></div>
+  <div class="card">
+    <div class="card-head"><span class="arrow">▶</span><h3>Everything CST349 needs for Fall<span class="one">Phase 3 — after the common foundation.</span></h3><span class="pill p-queued">Phase 3</span></div>
+    <div class="card-body">
+      <div class="q"><h4>Tasks</h4><ul class="tasks">
+        <li class="t-done">Spring build exists: overview, 4 sprints, ~60 assignment pages, sessions, config</li>
+        <li class="t-done">Spring gaps documented with proposed interventions</li>
+        <li class="t-open">Adopt CF-1 shell + CF-4 Sprint 0 equivalent</li>
+        <li class="t-open">Apply GAP fixes (cards above)</li>
+        <li class="t-open">Refresh session plans, roster, dates for Fall (schedule.html)</li>
+        <li class="t-open">Wire into daily playbook (nudges, H1 grading, H3 TA layer)</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Living document — Sathya's working vision for the Fall 2026 courses, maintained with Cowork. Task states update as work moves. Items marked ◆ are open decisions Sathya is holding; everything else is open for feedback — tell Sathya what's wrong or missing. Design rationale lives in <code>context/course-design.md</code>; spring evidence in <code>context/gaps-and-actions.md</code>. No CTI branding on student-facing course pages.
+</footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.panel).classList.add('active');
+    window.scrollTo({top:0});
+  });
+});
+document.querySelectorAll('.card-head').forEach(h=>{
+  h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
+});
+</script>
+</body>
+</html>
