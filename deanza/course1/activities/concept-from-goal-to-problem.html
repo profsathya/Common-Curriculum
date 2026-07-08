@@ -96,6 +96,19 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+
+    .mermaid-figure {
+      margin: 14px 0 18px;
+      padding: 14px;
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--radius, 8px);
+      background: #f8fafc;
+      overflow-x: auto;
+    }
+    .mermaid {
+      min-width: 420px;
+      text-align: center;
+    }
   </style>
   <script>
     (function() {
@@ -116,6 +129,21 @@
         });
       });
     })();
+  </script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.16.0/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: 'strict',
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ebf4ff',
+        primaryBorderColor: '#2c5282',
+        primaryTextColor: '#1a1a1a',
+        lineColor: '#2c5282',
+        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif'
+      }
+    });
   </script>
 </head>
 <body>
@@ -157,6 +185,20 @@
 <section>
 <h2 id="use-the-abstraction-ladder">Use The Abstraction Ladder</h2>
 <p>An Abstraction Ladder is a way to move between the specific situation in front of you and the larger purpose behind it. Moving up helps you ask what the problem is really about. Moving down helps you turn that broader understanding back into a specific problem you can test.</p>
+<p>Use the visual first, then use the table below it as the text version.</p>
+<figure class="mermaid-figure" aria-label="Mermaid diagram">
+  <div class="mermaid" role="img" aria-label="Mermaid diagram">
+flowchart TB
+  Purpose[&quot;Move up&lt;br/&gt;Bigger goal, need, or pattern&quot;]
+  Frame[&quot;Current frame&lt;br/&gt;How you describe the problem now&quot;]
+  Evidence[&quot;Move down&lt;br/&gt;Specific evidence, person, or next test&quot;]
+  Revise[&quot;Revise&lt;br/&gt;Carry forward a stronger problem frame&quot;]
+
+  Evidence &lt;--&gt; Frame
+  Frame &lt;--&gt; Purpose
+  Frame --&gt; Revise
+  </div>
+</figure>
 <table>
 <thead>
 <tr>
