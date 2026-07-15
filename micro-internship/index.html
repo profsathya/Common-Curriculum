@@ -5,49 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CTI Fall 2026 Micro-Internship — Pilot Concept</title>
 <style>
-  @page { size: Letter; margin: 0.55in 0.6in; }
-  @media screen { html { background:#e9eef0; } body { max-width: 8.5in; margin: 22px auto; padding: 0.55in 0.6in; background:#fff; box-shadow: 0 2px 16px rgba(20,40,30,.14); } }
+  :root { --green:#157a4d; --ink:#1c2b24; --muted:#5c6b63; --line:#e2ebe6; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html { background:#eef2f1; -webkit-text-size-adjust:100%; }
   body {
-    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-    color: #1c2b24; font-size: 10px; line-height: 1.4; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    margin:0; color:var(--ink);
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.62;
   }
-  .accent { color: #157a4d; }
-  header { border-bottom: 2px solid #157a4d; padding-bottom: 6px; margin-bottom: 9px; }
-  .kicker { font-size: 8.8px; letter-spacing: .14em; text-transform: uppercase; color: #157a4d; font-weight: 700; }
-  h1 { font-size: 20px; margin: 3px 0 2px; letter-spacing: -.2px; }
-  .subtitle { font-size: 11px; color: #3c4a43; margin: 0; }
-  .meta { font-size: 8.5px; color: #77857c; margin-top: 4px; }
-  h2 { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: #157a4d; margin: 8px 0 4px; border-bottom: .6px solid #d3e2da; padding-bottom: 2px; }
-  p { margin: 0 0 4px; }
-  ul { margin: 0 0 4px; padding-left: 15px; }
-  li { margin: 0 0 2.8px; }
-  .lead { font-size: 10.8px; }
-  b, strong { color: #12271d; }
-  table { width: 100%; border-collapse: collapse; margin: 3px 0 4px; }
-  th, td { text-align: left; vertical-align: top; padding: 4px 5.5px; border-bottom: .6px solid #e2ebe6; }
-  thead th { background: #eef5f1; font-size: 8.8px; text-transform: uppercase; letter-spacing: .04em; color: #2a5a44; border-bottom: 1px solid #cfe0d7; }
-  .disc { text-align: center; width: 12.5%; font-size: 9px; }
-  .proj { width: 37%; }
-  .proj b { display: block; font-size: 10.2px; }
-  .proj .desc { color: #46534c; }
-  .proj .eg { color: #6b7a72; font-style: italic; display: block; margin-top: 1.5px; }
-  .dot { font-size: 10.5px; line-height: 1; }
-  .core { color: #0f7a49; }
-  .some { color: #6b9e86; }
-  .min  { color: #b9c6bf; }
-  .disc .lab { display: block; font-size: 8px; color: #6b7a72; margin-top: 1.5px; }
-  .legend { font-size: 8.5px; color: #6b7a72; margin: 2px 0 0; }
-  .box { border: 1px solid #cfe0d7; background: #f5faf7; border-radius: 4px; padding: 7px 10px; margin-top: 4px; }
-  .box ol { margin: 3px 0 0; padding-left: 16px; }
-  .box li { margin-bottom: 3px; }
-  .cols { display: flex; gap: 16px; }
-  .cols > div { flex: 1; }
-  footer { margin-top: 6px; border-top: .6px solid #d3e2da; padding-top: 5px; font-size: 8px; color: #7a887f; display: flex; justify-content: space-between; }
+  .sheet {
+    max-width:900px; margin:30px auto; background:#fff;
+    padding:48px 56px 40px; border-radius:6px;
+    box-shadow:0 2px 22px rgba(20,40,30,.12);
+  }
+  a { color:var(--green); }
+  header { border-bottom:2px solid var(--green); padding-bottom:16px; margin-bottom:22px; }
+  .kicker { font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:var(--green); font-weight:700; }
+  h1 { font-size:31px; line-height:1.15; margin:6px 0 4px; letter-spacing:-.4px; }
+  .subtitle { font-size:16.5px; color:#3c4a43; margin:0; }
+  .meta { font-size:12.5px; color:#7a887f; margin-top:8px; }
+  h2 { font-size:14px; text-transform:uppercase; letter-spacing:.07em; color:var(--green); margin:30px 0 8px; border-bottom:1px solid var(--line); padding-bottom:5px; }
+  p { margin:0 0 11px; }
+  .lead { font-size:17.5px; line-height:1.55; color:#22322a; }
+  ul { margin:0 0 11px; padding-left:20px; }
+  li { margin:0 0 8px; }
+  b, strong { color:#12271d; }
+  .star { color:var(--green); font-weight:700; }
+
+  .tablewrap { overflow-x:auto; margin:6px 0 8px; }
+  table { width:100%; border-collapse:collapse; min-width:640px; }
+  th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--line); }
+  thead th { background:#eef5f1; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color:#2a5a44; border-bottom:1px solid #cfe0d7; }
+  .disc { text-align:center; width:12.5%; font-size:13px; }
+  .proj { width:35%; }
+  .proj b { display:block; font-size:15.5px; }
+  .proj .desc { color:#46534c; font-size:14px; }
+  .proj .eg { color:#6b7a72; font-style:italic; display:block; margin-top:3px; font-size:13.5px; }
+  .dot { font-size:15px; line-height:1; }
+  .core { color:#0f7a49; }
+  .some { color:#6b9e86; }
+  .min  { color:#b9c6bf; }
+  .disc .lab { display:block; font-size:11.5px; color:#6b7a72; margin-top:3px; }
+  .legend { font-size:12.5px; color:#6b7a72; margin:2px 0 4px; }
+  .footnote { font-size:12.5px; color:#6b7a72; margin:0 0 4px; }
+
+  .box { border:1px solid #cfe0d7; background:#f5faf7; border-radius:6px; padding:16px 22px; margin-top:22px; }
+  .box h2 { margin-top:0; }
+  .box ol { margin:6px 0 0; padding-left:20px; }
+  .box li { margin-bottom:7px; }
+
+  .cols { display:flex; gap:34px; margin-top:4px; }
+  .cols > div { flex:1; }
+
+  footer { margin-top:30px; border-top:1px solid var(--line); padding-top:14px; font-size:12.5px; color:#7a887f; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+  @media (max-width:640px) {
+    .sheet { padding:26px 20px; margin:0; border-radius:0; }
+    h1 { font-size:26px; }
+    .cols { flex-direction:column; gap:8px; }
+  }
+  @media print {
+    html { background:#fff; }
+    .sheet { box-shadow:none; margin:0; max-width:none; padding:0; }
+  }
 </style>
 </head>
 <body>
+<main class="sheet">
 
 <header>
   <div class="kicker">Computing Talent Initiative &nbsp;·&nbsp; Pilot concept</div>
@@ -58,6 +82,7 @@
 
 <p class="lead">A <b>4&ndash;6 week, sprint-based</b> experience in which a student works <b>solo on a real, unresolved gap inside a real open project</b> &mdash; mentored by an AI partner and a human domain mentor &mdash; and makes a genuine contribution a real audience can react to. Applicants apply to <b>one of the five interdisciplinary projects</b> below. The pilot is designed to exercise the full capability loop &mdash; <b>Self-Directed Learner &rarr; Integrative Solver &rarr; Adaptive Builder</b>: learn an unfamiliar domain fast, work across disciplines to find the real problem, and iterate to a genuine contribution.</p>
 
+<section>
 <h2>How it works</h2>
 <ul>
   <li><b>Solo, with peer review.</b> Each student owns a specific gap, and carries a cross-review responsibility to one or two peers on the same project (a per-project micro-cohort).</li>
@@ -65,8 +90,11 @@
   <li><b>&ldquo;Done&rdquo; is a staged bar.</b> <b>Floor</b> &mdash; a standalone artifact showing the CTI&nbsp;2.0 capabilities, genuine contact with the real project, and a domain mentor&rsquo;s review. <b>Target</b> &mdash; the project&rsquo;s community engages. <b>Bonus</b> &mdash; the contribution is adopted (merged, published, mapped). The mentor is the reacting audience we <i>guarantee</i>, so no student&rsquo;s success hinges on an outside maintainer.</li>
   <li><b>Incentives.</b> Non-credit; a completion stipend; network introductions as the capstone. Advertised to partner institutions; the application names the chosen project.</li>
 </ul>
+</section>
 
-<h2>The five projects &mdash; each real, open, and contributable today</h2>
+<section>
+<h2>The five projects <span class="star">*</span> &mdash; each real, open, and contributable today</h2>
+<div class="tablewrap">
 <table>
   <thead>
     <tr>
@@ -115,12 +143,16 @@
     </tr>
   </tbody>
 </table>
+</div>
 <p class="legend">&#9679; core &nbsp;·&nbsp; &#9681; genuine &nbsp;·&nbsp; &#9675; minimal &nbsp;&mdash;&nbsp; each project genuinely spans at least two disciplines (most span three). A sixth verified project (marine-biodiversity data, <i>worrms / WoRMS</i>) is held in reserve.</p>
+<p class="footnote"><span class="star">*</span> These five are <b>placeholders</b>. All are real and contributable today, but they are illustrative &mdash; if we find stronger or more fitting projects, we can add or swap them.</p>
+</section>
 
 <div class="cols">
   <div>
-    <h2>Mentors</h2>
-    <p>Recruited per project (CodeDay and partners; PhD students and practitioners) and <b>trained on the CTI&nbsp;2.0 framework</b>. Mentors practise the same capabilities we ask students to develop &mdash; two-context development &mdash; rather than merely supervising.</p>
+    <h2>Mentors &amp; scale</h2>
+    <p>Mentors are recruited per project (CodeDay and partners; PhD students and practitioners) and <b>trained on the CTI&nbsp;2.0 framework</b> &mdash; they practise the same capabilities we ask students to develop (two-context development), rather than merely supervising.</p>
+    <p>We&rsquo;re targeting <b>30&ndash;50 students</b> for the pilot, depending on how many mentors we can recruit and train &mdash; the hope is for each mentor to work with <b>three to five students</b>.</p>
   </div>
   <div>
     <h2>Why it isn&rsquo;t an academic exercise</h2>
@@ -129,10 +161,10 @@
 </div>
 
 <div class="box">
-  <h2 style="margin-top:0;">Open questions for Tyler &amp; Leslie</h2>
+  <h2>Open questions for Tyler &amp; Leslie</h2>
   <ol>
     <li><b>Business as a real spine.</b> All five projects are &ldquo;contribute to an existing open project.&rdquo; A genuine Business / consulting track (&ldquo;help a real organization&rdquo;) needs a committed partner org &mdash; worth adding for this pilot? <i>(Tyler)</i></li>
-    <li><b>Mentor sourcing &amp; load.</b> How many mentors per project, and from where?</li>
+    <li><b>Mentor sourcing &amp; load.</b> How many mentors can we recruit, and from where? (This sets the 30&ndash;50 student target.)</li>
     <li><b>Recruitment.</b> Which partner institutions, and who owns the application and selection?</li>
     <li><b>Scope to lock.</b> Final project set, cohort size, and exact length (4 / 6 / 8 weeks).</li>
   </ol>
@@ -143,5 +175,6 @@
   <span>CTI 2.0 &nbsp;·&nbsp; draft</span>
 </footer>
 
+</main>
 </body>
 </html>
