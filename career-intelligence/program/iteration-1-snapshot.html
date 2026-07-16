@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Intelligence &mdash; Iteration 1 Snapshot</title>
+  <style>
+    :root{--bg:#fafafa;--surface:#fff;--text:#1a1a1a;--muted:#555;--border:#e0e0e0;--accent:#2c5282;--accent-light:#ebf4ff;--green:#2d875e;--green-bg:#e9f2ec;--amber:#c79a2e;--amber-bg:#fbf6ec;--red:#9a3412;--red-bg:#fff7ed;--radius:8px;}
+    *{box-sizing:border-box;}
+    body{margin:0;padding:24px 16px;font:16px/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--bg);}
+    .page{max-width:820px;margin:0 auto;}
+    .meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px;}
+    h1{font-size:24px;font-weight:700;margin:0 0 6px;line-height:1.3;}
+    .sub{color:var(--muted);font-size:14px;margin:0 0 18px;}
+    .lens-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 20px;}
+    .lens-bar span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:2px;}
+    .lens-bar button{border:1px solid var(--border);background:var(--surface);border-radius:20px;padding:6px 14px;font-size:13.5px;cursor:pointer;color:var(--accent);font-weight:600;}
+    .lens-bar button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:0 0 18px;}
+    .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;text-align:center;}
+    .stat .n{font-size:22px;font-weight:700;color:var(--accent);}
+    .stat .l{font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:2px;}
+    .tldr{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 18px;margin:0 0 20px;}
+    .tldr h2{margin:0 0 6px;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;}
+    .tldr p{margin:6px 0;}
+    details{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin:10px 0;padding:0;}
+    details summary{cursor:pointer;padding:13px 16px;font-weight:600;font-size:15.5px;list-style:none;display:flex;align-items:baseline;gap:8px;}
+    details summary::-webkit-details-marker{display:none;}
+    details summary .chev{margin-left:auto;color:var(--muted);transition:transform .15s;font-size:13px;}
+    details[open] summary .chev{transform:rotate(90deg);}
+    details .body{padding:0 16px 14px;}
+    details p{margin:8px 0;}
+    details ul{margin:8px 0;padding-left:20px;}
+    details li{margin:6px 0;}
+    .thesis{font-weight:400;color:var(--muted);font-size:13.5px;}
+    .best summary{border-left:4px solid var(--green);border-radius:var(--radius) 0 0 var(--radius);}
+    .mid summary{border-left:4px solid var(--amber);border-radius:var(--radius) 0 0 var(--radius);}
+    .worst summary{border-left:4px solid #b45309;border-radius:var(--radius) 0 0 var(--radius);}
+    blockquote{margin:8px 0;padding:8px 14px;border-left:3px solid var(--border);color:#374151;font-style:italic;background:#f8fafc;border-radius:0 6px 6px 0;}
+    h3.sec{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:26px 0 8px;}
+    table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0;}
+    td,th{border:1px solid var(--border);padding:6px 10px;text-align:left;}
+    th{background:#f1f5f9;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+    footer{text-align:center;margin:30px 0 8px;opacity:.55;}
+    footer img{height:22px;}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <p class="meta">Computing Talent Initiative &middot; Career Intelligence</p>
+    <h1>Iteration 1 &mdash; a snapshot</h1>
+    <p class="sub">Career Intelligence teaches graduating seniors to run their job search as an experiment &mdash; and backs the strongest cases with warm referrals from CTI's own network. As of July 16, 2026 &middot; a point-in-time read, not a final evaluation &mdash; the referral work continues with students for the next couple of weeks. Based on a full reading of every student text submission from Weeks 3&ndash;5, the live submission data, and the Week 1 baseline survey. All students anonymized.</p>
+
+    <div class="lens-bar">
+      <span>Choose your depth:</span>
+      <button id="b0" onclick="setLens(0)" class="active">60-second read</button>
+      <button id="b1" onclick="setLens(1)">5-minute read</button>
+      <button id="b2" onclick="setLens(2)">Everything</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">39</div><div class="l">submissions read in full, against the goals</div></div>
+      <div class="stat"><div class="n">~8 of 16</div><div class="l">moved from generic claims to owned, quantified evidence</div></div>
+      <div class="stat"><div class="n">6 of 16</div><div class="l">spontaneously narrate owning the AI, not offloading to it</div></div>
+      <div class="stat"><div class="n">1 of 8</div><div class="l">complete search-experiment demonstration</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">referral cases &mdash; all walk-through-able</div></div>
+    </div>
+
+    <div class="tldr">
+      <h2>Is the learning being demonstrated &mdash; and how broadly?</h2>
+      <p><strong>It is being demonstrated.</strong> The strongest submissions show exactly the thinking the program was designed to produce: postings-grounded market reads, quantified evidence in place of generic claims, and visible ownership of AI collaboration &mdash; including one student correcting his AI's inaccurate suggestion about his own work.</p>
+      <p><strong>Not yet broadly.</strong> Full demonstration is concentrated in five or six students; the middle shows real movement &mdash; structure, numbers, insight turned into named next moves &mdash; without yet showing a complete case.</p>
+      <p><strong>The verification is ahead.</strong> Whether this is learning or performance gets tested in the next two weeks: the same Week 1 questions re-asked verbatim, a live 1:1 behind every referral, and referral outcomes themselves.</p>
+    </div>
+
+    <h3 class="sec">The numbers</h3>
+    <details class="lens1">
+      <summary>Participation, week by week <span class="thesis">&middot; a staircase, with one counter-move</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Signal</th><th>Count</th></tr>
+          <tr><td>Enrolled</td><td>69</td></tr>
+          <tr><td>Week 1 &mdash; submitted a resume / took the baseline survey</td><td>49 (71%)</td></tr>
+          <tr><td>Week 1 self-check</td><td>26 (38%)</td></tr>
+          <tr><td>Week 2 self-check</td><td>23 (33%)</td></tr>
+          <tr><td>Week 3 self-check</td><td>16 (23%)</td></tr>
+          <tr><td>Week 4 self-check / ran the 10+10 experiment</td><td>8 (12%)</td></tr>
+          <tr><td>Fireside chat reflections (Week 5)</td><td>10</td></tr>
+          <tr><td>Warm referral applications so far</td><td>3</td></tr>
+        </table>
+        <p>The staircase is what optional summer programs produce. The counter-move matters more: the Week 3 self-check sat at 3 submissions on June 29 and stands at 16 today &mdash; most of that after we announced the networking event required completing through Week 3. Real access moved behavior more than any reminder we sent. The Week 1 baseline survey also tells us where students started: asked why an employer should hire them, answers were generic lists ("skills, experience, mindset") almost across the board.</p>
+      </div>
+    </details>
+
+    <h3 class="sec">What the submissions show, against each program goal</h3>
+
+    <details class="lens2">
+      <summary>Evidence-backed value <span class="thesis">&middot; half the Week 3 cohort moved from generic to owned</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The goal: replace "why should we hire you" boilerplate with specific, provable claims. Against the generic Week 1 baseline, the strongest Week 3&ndash;4 submissions are unrecognizable: one student rewrote a capstone bullet into owned, quantified work &mdash; a Docker-backed CI testing workflow with 80%+ coverage, maintained through schema changes &mdash; and can say exactly what she owned and why it mattered. Another tested her positioning with the standard we taught:</p>
+        <blockquote>"[My case] breaks if you swap out the sector &mdash; unlike generic junior-SWE positioning."</blockquote>
+        <p>Roughly half of the sixteen Week 3 submissions show changes of this quality. The other half show real but thinner movement &mdash; adopting the resume structure, adding numbers &mdash; motion toward a case, not yet a case.</p>
+      </div>
+    </details>
+
+    <details class="lens2">
+      <summary>Market understanding <span class="thesis">&middot; the best reads cite named postings; the fireside converted to action</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The goal: know what employers actually want from observation, not guesswork. The best Week 4 answers pull top requirements from named postings (Palantir, Canonical, Tesla) and map each to the student's own evidence &mdash; then name the gap and the skill to learn. The weakest still guess ("strong backend skills, problem solving").</p>
+        <p>The Week 5 recruiter fireside visibly landed: nearly every reflection converts an insight into a named move &mdash; "find 5 startups and reach out to their Founders and Chief of Staff with a cold email," a shift to Y&nbsp;Combinator targeting, one student already cold-emailing "and seeing results." The recruiter's-eye flip &mdash; your first reader isn't an engineer, and you're their ninth conversation today &mdash; recurs in their own words.</p>
+      </div>
+    </details>
+
+    <details class="lens2">
+      <summary>The experiment discipline <span class="thesis">&middot; internalized beautifully &mdash; at n=1</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The goal: run the search as a fair test &mdash; a bet, a control, a signal, a read. One student's iteration is textbook: 10+10 applications sent, silence read as "too early to tell," the idea-vs-execution question applied to his own bet, a sharper next bet named with the fair-test rule kept and the signal declared. He then wrote, unprompted, that owning his search means "using silence to decide what to test next" &mdash; the program's core loop, in his own words. But this is one complete demonstration among the eight who ran the experiment, not eight.</p>
+      </div>
+    </details>
+
+    <details class="lens2">
+      <summary>AI fluency &mdash; create, don't consume <span class="thesis">&middot; the most encouraging content signal, with a caveat</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The goal: students drive the thinking; AI sharpens it. Six of sixteen Week 3 self-checks spontaneously describe the temptation to let the AI write and the decision not to. One student caught his Dojo suggesting a claim that "sounded good" but wasn't accurate to his actual work, and corrected it:</p>
+        <blockquote>"I let the Dojo help improve the wording, but I made the final decision about what I could honestly claim."</blockquote>
+        <p>That is the exact behavior the Dojos were designed to produce. The caveat we hold ourselves to: these are narratives of ownership, and a pasted submission can't verify them &mdash; which is why every referral requires a live 1:1 interview.</p>
+        <p>One strong student also pushed back, and we take it seriously: the AI-assisted reflection "doesn't really set up a good start&hellip; I feel like I'm not keeping my skills sharp." For students who arrive already advanced, the scaffolding can read as overhead.</p>
+      </div>
+    </details>
+
+    <details class="lens2">
+      <summary>The warm referral cases <span class="thesis">&middot; high quality, high aspiration, no artifacts yet</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The goal: a case strong enough for CTI to put its name behind. Three written applications so far, and the quality is genuinely high &mdash; detailed, walk-through-able evidence down to specific pull requests and issue numbers, with honest acknowledgment of where each case is thin. Two calibration notes for the 1:1s: two of the three cases target OpenAI &mdash; aspiration running ahead of calibration &mdash; and none of the three attempted the optional customized artifact. The case-building skill arrived; the show-don't-tell lever hasn't been pulled yet. Two more referral application windows are open now, first come, first served.</p>
+      </div>
+    </details>
+
+    <h3 class="sec">Three honest readings of the same evidence</h3>
+
+    <details class="best lens1">
+      <summary>Best case <span class="thesis">&middot; the funnel was a filter, and what it kept is exactly what we designed for</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The program's thinking shows up in student writing unprompted &mdash; fair tests, silence as data, evidence-first claims, AI ownership. The top third of remaining students are doing precisely what we designed: grounded market reads, cases that break if you swap the sector, resistance to AI ghostwriting. On this reading, the staircase was a filter for an optional summer program, and what it kept is a group whose work makes any referral defensible &mdash; which is the point of spending social capital carefully.</p>
+      </div>
+    </details>
+
+    <details class="mid lens1">
+      <summary>Medium case <span class="thesis">&middot; the design works for whom it reaches &mdash; and that's a dozen, not a cohort</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>Quality is bimodal. Five or six students demonstrate the full stack of goals; the middle does the motions with thinner substance; and depth is concentrated in the students who arguably needed us least. The insights landed cohort-wide &mdash; the fireside reflections are uniformly awake &mdash; but converting insight into disciplined practice (the 10+10, the iteration, the artifact) has happened at n=1 to n=3. The program teaches what we think it teaches; it hasn't yet shown it can teach it at breadth.</p>
+      </div>
+    </details>
+
+    <details class="worst lens1">
+      <summary>Worst case <span class="thesis">&middot; the machinery can be satisfied without the learning</span><span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>The weakest submissions suggest box-checking: one-line answers naming no evidence, and a resume "aligned to the niche" by rewording rather than by proof &mdash; the exact failure the program warns against, produced inside the program. Ownership narratives may be performed for the grader, since a copy-paste submission can't verify them. Zero artifacts and two moonshot targets in three referral cases could mean the bar reads as ceremony rather than a real door. On this reading, we built a strong program for the students we wished we had.</p>
+      </div>
+    </details>
+
+    <h3 class="sec">What we're watching over the next two weeks</h3>
+    <details class="lens1">
+      <summary>The evidence that will tell these readings apart <span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Before/after growth:</strong> the Week 6 self-check (due July 19) re-asks the three Week 1 survey questions verbatim &mdash; per-student value and market deltas against a genuinely generic baseline.</li>
+          <li><strong>The 1:1 interviews:</strong> the live verification layer &mdash; can each referral case survive a ten-minute conversation?</li>
+          <li><strong>Referral outcomes:</strong> do our contacts forward the resumes, and does anyone land an interview &mdash; the outcome the whole design points at.</li>
+          <li><strong>The networking event:</strong> what the access gate actually bought &mdash; turnout among the 16 eligible, and 24-hour follow-ups.</li>
+          <li><strong>Who the engaged core is:</strong> did the funnel keep the students we'd have bet on &mdash; or lose ones we should have kept?</li>
+        </ul>
+      </div>
+    </details>
+
+    <h3 class="sec">Early lessons, whichever reading wins</h3>
+    <details class="lens1">
+      <summary>Three moves for the next iteration <span class="chev">&#9654;</span></summary>
+      <div class="body">
+        <p>Front-load the access levers &mdash; the referral, the recruiters, the networking arrived in Week 4, and access is our strongest motivator. Bring live verification earlier &mdash; the 1:1 is what makes AI-era ownership real. And rebalance for the middle: fewer required items, more depth optional-but-inviting, with a faster lane for students who arrive advanced. The open question: the top third built exactly what we hoped &mdash; is the next design's job to widen that third, or to serve it deeper?</p>
+      </div>
+    </details>
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><br><span style="font-size:12px;color:#888;">Computing Talent Initiative &middot; CSU Monterey Bay &mdash; Career Intelligence</span></footer>
+  </div>
+
+  <script>
+    function setLens(n){
+      document.querySelectorAll('.lens-bar button').forEach((b,i)=>b.classList.toggle('active', i===n));
+      document.querySelectorAll('details.lens1').forEach(d=>d.open = n>=1);
+      document.querySelectorAll('details.lens2').forEach(d=>d.open = n>=2);
+      if(n===0){ document.querySelectorAll('details').forEach(d=>d.open=false); }
+    }
+  </script>
+</body>
+</html>
