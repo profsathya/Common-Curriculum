@@ -53,6 +53,7 @@ Framing rule for every line of copy (his call, 7/21): positive vision, stated in
 Reading order for someone walking past at 10 feet, then 3 feet:
 
 1. **Headline block** — the claim above, CTI mark, one-line identity: "An R&D institute at the intersection of AI, learning science, and workforce, serving California's large middle."
+   - **Opener tension band (Sathya, 7/21)** — a full-width line directly under the hero, framing the problem before the approach: *"A fast, boundary-crossing technology meets a slow, boundary-bound system."* Added to the poster (white band, navy bold, eyebrow "The tension we work in").
 2. **The question** (short, and specific per the spine) — as AI grows, how do you identify and nurture the human qualities that matter most: agency, curiosity, judgment, adaptability, and the ability to work with uncertainty? Nobody has the full answer.
 3. **The approach** (the centerpiece visual), framed as *a hypothesis grounded in research and inspired by what AI makes possible*. Order per Sathya (7/21): **the outcomes lead** — **Superagency + Human Value in two boxes at the top**, the ultimate point people see first — then "Developed Through" leads down into the **official framework wheel** (Symbiotic Thinking at center, Self-Directed Learner / Integrative Solver / Adaptive Builder around it with the Learn / Connect / Solve verbs). Goal first, mechanism second. (Naming per Sathya 2026-07-21: **"Human Value"** on all INSPIRE materials, keeping the shortened form rather than "Human Value Proposition.")
    - **The four-commitment spine** rides alongside the diagram (fundamental question · framework-as-hypothesis · short experiments that iterate · developed in ourselves alongside learners) — this is what marks CTI as not one more effort.
@@ -63,6 +64,7 @@ Reading order for someone walking past at 10 feet, then 3 feet:
    - **Reboot Salinas** — high schoolers, with partners already on the ground.
 5. **Why trust us with this** — the earned numbers from the website: 15 years, 750+ work-based placements, 56% first-generation learners, 65%+ three-year graduation in accelerated cohorts. Honest naming: these are pilots, and our data is checkable.
 6. **Try it + the ask** — the demo QR (below) plus: "Tell us where we're wrong. Partner with us." QR to the website and vision doc.
+7. **Closing commitment band (Sathya, 7/21)** — the poster's final word, a full-width green band: *"CTI is committed to this work, because we believe that figuring out how to define, develop, and measure a discipline-neutral, transferable set of human capabilities in scale is imperative to ensure that the AI transition doesn't become yet another technological advancement that widens inequality."* Added to the poster (green band, white text, eyebrow "Our commitment"). Kept **verbatim**; one optional polish flagged — "in scale" reads more naturally as "at scale" (Sathya's call). These two statements bookend the poster: problem → approach/framework/pilots → commitment.
 
 Brand — source of truth is **Eros's CTI Brand Guide 2026** (`Alan/Final_CTI_Brand_Suite.zip`, found + read 7/21):
 
