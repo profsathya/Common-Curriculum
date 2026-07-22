@@ -135,6 +135,8 @@ body{
 .codebox .code{ font-size:34px; font-weight:700; letter-spacing:.16em; margin:6px 0 2px; }
 .codebox .link{ font-size:12.5px; opacity:.82; word-break:break-all; }
 .copied{ font-size:12.5px; color:var(--green); font-weight:600; height:16px; margin-bottom:8px; }
+.consentNote{ background:#fff7e8; border:1px solid #e4c98a; border-radius:12px; padding:13px 15px; font-size:13.5px; color:#5a4a2a; text-align:left; line-height:1.55; margin:0 auto 18px; max-width:320px; }
+.consentNote b{ color:#8a5a12; }
 .waiting{ font-size:13px; color:var(--muted); display:flex; gap:8px; align-items:center; justify-content:center; margin-top:4px; }
 .dot2{ width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.2s infinite; }
 
@@ -219,21 +221,47 @@ body{
   <!-- SCREEN: share -->
   <div class="screen" id="screenShare" style="display:none;">
     <div class="share">
-      <div style="font-size:40px;">🤝</div>
-      <h2>Go deeper — together</h2>
-      <p>You did the thinking. Now hand this to someone else at the conference. They'll pick up your exact thread, and the Dojo will take you both further than either of you got alone.</p>
-      <div class="codebox">
-        <div class="lbl">Your inquiry code</div>
-        <div class="code" id="shareCode">·····</div>
-        <div class="link" id="shareLink">dojo.cti / join</div>
+
+      <!-- consent gate -->
+      <div id="consentView">
+        <div style="font-size:40px;">🤝</div>
+        <h2>Go deeper — together?</h2>
+        <p>So far this conversation has stayed on your device. To let someone else pick it up and go further with you, we'll save it to our backend so your partner can join.</p>
+        <div class="consentNote"><b>We hope that's okay — and it's completely optional.</b> Human + human + AI is part of how we build symbiotic thinking, with real human connection. You're welcome to try it. You don't have to.</div>
+        <button class="btn green" onclick="agreeShare()">Okay — create a share code →</button>
+        <div style="height:10px;"></div>
+        <button class="btn ghost" onclick="declineShare()">No thanks — keep it private</button>
       </div>
-      <div class="copied" id="copied"></div>
-      <button class="btn primary" onclick="copyLink()">Copy invite link</button>
-      <div style="height:10px;"></div>
-      <button class="btn green" onclick="partnerJoins()">Simulate: a partner joins →</button>
-      <div style="height:10px;"></div>
-      <button class="btn ghost" onclick="reset()">Start over</button>
-      <div class="waiting" id="waiting" style="display:none;"><span class="dot2"></span> Waiting for someone to enter the code…</div>
+
+      <!-- code view (after consent) -->
+      <div id="codeView" style="display:none;">
+        <div style="font-size:40px;">🔗</div>
+        <h2>Share your inquiry</h2>
+        <p>Saved. Hand this to someone at the conference — they'll pick up your exact thread, and the Dojo will take you both further than either of you got alone.</p>
+        <div class="codebox">
+          <div class="lbl">Your inquiry code</div>
+          <div class="code" id="shareCode">·····</div>
+          <div class="link" id="shareLink">dojo.cti / join</div>
+        </div>
+        <div class="copied" id="copied"></div>
+        <button class="btn primary" onclick="copyLink()">Copy invite link</button>
+        <div style="height:10px;"></div>
+        <button class="btn green" onclick="partnerJoins()">Simulate: a partner joins →</button>
+        <div style="height:10px;"></div>
+        <button class="btn ghost" onclick="reset()">Start over</button>
+        <div class="waiting" id="waiting" style="display:none;"><span class="dot2"></span> Waiting for someone to enter the code…</div>
+      </div>
+
+      <!-- kept private -->
+      <div id="privateView" style="display:none;">
+        <div style="font-size:40px;">🔒</div>
+        <h2>Kept private</h2>
+        <p>Nothing was saved — this conversation never left your device. That's completely fine. The thinking was still yours.</p>
+        <button class="btn primary" onclick="openTrace()">See your thinking trace 🧠</button>
+        <div style="height:10px;"></div>
+        <button class="btn ghost" onclick="reset()">Start over</button>
+      </div>
+
     </div>
   </div>
 
@@ -399,15 +427,29 @@ function growTa(t){ t.style.height='auto'; t.style.height=Math.min(t.scrollHeigh
 function toggleSend(){ const v=$('ta').value.trim(); $('sendBtn').disabled=!v; }
 function sendText(){ const v=$('ta').value.trim(); if(!v) return; answer(v); }
 
-// share
+// share — consent first, storage only on opt-in
 function goShare(){
   $('screenChat').style.display='none';
   setComposer('');
   $('screenShare').style.display='block';
+  $('consentView').style.display='block';
+  $('codeView').style.display='none';
+  $('privateView').style.display='none';
+}
+function agreeShare(){
+  // this is the moment we would push the conversation to the backend
+  $('consentView').style.display='none';
+  $('privateView').style.display='none';
+  $('codeView').style.display='block';
   const code = randCode();
   $('shareCode').textContent=code;
   $('shareLink').textContent='dojo.computingtalentinitiative.org/join/'+code;
   $('copied').textContent=''; $('waiting').style.display='none';
+}
+function declineShare(){
+  $('consentView').style.display='none';
+  $('codeView').style.display='none';
+  $('privateView').style.display='block';
 }
 function copyLink(){
   const link='dojo.computingtalentinitiative.org/join/'+$('shareCode').textContent;
