@@ -59,6 +59,28 @@
 
   footer { margin-top:30px; border-top:1px solid var(--line); padding-top:14px; font-size:12.5px; color:#7a887f; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 
+  /* Explore-by-major tabs */
+  .explore { margin-top:30px; }
+  .explore .sub { font-size:15px; color:var(--muted); margin:-2px 0 14px; max-width:64ch; }
+  .tabs { display:flex; flex-wrap:wrap; gap:4px; border-bottom:2px solid var(--line); }
+  .tabbtn { appearance:none; border:none; background:none; cursor:pointer; font:inherit; font-size:14.5px; font-weight:600; color:var(--muted); padding:10px 17px; border-radius:6px 6px 0 0; border-bottom:3px solid transparent; margin-bottom:-2px; }
+  .tabbtn:hover { color:var(--ink); background:#f2f7f4; }
+  .tabbtn[aria-selected="true"] { color:var(--green); border-bottom-color:var(--green); }
+  .panel { display:none; padding:20px 2px 2px; }
+  .panel.active { display:block; }
+  .panel .badge { display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--green); background:#e9f4ee; padding:3px 10px; border-radius:20px; margin-bottom:12px; }
+  .panel .goal { font-size:22px; line-height:1.25; color:#12271d; font-weight:700; margin:0 0 7px; }
+  .panel .ctx { font-size:15.5px; color:#33413a; margin:0 0 15px; max-width:62ch; }
+  .path { list-style:none; margin:0 0 14px; padding:0; max-width:70ch; }
+  .path li { display:flex; gap:14px; padding:8px 0; border-top:1px solid var(--line); align-items:baseline; }
+  .path li:first-child { border-top:none; }
+  .path .k { flex:0 0 132px; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--green); font-weight:700; }
+  .path .v { font-size:15px; color:#2a3a32; }
+  .basedon { font-size:13.5px; color:var(--muted); }
+  .basedon a { font-weight:600; }
+  @media (max-width:640px){ .path li{ flex-direction:column; gap:2px; } .path .k{ flex-basis:auto; } .tabbtn{ padding:9px 12px; font-size:13.5px; } }
+  @media print { .explore .tabs{ display:none; } .explore .panel{ display:block !important; margin-bottom:16px; border-top:1px solid var(--line); padding-top:14px; } }
+
   @media (max-width:640px) {
     .sheet { padding:26px 20px; margin:0; border-radius:0; }
     h1 { font-size:26px; }
@@ -148,6 +170,65 @@
 <p class="footnote"><span class="star">*</span> These five are <b>placeholders</b>. All are real and contributable today, but they are illustrative &mdash; if we find stronger or more fitting projects, we can add or swap them.</p>
 </section>
 
+<section class="explore">
+<h2>Which project could be yours?</h2>
+<p class="sub">Pick your major for one example of a way in - a real goal you could take on, and something you would build.</p>
+<div class="tabs" role="tablist" aria-label="Explore by major">
+  <button class="tabbtn" role="tab" aria-selected="true" data-tab="p-cs">Computing</button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-tab="p-sci">Natural Science</button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-tab="p-hum">Humanities</button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-tab="p-biz">Business</button>
+</div>
+
+<div id="p-cs" class="panel active" role="tabpanel">
+  <span class="badge">For Computing students</span>
+  <p class="goal">Help aid workers reach families after a disaster.</p>
+  <p class="ctx">When a flood or earthquake hits, responders often start from maps that are blank where people actually live. You can help fill them in, and improve the tools thousands of volunteers use to do it.</p>
+  <ul class="path">
+    <li><span class="k">You bring</span><span class="v">Computing - building and improving mapping tools.</span></li>
+    <li><span class="k">You&rsquo;ll cross into</span><span class="v">Humanitarian response and geography: who needs the map, and what it has to show.</span></li>
+    <li><span class="k">You&rsquo;ll build</span><span class="v">A merged improvement to an open mapping tool, or validated map data used in a live response.</span></li>
+  </ul>
+  <p class="basedon">Based on <a href="https://www.hotosm.org/" target="_blank" rel="noopener">Humanitarian OpenStreetMap</a>.</p>
+</div>
+
+<div id="p-sci" class="panel" role="tabpanel">
+  <span class="badge">For Natural Science students</span>
+  <p class="goal">Make your community&rsquo;s air quality easy to understand.</p>
+  <p class="ctx">Air-quality data exists for much of the world, but the numbers are hard for most people to read. You can turn the science into something a family, a teacher, or a city can actually use.</p>
+  <ul class="path">
+    <li><span class="k">You bring</span><span class="v">The science of what is in the air, and what is safe to breathe.</span></li>
+    <li><span class="k">You&rsquo;ll cross into</span><span class="v">Computing and public-health communication.</span></li>
+    <li><span class="k">You&rsquo;ll build</span><span class="v">A published air-quality guide for a place you care about, on a platform scientists and journalists already use.</span></li>
+  </ul>
+  <p class="basedon">Based on <a href="https://openaq.org/" target="_blank" rel="noopener">OpenAQ</a>.</p>
+</div>
+
+<div id="p-hum" class="panel" role="tabpanel">
+  <span class="badge">For Humanities students</span>
+  <p class="goal">Teach other students to explore history with a digital tool.</p>
+  <p class="ctx">More and more, humanists study their sources - maps, texts, records - with computing. You can build the hands-on lesson that helps the next student start.</p>
+  <ul class="path">
+    <li><span class="k">You bring</span><span class="v">The scholarship, and the questions worth asking.</span></li>
+    <li><span class="k">You&rsquo;ll cross into</span><span class="v">Computing methods for text, maps, and data.</span></li>
+    <li><span class="k">You&rsquo;ll build</span><span class="v">A peer-reviewed tutorial on a respected open site, or a fix that brings an older lesson back to life.</span></li>
+  </ul>
+  <p class="basedon">Based on <a href="https://programminghistorian.org/" target="_blank" rel="noopener">Programming Historian</a>.</p>
+</div>
+
+<div id="p-biz" class="panel" role="tabpanel">
+  <span class="badge">For Business students</span>
+  <p class="goal">Help shoppers see how healthy a product really is.</p>
+  <p class="ctx">Millions of people read food labels they cannot easily decode. You can make open product data clearer and more trustworthy, right at the shelf.</p>
+  <ul class="path">
+    <li><span class="k">You bring</span><span class="v">The consumer and market lens.</span></li>
+    <li><span class="k">You&rsquo;ll cross into</span><span class="v">Nutrition science and data.</span></li>
+    <li><span class="k">You&rsquo;ll build</span><span class="v">A real improvement to how food data reaches shoppers, on a database used by apps and researchers worldwide.</span></li>
+  </ul>
+  <p class="basedon">Based on <a href="https://world.openfoodfacts.org/" target="_blank" rel="noopener">Open Food Facts</a>.</p>
+</div>
+</section>
+
 <div class="cols">
   <div>
     <h2>Mentors &amp; scale</h2>
@@ -176,5 +257,25 @@
 </footer>
 
 </main>
+<script>
+(function(){
+  var btns = document.querySelectorAll('.explore .tabbtn');
+  function select(btn){
+    document.querySelectorAll('.explore .tabbtn').forEach(function(b){ b.setAttribute('aria-selected', b===btn ? 'true' : 'false'); });
+    var id = btn.getAttribute('data-tab');
+    document.querySelectorAll('.explore .panel').forEach(function(p){ p.classList.toggle('active', p.id===id); });
+  }
+  btns.forEach(function(btn, i){
+    btn.addEventListener('click', function(){ select(btn); });
+    btn.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight' || e.key==='ArrowLeft'){
+        e.preventDefault();
+        var next = (i + (e.key==='ArrowRight'?1:btns.length-1)) % btns.length;
+        btns[next].focus(); select(btns[next]);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
