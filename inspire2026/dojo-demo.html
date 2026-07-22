@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#153857">
+<title>Symbiotic Thinking Dojo — Demo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap');
+:root{
+  --blue:#2A6FAD; --green:#2D875E; --navy:#153857;
+  --ink:#1c2b33; --muted:#6b7a85; --line:#e6edf1; --bg:#eef2f4;
+  --dojo:#eef4f9; --dojoBorder:#d7e6f2; --user:#2D875E;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;height:100%;}
+body{
+  font-family:'Jost',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  color:var(--ink); background:#c9d4db; line-height:1.5;
+  display:flex; align-items:center; justify-content:center;
+}
+/* phone frame */
+.phone{
+  width:100%; max-width:430px; height:100dvh; max-height:920px;
+  background:#fff; display:flex; flex-direction:column; position:relative;
+  overflow:hidden; box-shadow:0 10px 50px rgba(20,40,60,.25);
+}
+@media (max-width:430px){ .phone{ height:100dvh; max-height:none; box-shadow:none; } }
+
+/* header */
+.hdr{
+  background:var(--navy); color:#fff; padding:14px 16px;
+  display:flex; align-items:center; gap:11px; flex:0 0 auto; z-index:5;
+}
+.hdr img{ height:30px; }
+.hdr .ttl{ font-weight:600; font-size:15.5px; letter-spacing:.01em; }
+.hdr .sub{ font-size:11px; opacity:.72; margin-top:-2px; }
+.hdr .spacer{ flex:1; }
+.traceBtn{
+  background:rgba(255,255,255,.12); border:none; color:#fff; font-family:inherit;
+  font-size:12.5px; font-weight:600; padding:7px 11px; border-radius:20px;
+  display:flex; align-items:center; gap:5px; cursor:pointer;
+}
+.traceBtn b{ background:#fff; color:var(--navy); border-radius:10px; padding:0 6px; font-size:11.5px; }
+
+/* screens */
+.screen{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.pad{ padding:20px 18px 26px; }
+
+/* ---- door select ---- */
+.hero{ text-align:center; padding:26px 22px 6px; }
+.hero h1{ font-size:24px; line-height:1.18; margin:0 0 8px; color:var(--navy); }
+.hero p{ font-size:15px; color:var(--muted); margin:0; }
+.hero .tag{ display:inline-block; margin-bottom:12px; font-size:11.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--blue); }
+.doors{ padding:8px 16px 20px; display:flex; flex-direction:column; gap:12px; }
+.door{
+  border:1.5px solid var(--line); border-left:5px solid var(--blue);
+  border-radius:14px; padding:15px 16px; cursor:pointer; background:#fff;
+  transition:transform .08s ease, box-shadow .15s ease, border-color .15s;
+  display:flex; gap:13px; align-items:flex-start;
+}
+.door:active{ transform:scale(.985); }
+.door .ic{ font-size:22px; flex:0 0 auto; width:38px; height:38px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; background:#eef4f9; }
+.door.d2 .ic{ background:#eaf3ee; } .door.d3 .ic{ background:#eef2f6; }
+.door h3{ margin:1px 0 3px; font-size:16px; color:var(--navy); }
+.door p{ margin:0; font-size:13px; color:var(--muted); line-height:1.4; }
+.door .cap{ display:inline-block; margin-top:7px; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); }
+.d2 .cap{ color:var(--green); } .d3 .cap{ color:var(--navy); }
+.footnote{ text-align:center; font-size:12px; color:var(--muted); padding:2px 26px 22px; }
+.footnote b{ color:var(--navy); }
+
+/* ---- chat ---- */
+.chat{ padding:18px 14px 8px; display:flex; flex-direction:column; gap:13px; }
+.msg{ max-width:86%; opacity:0; transform:translateY(8px); animation:rise .32s ease forwards; }
+@keyframes rise{ to{ opacity:1; transform:none; } }
+.msg.dojo{ align-self:flex-start; }
+.msg.me{ align-self:flex-end; }
+.who{ display:flex; align-items:center; gap:6px; margin:0 0 4px 2px; }
+.chip{ font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:2px 8px; border-radius:20px; color:#fff; text-transform:uppercase; }
+.c-sensei{ background:var(--navy); } .c-challenger{ background:#b4532e; }
+.c-framer{ background:var(--blue); } .c-auditor{ background:var(--green); }
+.c-connector{ background:#7a5aa6; } .c-reflector{ background:#417c9c; }
+.bubble{
+  background:var(--dojo); border:1px solid var(--dojoBorder); color:var(--ink);
+  padding:11px 14px; border-radius:16px 16px 16px 5px; font-size:15px;
+}
+.me .bubble{ background:var(--user); border-color:var(--user); color:#fff; border-radius:16px 16px 5px 16px; }
+/* metacognition tag under a dojo message */
+.meta{
+  margin:7px 2px 0; font-size:12px; color:var(--navy);
+  background:#fff7e8; border:1px dashed #e4c98a; border-radius:10px;
+  padding:7px 10px; display:flex; gap:7px; align-items:flex-start;
+}
+.meta .b{ font-size:13px; line-height:1.2; }
+.meta em{ font-style:normal; font-weight:700; color:#9a6a12; }
+
+/* typing */
+.typing{ align-self:flex-start; display:flex; gap:4px; padding:12px 15px; background:var(--dojo); border:1px solid var(--dojoBorder); border-radius:16px 16px 16px 5px; }
+.typing span{ width:7px; height:7px; border-radius:50%; background:#9db6cb; animation:blink 1.2s infinite; }
+.typing span:nth-child(2){ animation-delay:.2s; } .typing span:nth-child(3){ animation-delay:.4s; }
+@keyframes blink{ 0%,60%,100%{ opacity:.3; transform:translateY(0);} 30%{ opacity:1; transform:translateY(-3px);} }
+
+/* composer */
+.composer{ flex:0 0 auto; border-top:1px solid var(--line); background:#fff; padding:10px 12px calc(10px + env(safe-area-inset-bottom)); }
+.chips{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:9px; }
+.rchip{
+  border:1.5px solid var(--blue); color:var(--blue); background:#fff; font-family:inherit;
+  font-size:13px; font-weight:500; padding:8px 12px; border-radius:18px; cursor:pointer; text-align:left;
+}
+.rchip:active{ background:var(--blue); color:#fff; }
+.inrow{ display:flex; gap:8px; align-items:flex-end; }
+.inrow textarea{
+  flex:1; resize:none; font-family:inherit; font-size:15px; border:1.5px solid var(--line);
+  border-radius:20px; padding:9px 14px; max-height:96px; line-height:1.35; outline:none;
+}
+.inrow textarea:focus{ border-color:var(--blue); }
+.send{ flex:0 0 auto; width:42px; height:42px; border-radius:50%; border:none; background:var(--blue); color:#fff; font-size:19px; cursor:pointer; }
+.send:disabled{ opacity:.4; }
+.hint{ text-align:center; font-size:11px; color:var(--muted); margin:0 0 8px; }
+
+/* action bar (share / continue) */
+.actbar{ padding:12px; border-top:1px solid var(--line); background:#fff; display:flex; flex-direction:column; gap:8px; }
+.btn{ font-family:inherit; font-size:15px; font-weight:600; border:none; border-radius:12px; padding:13px; cursor:pointer; }
+.btn.primary{ background:var(--blue); color:#fff; }
+.btn.green{ background:var(--green); color:#fff; }
+.btn.ghost{ background:#fff; color:var(--navy); border:1.5px solid var(--line); }
+
+/* share screen */
+.share{ padding:24px 20px; text-align:center; }
+.share h2{ color:var(--navy); font-size:21px; margin:6px 0 6px; }
+.share p{ color:var(--muted); font-size:14.5px; margin:0 auto 18px; max-width:300px; }
+.codebox{ background:var(--navy); color:#fff; border-radius:16px; padding:20px; margin:0 0 14px; }
+.codebox .lbl{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
+.codebox .code{ font-size:34px; font-weight:700; letter-spacing:.16em; margin:6px 0 2px; }
+.codebox .link{ font-size:12.5px; opacity:.82; word-break:break-all; }
+.copied{ font-size:12.5px; color:var(--green); font-weight:600; height:16px; margin-bottom:8px; }
+.waiting{ font-size:13px; color:var(--muted); display:flex; gap:8px; align-items:center; justify-content:center; margin-top:4px; }
+.dot2{ width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.2s infinite; }
+
+/* trace sheet */
+.sheet{ position:absolute; inset:0; background:rgba(20,40,60,.45); display:none; z-index:20; }
+.sheet.open{ display:block; }
+.sheetInner{ position:absolute; left:0; right:0; bottom:0; background:#fff; border-radius:20px 20px 0 0; max-height:82%; display:flex; flex-direction:column; animation:slideup .28s ease; }
+@keyframes slideup{ from{ transform:translateY(100%);} to{ transform:none; } }
+.sheetHdr{ padding:16px 18px 12px; border-bottom:1px solid var(--line); display:flex; align-items:center; }
+.sheetHdr h3{ margin:0; color:var(--navy); font-size:17px; }
+.sheetHdr .x{ margin-left:auto; border:none; background:#eef2f4; width:30px; height:30px; border-radius:50%; font-size:16px; cursor:pointer; color:var(--navy); }
+.sheetBody{ overflow-y:auto; padding:10px 18px 26px; }
+.traceItem{ display:flex; gap:11px; padding:12px 0; border-bottom:1px solid var(--line); }
+.traceItem .n{ flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.traceItem .t b{ color:var(--navy); font-size:14px; } .traceItem .t p{ margin:2px 0 0; font-size:13px; color:var(--muted); }
+.traceEmpty{ text-align:center; color:var(--muted); font-size:14px; padding:30px 10px; }
+.sheetNote{ font-size:12.5px; color:var(--navy); background:var(--dojo); border-radius:10px; padding:10px 12px; margin-top:12px; }
+
+.recap{ margin:6px 14px 2px; background:#f4f9f6; border:1px solid #cfe6da; border-radius:14px; padding:15px 16px; }
+.recap h4{ margin:0 0 8px; color:var(--green); font-size:14px; text-transform:uppercase; letter-spacing:.05em; }
+.recap ol{ margin:0; padding-left:20px; } .recap li{ font-size:14px; margin:5px 0; color:var(--ink); }
+
+.brandfoot{ text-align:center; font-size:11px; color:var(--muted); padding:6px 0 10px; }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="hdr">
+    <img src="data:image/png;base64,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" alt="CTI">
+    <div>
+      <div class="ttl">Symbiotic Thinking Dojo</div>
+      <div class="sub">It makes you think — it doesn't think for you.</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="traceBtn" id="traceBtn" onclick="openTrace()" style="display:none;">🧠 <b id="traceCount">0</b></button>
+  </div>
+
+  <!-- SCREEN: door select -->
+  <div class="screen" id="screenDoors">
+    <div class="hero">
+      <span class="tag">Try it · 2 minutes</span>
+      <h1>What do you want to think through?</h1>
+      <p>Pick one. The Dojo won't answer for you — it'll help you think, then let you pull in another person to go deeper.</p>
+    </div>
+    <div class="doors">
+      <div class="door d1" onclick="start('sharpen')">
+        <div class="ic">🔎</div>
+        <div>
+          <h3>Sharpen your question</h3>
+          <p>Turn the question you came to the conference with into one worth answering.</p>
+          <span class="cap">Curiosity · Self-Directed Learner</span>
+        </div>
+      </div>
+      <div class="door d2" onclick="start('steelman')">
+        <div class="ic">⚖️</div>
+        <div>
+          <h3>Steelman the other side</h3>
+          <p>Take a belief you hold and argue the strongest case against it.</p>
+          <span class="cap">Judgment · The Challenger</span>
+        </div>
+      </div>
+      <div class="door d3" onclick="start('home')">
+        <div class="ic">🏛️</div>
+        <div>
+          <h3>Bring an idea home</h3>
+          <p>Pressure-test an idea from INSPIRE into a small experiment you could actually run.</p>
+          <span class="cap">Experiment mindset · Adaptive Builder</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">Every path ends the same way: you can <b>share your thinking with another person</b> and go deeper together.</div>
+    <div class="brandfoot">Computing Talent Initiative · demo</div>
+  </div>
+
+  <!-- SCREEN: chat -->
+  <div class="screen" id="screenChat" style="display:none;">
+    <div class="chat" id="chat"></div>
+  </div>
+  <div id="composer"></div>
+
+  <!-- SCREEN: share -->
+  <div class="screen" id="screenShare" style="display:none;">
+    <div class="share">
+      <div style="font-size:40px;">🤝</div>
+      <h2>Go deeper — together</h2>
+      <p>You did the thinking. Now hand this to someone else at the conference. They'll pick up your exact thread, and the Dojo will take you both further than either of you got alone.</p>
+      <div class="codebox">
+        <div class="lbl">Your inquiry code</div>
+        <div class="code" id="shareCode">·····</div>
+        <div class="link" id="shareLink">dojo.cti / join</div>
+      </div>
+      <div class="copied" id="copied"></div>
+      <button class="btn primary" onclick="copyLink()">Copy invite link</button>
+      <div style="height:10px;"></div>
+      <button class="btn green" onclick="partnerJoins()">Simulate: a partner joins →</button>
+      <div style="height:10px;"></div>
+      <button class="btn ghost" onclick="reset()">Start over</button>
+      <div class="waiting" id="waiting" style="display:none;"><span class="dot2"></span> Waiting for someone to enter the code…</div>
+    </div>
+  </div>
+
+  <!-- trace sheet -->
+  <div class="sheet" id="sheet">
+    <div class="sheetInner">
+      <div class="sheetHdr"><h3>🧠 Your thinking, made visible</h3><button class="x" onclick="closeTrace()">✕</button></div>
+      <div class="sheetBody">
+        <div id="traceList"></div>
+        <div class="sheetNote">This trace is the point. The Dojo's job isn't to give you answers — it's to make your own thinking visible, so you can see it, question it, and take it further. That's metacognition.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---------- flow scripts ----------
+// step types: 'dojo' (message + optional meta + responses), 'end' (offer share)
+const FLOWS = {
+  sharpen: {
+    title:'Sharpen your question',
+    steps:[
+      {who:'sensei', text:"Before ten sessions pull you in ten directions — what's one question about AI and learning you're hoping this convening helps you answer? Say it however it comes out.",
+       meta:{tag:'Start from your question', note:"We begin with what you care about, not what we want to say."},
+       chips:["How do we use AI without students losing the skill?","What should we even be teaching now?","How do we know AI is helping, not hurting?"]},
+      {who:'framer', text:"That's a real one. I'm not going to answer it — I'm going to help you sharpen it. What do you already believe the answer is, even a little?",
+       meta:{tag:'Surface what you already think', note:"Naming your current belief is the first metacognitive move."},
+       chips:["That it depends on the student","That we're moving too fast","Honestly, I'm not sure yet"]},
+      {who:'challenger', text:"Okay. Now the hard part: what would have to happen for you to change that belief? Name one thing that would prove you wrong.",
+       meta:{tag:'Name your own falsification', note:"A question you can be wrong about is a question worth asking."},
+       chips:["If students did worse without the AI","If they couldn't explain their own work","I'm not sure what would"]},
+      {who:'sensei', text:"Look what you have now: “What evidence would show our students are thinking more, not less, when they use AI?” You didn't get an answer from me. You built a sharper question. That's the skill.",
+       meta:{tag:'Vague hope → testable question', note:"You did the thinking. The Dojo only asked."},
+       chips:null}
+    ],
+    partner:{who:'connector', text:"Maria entered your code. She answered the same question from her side — she thinks the risk is highest in first-year courses; you think it's about the task, not the year. Here's the question that's now yours together: does AI's effect on thinking depend more on who the student is, or what the task asks of them? Take that into the next session.",
+      meta:{tag:'One sharper question, from two people', note:"Neither of you walked in with this one. That's Integrative Solving."}},
+    recap:["You started from your own question, not ours.","You named what you already believed.","You said what would change your mind.","You left with a testable question — and a partner to chase it with."]
+  },
+  steelman: {
+    title:'Steelman the other side',
+    steps:[
+      {who:'sensei', text:"Pick one you have a real opinion on — one you lean against.",
+       meta:{tag:'Pick a belief you hold', note:"We're about to turn it around on purpose."},
+       chips:["Students should be allowed to use AI on everything","AI tutors can do much of what instructors do","Grades should reflect the work, not the tool"]},
+      {who:'challenger', text:"You lean against that. Good. Now argue for it. Give me the strongest version — the one a smart person who truly believes it would make. No strawman.",
+       meta:{tag:'Argue the side you resist', note:"This is where thinking gets uncomfortable, and honest."},
+       chips:["It mirrors how real work actually happens now","Banning it just hides the skill gap","It frees time for higher-order thinking"]},
+      {who:'challenger', text:"That's the easy version. Push further: what would have to be true about students, or about teaching, for that view to be genuinely right?",
+       meta:{tag:'Past your first answer', note:"The Dojo won't let you coast on a slogan."},
+       chips:["That we assess thinking, not output","That students want to learn, not just pass","I need a second to think…"]},
+      {who:'sensei', text:"Notice what just happened. You made the best case for a position you walked in against — better than most people who hold it can. That's judgment. It's yours, and no AI built it for you.",
+       meta:{tag:'You steelmanned an opposing view', note:"Understanding the other side is the muscle AI can't grow for you."},
+       chips:null}
+    ],
+    partner:{who:'connector', text:"Devon entered your code — and he actually holds the view you just argued against. One rule before you reply to him: restate his strongest point back, in a way he'd agree with. Do that, and you'll find the one real thing you disagree on. That's a better conversation than this hall has had all day.",
+      meta:{tag:'Restate before you rebut', note:"That single rule is how disagreement gets honest."}},
+    recap:["You picked a belief you hold.","You argued the strongest case against it.","You pushed past your first, easy answer.","You're set up to disagree honestly with a real person."]
+  },
+  home: {
+    title:'Bring an idea home',
+    steps:[
+      {who:'sensei', text:"What's one idea from INSPIRE so far that you're excited about? Tell me where it might fit — or fail — at your institution.",
+       meta:{tag:'Start from real enthusiasm', note:"We'll turn excitement into something you can test."},
+       chips:["AI-assisted advising","Rethinking assessment for the AI age","A shared AI-literacy course"]},
+      {who:'framer', text:"I won't tell you how to roll it out. First question: who benefits most if it works — and who is going to resist it?",
+       meta:{tag:'Name winners and resisters', note:"Before any plan: who's it for, and who pushes back."},
+       chips:["Students win; faculty may resist","Advisors win; IT and budget resist","Honestly, not sure who resists"]},
+      {who:'auditor', text:"Good. Now shrink it: what's the smallest version you could test in about six weeks — small enough that being wrong is cheap?",
+       meta:{tag:'Shrink it to a test', note:"A six-week test you can afford to be wrong about. That's the experiment habit."},
+       chips:["One course, one section","One cohort of advisees","A two-week pilot with volunteers"]},
+      {who:'auditor', text:"Last one: what would you have to see to call it a success — or to kill it? Decide that now, before you start.",
+       meta:{tag:'Pick your evidence up front', note:"Deciding the signal before the test is what keeps you honest."},
+       chips:["Students can explain their reasoning better","Higher engagement, same rigor","Fewer advising bottlenecks"]},
+      {who:'sensei', text:"You came in with an idea. You're leaving with a six-week test, the people it touches, and a way to know if it worked. That's the whole move — and it's how we run everything at CTI.",
+       meta:{tag:'Idea → runnable experiment', note:"Short, measured, honest. You built it, not me."},
+       chips:null}
+    ],
+    partner:{who:'connector', text:"You pulled in Aisha from your campus. She just added three things you didn't: the budget line, the provost's timeline, and who actually owns advising. The Dojo folded them in — here's a sharper first experiment that survives contact with your real institution. Two people who know different parts of the same system just framed a better problem.",
+      meta:{tag:'Two people, one system', note:"Connecting perspectives to frame the real problem — that's the Integrative Solver."}},
+    recap:["You started from an idea you liked.","You named who benefits and who resists.","You shrank it to a six-week test.","You set your evidence — and made it real with a colleague."]
+  }
+};
+
+const CHAR={sensei:'Sensei',challenger:'Challenger',framer:'Framer',auditor:'Auditor',connector:'Connector',reflector:'Reflector'};
+
+let flow=null, key=null, step=0, trace=[], ended=false;
+
+const $=id=>document.getElementById(id);
+const chat=$('chat');
+
+function start(k){
+  key=k; flow=FLOWS[k]; step=0; trace=[]; ended=false;
+  chat.innerHTML=''; renderTraceCount();
+  $('screenDoors').style.display='none';
+  $('screenShare').style.display='none';
+  $('screenChat').style.display='block';
+  $('traceBtn').style.display='flex';
+  nextDojo();
+}
+
+function nextDojo(){
+  const s=flow.steps[step];
+  showTyping(()=>{
+    addDojo(s);
+    if(s.meta){ trace.push(s.meta); renderTraceCount(); }
+    if(s.chips){ renderComposer(s.chips); }
+    else { renderEndBar(); }
+  });
+}
+
+function showTyping(cb){
+  setComposer('');
+  const t=document.createElement('div'); t.className='typing'; t.id='typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  chat.appendChild(t); scroll();
+  setTimeout(()=>{ t.remove(); cb(); }, 780);
+}
+
+function addDojo(s){
+  const wrap=document.createElement('div'); wrap.className='msg dojo';
+  wrap.innerHTML='<div class="who"><span class="chip c-'+s.who+'">'+CHAR[s.who]+'</span></div>'+
+    '<div class="bubble">'+s.text+'</div>'+
+    (s.meta?'<div class="meta"><span>🧠</span><div class="b"><em>'+s.meta.tag+'.</em> '+s.meta.note+'</div></div>':'');
+  chat.appendChild(wrap); scroll();
+}
+function addMe(text){
+  const wrap=document.createElement('div'); wrap.className='msg me';
+  wrap.innerHTML='<div class="bubble">'+escapeHtml(text)+'</div>';
+  chat.appendChild(wrap); scroll();
+}
+
+function answer(text){
+  addMe(text);
+  step++;
+  if(step<flow.steps.length){ nextDojo(); }
+}
+
+// composer
+function setComposer(html){ $('composer').innerHTML=html; }
+function renderComposer(chips){
+  let html='<div class="composer"><div class="hint">Tap a response, or write your own — there are no wrong answers.</div><div class="chips">';
+  chips.forEach((c,i)=>{ html+='<button class="rchip" onclick="answer('+jsstr(c)+')">'+c+'</button>'; });
+  html+='</div><div class="inrow"><textarea id="ta" rows="1" placeholder="Type your answer…" oninput="growTa(this);toggleSend()"></textarea>'+
+    '<button class="send" id="sendBtn" disabled onclick="sendText()">↑</button></div></div>';
+  setComposer(html);
+}
+function renderEndBar(){
+  ended=true;
+  addRecap();
+  setComposer('<div class="actbar">'+
+    '<button class="btn green" onclick="goShare()">Share this thinking with someone →</button>'+
+    '<button class="btn ghost" onclick="reset()">Try another path</button></div>');
+}
+function addRecap(){
+  const r=document.createElement('div'); r.className='recap';
+  r.innerHTML='<h4>Your thinking, made visible</h4><ol>'+flow.recap.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
+  chat.appendChild(r); scroll();
+}
+
+function growTa(t){ t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,96)+'px'; }
+function toggleSend(){ const v=$('ta').value.trim(); $('sendBtn').disabled=!v; }
+function sendText(){ const v=$('ta').value.trim(); if(!v) return; answer(v); }
+
+// share
+function goShare(){
+  $('screenChat').style.display='none';
+  setComposer('');
+  $('screenShare').style.display='block';
+  const code = randCode();
+  $('shareCode').textContent=code;
+  $('shareLink').textContent='dojo.computingtalentinitiative.org/join/'+code;
+  $('copied').textContent=''; $('waiting').style.display='none';
+}
+function copyLink(){
+  const link='dojo.computingtalentinitiative.org/join/'+$('shareCode').textContent;
+  if(navigator.clipboard){ navigator.clipboard.writeText(link).catch(()=>{}); }
+  $('copied').textContent='Link copied — text it to someone nearby.';
+}
+function partnerJoins(){
+  $('waiting').style.display='flex';
+  setTimeout(()=>{
+    $('screenShare').style.display='none';
+    $('screenChat').style.display='block';
+    const p=flow.partner;
+    showTyping(()=>{
+      addDojo(p);
+      if(p.meta){ trace.push(p.meta); renderTraceCount(); }
+      setComposer('<div class="actbar">'+
+        '<button class="btn primary" onclick="openTrace()">See your thinking trace 🧠</button>'+
+        '<button class="btn ghost" onclick="reset()">Start over</button></div>');
+    });
+  }, 1400);
+}
+
+function reset(){
+  flow=null; step=0; trace=[]; ended=false;
+  $('screenChat').style.display='none';
+  $('screenShare').style.display='none';
+  setComposer('');
+  $('traceBtn').style.display='none';
+  $('screenDoors').style.display='block';
+  window.scrollTo(0,0);
+}
+
+// trace sheet
+function renderTraceCount(){ $('traceCount').textContent=trace.length; }
+function openTrace(){
+  const list=$('traceList');
+  if(!trace.length){ list.innerHTML='<div class="traceEmpty">Your metacognitive moves will show up here as you go.</div>'; }
+  else{ list.innerHTML=trace.map((m,i)=>'<div class="traceItem"><div class="n">'+(i+1)+'</div><div class="t"><b>'+m.tag+'</b><p>'+m.note+'</p></div></div>').join(''); }
+  $('sheet').classList.add('open');
+}
+function closeTrace(){ $('sheet').classList.remove('open'); }
+
+// utils
+function scroll(){ const sc=$('screenChat'); requestAnimationFrame(()=>{ sc.scrollTop=sc.scrollHeight; }); }
+function randCode(){ const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s=''; for(let i=0;i<4;i++){ s+=a[Math.floor(Math.random()*a.length)]; } return 'DOJO-'+s; }
+function escapeHtml(t){ return t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function jsstr(s){ return "'"+s.replace(/'/g,"\\'")+"'"; }
+</script>
+</body>
+</html>
