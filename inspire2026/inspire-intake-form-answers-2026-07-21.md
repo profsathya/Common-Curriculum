@@ -37,12 +37,12 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 
 **Q12 · 100–200 word session description** — *required.* (Recommended, 166 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
 
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? The difficulty is structural: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, while being grounded in the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? The difficulty is structural: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology while being grounded in the rigor and depth of academic values. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes, Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, questions, ideas, and partners who want to build and test what comes next with us.
 
-*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology, while being grounded in the rigor and depth of the academy."):
+*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology while being grounded in the rigor and depth of academic values."):
 - *2:* "…moves at the speed of the technology while keeping the depth and care of good education."
 - *3 (bold):* "…is built for both: fast enough to keep pace with the technology, grounded enough to hold the depth of real learning."
-- *4 (tight):* "…keeps pace with the technology while holding the depth of the academy."
+- *4 (tight):* "…keeps pace with the technology while holding the depth of academic values."
 
 *Connector alternatives* (swap "The difficulty is structural:"): "At its root is a mismatch of speed and boundaries:" · "Here is the bind:" · "The reason is structural:" · or drop the connector and let the line stand ("…in diverse learners? A fast, boundary-crossing technology has met a slow, boundary-bound system.").
 
@@ -53,7 +53,7 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 → Depends on print: **Yes** if printing on paper; **No** if you bring a self-standing foam-core poster (Selena's email says self-supporting foam-core needs no backing). Recommend **Yes** unless you've committed to foam-core.
 
 **Q15 · Will you require a table? (select all that apply)** — *required, checkboxes.* No electrical outlets at tables.
-→ Check **"Yes, I will need a table during the 45-minute gallery walk in order to facilitate a demo/interactive element"** (for the phone-Dojo demo, cards, and a battery device). Skip the 2-day trifold-table option unless going the trifold route.
+→ **No** (Sathya’s lean, 7/21). A table isn’t load-bearing: the phone-Dojo demo runs off a QR on the poster (no table or power), and fliers travel best as a **"Take a flier" QR on the poster** plus a small stack to hand out during the 45-minute gallery walk. The QR also covers the two unstaffed display days, where a physical stack can’t sit without a table. The gallery-walk table is a light, offered option if you ever want a surface for printed fliers or a tablet — but it isn’t needed. **To-do if No: add a "Take a flier" QR to the poster.**
 
 **Q16 · [Section: Materials, Accommodations, Etc.]** — section header.
 
@@ -74,4 +74,4 @@ Poster **dimensions / max display size** aren't in the form or her email. Send o
 
 ## Still-open decisions this forces
 
-Co-presenters + their Eventbrite registrations (Q3–Q4) · subtitle pick (Q11) · easel-and-backing print method (Q13–Q14) · optional image (Q19). (Q12 description is final.)
+Co-presenters + their Eventbrite registrations (Q3–Q4) · subtitle pick (Q11) · easel-and-backing print method (Q13–Q14) · table = leaning No (Q15) · optional image (Q19). (Q12 description is final.)
