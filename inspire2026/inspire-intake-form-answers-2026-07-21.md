@@ -35,16 +35,16 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 **Q11 · Optional Subtitle** — *optional.* (Agreed 7/21.)
 → **A framework that helps all learners build Superagency and Human Value in the age of AI**
 
-**Q12 · 100–200 word session description** — *required.* (Recommended, 169 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
+**Q12 · 100–200 word session description** — *required.* (Recommended, 166 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
 
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, while being grounded in the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? The difficulty is structural: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, while being grounded in the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
 
 *Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology, while being grounded in the rigor and depth of the academy."):
 - *2:* "…moves at the speed of the technology while keeping the depth and care of good education."
 - *3 (bold):* "…is built for both: fast enough to keep pace with the technology, grounded enough to hold the depth of real learning."
 - *4 (tight):* "…keeps pace with the technology while holding the depth of the academy."
 
-*Connector alternatives* (swap "This is what that struggle looks like:"): "Underneath it is a structural mismatch:" · "It is a collision of pace and boundaries:"
+*Connector alternatives* (swap "The difficulty is structural:"): "At its root is a mismatch of speed and boundaries:" · "Here is the bind:" · "The reason is structural:" · or drop the connector and let the line stand ("…in diverse learners? A fast, boundary-crossing technology has met a slow, boundary-bound system.").
 
 **Q13 · Will you require an easel for your poster?** — *required, MC.*
 → **Yes, I will need an easel** (recommended)
