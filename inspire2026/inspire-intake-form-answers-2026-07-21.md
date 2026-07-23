@@ -30,22 +30,16 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 **Q9 · [Section: Poster Presentations]** — section header, nothing to enter.
 
 **Q10 · Title (max 10–12 words)** — *required.*
-→ **Human Value That Grows With AI Capability** (7 words)
+→ **Human Value that Grows with AI Capability** (7 words)
 
-**Q11 · Optional Subtitle** — *optional.* Make it attention-capturing (Sathya). Options:
+**Q11 · Optional Subtitle** — *optional.* (Agreed 7/21.)
+→ **A framework that helps all learners build Superagency and Human Value in the age of AI**
 
-- **A (recommended, your line polished):** *A framework grounded in Symbiotic Thinking that helps diverse learners build Superagency and Human Value.*
-- **B (affirmative reach):** *Grounded in Symbiotic Thinking: a framework that helps learners from every community build Superagency and Human Value.*
-- **C (punchier):** *One framework, grounded in Symbiotic Thinking, that builds Superagency and Human Value in every learner.*
-- **D (bold, three-beat):** *Symbiotic Thinking as the foundation. Superagency and Human Value as the goal. Every learner in reach.*
+**Q12 · 100–200 word session description** — *required.* (Recommended, 169 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
 
-Note: the poster headline already says "Human Value," so on the poster this subtitle repeats it (fine as reinforcement); on the form it stands alone and reads great. Pick one; I can also place it on the poster hero.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, while being grounded in the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
 
-**Q12 · 100–200 word session description** — *required.* (Recommended, 168 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
-
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, with the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial, and develops three durable capabilities: Self-Directed Learning, Integrative Solving, and Adaptive Building, toward two outcomes we can observe: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
-
-*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology, with the rigor and depth of the academy."):
+*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology, while being grounded in the rigor and depth of the academy."):
 - *2:* "…moves at the speed of the technology while keeping the depth and care of good education."
 - *3 (bold):* "…is built for both: fast enough to keep pace with the technology, grounded enough to hold the depth of real learning."
 - *4 (tight):* "…keeps pace with the technology while holding the depth of the academy."
