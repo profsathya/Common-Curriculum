@@ -30,7 +30,7 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 **Q9 · [Section: Poster Presentations]** — section header, nothing to enter.
 
 **Q10 · Title (max 10–12 words)** — *required.*
-→ **Human Value That Grows With AI** (6 words)
+→ **Human Value That Grows With AI Capability** (7 words)
 
 **Q11 · Optional Subtitle** — *optional.* Make it attention-capturing (Sathya). Options:
 
@@ -41,11 +41,16 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 
 Note: the poster headline already says "Human Value," so on the poster this subtitle repeats it (fine as reinforcement); on the form it stands alone and reads great. Pick one; I can also place it on the poster hero.
 
-**Q12 · 100–200 word session description** — *required.* (Recommended, 166 words. Paste as-is.)
+**Q12 · 100–200 word session description** — *required.* (Recommended, 168 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
 
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI), an institute at Cal State Monterey Bay, is built to move at the technology's speed, grounded in the deliberation and depth of academic values, working on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial, and develops three durable capabilities: Self-Directed Learning, Integrative Solving, and Adaptive Building, toward two outcomes we can observe: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, with the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial, and develops three durable capabilities: Self-Directed Learning, Integrative Solving, and Adaptive Building, toward two outcomes we can observe: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
 
-*Connector alternatives* (swap "This is what that struggle looks like:"): "Underneath it is a structural mismatch:" · "The struggle has a simple shape:" · "It is a collision of pace and boundaries:"
+*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology, with the rigor and depth of the academy."):
+- *2:* "…moves at the speed of the technology while keeping the depth and care of good education."
+- *3 (bold):* "…is built for both: fast enough to keep pace with the technology, grounded enough to hold the depth of real learning."
+- *4 (tight):* "…keeps pace with the technology while holding the depth of the academy."
+
+*Connector alternatives* (swap "This is what that struggle looks like:"): "Underneath it is a structural mismatch:" · "It is a collision of pace and boundaries:"
 
 **Q13 · Will you require an easel for your poster?** — *required, MC.*
 → **Yes, I will need an easel** (recommended)

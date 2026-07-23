@@ -4,7 +4,7 @@ Sathya's calls (2026-07-21, via question widget): lead message = **"human value 
 
 Sathya's follow-up calls (2026-07-21, same day):
 
-1. Headline wording: **"Human Value That Grows With AI."**
+1. Headline wording: **"Human Value That Grows With AI Capability."**
 2. **Positive vision only — no comparative framing.** Present what CTI builds and let the uniqueness come through inherently. Constructions like "everyone does X, we do Y" and "not X, but Y" stay out of the copy. (Applied throughout this plan.)
 3. **Fliers are in**: one-page fliers with specific focus areas. Two candidate structures — by audience or by focus area ("understand X better"). His call: **draft a sample of each structure first**, compare, then choose the set. Samples: `alan/inspire-flier-sample-audience.html` + `alan/inspire-flier-sample-focus.html`. If the by-audience structure wins, the set is: **Faculty · Administrators (all three CA segments + Chancellor's offices) · Policymakers** (see the audience section below).
 
@@ -41,7 +41,7 @@ These four are the poster's real differentiator and the reason the "hypothesis, 
 
 Headline (his wording, 7/21):
 
-> **Human Value That Grows With AI.**
+> **Human Value That Grows With AI Capability.**
 > We are building and testing how: in public, with real learners.
 
 Framing rule for every line of copy (his call, 7/21): positive vision, stated in our own terms. The uniqueness shows through what CTI does — an R&D institute testing how human capability grows alongside AI capability, holding the discipline that we teach what we practice ourselves, with data anyone can check. "Nobody has the full answer; we are finding out in the open" is the honest posture, and it lands with a Learning Lab research crowd. The Week 5 audit rule carries over too: lead with the gain.
@@ -126,14 +126,14 @@ From Selena's 7/20 email (the offer): CTI gets one added poster in the gallery w
 - **Format is a 45-minute gallery walk plus two full days of display.** The poster works unattended for two days; the staffed demo window is 45 minutes. Our QR-first design is exactly right for this.
 - **No electrical outlets at tables**, and presenters bring their own laptop/tablet. The phone-based Dojo demo needs no power; any device we bring runs on battery.
 - **Poster logistics asked, not specified:** easel yes/no, foam-board backing yes/no, and a table choice — demo table for the 45-minute gallery walk, a 2-day table for a self-standing trifold, or none. Physical dimensions are not in the form; confirm with Selena or the acceptance email before print.
-- **Title: max 10–12 words** (they may edit, with our approval). "Human Value That Grows With AI" is 6 — fits with room for a tag.
+- **Title: max 10–12 words** (they may edit, with our approval). "Human Value That Grows With AI Capability" is 6 — fits with room for a tag.
 - **100–200 word session description** that draws attendees (draft below, for Sathya's edit).
 - **Up to 4 presenters** listed for a poster; **every listed presenter must be registered via INSPIRE2026.eventbrite.com** and the form asks us to confirm that — so the co-presenter list (Michelle? Leslie?) and registrations come before submission.
 - Optional 300 ppi image upload (headshot, group photo, or project image); accessibility-needs and other-materials questions; **everything submitted may be used publicly in their marketing**.
 
-Session description (166 words, Sathya’s final 7/21 — CTI matches the technology’s speed while grounded in academic deliberation/depth; Symbiotic Thinking defined as "the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial"):
+Session description (168 words, Sathya’s final 7/21 — CTI sentence split + plainened: works at the technology’s speed, with the rigor and depth of the academy):
 
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI), an institute at Cal State Monterey Bay, is built to move at the technology's speed, grounded in the deliberation and depth of academic values, working on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial, and develops three durable capabilities: Self-Directed Learning, Integrative Solving, and Adaptive Building, toward two outcomes we can observe: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? This is what that struggle looks like: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology, with the rigor and depth of the academy. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial, and develops three durable capabilities: Self-Directed Learning, Integrative Solving, and Adaptive Building, toward two outcomes we can observe: Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, hard questions, and partners who want to build and test what comes next with us.
 
 Decisions the form forces (Sathya): co-presenter list + Eventbrite registrations; easel vs self-standing trifold (print form drives this); table choice (recommend: yes to the 45-minute gallery-walk table, for table cards and a battery tablet); the description; optional image (the primary logo or a pilot photo per the brand guide's photo checklist).
 
