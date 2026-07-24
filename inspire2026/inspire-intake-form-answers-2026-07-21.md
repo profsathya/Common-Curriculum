@@ -35,16 +35,12 @@ Form: "Fall 2026 INSPIRE Convening – Learning Track Presenter Information Form
 **Q11 · Optional Subtitle** — *optional.* (Agreed 7/21.)
 → **A framework that helps all learners build Superagency and Human Value in the age of AI**
 
-**Q12 · 100–200 word session description** — *required.* (Recommended, 171 words. The wordy CTI sentence was split in two and plainened. Paste as-is.)
+**Q12 · 100–200 word session description** — *required.* (Recommended, 183 words. Paste as-is.)
 
-> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? A core challenge in answering this question is structural: a fast, boundary-crossing technology meets a slow, boundary-bound system. The Computing Talent Initiative (CTI) is an institute at Cal State Monterey Bay built to work at the speed of the technology while being grounded in the rigor and depth of academic values. We work on that question with learners across California: high schoolers, post-secondary learners, new graduates, and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes, Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, questions, ideas, and partners who want to build and test what comes next with us.
+> As AI capability grows, post-secondary institutions face a hard question: which human capabilities matter most now, and how do we nurture, cultivate, or grow them in diverse learners? A core challenge in answering this question is a structural mismatch: a fast, boundary-crossing technology meeting a slow, boundary-bound system. For more than 15 years, the Computing Talent Initiative (CTI), an institute at Cal State Monterey Bay, has worked at that intersection, moving at the speed of technological change while staying grounded in the rigor and depth of academic values. Our pilots explore the question with learners across California, from high schoolers and post-secondary learners to new graduates and mid-career professionals. Our framework rests on Symbiotic Thinking, the human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial. It develops three durable capabilities (Self-Directed Learning, Integrative Solving, and Adaptive Building) toward two observable outcomes, Superagency and Human Value. The poster shows the framework in one view, and the four pilots testing it. We are looking for reactions, questions, ideas, and partners who want to build and test what comes next with us.
 
-*Alternatives for the CTI sentence* (swap "…built to work at the speed of the technology while being grounded in the rigor and depth of academic values."):
-- *2:* "…moves at the speed of the technology while keeping the depth and care of good education."
-- *3 (bold):* "…is built for both: fast enough to keep pace with the technology, grounded enough to hold the depth of real learning."
-- *4 (tight):* "…keeps pace with the technology while holding the depth of academic values."
 
-*Connector alternatives* (swap "A core challenge in answering this question is structural:"): "The core challenge is structural:" (shorter) · "A core difficulty in answering this question is structural:" · "At its root is a mismatch of speed and boundaries:" · or drop the connector and let the line stand.
+*Opener note:* the challenge now reads "A core challenge... is a structural mismatch: a fast, boundary-crossing technology meeting a slow, boundary-bound system." Plainer option if you want to drop the metaphor: "…the technology is evolving faster than our institutions can adapt."
 
 **Q13 · Will you require an easel for your poster?** — *required, MC.*
 → **Yes, I will need an easel** (recommended)
@@ -74,4 +70,4 @@ Poster **dimensions / max display size** aren't in the form or her email. Send o
 
 ## Still-open decisions this forces
 
-Co-presenters + their Eventbrite registrations (Q3–Q4) · subtitle pick (Q11) · easel-and-backing print method (Q13–Q14) · table = leaning No (Q15) · optional image (Q19). (Q12 description is final.)
+Co-presenters + their Eventbrite registrations (Q3–Q4) · easel-and-backing print method (Q13–Q14) · table = leaning No (Q15) · optional image (Q19). (Q12 description is final.)
