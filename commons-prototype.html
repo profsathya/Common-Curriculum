@@ -138,6 +138,26 @@
   .legend ul{padding-left:19px;} .legend li{font-size:.88rem; color:var(--ink2); margin-top:6px;}
   .legend li b{color:var(--ink);}
   footer{margin-top:26px; font-size:.82rem; color:var(--ink3); text-align:center;}
+  .lamp{display:inline-block; width:11px; height:11px; border-radius:50%;}
+  .lamp.g{background:#38a169;} .lamp.y{background:#d69e2e;} .lamp.r{background:#c53030;}
+  td.act{white-space:nowrap; text-align:right;}
+
+  .phone{width:274px; flex:none; background:#1a2332; border-radius:34px; padding:11px; box-shadow:0 8px 26px rgba(0,0,0,.22); position:relative;}
+  .pnotch{position:absolute; top:11px; left:50%; transform:translateX(-50%); width:92px; height:20px; background:#1a2332; border-radius:0 0 13px 13px; z-index:2;}
+  .pscreen{background:#fff; border-radius:25px; overflow:hidden; min-height:470px; display:flex; flex-direction:column;}
+  .phead{background:var(--navy); color:#fff; font-size:.76rem; font-weight:650; padding:26px 14px 10px; text-align:center;}
+  .pbody{padding:13px 14px 14px; flex:1; display:flex; flex-direction:column;}
+  .rec{display:flex; align-items:center; gap:7px; font-size:.72rem; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:.06em;}
+  .rec .pulse{background:var(--red);}
+  .pwho{font-size:1.12rem; font-weight:700; margin-top:9px;}
+  .psub{font-size:.75rem; color:var(--ink3);}
+  .ptx{margin-top:11px; font-size:.79rem; color:var(--ink2); flex:1; overflow:hidden;}
+  .ptx p{margin-bottom:7px;} .ptx b{color:var(--ink);}
+  .pconfirm{border:1px solid var(--amber); background:#fffaf0; border-radius:10px; padding:11px 12px; margin-top:8px;}
+  .pc-q{font-size:.75rem; color:#7a5c12;}
+  .pc-a{font-size:.95rem; font-weight:700; margin:4px 0 9px;}
+  .pc-b{display:flex; gap:7px;}
+  .pbtns{margin-top:11px;}
   @media(max-width:640px){ .two{grid-template-columns:1fr;} .codebox .code{font-size:2rem;} }
 </style>
 </head>
@@ -323,11 +343,24 @@
     <div class="screen" id="s-livein">
       <h2 class="t">In conversation — Daniel Ortiz</h2>
       <p class="lede">You're in the same room, so you see each other's names here. Capture as you go, then write the summary yourself.</p>
+      <div class="banner" id="micNag" style="border-color:var(--teal); background:#f6fdfc;">
+        <div class="bt"><b>You started this conversation, so you hold the microphone.</b> Put your laptop between you and turn it on — you'll both get a summary drafted from it afterwards.</div>
+        <button class="btn sm" onclick="micOn()">Turn on the microphone</button>
+        <button class="btn ghost sm" onclick="document.getElementById('micNag').style.display='none'">Take notes instead</button>
+      </div>
       <div class="thread">
-        <div class="senseibar"><span class="pulse"></span><span>Capturing — microphone on</span></div>
+        <div class="senseibar" id="micBar" style="display:none;"><span class="pulse"></span><span>Recording — both of you can stop this at any time</span>
+          <button class="btn ghost sm" style="margin-left:auto;" onclick="micOff()">Stop</button></div>
         <div class="msg"><div class="mav">DO</div><div class="mb"><div class="mn">Daniel Ortiz</div><div class="mt">…so the part I keep avoiding is asking anyone for help, because then they'd know I'm behind.</div></div></div>
         <div class="msg"><div class="mav me">MR</div><div class="mb"><div class="mn">Mireya (you)</div><div class="mt">How long have you been sitting with it?</div></div></div>
+        <div id="liveT"></div>
       </div>
+      <div id="voiceCard" class="banner" style="display:none; border-color:var(--sensei); background:#f6fdfc;">
+        <div class="bt"><b>The Sensei has something to say.</b> <span style="color:var(--ink2);">It won't speak — glance down when you reach a natural pause.</span></div>
+        <button class="btn sm" onclick="alert('Shows the question on screen. Neither of you is interrupted mid-sentence.')">Read it</button>
+        <button class="btn ghost sm" onclick="document.getElementById('voiceCard').style.display='none'">Later</button>
+      </div>
+      <div class="note"><b>For Sergio — this is the hard one, and I'd like to talk about it before you build it.</b><br><br>Capturing the audio and transcribing it is work but it's known work. What I don't think either of us has solved is what the Sensei interjecting <i>means</i> in a spoken conversation. Everything you demoed assumes two people looking at a screen — "May I interject?" with a timer works beautifully there. In the room they're looking at each other, and nobody is watching the laptop. A card that waits quietly for them to glance down is my first guess, and it may well be wrong.<br><br>Two other things I'd want us to be honest about. One microphone in the middle of a table, in a room where eight other pairs are talking, is a genuinely hard audio problem — telling who said what will be rough, and the pair next to them will bleed in. And students need to be told plainly that they're being recorded, with a stop button that actually stops it.<br><br>So my instinct is to split this: capture and transcribe first, with the summary drafted afterwards, and the Sensei staying in the typed conversation. Live voice guidance gets its own design pass rather than a rushed one. Tell me if you see it differently.</div>
       <h3 class="s">Your summary</h3>
       <div class="field"><textarea placeholder="In your own words — what did you talk about, and what changed?">Daniel's stuck point isn't the material, it's asking for help. We worked out that he'd be fine asking a peer but not the instructor, so his first move is to ask one person in his group this week.</textarea></div>
       <div class="fb" style="border-left-color:var(--sensei);"><div class="h">Draft from the Sensei <span class="aitag">AI generated</span></div><p>A summary was drafted from the transcript. Edit it into your own words before submitting — what you submit is what counts.</p></div>
@@ -477,14 +510,15 @@
       <div id="thirdDone" class="banner" style="display:none; border-color:var(--green); background:#f0f9f3;">
         <div class="bt">Third seat open — one group of three, and only one. Everyone else stays in pairs.</div>
       </div>
-      <h3 class="s">Rooms</h3>
+      <h3 class="s">Rooms — where to walk</h3>
       <table>
-        <tr><th>Code</th><th>Who</th><th>Started</th><th>Status</th></tr>
-        <tr><td><code class="mono">K7RM</code></td><td>Mireya R. · Daniel O.</td><td>10:04</td><td><span class="pill p-live">Talking</span></td></tr>
-        <tr><td><code class="mono">P4WT</code></td><td>Jordan C. · Priya N.</td><td>10:05</td><td><span class="pill p-live">Talking</span></td></tr>
-        <tr><td><code class="mono">R9HK</code></td><td>Marcus L. · Elena V.</td><td>10:05</td><td><span class="pill p-done">Summary in</span></td></tr>
-        <tr><td>—</td><td>Aisha B.</td><td>—</td><td><span class="pill p-open" id="aishaStat">Waiting</span></td></tr>
+        <tr><th></th><th>Code</th><th>Who</th><th>Signal</th><th></th></tr>
+        <tr><td><span class="lamp g"></span></td><td><code class="mono">K7RM</code></td><td>Mireya R. · Daniel O.</td><td>Both talking, capture running, 14 min in</td><td class="act"><button class="btn ghost sm" onclick="alert('Message sent to this room.')">Message</button></td></tr>
+        <tr><td><span class="lamp g"></span></td><td><code class="mono">R9HK</code></td><td>Marcus L. · Elena V. · Aisha B.</td><td>Summary submitted</td><td class="act"><button class="btn ghost sm" onclick="alert('Opens what they submitted.')">Read</button></td></tr>
+        <tr><td><span class="lamp y"></span></td><td><code class="mono">P4WT</code></td><td>Jordan C. · Priya N.</td><td>One of them has said almost nothing for 6 minutes</td><td class="act"><button class="btn ghost sm" onclick="alert('Message sent to this room.')">Message</button> <button class="btn ghost sm" onclick="alert('On Zoom this drops you into their breakout room. In person, it tells you where to walk.')">Join</button></td></tr>
+        <tr><td><span class="lamp r"></span></td><td><code class="mono">MQ4J</code></td><td>Sam O. · Leo P.</td><td>Paired 9 minutes ago, capture never started</td><td class="act"><button class="btn sm" onclick="alert('Message sent to this room.')">Message</button> <button class="btn ghost sm" onclick="alert('On Zoom this drops you into their breakout room. In person, it tells you where to walk.')">Join</button></td></tr>
       </table>
+      <div class="note"><b>For Sergio — this is the port, not a new build.</b> The red / yellow / green facilitator dashboard with nudges already exists in Jeremy's career-workshop tool; we decided in July to bring those behaviours across rather than rewrite them. Worth looking at his before starting.<br><br>What makes a room yellow or red is the part I'd keep humble at first. Without a transcript we can still see plenty — nobody joined, joined but capture never started, no one has spoken for N minutes, time elapsed with no summary. That's enough to tell me where to walk, and it needs no judgment about the quality of anyone's thinking. Reading the conversation itself to decide if it's going well can come later, and I'd want to think about it before we do it.</div>
       <div class="note"><b>For Sergio — the question I'd like your read on.</b> If the third seat is open from the start, a friendly group of three grabs it in the first thirty seconds and the student who came on their own is still stranded. So either the platform holds it until exactly one person is unpaired, or I open it with one tap once the room has settled. For the first run I'd probably rather have the button, unless holding it is easy. Either way it's one group of three and only one — an even room needs none and an odd room needs exactly one, so a cap of one is always enough.</div>
       <div class="btnrow"><button class="btn ghost" onclick="go('i-grades')">Completion</button><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
     </div>
@@ -526,15 +560,59 @@
         <tr><td>Aisha Bennett</td><td>Prof. Narayanan</td><td>9 Sept</td><td><span class="pill p-live">Booked</span></td></tr>
       </table>
       <h3 class="s">Mireya Rojas-Kim — 4 Sept</h3>
-      <div class="thread"><div class="senseibar"><span class="pulse"></span><span>Capturing — microphone on</span></div>
+      <div class="thread"><div class="senseibar"><span class="pulse"></span><span>Recorded · 11 min · transcript kept</span></div>
         <div class="msg"><div class="mav">AD</div><div class="mb"><div class="mn">Ana Delgado (TA)</div><div class="mt">Tell me what you've actually been working on — not what you're supposed to be working on.</div></div></div>
+        <div class="msg"><div class="mav">MR</div><div class="mb"><div class="mn">Mireya</div><div class="mt">Honestly, the debugging on the sorter project. I've spent way more time on it than the assignment needed.</div></div></div>
       </div>
+      <div class="note"><b>For Sergio:</b> this one is much easier than the peer version — one-to-one, a close microphone, a quiet room, no Sensei in the middle of it. Just record, transcribe, keep the transcript so we can look across them later with AI. If you build voice capture once, build it here first: it's simpler, and it's the one I'll use every week.</div>
       <div class="field" style="margin-top:14px;"><label>Feedback and guidance</label><textarea>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do.
 
 For next time: pick one of the two projects and go a layer deeper rather than starting a third.</textarea></div>
       <label class="check"><input type="checkbox" checked disabled> Visible to the student <span style="color:var(--ink3);">— on by default</span></label>
       <div class="note"><b>For Sergio:</b> student-visible is the default here, not a switch we remember to flip. If I wouldn't want the student to read it, it doesn't belong in this box. I'd rather we not build a private notes field at all for the first version and see whether we miss it.</div>
       <div class="btnrow"><button class="btn" onclick="alert('Saved and shared with Mireya.')">Save</button><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
+    </div>
+
+    <div class="screen" id="i-mobile">
+      <h2 class="t">On the phone — in-class check-ins</h2>
+      <p class="lede">Walking the room doing short check-ins. Phone face up on the table between us; I never look anything up mid-conversation.</p>
+      <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:flex-start;">
+        <div class="phone">
+          <div class="pnotch"></div>
+          <div class="pscreen">
+            <div class="phead">The Commons · CST349</div>
+            <div class="pbody">
+              <div class="rec"><span class="pulse"></span> Recording · 04:12</div>
+              <div class="pwho" id="pwho">Daniel Ortiz</div>
+              <div class="psub" id="psub">Check-in 1 · started 10:22</div>
+              <div class="ptx" id="ptx">
+                <p><b>Daniel:</b> …I got most of it working but the merge conflicts took me two evenings.</p>
+                <p><b>You:</b> Who did you end up asking?</p>
+                <p><b>Daniel:</b> Nobody really. Well — Priya looked at it with me for a bit.</p>
+              </div>
+              <div class="pconfirm" id="pconfirm" style="display:none;">
+                <div class="pc-q">Heard a new name — <b>“Priya”</b></div>
+                <div class="pc-a">Priya Nakamura?</div>
+                <div class="pc-b"><button class="btn sm" onclick="confirmName(true)">Yes</button><button class="btn ghost sm" onclick="confirmName(false)">No</button></div>
+              </div>
+              <div class="pbtns">
+                <button class="btn ghost sm" onclick="nextStudent()">End &amp; start next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1; min-width:280px;">
+          <h3 class="s">Today's check-ins</h3>
+          <table>
+            <tr><th>Student</th><th>Length</th><th>Status</th></tr>
+            <tr><td>Aisha Bennett</td><td>6 min</td><td><span class="pill p-done">Transcribed</span></td></tr>
+            <tr><td id="curRow">Daniel Ortiz</td><td>4 min</td><td><span class="pill p-live">Recording</span></td></tr>
+            <tr><td colspan="3" style="color:var(--ink3);">Mentioned today: Priya Nakamura <span class="pill p-open" id="mention" style="display:none;">linked</span></td></tr>
+          </table>
+          <div class="note"><b>For Sergio:</b> the name-confirm popup is the clever part and I'd like to keep it — but I'd build the boring version first. A list of the twenty students in the course, tap one to start a check-in: one tap, no ambiguity, phone stays down. Then the popup handles the case I actually care about, which is a name coming up <i>during</i> a conversation about someone else.<br><br>Matching should only ever be against that course's roster — twenty to fifty-eight names, not the whole world — so "Danny", "Priya", a half-heard surname all resolve against a short list. And it asks rather than assumes.<br><br>Mobile web is enough for this; it doesn't need to be an app. Worth checking that recording survives the screen dimming, and that a fifty-minute class of back-to-back check-ins is stored as one recording per student rather than one long one.</div>
+        </div>
+      </div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('i-interview')">Interviews</button></div>
     </div>
 
     </div>
@@ -548,6 +626,7 @@ For next time: pick one of the two projects and go a layer deeper rather than st
     <li><b>Pseudonymous with peers, named with staff.</b> The campfire keeps pseudonyms and 25 messages now triggers a question rather than an automatic reveal. Live sessions and interviews use real names, and the two are not linked on the student side.</li>
     <li><b>Not a hard wall.</b> Students see their own interview status and everything a teacher or TA wrote for them. Student-visible is the default.</li>
     <li><b>Completion, not scores.</b> Per-student completion drives the participation grade. Nothing about the quality of a student's thinking is shown as a number — to them or on a dashboard.</li>
+    <li><b>Voice capture is the escalation.</b> Everything else here is roster, forms and state. Recording, transcribing and having the Sensei listen live is a different class of work — and the interjection design that works on screen doesn't obviously survive two people talking to each other. Capture first, live guidance after.</li>
     <li><b>Only the peer surface has to exist on 2 September.</b> The rest can follow once the first one has survived a real class hour.</li>
   </ul>
 </div>
@@ -558,7 +637,7 @@ For next time: pick one of the two projects and go a layer deeper rather than st
 <script>
 var NAV = {
   student: [['s-dash','Conversations'],['s-campfire','Campfire'],['s-live','Live session'],['s-interview','Interviews'],['s-reflect','Reflection'],['s-status','Where you stand']],
-  instructor: [['i-courses','Courses'],['i-roster','Roster'],['i-convs','Conversations'],['i-monitor','Live now'],['i-grades','Completion'],['i-interview','Interviews']]
+  instructor: [['i-courses','Courses'],['i-roster','Roster'],['i-convs','Conversations'],['i-monitor','Live now'],['i-grades','Completion'],['i-interview','Interviews'],['i-mobile','On the phone']]
 };
 var role='student', cur='s-signin';
 
@@ -667,6 +746,47 @@ function doReveal(){
   }
   alert('You both said yes, so your names are now showing. If either of you had said no, nothing would have changed.');
 }
+
+/* ---- voice capture (peer live) ---- */
+var vt=null;
+function micOn(){
+  document.getElementById('micNag').style.display='none';
+  document.getElementById('micBar').style.display='flex';
+  var lines=[
+    ['Daniel Ortiz','DO','Two evenings on merge conflicts. I kept thinking I should be able to work it out myself.'],
+    ['Mireya (you)','MR','Is that the same as the not-asking thing, or different?'],
+    ['Daniel Ortiz','DO','…yeah. It’s the same thing, isn’t it.']
+  ], i=0;
+  vt=setInterval(function(){
+    if(i>=lines.length){ clearInterval(vt); vt=null; document.getElementById('voiceCard').style.display='flex'; return; }
+    var l=lines[i++], d=document.createElement('div');
+    d.className='msg';
+    d.innerHTML='<div class="mav'+(l[1]==='MR'?' me':'')+'">'+l[1]+'</div><div class="mb"><div class="mn">'+l[0]+' <span class="aitag">transcribed</span></div><div class="mt">'+l[2]+'</div></div>';
+    document.getElementById('liveT').appendChild(d);
+  },1500);
+}
+function micOff(){
+  if(vt){clearInterval(vt); vt=null;}
+  document.getElementById('micBar').style.display='none';
+  document.getElementById('voiceCard').style.display='none';
+  alert('Recording stopped. Either of you can do this at any time.');
+}
+
+/* ---- mobile check-in ---- */
+var pi=0, PEOPLE=['Daniel Ortiz','Priya Nakamura','Marcus Lau'];
+function nextStudent(){
+  pi=(pi+1)%PEOPLE.length;
+  document.getElementById('pwho').textContent=PEOPLE[pi];
+  document.getElementById('psub').textContent='Check-in 1 · just started';
+  document.getElementById('curRow').textContent=PEOPLE[pi];
+  document.getElementById('ptx').innerHTML='<p style="color:#a0aec0;">Listening…</p>';
+  document.getElementById('pconfirm').style.display='none';
+}
+function confirmName(yes){
+  document.getElementById('pconfirm').style.display='none';
+  if(yes){ document.getElementById('mention').style.display='inline-block'; }
+}
+setTimeout(function(){ var e=document.getElementById('pconfirm'); if(e) e.style.display='block'; }, 1200);
 
 buildNav(); go('s-signin');
 </script>
