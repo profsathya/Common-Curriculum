@@ -158,6 +158,24 @@
   .pc-a{font-size:.95rem; font-weight:700; margin:4px 0 9px;}
   .pc-b{display:flex; gap:7px;}
   .pbtns{margin-top:11px;}
+  .chips{display:flex; flex-wrap:wrap; gap:5px; margin-top:8px;}
+  .chip{display:inline-flex; align-items:center; gap:5px; font-size:.7rem; font-weight:650; background:var(--chip); color:var(--ink2); padding:3px 8px; border-radius:99px;}
+  .chip i{width:7px; height:7px; border-radius:50%;}
+  .chip i.d1{background:#2b6cb0;} .chip i.d2{background:#0d7a72;} .chip i.d3{background:#b7791f;}
+  .slots{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .slot{appearance:none; font:inherit; font-size:.83rem; font-weight:600; text-align:left; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); cursor:pointer;}
+  .slot:hover{border-color:var(--teal); background:#f6fdfc;}
+  .slot.on{border-color:var(--teal); background:#e6f4f2; color:var(--teal);}
+  .slot.taken{color:var(--ink3); background:#f7fafc; cursor:not-allowed;}
+  .slot.taken span{font-size:.68rem; text-transform:uppercase; letter-spacing:.07em; display:block; margin-top:2px;}
+  .box{border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:#fff;}
+  .box.shared{border-left:3px solid var(--teal);}
+  .box.priv{border-left:3px solid var(--ink3); background:#fafbfc;}
+  .box .bh{font-size:.92rem; font-weight:650; display:flex; align-items:center; gap:8px;}
+  .box .bs{font-size:.79rem; color:var(--ink3); margin:3px 0 9px;}
+  .box .field{margin-bottom:0;}
+  .tagv{font-size:.63rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; background:#e6f4f2; color:var(--teal); padding:2px 7px; border-radius:99px;}
+  .tagp{font-size:.63rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; background:var(--chip); color:var(--ink2); padding:2px 7px; border-radius:99px;}
   @media(max-width:640px){ .two{grid-template-columns:1fr;} .codebox .code{font-size:2rem;} }
 </style>
 </head>
@@ -393,11 +411,43 @@
         <tr><td>Week of 20 Oct</td><td>Prof. Narayanan</td><td><span class="pill p-open">To schedule</span></td></tr>
         <tr><td>Week of 1 Dec</td><td>Either</td><td><span class="pill p-soon">Not open yet</span></td></tr>
       </table>
+      <h3 class="s">Book your next one</h3>
+      <p style="font-size:.88rem; color:var(--ink2); margin-bottom:10px;">Come on your own, or bring one or two classmates into the same slot.</p>
+      <div class="two">
+        <div>
+          <div class="slots" id="slots">
+            <button class="slot" onclick="pickSlot(this,'Tue 20 Oct · 2:00pm')">Tue 20 Oct · 2:00pm</button>
+            <button class="slot" onclick="pickSlot(this,'Tue 20 Oct · 2:20pm')">Tue 20 Oct · 2:20pm</button>
+            <button class="slot taken" disabled>Tue 20 Oct · 2:40pm <span>full</span></button>
+            <button class="slot" onclick="pickSlot(this,'Wed 21 Oct · 10:00am')">Wed 21 Oct · 10:00am</button>
+            <button class="slot" onclick="pickSlot(this,'Wed 21 Oct · 10:20am')">Wed 21 Oct · 10:20am</button>
+            <button class="slot" onclick="pickSlot(this,'Thu 22 Oct · 1:00pm')">Thu 22 Oct · 1:00pm</button>
+          </div>
+        </div>
+        <div>
+          <div class="item" id="bookPane">
+            <h4 id="slotTitle" style="color:var(--ink3);">Pick a time on the left</h4>
+            <div id="bookBody" style="display:none;">
+              <div class="meta" id="slotLen">On your own · 15 minutes</div>
+              <div class="field" style="margin-top:12px;"><label>Bring a classmate? (up to two)</label>
+                <label class="check"><input type="checkbox" onchange="grp(this)"> Daniel Ortiz</label>
+                <label class="check"><input type="checkbox" onchange="grp(this)"> Priya Nakamura</label>
+                <label class="check"><input type="checkbox" onchange="grp(this)"> Marcus Lau</label>
+              </div>
+              <p style="font-size:.83rem; color:var(--ink3);" id="grpNote">They'll be asked whether they want to join — nobody gets added to a conversation without saying yes.</p>
+              <div class="btnrow"><button class="btn sm" onclick="alert('Booked. Anyone you invited gets asked first.')">Book it</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><b>For Sergio:</b> one student books and invites; the people invited get asked rather than added. Two reasons — a group check-in means talking about your work in front of classmates, which not everyone wants, and having a single booker avoids two people racing for the same seat. The slot gets longer as the group gets bigger; fifteen minutes split three ways isn't a conversation.</div>
+
       <h3 class="s">Feedback and guidance</h3>
       <div class="fb"><div class="h">Guidance</div><div class="w">Ana Delgado, 4 Sept</div>
         <p>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do. That self-knowledge is the thing most people take a year to get to.</p>
         <p>For next time: pick one of the two projects you mentioned and go a layer deeper on it rather than starting a third. Bring what you find and we'll look at it together.</p></div>
-      <div class="note"><b>For Sergio — this is where the wall isn't hard.</b> Students see their own status and everything a teacher or TA wrote for them. My working assumption is that student-visible is the default for anything we write, not an option we remember to switch on. If I wouldn't want a student to read it, I probably shouldn't be typing it here.</div>
+      <p style="font-size:.83rem; color:var(--ink3); margin-top:11px;">Your instructor and TA also keep their own working notes from these conversations, and share them with you when they think it's useful.</p>
+      <div class="note"><b>For Sergio — this is where the wall isn't hard.</b> Students see their own status and everything a teacher or TA has shared with them. What they don't see is a working note that hasn't been shared yet. I'd rather they know that plainly — a line like the one above — than find out later. Knowing is normal; discovering feels like something else.</div>
       <div class="btnrow"><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
     </div>
 
@@ -498,6 +548,15 @@
         <div class="field"><label>Assign to</label><select><option>CST349 · Professional Seminar</option><option>CST395 · AI-Native Solution Engineering</option></select></div>
         <div class="field"><label>Group size</label><select><option>Pairs — one group of three allowed</option><option>Pairs only</option></select></div>
       </div>
+      <h3 class="s">If this is a booked check-in</h3>
+      <div class="field"><label>How long a slot, by how many students</label>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+          <div><span style="font-size:.78rem; color:var(--ink3);">On their own</span><input type="number" value="15"></div>
+          <div><span style="font-size:.78rem; color:var(--ink3);">Two students</span><input type="number" value="25"></div>
+          <div><span style="font-size:.78rem; color:var(--ink3);">Three students</span><input type="number" value="30"></div>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" checked> Students may bring classmates into a slot <span style="color:var(--ink3);">— up to three in one conversation</span></label>
       <label class="check"><input type="checkbox" checked> Students who miss the live session may do the asynchronous version for partial credit <span style="color:var(--ink3);">— 9 of 15 points</span></label>
       <label class="check"><input type="checkbox" checked> Students may invite the AI Sensei into this conversation</label>
       <div class="note"><b>For Sergio:</b> the partial-credit route is only for people who missed the live one — the point of the lower score is that most of them come to the live conversation. For the first run I'll open that myself rather than have the platform work out who was absent.</div>
@@ -562,7 +621,7 @@
 
     <div class="screen" id="i-interview">
       <h2 class="t">Check-in interview 1</h2>
-      <p class="lede">Mine and the TA's view. Everything written here is visible to the student.</p>
+      <p class="lede">Mine and the TA's view. Guidance goes to the student now; a working note waits until I share it.</p>
       <table>
         <tr><th>Student</th><th>With</th><th>When</th><th>Status</th></tr>
         <tr><td>Mireya Rojas-Kim</td><td>Ana Delgado (TA)</td><td>4 Sept</td><td><span class="pill p-done">Complete</span></td></tr>
@@ -575,11 +634,22 @@
         <div class="msg"><div class="mav">MR</div><div class="mb"><div class="mn">Mireya</div><div class="mt">Honestly, the debugging on the sorter project. I've spent way more time on it than the assignment needed.</div></div></div>
       </div>
       <div class="note"><b>For Sergio:</b> this one is much easier than the peer version — one-to-one, a close microphone, a quiet room, no Sensei in the middle of it. Just record, transcribe, keep the transcript so we can look across them later with AI. If you build voice capture once, build it here first: it's simpler, and it's the one I'll use every week.</div>
-      <div class="field" style="margin-top:14px;"><label>Feedback and guidance</label><textarea>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do.
+      <div class="two" style="margin-top:14px;">
+        <div class="box shared">
+          <div class="bh"><span class="tagv">Shared</span> Guidance for Mireya</div>
+          <div class="bs">She can read this now, on her own page.</div>
+          <div class="field"><textarea>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do.
 
 For next time: pick one of the two projects and go a layer deeper rather than starting a third.</textarea></div>
-      <label class="check"><input type="checkbox" checked disabled> Visible to the student <span style="color:var(--ink3);">— on by default</span></label>
-      <div class="note"><b>For Sergio:</b> student-visible is the default here, not a switch we remember to flip. If I wouldn't want the student to read it, it doesn't belong in this box. I'd rather we not build a private notes field at all for the first version and see whether we miss it.</div>
+        </div>
+        <div class="box priv">
+          <div class="bh"><span class="tagp">Working note</span> Not shared yet</div>
+          <div class="bs">Mine and the TA's. She'll see it if and when I share it.</div>
+          <div class="field"><textarea>She's carrying the whole group and hasn't noticed. Worth naming, but not until she's had one experience of handing something off well — otherwise it lands as criticism of the thing she's proudest of.</textarea></div>
+          <div class="btnrow" style="margin-top:2px;"><button class="btn ghost sm" onclick="promote()">Share this with her…</button></div>
+        </div>
+      </div>
+      <div class="note"><b>For Sergio — I changed my mind on this one.</b><br><br>I said earlier that everything we write should be visible to the student by default. I still want that to be the <i>main</i> channel — but there are things a student isn't ready to hear yet, and part of the job is working out how and when to say them. A note I'm holding until the right moment isn't a secret, it's timing.<br><br>So: two boxes, not one box with a switch. The shared one is the one I'm prompted to fill, and a working note can be promoted to shared whenever I decide — with a chance to rewrite it as I do, because what I'd say to myself and what I'd say to her aren't the same sentence.<br><br>Two things I'd keep to. The standard for writing doesn't change between the boxes — I'd still write a working note as though she'll read it eventually, because most of them she will. And once something is shared it stays shared with a date on it, rather than quietly disappearing. Whether students are told plainly that we also keep working notes is my call, not yours, and I think the answer is yes.</div>
       <div class="btnrow"><button class="btn" onclick="alert('Saved and shared with Mireya.')">Save</button><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
     </div>
 
@@ -593,17 +663,23 @@ For next time: pick one of the two projects and go a layer deeper rather than st
             <div class="phead">The Commons · CST349</div>
             <div class="pbody">
               <div class="rec"><span class="pulse"></span> Recording · 04:12</div>
-              <div class="pwho" id="pwho">Daniel Ortiz</div>
-              <div class="psub" id="psub">Check-in 1 · started 10:22</div>
+              <div class="pwho" id="pwho">Group check-in</div>
+              <div class="psub" id="psub">Booked 2:20pm · 30 min</div>
+              <div class="chips" id="chips">
+                <span class="chip"><i class="d1"></i>Daniel O.</span>
+                <span class="chip"><i class="d2"></i>Priya N.</span>
+                <span class="chip"><i class="d3"></i>Marcus L.</span>
+              </div>
               <div class="ptx" id="ptx">
-                <p><b>Daniel:</b> …I got most of it working but the merge conflicts took me two evenings.</p>
-                <p><b>You:</b> Who did you end up asking?</p>
-                <p><b>Daniel:</b> Nobody really. Well — Priya looked at it with me for a bit.</p>
+                <p style="color:var(--ink3); font-size:.74rem;">Each of you say your name once, then we'll start.</p>
+                <p><b>Daniel:</b> …merge conflicts took me two evenings.</p>
+                <p><b>Priya:</b> I sat with him for a bit but I didn't really know either.</p>
+                <p><b>You:</b> So neither of you asked anyone who would have known?</p>
               </div>
               <div class="pconfirm" id="pconfirm" style="display:none;">
-                <div class="pc-q">Heard a new name — <b>“Priya”</b></div>
+                <div class="pc-q">Not sure who said that</div>
                 <div class="pc-a">Priya Nakamura?</div>
-                <div class="pc-b"><button class="btn sm" onclick="confirmName(true)">Yes</button><button class="btn ghost sm" onclick="confirmName(false)">No</button></div>
+                <div class="pc-b"><button class="btn sm" onclick="confirmName(true)">Yes</button><button class="btn ghost sm" onclick="confirmName(false)">Someone else</button></div>
               </div>
               <div class="pbtns">
                 <button class="btn ghost sm" onclick="nextStudent()">End &amp; start next</button>
@@ -614,12 +690,23 @@ For next time: pick one of the two projects and go a layer deeper rather than st
         <div style="flex:1; min-width:280px;">
           <h3 class="s">Today's check-ins</h3>
           <table>
-            <tr><th>Student</th><th>Length</th><th>Status</th></tr>
+            <tr><th>Who</th><th>Length</th><th>Status</th></tr>
             <tr><td>Aisha Bennett</td><td>6 min</td><td><span class="pill p-done">Transcribed</span></td></tr>
-            <tr><td id="curRow">Daniel Ortiz</td><td>4 min</td><td><span class="pill p-live">Recording</span></td></tr>
-            <tr><td colspan="3" style="color:var(--ink3);">Mentioned today: Priya Nakamura <span class="pill p-open" id="mention" style="display:none;">linked</span></td></tr>
+            <tr><td id="curRow">Daniel O. · Priya N. · Marcus L.</td><td>4 min</td><td><span class="pill p-live">Recording</span></td></tr>
           </table>
-          <div class="note"><b>For Sergio:</b> the name-confirm popup is the clever part and I'd like to keep it — but I'd build the boring version first. A list of the twenty students in the course, tap one to start a check-in: one tap, no ambiguity, phone stays down. Then the popup handles the case I actually care about, which is a name coming up <i>during</i> a conversation about someone else.<br><br>Matching should only ever be against that course's roster — twenty to fifty-eight names, not the whole world — so "Danny", "Priya", a half-heard surname all resolve against a short list. And it asks rather than assumes.<br><br>Mobile web is enough for this; it doesn't need to be an app. Worth checking that recording survives the screen dimming, and that a fifty-minute class of back-to-back check-ins is stored as one recording per student rather than one long one.</div>
+          <h3 class="s">Afterwards — one note each</h3>
+          <div class="grid">
+            <div class="item"><div class="top"><h4>Daniel Ortiz</h4><span class="pill p-done">Complete</span></div>
+              <div class="field" style="margin-top:8px;"><label><span class="tagv">Shared</span></label><textarea style="min-height:46px;">You did the work twice over rather than ask. Next time, ask before the second evening.</textarea></div>
+              <div class="field" style="margin-bottom:0;"><label><span class="tagp">Working note</span></label><textarea style="min-height:38px;" placeholder="Held back for now…">Asking for help reads as admitting he's behind. Don't push on it yet.</textarea></div></div>
+            <div class="item"><div class="top"><h4>Priya Nakamura</h4><span class="pill p-done">Complete</span></div>
+              <div class="field" style="margin-top:8px;"><label><span class="tagv">Shared</span></label><textarea style="min-height:46px;" placeholder="Priya will read this."></textarea></div>
+              <div class="field" style="margin-bottom:0;"><label><span class="tagp">Working note</span></label><textarea style="min-height:38px;" placeholder="Held back for now…"></textarea></div></div>
+            <div class="item"><div class="top"><h4>Marcus Lau</h4><span class="pill p-done">Complete</span></div>
+              <div class="field" style="margin-top:8px;"><label><span class="tagv">Shared</span></label><textarea style="min-height:46px;" placeholder="Marcus will read this."></textarea></div>
+              <div class="field" style="margin-bottom:0;"><label><span class="tagp">Working note</span></label><textarea style="min-height:38px;" placeholder="Held back for now…"></textarea></div></div>
+          </div>
+          <div class="note"><b>For Sergio — the important one on group check-ins.</b> Notes are written <i>per student</i>, not once for the conversation — both the shared guidance and the working note. A single note attached to a group check-in would show all three of them what I wrote about each other. One transcript, three sets of notes.<br><br><b>On who said what:</b> this is much easier than the peer case, because the booking already tells us exactly who is in the room. It isn't "identify a voice from nowhere," it's "assign this line among me plus up to three known people." Having each of them say their name once at the start costs ten seconds and anchors the whole recording. When it still isn't sure, ask — the same popup, but now choosing from three names rather than the whole roster. And if attribution comes out poor, the transcript is still worth having at the group level; I can write the individual notes myself.<br><br><b>The rest of the mobile idea:</b> build the boring version first — a list of the course's students, tap to start. One tap, no ambiguity, phone stays down. Mobile web is enough; it doesn't need to be an app. Worth checking recording survives the screen dimming, and that a class of back-to-back check-ins is stored per booking rather than one long file.</div>
         </div>
       </div>
       <div class="btnrow"><button class="btn ghost" onclick="go('i-interview')">Interviews</button></div>
@@ -634,8 +721,9 @@ For next time: pick one of the two projects and go a layer deeper rather than st
   <ul>
     <li><b>One foundation, three surfaces.</b> Course, roster, identity and conversation-capture are built once. What changes between the three assignment types is who the student is talking to.</li>
     <li><b>Pseudonymous with peers, named with staff.</b> The campfire keeps pseudonyms and 25 messages now triggers a question rather than an automatic reveal. Live sessions and interviews use real names, and the two are not linked on the student side.</li>
-    <li><b>Not a hard wall.</b> Students see their own interview status and everything a teacher or TA wrote for them. Student-visible is the default.</li>
+    <li><b>Not a hard wall, but not everything at once either.</b> Students see their own check-in status and everything a teacher or TA has shared. Staff also keep working notes — held back until the moment is right, then promoted to shared with a chance to rewrite. Students are told the notes exist.</li>
     <li><b>Completion, not scores.</b> Per-student completion drives the participation grade. Nothing about the quality of a student's thinking is shown as a number — to them or on a dashboard.</li>
+    <li><b>Check-ins are booked, and can be a group of up to three.</b> One student books and invites; the others are asked, not added. The booking is what tells the recording who is in the room — and guidance is written per student, never once for the group.</li>
     <li><b>Voice is built once, for the check-ins.</b> Instructor and TA interviews get the microphone — one-to-one, close mic, quiet room, no Sensei in the middle of it. Peer conversations type their notes as they go, the way Jeremy's tool already does. Voice for peer conversations comes back later, Zoom first.</li>
     <li><b>Only the peer surface has to exist on 2 September.</b> The rest can follow once the first one has survived a real class hour.</li>
   </ul>
@@ -782,20 +870,50 @@ function micOff(){
   alert('Recording stopped. Either of you can do this at any time.');
 }
 
+function promote(){
+  alert('Opens the note so you can rewrite it for her before it goes across — what you\'d say to yourself and what you\'d say to her aren\'t the same sentence.\n\nOnce shared it stays shared, with the date on it.');
+}
+
+/* ---- booking a check-in ---- */
+function pickSlot(el,label){
+  var all=document.querySelectorAll('.slot');
+  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
+  el.classList.add('on');
+  document.getElementById('slotTitle').textContent=label;
+  document.getElementById('slotTitle').style.color='';
+  document.getElementById('bookBody').style.display='block';
+  grp();
+}
+function grp(){
+  var b=document.querySelectorAll('#bookBody .check input');
+  var n=0; for(var i=0;i<b.length;i++) if(b[i].checked) n++;
+  if(n>2){ for(var j=0;j<b.length;j++) if(b[j].checked && n>2){ /* cap at 2 guests */ } }
+  var total=n+1, mins=[15,25,30][n]||15;
+  document.getElementById('slotLen').textContent =
+    (total===1 ? 'On your own' : total+' of you together') + ' · ' + mins + ' minutes';
+  var lim = n>=2;
+  for(var k=0;k<b.length;k++) b[k].disabled = lim && !b[k].checked;
+  document.getElementById('grpNote').textContent = lim
+    ? 'Three is the most for one check-in. They’ll each be asked whether they want to join.'
+    : 'They’ll be asked whether they want to join — nobody gets added to a conversation without saying yes.';
+}
+
 /* ---- mobile check-in ---- */
-var pi=0, PEOPLE=['Daniel Ortiz','Priya Nakamura','Marcus Lau'];
+var pi=0, BOOKINGS=[
+  {who:'Group check-in', sub:'Booked 2:20pm · 30 min', row:'Daniel O. · Priya N. · Marcus L.', chips:true},
+  {who:'Elena Vargas', sub:'Booked 2:50pm · 15 min', row:'Elena Vargas', chips:false},
+  {who:'Pair check-in', sub:'Booked 3:05pm · 25 min', row:'Jordan C. · Leo P.', chips:false}
+];
 function nextStudent(){
-  pi=(pi+1)%PEOPLE.length;
-  document.getElementById('pwho').textContent=PEOPLE[pi];
-  document.getElementById('psub').textContent='Check-in 1 · just started';
-  document.getElementById('curRow').textContent=PEOPLE[pi];
-  document.getElementById('ptx').innerHTML='<p style="color:#a0aec0;">Listening…</p>';
+  pi=(pi+1)%BOOKINGS.length; var b=BOOKINGS[pi];
+  document.getElementById('pwho').textContent=b.who;
+  document.getElementById('psub').textContent=b.sub;
+  document.getElementById('curRow').textContent=b.row;
+  document.getElementById('chips').style.display=b.chips?'flex':'none';
+  document.getElementById('ptx').innerHTML='<p style="color:#a0aec0;">Say your name once, then we\'ll start…</p>';
   document.getElementById('pconfirm').style.display='none';
 }
-function confirmName(yes){
-  document.getElementById('pconfirm').style.display='none';
-  if(yes){ document.getElementById('mention').style.display='inline-block'; }
-}
+function confirmName(yes){ document.getElementById('pconfirm').style.display='none'; }
 setTimeout(function(){ var e=document.getElementById('pconfirm'); if(e) e.style.display='block'; }, 1200);
 
 buildNav(); go('s-signin');
