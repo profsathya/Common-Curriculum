@@ -343,11 +343,14 @@
     <div class="screen" id="s-livein">
       <h2 class="t">In conversation — Daniel Ortiz</h2>
       <p class="lede">You're in the same room, so you see each other's names here. Capture as you go, then write the summary yourself.</p>
-      <div class="banner" id="micNag" style="border-color:var(--teal); background:#f6fdfc;">
-        <div class="bt"><b>You started this conversation, so you hold the microphone.</b> Put your laptop between you and turn it on — you'll both get a summary drafted from it afterwards.</div>
-        <button class="btn sm" onclick="micOn()">Turn on the microphone</button>
-        <button class="btn ghost sm" onclick="document.getElementById('micNag').style.display='none'">Take notes instead</button>
+      <div class="banner" style="border-color:var(--teal); background:#f6fdfc;">
+        <div class="bt"><b>You're listening for this round.</b> Daniel tells his story; you ask and type as you go. You'll swap in ten minutes.</div>
+        <span class="timer">9:41</span>
+        <button class="btn ghost sm" onclick="alert('Swaps who is listening and who is telling.')">Swap roles</button>
       </div>
+      <h3 class="s">Your notes, as you talk</h3>
+      <div class="field"><textarea placeholder="What is he actually saying? Write it while it's fresh.">Two evenings on merge conflicts. Kept thinking he should work it out alone. Says he'd ask a peer but not the instructor — didn't sound like it had occurred to him that those are different.</textarea></div>
+      <h3 class="s">The conversation <span style="text-transform:none; letter-spacing:0; color:var(--ink3); font-weight:400;">— typed, as Jeremy's tool does it today</span></h3>
       <div class="thread">
         <div class="senseibar" id="micBar" style="display:none;"><span class="pulse"></span><span>Recording — both of you can stop this at any time</span>
           <button class="btn ghost sm" style="margin-left:auto;" onclick="micOff()">Stop</button></div>
@@ -360,12 +363,19 @@
         <button class="btn sm" onclick="alert('Shows the question on screen. Neither of you is interrupted mid-sentence.')">Read it</button>
         <button class="btn ghost sm" onclick="document.getElementById('voiceCard').style.display='none'">Later</button>
       </div>
-      <div class="note"><b>For Sergio — this is the hard one, and I'd like to talk about it before you build it.</b><br><br>Capturing the audio and transcribing it is work but it's known work. What I don't think either of us has solved is what the Sensei interjecting <i>means</i> in a spoken conversation. Everything you demoed assumes two people looking at a screen — "May I interject?" with a timer works beautifully there. In the room they're looking at each other, and nobody is watching the laptop. A card that waits quietly for them to glance down is my first guess, and it may well be wrong.<br><br>Two other things I'd want us to be honest about. One microphone in the middle of a table, in a room where eight other pairs are talking, is a genuinely hard audio problem — telling who said what will be rough, and the pair next to them will bleed in. And students need to be told plainly that they're being recorded, with a stop button that actually stops it.<br><br>So my instinct is to split this: capture and transcribe first, with the summary drafted afterwards, and the Sensei staying in the typed conversation. Live voice guidance gets its own design pass rather than a rushed one. Tell me if you see it differently.</div>
+      <div class="note"><b>For Sergio — typed notes for the first run, not voice.</b><br><br>Students type as they talk, the way Jeremy's tool already does it, and one of them is the listener at any moment. Worth keeping the roles: the person listening types, the person telling doesn't — so whoever is talking still gets eye contact rather than the top of a laptop.<br><br>I'd rather not do voice capture for in-person conversations until we've had a chance to test it. One microphone in a room where eight other pairs are talking is a hard audio problem, and I don't want to find that out on the 2nd.<br><br>Zoom is the interesting case and it's the one I'd come back to first. The audio is clean because everyone has their own microphone, and they're already looking at a screen — so the Sensei choreography you built works there unchanged, maybe with a short notification. Nothing you've already done is wasted; it's in-person that needs new thinking. Still, let's park both and get the typed version working.</div>
       <h3 class="s">Your summary</h3>
       <div class="field"><textarea placeholder="In your own words — what did you talk about, and what changed?">Daniel's stuck point isn't the material, it's asking for help. We worked out that he'd be fine asking a peer but not the instructor, so his first move is to ask one person in his group this week.</textarea></div>
-      <div class="fb" style="border-left-color:var(--sensei);"><div class="h">Draft from the Sensei <span class="aitag">AI generated</span></div><p>A summary was drafted from the transcript. Edit it into your own words before submitting — what you submit is what counts.</p></div>
+      <div class="fb" style="border-left-color:var(--sensei);"><div class="h">Draft from the Sensei <span class="aitag">AI generated</span></div><p>A summary was drafted from your notes. Edit it into your own words before submitting — what you submit is what counts.</p></div>
       <div class="btnrow"><button class="btn" onclick="alert('Submitted. Both of you are marked complete.')">Submit summary</button><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
       <div class="note"><b>For Sergio:</b> live records carry real names, using the preferred name from the roster — not the pseudonym. Someone a student meets here shouldn't be able to look up which campfire pseudonym belongs to them later.</div>
+
+      <details style="margin-top:22px; border:1px dashed var(--line); border-radius:10px; padding:12px 16px; background:#fbfdff;">
+        <summary style="cursor:pointer; font-size:.86rem; font-weight:650; color:var(--ink2);">Later — voice capture (not for the first run)</summary>
+        <p style="font-size:.88rem; color:var(--ink2); margin-top:10px;">Where this is heading once we've been able to test it. Click through to see the shape of it.</p>
+        <div class="btnrow"><button class="btn ghost sm" onclick="micOn()">Show the voice version</button></div>
+        <div class="note" style="margin-top:10px;"><b>Not for September.</b> Zoom first when we do come back to it — clean per-person audio and they're already looking at a screen, so the interjection design you built still works. In-person needs the noise problem solved and a different idea about how the Sensei gets anyone's attention.</div>
+      </details>
     </div>
 
     <div class="screen" id="s-interview">
@@ -626,7 +636,7 @@ For next time: pick one of the two projects and go a layer deeper rather than st
     <li><b>Pseudonymous with peers, named with staff.</b> The campfire keeps pseudonyms and 25 messages now triggers a question rather than an automatic reveal. Live sessions and interviews use real names, and the two are not linked on the student side.</li>
     <li><b>Not a hard wall.</b> Students see their own interview status and everything a teacher or TA wrote for them. Student-visible is the default.</li>
     <li><b>Completion, not scores.</b> Per-student completion drives the participation grade. Nothing about the quality of a student's thinking is shown as a number — to them or on a dashboard.</li>
-    <li><b>Voice capture is the escalation.</b> Everything else here is roster, forms and state. Recording, transcribing and having the Sensei listen live is a different class of work — and the interjection design that works on screen doesn't obviously survive two people talking to each other. Capture first, live guidance after.</li>
+    <li><b>Voice is built once, for the check-ins.</b> Instructor and TA interviews get the microphone — one-to-one, close mic, quiet room, no Sensei in the middle of it. Peer conversations type their notes as they go, the way Jeremy's tool already does. Voice for peer conversations comes back later, Zoom first.</li>
     <li><b>Only the peer surface has to exist on 2 September.</b> The rest can follow once the first one has survived a real class hour.</li>
   </ul>
 </div>
@@ -750,8 +760,8 @@ function doReveal(){
 /* ---- voice capture (peer live) ---- */
 var vt=null;
 function micOn(){
-  document.getElementById('micNag').style.display='none';
   document.getElementById('micBar').style.display='flex';
+  document.getElementById('liveT').innerHTML='';
   var lines=[
     ['Daniel Ortiz','DO','Two evenings on merge conflicts. I kept thinking I should be able to work it out myself.'],
     ['Mireya (you)','MR','Is that the same as the not-asking thing, or different?'],
