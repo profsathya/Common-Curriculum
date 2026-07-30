@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Commons — interactive prototype</title>
+<style>
+  :root{
+    --ink:#1a2332; --ink2:#4a5568; --ink3:#718096; --line:#e2e8f0; --bg:#f7fafc; --card:#ffffff;
+    --navy:#1f3a5f; --teal:#0d7a72; --amber:#b7791f; --red:#b03a2e; --green:#276749;
+    --chip:#edf2f7; --sensei:#0d7a72; --senseibg:#e6f4f2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; padding:0 0 60px;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 20px;}
+
+  header{background:var(--navy); color:#fff; padding:30px 0 24px;}
+  header h1{font-size:1.5rem; font-weight:650;}
+  header .sub{opacity:.85; font-size:.95rem; margin-top:6px; max-width:800px;}
+  .warn{background:#16283f; color:#fff; padding:12px 0;}
+  .warn p{font-size:.86rem; max-width:820px; opacity:.9;}
+  .warn strong{color:#ffd479;}
+
+  .controls{position:sticky; top:0; z-index:30; background:var(--card); border-bottom:1px solid var(--line); box-shadow:0 1px 4px rgba(0,0,0,.05);}
+  .controls .row{display:flex; align-items:center; gap:14px; padding:10px 20px; max-width:1040px; margin:0 auto; flex-wrap:wrap;}
+  .seg{display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .seg button{appearance:none; border:none; background:#fff; font:inherit; font-size:.88rem; font-weight:600; color:var(--ink2); padding:8px 16px; cursor:pointer;}
+  .seg button.on{background:var(--navy); color:#fff;}
+  .toggle{display:flex; align-items:center; gap:7px; font-size:.85rem; color:var(--ink2); cursor:pointer; user-select:none; margin-left:auto;}
+  .toggle input{width:16px; height:16px; cursor:pointer;}
+
+  .stage{margin-top:22px;}
+  .frame{background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .bar{background:#eef2f7; border-bottom:1px solid var(--line); padding:8px 14px; display:flex; align-items:center; gap:8px;}
+  .dot{width:10px; height:10px; border-radius:50%; background:#cbd5e0;}
+  .url{flex:1; background:#fff; border:1px solid var(--line); border-radius:6px; font-size:.76rem; color:var(--ink3); padding:3px 10px; font-family:ui-monospace,Menlo,monospace;}
+
+  .app{min-height:520px;}
+  .appbar{display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid var(--line);}
+  .logo{font-weight:700; font-size:1rem; color:var(--navy); letter-spacing:.2px;}
+  .logo span{color:var(--teal);}
+  .appnav{display:flex; gap:2px; margin-left:14px; flex-wrap:wrap;}
+  .appnav button{appearance:none; border:none; background:none; font:inherit; font-size:.87rem; font-weight:550; color:var(--ink2); padding:6px 11px; border-radius:6px; cursor:pointer;}
+  .appnav button:hover{background:var(--chip);}
+  .appnav button.on{background:var(--chip); color:var(--navy); font-weight:650;}
+  .who{margin-left:auto; display:flex; align-items:center; gap:10px; font-size:.85rem; color:var(--ink2);}
+  .avatar{width:28px; height:28px; border-radius:50%; background:var(--teal); color:#fff; display:grid; place-items:center; font-size:.75rem; font-weight:700;}
+  select.course{font:inherit; font-size:.82rem; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink); cursor:pointer;}
+
+  .body{padding:22px 24px 30px;}
+  .screen{display:none;} .screen.on{display:block;}
+  h2.t{font-size:1.18rem; font-weight:650; margin-bottom:3px;}
+  p.lede{font-size:.92rem; color:var(--ink2); margin-bottom:18px; max-width:680px;}
+  h3.s{font-size:.73rem; text-transform:uppercase; letter-spacing:.13em; color:var(--teal); font-weight:700; margin:22px 0 9px;}
+  h3.s:first-child{margin-top:0;}
+
+  .grid{display:grid; gap:12px;}
+  .item{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fff;}
+  .item.click{cursor:pointer;} .item.click:hover{border-color:var(--teal); background:#fbfefe;}
+  .item .top{display:flex; align-items:flex-start; gap:10px;}
+  .item h4{font-size:.98rem; font-weight:650; flex:1;}
+  .item .meta{font-size:.82rem; color:var(--ink3); margin-top:5px;}
+  .item .desc{font-size:.88rem; color:var(--ink2); margin-top:6px;}
+
+  .pill{flex:none; font-size:.68rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; white-space:nowrap;}
+  .p-done{background:#e6f4ea; color:var(--green);}
+  .p-open{background:#fff4e0; color:var(--amber);}
+  .p-soon{background:var(--chip); color:var(--ink3);}
+  .p-miss{background:#fdecea; color:var(--red);}
+  .p-live{background:#e6f0fb; color:var(--navy);}
+
+  .btn{appearance:none; font:inherit; font-size:.88rem; font-weight:600; border-radius:8px; padding:9px 16px; cursor:pointer; border:1px solid var(--navy); background:var(--navy); color:#fff;}
+  .btn:hover{background:#16283f;}
+  .btn.ghost{background:#fff; color:var(--navy);}
+  .btn.ghost:hover{background:var(--chip);}
+  .btn.sm{font-size:.82rem; padding:6px 12px;}
+  .btn.warn{border-color:var(--amber); background:var(--amber);}
+  .btn.warn:hover{background:#96631a;}
+  .btn:disabled{opacity:.45; cursor:not-allowed;}
+  .btnrow{display:flex; gap:9px; flex-wrap:wrap; margin-top:16px;}
+
+  table{width:100%; border-collapse:collapse; font-size:.87rem;}
+  th{text-align:left; font-size:.7rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink3); padding:8px 10px; border-bottom:1px solid var(--line);}
+  td{padding:9px 10px; border-bottom:1px solid #f0f4f8;}
+  tr:last-child td{border-bottom:none;}
+  code.mono{font-family:ui-monospace,Menlo,monospace; background:var(--chip); padding:1px 6px; border-radius:4px; font-size:.85em;}
+
+  .field{margin-bottom:14px;} .field label{display:block; font-size:.78rem; font-weight:650; color:var(--ink2); margin-bottom:4px;}
+  .field input, .field select, .field textarea{width:100%; font:inherit; font-size:.9rem; padding:8px 10px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink);}
+  .field textarea{min-height:78px; resize:vertical;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .check{display:flex; align-items:flex-start; gap:9px; font-size:.87rem; color:var(--ink); margin-bottom:9px;}
+  .check input{margin-top:3px; width:15px; height:15px;}
+
+  .note{display:none; background:#fffaf0; border-left:3px solid var(--amber); border-radius:0 8px 8px 0; padding:10px 14px; margin:12px 0; font-size:.85rem; color:#5c4813;}
+  body.shownotes .note{display:block;}
+  .note b{color:#7a5c12;}
+
+  .thread{border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .msg{display:flex; gap:11px; padding:12px 15px; border-bottom:1px solid #f0f4f8;}
+  .msg:last-child{border-bottom:none;}
+  .mav{width:30px; height:30px; border-radius:50%; flex:none; display:grid; place-items:center; font-size:.7rem; font-weight:700; color:#fff; background:var(--ink3);}
+  .mav.me{background:var(--navy);} .mav.ai{background:var(--sensei);}
+  .msg .mb{flex:1;}
+  .msg .mn{font-size:.79rem; font-weight:700; color:var(--ink2);}
+  .msg .mt{font-size:.9rem; margin-top:2px;}
+  .msg.sensei{background:var(--senseibg);}
+  .msg.sensei .mn{color:var(--sensei);}
+  .aitag{font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--sensei); background:#fff; border:1px solid #b8ded9; padding:1px 6px; border-radius:99px; margin-left:6px;}
+
+  .senseibar{display:flex; align-items:center; gap:10px; padding:10px 15px; background:var(--senseibg); border-bottom:1px solid #cfe6e3; font-size:.85rem; color:var(--sensei); font-weight:600;}
+  .pulse{width:9px; height:9px; border-radius:50%; background:var(--green); animation:p 1.4s ease-in-out infinite;}
+  @keyframes p{0%,100%{opacity:.35; transform:scale(.8);} 50%{opacity:1; transform:scale(1.25);}}
+
+  .banner{border:1px solid var(--amber); background:#fffaf0; border-radius:10px; padding:13px 16px; margin:14px 0; display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .banner .bt{flex:1; font-size:.9rem; min-width:220px;}
+  .timer{font-family:ui-monospace,Menlo,monospace; font-weight:700; color:var(--amber);}
+
+  .codebox{text-align:center; border:2px dashed var(--teal); border-radius:12px; padding:26px 20px; background:#f6fdfc; margin:16px 0;}
+  .codebox .lbl{font-size:.75rem; text-transform:uppercase; letter-spacing:.13em; color:var(--teal); font-weight:700;}
+  .codebox .code{font-family:ui-monospace,Menlo,monospace; font-size:2.6rem; font-weight:700; letter-spacing:.18em; color:var(--navy); margin:8px 0 4px;}
+  .codebox .hint{font-size:.85rem; color:var(--ink2);}
+
+  .stat{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:6px;}
+  .stat .s{border:1px solid var(--line); border-radius:10px; padding:13px 15px; background:#fff;}
+  .stat .s .n{font-size:1.6rem; font-weight:700; color:var(--navy); line-height:1.1;}
+  .stat .s .l{font-size:.78rem; color:var(--ink3); margin-top:3px;}
+
+  .fb{border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:0 9px 9px 0; padding:13px 16px; margin-top:11px; background:#fff;}
+  .fb .h{font-size:.78rem; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:.09em;}
+  .fb .w{font-size:.79rem; color:var(--ink3); margin-top:2px;}
+  .fb p{font-size:.9rem; margin-top:7px;}
+
+  pre.csv{background:#16283f; color:#d8e4f0; font-family:ui-monospace,Menlo,monospace; font-size:.78rem; padding:14px 16px; border-radius:9px; overflow-x:auto; margin-top:10px; line-height:1.6;}
+
+  .legend{margin-top:26px; border:1px solid var(--line); border-radius:10px; background:#fff; padding:16px 18px;}
+  .legend h3{font-size:.73rem; text-transform:uppercase; letter-spacing:.13em; color:var(--teal); font-weight:700; margin-bottom:8px;}
+  .legend ul{padding-left:19px;} .legend li{font-size:.88rem; color:var(--ink2); margin-top:6px;}
+  .legend li b{color:var(--ink);}
+  footer{margin-top:26px; font-size:.82rem; color:var(--ink3); text-align:center;}
+  @media(max-width:640px){ .two{grid-template-columns:1fr;} .codebox .code{font-size:2rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>The Commons — interactive prototype</h1>
+    <p class="sub">One shared foundation, three kinds of conversation: with a peer, with a teacher or TA, and with the Sensei. This is a clickable mock of the flow for Fall 2026 — a way of showing the design rather than describing it.</p>
+  </div>
+</header>
+<div class="warn">
+  <div class="wrap">
+    <p><strong>This is not working software.</strong> Nothing is saved, no one is signed in, and the data is invented. It exists to make the workflow concrete enough to argue with. Draft — Sathya, July 2026.</p>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="row">
+    <div class="seg">
+      <button id="rStu" class="on" onclick="setRole('student')">Student view</button>
+      <button id="rIns" onclick="setRole('instructor')">Instructor view</button>
+    </div>
+    <label class="toggle"><input type="checkbox" id="notesChk" onchange="document.body.classList.toggle('shownotes',this.checked)"> Show design notes</label>
+  </div>
+</div>
+
+<div class="wrap stage">
+<div class="frame">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="url" id="urlbar">commons.symbioticthinking.ai</span></div>
+
+  <div class="app">
+    <div class="appbar">
+      <div class="logo">The <span>Commons</span></div>
+      <div class="appnav" id="nav"></div>
+      <div class="who">
+        <select class="course" id="courseSel" onchange="switchCourse()">
+          <option>CST349 · Professional Seminar</option>
+          <option>CST395 · AI-Native Solution Engineering</option>
+        </select>
+        <div class="avatar" id="av">MR</div>
+        <span id="whoName">Mireya R.</span>
+      </div>
+    </div>
+
+    <div class="body">
+
+    <!-- ============ STUDENT ============ -->
+
+    <div class="screen" id="s-signin">
+      <h2 class="t">Sign in</h2>
+      <p class="lede">Students sign in with the Google account on the course roster. Their CSUMB address is a Google account, so nothing extra is needed.</p>
+      <div style="max-width:360px; border:1px solid var(--line); border-radius:12px; padding:26px; text-align:center; background:#fff;">
+        <div class="logo" style="font-size:1.15rem; margin-bottom:16px;">The <span>Commons</span></div>
+        <button class="btn ghost" style="width:100%;" onclick="go('s-dash')">Continue with Google</button>
+        <p style="font-size:.78rem; color:var(--ink3); margin-top:12px;">Use the address your instructor has on the roster.</p>
+      </div>
+      <div class="note"><b>For Sergio:</b> if someone signs in with a Google account that isn't on any roster, they should land on a plain "this email isn't on a roster" page — not an error — and the instructor needs to be able to add them on the spot.</div>
+    </div>
+
+    <div class="screen" id="s-dash">
+      <h2 class="t">Your conversations</h2>
+      <p class="lede">Everything assigned to you in <b id="cName">CST349</b>, grouped by who you'd be talking with.</p>
+
+      <h3 class="s">With a peer</h3>
+      <div class="grid">
+        <div class="item click" onclick="go('s-campfire')">
+          <div class="top"><h4>Where I'm stuck right now</h4><span class="pill p-open">Open</span></div>
+          <div class="meta">Asynchronous · due Fri 5 Sept · 10 points</div>
+          <div class="desc">Post the gap you're sitting with, read what your classmates wrote, and invite one of them to talk it through.</div>
+        </div>
+        <div class="item click" onclick="go('s-live')">
+          <div class="top"><h4>First conversation — in class</h4><span class="pill p-live">Live · today</span></div>
+          <div class="meta">Live session · Tue 2 Sept, in class · 15 points</div>
+          <div class="desc">Pair up with someone in the room and talk for twenty minutes. Capture it as you go and submit a summary in your own words.</div>
+        </div>
+      </div>
+
+      <h3 class="s">With a teacher or TA</h3>
+      <div class="grid">
+        <div class="item click" onclick="go('s-interview')">
+          <div class="top"><h4>Check-in interviews</h4><span class="pill p-open">1 of 3 done</span></div>
+          <div class="meta">Three across the semester · participation credit</div>
+          <div class="desc">A short conversation about what you're working on. Your notes and guidance from these are on this page.</div>
+        </div>
+      </div>
+
+      <h3 class="s">With the Sensei</h3>
+      <div class="grid">
+        <div class="item click" onclick="go('s-reflect')">
+          <div class="top"><h4>Reflection — start of term</h4><span class="pill p-done">Complete</span></div>
+          <div class="meta">Completed 2 Sept · repeats mid-term and at the end</div>
+          <div class="desc">A guided reflection on how you approach your own work.</div>
+        </div>
+        <div class="item"><div class="top"><h4>Reflection — mid-term</h4><span class="pill p-soon">Opens 20 Oct</span></div>
+          <div class="meta">The same questions again, so you can see what shifted.</div></div>
+      </div>
+      <div class="note"><b>For Sergio:</b> three assignment types, one dashboard. They differ in who the conversation is with, not in how they're built — same roster, same course, same capture, same completion record. That's the whole argument for one foundation.</div>
+    </div>
+
+    <div class="screen" id="s-campfire">
+      <h2 class="t">Where I'm stuck right now</h2>
+      <p class="lede">Everyone posts under a pseudonym. Names appear only if both people decide to show them.</p>
+      <div class="grid">
+        <div class="item"><div class="top"><h4>Quiet Heron</h4><span class="pill p-soon">3 replies</span></div>
+          <div class="desc">I can follow the lectures fine but the moment I open a blank file I don't know what the first line should be. I don't think it's a knowledge problem.</div>
+          <div class="btnrow"><button class="btn ghost sm" onclick="go('s-thread')">Invite to talk</button></div></div>
+        <div class="item"><div class="top"><h4>Cedar Fox</h4><span class="pill p-soon">1 reply</span></div>
+          <div class="desc">Everyone in my group already seems to know what they want to do after graduation and I keep nodding along. I don't actually know what I'd pick.</div>
+          <div class="btnrow"><button class="btn ghost sm" onclick="go('s-thread')">Invite to talk</button></div></div>
+        <div class="item" style="border-style:dashed; background:#fbfdff;"><div class="top"><h4>Your post</h4><span class="pill p-open">Draft</span></div>
+          <div class="desc" style="color:var(--ink3);">Write the gap you're actually sitting with…</div></div>
+      </div>
+      <div class="note"><b>For Sergio:</b> this is the part that already works and I don't want to change much. The one change is the reveal rule — see the thread screen.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
+    </div>
+
+    <div class="screen" id="s-thread">
+      <h2 class="t">Conversation with Quiet Heron</h2>
+      <p class="lede">You're <b id="myPseudo">Amber Wren</b> here. Either of you can invite the Sensei in; neither of you has to.</p>
+
+      <div class="thread">
+        <div class="senseibar" id="senseibar" style="display:none;"><span class="pulse"></span><span id="senseiState">The AI Sensei is listening</span></div>
+        <div class="msg"><div class="mav">QH</div><div class="mb"><div class="mn">Quiet Heron</div><div class="mt">Mine is the blank file thing. I know the material, I just freeze at the start.</div></div></div>
+        <div class="msg"><div class="mav me">AW</div><div class="mb"><div class="mn">Amber Wren (you)</div><div class="mt">Same, honestly. Though for me it's more that I don't trust the first idea I have, so I never write it down.</div></div></div>
+        <div class="msg"><div class="mav">QH</div><div class="mb"><div class="mn">Quiet Heron</div><div class="mt">Oh that's interesting — so you do have a first idea. I'm not sure I get that far.</div></div></div>
+        <div id="extra"></div>
+      </div>
+
+      <div id="interject" class="banner" style="display:none;">
+        <div class="bt"><b>The AI Sensei would like to say something.</b> It's been listening and has one question for you both.</div>
+        <span class="timer" id="tick">0:20</span>
+        <button class="btn sm" onclick="allowSensei()">Allow</button>
+        <button class="btn ghost sm" onclick="dismissOnce()">Not now</button>
+      </div>
+
+      <div id="dismissBox" class="banner" style="display:none; border-color:var(--teal); background:#f6fdfc;">
+        <div class="bt">You asked to send the Sensei away. Waiting for Quiet Heron to agree — it stays until you both do.</div>
+        <button class="btn sm" onclick="partnerAgrees()">Quiet Heron agrees</button>
+      </div>
+
+      <div id="revealBox" class="banner" style="display:none;">
+        <div class="bt"><b>You've been talking a while — 25 messages.</b> Would you like to show each other your names? It only happens if you both say yes.</div>
+        <button class="btn sm" onclick="doReveal()">Yes, show my name</button>
+        <button class="btn ghost sm" onclick="alert('Nothing changes. You both stay pseudonymous.')">Not yet</button>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn ghost" id="inviteBtn" onclick="inviteSensei()">Invite the AI Sensei</button>
+        <button class="btn ghost" onclick="document.getElementById('revealBox').style.display='flex'">Simulate reaching 25 messages</button>
+        <button class="btn ghost" onclick="go('s-campfire')">Back</button>
+      </div>
+      <div class="note"><b>For Sergio — the one change to what's shipped today.</b> Right now identity is revealed automatically at 25 messages. I'd like 25 to trigger the <i>question</i> instead, and the names to appear only if both say yes. The rest of the Sensei choreography here is exactly what you demoed: it announces itself, it shows it's listening, it asks before interjecting, and it takes both of them to send it away.</div>
+    </div>
+
+    <div class="screen" id="s-live">
+      <h2 class="t">First conversation — in class</h2>
+      <p class="lede">Find someone in the room. One of you starts and reads out the code; the other joins with it.</p>
+      <div class="two">
+        <div class="item"><h4>Start the conversation</h4>
+          <div class="desc">You'll get a short code to read out to your partner.</div>
+          <div class="btnrow"><button class="btn" onclick="startCode()">Start</button></div>
+          <div class="codebox" id="codeShow" style="display:none;">
+            <div class="lbl">Read this out</div><div class="code" id="theCode">— — — —</div>
+            <div class="hint">Waiting for someone to join…</div>
+          </div>
+        </div>
+        <div class="item"><h4>Join with a code</h4>
+          <div class="desc">Your partner will read it out to you.</div>
+          <div class="field" style="margin-top:12px;"><input id="codeIn" placeholder="e.g. K7RM" style="text-transform:uppercase; font-family:ui-monospace,Menlo,monospace; font-size:1.1rem; letter-spacing:.15em;"></div>
+          <button class="btn ghost" onclick="joinCode()">Join</button>
+          <p id="joinMsg" style="font-size:.85rem; margin-top:10px;"></p>
+          <div id="thirdSeat" style="display:none; margin-top:12px;">
+            <div class="fb" style="border-left-color:var(--amber);"><div class="h">Third seat open</div><p>One person in the room doesn't have a partner. Your instructor has opened one group of three — join a pair that's already talking.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><b>For Sergio:</b> a few things I'd want right. The code has to survive being read aloud with twenty people talking, so leave out 0/O, 1/I/L, S/5, B/V. Start and Join should be visibly different actions — two eager students will both tap the conversation, and tapping twice should show the <i>same</i> code, not mint a second one. Codes only work for someone on that roster with that conversation assigned, and only for that class period. A refresh should rejoin, not restart. And both people get completion credit, not only the one who started.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('s-livein')">Skip ahead — we're paired</button><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
+    </div>
+
+    <div class="screen" id="s-livein">
+      <h2 class="t">In conversation — Daniel Ortiz</h2>
+      <p class="lede">You're in the same room, so you see each other's names here. Capture as you go, then write the summary yourself.</p>
+      <div class="thread">
+        <div class="senseibar"><span class="pulse"></span><span>Capturing — microphone on</span></div>
+        <div class="msg"><div class="mav">DO</div><div class="mb"><div class="mn">Daniel Ortiz</div><div class="mt">…so the part I keep avoiding is asking anyone for help, because then they'd know I'm behind.</div></div></div>
+        <div class="msg"><div class="mav me">MR</div><div class="mb"><div class="mn">Mireya (you)</div><div class="mt">How long have you been sitting with it?</div></div></div>
+      </div>
+      <h3 class="s">Your summary</h3>
+      <div class="field"><textarea placeholder="In your own words — what did you talk about, and what changed?">Daniel's stuck point isn't the material, it's asking for help. We worked out that he'd be fine asking a peer but not the instructor, so his first move is to ask one person in his group this week.</textarea></div>
+      <div class="fb" style="border-left-color:var(--sensei);"><div class="h">Draft from the Sensei <span class="aitag">AI generated</span></div><p>A summary was drafted from the transcript. Edit it into your own words before submitting — what you submit is what counts.</p></div>
+      <div class="btnrow"><button class="btn" onclick="alert('Submitted. Both of you are marked complete.')">Submit summary</button><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
+      <div class="note"><b>For Sergio:</b> live records carry real names, using the preferred name from the roster — not the pseudonym. Someone a student meets here shouldn't be able to look up which campfire pseudonym belongs to them later.</div>
+    </div>
+
+    <div class="screen" id="s-interview">
+      <h2 class="t">Check-in interviews</h2>
+      <p class="lede">Short conversations with me or a TA. You can see where you stand and everything either of us wrote for you.</p>
+      <div class="stat">
+        <div class="s"><div class="n">1 / 3</div><div class="l">Completed this term</div></div>
+        <div class="s"><div class="n">2</div><div class="l">Still to schedule</div></div>
+        <div class="s"><div class="n">Met</div><div class="l">Participation so far</div></div>
+      </div>
+      <h3 class="s">History</h3>
+      <table>
+        <tr><th>When</th><th>With</th><th>Status</th></tr>
+        <tr><td>4 Sept 2026</td><td>Ana Delgado (TA)</td><td><span class="pill p-done">Complete</span></td></tr>
+        <tr><td>Week of 20 Oct</td><td>Prof. Narayanan</td><td><span class="pill p-open">To schedule</span></td></tr>
+        <tr><td>Week of 1 Dec</td><td>Either</td><td><span class="pill p-soon">Not open yet</span></td></tr>
+      </table>
+      <h3 class="s">Feedback and guidance</h3>
+      <div class="fb"><div class="h">Guidance</div><div class="w">Ana Delgado, 4 Sept</div>
+        <p>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do. That self-knowledge is the thing most people take a year to get to.</p>
+        <p>For next time: pick one of the two projects you mentioned and go a layer deeper on it rather than starting a third. Bring what you find and we'll look at it together.</p></div>
+      <div class="note"><b>For Sergio — this is where the wall isn't hard.</b> Students see their own status and everything a teacher or TA wrote for them. My working assumption is that student-visible is the default for anything we write, not an option we remember to switch on. If I wouldn't want a student to read it, I probably shouldn't be typing it here.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
+    </div>
+
+    <div class="screen" id="s-reflect">
+      <h2 class="t">Reflection — start of term</h2>
+      <p class="lede">A guided conversation with the Sensei about how you go about your own work. It repeats later in the term with the same questions.</p>
+      <div class="thread">
+        <div class="msg sensei"><div class="mav ai">S</div><div class="mb"><div class="mn">The Sensei <span class="aitag">AI generated</span></div><div class="mt">Think about the last time you got properly stuck on something — not a bug, something where you weren't sure what to do next. What did you actually do first?</div></div></div>
+        <div class="msg"><div class="mav me">MR</div><div class="mb"><div class="mn">Mireya (you)</div><div class="mt">Honestly I waited a couple of days to see if it'd get clearer. Then I asked in the group chat.</div></div></div>
+        <div class="msg sensei"><div class="mav ai">S</div><div class="mb"><div class="mn">The Sensei <span class="aitag">AI generated</span></div><div class="mt">What made the group chat feel like the right place, rather than somewhere else?</div></div></div>
+      </div>
+      <h3 class="s">Where this goes</h3>
+      <div class="fb"><div class="h">Your record</div><p>Marked complete. You'll be asked the same questions in October and again in December, so you can look back at what you said and see what's moved.</p></div>
+      <div class="note"><b>For Sergio — careful here.</b> This one is different from the other two: it's a repeating instrument, so the questions have to stay stable across administrations and it needs its own scheduling. And the student side shows <i>completion and their own words back</i> — not scores on the six dimensions. We've already decided the scales stay quiet and are never shown to students as a number. It'd be very easy to build the obvious status page and breach that by accident.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('s-dash')">Back</button></div>
+    </div>
+
+    <div class="screen" id="s-status">
+      <h2 class="t">Where you stand</h2>
+      <p class="lede">Everything across the three kinds of conversation, in one place.</p>
+      <div class="stat">
+        <div class="s"><div class="n">4 / 6</div><div class="l">Conversations complete</div></div>
+        <div class="s"><div class="n">1 / 3</div><div class="l">Interviews</div></div>
+        <div class="s"><div class="n">1 / 3</div><div class="l">Reflections</div></div>
+        <div class="s"><div class="n">45</div><div class="l">Participation points</div></div>
+      </div>
+      <h3 class="s">Everything you've been told</h3>
+      <div class="fb"><div class="h">Guidance</div><div class="w">Ana Delgado (TA) · interview · 4 Sept</div><p>Pick one of the two projects and go a layer deeper rather than starting a third.</p></div>
+      <div class="fb"><div class="h">From a peer</div><div class="w">Quiet Heron · conversation · 8 Sept</div><p>Said the thing about not trusting your first idea was the most useful sentence in the whole conversation.</p></div>
+      <div class="fb" style="border-left-color:var(--sensei);"><div class="h">Your own words <span class="aitag">from your reflection</span></div><div class="w">2 Sept</div><p>"I waited a couple of days to see if it'd get clearer, then I asked in the group chat."</p></div>
+      <div class="note"><b>For Sergio:</b> this page is the payoff for having one foundation — a student can't get this view if the three things live in three tools. Note there are no scores anywhere on it.</div>
+    </div>
+
+    <!-- ============ INSTRUCTOR ============ -->
+
+    <div class="screen" id="i-courses">
+      <h2 class="t">Your courses</h2>
+      <p class="lede">Create a course, then bring the roster in.</p>
+      <div class="grid">
+        <div class="item click" onclick="go('i-roster')"><div class="top"><h4>CST349 · Professional Seminar</h4><span class="pill p-done">58 students</span></div>
+          <div class="meta">Fall 2026 · roster updated 28 Aug</div></div>
+        <div class="item click" onclick="go('i-roster')"><div class="top"><h4>CST395 · AI-Native Solution Engineering</h4><span class="pill p-done">20 students</span></div>
+          <div class="meta">Fall 2026 · roster updated 28 Aug</div></div>
+        <div class="item" style="border-style:dashed;"><div class="top"><h4 style="color:var(--ink3);">+ Create a course</h4></div></div>
+      </div>
+    </div>
+
+    <div class="screen" id="i-roster">
+      <h2 class="t">CST349 — roster</h2>
+      <p class="lede">Upload the gradebook export from Canvas. The student IDs come in with it, so grades can go back the same way.</p>
+      <div class="item" style="border-style:dashed; text-align:center; padding:26px;">
+        <p style="font-size:.92rem; color:var(--ink2);">Drop <code class="mono">CST349-gradebook.csv</code> here, or choose a file</p>
+        <div class="btnrow" style="justify-content:center;"><button class="btn ghost" onclick="alert('58 students matched on ID. 3 added, 1 dropped. Nothing already posted was touched.')">Choose file</button></div>
+      </div>
+      <table style="margin-top:16px;">
+        <tr><th>Name</th><th>Preferred</th><th>Email</th><th>Status</th></tr>
+        <tr><td>Mireya Rojas-Kim</td><td>Mireya</td><td>mrojaskim@csumb.edu</td><td><span class="pill p-done">Active</span></td></tr>
+        <tr><td>Daniel Ortiz</td><td>Danny</td><td>dortiz@csumb.edu</td><td><span class="pill p-done">Active</span></td></tr>
+        <tr><td>Aisha Bennett</td><td>Aisha</td><td>abennett@csumb.edu</td><td><span class="pill p-open">Added 3 Sept</span></td></tr>
+        <tr><td>Tomas Vega</td><td>Tomas</td><td>tvega@csumb.edu</td><td><span class="pill p-miss">Dropped</span></td></tr>
+      </table>
+      <div class="note"><b>For Sergio:</b> I'll be re-uploading this through the first two weeks. Re-uploading should update rather than duplicate — match on the Canvas ID — and a dropped student's existing posts shouldn't be orphaned. Canvas doesn't carry a preferred name, so I'll add that column by hand; I'll send you a real export so you're not building to my description of it.</div>
+      <div class="btnrow"><button class="btn" onclick="go('i-convs')">Conversations</button><button class="btn ghost" onclick="go('i-courses')">Back</button></div>
+    </div>
+
+    <div class="screen" id="i-convs">
+      <h2 class="t">CST349 — conversations</h2>
+      <p class="lede">Everything I've assigned to this course.</p>
+      <div class="grid">
+        <div class="item"><div class="top"><h4>First conversation — in class</h4><span class="pill p-live">Live · today</span></div>
+          <div class="meta">Peer · live session · Tue 2 Sept · 15 pts · async fallback 9 pts</div>
+          <div class="btnrow"><button class="btn ghost sm" onclick="go('i-monitor')">Open session</button><button class="btn ghost sm" onclick="go('i-grades')">Completion</button></div></div>
+        <div class="item"><div class="top"><h4>Where I'm stuck right now</h4><span class="pill p-open">Open</span></div>
+          <div class="meta">Peer · asynchronous · due Fri 5 Sept · 10 pts</div></div>
+        <div class="item"><div class="top"><h4>Check-in interview 1</h4><span class="pill p-open">Open</span></div>
+          <div class="meta">Teacher or TA · by 12 Sept · participation</div>
+          <div class="btnrow"><button class="btn ghost sm" onclick="go('i-interview')">Open</button></div></div>
+        <div class="item"><div class="top"><h4>Reflection — start of term</h4><span class="pill p-done">41 of 58</span></div>
+          <div class="meta">Sensei · repeats 20 Oct and 1 Dec</div></div>
+      </div>
+      <div class="btnrow"><button class="btn" onclick="go('i-new')">New conversation</button><button class="btn ghost" onclick="go('i-roster')">Back</button></div>
+    </div>
+
+    <div class="screen" id="i-new">
+      <h2 class="t">New conversation</h2>
+      <p class="lede">The same form whichever kind it is — only the partner changes.</p>
+      <div class="field"><label>Title</label><input value="First conversation — in class"></div>
+      <div class="field"><label>What students are asked to do</label><textarea>Pair up with someone in the room. Twenty minutes. Talk about the gap you posted, capture it as you go, and submit a summary in your own words.</textarea></div>
+      <div class="two">
+        <div class="field"><label>Conversation with</label><select><option>A peer</option><option>A teacher or TA</option><option>The Sensei</option></select></div>
+        <div class="field"><label>Mode</label><select><option>Live session</option><option>Asynchronous</option></select></div>
+      </div>
+      <div class="two">
+        <div class="field"><label>Due</label><input type="date" value="2026-09-02"></div>
+        <div class="field"><label>Points</label><input type="number" value="15"></div>
+      </div>
+      <div class="two">
+        <div class="field"><label>Assign to</label><select><option>CST349 · Professional Seminar</option><option>CST395 · AI-Native Solution Engineering</option></select></div>
+        <div class="field"><label>Group size</label><select><option>Pairs — one group of three allowed</option><option>Pairs only</option></select></div>
+      </div>
+      <label class="check"><input type="checkbox" checked> Students who miss the live session may do the asynchronous version for partial credit <span style="color:var(--ink3);">— 9 of 15 points</span></label>
+      <label class="check"><input type="checkbox" checked> Students may invite the AI Sensei into this conversation</label>
+      <div class="note"><b>For Sergio:</b> the partial-credit route is only for people who missed the live one — the point of the lower score is that most of them come to the live conversation. For the first run I'll open that myself rather than have the platform work out who was absent.</div>
+      <div class="btnrow"><button class="btn" onclick="go('i-convs')">Create</button><button class="btn ghost" onclick="go('i-convs')">Cancel</button></div>
+    </div>
+
+    <div class="screen" id="i-monitor">
+      <h2 class="t">First conversation — live now</h2>
+      <p class="lede">Tue 2 Sept, 10:04am. Seventeen of twenty students are in the room.</p>
+      <div class="stat">
+        <div class="s"><div class="n">8</div><div class="l">Pairs talking</div></div>
+        <div class="s"><div class="n">1</div><div class="l">Waiting for a partner</div></div>
+        <div class="s"><div class="n">3</div><div class="l">Absent today</div></div>
+        <div class="s"><div class="n" id="trioN">0</div><div class="l">Groups of three</div></div>
+      </div>
+      <div id="unpaired" class="banner">
+        <div class="bt"><b>Aisha B. has no partner.</b> Seventeen in the room is an odd number. Open the third seat and she can join a pair that's already talking.</div>
+        <button class="btn warn sm" onclick="releaseThird()">Open the third seat</button>
+      </div>
+      <div id="thirdDone" class="banner" style="display:none; border-color:var(--green); background:#f0f9f3;">
+        <div class="bt">Third seat open — one group of three, and only one. Everyone else stays in pairs.</div>
+      </div>
+      <h3 class="s">Rooms</h3>
+      <table>
+        <tr><th>Code</th><th>Who</th><th>Started</th><th>Status</th></tr>
+        <tr><td><code class="mono">K7RM</code></td><td>Mireya R. · Daniel O.</td><td>10:04</td><td><span class="pill p-live">Talking</span></td></tr>
+        <tr><td><code class="mono">P4WT</code></td><td>Jordan C. · Priya N.</td><td>10:05</td><td><span class="pill p-live">Talking</span></td></tr>
+        <tr><td><code class="mono">R9HK</code></td><td>Marcus L. · Elena V.</td><td>10:05</td><td><span class="pill p-done">Summary in</span></td></tr>
+        <tr><td>—</td><td>Aisha B.</td><td>—</td><td><span class="pill p-open" id="aishaStat">Waiting</span></td></tr>
+      </table>
+      <div class="note"><b>For Sergio — the question I'd like your read on.</b> If the third seat is open from the start, a friendly group of three grabs it in the first thirty seconds and the student who came on their own is still stranded. So either the platform holds it until exactly one person is unpaired, or I open it with one tap once the room has settled. For the first run I'd probably rather have the button, unless holding it is easy. Either way it's one group of three and only one — an even room needs none and an odd room needs exactly one, so a cap of one is always enough.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('i-grades')">Completion</button><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
+    </div>
+
+    <div class="screen" id="i-grades">
+      <h2 class="t">Completion — First conversation</h2>
+      <p class="lede">Who has done it, and the file to put the points into Canvas.</p>
+      <div class="stat">
+        <div class="s"><div class="n">17</div><div class="l">Complete</div></div>
+        <div class="s"><div class="n">2</div><div class="l">Partial credit</div></div>
+        <div class="s"><div class="n">1</div><div class="l">Not yet</div></div>
+      </div>
+      <table style="margin-top:14px;">
+        <tr><th>Student</th><th>How</th><th>Partner</th><th>Points</th></tr>
+        <tr><td>Mireya Rojas-Kim</td><td>Live</td><td>Daniel Ortiz</td><td>15</td></tr>
+        <tr><td>Daniel Ortiz</td><td>Live</td><td>Mireya Rojas-Kim</td><td>15</td></tr>
+        <tr><td>Aisha Bennett</td><td>Live (three)</td><td>Marcus L. · Elena V.</td><td>15</td></tr>
+        <tr><td>Tomas Vega</td><td>Asynchronous</td><td>Jordan C.</td><td>9</td></tr>
+        <tr><td>Sam Okafor</td><td>—</td><td>—</td><td>0</td></tr>
+      </table>
+      <div class="btnrow"><button class="btn" onclick="document.getElementById('csv').style.display='block'">Download Canvas CSV</button></div>
+      <pre class="csv" id="csv" style="display:none;">Student,ID,SIS User ID,SIS Login ID,Section,"First conversation (1284957)"
+"Rojas-Kim, Mireya",90114,10442771,mrojaskim@csumb.edu,CST349-01,15
+"Ortiz, Daniel",90118,10442810,dortiz@csumb.edu,CST349-01,15
+"Bennett, Aisha",90126,10443002,abennett@csumb.edu,CST349-01,15
+"Vega, Tomas",90131,10443119,tvega@csumb.edu,CST349-01,9
+"Okafor, Sam",90140,10443265,sokafor@csumb.edu,CST349-01,0</pre>
+      <div class="note"><b>For Sergio:</b> this one matters more than it sounds — 58 students in one section means I can't be entering grades by hand. One assignment column at a time is enough. I'll send you a real Canvas export so the columns are right.</div>
+      <div class="btnrow"><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
+    </div>
+
+    <div class="screen" id="i-interview">
+      <h2 class="t">Check-in interview 1</h2>
+      <p class="lede">Mine and the TA's view. Everything written here is visible to the student.</p>
+      <table>
+        <tr><th>Student</th><th>With</th><th>When</th><th>Status</th></tr>
+        <tr><td>Mireya Rojas-Kim</td><td>Ana Delgado (TA)</td><td>4 Sept</td><td><span class="pill p-done">Complete</span></td></tr>
+        <tr><td>Daniel Ortiz</td><td>—</td><td>—</td><td><span class="pill p-open">To schedule</span></td></tr>
+        <tr><td>Aisha Bennett</td><td>Prof. Narayanan</td><td>9 Sept</td><td><span class="pill p-live">Booked</span></td></tr>
+      </table>
+      <h3 class="s">Mireya Rojas-Kim — 4 Sept</h3>
+      <div class="thread"><div class="senseibar"><span class="pulse"></span><span>Capturing — microphone on</span></div>
+        <div class="msg"><div class="mav">AD</div><div class="mb"><div class="mn">Ana Delgado (TA)</div><div class="mt">Tell me what you've actually been working on — not what you're supposed to be working on.</div></div></div>
+      </div>
+      <div class="field" style="margin-top:14px;"><label>Feedback and guidance</label><textarea>You came in with a clear read on what you're good at — you described the debugging work in real detail and you were honest about which part you'd rather not do.
+
+For next time: pick one of the two projects and go a layer deeper rather than starting a third.</textarea></div>
+      <label class="check"><input type="checkbox" checked disabled> Visible to the student <span style="color:var(--ink3);">— on by default</span></label>
+      <div class="note"><b>For Sergio:</b> student-visible is the default here, not a switch we remember to flip. If I wouldn't want the student to read it, it doesn't belong in this box. I'd rather we not build a private notes field at all for the first version and see whether we miss it.</div>
+      <div class="btnrow"><button class="btn" onclick="alert('Saved and shared with Mireya.')">Save</button><button class="btn ghost" onclick="go('i-convs')">Back</button></div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <h3>What this prototype is showing</h3>
+  <ul>
+    <li><b>One foundation, three surfaces.</b> Course, roster, identity and conversation-capture are built once. What changes between the three assignment types is who the student is talking to.</li>
+    <li><b>Pseudonymous with peers, named with staff.</b> The campfire keeps pseudonyms and 25 messages now triggers a question rather than an automatic reveal. Live sessions and interviews use real names, and the two are not linked on the student side.</li>
+    <li><b>Not a hard wall.</b> Students see their own interview status and everything a teacher or TA wrote for them. Student-visible is the default.</li>
+    <li><b>Completion, not scores.</b> Per-student completion drives the participation grade. Nothing about the quality of a student's thinking is shown as a number — to them or on a dashboard.</li>
+    <li><b>Only the peer surface has to exist on 2 September.</b> The rest can follow once the first one has survived a real class hour.</li>
+  </ul>
+</div>
+
+<footer>Prototype only — no data is stored and nothing here is live. The Commons · Fall 2026.</footer>
+</div>
+
+<script>
+var NAV = {
+  student: [['s-dash','Conversations'],['s-campfire','Campfire'],['s-live','Live session'],['s-interview','Interviews'],['s-reflect','Reflection'],['s-status','Where you stand']],
+  instructor: [['i-courses','Courses'],['i-roster','Roster'],['i-convs','Conversations'],['i-monitor','Live now'],['i-grades','Completion'],['i-interview','Interviews']]
+};
+var role='student', cur='s-signin';
+
+function setRole(r){
+  role=r;
+  document.getElementById('rStu').classList.toggle('on', r==='student');
+  document.getElementById('rIns').classList.toggle('on', r==='instructor');
+  document.getElementById('whoName').textContent = r==='student' ? 'Mireya R.' : 'Prof. Narayanan';
+  document.getElementById('av').textContent = r==='student' ? 'MR' : 'SN';
+  document.getElementById('courseSel').style.display = r==='student' ? '' : 'none';
+  buildNav();
+  go(r==='student' ? 's-signin' : 'i-courses');
+}
+function buildNav(){
+  var n=document.getElementById('nav'); n.innerHTML='';
+  NAV[role].forEach(function(p){
+    var b=document.createElement('button'); b.textContent=p[1]; b.dataset.k=p[0];
+    b.onclick=function(){go(p[0]);}; n.appendChild(b);
+  });
+}
+function go(id){
+  cur=id;
+  var all=document.querySelectorAll('.screen');
+  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
+  var el=document.getElementById(id); if(el) el.classList.add('on');
+  var bs=document.querySelectorAll('#nav button');
+  for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on', bs[j].dataset.k===id);
+  document.getElementById('urlbar').textContent='commons.symbioticthinking.ai/'+(id.indexOf('i-')===0?'teach/':'')+id.slice(2);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function switchCourse(){
+  var v=document.getElementById('courseSel').value;
+  document.getElementById('cName').textContent=v.split(' ·')[0];
+}
+
+/* ---- join codes: alphabet with look/sound-alikes removed ---- */
+/* no 0/O, 1/I/L, 5/S, B/V, and no letters that rhyme when shouted across a room */
+var ALPHA='AFHJKMNQRWXY479';
+var live=null;
+function mkCode(){var s='';for(var i=0;i<4;i++)s+=ALPHA[Math.floor(Math.random()*ALPHA.length)];return s;}
+function startCode(){
+  if(!live) live=mkCode();
+  document.getElementById('theCode').textContent=live;
+  document.getElementById('codeShow').style.display='block';
+}
+function joinCode(){
+  var v=(document.getElementById('codeIn').value||'').toUpperCase().trim();
+  var m=document.getElementById('joinMsg');
+  if(!v){m.textContent='Enter the code your partner read out.'; m.style.color='var(--ink3)'; return;}
+  if(live && v===live){ m.textContent='Joined. Both of you are in the same conversation.'; m.style.color='var(--green)'; setTimeout(function(){go('s-livein');},700); }
+  else { m.innerHTML='That code isn\'t open in this class. Check the letters and try again.'; m.style.color='var(--red)'; }
+}
+function releaseThird(){
+  document.getElementById('unpaired').style.display='none';
+  document.getElementById('thirdDone').style.display='flex';
+  document.getElementById('trioN').textContent='1';
+  document.getElementById('aishaStat').textContent='Joining a three';
+  document.getElementById('aishaStat').className='pill p-live';
+  document.getElementById('thirdSeat').style.display='block';
+}
+
+/* ---- sensei choreography ---- */
+var t=null;
+function inviteSensei(){
+  document.getElementById('inviteBtn').disabled=true;
+  document.getElementById('senseibar').style.display='flex';
+  add('sensei','S','The Sensei','I\'ve joined the room. I\'ll listen quietly and raise my hand if I have something worth saying.',true);
+  var n=20; document.getElementById('tick').textContent='0:20';
+  setTimeout(function(){
+    document.getElementById('interject').style.display='flex';
+    t=setInterval(function(){
+      n--; document.getElementById('tick').textContent='0:'+(n<10?'0':'')+n;
+      if(n<=0){clearInterval(t); dismissOnce();}
+    },1000);
+  },2600);
+}
+function stopT(){ if(t){clearInterval(t); t=null;} document.getElementById('interject').style.display='none'; }
+function allowSensei(){
+  stopT();
+  add('sensei','S','The Sensei','You both described freezing, but for different reasons — one of you has no first idea, the other doesn\'t trust the one they have. Is that actually the same problem?',true);
+  document.getElementById('senseiState').textContent='The AI Sensei is listening';
+}
+function dismissOnce(){
+  stopT();
+  document.getElementById('dismissBox').style.display='flex';
+}
+function partnerAgrees(){
+  document.getElementById('dismissBox').style.display='none';
+  document.getElementById('senseibar').style.display='none';
+  add('sensei','S','The Sensei','Both of you agreed — I\'ll step out. Invite me back whenever.',true);
+  document.getElementById('inviteBtn').disabled=false;
+}
+function add(cls,ini,name,text,ai){
+  var d=document.createElement('div');
+  d.className='msg '+(cls||'');
+  d.innerHTML='<div class="mav '+(ai?'ai':'')+'">'+ini+'</div><div class="mb"><div class="mn">'+name+(ai?' <span class="aitag">AI generated</span>':'')+'</div><div class="mt">'+text+'</div></div>';
+  document.getElementById('extra').appendChild(d);
+}
+function doReveal(){
+  document.getElementById('revealBox').style.display='none';
+  document.getElementById('myPseudo').textContent='Mireya Rojas-Kim';
+  var ns=document.querySelectorAll('#s-thread .mn');
+  for(var i=0;i<ns.length;i++){
+    if(ns[i].textContent.indexOf('Quiet Heron')===0) ns[i].textContent='Daniel Ortiz';
+    if(ns[i].textContent.indexOf('Amber Wren')===0) ns[i].textContent='Mireya (you)';
+  }
+  alert('You both said yes, so your names are now showing. If either of you had said no, nothing would have changed.');
+}
+
+buildNav(); go('s-signin');
+</script>
+</body>
+</html>
