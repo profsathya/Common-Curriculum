@@ -10,7 +10,7 @@
 --border:#C7CDD1; --border-light:#E8EAEC;
 --modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
 --check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
---teal:#0d9488;
+--teal:#0d9488; --teal-light:#f0fdfa;
 --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box;}
@@ -18,114 +18,114 @@ html,body{margin:0;padding:0;}
 body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
 a{color:var(--blue);text-decoration:none;}
 a:hover{text-decoration:underline;color:var(--blue-dark);}
+
 .page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
 
 .draft{border:1px solid #E0C88A;background:#FBF6EC;border-radius:5px;padding:10px 13px;margin-bottom:18px;font-size:12.5px;color:#5e4a18;display:flex;gap:8px;align-items:flex-start;}
 .draft svg{width:15px;height:15px;flex:0 0 15px;margin-top:2px;}
 .draft b{font-weight:700;}
 
-.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:20px;}
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:18px;}
 .course-header .eyebrow{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.7px;text-transform:uppercase;}
 .course-header h1{font-size:23px;font-weight:700;margin:3px 0 4px;}
 .course-header .sub{font-size:14px;color:var(--text);font-weight:600;}
 .course-header .lead{color:var(--muted);font-size:13px;max-width:690px;margin-top:6px;}
 .cti-logo{height:34px;width:auto;display:block;opacity:.9;}
-.cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;text-align:right;line-height:1.2;}
+.cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
-h2.sec{font-size:16px;font-weight:700;margin:26px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
-h2.sec:first-of-type{margin-top:0;}
-p.body{font-size:13.5px;margin:0 0 10px;}
-p.body:last-child{margin-bottom:0;}
-
+/* Program arc */
+.arc{margin:0 0 20px;}
+.arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
-a.arc-card .who{margin-top:auto;}
 a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBFD;}
 .arc-card .s{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
-.arc-card .nm{font-size:13.5px;font-weight:700;margin:2px 0 2px;line-height:1.25;color:var(--blue-dark);}
+.arc-card .nm{font-size:13.5px;font-weight:700;margin:2px 0 1px;color:var(--blue-dark);line-height:1.25;}
 .arc-card .th{font-size:11.5px;color:var(--muted);line-height:1.3;}
-.arc-card .who{font-size:11px;color:var(--muted);margin-top:6px;padding-top:5px;border-top:1px solid var(--border-light);}
+.arc-card .who{font-size:11px;color:var(--muted);margin-top:auto;padding-top:6px;}
 .arc-card .who b{color:var(--text);font-weight:600;}
 .arc-card.build{background:#F3F8FB;border-color:#A8CBE0;}
-.arc-note{font-size:12.5px;color:var(--muted);margin:9px 0 0;}
 @media(max-width:1000px){.arc-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:620px){.arc-grid{grid-template-columns:repeat(2,1fr);}}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-@media(max-width:760px){.split{grid-template-columns:1fr;}}
-.card{border:1px solid var(--border);border-radius:6px;padding:12px 14px;}
-.card .hd{font-size:14px;font-weight:700;margin-bottom:5px;}
-.card p{font-size:13px;margin:0 0 8px;}
-.card p:last-child{margin-bottom:0;}
-.card.keycard{background:var(--goal-bg);border-color:#A8CBE0;border-left:4px solid var(--goal-border);}
+/* Beyond the grade */
+.beyond{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:13px 15px;margin:0 0 22px;}
+.beyond .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
+.beyond .hd{font-size:15px;font-weight:700;margin-bottom:4px;}
+.beyond p{margin:0 0 6px;font-size:13px;color:#38503f;}
+.beyond p:last-child{margin-bottom:0;}
 
+/* Modules */
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+details.module > summary{list-style:none;cursor:pointer;}
+details.module > summary::-webkit-details-marker{display:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
+.module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
+details.module[open] > summary > .module-head .chev{transform:rotate(90deg);}
+.module-head:hover{background:#EFEFEF;}
+
+.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);padding:11px 14px;}
+.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.goal .text{font-size:14px;color:var(--text);}
+.goal ul{margin:4px 0 0;padding-left:18px;}
+.goal li{margin:2px 0;}
+.prereq{padding:8px 14px 4px;color:var(--muted);font-size:12.5px;display:flex;gap:7px;align-items:flex-start;border-bottom:1px solid var(--border-light);}
+.prereq svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.prereq b{color:var(--text);font-weight:600;}
+
+.items{padding:2px 0 4px;}
+.item{display:flex;gap:11px;padding:11px 14px 11px 26px;border-bottom:1px solid var(--border-light);align-items:flex-start;}
+.item:last-child{border-bottom:none;}
+.item .ico{flex:0 0 18px;margin-top:1px;color:var(--muted);}
+.item .ico svg{width:18px;height:18px;display:block;}
+.item .body{flex:1;min-width:0;}
+.item .title{font-size:14.5px;font-weight:600;}
+.item .meta{color:var(--muted);font-size:12px;margin-top:2px;}
+
+.group-label{padding:10px 14px 4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light);}
+.group-label .gd{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:#7C8A93;border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
+.badge.key{background:var(--blue);}
+.badge.check{background:#8B9AA5;}
+.badge.live{background:var(--check);}
+.badge.optional{background:#7C8A93;}
+
+.item.keyitem{background:var(--goal-bg);}
+.item.keyitem .ico{color:var(--blue);}
+.item.live{background:var(--check-bg);}
+.item.live .ico{color:var(--check);}
+
+.note{padding:9px 14px;background:#FBF6EC;border-bottom:1px solid var(--border-light);font-size:12.5px;color:#5e4a18;display:flex;gap:7px;align-items:flex-start;}
+.note svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.note b{font-weight:700;}
+
+/* Canvas-page content (how-this-works, problem-spaces) */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+.pagehead .lead{font-size:13.5px;color:var(--muted);max-width:700px;margin-top:7px;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+p.body{font-size:13.5px;margin:0 0 10px;}
 table.grades{border-collapse:collapse;width:100%;margin:10px 0 0;font-size:13px;}
 table.grades th,table.grades td{border-bottom:1px solid var(--border-light);padding:6px 8px;text-align:left;}
 table.grades th{font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);font-weight:700;}
 table.grades td:first-child{font-weight:700;width:70px;}
 
-.beyond{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:13px 15px;}
-.beyond .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
-.beyond .hd{font-size:14.5px;font-weight:700;margin-bottom:5px;}
-.beyond p{margin:0 0 7px;font-size:13px;color:#38503f;}
-.beyond p:last-child{margin-bottom:0;}
-
-.note{border:1px solid #E0C88A;background:#FBF6EC;border-radius:5px;padding:10px 13px;font-size:12.5px;color:#5e4a18;display:flex;gap:8px;align-items:flex-start;margin:12px 0;}
-.note svg{width:15px;height:15px;flex:0 0 15px;margin-top:2px;}
-
-/* sprint pages */
-.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
-.rail{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;}
-.rail a,.rail span{font-size:11.5px;padding:4px 10px;border-radius:20px;border:1px solid var(--border-light);background:#FAFBFC;color:var(--muted);}
-.rail a:hover{text-decoration:none;border-color:var(--blue);color:var(--blue);}
-.rail span.here{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;}
-
-.sprint-head{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
-.sprint-head .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
-.sprint-head h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
-.sprint-head .dt{font-size:13px;color:var(--muted);font-weight:600;}
-.sprint-head .lead{font-size:13.5px;color:var(--muted);max-width:700px;margin-top:7px;}
-
-.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);border-radius:0 5px 5px 0;padding:11px 14px;margin-bottom:18px;}
-.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
-.goal ul{margin:0;padding-left:18px;}
-.goal li{margin:3px 0;font-size:13.5px;}
-
-.week{border:1px solid var(--border);border-radius:5px;margin-bottom:13px;overflow:hidden;}
-.week-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:8px 13px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
-.week-head .wk{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);}
-.week-head .dt{font-size:11.5px;color:var(--muted);}
-.week-head .nm{font-size:13px;font-weight:600;color:var(--text);margin-left:auto;}
-.acts{padding:10px 13px;border-bottom:1px solid var(--border-light);}
-.acts .label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.acts ul{margin:0;padding-left:17px;}
-.acts li{font-size:13px;margin:2px 0;}
-.keyitem{background:var(--goal-bg);border-left:4px solid var(--goal-border);padding:10px 13px;}
-.keyitem .label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
-.keyitem .title{font-size:14px;font-weight:700;}
-.keyitem .meta{font-size:12.5px;color:var(--muted);margin-top:3px;}
-.checks{padding:10px 13px;}
-.checks .label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.checks ul{margin:0;padding-left:17px;}
-.checks li{font-size:13px;margin:2px 0;}
-.brk{border:1px dashed var(--border);border-radius:5px;padding:10px 13px;margin-bottom:13px;background:#FAFBFC;font-size:13px;color:var(--muted);}
-.brk b{color:var(--text);}
-
-.conv{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:12px 14px;margin-top:6px;}
-.conv .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
-.conv .hd{font-size:14px;font-weight:700;margin-bottom:4px;}
-.conv p{margin:0;font-size:13px;color:#38503f;}
-
-.sprintnav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
-
-/* problem spaces */
-.ps-group{margin-bottom:22px;}
-.ps-group h3{font-size:14px;font-weight:700;color:var(--blue-dark);margin:0 0 9px;padding-bottom:4px;border-bottom:1px solid var(--border-light);}
+.ps-group{margin-bottom:20px;}
+.ps-group h3{font-size:14px;font-weight:700;color:var(--blue-dark);margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border-light);}
 .ps{border:1px solid var(--border-light);border-radius:5px;padding:10px 13px;margin-bottom:8px;}
 .ps .nm{font-size:14px;font-weight:700;}
 .ps .desc{font-size:13px;color:var(--muted);margin-top:2px;}
 .ps .goal-line{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border-light);}
 .ps .goal-line b{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
 
 .instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
 .instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
@@ -142,92 +142,59 @@ table.grades td:first-child{font-weight:700;width:70px;}
 </head>
 <body>
 <div class="page">
-<div class="draft">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Draft for discussion &mdash; 31 July 2026, v4.</b> A proposed shape for CST499 in Fall 2026. Item links are still to be built and dates are provisional.</span>
-</div>
+<div class="draft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Draft for discussion &mdash; 31 July 2026, v4.</b> A proposed shape for CST499 in Fall 2026. Item links are still to be built and dates are provisional.</span></div>
 <div class="crumb"><a href="home.html">CST499</a> &middot; Sprint 4</div>
-<div class="rail">
-<a href="sprint-0.html">Sprint 0</a>
-<a href="sprint-1.html">Sprint 1</a>
-<a href="sprint-2.html">Sprint 2</a>
-<a href="sprint-3.html">Sprint 3</a>
-<span class="here">Sprint 4</span>
-<a href="sprint-5.html">Sprint 5</a>
-<a href="problem-spaces.html">Problem spaces</a>
-</div>
-<div class="sprint-head">
-<div class="s">Sprint 4</div>
-<h1>Own the search while finishing the proof</h1>
-<div class="dt">Weeks 13&ndash;15 &middot; Nov 16 &ndash; Dec 13</div>
-<div class="lead">Three weeks to turn the new evidence into a market case and run your search as an experiment, while the last of the build finishes.</div>
-</div>
-<div class="goal">
-<div class="label">What you will be able to do</div>
-<ul>
+<details class="module" id="sprint-4" open>
+<summary><div class="module-head"><span class="name">Sprint 4 &middot; Own the search while finishing the proof</span><span class="tag">Weeks 13&ndash;15 &middot; Nov 16 &ndash; Dec 13</span><span class="chev">&#9656;</span></div></summary>
+<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
 <li>Turn &ldquo;I am applying to jobs&rdquo; into a stated bet, with a fair test and a signal you would accept</li>
 <li>Rebuild a resume around evidence rather than coursework</li>
 <li>Make a written case for yourself strong enough that someone would put their name behind it</li>
 <li>Hold up in an interview about work you actually did</li>
-</ul>
+</ul></div></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Why this comes after building.</b> A search is far easier to run when you have something to point at. You arrive here with finished work, which is what turns &ldquo;I am interested in X&rdquo; into &ldquo;here is X, working.&rdquo;</span></div>
+<div class="items">
+<div class="group-label">Week 13 &mdash; Pick your targets <span class="gd">&middot; Nov 16 &middot; overlaps the end of Sprint 3</span></div>
+<div class="item">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+<div class="body"><div class="title">Target roles and employers, with your reasons<span class="badge check">Checkpoint</span></div></div>
 </div>
-<div class="week">
-<div class="week-head"><span class="wk">Week 13</span><span class="dt">Nov 16 &ndash; Nov 22</span><span class="nm">Pick your targets</span></div>
-<div class="acts">
-<div class="label">In class and on your own</div>
-<ul>
-<li>Target-role and employer selection. This week runs alongside the end of Sprint 3.</li>
-</ul>
+<div class="group-label">Fall Break <span class="gd">&middot; Nov 23 &ndash; Nov 29</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>No class.</b> If you are home with family and family friends, it is also one of the better networking weeks of the year &mdash; and your case is ready by then.</span></div>
+<div class="group-label">Week 14 &mdash; Rebuild the case <span class="gd">&middot; Nov 30</span></div>
+<div class="item">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+<div class="body"><div class="title">Resume and portfolio rebuilt on the new evidence<span class="badge check">Checkpoint</span></div><div class="meta">Every line survives a &ldquo;show me&rdquo; &mdash; and you now have work that does.</div></div>
 </div>
-<div class="checks">
-<div class="label">Checkpoints &middot; credit on submission</div>
-<ul>
-<li>Target roles and employers, with your reasons.</li>
-</ul>
+<div class="item">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
+<div class="body"><div class="title">Warm-referral case<span class="badge optional">Optional</span></div><div class="meta">Written, specific, and honest about where the case is thin.</div></div>
 </div>
+<div class="group-label">Week 15 &mdash; Run the experiment <span class="gd">&middot; Dec 7</span></div>
+<div class="item keyitem">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
+<div class="body"><div class="title">Search experiment &mdash; the bet, the evidence, the outcome, the next move<span class="badge key">Key item</span></div><div class="meta">A strategy you can test in weeks, so you learn from it while the semester is still running.</div></div>
 </div>
-<div class="brk"><b>Fall Break &mdash; Nov 23 to Nov 29.</b> No class. If you are home with family and family friends, it is also one of the better networking weeks of the year, and your case is ready by then.</div>
-<div class="week">
-<div class="week-head"><span class="wk">Week 14</span><span class="dt">Nov 30 &ndash; Dec 6</span><span class="nm">Rebuild the case</span></div>
-<div class="acts">
-<div class="label">In class and on your own</div>
-<ul>
-<li>Resume, LinkedIn, and portfolio revision.</li>
-</ul>
+<div class="item live">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
+<div class="body"><div class="title">Mock interview<span class="badge live">In person</span></div></div>
 </div>
-<div class="checks">
-<div class="label">Checkpoints &middot; credit on submission</div>
-<ul>
-<li>Resume and portfolio rebuilt on the new evidence.</li>
-<li>Warm-referral case &mdash; optional.</li>
-</ul>
+<div class="item">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></span>
+<div class="body"><div class="title">Poster and presentation drafts<span class="badge check">Checkpoint</span></div><div class="meta">Built here so Sprint 5 is peer review, the defense, and the Festival.</div></div>
 </div>
-</div>
-<div class="week">
-<div class="week-head"><span class="wk">Week 15</span><span class="dt">Dec 7 &ndash; Dec 13</span><span class="nm">Run the experiment</span></div>
-<div class="acts">
-<div class="label">In class and on your own</div>
-<ul>
-<li>Mock interviews.</li>
-<li>Build the poster and the presentation deck or video.</li>
-</ul>
-</div>
-<div class="keyitem">
-<div class="label">Key item &middot; checked in your next conversation</div>
-<div class="title">Search experiment: the bet, the evidence, the outcome, the next move</div>
-<div class="meta">Plus your mock interview, and drafts of the poster and the presentation.</div>
+<div class="item">
+<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
+<div class="body"><div class="title">Virtual networking with engineers from industry<span class="badge optional">Invitation</span></div><div class="meta">Small breakout rooms, guests rotating. Invitations go to students who have done the work.</div></div>
 </div>
 </div>
-<div class="beyond" style="margin-top:16px;">
-<div class="label">Optional</div>
-<div class="hd">The warm referral.</div>
-<p>If your week-13 artifact set clears the published bar, you can ask Prof. Sathya for an introduction to someone he knows at a company. You write the case; he decides whether he can stand behind it. It is optional, it is not part of your grade, and it is the reason the artifact-quality check sits where it does.</p>
-</div>
-<div class="conv">
+</details>
+<div class="beyond">
 <div class="label">The check</div>
 <div class="hd">Conversation 5 &middot; Sprint 4</div>
 <p>Your search experiment: the bet you made, what came back, and what you would change about it.</p>
 </div>
-<div class="sprintnav"><span><a href="sprint-3.html">&larr; Sprint 3 &middot; Deepen and finish the proof</a></span><span><a href="sprint-5.html">Sprint 5 &middot; Wrap, defend, and hand off &rarr;</a></span></div>
+<div class="pagenav"><span><a href="sprint-3.html">&larr; Sprint 3 &middot; Deepen and finish the proof</a></span><span><a href="sprint-5.html">Sprint 5 &middot; Wrap, defend, and hand off &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Dr. Sathya Narayanan &middot; Paige Weisskirch</div>
 <div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
