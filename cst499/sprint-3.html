@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -146,48 +181,48 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="crumb"><a href="home.html">CST499</a> &middot; Sprint 3</div>
 <details class="module" id="sprint-3" open>
 <summary><div class="module-head"><span class="name">Sprint 3 &middot; Deepen and finish the proof</span><span class="tag">Weeks 10&ndash;13 &middot; Oct 26 &ndash; Nov 22</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Scope a second milestone that raises the level rather than repeating the first</li>
-<li>Put work in front of a real user, maintainer, or mentor and act on what comes back</li>
-<li>Document trade-offs so a reader can tell what you chose and why</li>
-<li>Package work so it can be read without you in the room</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li><span class="gl"><button type="button" class="gt">Scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span> a second milestone that raises the difficulty instead of repeating the first.</li>
+<li>Put your work in front of a real user, maintainer, or mentor and change it based on what they say.</li>
+<li>Write up your <span class="gl"><button type="button" class="gt">trade-offs</button><span class="bub" role="tooltip"><b class="bt">Trade-offs</b><span class="br"><i>What it means.</i> The choices you made where a reasonable engineer could have gone the other way, and your reason for going your way.</span><span class="br"><i>Why it matters.</i> Anyone can list what they built. Naming what you gave up, and what it cost you, is what separates an engineer from someone following a tutorial.</span><span class="br"><i>What a good one looks like.</i> Two or three real ones, each with the alternative you rejected and the cost you accepted.</span></span></span> so a reader can tell what you chose and why you chose it.</li>
+<li>Package your work so someone can understand it without you in the room.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> what the first milestone taught you about your own building. This is where you show you learned how to build, not just that you built.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on what the first milestone taught you about how you build.</b> This is where you show you learned something, not just that you finished something.</span></div>
 <div class="items">
 <div class="group-label">Week 10 &mdash; Scope the second milestone <span class="gd">&middot; Oct 26</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title">Second-milestone scope, informed by the first<span class="badge key">Key item</span></div><div class="meta">One deeper artifact, a complementary second one, or the applied piece that shows a certification in use.</div></div>
+<div class="body"><div class="title">Scope your second milestone<span class="badge key">Key item</span></div><div class="meta">Choose one: go deeper on the same artifact, build a complementary second one, or build the applied piece that shows your certification in use. Say what the first milestone taught you and what that changes about this one.</div></div>
 </div>
 <div class="group-label">Week 11 &mdash; Build <span class="gd">&middot; Nov 2</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Working artifact draft<span class="badge check">Checkpoint</span></div></div>
+<div class="body"><div class="title">Submit a working draft of your artifact<span class="badge check">Checkpoint</span></div><div class="meta">It does not have to be finished. It does have to run.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Protected build time</b> continues, with the optional deep-work sessions alongside.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Class time is still yours to build in</b>, with the optional deep-work sessions alongside.</span></div>
 <div class="group-label">Week 12 &mdash; Test it on someone <span class="gd">&middot; Nov 9</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Reaction from a real audience, and what you changed because of it<span class="badge check">Checkpoint</span></div><div class="meta">A user, a maintainer, or a mentor &mdash; someone who did not have to be nice about it.</div></div>
+<div class="body"><div class="title">Get a reaction from a real audience and act on it<span class="badge check">Checkpoint</span></div><div class="meta">Show your work to a user, a maintainer, or a mentor &mdash; someone with no reason to be kind about it. Submit what they said and what you changed because of it.</div></div>
 </div>
 <div class="group-label">Week 13 &mdash; Finish and package <span class="gd">&middot; Nov 16</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
-<div class="body"><div class="title">Portfolio-ready artifact set, with trade-offs written up<span class="badge key">Key item</span></div><div class="meta">Technical and plain-language walkthrough. This is also the artifact-quality check &mdash; clearing it is what makes you eligible for a warm referral.</div></div>
+<div class="body"><div class="title">Submit your portfolio-ready artifact set, with your trade-offs written up<span class="badge key">Key item</span></div><div class="meta">Finished work, packaged so a stranger can run it, plus two walkthroughs: one technical, one in plain language. This is also the artifact-quality check &mdash; clearing it is what makes you eligible to ask for a <span class="gl"><button type="button" class="gt">warm referral</button><span class="bub" role="tooltip"><b class="bt">Warm referral</b><span class="br"><i>What it means.</i> An introduction from Prof. Sathya to someone he knows at a company, sent with his name behind it. Optional, and you ask for it.</span><span class="br"><i>Why it matters.</i> Referred applicants get read. Cold applicants often do not.</span><span class="br"><i>What a good one looks like.</i> Your week-13 artifact clears the published bar, and your written case is specific and honest about where it is still thin.</span></span></span>.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Sprint 3 conversation<span class="badge live">In person</span></div><div class="meta">What got better between the first milestone and this one, and why.</div></div>
+<div class="body"><div class="title">Come to your Sprint 3 conversation<span class="badge live">In person</span></div><div class="meta">Be ready to say what got better between your first milestone and this one, and why.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Sprint 4 starts this week.</b> The job search runs alongside the last of the build &mdash; on purpose.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Sprint 4 starts this week.</b> Your job search runs alongside the last of your build, on purpose.</span></div>
 </div>
 </details>
 <div class="beyond">
 <div class="label">The check</div>
 <div class="hd">Conversation 4 &middot; Sprint 3</div>
-<p>Your second-milestone scope and the finished artifact set. What got better between the first milestone and this one, and why.</p>
+<p>We go through your second-milestone scope and your finished artifact set, and ask what got better between the first milestone and this one.</p>
 </div>
-<div class="pagenav"><span><a href="sprint-2.html">&larr; Sprint 2 &middot; Build the first proof</a></span><span><a href="sprint-4.html">Sprint 4 &middot; Own the search while finishing the proof &rarr;</a></span></div>
+<div class="pagenav"><span><a href="sprint-2.html">&larr; Sprint 2 &middot; Build the first proof</a></span><span><a href="sprint-4.html">Sprint 4 &middot; Run your job search while you finish the proof &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Dr. Sathya Narayanan &middot; Paige Weisskirch</div>
 <div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>

@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -146,46 +181,46 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="crumb"><a href="home.html">CST499</a> &middot; Sprint 0</div>
 <details class="module" id="sprint-0" open>
 <summary><div class="module-head"><span class="name">Sprint 0 &middot; Orient</span><span class="tag">Week 1 &middot; Aug 24</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Read current job-market data and say what it means for your own next twelve months</li>
-<li>Tell strong portfolio evidence from weak, and say what makes the difference</li>
-<li>State honestly what you can prove today</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Explain what current job-market data means for your own next twelve months.</li>
+<li>Look at two portfolio pieces and say which one an employer would find convincing, and why.</li>
+<li>State honestly what you can prove about your own skills today.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> One week to see what the market is doing, what counts as proof, and where you are starting from.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> One week to see what the job market is doing, what counts as <span class="gl"><button type="button" class="gt">proof of your skills</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span>, and where you are starting from.</span></div>
 <div class="items">
 <div class="group-label">Week 1 &mdash; Orient <span class="gd">&middot; Aug 24</span></div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
-<div class="body"><div class="title">The entry-level market, in payroll data<span class="badge live">In person</span></div><div class="meta">Stanford's <a href="https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/" target="_blank" rel="noopener">Canaries dashboard</a> tracks the payroll records of 4.6M+ workers. Early-career workers (22&ndash;25) in the most AI-exposed occupations are down 5.4% over the past year, software developers among them, while mid-career in the same jobs holds steady. We look at it together.</div></div>
+<div class="body"><div class="title">Look at the entry-level job market in payroll data<span class="badge live">In person</span></div><div class="meta">In class we open Stanford's <a href="https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/" target="_blank" rel="noopener">Canaries dashboard</a>, which tracks the payroll records of more than 4.6 million workers. Early-career workers aged 22&ndash;25 in the most AI-exposed occupations are down 5.4% over the past year, software developers among them, while mid-career workers in the same jobs hold steady. We read the chart together and talk about what it means for you.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title">Strong and weak portfolio proof, side by side</div><div class="meta">Two examples of each, and what separates them</div></div>
+<div class="body"><div class="title">Compare strong and weak <span class="gl"><button type="button" class="gt">portfolio evidence</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span></div><div class="meta">We give you two portfolio pieces that would convince an employer and two that would not. Read all four and come ready to say what separates them.</div></div>
 </div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Baseline evidence inventory<span class="badge key">Key item</span></div><div class="meta">What you can prove today, honestly. A diagnostic rather than a grade, and the starting point for your first conversation.</div></div>
+<div class="body"><div class="title">Write your baseline evidence inventory<span class="badge key">Key item</span></div><div class="meta">List what you can prove about your own skills right now, and next to each claim write the evidence a stranger could go and check. This is a diagnostic, not a test &mdash; an honest short list is worth more than a padded long one. Your first <span class="gl"><button type="button" class="gt">the conversation</button><span class="bub" role="tooltip"><b class="bt">The conversation</b><span class="br"><i>What it means.</i> A short oral check where we pick part of your submitted work and ask you to explain it. Six across the semester, one per sprint.</span><span class="br"><i>Why it matters.</i> Submitting work shows you did it. Explaining it shows you understood it &mdash; and that is the 40% of your grade that moves you above a D.</span><span class="br"><i>What a good one looks like.</i> You can say what you chose, why you chose it, what broke, and what you would do differently. We pick which part, so prepare all of it.</span></span></span> starts from it.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg></span>
-<div class="body"><div class="title">Setup confirmed<span class="badge check">Checkpoint</span></div><div class="meta">Canvas, repo, and your AI thinking partner &mdash; and how to keep the thinking yours</div></div>
+<div class="body"><div class="title">Confirm your setup<span class="badge check">Checkpoint</span></div><div class="meta">Submit the short form once Canvas, your repository, and your AI thinking partner are all working. Five minutes. Like every <span class="gl"><button type="button" class="gt">checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item in the weeks between key items. It earns credit as soon as you submit it and is marked automatically.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track before the key item is due, while there is still time to change course.</span><span class="br"><i>What a good one looks like.</i> Submitted on time. Late work loses 7% a day, so a checkpoint two weeks late is worth nothing.</span></span></span>, it is credited the moment you submit it.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-<div class="body"><div class="title">Job-market opener response<span class="badge check">Checkpoint</span></div><div class="meta">What the data changes about your next twelve months</div></div>
+<div class="body"><div class="title">Post what the job-market data changes for you<span class="badge check">Checkpoint</span></div><div class="meta">One paragraph in the discussion: what you assumed about entry-level hiring before this week, and what you are less sure about now.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">What made the strong examples strong<span class="badge check">Checkpoint</span></div></div>
+<div class="body"><div class="title">Write down what made the strong examples strong<span class="badge check">Checkpoint</span></div><div class="meta">Three or four sentences naming the specific things the convincing portfolio pieces had that the weak ones did not.</div></div>
 </div>
 </div>
 </details>
 <div class="beyond">
 <div class="label">The check</div>
 <div class="hd">Conversation 1 &middot; Sprint 0</div>
-<p>Your baseline inventory. In practice it is held together with the Sprint 1 check-in at the end of week 5, so it is one sitting for everyone.</p>
+<p>We go through your baseline inventory. In practice you sit it together with the Sprint 1 check-in at the end of week 5, so it is one appointment for everyone.</p>
 </div>
-<div class="pagenav"><span><a href="how-this-works.html">&larr; How this course works</a></span><span><a href="sprint-1.html">Sprint 1 &middot; Know your niche and name the gap &rarr;</a></span></div>
+<div class="pagenav"><span><a href="how-this-works.html">&larr; How this course works</a></span><span><a href="sprint-1.html">Sprint 1 &middot; Know your niche and define the gap in your preparation &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Dr. Sathya Narayanan &middot; Paige Weisskirch</div>
 <div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>

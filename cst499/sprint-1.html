@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sprint 1 &mdash; Know your niche and name the gap | CST499</title>
+<title>Sprint 1 &mdash; Know your niche and define the gap in your preparation | CST499</title>
 <style>
 :root{
 --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -145,53 +180,53 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="draft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Draft for discussion &mdash; 31 July 2026, v4.</b> A proposed shape for CST499 in Fall 2026. Item links are still to be built and dates are provisional.</span></div>
 <div class="crumb"><a href="home.html">CST499</a> &middot; Sprint 1</div>
 <details class="module" id="sprint-1" open>
-<summary><div class="module-head"><span class="name">Sprint 1 &middot; Know your niche and name the gap</span><span class="tag">Weeks 2&ndash;5 &middot; Aug 31 &ndash; Sep 27</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Name what you are good at, with evidence someone else would find convincing</li>
-<li>Read job postings for what they are actually asking, and map your evidence against them</li>
-<li>Describe the slice of the market you fit, specifically enough that the sentence breaks if you swap the sector out</li>
-<li>Name the gap between what you can prove today and what those roles want</li>
-<li>Scope work that credibly closes it, and defend the scope</li>
+<summary><div class="module-head"><span class="name">Sprint 1 &middot; Know your niche and define the gap in your preparation</span><span class="tag">Weeks 2&ndash;5 &middot; Aug 31 &ndash; Sep 27</span><span class="chev">&#9656;</span></div></summary>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Name what you are good at, and back each claim with <span class="gl"><button type="button" class="gt">evidence</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span> another person could check.</li>
+<li>Read a job posting and say exactly what it is asking for and how an employer would know you had it.</li>
+<li>Describe the <span class="gl"><button type="button" class="gt">slice of the job market</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span> you fit, specifically enough that the description stops being true if you swap the industry out.</li>
+<li>State the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what those jobs ask for.</li>
+<li>Propose work that would close that gap, and defend its <span class="gl"><button type="button" class="gt">scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span>.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> your week-1 baseline. Everything you build from week 6 onward comes out of these four weeks, so clarity here pays for the rest of the semester.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on your week-1 baseline.</b> Everything you build from week 6 onward comes out of these four weeks, so getting clear here pays for the rest of the semester.</span></div>
 <div class="items">
 <div class="group-label">Week 2 &mdash; Know yourself, know the market <span class="gd">&middot; Aug 31</span></div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Know Yourself and Know the Market run this week and next.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Two Career Intelligence units start this week and run into next week: <b>Know Yourself</b> and <b>Know the Market</b>.</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Niche brief<span class="badge check">Checkpoint</span></div><div class="meta">Strengths, interests, and where the market is</div></div>
+<div class="body"><div class="title">Write your niche brief<span class="badge check">Checkpoint</span></div><div class="meta">One page: what you are good at, what you keep coming back to, and where in the job market those two overlap. Draft it now &mdash; you sharpen it in week 4.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-<div class="body"><div class="title">Five real postings, read and mapped<span class="badge check">Checkpoint</span></div><div class="meta">Named companies, named roles, current listings. What do they want, in their words, and how would they know you had it?</div></div>
+<div class="body"><div class="title">Read five real job postings and map your evidence against them<span class="badge check">Checkpoint</span></div><div class="meta">Five current listings, named companies, named roles. For each one, write what they are asking for in their own words, and what you could show them today that answers it.</div></div>
 </div>
 <div class="group-label">Week 3 &mdash; Audit your evidence <span class="gd">&middot; Sep 7</span></div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Gap identification starts now, running in parallel with the niche work. The two sharpen each other through week 5.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>You start defining the gap in your evidence this week, while the niche work is still running. The two sharpen each other through week 5.</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Portfolio-evidence audit<span class="badge check">Checkpoint</span></div><div class="meta">What you can show right now, and how strong it is</div></div>
+<div class="body"><div class="title">Audit the evidence you already have<span class="badge check">Checkpoint</span></div><div class="meta">List every piece of work you could put in front of an employer today &mdash; code, projects, coursework, anything. For each one, say how strong it is and who could verify it.</div></div>
 </div>
-<div class="group-label">Week 4 &mdash; Name the gap <span class="gd">&middot; Sep 14</span></div>
+<div class="group-label">Week 4 &mdash; Define the gap in your preparation <span class="gd">&middot; Sep 14</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Niche and evidence-gap statement<span class="badge check">Checkpoint</span></div><div class="meta">The sentence the rest of your capstone answers</div></div>
+<div class="body"><div class="title">Write your niche and evidence-gap statement<span class="badge check">Checkpoint</span></div><div class="meta">Two paragraphs. First, your <span class="gl"><button type="button" class="gt">your niche</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span>. Second, the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what those roles ask for. The rest of your capstone answers this statement, so make it specific enough that it could be wrong.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Proposal clinics with peers and instructor begin.</span></div>
-<div class="group-label">Week 5 &mdash; Propose the work <span class="gd">&middot; Sep 21</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Proposal clinics start this week.</b> Bring a draft to a clinic with your peers and one of us before you submit in week 5.</span></div>
+<div class="group-label">Week 5 &mdash; Propose your work <span class="gd">&middot; Sep 21</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title">Proposal &mdash; the project, problem space, or certification you will take on<span class="badge key">Key item</span></div><div class="meta">Scope, audience, and how you will prove it worked. <a href="problem-spaces.html">Candidate problem spaces &rarr;</a></div></div>
+<div class="body"><div class="title">Propose the work that will close your gap<span class="badge key">Key item</span></div><div class="meta">Choose a project inside one of the <span class="gl"><button type="button" class="gt">problem spaces</button><span class="bub" role="tooltip"><b class="bt">Problem space</b><span class="br"><i>What it means.</i> A real project with real users, open issues, and a documented way to contribute. You choose one and find your own gap inside it.</span><span class="br"><i>Why it matters.</i> A blank page produces projects nobody needs. An assigned project produces work you cannot speak for. A problem space gives you real constraints and still leaves the framing to you.</span><span class="br"><i>What a good one looks like.</i> Active in the last month, has issues labeled for newcomers, and has maintainers who reply.</span></span></span> (<a href="problem-spaces.html">see the list</a>), a certification, or something you argue for yourself. Write what you will build, who it is for, what <span class="gl"><button type="button" class="gt">scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span> you are taking on, and how you will prove at the end that the gap closed.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Proposal conversation<span class="badge live">In person</span></div><div class="meta">10&ndash;15 minutes, and you leave with one of three answers: approved, revise, or matched to a gap we have already scouted.</div></div>
+<div class="body"><div class="title">Come to your proposal conversation<span class="badge live">In person</span></div><div class="meta">Ten to fifteen minutes with one of us. Be ready to explain why this gap and why this work. You leave with one of three answers: approved, revise and come back, or we match you to a gap we have already scouted.</div></div>
 </div>
 </div>
 </details>
 <div class="beyond">
 <div class="label">The check</div>
 <div class="hd">Conversation 2 &middot; Sprint 1</div>
-<p>The in-class check-in at the end of week 5, for everyone. Your proposal: why this gap, why this work, and how you will know it closed. You leave knowing where you stand and how the rest of your conversations will be scheduled.</p>
+<p>An in-class check-in at the end of week 5, for everyone. We go through your proposal: why this gap, why this work, and how you will know it closed. You leave knowing where you stand and how the rest of your conversations will be scheduled.</p>
 </div>
 <div class="pagenav"><span><a href="sprint-0.html">&larr; Sprint 0 &middot; Orient</a></span><span><a href="sprint-2.html">Sprint 2 &middot; Build the first proof &rarr;</a></span></div>
 <div class="instructor">

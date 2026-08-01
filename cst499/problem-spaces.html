@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -148,11 +183,14 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="s">CST499 &middot; Fall 2026</div>
 <h1>Candidate problem spaces</h1>
 <div class="dt">Where your capstone work can come from</div>
-<div class="lead">Each of these is a real project with real users, open issues, and a documented way in. You pick one, find a gap inside it worth your semester, and make the case in your Sprint 1 proposal. The framing is yours. The quality pressure comes from people outside this classroom.</div>
+<div class="lead">Each of these is a real project with real users, open issues, and a documented way to contribute. Pick one, find a <span class="gl"><button type="button" class="gt">gap</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> inside it worth your semester, and make the case for it in your Sprint 1 proposal. The framing is yours. The pressure to make it good comes from people outside this classroom.</div>
 </div>
-<p class="body">The sample goals below are illustrative. They show the <em>scale</em> of contribution we expect &mdash; you still find and frame your own, and yours does not have to look like the example.</p>
-<p class="body">Faculty research projects sit in the same set: Clay&rsquo;s machine learning work, the kinesiology group, and the aircraft-inspection project are all available as problem spaces.</p>
-<p class="body">Two other routes answer the same question. A <b>certification</b> counts if the gap in your preparation is best closed by earning a real credential &mdash; same proposal, same checkpoints, same conversations, plus an applied piece that shows the learning in use. And you can <b>propose something outside this list</b>; the bar for that is higher, and you argue for it in your proposal.</p>
+<h2 class="sec">How to use this page</h2>
+<p class="body">Read the four groups below and pick the kind of work you want to spend a semester doing. Then open two or three of the projects in that group, read their contributor documentation, and look through their open issues until you find one you could plausibly take on. You are looking for a gap you could close at the right <span class="gl"><button type="button" class="gt">scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span>, not a project you like the sound of.</p>
+<p class="body">The sample goal under each project shows you the <em>scale</em> of contribution we expect. Yours does not have to look like the example, and you still find and frame your own.</p>
+<p class="body"><b>Faculty research projects count too.</b> Clay&rsquo;s machine learning work, the kinesiology group, and the aircraft-inspection project are all available as problem spaces &mdash; ask us if one of those is closer to your gap.</p>
+<p class="body"><b>A certification is a full route, not a lesser one.</b> If the gap in your preparation is best closed by earning a real credential, propose that instead. It runs through the same proposal, the same checkpoints, and the same conversations, and it also asks for an <span class="gl"><button type="button" class="gt">applied piece</button><span class="bub" role="tooltip"><b class="bt">Applied piece</b><span class="br"><i>What it means.</i> Something you build that shows a certification in use. Not the certificate itself.</span><span class="br"><i>Why it matters.</i> A credential says you passed a test. An applied piece says you can do the thing, which is what the interview will ask about.</span><span class="br"><i>What a good one looks like.</i> Small, working, and something you can walk someone through in ten minutes.</span></span></span> that shows the learning in use.</p>
+<p class="body"><b>You can propose something outside this list.</b> The bar is higher, and you make the case in your Sprint 1 proposal.</p>
 <div class="ps-group">
 <h3>Software engineering</h3>
 <div class="ps">

@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -147,301 +182,310 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div>
 <div class="eyebrow">CST499 &middot; Computer Science Capstone &middot; Fall 2026 &middot; 4 units</div>
 <h1>Know Your Niche, Build the Proof</h1>
-<div class="sub">Graduate with evidence a specific employer would find convincing.</div>
-<div class="lead">The entry-level market for software work is moving fast. This semester you work out the slice of it you fit, name the gap between what you can prove today and what those roles ask for, and spend the middle of the term building the proof that closes it. You run your search with that work in hand.</div>
+<div class="sub">You will graduate with evidence a specific employer would find convincing.</div>
+<div class="lead">The entry-level market for software work is moving fast. This semester you work out the <span class="gl"><button type="button" class="gt">slice of it you fit</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span>, define the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what those jobs ask for, and spend the middle of the term building the proof that closes it. You run your job search with that work in hand.</div>
 </div>
 <div>
 <img class="cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
 <div class="cti-logo-fallback">Computing Talent<br>Initiative</div>
 </div>
 </div>
+<details class="bigpic" id="big-picture">
+<summary><div class="bigpic-head"><span class="plus"></span>
+<span class="t">The big picture</span>
+<span class="s">All six sprints on one screen, and what you get out of this beyond the grade</span>
+</div></summary>
+<div class="bigpic-body">
 <div class="arc">
-<p class="arc-caption">Six sprints across sixteen instructional weeks. Two of them overlap on purpose: your niche and your gap sharpen each other through weeks 3&ndash;5, and your search starts in week 13, before the build is finished. Fall Break is the week of 23 November.</p>
+<p class="arc-caption">Six sprints across sixteen instructional weeks. Two of them overlap on purpose: your niche and your gap sharpen each other through weeks 3&ndash;5, and your job search starts in week 13, before your build is finished. Fall Break is the week of 23 November.</p>
 <div class="arc-grid">
-<a class="arc-card" href="sprint-0.html"><div class="s">Sprint 0</div><div class="nm">Orient</div><div class="th">what has changed, and what counts as proof</div><div class="who"><b>Week 1</b> &middot; Aug 24</div></a>
-<a class="arc-card" href="sprint-1.html"><div class="s">Sprint 1</div><div class="nm">Know your niche and name the gap</div><div class="th">strengths, market, and the gap in your evidence</div><div class="who"><b>Weeks 2&ndash;5</b> &middot; Aug 31 &ndash; Sep 27</div></a>
-<a class="arc-card build" href="sprint-2.html"><div class="s">Sprint 2</div><div class="nm">Build the first proof</div><div class="th">into a real project, out with a working milestone</div><div class="who"><b>Weeks 6&ndash;9</b> &middot; Sep 28 &ndash; Oct 25</div></a>
-<a class="arc-card build" href="sprint-3.html"><div class="s">Sprint 3</div><div class="nm">Deepen and finish the proof</div><div class="th">feedback, trade-offs, and a portfolio-ready set</div><div class="who"><b>Weeks 10&ndash;13</b> &middot; Oct 26 &ndash; Nov 22</div></a>
-<a class="arc-card" href="sprint-4.html"><div class="s">Sprint 4</div><div class="nm">Own the search while finishing the proof</div><div class="th">the market case, run as an experiment</div><div class="who"><b>Weeks 13&ndash;15</b> &middot; Nov 16 &ndash; Dec 13</div></a>
-<a class="arc-card" href="sprint-5.html"><div class="s">Sprint 5</div><div class="nm">Wrap, defend, and hand off</div><div class="th">poster, presentation, Festival</div><div class="who"><b>Week 16</b> &middot; Dec 14 &ndash; Dec 20</div></a>
+<a class="arc-card" href="sprint-0.html"><div class="s">Sprint 0</div><div class="nm">Orient</div><div class="th">See what the market is doing and where you stand</div><div class="who"><b>Week 1</b> &middot; Aug 24</div></a>
+<a class="arc-card" href="sprint-1.html"><div class="s">Sprint 1</div><div class="nm">Know your niche, define your gap</div><div class="th">Work out where you fit and what your evidence is missing</div><div class="who"><b>Weeks 2&ndash;5</b> &middot; Aug 31 &ndash; Sep 27</div></a>
+<a class="arc-card build" href="sprint-2.html"><div class="s">Sprint 2</div><div class="nm">Build the first proof</div><div class="th">Get inside a real project and ship a working milestone</div><div class="who"><b>Weeks 6&ndash;9</b> &middot; Sep 28 &ndash; Oct 25</div></a>
+<a class="arc-card build" href="sprint-3.html"><div class="s">Sprint 3</div><div class="nm">Finish the proof</div><div class="th">Take real feedback, raise the level, and package the work</div><div class="who"><b>Weeks 10&ndash;13</b> &middot; Oct 26 &ndash; Nov 22</div></a>
+<a class="arc-card" href="sprint-4.html"><div class="s">Sprint 4</div><div class="nm">Run your job search</div><div class="th">Rebuild your case and run the search as an experiment</div><div class="who"><b>Weeks 13&ndash;15</b> &middot; Nov 16 &ndash; Dec 13</div></a>
+<a class="arc-card" href="sprint-5.html"><div class="s">Sprint 5</div><div class="nm">Wrap up and defend</div><div class="th">Poster, presentation, final defense, Festival</div><div class="who"><b>Week 16</b> &middot; Dec 14 &ndash; Dec 20</div></a>
 </div>
 </div>
-<div class="beyond">
+
+<div class="beyond" style="margin-bottom:0;">
 <div class="label">Beyond the grade</div>
 <div class="hd">What you build here is meant to be used.</div>
 <p>In <b>Sprint 4</b>, Prof. Sathya can send a referral email on your behalf &mdash; an introduction to someone he knows at a company, backed by his name. It is optional, and it goes to students whose week-13 artifact clears the published bar, which is why it comes after you have built something.</p>
 <p>We are also planning an <b>invitation-only virtual networking session</b> with engineers from industry, so you finish the semester with people in your corner as well as a portfolio.</p>
 </div>
+</div>
+</details>
 <details class="module" id="start-here" open>
 <summary><div class="module-head"><span class="name">Start Here &middot; How this course works</span><span class="tag">Read before week 1</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What these pages cover</div><div class="text"><ul>
-<li>How the semester is shaped, and what you walk out with</li>
-<li>How the two kinds of work &mdash; key items and checkpoints &mdash; earn your grade</li>
-<li>What the six conversations check, and how you earn fewer appointments</li>
-<li>Where your capstone work can come from</li>
+<div class="goal"><div class="label">These five pages answer</div><div class="text"><ul>
+<li>How the semester is shaped, and what you walk out with.</li>
+<li>How the two kinds of work &mdash; <span class="gl"><button type="button" class="gt">key items</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> The one cumulative piece of work that carries a week&rsquo;s learning goal. There are eight across the semester.</span><span class="br"><i>Why it matters.</i> It earns submission credit like everything else, and it is what we draw from in your next conversation.</span><span class="br"><i>What a good one looks like.</i> You could walk someone through any part of it without notes.</span></span></span> and <span class="gl"><button type="button" class="gt">checkpoints</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item in the weeks between key items. It earns credit as soon as you submit it and is marked automatically.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track before the key item is due, while there is still time to change course.</span><span class="br"><i>What a good one looks like.</i> Submitted on time. Late work loses 7% a day, so a checkpoint two weeks late is worth nothing.</span></span></span> &mdash; earn your grade.</li>
+<li>What we ask you in the six <span class="gl"><button type="button" class="gt">conversations</button><span class="bub" role="tooltip"><b class="bt">The conversation</b><span class="br"><i>What it means.</i> A short oral check where we pick part of your submitted work and ask you to explain it. Six across the semester, one per sprint.</span><span class="br"><i>Why it matters.</i> Submitting work shows you did it. Explaining it shows you understood it &mdash; and that is the 40% of your grade that moves you above a D.</span><span class="br"><i>What a good one looks like.</i> You can say what you chose, why you chose it, what broke, and what you would do differently. We pick which part, so prepare all of it.</span></span></span>, and how you earn fewer appointments.</li>
+<li>Where your capstone work can come from, and how to choose.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> Four short pages. They answer the questions the rest of the course assumes you already know the answers to.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> Five short pages. They answer the questions the rest of the course assumes you already know the answers to.</span></div>
 <div class="items">
-<div class="group-label">Before week 1</div>
+<div class="group-label">Read these before week 1</div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a href="how-this-works.html">How this capstone works</a></div><div class="meta">The shape of the semester, the two kinds of work, and what you walk out with</div></div>
+<div class="body"><div class="title"><a href="how-this-works.html">How this capstone works</a></div><div class="meta">Start here. It explains the six sprints, the two kinds of work you will submit, and what you leave this course with.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a href="how-this-works.html#grade">How the grade works</a></div><div class="meta">Submission credit is 60% of the grade. The six conversations are the other 40%</div></div>
+<div class="body"><div class="title"><a href="how-this-works.html#grade">How the grade works</a></div><div class="meta">Everything you submit on time adds up to 60% of your grade. The six <span class="gl"><button type="button" class="gt">conversations</button><span class="bub" role="tooltip"><b class="bt">The conversation</b><span class="br"><i>What it means.</i> A short oral check where we pick part of your submitted work and ask you to explain it. Six across the semester, one per sprint.</span><span class="br"><i>Why it matters.</i> Submitting work shows you did it. Explaining it shows you understood it &mdash; and that is the 40% of your grade that moves you above a D.</span><span class="br"><i>What a good one looks like.</i> You can say what you chose, why you chose it, what broke, and what you would do differently. We pick which part, so prepare all of it.</span></span></span> are the other 40%. This page shows exactly what each letter grade takes.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a href="how-this-works.html#conversations">The six conversations</a></div><div class="meta">What gets checked, when, and how the number of appointments is earned down</div></div>
+<div class="body"><div class="title"><a href="how-this-works.html#conversations">What happens in the six conversations</a></div><div class="meta">Six times this semester you sit down with us and explain your own work. This page tells you what we ask, when they happen, and how you can earn fewer appointments.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a href="problem-spaces.html">Candidate problem spaces</a></div><div class="meta">Fourteen real projects, grouped by the kind of work they ask for &mdash; plus the certification route</div></div>
+<div class="body"><div class="title"><a href="problem-spaces.html">Choose where your capstone work comes from</a></div><div class="meta">Fourteen real open-source projects you can build inside, grouped by the kind of work they ask for. The certification route is on the same page.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
-<div class="body"><div class="title"><a href="../profsathya.html">Meet your instructors</a></div><div class="meta">Prof. Sathya Narayanan and Paige Weisskirch</div></div>
+<div class="body"><div class="title"><a href="../profsathya.html">Meet your instructors</a></div><div class="meta">How to reach Prof. Sathya Narayanan and Paige Weisskirch, and when office hours run.</div></div>
 </div>
 </div>
 </details>
 <details class="module" id="sprint-0" open>
 <summary><div class="module-head"><span class="name">Sprint 0 &middot; Orient</span><span class="tag">Week 1 &middot; Aug 24</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Read current job-market data and say what it means for your own next twelve months</li>
-<li>Tell strong portfolio evidence from weak, and say what makes the difference</li>
-<li>State honestly what you can prove today</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Explain what current job-market data means for your own next twelve months.</li>
+<li>Look at two portfolio pieces and say which one an employer would find convincing, and why.</li>
+<li>State honestly what you can prove about your own skills today.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> One week to see what the market is doing, what counts as proof, and where you are starting from.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> One week to see what the job market is doing, what counts as <span class="gl"><button type="button" class="gt">proof of your skills</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span>, and where you are starting from.</span></div>
 <div class="items">
 <div class="group-label">Week 1 &mdash; Orient <span class="gd">&middot; Aug 24</span></div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
-<div class="body"><div class="title">The entry-level market, in payroll data<span class="badge live">In person</span></div><div class="meta">Stanford's <a href="https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/" target="_blank" rel="noopener">Canaries dashboard</a> tracks the payroll records of 4.6M+ workers. Early-career workers (22&ndash;25) in the most AI-exposed occupations are down 5.4% over the past year, software developers among them, while mid-career in the same jobs holds steady. We look at it together.</div></div>
+<div class="body"><div class="title">Look at the entry-level job market in payroll data<span class="badge live">In person</span></div><div class="meta">In class we open Stanford's <a href="https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/" target="_blank" rel="noopener">Canaries dashboard</a>, which tracks the payroll records of more than 4.6 million workers. Early-career workers aged 22&ndash;25 in the most AI-exposed occupations are down 5.4% over the past year, software developers among them, while mid-career workers in the same jobs hold steady. We read the chart together and talk about what it means for you.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title">Strong and weak portfolio proof, side by side</div><div class="meta">Two examples of each, and what separates them</div></div>
+<div class="body"><div class="title">Compare strong and weak <span class="gl"><button type="button" class="gt">portfolio evidence</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span></div><div class="meta">We give you two portfolio pieces that would convince an employer and two that would not. Read all four and come ready to say what separates them.</div></div>
 </div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Baseline evidence inventory<span class="badge key">Key item</span></div><div class="meta">What you can prove today, honestly. A diagnostic rather than a grade, and the starting point for your first conversation.</div></div>
+<div class="body"><div class="title">Write your baseline evidence inventory<span class="badge key">Key item</span></div><div class="meta">List what you can prove about your own skills right now, and next to each claim write the evidence a stranger could go and check. This is a diagnostic, not a test &mdash; an honest short list is worth more than a padded long one. Your first <span class="gl"><button type="button" class="gt">the conversation</button><span class="bub" role="tooltip"><b class="bt">The conversation</b><span class="br"><i>What it means.</i> A short oral check where we pick part of your submitted work and ask you to explain it. Six across the semester, one per sprint.</span><span class="br"><i>Why it matters.</i> Submitting work shows you did it. Explaining it shows you understood it &mdash; and that is the 40% of your grade that moves you above a D.</span><span class="br"><i>What a good one looks like.</i> You can say what you chose, why you chose it, what broke, and what you would do differently. We pick which part, so prepare all of it.</span></span></span> starts from it.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg></span>
-<div class="body"><div class="title">Setup confirmed<span class="badge check">Checkpoint</span></div><div class="meta">Canvas, repo, and your AI thinking partner &mdash; and how to keep the thinking yours</div></div>
+<div class="body"><div class="title">Confirm your setup<span class="badge check">Checkpoint</span></div><div class="meta">Submit the short form once Canvas, your repository, and your AI thinking partner are all working. Five minutes. Like every <span class="gl"><button type="button" class="gt">checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item in the weeks between key items. It earns credit as soon as you submit it and is marked automatically.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track before the key item is due, while there is still time to change course.</span><span class="br"><i>What a good one looks like.</i> Submitted on time. Late work loses 7% a day, so a checkpoint two weeks late is worth nothing.</span></span></span>, it is credited the moment you submit it.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-<div class="body"><div class="title">Job-market opener response<span class="badge check">Checkpoint</span></div><div class="meta">What the data changes about your next twelve months</div></div>
+<div class="body"><div class="title">Post what the job-market data changes for you<span class="badge check">Checkpoint</span></div><div class="meta">One paragraph in the discussion: what you assumed about entry-level hiring before this week, and what you are less sure about now.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">What made the strong examples strong<span class="badge check">Checkpoint</span></div></div>
+<div class="body"><div class="title">Write down what made the strong examples strong<span class="badge check">Checkpoint</span></div><div class="meta">Three or four sentences naming the specific things the convincing portfolio pieces had that the weak ones did not.</div></div>
 </div>
 </div>
 </details>
 <details class="module" id="sprint-1">
-<summary><div class="module-head"><span class="name">Sprint 1 &middot; Know your niche and name the gap</span><span class="tag">Weeks 2&ndash;5 &middot; Aug 31 &ndash; Sep 27</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Name what you are good at, with evidence someone else would find convincing</li>
-<li>Read job postings for what they are actually asking, and map your evidence against them</li>
-<li>Describe the slice of the market you fit, specifically enough that the sentence breaks if you swap the sector out</li>
-<li>Name the gap between what you can prove today and what those roles want</li>
-<li>Scope work that credibly closes it, and defend the scope</li>
+<summary><div class="module-head"><span class="name">Sprint 1 &middot; Know your niche and define the gap in your preparation</span><span class="tag">Weeks 2&ndash;5 &middot; Aug 31 &ndash; Sep 27</span><span class="chev">&#9656;</span></div></summary>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Name what you are good at, and back each claim with <span class="gl"><button type="button" class="gt">evidence</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span> another person could check.</li>
+<li>Read a job posting and say exactly what it is asking for and how an employer would know you had it.</li>
+<li>Describe the <span class="gl"><button type="button" class="gt">slice of the job market</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span> you fit, specifically enough that the description stops being true if you swap the industry out.</li>
+<li>State the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what those jobs ask for.</li>
+<li>Propose work that would close that gap, and defend its <span class="gl"><button type="button" class="gt">scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span>.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> your week-1 baseline. Everything you build from week 6 onward comes out of these four weeks, so clarity here pays for the rest of the semester.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on your week-1 baseline.</b> Everything you build from week 6 onward comes out of these four weeks, so getting clear here pays for the rest of the semester.</span></div>
 <div class="items">
 <div class="group-label">Week 2 &mdash; Know yourself, know the market <span class="gd">&middot; Aug 31</span></div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Know Yourself and Know the Market run this week and next.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Two Career Intelligence units start this week and run into next week: <b>Know Yourself</b> and <b>Know the Market</b>.</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Niche brief<span class="badge check">Checkpoint</span></div><div class="meta">Strengths, interests, and where the market is</div></div>
+<div class="body"><div class="title">Write your niche brief<span class="badge check">Checkpoint</span></div><div class="meta">One page: what you are good at, what you keep coming back to, and where in the job market those two overlap. Draft it now &mdash; you sharpen it in week 4.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-<div class="body"><div class="title">Five real postings, read and mapped<span class="badge check">Checkpoint</span></div><div class="meta">Named companies, named roles, current listings. What do they want, in their words, and how would they know you had it?</div></div>
+<div class="body"><div class="title">Read five real job postings and map your evidence against them<span class="badge check">Checkpoint</span></div><div class="meta">Five current listings, named companies, named roles. For each one, write what they are asking for in their own words, and what you could show them today that answers it.</div></div>
 </div>
 <div class="group-label">Week 3 &mdash; Audit your evidence <span class="gd">&middot; Sep 7</span></div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Gap identification starts now, running in parallel with the niche work. The two sharpen each other through week 5.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>You start defining the gap in your evidence this week, while the niche work is still running. The two sharpen each other through week 5.</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Portfolio-evidence audit<span class="badge check">Checkpoint</span></div><div class="meta">What you can show right now, and how strong it is</div></div>
+<div class="body"><div class="title">Audit the evidence you already have<span class="badge check">Checkpoint</span></div><div class="meta">List every piece of work you could put in front of an employer today &mdash; code, projects, coursework, anything. For each one, say how strong it is and who could verify it.</div></div>
 </div>
-<div class="group-label">Week 4 &mdash; Name the gap <span class="gd">&middot; Sep 14</span></div>
+<div class="group-label">Week 4 &mdash; Define the gap in your preparation <span class="gd">&middot; Sep 14</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Niche and evidence-gap statement<span class="badge check">Checkpoint</span></div><div class="meta">The sentence the rest of your capstone answers</div></div>
+<div class="body"><div class="title">Write your niche and evidence-gap statement<span class="badge check">Checkpoint</span></div><div class="meta">Two paragraphs. First, your <span class="gl"><button type="button" class="gt">your niche</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span>. Second, the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what those roles ask for. The rest of your capstone answers this statement, so make it specific enough that it could be wrong.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Proposal clinics with peers and instructor begin.</span></div>
-<div class="group-label">Week 5 &mdash; Propose the work <span class="gd">&middot; Sep 21</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Proposal clinics start this week.</b> Bring a draft to a clinic with your peers and one of us before you submit in week 5.</span></div>
+<div class="group-label">Week 5 &mdash; Propose your work <span class="gd">&middot; Sep 21</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title">Proposal &mdash; the project, problem space, or certification you will take on<span class="badge key">Key item</span></div><div class="meta">Scope, audience, and how you will prove it worked. <a href="problem-spaces.html">Candidate problem spaces &rarr;</a></div></div>
+<div class="body"><div class="title">Propose the work that will close your gap<span class="badge key">Key item</span></div><div class="meta">Choose a project inside one of the <span class="gl"><button type="button" class="gt">problem spaces</button><span class="bub" role="tooltip"><b class="bt">Problem space</b><span class="br"><i>What it means.</i> A real project with real users, open issues, and a documented way to contribute. You choose one and find your own gap inside it.</span><span class="br"><i>Why it matters.</i> A blank page produces projects nobody needs. An assigned project produces work you cannot speak for. A problem space gives you real constraints and still leaves the framing to you.</span><span class="br"><i>What a good one looks like.</i> Active in the last month, has issues labeled for newcomers, and has maintainers who reply.</span></span></span> (<a href="problem-spaces.html">see the list</a>), a certification, or something you argue for yourself. Write what you will build, who it is for, what <span class="gl"><button type="button" class="gt">scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span> you are taking on, and how you will prove at the end that the gap closed.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Proposal conversation<span class="badge live">In person</span></div><div class="meta">10&ndash;15 minutes, and you leave with one of three answers: approved, revise, or matched to a gap we have already scouted.</div></div>
+<div class="body"><div class="title">Come to your proposal conversation<span class="badge live">In person</span></div><div class="meta">Ten to fifteen minutes with one of us. Be ready to explain why this gap and why this work. You leave with one of three answers: approved, revise and come back, or we match you to a gap we have already scouted.</div></div>
 </div>
 </div>
 </details>
 <details class="module" id="sprint-2">
 <summary><div class="module-head"><span class="name">Sprint 2 &middot; Build the first proof</span><span class="tag">Weeks 6&ndash;9 &middot; Sep 28 &ndash; Oct 25</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Onboard yourself into an unfamiliar codebase, domain, or certification path</li>
-<li>Reproduce a problem before proposing a solution to it</li>
-<li>Ship a working milestone someone outside this class could review</li>
-<li>Keep an evidence log that holds up when someone picks one piece of it</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Get yourself productive (<span class="gl"><button type="button" class="gt">onboarding</button><span class="bub" role="tooltip"><b class="bt">Onboarding</b><span class="br"><i>What it means.</i> Getting yourself productive inside a project you have never seen &mdash; its purpose, its users, its conventions, and how contributions get accepted.</span><span class="br"><i>Why it matters.</i> It is the most transferable skill in this course. Every job you take starts with it, and nobody will teach it to you again.</span><span class="br"><i>What a good one looks like.</i> You can explain the project to someone who has never heard of it, and you know what that community treats as finished.</span></span></span>) inside a codebase, domain, or certification path you have never seen before.</li>
+<li><span class="gl"><button type="button" class="gt">Reproduce a problem</button><span class="bub" role="tooltip"><b class="bt">Reproducing the problem</b><span class="br"><i>What it means.</i> Making the bug or the gap happen on your own machine, with steps someone else could follow.</span><span class="br"><i>Why it matters.</i> A fix for a problem you never saw is a guess. Reproducing it first is also how maintainers decide whether to trust your patch.</span><span class="br"><i>What a good one looks like.</i> Steps, expected result, actual result. Someone else can follow them and see the same thing.</span></span></span> yourself before you propose a fix for it.</li>
+<li>Ship a working <span class="gl"><button type="button" class="gt">milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A working chunk of your capstone that someone outside this class could review &mdash; not a finished product, but something real that runs.</span><span class="br"><i>Why it matters.</i> Two milestones instead of one final push means the second one benefits from what the first one taught you about how you build.</span><span class="br"><i>What a good one looks like.</i> It runs, it does something a user would notice, and its evidence log shows the decisions behind it.</span></span></span> that someone outside this class could review.</li>
+<li>Keep an <span class="gl"><button type="button" class="gt">evidence log</button><span class="bub" role="tooltip"><b class="bt">Evidence log</b><span class="br"><i>What it means.</i> A running record of what you tried, what broke, what you changed, and why.</span><span class="br"><i>Why it matters.</i> It is what makes your conversation possible, and it is the part employers ask about, because it shows how you think when the work resists.</span><span class="br"><i>What a good one looks like.</i> Dated entries written as you go. A log reconstructed the night before does not survive questions.</span></span></span> detailed enough that any single entry holds up when someone asks about it.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> the proposal you defended in week 5. Whatever closes your gap is what you build here &mdash; a project contribution, or the applied piece that shows a certification in use.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on the proposal you defended in week 5.</b> Whatever closes your gap is what you build here &mdash; a contribution to a real project, or the <span class="gl"><button type="button" class="gt">applied piece</button><span class="bub" role="tooltip"><b class="bt">Applied piece</b><span class="br"><i>What it means.</i> Something you build that shows a certification in use. Not the certificate itself.</span><span class="br"><i>Why it matters.</i> A credential says you passed a test. An applied piece says you can do the thing, which is what the interview will ask about.</span><span class="br"><i>What a good one looks like.</i> Small, working, and something you can walk someone through in ten minutes.</span></span></span> that shows a certification in use.</span></div>
 <div class="items">
 <div class="group-label">Week 6 &mdash; Onboard <span class="gd">&middot; Sep 28</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Onboarding note<span class="badge key">Key item</span></div><div class="meta">What the project or certification involves, who it serves, and what counts as done there.</div></div>
+<div class="body"><div class="title">Write your onboarding note<span class="badge key">Key item</span></div><div class="meta">One to two pages: what this project or certification actually involves, who it serves, how contributions get accepted, and what this community treats as finished. Write it so someone who has never heard of the project could follow it.</div></div>
 </div>
-<div class="group-label">Week 7 &mdash; Reproduce before you solve <span class="gd">&middot; Oct 5</span></div>
+<div class="group-label">Week 7 &mdash; Reproduce it before you solve it <span class="gd">&middot; Oct 5</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">The problem, reproduced or documented<span class="badge check">Checkpoint</span></div><div class="meta">Or the first certification module completed, with notes.</div></div>
+<div class="body"><div class="title">Reproduce the problem, or document it<span class="badge check">Checkpoint</span></div><div class="meta">Show the problem happening on your own machine, with the steps you took to get there. On a certification path, finish the first module and submit your notes instead.</div></div>
 </div>
 <div class="group-label">Week 8 &mdash; Plan the build <span class="gd">&middot; Oct 12</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title">Evidence and build plan<span class="badge check">Checkpoint</span></div><div class="meta">What you will build, and what will count as proof it worked</div></div>
+<div class="body"><div class="title">Write your evidence and build plan<span class="badge check">Checkpoint</span></div><div class="meta">What you will build over the next two weeks, and what specifically will count as proof that it worked. Name the tests, the reviewers, or the users.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Protected build time.</b> Class time is yours to work in. Optional deep-work sessions run alongside &mdash; come if it helps you get it done.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Class time is yours to build in from here.</b> Optional deep-work sessions run alongside &mdash; come if it helps you get it done.</span></div>
 <div class="group-label">Week 9 &mdash; Ship the first milestone <span class="gd">&middot; Oct 19</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">First working milestone, with an evidence log<span class="badge key">Key item</span></div><div class="meta">Something a maintainer, user, or mentor could look at without you in the room.</div></div>
+<div class="body"><div class="title">Ship your first working milestone, with an evidence log<span class="badge key">Key item</span></div><div class="meta">Something that runs, plus a log of what you tried, what broke, and what you changed. A maintainer, a user, or a mentor should be able to look at it without you in the room.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Sprint 2 conversation<span class="badge live">In person</span></div><div class="meta">We pick one piece of the evidence log and go deep on it: what you did, why, what broke, what you changed.</div></div>
+<div class="body"><div class="title">Come to your Sprint 2 conversation<span class="badge live">In person</span></div><div class="meta">We pick one entry from your evidence log and go deep on it: what you did, why you did it that way, what broke, and what you changed. You will not know which entry in advance.</div></div>
 </div>
 </div>
 </details>
 <details class="module" id="sprint-3">
 <summary><div class="module-head"><span class="name">Sprint 3 &middot; Deepen and finish the proof</span><span class="tag">Weeks 10&ndash;13 &middot; Oct 26 &ndash; Nov 22</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Scope a second milestone that raises the level rather than repeating the first</li>
-<li>Put work in front of a real user, maintainer, or mentor and act on what comes back</li>
-<li>Document trade-offs so a reader can tell what you chose and why</li>
-<li>Package work so it can be read without you in the room</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li><span class="gl"><button type="button" class="gt">Scope</button><span class="bub" role="tooltip"><b class="bt">Scope</b><span class="br"><i>What it means.</i> The boundary around what you are taking on &mdash; what is in, what is deliberately out, and what &ldquo;done&rdquo; means.</span><span class="br"><i>Why it matters.</i> Most capstones fail on scope, not on ability. Naming the boundary in week 5 is what lets you finish in week 13.</span><span class="br"><i>What a good one looks like.</i> Small enough to finish, big enough that finishing it proves something.</span></span></span> a second milestone that raises the difficulty instead of repeating the first.</li>
+<li>Put your work in front of a real user, maintainer, or mentor and change it based on what they say.</li>
+<li>Write up your <span class="gl"><button type="button" class="gt">trade-offs</button><span class="bub" role="tooltip"><b class="bt">Trade-offs</b><span class="br"><i>What it means.</i> The choices you made where a reasonable engineer could have gone the other way, and your reason for going your way.</span><span class="br"><i>Why it matters.</i> Anyone can list what they built. Naming what you gave up, and what it cost you, is what separates an engineer from someone following a tutorial.</span><span class="br"><i>What a good one looks like.</i> Two or three real ones, each with the alternative you rejected and the cost you accepted.</span></span></span> so a reader can tell what you chose and why you chose it.</li>
+<li>Package your work so someone can understand it without you in the room.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> what the first milestone taught you about your own building. This is where you show you learned how to build, not just that you built.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on what the first milestone taught you about how you build.</b> This is where you show you learned something, not just that you finished something.</span></div>
 <div class="items">
 <div class="group-label">Week 10 &mdash; Scope the second milestone <span class="gd">&middot; Oct 26</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title">Second-milestone scope, informed by the first<span class="badge key">Key item</span></div><div class="meta">One deeper artifact, a complementary second one, or the applied piece that shows a certification in use.</div></div>
+<div class="body"><div class="title">Scope your second milestone<span class="badge key">Key item</span></div><div class="meta">Choose one: go deeper on the same artifact, build a complementary second one, or build the applied piece that shows your certification in use. Say what the first milestone taught you and what that changes about this one.</div></div>
 </div>
 <div class="group-label">Week 11 &mdash; Build <span class="gd">&middot; Nov 2</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Working artifact draft<span class="badge check">Checkpoint</span></div></div>
+<div class="body"><div class="title">Submit a working draft of your artifact<span class="badge check">Checkpoint</span></div><div class="meta">It does not have to be finished. It does have to run.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Protected build time</b> continues, with the optional deep-work sessions alongside.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Class time is still yours to build in</b>, with the optional deep-work sessions alongside.</span></div>
 <div class="group-label">Week 12 &mdash; Test it on someone <span class="gd">&middot; Nov 9</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Reaction from a real audience, and what you changed because of it<span class="badge check">Checkpoint</span></div><div class="meta">A user, a maintainer, or a mentor &mdash; someone who did not have to be nice about it.</div></div>
+<div class="body"><div class="title">Get a reaction from a real audience and act on it<span class="badge check">Checkpoint</span></div><div class="meta">Show your work to a user, a maintainer, or a mentor &mdash; someone with no reason to be kind about it. Submit what they said and what you changed because of it.</div></div>
 </div>
 <div class="group-label">Week 13 &mdash; Finish and package <span class="gd">&middot; Nov 16</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
-<div class="body"><div class="title">Portfolio-ready artifact set, with trade-offs written up<span class="badge key">Key item</span></div><div class="meta">Technical and plain-language walkthrough. This is also the artifact-quality check &mdash; clearing it is what makes you eligible for a warm referral.</div></div>
+<div class="body"><div class="title">Submit your portfolio-ready artifact set, with your trade-offs written up<span class="badge key">Key item</span></div><div class="meta">Finished work, packaged so a stranger can run it, plus two walkthroughs: one technical, one in plain language. This is also the artifact-quality check &mdash; clearing it is what makes you eligible to ask for a <span class="gl"><button type="button" class="gt">warm referral</button><span class="bub" role="tooltip"><b class="bt">Warm referral</b><span class="br"><i>What it means.</i> An introduction from Prof. Sathya to someone he knows at a company, sent with his name behind it. Optional, and you ask for it.</span><span class="br"><i>Why it matters.</i> Referred applicants get read. Cold applicants often do not.</span><span class="br"><i>What a good one looks like.</i> Your week-13 artifact clears the published bar, and your written case is specific and honest about where it is still thin.</span></span></span>.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Sprint 3 conversation<span class="badge live">In person</span></div><div class="meta">What got better between the first milestone and this one, and why.</div></div>
+<div class="body"><div class="title">Come to your Sprint 3 conversation<span class="badge live">In person</span></div><div class="meta">Be ready to say what got better between your first milestone and this one, and why.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Sprint 4 starts this week.</b> The job search runs alongside the last of the build &mdash; on purpose.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Sprint 4 starts this week.</b> Your job search runs alongside the last of your build, on purpose.</span></div>
 </div>
 </details>
 <details class="module" id="sprint-4">
-<summary><div class="module-head"><span class="name">Sprint 4 &middot; Own the search while finishing the proof</span><span class="tag">Weeks 13&ndash;15 &middot; Nov 16 &ndash; Dec 13</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Turn &ldquo;I am applying to jobs&rdquo; into a stated bet, with a fair test and a signal you would accept</li>
-<li>Rebuild a resume around evidence rather than coursework</li>
-<li>Make a written case for yourself strong enough that someone would put their name behind it</li>
-<li>Hold up in an interview about work you actually did</li>
+<summary><div class="module-head"><span class="name">Sprint 4 &middot; Run your job search while you finish the proof</span><span class="tag">Weeks 13&ndash;15 &middot; Nov 16 &ndash; Dec 13</span><span class="chev">&#9656;</span></div></summary>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Turn &ldquo;I am applying to jobs&rdquo; into a <span class="gl"><button type="button" class="gt">stated bet</button><span class="bub" role="tooltip"><b class="bt">Search experiment</b><span class="br"><i>What it means.</i> Treating your job search as a testable bet: this kind of role, at this kind of company, reached this way &mdash; and here is the result that would make you change course.</span><span class="br"><i>Why it matters.</i> &ldquo;Applying everywhere&rdquo; produces no information. A stated bet fails fast enough that you can learn from it while the semester is still running.</span><span class="br"><i>What a good one looks like.</i> Specific enough to be wrong, and small enough to run in three weeks.</span></span></span>, with a fair test and a result that would make you change course.</li>
+<li>Rebuild your resume around evidence instead of coursework.</li>
+<li>Write a case for yourself strong enough that someone would put their name behind it.</li>
+<li>Answer interview questions about work you actually did.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Why this comes after building.</b> A search is far easier to run when you have something to point at. You arrive here with finished work, which is what turns &ldquo;I am interested in X&rdquo; into &ldquo;here is X, working.&rdquo;</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Why this comes after building.</b> A job search is far easier to run when you have something to point at. You get here with finished work, which is what turns &ldquo;I am interested in X&rdquo; into &ldquo;here is X, working.&rdquo;</span></div>
 <div class="items">
-<div class="group-label">Week 13 &mdash; Pick your targets <span class="gd">&middot; Nov 16 &middot; overlaps the end of Sprint 3</span></div>
+<div class="group-label">Week 13 &mdash; Pick your targets <span class="gd">&middot; Nov 16 &middot; runs alongside the end of Sprint 3</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-<div class="body"><div class="title">Target roles and employers, with your reasons<span class="badge check">Checkpoint</span></div></div>
+<div class="body"><div class="title">List your target roles and employers, with your reasons<span class="badge check">Checkpoint</span></div><div class="meta">Ten to fifteen specific roles at named companies. Next to each one, write one sentence on why you are a plausible candidate now that you were not in September.</div></div>
 </div>
 <div class="group-label">Fall Break <span class="gd">&middot; Nov 23 &ndash; Nov 29</span></div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>No class.</b> If you are home with family and family friends, it is also one of the better networking weeks of the year &mdash; and your case is ready by then.</span></div>
-<div class="group-label">Week 14 &mdash; Rebuild the case <span class="gd">&middot; Nov 30</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>No class this week.</b> If you are home with family and family friends, it is also one of the better networking weeks of the year &mdash; and your case is ready by then.</span></div>
+<div class="group-label">Week 14 &mdash; Rebuild your case <span class="gd">&middot; Nov 30</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title">Resume and portfolio rebuilt on the new evidence<span class="badge check">Checkpoint</span></div><div class="meta">Every line survives a &ldquo;show me&rdquo; &mdash; and you now have work that does.</div></div>
+<div class="body"><div class="title">Rebuild your resume and portfolio on the new evidence<span class="badge check">Checkpoint</span></div><div class="meta">Every line should survive someone saying &ldquo;show me.&rdquo; You now have work that does.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Warm-referral case<span class="badge optional">Optional</span></div><div class="meta">Written, specific, and honest about where the case is thin.</div></div>
+<div class="body"><div class="title">Write your warm-referral case<span class="badge optional">Optional</span></div><div class="meta">Optional. If you want a <span class="gl"><button type="button" class="gt">warm referral</button><span class="bub" role="tooltip"><b class="bt">Warm referral</b><span class="br"><i>What it means.</i> An introduction from Prof. Sathya to someone he knows at a company, sent with his name behind it. Optional, and you ask for it.</span><span class="br"><i>Why it matters.</i> Referred applicants get read. Cold applicants often do not.</span><span class="br"><i>What a good one looks like.</i> Your week-13 artifact clears the published bar, and your written case is specific and honest about where it is still thin.</span></span></span> &mdash; an introduction from Prof. Sathya to someone he knows at a company &mdash; write the case: what you built, why it matters, and where the case is still thin. He decides whether he can stand behind it.</div></div>
 </div>
 <div class="group-label">Week 15 &mdash; Run the experiment <span class="gd">&middot; Dec 7</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title">Search experiment &mdash; the bet, the evidence, the outcome, the next move<span class="badge key">Key item</span></div><div class="meta">A strategy you can test in weeks, so you learn from it while the semester is still running.</div></div>
+<div class="body"><div class="title">Submit your search experiment<span class="badge key">Key item</span></div><div class="meta">State the bet you made about your search, what you actually did, what came back, and what you are doing next. Make it a bet you can test in weeks, so you learn from it while the semester is still running.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Mock interview<span class="badge live">In person</span></div></div>
+<div class="body"><div class="title">Sit a mock interview<span class="badge live">In person</span></div><div class="meta">Twenty minutes on the work you built. We ask the questions an interviewer would.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></span>
-<div class="body"><div class="title">Poster and presentation drafts<span class="badge check">Checkpoint</span></div><div class="meta">Built here so Sprint 5 is peer review, the defense, and the Festival.</div></div>
+<div class="body"><div class="title">Submit drafts of your poster and your presentation<span class="badge check">Checkpoint</span></div><div class="meta">Drafts, not final versions. You build them now so week 16 is peer review, your defense, and the Festival.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Virtual networking with engineers from industry<span class="badge optional">Invitation</span></div><div class="meta">Small breakout rooms, guests rotating. Invitations go to students who have done the work.</div></div>
+<div class="body"><div class="title">Virtual networking with engineers from industry<span class="badge optional">Invitation</span></div><div class="meta">Small breakout rooms with guests rotating through. Invitations go to students who have done the work.</div></div>
 </div>
 </div>
 </details>
 <details class="module" id="sprint-5">
-<summary><div class="module-head"><span class="name">Sprint 5 &middot; Wrap, defend, and hand off</span><span class="tag">Week 16 &middot; Dec 14 &ndash; Dec 20</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Present your work to a room that includes people who hire, and hold up under questions</li>
-<li>Judge whether someone else&rsquo;s evidence convinces you, and say what would make it stronger</li>
-<li>Leave with a portfolio package and a next-step plan</li>
+<summary><div class="module-head"><span class="name">Sprint 5 &middot; Wrap up, defend, and hand off</span><span class="tag">Week 16 &middot; Dec 14 &ndash; Dec 20</span><span class="chev">&#9656;</span></div></summary>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Present your work to a room that includes people who hire, and answer their questions.</li>
+<li>Judge whether another student&rsquo;s <span class="gl"><button type="button" class="gt">portfolio evidence</button><span class="bub" role="tooltip"><b class="bt">Portfolio evidence</b><span class="br"><i>What it means.</i> Work a stranger can look at and verify without taking your word for it &mdash; merged code, a running artifact, a review thread, a published write-up.</span><span class="br"><i>Why it matters.</i> Employers discount claims and trust artifacts. Coursework rarely counts, because everyone in your graduating class has the same coursework.</span><span class="br"><i>What a good one looks like.</i> It survives &ldquo;show me.&rdquo; Someone can open it, run it, or read it in under five minutes and see what you did.</span></span></span> convinces you, and say what would make it stronger.</li>
+<li>Leave with a portfolio package and a written plan for what you do next.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> everything. This is where what you built gets packaged so someone else can see it.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on everything.</b> This is where what you built gets packaged so someone else can see it.</span></div>
 <div class="items">
-<div class="group-label">Week 16 &mdash; Wrap and defend <span class="gd">&middot; Dec 14 &ndash; Dec 20</span></div>
+<div class="group-label">Week 16 &mdash; Wrap up and defend <span class="gd">&middot; Dec 14 &ndash; Dec 20</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
-<div class="body"><div class="title">Poster, finalized<span class="badge check">Checkpoint</span></div><div class="meta">The one-glance version of what you built and why it matters</div></div>
+<div class="body"><div class="title">Finish your poster<span class="badge check">Checkpoint</span></div><div class="meta">The one-glance version of what you built and why it matters.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></span>
-<div class="body"><div class="title">Presentation, finalized<span class="badge check">Checkpoint</span></div><div class="meta">The version you could send a hiring manager tomorrow</div></div>
+<div class="body"><div class="title">Finish your presentation<span class="badge check">Checkpoint</span></div><div class="meta">The version you could send a hiring manager tomorrow.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-<div class="body"><div class="title">Peer review<span class="badge check">Checkpoint</span></div><div class="meta">One question: would you put your name behind this evidence?</div></div>
+<div class="body"><div class="title">Review a classmate&rsquo;s work<span class="badge check">Checkpoint</span></div><div class="meta">One question to answer: would you put your name behind this evidence? Say what would make it stronger.</div></div>
 </div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Final portfolio package<span class="badge key">Key item</span></div><div class="meta">Everything, packaged, plus the evidence that it closed the gap you named in September.</div></div>
+<div class="body"><div class="title">Submit your final portfolio package<span class="badge key">Key item</span></div><div class="meta">Everything you built, packaged, plus the evidence that it closed the gap you named in September.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Final defense<span class="badge live">In person</span></div><div class="meta">The problem, your contribution, the evidence, your use of AI, the limits, and the next move.</div></div>
+<div class="body"><div class="title">Sit your final defense<span class="badge live">In person</span></div><div class="meta">This is the <span class="gl"><button type="button" class="gt">final defense</button><span class="bub" role="tooltip"><b class="bt">Final defense</b><span class="br"><i>What it means.</i> The last conversation, covering all of it: the problem, your contribution, your evidence, how you used AI, the limits, and your next move.</span><span class="br"><i>Why it matters.</i> It is the question every employer asks in some form &mdash; what did you do, and how do you know it worked?</span><span class="br"><i>What a good one looks like.</i> You hold up on any part of it without notes, including the parts that did not go well.</span></span></span>. Be ready on all of it: the problem, what you contributed, the evidence, how you used AI, what the limits are, and what you do next.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.6 6.6L21 9.6l-4.8 4.4L17.6 21 12 17.6 6.4 21l1.4-7L3 9.6l6.4-1z"/></svg></span>
-<div class="body"><div class="title">Capstone Festival<span class="badge live">Required</span></div><div class="meta">Friday 18 December. The public showing &mdash; industry mentors, faculty, and family in the room.</div></div>
+<div class="body"><div class="title">Present at the Capstone Festival<span class="badge live">Required</span></div><div class="meta">Friday 18 December. The public showing, with industry mentors, faculty, and family in the room.</div></div>
 </div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg></span>
-<div class="body"><div class="title">Course look-back<span class="badge check">Checkpoint</span></div><div class="meta">The bookend to your week-1 baseline &mdash; the distance, in your own words</div></div>
+<div class="body"><div class="title">Submit your course look-back<span class="badge check">Checkpoint</span></div><div class="meta">The bookend to your week-1 baseline. What can you prove now that you could not in August, in your own words?</div></div>
 </div>
 </div>
 </details>

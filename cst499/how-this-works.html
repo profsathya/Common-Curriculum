@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -148,28 +183,28 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="s">CST499 &middot; Fall 2026</div>
 <h1>How this capstone works</h1>
 <div class="dt">Read this before week 1</div>
-<div class="lead">Six sprints, sixteen weeks. You work out where you fit, name the gap between what you can prove today and what the roles you want ask for, build the proof that closes it, and run your search with that work in hand.</div>
+<div class="lead">Six sprints across sixteen weeks. You work out your <span class="gl"><button type="button" class="gt">your niche</button><span class="bub" role="tooltip"><b class="bt">Your niche</b><span class="br"><i>What it means.</i> The specific slice of the job market you are aiming at &mdash; a kind of work, in a kind of company, solving a kind of problem.</span><span class="br"><i>Why it matters.</i> &ldquo;Software engineer&rdquo; describes two hundred thousand openings and helps you target none of them. A niche is what makes your resume, your project choice, and your cover letter all point the same direction.</span><span class="br"><i>What a good one looks like.</i> Specific enough that the description stops being true if you swap the industry out. &ldquo;Backend work on data pipelines at climate-tech companies&rdquo; passes. &ldquo;Full-stack at a startup&rdquo; does not.</span></span></span>, define the <span class="gl"><button type="button" class="gt">gap in your preparation</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the jobs in your niche ask for.</span><span class="br"><i>Why it matters.</i> Your whole capstone is the answer to this one sentence. If the gap is vague, the work you choose to close it will be vague too.</span><span class="br"><i>What a good one looks like.</i> Named, specific, and closeable in one semester. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span> between what you can prove today and what the jobs you want ask for, build the proof that closes that gap, and run your job search with that work in hand.</div>
 </div>
-<h2 class="sec">Two kinds of work</h2>
-<p class="body"><b>Key items</b> are the work. Most weeks end in one: the cumulative piece that carries that week's learning goal. There are eight across the semester. Each is checked in your next conversation, where we pick a part of it and ask you to explain it.</p>
-<p class="body"><b>Checkpoints</b> are the guardrail. In the weeks between key items sit short items, usually one or two a week. They exist so you can tell whether you are on track to reach the next key item. They earn credit on submission and are marked automatically.</p>
-<p class="body">Late work loses 7% a day, so nobody drifts more than about two weeks behind before the point is moot.</p>
+<h2 class="sec">You will submit two kinds of work</h2>
+<p class="body"><b>Key items are the work itself.</b> Most weeks end in one: the piece that carries that week's learning goal. There are eight across the semester. Each one gets checked in your next conversation, where we pick a part of it and ask you to explain it.</p>
+<p class="body"><b>Checkpoints are the guardrail.</b> In the weeks between key items you submit short items, usually one or two a week. They exist so you can tell whether you are on track to reach the next key item. They earn credit as soon as you submit them and are marked automatically.</p>
+<p class="body"><b>Late work loses 7% a day.</b> That means you cannot drift more than about two weeks behind before the credit is gone, which is deliberate &mdash; we would rather catch you in week 4 than in week 12.</p>
 <h2 class="sec" id="grade">How the grade works</h2>
-<p class="body">Everything you submit &mdash; checkpoints and key items alike &mdash; earns credit on submission, and that adds up to <b>60% of the grade</b>. Submit it all, on time, and you pass. The other <b>40% is the six conversations</b>, where we go through your key items and you explain them. Doing the work earns a pass. Understanding it is what moves you up.</p>
+<p class="body">Everything you submit &mdash; checkpoints and key items alike &mdash; earns credit on submission, and that adds up to <b>60% of your grade</b>. Submit it all, on time, and you pass this course. The other <b>40% comes from the six conversations</b>, where we go through your key items and you explain them. Doing the work earns you a pass. Understanding it is what moves you up.</p>
 <table class="grades">
 <tr><th>Grade</th><th>What it takes</th></tr>
 <tr><td>D</td><td>Submit every item on time. Nothing else.</td></tr>
 <tr><td>C</td><td>That, plus a quarter of the conversation credit.</td></tr>
-<tr><td>B</td><td>That, plus half.</td></tr>
-<tr><td>A</td><td>That, plus three quarters.</td></tr>
+<tr><td>B</td><td>That, plus half of it.</td></tr>
+<tr><td>A</td><td>That, plus three quarters of it.</td></tr>
 </table>
-<h2 class="sec" id="conversations">The six conversations</h2>
-<p class="body">Every key item is checked in conversation &mdash; six checks over the semester, one per sprint. Every student sits all six. What varies is how many appointments that takes.</p>
-<p class="body">The first is an in-class check-in at the end of Sprint 1, covering Sprints 0 and 1 together. After that, students whose checkpoints are current and whose key items hold up cover two sprints in one sitting &mdash; three sittings for the semester instead of six. That is earned, and you will know where you stand after the first one.</p>
-<p class="body">If a conversation goes badly you may sit it once more, on a different question, for a maximum of a C on that check.</p>
-<h2 class="sec">Where the work comes from</h2>
-<p class="body">You do not start from a blank page, and you are not handed a project. You choose a real problem space &mdash; an open project with real users, open issues, and a contribution path &mdash; and you find the gap inside it worth your semester. The framing is yours; the quality pressure comes from outside the classroom. <a href="problem-spaces.html">See the candidate problem spaces &rarr;</a></p>
-<p class="body">A certification answers the same question. If the gap in your preparation is best closed by earning a real credential, that is a legitimate route rather than a lesser one. It runs through the same proposal, the same checkpoints, and the same conversations, plus an applied piece that shows the learning in use.</p>
+<h2 class="sec" id="conversations">What happens in the six conversations</h2>
+<p class="body">Every key item gets checked in conversation. There are six checks across the semester, one for each sprint, and every student sits all six. We pick something you submitted, ask you to walk us through it, and ask why you made the choices you made. You will not know in advance which part we pick.</p>
+<p class="body">What varies is how many appointments those six checks take. The first is an in-class check-in at the end of Sprint 1, and it covers Sprints 0 and 1 together. After that, if your checkpoints are current and your key items hold up, you cover two sprints in one sitting &mdash; three appointments for the whole semester instead of six. You earn that, and you will know where you stand after the first one.</p>
+<p class="body">If a conversation goes badly, you may sit it once more on a different question. A retaken check is worth a maximum of a C.</p>
+<h2 class="sec">Where your capstone work comes from</h2>
+<p class="body">You do not start from a blank page, and we do not hand you a project. You choose a real problem space &mdash; an open project with real users, open issues, and a documented way to contribute &mdash; and you find the gap inside it worth your semester. The framing is yours. The pressure to make it good comes from people outside this classroom. <a href="problem-spaces.html">See the candidate problem spaces &rarr;</a></p>
+<p class="body">A certification answers the same question. If the gap in your preparation is best closed by earning a real credential, that is a full route rather than a lesser one. It runs through the same proposal, the same checkpoints, and the same conversations, and it also asks for an <span class="gl"><button type="button" class="gt">applied piece</button><span class="bub" role="tooltip"><b class="bt">Applied piece</b><span class="br"><i>What it means.</i> Something you build that shows a certification in use. Not the certificate itself.</span><span class="br"><i>Why it matters.</i> A credential says you passed a test. An applied piece says you can do the thing, which is what the interview will ask about.</span><span class="br"><i>What a good one looks like.</i> Small, working, and something you can walk someone through in ten minutes.</span></span></span> that shows the learning in use.</p>
 <p class="body">You can also propose something outside the list. The bar for that is higher, and you make the case in your Sprint 1 proposal.</p>
 <div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="problem-spaces.html">Candidate problem spaces &rarr;</a></span></div>
 <div class="instructor">

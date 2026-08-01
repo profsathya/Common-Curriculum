@@ -34,7 +34,19 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
 
 /* Program arc */
-.arc{margin:0 0 20px;}
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
 .arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
 .arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 a.arc-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
@@ -56,11 +68,11 @@ a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBF
 .beyond p:last-child{margin-bottom:0;}
 
 /* Modules */
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
 details.module > summary{list-style:none;cursor:pointer;}
 details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > summary > .module-head{border-bottom:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
 .module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
 .module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
 .module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
@@ -136,6 +148,29 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .provenance ul{margin:5px 0 0;padding-left:18px;}
 .provenance li{margin:2px 0;}
 
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
 .page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
 .page-footer img{height:20px;opacity:.55;}
 </style>
@@ -146,47 +181,47 @@ table.grades td:first-child{font-weight:700;width:70px;}
 <div class="crumb"><a href="home.html">CST499</a> &middot; Sprint 2</div>
 <details class="module" id="sprint-2" open>
 <summary><div class="module-head"><span class="name">Sprint 2 &middot; Build the first proof</span><span class="tag">Weeks 6&ndash;9 &middot; Sep 28 &ndash; Oct 25</span><span class="chev">&#9656;</span></div></summary>
-<div class="goal"><div class="label">What you will be able to do</div><div class="text"><ul>
-<li>Onboard yourself into an unfamiliar codebase, domain, or certification path</li>
-<li>Reproduce a problem before proposing a solution to it</li>
-<li>Ship a working milestone someone outside this class could review</li>
-<li>Keep an evidence log that holds up when someone picks one piece of it</li>
+<div class="goal"><div class="label">By the end of this sprint you will be able to</div><div class="text"><ul>
+<li>Get yourself productive (<span class="gl"><button type="button" class="gt">onboarding</button><span class="bub" role="tooltip"><b class="bt">Onboarding</b><span class="br"><i>What it means.</i> Getting yourself productive inside a project you have never seen &mdash; its purpose, its users, its conventions, and how contributions get accepted.</span><span class="br"><i>Why it matters.</i> It is the most transferable skill in this course. Every job you take starts with it, and nobody will teach it to you again.</span><span class="br"><i>What a good one looks like.</i> You can explain the project to someone who has never heard of it, and you know what that community treats as finished.</span></span></span>) inside a codebase, domain, or certification path you have never seen before.</li>
+<li><span class="gl"><button type="button" class="gt">Reproduce a problem</button><span class="bub" role="tooltip"><b class="bt">Reproducing the problem</b><span class="br"><i>What it means.</i> Making the bug or the gap happen on your own machine, with steps someone else could follow.</span><span class="br"><i>Why it matters.</i> A fix for a problem you never saw is a guess. Reproducing it first is also how maintainers decide whether to trust your patch.</span><span class="br"><i>What a good one looks like.</i> Steps, expected result, actual result. Someone else can follow them and see the same thing.</span></span></span> yourself before you propose a fix for it.</li>
+<li>Ship a working <span class="gl"><button type="button" class="gt">milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A working chunk of your capstone that someone outside this class could review &mdash; not a finished product, but something real that runs.</span><span class="br"><i>Why it matters.</i> Two milestones instead of one final push means the second one benefits from what the first one taught you about how you build.</span><span class="br"><i>What a good one looks like.</i> It runs, it does something a user would notice, and its evidence log shows the decisions behind it.</span></span></span> that someone outside this class could review.</li>
+<li>Keep an <span class="gl"><button type="button" class="gt">evidence log</button><span class="bub" role="tooltip"><b class="bt">Evidence log</b><span class="br"><i>What it means.</i> A running record of what you tried, what broke, what you changed, and why.</span><span class="br"><i>Why it matters.</i> It is what makes your conversation possible, and it is the part employers ask about, because it shows how you think when the work resists.</span><span class="br"><i>What a good one looks like.</i> Dated entries written as you go. A log reconstructed the night before does not survive questions.</span></span></span> detailed enough that any single entry holds up when someone asks about it.</li>
 </ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> the proposal you defended in week 5. Whatever closes your gap is what you build here &mdash; a project contribution, or the applied piece that shows a certification in use.</span></div>
+<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on the proposal you defended in week 5.</b> Whatever closes your gap is what you build here &mdash; a contribution to a real project, or the <span class="gl"><button type="button" class="gt">applied piece</button><span class="bub" role="tooltip"><b class="bt">Applied piece</b><span class="br"><i>What it means.</i> Something you build that shows a certification in use. Not the certificate itself.</span><span class="br"><i>Why it matters.</i> A credential says you passed a test. An applied piece says you can do the thing, which is what the interview will ask about.</span><span class="br"><i>What a good one looks like.</i> Small, working, and something you can walk someone through in ten minutes.</span></span></span> that shows a certification in use.</span></div>
 <div class="items">
 <div class="group-label">Week 6 &mdash; Onboard <span class="gd">&middot; Sep 28</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">Onboarding note<span class="badge key">Key item</span></div><div class="meta">What the project or certification involves, who it serves, and what counts as done there.</div></div>
+<div class="body"><div class="title">Write your onboarding note<span class="badge key">Key item</span></div><div class="meta">One to two pages: what this project or certification actually involves, who it serves, how contributions get accepted, and what this community treats as finished. Write it so someone who has never heard of the project could follow it.</div></div>
 </div>
-<div class="group-label">Week 7 &mdash; Reproduce before you solve <span class="gd">&middot; Oct 5</span></div>
+<div class="group-label">Week 7 &mdash; Reproduce it before you solve it <span class="gd">&middot; Oct 5</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">The problem, reproduced or documented<span class="badge check">Checkpoint</span></div><div class="meta">Or the first certification module completed, with notes.</div></div>
+<div class="body"><div class="title">Reproduce the problem, or document it<span class="badge check">Checkpoint</span></div><div class="meta">Show the problem happening on your own machine, with the steps you took to get there. On a certification path, finish the first module and submit your notes instead.</div></div>
 </div>
 <div class="group-label">Week 8 &mdash; Plan the build <span class="gd">&middot; Oct 12</span></div>
 <div class="item">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title">Evidence and build plan<span class="badge check">Checkpoint</span></div><div class="meta">What you will build, and what will count as proof it worked</div></div>
+<div class="body"><div class="title">Write your evidence and build plan<span class="badge check">Checkpoint</span></div><div class="meta">What you will build over the next two weeks, and what specifically will count as proof that it worked. Name the tests, the reviewers, or the users.</div></div>
 </div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Protected build time.</b> Class time is yours to work in. Optional deep-work sessions run alongside &mdash; come if it helps you get it done.</span></div>
+<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span><b>Class time is yours to build in from here.</b> Optional deep-work sessions run alongside &mdash; come if it helps you get it done.</span></div>
 <div class="group-label">Week 9 &mdash; Ship the first milestone <span class="gd">&middot; Oct 19</span></div>
 <div class="item keyitem">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title">First working milestone, with an evidence log<span class="badge key">Key item</span></div><div class="meta">Something a maintainer, user, or mentor could look at without you in the room.</div></div>
+<div class="body"><div class="title">Ship your first working milestone, with an evidence log<span class="badge key">Key item</span></div><div class="meta">Something that runs, plus a log of what you tried, what broke, and what you changed. A maintainer, a user, or a mentor should be able to look at it without you in the room.</div></div>
 </div>
 <div class="item live">
 <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title">Sprint 2 conversation<span class="badge live">In person</span></div><div class="meta">We pick one piece of the evidence log and go deep on it: what you did, why, what broke, what you changed.</div></div>
+<div class="body"><div class="title">Come to your Sprint 2 conversation<span class="badge live">In person</span></div><div class="meta">We pick one entry from your evidence log and go deep on it: what you did, why you did it that way, what broke, and what you changed. You will not know which entry in advance.</div></div>
 </div>
 </div>
 </details>
 <div class="beyond">
 <div class="label">The check</div>
 <div class="hd">Conversation 3 &middot; Sprint 2</div>
-<p>Your onboarding note and your first milestone. We pick one piece of the evidence log and go deep on it.</p>
+<p>We go through your onboarding note and your first milestone, then pick one entry from your evidence log and go deep on it.</p>
 </div>
-<div class="pagenav"><span><a href="sprint-1.html">&larr; Sprint 1 &middot; Know your niche and name the gap</a></span><span><a href="sprint-3.html">Sprint 3 &middot; Deepen and finish the proof &rarr;</a></span></div>
+<div class="pagenav"><span><a href="sprint-1.html">&larr; Sprint 1 &middot; Know your niche and define the gap in your preparation</a></span><span><a href="sprint-3.html">Sprint 3 &middot; Deepen and finish the proof &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Dr. Sathya Narayanan &middot; Paige Weisskirch</div>
 <div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
