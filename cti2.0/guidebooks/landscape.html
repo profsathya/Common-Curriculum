@@ -83,6 +83,40 @@
     footer { margin-top: 36px; font-size: 13px; color: var(--gray-500); border-top:1px solid var(--gray-200); padding-top: 14px; }
     a { color: var(--cti-primary-dark,#d97706); }
     .tablewrap { overflow-x:auto; }
+    /* ---- Course-build tab (added 2026-08-01) ---- */
+    .key { display:inline-block; font-size:11.5px; font-weight:700; padding:1px 9px; border-radius:999px; margin:0 2px; }
+    .key.frame { background:#eff6ff; color:#1d4ed8; } .key.ai { background:#fef3c7; color:#b45309; }
+    .key.gate  { background:#e8eef4; color:#153857; } .key.loop { background:#f0fdfa; color:#0f766e; }
+    .phase { display:grid; grid-template-columns:120px 1fr; gap:10px; align-items:start; margin:0 0 10px; }
+    .phase .plabel { font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+                     color:var(--gray-600); background:var(--gray-100); border-radius:8px; padding:10px 10px; text-align:center; }
+    .phase .prow { display:flex; flex-wrap:wrap; gap:6px; align-items:stretch; }
+    .pstep { flex:1 1 200px; background:#fff; border:2px solid var(--gray-200); border-left-width:6px;
+             border-radius:var(--radius-lg); padding:9px 12px; font-size:13px; }
+    .pstep .n { display:block; font-weight:800; font-size:12.5px; margin-bottom:3px; }
+    .pstep.frame { border-color:#bfdbfe; border-left-color:#1d4ed8; } .pstep.frame .n { color:#1d4ed8; }
+    .pstep.ai    { border-color:#fde68a; border-left-color:#f59e0b; } .pstep.ai .n { color:#b45309; }
+    .pstep.gate  { border-color:#c9d6e3; border-left-color:#153857; background:#f7f9fb; } .pstep.gate .n { color:#153857; }
+    .pstep.loop  { border-color:#99f6e4; border-left-color:#0d9488; background:#f0fdfa; } .pstep.loop .n { color:#0f766e; }
+    .loopback { background:#f0fdfa; border:1.5px dashed #0d9488; border-radius:8px; padding:9px 14px;
+                margin:4px 0 0; font-size:13px; color:#0f766e; }
+    .ladder { display:flex; flex-direction:column-reverse; gap:5px; margin:10px 0 4px; }
+    .rung { display:grid; grid-template-columns:118px 1fr 232px; gap:10px; align-items:stretch;
+            background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius-lg); overflow:hidden; }
+    .rung .lv { background:var(--cti-primary-light,#fef3c7); color:var(--cti-primary-dark,#d97706);
+                font-weight:800; font-size:12.5px; padding:10px 12px; display:flex; flex-direction:column; justify-content:center; }
+    .rung .lv small { display:block; font-weight:700; color:var(--gray-600); font-size:11px; margin-top:3px; }
+    .rung .what { padding:10px 4px 10px 0; font-size:13.5px; }
+    .rung .what .serves { display:block; color:var(--gray-600); font-size:12px; margin-top:4px; }
+    .rung .today { padding:10px 12px; font-size:12.5px; background:#fafaf9; border-left:1px solid var(--gray-200); }
+    .rung.found .lv { background:#e8eef4; color:#153857; }
+    .rung.loopr .lv { background:#ccfbf1; color:#0f766e; }
+    .has { color:#047857; font-weight:700; } .gap { color:#b91c1c; font-weight:700; }
+    .deprail { font-size:12px; color:var(--gray-600); text-align:center; margin:2px 0; }
+    @media (max-width:720px){
+      .phase { grid-template-columns:1fr; } .rung { grid-template-columns:1fr; }
+      .rung .today { border-left:none; border-top:1px solid var(--gray-200); }
+    }
   </style>
 </head>
 <body>
@@ -96,6 +130,7 @@
       <button class="tabbtn" data-for="run">What we run</button>
       <button class="tabbtn" data-for="measure">How we measure &amp; learn</button>
       <button class="tabbtn" data-for="part">Your part</button>
+      <button class="tabbtn" data-for="build">How we build a course</button>
     </div>
   </div>
 
@@ -353,8 +388,159 @@
     </div>
   </section>
 
+
+  <!-- ============ TAB 5: HOW WE BUILD A COURSE ============ -->
+  <section data-tab="build">
+    <div class="draft">
+      <strong>Draft — 1 August 2026.</strong> The course-development process and the skill system underneath it. Two things are settled: <strong>one skill file per scale</strong> (not one per verb), and <strong>each level depends on the level below it</strong>. Everything else here is a proposal for the team to correct.
+    </div>
+
+    <div class="mission">
+      <strong>What this is for:</strong> building a course currently takes longer than the calendar allows, and each one starts close to scratch. The target is <strong>about 75% of a course built in a week</strong>, then iterated with students already in it. That only works if the design method is written down, the repeatable parts are handed to AI, and a person sits at the gates where drift does the most damage.
+    </div>
+
+    <h2>The process — eleven steps, two human gates, one loop</h2>
+    <p class="sub">Colour shows who is driving: <span class="key frame">frame &amp; check</span> <span class="key ai">AI drafts</span> <span class="key gate">you edit, by hand</span> <span class="key loop">the weekly loop</span>. Open any step for what actually happens in it.</p>
+
+    <div class="phase">
+      <div class="plabel">1 · Frame</div>
+      <div class="prow">
+        <div class="pstep frame"><span class="n">Step 1 — Experiment design</span> Work the EDFG first: the core question, two to four hypotheses, and the criteria that would prove each one wrong.
+          <details><summary>more</summary><p>Sections 3–4 name the measures and the data sources. Nothing downstream is trustworthy if this is skipped — the alignment checks at steps 7 and 10 have nothing to check against.</p></details>
+        </div>
+        <div class="pstep frame"><span class="n">Step 2 — Nurture-track qualities</span> Name the qualities this course is trying to develop, and how each would show up in student work.
+          <details><summary>more</summary><p>Closely tied to the EDFG rather than separate from it. Note that the qualities framework is itself still moving, so this step is currently a judgement call rather than a lookup.</p></details>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="plabel">2 · Shape</div>
+      <div class="prow">
+        <div class="pstep frame"><span class="n">Step 3 — Course Gantt</span> Lay the weeks out end to end, in the shape used for CST499.
+          <details><summary>more</summary><p>This is the skeleton: what runs when, what has to be finished before what, and where the fixed dates sit — census, breaks, the last week that can carry new material.</p></details>
+        </div>
+        <div class="pstep frame"><span class="n">Step 4 — Sprints, weeks, goals, activities</span> Fill the skeleton with sprints, weeks, learning goals and activities. Every activity is one of <strong>two types</strong>: completion credit only, or completion credit plus an interview.
+          <details><summary>more</summary><p>Two types rather than many is what makes the rest tractable — the grading model, the workload estimate and the Canvas build all follow from which type each activity is.</p></details>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="plabel">3 · Front door</div>
+      <div class="prow">
+        <div class="pstep ai"><span class="n">Step 5 — Home page, drafted by chat</span> Build the course home page by working it out in conversation with AI.
+          <details><summary>more</summary><p>The home page comes first because it is where the whole course has to make sense to a student in one screen. If it cannot be written clearly, the design underneath it is not finished.</p></details>
+        </div>
+        <div class="pstep gate"><span class="n">Step 6 — Gate: publish as a doc, edit it directly</span> The draft is published as a document you can edit by hand, and you revise it until you are comfortable with it.
+          <details><summary>more</summary><p>This is the first of two human gates. Chat is good at producing a draft and bad at knowing when to stop; direct editing is where voice, judgement and the things only you know get put back in.</p></details>
+        </div>
+        <div class="pstep frame"><span class="n">Step 7 — Check: EDFG and metrics</span> Read the built page back against the EDFG, and confirm the right things are being tracked.
+          <details><summary>more</summary><p>Two questions, not one: does what got built still serve the hypotheses, and will the data actually be captured when students move through it?</p></details>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="plabel">4 · Body</div>
+      <div class="prow">
+        <div class="pstep ai"><span class="n">Step 8 — Sprints, one at a time, by chat</span> Build the sprints in conversation with AI, one sprint per pass rather than all at once.
+          <details><summary>more</summary><p>One at a time keeps each sprint reviewable and keeps the course shippable at any point — the first sprints can be live while the later ones are still being built.</p></details>
+        </div>
+        <div class="pstep gate"><span class="n">Step 9 — Gate: publish as a doc, edit it directly</span> Same gate as step 6, applied to each sprint.
+          <details><summary>more</summary><p>The second gate matters more than the first, because sprint content is where the volume is and where unreviewed AI drafting accumulates fastest.</p></details>
+        </div>
+        <div class="pstep frame"><span class="n">Step 10 — Check: EDFG and metrics</span> Alignment and measurement check again, now against the built sprints.
+          <details><summary>more</summary><p>Same two questions as step 7. Running it twice is deliberate: the front door and the body drift apart if only one of them is checked.</p></details>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="plabel">5 · Run</div>
+      <div class="prow">
+        <div class="pstep loop"><span class="n">Step 11 — Weekly iteration</span> Every week the course is running, read what students actually submitted and what the metrics say, and change the design from it.
+          <details><summary>more</summary><p>This is the step that makes the other ten worth doing, and it is the one with the least method behind it today. It is not the same as grading: grading judges the student, this judges the design. What it produces is a specific change to a later sprint, made while there is still time to make it.</p></details>
+        </div>
+      </div>
+    </div>
+    <div class="loopback">⟲ <strong>The loop:</strong> step 11 feeds back into step 8 every week while the course runs, and back into step 1 at the end of the term, where the EDFG hypotheses are assessed against the criteria set before launch.</div>
+
+    <h2>The skills underneath — seven levels, each standing on the one below</h2>
+    <p class="sub">Read bottom to top. Each level takes the level below as its input, which is the whole reason the ladder is a ladder. The right-hand column is what exists today.</p>
+
+    <div class="ladder">
+      <div class="rung found"><div class="lv">Level 0<small>How to write these</small></div>
+        <div class="what">What a course-design skill should look like — shape, trigger wording, what earns its place, how it gets tested.
+          <span class="serves">Governs every level above it.</span></div>
+        <div class="today"><span class="has">Largely exists.</span> Anthropic ships <em>skill-creator</em>, which also carries the evaluation harness. What we would add is the CTI-specific part, not the general part.</div>
+      </div>
+
+      <div class="rung found"><div class="lv">Level 1<small>Writing</small></div>
+        <div class="what">Plain, direct, action-oriented writing that says why — plus making a thing measurable.
+          <span class="serves">Serves every step that produces text.</span></div>
+        <div class="today"><span class="has">Partly exists.</span> <em>reviewing-course-text</em> covers the cutting-and-tightening half. The measurable half is not written.</div>
+      </div>
+
+      <div class="rung"><div class="lv">Level 2<small>Components</small></div>
+        <div class="what">The pieces themselves: learning goals, assignments, discussions, activities.
+          <span class="serves">Serves steps 4, 5 and 8.</span></div>
+        <div class="today"><span class="has">Best covered level.</span> <em>writing-learning-goals</em> and <em>dojo-design</em>. Assignments and discussions have no skill.</div>
+      </div>
+
+      <div class="rung"><div class="lv">Level 3<small>Module</small></div>
+        <div class="what">Designing a module, implementing it, and making sure it flows — one file, three sections.
+          <span class="serves">Serves step 8.</span></div>
+        <div class="today"><span class="has">Build half exists.</span> <em>updating-canvas</em> and <em>slides</em> cover implementation. The design and flow halves are not written.</div>
+      </div>
+
+      <div class="rung"><div class="lv">Level 4<small>Sprint</small></div>
+        <div class="what">Designing a sprint by combining modules, implementing it, and making sure the sprint flows.
+          <span class="serves">Serves steps 4 and 8.</span></div>
+        <div class="today"><span class="gap">Nothing exists.</span></div>
+      </div>
+
+      <div class="rung"><div class="lv">Level 5<small>Course</small></div>
+        <div class="what">Designing the course by combining sprints, implementing it, and making sure the course flows.
+          <span class="serves">Serves steps 3 and 5.</span></div>
+        <div class="today"><span class="gap">Nothing exists as a skill.</span> The method itself is written down, in the four-layer lock record used for CST286 and CST349.</div>
+      </div>
+
+      <div class="rung loopr"><div class="lv">Level 6<small>The loop</small></div>
+        <div class="what">EDFG alignment, weekly grading and assessment, iteration, and deciding what to track.
+          <span class="serves">Serves steps 1, 7, 10 and 11.</span></div>
+        <div class="today"><span class="has">Assess half exists</span> — <em>evaluating-submissions</em>. <span class="gap">The iterate half does not.</span> Nothing today takes what students submitted back into the design.</div>
+      </div>
+    </div>
+    <p class="deprail">↑ each level is built from the level below it · ↓ each level is only as good as its foundation</p>
+
+    <h2>What every one of these skills has to carry</h2>
+    <div class="check">
+      <ul>
+        <li><strong>A closing checklist, but only of things that can be checked by looking.</strong> "Every activity page names its EDFG hypothesis" or "every module has one activity of each of the two types" works, because the artifact can be inspected. "Did you write plainly?" does not, because the answer will always be yes. Published guidance splits on this: Anthropic still recommends validation steps inside a skill, while Trail of Bits now says end-of-prompt self-checks make output worse and the check belongs somewhere it runs automatically.</li>
+        <li><strong>The writing-quality checks belong to people, not to checklists.</strong> That is what the two publish-as-a-doc gates at steps 6 and 9 are for.</li>
+        <li><strong>A trigger that names a moment, not a level.</strong> Skills are chosen by matching a description against what is happening right now. The seven levels are the map for a person; they are not the filenames.</li>
+      </ul>
+    </div>
+
+    <h2>Settled, and still open</h2>
+    <div class="cards">
+      <div class="card"><h3>Settled</h3>
+        <p>One skill file per scale — module, sprint, course — with design, implementation and flow as sections inside each, rather than nine separate files whose descriptions would compete with each other.</p>
+        <p>Each level depends on the level below, and that dependency has to be visible in the skills themselves: a sprint skill assumes finished modules, a course skill assumes finished sprints.</p>
+        <p>Weekly iteration from student submissions and metrics is step 11 and closes the loop — not an addendum.</p>
+      </div>
+      <div class="card"><h3>Still open</h3>
+        <p>The design direction and the build direction are reverses of each other. The process runs top-down, from the experiment design to the activity; the ladder composes bottom-up, from components to the course. Only one of those is drawn here.</p>
+        <p>Reuse across courses — what CST286, CST349 and CST499 share versus what belongs to one course — is not represented yet.</p>
+        <p>The translation pass from internal working language into student-facing language is a gate in the existing method and is missing from the eleven steps.</p>
+        <p>Which parts of this are skills, which are templates, and which are scripts. The Gantt and the publish-as-a-doc step look more like tooling than like skills.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    Last updated: <strong>2026-07-14</strong> · Refresh cadence: monthly. The foundational questions are the three claims in the team repo (<code>vision/cti-2.0-claims.md</code>), phrased as questions. Live detail always lives in the team repo — STATE.md, experiments/, vision/, methodology/ — and with Athena. If this page disagrees with the repo, the repo wins; tell Sathya or Athena so this page gets fixed.
+    Last updated: <strong>2026-08-01</strong> · Refresh cadence: monthly. The foundational questions are the three claims in the team repo (<code>vision/cti-2.0-claims.md</code>), phrased as questions. Live detail always lives in the team repo — STATE.md, experiments/, vision/, methodology/ — and with Athena. If this page disagrees with the repo, the repo wins; tell Sathya or Athena so this page gets fixed.
   </footer>
 </div>
 
