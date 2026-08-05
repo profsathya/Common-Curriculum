@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <details class="bigpic" id="big-picture">
+            <details class="bigpic" id="big-picture" open>
                 <summary>
                     <div class="bigpic-head">
                         <span class="plus"></span>
@@ -246,7 +246,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-1">
+            <details class="module" id="sprint-1" open>
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 1 &middot; Know yourself, know the market, propose your project</span>
@@ -362,7 +362,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-2">
+            <details class="module" id="sprint-2" open>
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 2 &middot; Build the first portfolio piece</span>
@@ -477,7 +477,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-3">
+            <details class="module" id="sprint-3" open>
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 3 &middot; Improve and finish the portfolio work</span>
@@ -595,7 +595,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-4">
+            <details class="module" id="sprint-4" open>
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 4 &middot; Run your job search</span>
@@ -679,7 +679,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-5">
+            <details class="module" id="sprint-5" open>
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 5 &middot; Wrap up, defend, and request referrals</span>
@@ -820,5 +820,20 @@
   }
 })();
 </script>
-    </body>
+    <script>
+/* Editor-friendly accordions: the markup ships with every section open so a
+   visual editor (Pinegrow) can show and edit all of them. In a running
+   browser, this collapses everything except Start Here, Sprint 0, and any
+   section the URL's #hash points at - the same view students had before. */
+(function () {
+  var keep = { 'start-here': 1, 'sprint-0': 1 };
+  var h = location.hash.replace('#', '');
+  if (h) { keep[h] = 1; }
+  var all = document.querySelectorAll('details.module, details.bigpic');
+  for (var i = 0; i < all.length; i++) {
+    if (!keep[all[i].id]) { all[i].removeAttribute('open'); }
+  }
+})();
+</script>
+</body>
 </html>
