@@ -228,11 +228,36 @@ def load_config():
         return json.load(fh)
 
 
+def discover_pages(course_dir):
+    """Every .html under the course folder, relative to it, top level first."""
+    found = []
+    for root, dirs, files in os.walk(course_dir):
+        dirs[:] = sorted(d for d in dirs if not d.startswith("."))
+        rel_dir = os.path.relpath(root, course_dir)
+        rel_dir = "" if rel_dir == "." else rel_dir
+        for name in sorted(files):
+            if name.endswith(".html") and not name.startswith("."):
+                found.append(os.path.join(rel_dir, name) if rel_dir else name)
+    # Top-level pages first, then subfolders alphabetically.
+    return sorted(found, key=lambda p: (p.count(os.sep), os.path.dirname(p), p))
+
+
 def ordered_pages(course_dir, explicit_order):
-    on_disk = sorted(f for f in os.listdir(course_dir) if f.endswith(".html"))
+    on_disk = discover_pages(course_dir)
     ordered = [f for f in explicit_order if f in on_disk]
     ordered += [f for f in on_disk if f not in ordered]
     return ordered
+
+
+def is_skipped(rel_path, skip):
+    """A skip entry matches a full path, a bare filename, or a folder prefix."""
+    name = os.path.basename(rel_path)
+    for entry in skip:
+        if entry in (rel_path, name):
+            return True
+        if entry.endswith("/") and rel_path.startswith(entry):
+            return True
+    return False
 
 
 def build(course_key, config):
@@ -246,15 +271,23 @@ def build(course_key, config):
 
     converter = PageConverter()
     pages = []
-    for filename in ordered_pages(course_dir, course.get("order", [])):
-        if filename in set(course.get("skip", [])):
+    titles = course.get("titles", {})
+    skip = course.get("skip", [])
+    for rel_path in ordered_pages(course_dir, course.get("order", [])):
+        if is_skipped(rel_path, skip):
             continue
-        content = converter.convert(os.path.join(course_dir, filename))
+        content = converter.convert(os.path.join(course_dir, rel_path))
         if not content.strip():
             continue
+        name = os.path.basename(rel_path)
+        title = titles.get(rel_path) or titles.get(name)
+        if not title:
+            stem = name[:-5].replace("-", " ").replace("_", " ").strip()
+            folder = os.path.dirname(rel_path)
+            title = f"{folder} · {stem}" if folder else stem
         pages.append({
-            "path": f"{course_key}/{filename}",
-            "title": course.get("titles", {}).get(filename, filename.replace(".html", "")),
+            "path": f"{course_key}/{rel_path}",
+            "title": title,
             "content": content,
         })
 

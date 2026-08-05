@@ -14,10 +14,12 @@ config gives it its own.
    `.github/workflows/sync-course-docs.yml`.
 2. The workflow works out which course folders actually changed and syncs only
    those. A change to the builder or the config re-syncs every course.
-3. `scripts/build_course_context.py <course>` reads that folder's pages, strips
-   the interactive scaffolding — tooltips, icons, accordions, navigation — and
+3. `scripts/build_course_context.py <course>` reads every `.html` under that
+   folder — including subfolders like `assignments/` and `sessions/` — strips
+   the interactive scaffolding (tooltips, icons, accordions, navigation), and
    emits a JSON payload. Tooltip definitions are pulled out and collected once
-   in a glossary at the end.
+   in a glossary at the end. Top-level pages come first, then subfolders
+   alphabetically.
 4. The workflow adds the shared token and POSTs the payload to a Google Apps
    Script web app.
 5. The Apps Script clears that course's doc and rebuilds it.
@@ -65,8 +67,16 @@ In **Settings → Secrets and variables → Actions**:
 ### 4. Add a course
 
 Add an entry to `config/course-docs.json`, and its doc ID to `COURSE_DOC_IDS`
-in Apps Script. `order` is optional: pages you do not list are appended
-alphabetically, so a new page never breaks the sync. `skip` drops a page.
+in Apps Script. `order` is optional: pages you do not list are appended after
+the ones you did, so a new page never breaks the sync.
+
+`skip` takes a full relative path (`assignments/draft.html`), a bare filename
+(`draft.html`), or a folder prefix with a trailing slash (`archive/`) to drop a
+whole subfolder.
+
+`titles` keys on either the relative path or the bare filename. Anything
+untitled gets a readable one derived from its path, e.g. `assignments/s1-w2-five-whys.html`
+becomes "assignments · s1 w2 five whys".
 
 ## Running it by hand
 
