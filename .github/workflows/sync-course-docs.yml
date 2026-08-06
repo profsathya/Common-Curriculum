@@ -89,13 +89,14 @@ jobs:
             exit 1
           fi
 
-          failed=0
-          for course in $(python -c 'import json,os; print(" ".join(json.loads(os.environ["COURSES"])))'); do
-            echo "::group::$course"
+          # The Apps Script endpoint handles one request at a time. A large
+          # course can still be writing when the next request arrives, and
+          # Google answers 404 rather than queueing it. So: pause between
+          # courses, and retry a course that comes back unhappy.
+          COOLDOWN=20
+          ATTEMPTS=3
 
-            python3 scripts/build_course_context.py "$course" --output "payload-$course.json"
-
-            python - "$course" <<'PY'
+          cat > sign_payload.py <<'PY'
           import json, os, sys
           course = sys.argv[1]
           with open(f"payload-{course}.json", encoding="utf-8") as fh:
@@ -105,36 +106,60 @@ jobs:
               json.dump(payload, fh, ensure_ascii=False, separators=(",", ":"))
           PY
 
-            code="$(curl --silent --show-error --location \
-              --output "response-$course.json" \
-              --write-out "%{http_code}" \
-              --header "Content-Type: application/json" \
-              --data @"request-$course.json" \
-              "$COURSE_DOC_SYNC_URL")"
-            rm -f "request-$course.json"
-
-            if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
-              echo "::error::$course — Apps Script returned HTTP $code."
-              failed=1
-              echo "::endgroup::"
-              continue
-            fi
-
-            python - "$course" <<'PY' || failed=1
+          cat > check_response.py <<'PY'
           import json, sys
           course = sys.argv[1]
           try:
-              response = json.load(open(f"response-{course}.json", encoding="utf-8"))
-          except json.JSONDecodeError as exc:
-              print(f"::error::{course} — response was not JSON: {exc}")
+              with open(f"response-{course}.json", encoding="utf-8") as fh:
+                  response = json.load(fh)
+          except (OSError, json.JSONDecodeError) as exc:
+              print(f"  response was not JSON: {exc}")
               sys.exit(1)
           if response.get("ok") is not True:
               safe = {k: v for k, v in response.items() if k.lower() not in {"token", "secret"}}
-              print(f"::error::{course} — sync failed: {json.dumps(safe)}")
+              print(f"  endpoint rejected the payload: {json.dumps(safe)}")
               sys.exit(1)
-          print(f"{course}: {response.get('page_count')} pages -> {response.get('document_id')}")
+          print(f"  {course}: {response.get('page_count')} pages -> {response.get('document_id')}")
           PY
 
+          failed=0
+          first=1
+          for course in $(python -c 'import json,os; print(" ".join(json.loads(os.environ["COURSES"])))'); do
+            echo "::group::$course"
+
+            if [ "$first" -eq 0 ]; then
+              echo "  waiting ${COOLDOWN}s so the previous write can finish"
+              sleep "$COOLDOWN"
+            fi
+            first=0
+
+            python3 scripts/build_course_context.py "$course" --output "payload-$course.json"
+            python3 sign_payload.py "$course"
+
+            synced=0
+            for attempt in $(seq 1 "$ATTEMPTS"); do
+              code="$(curl --silent --show-error --location \
+                --output "response-$course.json" \
+                --write-out "%{http_code}" \
+                --header "Content-Type: application/json" \
+                --data @"request-$course.json" \
+                "$COURSE_DOC_SYNC_URL" || echo 000)"
+
+              if [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && python3 check_response.py "$course"; then
+                synced=1
+                break
+              fi
+
+              if [ "$attempt" -lt "$ATTEMPTS" ]; then
+                echo "  attempt $attempt returned HTTP $code — retrying in ${COOLDOWN}s"
+                sleep "$COOLDOWN"
+              else
+                echo "::error::$course — still failing after $ATTEMPTS attempts (last HTTP $code)."
+              fi
+            done
+
+            rm -f "request-$course.json"
+            [ "$synced" -eq 1 ] || failed=1
             echo "::endgroup::"
           done
 
