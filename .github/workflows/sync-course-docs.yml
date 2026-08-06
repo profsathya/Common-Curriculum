@@ -1,13 +1,16 @@
 name: Sync course context docs
 
-# Rebuilds one Google Doc per course whenever that course's pages change.
-# Only the courses that actually changed in the push get synced.
+# Each course doc has two tabs, Course and Dojo, written independently.
+# A push syncs only the tabs whose source actually changed: editing a course
+# page rewrites that course's Course tab, and editing a dojo file rewrites the
+# Dojo tab in every course doc.
 
 on:
   push:
     branches: [main]
     paths:
       - "*/**.html"
+      - "career-intelligence/resources/dojo-*.txt"
       - "config/course-docs.json"
       - "scripts/build_course_context.py"
       - ".github/workflows/sync-course-docs.yml"
@@ -17,6 +20,12 @@ on:
         description: "Course folder to sync (blank = every configured course)"
         required: false
         default: ""
+      section:
+        description: "Which tab to sync"
+        required: false
+        default: "all"
+        type: choice
+        options: ["all", "course", "dojo"]
 
 permissions:
   contents: read
@@ -40,43 +49,70 @@ jobs:
       - name: Install dependencies
         run: pip install beautifulsoup4
 
-      - name: Work out which courses to sync
-        id: courses
+      - name: Work out which tabs to sync
+        id: jobs
         env:
           MANUAL_COURSE: ${{ github.event.inputs.course }}
+          MANUAL_SECTION: ${{ github.event.inputs.section }}
         run: |
           set -euo pipefail
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import json, os, subprocess
 
           with open("config/course-docs.json", encoding="utf-8") as fh:
-              configured = set(json.load(fh)["courses"])
+              config = json.load(fh)
+          configured = sorted(config["courses"])
+          dojo_dir = config["dojo"]["source_dir"]
 
-          manual = (os.environ.get("MANUAL_COURSE") or "").strip()
-          if manual:
-              selected = sorted(configured & {manual})
-          elif os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
-              selected = sorted(configured)
+          manual_course = (os.environ.get("MANUAL_COURSE") or "").strip()
+          manual_section = (os.environ.get("MANUAL_SECTION") or "all").strip() or "all"
+          dispatched = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+
+          jobs = []
+          if dispatched:
+              courses = [manual_course] if manual_course else configured
+              courses = [c for c in courses if c in configured]
+              sections = ["course", "dojo"] if manual_section == "all" else [manual_section]
+              jobs = [(c, s) for c in courses for s in sections]
           else:
               diff = subprocess.run(
                   ["git", "diff", "--name-only", "HEAD^", "HEAD"],
                   capture_output=True, text=True, check=False,
               ).stdout.split()
-              touched = {p.split("/")[0] for p in diff if "/" in p}
-              # A change to the builder or the config re-syncs everything.
-              infra = {"config/course-docs.json", "scripts/build_course_context.py"}
-              selected = sorted(configured) if infra & set(diff) else sorted(configured & touched)
 
-          print("list=" + json.dumps(selected))
-          print("count=" + str(len(selected)))
+              # A change to the builder or the config re-syncs both tabs everywhere.
+              infra = {"config/course-docs.json", "scripts/build_course_context.py"}
+              if infra & set(diff):
+                  jobs = [(c, s) for c in configured for s in ("course", "dojo")]
+              else:
+                  touched = {p.split("/")[0] for p in diff if "/" in p}
+                  for course in configured:
+                      if course in touched:
+                          jobs.append((course, "course"))
+                  # Any dojo file changing refreshes the Dojo tab in every doc.
+                  if any(p.startswith(dojo_dir + "/")
+                         and os.path.basename(p).startswith("dojo-")
+                         and p.endswith(".txt")
+                         for p in diff):
+                      jobs += [(c, "dojo") for c in configured]
+
+          # Deduplicate, keep a stable order.
+          seen, ordered = set(), []
+          for job in jobs:
+              if job not in seen:
+                  seen.add(job)
+                  ordered.append(job)
+
+          print("list=" + " ".join(f"{c}:{s}" for c, s in ordered))
+          print("count=" + str(len(ordered)))
           PY
 
-      - name: Sync each course
-        if: steps.courses.outputs.count != '0'
+      - name: Sync each tab
+        if: steps.jobs.outputs.count != '0'
         env:
           COURSE_DOC_SYNC_URL: ${{ secrets.COURSE_DOC_SYNC_URL }}
           COURSE_DOC_SYNC_TOKEN: ${{ secrets.COURSE_DOC_SYNC_TOKEN }}
-          COURSES: ${{ steps.courses.outputs.list }}
+          JOBS: ${{ steps.jobs.outputs.list }}
         run: |
           set -euo pipefail
 
@@ -90,27 +126,27 @@ jobs:
           fi
 
           # The Apps Script endpoint handles one request at a time. A large
-          # course can still be writing when the next request arrives, and
+          # write can still be running when the next request arrives, and
           # Google answers 404 rather than queueing it. So: pause between
-          # courses, and retry a course that comes back unhappy.
+          # requests, and retry one that comes back unhappy.
           COOLDOWN=20
           ATTEMPTS=3
 
           cat > sign_payload.py <<'PY'
           import json, os, sys
-          course = sys.argv[1]
-          with open(f"payload-{course}.json", encoding="utf-8") as fh:
+          stem = sys.argv[1]
+          with open(f"payload-{stem}.json", encoding="utf-8") as fh:
               payload = json.load(fh)
           payload["token"] = os.environ["COURSE_DOC_SYNC_TOKEN"]
-          with open(f"request-{course}.json", "w", encoding="utf-8") as fh:
+          with open(f"request-{stem}.json", "w", encoding="utf-8") as fh:
               json.dump(payload, fh, ensure_ascii=False, separators=(",", ":"))
           PY
 
           cat > check_response.py <<'PY'
           import json, sys
-          course = sys.argv[1]
+          stem = sys.argv[1]
           try:
-              with open(f"response-{course}.json", encoding="utf-8") as fh:
+              with open(f"response-{stem}.json", encoding="utf-8") as fh:
                   response = json.load(fh)
           except (OSError, json.JSONDecodeError) as exc:
               print(f"  response was not JSON: {exc}")
@@ -119,13 +155,17 @@ jobs:
               safe = {k: v for k, v in response.items() if k.lower() not in {"token", "secret"}}
               print(f"  endpoint rejected the payload: {json.dumps(safe)}")
               sys.exit(1)
-          print(f"  {course}: {response.get('page_count')} pages -> {response.get('document_id')}")
+          tabs = ", ".join(response.get("tabs_written") or [])
+          print(f"  {stem}: wrote tab(s) {tabs} — {response.get('page_count')} pages -> {response.get('document_id')}")
           PY
 
           failed=0
           first=1
-          for course in $(python -c 'import json,os; print(" ".join(json.loads(os.environ["COURSES"])))'); do
-            echo "::group::$course"
+          for job in $JOBS; do
+            course="${job%%:*}"
+            section="${job##*:}"
+            stem="$course-$section"
+            echo "::group::$course — $section tab"
 
             if [ "$first" -eq 0 ]; then
               echo "  waiting ${COOLDOWN}s so the previous write can finish"
@@ -133,19 +173,19 @@ jobs:
             fi
             first=0
 
-            python3 scripts/build_course_context.py "$course" --output "payload-$course.json"
-            python3 sign_payload.py "$course"
+            python3 scripts/build_course_context.py "$course" --section "$section" --output "payload-$stem.json"
+            python3 sign_payload.py "$stem"
 
             synced=0
             for attempt in $(seq 1 "$ATTEMPTS"); do
               code="$(curl --silent --show-error --location \
-                --output "response-$course.json" \
+                --output "response-$stem.json" \
                 --write-out "%{http_code}" \
                 --header "Content-Type: application/json" \
-                --data @"request-$course.json" \
+                --data @"request-$stem.json" \
                 "$COURSE_DOC_SYNC_URL" || echo 000)"
 
-              if [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && python3 check_response.py "$course"; then
+              if [ "$code" -ge 200 ] && [ "$code" -lt 300 ] && python3 check_response.py "$stem"; then
                 synced=1
                 break
               fi
@@ -154,11 +194,11 @@ jobs:
                 echo "  attempt $attempt returned HTTP $code — retrying in ${COOLDOWN}s"
                 sleep "$COOLDOWN"
               else
-                echo "::error::$course — still failing after $ATTEMPTS attempts (last HTTP $code)."
+                echo "::error::$stem — still failing after $ATTEMPTS attempts (last HTTP $code)."
               fi
             done
 
-            rm -f "request-$course.json"
+            rm -f "request-$stem.json"
             [ "$synced" -eq 1 ] || failed=1
             echo "::endgroup::"
           done
