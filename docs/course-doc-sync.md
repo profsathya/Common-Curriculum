@@ -44,8 +44,8 @@ config catches up.
    folder — including subfolders like `assignments/` and `sessions/` — strips
    the interactive scaffolding (tooltips, icons, accordions, navigation), and
    pulls tooltip definitions into a glossary at the end. For the Dojo tab it
-   reads the `dojo-*.txt` files, using each file's first line as its heading so
-   the version shows in the doc.
+   reads the `dojo-*.txt` files in `common/dojo/`, using each file's first line as
+   its heading so the version shows in the doc.
 4. The workflow adds the shared token and POSTs the payload to a Google Apps
    Script web app.
 5. The Apps Script clears **only the tabs named in the payload** and rebuilds
@@ -110,7 +110,7 @@ becomes "assignments · s1 w2 five whys".
 
 ### 5. Add a dojo module
 
-Drop a new `dojo-*.txt` into `career-intelligence/resources/`. Nothing else is
+Drop a new `dojo-*.txt` into `common/dojo/`. Nothing else is
 required — no new tab, and no config change unless you want it in a particular
 position, in which case add the filename to `dojo.order`. Files not listed there
 are appended alphabetically after the ones that are.
@@ -118,6 +118,16 @@ are appended alphabetically after the ones that are.
 The first non-blank line of each file becomes its heading in the doc, so keep
 carrying the version there (`RESUME DOJO - module (v1.2.1, ...)`). Lines of the
 form `== Section ==` become subheadings.
+
+Then rebuild the PDF students download, so it never lags the text version:
+
+```bash
+python3 scripts/build_dojo_pdfs.py          # all of them
+python3 scripts/build_dojo_pdfs.py dojo-core
+```
+
+Finally, add the module to `common/dojo/dojo-library.html` so it appears on the
+library page.
 
 ## Running it by hand
 
@@ -151,8 +161,8 @@ Google Docs or fix the title in `config/course-docs.json`.
 apart. Redeploy the web app if you changed deployment settings.
 
 **Nothing happened on push** — the workflow fires on `<course>/*.html` and on
-`career-intelligence/resources/dojo-*.txt`. Use the manual trigger, or check
-whether the folder is in the config.
+`common/dojo/dojo-*.txt`. Use the manual trigger, or check whether the folder is
+in the config.
 
 **The Dojo tab did not update** — dojo files only match if they are named
 `dojo-<something>.txt` and sit in the folder named by `dojo.source_dir`.
