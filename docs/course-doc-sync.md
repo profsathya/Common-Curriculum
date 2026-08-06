@@ -8,25 +8,52 @@ about their own work.
 One folder, one doc. `cst499/` syncs to the CST499 doc; adding `cst286/` to the
 config gives it its own.
 
+## Two tabs
+
+Each doc has two tabs, and they sync independently:
+
+| Tab | Holds | Rewritten when |
+| --- | --- | --- |
+| **Course** | that course's pages | one of that course's pages changes |
+| **Dojo** | the Dojo Core plus every module | any `dojo-*.txt` changes |
+
+The Dojo tab is identical in all three docs. That is the point of splitting
+them: editing `dojo-core.txt` refreshes the Dojo tab in every course doc
+without rebuilding a single page of course content, and editing a course page
+never touches the Dojo tab.
+
+Attaching the doc to an AI assistant picks up **both** tabs — the "Current tab
+only" default applies to the manual File → Download dialog, not to a tool
+reading the document.
+
+**Tabs cannot be created by script.** Google's API can write into a tab that
+exists but cannot make one. Add the two tabs by hand once per doc, and keep
+their titles matching the `tabs` block in `config/course-docs.json` — the sync
+finds them by title, so renaming a tab in Google Docs breaks that doc until the
+config catches up.
+
 ## How it works
 
-1. A push to `main` that touches `<course>/*.html` triggers
+1. A push to `main` that touches `<course>/*.html` or a `dojo-*.txt` triggers
    `.github/workflows/sync-course-docs.yml`.
-2. The workflow works out which course folders actually changed and syncs only
-   those. A change to the builder or the config re-syncs every course.
-3. `scripts/build_course_context.py <course>` reads every `.html` under that
+2. The workflow works out which *tabs* actually need rewriting — a course page
+   edit produces one job, a dojo edit produces one job per course. A change to
+   the builder or the config re-syncs both tabs everywhere.
+3. `scripts/build_course_context.py <course> --section <course|dojo|all>` builds
+   the payload. For the Course tab it reads every `.html` under the course
    folder — including subfolders like `assignments/` and `sessions/` — strips
    the interactive scaffolding (tooltips, icons, accordions, navigation), and
-   emits a JSON payload. Tooltip definitions are pulled out and collected once
-   in a glossary at the end. Top-level pages come first, then subfolders
-   alphabetically.
+   pulls tooltip definitions into a glossary at the end. For the Dojo tab it
+   reads the `dojo-*.txt` files, using each file's first line as its heading so
+   the version shows in the doc.
 4. The workflow adds the shared token and POSTs the payload to a Google Apps
    Script web app.
-5. The Apps Script clears that course's doc and rebuilds it.
+5. The Apps Script clears **only the tabs named in the payload** and rebuilds
+   them, leaving every other tab untouched.
 
-**The doc is downstream.** The HTML is the source of truth. Anything typed into
-the doc is gone at the next push. That is deliberate — it is what lets the doc
-stay current without anyone maintaining it.
+**The doc is downstream.** The repo is the source of truth. Anything typed into
+a synced tab is gone the next time that tab syncs. That is deliberate — it is
+what lets the doc stay current without anyone maintaining it.
 
 ## Setup
 
@@ -34,8 +61,11 @@ Four steps, and only the first three need doing once.
 
 ### 1. Create the docs
 
-One empty Google Doc per course. Note each document ID — the long string in the
-URL between `/d/` and `/edit`.
+One Google Doc per course. In each, open **View → Show tabs & outline** and make
+two tabs named exactly `Dojo` and `Course` — Dojo first, so an assistant reads
+how to behave before it reads the material.
+
+Note each document ID — the long string in the URL between `/d/` and `/edit`.
 
 Share each one **Anyone with the link · Viewer** so students can open it without
 individual permissions.
@@ -78,12 +108,24 @@ whole subfolder.
 untitled gets a readable one derived from its path, e.g. `assignments/s1-w2-five-whys.html`
 becomes "assignments · s1 w2 five whys".
 
+### 5. Add a dojo module
+
+Drop a new `dojo-*.txt` into `career-intelligence/resources/`. Nothing else is
+required — no new tab, and no config change unless you want it in a particular
+position, in which case add the filename to `dojo.order`. Files not listed there
+are appended alphabetically after the ones that are.
+
+The first non-blank line of each file becomes its heading in the doc, so keep
+carrying the version there (`RESUME DOJO - module (v1.2.1, ...)`). Lines of the
+form `== Section ==` become subheadings.
+
 ## Running it by hand
 
-Preview what a course doc will say, without touching Google:
+Preview what a tab will say, without touching Google:
 
 ```bash
-python3 scripts/build_course_context.py cst499 --dry-run
+python3 scripts/build_course_context.py cst499 --dry-run              # both tabs
+python3 scripts/build_course_context.py cst499 --section dojo --dry-run
 ```
 
 Write the payload to disk:
@@ -93,9 +135,14 @@ python3 scripts/build_course_context.py cst499 --output cst499-context.json
 ```
 
 Force a sync from GitHub: **Actions → Sync course context docs → Run workflow**.
-Leave the course blank to sync every configured course, or name one.
+Leave the course blank for every configured course, or name one; pick a section
+to sync just the Course or just the Dojo tab.
 
 ## Troubleshooting
+
+**`no tab titled 'Dojo'`** — that doc is missing the tab, or it has been
+renamed. Tabs are matched by title and cannot be created by script; add it in
+Google Docs or fix the title in `config/course-docs.json`.
 
 **`unknown_course`** — the course is in `config/course-docs.json` but not in the
 `COURSE_DOC_IDS` script property.
@@ -103,8 +150,12 @@ Leave the course blank to sync every configured course, or name one.
 **`invalid_token`** — the repository secret and the script property have drifted
 apart. Redeploy the web app if you changed deployment settings.
 
-**Nothing happened on push** — the workflow only fires on `<course>/*.html`. Use
-the manual trigger, or check whether the folder is in the config.
+**Nothing happened on push** — the workflow fires on `<course>/*.html` and on
+`career-intelligence/resources/dojo-*.txt`. Use the manual trigger, or check
+whether the folder is in the config.
+
+**The Dojo tab did not update** — dojo files only match if they are named
+`dojo-<something>.txt` and sit in the folder named by `dojo.source_dir`.
 
 **A page came out thin** — the builder understands the accordion layout used by
 the sprint pages and falls back to reading every text block for anything else.

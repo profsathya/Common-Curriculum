@@ -1,9 +1,17 @@
 /**
  * Common-Curriculum course doc sync.
  *
- * Receives one course's context payload from GitHub Actions and rebuilds that
- * course's Google Doc from scratch. One doc per course; the doc is downstream
- * of the repo and any edit made in it is lost on the next push.
+ * Receives one course's context payload from GitHub Actions and rewrites the
+ * named tabs of that course's Google Doc. Each doc has a Course tab and a Dojo
+ * tab; a payload carries one or both, and any tab it does not name is left
+ * completely alone. That is what lets a dojo edit refresh the Dojo tab in every
+ * course doc without rebuilding any course content.
+ *
+ * Tabs cannot be created by script — add them by hand once per doc, then keep
+ * their titles matching config/course-docs.json.
+ *
+ * The doc is downstream of the repo. Any edit made in a synced tab is lost the
+ * next time that tab syncs.
  *
  * Script properties this expects:
  *   COURSE_DOC_SYNC_TOKEN  shared secret, must match the GitHub secret
@@ -36,8 +44,12 @@ function doPost(e) {
   if (!payload.course) {
     return jsonResponse({ ok: false, error: "missing_course", message: "Payload must name a course." });
   }
-  if (!Array.isArray(payload.pages)) {
-    return jsonResponse({ ok: false, error: "invalid_payload", message: "Payload must include a pages array." });
+  if (!Array.isArray(payload.sections) || payload.sections.length === 0) {
+    return jsonResponse({
+      ok: false,
+      error: "invalid_payload",
+      message: "Payload must include a non-empty sections array."
+    });
   }
 
   var docId = lookupDocId(props, payload.course);
@@ -55,12 +67,13 @@ function doPost(e) {
   }
 
   try {
-    rebuildDocument(docId, payload);
+    var written = rebuildDocument(docId, payload);
     return jsonResponse({
       ok: true,
       course: payload.course,
       document_id: docId,
-      page_count: payload.pages.length,
+      tabs_written: written.tabs,
+      page_count: written.pages,
       updated_at: new Date().toISOString()
     });
   } catch (err) {
@@ -94,40 +107,84 @@ function parsePayload(e) {
   }
 }
 
+/**
+ * Collect the document's tabs by title, including nested ones, so a tab that
+ * gets dragged under another still resolves.
+ */
+function collectTabs(tabs, found) {
+  for (var i = 0; i < tabs.length; i++) {
+    var tab = tabs[i];
+    found[tab.getTitle()] = tab;
+    var children = tab.getChildTabs();
+    if (children && children.length) {
+      collectTabs(children, found);
+    }
+  }
+  return found;
+}
+
 function rebuildDocument(docId, payload) {
   var doc = DocumentApp.openById(docId);
-  var body = doc.getBody();
+  var tabsByTitle = collectTabs(doc.getTabs(), {});
+
+  // Resolve every tab before writing anything, so one bad title can't leave
+  // the document half-updated.
+  var targets = [];
+  for (var i = 0; i < payload.sections.length; i++) {
+    var section = payload.sections[i];
+    var tab = tabsByTitle[section.tab];
+    if (!tab) {
+      var available = Object.keys(tabsByTitle).join(", ") || "none";
+      throw new Error(
+        "This document has no tab titled '" + section.tab + "'. Tabs found: " + available +
+        ". Add the tab in Google Docs, or fix the title in config/course-docs.json."
+      );
+    }
+    targets.push({ section: section, tab: tab });
+  }
+
+  var titles = [];
+  var pages = 0;
+  for (var j = 0; j < targets.length; j++) {
+    writeSection(targets[j].tab.asDocumentTab().getBody(), targets[j].section, payload);
+    titles.push(targets[j].section.tab);
+    pages += (targets[j].section.pages || []).length;
+  }
+
+  doc.saveAndClose();
+  return { tabs: titles, pages: pages };
+}
+
+function writeSection(body, section, payload) {
   body.clear();
 
-  body.appendParagraph(payload.title || payload.course)
+  body.appendParagraph(section.heading || payload.title || payload.course)
     .setHeading(DocumentApp.ParagraphHeading.HEADING1);
 
-  if (payload.intro) {
-    body.appendParagraph(payload.intro).editAsText().setItalic(true);
+  if (section.intro) {
+    body.appendParagraph(section.intro).editAsText().setItalic(true);
   }
 
   body.appendParagraph("Last updated " + (payload.generated_at_pacific || "unknown") + " Pacific.")
     .editAsText().setItalic(true).setFontSize(9);
   body.appendParagraph("");
 
-  payload.pages.forEach(function (page) {
+  (section.pages || []).forEach(function (page) {
     body.appendParagraph(page.title || page.path)
       .setHeading(DocumentApp.ParagraphHeading.HEADING1);
     renderContent(body, page.content || "");
     body.appendParagraph("");
   });
 
-  if (Array.isArray(payload.glossary) && payload.glossary.length > 0) {
+  if (Array.isArray(section.glossary) && section.glossary.length > 0) {
     body.appendParagraph("Glossary")
       .setHeading(DocumentApp.ParagraphHeading.HEADING1);
-    payload.glossary.forEach(function (entry) {
+    section.glossary.forEach(function (entry) {
       body.appendParagraph(entry.term)
         .setHeading(DocumentApp.ParagraphHeading.HEADING3);
       body.appendParagraph(entry.definition || "");
     });
   }
-
-  doc.saveAndClose();
 }
 
 function renderContent(body, content) {

@@ -2,14 +2,22 @@
 """Build a plain-language context snapshot of one course folder.
 
 Reads the course's HTML pages, strips the interactive scaffolding (tooltips,
-icons, accordions), and emits a JSON payload the Apps Script endpoint turns
-into a single Google Doc — one doc per course.
+icons, accordions), and emits a JSON payload the Apps Script endpoint writes
+into one Google Doc per course.
+
+Each doc has two tabs, and each is written independently:
+
+  Course  the course pages
+  Dojo    the Dojo Core plus every module, from career-intelligence/resources
 
     python3 scripts/build_course_context.py cst499 --output cst499-context.json
-    python3 scripts/build_course_context.py cst499 --dry-run
+    python3 scripts/build_course_context.py cst499 --section dojo --dry-run
 
-The doc is downstream of the repo. The HTML is the source of truth; the doc is
-regenerated from scratch on every push and any edit made in it is lost.
+Building one section at a time is the point: editing a dojo file rewrites only
+the Dojo tab in each doc, and never touches the course content.
+
+The doc is downstream of the repo. The repo is the source of truth; each tab is
+regenerated from scratch when it syncs and any edit made in it is lost.
 """
 import argparse
 import json
@@ -260,11 +268,76 @@ def is_skipped(rel_path, skip):
     return False
 
 
-def build(course_key, config):
-    course = config["courses"].get(course_key)
-    if course is None:
-        sys.exit(f"'{course_key}' is not in config/course-docs.json")
+# ------------------------------------------------------------------ dojo
 
+def discover_dojo_files(dojo_dir, explicit_order):
+    """Every dojo-*.txt in the resources folder, listed order first."""
+    on_disk = sorted(
+        name for name in os.listdir(dojo_dir)
+        if name.startswith("dojo-") and name.endswith(".txt")
+    )
+    ordered = [f for f in explicit_order if f in on_disk]
+    ordered += [f for f in on_disk if f not in ordered]
+    return ordered
+
+
+def convert_dojo_file(path):
+    """First non-blank line becomes the heading; '== X ==' becomes a subhead.
+
+    The dojo files already carry their own version line at the top, so the
+    heading in the doc shows which version a student is looking at.
+    """
+    with open(path, encoding="utf-8") as fh:
+        raw = fh.read()
+
+    heading = ""
+    lines = []
+    for line in raw.split("\n"):
+        stripped = line.strip()
+        if not heading:
+            if stripped:
+                heading = stripped
+            continue
+        if not stripped:
+            continue
+        section = re.match(r"^==\s*(.+?)\s*==$", stripped)
+        lines.append(f"## {section.group(1)}" if section else stripped)
+
+    return heading, "\n".join(lines)
+
+
+def build_dojo_section(config):
+    dojo = config.get("dojo") or {}
+    dojo_dir = os.path.join(REPO_ROOT, dojo.get("source_dir", ""))
+    if not os.path.isdir(dojo_dir):
+        sys.exit(f"dojo folder not found: {dojo_dir}")
+
+    pages = []
+    for name in discover_dojo_files(dojo_dir, dojo.get("order", [])):
+        if name in dojo.get("skip", []):
+            continue
+        heading, content = convert_dojo_file(os.path.join(dojo_dir, name))
+        if not content.strip():
+            continue
+        pages.append({
+            "path": f"{dojo.get('source_dir', '')}/{name}",
+            "title": heading or name,
+            "content": content,
+        })
+
+    return {
+        "tab": config["tabs"]["dojo"],
+        "heading": dojo.get("heading", "The Dojo"),
+        "intro": dojo.get("intro", ""),
+        "pages": pages,
+        "glossary": [],
+    }
+
+
+# ---------------------------------------------------------------- payload
+
+def build_course_section(course_key, config):
+    course = config["courses"].get(course_key)
     course_dir = os.path.join(REPO_ROOT, course_key)
     if not os.path.isdir(course_dir):
         sys.exit(f"course folder not found: {course_dir}")
@@ -297,6 +370,26 @@ def build(course_key, config):
     ]
 
     return {
+        "tab": config["tabs"]["course"],
+        "heading": course.get("doc_title", f"{course_key.upper()} — course context"),
+        "intro": course.get("intro", ""),
+        "pages": pages,
+        "glossary": glossary,
+    }
+
+
+def build(course_key, config, sections=("course", "dojo")):
+    course = config["courses"].get(course_key)
+    if course is None:
+        sys.exit(f"'{course_key}' is not in config/course-docs.json")
+
+    built = []
+    if "course" in sections:
+        built.append(build_course_section(course_key, config))
+    if "dojo" in sections:
+        built.append(build_dojo_section(config))
+
+    return {
         "course": course_key,
         "title": course.get("doc_title", f"{course_key.upper()} — course context"),
         "generated_at_pacific": datetime.now(PACIFIC).isoformat(timespec="seconds"),
@@ -310,9 +403,7 @@ def build(course_key, config):
                 if os.environ.get("GITHUB_RUN_ID") else ""
             ),
         },
-        "intro": course.get("intro", ""),
-        "pages": pages,
-        "glossary": glossary,
+        "sections": built,
     }
 
 
@@ -321,30 +412,42 @@ def main():
     parser.add_argument("course", help="course folder name, e.g. cst499")
     parser.add_argument("--output", help="write the JSON payload here")
     parser.add_argument("--dry-run", action="store_true", help="print the text instead")
+    parser.add_argument(
+        "--section", choices=["course", "dojo", "all"], default="all",
+        help="which tab to build (default: both)",
+    )
     args = parser.parse_args()
 
-    payload = build(args.course, load_config())
+    wanted = ("course", "dojo") if args.section == "all" else (args.section,)
+    payload = build(args.course, load_config(), wanted)
 
     if args.dry_run:
         print(payload["title"])
         print(payload["generated_at_pacific"])
-        for page in payload["pages"]:
-            print("\n" + "=" * 70)
-            print(page["title"], f"({page['path']})")
-            print("=" * 70)
-            print(page["content"])
-        if payload["glossary"]:
-            print("\n" + "=" * 70 + "\nGlossary\n" + "=" * 70)
-            for entry in payload["glossary"]:
-                print(f"\n{entry['term']}\n{entry['definition']}")
+        for section in payload["sections"]:
+            print("\n" + "#" * 70)
+            print(f"TAB: {section['tab']} — {section['heading']}")
+            print("#" * 70)
+            for page in section["pages"]:
+                print("\n" + "=" * 70)
+                print(page["title"], f"({page['path']})")
+                print("=" * 70)
+                print(page["content"])
+            if section["glossary"]:
+                print("\n" + "=" * 70 + "\nGlossary\n" + "=" * 70)
+                for entry in section["glossary"]:
+                    print(f"\n{entry['term']}\n{entry['definition']}")
         return 0
 
     target = args.output or f"{args.course}-context.json"
     with open(target, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=1)
-    words = sum(len(p["content"].split()) for p in payload["pages"])
-    print(f"wrote {target}: {len(payload['pages'])} pages, "
-          f"{len(payload['glossary'])} glossary terms, ~{words} words")
+    summary = ", ".join(
+        f"{s['tab']}: {len(s['pages'])} pages / "
+        f"~{sum(len(p['content'].split()) for p in s['pages'])} words"
+        for s in payload["sections"]
+    )
+    print(f"wrote {target} — {summary}")
     return 0
 
 
