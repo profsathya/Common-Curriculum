@@ -4,7 +4,7 @@ The discipline files an AI assistant loads while helping design a CTI course. Th
 
 Each skill lives in its own subfolder as a `SKILL.md` with YAML frontmatter: a `name`, and a `description` written as the moment the skill should load. The body is self-contained.
 
-**Status (4 August 2026).** The folder starts small on purpose: this README plus the two design-level skills that exist and have been used in real course work. The scale skills below are named gaps. Each gets written the first time real work exercises it, so its content comes from use rather than from invention.
+**Status (8 August 2026).** The folder starts small on purpose: this README plus the three design-level skills that exist and have been used in real course work. The scale skills below are named gaps. Each gets written the first time real work exercises it, so its content comes from use rather than from invention — `writing-to-teach/` is the first skill grown this way, promoted 8 August 2026 after passing its first test on the CST499 home page.
 
 ## The process these skills serve
 
@@ -22,21 +22,22 @@ Read bottom to top; each level takes the one below as its input.
 | Level | Covers | Today |
 |---|---|---|
 | **L6 — The loop** | Weekly grading and assessment, and the iteration that follows from it | Assess half exists in the team repo (`evaluating-submissions`); the iterate half is a gap |
-| **L5 — Course** | Designing the course by combining sprints; implement, flow, alignment | Gap as a skill; the method exists as the four-layer lock record used for CST286 and CST349 |
+| **L5 — Course** | Designing the course by combining sprints; implement, flow, alignment | Gap as a skill; the method exists as the four-layer lock record used for CST286, CST349 and CST499 |
 | **L4 — Sprint** | Designing a sprint by combining modules; implement, flow, alignment | Gap — will be written from the first sprint built through the process |
 | **L3 — Module** | Designing, implementing, flowing and aligning one module | Design, flow and alignment are gaps; the build half exists in the team repo (`updating-canvas`, `slides`) |
 | **L2 — Components** | Learning goals, assignments, discussions, activities | **`writing-learning-goals/` — here.** `dojo-design` is in the team repo; assignments and discussions have no skill yet |
-| **L1 — Writing** | Plain, direct, action-oriented text that says why — and making things measurable | **`reviewing-course-text/` — here** (the cutting-and-tightening half); the measurable half is not written |
+| **L1 — Writing** | Plain, direct, action-oriented text that says why — and making things measurable | **`writing-to-teach/` — here** (the teaching half) · **`reviewing-course-text/` — here** (the cutting-and-tightening half); the measurable part is not written |
 | **L0 — How to write these** | What a course-design skill should look like | Largely exists: Anthropic's `skill-creator` plus the team repo's Authoring rules |
 
 ## Current skills
 
+- `writing-to-teach/` — how teaching text gets written in the first place: start from what the reader knows, has, and has attention for; reach all four engagement modes; keep teaching text and task text under their own rules; backbone visible, detours behind clicks. Triggers when drafting or revising any page that stands in for a lecture.
 - `writing-learning-goals/` — the per-goal writing discipline: a learning goal is one sentence stating what the student does and why it matters, in plain student-facing language with no internal jargon or forward references. Triggers when writing or reviewing any learning goal on an activity, module, slide, or self-check.
 - `reviewing-course-text/` — the final pass over any student-facing text before it reaches a live surface: map the message each sentence carries, cut what repeats across the stacked surfaces, drop sentences with no job, flip unnecessary negatives, and move each instruction to its point of action. Triggers at the end of any course-writing task.
 
 ## Adding a skill
 
-Write it against the Authoring rules in `cti-chief-of-staff/skills/README.md` — one authoritative source; this file points rather than duplicates. Keep the body self-contained, describe the trigger as a moment, and close with a checklist only of things checkable by looking at the artifact. Add a one-line entry to the list above.
+Write it against the Authoring rules in `cti-chief-of-staff/skills/README.md` — one authoritative source; this file points rather than duplicates. Keep the body self-contained, describe the trigger as a moment, and close with a checklist only of things checkable by looking. Add a one-line entry to the list above.
 
 ---
 
