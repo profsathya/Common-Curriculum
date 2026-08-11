@@ -69,3 +69,4 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
 
 - 2026-08-10 — file created. Framework: Sathya. Status calls and wording: Alan, for Sathya's review.
 - 2026-08-11 — nurture-track section added (throughout principle; both items not yet). — Alan
+- 2026-08-11 — FALL HOME PAGE: cst349/home.html replaced (spring page in git history). Built from the design doc v15 + the CST499 shell (one vocabulary: key item / checkpoint / live session; new Sprint Exam gloss). Student-facing names for S0-S4; shape ladder as through-line; how-this-works module inline (one assignment + one reflection weekly, 50/50, interviews, sprint exams, 10%/day, no mid-course retakes + end catch-up). Sprint pages + item links NOT built yet — no dead links (cards are non-links). At Sathya's direct-edit gate. — Alan

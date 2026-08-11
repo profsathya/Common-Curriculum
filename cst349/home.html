@@ -1,439 +1,580 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CST349 — Becoming a Self-Directed Learner</title>
-<style>
-:root{
---blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
---border:#C7CDD1; --border-light:#E8EAEC;
---modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
---check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
---teal:#0d9488; --teal-light:#f0fdfa;
---font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
-a{color:var(--blue);text-decoration:none;}
-a:hover{text-decoration:underline;color:var(--blue-dark);}
-
-.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
-
-.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:18px;}
-.course-header .eyebrow{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.7px;text-transform:uppercase;}
-.course-header h1{font-size:23px;font-weight:700;margin:3px 0 4px;}
-.course-header .sub{font-size:14px;color:var(--text);font-weight:600;}
-.course-header .lead{color:var(--muted);font-size:13px;max-width:660px;margin-top:6px;}
-.cti-logo{height:34px;width:auto;display:block;opacity:.9;}
-.cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
-
-/* Program arc */
-.arc{margin:0 0 22px;}
-.arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
-.arc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.arc-card{border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#FCFDFE;}
-.arc-card .s{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
-.arc-card .nm{font-size:14.5px;font-weight:700;margin:2px 0 1px;color:var(--text);}
-.arc-card .th{font-size:12px;color:var(--blue-dark);font-weight:600;}
-.arc-card .who{font-size:11.5px;color:var(--muted);margin-top:5px;}
-.arc-card .who b{color:var(--text);font-weight:600;}
-@media(max-width:720px){.arc-grid{grid-template-columns:repeat(2,1fr);}}
-
-.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
-details.module > summary{list-style:none;cursor:pointer;}
-details.module > summary::-webkit-details-marker{display:none;}
-.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;}
-details.module:not([open]) > .module-head{border-bottom:none;}
-.module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
-.module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
-.module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
-details.module[open] > .module-head .chev{transform:rotate(90deg);}
-.module-head:hover{background:#EFEFEF;}
-
-.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);padding:11px 14px;}
-.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
-.goal .text{font-size:14px;color:var(--text);}
-.goal ul{margin:4px 0 0;padding-left:18px;}
-.goal li{margin:1px 0;}
-.prereq{padding:8px 14px 4px;color:var(--muted);font-size:12.5px;display:flex;gap:7px;align-items:flex-start;border-bottom:1px solid var(--border-light);}
-.prereq svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
-.prereq b{color:var(--text);font-weight:600;}
-
-.items{padding:2px 0 4px;}
-.item{display:flex;gap:11px;padding:11px 14px 11px 26px;border-bottom:1px solid var(--border-light);align-items:flex-start;}
-.item:last-child{border-bottom:none;}
-.item .ico{flex:0 0 18px;margin-top:1px;color:var(--muted);}
-.item .ico svg{width:18px;height:18px;display:block;}
-.item .body{flex:1;min-width:0;}
-.item .title{font-size:14.5px;font-weight:600;}
-.item .meta{color:var(--muted);font-size:12px;margin-top:2px;}
-
-.group-label{padding:10px 14px 4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light);}
-
-.item.selfcheck{background:var(--check-bg);}
-.item.selfcheck .ico{color:var(--check);}
-.selfcheck .badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--check);border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
-.selfcheck .badge.optional{background:#7C8A93;}
-.selfcheck .verify{margin-top:5px;font-size:12.5px;color:#3d5346;display:flex;gap:6px;align-items:flex-start;}
-.selfcheck .verify svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
-
-.note{padding:9px 14px;background:#FBF6EC;border-bottom:1px solid var(--border-light);font-size:12.5px;color:#5e4a18;display:flex;gap:7px;align-items:flex-start;}
-.note svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
-
-.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
-.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
-.instructor .links{font-size:12.5px;color:var(--muted);}
-
-.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
-.page-footer img{height:20px;opacity:.55;}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CST349 &mdash; Learn to Direct Your Own Growth</title>
+        <style>:root { --blue: #0374B5; --blue-dark: #0a5a8a; --text: #2D3B45; --muted: #6B7780; --border: #C7CDD1; --border-light: #E8EAEC; --modhead: #F5F5F5; --goal-bg: #F3F8FB; --goal-border: #0374B5; --check-bg: #F2FAF5; --check-border: #0B874B; --check: #0B874B; --warn: #9B6A00; --teal: #0d9488; --teal-light: #f0fdfa; --font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; } * { box-sizing: border-box; } html, body { margin: 0; padding: 0; } body { font-family: var(--font); color: var(--text); background: #fff; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; } a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; color: var(--blue-dark); } .page { max-width: 1040px; margin: 0 auto; padding: 22px 22px 56px; } .draft { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 5px; padding: 10px 13px; margin-bottom: 18px; font-size: 12.5px; color: #5e4a18; display: flex; gap: 8px; align-items: flex-start; } .draft svg { width: 15px; height: 15px; flex: 0 0 15px; margin-top: 2px; } .draft b { font-weight: 700; } .course-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 18px; } .course-header .eyebrow { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .7px; text-transform: uppercase; } .course-header h1 { font-size: 23px; font-weight: 700; margin: 3px 0 4px; } .course-header .sub { font-size: 14px; color: var(--text); font-weight: 600; } .course-header .lead { color: var(--muted); font-size: 13px; max-width: 690px; margin-top: 6px; } .cti-logo { height: 34px; width: auto; display: block; opacity: .9; } .cti-logo-fallback { display: none; font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: .3px; text-align: right; line-height: 1.2; } /* Program arc */.bigpic { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 20px; background: #fff; } details.bigpic > summary { list-style: none; cursor: pointer; } details.bigpic > summary::-webkit-details-marker { display: none; } .bigpic-head { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: #FCFDFE; border-radius: 5px; } details.bigpic[open] > summary > .bigpic-head { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .bigpic-head:hover { background: #F5F9FB; } .bigpic-head .plus { flex: 0 0 18px; width: 18px; height: 18px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.bigpic[open] > summary > .bigpic-head .plus::after { content: "\2212"; } details.bigpic:not([open]) > summary > .bigpic-head .plus::after { content: "+"; } .bigpic-head .t { font-size: 14px; font-weight: 700; color: var(--text); } .bigpic-head .s { font-size: 12.5px; color: var(--muted); } .bigpic-body { padding: 14px; } .arc { margin: 0 0 16px; } .arc .arc-caption { font-size: 12.5px; color: var(--muted); margin: 0 0 9px; } .arc-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; } .arc-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; background: #FCFDFE; color: var(--text); } .arc-card:hover, .arc-card:focus-within { z-index: 70; } .arc-card .bub { width: 320px; max-width: none; margin-top: 8px; } @media (min-width:1001px){ .arc-grid > .arc-card:nth-child(n+4) .bub {  left: auto;  right: 0; } } @media (max-width:1000px) and (min-width:621px){ .arc-grid > .arc-card:nth-child(3n) .bub {  left: auto;  right: 0; } } @media (max-width:620px){ .arc-grid > .arc-card:nth-child(2n) .bub {  left: auto;  right: 0; } } .arc-card:hover { border-color: var(--blue); background: #F7FBFD; } .arc-card .s { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); } .arc-card .nm { font-size: 13.5px; font-weight: 700; margin: 2px 0 1px; color: var(--blue-dark); line-height: 1.25; } .arc-card .th { font-size: 11.5px; color: var(--muted); line-height: 1.3; } .arc-card .who { font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 6px; } .arc-card .who b { color: var(--text); font-weight: 600; } .arc-card.build { background: #F3F8FB; border-color: #A8CBE0; } @media (max-width:1000px){ .arc-grid {  grid-template-columns: repeat(3,1fr); } } @media (max-width:620px){ .arc-grid {  grid-template-columns: repeat(2,1fr); } } /* Beyond the grade */.beyond { border: 1px solid var(--check-border); background: var(--check-bg); border-radius: 6px; padding: 13px 15px; margin: 0 0 22px; } .beyond .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--check); margin-bottom: 4px; } .beyond .hd { font-size: 15px; font-weight: 700; margin-bottom: 4px; } .beyond p { margin: 0 0 6px; font-size: 13px; color: #38503f; } .beyond p:last-child { margin-bottom: 0; } /* Modules */.module { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 16px; } details.module > summary { list-style: none; cursor: pointer; } details.module > summary::-webkit-details-marker { display: none; } .module-head { background: var(--modhead); border-bottom: 1px solid var(--border); padding: 11px 14px; display: flex; align-items: center; gap: 12px; border-radius: 3px 3px 0 0; } details.module:not([open]) > summary > .module-head { border-bottom: none; border-radius: 3px; } .module-head .name { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; } .module-head .tag { font-size: 12px; color: var(--muted); white-space: nowrap; } .module-head .chev { display: inline-block; font-size: 11px; color: var(--muted); transition: transform .15s ease; flex-shrink: 0; } details.module[open] > summary > .module-head .chev { transform: rotate(90deg); } .module-head:hover { background: #EFEFEF; } .goal { background: var(--goal-bg); border-left: 4px solid var(--goal-border); padding: 11px 14px; } .goal .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; } .goal .text { font-size: 14px; color: var(--text); } .goal ul { margin: 4px 0 0; padding-left: 18px; } .goal li { margin: 2px 0; } .prereq { padding: 8px 14px 4px; color: var(--muted); font-size: 12.5px; display: flex; gap: 7px; align-items: flex-start; border-bottom: 1px solid var(--border-light); } .prereq svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .prereq b { color: var(--text); font-weight: 600; } .items { padding: 2px 0 4px; } .item { display: flex; gap: 11px; padding: 11px 14px 11px 26px; border-bottom: 1px solid var(--border-light); align-items: flex-start; } .item:last-child { border-bottom: none; } .item .ico { flex: 0 0 18px; margin-top: 1px; color: var(--muted); } .item .ico svg { width: 18px; height: 18px; display: block; } .item .body { flex: 1; min-width: 0; } .item .title { font-size: 14.5px; font-weight: 600; } .item .meta { color: var(--muted); font-size: 12px; margin-top: 2px; } .group-label { padding: 10px 14px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: #FAFBFC; border-bottom: 1px solid var(--border-light); } .group-label .gd { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); } .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: #7C8A93; border-radius: 3px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; } .badge.key { background: var(--blue); } .badge.check { background: #8B9AA5; } .badge.live { background: var(--check); } .badge.optional { background: #7C8A93; } .item.keyitem { background: var(--goal-bg); } .item.keyitem .ico { color: var(--blue); } .item.live { background: var(--check-bg); } .item.live .ico { color: var(--check); } .note { padding: 9px 14px; background: #FBF6EC; border-bottom: 1px solid var(--border-light); font-size: 12.5px; color: #5e4a18; display: flex; gap: 7px; align-items: flex-start; } .note svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .note b { font-weight: 700; } h2.sec { font-size: 16px; font-weight: 700; margin: 24px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--border-light); } p.body { font-size: 13.5px; margin: 0 0 10px; } .instructor { margin-top: 26px; background: #FAFBFC; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; text-align: center; } .instructor .nm { font-weight: 700; color: var(--text); margin-bottom: 3px; } .instructor .links { font-size: 12.5px; color: var(--muted); } .provenance { margin-top: 18px; border: 1px solid var(--border-light); border-radius: 6px; padding: 11px 14px; font-size: 11.5px; color: var(--muted); background: #FCFCFD; } .provenance b { color: var(--text); font-weight: 700; } .provenance ul { margin: 5px 0 0; padding-left: 18px; } .provenance li { margin: 2px 0; } /* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */.gl { display: inline; } .item .body, .goal li, .prereq, .note, p.body, .course-header .lead, .beyond p, .arc-caption { position: relative; } .arc-card .gl { display: block; } .arc-card .gt { font: inherit; color: inherit; text-align: left; border-bottom: 1px dashed var(--blue); } .gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; } .gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; } .gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; } .bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-align: left; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; white-space: normal; } .gl:hover > .bub, .gl:focus-within > .bub { display: block; } .bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); } .bub .br { display: block; margin-bottom: 6px; color: var(--text); } .bub .br:last-child { margin-bottom: 0; } .bub .br i { font-style: normal; font-weight: 700; color: var(--muted); } @media print{ .bub {  display: none !important; } } .page-footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11.5px; flex-wrap: wrap; } .page-footer img { height: 20px; opacity: .55; }
+.gt.badge{background:#7C8A93;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:inline-block;vertical-align:middle;border-radius:3px;padding:1px 6px;margin-left:8px;border-bottom:0;cursor:help;text-decoration:underline dotted rgba(255,255,255,.75);text-underline-offset:2px;}
+.gt.badge.key{background:var(--blue);}
+.gt.badge.check{background:#8B9AA5;}
+.gt.badge.live{background:var(--check);}
+.goal .why{margin-top:8px;font-size:12.5px;color:var(--muted);}
 </style>
-</head>
-<body>
-<div class="page">
-
-<div class="course-header">
-<div>
-<div class="eyebrow">CST349 &middot; Professional Seminar</div>
-<h1>Becoming a Self-Directed Learner</h1>
-<div class="sub">Technical skills get you hired. Self-directed learning keeps you relevant.</div>
-<div class="lead">Over the semester you'll run the same cycle again and again &mdash; spot a skill gap, develop it with real accountability, and prove your growth &mdash; until directing your own learning becomes a habit you keep long after this course.</div>
-</div>
-<div>
-<img class="cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-<div class="cti-logo-fallback">Computing Talent<br>Initiative</div>
-</div>
-</div>
-
-<!-- PROGRAM ARC -->
-<div class="arc">
-<p class="arc-caption">A two-week orientation eases you in. Then three skill-building sprints, with support that tapers as your independence grows. A two-week wrap-up to prove it.</p>
-<div class="arc-grid">
-<div class="arc-card"><div class="s">Sprint 1</div><div class="nm">Beyond Technical</div><div class="th">Spot &amp; close a skill gap</div><div class="who">Support: <b>High</b></div></div>
-<div class="arc-card"><div class="s">Sprint 2</div><div class="nm">Accountable Growth</div><div class="th">Stretch with accountability</div><div class="who">Support: <b>Medium</b></div></div>
-<div class="arc-card"><div class="s">Sprint 3</div><div class="nm">Transfer</div><div class="th">Read your field's future</div><div class="who">Support: <b>Low</b></div></div>
-<div class="arc-card"><div class="s">Sprint 4</div><div class="nm">Proving It</div><div class="th">Synthesize &amp; defend</div><div class="who"><b>Full autonomy</b></div></div>
-</div>
-</div>
-
-<!-- SPRINT 0 -->
-<details class="module" id="sprint-0" open>
-<summary class="module-head"><span class="name">Sprint 0 &middot; Orientation</span><span class="tag">Weeks 1–2 &middot; land softly</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll get from these two weeks</div><div class="text"><ul>
-<li>Understand what this seminar is and how the sprint + reflection rhythm works</li>
-<li>Meet your cohort and your instructor</li>
-<li>Take an honest baseline of where your skills stand &mdash; low-stakes, no grade pressure</li>
-</ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span><b>Start here.</b> These two weeks exist so you're not thrown into Sprint 1 cold &mdash; get your bearings first.</span></div>
-<div class="items">
-
-<div class="group-label">Week 1 — Welcome &amp; Orientation</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="overview.html">Welcome &amp; how this seminar works</a></div><div class="meta">Page &middot; what the course is, and how sprints and reflections fit together</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="../profsathya.html">Meet your instructor</a></div><div class="meta">Page &middot; how to reach Prof. Sathya through the semester</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="sdl-dimensions.html">What is self-directed learning?</a></div><div class="meta">Page &middot; the dimensions of SDL you'll grow this semester</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="overview.html">Course Pre-Survey &amp; Introduce Yourself</a></div><div class="meta">Survey + discussion &middot; a quick baseline and a hello to the cohort</div></div>
-</div>
-
-<div class="group-label">Week 2 — Baseline &amp; Rhythm</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w1-skills-self-assessment.html">Skills Self-Assessment</a></div><div class="meta">Your honest starting point across the SDL dimensions &mdash; no grade pressure</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w1-productive-reflection.html">Productive Reflection #1</a><span class="badge">Reflection</span></div><div class="meta">Your first reflection &mdash; get used to the weekly rhythm before the work ramps up</div></div>
-</div>
-
-</div>
-</details>
-
-<!-- SPRINT 1 -->
-<details class="module" id="sprint-1">
-<summary class="module-head"><span class="name">Sprint 1 &middot; Beyond Technical</span><span class="tag">Weeks 3–6 &middot; High support</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll be able to do</div><div class="text"><ul>
-<li>Spot a real soft-skill gap and trace it to its root cause</li>
-<li>Plan and run your first self-directed development cycle</li>
-<li>Demonstrate growth with evidence, not just claims</li>
-</ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> your Sprint 0 baseline self-assessment &mdash; the gap you target here comes straight out of it.</span></div>
-<div class="items">
-
-<div class="group-label">Week 3 — Identifying Your Growth Edge</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w2-skills-revision.html">Skills Assessment Revision</a></div><div class="meta">Sharpen the baseline into one gap worth a sprint of work</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w2-five-whys.html">5 Whys Analysis</a></div><div class="meta">Trace the gap past the symptom to the cause that actually matters</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w2-productive-reflection.html">Productive Reflection #2</a><span class="badge">Reflection</span></div><div class="meta">What did naming the real gap change about your plan?</div></div>
-</div>
-
-<div class="group-label">Week 4 — Active Learning</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w3-learning-log.html">Learning Log</a></div><div class="meta">Track what you actually do to develop the skill &mdash; not what you meant to do</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w3-sprint-plan.html">Sprint Plan v1</a></div><div class="meta">A concrete plan: what you'll practice, and how you'll know it worked</div></div>
-</div>
-
-<div class="group-label">Week 5 — Build &amp; Practice</div>
-<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Protected build time &mdash; no new deliverable. Put your plan into practice and develop the skill before you demonstrate it.</span></div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s1-w3-productive-reflection.html">Productive Reflection #3</a><span class="badge">Reflection</span></div><div class="meta">A mid-sprint check on your own engagement &mdash; are you actually practicing?</div></div>
-</div>
-
-<div class="group-label">Week 6 — Demonstration &amp; Synthesis</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><polygon points="10 8.5 16 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/sprint-1-demo.html">Sprint 1 Demo Discussion</a></div><div class="meta">Show honest growth with evidence &mdash; not a highlight reel</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w5-bridge-reflection.html">Sprint 1&rarr;2 Bridge Reflection</a><span class="badge">Reflection</span></div><div class="meta">Carry what worked into a sprint with real external accountability</div></div>
-</div>
-
-</div>
-</details>
-
-<!-- SPRINT 2 -->
-<details class="module" id="sprint-2">
-<summary class="module-head"><span class="name">Sprint 2 &middot; Accountable Growth</span><span class="tag">Weeks 7–10 &middot; Medium support</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll be able to do</div><div class="text"><ul>
-<li>Stretch a skill with real external accountability &mdash; triads, outreach, and industry contact</li>
-<li>Design evidence of growth that someone else can validate</li>
-<li>Demonstrate to peers and professionals, not just to yourself</li>
-</ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> the self-directed cycle you ran in Sprint 1. Now other people hold you to it.</span></div>
-<div class="items">
-
-<div class="group-label">Week 7 — Accountability Setup</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/s2-orientation.html">Sprint 2 Orientation</a></div><div class="meta">The shift from solo development to accountable, externally-checked growth</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w5-goal-setting.html">Sprint 2 Goal Setting</a></div><div class="meta">A stretch goal you'll be held accountable to</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M3 21v-2a5 5 0 0 1 5-5h3"/><path d="M16 14l2 2 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w5-group-rules.html">Group Rules &amp; Check-in Plan</a></div><div class="meta">Set the terms with your triad &mdash; how you'll keep each other honest</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w5-productive-reflection.html">Productive Reflection #4</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 8 — Evidence &amp; Outreach</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w5-evidence-design.html">Evidence Design — What Will You Demonstrate?</a></div><div class="meta">Decide up front what proof of growth will look like</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M3 21v-2a5 5 0 0 1 5-5h3"/><path d="M16 14l2 2 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w6-triad-checkin.html">Triad Check-in #1</a></div><div class="meta">First accountability check with your triad</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w6-networking-prep.html">Networking Event Preparation</a></div><div class="meta">Prep for the live Virtual Networking event &mdash; 27 industry mentors across companies</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w6-productive-reflection.html">Productive Reflection #5</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 9 — Stretch Challenge</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w7-networking-report.html">Networking Event Report</a></div><div class="meta">What you learned reaching out to people ahead of you in the field</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w7-demo-slides.html">Demo Slide Builder</a></div><div class="meta">Build the deck for your validated demonstration</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w7-productive-reflection.html">Productive Reflection #6</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 10 — Validated Demonstration</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><polygon points="10 8.5 16 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w8-demo.html">Demonstration with Evidence</a></div><div class="meta">Prove your growth with evidence others can check</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M3 21v-2a5 5 0 0 1 5-5h3"/><path d="M16 14l2 2 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w8-peer-eval.html">Peer Evaluation</a></div><div class="meta">Judge a peer's evidence &mdash; and be judged on yours</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w8-bridge-reflection.html">Sprint 2&rarr;3 Bridge Reflection</a><span class="badge">Reflection</span></div><div class="meta">Turn from building skills to reading where your field is going</div></div>
-</div>
-
-</div>
-</details>
-
-<!-- SPRINT 3 -->
-<details class="module" id="sprint-3">
-<summary class="module-head"><span class="name">Sprint 3 &middot; Transfer</span><span class="tag">Weeks 11–14 &middot; Low support</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll be able to do</div><div class="text"><ul>
-<li>Build the habit of reading where your field is heading</li>
-<li>Separate real signal from noise in what you consume</li>
-<li>Stake an evidence-backed claim about your field's future</li>
-</ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> two sprints of self-directed growth &mdash; now you point that skill at the future, not just yourself.</span></div>
-<div class="items">
-
-<div class="group-label">Week 11 — You Are What You Read</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w9-info-diet-audit.html">Information Diet Audit + First Signal</a></div><div class="meta">Audit what you consume, then pick one real signal worth tracking</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w9-goal-setting.html">Sprint 3 Goal Setting</a></div><div class="meta">Set your futures-reading goal for the sprint</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w9-reflection.html">Productive Reflection #7</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 12 — Finding What Matters</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M3 21v-2a5 5 0 0 1 5-5h3"/><path d="M16 14l2 2 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w10-goal-checkin.html">Goal Check-In (Week 12)</a></div><div class="meta">Are your signals telling you something, or just noise?</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w10-productive-reflection.html">Productive Reflection #8</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 13 — Making a Claim</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s2-w8-claims-discussion.html">Claims in Practice</a></div><div class="meta">Pressure-test a claim about your field against the evidence</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M3 21v-2a5 5 0 0 1 5-5h3"/><path d="M16 14l2 2 4-4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w11-goal-checkin.html">Goal Check-In (Week 13)</a></div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s3-w11-productive-reflection.html">Productive Reflection #9</a><span class="badge">Reflection</span></div></div>
-</div>
-
-<div class="group-label">Week 14 — Demo Day: Your Futures Brief</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><polygon points="10 8.5 16 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/sprint-3-demo.html">Demo Day — Your Futures Brief</a></div><div class="meta">Present your evidence-backed read on where your field is going</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/s3-w11-codesign.html">Sprint 4 Co-Design Activity</a></div><div class="meta">Help shape how the final wrap-up sprint runs</div></div>
-</div>
-
-</div>
-</details>
-
-<!-- SPRINT 4 -->
-<details class="module" id="sprint-4">
-<summary class="module-head"><span class="name">Sprint 4 &middot; Proving It</span><span class="tag">Weeks 15–16 &middot; wrap-up</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll be able to do</div><div class="text"><ul>
-<li>Synthesize three sprints of growth into one coherent story</li>
-<li>Name the gap between where you are and where you want to be next</li>
-<li>Defend your portfolio: "What can you do, and how do you know?"</li>
-</ul></div></div>
-<div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>Builds on:</b> all three sprints and the reflections you wrote along the way.</span></div>
-<div class="items">
-
-<div class="group-label">Week 15 — Diagnose &amp; Synthesize</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w13-three-sprint-retrospective.html">Three-Sprint Retrospective</a><span class="badge">Reflection</span></div><div class="meta">Look back across all three sprints &mdash; what actually changed in how you learn?</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w13-gap-statement.html">Gap Statement</a></div><div class="meta">Name your next growth edge &mdash; the work doesn't end with the course</div></div>
-</div>
-
-<div class="group-label">Week 16 — Defend</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 18v3M16 18v3"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-defense-presentation.html">Final Defense Presentation</a></div><div class="meta">Defend your growth out loud &mdash; the question every employer asks</div></div>
-</div>
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h14a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2z"/><path d="M8 4v16M11 8h6M11 12h6"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-notebook.html">Notebook Grade</a></div><div class="meta">Bring your semester notebook to the final class for collection</div></div>
-</div>
-
-</div>
-</details>
-
-<!-- EXTRA CREDIT -->
-<details class="module" id="extra-credit">
-<summary class="module-head"><span class="name">Extra Credit &amp; Course Close</span><span class="tag">Optional</span><span class="chev">&#9656;</span></summary>
-<div class="goal"><div class="label">What you'll get from this module</div><div class="text"><ul>
-<li>Close the loop on the course evaluation that measures your growth</li>
-<li>Recover points by revisiting earlier work honestly</li>
-<li>Make your own growth visible across the whole semester</li>
-</ul></div></div>
-<div class="items">
-<div class="item">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="overview.html">Course Post-Survey</a></div><div class="meta">Survey &middot; the bookend to your pre-survey &mdash; how far you've come</div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w13-lookback-1-five-whys.html">Look-back 1 — 5 Whys</a><span class="badge optional">Extra Credit</span></div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w14-lookback-2-pr3.html">Look-back 2 — Productive Reflection #3</a><span class="badge optional">Extra Credit</span></div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w15-lookback-3-networking.html">Look-back 3 — Networking Event</a><span class="badge optional">Extra Credit</span></div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w15-lookback-4-info-diet.html">Look-back 4 — Information Diet Audit</a><span class="badge optional">Extra Credit</span></div></div>
-</div>
-<div class="item selfcheck">
-<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span>
-<div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/s4-w16-lookback-5-meta.html">Look-back 5 — Look-back on your Look-backs</a><span class="badge optional">Extra Credit</span></div></div>
-</div>
-</div>
-</details>
-
-<div class="instructor">
-<div class="nm">Dr. Sathya Narayanan</div>
-<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
-</div>
-
-<footer class="page-footer">
-<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar</span>
-</footer>
-
-</div>
+    </head>
+    <body>
+        <div class="page">
+            <div class="draft">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 8v5M12 16h.01"/>
+                </svg>
+                <span><b>Draft for discussion &mdash; 11 August 2026, v1.</b> The Fall 2026 shape of CST349. Sprint pages and item links are still to be built, and dates are provisional.</span>
+            </div>
+            <div class="course-header">
+                <div>
+                    <div class="eyebrow">CST349 &middot; Professional Seminar &middot; Fall 2026</div>
+                    <h1>Learn to Direct Your Own Growth</h1>
+                    <div class="sub">The professionals who stay valuable in the age of AI are the ones who can grow themselves on purpose. This semester you build that skill &mdash; on yourself.</div>
+                    <div class="lead">Think about the person on any team everyone calls irreplaceable. It is rarely the person who knows one thing best &mdash; it is the one who connects things: the engineer who understands the customer, the designer who reads the data. Careers used to reward being <span class="gl"><button type="button" class="gt">I-shaped</button><span class="bub" role="tooltip"><b class="bt">Professional shapes: I &rarr; T &rarr; &pi; &rarr; comb</b><span class="br"><i>What it means.</i> An I-shaped professional is deep in one thing. A T adds working knowledge across other fields. &pi;, m, and comb shapes add more deep pillars &mdash; two, three, many.</span><span class="br"><i>Why it matters now.</i> AI is fastest at replacing single-pillar depth. The value it cannot reach sits where pillars combine &mdash; judgment that needs two fields, or two viewpoints, at once.</span><span class="br"><i>What you do with it.</i> In week 1 you locate your own shape. In Sprint 3 you make one move up the ladder &mdash; you add a pillar.</span></span></span> &mdash; deep in one thing. The professionals thriving alongside AI keep adding pillars. This semester you find where you are on that ladder, and make one real move up it.</div>
+                    <div class="lead">Here is how: you define what growth means <em>for you</em> &mdash; on several dimensions, not one &mdash; with a way to measure each. You set your starting point. Then you run a weekly loop: set a milestone, do the work, read what happened, adapt. By Sprint 3 the loop is yours enough to carry somewhere new.</div>
+                    <div class="lead">Two things come out of this semester:</div>
+                    <div class="lead">
+                        <ol style="margin:4px 0 4px 22px;padding:0;">
+                            <li>
+                                <b>A growth process that is yours.</b> Three versions of your own Goal Plan, showing decisions you made &mdash; set, measured, adapted &mdash; not steps an instructor handed you.
+                            </li>
+                            <li>
+                                <b>Your first pillar move.</b> Evidence you carried that process into a second field or another person's viewpoint &mdash; the move you will repeat for the rest of your career.
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="lead">
+                        <b>Your ability to explain your own growth out loud is how anyone &mdash; an interviewer, a manager, a mentor &mdash; will know what you bring. That is why you talk through your work in interviews all semester, and why those conversations are half your grade.</b>
+                    </div>
+                </div>
+                <div>
+                    <img class="cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <div class="cti-logo-fallback">Computing Talent<br>Initiative
+                    </div>
+                </div>
+            </div>
+            <details class="bigpic" id="big-picture" open>
+                <summary>
+                    <div class="bigpic-head">
+                        <span class="plus"></span>
+                        <span class="t">The big picture</span>
+                        <span class="s">All five sprints on one screen, and what you keep after the grade is posted</span>
+                    </div>
+                </summary>
+                <div class="bigpic-body">
+                    <div class="arc">
+                        <p class="arc-caption">Five sprints across sixteen instructional weeks. Hover any sprint name to see what it is, why it comes where it does, and what you have at the end of it. Fall Break &mdash; the week of 23 November &mdash; sits inside Sprint 3, between weeks 13 and 14.</p>
+                        <div class="arc-grid">
+                            <div class="arc-card"><div class="s">Sprint 0</div><div class="nm">
+                                    <span class="gl"><button type="button" class="gt">Orient</button><span class="bub" role="tooltip"><b class="bt">Sprint 0 &middot; Orient</b><span class="br"><i>What this sprint is.</i> Two weeks to see why this course is built the way it is, what it offers your future &mdash; and to take an honest look at where you are today.</span><span class="br"><i>Why it comes here.</i> Everything in this course runs on decisions you make about yourself. Knowing where you actually start &mdash; skills, information diet, shape &mdash; is what makes those decisions real.</span><span class="br"><i>What you have at the end.</i> A know-yourself portfolio, your location on the shape ladder, and your first interview behind you.</span></span></span>
+                                </div><div class="th">See why the course works this way, and where you are today</div><div class="who">
+                                    <b>Weeks 1&ndash;2</b> &middot; Aug 24 &ndash; Sep 4
+                                </div></div>
+                            <div class="arc-card"><div class="s">Sprint 1</div><div class="nm">
+                                    <span class="gl"><button type="button" class="gt">Set your professional growth goals</button><span class="bub" role="tooltip"><b class="bt">Sprint 1 &middot; Set your professional growth goals</b><span class="br"><i>What this sprint is.</i> Four weeks defining growth on your terms &mdash; several dimensions, a metric for each, a baseline &mdash; and starting the weekly loop.</span><span class="br"><i>Why it comes here.</i> &ldquo;Get better&rdquo; is not a plan. Growth you can measure from your own starting point is &mdash; and everything after this builds on it.</span><span class="br"><i>What you have at the end.</i> Goal Plan v1, your first milestone loops run, and Sprint Exam 1 behind you.</span></span></span>
+                                </div><div class="th">Define growth on your terms, and start the weekly loop</div><div class="who">
+                                    <b>Weeks 3&ndash;6</b> &middot; Sep 7 &ndash; Oct 2
+                                </div></div>
+                            <div class="arc-card build"><div class="s">Sprint 2</div><div class="nm">
+                                    <span class="gl"><button type="button" class="gt">Reflect, revise and deepen your goals</button><span class="bub" role="tooltip"><b class="bt">Sprint 2 &middot; Reflect, revise and deepen your goals</b><span class="br"><i>What this sprint is.</i> Four weeks running the loop on real readings &mdash; and revising the plan when the readings say so.</span><span class="br"><i>Why it comes here.</i> A plan that never changes is a plan nobody is reading. Revising from evidence &mdash; including honest misses &mdash; is the skill this sprint builds.</span><span class="br"><i>What you have at the end.</i> Goal Plan v2, a visible trajectory on your own metrics, and Sprint Exam 2 behind you.</span></span></span>
+                                </div><div class="th">Read your own data, revise the plan, deepen the work</div><div class="who">
+                                    <b>Weeks 7&ndash;10</b> &middot; Oct 5 &ndash; Oct 30
+                                </div></div>
+                            <div class="arc-card build"><div class="s">Sprint 3</div><div class="nm">
+                                    <span class="gl"><button type="button" class="gt">Add a new pillar to your goal</button><span class="bub" role="tooltip"><b class="bt">Sprint 3 &middot; Add a new pillar to your goal</b><span class="br"><i>What this sprint is.</i> Four weeks choosing a second field or another person's viewpoint &mdash; and running your loop on that unfamiliar ground.</span><span class="br"><i>Why it comes here.</i> This is the move up the shape ladder, and it is what proves your process transfers. Progress counts, arrival does not have to happen &mdash; we grade the loop, not the finish line.</span><span class="br"><i>What you have at the end.</i> A declared pillar, movement evidence on it, and Sprint Exam 3 &mdash; where you connect the pillars.</span></span></span>
+                                </div><div class="th">Carry your process into a second field or viewpoint</div><div class="who">
+                                    <b>Weeks 11&ndash;14</b> &middot; Nov 2 &ndash; Dec 4
+                                </div></div>
+                            <div class="arc-card"><div class="s">Sprint 4</div><div class="nm">
+                                    <span class="gl"><button type="button" class="gt">Reflect and conclude with sustainable practice</button><span class="bub" role="tooltip"><b class="bt">Sprint 4 &middot; Reflect and conclude with sustainable practice</b><span class="br"><i>What this sprint is.</i> Two weeks putting your three Goal Plans side by side, assembling your evidence, and walking us through what changed.</span><span class="br"><i>Why it comes here.</i> The course ends; the loop should not. The close is about setting up the practice so it keeps running without us.</span><span class="br"><i>What you have at the end.</i> A growth synthesis you have defended, and a loop you can keep running in January.</span></span></span>
+                                </div><div class="th">Show the process works &mdash; and set it up to keep running</div><div class="who">
+                                    <b>Weeks 15&ndash;16</b> &middot; Dec 7 &ndash; Dec 18
+                                </div></div>
+                        </div>
+                    </div>
+                    <div class="beyond" style="margin-bottom:0;">
+                        <div class="label">Beyond the grade</div>
+                        <div class="hd">The process is the product.</div>
+                        <p>Courses end. The loop you build here does not have to. What you keep is the process working professionals use to stay valuable while AI reshapes their field: define growth in your own terms, measure it from your own baseline, adapt weekly, and add a pillar when the ground shifts. By December, running it should no longer need us.</p>
+                        <p><b>When we meet.</b> Class time is built around conversations, not lectures. Sprints 1&ndash;3 open with a first-hour workshop (weeks 3, 7, 11) and close with a Sprint Exam (weeks 6, 10, 14). Every other session is a working session while interviews run &mdash; starting with every student in a small-group interview during weeks 1&ndash;2.</p>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="how-this-works" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Start Here &middot; How this course works</span>
+                        <span class="tag">Read before week 1</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">This section answers</div>
+                    <div class="text">
+                        <ul>
+                            <li>What am I asked to do each week?</li>
+                            <li>How is my grade calculated?</li>
+                            <li>What happens in the interviews, and what is a Sprint Exam?</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="items">
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <path d="M16 2v4M8 2v4M3 10h18"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Every week: one assignment, one reflection</div>
+                            <div class="meta">Each week has exactly one assignment and one short <span class="gl"><button type="button" class="gt">reflection</button><span class="bub" role="tooltip"><b class="bt">Reflection</b><span class="br"><i>What it means.</i> A few honest lines each week on how the work went and how you feel about it &mdash; the inside half of your evidence.</span><span class="br"><i>Why it matters.</i> Work alone can be produced without you growing; feelings alone can be performed. Together, and agreeing with each other, they are hard to fake &mdash; and they are what your interviews draw on.</span></span></span> &mdash; never two assignments due the same week. The work builds one evolving piece per sprint, not a pile of separate tasks.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M8 12l2.5 2.5L16 9"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Half submitting, half explaining</div>
+                            <div class="meta">Half your grade comes from submitting the work. The other half comes from explaining it &mdash; in interviews and Sprint Exams that sample work you already submitted. We measure your movement from <em>your</em> starting point, and we grade the loop: an honest miss you read and adapted from counts as evidence the loop works.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <circle cx="9" cy="8" r="3.2"/>
+                                <path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/>
+                                <circle cx="17.5" cy="10" r="2.6"/>
+                                <path d="M14.5 20v-1a4 4 0 0 1 4-4"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Interviews run in small groups, all semester</div>
+                            <div class="meta">You meet in a group of four: first with the TA, then with Prof. Sathya. We pick which piece of your submitted work to talk through, so prepare all of it. Everyone is seen in weeks 1&ndash;2; after that, rounds spread across the semester.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Sprint Exams are written by hand, then talked through</div>
+                            <div class="meta">The last week of Sprints 1&ndash;3, in class: one page, hand-written &mdash; the questions are published ahead of time. Then you trade pages with a partner, type their answers into a short AI form, talk it through with them, and submit your evaluation of their work. Reading and judging someone else's thinking is part of the skill.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 7v5l3 3"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Late work loses 10% a day &mdash; and there are no mid-course retakes</div>
+                            <div class="meta">That is deliberate: we would rather catch you in week 4 than in week 12. If the semester gets away from you, there is a catch-up option at the end of the course &mdash; talk to us before then.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="sprint-0" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 0 &middot; Orient</span>
+                        <span class="tag">Weeks 1&ndash;2 &middot; Aug 24 &ndash; Sep 4</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text">
+                        <ul>
+                            <li>Say why this course is designed the way it is, and what it offers your future.</li>
+                            <li>Locate yourself on the professional shape ladder &mdash; honestly.</li>
+                            <li>Describe your current information diet, and what it is feeding.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/>
+                    </svg>
+                    <span><b>Start here.</b> Two weeks to see the whole design &mdash; and to take an honest baseline of yourself. Every decision you make this semester builds on this one.</span>
+                </div>
+                <div class="items">
+                    <div class="group-label">Week 1 &mdash; Why this course works this way <span class="gd">&middot; Aug 24</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M3 3v18h18"/>
+                                <path d="M7 15l4-5 3 3 5-7"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Course Orientation<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session &mdash; attendance in class is expected, everyone together.</span></span></span>
+                            </div>
+                            <div class="meta">The week-1 session, in class: why this course is built the way it is, how professionals grow in the age of AI &mdash; the shape ladder &mdash; and how conversation with people and with AI is the way we work here.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Show you know how this course works<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">A short AI-guided form: make sure the design, the weekly rhythm, and the grading all make sense to you before they matter.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Weeks 1&ndash;2 &mdash; Your first interview <span class="gd">&middot; sign up for a slot</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <circle cx="9" cy="8" r="3.2"/>
+                                <path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/>
+                                <circle cx="17.5" cy="10" r="2.6"/>
+                                <path d="M14.5 20v-1a4 4 0 0 1 4-4"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Meet us in a group of four<span class="gl"><button type="button" class="gt badge live">Live session</button><span class="bub" role="tooltip"><b class="bt">Live session</b><span class="br"><i>What it means.</i> In person, or on Zoom with your camera on &mdash; the same conversation and the same bar either way.</span></span></span>
+                            </div>
+                            <div class="meta">Ten minutes with the TA, then fifteen with Prof. Sathya: where you are starting from, in your own words. Every student is seen in the first two weeks.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 2 &mdash; Know yourself <span class="gd">&middot; Aug 31</span>
+                    </div>
+                    <div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 3h11l3 3v15H5z"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Build your know-yourself portfolio<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. Like every assignment it earns completion credit &mdash; and it is the work your interviews draw on.</span></span></span>
+                            </div>
+                            <div class="meta">Three honest looks at yourself: a skills self-assessment, an audit of your information diet &mdash; what you read, watch, and listen to, and what it is feeding &mdash; and your location on the shape ladder. With the reflection: how you feel about where you are.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="sprint-1" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 1 &middot; Set your professional growth goals</span>
+                        <span class="tag">Weeks 3&ndash;6 &middot; Sep 7 &ndash; Oct 2</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text">
+                        <ul>
+                            <li>Define your growth on several dimensions &mdash; not one skill, one credential, or one job title.</li>
+                            <li>Attach a metric and a baseline to each dimension, so movement is measurable.</li>
+                            <li>Run the weekly loop yourself: set a milestone, do the work, read the result, adapt.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                    <span><b>Builds on your know-yourself portfolio.</b> The dimensions you choose here come out of the honest look you took in Sprint 0.</span>
+                </div>
+                <div class="items">
+                    <div class="group-label">Week 3 &mdash; Define growth <span class="gd">&middot; Sep 7</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M3 3v18h18"/>
+                                <path d="M7 15l4-5 3 3 5-7"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Goal-setting workshop, first hour<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session &mdash; attendance in class is expected, everyone together.</span></span></span>
+                            </div>
+                            <div class="meta">What growth means when it is more than one axis &mdash; and two questions we will keep coming back to all semester: have you tackled a problem you could not have alone, with AI's help? And how is the outcome better because of <em>your</em> involvement?</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Draft your growth dimensions<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">List the dimensions your growth needs this semester, with a candidate metric for each. Rough is fine &mdash; the Goal Plan is where they get real.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 4 &mdash; Commit to the plan <span class="gd">&middot; Sep 14</span>
+                    </div>
+                    <div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 3h11l3 3v15H5z"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Write Goal Plan v1<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. Like every assignment it earns completion credit &mdash; and it is the work your interviews draw on.</span></span></span>
+                            </div>
+                            <div class="meta">Your growth dimensions, a metric for each, a baseline reading for each, and your first milestones. This is the plan your whole semester runs on &mdash; and you will revise it twice, on purpose.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 5 &mdash; Run the loop <span class="gd">&middot; Sep 21</span>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Submit your first milestone record<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">What you set out to move this week, what actually happened, and what you are changing. A miss reported honestly counts &mdash; that is the loop working.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 6 &mdash; Sprint Exam 1 <span class="gd">&middot; Sep 28, in class</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Sit Sprint Exam 1<span class="gl"><button type="button" class="gt badge live">In class</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it means.</i> One page, hand-written, in class &mdash; the questions are published ahead of time. Then you trade pages with a partner, type their answers into a short AI form, talk it through, and submit your evaluation of their work.</span><span class="br"><i>Why it matters.</i> Writing by hand shows the thinking is yours. Reading a partner's page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span>
+                            </div>
+                            <div class="meta">Your goals and your first loops, examined. One hand-written page, then the partner exchange. Second hour: interviews.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="sprint-2">
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 2 &middot; Reflect, revise and deepen your goals</span>
+                        <span class="tag">Weeks 7&ndash;10 &middot; Oct 5 &ndash; Oct 30</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text">
+                        <ul>
+                            <li>Read your own metrics and say what they are telling you.</li>
+                            <li>Revise a plan from evidence &mdash; and defend the revision as your own decision.</li>
+                            <li>Treat an honest miss as data, sometimes stronger evidence than an easy win.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                    <span><b>Builds on Goal Plan v1.</b> Five weeks of real readings are in &mdash; now the plan meets the evidence.</span>
+                </div>
+                <div class="items">
+                    <div class="group-label">Week 7 &mdash; Revise the plan <span class="gd">&middot; Oct 5</span>
+                    </div>
+                    <div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 3h11l3 3v15H5z"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Write Goal Plan v2, after the first-hour workshop<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. Like every assignment it earns completion credit &mdash; and it is the work your interviews draw on.</span></span></span>
+                            </div>
+                            <div class="meta">The mid-course revision: what your readings say, what you are changing, and why &mdash; in your own decisions. The workshop walks through how to read five weeks of your own data.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Weeks 8&ndash;9 &mdash; Deepen <span class="gd">&middot; Oct 12 &ndash; Oct 23</span>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Keep the loop running: weekly milestone records<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">One record and one reflection each week, against the revised plan. Your deepening trajectory across these weeks is what interviews sample.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 10 &mdash; Sprint Exam 2 <span class="gd">&middot; Oct 26, in class</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Sit Sprint Exam 2<span class="gl"><button type="button" class="gt badge live">In class</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it means.</i> One page, hand-written, in class &mdash; the questions are published ahead of time. Then you trade pages with a partner, type their answers into a short AI form, talk it through, and submit your evaluation of their work.</span><span class="br"><i>Why it matters.</i> Writing by hand shows the thinking is yours. Reading a partner's page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span>
+                            </div>
+                            <div class="meta">The deepening, examined: your metric trajectory, what caused what, and the misses you read honestly. Second hour: interviews.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="sprint-3">
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 3 &middot; Add a new pillar to your goal</span>
+                        <span class="tag">Weeks 11&ndash;14 &middot; Nov 2 &ndash; Dec 4</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text">
+                        <ul>
+                            <li>Choose a second field or another person's viewpoint worth adding to your shape &mdash; and say why it is yours.</li>
+                            <li>Run your loop on unfamiliar ground: metric, baseline, milestones, adaptation.</li>
+                            <li>Connect the pillars: say what the combination sees that either alone would miss.</li>
+                        </ul>
+                        <p class="why">Movement is what we grade. Arriving at the next shape is a career's work &mdash; starting the move honestly is this sprint's.</p>
+                    </div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                    <span><b>This is the move up the shape ladder.</b> The process you built in Sprints 1&ndash;2 is the tool; this sprint proves it transfers. Fall Break (Nov 23&ndash;29) lands mid-sprint &mdash; have your pillar work in hand before it.</span>
+                </div>
+                <div class="items">
+                    <div class="group-label">Week 11 &mdash; Declare your pillar <span class="gd">&middot; Nov 2</span>
+                    </div>
+                    <div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 3h11l3 3v15H5z"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Declare your new pillar, after the first-hour workshop<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. Like every assignment it earns completion credit &mdash; and it is the work your interviews draw on.</span></span></span>
+                            </div>
+                            <div class="meta">Which second field or stakeholder viewpoint you are adding, why it is yours and not just impressive, and the metric and baseline you will run the loop against. The workshop brings curated examples of professionals who made this move.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Weeks 12&ndash;13 &mdash; Run the loop on new ground <span class="gd">&middot; Nov 9 &ndash; Nov 20</span>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Submit integration milestone records<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">The weekly loop, now on the pillar: what moved, what resisted, and what the new ground is teaching you about your own process. One record and one reflection each week.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 14 &mdash; Sprint Exam 3 <span class="gd">&middot; Nov 30, in class, after Fall Break</span>
+                    </div>
+                    <div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Sit Sprint Exam 3<span class="gl"><button type="button" class="gt badge live">In class</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it means.</i> One page, hand-written, in class &mdash; the questions are published ahead of time. Then you trade pages with a partner, type their answers into a short AI form, talk it through, and submit your evaluation of their work.</span><span class="br"><i>Why it matters.</i> Writing by hand shows the thinking is yours. Reading a partner's page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span>
+                            </div>
+                            <div class="meta">The pillar move, examined &mdash; your movement on unfamiliar ground, and the integration question: what does the combination of your pillars see that either alone would miss? Second hour: interviews.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="module" id="sprint-4">
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 4 &middot; Reflect and conclude with sustainable practice</span>
+                        <span class="tag">Weeks 15&ndash;16 &middot; Dec 7 &ndash; Dec 18</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text">
+                        <ul>
+                            <li>Put your three Goal Plans side by side and narrate the decisions between them as your own.</li>
+                            <li>Give your best current answers to the two questions we planted in week 3.</li>
+                            <li>Say how your loop keeps running in January, without a course around it.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                    <span><b>The course ends. The loop should not.</b> These two weeks are about proving the process works &mdash; and setting it up to keep running without us.</span>
+                </div>
+                <div class="items">
+                    <div class="group-label">Week 15 &mdash; Close the plan <span class="gd">&middot; Dec 7</span>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Write Goal Plan v3<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A short item between key items, credited as soon as you submit it. Its job is to tell you whether you are on track while there is still time to adjust.</span></span></span>
+                            </div>
+                            <div class="meta">The end revision: where each dimension landed against its baseline, what the pillar move changed, and what the plan looks like when its owner is the only one reading it.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">Week 16 &mdash; The synthesis <span class="gd">&middot; Dec 14</span>
+                    </div>
+                    <div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 3h11l3 3v15H5z"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg></span>
+                        <div class="body">
+                            <div class="title">Present your growth synthesis, in your final walkthrough<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. Like every assignment it earns completion credit &mdash; and it is the work your interviews draw on.</span></span></span><span class="gl"><button type="button" class="gt badge live">Live session</button><span class="bub" role="tooltip"><b class="bt">Live session</b><span class="br"><i>What it means.</i> In person, or on Zoom with your camera on &mdash; the same conversation and the same bar either way.</span></span></span>
+                            </div>
+                            <div class="meta">Three Goal Plans, your evidence, your shape-ladder read &mdash; where you started against where you are &mdash; and your answers-so-far to the two questions. This conversation is the course's last word, and yours.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <div class="instructor">
+                <div class="nm">Prof. Sathya Narayanan</div>
+                <div class="links">
+                    <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack
+                </div>
+            </div>
+            <div class="provenance">
+                <b>Provenance.</b> Draft v1 of 2026-08-11.
+                <ul>
+                    <li>
+                        <b>Human</b> &mdash; the design: the course outcome and its three principles (locked July 2026); the professional-shape ladder as the through-line, with know-yourself and the information diet feeding self-location and one pillar move integrated with the transfer rep; one assignment and one reflection every week; the class-time architecture &mdash; first-hour workshops at sprint opens, hand-written Sprint Exams with partner exchange at sprint closes, interviews through the remaining sessions; groups of four with TA pre-meetings across the first two weeks; grading the loop rather than the line; no mid-course retakes with an end-of-course catch-up; 10%-a-day late policy (Sathya Narayanan, July 8 &ndash; August 11, 2026).
+                    </li>
+                    <li>
+                        <b>Human + AI</b> &mdash; placement of the sprints against the Fall 2026 calendar, the week-by-week items, and the student-facing phrasing, drafted from the CST349 design document (v15, 2026-08-11) against the CST499 page shell.
+                    </li>
+                    <li>
+                        <b>Open</b> &mdash; sprint pages and item links; points; the student-facing language pass; Symbiotic Thinking's airtime inside Sprint 0; where the two questions surface beyond week 3.
+                    </li>
+                </ul>
+            </div>
+            <footer class="page-footer">
+                <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; Draft v1</span>
+            </footer>
+        </div>
+        <script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var ctx = p.get('context') || (window.self !== window.top ? 'canvas' : 'web');
+  if (ctx === 'canvas') {
+    document.querySelectorAll('[data-canvas-href]').forEach(function(a){
+      a.setAttribute('href', a.getAttribute('data-canvas-href'));
+      a.setAttribute('target', '_top');
+    });
+  } else {
+    document.querySelectorAll('a[href]').forEach(function(a){
+      var h = a.getAttribute('href');
+      if (h && !/^https?:|^#|^mailto:/.test(h)) a.setAttribute('href', h + (h.indexOf('?')>-1?'&':'?') + 'context=web');
+    });
+  }
+})();
+</script>
+    <script>
+/* Editor-friendly accordions: the markup ships with every section open so a
+   visual editor (Pinegrow) can show and edit all of them. In a running
+   browser, this collapses everything except Start Here and Sprint 0, plus any
+   section the URL's #hash points at. */
+(function () {
+  if (location.protocol !== 'https:') { return; }  /* editors and local previews stay fully open */
+  var keep = { 'how-this-works': 1, 'sprint-0': 1 };
+  var h = location.hash.replace('#', '');
+  if (h) { keep[h] = 1; }
+  var all = document.querySelectorAll('details.module, details.bigpic');
+  for (var i = 0; i < all.length; i++) {
+    if (!keep[all[i].id]) { all[i].removeAttribute('open'); }
+  }
+})();
+</script>
 </body>
 </html>
