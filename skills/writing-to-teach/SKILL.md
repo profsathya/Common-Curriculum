@@ -138,6 +138,35 @@ action just taken holds; understanding built on ten paragraphs does not.
 zoom-out ("you have built the piece that lets a computer add") — and the standing
 invitation to ask. Never end on a warning.
 
+## Promises and frames
+
+Born from the CST349 home-page gate (2026-08-11), where the instructor's edit round
+read as eight page rules. The four that govern promises and framing:
+
+**Growth is part of the profession, never survival.** No fear levers, no exclusivity
+("the ones who stay valuable"). State growth as what professionals do.
+
+**A promised skill gets unpacked into its parts at the moment it is promised** —
+"build that skill" becomes "recognize the growth needed, develop a plan, follow
+through."
+
+**Metaphor decorates; capability claims.** The literal capability carries the
+sentence ("cross domains, disciplines and systems"); the image (ladder, pillar)
+illustrates it.
+
+**Page promises match the grading truth.** If the course grades movement, the page
+promises "a meaningful effort," "an initial plan," "an ability you will need" —
+never arrival.
+
+And three that govern the actors on the page: **reflection is a named step wherever
+the loop appears** (set → work → reflect → revise → adapt — never compressed to
+"read and adapt"); **independence is a fading scaffold** ("decreasing levels of
+guidance"), never an anti-instructor contrast; **conversations include peers and
+audiences include collaborators** — instructor/TA and peer conversations, sitting
+beside interviewers and managers. Use **student-humane verbs**: students recognize
+their starting point and reflect on their experience; they do not "get set" or
+"read their data."
+
 ## One vocabulary
 
 The same thing has the same name everywhere — on this page, on its siblings, in Canvas,
@@ -170,6 +199,8 @@ you only the first sentence leave knowing the payoff?
 - One name per concept, on this page and its siblings; our terms carry a tooltip or
   parenthetical at first use.
 - The page ends with what the student can now do and where to ask questions.
+- Promises match the grading truth; growth framed as profession, not survival; loop
+  descriptions name reflection; independence reads as fading guidance.
 
 Judgment calls — does it meet the feeling, is the voice right, is the hope honest — are
 not checklist items. They go to a person: that is what the publish-as-a-doc gate is for.
@@ -182,6 +213,8 @@ final trim, with the varied-repetition boundary noted above. `updating-canvas` a
 the first place.
 
 ---
+
+*Addendum 2026-08-11: the Promises-and-frames section was extracted from Sathya's direct-edit round on the CST349 fall home page — the gate's second output, per the pattern-extraction practice.*
 
 *Provenance — Human (Sathya): the teach-vs-present diagnosis; the personas idea and the
 choice of Winthrop's modes; the light-load-sentences, backbone-plus-expandables, and

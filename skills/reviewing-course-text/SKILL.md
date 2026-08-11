@@ -21,7 +21,7 @@ At the end of writing, every time. The review is the last step before student-fa
 
 **3. Cut sentences with no job.** If deleting a sentence changes nothing about what the student understands or does next, delete it. True is not a reason to keep; the reader's next move is.
 
-**4. Flip unnecessary negatives.** Apply the inspire-don't-scare rule (see `writing-learning-goals`) to body text: warnings, not-X constructions, and loss-frames used as hooks get their positive twin ("write an answer only this company could receive," not "if it could go to any company, it isn't done"). Honesty guardrails — no-guarantees, plan-not-promise — stay, but they never lead.
+**4. Flip unnecessary negatives.** Apply the inspire-don't-scare rule (see `writing-learning-goals`) to body text: warnings, not-X constructions, and loss-frames used as hooks get their positive twin ("write an answer only this company could receive," not "if it could go to any company, it isn't done"). Honesty guardrails — no-guarantees, plan-not-promise — stay, but they never lead. Exclusivity and survival frames count as negatives too: “the professionals who stay valuable are the ones who…” gets the same flip as a warning — growth stated plainly as part of the profession (CST349 gate, 2026-08-11).
 
 **5. Place instructions at the point of action.** A "how to submit" line belongs in the submit box, not the intro; a hand-write-first rule belongs on the question that gets hand-written. A message in the wrong place forces a second copy in the right place — misplacement is where most duplication starts.
 
