@@ -45,6 +45,16 @@ Aug 4–5 build — written 10 Aug 2026 for Sathya to correct.
 
 - **NOT YET.** Same call as the other courses (10 Aug): plant them early, as the value-proposition frame. `why-this-course.html` — the three-futures argument — is the natural doorway, but nothing asks the questions themselves.
 
+## The nurture-track thread (six qualities)
+
+- **NOT YET — Every activity aligned to a named subset of the six qualities.**
+  Evidence: principle decided 10–11 Aug — the qualities are woven throughout the course rather than treated as a start/end measure; each activity carries a subset chosen by its focus; Map Your Curiosity is out as a course activity; the opening Know-Yourself activity carries self-knowledge and probably self-regulation.
+  Missing: the activity-by-activity mapping for this course.
+
+- **NOT YET — Movement on those qualities watched per activity.**
+  Evidence: decided 11 Aug — conversations with AI Sensei run throughout the course (the two-conversation week 1–2 / week 6–8 design is superseded; note on the 8/10 plan file).
+  Missing: how each activity's conversations or artifacts record movement, and which parts of the plan file survive per conversation.
+
 ## The scaffolded introduction sequence
 
 - **NOT YET.** Order sketched 10 Aug; needs careful thinking. Part 0 (weeks 1–2, orientation) is the natural slot for it — and is also where the Canvas build already starts, so this decision touches pages already at the review gate.
@@ -56,3 +66,4 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
 ## Log
 
 - 2026-08-10 — file created. Framework: Sathya. Status calls and wording: Alan, for Sathya's review.
+- 2026-08-11 — nurture-track section added (throughout principle; both items not yet). — Alan

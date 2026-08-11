@@ -42,6 +42,16 @@ Aug 4–5 build record — written 10 Aug 2026 for Sathya to correct.
 - **NOT YET.** Decided 10 Aug: plant them early — day one is too soon — so students start living with *did you tackle a problem you couldn't have on your own, with AI's help?* and *how is it better because you were involved?*, and learn their value as professionals rests on demonstrating both.
   Missing: when exactly, inside what activity, and the materials.
 
+## The nurture-track thread (six qualities)
+
+- **NOT YET — Every activity aligned to a named subset of the six qualities.**
+  Evidence: principle decided 10–11 Aug — the qualities are woven throughout the course rather than treated as a start/end measure; each activity carries a subset chosen by its focus; Map Your Curiosity is out as a course activity; the opening Know-Yourself activity carries self-knowledge and probably self-regulation.
+  Missing: the activity-by-activity mapping for this course.
+
+- **NOT YET — Movement on those qualities watched per activity.**
+  Evidence: decided 11 Aug — conversations with AI Sensei run throughout the course (the two-conversation week 1–2 / week 6–8 design is superseded; note on the 8/10 plan file).
+  Missing: how each activity's conversations or artifacts record movement, and which parts of the plan file survive per conversation.
+
 ## The scaffolded introduction sequence
 
 - **NOT YET.** The order is sketched — engage and orient → conversation + Symbiotic Thinking → the learning cycle → then the two questions — and flagged 10 Aug as needing careful thinking. Nothing is designed.
@@ -53,3 +63,4 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
 ## Log
 
 - 2026-08-10 — file created. Framework: Sathya. Status calls and wording: Alan, for Sathya's review.
+- 2026-08-11 — nurture-track section added (throughout principle; both items not yet). — Alan
