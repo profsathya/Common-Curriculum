@@ -830,7 +830,9 @@
    section the URL's #hash points at - the same view students had before. */
 (function () {
   if (location.protocol !== 'https:') { return; }  /* editors and local previews stay fully open */
-  var keep = { 'start-here': 1, 'sprint-0': 1 };
+  /* Sathya 2026-08-12: the big picture stays open for the start of the semester.
+     After Sprint 0, delete the big-picture entry from this line to collapse it by default. */
+  var keep = { 'big-picture': 1, 'start-here': 1, 'sprint-0': 1 };
   var h = location.hash.replace('#', '');
   if (h) { keep[h] = 1; }
   var all = document.querySelectorAll('details.module, details.bigpic');
