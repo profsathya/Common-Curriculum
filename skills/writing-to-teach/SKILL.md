@@ -108,6 +108,23 @@ rule is one new idea per sentence. A short sentence carrying three compressed id
 presentation, not teaching. When a sentence needs two reads, split it and spend the
 words walking, not summarizing.
 
+**Walk the chain — don't chain declaratives.** (2026-08-11, named by Sathya at the
+CST349 gate.) A run of short declaratives that each state a conclusion leaves the
+connections as reader homework — presentation in miniature, even when every sentence
+is short. Give each claim its actor and its concrete mechanism ("with the help of AI,
+you could complete the work" — never "work can be produced"), and write the
+connectives — but, so, because — into the prose. An aphorism may close a section; it
+never explains one. Corollary: describe integrity mechanisms as what holds us
+accountable to our learning together, never as fake-detection.
+
+**Pronouns don't survive first contact.** A "they" or "it" whose antecedent lives in
+an earlier sentence fails a first-time reader (found live: first TA review,
+2026-08-11). Repeat the nouns until the pair itself has a name.
+
+**Sibling terms need a frame before the contrast.** Two new terms arriving inside an
+either/or read as interchangeable (same review). First the frame ("it comes in two
+kinds"), then one definition sentence per term.
+
 **Backbone visible, detours behind clicks.** In a lecture a detour works because the
 key points are tied back across it; on a page, the same content laid flat becomes a
 wall. So: the backbone — payoff, core idea, everyday example, next action — reads
@@ -194,6 +211,8 @@ you only the first sentence leave knowing the payoff?
 - The backbone reads top-to-bottom with every expandable closed; detail sits behind
   clicks at the point of use.
 - No sentence introduces more than one new idea.
+- No declarative chains: each claim carries its actor, mechanism, and connective;
+  every pronoun resolves inside its own sentence.
 - Task text: verb first, one task per line, constraints bold, deliverable stated
   separately from the steps.
 - One name per concept, on this page and its siblings; our terms carry a tooltip or
