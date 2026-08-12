@@ -64,3 +64,16 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
 
 - 2026-08-10 — file created. Framework: Sathya. Status calls and wording: Alan, for Sathya's review.
 - 2026-08-11 — nurture-track section added (throughout principle; both items not yet). — Alan
+- 2026-08-12 — DESIGN DOC v1: `CST286 Course Design v1 - 20260812` created in Drive
+  (https://docs.google.com/document/d/1MSolKdPSz-yVZXPDAUeGCJ8SQxFcjir6-FrYn00qn4A), mirroring the
+  CST349 design doc's structure at Sathya's direction; markdown source in
+  `cowork/fall-2026-courses/cst286-course-design-v1.md`. Carries every 286 lock from July +
+  the 8/05–8/06 build session (mirror mechanic, 4 windows one per sprint, combine-never-waive,
+  process-step/milestone, D/F-only end retake, 2/4/4/4/2 arc, finding starts S1, 10%/day) and
+  marks Alan's proposals (hypotheses, week placement, class time, nurture map) as unreviewed.
+  Status calls in the sections above are unchanged pending Sathya's pass on the doc. — Alan
+- 2026-08-12 — CORRECTION to "Where the build lives today": the 8/06 home page rebuild
+  ("Get Truly Good at Something You Care About") was built and delivered into a chat while the
+  desktop bridge was down, and a later checkpoint recorded it as committed. It was not.
+  `home.html` still has one commit (16148bc, 12 Jun) and is entirely the superseded physics-up
+  page — which `config/course-docs.json` also feeds into the CST286 course-context doc. — Alan
