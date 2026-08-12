@@ -86,4 +86,22 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   and item links are deliberately unbuilt and nothing links to them, so there are no dead links.
   Audits clean: balanced markup, 0 X-not-Y constructions, 0 internal shorthand ("dig", "milestone",
   "process step"), render-verified at 1100px. STATUS: at Sathya's direct-edit gate. — Alan
+- 2026-08-12 — `understand-the-course-design.html` CREATED for 286, mirroring the 349 page (crumb,
+  pagehead, On-this-page list, h2.sec sections). Six sections: weekly rhythm (one reflection + one
+  assignment, key item vs checkpoint, the two challenge-and-evidence questions, 10%/day) · how the
+  grade works (50/50, nothing submitted and forgotten, no mid-course retakes + end catch-up) · **what
+  counts as going deeper** (the three standards in student language, the qualitative-is-enough /
+  quantitative-encouraged-and-defended bar, delta from your own starting line — this section is
+  286-specific and has no 349 equivalent) · interview check-ins (one round per sprint, everyone seen
+  in wks 1–2, the scheduling rider explained as why the weekly rhythm matters, the bandwidth rule) ·
+  Sprint Exams (wks 6/10/14, Monday prep checkpoint) · attendance. Home Start Here module rewritten
+  to link to it (2 items, the 499/349 pattern) instead of carrying the mechanics inline.
+  **Attendance is deliberately incomplete**: Mondays and the required Wednesdays are stated, and the
+  rule for the remaining Wednesdays is marked as still being set — Sathya has not decided it and it
+  was not invented. Flagged in the page's draft banner.
+- 2026-08-12 — GENERATOR RETIRED. `mk_cst286_home.py` moved to `cowork/fall-2026-courses/_to_delete/`.
+  It was a one-time build tool, and telling Sathya to "edit the generator, not the HTML" was wrong:
+  he edits these pages directly in Pinegrow (see the `_pgbackup/` folders in cst349 and cst499), so a
+  live generator would silently overwrite his edits on the next run. **The HTML is the source of
+  truth for both 286 pages from here.** — Alan
 
