@@ -77,3 +77,13 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   desktop bridge was down, and a later checkpoint recorded it as committed. It was not.
   `home.html` still has one commit (16148bc, 12 Jun) and is entirely the superseded physics-up
   page — which `config/course-docs.json` also feeds into the CST286 course-context doc. — Alan
+- 2026-08-12 — FALL HOME PAGE BUILT AND COMMITTED. `cst286/home.html` replaced (the June
+  physics-up page lives in git history). Built from `cowork/fall-2026-courses/cst286-course-design-v1.md`
+  against the CST349 fall shell — same stylesheet, same accordion behaviour, same tooltip
+  scaffolding. Generator kept at `cowork/fall-2026-courses/mk_cst286_home.py`; edit that, not the
+  HTML. Vocabulary now checkpoint / key item (Sathya 8/12, matching 349 and 499); pursuit · deep
+  dive · interview · Sprint Exam student-facing. No CTI logo, per the CONTEXT decision. Sprint pages
+  and item links are deliberately unbuilt and nothing links to them, so there are no dead links.
+  Audits clean: balanced markup, 0 X-not-Y constructions, 0 internal shorthand ("dig", "milestone",
+  "process step"), render-verified at 1100px. STATUS: at Sathya's direct-edit gate. — Alan
+

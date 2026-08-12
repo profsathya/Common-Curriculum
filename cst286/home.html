@@ -1,296 +1,411 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CST286 &middot; Physics of Computing (with AI) &mdash; Fall 2026</title>
-<style>:root { --blue: #0374B5; --blue-dark: #0a5a8a; --text: #2D3B45; --muted: #6B7780; --border: #C7CDD1; --border-light: #E8EAEC; --modhead: #F5F5F5; --goal-bg: #F3F8FB; --goal-border: #0374B5; --check-bg: #F2FAF5; --check-border: #0B874B; --check: #0B874B; --warn: #9B6A00; --teal: #0d9488; --teal-light: #f0fdfa; --font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; } * { box-sizing: border-box; } html, body { margin: 0; padding: 0; } body { font-family: var(--font); color: var(--text); background: #fff; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; } a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; color: var(--blue-dark); } .page { max-width: 1040px; margin: 0 auto; padding: 22px 22px 56px; } .draft { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 5px; padding: 10px 13px; margin-bottom: 18px; font-size: 12.5px; color: #5e4a18; display: flex; gap: 8px; align-items: flex-start; } .draft svg { width: 15px; height: 15px; flex: 0 0 15px; margin-top: 2px; } .draft b { font-weight: 700; } .course-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 18px; } .course-header .eyebrow { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .7px; text-transform: uppercase; } .course-header h1 { font-size: 23px; font-weight: 700; margin: 3px 0 4px; } .course-header .sub { font-size: 14px; color: var(--text); font-weight: 600; } .course-header .lead { color: var(--muted); font-size: 13px; max-width: 690px; margin-top: 6px; } .cti-logo { height: 34px; width: auto; display: block; opacity: .9; } .cti-logo-fallback { display: none; font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: .3px; text-align: right; line-height: 1.2; } /* Program arc */.bigpic { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 20px; background: #fff; } details.bigpic > summary { list-style: none; cursor: pointer; } details.bigpic > summary::-webkit-details-marker { display: none; } .bigpic-head { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: #FCFDFE; border-radius: 5px; } details.bigpic[open] > summary > .bigpic-head { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .bigpic-head:hover { background: #F5F9FB; } .bigpic-head .plus { flex: 0 0 18px; width: 18px; height: 18px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.bigpic[open] > summary > .bigpic-head .plus::after { content: "\2212"; } details.bigpic:not([open]) > summary > .bigpic-head .plus::after { content: "+"; } .bigpic-head .t { font-size: 14px; font-weight: 700; color: var(--text); } .bigpic-head .s { font-size: 12.5px; color: var(--muted); } .bigpic-body { padding: 14px; } .arc { margin: 0 0 16px; } .arc .arc-caption { font-size: 12.5px; color: var(--muted); margin: 0 0 9px; } .arc-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; } a.arc-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; background: #FCFDFE; color: var(--text); } a.arc-card:hover, a.arc-card:focus { z-index: 70; } a.arc-card .bub { width: 320px; max-width: none; margin-top: 8px; } a.arc-card:hover > .gl > .bub, a.arc-card:focus > .gl > .bub { display: block; } @media (min-width:1001px){ .arc-grid > a:nth-child(n+5) .bub {  left: auto;  right: 0; } } @media (max-width:1000px) and (min-width:621px){ .arc-grid > a:nth-child(3n) .bub {  left: auto;  right: 0; } } @media (max-width:620px){ .arc-grid > a:nth-child(2n) .bub {  left: auto;  right: 0; } } a.arc-card:hover { text-decoration: none; border-color: var(--blue); background: #F7FBFD; } .arc-card .s { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); } .arc-card .nm { font-size: 13.5px; font-weight: 700; margin: 2px 0 1px; color: var(--blue-dark); line-height: 1.25; } .arc-card .th { font-size: 11.5px; color: var(--muted); line-height: 1.3; } .arc-card .who { font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 6px; } .arc-card .who b { color: var(--text); font-weight: 600; } .arc-card.build { background: #F3F8FB; border-color: #A8CBE0; } @media (max-width:1000px){ .arc-grid {  grid-template-columns: repeat(3,1fr); } } @media (max-width:620px){ .arc-grid {  grid-template-columns: repeat(2,1fr); } } /* Beyond the grade */.beyond { border: 1px solid var(--check-border); background: var(--check-bg); border-radius: 6px; padding: 13px 15px; margin: 0 0 22px; } .beyond .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--check); margin-bottom: 4px; } .beyond .hd { font-size: 15px; font-weight: 700; margin-bottom: 4px; } .beyond p { margin: 0 0 6px; font-size: 13px; color: #38503f; } .beyond p:last-child { margin-bottom: 0; } /* Modules */.module { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 16px; } details.module > summary { list-style: none; cursor: pointer; } details.module > summary::-webkit-details-marker { display: none; } .module-head { background: var(--modhead); border-bottom: 1px solid var(--border); padding: 11px 14px; display: flex; align-items: center; gap: 12px; border-radius: 3px 3px 0 0; } details.module:not([open]) > summary > .module-head { border-bottom: none; border-radius: 3px; } .module-head .name { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; } .module-head .tag { font-size: 12px; color: var(--muted); white-space: nowrap; } .module-head .chev { display: inline-block; font-size: 11px; color: var(--muted); transition: transform .15s ease; flex-shrink: 0; } details.module[open] > summary > .module-head .chev { transform: rotate(90deg); } .module-head:hover { background: #EFEFEF; } .goal { background: var(--goal-bg); border-left: 4px solid var(--goal-border); padding: 11px 14px; } .goal .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; } .goal .text { font-size: 14px; color: var(--text); } .goal ul { margin: 4px 0 0; padding-left: 18px; } .goal li { margin: 2px 0; } .prereq { padding: 8px 14px 4px; color: var(--muted); font-size: 12.5px; display: flex; gap: 7px; align-items: flex-start; border-bottom: 1px solid var(--border-light); } .prereq svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .prereq b { color: var(--text); font-weight: 600; } .items { padding: 2px 0 4px; } .item { display: flex; gap: 11px; padding: 11px 14px 11px 26px; border-bottom: 1px solid var(--border-light); align-items: flex-start; } .item:last-child { border-bottom: none; } .item .ico { flex: 0 0 18px; margin-top: 1px; color: var(--muted); } .item .ico svg { width: 18px; height: 18px; display: block; } .item .body { flex: 1; min-width: 0; } .item .title { font-size: 14.5px; font-weight: 600; } .item .meta { color: var(--muted); font-size: 12px; margin-top: 2px; } .group-label { padding: 10px 14px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: #FAFBFC; border-bottom: 1px solid var(--border-light); } .group-label .gd { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); } .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: #7C8A93; border-radius: 3px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; } .badge.key { background: var(--blue); } .badge.check { background: #8B9AA5; } .badge.live { background: var(--check); } .badge.optional { background: #7C8A93; } .item.keyitem { background: var(--goal-bg); } .item.keyitem .ico { color: var(--blue); } .item.live { background: var(--check-bg); } .item.live .ico { color: var(--check); } .note { padding: 9px 14px; background: #FBF6EC; border-bottom: 1px solid var(--border-light); font-size: 12.5px; color: #5e4a18; display: flex; gap: 7px; align-items: flex-start; } .note svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .note b { font-weight: 700; } /* Canvas-page content (how-this-works, problem-spaces) */.crumb { font-size: 12px; color: var(--muted); margin-bottom: 12px; } .pagehead { border-bottom: 1px solid var(--border-light); padding-bottom: 14px; margin-bottom: 18px; } .pagehead .s { font-size: 11px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--teal); } .pagehead h1 { font-size: 22px; font-weight: 700; margin: 3px 0 5px; } .pagehead .dt { font-size: 13px; color: var(--muted); font-weight: 600; } .pagehead .lead { font-size: 13.5px; color: var(--muted); max-width: 700px; margin-top: 7px; } h2.sec { font-size: 16px; font-weight: 700; margin: 24px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--border-light); } p.body { font-size: 13.5px; margin: 0 0 10px; } table.grades { border-collapse: collapse; width: 100%; margin: 10px 0 0; font-size: 13px; } table.grades th, table.grades td { border-bottom: 1px solid var(--border-light); padding: 6px 8px; text-align: left; } table.grades th { font-size: 10.5px; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); font-weight: 700; } table.grades td:first-child { font-weight: 700; width: 70px; } .ps-group { margin-bottom: 20px; } .ps-group h3 { font-size: 14px; font-weight: 700; color: var(--blue-dark); margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border-light); } .ps { border: 1px solid var(--border-light); border-radius: 5px; padding: 10px 13px; margin-bottom: 8px; } .ps .nm { font-size: 14px; font-weight: 700; } .ps .desc { font-size: 13px; color: var(--muted); margin-top: 2px; } .ps .goal-line { font-size: 12.5px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border-light); } .ps .goal-line b { color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; font-size: 10px; } .pagenav { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border-light); font-size: 13px; } .instructor { margin-top: 26px; background: #FAFBFC; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; text-align: center; } .instructor .nm { font-weight: 700; color: var(--text); margin-bottom: 3px; } .instructor .links { font-size: 12.5px; color: var(--muted); } .provenance { margin-top: 18px; border: 1px solid var(--border-light); border-radius: 6px; padding: 11px 14px; font-size: 11.5px; color: var(--muted); background: #FCFCFD; } .provenance b { color: var(--text); font-weight: 700; } .provenance ul { margin: 5px 0 0; padding-left: 18px; } .provenance li { margin: 2px 0; } /* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */.gl { display: inline; } /* the bubble anchors to the surrounding block, not the word, so it can never run off
-   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */.item .body, .goal li, .prereq, .note, p.body, .pagehead .lead, .course-header .lead, .ps .desc, .ps .goal-line, .beyond p, .arc-caption { position: relative; } .arc-card .gl { display: block; } .arc-card .gt { font: inherit; color: inherit; text-align: left; border-bottom: 1px dashed var(--blue); } .gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; } .gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; } .gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; } .bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-align: left; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; white-space: normal; } .gl:hover > .bub, .gl:focus-within > .bub { display: block; } .bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); } .bub .br { display: block; margin-bottom: 6px; color: var(--text); } .bub .br:last-child { margin-bottom: 0; } .bub .br i { font-style: normal; font-weight: 700; color: var(--muted); } @media print{ .bub {  display: none !important; } } .page-footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11.5px; flex-wrap: wrap; } .page-footer img { height: 20px; opacity: .55; }
-/* Badges double as glossary triggers; explicit chip styling wins over the .gt reset */
-.gt.badge{background:#7C8A93;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:inline-block;vertical-align:middle;border-radius:3px;padding:1px 6px;margin-left:8px;border-bottom:0;cursor:help;text-decoration:underline dotted rgba(255,255,255,.75);text-underline-offset:2px;}
-.gt.badge.key{background:var(--blue);}
-.gt.badge.check{background:#8B9AA5;}
-.gt.badge.live{background:var(--check);}
-.gt.badge.optional{background:#7C8A93;}
-.gt.badge:hover,.gt.badge:focus{color:#fff;border-bottom:0;}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CST286 &mdash; Get Truly Good at Something You Care About</title>
+        <style>:root { --blue: #0374B5; --blue-dark: #0a5a8a; --text: #2D3B45; --muted: #6B7780; --border: #C7CDD1; --border-light: #E8EAEC; --modhead: #F5F5F5; --goal-bg: #F3F8FB; --goal-border: #0374B5; --check-bg: #F2FAF5; --check-border: #0B874B; --check: #0B874B; --warn: #9B6A00; --teal: #0d9488; --teal-light: #f0fdfa; --font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; } * { box-sizing: border-box; } html, body { margin: 0; padding: 0; } body { font-family: var(--font); color: var(--text); background: #fff; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; } a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; color: var(--blue-dark); } .page { max-width: 1040px; margin: 0 auto; padding: 22px 22px 56px; } .draft { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 5px; padding: 10px 13px; margin-bottom: 18px; font-size: 12.5px; color: #5e4a18; display: flex; gap: 8px; align-items: flex-start; } .draft svg { width: 15px; height: 15px; flex: 0 0 15px; margin-top: 2px; } .draft b { font-weight: 700; } .course-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 18px; } .course-header .eyebrow { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .7px; text-transform: uppercase; } .course-header h1 { font-size: 23px; font-weight: 700; margin: 3px 0 4px; } .course-header .sub { font-size: 14px; color: var(--text); font-weight: 600; } .course-header .lead { color: var(--muted); font-size: 13px; max-width: 690px; margin-top: 6px; } .cti-logo { height: 34px; width: auto; display: block; opacity: .9; } .cti-logo-fallback { display: none; font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: .3px; text-align: right; line-height: 1.2; } /* Program arc */.bigpic { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 20px; background: #fff; } details.bigpic > summary { list-style: none; cursor: pointer; } details.bigpic > summary::-webkit-details-marker { display: none; } .bigpic-head { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: #FCFDFE; border-radius: 5px; } details.bigpic[open] > summary > .bigpic-head { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .bigpic-head:hover { background: #F5F9FB; } .bigpic-head .plus { flex: 0 0 18px; width: 18px; height: 18px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.bigpic[open] > summary > .bigpic-head .plus::after { content: "\2212"; } details.bigpic:not([open]) > summary > .bigpic-head .plus::after { content: "+"; } .bigpic-head .t { font-size: 14px; font-weight: 700; color: var(--text); } .bigpic-head .s { font-size: 12.5px; color: var(--muted); } .bigpic-body { padding: 14px; } .arc { margin: 0 0 16px; } .arc .arc-caption { font-size: 12.5px; color: var(--muted); margin: 0 0 9px; } .arc-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; } .arc-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; background: #FCFDFE; color: var(--text); } .arc-card:hover, .arc-card:focus-within { z-index: 70; } .arc-card .bub { width: 320px; max-width: none; margin-top: 8px; } @media (min-width:1001px){ .arc-grid > .arc-card:nth-child(n+4) .bub {  left: auto;  right: 0; } } @media (max-width:1000px) and (min-width:621px){ .arc-grid > .arc-card:nth-child(3n) .bub {  left: auto;  right: 0; } } @media (max-width:620px){ .arc-grid > .arc-card:nth-child(2n) .bub {  left: auto;  right: 0; } } .arc-card:hover { border-color: var(--blue); background: #F7FBFD; } .arc-card .s { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); } .arc-card .nm { font-size: 13.5px; font-weight: 700; margin: 2px 0 1px; color: var(--blue-dark); line-height: 1.25; } .arc-card .th { font-size: 11.5px; color: var(--muted); line-height: 1.3; } .arc-card .who { font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 6px; } .arc-card .who b { color: var(--text); font-weight: 600; } .arc-card.build { background: #F3F8FB; border-color: #A8CBE0; } @media (max-width:1000px){ .arc-grid {  grid-template-columns: repeat(3,1fr); } } @media (max-width:620px){ .arc-grid {  grid-template-columns: repeat(2,1fr); } } /* Beyond the grade */.beyond { border: 1px solid var(--check-border); background: var(--check-bg); border-radius: 6px; padding: 13px 15px; margin: 0 0 22px; } .beyond .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--check); margin-bottom: 4px; } .beyond .hd { font-size: 15px; font-weight: 700; margin-bottom: 4px; } .beyond p { margin: 0 0 6px; font-size: 13px; color: #38503f; } .beyond p:last-child { margin-bottom: 0; } /* Modules */.module { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 16px; } details.module > summary { list-style: none; cursor: pointer; } details.module > summary::-webkit-details-marker { display: none; } .module-head { background: var(--modhead); border-bottom: 1px solid var(--border); padding: 11px 14px; display: flex; align-items: center; gap: 12px; border-radius: 3px 3px 0 0; } details.module:not([open]) > summary > .module-head { border-bottom: none; border-radius: 3px; } .module-head .name { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; } .module-head .tag { font-size: 12px; color: var(--muted); white-space: nowrap; } .module-head .chev { display: inline-block; font-size: 11px; color: var(--muted); transition: transform .15s ease; flex-shrink: 0; } details.module[open] > summary > .module-head .chev { transform: rotate(90deg); } .module-head:hover { background: #EFEFEF; } .goal { background: var(--goal-bg); border-left: 4px solid var(--goal-border); padding: 11px 14px; } .goal .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; } .goal .text { font-size: 14px; color: var(--text); } .goal ul { margin: 4px 0 0; padding-left: 18px; } .goal li { margin: 2px 0; } .prereq { padding: 8px 14px 4px; color: var(--muted); font-size: 12.5px; display: flex; gap: 7px; align-items: flex-start; border-bottom: 1px solid var(--border-light); } .prereq svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .prereq b { color: var(--text); font-weight: 600; } .items { padding: 2px 0 4px; } .item { display: flex; gap: 11px; padding: 11px 14px 11px 26px; border-bottom: 1px solid var(--border-light); align-items: flex-start; } .item:last-child { border-bottom: none; } .item .ico { flex: 0 0 18px; margin-top: 1px; color: var(--muted); } .item .ico svg { width: 18px; height: 18px; display: block; } .item .body { flex: 1; min-width: 0; } .item .title { font-size: 14.5px; font-weight: 600; } .item .meta { color: var(--muted); font-size: 12px; margin-top: 2px; } .group-label { padding: 10px 14px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: #FAFBFC; border-bottom: 1px solid var(--border-light); } .group-label .gd { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); } .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: #7C8A93; border-radius: 3px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; } .badge.key { background: var(--blue); } .badge.check { background: #8B9AA5; } .badge.live { background: var(--check); } .badge.optional { background: #7C8A93; } .item.keyitem { background: var(--goal-bg); } .item.keyitem .ico { color: var(--blue); } .item.live { background: var(--check-bg); } .item.live .ico { color: var(--check); } .note { padding: 9px 14px; background: #FBF6EC; border-bottom: 1px solid var(--border-light); font-size: 12.5px; color: #5e4a18; display: flex; gap: 7px; align-items: flex-start; } .note svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .note b { font-weight: 700; } h2.sec { font-size: 16px; font-weight: 700; margin: 24px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--border-light); } p.body { font-size: 13.5px; margin: 0 0 10px; } .instructor { margin-top: 26px; background: #FAFBFC; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; text-align: center; } .instructor .nm { font-weight: 700; color: var(--text); margin-bottom: 3px; } .instructor .links { font-size: 12.5px; color: var(--muted); } .provenance { margin-top: 18px; border: 1px solid var(--border-light); border-radius: 6px; padding: 11px 14px; font-size: 11.5px; color: var(--muted); background: #FCFCFD; } .provenance b { color: var(--text); font-weight: 700; } .provenance ul { margin: 5px 0 0; padding-left: 18px; } .provenance li { margin: 2px 0; } /* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */.gl { display: inline; } .item .body, .goal li, .prereq, .note, p.body, .course-header .lead, .beyond p, .arc-caption { position: relative; } .arc-card .gl { display: block; } .arc-card .gt { font: inherit; color: inherit; text-align: left; border-bottom: 1px dashed var(--blue); } .gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; } .gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; } .gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; } .bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-align: left; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; white-space: normal; } .gl:hover > .bub, .gl:focus-within > .bub { display: block; } .bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); } .bub .br { display: block; margin-bottom: 6px; color: var(--text); } .bub .br:last-child { margin-bottom: 0; } .bub .br i { font-style: normal; font-weight: 700; color: var(--muted); } @media print{ .bub {  display: none !important; } } .page-footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11.5px; flex-wrap: wrap; } .page-footer img { height: 20px; opacity: .55; } .gt.badge { background: #7C8A93; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; display: inline-block; vertical-align: middle; border-radius: 3px; padding: 1px 6px; margin-left: 8px; border-bottom: 0; cursor: help; text-decoration: underline dotted rgba(255,255,255,.75); text-underline-offset: 2px; } .gt.badge.key { background: var(--blue); } .gt.badge.check { background: #8B9AA5; } .gt.badge.live { background: var(--check); } .goal .why { margin-top: 8px; font-size: 12.5px; color: var(--muted); }</style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="draft">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 8v5M12 16h.01"/>
+                </svg>
+                <span><b>Draft for discussion &mdash; 12 August 2026, v1.</b> The Fall 2026 shape of CST286. Sprint pages and item links are still to be built, and dates are provisional.</span>
+            </div>
+            <div class="course-header">
+                <div>
+                    <div class="eyebrow">CST286 &middot; Physics of Computing (with AI) &middot; Fall 2026</div>
+                    <h1>Get Truly Good at Something You Care About</h1>
+                    <div class="sub">Pick something you already care about. Spend a semester finding out how it actually works underneath &mdash; and get better at it because of what you find.</div>
 
-.goal .why{margin-top:8px;font-size:12.5px;color:var(--muted);}
-</style>
-</head>
-<body>
-<div class="page">
-<div class="draft">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-  <span><b>Draft for discussion &mdash; 6 August 2026, v1.</b> A proposed shape for CST286 in Fall 2026, rebuilt from the locked design. Item links and the weekly deep-dive activities inside Sprints 1&ndash;3 are still to be built; dates are provisional.</span>
-</div>
-<div class="course-header">
-  <div>
-    <div class="eyebrow">CST286 &middot; Physics of Computing (with AI) &middot; Fall 2026 &middot; Mondays online &middot; Wednesdays in person</div>
-    <h1>Get Truly Good at Something You Care About</h1>
-    <div class="sub">You choose the pursuit. Physics shows you how it really works underneath. The depth makes you better at it &mdash; and the habit of going deep stays with you.</div>
-    <div class="lead">This semester you take something you already care about &mdash; a sport, a game, an instrument, a craft, a hobby &mdash; and get genuinely better at it by understanding how it really works. Physics is the lens this course hands you for that <span class="gl"><button type="button" class="gt">deep dive</button><span class="bub" role="tooltip"><b class="bt">The deep dive</b><span class="br"><i>What it means.</i> Getting underneath your pursuit to the level where you can explain how it really works &mdash; with physics as the lens this course hands you.</span><span class="br"><i>Why it matters.</i> Understanding the mechanism is what turns &ldquo;I do this&rdquo; into &ldquo;I can make this better on purpose.&rdquo;</span><span class="br"><i>What a good one looks like.</i> You can show how it works, show you got better at the pursuit because of the depth, and run the same process on something new.</span></span></span>: the mechanics under a jump shot, the acoustics under a guitar, the thermodynamics under baking. In the second half of the term you choose a second interest and run the same process again, more on your own &mdash; because the skill this course builds is the habit of going deep, and by December you will have seen it work twice.</div>
-    <div class="lead">Two things come out of this semester:</div>
-    <div class="lead">
-      <ol style="margin:4px 0 4px 22px;padding:0;">
-        <li><b>Your pursuit, genuinely improved.</b> You will be better at the thing itself, and able to show the before and after.</li>
-        <li><b>A process for going deep that you own.</b> A repeatable way to get underneath any interest or goal and come back better at it.</li>
-      </ol>
-    </div>
-    <div class="lead"><b>Explaining both of these out loud is how the depth is verified. That is why you sit down and walk your instructor through your own work each sprint, and why those interviews are half your grade.</b></div>
-  </div>
-</div>
-<details class="bigpic" id="big-picture" open>
-  <summary>
-    <div class="bigpic-head">
-      <span class="plus"></span>
-      <span class="t">The big picture</span>
-      <span class="s">All five sprints on one screen, and how the semester builds</span>
-    </div>
-  </summary>
-  <div class="bigpic-body">
-    <div class="arc">
-      <p class="arc-caption">Five sprints across sixteen instructional weeks. Hover any sprint name to see what it is, why it comes where it does, and what you have at the end of it. Fall Break &mdash; the week of 23 November &mdash; lands inside Sprint 3, with your second deep dive already underway.</p>
-      <div class="arc-grid">
-        <a class="arc-card" href="#sprint-0"><div class="s">Sprint 0</div><div class="nm"><span class="gl"><button type="button" class="gt">Get oriented</button><span class="bub" role="tooltip"><b class="bt">Sprint 0 &middot; Get oriented</b><span class="br"><i>What this sprint is.</i> Two weeks to understand how this course works and why, and to set up how you will partner with AI all semester.</span><span class="br"><i>Why it comes here.</i> This course asks you to drive. Seeing the whole design first &mdash; and getting your AI partnership working &mdash; is what makes that possible.</span><span class="br"><i>What you have at the end.</i> Your questions answered, your tools set up, and your first small-group interview done.</span></span></span></div><div class="th">See how the course works, and set up your AI partnership</div><div class="who"><b>Weeks 1&ndash;2</b> &middot; Aug 24 &ndash; Sep 6</div></a>
-        <a class="arc-card build" href="#sprint-1"><div class="s">Sprint 1</div><div class="nm"><span class="gl"><button type="button" class="gt">Find your pursuit, start the deep dive</button><span class="bub" role="tooltip"><b class="bt">Sprint 1 &middot; Find your pursuit, start the deep dive</b><span class="br"><i>What this sprint is.</i> Four weeks to choose the pursuit you will spend the semester on, define what evidence of depth will look like for it, write down your starting point, and make your first pass underneath it.</span><span class="br"><i>Why it comes here.</i> Everything that follows runs on something you actually care about &mdash; so choosing well is real work, and your own starting point is what your depth gets measured from.</span><span class="br"><i>What you have at the end.</i> A pursuit, an evidence plan, a first explanation of how it really works, and your Sprint 1 interview.</span></span></span></div><div class="th">Choose your pursuit, set your baseline, and get underneath it</div><div class="who"><b>Weeks 3&ndash;6</b> &middot; Sep 7 &ndash; Oct 4</div></a>
-        <a class="arc-card build" href="#sprint-2"><div class="s">Sprint 2</div><div class="nm"><span class="gl"><button type="button" class="gt">Go deeper</button><span class="bub" role="tooltip"><b class="bt">Sprint 2 &middot; Go deeper</b><span class="br"><i>What this sprint is.</i> Four weeks taking the same pursuit further down &mdash; past the level where the explanation was easy.</span><span class="br"><i>Why it comes here.</i> The first explanation is where most digging stops. Going past it is where the payoff lives &mdash; the point where the depth starts changing what you do.</span><span class="br"><i>What you have at the end.</i> Something you now do differently in your pursuit, and the evidence showing the before and after.</span></span></span></div><div class="th">Push past the first explanation, and show the payoff</div><div class="who"><b>Weeks 7&ndash;10</b> &middot; Oct 5 &ndash; Nov 1</div></a>
-        <a class="arc-card" href="#sprint-3"><div class="s">Sprint 3</div><div class="nm"><span class="gl"><button type="button" class="gt">Do it again with a second pursuit</button><span class="bub" role="tooltip"><b class="bt">Sprint 3 &middot; Do it again with a second pursuit</b><span class="br"><i>What this sprint is.</i> Four weeks to choose a second interest and run your whole process on it &mdash; this time with you in the driver&rsquo;s seat.</span><span class="br"><i>Why it comes here.</i> Running the process again on new ground is what turns one good semester into a skill you own.</span><span class="br"><i>What you have at the end.</i> A second case in your own words, and your Sprint 3 interview covering both pursuits.</span></span></span></div><div class="th">Run the whole process on a second interest, more on your own</div><div class="who"><b>Weeks 11&ndash;14</b> &middot; Nov 2 &ndash; Dec 6</div></a>
-        <a class="arc-card" href="#sprint-4"><div class="s">Sprint 4</div><div class="nm"><span class="gl"><button type="button" class="gt">Wrap up and show it</button><span class="bub" role="tooltip"><b class="bt">Sprint 4 &middot; Wrap up and show it</b><span class="br"><i>What this sprint is.</i> Two weeks to pull your two deep dives into one account of what going deep does for you &mdash; and to demonstrate it.</span><span class="br"><i>Why it comes here.</i> Making the claim from your own evidence is the strongest form of knowing it.</span><span class="br"><i>What you have at the end.</i> Your final demonstration, argued from two pursuits you actually got better at.</span></span></span></div><div class="th">Make your case for depth, from your own two pursuits</div><div class="who"><b>Weeks 15&ndash;16</b> &middot; Dec 7 &ndash; Dec 20</div></a>
-      </div>
-    </div>
-  </div>
-</details>
-<details class="module" id="start-here" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Start Here &middot; How this course works</span>
-      <span class="tag">Read before week 1</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">This section answers</div>
-    <div class="text"><ul><li>What am I being asked to do this semester, and what will I have at the end of it?</li><li>How is my grade calculated? Half your points come from submitting the work &mdash; <span class="gl"><button type="button" class="gt badge check">Process step</button><span class="bub" role="tooltip"><b class="bt">Process step</b><span class="br"><i>What it means.</i> A short piece of the work, credited as soon as you submit it. Its job is to keep you moving and tell you whether you are on track while there is still time to adjust.</span></span></span> items credited when you submit, and <span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span> items worth 100 points each. The other half comes from four <span class="gl"><button type="button" class="gt badge live">Interview</button><span class="bub" role="tooltip"><b class="bt">The interview</b><span class="br"><i>What it means.</i> A conversation at the end of each sprint where we pick pieces of the work you submitted and you walk us through them. You sign up once that sprint&rsquo;s work is in.</span><span class="br"><i>Why it matters.</i> Submitting shows you did the work; explaining it shows the depth is yours. Each interview is worth as many points as that sprint&rsquo;s milestones put together &mdash; the half of your grade that raises your letter.</span><span class="br"><i>What a good one looks like.</i> You can say what you found, how you know, and what changed in your pursuit because of it. We pick the pieces, so bring all of it. Your first one runs as a small group; students doing well may cover two sprints in one combined sitting.</span></span></span> sittings, one per sprint, each worth that sprint&rsquo;s milestone points put together.</li><li>Do I have to be good at physics to do well here? Your depth is <span class="gl"><button type="button" class="gt">measured from where you start</button><span class="bub" role="tooltip"><b class="bt">Your starting point</b><span class="br"><i>What it means.</i> In week 4 you write down where your pursuit and your physics comfort stand today. That written starting point is your baseline.</span><span class="br"><i>Why it matters.</i> Depth is judged as distance traveled from your own baseline &mdash; so a strong start and a modest start compete on the same terms: how far did you go.</span></span></span> &mdash; you write that starting point down in week 4, and your grade tracks how far you travel from it.</li><li>What if an interview goes badly? Your next interview is your recovery: show up stronger at it. And for students who would otherwise finish at D or F, one cumulative retake at the end of term earns back part of the interview points &mdash; after the progress is visible.</li></ul></div>
-  </div>
-  <div class="prereq">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
-  <span><b>Start here.</b> Two short pages, about ten minutes. Read them before week 1 and the rest of the course makes sense.</span>
-</div>
-  <div class="items">
-<div class="group-label">Read these before week 1</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a href="understand-the-course-design.html">Understand the Course Design</a></div>
-    <div class="meta">How the course works end to end &mdash; the grade, the interviews, and how the sprints fit together.</div>
-  </div>
-</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
-  <div class="body">
-    <div class="title"><a href="../profsathya.html">Meet your instructor</a></div>
-    <div class="meta">How to reach Prof. Sathya Narayanan, and when office hours run.</div>
-  </div>
-</div>
-  </div>
-</details>
-<details class="module" id="sprint-0" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Sprint 0 &middot; Get oriented</span>
-      <span class="tag">Weeks 1&ndash;2 &middot; Aug 24 &ndash; Sep 6</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">By the end of this sprint you will be able to</div>
-    <div class="text"><ul><li>Explain how this course works and what it asks of you.</li><li>Start developing a mental model and process for partnering with AI &mdash; the advantages and challenges.</li><li>Know who you are working with and how to reach them.</li></ul></div>
-  </div>
-  <div class="prereq">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
-  <span><b>Start here.</b> Two weeks to see the whole design and get set up &mdash; the rest of the semester makes more sense from day one.</span>
-</div>
-  <div class="items">
-<div class="group-label">Week 1 &middot; Aug 24</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Course Orientation</a></div>
-    <div class="meta">The week-1 session, in class: how this course is designed and why.</div>
-  </div>
-</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Show you know how this course works</a><span class="gl"><button type="button" class="gt badge check">Process step</button><span class="bub" role="tooltip"><b class="bt">Process step</b><span class="br"><i>What it means.</i> A short piece of the work, credited as soon as you submit it. Its job is to keep you moving and tell you whether you are on track while there is still time to adjust.</span></span></span></div>
-    <div class="meta">Lets make sure all your questions about the course design are addressed early.</div>
-  </div>
-</div><div class="group-label">Week 2 &middot; Aug 31</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Confirm you understand how to partner with AI and your AI Dojo is set up</a><span class="gl"><button type="button" class="gt badge check">Process step</button><span class="bub" role="tooltip"><b class="bt">Process step</b><span class="br"><i>What it means.</i> A short piece of the work, credited as soon as you submit it. Its job is to keep you moving and tell you whether you are on track while there is still time to adjust.</span></span></span></div>
-    <div class="meta">Set up your AI Dojo and show your partnering process is ready for Sprint 1.</div>
-  </div>
-</div><div class="item live">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Small-group orientation interview</a><span class="gl"><button type="button" class="gt badge live">Interview</button><span class="bub" role="tooltip"><b class="bt">The interview</b><span class="br"><i>What it means.</i> A conversation at the end of each sprint where we pick pieces of the work you submitted and you walk us through them. You sign up once that sprint&rsquo;s work is in.</span><span class="br"><i>Why it matters.</i> Submitting shows you did the work; explaining it shows the depth is yours. Each interview is worth as many points as that sprint&rsquo;s milestones put together &mdash; the half of your grade that raises your letter.</span><span class="br"><i>What a good one looks like.</i> You can say what you found, how you know, and what changed in your pursuit because of it. We pick the pieces, so bring all of it. Your first one runs as a small group; students doing well may cover two sprints in one combined sitting.</span></span></span></div>
-    <div class="meta">Use the scheduling tool to sign up for a small-group interview slot with your instructor.</div>
-  </div>
-</div>
-  </div>
-</details>
-<details class="module" id="sprint-1" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Sprint 1 &middot; Find your pursuit, start the deep dive</span>
-      <span class="tag">Weeks 3&ndash;6 &middot; Sep 7 &ndash; Oct 4</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">By the end of this sprint you will be able to</div>
-    <div class="text"><ul><li>Name a pursuit you genuinely care about and want to get better at.</li><li>Define what evidence of depth will look like for your pursuit, and record where you are starting from.</li><li>Explain what is actually happening when your pursuit works &mdash; your first pass underneath it.</li></ul></div>
-  </div>
-  
-  <div class="items">
-<div class="group-label">Week 3 &middot; Sep 7</div><div class="item">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Choose your pursuit</a><span class="gl"><button type="button" class="gt badge check">Process step</button><span class="bub" role="tooltip"><b class="bt">Process step</b><span class="br"><i>What it means.</i> A short piece of the work, credited as soon as you submit it. Its job is to keep you moving and tell you whether you are on track while there is still time to adjust.</span></span></span></div>
-    <div class="meta">Name the pursuit you will spend the semester getting better at &mdash; the one requirement is that you genuinely care about it.</div>
-  </div>
-</div><div class="group-label">Week 4 &middot; Sep 14</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Evidence plan and starting point</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Write down what evidence of depth will look like for your pursuit, and where you are starting from.</div>
-  </div>
-</div><div class="group-label">Weeks 5&ndash;6 &middot; Sep 21 &ndash; Oct 4</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Deep dive: first pass</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Get underneath your pursuit and explain what is actually going on when it works.</div>
-  </div>
-</div><div class="item live">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Sprint 1 interview</a><span class="gl"><button type="button" class="gt badge live">Interview</button><span class="bub" role="tooltip"><b class="bt">The interview</b><span class="br"><i>What it means.</i> A conversation at the end of each sprint where we pick pieces of the work you submitted and you walk us through them. You sign up once that sprint&rsquo;s work is in.</span><span class="br"><i>Why it matters.</i> Submitting shows you did the work; explaining it shows the depth is yours. Each interview is worth as many points as that sprint&rsquo;s milestones put together &mdash; the half of your grade that raises your letter.</span><span class="br"><i>What a good one looks like.</i> You can say what you found, how you know, and what changed in your pursuit because of it. We pick the pieces, so bring all of it. Your first one runs as a small group; students doing well may cover two sprints in one combined sitting.</span></span></span></div>
-    <div class="meta">Sign up for your Sprint 1 interview once your milestones are in.</div>
-  </div>
-</div>
-  </div>
-</details>
-<details class="module" id="sprint-2" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Sprint 2 &middot; Go deeper</span>
-      <span class="tag">Weeks 7&ndash;10 &middot; Oct 5 &ndash; Nov 1</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">By the end of this sprint you will be able to</div>
-    <div class="text"><ul><li>Explain your pursuit at the level where it stopped being obvious.</li><li>Show something you now do differently in your pursuit because of the depth.</li></ul></div>
-  </div>
-  
-  <div class="items">
-<div class="group-label">Weeks 7&ndash;8 &middot; Oct 5 &ndash; Oct 18</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Deep dive: past the obvious</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Push your explanation to the level where it stopped being easy &mdash; and record what surprised you.</div>
-  </div>
-</div><div class="group-label">Weeks 9&ndash;10 &middot; Oct 19 &ndash; Nov 1</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Show the payoff</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Demonstrate something you now do differently in your pursuit because of what you found.</div>
-  </div>
-</div><div class="item live">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Sprint 2 interview</a><span class="gl"><button type="button" class="gt badge live">Interview</button><span class="bub" role="tooltip"><b class="bt">The interview</b><span class="br"><i>What it means.</i> A conversation at the end of each sprint where we pick pieces of the work you submitted and you walk us through them. You sign up once that sprint&rsquo;s work is in.</span><span class="br"><i>Why it matters.</i> Submitting shows you did the work; explaining it shows the depth is yours. Each interview is worth as many points as that sprint&rsquo;s milestones put together &mdash; the half of your grade that raises your letter.</span><span class="br"><i>What a good one looks like.</i> You can say what you found, how you know, and what changed in your pursuit because of it. We pick the pieces, so bring all of it. Your first one runs as a small group; students doing well may cover two sprints in one combined sitting.</span></span></span></div>
-    <div class="meta">Sign up for your Sprint 2 interview once your milestones are in.</div>
-  </div>
-</div>
-  </div>
-</details>
-<details class="module" id="sprint-3" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Sprint 3 &middot; Do it again with a second pursuit</span>
-      <span class="tag">Weeks 11&ndash;14 &middot; Nov 2 &ndash; Dec 6</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">By the end of this sprint you will be able to</div>
-    <div class="text"><ul><li>Run the whole process on a second interest, with you in the driver&rsquo;s seat.</li><li>Say what stayed the same and what you adapted between your two runs.</li></ul></div>
-  </div>
-  
-  <div class="items">
-<div class="group-label">Week 11 &middot; Nov 2</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Choose your second pursuit and plan the run</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Name your second interest and lay out how you will run your process on it &mdash; this round is yours to drive.</div>
-  </div>
-</div><div class="group-label">Weeks 12&ndash;14 &middot; Nov 9 &ndash; Dec 6</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Second deep dive</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Run your process end to end on the new pursuit and bring back the evidence.</div>
-  </div>
-</div><div class="note">Fall Break is the week of November 23. Your second deep dive pauses there and picks back up November 30.</div><div class="item live">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Sprint 3 interview</a><span class="gl"><button type="button" class="gt badge live">Interview</button><span class="bub" role="tooltip"><b class="bt">The interview</b><span class="br"><i>What it means.</i> A conversation at the end of each sprint where we pick pieces of the work you submitted and you walk us through them. You sign up once that sprint&rsquo;s work is in.</span><span class="br"><i>Why it matters.</i> Submitting shows you did the work; explaining it shows the depth is yours. Each interview is worth as many points as that sprint&rsquo;s milestones put together &mdash; the half of your grade that raises your letter.</span><span class="br"><i>What a good one looks like.</i> You can say what you found, how you know, and what changed in your pursuit because of it. We pick the pieces, so bring all of it. Your first one runs as a small group; students doing well may cover two sprints in one combined sitting.</span></span></span></div>
-    <div class="meta">Sign up for your Sprint 3 interview &mdash; it draws on both of your pursuits.</div>
-  </div>
-</div>
-  </div>
-</details>
-<details class="module" id="sprint-4" open>
-  <summary>
-    <div class="module-head">
-      <span class="name">Sprint 4 &middot; Wrap up and show it</span>
-      <span class="tag">Weeks 15&ndash;16 &middot; Dec 7 &ndash; Dec 20</span>
-      <span class="chev">&#9656;</span>
-    </div>
-  </summary>
-  <div class="goal">
-    <div class="label">By the end of this sprint you will be able to</div>
-    <div class="text"><ul><li>Make your own case, from two pursuits, for what going deep does.</li><li>Demonstrate it.</li></ul></div>
-  </div>
-  
-  <div class="items">
-<div class="group-label">Week 15 &middot; Dec 7</div><div class="item keyitem">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Synthesis: your case for depth</a><span class="gl"><button type="button" class="gt badge key">Milestone</button><span class="bub" role="tooltip"><b class="bt">Milestone</b><span class="br"><i>What it means.</i> A major piece of your deep dive, worth 100 points. You earn the points by submitting it &mdash; and it is part of the work your sprint interview draws from.</span><span class="br"><i>Why it matters.</i> Milestones are the backbone of your evidence: each one is something you can point at later and say &ldquo;this is how far I went.&rdquo;</span></span></span></div>
-    <div class="meta">Argue, from your own two pursuits, what going deep does &mdash; and where you will point it next.</div>
-  </div>
-</div><div class="group-label">Week 16 &middot; Dec 14 &ndash; Dec 20 &middot; finals week</div><div class="item live">
-  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-  <div class="body">
-    <div class="title"><a>Final demonstration</a><span class="gl"><button type="button" class="gt badge live">Final</button><span class="bub" role="tooltip"><b class="bt">Final demonstration</b><span class="br"><i>What it means.</i> The closing demonstration of your semester, during finals week &mdash; your two pursuits, the depth you reached, and the process that got you there.</span></span></span></div>
-    <div class="meta">The closing demonstration of your semester &mdash; format announced during the term.</div>
-  </div>
-</div>
-  </div>
-</details>
-<div class="footer">
-  <div>CST286 &middot; Physics of Computing (with AI) &middot; CSU Monterey Bay &middot; Fall 2026<br>
-  Prof. Sathya Narayanan &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
-</div>
-<div class="provenance">
-  <b>Provenance.</b> Draft v1 of 2026-08-06.
-  <ul>
-    <li><b>Human</b> &mdash; the design: the outcome (a pursuit the student already cares about, physics as the instrument, depth as a discipline that transfers); the three standards behind every interview (show how it works &middot; show you got better because of it &middot; show you could run it again); progress measured from a written starting point; assignments and interviews in a 50/50 mirror; four interviews, one per sprint, the first in small groups with combining earned; the process-step and milestone split; interviews schedulable once the sprint&rsquo;s work is in; recovery through the next interview, with one end-of-term retake for D/F after visible progress; and the shared 2/4/4/4/2 arc across CST286 and CST349 (Sathya Narayanan, 8 July &ndash; 6 August 2026).</li>
-    <li><b>Human + AI</b> &mdash; placement of the sprints against the Fall 2026 calendar, the week-by-week item cadence, and the student-facing phrasings on this page; proposals for his edit.</li>
-    <li><b>AI, verified</b> &mdash; semester dates (Aug 24 start; Fall Break Nov 23&ndash;29; finals week Dec 14&ndash;20) from the Fall 2026 calendar captured 25 July 2026.</li>
-    <li><b>Open</b> &mdash; the weekly deep-dive activity designs inside Sprints 1&ndash;3, the baseline instrument, point totals, how the Monday online and Wednesday in-person sessions differ, and units.</li>
-  </ul>
-</div>
-</div>
-<script>
+                    <div class="lead">Think about something you already do: riding, cooking, playing, building, fixing. You have a feel for it. Most of that feel came from repetition, so you know what works without knowing why it works. Now think about what changes when the why arrives. A cyclist who finds out why a softer tyre rolls faster over rough ground stops guessing at tyre pressure and starts choosing it. That move &mdash; from a feel for something to an understanding of it &mdash; is what this course is for.</div>
+
+                    <div class="lead">Underneath the thing you care about, there is <span class="gl"><button type="button" class="gt">physics</button><span class="bub" role="tooltip"><b class="bt">Physics</b><span class="br"><i>What it is.</i> The precise description of how the physical world behaves, written in mathematics.</span><span class="br"><i>Why that is powerful.</i> A handful of exact relationships let you predict something you have never seen. That is what every technology is built on top of &mdash; engines, radio, semiconductors, and the machines running AI today.</span><span class="br"><i>What you do with it here.</i> You use it as the way into whatever you chose. There is no list of physics topics to cover.</span></span></span>: the precise description of how the physical world behaves, written in mathematics. A handful of exact relationships is enough to predict something nobody has ever seen, and that is what every piece of technology we have is built on top of &mdash; engines, radio, the semiconductors in your laptop, and the machines running AI today. This semester you get to use that on something of your own choosing.</div>
+
+                    <div class="lead">Here is how the semester goes. In week 3 you choose your <span class="gl"><button type="button" class="gt">pursuit</button><span class="bub" role="tooltip"><b class="bt">Your pursuit</b><span class="br"><i>What it means.</i> The thing you choose to go deep on this semester &mdash; something you already care about.</span><span class="br"><i>Why there is no filter on it.</i> It does not have to touch computing and it does not have to look useful for a career. The moment the choice gets filtered, people stop picking what they care about.</span><span class="br"><i>What a good one looks like.</i> Specific enough to get underneath. &ldquo;Why my espresso pulls sour&rdquo; works. &ldquo;Coffee&rdquo; does not.</span></span></span>, and you build something small that models a piece of the world, so that modelling becomes something you have done rather than something you have heard of. In week 4 you write down what would count as evidence that you got deeper, and where you are starting from. Then you go under it &mdash; and in Sprint 3 you do the whole thing again on a second interest, more on your own, to find out whether what you built is a practice you can repeat.</div>
+
+                    <div class="lead">
+                        <ol>
+                            <li><b>A <span class="gl"><button type="button" class="gt">deep dive</button><span class="bub" role="tooltip"><b class="bt">Deep dive</b><span class="br"><i>What it means.</i> Going under your pursuit far enough to reach the mechanism &mdash; how the thing actually works, rather than a summary of it.</span><span class="br"><i>How far is far enough.</i> Measured from where you started, written down in your own words in week 4. There is no fixed bar everyone has to clear.</span><span class="br"><i>How you will know.</i> You can walk someone through it and keep going when they ask &ldquo;why?&rdquo; and &ldquo;what would happen if&hellip;?&rdquo;</span></span></span> you can walk anyone through.</b> Not a summary you read somewhere: the actual how-it-works, in your own words, holding up while someone asks why.</li>
+                            <li><b>Something you do differently because of it.</b> Understanding that changes nothing is trivia. The point is the change it makes to what you do, make, or choose.</li>
+                        </ol>
+                    </div>
+
+                    <div class="lead">Your ability to explain your own understanding out loud is how anyone &mdash; an interviewer, a colleague, a collaborator &mdash; will know what you actually have. That is why you talk through your work in interviews all semester, and why those conversations are half your grade.</div>
+                </div>
+                <div></div>
+            </div>
+
+            <details class="bigpic" id="big-picture" open>
+                <summary>
+                    <div class="bigpic-head">
+                        <span class="plus">&#43;</span>
+                        <span class="t">The big picture</span>
+                        <span class="s">All five sprints on one screen, and what you keep after the grade is posted</span>
+                    </div>
+                </summary>
+                <div class="bigpic-body">
+                    <div class="arc">
+                        <p class="arc-caption">Five sprints across sixteen instructional weeks. Hover any sprint name to see what it is, why it comes where it does, and what you have at the end of it.</p>
+                        <div class="arc-grid"><div class="arc-card">
+                            <div class="s">Sprint 0</div>
+                            <div class="nm"><span class="gl"><button type="button" class="gt">Orient</button><span class="bub" role="tooltip"><b class="bt">Sprint 0 &middot; Orient</b><span class="br"><i>What this sprint is.</i> Two weeks to see why the course is built this way, to start working in conversation, and to take an honest look at where you are today.</span><span class="br"><i>Why it comes here.</i> Everything after this runs on choices you make about yourself. Knowing your real starting point is what makes those choices worth something.</span><span class="br"><i>What you have at the end.</i> A know-yourself portfolio and your first interview behind you.</span></span></span></div>
+                            <div class="th">See how the course works, and where you are starting from</div>
+                            <div class="who"><b>Weeks 1&ndash;2</b> &middot; Aug 24 &ndash; Sep 4</div>
+                        </div><div class="arc-card build">
+                            <div class="s">Sprint 1</div>
+                            <div class="nm"><span class="gl"><button type="button" class="gt">Explore your interest deeply</button><span class="bub" role="tooltip"><b class="bt">Sprint 1 &middot; Explore your interest deeply</b><span class="br"><i>What this sprint is.</i> Four weeks to choose your pursuit, decide what counts as evidence you got deeper, meet the tools, and reach a first mechanism.</span><span class="br"><i>Why it comes here.</i> You cannot go deep on something you have not chosen honestly. Week 3 is where the choosing and the physics both arrive.</span><span class="br"><i>What you have at the end.</i> Your pursuit and baseline written down, your first deep dive, and Sprint Exam 1 behind you.</span></span></span></div>
+                            <div class="th">Choose it, set your baseline, and reach the first mechanism</div>
+                            <div class="who"><b>Weeks 3&ndash;6</b> &middot; Sep 7 &ndash; Oct 2</div>
+                        </div><div class="arc-card build">
+                            <div class="s">Sprint 2</div>
+                            <div class="nm"><span class="gl"><button type="button" class="gt">Reflect, adjust and go further</button><span class="bub" role="tooltip"><b class="bt">Sprint 2 &middot; Reflect, adjust and go further</b><span class="br"><i>What this sprint is.</i> Four weeks going further under the same pursuit &mdash; and showing that the understanding changed something you do.</span><span class="br"><i>Why it comes here.</i> The first mechanism you reach is rarely the whole story. This is where doubt does useful work.</span><span class="br"><i>What you have at the end.</i> A second deep dive, a before-and-after inside your pursuit, and Sprint Exam 2 behind you.</span></span></span></div>
+                            <div class="th">Go further, and show what the understanding changed</div>
+                            <div class="who"><b>Weeks 7&ndash;10</b> &middot; Oct 5 &ndash; Oct 30</div>
+                        </div><div class="arc-card build">
+                            <div class="s">Sprint 3</div>
+                            <div class="nm"><span class="gl"><button type="button" class="gt">Transfer your practice to another topic</button><span class="bub" role="tooltip"><b class="bt">Sprint 3 &middot; Transfer your practice to another topic</b><span class="br"><i>What this sprint is.</i> Four weeks running the same process on a second interest, with less help than you had the first time.</span><span class="br"><i>Why it comes here.</i> One deep dive can be luck. Doing it again somewhere else is how you find out you have a practice.</span><span class="br"><i>What you have at the end.</i> A third deep dive on new ground, and Sprint Exam 3 behind you.</span></span></span></div>
+                            <div class="th">Do it again somewhere new, and find out what transfers</div>
+                            <div class="who"><b>Weeks 11&ndash;14</b> &middot; Nov 2 &ndash; Dec 4</div>
+                        </div><div class="arc-card">
+                            <div class="s">Sprint 4</div>
+                            <div class="nm"><span class="gl"><button type="button" class="gt">Reflect and conclude with a sustainable practice</button><span class="bub" role="tooltip"><b class="bt">Sprint 4 &middot; Reflect and conclude with a sustainable practice</b><span class="br"><i>What this sprint is.</i> Two weeks putting both deep dives side by side and walking us through what changed.</span><span class="br"><i>Why it comes here.</i> The course ends. The habit does not have to.</span><span class="br"><i>What you have at the end.</i> Evidence you can point at, and a way of going deep that keeps working in January.</span></span></span></div>
+                            <div class="th">Show what depth did, and set it up to keep running</div>
+                            <div class="who"><b>Weeks 15&ndash;16</b> &middot; Dec 7 &ndash; Dec 18</div>
+                        </div></div>
+                    </div>
+                    <div class="beyond">
+                        <div class="label">Beyond the grade</div>
+                        <div class="hd">Depth is the practice.</div>
+                        <p>Courses end. What you keep is a way of working that professionals use on anything unfamiliar: choose something worth understanding, find out how it really works, let that change what you do, and then do it again on the next thing. By December you will have run it twice.</p>
+                        <p><b>When we meet.</b> Mondays are online and belong to check-ins &mdash; small groups or one-on-one, rolling through the roster all semester. Wednesdays are in person: the sessions that open each sprint, the three Sprint Exams, and the check-ins that are better in a room.</p>
+                    </div>
+                </div>
+            </details>
+
+            <details class="module" id="how-this-works" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Start Here &middot; How this course works</span>
+                        <span class="tag">Read before week 1</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="items">
+                    <div class="group-label">Every week</div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">One assignment and one reflection</div>
+                            <div class="meta">Each week carries one piece of work and a few honest lines on how it went and how you feel about it. The work on its own can be produced without you growing; the feelings on their own can be performed. Together, and agreeing with each other, they are hard to fake &mdash; and they are what your interviews draw on. Late work loses 10% a day, which is deliberate: we would rather catch you in week 4 than in week 12.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">How the grade works</div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+                        <div class="body">
+                            <div class="title">Half for doing it, half for explaining it</div>
+                            <div class="meta">Half your grade comes from submitting each week&rsquo;s work on time. The other half is earned live, in interviews where we pick something you already submitted and ask you to walk us through it. You will not know in advance which piece we pick, so prepare all of it.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Measured from your own starting line</div>
+                            <div class="meta">Depth is judged against the baseline you write in week 4, so you are never compared to a classmate who arrived with three physics courses behind them. There is no fixed bar everyone has to clear.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Recovering from a rough interview</div>
+                            <div class="meta">There are no mid-course retakes. A rough conversation is recovered by showing up better prepared at the next one. If the semester gets away from you, there is one catch-up at the end &mdash; talk to us before then, not after.</div>
+                        </div>
+                    </div>
+                    <div class="group-label">The conversations</div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
+                        <div class="body">
+                            <div class="title">Interviews</div>
+                            <div class="meta">Four rounds, one per sprint. The first round is a small group and every student is seen. After that, how your rounds are packaged depends on how the work is going &mdash; some people meet us fewer times, with more covered each time. Every sprint&rsquo;s work is checked for everyone.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Sprint Exams</div>
+                            <div class="meta">The last Wednesday of Sprints 1, 2 and 3 &mdash; weeks 6, 10 and 14. One page, hand-written, with the questions published ahead of time. Then you swap with a partner, type their answers into a short AI form, talk it through with them, and submit your evaluation of their work.</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
+                        <div class="body">
+                            <div class="title">Meet your instructor</div>
+                            <div class="meta">How to reach Prof. Sathya Narayanan, and when office hours run.</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="module" id="sprint-0" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 0 &middot; Orient</span>
+                        <span class="tag">Weeks 1&ndash;2 &middot; Aug 24 &ndash; Sep 4</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text"><ul><li>Say how this course works and why it is built this way.</li><li>Work through an idea in conversation &mdash; with people, and with AI.</li><li>Describe honestly where you are with physics, with AI, and with learning something hard on your own.</li></ul></div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
+                    <span><b>Start here.</b> Two weeks to get oriented and to take an honest baseline of yourself. Everything you choose later builds on this.</span>
+                </div>
+                <div class="items"><div class="group-label">Week 1 &mdash; How this course works <span class="gd">&middot; Aug 24</span></div><div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+                        <div class="body">
+                            <div class="title">Course orientation<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session on a Wednesday, everyone together.</span></span></span></div>
+                            <div class="meta">The Wednesday session, in class: what this course asks of you, how the semester is shaped, and why we work in conversation. This is also where <span class="gl"><button type="button" class="gt">Symbiotic Thinking</button><span class="bub" role="tooltip"><b class="bt">Symbiotic Thinking</b><span class="br"><i>What it means.</i> The human-led practice of pursuing wisdom in partnership with other intelligences, human or artificial.</span><span class="br"><i>What it looks like here.</i> You keep the thinking and the decisions. AI is in the room as a partner you direct.</span></span></span> gets introduced.</div>
+                        </div>
+                    </div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Show you know how this course works<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">A short AI-guided form. Make sure the rhythm and the grading make sense to you before they start counting.</div>
+                        </div>
+                    </div><div class="group-label">Weeks 1&ndash;2 &mdash; Your first interview <span class="gd">&middot; sign up for a slot</span></div><div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
+                        <div class="body">
+                            <div class="title">Meet us in a small group<span class="gl"><button type="button" class="gt badge live">Live session</button><span class="bub" role="tooltip"><b class="bt">Live session</b><span class="br"><i>What it means.</i> In person, or on Zoom with your camera on &mdash; the same conversation and the same bar either way.</span></span></span></div>
+                            <div class="meta">Where you are starting from, in your own words. Every student is seen in these first two weeks, and what we hear here shapes how your later check-ins are scheduled.</div>
+                        </div>
+                    </div><div class="group-label">Week 2 &mdash; Know yourself <span class="gd">&middot; Aug 31</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Build your know-yourself portfolio<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">Where you stand with physics, with AI, and with learning something hard on your own &mdash; plus the honest half: how you feel about where you are.</div>
+                        </div>
+                    </div></div>
+            </details>
+            <details class="module" id="sprint-1" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 1 &middot; Explore your interest deeply</span>
+                        <span class="tag">Weeks 3&ndash;6 &middot; Sep 7 &ndash; Oct 2</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text"><ul><li>Choose a <span class="gl"><button type="button" class="gt">pursuit</button><span class="bub" role="tooltip"><b class="bt">Your pursuit</b><span class="br"><i>What it means.</i> The thing you choose to go deep on this semester &mdash; something you already care about.</span><span class="br"><i>Why there is no filter on it.</i> It does not have to touch computing and it does not have to look useful for a career. The moment the choice gets filtered, people stop picking what they care about.</span><span class="br"><i>What a good one looks like.</i> Specific enough to get underneath. &ldquo;Why my espresso pulls sour&rdquo; works. &ldquo;Coffee&rdquo; does not.</span></span></span> you actually care about, and say why it is yours.</li><li>Write down what would count as evidence you got deeper, and where you are starting from.</li><li>Build something small that models a piece of the physical world, and explain what it does.</li><li>Reach a first mechanism underneath your pursuit.</li></ul></div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
+                    <span><b>This is where <span class="gl"><button type="button" class="gt">physics</button><span class="bub" role="tooltip"><b class="bt">Physics</b><span class="br"><i>What it is.</i> The precise description of how the physical world behaves, written in mathematics.</span><span class="br"><i>Why that is powerful.</i> A handful of exact relationships let you predict something you have never seen. That is what every technology is built on top of &mdash; engines, radio, semiconductors, and the machines running AI today.</span><span class="br"><i>What you do with it here.</i> You use it as the way into whatever you chose. There is no list of physics topics to cover.</span></span></span> arrives.</b> Week 3 runs long on Wednesday: you find your pursuit, and you spend two hours building something that models a piece of the world, so that modelling stops being an idea and becomes something you have done.</span>
+                </div>
+                <div class="items"><div class="group-label">Week 3 &mdash; Find it, and start tinkering <span class="gd">&middot; Sep 7</span></div><div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14.5 3.5a5 5 0 0 0-6.6 6.2L3 14.6V21h6.4l4.9-4.9a5 5 0 0 0 6.2-6.6l-3.1 3.1-2.9-.6-.6-2.9z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Finding your pursuit, and your first build<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session on a Wednesday, everyone together.</span></span></span></div>
+                            <div class="meta">The Wednesday session, in class. First we find what you actually care about &mdash; three moments across your life where you lost track of time or got annoyed enough to act. Then you open the example library and get something running: a simulation, a circuit, a model. Two hours, and you leave having built something.</div>
+                        </div>
+                    </div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Your challenge, your evidence<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">Two short answers: how did you challenge yourself this week, and what is your own evidence? Bring your three moments and the thing you got running.</div>
+                        </div>
+                    </div><div class="group-label">Week 4 &mdash; Stake it <span class="gd">&middot; Sep 14</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Your pursuit, your evidence plan, your baseline<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">What you are chasing, what will count as evidence that you got deeper, and where you are starting from today. This is the line the rest of the semester is measured against &mdash; yours, in your words.</div>
+                        </div>
+                    </div><div class="group-label">Week 5 &mdash; Get underneath it <span class="gd">&middot; Sep 21</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.2 5.6L20 9.5l-4.4 3.6L16.4 19 12 15.9 7.6 19l.8-5.9L4 9.5l5.8-1.9z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Deep dive 1<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">The first mechanism you reach, and the questions you asked to get there &mdash; including the ones that went nowhere.</div>
+                        </div>
+                    </div><div class="group-label">Week 6 &mdash; Close the sprint <span class="gd">&middot; Sep 28 &middot; Mon prep, Wed exam</span></div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Prepare for the exam<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">Due Monday. Pull your sprint together so Wednesday is a chance to show what you have rather than a scramble.</div>
+                        </div>
+                    </div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Sprint Exam 1<span class="gl"><button type="button" class="gt badge key">Sprint Exam</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it happens.</i> One page, hand-written, in class. The questions are published ahead of time, with options, so preparing pays off.</span><span class="br"><i>Then it changes hands.</i> You swap pages with a partner, type their answers into a short AI form, talk their thinking through with them, and submit your evaluation of their work.</span><span class="br"><i>Why it works this way.</i> Writing by hand shows the thinking is yours. Reading a partner&rsquo;s page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span></div>
+                            <div class="meta">In class Wednesday. Your sprint&rsquo;s learning, examined &mdash; then swapped, discussed, and evaluated with a partner. The rest of the session runs check-ins.</div>
+                        </div>
+                    </div></div>
+            </details>
+            <details class="module" id="sprint-2" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 2 &middot; Reflect, adjust and go further</span>
+                        <span class="tag">Weeks 7&ndash;10 &middot; Oct 5 &ndash; Oct 30</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text"><ul><li>Ask how your own understanding could be wrong, and what is missing from it.</li><li>Go further under the same pursuit than you did the first time.</li><li>Show something you now do, make, or choose differently because of what you understood.</li></ul></div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
+                    <span><b>The first answer is a door.</b> This sprint is about what happens after it &mdash; and about the payoff, which is the part that makes depth worth having.</span>
+                </div>
+                <div class="items"><div class="group-label">Week 7 &mdash; Doubt and humility <span class="gd">&middot; Oct 5</span></div><div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+                        <div class="body">
+                            <div class="title">Doubt and humility<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session on a Wednesday, everyone together.</span></span></span></div>
+                            <div class="meta">The Wednesday session, in class. How holding both helps you find that there is more here than you understand &mdash; and keeps you going when it would be comfortable to stop. Two questions you will be asked all semester start here: how could you be wrong, and what is missing?</div>
+                        </div>
+                    </div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Your challenge, your evidence<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">How did you challenge yourself this week, and what is your own evidence?</div>
+                        </div>
+                    </div><div class="group-label">Week 8 &mdash; Further under <span class="gd">&middot; Oct 12</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.2 5.6L20 9.5l-4.4 3.6L16.4 19 12 15.9 7.6 19l.8-5.9L4 9.5l5.8-1.9z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Deep dive 2<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">The same pursuit, further down than the first dive reached.</div>
+                        </div>
+                    </div><div class="group-label">Week 9 &mdash; The payoff <span class="gd">&middot; Oct 19</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+                        <div class="body">
+                            <div class="title">What the depth changed<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">A before and after inside your pursuit, with the line drawn between them: what you changed, and the understanding that made you change it.</div>
+                        </div>
+                    </div><div class="group-label">Week 10 &mdash; Close the sprint <span class="gd">&middot; Oct 26 &middot; Mon prep, Wed exam</span></div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Prepare for the exam<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">Due Monday.</div>
+                        </div>
+                    </div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Sprint Exam 2<span class="gl"><button type="button" class="gt badge key">Sprint Exam</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it happens.</i> One page, hand-written, in class. The questions are published ahead of time, with options, so preparing pays off.</span><span class="br"><i>Then it changes hands.</i> You swap pages with a partner, type their answers into a short AI form, talk their thinking through with them, and submit your evaluation of their work.</span><span class="br"><i>Why it works this way.</i> Writing by hand shows the thinking is yours. Reading a partner&rsquo;s page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span></div>
+                            <div class="meta">In class Wednesday, then check-ins.</div>
+                        </div>
+                    </div></div>
+            </details>
+            <details class="module" id="sprint-3" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 3 &middot; Transfer your practice to another topic</span>
+                        <span class="tag">Weeks 11&ndash;14 &middot; Nov 2 &ndash; Dec 4</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text"><ul><li>Choose a second interest and plan your approach to it yourself.</li><li>Reach a mechanism on ground you have not worked before.</li><li>Say what carried over from the first <span class="gl"><button type="button" class="gt">deep dive</button><span class="bub" role="tooltip"><b class="bt">Deep dive</b><span class="br"><i>What it means.</i> Going under your pursuit far enough to reach the mechanism &mdash; how the thing actually works, rather than a summary of it.</span><span class="br"><i>How far is far enough.</i> Measured from where you started, written down in your own words in week 4. There is no fixed bar everyone has to clear.</span><span class="br"><i>How you will know.</i> You can walk someone through it and keep going when they ask &ldquo;why?&rdquo; and &ldquo;what would happen if&hellip;?&rdquo;</span></span></span> and what you had to invent again.</li></ul></div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
+                    <span><b>One deep dive can be luck.</b> Doing it again, somewhere else, with less help, is how you find out you have a practice you own. Fall Break falls between weeks 13 and 14, so your work is in hand before you go.</span>
+                </div>
+                <div class="items"><div class="group-label">Week 11 &mdash; Somewhere new <span class="gd">&middot; Nov 2</span></div><div class="item live">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+                        <div class="body">
+                            <div class="title">Choosing your second interest<span class="gl"><button type="button" class="gt badge live">In person</button><span class="bub" role="tooltip"><b class="bt">In person</b><span class="br"><i>What it means.</i> A full-class session on a Wednesday, everyone together.</span></span></span></div>
+                            <div class="meta">The Wednesday session, in class: what actually transfers between two very different things, and how to plan the second dive from your own account of the first.</div>
+                        </div>
+                    </div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Your second interest, and your plan for it<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">Which interest, why it is yours, and how you intend to get underneath it &mdash; written from your own process, not from ours.</div>
+                        </div>
+                    </div><div class="group-label">Week 12 &mdash; On your own <span class="gd">&middot; Nov 9</span></div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Your challenge, your evidence<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">How did you challenge yourself this week, and what is your own evidence?</div>
+                        </div>
+                    </div><div class="group-label">Week 13 &mdash; Get underneath it <span class="gd">&middot; Nov 16 &middot; Fall Break follows, Nov 23&ndash;29</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.2 5.6L20 9.5l-4.4 3.6L16.4 19 12 15.9 7.6 19l.8-5.9L4 9.5l5.8-1.9z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Deep dive 3<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">The second mechanism reached &mdash; and what carried over from the first time.</div>
+                        </div>
+                    </div><div class="group-label">Week 14 &mdash; Close the sprint <span class="gd">&middot; Dec 1 &middot; Mon prep, Wed exam</span></div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Prepare for the exam<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">Due Monday.</div>
+                        </div>
+                    </div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                        <div class="body">
+                            <div class="title">Sprint Exam 3<span class="gl"><button type="button" class="gt badge key">Sprint Exam</button><span class="bub" role="tooltip"><b class="bt">Sprint Exam</b><span class="br"><i>What it happens.</i> One page, hand-written, in class. The questions are published ahead of time, with options, so preparing pays off.</span><span class="br"><i>Then it changes hands.</i> You swap pages with a partner, type their answers into a short AI form, talk their thinking through with them, and submit your evaluation of their work.</span><span class="br"><i>Why it works this way.</i> Writing by hand shows the thinking is yours. Reading a partner&rsquo;s page &mdash; and being read &mdash; is the fastest honest feedback in the course.</span></span></span></div>
+                            <div class="meta">In class Wednesday, then check-ins.</div>
+                        </div>
+                    </div></div>
+            </details>
+            <details class="module" id="sprint-4" open>
+                <summary>
+                    <div class="module-head">
+                        <span class="name">Sprint 4 &middot; Reflect and conclude with a sustainable practice</span>
+                        <span class="tag">Weeks 15&ndash;16 &middot; Dec 7 &ndash; Dec 18</span>
+                        <span class="chev">&#9656;</span>
+                    </div>
+                </summary>
+                <div class="goal">
+                    <div class="label">By the end of this sprint you will be able to</div>
+                    <div class="text"><ul><li>Put both deep dives side by side and say what you have that you did not have in August.</li><li>Answer, as far as you can, whether you took on something you could not have alone with AI&rsquo;s help &mdash; and how it is better because you were in it.</li><li>Describe how you would go deep on something next, without a course around you.</li></ul></div>
+                </div>
+                <div class="prereq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
+                    <span><b>The course ends; the habit does not have to.</b> These two weeks are about what you are taking with you.</span>
+                </div>
+                <div class="items"><div class="group-label">Week 15 &mdash; Pull it together <span class="gd">&middot; Dec 7</span></div><div class="item">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 6L9 17l-5-5"/></svg></span>
+                        <div class="body">
+                            <div class="title">Assemble your evidence<span class="gl"><button type="button" class="gt badge check">Checkpoint</button><span class="bub" role="tooltip"><b class="bt">Checkpoint</b><span class="br"><i>What it means.</i> A shorter item between key items, credited as soon as you submit it.</span><span class="br"><i>Why it matters.</i> It tells you whether you are on track while there is still time to adjust.</span></span></span></div>
+                            <div class="meta">Both deep dives, your baseline, and what moved between them.</div>
+                        </div>
+                    </div><div class="group-label">Week 16 &mdash; Show it <span class="gd">&middot; Dec 14</span></div><div class="item keyitem">
+                        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3"/><circle cx="17.5" cy="10" r="2.6"/><path d="M14.5 20v-1a4 4 0 0 1 4-4"/></svg></span>
+                        <div class="body">
+                            <div class="title">Final demonstration<span class="gl"><button type="button" class="gt badge key">Key item</button><span class="bub" role="tooltip"><b class="bt">Key item</b><span class="br"><i>What it means.</i> A sprint&rsquo;s main piece of work. It earns credit as soon as you submit it, and it is the work your interviews draw on.</span><span class="br"><i>Why it matters.</i> Nothing here is handed in and forgotten. Any key item you have submitted can come up in any later conversation.</span></span></span></div>
+                            <div class="meta">You walk us through both dives, the distance from your own starting line, and your answers so far to the two questions. This conversation is the course&rsquo;s last word, and yours.</div>
+                        </div>
+                    </div></div>
+            </details>
+
+            <div class="instructor">
+                <div class="nm">Prof. Sathya Narayanan</div>
+                <div class="links">
+                    <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack
+                </div>
+            </div>
+
+            <div class="provenance">
+                <b>Provenance.</b> Draft v1 of 2026-08-12, built from the CST286 course design document against the CST349 page shell.
+                <ul>
+                    <li><b>Human</b> &mdash; the design: the course outcome and its principles (locked July 2026); physics as the way in with no coverage requirement; a qualitative mechanism as the bar, with a quantitative model encouraged and defended in the interview; physics coming to the student&rsquo;s interest rather than the reverse; one tinkering build for everyone, tool of their choosing; the two-week orientation and physics arriving in week 3; the sprint names; doubt and humility as week 7; asking how your understanding could be wrong and what is missing from it; one assignment and one reflection every week; hand-written Sprint Exams with partner exchange at sprint closes, with a preparation item due the Monday before; Mondays online for check-ins and Wednesdays in person for sessions and exams; no mid-course retakes with an end-of-course catch-up; the 10%-a-day late policy (Sathya Narayanan, July 8 &ndash; August 12, 2026).</li>
+                    <li><b>Human + AI</b> &mdash; placement of the sprints against the Fall 2026 calendar, the week-by-week items, and the student-facing phrasing.</li>
+                    <li><b>Open</b> &mdash; sprint pages and item links; the example library; points and weights; session length; how the Dojo coaches depth.</li>
+                </ul>
+            </div>
+
+            <footer class="page-footer">
+                <span>CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Draft v1</span>
+            </footer>
+        </div>
+        <script>
 (function(){
   var p = new URLSearchParams(location.search);
   var ctx = p.get('context') || (window.self !== window.top ? 'canvas' : 'web');
@@ -307,14 +422,14 @@
   }
 })();
 </script>
-<script>
+    <script>
 /* Editor-friendly accordions: the markup ships with every section open so a
    visual editor (Pinegrow) can show and edit all of them. In a running
-   browser, this collapses everything except Start Here, Sprint 0, and any
-   section the URL's #hash points at - the same view students had before. */
+   browser, this collapses everything except Start Here and Sprint 0, plus any
+   section the URL's #hash points at. */
 (function () {
-  if (location.protocol !== 'https:') { return; }  /* editors and local previews stay fully open */
-  var keep = { 'start-here': 1, 'sprint-0': 1 };
+  if (location.protocol !== 'https:') { return; }
+  var keep = { 'how-this-works': 1, 'sprint-0': 1 };
   var h = location.hash.replace('#', '');
   if (h) { keep[h] = 1; }
   var all = document.querySelectorAll('details.module, details.bigpic');
