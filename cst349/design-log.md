@@ -91,4 +91,11 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
 - 2026-08-12 — BIG PICTURE OPENS BY DEFAULT. Sathya 8/12: the box stays open for the start of the
   semester and gets collapsed after Sprint 0. 'big-picture' added to the accordion keep-list with a
   dated comment naming the one-line change to reverse it. Header not otherwise changed. — Alan
+- 2026-08-12 — HEADER RESTRUCTURED to match CST286: one question as the section hook
+  (**"Who becomes irreplaceable?"**) above the opening paragraph, and the two-things-you-leave-with list plus the
+  explain-out-loud line MOVED DOWN into the Beyond-the-grade block, which now opens with
+  "What you leave with" before its existing content. Safe to move because the big picture box now
+  ships open. New `.course-header .q` CSS rule. The instructor's own gate-round sentences are
+  untouched &mdash; the change is placement plus one new heading line. Header lead words:
+  349: 191 &rarr; 157. Markup balanced, render-verified. — Alan
 
