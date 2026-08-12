@@ -82,4 +82,7 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   the payoff beyond the grade. Lead word counts: **CST286 361 → 193, CST349 282 → 191, CST499
   183 → 160.** Sathya's own gate-round sentences in the 349 and 499 headers were preserved; those
   two edits are subtractive only. Markup balanced, render-verified. — Alan
+- 2026-08-12 — BIG PICTURE OPENS BY DEFAULT. Sathya 8/12: the box stays open for the start of the
+  semester and gets collapsed after Sprint 0. 'big-picture' added to the accordion keep-list with a
+  dated comment naming the one-line change to reverse it. Header not otherwise changed. — Alan
 

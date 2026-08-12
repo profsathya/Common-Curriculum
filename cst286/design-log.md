@@ -116,4 +116,19 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   the payoff beyond the grade. Lead word counts: **CST286 361 → 193, CST349 282 → 191, CST499
   183 → 160.** Sathya's own gate-round sentences in the 349 and 499 headers were preserved; those
   two edits are subtractive only. Markup balanced, render-verified. — Alan
+- 2026-08-12 — HEADER RESTRUCTURED (286) + BIG PICTURE OPENS BY DEFAULT (all three). Sathya's calls:
+  questions rather than declarative titles as section hooks, his opener verbatim ("Have you wondered
+  how something works the way it does?"); and the big picture box stays open for the start of the
+  semester, to be collapsed after Sprint 0. **The keep-list line in the accordion script now carries
+  'big-picture' with a dated comment naming the one-line change to close it** — cst286, cst349 and
+  cst499 (499's keep-list uses 'start-here' rather than 'how-this-works'; matched to its own ids).
+  286 header now: h1 + sub, then two questions with one short paragraph each — "Have you wondered how
+  something works the way it does?" (the everyday hook) and "Why physics?" (the objection actually
+  sitting in the room, named out loud). New `.course-header .q` rule added for the hooks. The
+  two-things-you-leave-with list and the explain-out-loud line MOVED DOWN into the Beyond-the-grade
+  block, which now reads label → "What you leave with" → the two items → explain-out-loud → the
+  keeps-running paragraph → when-we-meet. This also resolves the near-duplication between that list
+  and the old "Depth is the practice" paragraph, which is gone. Header 193 → 171 words with two
+  paragraphs lifted into the box. Markup balanced, render-verified. 349 and 499 headers NOT
+  restructured — awaiting his call. — Alan
 
