@@ -76,3 +76,16 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
 - 2026-08-11 — Walk-the-chain audit applied, all 8 rows approved by Sathya: four arc-card bubbles (S0/S1/S2/S3 why-it-comes-here walked with actor+mechanism), pillar tooltip why-it-matters (concrete two-field call example), exam by-hand rationale (accountability framing, two whys walked), grade-the-loop line-term framed, lead work-across + ladder-of-shapes referent fix. home.html + understand-the-course-design.html. — Alan
 - 2026-08-11 — Start Here reshaped per Sathya: goal box + group label removed (module tag Read-before-week-1 carries it; item subtitles carry purpose). Two pages CREATED: why-this-course.html (My-approach articulation — variability accepted, durable skills; what-it-changes; AI-helped-build honesty; ~3 min read) and setup-ai-dojo.html (neutral name per dojo-design skill: pasted Dojo instruction — Sensei rules, one question at a time, hand-the-pen-back — + ChatGPT/Claude/Gemini project steps + interview-me test; files-from-Canvas hook for future Dojo Core/modules). Start Here order: Understand → Why → Dojo → instructor. — Alan
 - 2026-08-11 — setup-ai-dojo.html v2: Sathya's Dojo instruction verbatim (Core-file reference, core rule, questions-not-answers, warm+direct coach paragraphs); CST349 Dojo Core Google Doc created (v1) and linked — add-by-link-from-Drive steps per tool, explicit do-not-copy rule (live doc updates through the semester). — Alan
+- 2026-08-12 — HEADER TRIMMED, all three fall home pages, at Sathya's ask: the top block was
+  comprehensively informative where it needed to be briefly inspiring. Test applied from
+  `skills/writing-to-teach` — a reader gives you one sentence, maybe three to five lines, before
+  deciding whether to continue; the backbone survives a skim; detail waits behind clicks. **Rule
+  used: anything the arc cards or `understand-the-course-design.html` already say came out of the
+  header.** Cuts: the "here is how the semester goes" machinery paragraph (the arc cards say it
+  better, with tooltips), and the "&hellip;and that is why those conversations are half your grade"
+  tail (it is on the course-design page, and it ends a first visit on grading rather than on what
+  the student gets). Kept and tightened: the everyday hook, and the two things you leave with —
+  the payoff beyond the grade. Lead word counts: **CST286 361 → 193, CST349 282 → 191, CST499
+  183 → 160.** Sathya's own gate-round sentences in the 349 and 499 headers were preserved; those
+  two edits are subtractive only. Markup balanced, render-verified. — Alan
+

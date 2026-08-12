@@ -104,4 +104,16 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   he edits these pages directly in Pinegrow (see the `_pgbackup/` folders in cst349 and cst499), so a
   live generator would silently overwrite his edits on the next run. **The HTML is the source of
   truth for both 286 pages from here.** — Alan
+- 2026-08-12 — HEADER TRIMMED, all three fall home pages, at Sathya's ask: the top block was
+  comprehensively informative where it needed to be briefly inspiring. Test applied from
+  `skills/writing-to-teach` — a reader gives you one sentence, maybe three to five lines, before
+  deciding whether to continue; the backbone survives a skim; detail waits behind clicks. **Rule
+  used: anything the arc cards or `understand-the-course-design.html` already say came out of the
+  header.** Cuts: the "here is how the semester goes" machinery paragraph (the arc cards say it
+  better, with tooltips), and the "&hellip;and that is why those conversations are half your grade"
+  tail (it is on the course-design page, and it ends a first visit on grading rather than on what
+  the student gets). Kept and tightened: the everyday hook, and the two things you leave with —
+  the payoff beyond the grade. Lead word counts: **CST286 361 → 193, CST349 282 → 191, CST499
+  183 → 160.** Sathya's own gate-round sentences in the 349 and 499 headers were preserved; those
+  two edits are subtractive only. Markup balanced, render-verified. — Alan
 

@@ -70,3 +70,16 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
 - 2026-08-11 — late-policy consistency fix: sprint-0 checkpoint tooltip said 7%/day while understand-the-course-design says 10%/day; Sathya confirmed 10%/day is the decision, now for ALL THREE fall courses. Tooltip fixed 7→10. Spring-archive pages (cst349 spring wk-1, cst395) left as history. Still stale: the 499 working-plan Google Doc with Paige (7%) and possibly Canvas assignment text — flagged in cowork PENDING. — Alan
 - 2026-08-11 — Three principle-driven flips from the CST349 gate applied to home.html: the two nobody-will-teach-you-again lines and the no-one-runs-your-search-for-you list rewritten as positive agency framings (growth as profession, fading scaffold). See skills/writing-to-teach Promises-and-frames. — Alan
 - 2026-08-11 — Dojo Core delivery reworked on Sathya's spec: Core = ONE Google Doc per course, added to the project BY LINK from Drive, never copied (the doc updates through the semester; a copy freezes). CST499 Dojo Core doc created (v1, from dojo-design skill canon); setup-your-ai-dojo.html updated: what-you-need carries the doc link + dont-copy rule, all three tool steps say by-link, config gains the guide-through-questions paragraph (capstone nouns: proposal/evidence log). — Alan
+- 2026-08-12 — HEADER TRIMMED, all three fall home pages, at Sathya's ask: the top block was
+  comprehensively informative where it needed to be briefly inspiring. Test applied from
+  `skills/writing-to-teach` — a reader gives you one sentence, maybe three to five lines, before
+  deciding whether to continue; the backbone survives a skim; detail waits behind clicks. **Rule
+  used: anything the arc cards or `understand-the-course-design.html` already say came out of the
+  header.** Cuts: the "here is how the semester goes" machinery paragraph (the arc cards say it
+  better, with tooltips), and the "&hellip;and that is why those conversations are half your grade"
+  tail (it is on the course-design page, and it ends a first visit on grading rather than on what
+  the student gets). Kept and tightened: the everyday hook, and the two things you leave with —
+  the payoff beyond the grade. Lead word counts: **CST286 361 → 193, CST349 282 → 191, CST499
+  183 → 160.** Sathya's own gate-round sentences in the 349 and 499 headers were preserved; those
+  two edits are subtractive only. Markup balanced, render-verified. — Alan
+
