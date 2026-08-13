@@ -1,9 +1,11 @@
 ---
 purpose: Anonymized findings from student data analysis — what we know and how we know it
-last_updated: 2026-02-23
+last_updated: 2026-08-13
 updated_by: sathya
 status: active
 ---
+
+> **Scope (checked 13 Aug 2026):** Spring 2026 findings from CST395 and CST349, and they still hold — this is the evidence base the Fall design was built against. The interventions proposed inside individual gaps may name spring machinery that Fall no longer uses; the findings themselves are the durable part. Fall course design lives in `fall-2026-vision.html`.
 
 # Evidence
 

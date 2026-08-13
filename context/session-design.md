@@ -1,9 +1,11 @@
 ---
 purpose: Session design principles — patterns that work for in-class delivery, drawn from experience
-last_updated: 2026-02-25
+last_updated: 2026-08-13
 updated_by: sathya
 status: active
 ---
+
+> **Scope (checked 13 Aug 2026):** in-class delivery patterns drawn from Spring 2026 experience; still the reference for session design. Fall adds a split these notes predate — CST286 meets Mondays online and Wednesdays in person — so the patterns need reading against the modality of the session you're planning.
 
 # Session Design Principles
 

@@ -1,99 +1,89 @@
 ---
-purpose: Onboarding guide for teammates joining the Common-Curriculum project
-last_updated: 2026-02-28
-updated_by: claude-code
+purpose: What this folder is, and where the current thinking actually lives
+last_updated: 2026-08-13
+updated_by: alan (cowork)
+status: active
 ---
 
-> **Spring 2026 record — superseded for Fall 2026 (banner added 2026-08-13).** This folder
-> documents the CST395/CST349 spring build and its pipeline: `config/*-assignments.csv` as the
-> assignment source of truth, and a "Quick Start" logistics block at the top of each assignment
-> page. Both were replaced for Fall 2026 — the registry is now each course's `schedule.html`
-> (Sathya, 13 Aug 2026), and assignment pages open with Purpose rather than logistics (see
-> `skills/writing-assignments/SKILL.md`). Read this folder as history and as evidence from real
-> student data, which still holds. Fall 2026 decisions live in the four-layer lock record at
-> `cowork/fall-2026-courses/CONTEXT.md`.
+# Context Folder
 
-# Context Folder — Onboarding Guide
+Shared memory for the Common-Curriculum project: the findings, principles and open
+tensions that took real work to learn and that a newcomer — human or AI — needs before
+contributing.
 
-## What This Is
+It is deliberately small. **It does not hold the course design.** That lives in the
+pointer map below, in one place per topic, and this folder points rather than repeats.
+Rewritten 13 August 2026 for that reason: the folder had grown a parallel description of
+the Spring 2026 courses and their pipeline, and by August it disagreed with the live
+design in several places. Anyone reading it in good faith got the wrong answer.
 
-This folder is the **shared memory** for the Common-Curriculum project. It captures design decisions, evidence from student data, active issues, and open questions across two courses (CST395 and CST349) — as well as early-stage thinking on broader CTI 2.0 initiatives — so that anyone — human or AI — can quickly understand the current state and contribute effectively.
+## Where the current thinking lives
 
-## How to Get Started
+| If you need | Read |
+|---|---|
+| The Fall 2026 course design — outcomes, principles, evidence, grading, what is still to build | [`fall-2026-vision.html`](../fall-2026-vision.html) |
+| How to write a student-facing page — teaching prose, learning goals, assignments, the final trim | [`skills/`](../skills/) |
+| Every assignment in a course — week, points, due day, prerequisite, links | that course's `schedule.html` |
+| What CTI as a whole is doing and why | [`cti2.0/guidebooks/landscape.html`](../cti2.0/guidebooks/landscape.html) |
+| What students actually did, and what we learned from it | `evidence.md`, here |
 
-### 1. Read the files in this order
+Behind the vision page sits Sathya's dated decision record, in a private repo
+(`cowork/fall-2026-courses/CONTEXT.md`). You do not need it — the vision page is its
+readable view, and it is kept current. If the vision page and something here disagree,
+the vision page is right and the file here needs fixing.
 
-1. **`index.html`** — Open in browser for visual navigation. This is the fastest way to orient yourself.
-2. **`course-design.md`** — Understand the course structure, frameworks, and sprint progression.
-3. **`evidence.md`** — What we know from student data analysis (anonymized).
-4. **`gaps-and-actions.md`** — What we're working on and why.
-5. **`open-questions.md`** — Unresolved design tensions where your input matters.
+## What's in this folder
 
-You don't need to read `pipeline.md` unless you're working on the analysis scripts, or `changelog.md` unless you're catching up after time away.
+- **`evidence.md`** — anonymized findings from Spring 2026 student data. The strongest
+  thing here. Read it before proposing an intervention; several obvious ideas are already
+  tested and documented as not working.
+- **`design-uncertainty.md`** — what we don't know about students and about what they'll
+  need, and how to design anyway. Includes the three-population picture that most design
+  arguments turn on.
+- **`open-questions.md`** — design tensions still without an answer, plus the ones the
+  Fall design settled and how.
+- **`session-design.md`** — patterns that work for in-class delivery, from experience.
+- **`student-relationship.md`** — how instructor presence and intent get communicated in
+  course materials.
+- **`science-of-computing.md`** — early-stage concept capture; the domain-knowledge
+  question underneath CST286 and the SOSE redesign.
+- **`index.html`** — open in a browser to read the above with navigation.
 
-### 2. Set up your environment
+Files are Spring 2026 in origin unless dated otherwise. Each carries a scope line saying
+what still holds.
 
-You need access to two repos:
+## What was removed, and how to get it back
 
-- **Common-Curriculum** (this repo) — Course pages, scripts, context folder. You should have been added as a collaborator.
-- **Common-Curriculum-Data** — Student submission data and analysis output. Contains an `anonymous/` subfolder with PII-stripped data safe for AI analysis.
+Eleven files were retired on 13 August 2026 — the CSV assignment pipeline and its QA
+checklist, the sprint-page information-architecture spec, the terminology map, the gaps
+tracker, the changelog, and the Sprint 2/3 trackers. All described machinery the Fall
+courses no longer use, and the two that stated design rules (`course-design.md`'s
+"actionability first, Quick Start block at the top of every page" and `terminology.md`'s
+"the CSV is the single source of truth") had become actively wrong.
 
-To work with the analysis pipeline:
-```bash
-git clone [Common-Curriculum repo URL]
-git clone [Common-Curriculum-Data repo URL]
-# Ensure both are siblings in the same parent directory
+Nothing is lost. Every version is in git:
+
+```
+git log --diff-filter=D --name-only -- context/
+git show <commit>^:context/course-design.md
 ```
 
-The analysis script lives at `scripts/submission-analyzer.js` in Common-Curriculum. See `pipeline.md` for details.
+The first command lists what was removed and when; the second reads any file as it was.
 
-### 3. Working with AI assistants (Claude, ChatGPT, etc.)
+The working rule behind this, Sathya's: keep the files tight to current thinking while
+the design is still moving, and use the repo history when you need to know what we
+used to think.
 
-When starting a new AI chat session about this project:
+## Working with student data
 
-- Upload or reference the **context folder** files — they're designed to give an AI the full project state.
-- For student data analysis, use files from **Common-Curriculum-Data/anonymous/** only. Never share files from the non-anonymous course directories.
-- **POLICY: No student names in any analysis, discussion, or AI conversation.** Use Canvas anonymous IDs only (e.g., CST395-07, CST349-23).
+**No student names in any analysis, discussion, or AI conversation.** Use Canvas
+anonymous IDs only (for example `CST395-07`, `CST349-23`). Student submissions and
+analysis output live in a separate repo, `Common-Curriculum-Data`; use its `anonymous/`
+subfolder, never the course directories.
 
-If you're using Claude Code:
-- Point it at the Common-Curriculum repo
-- It can read and update context files as part of its workflow
-- After significant work, ask it to update `changelog.md` and any relevant context files
+## Updating this folder
 
-### 4. How to update context files
-
-After you do meaningful work (design decisions, data analysis, implementing changes):
-
-1. **Update the relevant file(s)** — Add findings to `evidence.md`, update status in `gaps-and-actions.md`, add your thinking to `open-questions.md`.
-2. **Add a changelog entry** — Top of `changelog.md`, reverse-chronological. Include: date, your name, what changed, why.
-3. **Update `last_updated` in frontmatter** — Each file has YAML frontmatter with `last_updated` and `updated_by`.
-4. **Commit and push** — Standard git workflow.
-
-Keep entries concise. The goal is "enough for someone else to pick up where you left off," not comprehensive documentation.
-
-### 5. When to have a face-to-face instead
-
-Check `open-questions.md` regularly. If you see a question where you disagree with the current direction or have a fundamentally different perspective, **flag it in the file** (add your name and a brief note) and schedule a conversation. Some design tensions are better resolved in 10 minutes of dialogue than 10 rounds of async text.
-
-## File Purposes (Quick Reference)
-
-| File | What it captures | Who updates it |
-|---|---|---|
-| `course-design.md` | Course structure, frameworks, sprint design, grading, product experience principles | Anyone making design changes |
-| `evidence.md` | Anonymized findings from student data | Anyone running analysis |
-| `gaps-and-actions.md` | Active problems, interventions, status | Anyone working on fixes |
-| `pipeline.md` | Technical infrastructure, scripts, known issues | Anyone touching the code |
-| `open-questions.md` | Unresolved design tensions | Anyone with questions or opinions |
-| `terminology.md` | Canonical operational terms, allowed aliases, deprecated names | Anyone noticing naming drift |
-| `content-qa.md` | Definition of Done checklist for publishing pages | Anyone creating or revising content |
-| `science-of-computing.md` | Early-stage concept: foundational computing reasoning for AI-augmented builders. Core problem, two layers, architectural fit, open questions. Broader than CST395/CST349 — shapes CTI 2.0 and SOSE. | Anyone working on Science of Computing investigation |
-| `student-relationship.md` | Design principle for instructor presence layer ("Why This" block) in assignment pages | Anyone creating new assignment HTML |
-| `changelog.md` | What changed, when, by whom, why | Everyone, every session |
-
-## Ground Rules
-
-- **No student names anywhere.** Canvas anonymous IDs only.
-- **Update context when you finish working**, not "later."
-- **Keep files under ~500 lines.** If a file is growing past that, split or summarize.
-- **Conclusions over raw data.** Context files capture what we concluded and why, not every data point. Raw data lives in Common-Curriculum-Data.
-- **Disagree openly.** Add your perspective to `open-questions.md` rather than silently overriding someone else's decision.
+Add a finding when you have one, with how you know it. Update a file's `last_updated`
+and `status` when you touch it. If what you're writing is a course-design decision, it
+belongs on the vision page instead — bring it to Sathya rather than filing it here, or
+this folder starts disagreeing with the design again.

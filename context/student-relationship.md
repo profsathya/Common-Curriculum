@@ -1,9 +1,11 @@
 ---
 purpose: Design principle for how instructor presence and intent is communicated to students in course materials
-last_updated: 2026-03-10
+last_updated: 2026-08-13
 updated_by: sathya
 status: active
 ---
+
+> **Scope (checked 13 Aug 2026):** the principle holds and Fall pages follow it. Note that the Fall home pages carry the instructor's voice in the header question and opening paragraph rather than in a separate opening block, so treat the HTML component here as one implementation rather than the required one. Page writing rules now live in `skills/writing-to-teach/`.
 
 # Student Relationship: The "Why This" Layer
 

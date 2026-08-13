@@ -1,9 +1,11 @@
 ---
 purpose: Acknowledging what we don't know — the fog on both input and output sides of course design
-last_updated: 2026-02-24
+last_updated: 2026-08-13
 updated_by: sathya
 status: active
 ---
+
+> **Scope (checked 13 Aug 2026):** written by Sathya in February 2026 and carried forward whole — the three-population picture, the participation numbers on optional work, and in-class time as the highest-value diagnostic all still hold, and the Fall design assumes them. The closing note about context files serving session prep is what the 13 Aug rewrite of this folder acted on.
 
 # Design-Level Uncertainty
 

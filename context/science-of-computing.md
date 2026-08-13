@@ -1,10 +1,12 @@
 ---
 purpose: Early-stage concept capture — Science of Computing as foundational domain knowledge for AI-augmented builders
-last_updated: 2026-03-03
+last_updated: 2026-08-13
 updated_by: sathya
 status: early-stage investigation
 sources: CS Working Group prep session (March 2, 2026) + SOSE 2026 redesign session (March 2, 2026)
 ---
+
+> **Scope (checked 13 Aug 2026):** early-stage thinking, unchanged since March 2026 and not yet acted on. Kept because the domain-knowledge question it raises sits underneath CST286 and the SOSE redesign. Read it as an open investigation, not as a decision.
 
 # Science of Computing — Concept & Working Notes
 
