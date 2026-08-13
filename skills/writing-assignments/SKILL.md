@@ -1,11 +1,11 @@
 ---
 name: writing-assignments
-description: Use when writing or revising any assignment or activity page students will act on — the weekly reflection, the comprehensive, a sprint activity, a practice-dojo companion page. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (schedule.html registry → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
+description: Use when writing or revising any assignment or activity page students will act on, whatever the course calls that kind of work. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (schedule.html registry → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
 ---
 
-_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
+_Status: v2 (13 August 2026) — the assignment-kind labels and the per-kind point values were removed and handed back to each course's design record, after three renamings in eight days. v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
 August (Sathya + Alan); the shape adapts the Transparent Assignment Template © 2013
 Mary-Ann Winkelmes (TILT Higher Ed), whose national study showed that making purpose,
 task, and criteria explicit measurably improves learning. First test: the first fall
@@ -77,7 +77,7 @@ with depth behind expandables (writing-to-teach governs every sentence).
 
 Two or three questions at the end of the page, written to be answered after the work:
 what changed in your understanding, what would you do differently, what does this tell
-you about how you work. These feed the Friday reflection. After grades come back, the
+you about how you work. These feed the course's own reflection rhythm. After grades come back, the
 reflection is where a student adjusts strategy — ask for that explicitly when the
 assignment is one they'll build on.
 
@@ -95,10 +95,16 @@ Each assignment's record — not its page — carries:
 The repo is the source of truth; Canvas is the display.
 
 1. The design conversation decides the assignment → one row in the course's
-   `schedule.html` (mechanics only: id · week · module · title · kind · key-item or
-   checkpoint · points · due-day · submission type · completion requirement ·
-   prerequisite · qualities · html path and its public page URL · the Canvas
-   assignment URL and ids, written back by the sync).
+   `schedule.html` (mechanics only: id · week · module · title · kind · points ·
+   due-day · submission type · completion requirement · prerequisite · qualities ·
+   html path and its public page URL · the Canvas assignment URL and ids, written back
+   by the sync).
+
+   **The kinds themselves are course design, not this skill (Sathya, 13 Aug 2026).**
+   `kind` is a field this skill fills in from whatever the course has decided to call
+   its categories, and what each is worth. Naming them here means every renaming
+   downstream — and there have been three — has to come back and edit this file.
+   Read the course's own design record for the current set.
 
    **The registry is a web page, not a CSV (Sathya, 13 Aug 2026).** Both hold the same
    fields; the page is the one he can actually review — sprints group into expandable
@@ -120,10 +126,10 @@ The repo is the source of truth; Canvas is the display.
    surface. (Open: which doc exactly, and whether the copy is scripted or a manual
    step in the update routine.)
 
-Due days are rule-driven, not per-row: reflections fall on Friday in all three courses;
-the comprehensive falls at the week-opening class (Mon for CST286, Wed for CST349/499),
-so every comprehensive owns a weekend. CST286 points follow the mirror mechanic: every
-assignment 100, each walkthrough worth the sum of its window.
+Due days are rule-driven, not per-row: the course's design record sets the rhythm —
+which kind of work falls on which day, and why — and this skill applies it rather than
+restating it. The same goes for what each kind is worth. Both changed on 13 Aug 2026;
+neither is written down here again.
 
 ## Checklist (checkable by looking)
 
@@ -134,7 +140,8 @@ assignment 100, each walkthrough worth the sum of its window.
   student-runnable checklist; points and their route to the walkthrough are stated.
 - Reflection questions are answerable only after doing the work.
 - The qualities line and evidence linkage are in the record and absent from the page.
-- The `schedule.html` row exists and matches the page: points, due day by the rhythm rule,
+- The `schedule.html` row exists and matches the page: kind and points as the course
+  design defines them, due day by the rhythm rule,
   submission type, completion requirement — and the builds-on block, the schedule's
   prerequisite, and the Canvas requirement all name the same prior work.
 - The page renders in both contexts (web and Canvas iframe).

@@ -93,3 +93,19 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   untouched &mdash; the change is placement plus one new heading line. Header lead words:
   499: 160 &rarr; 144. Markup balanced, render-verified. — Alan
 
+
+- 2026-08-13 — ASSIGNMENT STRUCTURE AND VOCABULARY CHANGED (Sathya), plus two course decisions.
+  The pair *key item* / *checkpoint* is retired for **graded item**, **mid-term**, and **Own your
+  progress guidance** (1–3 a week, due dates and point values shown, grade group weighted **0%**).
+  CST499 runs **8 graded items (800) + a 200-point mid-term = 1000 submitted**, matched by **1000**
+  in interviews — **2000 total**. The mid-term resolves the question left open on 8/12 of whether
+  499 takes the exam mechanic: it does, once, mid-semester. It is **hand-written, closed book, no
+  notes or cheat sheet, questions published ahead of time**. Also decided today: **the ETS CS major
+  exam is dropped going forward** (a program-level decision, not just a Fall one), and the capstone
+  deliverable is **at least one portfolio piece with opportunities to iterate and improve** rather
+  than two pieces with the second harder — which softens the two-artifact goal that came out of the
+  iteration-1 review on 7/25. Captured in `cowork/fall-2026-courses/CST499-Syllabus-Fall-2026.md`
+  and in `fall-2026-vision.html`. **NOT yet applied to `home.html`,
+  `understand-the-course-design.html`, or `sprint-0`–`sprint-5.html`** — those carry the
+  week-by-week item lists and the "every assignment is worth 100 points" rule, and cannot be
+  re-cut until Sathya names the eight items. All eight pages are stale as of today. — Alan

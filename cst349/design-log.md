@@ -100,3 +100,17 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   349: 191 &rarr; 157. Markup balanced, render-verified. — Alan
 
 - 2026-08-11 — SPRING SITE ARCHIVED: everything except the five fall files (home, understand-the-course-design, why-this-course, setup-ai-dojo, design-log.md; pinegrow.json kept for the editor) moved from cst349/ to cst349-spring-2026/ (assignments 55, sessions 14, activities, sprint-1..4, concepts, overview, peer-conversations, sdl-dimensions, _pgbackup) with an explanatory README. Reason: the Dojo Core doc is script-generated from course files — old assignments were about to flood it. Fall pages verified: zero references to moved files. NOTE: sdl-dimensions.html (the S1 growth-definition scaffold candidate) now lives in the archive — retrieve when building S1. — Alan
+
+- 2026-08-13 — ASSIGNMENT STRUCTURE AND VOCABULARY CHANGED (Sathya). The pair *key item* /
+  *checkpoint*, locked 8/12, is retired. Three kinds now, shared with CST286 and CST499:
+  **graded assignment** (100 points), **Sprint Exam** (200 points), and **Own your progress
+  guidance** (1–3 a week, due dates and point values shown, grade group weighted **0%**).
+  CST349 runs **9 graded assignments (900) + 3 Sprint Exams (600) = 1500 submitted**, matched by
+  **1500** in check-ins — **3000 total**, identical to CST286. Every-assignment-is-100 no longer
+  holds. Check-ins are **2–5 across the semester** rather than one round per sprint; points still
+  divide by sprint, and a sitting can cover more than one. Exams are **hand-written, closed book,
+  no notes or cheat sheet, questions published ahead of time**. Captured in
+  `cowork/fall-2026-courses/CST349-Syllabus-Fall-2026.md` and in `fall-2026-vision.html`.
+  **NOT yet applied to `home.html` or `understand-the-course-design.html`** — their week-by-week
+  item lists cannot be re-cut until Sathya names the nine items and rules on whether the weekly
+  reflection continues as Own your progress guidance. Both pages are stale as of today. — Alan

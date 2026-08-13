@@ -132,3 +132,21 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   paragraphs lifted into the box. Markup balanced, render-verified. 349 and 499 headers NOT
   restructured — awaiting his call. — Alan
 
+
+- 2026-08-13 — ASSIGNMENT STRUCTURE AND VOCABULARY CHANGED (Sathya). The pair *key item* /
+  *checkpoint*, locked 8/12, is retired. Three kinds now, shared with CST349 and CST499:
+  **graded assignment** (the work itself, 100 points), **Sprint Exam** (200 points), and
+  **Own your progress guidance** (1–3 a week, carrying due dates and point values so a student
+  can see whether they are on track, but sitting in a grade group weighted **0%**). CST286 runs
+  **9 graded assignments (900) + 3 Sprint Exams (600) = 1500 submitted**, matched by **1500** in
+  check-ins — **3000 total**. The rule that every assignment is worth 100 points no longer holds;
+  Sprint Exams doubled. Check-ins are now described as **2–5 across the semester** rather than one
+  round per sprint — the points still divide by sprint, but a sitting can cover more than one and
+  each sprint's points score at whichever sitting covers them (the 8/05 combine-never-waive lock,
+  finally written down where students read it). Exams are **hand-written, closed book, no notes or
+  cheat sheet, questions published ahead of time**. Captured in
+  `cowork/fall-2026-courses/CST286-Syllabus-Fall-2026.md` and in `fall-2026-vision.html`.
+  **NOT yet applied to `home.html` or `understand-the-course-design.html`** — those carry the
+  week-by-week item lists, which cannot be re-cut until Sathya says which nine items survive and
+  whether the weekly reflection (locked 8/12) continues as Own your progress guidance now that it
+  carries no points. Those two pages are stale as of today; read the syllabus, not them. — Alan
