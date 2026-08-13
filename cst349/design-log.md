@@ -99,3 +99,4 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   untouched &mdash; the change is placement plus one new heading line. Header lead words:
   349: 191 &rarr; 157. Markup balanced, render-verified. — Alan
 
+- 2026-08-11 — SPRING SITE ARCHIVED: everything except the five fall files (home, understand-the-course-design, why-this-course, setup-ai-dojo, design-log.md; pinegrow.json kept for the editor) moved from cst349/ to cst349-spring-2026/ (assignments 55, sessions 14, activities, sprint-1..4, concepts, overview, peer-conversations, sdl-dimensions, _pgbackup) with an explanatory README. Reason: the Dojo Core doc is script-generated from course files — old assignments were about to flood it. Fall pages verified: zero references to moved files. NOTE: sdl-dimensions.html (the S1 growth-definition scaffold candidate) now lives in the archive — retrieve when building S1. — Alan
