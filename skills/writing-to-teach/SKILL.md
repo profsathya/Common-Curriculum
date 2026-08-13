@@ -3,6 +3,8 @@ name: writing-to-teach
 description: Use whenever writing or revising text that students will read to learn — a course or sprint home page, a concept introduction, the framing at the top of an activity, or any page standing in for a lecture. Triggers when drafting a new student-facing page, when converting lecture or video material into text, and whenever a draft reads like a summary for colleagues instead of teaching — short sentences that describe the end state without walking the reader there. Covers starting from what the reader knows, has, and has attention for; the four engagement modes a page must reach; the two registers (teaching text vs task text) and which rules govern each; the teaching moves; and a backbone-plus-expandables page structure. Does not cover goal lines (writing-learning-goals), assignment structure (writing-assignments), or the final trim pass (reviewing-course-text).
 ---
 
+_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+
 _Status: v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
 was presentation-register writing — describing the end state to readers who don't yet
 have what they need to get there. First test passed 2026-08-04, rewriting the CST499

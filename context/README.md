@@ -4,6 +4,15 @@ last_updated: 2026-02-28
 updated_by: claude-code
 ---
 
+> **Spring 2026 record — superseded for Fall 2026 (banner added 2026-08-13).** This folder
+> documents the CST395/CST349 spring build and its pipeline: `config/*-assignments.csv` as the
+> assignment source of truth, and a "Quick Start" logistics block at the top of each assignment
+> page. Both were replaced for Fall 2026 — the registry is now each course's `schedule.html`
+> (Sathya, 13 Aug 2026), and assignment pages open with Purpose rather than logistics (see
+> `skills/writing-assignments/SKILL.md`). Read this folder as history and as evidence from real
+> student data, which still holds. Fall 2026 decisions live in the four-layer lock record at
+> `cowork/fall-2026-courses/CONTEXT.md`.
+
 # Context Folder — Onboarding Guide
 
 ## What This Is

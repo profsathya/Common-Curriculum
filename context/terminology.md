@@ -2,8 +2,10 @@
 purpose: Canonical terms for operational vocabulary — the dictionary that prevents naming drift
 last_updated: 2026-02-28
 updated_by: claude-code
-status: active
+status: spring-2026 record (see banner)
 ---
+
+> **Spring 2026 record.** Superseded in part for Fall 2026 — see the banner in `context/README.md`. Fall decisions live in `cowork/fall-2026-courses/CONTEXT.md`.
 
 # Terminology Map
 

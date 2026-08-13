@@ -35,6 +35,12 @@ config/*.csv (Canvas IDs written back)
 
 ## Workflow Documentation
 
+> **Scope (13 Aug 2026):** the CSV workflow below is the Spring 2026 pipeline for CST395 and
+> CST349, kept because those courses ran on it. The Fall 2026 courses do not use it — their
+> assignment registry is each course's `schedule.html`, and pages are written through
+> `skills/writing-assignments/SKILL.md`. Fall decisions live in
+> `cowork/fall-2026-courses/CONTEXT.md`.
+
 ### How to Add a New Assignment
 
 1. **Edit the CSV file** (`config/cst349-assignments.csv` or `config/cst395-assignments.csv`):

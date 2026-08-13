@@ -2,8 +2,10 @@
 purpose: Documents the sprint page information architecture redesign and its pedagogical rationale
 last_updated: 2026-03-28
 updated_by: claude-code
-status: active
+status: spring-2026 record (see banner)
 ---
+
+> **Spring 2026 record.** Superseded in part for Fall 2026 — see the banner in `context/README.md`. Fall decisions live in `cowork/fall-2026-courses/CONTEXT.md`.
 
 # Sprint Page Information Architecture
 

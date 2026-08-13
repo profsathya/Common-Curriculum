@@ -2,8 +2,10 @@
 purpose: Technical infrastructure — what scripts do, known issues, recent changes
 last_updated: 2026-02-26
 updated_by: sathya
-status: active
+status: spring-2026 record (see banner)
 ---
+
+> **Spring 2026 record.** Superseded in part for Fall 2026 — see the banner in `context/README.md`. Fall decisions live in `cowork/fall-2026-courses/CONTEXT.md`.
 
 # Pipeline & Infrastructure
 

@@ -3,6 +3,8 @@ name: writing-learning-goals
 description: Use whenever writing or reviewing a learning goal for a student-facing activity, assignment, module, slide, or self-check — any line labeled "Learning goal" or its equivalent. Triggers when drafting new activity guidance, refining existing pages, or reviewing a week's content before it goes live, and whenever a goal reads as vague, multi-clause, jargon-laden, or framed around what the activity does rather than what the student gets. Covers leading with the student's payoff, naming the recognizable skill behind a goal when one fits, and keeping the stated payoff credible rather than inflated, framing it as inspiration rather than fear, and naming the outcome rather than the inventory of parts. Developed for Career Intelligence; general across programs.
 ---
 
+_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+
 _Status: v1 (June 2026), refined as the program runs. Named-skill, credibility, inspire-not-scare, and name-the-outcome rules added 2026-06-27._
 
 # Writing learning goals

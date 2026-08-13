@@ -3,6 +3,8 @@ name: reviewing-course-text
 description: Run as the final step whenever student-facing course text is created or substantively edited — activity pages, Canvas assignment/quiz descriptions, self-check JSON blocks (infoBlock, description, prompts), home-page rows and notes, slide body copy, and emails to students. Triggers at the end of any course-development writing task, before the text is saved to a live surface, and whenever a reviewer says content feels long, repetitive, or preachy. Covers mapping the message of each sentence, cutting redundancy within a page and across stacked surfaces, removing sentences with no job, flipping unnecessary negatives, and placing each instruction at the point of action. Developed for Career Intelligence; general across programs.
 ---
 
+_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+
 _Status: v1 (July 2026). Born from the Week 5 build: the same intro paragraph rendered twice on the self-check (page intro + engine description), and the referral application page needed a hard trim after team review._
 
 # Reviewing course text

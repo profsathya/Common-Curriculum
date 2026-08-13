@@ -78,7 +78,7 @@
 <header>
   <div class="wrap">
     <h1>Fall 2026 — Course Vision</h1>
-    <div class="sub">CST286 · Physics of Computing (new course) &nbsp;·&nbsp; CST349 · Professional Seminar (taught in spring, being restructured) &nbsp;·&nbsp; CST499 · Capstone (Paige leads; Sathya supports). This page is the living map of the whole effort: what we want for students, the design that gets there, how we will know it worked, and what still has to be built. Rebuilt 2026-07-20 after the design was finished. Enrollment as of 7/8, still moving: 286 has 47, 349 has 83, 499 has 43.</div>
+    <div class="sub">CST286 · Physics of Computing (new course) &nbsp;·&nbsp; CST349 · Professional Seminar (taught in spring, being restructured) &nbsp;·&nbsp; CST499 · Capstone (Paige leads; Sathya supports). This page is the living map of the whole effort: what we want for students, the design that gets there, how we will know it worked, and what still has to be built. Rebuilt 2026-07-20 after the design was finished. Enrollment as of 7/8, still moving: 286 has 47, 349 has 83, 499 has 43. <br><br><em>This page is the readable view of the four-layer lock record in <code>cowork/fall-2026-courses/CONTEXT.md</code>, which is where the decisions actually live. Where the two disagree, the record is right and this page needs fixing. Last checked against it: 13 Aug 2026.</em></div>
   </div>
 </header>
 <div class="northstar">
@@ -212,7 +212,7 @@
       <div class="q"><h4>Goal</h4><p>A student always knows what to do, how long it takes, and why it matters — before any motivational framing. For this population (over half first-generation, nearly half transfer students), being specific IS the support.</p></div>
       <div class="q"><h4>What the template includes</h4><ul>
         <li>No CTI logo — these are CSUMB courses, not CTI programs (decided 6/30).</li>
-        <li>A "Quick Start" box at the top of every assignment: what to turn in, how long it takes, file format, due date, points, and one line on why it matters.</li>
+        <li>Every assignment page opens with Purpose &mdash; why this work is worth the student's time &mdash; then what it builds on, the task, the criteria, and reflection. <em>(Superseded 8/13: this line used to specify a "Quick Start" box of logistics at the top. The <code>writing-assignments</code> skill of 8/12 puts purpose first instead, and no page was ever built with a Quick Start box. Still open: where a page states how long the work takes and what file format to submit.)</em></li>
         <li>Learning goals that lead with the value and name the skill, not describe the activity.</li>
         <li>New requirement (7/20): each assignment page shows which continuing piece of work it belongs to and what "further than last time" means for this installment.</li>
       </ul></div>
@@ -225,18 +225,20 @@
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="arrow">▶</span><h3>CF-2 · One readable schedule per course<span class="one">A plain web page is the single source of truth; Canvas is updated from it, with approval.</span></h3><span class="pill p-decided">Direction decided</span></div>
+    <div class="card-head"><span class="arrow">▶</span><h3>CF-2 · One readable schedule per course<span class="one">One web page per course is the single source of truth for every assignment; Canvas is updated from it, with approval.</span></h3><span class="pill p-decided">Direction decided</span></div>
     <div class="card-body">
       <div class="q"><h4>Goal</h4><p>Dates, points, and assignment names live in exactly one place that Sathya can read in a browser — so pages and Canvas never drift apart, without maintaining a brittle sync script or reviewing an unreadable spreadsheet.</p></div>
       <div class="q"><h4>How it works</h4><ul>
-        <li>Each course gets a <code>schedule.html</code>: a plain table — assignment, week, due date, points. The table itself is the master copy.</li>
-        <li>To change anything: edit the table → Cowork shows what would change in Canvas → Sathya approves → Cowork makes the change, then reads Canvas back to confirm it matches.</li>
-        <li>The schedule now also needs to show which Canvas submissions belong to which course assignment, and when the check-in meetings fall.</li>
+        <li>Each course gets a <code>schedule.html</code>: the master copy of every assignment, readable in a browser. Sprints group into expandable sections, so the whole semester fits on one screen and opens where you want detail — the reason this is a web page and not a spreadsheet.</li>
+        <li><strong>Confirmed 8/13:</strong> <code>schedule.html</code> carries everything the retired <code>assignments.csv</code> was going to carry, not just dates and points: id, week, module, title, kind, key item or checkpoint, points, due day, submission type, completion requirement, prerequisite, the qualities this activity nurtures, the path to its page and its public URL, and the Canvas assignment URL and ids written back by the sync.</li>
+        <li>To change anything: edit the page → Cowork shows what would change in Canvas → Sathya approves → Cowork makes the change, then reads Canvas back to confirm it matches. Hand-edits made in Canvas come back as drift to report, not as silent overwrites.</li>
+        <li>The schedule also shows which Canvas submissions belong to which course assignment, and when the check-in meetings fall.</li>
         <li>Being retired: the CSV files, the canvas-sync script, and the nightly automated jobs.</li>
       </ul></div>
       <div class="q"><h4>Tasks</h4><ul class="tasks">
         <li class="t-done">Direction confirmed (7/2)</li>
-        <li class="t-open">Build the schedule template; fill in Fall dates for both courses; retire the old pipeline</li>
+        <li class="t-done">CSV vs. page settled in favor of <code>schedule.html</code>, carrying the full assignment record (8/13)</li>
+        <li class="t-open">Build the schedule template; fill in Fall dates for all three courses; retire the old pipeline</li>
       </ul></div>
     </div>
   </div>
@@ -444,7 +446,7 @@
       <div class="q"><h4>Why</h4><p>The proof should have the same shape as the goal. A course about directing one pursuit shouldn't grade sixty scattered submissions. Points follow the one deepening piece of work, not the count of tasks completed.</p></div>
       <div class="q"><h4>How</h4><ul>
         <li>Map the existing ~60 assignment pages onto the semester arc: keep what serves the arc as installments, merge or drop the rest.</li>
-        <li>Fix the documented problems from spring along the way: worked examples for 5 Whys (most chains circled instead of deepening) · "evidence of change" must name a specific moment, not a feeling · fewer frameworks in Sprint 1 · a Quick Start box and honest time estimates on every page · no placeholders or stale dates (dates come from the schedule page).</li>
+        <li>Fix the documented problems from spring along the way: worked examples for 5 Whys (most chains circled instead of deepening) · "evidence of change" must name a specific moment, not a feeling · fewer frameworks in Sprint 1 · honest time estimates on every page (the Quick Start box named here on 7/2 is superseded — pages open with Purpose, per the writing-assignments skill) · no placeholders or stale dates (dates come from the schedule page).</li>
         <li>Adopt the same grading design as 286 (agreed 7/20): half on submission, half earned at check-in meetings — "something along those lines needs to be tested for the age of AI." With 83 students, meetings will be in small groups; the numbers get worked out in the CF-6 tool plan.</li>
       </ul></div>
       <div class="q"><h4>The three things evidence must show</h4><ul>
