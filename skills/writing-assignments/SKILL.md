@@ -95,7 +95,8 @@ The repo is the source of truth; Canvas is the display.
 1. The design conversation decides the assignment → one row in the course's
    `assignments.csv` (mechanics only: id · week · module · title · kind · key-item or
    checkpoint · points · due-day · submission type · completion requirement ·
-   prerequisite · qualities · html path · canvas ids, written back by the sync).
+   prerequisite · qualities · html path and its public page URL · the Canvas
+   assignment URL and ids, written back by the sync).
 2. This skill produces the page → one HTML file in the course folder, house style,
    accessibility rules observed → publishes via the repo to GitHub Pages.
 3. Canvas shows the page in an iframe (the CST499 home-page pattern, with the
@@ -104,6 +105,11 @@ The repo is the source of truth; Canvas is the display.
    modules, order, prerequisites, completion requirements, due dates — with everything
    unpublished until Sathya's explicit go. Hand-edits in Canvas surface as drift to
    report, never silently overwritten.
+5. Whenever the CSV or an assignment page changes, the two links — the Canvas
+   assignment URL and the public HTML page URL — get copied into the dojo's Google
+   Doc, so the dojo can point a student straight at the right assignment on either
+   surface. (Open: which doc exactly, and whether the copy is scripted or a manual
+   step in the update routine.)
 
 Due days are rule-driven, not per-row: reflections fall on Friday in all three courses;
 the comprehensive falls at the week-opening class (Mon for CST286, Wed for CST349/499),
@@ -123,6 +129,7 @@ assignment 100, each walkthrough worth the sum of its window.
   submission type, completion requirement — and the builds-on block, the CSV
   prerequisite, and the Canvas requirement all name the same prior work.
 - The page renders in both contexts (web and Canvas iframe).
+- The dojo Google Doc carries this assignment's current Canvas link and page link.
 
 ---
 
