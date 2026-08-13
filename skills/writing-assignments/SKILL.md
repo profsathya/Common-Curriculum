@@ -1,6 +1,6 @@
 ---
 name: writing-assignments
-description: Use when writing or revising any assignment or activity page students will act on — the weekly reflection, the comprehensive, a sprint activity, a practice-dojo companion page. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template), the internal qualities line, and the pipeline the page lands in (CSV registry → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
+description: Use when writing or revising any assignment or activity page students will act on — the weekly reflection, the comprehensive, a sprint activity, a practice-dojo companion page. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (CSV registry → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
 ---
 
 _Status: v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
@@ -11,10 +11,10 @@ task, and criteria explicit measurably improves learning. First test: the first 
 
 # Writing assignments
 
-An assignment page tells a student four things, in this order: why this work is worth
-their time, what exactly to do, how they'll know they did it well, and what to take
-from it afterward. Every assignment and activity page in the fall courses carries these
-four blocks. The design conversation decides the assignment; this skill makes the page
+An assignment page tells a student five things, in this order: why this work is worth
+their time, what it builds on, what exactly to do, how they'll know they did it well,
+and what to take from it afterward. Every assignment and activity page in the fall
+courses carries these five blocks. The design conversation decides the assignment; this skill makes the page
 uniform.
 
 ## Purpose — why this exists
@@ -32,6 +32,23 @@ When an assignment deliberately withholds the how — the struggle is the point 
 purpose says so in so many words ("the purpose here is for you to feel stuck and invent
 your own approach; that experience is the skill"). Confusion a student was warned about
 reads as design; confusion they weren't reads as not belonging.
+
+## What you're building on — the prerequisite block
+
+Its own short block, placed right before Task — the moment the student needs the prior
+work is the moment they start this one. Three lines, concrete:
+
+- **The prior activity this stands on**, named, with the artifact in hand: "bring your
+  evidence inventory from Sprint 0," never "recall previous material."
+- **The knowledge or skill assumed**, in one plain sentence, so the student can
+  self-check before starting.
+- **Where to go back** if it's shaky — a link to the earlier page, framed as a
+  refresher rather than a remediation.
+
+This block is the student-language mirror of the machinery: the CSV's prerequisite
+column and the Canvas module requirement must name the same prior work the page names —
+one link, three views. It is also what makes the course feel cumulative on every page:
+each assignment visibly extends an evolving piece of work rather than starting fresh.
 
 ## Task — what to do
 
@@ -95,7 +112,7 @@ assignment 100, each walkthrough worth the sum of its window.
 
 ## Checklist (checkable by looking)
 
-- The four blocks are present, in order: Purpose · Task · Criteria · Reflection.
+- The five blocks are present, in order: Purpose · What you're building on · Task · Criteria · Reflection.
 - The first sentence of Purpose is the payoff, not the topic.
 - Every instruction sits at its point of action; known wrong turns are named.
 - Criteria distinguish done from good, show two or more examples, and end in a
@@ -103,7 +120,8 @@ assignment 100, each walkthrough worth the sum of its window.
 - Reflection questions are answerable only after doing the work.
 - The qualities line and evidence linkage are in the record and absent from the page.
 - The CSV row exists and matches the page: points, due day by the rhythm rule,
-  submission type, completion requirement.
+  submission type, completion requirement — and the builds-on block, the CSV
+  prerequisite, and the Canvas requirement all name the same prior work.
 - The page renders in both contexts (web and Canvas iframe).
 
 ---
