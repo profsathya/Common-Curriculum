@@ -125,3 +125,12 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
 - **2026-08-13 (correction) — interview sign-up rows removed from the weekly block** (Sathya's
   catch; see cst286 log, same date). Week 1's first-interview Slot row is gone; week 16's
   synthesis walkthrough remains only as the graded item. Session plan is Wed only. — Alan
+
+- **2026-08-14 — "How this course is different" added to `understand-the-course-design.html` (v3).**
+  Sathya's spec, agreed in chat before the build. First section on the page: AI as a partner, used
+  openly · process over output, with the pre-AI/AI-age contrast as the why (testing, challenging,
+  exercising motivation / metacognition / mindset; metacognition carries a glossary bubble) · less
+  weight on the grade, pointing at the home page's 🌱 Own your progress guidance as the ungraded
+  surface · a closing line tying the section to the machinery the page already explains.
+  Known and left for the vocabulary sweep: the same page's older checkpoint paragraph still says
+  checkpoints are credited on submission. — Alan

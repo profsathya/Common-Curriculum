@@ -121,3 +121,18 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   catch; see cst286 log, same date). Week 1's Sprint 0 interview had mis-rendered as a second Wed
   row; it and the proposal (wks 4–5), Sprint 2/3 interview, mock-interview and final-defense rows
   are gone. Session plan is Wed + Fri only; the Capstone Festival keeps its Fri row in week 16. — Alan
+
+- **2026-08-14 — "How this course is different" added to `understand-the-course-design.html` (v6).**
+  Sathya's spec, agreed in chat before the build. First section on the page: AI as a partner, used
+  openly · process over output, with the pre-AI/AI-age contrast as the why (testing, challenging,
+  exercising motivation / metacognition / mindset; metacognition carries a glossary bubble) · less
+  weight on the grade, pointing at the home page's 🌱 Own your progress guidance as the ungraded
+  surface · a closing line tying the section to the machinery the page already explains. **Plus the
+  previous-years contrast**: past capstones spent most of the semester executing; this one gives
+  more time to decide and deliver — anchored on the decide/execute/deliver figure from Arvind
+  Narayanan & Sayash Kapoor, "Why AI hasn't replaced software engineers" (*AI as Normal
+  Technology*, June 2026; figure hotlinked from substackcdn, paper linked as the reference) — and:
+  project of your choice unchanged; peer review and helping each other encouraged, course work done
+  individually.
+  Known and left for the vocabulary sweep: the same page's older checkpoint paragraph still says
+  checkpoints are credited on submission. — Alan

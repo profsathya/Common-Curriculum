@@ -169,3 +169,12 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   The week-1 "Slot" row for the first interview is gone; interview sign-ups are not part of the
   weekly block. Same correction in cst349 (week 1) and cst499 (all interview/defense rows,
   including one that had mis-rendered as a second Wed row in week 1). — Alan
+
+- **2026-08-14 — "How this course is different" added to `understand-the-course-design.html` (v2).**
+  Sathya's spec, agreed in chat before the build. First section on the page: AI as a partner, used
+  openly · process over output, with the pre-AI/AI-age contrast as the why (testing, challenging,
+  exercising motivation / metacognition / mindset; metacognition carries a glossary bubble) · less
+  weight on the grade, pointing at the home page's 🌱 Own your progress guidance as the ungraded
+  surface · a closing line tying the section to the machinery the page already explains.
+  Known and left for the vocabulary sweep: the same page's older checkpoint paragraph still says
+  checkpoints are credited on submission. — Alan
