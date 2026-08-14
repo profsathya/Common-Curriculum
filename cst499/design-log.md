@@ -116,3 +116,8 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   progress guidance; old key items → 🎯 graded items at 100 — **all eight placed, matching the
   locked eight; the 200-point mid-term's week is still TBD and not on the page.** Slot rows carry
   the interview windows; existing data-canvas-href anchors preserved. — Alan
+
+- **2026-08-13 (correction) — interview and defense rows removed from the weekly block** (Sathya's
+  catch; see cst286 log, same date). Week 1's Sprint 0 interview had mis-rendered as a second Wed
+  row; it and the proposal (wks 4–5), Sprint 2/3 interview, mock-interview and final-defense rows
+  are gone. Session plan is Wed + Fri only; the Capstone Festival keeps its Fri row in week 16. — Alan

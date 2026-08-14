@@ -121,3 +121,7 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   100, or the Sprint Exam at 200). **Five of the locked nine graded assignments are placed; four
   are TBD.** Session plans without settled content say Plan TBD. Which nine items survive and the
   weekly-reflection ruling remain open. — Alan
+
+- **2026-08-13 (correction) — interview sign-up rows removed from the weekly block** (Sathya's
+  catch; see cst286 log, same date). Week 1's first-interview Slot row is gone; week 16's
+  synthesis walkthrough remains only as the graded item. Session plan is Wed only. — Alan

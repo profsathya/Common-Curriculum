@@ -163,3 +163,9 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   reflects the 8/13 point structure, but which nine items survive and the weekly-reflection
   ruling are still Sathya's open calls. Vision page CF-1 and `skills/writing-to-teach` carry the
   pattern. — Alan
+
+- **2026-08-13 (correction) — interview sign-up rows removed from the weekly block.** Sathya's
+  catch on the first build: Session plan carries only the fixed session days (Mon + Wed here).
+  The week-1 "Slot" row for the first interview is gone; interview sign-ups are not part of the
+  weekly block. Same correction in cst349 (week 1) and cst499 (all interview/defense rows,
+  including one that had mis-rendered as a second Wed row in week 1). — Alan
