@@ -109,3 +109,10 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   `understand-the-course-design.html`, or `sprint-0`–`sprint-5.html`** — those carry the
   week-by-week item lists and the "every assignment is worth 100 points" rule, and cannot be
   re-cut until Sathya names the eight items. All eight pages are stale as of today. — Alan
+
+- **2026-08-13 (later) — home.html restructured into the weekly block (v6).** Same structure as
+  CST286/349 (see those logs, same date), with **Wed + Fri** session rows per Sathya's spec today;
+  Friday plans are TBD except the Capstone Festival (Fri Dec 18). Old checkpoints → 🌱 Own your
+  progress guidance; old key items → 🎯 graded items at 100 — **all eight placed, matching the
+  locked eight; the 200-point mid-term's week is still TBD and not on the page.** Slot rows carry
+  the interview windows; existing data-canvas-href anchors preserved. — Alan

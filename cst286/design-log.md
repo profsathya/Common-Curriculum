@@ -150,3 +150,16 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   week-by-week item lists, which cannot be re-cut until Sathya says which nine items survive and
   whether the weekly reflection (locked 8/12) continues as Own your progress guidance now that it
   carries no points. Those two pages are stale as of today; read the syllabus, not them. — Alan
+
+- **2026-08-13 (later) — home.html restructured into the weekly block (v2).** Sathya's design,
+  agreed after three mock rounds in the Alan session: every week now carries three visually
+  distinct sections — **🗓️ Session plan** (Mon online check-in + Wed in person; a one-sentence
+  goal per day, a "+" expanding in place to details and links) · **🌱 Own your progress guidance**
+  (the old checkpoints, not graded) · **🎯 Graded item** ("None." on most weeks, or the item, or
+  the Sprint Exam at 200). Violet, not a warning color, marks graded work — his call after amber
+  and orange both read as danger. Old key items carried over as graded at 100; **eight of the
+  locked nine are placed, the ninth is TBD**; Wednesday plans without settled content say Plan
+  TBD rather than inventing. The page partially un-stales today's earlier note: the weekly block
+  reflects the 8/13 point structure, but which nine items survive and the weekly-reflection
+  ruling are still Sathya's open calls. Vision page CF-1 and `skills/writing-to-teach` carry the
+  pattern. — Alan

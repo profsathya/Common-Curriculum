@@ -114,3 +114,10 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   **NOT yet applied to `home.html` or `understand-the-course-design.html`** — their week-by-week
   item lists cannot be re-cut until Sathya names the nine items and rules on whether the weekly
   reflection continues as Own your progress guidance. Both pages are stale as of today. — Alan
+
+- **2026-08-13 (later) — home.html restructured into the weekly block (v3).** Same structure as
+  CST286 (see that log, same date): 🗓️ Session plan (Wed only for this course) · 🌱 Own your
+  progress guidance (old checkpoints, not graded) · 🎯 Graded item (violet; "None.", the item at
+  100, or the Sprint Exam at 200). **Five of the locked nine graded assignments are placed; four
+  are TBD.** Session plans without settled content say Plan TBD. Which nine items survive and the
+  weekly-reflection ruling remain open. — Alan

@@ -1,6 +1,6 @@
 ---
 name: writing-to-teach
-description: Use whenever writing or revising text that students will read to learn — a course or sprint home page, a concept introduction, the framing at the top of an activity, or any page standing in for a lecture. Triggers when drafting a new student-facing page, when converting lecture or video material into text, and whenever a draft reads like a summary for colleagues instead of teaching — short sentences that describe the end state without walking the reader there. Covers starting from what the reader knows, has, and has attention for; the four engagement modes a page must reach; the two registers (teaching text vs task text) and which rules govern each; the teaching moves; and a backbone-plus-expandables page structure. Does not cover goal lines (writing-learning-goals), assignment structure (writing-assignments), or the final trim pass (reviewing-course-text).
+description: Use whenever writing or revising text that students will read to learn — a course or sprint home page, a concept introduction, the framing at the top of an activity, or any page standing in for a lecture. Triggers when drafting a new student-facing page, when converting lecture or video material into text, and whenever a draft reads like a summary for colleagues instead of teaching — short sentences that describe the end state without walking the reader there. Covers starting from what the reader knows, has, and has attention for; the four engagement modes a page must reach; the two registers (teaching text vs task text) and which rules govern each; the teaching moves; and a backbone-plus-expandables page structure; also the fall home-page weekly block (session plan / own-your-progress guidance / graded item). Does not cover goal lines (writing-learning-goals), assignment structure (writing-assignments), or the final trim pass (reviewing-course-text).
 ---
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
@@ -185,6 +185,28 @@ audiences include collaborators** — instructor/TA and peer conversations, sitt
 beside interviewers and managers. Use **student-humane verbs**: students recognize
 their starting point and reflect on their experience; they do not "get set" or
 "read their data."
+
+## The home-page weekly block (adopted 2026-08-13)
+
+Every week on a fall course home page carries the same three sections, in the same
+order, each visually distinct and anchored by its emoji:
+
+- **🗓️ Session plan** (blue) — one row per session day (CST286 Mon + Wed ·
+  CST349 Wed · CST499 Wed + Fri). Each row is a one-sentence goal for the session,
+  with a "+" that expands in place — native `<details>`, keyboard-safe — to details
+  and links for slides or video. Expanding never navigates.
+- **🌱 Own your progress guidance** (green) — one to three items, a one-sentence
+  goal each; not graded (the 0% Canvas group). Each row links to its activity.
+- **🎯 Graded item** (violet — deliberately not a warm or warning color) —
+  "None." on most weeks, or the one graded item, or the Sprint Exam / mid-term.
+
+Rows that open work open it in a **new tab** — a course page in the web context, the
+Canvas assignment inside Canvas. The sprint module keeps its "By the end of this
+sprint you will be able to" box, and each week keeps a one-line title beside its
+dates. The split is the point: expand in place for information, navigate for work.
+Emojis are decorative (`aria-hidden`); expanders are native `<details>`. Item names,
+dates and points come from the course's record (`schedule.html`, once built) — this
+skill owns the shape, never the list.
 
 ## One vocabulary
 
