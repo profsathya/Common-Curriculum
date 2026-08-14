@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="how-this-works" open>
+            <details class="module" id="how-this-works">
                 <summary>
                     <div class="module-head">
                         <span class="name">Start Here &middot; How this course works</span>
@@ -185,7 +185,7 @@
                     </div>
                 </div>
             </details>
-            <details class="module" id="sprint-0" open>
+            <details class="module" id="sprint-0">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 0 &middot; Orient</span>
@@ -222,7 +222,7 @@
                 <div class="wsec wsec-grad"><div class="wsec-head"><span class="emo" aria-hidden="true">&#x1F3AF;</span> Graded item</div><div class="wrow"><div class="wbody"><span class="wt">Build your know-yourself portfolio</span><span class="wm">Three honest looks at yourself: a skills self-assessment, an audit of your information diet &mdash; what you read, watch, and listen to, and what it is feeding &mdash; and your location on the shape ladder. With the reflection: how you feel about where you are.</span></div><span class="wpts">100 pts</span></div></div>
                 </div>
             </details>
-            <details class="module" id="sprint-1" open>
+            <details class="module" id="sprint-1">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 1 &middot; Set your professional growth goals</span>
@@ -444,14 +444,15 @@
    section the URL's #hash points at. */
 (function () {
   if (location.protocol !== 'https:') { return; }  /* editors and local previews stay fully open */
-  /* Sathya 2026-08-13: the big picture ships closed — students click it to learn more.
-     (Supersedes the 8/12 open-for-Sprint-0 call.) */
-  var keep = { 'how-this-works': 1, 'sprint-0': 1 };
+  /* Sathya 2026-08-13: every box ships closed — the big picture, Start Here, and the
+     sprint modules alike; students open what they need. A #hash link still opens its section. */
+  var keep = {};
   var h = location.hash.replace('#', '');
   if (h) { keep[h] = 1; }
   var all = document.querySelectorAll('details.module, details.bigpic');
   for (var i = 0; i < all.length; i++) {
     if (!keep[all[i].id]) { all[i].removeAttribute('open'); }
+    else { all[i].setAttribute('open', ''); }
   }
 })();
 </script>

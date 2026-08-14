@@ -122,7 +122,7 @@
                 </div>
             </details>
 
-            <details class="module" id="how-this-works" open>
+            <details class="module" id="how-this-works">
                 <summary>
                     <div class="module-head">
                         <span class="name">Start Here &middot; How this course works</span>
@@ -155,7 +155,7 @@
                 </div>
             </details>
 
-            <details class="module" id="sprint-0" open>
+            <details class="module" id="sprint-0">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 0 &middot; Orient</span>
@@ -184,7 +184,7 @@
                 <div class="wsec wsec-grad"><div class="wsec-head"><span class="emo" aria-hidden="true">&#x1F3AF;</span> Graded item</div><div class="wrow"><div class="wbody"><span class="wt">Build your know-yourself portfolio</span><span class="wm">Where you stand with physics, with AI, and with learning something hard on your own &mdash; plus the honest half: how you feel about where you are.</span></div><span class="wpts">100 pts</span></div></div>
                 </div>
             </details>
-            <details class="module" id="sprint-1" open>
+            <details class="module" id="sprint-1">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 1 &middot; Explore your interest deeply</span>
@@ -225,7 +225,7 @@
                 <div class="wsec wsec-grad"><div class="wsec-head"><span class="emo" aria-hidden="true">&#x1F3AF;</span> Graded item</div><div class="wrow"><div class="wbody"><span class="wt">Sprint Exam 1</span><span class="wm">In class Wednesday. Your sprint&rsquo;s learning, examined &mdash; then swapped, discussed, and evaluated with a partner. The rest of the session runs check-ins.</span></div><span class="wpts">200 pts</span></div></div>
                 </div>
             </details>
-            <details class="module" id="sprint-2" open>
+            <details class="module" id="sprint-2">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 2 &middot; Reflect, adjust and go further</span>
@@ -266,7 +266,7 @@
                 <div class="wsec wsec-grad"><div class="wsec-head"><span class="emo" aria-hidden="true">&#x1F3AF;</span> Graded item</div><div class="wrow"><div class="wbody"><span class="wt">Sprint Exam 2</span><span class="wm">In class Wednesday, then check-ins.</span></div><span class="wpts">200 pts</span></div></div>
                 </div>
             </details>
-            <details class="module" id="sprint-3" open>
+            <details class="module" id="sprint-3">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 3 &middot; Transfer your practice to another topic</span>
@@ -307,7 +307,7 @@
                 <div class="wsec wsec-grad"><div class="wsec-head"><span class="emo" aria-hidden="true">&#x1F3AF;</span> Graded item</div><div class="wrow"><div class="wbody"><span class="wt">Sprint Exam 3</span><span class="wm">In class Wednesday, then check-ins.</span></div><span class="wpts">200 pts</span></div></div>
                 </div>
             </details>
-            <details class="module" id="sprint-4" open>
+            <details class="module" id="sprint-4">
                 <summary>
                     <div class="module-head">
                         <span class="name">Sprint 4 &middot; Reflect and conclude with a sustainable practice</span>
@@ -381,14 +381,15 @@
    section the URL's #hash points at. */
 (function () {
   if (location.protocol !== 'https:') { return; }
-  /* Sathya 2026-08-13: the big picture ships closed — students click it to learn more.
-     (Supersedes the 8/12 open-for-Sprint-0 call.) */
-  var keep = { 'how-this-works': 1, 'sprint-0': 1 };
+  /* Sathya 2026-08-13: every box ships closed — the big picture, Start Here, and the
+     sprint modules alike; students open what they need. A #hash link still opens its section. */
+  var keep = {};
   var h = location.hash.replace('#', '');
   if (h) { keep[h] = 1; }
   var all = document.querySelectorAll('details.module, details.bigpic');
   for (var i = 0; i < all.length; i++) {
     if (!keep[all[i].id]) { all[i].removeAttribute('open'); }
+    else { all[i].setAttribute('open', ''); }
   }
 })();
 </script>
