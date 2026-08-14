@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <details class="bigpic" id="big-picture" open>
+            <details class="bigpic" id="big-picture">
                 <summary>
                     <div class="bigpic-head">
                         <span class="plus"></span>
@@ -444,9 +444,9 @@
    section the URL's #hash points at. */
 (function () {
   if (location.protocol !== 'https:') { return; }  /* editors and local previews stay fully open */
-  /* Sathya 2026-08-12: the big picture stays open for the start of the semester.
-     After Sprint 0, delete 'big-picture' from this line to collapse it by default. */
-  var keep = { 'big-picture': 1, 'how-this-works': 1, 'sprint-0': 1 };
+  /* Sathya 2026-08-13: the big picture ships closed — students click it to learn more.
+     (Supersedes the 8/12 open-for-Sprint-0 call.) */
+  var keep = { 'how-this-works': 1, 'sprint-0': 1 };
   var h = location.hash.replace('#', '');
   if (h) { keep[h] = 1; }
   var all = document.querySelectorAll('details.module, details.bigpic');

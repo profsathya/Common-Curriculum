@@ -136,3 +136,13 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   individually.
   Known and left for the vocabulary sweep: the same page's older checkpoint paragraph still says
   checkpoints are credited on submission. — Alan
+
+- **2026-08-14 (later) — weekly-rhythm ruling applied: vocabulary sweep (design page v7) + hover
+  explainers (home v7).** His ruling, same day: **"one reflection and one comprehensive assignment"
+  is gone.** The weekly message to students is now **1–3 Own your progress guidance activities and
+  at most one graded item per week**; the reflection floats — some weeks it sits in Own your
+  progress guidance, some weeks it is the graded item. Design page: rhythm section rewritten to
+  that message, key item / checkpoint terms removed, late rule now on graded items, grade section's
+  "each week's assignment and reflection" → "each graded item", cert route now runs through "the same weekly rhythm", grade example reworded to "a sprint with four graded items carries a 400-point interview". Home page: CSS-only
+  hover/tap/keyboard bubbles on every weekly block's 🌱 and 🎯 titles (what it is / how it counts).
+  Remaining key-item/checkpoint strings are dead CSS selectors and the provenance history block only. — Alan
