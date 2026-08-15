@@ -24,8 +24,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 .head h1{font-size:23px;font-weight:700;margin:3px 0 4px}
 .head .lead{font-size:13px;color:var(--muted);max-width:760px}
 .derived{font-size:11.5px;color:var(--muted);margin-top:8px;font-style:italic}
-/* convention + counts */
-.strip{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-bottom:18px}
+.selfurl{font-size:12px;margin-top:9px}
+.selfurl b{color:var(--muted);font-weight:600}
+.selfurl a{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;word-break:break-all}
+.strip{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-bottom:12px}
 @media (max-width:860px){.strip{grid-template-columns:1fr}}
 .card{border:1px solid var(--border-light);border-radius:6px;padding:12px 14px;background:#FCFDFE}
 .card .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -34,20 +36,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 .card td:first-child{width:150px;color:var(--muted)}
 .card .why{font-size:12px;color:var(--muted);margin-top:8px;padding-top:7px;border-top:1px solid var(--border-light)}
 .counts{display:flex;flex-wrap:wrap;gap:8px}
+.count{border:1px solid var(--border-light);border-radius:5px;padding:7px 10px;background:#fff;flex:1 1 120px}
+.count .n{font-size:18px;font-weight:700;line-height:1.1}
+.count .l{font-size:11px;color:var(--muted)}
+.count.gi .n{color:var(--violet)} .count.oyp .n{color:var(--check)}
 .groups{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-@media (max-width:860px){.groups{grid-template-columns:1fr}}
+@media (max-width:960px){.groups{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.groups{grid-template-columns:1fr}}
 .grp{border:1px solid var(--border-light);border-left:4px solid var(--border);border-radius:5px;padding:9px 11px;background:#fff}
 .grp .gn{font-size:13px;font-weight:700}
 .grp .gw{font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff;border-radius:3px;padding:1px 6px;margin-left:6px;background:#8B9AA5}
 .grp .gd{font-size:12px;color:var(--muted);margin-top:3px}
 .grp.g0{border-left-color:var(--check)} .grp.g0 .gw{background:var(--check)}
 .grp.g1{border-left-color:var(--violet)} .grp.g1 .gw{background:var(--violet)}
-.grp.g2{border-left-color:var(--blue)} .grp.g2 .gw{background:var(--blue)}
-.count{border:1px solid var(--border-light);border-radius:5px;padding:7px 10px;background:#fff;flex:1 1 120px}
-.count .n{font-size:18px;font-weight:700;line-height:1.1}
-.count .l{font-size:11px;color:var(--muted)}
-.count.gi .n{color:var(--violet)} .count.oyp .n{color:var(--check)}
-/* sprint sections */
+.grp.g2{border-left-color:#C05621} .grp.g2 .gw{background:#C05621}
+.grp.g3{border-left-color:var(--blue)} .grp.g3 .gw{background:var(--blue)}
 details.sprint{border:1px solid var(--border);border-radius:4px;margin-bottom:12px}
 details.sprint>summary{list-style:none;cursor:pointer}
 details.sprint>summary::-webkit-details-marker{display:none}
@@ -61,7 +64,6 @@ details.sprint[open]>summary>.sp-head .chev{transform:rotate(90deg)}
 .sp-head .nm .sub{font-weight:400;color:var(--muted);font-size:13px}
 .sp-head .tag{font-size:12px;color:var(--muted);white-space:nowrap}
 .sp-head .tally{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-/* column header */
 .chead,details.arow>summary{display:grid;grid-template-columns:56px 1.25fr 2fr 150px 54px 118px 20px;gap:12px;align-items:baseline;padding:8px 14px}
 .chead{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light)}
 details.arow{border-bottom:1px solid var(--border-light)}
@@ -78,7 +80,7 @@ details.arow[open]>summary{background:var(--goal-bg)}
 .c-due{font-size:12.5px;font-weight:600;white-space:nowrap}
 .c-due .dm{display:block;font-size:11px;font-weight:400;color:var(--muted)}
 .k{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;color:#fff;border-radius:3px;padding:1px 6px}
-.k-oyp{background:var(--check)} .k-gi{background:var(--violet)}
+.k-oyp{background:var(--check)} .k-gi{background:var(--violet)} .k-exam{background:#C05621}
 .plus{width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;justify-self:end}
 details.arow[open] .plus::before{content:"\2212"}
 details.arow:not([open]) .plus::before{content:"+"}
@@ -87,15 +89,11 @@ details.arow:not([open]) .plus::before{content:"+"}
 .dt{color:var(--muted);font-weight:600}
 .dd{color:var(--text)}
 .dd a.url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;word-break:break-all}
-.selfurl{font-size:12px;margin-top:9px}
-.selfurl b{color:var(--muted);font-weight:600}
-.selfurl a{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;word-break:break-all}
 .tbd{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;color:#8a6d0b;background:#FBF6EC;border:1px solid #E0C88A;border-radius:3px;padding:0 5px}
 .na{color:var(--muted)}
 .pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;border-radius:3px;padding:1px 6px;color:#fff}
 .pill.no{background:#8B9AA5} .pill.yes{background:var(--check)}
 .empty{padding:12px 14px;font-size:12.5px;color:var(--muted)}
-/* unplaced */
 .unplaced{border:1px solid #E0C88A;background:#FBF6EC;border-radius:6px;padding:12px 14px;margin-top:18px;font-size:12.5px;color:#5e4a18}
 .unplaced .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin-bottom:6px}
 .unplaced ul{margin:6px 0 0;padding-left:18px} .unplaced li{margin:3px 0}
@@ -118,22 +116,21 @@ details.arow:not([open]) .plus::before{content:"+"}
 <div class="page">
 
   <div class="draft">
-    <b>Draft v3 &middot; 14 Aug 2026.</b> First build of the registry. Placed so far: the five items
-    Sathya named on 14 Aug (weeks 1 and 2). Everything marked TBD is genuinely undecided, not
-    forgotten &mdash; points for Own your progress items, Canvas types, the six-qualities mapping,
-    and the remaining 6 graded items plus the 200-point mid-term week.
+    <b>Draft v4 &middot; 14 Aug 2026.</b> Working registry for CST499. Everything marked TBD is genuinely
+    undecided, not forgotten. Items appear here as they are designed; the &ldquo;Still to place&rdquo; box at the
+    bottom says what is missing.
   </div>
 
   <div class="head">
     <div class="eyebrow">CST499 &middot; Fall 2026 &middot; Course build record</div>
     <h1>Assignment registry</h1>
-    <div class="lead">One row per assignment, grouped by sprint. This file is the source of truth for
-      what exists, when it is due, what it is worth and whether it is in Canvas yet &mdash; it replaces the
-      spring <code>assignments.csv</code> pipeline. Click a sprint to open it; click a row for the full record.</div>
+    <div class="lead">One row per assignment, grouped by sprint. This file is the source of truth for what exists,
+      when it is due, what it is worth, which Canvas grade group it belongs to and whether it is in Canvas yet
+      &mdash; it replaces the spring <code>assignments.csv</code> pipeline. Click a sprint to open it; click a row
+      for the full record.</div>
     <div class="derived">Derived from the four-layer lock record in <code>cowork/fall-2026-courses/CONTEXT.md</code>
       and the dated decisions in <code>HANDOFF.md</code> (13&ndash;14 Aug 2026). Last checked 14 Aug 2026.</div>
-    <div class="selfurl"><b>This page:</b>
-      <a href="https://profsathya.github.io/Common-Curriculum/cst499/assignments.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/assignments.html</a></div>
+    <div class="selfurl"><b>This page:</b> <a href="https://profsathya.github.io/Common-Curriculum/cst499/assignments.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/assignments.html</a></div>
   </div>
 
   <div class="strip">
@@ -146,8 +143,8 @@ details.arow:not([open]) .plus::before{content:"+"}
         <tr><td>Graded item</td><td>Monday &mdash; the Monday that follows the week</td></tr>
         <tr><td>Time</td><td>11:59 p.m. PST (syllabus)</td></tr>
       </table>
-      <div class="why">Graded work lands Monday so no one is finishing it on a Sunday night. Intended for all
-        three courses. Supersedes the 12 Aug arrangement of a Monday prep step before a Wednesday Sprint Exam.</div>
+      <div class="why">Graded work lands Monday so no one is finishing it on a Sunday night. Shared across all
+        three courses.</div>
     </div>
     <div class="card">
       <div class="label">Where the course stands</div>
@@ -156,9 +153,7 @@ details.arow:not([open]) .plus::before{content:"+"}
         <div class="count oyp"><div class="n">3</div><div class="l">OYP items placed</div></div>
         <div class="count"><div class="n">0 / 5</div><div class="l">built in Canvas</div></div>
       </div>
-      <div class="why">Course total 3000: 1500 submitted (8 graded items &times; 100 + a 200-point mid-term)
-        mirrored by 1500 in interviews. Own your progress guidance carries points for visibility but sits in a
-        0%-weighted group.</div>
+      <div class="why">Course total 3000: 1500 submitted (8 graded items &times; 100 + a 200-point mid-term) mirrored by 1500 in interviews. Own your progress guidance carries points for visibility but sits in a 0%-weighted group.</div>
     </div>
   </div>
 
@@ -322,23 +317,16 @@ details.arow:not([open]) .plus::before{content:"+"}
 
   <div class="unplaced">
     <div class="label">Still to place</div>
-    <ul>
-      <li><b>6 more graded items</b> &mdash; 100 points each, at most one per week.</li>
-      <li><b>The 200-point mid-term</b> &mdash; hand-written, closed book, questions given ahead. Week not chosen
-        (an unapproved sketch had it at week 8).</li>
-      <li><b>Own your progress items for weeks 3&ndash;16</b> &mdash; one to three a week.</li>
-      <li><b>A point value for Own your progress items</b> &mdash; they show points for visibility but carry 0% weight.</li>
-      <li><b>The six-qualities mapping</b> per item.</li>
-    </ul>
+    <ul><li><b>6 more graded items</b> &mdash; 100 points each, at most one per week.</li><li><b>The 200-point mid-term</b> &mdash; hand-written, closed book, questions given ahead. Week not chosen (an unapproved sketch had it at week 8).</li><li><b>Own your progress items for weeks 3&ndash;16</b> &mdash; one to three a week.</li><li><b>A point value for Own your progress items</b> &mdash; they show points for visibility but carry 0% weight.</li><li><b>The six-qualities mapping</b> per item.</li></ul>
   </div>
 
   <div class="foot">
-    CST499 assignment registry &middot; v3 &middot; built 14 Aug 2026 &middot; generated by
-    <code>mk_cst499_assignments.py</code> &mdash; edit the generator, not this file.
+    CST499 assignment registry &middot; v4 &middot; built 14 Aug 2026 &middot; generated by
+    <code>mk_assignments.py cst499</code> &mdash; edit the generator, not this file.
     Every row carries <code>data-*</code> attributes (<code>data-id</code>, <code>data-week</code>,
-    <code>data-kind</code>, <code>data-due</code>, <code>data-points</code>, <code>data-canvas-id</code>,
-    <code>data-canvas-url</code>, <code>data-published</code>, <code>data-page</code>) so a Canvas sync can
-    read this file and write ids back into it.
+    <code>data-kind</code>, <code>data-due</code>, <code>data-points</code>, <code>data-grade-group</code>,
+    <code>data-canvas-id</code>, <code>data-canvas-url</code>, <code>data-published</code>,
+    <code>data-page</code>) so a Canvas sync can read this file and write ids back into it.
   </div>
 
 </div>
