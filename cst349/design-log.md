@@ -144,3 +144,16 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   "each week's assignment and reflection" → "each graded item". Home page: CSS-only
   hover/tap/keyboard bubbles on every weekly block's 🌱 and 🎯 titles (what it is / how it counts).
   Remaining key-item/checkpoint strings are dead CSS selectors only. — Alan
+
+- **2026-08-15 — three more "How this course is different" points added (design page v5).** Sathya's spec, verbatim
+  intent: (1) transcripts — you will be asked, at times, to submit transcripts of your AI
+  conversations to demonstrate process (attached to the process-over-output paragraph; grade
+  paragraph now opens "Another way you will see this"); (2) Canvas organized for comprehensive
+  learning, not transactions — "not easy to find what to do next" named as deliberate productive
+  friction, with the self-questions (where am I, can I remember or look it up, what next, where are
+  the details) developing independence + metacognition for the age of AI; (3) content practices
+  reading and writing at every turn, supported by listening and talking with peers and instructors
+  — all exercising critical thinking, communication, collaboration, named as what **Symbiotic
+  Thinking** develops. Symbiotic Thinking gets a glossary bubble with the canonical definition
+  (human-led practice of pursuing wisdom in partnership with other intelligences, human or
+  artificial) — first student-facing use of the term on this course's pages. — Alan
