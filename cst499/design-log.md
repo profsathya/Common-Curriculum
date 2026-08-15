@@ -159,3 +159,20 @@ The freshest of the three: the v5 site in this folder (home, sprints 0–5, prob
   Thinking** develops. Symbiotic Thinking gets a glossary bubble with the canonical definition
   (human-led practice of pursuing wisdom in partnership with other intelligences, human or
   artificial) — first student-facing use of the term on this course's pages. — Alan
+
+## 2026-08-15 — Week 1 goes live in Canvas; home.html weeks 1–2 reconciled to the registry
+
+Canvas course 33649 now carries the three weighted grade groups (Own your progress guidance 0% ·
+Graded items 50% · Interviews 50%) and the two week-1 assignments — AI Dojo Setup (OYP, Fri 28 Aug)
+and What are my priorities (graded, Mon 31 Aug) — both 100 points, text entry, published, in Sprint 0
+modules that carry submit requirements (graded chain sequential, OYP not). The four July-draft
+assignments and their two week-modules were deleted; the spring-import content remains for a later
+cleanup pass. `assignments.html` is at v7 with Canvas ids, URLs and published state written back.
+
+`home.html` weeks 1–2 now match the registry: week 1 is AI Dojo Setup + What are my priorities (both
+dual-context linked — course page on the web, Canvas assignment in Canvas), week 2 is Information
+Diet Audit / Know yourself / Know the market as unlinked rows until they are built. "Show you know
+how this course works" and "Write your baseline evidence inventory" came off the page; the dead
+module-item links from the July Canvas build are gone. Still open: the Labor-Day due date for Know
+the market, the Know-yourself kind confirmation, and the sprint-opening reflection assignments that
+gate each next sprint.
