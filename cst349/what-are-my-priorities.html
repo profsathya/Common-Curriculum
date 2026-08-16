@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST349 &mdash; What Are My Priorities</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+.draft{border:1px solid #E0C88A;background:#FBF6EC;border-radius:5px;padding:10px 13px;margin-bottom:18px;font-size:12.5px;color:#5e4a18;display:flex;gap:8px;align-items:flex-start;}
+.draft svg{width:15px;height:15px;flex:0 0 15px;margin-top:2px;}
+.draft b{font-weight:700;}
+
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:18px;}
+.course-header .eyebrow{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.7px;text-transform:uppercase;}
+.course-header h1{font-size:23px;font-weight:700;margin:3px 0 4px;}
+.course-header .sub{font-size:14px;color:var(--text);font-weight:600;}
+.course-header .lead{color:var(--muted);font-size:13px;max-width:690px;margin-top:6px;}
+.cti-logo{height:34px;width:auto;display:block;opacity:.9;}
+.cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
+
+/* Program arc */
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
+.arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
+.arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+a.arc-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
+a.arc-card:hover,a.arc-card:focus{z-index:70;}
+a.arc-card > .bub{margin-top:8px;}
+a.arc-card:hover > .gl > .bub,a.arc-card:focus > .gl > .bub{display:block;}
+@media(min-width:1001px){.arc-grid > a:nth-child(n+5) .bub{left:auto;right:0;}}
+@media(max-width:1000px) and (min-width:621px){.arc-grid > a:nth-child(3n) .bub{left:auto;right:0;}}
+@media(max-width:620px){.arc-grid > a:nth-child(2n) .bub{left:auto;right:0;}}
+a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBFD;}
+.arc-card .s{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
+.arc-card .nm{font-size:13.5px;font-weight:700;margin:2px 0 1px;color:var(--blue-dark);line-height:1.25;}
+.arc-card .th{font-size:11.5px;color:var(--muted);line-height:1.3;}
+.arc-card .who{font-size:11px;color:var(--muted);margin-top:auto;padding-top:6px;}
+.arc-card .who b{color:var(--text);font-weight:600;}
+.arc-card.build{background:#F3F8FB;border-color:#A8CBE0;}
+@media(max-width:1000px){.arc-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:620px){.arc-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* Beyond the grade */
+.beyond{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:13px 15px;margin:0 0 22px;}
+.beyond .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
+.beyond .hd{font-size:15px;font-weight:700;margin-bottom:4px;}
+.beyond p{margin:0 0 6px;font-size:13px;color:#38503f;}
+.beyond p:last-child{margin-bottom:0;}
+
+/* Modules */
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
+details.module > summary{list-style:none;cursor:pointer;}
+details.module > summary::-webkit-details-marker{display:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
+.module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
+.module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
+details.module[open] > summary > .module-head .chev{transform:rotate(90deg);}
+.module-head:hover{background:#EFEFEF;}
+
+.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);padding:11px 14px;}
+.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.goal .text{font-size:14px;color:var(--text);}
+.goal ul{margin:4px 0 0;padding-left:18px;}
+.goal li{margin:2px 0;}
+.prereq{padding:8px 14px 4px;color:var(--muted);font-size:12.5px;display:flex;gap:7px;align-items:flex-start;border-bottom:1px solid var(--border-light);}
+.prereq svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.prereq b{color:var(--text);font-weight:600;}
+
+.items{padding:2px 0 4px;}
+.item{display:flex;gap:11px;padding:11px 14px 11px 26px;border-bottom:1px solid var(--border-light);align-items:flex-start;}
+.item:last-child{border-bottom:none;}
+.item .ico{flex:0 0 18px;margin-top:1px;color:var(--muted);}
+.item .ico svg{width:18px;height:18px;display:block;}
+.item .body{flex:1;min-width:0;}
+.item .title{font-size:14.5px;font-weight:600;}
+.item .meta{color:var(--muted);font-size:12px;margin-top:2px;}
+
+.group-label{padding:10px 14px 4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light);}
+.group-label .gd{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:#7C8A93;border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
+.badge.key{background:var(--blue);}
+.badge.check{background:#8B9AA5;}
+.badge.live{background:var(--check);}
+.badge.optional{background:#7C8A93;}
+
+.item.keyitem{background:var(--goal-bg);}
+.item.keyitem .ico{color:var(--blue);}
+.item.live{background:var(--check-bg);}
+.item.live .ico{color:var(--check);}
+
+.note{padding:9px 14px;background:#FBF6EC;border-bottom:1px solid var(--border-light);font-size:12.5px;color:#5e4a18;display:flex;gap:7px;align-items:flex-start;}
+.note svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.note b{font-weight:700;}
+
+/* Canvas-page content (how-this-works, problem-spaces) */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+.pagehead .lead{font-size:13.5px;color:var(--muted);max-width:700px;margin-top:7px;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+p.body{font-size:13.5px;margin:0 0 10px;}
+table.grades{border-collapse:collapse;width:100%;margin:10px 0 0;font-size:13px;}
+table.grades th,table.grades td{border-bottom:1px solid var(--border-light);padding:6px 8px;text-align:left;}
+table.grades th{font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);font-weight:700;}
+table.grades td:first-child{font-weight:700;width:70px;}
+
+.ps-group{margin-bottom:20px;}
+.ps-group h3{font-size:14px;font-weight:700;color:var(--blue-dark);margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border-light);}
+.ps{border:1px solid var(--border-light);border-radius:5px;padding:10px 13px;margin-bottom:8px;}
+.ps .nm{font-size:14px;font-weight:700;}
+.ps .desc{font-size:13px;color:var(--muted);margin-top:2px;}
+.ps .goal-line{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border-light);}
+.ps .goal-line b{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+.provenance{margin-top:18px;border:1px solid var(--border-light);border-radius:6px;padding:11px 14px;font-size:11.5px;color:var(--muted);background:#FCFCFD;}
+.provenance b{color:var(--text);font-weight:700;}
+.provenance ul{margin:5px 0 0;padding-left:18px;}
+.provenance li{margin:2px 0;}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.arc-card .gl{display:block;}
+.arc-card .gt{font:inherit;color:inherit;text-align:left;border-bottom:1px dashed var(--blue);}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+.page-footer img{height:20px;opacity:.55;}
+
+.copywrap{position:relative;}
+.copybtn{position:absolute;top:10px;right:10px;z-index:5;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#0374B5;background:#fff;border:1px solid #0374B5;border-radius:4px;padding:3px 10px;cursor:pointer;}
+.copybtn:hover{background:#F3F8FB;}
+
+.dojolink{display:inline-block;font-size:14px;font-weight:700;color:#fff;background:#0374B5;border-radius:5px;padding:9px 16px;}
+.dojolink:hover{background:#0a5a8a;text-decoration:none;color:#fff;}
+.keybox{border:1px solid #E0C88A;background:#FBF6EC;border-radius:6px;padding:11px 14px;font-size:13px;color:#5e4a18;margin:0 0 10px;}
+.keybox code{background:#fff;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="crumb"><a href="home.html">CST349</a> &middot; What Are My Priorities</div>
+<div class="pagehead">
+<div class="s">CST349 &middot; Fall 2026 &middot; Week 1 &middot; Graded assignment &middot; 100 points</div>
+<h1>What Are My Priorities</h1>
+<div class="dt">Due Monday 31 August, 11:59 p.m. &middot; about 30 minutes</div>
+<div class="lead">A guided conversation about what you actually want out of your professional life. It is the first graded
+thing you do here, because in week 3 you define what growth means for you &mdash; and that definition is only as good as
+your honesty about what you are aiming at.</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">This course asks you to define your own growth, build a plan for it, and run that plan for a semester. Weeks 3
+and 4 are where that gets written down. Everything after is you running the loop and revising it.</p>
+<p class="body">Which means the whole thing rests on one question that most people never actually sit with: <b>what do you
+want?</b> Not what a good CS student is supposed to want. Not the answer that goes down well in an interview. What you
+actually want, including the parts that are inconvenient or unimpressive.</p>
+<p class="body">Skip that question and you will still write a growth plan &mdash; a plausible one, aimed at a version of you
+that someone else described. Those plans do not survive week 8, because nothing in them is worth the friction. So this half
+hour comes before anything else.</p>
+
+<h2 class="sec">What this is &mdash; and how it differs from your own Dojo</h2>
+<p class="body">This runs in a <b>practice Dojo</b>, which is a different thing from the AI Dojo you set up on the
+<a href="setup-ai-dojo.html">Set Up Your AI Dojo</a> page. You do not configure anything. You open a link and a conversation
+prepared for this one question starts asking you things.</p>
+<p class="body">It behaves the way this course behaves: it asks, you think, you answer. It will not hand you a set of
+priorities. Ask it to and it will hand the question back &mdash; which is the point of it.</p>
+
+<h2 class="sec">Step 1 &mdash; Open the Dojo</h2>
+<div class="keybox"><b>The link arrives before week 1.</b> It will look like
+    <code>https://dojo.symbioticthinking.ai/?topic=what-are-my-priorities&amp;key=&hellip;</code> &mdash; the class key goes out with the week&nbsp;1
+    announcement and this page will carry the full clickable link then. Nothing for you to do until it shows up.</div>
+<p class="body">Use a laptop if you can. You will be typing for half an hour.</p>
+
+<h2 class="sec">Step 2 &mdash; Have the conversation</h2>
+<p class="body"><b>Give it about thirty minutes, in one sitting.</b> This is not a form to fill in between other things. The
+answers worth having usually arrive after the first ten minutes, once the obvious ones are out of the way.</p>
+<p class="body"><b>Be honest, including about the unimpressive parts.</b> If the true answer is &ldquo;I want to earn enough
+that money stops being a worry,&rdquo; say that. If it is &ldquo;I am not sure I want to be a software engineer,&rdquo; say
+that too &mdash; week 1 of a course about your own growth is exactly the right place to find that out, and there are no points
+riding on having admirable priorities.</p>
+<p class="body"><b>Push back when it gets you wrong.</b> If it plays your answer back and the summary is off, say so. A
+conversation where you corrected it twice is worth more than one where you agreed with everything.</p>
+<p class="body"><b>Do not stop at your first answer.</b> When it asks why something matters to you, the first answer is the
+surface one. The second and third are usually the real ones. Sit with the question rather than moving on.</p>
+<p class="body">Before you finish, ask it to play back the priorities it heard, and tell it whether it got them right.</p>
+
+<h2 class="sec">Step 3 &mdash; Submit</h2>
+<p class="body">One text box in Canvas, two parts.</p>
+<p class="body"><b>1. Your priorities, in your own words.</b> Three to five of them, one line each, in the order that matters
+to you. Then two or three sentences on what surprised you &mdash; something you said that you had not put into words before,
+or a priority that turned out to sit lower than you assumed.</p>
+<p class="body"><b>2. The whole conversation, pasted underneath.</b> All of it, unedited.</p>
+<p class="body">You do not have to copy it out by hand. The Dojo has a <b>download / copy-to-clipboard</b> option built in
+&mdash; use that when you are finished, then paste it straight into the Canvas box.</p>
+
+<h2 class="sec">How this is graded</h2>
+<p class="body">This is a graded assignment worth 100 points. Like everything you submit here, it can be sampled in a check-in
+&mdash; so expect to be asked about your priorities out loud, not just on paper.</p>
+<p class="body">What earns the points is <b>evidence that you did the thinking</b>: priorities specific enough that they would
+actually rule something out, a conversation that shows you working rather than agreeing, and at least one place where your
+answer changed as you talked.</p>
+<p class="body">What does not earn the points is a tidy list of admirable-sounding goals with a conversation underneath showing
+you took the first thing the Dojo offered.</p>
+<p class="body">There is no right set of priorities. There is only whether these are actually yours &mdash; which is what makes
+the growth plan you write in week 3 worth running.</p>
+
+<div class="pagenav"><span><a href="setup-ai-dojo.html">&larr; Set Up Your AI Dojo</a></span><span><a href="home.html">Course home &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; What Are My Priorities &middot; Draft v1</span>
+</footer>
+
+</div>
+</body>
+</html>
