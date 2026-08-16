@@ -1,11 +1,15 @@
 ---
 name: writing-assignments
-description: Use when writing or revising any assignment or activity page students will act on, whatever the course calls that kind of work. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (schedule.html registry → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
+description: Use when writing or revising any assignment or activity page students will act on, whatever the course calls that kind of work. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (assignments.html → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
 ---
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v2 (13 August 2026) — the assignment-kind labels and the per-kind point values were removed and handed back to each course's design record, after three renamings in eight days. v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
+_Status: v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+`schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
+first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
+the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
+publish-on-creation policy. v2 (13 August 2026) — the assignment-kind labels and the per-kind point values were removed and handed back to each course's design record, after three renamings in eight days. v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
 August (Sathya + Alan); the shape adapts the Transparent Assignment Template © 2013
 Mary-Ann Winkelmes (TILT Higher Ed), whose national study showed that making purpose,
 task, and criteria explicit measurably improves learning. First test: the first fall
@@ -47,8 +51,8 @@ work is the moment they start this one. Three lines, concrete:
 - **Where to go back** if it's shaky — a link to the earlier page, framed as a
   refresher rather than a remediation.
 
-This block is the student-language mirror of the machinery: the schedule's prerequisite
-column and the Canvas module requirement name the same prior work the page names —
+This block is the student-language mirror of the machinery: the prerequisite field in
+`assignments.html` and the Canvas module requirement name the same prior work the page names —
 one link, three views. It is also what makes the course feel cumulative on every page:
 each assignment visibly extends an evolving piece of work rather than starting fresh.
 
@@ -95,10 +99,16 @@ Each assignment's record — not its page — carries:
 The repo is the source of truth; Canvas is the display.
 
 1. The design conversation decides the assignment → one row in the course's
-   `schedule.html` (mechanics only: id · week · module · title · kind · points ·
+   `assignments.html` (mechanics only: id · week · module · title · kind · points ·
    due-day · submission type · completion requirement · prerequisite · qualities ·
-   html path and its public page URL · the Canvas assignment URL and ids, written back
-   by the sync).
+   html path and its public page URL · the Canvas assignment URL, id and published
+   state — written back **in the same pass that creates them in Canvas**, so the file
+   never lags the shell). Canvas URLs are hand-maintained in exactly ONE place — this
+   file; home pages and the course Google Docs derive from it or are diffed against
+   it. The 15 Aug dead-link incident was a home page carrying its own copies of
+   Canvas URLs that outlived the objects they pointed at. When Canvas objects are
+   deleted or recreated, sweep the link consumers the same day — module-item URLs die
+   with their modules.
 
    **The kinds themselves are course design, not this skill (Sathya, 13 Aug 2026).**
    `kind` is a field this skill fills in from whatever the course has decided to call
@@ -106,25 +116,37 @@ The repo is the source of truth; Canvas is the display.
    downstream — and there have been three — has to come back and edit this file.
    Read the course's own design record for the current set.
 
-   **The registry is a web page, not a CSV (Sathya, 13 Aug 2026).** Both hold the same
-   fields; the page is the one he can actually review — sprints group into expandable
-   sections, so the semester reads at a glance and opens where he wants detail. A registry
-   this wide is unreadable as a spreadsheet, which is why the earlier `assignments.csv`
-   plan was dropped. `config/cst349-assignments.csv` and `config/cst395-assignments.csv`
+   **assignments.html is a web page, not a CSV (Sathya, 13 Aug 2026; named
+   `assignments.html` 14 Aug — it holds assignments only, no session dates).** Both hold
+   the same fields; the page is the one he can actually review — sprints group into
+   expandable sections, so the semester reads at a glance and opens where he wants
+   detail. A record this wide is unreadable as a spreadsheet, which is why the earlier
+   `assignments.csv` plan was dropped. `config/cst349-assignments.csv` and `config/cst395-assignments.csv`
    are spring artifacts of the retired pipeline, not inputs to this one.
 2. This skill produces the page → one HTML file in the course folder, house style,
    accessibility rules observed → publishes via the repo to GitHub Pages.
-3. Canvas shows the page in an iframe (the CST499 home-page pattern, with the
-   context resolver for canvas-vs-web links).
-4. A reconcile pass diffs the schedule against Canvas and applies only the differences —
-   modules, order, prerequisites, completion requirements, due dates — with everything
-   unpublished until Sathya's explicit go. Hand-edits in Canvas surface as drift to
-   report, never silently overwritten.
-5. Whenever the schedule or an assignment page changes, the two links — the Canvas
-   assignment URL and the public HTML page URL — get copied into the dojo's Google
-   Doc, so the dojo can point a student straight at the right assignment on either
-   surface. (Open: which doc exactly, and whether the copy is scripted or a manual
-   step in the update routine.)
+3. Canvas shows the page in an iframe. The assignment description is an iframe of the
+   public page (width 100%, height ~1100, border 0, a title attribute) plus one
+   fallback line linking the page in a new tab (settled 15 Aug 2026, both CST499
+   week-1 assignments). On course pages, activity links open a NEW TAB in both
+   contexts — the context resolver sets `_blank`, never `_top` (the `_top` still in the
+   286/349 home-page scripts is the deviation to fix when their links go live).
+4. A reconcile pass diffs `assignments.html` against Canvas and applies only the
+   differences — modules, order, prerequisites, completion requirements, due dates.
+   **Before the FIRST write into any Canvas shell, inventory what is already there**
+   (semester imports, old drafts) and get a ruling — the CST499 shell held ~20 spring
+   items and four stale drafts on 15 Aug. Hand-edits in Canvas surface as drift to
+   report, never silently overwritten. **Publish policy (Sathya, 15 Aug 2026):
+   publish-on-creation while the course shell is unpublished; once the course is live,
+   new items stay unpublished until his explicit go.** After any Canvas write, read the
+   result back through the API before reporting it done.
+5. Whenever `assignments.html` or an assignment page changes, the two links — the
+   Canvas assignment URL and the public HTML page URL — reach each course's Google Doc
+   through the Common-Curriculum Apps Script sync (`apps-script/CourseDocSync.gs`,
+   driven by GitHub Actions and `config/course-docs.json`), so the AI Dojo can point a
+   student straight at the right assignment on either surface (Sathya, 15 Aug 2026 —
+   keep this step; the doc is downstream of the repo, and edits made in a synced tab
+   are lost on the next sync).
 
 Due days are rule-driven, not per-row: the course's design record sets the rhythm —
 which kind of work falls on which day, and why — and this skill applies it rather than
@@ -140,12 +162,14 @@ neither is written down here again.
   student-runnable checklist; points and their route to the walkthrough are stated.
 - Reflection questions are answerable only after doing the work.
 - The qualities line and evidence linkage are in the record and absent from the page.
-- The `schedule.html` row exists and matches the page: kind and points as the course
-  design defines them, due day by the rhythm rule,
-  submission type, completion requirement — and the builds-on block, the schedule's
-  prerequisite, and the Canvas requirement all name the same prior work.
+- The `assignments.html` row exists and matches the page: kind and points as the course
+  design defines them, due day by the rhythm rule, submission type, completion
+  requirement — and the builds-on block, the row's prerequisite, and the Canvas
+  requirement all name the same prior work. If the assignment exists in Canvas, the
+  row carries its id, URL and published state.
 - The page renders in both contexts (web and Canvas iframe).
-- The dojo Google Doc carries this assignment's current Canvas link and page link.
+- The course Google Doc carries this assignment's current Canvas link and page link
+  (via the Apps Script sync).
 
 ---
 
