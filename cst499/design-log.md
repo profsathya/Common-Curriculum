@@ -184,3 +184,15 @@ gate each next sprint.
   rendering at the page corner), and registry-linked titles keep their links — bubbles sit on
   adjacent plain text. class="gl" count now 57. New skill: `skills/hover-text/SKILL.md`
   carries the register, placement, markup, and after-rebuild survival check. — Alan
+
+- **2026-08-16 (later) — sprint-0..5 vocabulary swept, his call ("there is no key item,
+  checkpoint... It is Own Your Progress and Graded Item").** All six sprint pages: 8 "Key item"
+  chips → "Graded item" (violet #6D3FA9, matching the home weekly block), 18 "Checkpoint" chips →
+  "Own your progress" (green), and sprint-0's checkpoint bubble replaced with the inspirational
+  Own-your-progress bubble — its "credited the moment you submit it" sentence now says the item
+  does not affect the grade and exists to surface setup problems in week 1. No key-item/checkpoint
+  text remains on any sprint page. **Still open, deliberately untouched: item-level
+  reconciliation** — sprint-0 still shows "Write your baseline evidence inventory" as week 1's
+  graded item where the registry has "What are my priorities" (and week 2 = "Know the market");
+  later weeks carry item lists the registry has not placed yet. That is the registry-driven
+  rebuild, not vocabulary. — Alan
