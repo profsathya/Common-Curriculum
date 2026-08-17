@@ -1,6 +1,6 @@
 ---
 name: building-canvas-fall-2026
-description: Use when creating or updating assignment groups, modules, or assignments in the Fall 2026 Canvas shells (CST286 33930 · CST349 34789 · CST499 33649). The ordered build recipe — grade groups and weights, assignments from assignments.html rows, per-sprint type-split modules with submit requirements, the reflection gate, same-pass id write-back, and the verification and publish rules. Fall-2026-specific by decision; whether other programs adopt a similar structure is deliberately left open.
+description: Use when creating or updating assignment groups, modules, or assignments in the Fall 2026 Canvas shells (CST286 33930 · CST349 34789 · CST499 33649). The ordered build recipe — grade groups and weights, assignments from assignments.html rows, per-sprint type-split modules with submit requirements, the reflection-first ordering, same-pass id write-back, and the verification and publish rules. Fall-2026-specific by decision; whether other programs adopt a similar structure is deliberately left open.
 ---
 
 _Scope (Sathya, 15 August 2026): this is the build process for the three Fall 2026 CSUMB courses
@@ -11,7 +11,7 @@ module architecture — this file wins for these three courses and only these._
 
 _Derived from the lock record (`cowork/fall-2026-courses/CONTEXT.md`; the Canvas gating model locked
 15 Aug 2026) and the first live build (CST499 week 1, 15 Aug 2026). The design decisions this recipe
-implements are stated there, not here — this file is only the how. Last checked: 15 August 2026._
+implements are stated there, not here — this file is only the how. Last checked: 16 August 2026 (module architecture revised that day)._
 
 # Building Canvas for the Fall 2026 courses
 
@@ -50,12 +50,15 @@ explicit go.**
   requirements in sequential order* ON, and **"Sprint N · Own your progress"** with sequencing OFF.
 - Every item in both carries a **submit** completion requirement — satisfied even by a late
   submission. Skipping an Own-your-progress item never blocks the next one.
-- The sprint-opening **reflection is its own one-item module** (so it can serve as a prerequisite —
-  Canvas prerequisites reference modules, not items), and the next sprint's modules list that
-  reflection module as their ONLY prerequisite. Never "complete the previous sprint": module
-  prerequisites have no OR condition, and the reflection is the gate by design. *(Open as of 15 Aug:
-  the reflection assignments themselves are not yet created, and their kind and points are
-  undecided.)*
+- The sprint-opening **reflection is the first item inside that sprint's Graded-items module**
+  (Sathya, 16 Aug 2026 — this replaces the 15 Aug reflection-as-its-own-module design). Because
+  the module is sequential, the reflection is what a student does before anything else that
+  sprint. **Set no cross-sprint module prerequisites.** Leaving the next sprint ungated is what
+  delivers the catch-up: a student stuck mid-Sprint 1 opens Sprint 2 by submitting its
+  reflection, where gating Sprint 2 behind Sprint 1 would lock them out. Sprint 0 has no opening
+  reflection — it starts with the course's first graded assignment. Each reflection is one of the
+  course's nine graded assignments, not an addition to them (16 Aug). *(Open: the reflection
+  assignments themselves are not yet created for any sprint.)*
 - Modules stay hidden from the student navigation — they are gating machinery; the course home page
   carries navigation. Requirements still gate direct links.
 
@@ -79,7 +82,8 @@ embeds by eye before diagnosing a failure.
 - Every assignment's name, points, due date, submission type and group match its row; the
   description is the iframe plus the fallback link.
 - Graded-items modules are sequential, Own-your-progress modules are not; every item requires
-  submit; each sprint's modules are gated only by the previous sprint's reflection module.
+  submit; each sprint's Graded-items module opens with its reflection and no module carries a
+  cross-sprint prerequisite.
 - Canvas ids, URLs and published state are written back and committed in the same pass.
 - Everything was read back via the API; embeds checked by eye.
 
@@ -89,4 +93,6 @@ embeds by eye before diagnosing a failure.
 the everything-100 points call, the iframe-embed and new-tab decisions, the keep-it-out-of-Athena
 placement. Human + AI: the type-split module architecture and reflection-as-gate, worked out in
 conversation 15 Aug 2026 from Canvas's module-scoped sequencing and OR-less prerequisites.
-AI (Alan): this file's drafting, 15 Aug 2026, from the first CST499 build, for Sathya's edit.*
+AI (Alan): this file's drafting, 15 Aug 2026, from the first CST499 build, for Sathya's edit.
+Revised 16 Aug 2026 after Sathya replaced the reflection-as-module gate with reflection-first
+ordering and no cross-sprint prerequisites, built that day on CST286.*
