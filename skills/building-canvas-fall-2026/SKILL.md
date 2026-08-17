@@ -64,9 +64,12 @@ explicit go.**
 
 ## 4. Write-back — same pass, never later
 
-Canvas id, URL and published state go into the generator's data block
-(`cowork/fall-2026-courses/mk_assignments.py`), the course's `assignments.html` is regenerated and
-committed in the same working pass. The file never lags the shell.
+Canvas id, URL and published state go into that course's data file
+(`cowork/fall-2026-courses/assignments-data/<course>.py` — one file per course since 17 Aug 2026, so
+parallel work on two courses never touches the same file; `mk_assignments.py` is the shared renderer
+and changes only when the page's structure changes). Regenerate with
+`python3 mk_assignments.py <course>` and commit the page in the same working pass. The file never
+lags the shell.
 
 ## 5. Verify
 
