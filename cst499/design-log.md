@@ -176,3 +176,11 @@ how this course works" and "Write your baseline evidence inventory" came off the
 module-item links from the July Canvas build are gone. Still open: the Labor-Day due date for Know
 the market, the Know-yourself kind confirmation, and the sprint-opening reflection assignments that
 gate each next sprint.
+
+- **2026-08-16 — hover-text layer applied to home.html (approved list, pass 1).** Restored 🌱/🎯 on all 16 weeks; AI Dojo, problem spaces, Symbiotic Thinking added — and the week-1 "SymbioticThinking" missing space fixed. All
+  bubbles in the why-first register (rule confirmed by Sathya today); 🌱/🎯 title bubbles restored
+  with the inspirational Own-your-progress text. Two mechanics fixed page-wide: the weekly-block
+  containers joined the position:relative anchor list (pre-existing bubbles in weekly rows were
+  rendering at the page corner), and registry-linked titles keep their links — bubbles sit on
+  adjacent plain text. class="gl" count now 57. New skill: `skills/hover-text/SKILL.md`
+  carries the register, placement, markup, and after-rebuild survival check. — Alan

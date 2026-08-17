@@ -157,3 +157,11 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   Thinking** develops. Symbiotic Thinking gets a glossary bubble with the canonical definition
   (human-led practice of pursuing wisdom in partnership with other intelligences, human or
   artificial) — first student-facing use of the term on this course's pages. — Alan
+
+- **2026-08-16 — hover-text layer applied to home.html (approved list, pass 1).** Restored 🌱/🎯 on all 14 weeks; Sprint Exam (3), AI Dojo, Goal Plan, growth dimensions (π/m/comb intentionality per Sathya), shape ladder, milestone record, baseline reading added. All
+  bubbles in the why-first register (rule confirmed by Sathya today); 🌱/🎯 title bubbles restored
+  with the inspirational Own-your-progress text. Two mechanics fixed page-wide: the weekly-block
+  containers joined the position:relative anchor list (pre-existing bubbles in weekly rows were
+  rendering at the page corner), and registry-linked titles keep their links — bubbles sit on
+  adjacent plain text. class="gl" count now 44. New skill: `skills/hover-text/SKILL.md`
+  carries the register, placement, markup, and after-rebuild survival check. — Alan

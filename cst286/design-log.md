@@ -201,3 +201,11 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   Thinking** develops. Symbiotic Thinking gets a glossary bubble with the canonical definition
   (human-led practice of pursuing wisdom in partnership with other intelligences, human or
   artificial) — this is the term's FIRST student-facing surface — the framework item "Symbiotic Thinking, named and practiced" moves from Not yet toward Partial (introduced, not yet practiced by design). — Alan
+
+- **2026-08-16 — hover-text layer applied to home.html (approved list, pass 1).** Restored 🌱/🎯 on all 16 weeks; Mondays retitled "Online check-in and Deep work session" with a two-sided bubble; Sprint Exam (3), mechanism (2), model, baseline, AI Dojo added. All
+  bubbles in the why-first register (rule confirmed by Sathya today); 🌱/🎯 title bubbles restored
+  with the inspirational Own-your-progress text. Two mechanics fixed page-wide: the weekly-block
+  containers joined the position:relative anchor list (pre-existing bubbles in weekly rows were
+  rendering at the page corner), and registry-linked titles keep their links — bubbles sit on
+  adjacent plain text. class="gl" count now 66. New skill: `skills/hover-text/SKILL.md`
+  carries the register, placement, markup, and after-rebuild survival check. — Alan
