@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CST499 &mdash; Assignments (Fall 2026)</title>
+<title>CST499 &mdash; Assignment registry (Fall 2026)</title>
 <style>
 :root {
   --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
@@ -40,7 +40,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;ba
 .count .n{font-size:18px;font-weight:700;line-height:1.1}
 .count .l{font-size:11px;color:var(--muted)}
 .count.gi .n{color:var(--violet)} .count.oyp .n{color:var(--check)}
-.groups{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
 @media (max-width:960px){.groups{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.groups{grid-template-columns:1fr}}
 .grp{border:1px solid var(--border-light);border-left:4px solid var(--border);border-radius:5px;padding:9px 11px;background:#fff}
@@ -64,7 +64,7 @@ details.sprint[open]>summary>.sp-head .chev{transform:rotate(90deg)}
 .sp-head .nm .sub{font-weight:400;color:var(--muted);font-size:13px}
 .sp-head .tag{font-size:12px;color:var(--muted);white-space:nowrap}
 .sp-head .tally{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.chead,details.arow>summary{display:grid;grid-template-columns:56px 1.25fr 2fr 150px 54px 118px 20px;gap:12px;align-items:baseline;padding:8px 14px}
+.chead,details.arow>summary{display:grid;grid-template-columns:48px 1.05fr 1.7fr 122px 48px 132px 108px 20px;gap:12px;align-items:baseline;padding:8px 14px}
 .chead{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light)}
 details.arow{border-bottom:1px solid var(--border-light)}
 details.arow:last-child{border-bottom:0}
@@ -81,6 +81,13 @@ details.arow[open]>summary{background:var(--goal-bg)}
 .c-due .dm{display:block;font-size:11px;font-weight:400;color:var(--muted)}
 .k{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;color:#fff;border-radius:3px;padding:1px 6px}
 .k-oyp{background:var(--check)} .k-gi{background:var(--violet)} .k-exam{background:#C05621}
+.st{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;border-radius:3px;padding:1px 6px;white-space:nowrap;border:1px solid}
+.st-review{color:#8a6d0b;background:#FBF6EC;border-color:#E0C88A}
+.st-ready{color:#0a5a8a;background:#EAF4FA;border-color:#A8CBE0}
+.st-live{color:#0B874B;background:#EAF7F0;border-color:#9AD3B4}
+.sthelp{color:var(--muted);font-size:12px}
+.statusbar{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;padding-top:8px;border-top:1px solid var(--border-light);font-size:12px;color:var(--muted)}
+.statusbar b{color:var(--text);font-weight:700}
 .plus{width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;justify-self:end}
 details.arow[open] .plus::before{content:"\2212"}
 details.arow:not([open]) .plus::before{content:"+"}
@@ -103,7 +110,7 @@ details.arow:not([open]) .plus::before{content:"+"}
   details.arow>summary{grid-template-columns:1fr 20px;gap:4px}
   .c-week::after{content:" \00b7 "}
   .c-week,.c-title{display:inline}
-  .c-purpose,.c-ctype,.c-kind,.c-due{grid-column:1}
+  .c-purpose,.c-ctype,.c-kind,.c-status,.c-due{grid-column:1}
   .c-due .dm{display:inline;margin-left:6px}
   .abody{padding-left:14px}
   .dgrid{grid-template-columns:1fr}
@@ -116,16 +123,16 @@ details.arow:not([open]) .plus::before{content:"+"}
 <div class="page">
 
   <div class="draft">
-    <b>Draft v9 &middot; 15 Aug 2026.</b> Working registry for CST499. Everything marked TBD is genuinely
+    <b>Draft v6 &middot; 14 Aug 2026.</b> Working registry for CST499. Everything marked TBD is genuinely
     undecided, not forgotten. Items appear here as they are designed; the &ldquo;Still to place&rdquo; box at the
     bottom says what is missing.
   </div>
 
   <div class="head">
     <div class="eyebrow">CST499 &middot; Fall 2026 &middot; Course build record</div>
-    <h1>Assignments</h1>
+    <h1>Assignment registry</h1>
     <div class="lead">One row per assignment, grouped by sprint. This file is the source of truth for what exists,
-      when it is due, what it is worth, which Canvas grade group it belongs to and whether it is in Canvas yet
+      when it is due, what it is worth, which Canvas grade group it belongs to, and where it stands between here and Canvas
       &mdash; it replaces the spring <code>assignments.csv</code> pipeline. Click a sprint to open it; click a row
       for the full record.</div>
     <div class="derived">Derived from the four-layer lock record in <code>cowork/fall-2026-courses/CONTEXT.md</code>
@@ -151,15 +158,26 @@ details.arow:not([open]) .plus::before{content:"+"}
       <div class="counts">
         <div class="count gi"><div class="n">2 / 8</div><div class="l">graded items placed</div></div>
         <div class="count oyp"><div class="n">3</div><div class="l">OYP items placed</div></div>
-        <div class="count"><div class="n">0 / 5</div><div class="l">built in Canvas</div></div>
       </div>
-      <div class="why">Course total 2000: 1000 submitted (8 graded items &times; 100 + a 200-point mid-term) mirrored by 1000 in interviews. Own your progress guidance carries points for visibility but sits in a 0%-weighted group.</div>
+      <div class="statusbar"><span><span class="st st-live">Up-to-date on Canvas</span> <b>2</b></span> <span><span class="st st-ready">Ready for Canvas</span> <b>0</b></span> <span><span class="st st-review">Not Yet Reviewed</span> <b>3</b></span></div>
+      <div class="why">Course total 3000: 1500 submitted (8 graded items &times; 100 + a 200-point mid-term) mirrored by 1500 in interviews. Own your progress guidance carries points for visibility but sits in a 0%-weighted group.</div>
     </div>
   </div>
 
   <div class="card" style="margin-bottom:18px">
     <div class="label">Canvas grade groups &mdash; adopted 14 Aug 2026</div>
-    <div class="groups"><div class="grp g0"><div class="gn">Own your progress guidance<span class="gw">0%</span></div><div class="gd">Carries points so students can see whether they are on track; no effect on the grade.</div></div><div class="grp g1"><div class="gn">Graded items<span class="gw">40%</span></div><div class="gd">The work itself &mdash; 8 items at 100 points.</div></div><div class="grp g2"><div class="gn">Mid-term<span class="gw">10%</span></div><div class="gd">200 points, hand-written and closed book &mdash; no notes, no cheat sheet &mdash; questions given ahead.</div></div><div class="grp g3"><div class="gn">Interviews<span class="gw">50%</span></div><div class="gd">Mirrors the submitted work: each sprint's interview is worth the graded points in that sprint.</div></div></div>
+    <div class="groups"><div class="grp g0"><div class="gn">Own your progress guidance<span class="gw">0%</span></div><div class="gd">Carries points so students can see whether they are on track; no effect on the grade.</div></div><div class="grp g1"><div class="gn">Graded items<span class="gw">50%</span></div><div class="gd">The work itself &mdash; 8 items at 100 points, plus the 200-point mid-term.</div></div><div class="grp g2"><div class="gn">Interviews<span class="gw">50%</span></div><div class="gd">Mirrors the submitted work: each sprint's interview is worth the graded points in that sprint.</div></div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="label">Build status &mdash; what each row's status means</div>
+    <table>
+      <tr><td style="width:170px"><span class="st st-review">Not Yet Reviewed</span></td><td>Drafted here, not yet read through and approved.</td></tr>
+      <tr><td><span class="st st-ready">Ready for Canvas</span></td><td>Reviewed and approved &mdash; safe to create in Canvas.</td></tr>
+      <tr><td><span class="st st-live">Up-to-date on Canvas</span></td><td>Exists in Canvas and matches what this row says.</td></tr>
+    </table>
+    <div class="why">Status is about this registry and Canvas agreeing with each other. A row can be
+      <b>Up-to-date on Canvas</b> and still carry TBDs &mdash; those are design gaps, not sync gaps.</div>
   </div>
 
   <details class="sprint" data-sprint="S0" open>
@@ -173,37 +191,39 @@ details.arow:not([open]) .plus::before{content:"+"}
     </summary>
     <div class="chead">
       <span>Week</span><span>Title</span><span>Purpose</span><span>Canvas type</span>
-      <span>Type</span><span>Due</span><span></span>
+      <span>Type</span><span>Status</span><span>Due</span><span></span>
     </div>
       <details class="arow" data-id="499-w01-oyp1" data-week="1" data-kind="OYP"
-               data-due="2026-08-28" data-due-day="FRI" data-points="100"
-               data-grade-group="Own your progress guidance (0%)"
-               data-canvas-id="621375" data-canvas-url="https://csumb.instructure.com/courses/33649/assignments/621375" data-published="true" data-page="setup-your-ai-dojo.html">
+               data-due="2026-08-28" data-due-day="FRI" data-points="TBD"
+               data-grade-group="Own your progress guidance (0%)" data-status="Up-to-date on Canvas"
+               data-canvas-id="" data-canvas-url="" data-page="setup-your-ai-dojo.html">
         <summary>
           <span class="c-week">Wk 1</span>
           <span class="c-title">AI Dojo Setup</span>
           <span class="c-purpose">Get your Dojo running, then show it works by pasting in a conversation you actually used it for.</span>
           <span class="c-ctype">Assignment &mdash; text entry</span>
           <span class="c-kind"><span class="k k-oyp" title="Own your progress guidance &middot; not graded">OYP</span></span>
+          <span class="c-status"><span class="st st-live">Up-to-date on Canvas</span></span>
           <span class="c-due">Fri 28 Aug<span class="dm">11:59 pm</span></span>
           <span class="plus" aria-hidden="true"></span>
         </summary>
-        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w01-oyp1</code></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd">Text entry &mdash; one pasted chat transcript</div><div class="dt">Completion requirement</div><div class="dd">One whole conversation with the Dojo, start to finish, pasted into the text box. The page carries a prompt that makes the Dojo reproduce the chat as one copyable message, then step-by-step copy-and-paste directions.</div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><a href="setup-your-ai-dojo.html" target="_blank" rel="noopener">setup-your-ai-dojo.html</a></div><div class="dt">Public URL</div><div class="dd"><a class="url" href="https://profsathya.github.io/Common-Curriculum/cst499/setup-your-ai-dojo.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/setup-your-ai-dojo.html</a></div><div class="dt">Canvas URL</div><div class="dd"><a class="url" href="https://csumb.instructure.com/courses/33649/assignments/621375" target="_blank" rel="noopener">https://csumb.instructure.com/courses/33649/assignments/621375</a></div><div class="dt">Canvas assignment id</div><div class="dd"><code>621375</code></div><div class="dt">Published on Canvas</div><div class="dd"><span class="pill yes">Yes</span></div><div class="dt">Notes</div><div class="dd">Created in Canvas 15 Aug 2026: assignment 621375, in module <i>Sprint 0 &middot; Own your progress</i> (submit requirement, not sequential). Course page at v7 (14 Aug 2026). Submission simplified to the transcript alone &mdash; the earlier three-questions requirement is superseded by Sathya, same day. <code>home.html</code> weeks 1&ndash;2 reconciled to this file 15 Aug 2026: this row is week 1's only Own-your-progress item, named AI Dojo Setup and linked to the Canvas assignment; &ldquo;Show you know how this course works&rdquo; came off the page.</div></div></div>
+        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w01-oyp1</code></div><div class="dt">Status</div><div class="dd"><span class="st st-live">Up-to-date on Canvas</span> <span class="sthelp">Exists in Canvas and matches what this row says.</span></div><div class="dt">Points</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd">Text entry &mdash; one pasted chat transcript</div><div class="dt">Completion requirement</div><div class="dd">One whole conversation with the Dojo, start to finish, pasted into the text box. The page carries a prompt that makes the Dojo reproduce the chat as one copyable message, then step-by-step copy-and-paste directions.</div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><a href="setup-your-ai-dojo.html" target="_blank" rel="noopener">setup-your-ai-dojo.html</a></div><div class="dt">Public URL</div><div class="dd"><a class="url" href="https://profsathya.github.io/Common-Curriculum/cst499/setup-your-ai-dojo.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/setup-your-ai-dojo.html</a></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Notes</div><div class="dd">Course page at v7 (14 Aug 2026). Submission simplified to the transcript alone &mdash; the earlier three-questions requirement is superseded by Sathya, same day. Open: <code>home.html</code> week 1 lists this as &ldquo;Confirm you understand how to partner with AI and your AI Dojo is set up&rdquo; and calls it a short form, alongside a second OYP item (&ldquo;Show you know how this course works&rdquo;). If week 1 really carries two OYP items, the convention makes them Wed + Fri rather than Fri alone.</div></div></div>
       </details>
       <details class="arow" data-id="499-w01-gi1" data-week="1" data-kind="GI"
                data-due="2026-08-31" data-due-day="MON" data-points="100"
-               data-grade-group="Graded items (40%)"
-               data-canvas-id="621376" data-canvas-url="https://csumb.instructure.com/courses/33649/assignments/621376" data-published="true" data-page="what-are-my-priorities.html">
+               data-grade-group="Graded items (50%)" data-status="Up-to-date on Canvas"
+               data-canvas-id="" data-canvas-url="" data-page="what-are-my-priorities.html">
         <summary>
           <span class="c-week">Wk 1</span>
           <span class="c-title">What are my priorities</span>
           <span class="c-purpose">A SymbioticThinking Dojo conversation that works out what you actually want out of this year.</span>
           <span class="c-ctype">Assignment &mdash; text entry</span>
           <span class="c-kind"><span class="k k-gi" title="Graded item">GI</span></span>
+          <span class="c-status"><span class="st st-live">Up-to-date on Canvas</span></span>
           <span class="c-due">Mon 31 Aug<span class="dm">11:59 pm</span></span>
           <span class="plus" aria-hidden="true"></span>
         </summary>
-        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w01-gi1</code></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Graded items (40%)</div><div class="dt">Submission type</div><div class="dd">Text entry &mdash; priorities plus the Dojo transcript (exported from the Dojo, not hand-copied)</div><div class="dt">Completion requirement</div><div class="dd">The full conversation with the practice Dojo, pasted in, ending with the priorities the student settled on.</div><div class="dt">Prerequisite</div><div class="dd">AI Dojo set up (week 1)</div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><a href="what-are-my-priorities.html" target="_blank" rel="noopener">what-are-my-priorities.html</a></div><div class="dt">Public URL</div><div class="dd"><a class="url" href="https://profsathya.github.io/Common-Curriculum/cst499/what-are-my-priorities.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/what-are-my-priorities.html</a></div><div class="dt">Canvas URL</div><div class="dd"><a class="url" href="https://csumb.instructure.com/courses/33649/assignments/621376" target="_blank" rel="noopener">https://csumb.instructure.com/courses/33649/assignments/621376</a></div><div class="dt">Canvas assignment id</div><div class="dd"><code>621376</code></div><div class="dt">Published on Canvas</div><div class="dd"><span class="pill yes">Yes</span></div><div class="dt">Notes</div><div class="dd">Created in Canvas 15 Aug 2026: assignment 621376, in module <i>Sprint 0 &middot; Graded items</i> (submit requirement, sequential). Runs in the practice Dojo at dojo.symbioticthinking.ai with topic <code>what-are-my-priorities</code>. The class key is not issued yet, so the page shows the link shape with the key marked TBD. Transcript comes out via the Dojo's own download / copy-to-clipboard button &mdash; the transcript prompt is only needed for the AI Dojo, which runs on ChatGPT / Claude / Gemini.</div></div></div>
+        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w01-gi1</code></div><div class="dt">Status</div><div class="dd"><span class="st st-live">Up-to-date on Canvas</span> <span class="sthelp">Exists in Canvas and matches what this row says.</span></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Graded items (50%)</div><div class="dt">Submission type</div><div class="dd">Text entry &mdash; priorities plus the Dojo transcript (exported from the Dojo, not hand-copied)</div><div class="dt">Completion requirement</div><div class="dd">The full conversation with the practice Dojo, pasted in, ending with the priorities the student settled on.</div><div class="dt">Prerequisite</div><div class="dd">AI Dojo set up (week 1)</div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><a href="what-are-my-priorities.html" target="_blank" rel="noopener">what-are-my-priorities.html</a></div><div class="dt">Public URL</div><div class="dd"><a class="url" href="https://profsathya.github.io/Common-Curriculum/cst499/what-are-my-priorities.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst499/what-are-my-priorities.html</a></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Notes</div><div class="dd">Runs in the practice Dojo at dojo.symbioticthinking.ai with topic <code>what-are-my-priorities</code>. The class key is not issued yet, so the page shows the link shape with the key marked TBD. Transcript comes out via the Dojo's own download / copy-to-clipboard button &mdash; the transcript prompt is only needed for the AI Dojo, which runs on ChatGPT / Claude / Gemini.</div></div></div>
       </details>
   </details>
 
@@ -218,52 +238,55 @@ details.arow:not([open]) .plus::before{content:"+"}
     </summary>
     <div class="chead">
       <span>Week</span><span>Title</span><span>Purpose</span><span>Canvas type</span>
-      <span>Type</span><span>Due</span><span></span>
+      <span>Type</span><span>Status</span><span>Due</span><span></span>
     </div>
       <details class="arow" data-id="499-w02-oyp1" data-week="2" data-kind="OYP"
-               data-due="2026-09-02" data-due-day="WED" data-points="100"
-               data-grade-group="Own your progress guidance (0%)"
-               data-canvas-id="" data-canvas-url="" data-published="false" data-page="TBD">
+               data-due="2026-09-02" data-due-day="WED" data-points="TBD"
+               data-grade-group="Own your progress guidance (0%)" data-status="Not Yet Reviewed"
+               data-canvas-id="" data-canvas-url="" data-page="TBD">
         <summary>
           <span class="c-week">Wk 2</span>
           <span class="c-title">Information Diet Audit</span>
           <span class="c-purpose">How do I know I am getting good information? Look at where what you know comes from.</span>
           <span class="c-ctype">Assignment &mdash; text entry</span>
           <span class="c-kind"><span class="k k-oyp" title="Own your progress guidance &middot; not graded">OYP</span></span>
+          <span class="c-status"><span class="st st-review">Not Yet Reviewed</span></span>
           <span class="c-due">Wed 2 Sep<span class="dm">11:59 pm</span></span>
           <span class="plus" aria-hidden="true"></span>
         </summary>
-        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-oyp1</code></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd">Text entry</div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Published on Canvas</div><div class="dd"><span class="pill no">No</span></div><div class="dt">Notes</div><div class="dd"><span class="na">&mdash;</span></div></div></div>
+        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-oyp1</code></div><div class="dt">Status</div><div class="dd"><span class="st st-review">Not Yet Reviewed</span> <span class="sthelp">Drafted here, not yet read through and approved.</span></div><div class="dt">Points</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd">Text entry</div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Notes</div><div class="dd"><span class="na">&mdash;</span></div></div></div>
       </details>
       <details class="arow" data-id="499-w02-oyp2" data-week="2" data-kind="OYP"
-               data-due="2026-09-04" data-due-day="FRI" data-points="100"
-               data-grade-group="Own your progress guidance (0%)"
-               data-canvas-id="" data-canvas-url="" data-published="false" data-page="TBD">
+               data-due="2026-09-04" data-due-day="FRI" data-points="TBD"
+               data-grade-group="Own your progress guidance (0%)" data-status="Not Yet Reviewed"
+               data-canvas-id="" data-canvas-url="" data-page="TBD">
         <summary>
           <span class="c-week">Wk 2</span>
           <span class="c-title">Know yourself</span>
           <span class="c-purpose">TBD &mdash; the Career Intelligence unit already runs in the Wednesday session; this is the take-away work.</span>
           <span class="c-ctype"><span class="tbd">TBD</span></span>
           <span class="c-kind"><span class="k k-oyp" title="Own your progress guidance &middot; not graded">OYP</span></span>
+          <span class="c-status"><span class="st st-review">Not Yet Reviewed</span></span>
           <span class="c-due">Fri 4 Sep<span class="dm">11:59 pm</span></span>
           <span class="plus" aria-hidden="true"></span>
         </summary>
-        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-oyp2</code></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Published on Canvas</div><div class="dd"><span class="pill no">No</span></div><div class="dt">Notes</div><div class="dd">Read as Own your progress so week 2 carries two OYP and one graded item, matching the weekly rhythm. Needs confirming.</div></div></div>
+        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-oyp2</code></div><div class="dt">Status</div><div class="dd"><span class="st st-review">Not Yet Reviewed</span> <span class="sthelp">Drafted here, not yet read through and approved.</span></div><div class="dt">Points</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas grade group</div><div class="dd">Own your progress guidance (0%)</div><div class="dt">Submission type</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd"><span class="na">&mdash;</span></div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Notes</div><div class="dd">Read as Own your progress so week 2 carries two OYP and one graded item, matching the weekly rhythm. Needs confirming.</div></div></div>
       </details>
       <details class="arow" data-id="499-w02-gi1" data-week="2" data-kind="GI"
                data-due="2026-09-07" data-due-day="MON" data-points="100"
-               data-grade-group="Graded items (40%)"
-               data-canvas-id="" data-canvas-url="" data-published="false" data-page="TBD">
+               data-grade-group="Graded items (50%)" data-status="Not Yet Reviewed"
+               data-canvas-id="" data-canvas-url="" data-page="TBD">
         <summary>
           <span class="c-week">Wk 2</span>
           <span class="c-title">Know the market</span>
           <span class="c-purpose">Read job postings for what they are actually asking for, so you can tell which roles you are already close to.</span>
           <span class="c-ctype"><span class="tbd">TBD</span></span>
           <span class="c-kind"><span class="k k-gi" title="Graded item">GI</span></span>
+          <span class="c-status"><span class="st st-review">Not Yet Reviewed</span></span>
           <span class="c-due">Mon 7 Sep<span class="dm">11:59 pm</span></span>
           <span class="plus" aria-hidden="true"></span>
         </summary>
-        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-gi1</code></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Graded items (40%)</div><div class="dt">Submission type</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd">Know yourself (week 2)</div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not created yet</span></div><div class="dt">Published on Canvas</div><div class="dd"><span class="pill no">No</span></div><div class="dt">Notes</div><div class="dd">Due date lands on Mon 7 Sep &mdash; Labor Day, a campus holiday. Open: shift to Tue 8 Sep or leave it. home.html week 2 reconciled 15 Aug 2026 &mdash; this is now the page's week-2 graded item; &ldquo;Write your baseline evidence inventory&rdquo; came off.</div></div></div>
+        <div class="abody"><div class="dgrid"><div class="dt">ID</div><div class="dd"><code>499-w02-gi1</code></div><div class="dt">Status</div><div class="dd"><span class="st st-review">Not Yet Reviewed</span> <span class="sthelp">Drafted here, not yet read through and approved.</span></div><div class="dt">Points</div><div class="dd">100 pts</div><div class="dt">Canvas grade group</div><div class="dd">Graded items (50%)</div><div class="dt">Submission type</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Completion requirement</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Prerequisite</div><div class="dd">Know yourself (week 2)</div><div class="dt">Six qualities</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Course page</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Public URL</div><div class="dd"><span class="tbd">TBD</span></div><div class="dt">Canvas URL</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Canvas assignment id</div><div class="dd"><span class="na">not recorded yet</span></div><div class="dt">Notes</div><div class="dd">Due date lands on Mon 7 Sep &mdash; Labor Day, a campus holiday. Open: shift to Tue 8 Sep or leave it. Also: home.html currently shows week 2's graded item as &ldquo;Write your baseline evidence inventory&rdquo; (100 pts). Two graded items cannot both sit in week 2 &mdash; one of them moves.</div></div></div>
       </details>
   </details>
 
@@ -317,15 +340,15 @@ details.arow:not([open]) .plus::before{content:"+"}
 
   <div class="unplaced">
     <div class="label">Still to place</div>
-    <ul><li><b>6 more graded items</b> &mdash; 100 points each, at most one per week.</li><li><b>The 200-point mid-term</b> &mdash; hand-written, closed book, questions given ahead. Week not chosen (an unapproved sketch had it at week 8).</li><li><b>Own your progress items for weeks 3&ndash;16</b> &mdash; one to three a week.</li><li><b>The six-qualities mapping</b> per item.</li></ul>
+    <ul><li><b>6 more graded items</b> &mdash; 100 points each, at most one per week.</li><li><b>The 200-point mid-term</b> &mdash; hand-written, closed book, questions given ahead. Week not chosen (an unapproved sketch had it at week 8).</li><li><b>Own your progress items for weeks 3&ndash;16</b> &mdash; one to three a week.</li><li><b>A point value for Own your progress items</b> &mdash; they show points for visibility but carry 0% weight.</li><li><b>The six-qualities mapping</b> per item.</li></ul>
   </div>
 
   <div class="foot">
-    CST499 assignments.html &middot; v9 &middot; built 15 Aug 2026 &middot; generated by
+    CST499 assignment registry &middot; v6 &middot; built 14 Aug 2026 &middot; generated by
     <code>mk_assignments.py cst499</code> &mdash; edit the generator, not this file.
     Every row carries <code>data-*</code> attributes (<code>data-id</code>, <code>data-week</code>,
     <code>data-kind</code>, <code>data-due</code>, <code>data-points</code>, <code>data-grade-group</code>,
-    <code>data-canvas-id</code>, <code>data-canvas-url</code>, <code>data-published</code>,
+    <code>data-status</code>, <code>data-canvas-id</code>, <code>data-canvas-url</code>,
     <code>data-page</code>) so a Canvas sync can read this file and write ids back into it.
   </div>
 
