@@ -30,8 +30,9 @@ are deleted or recreated, their module-item URLs die with them — sweep the lin
 ## 1. Grade groups — once per course
 
 Create the course's grade-group set exactly as its `assignments.html` grade-group cards state
-(CST499: Own your progress guidance 0% · Graded items 50% · Interviews 50%; CST286/349 carry four
-groups per their syllabi), then turn on weighted assignment groups. Legacy groups from an import
+(CST499: Own your progress guidance 0% · Graded items 40% · Mid-term 10% · Interviews 50% —
+the groups mirror the syllabus grade table rows; CST286/349 carry their own four-group sets per
+their syllabi), then turn on weighted assignment groups. Legacy groups from an import
 stay until their cleanup ruling — unpublished items never touch grades.
 
 ## 2. Assignments — one per assignments.html row
