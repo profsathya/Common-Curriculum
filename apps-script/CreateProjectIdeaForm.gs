@@ -76,7 +76,7 @@ function addProblemSpace(form) {
     "Existing project",
     "Not sure"
   ], false);
-  longText(form, "If it is a new project, what other solutions exist for this problem?", "");
+  longText(form, "What other solutions exist for this problem?", "");
   longText(form, "Name one or two things that are undecided about the problem scope — can students take the lead in deciding them?", "");
 }
 
