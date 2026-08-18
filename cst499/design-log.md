@@ -196,3 +196,14 @@ gate each next sprint.
   graded item where the registry has "What are my priorities" (and week 2 = "Know the market");
   later weeks carry item lists the registry has not placed yet. That is the registry-driven
   rebuild, not vocabulary. — Alan
+
+- **2026-08-18 — problem-spaces.html: the three route paragraphs collapsed into one (Sathya's
+  wording).** Removed the faculty-research paragraph (Clay's ML work, kinesiology, aircraft
+  inspection), the certification-is-a-full-route paragraph, and the propose-outside-this-list
+  paragraph. Replaced with a single line: a research project with faculty, your own proposed
+  idea, or other options like a certification or a work project are all **possible** — with a
+  convincing reason why it is the best case for your future career, where the demand is for the
+  skills and capabilities you will develop, and an applied artifact that demonstrates them. Two
+  consequences to note: the named faculty projects no longer appear anywhere on the page, and the
+  **"applied piece" glossary bubble is gone** (its definition was certification-specific and the
+  new sentence says "applied artifact"). Draft v4 → v5. — Alan
