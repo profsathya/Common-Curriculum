@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome | Welcome and Orientation (V2)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity">
+    <a class="back-link" href="../sprint-7.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">course1 &middot; Sprint 7 &middot; Welcome and Orientation (V2) &middot; Page</p>
+    <h1>Welcome</h1>
+
+    <div class="goal">
+      <h2>Learning goal</h2>
+      <p>Understand Welcome and connect it to the work in this module.</p>
+    </div>
+
+    <section>
+<h2>Overview</h2>
+<blockquote>
+<p><strong>The short version</strong></p>
+<p>This course helps you take a real problem from your work and turn it into a problem clear enough to actually solve. You bring the problem. AI helps you think it through. You make every call. In ten weeks you will have one document that shows the problem, the thinking behind it, and how your own thinking changed.</p>
+</blockquote>
+<p><code>[TODO: add the instructor welcome video here, 2 to 3 minutes, with captions or a transcript. Video cannot be embedded from Markdown, so add it on the Canvas page after publish.]</code></p>
+</section>
+
+<section>
+<h2 id="who-is-teaching-this">Who is teaching this</h2>
+<p><code>[TODO: add 3 to 4 sentences from Clare, in her own words: who she is, what she does, why she cares about this course.]</code></p>
+</section>
+
+<section>
+<h2 id="what-this-course-is">What this course is</h2>
+<p>You pick one real problem, something from your job, your job search, or something you are genuinely trying to change, and you spend ten weeks turning it into a problem that is clearly defined and actually actionable.</p>
+<p>That sounds small. It is not. Most work that fails, fails because the wrong problem got solved very well.</p>
+<p>The problem has to be real. Real people affected, real consequences. Most people bring something from their current work. A job search counts. Community work counts. Caregiving counts. What does not work is a made-up case study, because you will not stay with it for ten weeks.</p>
+<p>You choose it in Sprint 1. You do not need to know what it is yet.</p>
+</section>
+
+<section>
+<h2 id="what-you-walk-out-with">What you walk out with</h2>
+<p><strong>The integrated problem document.</strong> One document, built across all five sprints.</p>
+<p>It does two things. It lays out your problem: what it really is, who it affects, what the constraints are, and what would count as solving it. And it traces how your thinking moved from week 1 to week 10.</p>
+<p>That second part matters more than it sounds. Everything you produce in sprints 1 through 4 feeds this document. Nothing you do is thrown away.</p>
+</section>
+
+<section>
+<h2 id="who-this-is-for">Who this is for</h2>
+<p>Working professionals, and people in the middle of a career change.</p>
+<p>You are not undergraduates, and this course is not built like an undergraduate course. You already know how your organization actually works: the official process and the real one, the stated priority and the real one. That knowledge is the thing this course builds on. It is also exactly the thing AI cannot supply.</p>
+<p>You do not need a technical background. Directing AI well is not a technical skill.</p>
+</section>
+
+<section>
+<h2 id="the-two-ideas-underneath-all-of-this">The two ideas underneath all of this</h2>
+<p>Everything in this course comes back to two ideas. You will see them again in every sprint.</p>
+<p><strong>Superagency:</strong> taking on work you would not otherwise have taken on. Not confidence. Evidence. By week 10 you should be able to point at something and say: I could not have done that in week 1.</p>
+<p><strong>Human Value:</strong> what you contribute that AI does not. The context. The relationships. The judgment calls. AI can generate ten possible framings of your problem in four seconds. It cannot know which one your director will actually fund, or which colleague will quietly block it, or what happened the last time someone tried.</p>
+<p>Underneath both sits a practice we call <strong>Symbiotic Thinking</strong>: treating AI as a partner in thinking, not as a faster way to do what you already do.</p>
+</section>
+
+<section>
+<h2 id="why-this-and-why-now">Why this, and why now</h2>
+<p>The AI tools you use today will not be the ones you use in three years. Anything built around a specific tool goes stale.</p>
+<p>So this course is not a tour of AI tools. What we are building is a way of working: how to frame a problem, how to judge what an AI hands you, how to explain your reasoning to another person. That survives the tools changing.</p>
+<blockquote>
+<p><strong>Go further, optional</strong></p>
+<p>If you want the fuller picture before you start: this is Course 1 of a two-course certificate. Course 2, CIS 502, is where you design and build a solution to the problem you framed here. You do not need to decide about Course 2 now.</p>
+</blockquote>
+</section>
+
+<section>
+<h2 id="next">Next</h2>
+<p>Continue to <strong>How This Course Works</strong>: the five sprints, the weekly rhythm, and how you turn work in.</p>
+</section>
+
+    <div class="submit">
+      <h2>What counts as done</h2>
+      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
+    </div>
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+  </div>
+</body>
+</html>
