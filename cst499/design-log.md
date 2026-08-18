@@ -207,3 +207,11 @@ gate each next sprint.
   consequences to note: the named faculty projects no longer appear anywhere on the page, and the
   **"applied piece" glossary bubble is gone** (its definition was certification-specific and the
   new sentence says "applied artifact"). Draft v4 → v5. — Alan
+
+- **2026-08-18 (later) — problem-spaces.html: industry-partner paragraph added.** New line directly
+  under the routes paragraph: we are collecting problem spaces from industry partners and will
+  update the page as they come in, and a student can take a problem space as their capstone if it
+  fits their interest and career planning. Sathya's wording; one repair — his "consider the problem
+  space as your capstone that fits your interest" became "consider a problem space as your capstone
+  if it fits your interest and your career-planning needs", since the relative clause was attached
+  to the wrong noun. Draft v5 → v6. — Alan
