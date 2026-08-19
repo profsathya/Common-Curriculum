@@ -46,8 +46,9 @@
 
   /* The progress marker is deliberately outside the palette: one per page,
      one colour nobody else uses, so "where am I" never blends into "what did
-     I think about this". */
-  var PROGRESS = { ink: '#fff', bg: '#C2262E', line: '#8E1219' };
+     I think about this". Deeper than the page's own check-green so it doesn't
+     read as another status badge. */
+  var PROGRESS = { ink: '#fff', bg: '#157F3C', line: '#0E5C2B' };
 
   var MAX_TAB_CHARS = 34;      /* tab is fixed width; this is the hard clip   */
   var STORAGE_PREFIX = 'cc-bookmarks:';
@@ -219,6 +220,9 @@
     '.bmk-handle:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
     '.bmk-progress-handle{margin-top:6px;}',
     '.bmk-hint{margin-top:7px;font-size:10.5px;line-height:1.35;color:#6B7780;}',
+    '.bmk-local{margin-top:8px;padding:7px 8px;border-radius:4px;background:#F5F8FA;',
+    'border:1px solid #E1E8ED;font-size:10.5px;line-height:1.4;color:#4A5760;}',
+    '.bmk-local b{color:#2D3B45;font-weight:700;}',
     '.bmk-list-toggle{margin-top:8px;width:100%;padding:6px;font:inherit;font-size:11px;',
     'font-weight:600;color:#0374B5;background:#F3F8FB;border:1px solid #CFE3F0;',
     'border-radius:5px;cursor:pointer;}',
@@ -544,7 +548,8 @@
       clearTimeout(timer);
       timer = setTimeout(function () {
         var ok = save(marks);
-        saved.textContent = ok ? 'Saved on this computer' : 'Not saved — storage is blocked here';
+        saved.textContent = ok ? 'Saved on this computer only'
+                              : 'Not saved — this browser is blocking local storage';
         var tab = document.querySelector('.bmk-tab[data-bmk-id="' + mark.id + '"] .lbl');
         if (tab) tab.textContent = tabLabel(mark);
       }, 400);
@@ -568,6 +573,9 @@
         '<button type="button" class="bmk-handle bmk-progress-handle">I&rsquo;m here</button>' +
         '<div class="bmk-hint">Drag a bookmark out of the stack onto any part of the page. ' +
         'Or press Enter on one and use the arrow keys.</div>' +
+        '<div class="bmk-local"><b>Saved on this computer only.</b> Your bookmarks and notes stay ' +
+        'in this browser. They are not sent anywhere \u2014 not to your instructor, not to a server. ' +
+        'They will not follow you to another computer, and clearing your browser data erases them.</div>' +
         '<button type="button" class="bmk-list-toggle"></button>' +
         '<div class="bmk-list" hidden></div>' +
       '</div>' +
