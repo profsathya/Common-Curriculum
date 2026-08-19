@@ -82,6 +82,12 @@
      dragging across that distance is impossible because the parent can't
      scroll mid-drag. So when embedded the panel sits inline in the flow and
      placement is click-to-pick-up, click-to-drop. */
+  /* Safari deletes this kind of storage on its own — ephemeral in a
+     third-party frame, and capped at 7 days of no interaction as first party.
+     Students on Safari get told, in the panel, before they trust it. */
+  var IS_SAFARI = /^((?!chrome|android|crios|fxios|edgios|edg\/).)*safari/i
+    .test(navigator.userAgent);
+
   var EMBEDDED = (function () {
     try { if (window.self !== window.top) return true; } catch (e) { return true; }
     return new URLSearchParams(location.search).get('context') === 'canvas';
@@ -239,6 +245,9 @@
     '.bmk-local{margin-top:8px;padding:7px 8px;border-radius:4px;background:#F5F8FA;',
     'border:1px solid #E1E8ED;font-size:10.5px;line-height:1.4;color:#4A5760;}',
     '.bmk-local b{color:#2D3B45;font-weight:700;}',
+    '.bmk-warn{display:block;margin-top:6px;color:#B3261E;font-size:10px;font-weight:700;',
+    'line-height:1.35;cursor:help;text-decoration:underline dotted rgba(179,38,30,.5);',
+    'text-underline-offset:2px;}',
     '.bmk-move{margin-top:8px;display:flex;flex-direction:column;gap:5px;}',
 
     /* inline layout, used inside the Canvas embed --------------------- */
@@ -646,7 +655,16 @@
         '<div class="bmk-local"><b>Saved on this computer only.</b> Your bookmarks and notes stay ' +
         'in this browser. They are not sent anywhere \u2014 not to your instructor, not to a server. ' +
         'Clearing your browser data erases them. To carry them to another computer, ' +
-        'email them to yourself with the button below.</div>' +
+        'email them to yourself with the button below.' +
+        (IS_SAFARI ? '<span class="bmk-warn" title="Safari clears this kind of storage by ' +
+          'itself, without warning you first. The only copy that survives is one you have ' +
+          'emailed to yourself. Use \u201cEmail my notes to me\u201d and keep the message \u2014 ' +
+          'you can paste it back on any computer, in any browser.">' +
+          (EMBEDDED
+            ? 'Safari will not keep these once you quit the browser. Email yourself a copy.'
+            : 'Safari erases these after 7 days without opening this page. Email yourself a copy.') +
+          '</span>' : '') +
+        '</div>' +
         '<button type="button" class="bmk-list-toggle"></button>' +
         '<div class="bmk-list" hidden></div>' +
         '<div class="bmk-move">' +
