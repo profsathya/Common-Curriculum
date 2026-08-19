@@ -301,6 +301,9 @@
     '.bmk-btn:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
     '.bmk-say{font-size:12px;color:#0B874B;font-weight:600;}',
     '.bmk-say.bad{color:#9B3B3B;}',
+    '.bmk-flashmsg{margin-top:8px;padding:7px 9px;border-radius:5px;background:#F2FAF5;',
+    'border:1px solid #B8E0C8;font-size:11px;line-height:1.4;color:#0b5c34;font-weight:600;}',
+    '.bmk-dispenser.is-inline .bmk-flashmsg{margin:0;flex:1 1 100%;}',
     '.bmk-list-toggle{margin-top:8px;width:100%;padding:6px;font:inherit;font-size:11px;',
     'font-weight:600;color:#0374B5;background:#F3F8FB;border:1px solid #CFE3F0;',
     'border-radius:5px;cursor:pointer;}',
@@ -924,18 +927,106 @@
     return close;
   }
 
+  /* One press: copy the notes, then open a Gmail compose already carrying
+     them. A compose URL cannot attach a file, but it CAN carry the whole
+     thing as body text — until the URL gets too long, at which point the
+     clipboard is the payload and the dialog explains the paste. */
+
+  var URL_BUDGET = 7000;   /* conservative: Gmail truncates long compose URLs */
+
+  function todayLabel() {
+    var d = new Date();
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function subjectLine() {
+    return courseLabel() + ' \u2014 my bookmarks, ' + todayLabel();
+  }
+
+  var PREAMBLE =
+    'Your notes are below. Put your own address in To and send this to yourself, or just ' +
+    'save it as a draft \u2014 either way you have a copy.\n\n' +
+    'To put them back on another computer: open the course page, choose "Paste notes from ' +
+    'another computer", and paste this whole message in.\n\n';
+
+  function gmailUrl(body) {
+    return 'https://mail.google.com/mail/?view=cm&fs=1&tf=1' +
+           '&su=' + encodeURIComponent(subjectLine()) +
+           '&body=' + encodeURIComponent(body);
+  }
+
+  /* Copy without disturbing what the student is looking at. execCommand is
+     tried first because the async Clipboard API needs a permission a
+     cross-origin iframe (i.e. Canvas) will not have been granted. */
+  function copyText(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px;left:0;opacity:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (!ok && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {}, function () {});
+      return 'async';
+    }
+    return ok;
+  }
+
   function openExport() {
-    if (!marks.length) { alert('You have not made any bookmarks on this page yet.'); return; }
+    if (!marks.length) {
+      alert('You have not made any bookmarks on this page yet.');
+      return;
+    }
+
+    var payload = serialize();
+    var copied = copyText(payload);
+    var full = PREAMBLE + payload;
+    var fits = gmailUrl(full).length <= URL_BUDGET;
+
+    window.open(gmailUrl(fits ? full : PREAMBLE), '_blank', 'noopener');
+
+    /* Everything worked: say so briefly in the panel and get out of the way. */
+    if (fits && copied) {
+      flash('Gmail opened with your ' + marks.length +
+            (marks.length === 1 ? ' bookmark' : ' bookmarks') + ' in it. Send it to yourself.');
+      return;
+    }
+
+    /* Something needs the student to act — show the text and say what to do. */
+    exportDialog(payload, fits, copied);
+  }
+
+  function flash(msg) {
+    var el = dispenser.querySelector('.bmk-flashmsg');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'bmk-flashmsg';
+      dispenser.querySelector('.bmk-body').appendChild(el);
+    }
+    el.textContent = msg;
+    announce(msg);
+    clearTimeout(flash._t);
+    flash._t = setTimeout(function () {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 9000);
+  }
+
+  function exportDialog(payload, fits, copied) {
     modal(function (box, close) {
-      var payload = serialize();
       box.innerHTML =
-        '<h2>Email your notes to yourself</h2>' +
-        '<p>This is all ' + marks.length + ' of your bookmarks as text. Send it to yourself, then on the ' +
-        'other computer open this page, choose <b>Paste notes from another computer</b>, and paste it in. ' +
-        'Every note goes back on the item you wrote it against.</p>' +
-        '<ol><li>Press <b>Copy</b>.</li><li>Press <b>Open Gmail</b> — a new message opens.</li>' +
-        '<li>Put your own address in <b>To</b>, click in the message body and paste.</li>' +
-        '<li>Send it. Keep the email; it is your backup.</li></ol>';
+        '<h2>One more step</h2>' +
+        '<p>' + (!fits
+          ? 'You have enough notes now that they will not fit in the link, so Gmail opened empty. ' +
+            (copied ? 'Your notes are already on the clipboard \u2014 click in the message and paste.'
+                    : 'Copy the text below, then paste it into the message.')
+          : 'Gmail opened, but this browser would not let me copy for you. ' +
+            'Select the text below, copy it, and paste it into the message.') +
+        '</p>';
       var ta = document.createElement('textarea');
       ta.value = payload;
       ta.readOnly = true;
@@ -948,41 +1039,38 @@
       say.className = 'bmk-say';
 
       var copy = document.createElement('button');
-      copy.type = 'button'; copy.className = 'bmk-btn primary'; copy.textContent = 'Copy';
+      copy.type = 'button';
+      copy.className = 'bmk-btn primary';
+      copy.textContent = 'Copy';
       copy.addEventListener('click', function () {
         ta.select();
-        var done = false;
-        try { done = document.execCommand('copy'); } catch (e) { done = false; }
-        if (!done && navigator.clipboard) {
-          navigator.clipboard.writeText(payload).then(function () {
-            say.className = 'bmk-say'; say.textContent = 'Copied.';
-          }, function () {
-            say.className = 'bmk-say bad';
-            say.textContent = 'Could not copy for you — select the text above and copy it.';
-          });
-          return;
-        }
-        say.className = done ? 'bmk-say' : 'bmk-say bad';
-        say.textContent = done ? 'Copied.'
-                               : 'Could not copy for you — select the text above and copy it.';
+        var ok = copyText(payload);
+        say.className = ok ? 'bmk-say' : 'bmk-say bad';
+        say.textContent = ok ? 'Copied.'
+                             : 'Could not copy for you \u2014 select the text above and copy it.';
       });
 
-      var gmail = document.createElement('button');
-      gmail.type = 'button'; gmail.className = 'bmk-btn'; gmail.textContent = 'Open Gmail';
-      gmail.addEventListener('click', function () {
-        var url = 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&su=' +
-          encodeURIComponent('My ' + courseLabel() + ' bookmarks') +
-          '&body=' + encodeURIComponent('Paste your notes here, then send this to yourself.\n\n');
-        window.open(url, '_blank', 'noopener');
+      var again = document.createElement('button');
+      again.type = 'button';
+      again.className = 'bmk-btn';
+      again.textContent = 'Open Gmail again';
+      again.addEventListener('click', function () {
+        window.open(gmailUrl(PREAMBLE), '_blank', 'noopener');
       });
 
       var shut = document.createElement('button');
-      shut.type = 'button'; shut.className = 'bmk-btn'; shut.textContent = 'Close';
+      shut.type = 'button';
+      shut.className = 'bmk-btn';
+      shut.textContent = 'Close';
       shut.addEventListener('click', close);
 
-      foot.appendChild(copy); foot.appendChild(gmail);
-      var grow = document.createElement('span'); grow.className = 'grow'; foot.appendChild(grow);
-      foot.appendChild(say); foot.appendChild(shut);
+      foot.appendChild(copy);
+      foot.appendChild(again);
+      var grow = document.createElement('span');
+      grow.className = 'grow';
+      foot.appendChild(grow);
+      foot.appendChild(say);
+      foot.appendChild(shut);
       box.appendChild(foot);
       setTimeout(function () { copy.focus(); }, 0);
     });
