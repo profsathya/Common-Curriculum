@@ -126,6 +126,62 @@
 
   var marks = load();
 
+  /* ------------------------------------------- which sections they left open
+
+     The page ships with every section shut and its own script re-shuts them,
+     so "closed" stays the default for a first visit. All this does is re-open
+     the ones the student opened last time. It only ever ADDS opens, so a
+     #hash link pointing at a section still wins. */
+
+  var openStoreKey = storeKey.replace(STORAGE_PREFIX, 'cc-open:');
+  var restoring = false;
+
+  function loadOpen() {
+    try { return JSON.parse(window.localStorage.getItem(openStoreKey) || '[]'); }
+    catch (e) { return []; }
+  }
+
+  function saveOpen(list) {
+    try { window.localStorage.setItem(openStoreKey, JSON.stringify(list)); } catch (e) {}
+  }
+
+  /* Same principle as a bookmark's key: describe the section in the page's own
+     terms so re-editing the HTML doesn't lose the student's place. */
+  function detailsKey(d) {
+    if (d.id) return 'id:' + d.id;
+    var sum = textOf(d.querySelector(':scope > summary'), 40).toLowerCase();
+    return keyFor(d) + '|s:' + sum;
+  }
+
+  function eachDetails(fn) {
+    var all = document.querySelectorAll('details');
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].closest('.bmk-ui')) continue;
+      fn(all[i]);
+    }
+  }
+
+  function restoreOpen() {
+    var want = loadOpen();
+    if (!want.length) return;
+    var set = {};
+    for (var i = 0; i < want.length; i++) set[want[i]] = 1;
+    restoring = true;
+    /* document order = outermost first, so a nested section is reachable by
+       the time we get to it */
+    eachDetails(function (d) {
+      if (set[detailsKey(d)]) d.setAttribute('open', '');
+    });
+    restoring = false;
+  }
+
+  function captureOpen() {
+    if (restoring) return;
+    var out = [];
+    eachDetails(function (d) { if (d.open) out.push(detailsKey(d)); });
+    saveOpen(out);
+  }
+
   function uid() {
     return 'bm' + Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36);
   }
@@ -1339,6 +1395,7 @@
   function boot() {
     injectCSS();
     buildDispenser();
+    restoreOpen();
     renderAll();
 
     /* Opening or closing a <details> changes what is on screen; re-place tabs
@@ -1346,7 +1403,7 @@
     document.addEventListener('toggle', function (e) {
       if (e.target && e.target.tagName === 'DETAILS' && !e.target.closest('.bmk-ui')) {
         clearTimeout(boot._t);
-        boot._t = setTimeout(renderAll, 30);
+        boot._t = setTimeout(function () { captureOpen(); renderAll(); }, 30);
       }
     }, true);
 
