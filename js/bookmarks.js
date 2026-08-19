@@ -205,10 +205,13 @@
     '.bmk-body{padding:0 10px 10px;}',
     '.bmk-dispenser.is-min .bmk-body{display:none;}',
     '.bmk-dispenser.is-min{width:auto;}',
-    '.bmk-swatches{display:flex;gap:5px;margin-bottom:8px;}',
-    '.bmk-sw{width:20px;height:20px;border-radius:4px;border:1px solid rgba(0,0,0,.18);',
-    'cursor:pointer;padding:0;}',
-    '.bmk-sw[aria-pressed="true"]{outline:2px solid #2D3B45;outline-offset:1px;}',
+    '.bmk-swatches{display:flex;gap:6px;margin-bottom:9px;}',
+    '.bmk-sw{width:22px;height:30px;border-radius:2px 2px 0 0;border:1px solid rgba(0,0,0,.16);',
+    'cursor:grab;padding:0;touch-action:none;',
+    'clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 7px),0 100%);}',
+    '.bmk-sw:hover{transform:translateY(-2px);}',
+    '.bmk-sw:active{cursor:grabbing;}',
+    '.bmk-sw:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
     '.bmk-handle{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;',
     'padding:9px 8px;border-radius:5px;border:1px solid rgba(0,0,0,.18);cursor:grab;',
     'font:inherit;font-size:11.5px;font-weight:700;touch-action:none;user-select:none;}',
@@ -240,6 +243,13 @@
     '.bmk-tab .lbl{overflow:hidden;text-overflow:ellipsis;}',
     '.bmk-tab:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
     '.bmk-tab:hover{filter:brightness(1.04);}',
+
+    /* stub: a bookmark still poking out of a shut section ---------------- */
+    '.bmk-stub{position:absolute;bottom:-7px;width:11px;height:16px;border-radius:1px;',
+    'cursor:pointer;z-index:56;box-shadow:0 1px 2px rgba(45,59,69,.2);',
+    'clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 5px),0 100%);}',
+    '.bmk-stub:hover{filter:brightness(1.06);}',
+    '.bmk-stub:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
 
     /* note card, in flow so the page makes room for it ------------------ */
     '.bmk-card{margin:6px 0 10px;border-left:4px solid;border-radius:0 6px 6px 0;',
@@ -338,7 +348,7 @@
   /* -------------------------------------------------------------- rendering */
 
   function clearRendered() {
-    var old = document.querySelectorAll('.bmk-tab, .bmk-card');
+    var old = document.querySelectorAll('.bmk-tab, .bmk-card, .bmk-stub');
     for (var i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
   }
 
@@ -347,10 +357,18 @@
     buildIndex();
     var orphans = 0;
 
+    var stubbed = [];   /* summary element -> how many stubs already on it */
+
     marks.forEach(function (mark) {
       var host = elementForKey(mark.key);
       if (!host) { orphans++; return; }
       if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+
+      /* If the block is inside a collapsed section the real tab is hidden with
+         it, so show a stub on the closed section's own header — the way a
+         bookmark still sticks out of a shut book. */
+      var closed = outermostClosedDetails(host);
+      if (closed) addStub(closed, mark, stubbed);
 
       var c = colorOf(mark);
 
@@ -384,6 +402,64 @@
     });
 
     updateDispenser(orphans);
+  }
+
+  /* The highest closed <details> above this element — the one whose header is
+     the visible edge of everything hidden underneath it. */
+  function outermostClosedDetails(el) {
+    var found = null, node = el;
+    while (node) {
+      var d = node.parentElement ? node.parentElement.closest('details') : null;
+      if (!d) break;
+      if (!d.open) {
+        var sm = d.querySelector(':scope > summary');
+        if (!(sm && (node === sm || sm.contains(node)))) found = d;
+      }
+      node = d;
+    }
+    return found;
+  }
+
+  function addStub(details, mark, stubbed) {
+    var summary = details.querySelector(':scope > summary');
+    if (!summary) return;
+    if (getComputedStyle(summary).position === 'static') summary.style.position = 'relative';
+
+    var entry = null;
+    for (var i = 0; i < stubbed.length; i++) {
+      if (stubbed[i].el === summary) { entry = stubbed[i]; break; }
+    }
+    if (!entry) { entry = { el: summary, n: -1 }; stubbed.push(entry); }
+    var slot = ++entry.n;
+
+    var c = colorOf(mark);
+    var stub = document.createElement('span');
+    stub.className = 'bmk-ui bmk-stub';
+    stub.setAttribute('role', 'button');
+    stub.setAttribute('tabindex', '0');
+    stub.style.background = c.bg;
+    stub.style.right = (16 + slot * 15) + 'px';
+    stub.title = (mark.kind === 'progress' ? "You are here: " : 'Bookmark: ') + tabLabel(mark) +
+                 ' — click to open';
+    stub.setAttribute('aria-label', stub.title);
+
+    function reveal(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var el = elementForKey(mark.key);
+      if (!el) return;
+      openAncestors(el);
+      setTimeout(function () {
+        el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        el.classList.add('bmk-flash');
+        setTimeout(function () { el.classList.remove('bmk-flash'); }, 1200);
+      }, 40);
+    }
+    stub.addEventListener('click', reveal);
+    stub.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') reveal(e);
+    });
+    summary.appendChild(stub);
   }
 
   function buildCard(mark, c) {
@@ -459,7 +535,7 @@
 
   /* ------------------------------------------------------------- dispenser */
 
-  var dispenser, listEl, listOpen = false, selectedColor = COLORS[0].id;
+  var dispenser, listEl, listOpen = false;
 
   function buildDispenser() {
     dispenser = document.createElement('div');
@@ -468,29 +544,29 @@
       '<div class="bmk-title"><span>Bookmarks</span>' +
       '<button type="button" class="bmk-collapse" aria-label="Hide bookmark tools">–</button></div>' +
       '<div class="bmk-body">' +
-        '<div class="bmk-swatches" role="group" aria-label="Bookmark colour"></div>' +
-        '<button type="button" class="bmk-handle bmk-note-handle">Drag onto the page</button>' +
+        '<div class="bmk-swatches" role="group" aria-label="Bookmarks — drag one onto the page"></div>' +
         '<button type="button" class="bmk-handle bmk-progress-handle">I&rsquo;m here</button>' +
-        '<div class="bmk-hint">Drag a bookmark onto any block, or press Enter on it and use the arrow keys.</div>' +
+        '<div class="bmk-hint">Drag a bookmark out of the stack onto any part of the page. ' +
+        'Or press Enter on one and use the arrow keys.</div>' +
         '<button type="button" class="bmk-list-toggle"></button>' +
         '<div class="bmk-list" hidden></div>' +
       '</div>' +
       '<div id="bmk-live" class="bmk-sr" aria-live="polite"></div>';
     document.body.appendChild(dispenser);
 
+    /* Each colour in the stack IS a bookmark you pull out — there is no
+       separate "drag me" control to find first. */
     var sw = dispenser.querySelector('.bmk-swatches');
     COLORS.forEach(function (col) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'bmk-sw';
       b.style.background = col.bg;
-      b.setAttribute('aria-label', col.label + ' bookmark');
-      b.setAttribute('aria-pressed', col.id === selectedColor ? 'true' : 'false');
-      b.addEventListener('click', function () {
-        selectedColor = col.id;
-        paintHandles();
-      });
+      b.style.borderColor = col.line;
+      b.setAttribute('aria-label', 'Drag out a ' + col.label.toLowerCase() + ' bookmark');
+      b.title = col.label + ' bookmark — drag onto the page';
       sw.appendChild(b);
+      makeDraggable(b, 'note', col.id);
     });
 
     dispenser.querySelector('.bmk-collapse').addEventListener('click', function () {
@@ -511,7 +587,6 @@
       updateDispenser();
     });
 
-    makeDraggable(dispenser.querySelector('.bmk-note-handle'), 'note');
     makeDraggable(dispenser.querySelector('.bmk-progress-handle'), 'progress');
     paintHandles();
   }
@@ -533,15 +608,8 @@
   }
 
   function paintHandles() {
-    var c = colorOf({ kind: 'note', color: selectedColor });
-    var h = dispenser.querySelector('.bmk-note-handle');
-    h.style.background = c.bg; h.style.borderColor = c.line; h.style.color = c.ink;
     var p = dispenser.querySelector('.bmk-progress-handle');
     p.style.background = PROGRESS.bg; p.style.borderColor = PROGRESS.line; p.style.color = PROGRESS.ink;
-    var sws = dispenser.querySelectorAll('.bmk-sw');
-    for (var i = 0; i < sws.length; i++) {
-      sws[i].setAttribute('aria-pressed', COLORS[i].id === selectedColor ? 'true' : 'false');
-    }
   }
 
   function updateDispenser(orphans) {
@@ -602,7 +670,7 @@
     return a || null;
   }
 
-  function makeDraggable(handle, kind) {
+  function makeDraggable(handle, kind, colorId) {
     var ghost = null, target = null, dragging = false;
 
     handle.addEventListener('pointerdown', function (e) {
@@ -610,7 +678,7 @@
       e.preventDefault();
       dragging = true;
       handle.setPointerCapture(e.pointerId);
-      var c = kind === 'progress' ? PROGRESS : colorOf({ color: selectedColor });
+      var c = kind === 'progress' ? PROGRESS : colorOf({ color: colorId });
       ghost = document.createElement('div');
       ghost.className = 'bmk-ui bmk-ghost';
       ghost.textContent = kind === 'progress' ? "I'm here" : 'Note';
@@ -629,7 +697,7 @@
       if (ghost) { ghost.parentNode.removeChild(ghost); ghost = null; }
       if (target) {
         target.classList.remove('bmk-target');
-        place(target, kind);
+        place(target, kind, colorId);
         target = null;
       }
     });
@@ -644,7 +712,7 @@
     handle.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        keyboardPlace(kind);
+        keyboardPlace(kind, colorId);
       }
     });
 
@@ -662,7 +730,7 @@
     }
   }
 
-  function place(el, kind) {
+  function place(el, kind, colorId) {
     buildIndex();
     var key = el.getAttribute('data-bmk-key') || keyFor(el);
 
@@ -673,7 +741,7 @@
       id: uid(),
       key: key,
       kind: kind,
-      color: kind === 'progress' ? null : selectedColor,
+      color: kind === 'progress' ? null : colorId,
       text: '',
       open: true,
       ts: Date.now()
@@ -687,7 +755,7 @@
     if (ta) ta.focus();
   }
 
-  function keyboardPlace(kind) {
+  function keyboardPlace(kind, colorId) {
     var all = [];
     var nodes = document.querySelectorAll(ANCHOR_QUERY);
     for (var i = 0; i < nodes.length; i++) {
@@ -719,7 +787,7 @@
       } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         e.preventDefault(); idx = Math.max(0, idx - 1); highlight();
       } else if (e.key === 'Enter') {
-        e.preventDefault(); var t = all[idx]; cleanup(); place(t, kind);
+        e.preventDefault(); var t = all[idx]; cleanup(); place(t, kind, colorId);
       } else if (e.key === 'Escape') {
         e.preventDefault(); cleanup(); announce('Cancelled.');
       }
