@@ -76,6 +76,17 @@
   var reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Inside the Canvas embed the iframe is sized to the whole page height and
+     never scrolls — the OUTER page does. A position:fixed panel therefore
+     pins to the bottom of a 1500px-tall viewport and is never seen again, and
+     dragging across that distance is impossible because the parent can't
+     scroll mid-drag. So when embedded the panel sits inline in the flow and
+     placement is click-to-pick-up, click-to-drop. */
+  var EMBEDDED = (function () {
+    try { if (window.self !== window.top) return true; } catch (e) { return true; }
+    return new URLSearchParams(location.search).get('context') === 'canvas';
+  })();
+
   /* --------------------------------------------------------------- storage */
 
   var storeKey = (function () {
@@ -143,12 +154,17 @@
       parts.push(kind);
     }
 
-    /* The row itself. A link href is the most durable identity we have; the
-       item's own title is the fallback. */
+    /* The row itself. A link is the most durable identity we have — but it
+       must be the SAME link in both contexts. Inside Canvas the page rewrites
+       each item's href to its Canvas assignment URL, so keying on href alone
+       would give an item two different keys depending on where the student
+       read it, and an emailed export would not restore across them.
+       `data-canvas-href` is present and untouched in both, so key on that. */
     if (el.matches('.wrow, .item')) {
       var a = el.querySelector('a[href]');
       if (a) {
-        parts.push('link:' + a.getAttribute('href').split('/').pop().split('?')[0]);
+        var raw = a.getAttribute('data-canvas-href') || a.getAttribute('href');
+        parts.push('link:' + raw.split('/').pop().split('?')[0]);
       } else {
         parts.push('t:' + textOf(el.querySelector('.wt, .title') || el, 48).toLowerCase());
       }
@@ -224,6 +240,29 @@
     'border:1px solid #E1E8ED;font-size:10.5px;line-height:1.4;color:#4A5760;}',
     '.bmk-local b{color:#2D3B45;font-weight:700;}',
     '.bmk-move{margin-top:8px;display:flex;flex-direction:column;gap:5px;}',
+
+    /* inline layout, used inside the Canvas embed --------------------- */
+    '.bmk-dispenser.is-inline{position:static;width:auto;margin:0 0 18px;box-shadow:none;}',
+    '.bmk-dispenser.is-inline .bmk-body{display:flex;flex-wrap:wrap;align-items:flex-start;',
+    'gap:10px 14px;}',
+    '.bmk-dispenser.is-inline .bmk-swatches{margin:0;}',
+    '.bmk-dispenser.is-inline .bmk-handle{width:auto;padding:7px 14px;align-self:flex-start;}',
+    '.bmk-dispenser.is-inline .bmk-progress-handle{margin-top:0;}',
+    '.bmk-dispenser.is-inline .bmk-hint{margin:0;flex:1 1 210px;min-width:170px;}',
+    '.bmk-dispenser.is-inline .bmk-local{margin:0;flex:1 1 250px;}',
+    '.bmk-dispenser.is-inline .bmk-move{margin:0;flex-direction:row;flex-wrap:wrap;}',
+    '.bmk-dispenser.is-inline .bmk-xfer{padding:6px 10px;}',
+    '.bmk-dispenser.is-inline .bmk-list-toggle{margin:0;width:auto;padding:6px 12px;}',
+    '.bmk-dispenser.is-inline .bmk-list{flex:1 1 100%;max-height:200px;}',
+
+    /* armed: a bookmark is in hand, waiting for a click --------------- */
+    'body.bmk-arming{cursor:crosshair;}',
+    'body.bmk-arming a,body.bmk-arming summary,body.bmk-arming button{cursor:crosshair;}',
+    '.bmk-sw.is-armed{outline:2px solid #2D3B45;outline-offset:2px;transform:translateY(-3px);}',
+    '.bmk-handle.is-armed{outline:2px solid #2D3B45;outline-offset:2px;}',
+    '.bmk-armbar{margin-top:8px;padding:7px 9px;border-radius:5px;background:#FFF7E0;',
+    'border:1px solid #E7CF93;font-size:11px;line-height:1.4;color:#5e4a18;}',
+    '.bmk-dispenser.is-inline .bmk-armbar{margin:0;flex:1 1 100%;}',
     '.bmk-xfer{padding:6px;font:inherit;font-size:11px;font-weight:600;color:#2D3B45;',
     'background:#fff;border:1px solid #C7CDD1;border-radius:5px;cursor:pointer;}',
     '.bmk-xfer:hover{background:#F5F8FA;border-color:#9AA6AE;}',
@@ -601,8 +640,9 @@
       '<div class="bmk-body">' +
         '<div class="bmk-swatches" role="group" aria-label="Bookmarks — drag one onto the page"></div>' +
         '<button type="button" class="bmk-handle bmk-progress-handle">I&rsquo;m here</button>' +
-        '<div class="bmk-hint">Drag a bookmark out of the stack onto any part of the page. ' +
-        'Or press Enter on one and use the arrow keys.</div>' +
+        '<div class="bmk-hint">Click a bookmark to pick it up, then click the part of the page ' +
+        'you want to mark. You can also drag one straight out of the stack, or press Enter on one ' +
+        'and use the arrow keys.</div>' +
         '<div class="bmk-local"><b>Saved on this computer only.</b> Your bookmarks and notes stay ' +
         'in this browser. They are not sent anywhere \u2014 not to your instructor, not to a server. ' +
         'Clearing your browser data erases them. To carry them to another computer, ' +
@@ -615,7 +655,16 @@
         '</div>' +
       '</div>' +
       '<div id="bmk-live" class="bmk-sr" aria-live="polite"></div>';
-    document.body.appendChild(dispenser);
+
+    if (EMBEDDED) {
+      dispenser.classList.add('is-inline');
+      var page = document.querySelector('.page') || document.body;
+      var header = page.querySelector('.course-header');
+      if (header && header.nextSibling) page.insertBefore(dispenser, header.nextSibling);
+      else page.insertBefore(dispenser, page.firstChild);
+    } else {
+      document.body.appendChild(dispenser);
+    }
 
     /* Each colour in the stack IS a bookmark you pull out — there is no
        separate "drag me" control to find first. */
@@ -667,7 +716,7 @@
   }
 
   function fit() {
-    if (userToggled) return;
+    if (userToggled || EMBEDDED) return;
     var page = document.querySelector('.page');
     var colW = page ? page.getBoundingClientRect().width : 1040;
     setMin(window.innerWidth - colW < 400);
@@ -698,7 +747,7 @@
       b.querySelector('.dot').style.background = c.bg;
       b.querySelector('b').textContent = tabLabel(mark);
       b.querySelector('i').textContent = host
-        ? whereLabel(mark.key)
+        ? whereLabel(mark.key, host)
         : 'this part of the page has moved';
       b.addEventListener('click', function () {
         var el = elementForKey(mark.key);
@@ -719,7 +768,15 @@
     }
   }
 
-  function whereLabel(key) {
+  function whereLabel(key, host) {
+    if (host) {
+      var t = textOf(host.querySelector('.wt, .title, .wk-head, .module-head .name, .wsec-head') || host, 52);
+      if (t) return t;
+    }
+    return whereFromKey(key);
+  }
+
+  function whereFromKey(key) {
     return key.split('|').map(function (p) {
       return p.replace(/^link:/, '').replace(/^t:/, '').replace(/^day:/, '')
               .replace(/\.html$/, '').replace(/-/g, ' ');
@@ -748,7 +805,8 @@
       '"Paste notes from another computer" on the course page.', ''];
     marks.forEach(function (m) {
       out.push('@ ' + m.key);
-      out.push('> ' + (m.kind === 'progress' ? "I'm here · " : '') + whereLabel(m.key));
+      out.push('> ' + (m.kind === 'progress' ? "I'm here · " : '') +
+               whereLabel(m.key, elementForKey(m.key)));
       out.push('# ' + (m.kind === 'progress' ? 'progress' : m.color));
       out.push((m.text || '').replace(/\r/g, ''));
       out.push('');
@@ -968,12 +1026,14 @@
   }
 
   function makeDraggable(handle, kind, colorId) {
-    var ghost = null, target = null, dragging = false;
+    var ghost = null, target = null, dragging = false, moved = false, startX = 0, startY = 0;
 
     handle.addEventListener('pointerdown', function (e) {
       if (e.button != null && e.button !== 0) return;
       e.preventDefault();
       dragging = true;
+      moved = false;
+      startX = e.clientX; startY = e.clientY;
       handle.setPointerCapture(e.pointerId);
       var c = kind === 'progress' ? PROGRESS : colorOf({ color: colorId });
       ghost = document.createElement('div');
@@ -992,11 +1052,19 @@
       if (!dragging) return;
       dragging = false;
       if (ghost) { ghost.parentNode.removeChild(ghost); ghost = null; }
-      if (target) {
-        target.classList.remove('bmk-target');
-        place(target, kind, colorId);
+      if (target) { target.classList.remove('bmk-target'); }
+
+      /* Pressed without dragging = picked it up. Inside the Canvas embed this
+         is the only workable path, because the parent page cannot scroll
+         while a drag is in progress. */
+      if (!moved) {
+        if (target) target.classList.remove('bmk-target');
         target = null;
+        if (armed && armed.handle === handle) disarm();
+        else arm(kind, colorId, handle);
+        return;
       }
+      if (target) { place(target, kind, colorId); target = null; }
     });
 
     handle.addEventListener('pointercancel', function () {
@@ -1014,6 +1082,9 @@
     });
 
     function move(e) {
+      if (!moved && (Math.abs(e.clientX - startX) > 4 || Math.abs(e.clientY - startY) > 4)) {
+        moved = true;
+      }
       ghost.style.left = (e.clientX + 12) + 'px';
       ghost.style.top = (e.clientY - 10) + 'px';
       if (ghost) ghost.style.display = 'none';
@@ -1025,6 +1096,72 @@
         if (target) target.classList.add('bmk-target');
       }
     }
+  }
+
+  var armed = null;
+
+  function armBar(text) {
+    var bar = dispenser.querySelector('.bmk-armbar');
+    if (!text) { if (bar) bar.parentNode.removeChild(bar); return; }
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.className = 'bmk-armbar';
+      dispenser.querySelector('.bmk-body').appendChild(bar);
+    }
+    bar.textContent = text;
+  }
+
+  function arm(kind, colorId, handle) {
+    disarm();
+    armed = { kind: kind, colorId: colorId, handle: handle };
+    handle.classList.add('is-armed');
+    document.body.classList.add('bmk-arming');
+    armBar(kind === 'progress'
+      ? 'Marker in hand — click where you are up to. Escape to put it back.'
+      : 'Bookmark in hand — click the part of the page you want to mark. Escape to put it back.');
+    announce('Bookmark picked up. Click a block to place it, or press Escape.');
+    document.addEventListener('click', onArmedClick, true);
+    document.addEventListener('mousemove', onArmedMove, true);
+    document.addEventListener('keydown', onArmedKey, true);
+  }
+
+  function disarm() {
+    if (!armed) return;
+    armed.handle.classList.remove('is-armed');
+    armed = null;
+    document.body.classList.remove('bmk-arming');
+    armBar(null);
+    var hot = document.querySelectorAll('.bmk-target');
+    for (var i = 0; i < hot.length; i++) hot[i].classList.remove('bmk-target');
+    document.removeEventListener('click', onArmedClick, true);
+    document.removeEventListener('mousemove', onArmedMove, true);
+    document.removeEventListener('keydown', onArmedKey, true);
+  }
+
+  function onArmedMove(e) {
+    var a = anchorFromPoint(e.clientX, e.clientY);
+    var hot = document.querySelectorAll('.bmk-target');
+    for (var i = 0; i < hot.length; i++) {
+      if (hot[i] !== a) hot[i].classList.remove('bmk-target');
+    }
+    if (a) a.classList.add('bmk-target');
+  }
+
+  function onArmedKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); disarm(); announce('Put back.'); }
+  }
+
+  /* Swallow the click entirely — while a bookmark is in hand a click must not
+     follow a link or open a section, it must drop the bookmark. */
+  function onArmedClick(e) {
+    if (e.target.closest && e.target.closest('.bmk-ui')) return;
+    var a = e.target.closest ? e.target.closest(ANCHOR_QUERY) : null;
+    e.preventDefault();
+    e.stopPropagation();
+    var kind = armed.kind, colorId = armed.colorId;
+    disarm();
+    if (a) place(a, kind, colorId);
+    else announce('Nothing to mark there — try a week, an item or a section.');
   }
 
   function place(el, kind, colorId) {
