@@ -243,6 +243,10 @@
     '.bmk-tab .lbl{overflow:hidden;text-overflow:ellipsis;}',
     '.bmk-tab:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
     '.bmk-tab:hover{filter:brightness(1.04);}',
+    /* on a section header the tab hangs off the bottom edge, so it never */
+    /* covers the header\'s own week dates or open/close marker            */
+    '.bmk-tab-summary{top:auto;bottom:-9px;right:16px;',
+    'box-shadow:0 2px 3px rgba(45,59,69,.18);}',
 
     /* stub: a bookmark still poking out of a shut section ---------------- */
     '.bmk-stub{position:absolute;bottom:-7px;width:11px;height:16px;border-radius:1px;',
@@ -362,19 +366,25 @@
     marks.forEach(function (mark) {
       var host = elementForKey(mark.key);
       if (!host) { orphans++; return; }
-      if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+
+      /* A bookmark ON a <details> hangs from its <summary>, which stays
+         visible when the section is shut — otherwise the tab would vanish
+         along with the content it marks. */
+      var onSummary = host.matches('details');
+      var mount = onSummary ? (host.querySelector(':scope > summary') || host) : host;
+      if (getComputedStyle(mount).position === 'static') mount.style.position = 'relative';
 
       /* If the block is inside a collapsed section the real tab is hidden with
          it, so show a stub on the closed section's own header — the way a
          bookmark still sticks out of a shut book. */
-      var closed = outermostClosedDetails(host);
+      var closed = outermostClosedDetails(mount);
       if (closed) addStub(closed, mark, stubbed);
 
       var c = colorOf(mark);
 
       var tab = document.createElement('button');
       tab.type = 'button';
-      tab.className = 'bmk-tab';
+      tab.className = 'bmk-tab' + (onSummary ? ' bmk-tab-summary' : '');
       tab.dataset.bmkId = mark.id;
       tab.style.background = c.bg;
       tab.style.borderColor = c.line;
@@ -384,7 +394,7 @@
         (mark.kind === 'progress' ? 'Progress marker: ' : 'Bookmark: ') + tabLabel(mark));
       tab.innerHTML = '<span class="lbl"></span>';
       tab.querySelector('.lbl').textContent = tabLabel(mark);
-      host.appendChild(tab);
+      mount.appendChild(tab);
 
       tab.addEventListener('click', function (e) {
         e.preventDefault();
@@ -399,6 +409,16 @@
       });
 
       if (mark.open) host.parentNode.insertBefore(buildCard(mark, c), host.nextSibling);
+    });
+
+    /* A header can carry both a tab of its own and stubs for marks buried
+       under it — slide the stubs clear of the tab so they never overlap. */
+    stubbed.forEach(function (entry) {
+      if (!entry.el.querySelector(':scope > .bmk-tab-summary')) return;
+      var st = entry.el.querySelectorAll(':scope > .bmk-stub');
+      for (var i = 0; i < st.length; i++) {
+        st[i].style.right = (parseInt(st[i].style.right, 10) + 190) + 'px';
+      }
     });
 
     updateDispenser(orphans);
