@@ -272,14 +272,19 @@
     '.bmk-ui,.bmk-ui *{box-sizing:border-box;}',
 
     /* dispenser -------------------------------------------------------- */
-    '.bmk-dispenser{position:fixed;top:14px;right:14px;z-index:900;width:172px;',
+    '.bmk-dispenser{position:fixed;top:14px;right:14px;z-index:900;width:198px;',
     'font-family:inherit;font-size:12px;color:#2D3B45;background:#fff;',
     'border:1px solid #C7CDD1;border-radius:8px;box-shadow:0 4px 14px rgba(45,59,69,.13);}',
-    '.bmk-dispenser .bmk-title{display:flex;align-items:center;gap:6px;padding:8px 10px 6px;',
-    'font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#6B7780;}',
-    '.bmk-dispenser .bmk-title span{flex:1;}',
-    '.bmk-collapse{border:0;background:none;color:#6B7780;cursor:pointer;font-size:14px;',
-    'line-height:1;padding:2px 4px;border-radius:3px;}',
+    /* an eyebrow over the name, the same idiom the page already uses on its  */
+    /* goal and callout blocks — puts the tool inside a practice students know */
+    '.bmk-dispenser .bmk-title{display:flex;align-items:flex-start;gap:7px;padding:9px 10px 7px;}',
+    '.bmk-dispenser .bmk-name{flex:1;font-size:12.5px;font-weight:700;line-height:1.25;',
+    'color:#2D3B45;}',
+    '.bmk-dispenser .bmk-eyebrow{display:block;font-size:9.5px;font-weight:700;letter-spacing:.6px;',
+    'text-transform:uppercase;color:#6B7780;margin-bottom:1px;}',
+    '.bmk-dispenser .bmk-emo{flex:0 0 auto;font-size:14px;line-height:1.5;}',
+    '.bmk-collapse{flex:0 0 auto;border:0;background:none;color:#6B7780;cursor:pointer;',
+    'font-size:14px;line-height:1;padding:2px 4px;border-radius:3px;}',
     '.bmk-collapse:hover{background:#F0F2F4;color:#2D3B45;}',
     '.bmk-body{padding:0 10px 10px;}',
     '.bmk-dispenser.is-min .bmk-body{display:none;}',
@@ -703,8 +708,11 @@
     dispenser = document.createElement('div');
     dispenser.className = 'bmk-ui bmk-dispenser';
     dispenser.innerHTML =
-      '<div class="bmk-title"><span>Bookmarks</span>' +
-      '<button type="button" class="bmk-collapse" aria-label="Hide bookmark tools">–</button></div>' +
+      '<div class="bmk-title">' +
+        '<span class="bmk-emo" aria-hidden="true">\uD83D\uDD16</span>' +
+        '<span class="bmk-name"><span class="bmk-eyebrow">Own your progress</span>Bookmarks</span>' +
+        '<button type="button" class="bmk-collapse" aria-label="Hide bookmarks panel">\u2013</button>' +
+      '</div>' +
       '<div class="bmk-body">' +
         '<div class="bmk-swatches" role="group" aria-label="Bookmarks — drag one onto the page"></div>' +
         '<button type="button" class="bmk-handle bmk-progress-handle">I&rsquo;m here</button>' +
