@@ -223,6 +223,36 @@
     '.bmk-local{margin-top:8px;padding:7px 8px;border-radius:4px;background:#F5F8FA;',
     'border:1px solid #E1E8ED;font-size:10.5px;line-height:1.4;color:#4A5760;}',
     '.bmk-local b{color:#2D3B45;font-weight:700;}',
+    '.bmk-move{margin-top:8px;display:flex;flex-direction:column;gap:5px;}',
+    '.bmk-xfer{padding:6px;font:inherit;font-size:11px;font-weight:600;color:#2D3B45;',
+    'background:#fff;border:1px solid #C7CDD1;border-radius:5px;cursor:pointer;}',
+    '.bmk-xfer:hover{background:#F5F8FA;border-color:#9AA6AE;}',
+    '.bmk-xfer:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
+
+    /* transfer dialog ---------------------------------------------------- */
+    '.bmk-scrim{position:fixed;inset:0;z-index:1100;background:rgba(45,59,69,.42);',
+    'display:flex;align-items:center;justify-content:center;padding:20px;}',
+    '.bmk-modal{width:min(640px,100%);max-height:86vh;overflow:auto;background:#fff;',
+    'border-radius:8px;box-shadow:0 12px 40px rgba(45,59,69,.35);padding:18px 20px;',
+    'font-family:inherit;color:#2D3B45;font-size:13px;line-height:1.5;}',
+    '.bmk-modal h2{margin:0 0 6px;font-size:16px;font-weight:700;}',
+    '.bmk-modal p{margin:0 0 10px;font-size:12.5px;color:#4A5760;}',
+    '.bmk-modal ol{margin:0 0 12px;padding-left:20px;font-size:12.5px;color:#4A5760;}',
+    '.bmk-modal li{margin:3px 0;}',
+    '.bmk-modal textarea{width:100%;height:210px;font-family:ui-monospace,SFMono-Regular,',
+    'Menlo,Consolas,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;',
+    'border:1px solid #C7CDD1;border-radius:5px;resize:vertical;color:#2D3B45;}',
+    '.bmk-modal textarea:focus{outline:2px solid #0374B5;outline-offset:1px;}',
+    '.bmk-modal-foot{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;}',
+    '.bmk-modal-foot .grow{flex:1;}',
+    '.bmk-btn{padding:8px 13px;font:inherit;font-size:12.5px;font-weight:700;border-radius:5px;',
+    'cursor:pointer;border:1px solid #C7CDD1;background:#fff;color:#2D3B45;}',
+    '.bmk-btn:hover{background:#F5F8FA;}',
+    '.bmk-btn.primary{background:#0374B5;border-color:#0374B5;color:#fff;}',
+    '.bmk-btn.primary:hover{background:#0a5a8a;}',
+    '.bmk-btn:focus-visible{outline:2px solid #0374B5;outline-offset:2px;}',
+    '.bmk-say{font-size:12px;color:#0B874B;font-weight:600;}',
+    '.bmk-say.bad{color:#9B3B3B;}',
     '.bmk-list-toggle{margin-top:8px;width:100%;padding:6px;font:inherit;font-size:11px;',
     'font-weight:600;color:#0374B5;background:#F3F8FB;border:1px solid #CFE3F0;',
     'border-radius:5px;cursor:pointer;}',
@@ -575,9 +605,14 @@
         'Or press Enter on one and use the arrow keys.</div>' +
         '<div class="bmk-local"><b>Saved on this computer only.</b> Your bookmarks and notes stay ' +
         'in this browser. They are not sent anywhere \u2014 not to your instructor, not to a server. ' +
-        'They will not follow you to another computer, and clearing your browser data erases them.</div>' +
+        'Clearing your browser data erases them. To carry them to another computer, ' +
+        'email them to yourself with the button below.</div>' +
         '<button type="button" class="bmk-list-toggle"></button>' +
         '<div class="bmk-list" hidden></div>' +
+        '<div class="bmk-move">' +
+          '<button type="button" class="bmk-xfer bmk-out">Email my notes to me</button>' +
+          '<button type="button" class="bmk-xfer bmk-in">Paste notes from another computer</button>' +
+        '</div>' +
       '</div>' +
       '<div id="bmk-live" class="bmk-sr" aria-live="polite"></div>';
     document.body.appendChild(dispenser);
@@ -614,6 +649,9 @@
       listEl.hidden = !listOpen;
       updateDispenser();
     });
+
+    dispenser.querySelector('.bmk-out').addEventListener('click', openExport);
+    dispenser.querySelector('.bmk-in').addEventListener('click', openImport);
 
     makeDraggable(dispenser.querySelector('.bmk-progress-handle'), 'progress');
     paintHandles();
@@ -686,6 +724,237 @@
       return p.replace(/^link:/, '').replace(/^t:/, '').replace(/^day:/, '')
               .replace(/\.html$/, '').replace(/-/g, ' ');
     }).join(' · ').slice(0, 60);
+  }
+
+  /* ------------------------------------------------- carrying notes across
+
+     The exported text is the same semantic keys the bookmarks are stored
+     under, so a paste on another computer puts every note back on the exact
+     item it was written against — progress marker included. Lines beginning
+     `>` are a human-readable label for whoever reads the email; the parser
+     ignores them. Everything before the first `@` is ignored too, so Gmail's
+     quoting, signatures and "On Tue... wrote:" wrappers do no harm.        */
+
+  var FENCE_TOP = '--- my course bookmarks · v1 ---';
+  var FENCE_END = '--- end ---';
+
+  function courseLabel() {
+    var h = document.querySelector('.course-header .eyebrow');
+    return h ? textOf(h) : document.title;
+  }
+
+  function serialize() {
+    var out = [FENCE_TOP, courseLabel(), '', 'Paste this whole message into ' +
+      '"Paste notes from another computer" on the course page.', ''];
+    marks.forEach(function (m) {
+      out.push('@ ' + m.key);
+      out.push('> ' + (m.kind === 'progress' ? "I'm here · " : '') + whereLabel(m.key));
+      out.push('# ' + (m.kind === 'progress' ? 'progress' : m.color));
+      out.push((m.text || '').replace(/\r/g, ''));
+      out.push('');
+    });
+    out.push(FENCE_END);
+    return out.join('\n');
+  }
+
+  function parse(text) {
+    var lines = String(text).replace(/\r/g, '').split('\n');
+    var found = [], cur = null;
+
+    function flush() {
+      if (!cur) return;
+      cur.text = cur.lines.join('\n').replace(/^\n+|\n+$/g, '');
+      delete cur.lines;
+      found.push(cur);
+      cur = null;
+    }
+
+    for (var i = 0; i < lines.length; i++) {
+      var ln = lines[i];
+      var bare = ln.replace(/^[\s>|]*(?=@\s)/, '');   /* survive email quoting */
+      if (bare.indexOf('@ ') === 0) {
+        flush();
+        cur = { key: bare.slice(2).trim(), kind: 'note', color: COLORS[0].id, lines: [] };
+        continue;
+      }
+      if (!cur) continue;
+      if (ln.indexOf('>') === 0) continue;              /* human-readable label */
+      if (ln.indexOf('# ') === 0) {
+        var v = ln.slice(2).trim().toLowerCase();
+        if (v === 'progress') { cur.kind = 'progress'; cur.color = null; }
+        else { cur.color = v; }
+        continue;
+      }
+      if (ln.trim() === FENCE_END) { flush(); break; }
+      cur.lines.push(ln);
+    }
+    flush();
+
+    return found.filter(function (m) { return m.key; }).map(function (m) {
+      return {
+        id: uid(), key: m.key, kind: m.kind,
+        color: m.kind === 'progress' ? null
+             : (COLORS.some(function (c) { return c.id === m.color; }) ? m.color : COLORS[0].id),
+        text: m.text, open: false, ts: Date.now()
+      };
+    });
+  }
+
+  /* Merge, never clobber: a note already on the same item in the same colour
+     is updated, anything new is added, and the single progress marker is
+     replaced. Notes made on THIS computer are never silently dropped. */
+  function mergeIn(incoming) {
+    var added = 0, updated = 0;
+    incoming.forEach(function (m) {
+      if (m.kind === 'progress') {
+        marks = marks.filter(function (x) { return x.kind !== 'progress'; });
+        marks.push(m); added++;
+        return;
+      }
+      var hit = null;
+      for (var i = 0; i < marks.length; i++) {
+        if (marks[i].kind !== 'progress' && marks[i].key === m.key &&
+            marks[i].color === m.color) { hit = marks[i]; break; }
+      }
+      if (hit) { if (hit.text !== m.text) { hit.text = m.text; updated++; } }
+      else { marks.push(m); added++; }
+    });
+    save(marks);
+    renderAll();
+    return { added: added, updated: updated };
+  }
+
+  function modal(build) {
+    var prevFocus = document.activeElement;
+    var scrim = document.createElement('div');
+    scrim.className = 'bmk-ui bmk-scrim';
+    var box = document.createElement('div');
+    box.className = 'bmk-modal';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    scrim.appendChild(box);
+
+    function close() {
+      if (scrim.parentNode) scrim.parentNode.removeChild(scrim);
+      document.removeEventListener('keydown', onKey, true);
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+    }
+    function onKey(e) { if (e.key === 'Escape') { e.preventDefault(); close(); } }
+    scrim.addEventListener('click', function (e) { if (e.target === scrim) close(); });
+    document.addEventListener('keydown', onKey, true);
+
+    build(box, close);
+    document.body.appendChild(scrim);
+    return close;
+  }
+
+  function openExport() {
+    if (!marks.length) { alert('You have not made any bookmarks on this page yet.'); return; }
+    modal(function (box, close) {
+      var payload = serialize();
+      box.innerHTML =
+        '<h2>Email your notes to yourself</h2>' +
+        '<p>This is all ' + marks.length + ' of your bookmarks as text. Send it to yourself, then on the ' +
+        'other computer open this page, choose <b>Paste notes from another computer</b>, and paste it in. ' +
+        'Every note goes back on the item you wrote it against.</p>' +
+        '<ol><li>Press <b>Copy</b>.</li><li>Press <b>Open Gmail</b> — a new message opens.</li>' +
+        '<li>Put your own address in <b>To</b>, click in the message body and paste.</li>' +
+        '<li>Send it. Keep the email; it is your backup.</li></ol>';
+      var ta = document.createElement('textarea');
+      ta.value = payload;
+      ta.readOnly = true;
+      ta.setAttribute('aria-label', 'Your bookmarks as text');
+      box.appendChild(ta);
+
+      var foot = document.createElement('div');
+      foot.className = 'bmk-modal-foot';
+      var say = document.createElement('span');
+      say.className = 'bmk-say';
+
+      var copy = document.createElement('button');
+      copy.type = 'button'; copy.className = 'bmk-btn primary'; copy.textContent = 'Copy';
+      copy.addEventListener('click', function () {
+        ta.select();
+        var done = false;
+        try { done = document.execCommand('copy'); } catch (e) { done = false; }
+        if (!done && navigator.clipboard) {
+          navigator.clipboard.writeText(payload).then(function () {
+            say.className = 'bmk-say'; say.textContent = 'Copied.';
+          }, function () {
+            say.className = 'bmk-say bad';
+            say.textContent = 'Could not copy for you — select the text above and copy it.';
+          });
+          return;
+        }
+        say.className = done ? 'bmk-say' : 'bmk-say bad';
+        say.textContent = done ? 'Copied.'
+                               : 'Could not copy for you — select the text above and copy it.';
+      });
+
+      var gmail = document.createElement('button');
+      gmail.type = 'button'; gmail.className = 'bmk-btn'; gmail.textContent = 'Open Gmail';
+      gmail.addEventListener('click', function () {
+        var url = 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&su=' +
+          encodeURIComponent('My ' + courseLabel() + ' bookmarks') +
+          '&body=' + encodeURIComponent('Paste your notes here, then send this to yourself.\n\n');
+        window.open(url, '_blank', 'noopener');
+      });
+
+      var shut = document.createElement('button');
+      shut.type = 'button'; shut.className = 'bmk-btn'; shut.textContent = 'Close';
+      shut.addEventListener('click', close);
+
+      foot.appendChild(copy); foot.appendChild(gmail);
+      var grow = document.createElement('span'); grow.className = 'grow'; foot.appendChild(grow);
+      foot.appendChild(say); foot.appendChild(shut);
+      box.appendChild(foot);
+      setTimeout(function () { copy.focus(); }, 0);
+    });
+  }
+
+  function openImport() {
+    modal(function (box, close) {
+      box.innerHTML =
+        '<h2>Paste notes from another computer</h2>' +
+        '<p>Paste the whole email you sent yourself. Quoted lines, signatures and the rest of the ' +
+        'message are ignored. Notes you have already made here are kept — anything on the same item ' +
+        'in the same colour is updated, and your progress marker moves to where the pasted one is.</p>';
+      var ta = document.createElement('textarea');
+      ta.placeholder = 'Paste here…';
+      ta.setAttribute('aria-label', 'Paste your bookmarks text');
+      box.appendChild(ta);
+
+      var foot = document.createElement('div');
+      foot.className = 'bmk-modal-foot';
+      var say = document.createElement('span');
+      say.className = 'bmk-say';
+
+      var go = document.createElement('button');
+      go.type = 'button'; go.className = 'bmk-btn primary'; go.textContent = 'Bring them in';
+      go.addEventListener('click', function () {
+        var found = parse(ta.value);
+        if (!found.length) {
+          say.className = 'bmk-say bad';
+          say.textContent = 'Nothing recognisable in that — paste the whole message.';
+          return;
+        }
+        var r = mergeIn(found);
+        say.className = 'bmk-say';
+        say.textContent = r.added + ' added, ' + r.updated + ' updated.';
+        announce(say.textContent);
+        setTimeout(close, 1100);
+      });
+
+      var shut = document.createElement('button');
+      shut.type = 'button'; shut.className = 'bmk-btn'; shut.textContent = 'Cancel';
+      shut.addEventListener('click', close);
+
+      foot.appendChild(go);
+      var grow = document.createElement('span'); grow.className = 'grow'; foot.appendChild(grow);
+      foot.appendChild(say); foot.appendChild(shut);
+      box.appendChild(foot);
+      setTimeout(function () { ta.focus(); }, 0);
+    });
   }
 
   /* --------------------------------------------------------- drag to place */
