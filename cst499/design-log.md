@@ -215,3 +215,12 @@ gate each next sprint.
   space as your capstone that fits your interest" became "consider a problem space as your capstone
   if it fits your interest and your career-planning needs", since the relative clause was attached
   to the wrong noun. Draft v5 → v6. — Alan
+
+## 2026-08-18 — Sprint modules marked work in progress
+
+Each sprint module head on `home.html` (Sprint 0 through Sprint 4) carries a small
+WORK IN PROGRESS chip, so a student opening the page before the semester sees which parts are still
+being built without having to expand anything. Start Here carries no chip — it is finished, and it is
+what students are asked to read first. The chip is house note-amber, sits between the sprint name and
+its week/date tag, and is hidden on narrow screens. Removing it as each sprint is finalized is one
+line per sprint.
