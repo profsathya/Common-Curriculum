@@ -204,6 +204,10 @@ Rows that open work open it in a **new tab** — a course page in the web contex
 Canvas assignment inside Canvas. The sprint module keeps its "By the end of this
 sprint you will be able to" box, and each week keeps a one-line title beside its
 dates. The split is the point: expand in place for information, navigate for work.
+Weeks themselves are `<details>`, closed by default (adopted 2026-08-20): a sprint
+reads as one-line week heads until the student opens the week they need, and
+`js/bookmarks.js` remembers each student's open sections — weeks included — in
+localStorage (`cc-open:` keys), so the page reopens the way they left it.
 Emojis are decorative (`aria-hidden`); expanders are native `<details>`. Item names,
 dates and points come from the course's record (`schedule.html`, once built) — this
 skill owns the shape, never the list.

@@ -224,3 +224,11 @@ being built without having to expand anything. Start Here carries no chip — it
 what students are asked to read first. The chip is house note-amber, sits between the sprint name and
 its week/date tag, and is hidden on narrow screens. Removing it as each sprint is finalized is one
 line per sprint.
+
+- **2026-08-20 — weeks collapse, closed by default.** Sathya's call. Every week block is now a
+  `<details class="wk" id="wk-N">` with the one-line week head as its summary (+/− marker,
+  keyboard-focusable); a sprint reads as one-line week heads until the student opens one. The
+  existing `js/bookmarks.js` open-state store (`cc-open:` in localStorage) already tracks all
+  `<details>` generically, so week-level memory came free — verified live: closed on first visit,
+  student's opens restored on reload, `#wk-N` links open the week and its sprint. Strict parse
+  clean. — Alan

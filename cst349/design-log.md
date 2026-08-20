@@ -171,3 +171,11 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   being built — activities and dates may change."), inserted after the `.name` span and before
   `.tag`, exactly as on `cst499/home.html`. The `.module-head .wip` rule was added to the inline
   stylesheet next to `.module-head .tag`. Start Here is deliberately unmarked. — Alan
+
+- **2026-08-20 — weeks collapse, closed by default.** Sathya's call. Every week block is now a
+  `<details class="wk" id="wk-N">` with the one-line week head as its summary (+/− marker,
+  keyboard-focusable); a sprint reads as one-line week heads until the student opens one. The
+  existing `js/bookmarks.js` open-state store (`cc-open:` in localStorage) already tracks all
+  `<details>` generically, so week-level memory came free — verified live: closed on first visit,
+  student's opens restored on reload, `#wk-N` links open the week and its sprint. Strict parse
+  clean. — Alan
