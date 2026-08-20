@@ -165,3 +165,9 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   rendering at the page corner), and registry-linked titles keep their links — bubbles sit on
   adjacent plain text. class="gl" count now 44. New skill: `skills/hover-text/SKILL.md`
   carries the register, placement, markup, and after-rebuild survival check. — Alan
+
+- **2026-08-18 — sprint modules marked Work in progress (parity with CST499).** All five sprint
+  module heads now carry the amber `.wip` chip ("Work in progress", title: "This sprint is still
+  being built — activities and dates may change."), inserted after the `.name` span and before
+  `.tag`, exactly as on `cst499/home.html`. The `.module-head .wip` rule was added to the inline
+  stylesheet next to `.module-head .tag`. Start Here is deliberately unmarked. — Alan
