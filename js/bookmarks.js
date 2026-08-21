@@ -604,7 +604,11 @@
     stub.setAttribute('role', 'button');
     stub.setAttribute('tabindex', '0');
     stub.style.background = c.bg;
-    stub.style.right = (16 + slot * 15) + 'px';
+    /* 2026-08-20: week and day summaries carry a +/− expander at right:0 (17px
+       wide). The old 16px base landed stubs exactly on it — clicks meant for
+       the expander hit the stub. Clear it; module/bigpic heads keep 16px. */
+    var base = summary.querySelector('.wplus') ? 44 : 16;
+    stub.style.right = (base + slot * 15) + 'px';
     stub.title = (mark.kind === 'progress' ? "You are here: " : 'Bookmark: ') + tabLabel(mark) +
                  ' — click to open';
     stub.setAttribute('aria-label', stub.title);
