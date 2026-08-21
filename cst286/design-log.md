@@ -223,3 +223,24 @@ The design record is `fall-2026-courses/cst286-plan-working.html` (working plan,
   `<details>` generically, so week-level memory came free — verified live: closed on first visit,
   student's opens restored on reload, `#wk-N` links open the week and its sprint. Strict parse
   clean. — Alan
+
+## 2026-08-14 — Week 1 Monday session plan lands on the home page
+
+The Monday Aug 24 row in Week 1's Session plan moved off "Plan TBD" and now carries the real
+plan plus a link to the slides.
+
+- Goal line: "Online — meet the class, and get set up."
+- Body: Zoom session, opening with Human Bingo (short breakout rounds), then a short look at what
+  the course is for, then setting up the CST286 AI Dojo, closing in small groups pulled a few at a
+  time into the main room. Ends on "Be on webcam."
+- Slides link: the Google Slides deck *CST 286 - Week 1 - Mon*
+  (1ibJ1Cri8kI7eC9LWgCYFqTe6IfEBG3hG4O_o3u8lEBo), linked as `/preview` so students get the clean
+  viewer rather than the editor chrome. Sharing verified as anyone-with-link reader, so no CSUMB
+  sign-in is required — unlike the syllabus `/preview` embeds, which are domain-restricted.
+  Opens in a new tab, per the 13 Aug weekly-block rule.
+
+This is the first `wday-body` on any of the three home pages to carry a link, so it sets the
+pattern: prose first, the material named at the end.
+
+The Wednesday Aug 26 row is unchanged ("Course orientation."), and the deeper course-design
+conversation stays there, in person.
