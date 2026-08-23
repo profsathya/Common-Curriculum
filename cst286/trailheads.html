@@ -1,0 +1,1464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 &mdash; Trailheads</title>
+<!--
+  TRAILHEADS — CST286, Fall 2026.  Three levels, one file:
+    #basecamp            pick a trailhead (10 trails)
+    #trail-<id>          follow the trail (map, forks, pitfalls, vista, sources)
+    #route-<trail>-<id>  explore a route to its vista (motion route built out; others surveyed)
+  All content is static markup — edit it directly (Pinegrow-safe). The only script is the
+  hash router that shows one view at a time, plus the cycling hook question in the hero.
+  Every trail and route carries its own Sources block: that is what the Dojo context file captures.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ---------- house chrome (matches the other CST286 pages) ---------- */
+  :root{
+    --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+    --border:#C7CDD1; --border-light:#E8EAEC; --teal:#0d9488;
+    --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font); color:var(--text); background:var(--paper); font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased}
+  .page{max-width:1040px; margin:0 auto; padding:22px 22px 56px}
+  .crumb{font-size:12px; color:var(--muted); margin-bottom:12px}
+  .crumb a{color:var(--blue); text-decoration:none}
+  .crumb a:hover{text-decoration:underline}
+  .pagenav{display:flex; justify-content:space-between; gap:12px; margin-top:24px; padding-top:14px; border-top:1px solid var(--line); font-size:13px}
+  .pagenav a{color:var(--blue); text-decoration:none}
+  .pagenav a:hover{text-decoration:underline}
+  .instructor{margin-top:26px; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:14px 16px; text-align:center}
+  .instructor .nm{font-weight:700; color:var(--ink); margin-bottom:3px}
+  .instructor .links{font-size:12.5px; color:var(--ink-soft)}
+  .instructor a{color:var(--blue); text-decoration:none}
+  .page-footer{margin-top:22px; padding-top:16px; border-top:1px solid var(--line); display:flex; align-items:center; gap:10px; color:var(--ink-soft); font-size:11.5px; flex-wrap:wrap}
+  .page-footer img{height:20px; opacity:.55}
+
+  /* ---------- Trailheads palette ---------- */
+  :root{
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#C2551F;
+    --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --warn:#8A6D1C; --vista:#B08018;
+    --t-phone:#2F6BA8; --t-phone-soft:#E2EAF3;
+    --t-games:#6D4FC0; --t-games-soft:#E9E4F5;
+    --t-sound:#2E7D6E; --t-sound-soft:#DFEDE8;
+    --t-sports:#A8453C; --t-sports-soft:#F4E3E1;
+    --t-silicon:#52691F; --t-silicon-soft:#E9EEDC;
+    --t-space:#3A4A8F; --t-space-soft:#E3E5F2;
+    --t-light:#A03C78; --t-light-soft:#F3E1EC;
+    --t-energy:#2C7A44; --t-energy-soft:#DEEDE3;
+    --t-weird:#6A3A78; --t-weird-soft:#EDE2F0;
+    --t-method:#4C6270; --t-method-soft:#E4EAEE;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --blue:#6BAEDC; --warn:#D6B04A; --vista:#D9AE3E;
+      --t-phone:#7FA9D6; --t-phone-soft:#22313F;
+      --t-games:#A78FE0; --t-games-soft:#2C2740;
+      --t-sound:#7FBCAD; --t-sound-soft:#1F332E;
+      --t-sports:#E0958C; --t-sports-soft:#3A2624;
+      --t-silicon:#ADC172; --t-silicon-soft:#2A3218;
+      --t-space:#8F9AD8; --t-space-soft:#242A44;
+      --t-light:#DE90C0; --t-light-soft:#3A2233;
+      --t-energy:#7CC08E; --t-energy-soft:#1D3325;
+      --t-weird:#BE95CC; --t-weird-soft:#2F2036;
+      --t-method:#A3B4BE; --t-method-soft:#26323A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E;
+    --blaze:#E0793C; --blue:#6BAEDC; --warn:#D6B04A; --vista:#D9AE3E;
+    --t-phone:#7FA9D6; --t-phone-soft:#22313F;
+    --t-games:#A78FE0; --t-games-soft:#2C2740;
+    --t-sound:#7FBCAD; --t-sound-soft:#1F332E;
+    --t-sports:#E0958C; --t-sports-soft:#3A2624;
+    --t-silicon:#ADC172; --t-silicon-soft:#2A3218;
+    --t-space:#8F9AD8; --t-space-soft:#242A44;
+    --t-light:#DE90C0; --t-light-soft:#3A2233;
+    --t-energy:#7CC08E; --t-energy-soft:#1D3325;
+    --t-weird:#BE95CC; --t-weird-soft:#2F2036;
+    --t-method:#A3B4BE; --t-method-soft:#26323A;
+  }
+
+  /* ---------- typography inside the map ---------- */
+  .th-body{font-family:"Atkinson Hyperlegible",var(--font); font-size:16px; line-height:1.6; color:var(--ink)}
+  .th-body h1,.th-body h2,.th-body h3,.th-body h4{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  .th-body a{color:var(--blaze)}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; position:relative; overflow:hidden; margin-bottom:0}
+  .hero-inner{padding:46px 34px 42px; position:relative; z-index:1}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:#9FB2C4; margin-bottom:16px}
+  .hero h1{font-size:clamp(2.4rem,6vw,4rem); font-weight:900; line-height:1.02; letter-spacing:-.01em; color:var(--hero-cream)}
+  .hero .tagline{font-family:Fraunces,Georgia,serif; font-size:clamp(1.05rem,2.4vw,1.35rem); font-weight:500; color:#C9D4DC; margin:12px 0 0; max-width:34ch}
+  .hero .hook{margin-top:30px; border-left:3px solid var(--blaze); padding:6px 0 6px 18px; max-width:62ch}
+  .hero .hook .lbl{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:#8FA3B5}
+  .hero .hook p{margin:6px 0 0; font-size:1.1rem; color:var(--hero-cream); min-height:3.2em; transition:opacity .35s ease}
+  .contours{position:absolute; inset:0; z-index:0; opacity:.5}
+
+  /* ---------- legend ---------- */
+  .legend{border:1px solid var(--line); border-top:0; border-radius:0 0 8px 8px; background:var(--card); padding:12px 18px; display:flex; flex-wrap:wrap; gap:8px 26px; align-items:center; margin-bottom:30px}
+  .legend .item{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--ink-soft)}
+  .legend .g{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--ink)}
+
+  /* ---------- basecamp ---------- */
+  .basecamp h2{font-size:clamp(1.5rem,4vw,2.1rem); font-weight:650}
+  .basecamp .lead{max-width:64ch; color:var(--ink-soft); margin:10px 0 0}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:16px; margin:30px 0 8px}
+  .tcard{display:flex; flex-direction:column; gap:11px; text-align:left; background:var(--card);
+    border:1px solid var(--line); border-top:6px solid var(--tc,var(--blaze)); border-radius:6px;
+    padding:20px 20px 16px; color:var(--ink); text-decoration:none; transition:transform .15s ease, box-shadow .15s ease}
+  .tcard:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(20,30,40,.10)}
+  .tcard:focus-visible{outline:3px solid var(--tc,var(--blaze)); outline-offset:2px}
+  .tcard .no{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.2em; color:var(--ink-soft)}
+  .tcard h3{font-size:1.3rem; font-weight:650; color:var(--ink)}
+  .tcard .q{font-style:italic; color:var(--ink-soft); margin:0; font-size:.95rem}
+  .th-body .tcard{color:var(--ink)}
+  .tcard .modes{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:10px}
+  .tcard .emblem{height:50px; color:var(--tc)}
+  .chip{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.06em; padding:3px 9px; border-radius:99px; background:var(--tsoft,var(--line-soft)); color:var(--ink)}
+  .rules{margin:34px 0 6px; padding:22px 24px; background:var(--card); border:1px solid var(--line); border-radius:6px}
+  .rules h2{font-size:1.2rem; font-weight:650; margin-bottom:6px}
+  .rules p{margin:8px 0; max-width:76ch}
+
+  /* ---------- trail + route views ---------- */
+  .trail{display:none}
+  .trail.open{display:block}
+  .tcrumb{font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; margin-bottom:18px; color:var(--ink-soft)}
+  .tcrumb a{text-decoration:none; color:var(--ink-soft)}
+  .tcrumb a:hover{color:var(--blaze)}
+  .trail .th-kicker{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--tc)}
+  .trail h2{font-size:clamp(1.7rem,4.6vw,2.5rem); font-weight:900; margin-top:6px}
+  .trail .why{font-family:Fraunces,Georgia,serif; font-size:1.12rem; max-width:60ch; margin:14px 0 0; color:var(--ink-soft)}
+  .summit{margin:26px 0 0; display:grid; grid-template-columns:1fr 1fr; gap:8px 26px;
+    border:1.5px solid var(--tc,var(--line)); border-radius:6px; background:var(--card); padding:16px 20px 18px}
+  @media (max-width:680px){.summit{grid-template-columns:1fr}}
+  .summit .s-head{grid-column:1/-1; font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:var(--tc)}
+  .summit .s-item .s-k{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft)}
+  .summit .s-item p{margin:4px 0 0; font-family:Fraunces,Georgia,serif; font-size:1.02rem; line-height:1.5; color:var(--ink)}
+  .mapbox{margin:28px 0 8px; border:1px solid var(--line); border-radius:6px; background:var(--card); overflow-x:auto}
+  .mapbox svg{display:block; min-width:900px; width:100%; height:auto}
+  .mapbox svg a{cursor:pointer}
+  .mapbox svg a:hover text.rt, .mapbox svg a:focus-visible text.rt{fill:var(--blaze); text-decoration:underline}
+  .mapnote{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-soft); margin:8px 2px 0}
+  .waypoints{margin-top:28px; display:grid; gap:12px}
+  .wp{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--tc,var(--line)); border-radius:4px; padding:15px 18px}
+  .wp .wp-k{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--tc)}
+  .wp h3{font-size:1.05rem; font-weight:650; margin:4px 0 6px}
+  .wp p{margin:0; color:var(--ink-soft)}
+  .wp.fork{border-left-color:var(--blaze)} .wp.fork .wp-k{color:var(--blaze)}
+  .wp.pitfall{border-left-color:var(--warn)} .wp.pitfall .wp-k{color:var(--warn)}
+  .wp.vista{border-left-color:var(--vista)} .wp.vista .wp-k{color:var(--vista)}
+  .sources{margin:32px 0 6px; padding:20px 22px; background:var(--card); border:1px solid var(--line); border-radius:6px}
+  .sources h3{font-size:1rem; font-weight:650; margin-bottom:4px}
+  .sources ul{margin:8px 0 0; padding-left:20px}
+  .sources li{margin:6px 0; font-size:.95rem}
+  .sources .why-src{color:var(--ink-soft); font-family:"Atkinson Hyperlegible",var(--font); font-weight:400}
+
+  /* ---------- level 3 route extras ---------- */
+  .youarehere{margin:26px 0 0; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:10px 16px 6px; overflow-x:auto}
+  .youarehere .yah-l{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft)}
+  .youarehere svg{display:block; min-width:560px; width:100%; max-width:720px; height:auto}
+  .profilebox{margin:26px 0 8px; border:1px solid var(--line); border-radius:6px; background:var(--card); overflow-x:auto}
+  .profilebox svg{display:block; min-width:900px; width:100%; height:auto}
+  .predict{margin-top:28px; border:1.5px solid var(--blaze); border-radius:6px; background:var(--card); padding:16px 20px}
+  .predict .pk{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--blaze)}
+  .predict h3{font-size:1.1rem; font-weight:650; margin:4px 0 6px}
+  .predict p{margin:6px 0 0; max-width:74ch; color:var(--ink)}
+  .sec-k{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin:34px 0 0}
+  .sec-h{font-family:Fraunces,Georgia,serif; font-size:1.3rem; font-weight:650; margin:4px 0 0}
+  .ways{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:16px; margin-top:22px}
+  .way{background:var(--card); border:1px solid var(--line); border-top:5px solid var(--tc,var(--line)); border-radius:6px; padding:16px 18px; display:flex; flex-direction:column; gap:9px}
+  .way .wk{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--tc)}
+  .way h4{font-size:1.1rem; font-weight:650}
+  .way p{margin:0; font-size:.92rem; color:var(--ink-soft)}
+  .way p strong{color:var(--ink)}
+  .coach{margin-top:30px; background:var(--hero-ink); border-radius:6px; padding:18px 22px; color:var(--hero-cream)}
+  .coach .ck{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:#9FB2C4}
+  .coach h3{font-size:1.1rem; font-weight:650; margin:4px 0 8px; color:var(--hero-cream)}
+  .coach blockquote{margin:10px 0 0; padding:12px 16px; border-left:3px solid var(--blaze); background:rgba(255,255,255,.05); font-family:"IBM Plex Mono",monospace; font-size:.82rem; line-height:1.55}
+  .coach p{margin:8px 0 0; color:#C9D4DC; font-size:.9rem; max-width:76ch}
+  .coach a{color:#E0A87C}
+  @media (prefers-reduced-motion: reduce){ .tcard{transition:none} .hero .hook p{transition:none} }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="crumb"><a href="home.html">CST286</a> &middot; Trailheads</div>
+
+  <div class="th-body">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero" id="hero">
+    <svg class="contours" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#2A3B4C" stroke-width="1.1">
+        <path d="M-40,340 C160,290 260,380 470,330 S820,250 1240,320"/>
+        <path d="M-40,300 C170,250 300,330 500,285 S840,205 1240,275"/>
+        <path d="M-40,255 C190,210 330,285 540,240 S860,165 1240,230"/>
+        <path d="M-40,205 C220,170 360,235 580,195 S880,120 1240,180"/>
+        <path d="M-40,155 C240,125 400,185 620,150 S900,80 1240,130"/>
+      </g>
+      <g fill="#EFE9D6" opacity=".75">
+        <circle cx="150" cy="70" r="1.6"/><circle cx="340" cy="40" r="1.2"/><circle cx="520" cy="90" r="1.4"/>
+        <circle cx="760" cy="50" r="1.2"/><circle cx="940" cy="95" r="1.6"/><circle cx="1100" cy="45" r="1.2"/>
+        <circle cx="640" cy="30" r="1.0"/><circle cx="240" cy="110" r="1.0"/><circle cx="1040" cy="120" r="1.0"/>
+      </g>
+    </svg>
+    <div class="hero-inner">
+      <div class="kicker">CST 286 &middot; Physics of Computing (with AI) &middot; Fall 2026</div>
+      <h1>Trailheads</h1>
+      <p class="tagline">Physics: go where you haven&rsquo;t gone before.</p>
+      <div class="hook">
+        <span class="lbl">Somewhere on this map</span>
+        <p id="hookline">Why doesn&rsquo;t your phone&rsquo;s compass work when it&rsquo;s next to a speaker?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend" id="legend">
+    <span class="item"><span class="g">&#9670;</span> a fork is a question &mdash; you pick</span>
+    <span class="item"><span class="g">&#9888;</span> pitfall &mdash; where explorers before you got fooled</span>
+    <span class="item"><span class="g">&#10022;</span> vista &mdash; a payoff worth climbing to</span>
+    <span class="item"><span class="g">&#8594;</span> trails cross; there is no required order</span>
+  </div>
+
+  <!-- ===== LEVEL 1 &middot; BASECAMP ===== -->
+  <section class="basecamp" id="basecamp">
+    <h2>Pick a trailhead. Any trailhead.</h2>
+    <p class="lead">Everything you already care about has physics under it &mdash; this map exists to help you find it.
+    Each trail starts from an interest, not from a chapter. You choose where to go at every fork; the map marks what is
+    worth seeing and where people tend to get lost. Ten trails are open. If none of them is yours, say so &mdash; we will
+    find the physics under whatever is.</p>
+
+    <div class="cards">
+      <a class="tcard" href="#trail-phone" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+        <span class="no">TRAIL 01</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><rect x="46" y="4" width="28" height="46" rx="5" fill="none" stroke="var(--tc)" stroke-width="2.5"/><circle cx="60" cy="43" r="2.2" fill="var(--tc)"/><path d="M20 27 C30 12 40 12 46 20 M100 27 C90 42 80 42 74 34" fill="none" stroke="var(--tc)" stroke-width="2" stroke-dasharray="4 4"/></svg>
+        <h3>The Slab of Glass</h3>
+        <p class="q">Your phone knows which way is up, where on Earth it is, and when your finger touches it. How?</p>
+        <div class="modes"><span class="chip">simulate</span><span class="chip">measure</span><span class="chip">build</span></div>
+      </a>
+      <a class="tcard" href="#trail-games" style="--tc:var(--t-games); --tsoft:var(--t-games-soft)">
+        <span class="no">TRAIL 02</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M14 44 Q40 -14 82 30 T112 22" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="5 4"/><circle cx="14" cy="44" r="4" fill="var(--tc)"/><circle cx="82" cy="30" r="3" fill="none" stroke="var(--tc)" stroke-width="2"/></svg>
+        <h3>Game Feel</h3>
+        <p class="q">You can tell a floaty jump from a heavy one in half a second. Your gut already runs a physics engine &mdash; is it right?</p>
+        <div class="modes"><span class="chip">simulate</span><span class="chip">code</span><span class="chip">model</span></div>
+      </a>
+      <a class="tcard" href="#trail-sound" style="--tc:var(--t-sound); --tsoft:var(--t-sound-soft)">
+        <span class="no">TRAIL 03</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M8 27 Q18 6 28 27 T48 27 T68 27 T88 27 T108 27" fill="none" stroke="var(--tc)" stroke-width="2.5"/><path d="M8 27 Q23 -6 38 27 T68 27 T98 27" fill="none" stroke="var(--tc)" stroke-width="1.4" opacity=".5"/></svg>
+        <h3>Signal &amp; Sound</h3>
+        <p class="q">Two speakers play the same note and parts of the room go quiet. Where does the sound go?</p>
+        <div class="modes"><span class="chip">measure</span><span class="chip">simulate</span><span class="chip">hear it</span></div>
+      </a>
+      <a class="tcard" href="#trail-sports" style="--tc:var(--t-sports); --tsoft:var(--t-sports-soft)">
+        <span class="no">TRAIL 04</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M12 46 Q46 -6 84 30" fill="none" stroke="var(--tc)" stroke-width="2.5"/><circle cx="84" cy="30" r="5" fill="none" stroke="var(--tc)" stroke-width="2"/><path d="M96 20 a10 10 0 1 1 0 20" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M6 50 H112" stroke="var(--tc)" stroke-width="1" opacity=".4"/></svg>
+        <h3>The Moving Body</h3>
+        <p class="q">You can feel when a shot leaves your hand right. What is your body actually solving in that half second?</p>
+        <div class="modes"><span class="chip">measure</span><span class="chip">film it</span><span class="chip">model</span></div>
+      </a>
+      <a class="tcard" href="#trail-silicon" style="--tc:var(--t-silicon); --tsoft:var(--t-silicon-soft)">
+        <span class="no">TRAIL 05</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><rect x="40" y="12" width="40" height="30" rx="3" fill="none" stroke="var(--tc)" stroke-width="2.5"/><path d="M40 20 H28 M40 27 H28 M40 34 H28 M80 20 H92 M80 27 H92 M80 34 H92" stroke="var(--tc)" stroke-width="2"/><rect x="52" y="23" width="16" height="8" fill="var(--tc)" opacity=".35"/></svg>
+        <h3>From Sand to CPU</h3>
+        <p class="q">Beach sand, arranged carefully enough, runs everything you use. Where does the thinking actually happen?</p>
+        <div class="modes"><span class="chip">simulate</span><span class="chip">build</span><span class="chip">go down a level</span></div>
+      </a>
+      <a class="tcard" href="#trail-space" style="--tc:var(--t-space); --tsoft:var(--t-space-soft)">
+        <span class="no">TRAIL 06</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><ellipse cx="60" cy="27" rx="46" ry="18" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-dasharray="4 4"/><circle cx="60" cy="27" r="9" fill="none" stroke="var(--tc)" stroke-width="2.5"/><circle cx="106" cy="27" r="3.5" fill="var(--tc)"/></svg>
+        <h3>Rockets &amp; Orbits</h3>
+        <p class="q">Astronauts float &mdash; and it is not because gravity stops up there. So what is it?</p>
+        <div class="modes"><span class="chip">simulate</span><span class="chip">model</span><span class="chip">compute</span></div>
+      </a>
+      <a class="tcard" href="#trail-light" style="--tc:var(--t-light); --tsoft:var(--t-light-soft)">
+        <span class="no">TRAIL 07</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M40 44 L60 8 L80 44 Z" fill="none" stroke="var(--tc)" stroke-width="2.5"/><path d="M8 30 H42" stroke="var(--tc)" stroke-width="2"/><path d="M74 30 L112 18 M75 33 L112 28 M76 36 L112 38" stroke="var(--tc)" stroke-width="1.8"/></svg>
+        <h3>Cameras &amp; Light</h3>
+        <p class="q">Why doesn&rsquo;t the photo look like what you saw?</p>
+        <div class="modes"><span class="chip">measure</span><span class="chip">simulate</span><span class="chip">build</span></div>
+      </a>
+      <a class="tcard" href="#trail-energy" style="--tc:var(--t-energy); --tsoft:var(--t-energy-soft)">
+        <span class="no">TRAIL 08</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><rect x="20" y="14" width="66" height="26" rx="4" fill="none" stroke="var(--tc)" stroke-width="2.5"/><rect x="86" y="22" width="8" height="10" rx="2" fill="var(--tc)"/><rect x="26" y="20" width="16" height="14" fill="var(--tc)" opacity=".55"/><rect x="46" y="20" width="16" height="14" fill="var(--tc)" opacity=".25"/></svg>
+        <h3>Energy &amp; What It Costs</h3>
+        <p class="q">Your battery is worse than it was a year ago, and a data centre drinks a river. Same physics, same receipt.</p>
+        <div class="modes"><span class="chip">measure</span><span class="chip">estimate</span><span class="chip">argue with numbers</span></div>
+      </a>
+      <a class="tcard" href="#trail-weird" style="--tc:var(--t-weird); --tsoft:var(--t-weird-soft)">
+        <span class="no">TRAIL 09</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M30 6 V48" stroke="var(--tc)" stroke-width="2.5"/><path d="M52 6 V20 M52 34 V48" stroke="var(--tc)" stroke-width="2.5"/><path d="M74 12 h8 M74 20 h14 M74 27 h20 M74 34 h14 M74 42 h8" stroke="var(--tc)" stroke-width="2" opacity=".8"/></svg>
+        <h3>The Weird Stuff</h3>
+        <p class="q">Some of this is genuinely strange &mdash; and the strangest parts are the ones that turned into technology.</p>
+        <div class="modes"><span class="chip">simulate</span><span class="chip">compute</span><span class="chip">argue</span></div>
+      </a>
+      <a class="tcard" href="#trail-method" style="--tc:var(--t-method); --tsoft:var(--t-method-soft)">
+        <span class="no">TRAIL 10</span>
+        <svg class="emblem" viewBox="0 0 120 54" aria-hidden="true"><path d="M12 44 L34 30 L52 36 L74 16 L102 10" fill="none" stroke="var(--tc)" stroke-width="2"/><circle cx="34" cy="30" r="3" fill="var(--tc)"/><circle cx="52" cy="36" r="3" fill="var(--tc)"/><circle cx="74" cy="16" r="3" fill="var(--tc)"/><path d="M12 48 H108" stroke="var(--tc)" stroke-width="1" opacity=".4"/><path d="M52 36 V26" stroke="var(--tc)" stroke-width="1.4" stroke-dasharray="2 2"/></svg>
+        <h3>How Physics Knows</h3>
+        <p class="q">Someone tells you a study proves something. How would you actually check?</p>
+        <div class="modes"><span class="chip">design</span><span class="chip">test</span><span class="chip">defend</span></div>
+      </a>
+    </div>
+
+    <div class="rules">
+      <h2>How to read this map</h2>
+      <p>This is a territory, not a syllabus. The same physics turns up on several trails, so no trail is
+      &ldquo;the momentum unit&rdquo; &mdash; momentum is terrain you cross wherever you happen to be walking. Forks are
+      questions only you can answer. Pitfall markers are honest signs about where learning tends to go wrong: watching a
+      video feels like learning, and usually is not, unless you predicted first. Vistas are the payoffs &mdash; the moments
+      the terrain suddenly makes sense from above.</p>
+      <p>Every trail says up front what you will be able to answer and what you will be able to predict once you have
+      walked it. Those two promises are the point of the trail; everything between here and there is choice.</p>
+      <p>You will not walk alone: your <a href="setup-ai-dojo.html">CST286 AI Dojo</a> carries this map, its markers and
+      its sources. Ask it where you are, what is nearby, or for the story behind any marker &mdash; it will question you
+      before it answers you. That is its job.</p>
+    </div>
+  </section>
+
+  <!-- ===== LEVEL 2 &middot; TRAILS ===== -->
+
+<!-- ================= TRAIL 01 &middot; The Slab of Glass ================= -->
+<section class="trail" id="trail-phone" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 01 &middot; The Slab of Glass</div>
+    <h2>Your phone is a physics lab that fits in your pocket</h2>
+    <p class="why">Inside the glass: at least five instruments &mdash; accelerometer, gyroscope, magnetometer, barometer, microphone &mdash; each one a physics idea made small enough to carry. On this trail you use the phone to study the phone.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a slab of glass know it&rsquo;s moving, where it is, and when you touch it &mdash; and why does every one of those answers come down to a force, a field, or a wave?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>What your accelerometer will read, second by second, on an elevator ride you haven&rsquo;t taken yet &mdash; and how many steps your own counter will report on a walk it has never seen.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for The Slab of Glass: a trailhead leads to a fork with routes for how it knows it&#8217;s moving and how it feels your finger and why the battery dies and how it knows where it is, with pitfall and vista markers">
+      <path d="M60,320 C140,300 180,250 250,235 C320,220 350,205 415,190" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,150 560,120 650,105 C720,93 780,80 840,60" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,185 590,190 680,200 C740,207 790,215 845,230" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C480,230 540,265 620,285 C690,302 750,310 840,318" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C450,140 470,100 500,60 C520,35 540,25 570,18" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">hold your phone</text>
+      <circle cx="250" cy="235" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="250" y="264" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first measurement</text>
+      <text x="250" y="279" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">phyphox: ride an elevator</text>
+      <path d="M320,205 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="330" y="172" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; teardown videos &ne; understanding</text>
+      <rect x="404" y="179" width="22" height="22" transform="rotate(45 415 190)" fill="var(--blaze)"/>
+      <text x="415" y="230" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT PULLS YOU?</text>
+      <a href="#route-phone-motion"><text class="rt" x="655" y="88" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">how it knows it&#8217;s moving &#8599;</text>
+      <text x="655" y="134" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">accelerometer &middot; gyroscope &rarr; forces &amp; spin</text></a>
+      <circle cx="840" cy="60" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="42" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; step-counter, from scratch</text>
+      <a href="#route-phone-touch"><text class="rt" x="680" y="182" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">how it feels your finger &#8599;</text>
+      <text x="680" y="222" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">charge &middot; capacitance &rarr; fields</text></a>
+      <circle cx="845" cy="230" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="257" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; why gloves don&#8217;t work</text>
+      <a href="#route-phone-battery"><text class="rt" x="620" y="270" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">why the battery dies &#8599;</text>
+      <text x="620" y="305" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">energy &middot; potential &middot; Ohm &rarr; circuits</text></a>
+      <path d="M830,326 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="345" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; energy is not power</text>
+      <a href="#route-phone-location"><text class="rt" x="592" y="14" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">how it knows where it is &#8599;</text>
+      <text x="592" y="31" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">GPS &middot; waves &middot; timing &rarr; relativity, truly</text></a>
+      <circle cx="570" cy="18" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+    </svg>
+  </div>
+  <p class="mapnote">Click a route name on the map to walk it.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Hold your phone. Ask it a question it can answer.</h3>
+      <p>Ten minutes with a sensor you already own, before any theory.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What pulls you?</h3>
+      <p>Four routes leave this junction. They cross again later &mdash; starting on one loses you nothing. Walk one: <a href="#route-phone-motion">how it knows it&#8217;s moving</a> &middot; <a href="#route-phone-touch">how it feels your finger</a> &middot; <a href="#route-phone-battery">why the battery dies</a> &middot; <a href="#route-phone-location">how it knows where it is</a>.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Teardown videos feel like learning</h3>
+      <p>If you can&rsquo;t change a number and predict what happens, you&rsquo;ve watched &mdash; not learned. Predict first, then watch.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>Your own step-counter</h3>
+      <p>From raw accelerometer data to a working step-counter you wrote yourself &mdash; the moment the sensor stops being magic.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phyphox.org/">phyphox</a> (RWTH Aachen) &mdash; turns the phone&rsquo;s sensors into instruments; the trail&rsquo;s main tool. Tool paper: <a href="https://iopscience.iop.org/article/10.1088/1361-6552/aac05e">Staacks et al., <em>Physics Education</em> 53 (2018)</a>.</li>
+      <li><a href="https://phet.colorado.edu/">PhET Interactive Simulations</a> (University of Colorado Boulder) &mdash; research-based sims for forces, circuits, capacitance; <a href="https://phet.colorado.edu/en/research">research base</a>.</li>
+      <li><a href="https://www.falstad.com/circuit/">Falstad Circuit Simulator</a> &mdash; animated current, no account; the touch and battery routes&rsquo; sandbox.</li>
+      <li><a href="https://www.youtube.com/@BranchEducation">Branch Education</a> &mdash; photorealistic device teardowns (touchscreens, batteries, GPS). Watch <em>after</em> predicting.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; the careful version of any idea met on the trail, free.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 02 &middot; Game Feel ================= -->
+<section class="trail" id="trail-games" style="--tc:var(--t-games); --tsoft:var(--t-games-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 02 &middot; Game Feel</div>
+    <h2>Your gut runs a physics engine. Time to read its source.</h2>
+    <p class="why">Every game you&rsquo;ve ever judged as &ldquo;floaty&rdquo; or &ldquo;tight&rdquo; was a physics model with different constants. On this trail you write those models yourself &mdash; twenty lines at a time &mdash; and find out why the real world&rsquo;s constants feel right.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a physics engine decide where everything goes next frame &mdash; and why does changing one constant change how the whole game feels?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>Where your projectile will land before you run the code &mdash; and what doubling gravity does to your jump&rsquo;s height and hang time, in numbers you defend.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for Game Feel: a trailhead leads to a fork with routes for jumps and arcs and collisions and knockback and spin and handling, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">a jump that feels wrong</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first model</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">Glowscript: ball + gravity, 15 lines</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; running code you didn&#8217;t predict</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT DO YOU WANT TO GET RIGHT?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">jumps &amp; arcs</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">gravity &middot; velocity &middot; drag</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; tune a jump till it feels right</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">collisions &amp; knockback</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">momentum &middot; elasticity</text>
+      <circle cx="850" cy="228" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; why heavy hits feel heavy</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">spin &amp; handling</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">torque &middot; angular momentum</text>
+      <path d="M835,330 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; time-step traps</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Load a game with a floaty jump. Say why it&rsquo;s wrong &mdash; precisely.</h3>
+      <p>Then build the smallest model that reproduces the feeling.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What do you want to get right?</h3>
+      <p>Three routes. Each one ends with a constant you tuned and can defend.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Running code you didn&rsquo;t predict</h3>
+      <p>Before every run: write down what the trajectory will look like. The gap between your sketch and the screen is where the physics lives.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>The jump that finally feels right</h3>
+      <p>The constants that feel good are close to Earth&rsquo;s &mdash; and now you know why, in numbers you chose.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://www.glowscript.org/">GlowScript / Web VPython</a> &mdash; write 3D physics in the browser; also via <a href="https://trinket.io/">trinket.io</a>.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/projectile-motion">PhET: Projectile Motion</a> and <a href="https://phet.colorado.edu/en/simulations/collision-lab">Collision Lab</a> &mdash; the clean-world versions to test intuitions against.</li>
+      <li><a href="https://www.myphysicslab.com/">myPhysicsLab</a> &mdash; open-source interactive simulations with the equations shown beside them.</li>
+      <li><a href="http://www.algodoo.com/">Algodoo</a> &mdash; free 2D physics sandbox; force vectors drawn live.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; kinematics, momentum and rotation chapters, free.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 03 &middot; Signal &amp; Sound ================= -->
+<section class="trail" id="trail-sound" style="--tc:var(--t-sound); --tsoft:var(--t-sound-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 03 &middot; Signal &amp; Sound</div>
+    <h2>Everything you hear is waves doing arithmetic</h2>
+    <p class="why">A guitar string playing two notes at once, a room with dead spots, an equalizer moving &ldquo;the bass&rdquo; &mdash; one idea underneath: waves add. This trail is the most audible physics on the map, and it runs straight toward signal processing.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does one vibrating string make many notes at once &mdash; and why can two speakers playing the same note silence each other?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>Which frequencies your spectrum will show before you sing the note &mdash; and where the quiet spots in a room will fall, given the tone and the distance between the speakers.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for Signal &amp; Sound: a trailhead leads to a fork with routes for instruments and notes and rooms and dead spots and the equalizer route, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">see your own voice</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first measurement</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">phyphox spectrum: sing one note</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; pitch is not loudness</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT DO YOU WANT TO HEAR?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">instruments &amp; notes</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">standing waves &middot; resonance &middot; harmonics</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; why the octave sounds &#8216;the same&#8217;</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">rooms &amp; dead spots</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">interference &middot; reflection</text>
+      <circle cx="850" cy="228" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; measure the speed of sound</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">the equalizer route</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">Fourier &middot; sampling &rarr; signal processing</text>
+      <path d="M835,330 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; pretty spectrograms &ne; understanding</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Open a spectrum view and sing one note. Count the peaks.</h3>
+      <p>Two minutes, no theory, and the question that opens the whole trail.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What do you want to hear?</h3>
+      <p>Three routes; the equalizer route runs furthest into CS &mdash; Fourier is the math your field runs on.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Pretty spectrograms without a prediction</h3>
+      <p>Before you look: sketch what a pure note should look like. One peak? Several? Then look, and explain the difference.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>The speed of sound, measured with two phones</h3>
+      <p>A number physicists chased for centuries, measured in your hallway before lunch.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phyphox.org/">phyphox</a> &mdash; audio spectrum, oscilloscope, and the two-phone <a href="https://phyphox.org/experiment/speed-of-sound/">speed-of-sound experiment</a>.</li>
+      <li><a href="https://musiclab.chromeexperiments.com/">Chrome Music Lab</a> &mdash; spectrograms, harmonics, strings; the friendliest first touch.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/fourier-making-waves">PhET: Fourier &mdash; Making Waves</a> and <a href="https://phet.colorado.edu/en/simulations/waves-intro">Waves Intro</a>.</li>
+      <li><a href="https://www.falstad.com/mathphysics.html">Falstad math &amp; physics applets</a> &mdash; ripple tank, Fourier, loaded string.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; waves and sound chapters, free.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 04 &middot; The Moving Body ================= -->
+<section class="trail" id="trail-sports" style="--tc:var(--t-sports); --tsoft:var(--t-sports-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 04 &middot; The Moving Body</div>
+    <h2>Your body solves equations it could never write down</h2>
+    <p class="why">A jump, a throw, a pedal stroke &mdash; each is a force problem your muscles solve in milliseconds and your mouth can&rsquo;t explain. Film it and the solution becomes visible: position, velocity and acceleration, on one graph, from your own footage.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a spinning ball curve, why does a crouched start make you faster, and why is the physics of a helmet the same as the physics of a car&rsquo;s crumple zone?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>Where your own shot will land, from the release you filmed &mdash; and roughly how much force a landing puts through your knees, from the video alone.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for The Moving Body: a trailhead leads to a fork with routes for throwing and shooting and strength and the lift and impacts and staying whole, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">film one rep</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first measurement</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">Tracker: click through your own frames</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; noisy data looks like broken physics</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT DO YOU WANT TO GET BETTER AT?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">throwing &amp; shooting</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">projectile motion &middot; spin (Magnus effect)</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; call your shot before it lands</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">strength &amp; the lift</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">force &middot; torque &middot; levers &middot; centre of mass</text>
+      <circle cx="850" cy="228" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; the physics of your own technique</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">impacts &amp; staying whole</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">momentum &middot; impulse</text>
+      <path d="M835,330 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; force and impulse are not the same</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Film one rep in slow motion. Watch it back frame by frame.</h3>
+      <p>Your phone shoots 240 fps. That is a lab-grade instrument you already carry.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What do you want to get better at?</h3>
+      <p>Three routes. All of them end with your own footage turned into numbers.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Noisy data looks like broken physics</h3>
+      <p>Your video will not match the clean simulation &mdash; and the gap is the interesting part: air resistance, spin and measurement error, each of them nameable. Don&rsquo;t discard the difference; explain it.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>Your own motion, modelled</h3>
+      <p>Two films of the same movement &mdash; one from week 1, one from later &mdash; with a model in between that says what changed and why.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://opensourcephysics.github.io/tracker-website/">Tracker</a> (Open Source Physics) &mdash; turn video into position-time data; also <a href="https://opensourcephysics.github.io/tracker-online/">Tracker Online</a>, no install.</li>
+      <li><a href="https://phyphox.org/">phyphox</a> &mdash; strap the accelerometer to the moving thing and record the rep.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/projectile-motion">PhET: Projectile Motion</a> &mdash; the airless comparison case, with drag you can switch on.</li>
+      <li><a href="https://www.youtube.com/@physicsgirl">Physics Girl</a> and <a href="https://www.youtube.com/@SmarterEveryDay">Smarter Every Day</a> &mdash; slow-motion sports physics done carefully.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; motion in two dimensions, linear momentum, statics and torque.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 05 &middot; From Sand to CPU ================= -->
+<section class="trail" id="trail-silicon" style="--tc:var(--t-silicon); --tsoft:var(--t-silicon-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 05 &middot; From Sand to CPU</div>
+    <h2>Every idea you have ever had on a computer was electrons in silicon</h2>
+    <p class="why">There is no magic layer. Charge moves, switches flip, numbers add &mdash; and somewhere in that stack, adding numbers becomes running code. This trail goes down until it hits physics, then climbs back up carrying what it found.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a transistor &mdash; a switch with no moving parts &mdash; turn voltage into logic, and why does that make heat, not cleverness, the real limit on computing?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>What your adder circuit will output before you run it &mdash; and roughly how much power a chip burns at a given clock speed, with your assumptions written down.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for From Sand to CPU: a trailhead leads to a fork with routes for build things that sense the world and how logic becomes physical and why chips get hot and how memory remembers, with pitfall and vista markers">
+      <path d="M60,320 C140,300 180,250 250,235 C320,220 350,205 415,190" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,150 560,120 650,105 C720,93 780,80 840,60" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,185 590,190 680,200 C740,207 790,215 845,230" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C480,230 540,265 620,285 C690,302 750,310 840,318" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C450,140 470,100 500,60 C520,35 540,25 570,18" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">open something and look</text>
+      <circle cx="250" cy="235" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="250" y="264" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first measurement</text>
+      <text x="250" y="279" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">Falstad: watch the current move</text>
+      <path d="M320,205 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="330" y="172" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; wiring it right is not understanding it</text>
+      <rect x="404" y="179" width="22" height="22" transform="rotate(45 415 190)" fill="var(--blaze)"/>
+      <text x="415" y="230" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; HOW FAR DOWN DO YOU WANT TO GO?</text>
+      <text class="rt" x="655" y="88" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">build things that sense the world</text>
+      <text x="655" y="134" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">current &middot; voltage &middot; sensors</text>
+      <circle cx="840" cy="60" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="42" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; a circuit that reacts to you</text>
+      <text class="rt" x="680" y="182" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">how logic becomes physical</text>
+      <text x="680" y="222" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">transistors &middot; gates &middot; adders</text>
+      <circle cx="845" cy="230" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="257" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; a computer built up from NAND</text>
+      <text class="rt" x="620" y="270" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">why chips get hot</text>
+      <text x="620" y="305" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">energy &middot; power &middot; thermodynamics</text>
+      <path d="M830,326 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="345" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; &#8216;faster&#8217; always means &#8216;hotter&#8217;</text>
+      <text class="rt" x="592" y="14" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">how memory remembers</text>
+      <text x="592" y="31" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">capacitance &middot; magnetism &rarr; storage</text>
+      <circle cx="570" cy="18" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Open something &mdash; or a photograph of its board &mdash; and find one component you can name.</h3>
+      <p>Then find out what it does by making one in a simulator.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>How far down do you want to go?</h3>
+      <p>Four routes down the stack. You can stop at any level and still have gone deeper than most people ever do.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Wiring it right is not understanding it</h3>
+      <p>A circuit copied from a diagram works and teaches nothing. The test: can you say what the charge is doing, and what would happen if you doubled that resistor?</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>A working computer you built from a single kind of gate</h3>
+      <p>NAND to adder to something that computes &mdash; and the sentence you can now say out loud about how a machine adds.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://www.falstad.com/circuit/">Falstad Circuit Simulator</a> &mdash; animated current, no account needed.</li>
+      <li><a href="https://nandgame.com/">NANDgame</a> &mdash; build a working computer from NAND gates up, free in the browser; the long version is <a href="https://www.nand2tetris.org/">Nand2Tetris</a>.</li>
+      <li><a href="https://wokwi.com/">Wokwi</a> and <a href="https://www.tinkercad.com/circuits">Tinkercad Circuits</a> &mdash; virtual breadboards with Arduino, ESP32 and Raspberry Pi Pico.</li>
+      <li><a href="https://www.raspberrypi.com/documentation/microcontrollers/">Raspberry Pi Pico documentation</a> &mdash; real hardware for about the price of lunch, MicroPython-friendly.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc">PhET: Circuit Construction Kit (DC)</a> &mdash; the safe place to break things first.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; electric current, resistance and Ohm&rsquo;s law.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 06 &middot; Rockets &amp; Orbits ================= -->
+<section class="trail" id="trail-space" style="--tc:var(--t-space); --tsoft:var(--t-space-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 06 &middot; Rockets &amp; Orbits</div>
+    <h2>An orbit is a fall that keeps missing the Earth</h2>
+    <p class="why">Newton worked it out with an imaginary cannon on an impossibly tall mountain: fire fast enough and the ground curves away as fast as you drop. The same arithmetic lands boosters upright today, and it is within reach of fifteen lines of code.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a rocket push against nothing and still accelerate, and why does a satellite in orbit need no engine at all?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>How fast something must travel to stay in orbit at a given altitude &mdash; and what fraction of a rocket has to be fuel to get there.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for Rockets &amp; Orbits: a trailhead leads to a fork with routes for getting off the ground and staying up there and finding worlds we cannot see, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">watch a launch and a landing</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first model</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">Glowscript: a planet, a moon, 15 lines</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; orbit diagrams lie about scale</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT ARE YOU CHASING?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">getting off the ground</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">momentum conservation &middot; the rocket equation</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; the astronaut-and-wrench problem, scaled up</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">staying up there</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">gravity &middot; circular motion</text>
+      <path d="M840,236 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; gravity does not end in space</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">finding worlds we cannot see</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">light &middot; Doppler &middot; real data</text>
+      <circle cx="845" cy="322" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; detect a planet in someone else&#8217;s data</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Watch a launch and a landing back to back, and say what is conserved.</h3>
+      <p>The answer is in the exhaust, and it is the same answer as an astronaut throwing a wrench.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What are you chasing?</h3>
+      <p>Three routes. The first is momentum in disguise; the second is gravity; the third is how we know anything about places we cannot visit.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Gravity does not end in space</h3>
+      <p>At the space station&rsquo;s altitude gravity is about 90% of what you feel now. Floating is free fall, not the absence of gravity &mdash; and until that sentence feels obvious, the rest of the trail will not.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>A working orbit you wrote yourself</h3>
+      <p>Change the launch speed and watch the orbit open into an escape &mdash; the moment the mathematics and the picture become one thing.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phet.colorado.edu/en/simulations/gravity-and-orbits">PhET: Gravity and Orbits</a> &mdash; gravity, orbits and scale you can switch on and off.</li>
+      <li><a href="https://www.glowscript.org/">GlowScript / Web VPython</a> &mdash; orbital motion is what VPython was built for.</li>
+      <li><a href="https://science.nasa.gov/exoplanets/">NASA: Exoplanets</a> &mdash; how planets around other stars are actually detected, with the data.</li>
+      <li><a href="https://www.youtube.com/@veritasium">Veritasium</a> &mdash; including the &ldquo;why astronauts float&rdquo; misconception, taken seriously.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; uniform circular motion and gravitation.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 07 &middot; Cameras &amp; Light ================= -->
+<section class="trail" id="trail-light" style="--tc:var(--t-light); --tsoft:var(--t-light-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 07 &middot; Cameras &amp; Light</div>
+    <h2>Light is the strangest thing you look at every day</h2>
+    <p class="why">Your eye, your camera and the evening sky are all running the same physics &mdash; bending, scattering, and waves adding up. Follow it far enough and light stops behaving like anything you have intuition for, while still taking your photograph.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does a lens decide what is in focus, why is the sky blue and the sunset red, and why does light passing through two slits refuse to behave like a particle?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>Where your image will form and how large it will be, before you take the photo &mdash; and the width of a human hair from the pattern it casts in a laser beam.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for Cameras &amp; Light: a trailhead leads to a fork with routes for focus, blur and bokeh and colour, screens and sunsets and what light actually is and fibre, signals and the internet, with pitfall and vista markers">
+      <path d="M60,320 C140,300 180,250 250,235 C320,220 350,205 415,190" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,150 560,120 650,105 C720,93 780,80 840,60" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C500,185 590,190 680,200 C740,207 790,215 845,230" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C480,230 540,265 620,285 C690,302 750,310 840,318" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M415,190 C450,140 470,100 500,60 C520,35 540,25 570,18" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">a laser pointer and a strand of hair</text>
+      <circle cx="250" cy="235" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="250" y="264" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first measurement</text>
+      <text x="250" y="279" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">PhET Bending Light: predict the bend</text>
+      <path d="M320,205 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="330" y="172" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; ray diagrams as ritual</text>
+      <rect x="404" y="179" width="22" height="22" transform="rotate(45 415 190)" fill="var(--blaze)"/>
+      <text x="415" y="230" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT DO YOU WANT TO SEE?</text>
+      <text class="rt" x="655" y="88" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">focus, blur and bokeh</text>
+      <text x="655" y="134" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">geometric optics &middot; lenses &middot; aperture</text>
+      <circle cx="840" cy="60" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="42" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; predict your portrait&#8217;s blur</text>
+      <text class="rt" x="680" y="182" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">colour, screens and sunsets</text>
+      <text x="680" y="222" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">spectra &middot; scattering &middot; RGB</text>
+      <path d="M835,238 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="257" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; mixing paint is not mixing light</text>
+      <text class="rt" x="620" y="270" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">what light actually is</text>
+      <text x="620" y="305" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">waves vs photons &middot; the double slit</text>
+      <circle cx="840" cy="318" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="345" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; measure a hair with a laser</text>
+      <text class="rt" x="592" y="14" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">fibre, signals and the internet</text>
+      <text x="592" y="31" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">total internal reflection &rarr; networks</text>
+      <circle cx="570" cy="18" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Shine a laser pointer past a single strand of hair onto a wall.</h3>
+      <p>The stripes you get should not be possible if light travels in straight lines. They are the trail.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What do you want to see?</h3>
+      <p>Four routes, and the cheapest equipment on the whole map.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Ray diagrams as ritual</h3>
+      <p>Drawing the three standard rays correctly and predicting nothing is a common way to pass optics without learning it. Always answer the question &ldquo;where will the image be, and how big?&rdquo; before you draw.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>The width of a hair, from a pattern on a wall</h3>
+      <p>No microscope, no ruler fine enough &mdash; just wave arithmetic and a $2 laser. Then explain why the method works at all.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phet.colorado.edu/en/simulations/bending-light">PhET: Bending Light</a>, <a href="https://phet.colorado.edu/en/simulations/geometric-optics">Geometric Optics</a> and <a href="https://phet.colorado.edu/en/simulations/color-vision">Color Vision</a>.</li>
+      <li><a href="https://phyphox.org/">phyphox</a> &mdash; the phone&rsquo;s light sensor, for inverse-square and brightness measurements.</li>
+      <li><a href="https://www.youtube.com/@3blue1brown">3Blue1Brown</a> &mdash; visual treatments of light, waves and why the mathematics looks the way it does.</li>
+      <li><a href="http://hyperphysics.phy-astr.gsu.edu/hbase/geoopt/lenseq.html">HyperPhysics: lens equation</a> (Georgia State) &mdash; the concept-map view of optics.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; geometric optics, wave optics, vision and optical instruments.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 08 &middot; Energy &amp; What It Costs ================= -->
+<section class="trail" id="trail-energy" style="--tc:var(--t-energy); --tsoft:var(--t-energy-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 08 &middot; Energy &amp; What It Costs</div>
+    <h2>Energy is the only currency the universe actually accepts</h2>
+    <p class="why">Every phone charge, every mile driven, every model trained is an energy conversion with a receipt attached. Learn to read the receipt and a surprising number of arguments get shorter &mdash; including the ones about your own field.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does energy move from a battery to a screen without ever being created or destroyed &mdash; and why does every conversion leave heat behind?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>What a device costs to run for a year, in kilowatt-hours and dollars &mdash; and how far an electric car goes on the energy in a gallon of petrol, with your assumptions stated.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for Energy &amp; What It Costs: a trailhead leads to a fork with routes for batteries, and why they age and moving people and things and the machines that think, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">find the watt rating on something you own</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first estimate</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">one device, one year, on paper</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; energy is not power</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT DO YOU WANT TO ACCOUNT FOR?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">batteries, and why they age</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">charge &middot; potential &middot; chemistry&#8217;s edge</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; explain every number on your battery screen</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">moving people and things</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">conversion chains &middot; efficiency</text>
+      <path d="M840,236 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; efficiency of what, exactly?</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">the machines that think</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">power &middot; heat &middot; cooling &rarr; data centres</text>
+      <circle cx="845" cy="322" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; cost one model training run</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Find the watt rating printed on a charger, a kettle or a laptop.</h3>
+      <p>One number, one year, one multiplication &mdash; and you have your first energy estimate.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What do you want to account for?</h3>
+      <p>Three routes, all of which end in a number you can defend in an argument.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Energy is not power</h3>
+      <p>Watts are a rate; watt-hours are an amount. Almost every confused energy claim in public is this one mistake wearing a suit. Catch yourself using them interchangeably and stop.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>The cost of something everybody argues about</h3>
+      <p>An estimate of your own, with every assumption written down and each one attackable &mdash; which is what makes it worth more than a headline.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phet.colorado.edu/en/simulations/energy-skate-park">PhET: Energy Skate Park</a> and <a href="https://phet.colorado.edu/en/simulations/energy-forms-and-changes">Energy Forms and Changes</a>.</li>
+      <li><a href="https://www.eia.gov/energyexplained/">U.S. Energy Information Administration &mdash; Energy Explained</a> &mdash; real numbers for real comparisons.</li>
+      <li><a href="https://ed.ted.com/lessons/why-batteries-die-adam-jacobson">TED-Ed: why batteries die</a> &mdash; short, and already used in this course&rsquo;s earlier version.</li>
+      <li><a href="https://phyphox.org/">phyphox</a> &mdash; cooling curves and temperature-style measurements you can run at home.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; work and energy, thermodynamics, electric power.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 09 &middot; The Weird Stuff ================= -->
+<section class="trail" id="trail-weird" style="--tc:var(--t-weird); --tsoft:var(--t-weird-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 09 &middot; The Weird Stuff</div>
+    <h2>The universe does not owe you an intuition</h2>
+    <p class="why">Time runs slower for a moving clock. A single particle goes through both slits. Neither is a metaphor: both are measured, and both are engineering constraints inside things you already use. Come for the strangeness &mdash; the foundations you need to go deeper are on the other trails, and this one will tell you which.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How can two particles stay correlated with no signal passing between them, and why does the GPS in your pocket stop working without relativity?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>How far your GPS position would drift in a single day if nobody corrected for relativity &mdash; in kilometres, from the clock rates.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for The Weird Stuff: a trailhead leads to a fork with routes for computers that use interference and time that is not the same for everyone and is any of this actually real, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">watch the double slit, then argue with it</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first encounter</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">a simulation you cannot explain away</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; pop-quantum word salad</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHICH STRANGENESS?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">computers that use interference</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">superposition &middot; qubits</text>
+      <path d="M835,63 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; the wave math is on the sound trail</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">time that is not the same for everyone</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">special &amp; general relativity</text>
+      <circle cx="850" cy="228" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; compute the GPS correction</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">is any of this actually real</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">the experiments, Young to Aspect</text>
+      <circle cx="845" cy="322" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="347" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; say what was measured, not what it means</text>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Watch the double slit result, then try to explain it with particles. Fail honestly.</h3>
+      <p>The failure is the point &mdash; write down exactly which assumption broke.</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>Which strangeness?</h3>
+      <p>Three routes. This is the one trail on the map that will send you to another trail for the tools &mdash; and it says so up front.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>Pop-quantum word salad</h3>
+      <p>This trail has the worst signal-to-noise on the internet: consciousness collapsing wavefunctions, &ldquo;quantum&rdquo; as a synonym for mysterious. Stick to the sources here, and demand of any claim: what was measured?</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>Relativity, in your pocket, in numbers</h3>
+      <p>The GPS clock correction is a real calculation with a real answer &mdash; and once you have done it, relativity stops being a story about twins and becomes engineering.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://phet.colorado.edu/en/simulations/filter?subjects=quantum-phenomena&amp;type=html">PhET quantum simulations</a> &mdash; including the double slit and quantum-measurement sims.</li>
+      <li><a href="http://gamelab.mit.edu/games/a-slower-speed-of-light/">A Slower Speed of Light</a> (MIT Game Lab) &mdash; walk through a world where light crawls; free.</li>
+      <li><a href="https://www.nobelprize.org/prizes/physics/2022/summary/">Nobel Prize in Physics 2022</a> &mdash; entanglement experiments, described by the people who judged them.</li>
+      <li><a href="https://www.feynmanlectures.caltech.edu/">The Feynman Lectures on Physics</a> &mdash; free online; Volume III opens with the double slit.</li>
+      <li><a href="https://www.youtube.com/@pbsspacetime">PBS Space Time</a> and <a href="https://www.youtube.com/@3blue1brown">3Blue1Brown</a> &mdash; the two channels that survive scrutiny on this material.</li>
+    </ul>
+  </section>
+</section>
+
+<!-- ================= TRAIL 10 &middot; How Physics Knows ================= -->
+<section class="trail" id="trail-method" style="--tc:var(--t-method); --tsoft:var(--t-method-soft)">
+  <nav class="tcrumb"><a href="#basecamp">&larr; Basecamp</a></nav>
+  <header>
+    <div class="th-kicker">Trail 10 &middot; How Physics Knows</div>
+    <h2>The method is the actual invention</h2>
+    <p class="why">Physics is not a pile of facts; it is a way of arguing with evidence until one explanation is left standing. This trail runs alongside every other trail on the map &mdash; take it when you want to know why anyone believes what your trail just told you.</p>
+  </header>
+
+  <div class="summit">
+    <span class="s-head">&#10022; At the end of this trail</span>
+    <div class="s-item">
+      <span class="s-k">You will be able to answer &mdash; how &amp; why</span>
+      <p>How does an experiment rule an explanation <em>out</em>, and why will a physicist trust a measurement they have never repeated themselves?</p>
+    </div>
+    <div class="s-item">
+      <span class="s-k">You will be able to predict &mdash; with numbers</span>
+      <p>What your data should look like if your explanation is right &mdash; and, before you collect any, what result would force you to abandon it.</p>
+    </div>
+  </div>
+
+  <div class="mapbox">
+    <svg viewBox="0 0 940 380" role="img" aria-label="Trail map for How Physics Knows: a trailhead leads to a fork with routes for your own explanation and somebody else&#8217;s paper and the history of getting it wrong, with pitfall and vista markers">
+      <path d="M60,320 C150,305 210,270 280,240 C330,218 360,205 420,195" fill="none" stroke="var(--tc)" stroke-width="3" stroke-dasharray="7 6"/>
+      <path d="M420,195 C500,150 570,115 660,95 C730,80 780,70 845,55" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C510,195 600,200 690,210 C750,217 800,222 850,228" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <path d="M420,195 C480,240 550,275 630,295 C700,312 760,318 845,322" fill="none" stroke="var(--tc)" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="60" cy="320" r="9" fill="var(--tc)"/>
+      <text x="60" y="352" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">TRAILHEAD</text>
+      <text x="60" y="368" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink-soft)">pick one claim from any trail</text>
+      <circle cx="280" cy="240" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="280" y="269" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">first cycle</text>
+      <text x="280" y="284" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">observe &rarr; pattern &rarr; explanation &rarr; test</text>
+      <path d="M330,208 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="340" y="175" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; &#8216;research&#8217; that never touches data</text>
+      <rect x="409" y="184" width="22" height="22" transform="rotate(45 420 195)" fill="var(--blaze)"/>
+      <text x="420" y="235" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--blaze)" font-weight="600">&#9670; WHAT ARE YOU TESTING?</text>
+      <text class="rt" x="660" y="78" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">your own explanation</text>
+      <text x="660" y="115" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">design an experiment that could fail</text>
+      <circle cx="845" cy="55" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="930" y="37" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; a test whose result you cannot predict</text>
+      <text class="rt" x="690" y="192" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">somebody else&#8217;s paper</text>
+      <text x="690" y="232" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">hypothesis &middot; variables &middot; controls</text>
+      <path d="M840,236 l10,-17 l10,17 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="930" y="255" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; an AI summary is not a source</text>
+      <text class="rt" x="630" y="280" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="12" fill="var(--ink)">the history of getting it wrong</text>
+      <text x="630" y="315" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">how good ideas were overturned</text>
+      <circle cx="845" cy="322" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+    </svg>
+  </div>
+  <p class="mapnote">Route pages open as each route is surveyed &mdash; the map is the part that is finished.</p>
+
+  <div class="waypoints">
+    <div class="wp">
+      <span class="wp-k">Trailhead</span>
+      <h3>Pick one claim &mdash; from any trail, or from something you read this week.</h3>
+      <p>Then ask the only question that matters: what would have to be true for this to be wrong?</p>
+    </div>
+    <div class="wp fork">
+      <span class="wp-k">&#9670; Fork</span>
+      <h3>What are you testing?</h3>
+      <p>Three routes. All of them make the other nine trails harder to fool you with.</p>
+    </div>
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall</span>
+      <h3>&ldquo;Research&rdquo; that never touches data</h3>
+      <p>Asking an AI for a summary of a summary can fill pages without a single measurement in them. The habit that fixes it: write your own summary first, then compare it to the AI&rsquo;s and account for every difference.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista</span>
+      <h3>An experiment whose result you genuinely cannot predict</h3>
+      <p>Design one, run it, and be prepared to be wrong in public. That is the whole method, in one afternoon.</p>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h3>Trail sources <span class="why-src">&mdash; what your Dojo cites on this trail</span></h3>
+    <ul>
+      <li><a href="https://www.physport.org/methods/ISLE">Investigative Science Learning Environment (ISLE)</a> on PhysPort &mdash; the observe / explain / test cycle, with its evidence base.</li>
+      <li><a href="https://www.islephysics.net/">ISLE Physics</a> &mdash; the approach&rsquo;s own site, including experiment collections.</li>
+      <li><a href="https://phyphox.org/">phyphox</a> and <a href="https://opensourcephysics.github.io/tracker-website/">Tracker</a> &mdash; the instruments that make your test cheap enough to actually run.</li>
+      <li><a href="https://www.physport.org/">PhysPort</a> &mdash; what physics-education research says works, for teachers and, honestly, for students too.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a> &mdash; the introduction on models, theories and the nature of measurement.</li>
+    </ul>
+  </section>
+</section>
+
+  <!-- ===== LEVEL 3 &middot; ROUTES ===== -->
+
+<!-- ================= LEVEL 3 &middot; ROUTE: MOTION (built out) ================= -->
+<section class="trail route" id="route-phone-motion" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+  <nav class="tcrumb"><a href="#basecamp">Basecamp</a> &rarr; <a href="#trail-phone">The Slab of Glass</a> &rarr; <strong>how it knows it&rsquo;s moving</strong></nav>
+  <header>
+    <div class="th-kicker">Trail 01 &middot; Route &middot; accelerometer &amp; gyroscope</div>
+    <h2>There&rsquo;s a tiny diving board inside your phone</h2>
+    <p class="why">A speck of silicon on springs &mdash; smaller than a grain of salt &mdash; flexes every time you move,
+    and the phone reads that flex as force. This route follows the push: from what you feel in an elevator to a
+    step-counter you build from raw data. It ends at a vista where the sensor stops being magic.</p>
+  </header>
+
+  <div class="youarehere">
+    <span class="yah-l">You are here</span>
+    <svg viewBox="0 0 720 70" aria-label="Position on the trail: past the trailhead and the fork, on the motion route, heading for the step-counter vista">
+      <path d="M20,50 C90,42 130,38 190,35" fill="none" stroke="var(--tc)" stroke-width="2" stroke-dasharray="5 5" opacity=".45"/>
+      <path d="M190,35 C300,28 420,24 560,22 C610,21 650,20 690,20" fill="none" stroke="var(--tc)" stroke-width="3.5"/>
+      <path d="M190,35 C280,45 360,52 450,56" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-dasharray="4 5" opacity=".3"/>
+      <path d="M190,35 C260,20 300,14 350,10" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-dasharray="4 5" opacity=".3"/>
+      <circle cx="20" cy="50" r="5" fill="var(--tc)" opacity=".5"/>
+      <rect x="183" y="28" width="14" height="14" transform="rotate(45 190 35)" fill="var(--blaze)"/>
+      <circle cx="430" cy="24" r="7" fill="var(--tc)"/>
+      <circle cx="430" cy="24" r="12" fill="none" stroke="var(--tc)" stroke-width="1.5" opacity=".4"/>
+      <circle cx="690" cy="20" r="6" fill="none" stroke="var(--vista)" stroke-width="2.5"/>
+      <text x="20" y="68" text-anchor="start" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">trailhead</text>
+      <text x="190" y="63" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">fork</text>
+      <text x="430" y="50" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink)">you</text>
+      <text x="690" y="44" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--vista)">&#10022; vista</text>
+    </svg>
+  </div>
+
+  <div class="profilebox">
+    <svg viewBox="0 0 940 250" role="img" aria-label="Elevation profile of this route: predict first, then three ways to walk it, a pitfall part-way up, rising to the step-counter vista">
+      <path d="M40,210 L940,210" stroke="var(--line)" stroke-width="1"/>
+      <path d="M40,210 C160,206 260,196 360,178 C500,152 620,120 740,84 C810,63 870,48 900,40 L900,210 L40,210 Z" fill="var(--tc)" opacity=".08" stroke="none"/>
+      <path d="M40,210 C160,206 260,196 360,178 C500,152 620,120 740,84 C810,63 870,48 900,40" fill="none" stroke="var(--tc)" stroke-width="3"/>
+      <rect x="103" y="193" width="14" height="14" transform="rotate(45 110 200)" fill="var(--blaze)"/>
+      <text x="110" y="236" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--blaze)">predict first</text>
+      <circle cx="360" cy="178" r="6" fill="none" stroke="var(--tc)" stroke-width="2.5"/>
+      <text x="360" y="152" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--ink)">walk it &mdash; three ways</text>
+      <text x="360" y="236" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="10" fill="var(--ink-soft)">measure &middot; simulate &middot; build</text>
+      <path d="M580,132 l9,-16 l9,16 z" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <text x="589" y="105" text-anchor="middle" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--warn)">&#9888; the flat line that lies</text>
+      <circle cx="900" cy="40" r="7" fill="none" stroke="var(--vista)" stroke-width="3"/>
+      <text x="893" y="22" text-anchor="end" font-family="IBM Plex Mono" stroke="var(--card)" stroke-width="4.5" paint-order="stroke" font-size="11" fill="var(--vista)">&#10022; your own step-counter</text>
+    </svg>
+  </div>
+  <p class="mapnote">The profile is the route&rsquo;s honest shape: it climbs. The markers below are the same ones, in words.</p>
+
+  <div class="predict">
+    <span class="pk">&#9670; Predict first &mdash; before anything else</span>
+    <h3>You&rsquo;re in an elevator, phone in hand, riding up three floors.</h3>
+    <p>Sketch the acceleration graph for the whole ride &mdash; the start, the middle, the stop &mdash; before you measure
+    anything. What does the middle of the ride look like? Commit to the sketch on paper. The gap between your sketch and
+    the measurement is where this route&rsquo;s physics lives.</p>
+  </div>
+
+  <p class="sec-k">The route, three ways</p>
+  <h3 class="sec-h">Walk whichever suits you &mdash; or all three. They meet at the vista.</h3>
+  <div class="ways">
+    <div class="way">
+      <span class="wk">Measure</span>
+      <h4>Ride with phyphox</h4>
+      <p><strong>First move:</strong> open <a href="https://phyphox.org/" target="_blank" rel="noopener">phyphox</a> &rarr; &ldquo;Acceleration with g&rdquo;, pocket the phone, record one elevator ride. Stairs work too.</p>
+      <p><strong>Consider:</strong> why does the graph spike at the start and the stop, but sit flat through the middle?</p>
+      <p><strong>What about:</strong> the flat middle &mdash; does it read 0, or about 9.8? Try &ldquo;Acceleration without g&rdquo; and explain the difference between the two sensors&rsquo; stories.</p>
+    </div>
+    <div class="way">
+      <span class="wk">Simulate</span>
+      <h4>Push things in PhET</h4>
+      <p><strong>First move:</strong> open <a href="https://phet.colorado.edu/en/simulations/forces-and-motion-basics" target="_blank" rel="noopener">Forces and Motion: Basics</a>; before every push, predict the speedometer.</p>
+      <p><strong>Consider:</strong> what net force keeps the crate moving at a constant speed? Is that what your elevator&rsquo;s flat middle was telling you?</p>
+      <p><strong>What about:</strong> retell your elevator ride entirely as a story about forces on your phone. Where does the floor push harder than gravity?</p>
+    </div>
+    <div class="way">
+      <span class="wk">Build</span>
+      <h4>Model the sensor itself</h4>
+      <p><strong>First move:</strong> in <a href="https://www.glowscript.org/" target="_blank" rel="noopener">Glowscript</a>, make a box on a spring inside a moving case &mdash; about fifteen lines. Shake the case; watch the box lag.</p>
+      <p><strong>Consider:</strong> the lag <em>is</em> the measurement. Why does a stiffer spring make a worse motion sensor but a faster one?</p>
+      <p><strong>What about:</strong> export your phyphox ride as CSV into a spreadsheet and mark, by hand, where each phase of the ride begins. Your marks are the model.</p>
+    </div>
+  </div>
+
+  <div class="waypoints" style="margin-top:26px">
+    <div class="wp pitfall">
+      <span class="wp-k">&#9888; Pitfall &middot; the flat line that lies</span>
+      <h3>A flat accelerometer line does not mean &ldquo;not moving&rdquo;</h3>
+      <p>At rest the sensor reads about 9.8, and in smooth constant motion it reads the same. If that seems wrong, you have
+      found the route&rsquo;s central idea: the sensor measures force, not speed. Don&rsquo;t pass this marker until you can
+      say &mdash; out loud, in your own words &mdash; what an accelerometer actually measures.</p>
+    </div>
+    <div class="wp vista">
+      <span class="wp-k">&#10022; Vista &middot; the summit of this route</span>
+      <h3>Build your own step-counter</h3>
+      <p>Record a fifty-step walk with the raw accelerometer. Then find the rule that counts your steps &mdash; a threshold?
+      peaks? something better? When your count lands within a step or two of reality, you have built the thing your phone
+      ships with, and you know why it miscounts when you shuffle. Worth bringing to a check-in: your data, your rule, and
+      the miscount you can explain.</p>
+    </div>
+  </div>
+
+  <div class="coach">
+    <span class="ck">Ask your Dojo</span>
+    <h3>Take this route with your CST286 AI Dojo &mdash; as a guide, not an answer machine</h3>
+    <blockquote>I just measured my elevator ride with phyphox and I want to understand my acceleration graph. Don&rsquo;t give
+    me the answer &mdash; use the Socratic method: ask me questions that guide me to explain the spikes, the flat middle, and
+    what the sensor actually measures. At the end, ask me to explain the whole ride in my own words and check whether my
+    understanding is right.</blockquote>
+    <p>Your Dojo carries this route&rsquo;s map, markers and sources &mdash; ask it where you are, what is nearby, or for a
+    harder version of any question here. Setting it up takes ten minutes: <a href="setup-ai-dojo.html">Set Up Your CST286 AI Dojo</a>.</p>
+  </div>
+
+  <section class="sources">
+    <h3>Route sources <span class="why-src">&mdash; what your Dojo cites on this route</span></h3>
+    <ul>
+      <li><a href="https://phyphox.org/">phyphox</a> &mdash; acceleration (with and without g); this route&rsquo;s instrument. Tool paper: <a href="https://iopscience.iop.org/article/10.1088/1361-6552/aac05e">Staacks et al., <em>Physics Education</em> 53 (2018)</a>.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/forces-and-motion-basics">PhET: Forces and Motion &mdash; Basics</a> (University of Colorado Boulder).</li>
+      <li><a href="https://www.glowscript.org/">GlowScript / Web VPython</a> &mdash; the fifteen-line sensor model.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a>, Dynamics: Force and Newton&rsquo;s Laws of Motion &mdash; free.</li>
+      <li><a href="http://hyperphysics.phy-astr.gsu.edu/hbase/Newt.html">HyperPhysics: Newton&rsquo;s laws</a> (Georgia State) &mdash; the concept-map view of the same terrain.</li>
+      <li><a href="https://www.youtube.com/@BranchEducation">Branch Education</a> &mdash; inside-the-phone teardowns. Watch <em>after</em> your prediction, not instead of it.</li>
+    </ul>
+  </section>
+</section>
+
+<section class="trail route" id="route-phone-touch" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+  <nav class="tcrumb"><a href="#basecamp">Basecamp</a> &rarr; <a href="#trail-phone">The Slab of Glass</a> &rarr; <strong>how it feels your finger</strong></nav>
+  <header>
+    <div class="th-kicker">Trail 01 &middot; Route &middot; charge &amp; capacitance</div>
+    <h2>Your finger completes a circuit it never touches</h2>
+    <p class="why">The glass never bends and nothing clicks &mdash; your fingertip changes an electric field, and the phone works out where from. This route runs from static charge to capacitance, ending at why gloves don&rsquo;t work and some styluses do.</p>
+  </header>
+  <p class="mapnote" style="margin-top:26px"><strong>Route being surveyed.</strong> It will follow the same shape as the motion route: predict first &rarr; walk it three ways (Falstad &middot; PhET &middot; a foil-and-paper capacitor you build) &rarr; pitfall &rarr; vista.</p>
+  <section class="sources">
+    <h3>Route sources <span class="why-src">&mdash; already scouted</span></h3>
+    <ul>
+      <li><a href="https://www.falstad.com/circuit/">Falstad Circuit Simulator</a> &mdash; watch charge move; no account needed.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/capacitor-lab-basics">PhET: Capacitor Lab &mdash; Basics</a>.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a>, Electric Charge and Electric Field.</li>
+    </ul>
+  </section>
+</section>
+
+<section class="trail route" id="route-phone-battery" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+  <nav class="tcrumb"><a href="#basecamp">Basecamp</a> &rarr; <a href="#trail-phone">The Slab of Glass</a> &rarr; <strong>why the battery dies</strong></nav>
+  <header>
+    <div class="th-kicker">Trail 01 &middot; Route &middot; energy, potential &amp; circuits</div>
+    <h2>Your battery is a hill that electrons roll down</h2>
+    <p class="why">Charging pushes them back up; every app is a slope. This route runs from energy and potential through Ohm&rsquo;s law to real circuits &mdash; and to the most useful everyday distinction in physics: energy is not power.</p>
+  </header>
+  <p class="mapnote" style="margin-top:26px"><strong>Route being surveyed.</strong> Same shape: predict first (which drains faster, the screen or the radio? commit) &rarr; walk it three ways (Falstad &middot; your phone&rsquo;s own battery statistics &middot; Wokwi with a current meter) &rarr; pitfall (&ldquo;energy is not power&rdquo;) &rarr; vista (read your battery-health screen and explain every number on it).</p>
+  <section class="sources">
+    <h3>Route sources <span class="why-src">&mdash; already scouted</span></h3>
+    <ul>
+      <li><a href="https://www.falstad.com/circuit/">Falstad Circuit Simulator</a> &mdash; animated current; this route&rsquo;s sandbox.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc">PhET: Circuit Construction Kit (DC)</a>.</li>
+      <li><a href="https://ed.ted.com/lessons/why-batteries-die-adam-jacobson">TED-Ed: why batteries die</a> &mdash; already used in this course&rsquo;s earlier version.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a>, Electric Current, Resistance and Ohm&rsquo;s Law.</li>
+    </ul>
+  </section>
+</section>
+
+<section class="trail route" id="route-phone-location" style="--tc:var(--t-phone); --tsoft:var(--t-phone-soft)">
+  <nav class="tcrumb"><a href="#basecamp">Basecamp</a> &rarr; <a href="#trail-phone">The Slab of Glass</a> &rarr; <strong>how it knows where it is</strong></nav>
+  <header>
+    <div class="th-kicker">Trail 01 &middot; Route &middot; waves, timing &amp; relativity</div>
+    <h2>Your phone finds you by listening to four clocks in space</h2>
+    <p class="why">Satellites 20,000&nbsp;km up broadcast the time; your phone turns tiny disagreements between those clocks into your street corner. The clocks run fast on purpose &mdash; Einstein said they would. This is the one route where relativity is not exotic: it is in your pocket, correcting itself every second.</p>
+  </header>
+  <p class="mapnote" style="margin-top:26px"><strong>Route being surveyed.</strong> Same shape: predict first (how many satellites do you need, and why? commit) &rarr; walk it three ways (your phone&rsquo;s raw GPS data &middot; a timing-triangulation calculation by hand &middot; a Glowscript orbit) &rarr; pitfall (&ldquo;GPS doesn&rsquo;t send your location anywhere&rdquo;) &rarr; vista (compute the daily clock error relativity predicts, and compare it with what engineers actually correct).</p>
+  <section class="sources">
+    <h3>Route sources <span class="why-src">&mdash; already scouted</span></h3>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=ozAPGnr-934">Why the US military made GPS free to use</a> &mdash; already used in this course&rsquo;s earlier version.</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/gravity-and-orbits">PhET: Gravity and Orbits</a>.</li>
+      <li><a href="https://openstax.org/details/books/college-physics-2e">OpenStax College Physics</a>, Special Relativity.</li>
+    </ul>
+  </section>
+</section>
+
+
+  </div><!-- /.th-body -->
+
+  <div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="what-are-my-priorities.html">What are my priorities &rarr;</a></span></div>
+  <div class="instructor">
+    <div class="nm">Prof. Sathya Narayanan</div>
+    <div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+  </div>
+  <footer class="page-footer">
+    <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+    <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Trailheads &middot; Draft v1</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var views = ['trail-phone','trail-games','trail-sound','trail-sports','trail-silicon','trail-space','trail-light','trail-energy','trail-weird','trail-method','route-phone-motion','route-phone-touch','route-phone-battery','route-phone-location'];
+  var basecamp = document.getElementById('basecamp');
+  var hero = document.getElementById('hero');
+  var legend = document.getElementById('legend');
+  function show(){
+    var h = location.hash.replace('#','');
+    var isView = views.indexOf(h) !== -1;
+    views.forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('open', id === h);
+    });
+    basecamp.style.display = isView ? 'none' : '';
+    hero.style.display = isView ? 'none' : '';
+    legend.style.display = isView ? 'none' : '';
+    if (isView) window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', show);
+  show();
+})();
+
+(function(){
+  var hooks = [
+      "Why doesn\u2019t your phone\u2019s compass work when it\u2019s next to a speaker?",
+      "A truck and a car have the same momentum. Same braking force. Which stops first?",
+      "Two speakers play the same note \u2014 and parts of the room go quiet. Where does the sound go?",
+      "Astronauts float. It is not because gravity stops up there. So what is it?",
+      "Your game\u2019s jump feels floaty. Which number is wrong?",
+      "Why don\u2019t birds get electrocuted on power lines?",
+      "Beach sand, arranged carefully enough, runs everything you use. How?"
+  ];
+  var el = document.getElementById('hookline');
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0;
+  setInterval(function(){
+    i = (i + 1) % hooks.length;
+    el.style.opacity = 0;
+    setTimeout(function(){ el.textContent = hooks[i]; el.style.opacity = 1; }, 350);
+  }, 5200);
+})();
+</script>
+</body>
+</html>

@@ -244,3 +244,37 @@ pattern: prose first, the material named at the end.
 
 The Wednesday Aug 26 row is unchanged ("Course orientation."), and the deeper course-design
 conversation stays there, in person.
+
+## 2026-08-23 — Trailheads: the physics exploration map lands as a course page
+
+`trailheads.html` joins the CST286 pages, linked from **Week 2's Own your progress** block. It is the
+student-facing form of the exploration map worked out in `fall-2026-courses/` this week, and it is built
+as one page with three levels behind a hash router:
+
+- `#basecamp` — **pick a trailhead.** Ten trail cards, each opening from an interest rather than a topic:
+  The Slab of Glass · Game Feel · Signal & Sound · The Moving Body · From Sand to CPU · Rockets & Orbits ·
+  Cameras & Light · Energy & What It Costs · The Weird Stuff · How Physics Knows.
+- `#trail-<id>` — **follow the trail.** Each carries the "At the end of this trail" promise pair
+  (answer *how & why* / predict *with numbers* — Sathya's framing, 23 Aug), an SVG map whose fork is a
+  question the student answers, ⚠ pitfall and ✦ vista markers, the same waypoints written out in words,
+  and its own **Trail sources** block.
+- `#route-phone-motion` — **explore a route to its vista.** One route built out as the template:
+  you-are-here strip, elevation profile, predict-first box, the route three ways (measure / simulate /
+  build), pitfall, vista challenge, a Socratic Dojo prompt, and route-level sources. The other three
+  phone routes are stubs in the same shape.
+
+Design decisions worth keeping:
+
+- **Colour encodes trail identity, not hierarchy** — ten muted hues, with `--blaze` reserved for forks,
+  `--vista` for payoffs and `--warn` for pitfalls, so a marker means the same thing on every map.
+- **Map labels carry a background-coloured halo** (`paint-order="stroke"`) so route names stay legible
+  where dashed trail lines pass behind them.
+- **Sources are per trail and per route, not one bibliography at the end.** That is deliberate: this page
+  is captured into the Dojo context document, and the coach needs to know which sources belong to where
+  the student actually is.
+- House chrome (crumb, page nav, instructor, footer) wraps a deliberately different interior — the map is
+  a place, not another course page — and the page carries no `data-canvas-href`, so inside the Canvas
+  embed it stays a relative link and keeps working.
+
+Everything is static markup; no generator. Trails 04–10 have finished maps and sources, and their route
+pages open as each route is surveyed. — Alan
