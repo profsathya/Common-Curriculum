@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 · The big picture — prototype v3</title>
+<style>
+:root { --blue: #0374B5; --blue-dark: #0a5a8a; --text: #2D3B45; --muted: #6B7780; --border: #C7CDD1; --border-light: #E8EAEC; --goal-bg: #F3F8FB; --check-bg: #F2FAF5; --check-border: #0B874B; --check: #0B874B; --font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: var(--font); color: var(--text); background: #fff; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+.page { max-width: 1040px; margin: 0 auto; padding: 22px 22px 56px; }
+.protonote { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 5px; padding: 10px 13px; margin-bottom: 18px; font-size: 12.5px; color: #5e4a18; }
+
+/* ---- big picture shell (unchanged from home.html) ---- */
+.bigpic { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 20px; background: #fff; }
+details.bigpic > summary { list-style: none; cursor: pointer; }
+details.bigpic > summary::-webkit-details-marker { display: none; }
+.bigpic-head { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: #FCFDFE; border-radius: 5px; }
+details.bigpic[open] > summary > .bigpic-head { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; }
+.bigpic-head:hover { background: #F5F9FB; }
+.bigpic-head .plus { flex: 0 0 18px; width: 18px; height: 18px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; }
+details.bigpic[open] > summary > .bigpic-head .plus::after { content: "\2212"; }
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after { content: "+"; }
+.bigpic-head .t { font-size: 14px; font-weight: 700; color: var(--text); }
+.bigpic-head .s { font-size: 12.5px; color: var(--muted); }
+.bigpic-body { padding: 14px; }
+
+/* ---- NEW: section rhythm ---- */
+.bp-sec { margin: 0 0 18px; }
+.bp-sec:last-child { margin-bottom: 0; }
+.bp-kicker { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.bp-h { font-size: 15.5px; font-weight: 700; margin: 0 0 8px; line-height: 1.3; }
+
+/* 1 · the lead */
+.leadout { border: 1px solid var(--check-border); background: var(--check-bg); border-radius: 6px; padding: 14px 16px; }
+.leadout .bp-kicker { color: var(--check); }
+.leadout .bp-h { font-size: 18px; margin-bottom: 11px; max-width: 780px; }
+.keeps { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.keep { background: #fff; border: 1px solid #BFE0CB; border-radius: 6px; padding: 11px 12px; }
+.keep .kt { font-size: 13.5px; font-weight: 700; margin: 0 0 3px; line-height: 1.3; }
+.keep .kd { font-size: 12.5px; color: #4a6153; line-height: 1.45; }
+@media (max-width:700px){ .keeps { grid-template-columns: 1fr; } }
+
+/* 2 · why this shape */
+.why-steps { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin: 0 0 10px; }
+.why-step { font-size: 12px; font-weight: 700; color: var(--blue-dark); background: var(--goal-bg); border: 1px solid #A8CBE0; border-radius: 20px; padding: 4px 11px; }
+.why-arrow { color: var(--muted); font-size: 12px; }
+.why-list { margin: 0; padding-left: 18px; max-width: 780px; }
+.why-list li { font-size: 13px; margin: 0 0 5px; }
+.why-list li:last-child { margin-bottom: 0; }
+.why-list li b { font-weight: 700; }
+
+/* 3 · the path */
+.arc-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.arc-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; background: #FCFDFE; color: var(--text); }
+.arc-card:hover { border-color: var(--blue); background: #F7FBFD; }
+.arc-card .s { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); }
+.arc-card .nm { font-size: 13px; font-weight: 700; margin: 2px 0 4px; color: var(--blue-dark); line-height: 1.25; }
+.arc-card .get { font-size: 12px; color: var(--text); line-height: 1.35; }
+.arc-card .who { font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 7px; }
+.arc-card .who b { color: var(--text); font-weight: 600; }
+.arc-card.build { background: #F3F8FB; border-color: #A8CBE0; }
+@media (max-width:1000px){ .arc-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width:620px){ .arc-grid { grid-template-columns: repeat(2,1fr); } }
+
+/* 4 · what is asked */
+.asks { border: 1px solid var(--border); border-radius: 6px; background: #FCFDFE; }
+.ask { display: flex; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border-light); align-items: baseline; }
+.ask:last-child { border-bottom: 0; }
+.ask .when { flex: 0 0 138px; font-size: 12px; font-weight: 700; color: var(--blue-dark); }
+.ask .what { flex: 1; font-size: 13px; }
+.ask .what b { font-weight: 700; }
+.ask .what .sub { color: var(--muted); }
+@media (max-width:620px){ .ask { display: block; } .ask .when { margin-bottom: 2px; } }
+
+/* glossary bubbles (unchanged) */
+.gl { display: inline; }
+.bp-h, .keep .kd, .why-list li { position: relative; }
+.gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; }
+.gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; }
+.gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; }
+.bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-align: left; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; white-space: normal; }
+.gl:hover > .bub, .gl:focus-within > .bub { display: block; }
+.bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); }
+.bub .br { display: block; margin-bottom: 6px; color: var(--text); }
+.bub .br:last-child { margin-bottom: 0; }
+.bub .br i { font-style: normal; font-weight: 700; color: var(--muted); }
+@media print { .bub { display: none !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="protonote"><b>Prototype v4 — not live.</b> Three sections: what you get · why it works this way · how you get there. Shown open so you can read it; on the real page it still ships closed.</div>
+
+  <details class="bigpic" id="big-picture" open>
+    <summary>
+      <div class="bigpic-head">
+        <span class="plus">&#43;</span>
+        <span class="t">The big picture</span>
+        <span class="s">What you get out of this semester, and how you get there</span>
+      </div>
+    </summary>
+    <div class="bigpic-body">
+
+      <!-- 1 · WHAT YOU GET -->
+      <div class="bp-sec leadout">
+        <div class="bp-kicker">What you get</div>
+        <h3 class="bp-h">Explore something you are interested in, understand it in a way that makes a difference to you &mdash; then do it again.</h3>
+        <div class="keeps">
+          <div class="keep">
+            <div class="kt">You understand it, not just know about it</div>
+            <div class="kd">You can walk anyone through <span class="gl"><button type="button" class="gt">how it actually works</button><span class="bub" role="tooltip"><b class="bt">How it actually works</b><span class="br"><i>What that means.</i> You can say <i>why</i> the thing behaves the way it does, not just <i>that</i> it does.</span><span class="br"><i>How you know you got there.</i> Someone asks &ldquo;why?&rdquo; and &ldquo;what if&hellip;?&rdquo; and you keep having answers.</span><span class="br"><i>How deep is deep enough.</i> Measured from where <i>you</i> started &mdash; you write that down yourself in week 4.</span></span></span> &mdash; in your own words, and keep going when they ask why.</div>
+          </div>
+          <div class="keep">
+            <div class="kt">It changes something you do</div>
+            <div class="kd">Understanding that changes nothing is trivia. Yours should show up in something you make, choose, or do differently.</div>
+          </div>
+          <div class="keep">
+            <div class="kt">You can do it again on anything</div>
+            <div class="kd">By December you will have run this twice, the second time on a different interest with less help. That is the part you keep.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 · WHY THIS SHAPE -->
+      <div class="bp-sec">
+        <div class="bp-kicker">Why the course works this way</div>
+        <div class="why-steps">
+          <span class="why-step">Choose your interest</span><span class="why-arrow">&rarr;</span>
+          <span class="why-step">Explore in depth</span><span class="why-arrow">&rarr;</span>
+          <span class="why-step">Apply the knowledge you have gained</span><span class="why-arrow">&rarr;</span>
+          <span class="why-step">Rinse and repeat to strengthen</span>
+        </div>
+        <ul class="why-list">
+          <li><b>You pick the topic.</b> Whatever you already care about &mdash; music, engines, climbing, batteries, a game &mdash; has <span class="gl"><button type="button" class="gt">physics</button><span class="bub" role="tooltip"><b class="bt">Physics</b><span class="br"><i>What it is.</i> The precise description of how the physical world behaves, written in mathematics.</span><span class="br"><i>Why that is powerful.</i> A few exact relationships let you predict something nobody has ever seen &mdash; which is what every technology is built on, engines and radio and semiconductors and the machines running AI today.</span><span class="br"><i>What you do with it here.</i> You use it as the way into whatever you chose. There is no list of physics topics to cover.</span></span></span> under it. There is no topic list to get through.</li>
+          <li><b>Depth is measured from your own starting point.</b> So the first thing you do is get honest about where that is.</li>
+          <li><b>You run the whole loop twice.</b> One deep dive can be luck. Running it again on new ground is what turns it into a practice you keep.</li>
+        </ul>
+      </div>
+
+      <!-- 3 · THE PATH -->
+      <div class="bp-sec">
+        <div class="bp-kicker">How you get there &mdash; five sprints, sixteen weeks</div>
+        <div class="arc-grid">
+          <div class="arc-card">
+            <div class="s">Sprint 0</div>
+            <div class="nm">Orient</div>
+            <div class="get">See how the course works and where you are starting from.</div>
+            <div class="who"><b>Weeks 1&ndash;2</b> &middot; Aug 24 &ndash; Sep 4</div>
+          </div>
+          <div class="arc-card build">
+            <div class="s">Sprint 1</div>
+            <div class="nm">Explore your interest deeply</div>
+            <div class="get">Choose it, then reach your first real explanation of how it works.</div>
+            <div class="who"><b>Weeks 3&ndash;6</b> &middot; Sep 7 &ndash; Oct 2</div>
+          </div>
+          <div class="arc-card build">
+            <div class="s">Sprint 2</div>
+            <div class="nm">Reflect, adjust and go further</div>
+            <div class="get">Push past the first answer, and show what it changed.</div>
+            <div class="who"><b>Weeks 7&ndash;10</b> &middot; Oct 5 &ndash; Oct 30</div>
+          </div>
+          <div class="arc-card build">
+            <div class="s">Sprint 3</div>
+            <div class="nm">Transfer your practice to another topic</div>
+            <div class="get">Do it again on a second interest, with less help.</div>
+            <div class="who"><b>Weeks 11&ndash;14</b> &middot; Nov 2 &ndash; Dec 4</div>
+          </div>
+          <div class="arc-card">
+            <div class="s">Sprint 4</div>
+            <div class="nm">Reflect and conclude with a sustainable practice</div>
+            <div class="get">Show what changed, and set it up to keep running.</div>
+            <div class="who"><b>Weeks 15&ndash;16</b> &middot; Dec 7 &ndash; Dec 18</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </details>
+
+</div>
+</body>
+</html>
