@@ -278,3 +278,36 @@ Design decisions worth keeping:
 
 Everything is static markup; no generator. Trails 04–10 have finished maps and sources, and their route
 pages open as each route is surveyed. — Alan
+
+
+## week1-mon-recording.html — 25 August 2026
+
+The Monday 24 Aug Zoom session, indexed rather than edited. Modelled on
+`career-intelligence/sessions/week-1-recording.html`, but inverted the way Sathya asked for it: one
+player at the top, the section list underneath, sections linked into the video. The CI pages carried
+per-clip takeaway bullets; this one carries a single line per section instead, following the direction
+his last several rounds of edits have pulled (fewer sections, fewer words).
+
+Ten sections out of a 98-minute recording, in two groups — *Why this course is built this way*
+(2:02 / 10:15 / 51:29 / 58:08) and *Getting set up* (59:03 / 61:07 / 62:00 / 64:05 / 65:05 / 69:05).
+Two are starred: **The two layers** (51:29) and **Your two things to do** (65:05). Section titles and
+lines were written from the auto-caption transcript, saved at
+`cowork/fall-2026-courses/cst286-transcript-2026-08-24.txt` with the full edit map beside it.
+
+**The mechanism, and why it is what it is.** `Embed.aspx` on CSUMB's Panopto ignores `&start=` —
+tested with and without `autoplay`, the player begins at 0:00 both times. No cross-frame seek API is
+exposed either: the embed page does not answer player.js `postMessage`, and `EmbedApi.js` 404s on this
+site. So section rows are plain links to `Viewer.aspx?id=…&start=NNN` opening in a new tab, and the
+embedded player at the top is for watching straight through. Each row also prints its timestamp, so if
+`&start=` turns out not to hold either, a student can still scrub to it — the page degrades rather
+than breaks. **UNVERIFIED:** the Panopto viewer wedged on "Loading…" partway through testing and would
+not come back, so the `&start=` behaviour on `Viewer.aspx` has not actually been confirmed. Click one
+row before this goes in front of students.
+
+If clicks should move the video in place, that needs a host with a real player API — an unlisted
+YouTube upload of the trimmed cut. Worth knowing: the ten kept sections are all Sathya talking, so a
+trim removes every student from the footage, which is what made YouTube the wrong answer before.
+Panopto's own Table of Contents entries are the other route — same chapters, inside the player, no
+page needed.
+
+Linked from `home.html` week 1, Mon 24 Aug row, next to Slides, opening in a new tab. — Alan
