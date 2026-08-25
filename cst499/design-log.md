@@ -232,3 +232,18 @@ line per sprint.
   `<details>` generically, so week-level memory came free — verified live: closed on first visit,
   student's opens restored on reload, `#wk-N` links open the week and its sprint. Strict parse
   clean. — Alan
+
+## 2026-08-24 — Attendance: the schedule is the plan, not a finished thing
+
+Sathya's call. The seven full-class days were reading as a settled calendar, and he does not want that message.
+Both surfaces now say the same thing:
+
+- `understand-the-course-design.html`, after the full-class table: treat the list as the plan rather than a
+  finished schedule; if one or two more full-class sessions turn out to be needed we will add them, with at
+  least a week's notice before any new date becomes required, and nothing gets added the week it happens.
+- The session-1 deck's "What's required, and when" slide carries the same sentence as a footnote, and the
+  speaker note tells him to say it out loud rather than let them read it.
+
+**Open, flagged and not resolved here:** this page lists **seven** full-class days (weeks 1, 2, 5, 8, 9, 13, 16,
+with a mid-term in week 8) while the session-1 deck says **six** (weeks 1, 2, 6, 10, 14, 16). The two describe
+different sprint calendars. One of them is stale and they need reconciling before students see both.
