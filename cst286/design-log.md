@@ -308,3 +308,18 @@ player naming the section and saying that if the video does not start on its own
 begin it there. The clicked row keeps a highlight so it stays obvious which section is loaded.
 
 Linked from `home.html` week 1, Mon 24 Aug row, next to Slides, opening in a new tab. — Alan
+
+## 2026-08-24 — Late graded items: two own-your-progress activities can stand in
+
+Sathya's call, added to "How the grade works": if a student was late submitting graded items, they can swap
+in up to **two own-your-progress activities** to stand in for two of them.
+
+This required one consistency fix on the same page. The "How this course is different" section described
+own-your-progress guidance as "activities that do not affect your grade at all", which the new rule
+contradicts. Changed to "activities that are not graded", and the new note names itself as the one
+exception — the single place where having done the optional work changes the grade.
+
+**Open, and deliberately not written into the page:** which two graded items can be swapped (the late ones,
+or any two), whether the swapped-in activities carry the graded item's points or only remove the late
+penalty, and whether the swap has to be requested. The page states the flexibility without inventing the
+mechanics.

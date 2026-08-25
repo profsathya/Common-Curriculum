@@ -247,3 +247,33 @@ Both surfaces now say the same thing:
 **Open, flagged and not resolved here:** this page lists **seven** full-class days (weeks 1, 2, 5, 8, 9, 13, 16,
 with a mid-term in week 8) while the session-1 deck says **six** (weeks 1, 2, 6, 10, 14, 16). The two describe
 different sprint calendars. One of them is stale and they need reconciling before students see both.
+
+## 2026-08-24 — Late graded items: two own-your-progress activities can stand in
+
+Sathya's call, added to "How the grade works": if a student was late submitting graded items, they can swap
+in up to **two own-your-progress activities** to stand in for two of them.
+
+This required one consistency fix on the same page. The "How this course is different" section described
+own-your-progress guidance as "activities that do not affect your grade at all", which the new rule
+contradicts. Changed to "activities that are not graded", and the new note names itself as the one
+exception — the single place where having done the optional work changes the grade.
+
+**Open, and deliberately not written into the page:** which two graded items can be swapped (the late ones,
+or any two), whether the swapped-in activities carry the graded item's points or only remove the late
+penalty, and whether the swap has to be requested. The page states the flexibility without inventing the
+mechanics.
+
+## 2026-08-24 — Start Here trimmed to two pages
+
+Sathya's call: the **Meet your instructors** link and the **Why this course is designed the way it is** card
+are both out of the Start Here module on `home.html`. Start Here now carries three items — the anonymous AI
+survey, Understand the Course Design, and Set up your AI Dojo — and the lead line changed from "Four short
+pages, about twenty minutes" to "Two short pages, about ten minutes".
+
+The instructor introduction moves into the session-1 deck instead: CST499 gets a deliberately bare
+"Meet your instructors" slide with both names, and Sathya and Paige introduce themselves live.
+
+**Left in place, not deleted:** `why-this-course.html` and the root `profsathya.html` still exist and are
+still published — only the links from this home page are gone. Nothing else in the repo links
+`why-this-course.html` from cst499. If the page is meant to be retired rather than unlinked, that is a
+separate call.

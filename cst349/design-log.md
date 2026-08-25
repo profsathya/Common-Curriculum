@@ -197,3 +197,18 @@ penalty" — that message is gone, from both the page and the session-1 deck.
 Deck: `alan/cst349-session1-deck-v10.pptx`, slide 17. Left column head is now "Every Wednesday —
 everyone"; the right column changed from "Every other session: working time … no attendance penalty" to
 "Every other Wednesday: working time" plus the check-ins-only exception. Same footnote as the page.
+
+## 2026-08-24 — Late graded items: two own-your-progress activities can stand in
+
+Sathya's call, added to "How the grade works": if a student was late submitting graded items, they can swap
+in up to **two own-your-progress activities** to stand in for two of them.
+
+This required one consistency fix on the same page. The "How this course is different" section described
+own-your-progress guidance as "activities that do not affect your grade at all", which the new rule
+contradicts. Changed to "activities that are not graded", and the new note names itself as the one
+exception — the single place where having done the optional work changes the grade.
+
+**Open, and deliberately not written into the page:** which two graded items can be swapped (the late ones,
+or any two), whether the swapped-in activities carry the graded item's points or only remove the late
+penalty, and whether the swap has to be requested. The page states the flexibility without inventing the
+mechanics.
