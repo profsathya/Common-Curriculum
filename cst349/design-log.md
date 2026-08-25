@@ -179,3 +179,21 @@ The full spring site is in this folder (home, overview, concepts, sdl-dimensions
   `<details>` generically, so week-level memory came free — verified live: closed on first visit,
   student's opens restored on reload, `#wk-N` links open the week and its sprint. Strict parse
   clean. — Alan
+
+## 2026-08-24 — Attendance rewritten: every Wednesday is required
+
+Sathya's rule. The old model said every non-required session was working time with "no attendance
+penalty" — that message is gone, from both the page and the session-1 deck.
+
+- **Every Wednesday session is required.** Weeks 1–3 (orientation, first check-in sweep, goal-setting),
+  Sprint Exam days (6, 10, 14) and week 15 are named; the rest are working sessions with check-ins
+  running alongside, and they carry the same expectation.
+- **The one exception:** when a Wednesday is given over entirely to check-ins, students come for their
+  scheduled time only — announced in advance.
+- Check-in times on The Commons and by email; a missed check-in loses its points, unrecoverable.
+- Closing note added: the list is the plan, not a finished schedule — one or two more required sessions
+  would come with at least a week's notice.
+
+Deck: `alan/cst349-session1-deck-v10.pptx`, slide 17. Left column head is now "Every Wednesday —
+everyone"; the right column changed from "Every other session: working time … no attendance penalty" to
+"Every other Wednesday: working time" plus the check-ins-only exception. Same footnote as the page.

@@ -311,3 +311,20 @@ Panopto's own Table of Contents entries are the other route — same chapters, i
 page needed.
 
 Linked from `home.html` week 1, Mon 24 Aug row, next to Slides, opening in a new tab. — Alan
+
+## 2026-08-24 — Attendance rewritten: Wednesdays required, Mondays encouraged
+
+Sathya's rule, applied to `understand-the-course-design.html`:
+
+- **Wednesdays are in person and required** — sprint openers (weeks 1, 3, 7, 11) and the three Sprint Exam
+  days (6, 10, 14) are guided for the whole class; the other Wednesdays are peer conversations and group
+  work time, and they count the same. No "optional" framing anywhere.
+- **Mondays are online and belong to check-ins.** Your own scheduled check-in is required; every other
+  Monday is encouraged, with the Zoom session open for help and work time.
+- The missed-check-in points rule kept, and a closing note added: the required-session list is the plan,
+  not a finished schedule; one or two more would come with at least a week's notice, never the same week.
+
+Also fixed three typos that were live on the page: "couse activiteis" and "convesations".
+
+Note: CST286 has no session-1 slide covering attendance — the Monday deck does not include one — so this
+page is the only surface carrying the rule.
