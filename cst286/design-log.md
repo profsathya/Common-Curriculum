@@ -284,9 +284,9 @@ pages open as each route is surveyed. — Alan
 
 The Monday 24 Aug Zoom session, indexed rather than edited. Modelled on
 `career-intelligence/sessions/week-1-recording.html`, but inverted the way Sathya asked for it: one
-player at the top, the section list underneath, sections linked into the video. The CI pages carried
-per-clip takeaway bullets; this one carries a single line per section instead, following the direction
-his last several rounds of edits have pulled (fewer sections, fewer words).
+player at the top, the section list underneath, and clicking a section moves that player. The CI pages
+carried per-clip takeaway bullets; this one carries a single line per section instead, following the
+direction his last several rounds of edits have pulled (fewer sections, fewer words).
 
 Ten sections out of a 98-minute recording, in two groups — *Why this course is built this way*
 (2:02 / 10:15 / 51:29 / 58:08) and *Getting set up* (59:03 / 61:07 / 62:00 / 64:05 / 65:05 / 69:05).
@@ -294,37 +294,17 @@ Two are starred: **The two layers** (51:29) and **Your two things to do** (65:05
 lines were written from the auto-caption transcript, saved at
 `cowork/fall-2026-courses/cst286-transcript-2026-08-24.txt` with the full edit map beside it.
 
-**The mechanism, and why it is what it is.** `Embed.aspx` on CSUMB's Panopto ignores `&start=` —
-tested with and without `autoplay`, the player begins at 0:00 both times. No cross-frame seek API is
-exposed either: the embed page does not answer player.js `postMessage`, and `EmbedApi.js` 404s on this
-site. So section rows are plain links to `Viewer.aspx?id=…&start=NNN` opening in a new tab, and the
-embedded player at the top is for watching straight through. Each row also prints its timestamp, so if
-`&start=` turns out not to hold either, a student can still scrub to it — the page degrades rather
-than breaks. **UNVERIFIED:** the Panopto viewer wedged on "Loading…" partway through testing and would
-not come back, so the `&start=` behaviour on `Viewer.aspx` has not actually been confirmed. Click one
-row before this goes in front of students.
+**The mechanism, and the thing that is easy to get wrong.** Clicking a section rewrites the iframe
+`src` to the same `Embed.aspx` URL plus `&autoplay=true&start=<seconds>`. This works — verified end to
+end in Chrome, the player lands on 51:29 — but **`&start=` is not applied until playback begins**. So
+if you load the embed with `&start=` and inspect it before pressing play, the seekbar reads 0:00 and
+the caption shows the first cue, and it looks exactly like the parameter is being ignored. It is not.
+Check after play, not before. (Costly detour on the way here: this was first mis-diagnosed as
+unsupported, and the page briefly shipped with the sections as links opening Panopto in a new tab.)
 
-If clicks should move the video in place, that needs a host with a real player API — an unlisted
-YouTube upload of the trimmed cut. Worth knowing: the ten kept sections are all Sathya talking, so a
-trim removes every student from the footage, which is what made YouTube the wrong answer before.
-Panopto's own Table of Contents entries are the other route — same chapters, inside the player, no
-page needed.
+Autoplay does not actually fire — Chrome leaves the Panopto splash up even with `allow="autoplay"` on
+the iframe and a real click driving the `src` change. That is why a click also reveals a line under the
+player naming the section and saying that if the video does not start on its own, pressing play will
+begin it there. The clicked row keeps a highlight so it stays obvious which section is loaded.
 
 Linked from `home.html` week 1, Mon 24 Aug row, next to Slides, opening in a new tab. — Alan
-
-## 2026-08-24 — Attendance rewritten: Wednesdays required, Mondays encouraged
-
-Sathya's rule, applied to `understand-the-course-design.html`:
-
-- **Wednesdays are in person and required** — sprint openers (weeks 1, 3, 7, 11) and the three Sprint Exam
-  days (6, 10, 14) are guided for the whole class; the other Wednesdays are peer conversations and group
-  work time, and they count the same. No "optional" framing anywhere.
-- **Mondays are online and belong to check-ins.** Your own scheduled check-in is required; every other
-  Monday is encouraged, with the Zoom session open for help and work time.
-- The missed-check-in points rule kept, and a closing note added: the required-session list is the plan,
-  not a finished schedule; one or two more would come with at least a week's notice, never the same week.
-
-Also fixed three typos that were live on the page: "couse activiteis" and "convesations".
-
-Note: CST286 has no session-1 slide covering attendance — the Monday deck does not include one — so this
-page is the only surface carrying the rule.

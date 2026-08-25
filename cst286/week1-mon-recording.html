@@ -20,10 +20,13 @@ a:hover { text-decoration: underline; color: var(--blue-dark); }
 .pagehead .lead { font-size: 13.5px; color: var(--muted); max-width: 700px; margin-top: 7px; }
 
 /* Player */
-.player { margin: 0 0 8px; }
 .vid-frame { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; border: 1px solid var(--border); background: #000; }
 .vid-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-.vid-note { font-size: 12px; color: var(--muted); margin: 4px 0 22px; }
+.now { display: none; margin: 9px 0 0; padding: 8px 12px; border: 1px solid #A8CBE0; background: var(--goal-bg); border-radius: 6px; font-size: 13px; }
+.now.on { display: block; }
+.now b { color: var(--blue-dark); }
+.now .hint { color: var(--muted); font-size: 12px; }
+.vid-note { font-size: 12px; color: var(--muted); margin: 9px 0 22px; }
 
 /* Section list */
 h2.sec { font-size: 16px; font-weight: 700; margin: 26px 0 4px; padding-bottom: 5px; border-bottom: 1px solid var(--border-light); }
@@ -31,16 +34,17 @@ p.body { font-size: 13.5px; margin: 0 0 12px; }
 .partlabel { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--teal); margin: 20px 0 7px; }
 ol.jump { list-style: none; margin: 0; padding: 0; }
 ol.jump li { margin: 0 0 7px; }
-a.jump { text-decoration: none; display: flex; width: 100%; text-align: left; gap: 12px; align-items: baseline; font: inherit; color: inherit; background: #FCFDFE; border: 1px solid var(--border); border-radius: 6px; padding: 10px 13px; cursor: pointer; }
-a.jump:hover, a.jump:focus { border-color: var(--blue); background: #F7FBFD; outline: none; text-decoration: none; }
-a.jump:focus-visible { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; }
-a.jump .ts { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; padding-top: 1px; }
-a.jump .tx { flex: 1; min-width: 0; }
-a.jump .nm { font-size: 14px; font-weight: 700; color: var(--blue-dark); }
-a.jump .de { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
-a.jump .rt { flex: 0 0 auto; font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 3px; }
-li.star a.jump { border-color: #A8CBE0; background: var(--goal-bg); }
-li.star a.jump .nm::after { content: " \2605"; color: var(--check); font-size: 12px; }
+button.jump { display: flex; width: 100%; text-align: left; gap: 12px; align-items: baseline; font: inherit; color: inherit; background: #FCFDFE; border: 1px solid var(--border); border-radius: 6px; padding: 10px 13px; cursor: pointer; }
+button.jump:hover { border-color: var(--blue); background: #F7FBFD; }
+button.jump:focus-visible { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; }
+button.jump .ts { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; padding-top: 1px; }
+button.jump .tx { flex: 1; min-width: 0; }
+button.jump .nm { display: block; font-size: 14px; font-weight: 700; color: var(--blue-dark); }
+button.jump .de { display: block; font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+button.jump .rt { flex: 0 0 auto; font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 3px; }
+button.jump.pick { border-color: var(--blue); background: var(--goal-bg); box-shadow: inset 3px 0 0 var(--blue); }
+li.star button.jump { border-color: #A8CBE0; }
+li.star button.jump .nm::after { content: " \2605"; color: var(--check); font-size: 12px; }
 
 .skipnote { border: 1px solid var(--border-light); border-radius: 6px; padding: 11px 14px; font-size: 12.5px; color: var(--muted); background: #FCFCFD; margin: 22px 0 0; }
 .skipnote b { color: var(--text); font-weight: 700; }
@@ -51,8 +55,8 @@ li.star a.jump .nm::after { content: " \2605"; color: var(--check); font-size: 1
 .instructor .links { font-size: 12.5px; color: var(--muted); }
 .page-footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-light); color: var(--muted); font-size: 11.5px; }
 @media (max-width: 560px) {
-  a.jump { flex-wrap: wrap; }
-  a.jump .rt { flex-basis: 100%; padding-top: 2px; }
+  button.jump { flex-wrap: wrap; }
+  button.jump .rt { flex-basis: 100%; padding-top: 2px; }
 }
         </style>
     </head>
@@ -65,39 +69,38 @@ li.star a.jump .nm::after { content: " \2605"; color: var(--check); font-size: 1
                 <div class="s">CST286 &middot; Fall 2026</div>
                 <h1>Week 1 &mdash; Monday Session Recording</h1>
                 <div class="dt">Monday, August 24 &middot; online</div>
-                <p class="lead">The full session is here, but you do not have to sit through it. The sections below are the parts worth your time &mdash; click any one and it opens the recording at that moment.</p>
+                <p class="lead">The full session is here, but you do not have to sit through it. The sections below are the parts worth your time &mdash; click any one and the video above jumps to it.</p>
             </div>
 
-            <div class="player">
-                <div class="vid-frame">
-                    <iframe id="vid"
-                            src="https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;v=1&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=false&amp;showbrand=false&amp;captions=true&amp;interactivity=all"
-                            title="CST286 Week 1 Monday session recording"
-                            allowfullscreen
-                            allow="autoplay; fullscreen"></iframe>
-                </div>
-                <p class="vid-note">Watch straight through here, or use the sections below. Sign in with your CSUMB account if the player asks, and turn captions on with the <b>CC</b> button. Player not loading? <a href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b" target="_blank" rel="noopener">Open it directly on Panopto &#8599;</a></p>
+            <div class="vid-frame">
+                <iframe id="vid"
+                        src="https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;v=1&amp;offerviewer=true&amp;showtitle=false&amp;showbrand=false&amp;captions=true&amp;interactivity=all&amp;autoplay=false"
+                        title="CST286 Week 1 Monday session recording"
+                        allowfullscreen
+                        allow="autoplay; fullscreen"></iframe>
             </div>
+            <p class="now" id="now"></p>
+            <p class="vid-note">Watch straight through, or use the sections below. Sign in with your CSUMB account if the player asks, and turn captions on with the <b>CC</b> button. Player not loading? <a href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b" target="_blank" rel="noopener">Open it directly on Panopto &#8599;</a></p>
 
             <h2 class="sec">Jump to a section</h2>
             <p class="body">About twenty minutes of the session is the part that carries the course. If you only watch one thing, watch <b>The two layers</b>.</p>
 
             <div class="partlabel">Why this course is built this way</div>
             <ol class="jump">
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=122" target="_blank" rel="noopener"><span class="ts">2:02</span><span class="tx"><span class="nm">Who is teaching this</span><span class="de">Physics, then years of building things, then CSUMB &mdash; and why teaching is not copying files from one computer to another.</span></span><span class="rt">~5 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=615" target="_blank" rel="noopener"><span class="ts">10:15</span><span class="tx"><span class="nm">Attitude matters more than aptitude</span><span class="de">You are not expected to arrive knowing anything. Curiosity, work ethic and discipline are what this course runs on.</span></span><span class="rt">~1 min</span></a></li>
-                <li class="star"><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3089" target="_blank" rel="noopener"><span class="ts">51:29</span><span class="tx"><span class="nm">The two layers</span><span class="de">The heart of the session. Becoming a self-directed learner is the first layer; physical science is what you practice it on. Why a fixed list of topics no longer makes sense, and what using AI as a partner rather than a crutch means here.</span></span><span class="rt">~7 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3488" target="_blank" rel="noopener"><span class="ts">58:08</span><span class="tx"><span class="nm">If you have reservations about AI</span><span class="de">Answering a question from the class &mdash; what the design is for, what is worth worrying about, and an open invitation to push back on it.</span></span><span class="rt">~1 min</span></a></li>
+                <li><button type="button" class="jump" data-t="122"><span class="ts">2:02</span><span class="tx"><span class="nm">Who is teaching this</span><span class="de">Physics, then years of building things, then CSUMB &mdash; and why teaching is not copying files from one computer to another.</span></span><span class="rt">~5 min</span></button></li>
+                <li><button type="button" class="jump" data-t="615"><span class="ts">10:15</span><span class="tx"><span class="nm">Attitude matters more than aptitude</span><span class="de">You are not expected to arrive knowing anything. Curiosity, work ethic and discipline are what this course runs on.</span></span><span class="rt">~1 min</span></button></li>
+                <li class="star"><button type="button" class="jump" data-t="3089"><span class="ts">51:29</span><span class="tx"><span class="nm">The two layers</span><span class="de">The heart of the session. Becoming a self-directed learner is the first layer; physical science is what you practice it on. Why a fixed list of topics no longer makes sense, and what using AI as a partner rather than a crutch means here.</span></span><span class="rt">~7 min</span></button></li>
+                <li><button type="button" class="jump" data-t="3488"><span class="ts">58:08</span><span class="tx"><span class="nm">If you have reservations about AI</span><span class="de">Answering a question from the class &mdash; what the design is for, what is worth worrying about, and an open invitation to push back on it.</span></span><span class="rt">~1 min</span></button></li>
             </ol>
 
             <div class="partlabel">Getting set up</div>
             <ol class="jump">
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3543" target="_blank" rel="noopener"><span class="ts">59:03</span><span class="tx"><span class="nm">Getting into Canvas</span><span class="de">A walkthrough from csumb.edu/dashboard through your OtterID and two-factor sign-in. Start here if you are new to CSUMB.</span></span><span class="rt">~2 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3667" target="_blank" rel="noopener"><span class="ts">61:07</span><span class="tx"><span class="nm">How this course was built</span><span class="de">This course was built with AI help and edited by hand. If something reads wrong to you, say so &mdash; that feedback is wanted.</span></span><span class="rt">~1 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3720" target="_blank" rel="noopener"><span class="ts">62:00</span><span class="tx"><span class="nm">A tour of the course home page</span><span class="de">How the weeks open and close, where the course-design pages live, and how to bookmark a spot and leave yourself notes.</span></span><span class="rt">~2 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3845" target="_blank" rel="noopener"><span class="ts">64:05</span><span class="tx"><span class="nm">The virtual labs</span><span class="de">A first look at the simulation tools you will build and test models with.</span></span><span class="rt">~1 min</span></a></li>
-                <li class="star"><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=3905" target="_blank" rel="noopener"><span class="ts">65:05</span><span class="tx"><span class="nm">Your two things to do</span><span class="de">Join the class on Slack, and set up your CST286 AI Dojo &mdash; with the three ways to get an AI account, and why the choice is yours.</span></span><span class="rt">~3 min</span></a></li>
-                <li><a class="jump" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e1878a02-d94b-43f2-8d1f-b4b100120c1b&amp;start=4145" target="_blank" rel="noopener"><span class="ts">69:05</span><span class="tx"><span class="nm">What the first two weeks are for</span><span class="de">Weeks 1 and 2 are orientation. The aim is that by the end of next week you are ready to run at your own speed.</span></span><span class="rt">~1 min</span></a></li>
+                <li><button type="button" class="jump" data-t="3543"><span class="ts">59:03</span><span class="tx"><span class="nm">Getting into Canvas</span><span class="de">A walkthrough from csumb.edu/dashboard through your OtterID and two-factor sign-in. Start here if you are new to CSUMB.</span></span><span class="rt">~2 min</span></button></li>
+                <li><button type="button" class="jump" data-t="3667"><span class="ts">61:07</span><span class="tx"><span class="nm">How this course was built</span><span class="de">This course was built with AI help and edited by hand. If something reads wrong to you, say so &mdash; that feedback is wanted.</span></span><span class="rt">~1 min</span></button></li>
+                <li><button type="button" class="jump" data-t="3720"><span class="ts">62:00</span><span class="tx"><span class="nm">A tour of the course home page</span><span class="de">How the weeks open and close, where the course-design pages live, and how to bookmark a spot and leave yourself notes.</span></span><span class="rt">~2 min</span></button></li>
+                <li><button type="button" class="jump" data-t="3845"><span class="ts">64:05</span><span class="tx"><span class="nm">The virtual labs</span><span class="de">A first look at the simulation tools you will build and test models with.</span></span><span class="rt">~1 min</span></button></li>
+                <li class="star"><button type="button" class="jump" data-t="3905"><span class="ts">65:05</span><span class="tx"><span class="nm">Your two things to do</span><span class="de">Join the class on Slack, and set up your CST286 AI Dojo &mdash; with the three ways to get an AI account, and why the choice is yours.</span></span><span class="rt">~3 min</span></button></li>
+                <li><button type="button" class="jump" data-t="4145"><span class="ts">69:05</span><span class="tx"><span class="nm">What the first two weeks are for</span><span class="de">Weeks 1 and 2 are orientation. The aim is that by the end of next week you are ready to run at your own speed.</span></span><span class="rt">~1 min</span></button></li>
             </ol>
 
             <div class="skipnote"><b>What is not listed.</b> The stretches in between are the Human Bingo activity, the breakout rounds and the getting-everyone-connected work &mdash; worth being in, not worth watching back. We do a fuller version of the course conversation in person on Wednesday.</div>
@@ -117,5 +120,41 @@ li.star a.jump .nm::after { content: " \2605"; color: var(--check); font-size: 1
 
         </div>
 
+        <script>
+        /* Section clicks reload the Panopto embed at that timestamp.
+           Panopto applies &start= when playback begins, so &autoplay=true goes with it;
+           if the browser blocks autoplay the player still opens AT the section — one press of
+           play and it starts there. */
+        (function () {
+          var vid  = document.getElementById('vid');
+          var now  = document.getElementById('now');
+          var base = vid.getAttribute('src').replace(/&(autoplay|start)=[^&]*/g, '');
+
+          function fmt(s) {
+            var m = Math.floor(s / 60), r = s % 60;
+            return m + ':' + (r < 10 ? '0' : '') + r;
+          }
+
+          Array.prototype.forEach.call(document.querySelectorAll('button.jump'), function (b) {
+            b.addEventListener('click', function () {
+              var t    = parseInt(b.getAttribute('data-t'), 10);
+              var name = b.querySelector('.nm').textContent.replace(/\s*★\s*$/, '');
+
+              vid.src = base + '&autoplay=true&start=' + t;
+
+              Array.prototype.forEach.call(document.querySelectorAll('button.jump'), function (o) {
+                o.classList.remove('pick');
+              });
+              b.classList.add('pick');
+
+              now.className = 'now on';
+              now.innerHTML = 'Playing <b>' + name + '</b>, from ' + fmt(t) +
+                '. <span class="hint">If the video does not start on its own, press play &mdash; it will begin at this section.</span>';
+
+              vid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+          });
+        })();
+        </script>
     </body>
 </html>
