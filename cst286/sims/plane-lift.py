@@ -1,7 +1,7 @@
 Web VPython 3.2
 # How a plane stays up  -  CST286 Explore Physics Loop
 # The stage cards on the course page tell you which line to change.
-# Lines marked  # <-- change this  are the ones to edit. Reload the page to reset.
+# Lines marked  # <-- change this  are the ones to edit. The Reset button brings this original back.
 
 speed = 60          # airspeed in m/s. A small plane cruises near 60              # <-- change this
 angle = 5           # angle of attack in degrees. Try 0, 5, 10, 20                # <-- change this
@@ -36,12 +36,16 @@ vy = 0
 t = 0
 dt = 0.02
 while t < 30 and plane.pos.y > 0:
-    rate(50)
-    effective_angle = angle - degrees(atan(vy / speed))            # climbing meets the air more head-on, so the working angle drops
-    lift = 0.5 * rho * speed**2 * wing_area * lift_coefficient(effective_angle)
-    weight = mass * g
-    vy = vy + ((lift - weight) / mass) * dt                        # F = m a in the vertical direction only
-    plane.pos = plane.pos + vector(speed * dt, vy * dt, 0)
+    rate(25)                          # one drawn frame...
+    for i in range(2):                # ...carries two physics steps
+        effective_angle = angle - degrees(atan(vy / speed))        # climbing meets the air more head-on, so the working angle drops
+        lift = 0.5 * rho * speed**2 * wing_area * lift_coefficient(effective_angle)
+        weight = mass * g
+        vy = vy + ((lift - weight) / mass) * dt                    # F = m a in the vertical direction only
+        plane.pos = plane.pos + vector(speed * dt, vy * dt, 0)
+        t = t + dt
+        if plane.pos.y <= 0:
+            break
     body.pos = plane.pos - vector(4, 0, 0)
     scene.camera.pos = plane.pos + vector(0, 0, 60)
     lift_arrow.pos = plane.pos
@@ -51,6 +55,5 @@ while t < 30 and plane.pos.y > 0:
     height.plot(t, plane.pos.y)
     lift_c.plot(t, lift)
     weight_c.plot(t, weight)
-    t = t + dt
 
 print("After", round(t, 1), "s: height", round(plane.pos.y, 1), "m, climbing at", round(vy, 2), "m/s")

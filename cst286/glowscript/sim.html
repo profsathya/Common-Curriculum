@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 &mdash; Web VPython model</title>
+<link type="text/css" href="jquery-ui.custom.css" rel="stylesheet">
+<link type="text/css" href="ide.css" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: #fff; color: #2D3B45; }
+  .wrap { display: flex; flex-direction: column; height: 100%; }
+  .bar { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-bottom: 1px solid #C7CDD1; background: #F5F5F5; flex-wrap: wrap; }
+  .bar button { font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 5px; cursor: pointer; border: 1px solid #0374B5; background: #0374B5; color: #fff; }
+  .bar button.secondary { background: #fff; color: #0374B5; }
+  .bar .hint { font-size: 12px; color: #6B7780; }
+  #gserrors { flex: 0 0 auto; font-family: Verdana, sans-serif; font-size: 12.5px; color: #c00; padding: 0 10px; }
+  #gserrors p { margin: 6px 0; }
+  .panes { flex: 1 1 auto; display: flex; min-height: 0; }
+  .pane { min-width: 0; min-height: 0; overflow: auto; }
+  .pane.left { flex: 0 0 44%; border-right: 1px solid #C7CDD1; display: flex; }
+  .pane.right { flex: 1 1 auto; }
+  #edit { flex: 1 1 auto; border: 0; outline: none; resize: none; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; line-height: 1.45; padding: 8px 10px; white-space: pre; color: #1a2733; min-height: 100%; box-sizing: border-box; }
+  @media (max-width: 899px) {
+    .panes { flex-direction: column; }
+    .pane.left { flex: 0 0 235px; border-right: 0; border-bottom: 1px solid #C7CDD1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <button id="runbtn" type="button">&#9654; Run</button>
+    <button id="resetbtn" type="button" class="secondary">Reset to original</button>
+    <span class="hint">Edit any line on the left, then press Run. Reset brings the original code back.</span>
+  </div>
+  <div id="gserrors"></div>
+  <div class="panes">
+    <div class="pane left"><textarea id="edit" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Program code"></textarea></div>
+    <div class="pane right" id="glows"></div>
+  </div>
+</div>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="RSrun.3.2.min.js"></script>
+<script type="text/javascript" src="glow.3.2.min.js" charset="UTF-8"></script>
+<script>
+// CST286 self-hosted Web VPython runner, adapted from GlowScript Offline
+// (github.com/vpython/glowscript, MIT license). The program source lives in
+// ../sims/<name>.py; ?sim=<name> picks it. Compile-and-run logic follows
+// GlowScript.html's localCompile/ready/runprog. (No 'use strict' here: the compiled
+// program is eval'ed directly and must define __main__ in this scope, which strict-mode
+// eval would prevent.)
+var gsversion = '3.2';
+var edit = document.getElementById('edit');
+var gserrors = document.getElementById('gserrors');
+var glows = document.getElementById('glows');
+var original = '';
+var params = new URLSearchParams(location.search);
+var sim = (params.get('sim') || '').replace(/[^a-z0-9_-]/g, '');
+
+function showError(msg) { gserrors.innerHTML = '<p>' + msg + '</p>'; }
+
+function localCompile(ready) {
+    gserrors.innerHTML = '';
+    window.glowscript_compile = undefined;
+    $.ajax({ url: 'RScompiler.' + gsversion + '.min.js', dataType: 'script', cache: true }).done(function () {
+        var embedScript;
+        try {
+            embedScript = window.glowscript_compile(edit.value, { lang: 'vpython', version: gsversion });
+        } catch (err) {
+            var feedback = err.toString();
+            if (err.cursor && err.source) {
+                var c = err.cursor;
+                while (c > 0 && err.source[c - 1] != '\n') c--;
+                feedback += '<br>' + err.source.substr(c).split('\n')[0];
+            }
+            showError(feedback);
+            return;
+        }
+        ready(embedScript);
+    }).fail(function () { showError('Could not load the compiler. Reload the page and try again.'); });
+}
+
+async function runprog(prog) {
+    try {
+        eval(prog);
+        await __main__();
+    } catch (err) {
+        if (err && /canvas/i.test(String(err))) return; // an earlier run's loop losing its canvas is not the student's error
+        showError(String(err));
+    }
+}
+
+function ready(program) {
+    glows.innerHTML = '';
+    glows.innerHTML = '<div id="glowscript" class="glowscript"></div>';
+    window.__context = { glowscript_container: $('#glowscript') };
+    runprog(program);
+}
+
+function runCode() { localCompile(ready); }
+
+document.getElementById('runbtn').addEventListener('click', runCode);
+document.getElementById('resetbtn').addEventListener('click', function () {
+    edit.value = original;
+    gserrors.innerHTML = '';
+    runCode();
+});
+
+if (!sim) {
+    showError('No model named. Open this page as sim.html?sim=&lt;name&gt;.');
+} else {
+    fetch('../sims/' + sim + '.py').then(function (r) {
+        if (!r.ok) { throw new Error('not found'); }
+        return r.text();
+    }).then(function (text) {
+        original = text;
+        edit.value = text;
+        runCode();
+    }).catch(function () {
+        showError('Could not load the model "' + sim + '". If you opened this file straight from disk, it needs to be served from the course site to load its code.');
+    });
+}
+</script>
+</body>
+</html>

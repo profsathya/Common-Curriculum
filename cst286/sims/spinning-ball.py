@@ -1,7 +1,7 @@
 Web VPython 3.2
 # Why a spinning ball curves  -  CST286 Explore Physics Loop
 # The stage cards on the course page tell you which line to change.
-# Lines marked  # <-- change this  are the ones to edit. Reload the page to reset.
+# Lines marked  # <-- change this  are the ones to edit. The Reset button brings this original back.
 
 spin = 0            # turns per second. 0 = no spin. Try 5, 10, -10          # <-- change this
 speed = 25          # launch speed in m/s. A hard kick is about 25 to 30      # <-- change this
@@ -30,15 +30,18 @@ drift = gcurve(color=color.red)
 t = 0
 dt = 0.005
 while ball.pos.y >= radius:
-    rate(200)
-    v = ball.v
-    F = mass * g                                                   # gravity
-    if drag_on:
-        F = F - 0.5 * rho * Cd * area * mag(v) * v                 # drag: pushes against the motion, grows with speed squared
-    F = F + 0.5 * rho * area * radius * cross(omega, v)            # Magnus: sideways to both the spin axis and the motion
-    ball.v = v + (F / mass) * dt                                   # F = m a, taken one small step at a time
-    ball.pos = ball.pos + ball.v * dt
+    rate(50)                          # one drawn frame...
+    for i in range(4):                # ...carries four small physics steps
+        v = ball.v
+        F = mass * g                                               # gravity
+        if drag_on:
+            F = F - 0.5 * rho * Cd * area * mag(v) * v             # drag: pushes against the motion, grows with speed squared
+        F = F + 0.5 * rho * area * radius * cross(omega, v)        # Magnus: sideways to both the spin axis and the motion
+        ball.v = v + (F / mass) * dt                               # F = m a, taken one small step at a time
+        ball.pos = ball.pos + ball.v * dt
+        t = t + dt
+        if ball.pos.y < radius:
+            break
     drift.plot(t, ball.pos.z)
-    t = t + dt
 
 print("Landed after", round(t, 2), "s at x =", round(ball.pos.x, 1), "m, drifted sideways z =", round(ball.pos.z, 2), "m")
