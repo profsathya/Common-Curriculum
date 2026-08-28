@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CST286 &mdash; Explore Physics Loop</title>
+        <style>:root { --blue: #0374B5; --blue-dark: #0a5a8a; --text: #2D3B45; --muted: #6B7780; --border: #C7CDD1; --border-light: #E8EAEC; --modhead: #F5F5F5; --goal-bg: #F3F8FB; --goal-border: #0374B5; --check-bg: #F2FAF5; --check-border: #0B874B; --check: #0B874B; --warn: #9B6A00; --teal: #0d9488; --teal-light: #f0fdfa; --font: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; } * { box-sizing: border-box; } html, body { margin: 0; padding: 0; } body { font-family: var(--font); color: var(--text); background: #fff; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; } a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; color: var(--blue-dark); } .page { max-width: 1040px; margin: 0 auto; padding: 22px 22px 56px; } .draft { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 5px; padding: 10px 13px; margin-bottom: 18px; font-size: 12.5px; color: #5e4a18; display: flex; gap: 8px; align-items: flex-start; } .draft svg { width: 15px; height: 15px; flex: 0 0 15px; margin-top: 2px; } .draft b { font-weight: 700; } .course-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 18px; } .course-header .eyebrow { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .7px; text-transform: uppercase; } .course-header h1 { font-size: 23px; font-weight: 700; margin: 3px 0 4px; } .course-header .sub { font-size: 14px; color: var(--text); font-weight: 600; } .course-header .lead { color: var(--muted); font-size: 13px; max-width: 690px; margin-top: 6px; } .cti-logo { height: 34px; width: auto; display: block; opacity: .9; } .cti-logo-fallback { display: none; font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: .3px; text-align: right; line-height: 1.2; } /* Program arc */.bigpic { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 20px; background: #fff; } details.bigpic > summary { list-style: none; cursor: pointer; } details.bigpic > summary::-webkit-details-marker { display: none; } .bigpic-head { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: #FCFDFE; border-radius: 5px; } details.bigpic[open] > summary > .bigpic-head { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .bigpic-head:hover { background: #F5F9FB; } .bigpic-head .plus { flex: 0 0 18px; width: 18px; height: 18px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.bigpic[open] > summary > .bigpic-head .plus::after { content: "\2212"; } details.bigpic:not([open]) > summary > .bigpic-head .plus::after { content: "+"; } .bigpic-head .t { font-size: 14px; font-weight: 700; color: var(--text); } .bigpic-head .s { font-size: 12.5px; color: var(--muted); } .bigpic-body { padding: 14px; } .arc { margin: 0 0 16px; } .arc .arc-caption { font-size: 12.5px; color: var(--muted); margin: 0 0 9px; } .arc-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; } a.arc-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; background: #FCFDFE; color: var(--text); } a.arc-card:hover, a.arc-card:focus { z-index: 70; } a.arc-card > .bub { margin-top: 8px; } a.arc-card:hover > .gl > .bub, a.arc-card:focus > .gl > .bub { display: block; } @media (min-width:1001px){ .arc-grid > a:nth-child(n+5) .bub {  left: auto;  right: 0; } } @media (max-width:1000px) and (min-width:621px){ .arc-grid > a:nth-child(3n) .bub {  left: auto;  right: 0; } } @media (max-width:620px){ .arc-grid > a:nth-child(2n) .bub {  left: auto;  right: 0; } } a.arc-card:hover { text-decoration: none; border-color: var(--blue); background: #F7FBFD; } .arc-card .s { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); } .arc-card .nm { font-size: 13.5px; font-weight: 700; margin: 2px 0 1px; color: var(--blue-dark); line-height: 1.25; } .arc-card .th { font-size: 11.5px; color: var(--muted); line-height: 1.3; } .arc-card .who { font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 6px; } .arc-card .who b { color: var(--text); font-weight: 600; } .arc-card.build { background: #F3F8FB; border-color: #A8CBE0; } @media (max-width:1000px){ .arc-grid {  grid-template-columns: repeat(3,1fr); } } @media (max-width:620px){ .arc-grid {  grid-template-columns: repeat(2,1fr); } } /* Beyond the grade */.beyond { border: 1px solid var(--check-border); background: var(--check-bg); border-radius: 6px; padding: 13px 15px; margin: 0 0 22px; } .beyond .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--check); margin-bottom: 4px; } .beyond .hd { font-size: 15px; font-weight: 700; margin-bottom: 4px; } .beyond p { margin: 0 0 6px; font-size: 13px; color: #38503f; } .beyond p:last-child { margin-bottom: 0; } /* Modules */.module { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 16px; } details.module > summary { list-style: none; cursor: pointer; } details.module > summary::-webkit-details-marker { display: none; } .module-head { background: var(--modhead); border-bottom: 1px solid var(--border); padding: 11px 14px; display: flex; align-items: center; gap: 12px; border-radius: 3px 3px 0 0; } details.module:not([open]) > summary > .module-head { border-bottom: none; border-radius: 3px; } .module-head .name { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; } .module-head .tag { font-size: 12px; color: var(--muted); white-space: nowrap; } .module-head .chev { display: inline-block; font-size: 11px; color: var(--muted); transition: transform .15s ease; flex-shrink: 0; } details.module[open] > summary > .module-head .chev { transform: rotate(90deg); } .module-head:hover { background: #EFEFEF; } .goal { background: var(--goal-bg); border-left: 4px solid var(--goal-border); padding: 11px 14px; } .goal .label { font-size: 10.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; } .goal .text { font-size: 14px; color: var(--text); } .goal ul { margin: 4px 0 0; padding-left: 18px; } .goal li { margin: 2px 0; } .prereq { padding: 8px 14px 4px; color: var(--muted); font-size: 12.5px; display: flex; gap: 7px; align-items: flex-start; border-bottom: 1px solid var(--border-light); } .prereq svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .prereq b { color: var(--text); font-weight: 600; } .items { padding: 2px 0 4px; } .item { display: flex; gap: 11px; padding: 11px 14px 11px 26px; border-bottom: 1px solid var(--border-light); align-items: flex-start; } .item:last-child { border-bottom: none; } .item .ico { flex: 0 0 18px; margin-top: 1px; color: var(--muted); } .item .ico svg { width: 18px; height: 18px; display: block; } .item .body { flex: 1; min-width: 0; } .item .title { font-size: 14.5px; font-weight: 600; } .item .meta { color: var(--muted); font-size: 12px; margin-top: 2px; } .group-label { padding: 10px 14px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: #FAFBFC; border-bottom: 1px solid var(--border-light); } .group-label .gd { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); } .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: #7C8A93; border-radius: 3px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; } .badge.key { background: var(--blue); } .badge.check { background: #8B9AA5; } .badge.live { background: var(--check); } .badge.optional { background: #7C8A93; } .item.keyitem { background: var(--goal-bg); } .item.keyitem .ico { color: var(--blue); } .item.live { background: var(--check-bg); } .item.live .ico { color: var(--check); } .note { padding: 9px 14px; background: #FBF6EC; border-bottom: 1px solid var(--border-light); font-size: 12.5px; color: #5e4a18; display: flex; gap: 7px; align-items: flex-start; } .note svg { width: 14px; height: 14px; flex: 0 0 14px; margin-top: 2px; } .note b { font-weight: 700; } /* Canvas-page content (how-this-works, problem-spaces) */.crumb { font-size: 12px; color: var(--muted); margin-bottom: 12px; } .pagehead { border-bottom: 1px solid var(--border-light); padding-bottom: 14px; margin-bottom: 18px; } .pagehead .s { font-size: 11px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--teal); } .pagehead h1 { font-size: 22px; font-weight: 700; margin: 3px 0 5px; } .pagehead .dt { font-size: 13px; color: var(--muted); font-weight: 600; } .pagehead .lead { font-size: 13.5px; color: var(--muted); max-width: 700px; margin-top: 7px; } h2.sec { font-size: 16px; font-weight: 700; margin: 24px 0 9px; padding-bottom: 5px; border-bottom: 1px solid var(--border-light); } p.body { font-size: 13.5px; margin: 0 0 10px; } table.grades { border-collapse: collapse; width: 100%; margin: 10px 0 0; font-size: 13px; } table.grades th, table.grades td { border-bottom: 1px solid var(--border-light); padding: 6px 8px; text-align: left; } table.grades th { font-size: 10.5px; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); font-weight: 700; } table.grades td:first-child { font-weight: 700; width: 70px; } .ps-group { margin-bottom: 20px; } .ps-group h3 { font-size: 14px; font-weight: 700; color: var(--blue-dark); margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border-light); } .ps { border: 1px solid var(--border-light); border-radius: 5px; padding: 10px 13px; margin-bottom: 8px; } .ps .nm { font-size: 14px; font-weight: 700; } .ps .desc { font-size: 13px; color: var(--muted); margin-top: 2px; } .ps .goal-line { font-size: 12.5px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border-light); } .ps .goal-line b { color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; font-size: 10px; } .pagenav { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border-light); font-size: 13px; } .instructor { margin-top: 26px; background: #FAFBFC; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; text-align: center; } .instructor .nm { font-weight: 700; color: var(--text); margin-bottom: 3px; } .instructor .links { font-size: 12.5px; color: var(--muted); } .provenance { margin-top: 18px; border: 1px solid var(--border-light); border-radius: 6px; padding: 11px 14px; font-size: 11.5px; color: var(--muted); background: #FCFCFD; } .provenance b { color: var(--text); font-weight: 700; } .provenance ul { margin: 5px 0 0; padding-left: 18px; } .provenance li { margin: 2px 0; } /* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */.gl { display: inline; } /* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */.item .body, .goal li, .prereq, .note, p.body, .pagehead .lead, .course-header .lead, .ps .desc, .ps .goal-line, .beyond p, .arc-caption { position: relative; } .arc-card .gl { display: block; } .arc-card .gt { font: inherit; color: inherit; text-align: left; border-bottom: 1px dashed var(--blue); } .gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; } .gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; } .gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; } .bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-align: left; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; white-space: normal; } .gl:hover > .bub, .gl:focus-within > .bub { display: block; } .bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); } .bub .br { display: block; margin-bottom: 6px; color: var(--text); } .bub .br:last-child { margin-bottom: 0; } .bub .br i { font-style: normal; font-weight: 700; color: var(--muted); } @media print{ .bub {  display: none !important; } } .page-footer { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11.5px; flex-wrap: wrap; }
+        .feedback-note { margin: 22px 0 0; padding-top: 14px; border-top: 1px solid var(--border-light); font-size: 12.5px; color: var(--muted); text-align: center; }
+        .feedback-note a { color: var(--blue-dark); }
+ .page-footer img { height: 20px; opacity: .55; } .copywrap { position: relative; } .copybtn { position: absolute; top: 10px; right: 10px; z-index: 5; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: #0374B5; background: #fff; border: 1px solid #0374B5; border-radius: 4px; padding: 3px 10px; cursor: pointer; } .copybtn:hover { background: #F3F8FB; } .dojolink { display: inline-block; font-size: 14px; font-weight: 700; color: #fff; background: #0374B5; border-radius: 5px; padding: 9px 16px; } .dojolink:hover { background: #0a5a8a; text-decoration: none; color: #fff; } .keybox { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 6px; padding: 11px 14px; font-size: 13px; color: #5e4a18; margin: 0 0 10px; } .keybox code { background: #fff; }/* Route expanders — the two ways to do an assignment; both closed by default */details.route { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; } details.route > summary { list-style: none; cursor: pointer; padding: 11px 14px; display: flex; gap: 11px; align-items: flex-start; border-radius: 5px; } details.route > summary::-webkit-details-marker { display: none; } details.route > summary:hover { background: #F5F9FB; } details.route > summary:focus-visible { outline: 2px solid rgba(3,116,181,.45); outline-offset: -2px; } details.route[open] > summary { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .route .plus { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.route:not([open]) > summary .plus::after { content: "+"; } details.route[open] > summary .plus::after { content: "\2212"; } .route .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .route .rt { font-size: 14.5px; font-weight: 700; color: var(--text); } .route .rt .noai { font-weight: 400; color: var(--muted); } .route .rd { font-size: 13px; color: var(--muted); } .route-body { padding: 13px 14px 3px; } @media print { details.route > summary .plus { display: none; } }</style>
+        <style>/* Explore Physics Loop — page-specific. Content lives in the markup below; the script at the foot only shows, hides, saves and talks to the AI proxy. */
+.why { font-size: 13.5px; margin: 0 0 10px; }
+.topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 8px 0 16px; }
+.topic-card { text-align: left; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: 12px 14px; cursor: pointer; color: var(--text); }
+.topic-card:hover, .topic-card:focus-visible { border-color: var(--blue); outline: none; }
+.topic-card[aria-pressed="true"] { border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); background: var(--goal-bg); }
+.topic-card .tt { font-weight: 700; font-size: 14.5px; display: block; }
+.topic-card .tq { font-size: 13px; color: var(--muted); display: block; margin-top: 3px; line-height: 1.45; }
+.topic-card .tool { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--blue-dark); display: block; margin-top: 6px; }
+.panel[hidden] { display: none; }
+.sim { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: #fff; margin: 6px 0 8px; }
+.sim iframe { width: 100%; height: 640px; border: 0; display: block; }
+.sim .pending { padding: 40px 20px; text-align: center; color: var(--muted); font-size: 13.5px; }
+.simline { font-size: 12.5px; color: var(--muted); margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.simline a { color: var(--blue-dark); }
+.meet { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 0 0 14px; }
+@media (min-width: 900px) { .meet { grid-template-columns: 1fr 1fr 1fr; } }
+.meet .mb { border: 1px solid var(--border-light); border-radius: 6px; padding: 10px 12px; background: #FAFBFC; font-size: 13.5px; line-height: 1.5; }
+.meet .mb b.h { display: block; font-size: 11px; letter-spacing: .6px; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 4px; }
+.meet code, .step code, .cy code { background: #F3F4F6; border: 1px solid var(--border-light); border-radius: 3px; padding: 0 4px; font-size: 12.5px; }
+.stage { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 12px; background: #fff; }
+.stage[hidden] { display: none; }
+.stage-head { padding: 10px 14px; background: var(--modhead); border-bottom: 1px solid var(--border-light); font-weight: 700; font-size: 14.5px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.stage-head .aim { font-weight: 400; color: var(--muted); font-size: 13px; }
+.stage-body { padding: 12px 14px 4px; }
+.step { margin: 0 0 10px; font-size: 13.5px; line-height: 1.5; }
+.step b.k { color: var(--blue-dark); }
+textarea.box { width: 100%; min-height: 120px; font-family: inherit; font-size: 13.5px; line-height: 1.5; padding: 9px 10px; border: 1px solid var(--border); border-radius: 5px; resize: vertical; color: var(--text); }
+textarea.box.short { min-height: 60px; }
+textarea.box:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+.count { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+.count.ok { color: #1a7f4b; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 4px 0 10px; }
+.btn { font-family: inherit; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 5px; cursor: pointer; border: 1px solid var(--blue); color: var(--blue); background: #fff; }
+.btn.primary { background: var(--blue); color: #fff; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; }
+.aibox { display: none; margin: 4px 0 10px; padding: 12px 14px; background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 6px; font-size: 13.5px; line-height: 1.55; }
+.aibox .lbl { font-size: 11px; letter-spacing: .6px; text-transform: uppercase; color: var(--blue-dark); font-weight: 700; margin-bottom: 4px; }
+.aibox .err { color: #8a3b12; }
+details.cy { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; }
+details.cy > summary { list-style: none; cursor: pointer; padding: 9px 12px; display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; }
+details.cy > summary::-webkit-details-marker { display: none; }
+details.cy > summary .rt { font-weight: 700; } details.cy > summary .rd { color: var(--muted); font-size: 13px; }
+details.cy > summary .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+details.cy > summary .plus::after { content: "+"; }
+details.cy[open] > summary .plus::after { content: "\2212"; }
+details.cy .cy-body { padding: 4px 12px 8px; font-size: 13.5px; }
+details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-body li { margin: 0 0 6px; }
+.routes-note { font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+.nextline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 10px; }
+.nextline .hint { font-size: 12.5px; color: var(--muted); }
+.final { border: 1px solid var(--blue); }
+.summary-out { width: 100%; min-height: 220px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.45; padding: 10px; border: 1px solid var(--border); border-radius: 5px; white-space: pre; overflow: auto; }
+.status { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; }
+.status.ok { color: #1a7f4b; }
+.namerow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 10px; font-size: 13.5px; }
+.namerow input { font-family: inherit; font-size: 13.5px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 5px; min-width: 220px; }
+.storenote { font-size: 12.5px; color: #8a3b12; margin: 6px 0 0; display: none; }
+@media (prefers-reduced-motion: no-preference) { .stage { scroll-margin-top: 12px; } }
+@media print { .sim, .actions, .btn, .aibox, .topics { display: none !important; } .stage[hidden], .panel[hidden] { display: block !important; } textarea.box { border: 0; } }
+</style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="crumb">
+                <a href="home.html">CST286</a> &middot; Explore Physics Loop
+            </div>
+            <div class="pagehead">
+                <div class="s">CST286 &middot; Fall 2026 &middot; Week 2 &middot; Own your progress &middot; not graded</div>
+                <h1>Explore Physics Loop</h1>
+                <div class="dt">One round of the loop this course runs on &middot; about 40&ndash;60 minutes &middot; laptop, not phone</div>
+            </div>
+
+            <h2 class="sec">Why this exists</h2>
+<p class="body">Everything you will do in this course comes back to one loop: take something you wonder about, get a model of it running, change the model, say what you expect before you look, watch what actually happens, and then explain it in your own words &mdash; well enough that someone could push back. That is what physicists do, it is what engineers do, and it is what you will be doing on your own topic in a few weeks. This page is one round of that loop with the model already built for you, so the only thing you have to bring is curiosity and honesty about what you see.</p>
+<p class="body">Nothing here is graded. What you write is for you, and the summary you copy at the end goes into the Week 2 own-your-progress box on Canvas so I can see how the loop is working for you and make it better. Do it in one sitting if you can; it takes about the length of a movie&rsquo;s first act.</p>
+
+            <h2 class="sec">1 &middot; Pick one</h2>
+<p class="body">Pick the one you have actually wondered about. Every card goes to the same depth and takes the same time, so the only reason to choose is that the question pulls at you. These are the ones that came up in class this week and in our Zoom check-ins.</p>
+            <div class="topics" role="group" aria-label="Choose a topic">
+                <button type="button" class="topic-card" data-topic="ball" aria-pressed="false">
+                    <span class="tt">Why a spinning ball curves</span>
+                    <span class="tq">A free kick bends around the wall. A curveball drops. Why does spin change where a ball goes?</span>
+                    <span class="tool">Web VPython &middot; you edit the code</span>
+                </button>
+                <button type="button" class="topic-card" data-topic="plane" aria-pressed="false">
+                    <span class="tt">How a plane stays up</span>
+                    <span class="tq">A thousand kilograms of metal, held up by air. What is the air actually doing, and when does it stop doing it?</span>
+                    <span class="tool">Web VPython &middot; you edit the code</span>
+                </button>
+                <button type="button" class="topic-card" data-topic="phone" aria-pressed="false">
+                    <span class="tt">How your phone knows which way is up</span>
+                    <span class="tq">Your screen rotates, your step counter counts, a game knows you tilted. Two tiny sensors, each wrong in its own way.</span>
+                    <span class="tool">Web VPython &middot; you edit the code</span>
+                </button>
+            </div>
+            <p class="routes-note" id="pick-hint">Your choice and everything you write are saved in this browser as you go. The copy you paste into Canvas at the end is the one that lasts.</p>
+
+            <!-- ============================================================ TOPIC: spinning ball -->
+            <section class="panel" id="panel-ball" data-topic="ball" hidden>
+            <h2 class="sec">2 &middot; Meet it &mdash; why a spinning ball curves</h2>
+<p class="body">Below is a running model of a soccer ball kicked hard along the white line, seen from just behind the kicker. Press <b>Run</b> (the play button) to watch it once as it is. You can edit any line of the code in the left panel and press Run again; nothing you break is permanent &mdash; reloading this page puts the original back.</p>
+            <div class="sim">
+                <iframe title="Web VPython simulation: a spinning ball in flight" data-src="https://trinket.io/embed/glowscript/TRINKET_BALL?showInstructions=true" allowfullscreen></iframe>
+            </div>
+            <div class="simline">
+                <span>If the model does not load here, <a data-open="https://trinket.io/glowscript/TRINKET_BALL" href="https://trinket.io/glowscript/TRINKET_BALL" target="_blank" rel="noopener">open it in a new tab</a>.</span>
+                <span><a href="sims/spinning-ball.py" target="_blank" rel="noopener">The code as plain text</a></span>
+                <span>Reset: reload this page.</span>
+            </div>
+            <div class="meet">
+                <div class="mb"><b class="h">What you are looking at</b>A ball kicked at 25 m/s, 15 degrees up, along the white line. The yellow trail is its path. The graph plots how far the ball has drifted <i>sideways</i> as time passes. With <code>spin = 0</code> the trail stays on the line and the graph stays flat. The line printed under the graph tells you where it landed.</div>
+                <div class="mb"><b class="h">The physics in one breath</b>A spinning ball drags a thin layer of air around with it. On one side that layer moves <i>with</i> the oncoming air, on the other side <i>against</i> it. The air ends up pushing harder on the slow side than on the fast side, so the ball gets a sideways shove &mdash; the Magnus force. More spin, or more speed, means a bigger shove.</div>
+                <div class="mb"><b class="h">The math in one line</b><code>F = F + 0.5 * rho * area * radius * cross(omega, v)</code> &mdash; <code>omega</code> is the spin (how fast, and about which axis), <code>v</code> is the velocity, and <code>cross</code> makes a force at right angles to both, which is why it is sideways. The next line, <code>ball.v = v + (F / mass) * dt</code>, is Newton&rsquo;s F = ma taken one tiny step at a time. That loop is the whole model.</div>
+            </div>
+
+            <h2 class="sec">3 &middot; Three stages</h2>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+
+            <article class="stage" data-stage="1">
+                <div class="stage-head"><span>Stage 1 of 3 &middot; See it move</span><span class="aim">Aim: say one true thing about why spin bends the path</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Before you change anything you need to know what &ldquo;normal&rdquo; looks like &mdash; otherwise you cannot tell what your change did.</p>
+                    <p class="step"><b class="k">Do.</b> Press Run with <code>spin = 0</code> and watch the trail and the graph. Then find the line <code>spin = 0</code> and change it to <code>spin = 5</code>. Before you press Run again, write your prediction.</p>
+                    <label class="step" for="ball-1-predict"><b class="k">Predict first.</b> Which way will the ball curve, and roughly how far sideways will it land &mdash; a hand&rsquo;s width, a metre, several metres?</label>
+                    <textarea class="box short" id="ball-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The trail from behind, and the red line on the graph &mdash; is it straight, gently curved, or bending harder as it goes? What does the printed line say for z?</p>
+                    <label class="step" for="ball-1-explain"><b class="k">Explain.</b> What changed when you added spin, and why does spin make a sideways push at all? Use the numbers the model printed and what the graph&rsquo;s shape tells you.</label>
+                    <textarea class="box" id="ball-1-explain" data-field="explain" placeholder="What happened, and why do you think so? Point at the graph and the code..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>Did the ball curve to the left or the right of the line? What single change in the code would flip it?</li>
+                                <li>Is the graph a straight line or does it bend more and more? What does that say about whether the sideways push is a one-time shove or keeps acting the whole flight?</li>
+                                <li>Look at the Magnus line: the force is at right angles to which two things? So which direction can it never push?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> with spin = 5 the red line bends away from zero and keeps bending &mdash; the ball lands one to two metres off the line, to the left as seen from behind the kicker. Negative spin sends it the other way.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 2</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="2" hidden>
+                <div class="stage-head"><span>Stage 2 of 3 &middot; Change the physics</span><span class="aim">Aim: a cause-and-effect sentence that names a force</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> One number changed the picture. Now change a <i>rule</i>. You will take the air out of the model and find out which parts of the flight belong to gravity and which belong to the air.</p>
+                    <p class="step"><b class="k">Do.</b> Set <code>spin = 10</code>. Find <code>drag_on = True</code> and change it to <code>drag_on = False</code>. Predict, then Run. Then put drag back on, change <code>speed = 25</code> to <code>speed = 12</code> (a soft pass), predict again, and Run.</p>
+                    <label class="step" for="ball-2-predict"><b class="k">Predict first.</b> With no drag, does the ball go further, and does it curve more or less? With the soft kick and the same spin, does it curve more or less than the hard kick did?</label>
+                    <textarea class="box short" id="ball-2-predict" data-field="predict" placeholder="Two predictions, before you run..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The landing x and z that the model prints for each run; how high the graph gets; how sharply the trail bends compared with how far the ball travelled.</p>
+                    <label class="step" for="ball-2-explain"><b class="k">Explain.</b> Which prediction held and which missed? Say what drag does to the flight and what speed does to the curve &mdash; and point to the line in the code that makes each of those true.</label>
+                    <textarea class="box" id="ball-2-explain" data-field="explain" placeholder="What drag does, what speed does, and where in the code each one lives..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>Drag is written as <code>mag(v) * v</code>. When the speed doubles, what happens to that term &mdash; double, or four times?</li>
+                                <li>The Magnus term has <code>cross(omega, v)</code> in it. Does the sideways force grow with speed, shrink with it, or ignore it?</li>
+                                <li>Divide sideways drift z by distance x for the hard kick and for the soft one. Which ball curved more <i>per metre travelled</i>? Why does a slow ball have more time to be pushed over each metre?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> without drag the ball flies further (about 30 m instead of about 24) and the drift is a little larger. The soft kick lands much closer and drifts fewer metres in total, but its path bends more sharply for the distance it covers.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 3</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="3" hidden>
+                <div class="stage-head"><span>Stage 3 of 3 &middot; Find the edge</span><span class="aim">Aim: say what the model leaves out</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Every model leaves something out. Finding where it stops matching the world is how you learn what it actually contains &mdash; and it is the question you will be asked about your own models later.</p>
+                    <p class="step"><b class="k">Do.</b> Set <code>spin = 60</code> &mdash; a number no foot can produce &mdash; predict, and Run. Then put spin back to 10 and change <code>radius = 0.11</code> to <code>radius = 0.02</code>: a ping-pong ball&rsquo;s size, still weighing 0.43 kg, which is deliberately impossible. Predict, and Run.</p>
+                    <label class="step" for="ball-3-predict"><b class="k">Predict first.</b> Will the ball do something a real ball never does? What, exactly?</label>
+                    <textarea class="box short" id="ball-3-predict" data-field="predict" placeholder="What will break, and how..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The trail and the printed numbers. Does anything look physically impossible &mdash; a loop, a hover, a boomerang? What did the tiny heavy ball do?</p>
+                    <label class="step" for="ball-3-explain"><b class="k">Explain.</b> Where did the model stop matching the real world, and what is it missing? Name one thing you would add to the code, or one thing you would measure with a real ball, to check it.</label>
+                    <textarea class="box" id="ball-3-explain" data-field="explain" placeholder="Where it broke, what is missing, and what you would add or measure..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>At spin = 60 the sideways force in the code is several times the ball&rsquo;s weight. What does real air do around a ball spinning that fast that this formula does not know about?</li>
+                                <li>The formula has no upper limit on the sideways push. Real balls do. Where in the code would you put a limit, and what would you set it to?</li>
+                                <li>What is missing entirely &mdash; the spin slowing down during flight, wind, the ball&rsquo;s seams and roughness, the bounce?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at spin = 60 the trail swings round in a wide hook and the drift graph races off &mdash; a boomerang, not a free kick. The tiny heavy ball barely feels the air at all: almost no drag, almost no curve, a plain arc.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to the final reflection</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+            </section>
+
+            <!-- ============================================================ TOPIC: plane -->
+            <section class="panel" id="panel-plane" data-topic="plane" hidden>
+            <h2 class="sec">2 &middot; Meet it &mdash; how a plane stays up</h2>
+<p class="body">Below is a running model of a wing flying to the right at a steady airspeed, starting 100 m up. Press <b>Run</b> (the play button) to watch it once as it is. You can edit any line of the code in the left panel and press Run again; nothing you break is permanent &mdash; reloading this page puts the original back.</p>
+            <div class="sim">
+                <iframe title="Web VPython simulation: a wing in flight" data-src="https://trinket.io/embed/glowscript/TRINKET_PLANE?showInstructions=true" allowfullscreen></iframe>
+            </div>
+            <div class="simline">
+                <span>If the model does not load here, <a data-open="https://trinket.io/glowscript/TRINKET_PLANE" href="https://trinket.io/glowscript/TRINKET_PLANE" target="_blank" rel="noopener">open it in a new tab</a>.</span>
+                <span><a href="sims/plane-lift.py" target="_blank" rel="noopener">The code as plain text</a></span>
+                <span>Reset: reload this page.</span>
+            </div>
+            <div class="meet">
+                <div class="mb"><b class="h">What you are looking at</b>A white wing with a body, flying right at 60 m/s. The yellow arrow is lift, the red arrow is weight. The top graph is the plane&rsquo;s height; the bottom graph draws lift and weight together so you can see when they match and when they do not. The line printed under the graphs tells you how fast it is climbing or sinking at the end.</div>
+                <div class="mb"><b class="h">The physics in one breath</b>A wing tilted slightly into the oncoming air pushes air downward, and the air pushes the wing up. That push is lift. It grows with the tilt (the <i>angle of attack</i>) and with the <i>square</i> of the speed &mdash; twice the speed, four times the lift. Past about 15 degrees the air can no longer follow the top of the wing, it breaks away, and most of the lift disappears. That is a stall.</div>
+                <div class="mb"><b class="h">The math in one line</b><code>lift = 0.5 * rho * speed**2 * wing_area * lift_coefficient(effective_angle)</code> &mdash; air density, times speed squared, times wing area, times a number that depends on the angle. Then <code>vy = vy + ((lift - weight) / mass) * dt</code> is F = ma in the up-and-down direction only, one small step at a time. The <code>effective_angle</code> line is the clever part: a climbing wing meets the air more head-on, so its working angle drops.</div>
+            </div>
+
+            <h2 class="sec">3 &middot; Three stages</h2>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+
+            <article class="stage" data-stage="1">
+                <div class="stage-head"><span>Stage 1 of 3 &middot; See it move</span><span class="aim">Aim: say one true thing about where lift comes from</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Before you change anything you need to know what &ldquo;normal&rdquo; looks like &mdash; otherwise you cannot tell what your change did.</p>
+                    <p class="step"><b class="k">Do.</b> Press Run as it is (<code>speed = 60</code>, <code>angle = 5</code>) and watch the two graphs. Then change <code>angle = 5</code> to <code>angle = 0</code>. Before you press Run again, write your prediction.</p>
+                    <label class="step" for="plane-1-predict"><b class="k">Predict first.</b> With the wing perfectly flat to the air, does the plane drop like a stone, glide down gently, or hold its height?</label>
+                    <textarea class="box short" id="plane-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The shape of the height graph; the two arrows; and on the bottom graph, whether lift and weight ever meet.</p>
+                    <label class="step" for="plane-1-explain"><b class="k">Explain.</b> What happened at angle 0, and why did the plane not simply keep falling faster and faster? Look at the <code>effective_angle</code> line before you answer.</label>
+                    <textarea class="box" id="plane-1-explain" data-field="explain" placeholder="What happened, and why do you think so? Point at the graph and the code..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>At angle 0 the lift starts at zero &mdash; so where did the lift on the graph come from once the plane began to fall?</li>
+                                <li>When the height graph settles into a straight downhill line, what is true about lift and weight at that moment?</li>
+                                <li>Which way is &ldquo;into the wind&rdquo; for a wing that is sinking? Why does sinking raise the working angle?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at angle 5 the plane climbs and settles into a steady climb of about 2.5 m/s, with lift and weight meeting on the bottom graph. At angle 0 it sinks at first, lift appears as it sinks, and it settles into a steady glide down at about 2.5 m/s &mdash; again with lift equal to weight.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 2</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="2" hidden>
+                <div class="stage-head"><span>Stage 2 of 3 &middot; Change the physics</span><span class="aim">Aim: say what &ldquo;speed squared&rdquo; means for a pilot</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Speed sits in the lift line <i>squared</i>. Squared is a word until you watch what it does to a thousand kilograms of aeroplane.</p>
+                    <p class="step"><b class="k">Do.</b> Put <code>angle = 5</code> back. Change <code>speed = 60</code> to <code>speed = 30</code>. Predict, then Run. Then change it to <code>speed = 120</code>, predict, and Run.</p>
+                    <label class="step" for="plane-2-predict"><b class="k">Predict first.</b> Halving the speed &mdash; does the lift halve, quarter, or something else? Will the plane hold its height at 30 m/s? What will 120 m/s do?</label>
+                    <textarea class="box short" id="plane-2-predict" data-field="predict" placeholder="Two predictions, before you run..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The very first value of the lift line on the bottom graph, before the angle has time to adjust; then the height graph; then the printed climb or sink speed.</p>
+                    <label class="step" for="plane-2-explain"><b class="k">Explain.</b> What did &ldquo;speed squared&rdquo; do to lift, and what did the plane do about it? Then, in your own words: why does a plane have to go fast to take off?</label>
+                    <textarea class="box" id="plane-2-explain" data-field="explain" placeholder="What speed squared did, what the plane did, and why runways are long..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>Read the first lift value at 30 m/s and at 60 m/s, same angle. What is the ratio? What does that tell you about the <code>speed**2</code> in the code?</li>
+                                <li>At 30 m/s, is there <i>any</i> angle below the stall that makes enough lift for 1000 kg? Try 14. What is the slowest speed that still holds height at angle 14? (Pilots call it the stall speed.)</li>
+                                <li>An airliner weighs three hundred times this plane. Put that together with speed squared: why is a runway two kilometres long?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at 30 m/s the first lift value is a quarter of what it was at 60 (about 4,700 N against 19,000 N), well below the weight, and the plane settles into a sink of about 3 m/s. At 120 m/s the lift starts at four times, the plane climbs hard and settles into a climb near 9 m/s. At angle 14, height holds down to about 25 m/s and not below.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 3</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="3" hidden>
+                <div class="stage-head"><span>Stage 3 of 3 &middot; Find the edge</span><span class="aim">Aim: say what the model leaves out</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Every model leaves something out. Pilots train for the edge of the envelope; this model has one edge built in, and it is worth finding what is on the other side of it.</p>
+                    <p class="step"><b class="k">Do.</b> Set <code>speed = 30</code> and <code>angle = 14</code>. Predict, Run. Then change to <code>angle = 20</code>. Predict, Run. Then put angle back to 14 and change <code>mass = 1000</code> to <code>mass = 3000</code>. Predict, Run.</p>
+                    <label class="step" for="plane-3-predict"><b class="k">Predict first.</b> More tilt than 14 degrees &mdash; more lift, or something worse? Three times the mass at the same speed &mdash; can the plane hold height at all?</label>
+                    <textarea class="box short" id="plane-3-predict" data-field="predict" placeholder="What will break, and how..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The lift line on the bottom graph when the stall hits; the height graph; the printed sink speed. Does the plane ever recover on its own?</p>
+                    <label class="step" for="plane-3-explain"><b class="k">Explain.</b> What does the model say happens past the stall, and why does the plane stay stalled once it starts to fall? Then say what a real wing does that this model simplifies, and name one thing you would add.</label>
+                    <textarea class="box" id="plane-3-explain" data-field="explain" placeholder="Where it broke, what is missing, and what you would add..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>The stall is one <code>if</code> line: past 15 degrees the lift drops to about a third and stays there. What does real air do &mdash; is the drop that sudden, and does anything come back?</li>
+                                <li>Once the plane is falling, the working angle gets <i>bigger</i>, not smaller. Why does that trap the plane in the stall?</li>
+                                <li>This model has no drag, no engine and no way to pitch the nose down. Which missing piece is the one a pilot actually uses to recover?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at 30 m/s and 14 degrees the plane holds and climbs gently. At 20 degrees the lift line collapses at once, the plane sinks, and it never recovers &mdash; the working angle only grows as it falls. At 3000 kg and 14 degrees, even full lift is short of the weight; it sinks, the angle rises past the stall, and it falls out of the sky.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to the final reflection</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+            </section>
+
+            <!-- ============================================================ TOPIC: phone -->
+            <section class="panel" id="panel-phone" data-topic="phone" hidden>
+            <h2 class="sec">2 &middot; Meet it &mdash; how your phone knows which way is up</h2>
+<p class="body">Below is a running model of a phone being tilted to 40 degrees and back over twelve seconds. The dark phone is the truth. The cyan ghost is where the phone <i>thinks</i> it is. Press <b>Run</b> (the play button) to watch it once as it is. You can edit any line of the code in the left panel and press Run again; nothing you break is permanent &mdash; reloading this page puts the original back.</p>
+            <div class="sim">
+                <iframe title="Web VPython simulation: a phone's tilt sensors" data-src="https://trinket.io/embed/glowscript/TRINKET_PHONE?showInstructions=true" allowfullscreen></iframe>
+            </div>
+            <div class="simline">
+                <span>If the model does not load here, <a data-open="https://trinket.io/glowscript/TRINKET_PHONE" href="https://trinket.io/glowscript/TRINKET_PHONE" target="_blank" rel="noopener">open it in a new tab</a>.</span>
+                <span><a href="sims/phone-tilt.py" target="_blank" rel="noopener">The code as plain text</a></span>
+                <span>Reset: reload this page.</span>
+            </div>
+            <div class="meet">
+                <div class="mb"><b class="h">What you are looking at</b>The graph draws four lines: the true tilt (black), what the accelerometer alone would say (red), what the gyroscope alone would say (blue), and the blend a real phone uses (green). At the start the blend trusts the accelerometer completely, so the green line sits on the red one. The printed line at the end tells you how far off each answer is once the phone is back flat.</div>
+                <div class="mb"><b class="h">The physics in one breath</b>Your phone has two tiny sensors. The <b>accelerometer</b> is a speck of silicon on springs; gravity pulls it, so it can tell which way &ldquo;down&rdquo; is &mdash; but any shake moves it too, and it cannot tell a shake from gravity. The <b>gyroscope</b> feels how fast the phone is <i>turning</i>; add up rate &times; time and you get the angle &mdash; but a tiny built-in error, added up for seconds, becomes a big one. Each is wrong in its own way, so the phone blends them.</div>
+                <div class="mb"><b class="h">The math in one line</b><code>tilt_acc = degrees(atan2(ax, ay))</code> reads the angle gravity seems to come from. <code>tilt_gyro = tilt_gyro + (true_rate + gyro_drift) * dt</code> is integration &mdash; adding up tiny steps &mdash; the same move the other models make with F = ma. The blend line, <code>trust_gyro * (...) + (1 - trust_gyro) * tilt_acc</code>, is what real phones do: mostly gyro, a little accelerometer.</div>
+            </div>
+
+            <h2 class="sec">3 &middot; Three stages</h2>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+
+            <article class="stage" data-stage="1">
+                <div class="stage-head"><span>Stage 1 of 3 &middot; See it move</span><span class="aim">Aim: say which sensor a shake fools, and why</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Before you change anything you need to know what &ldquo;normal&rdquo; looks like &mdash; otherwise you cannot tell what your change did.</p>
+                    <p class="step"><b class="k">Do.</b> Press Run as it is (<code>shake = 0</code>, <code>gyro_drift = 0.5</code>, <code>trust_gyro = 0.0</code>) and watch the four lines. Then change <code>shake = 0</code> to <code>shake = 3</code>. Before you press Run again, write your prediction.</p>
+                    <label class="step" for="phone-1-predict"><b class="k">Predict first.</b> When the phone shakes, which line goes wrong &mdash; the accelerometer (red) or the gyroscope (blue)? By how much &mdash; a degree, ten, more?</label>
+                    <textarea class="box short" id="phone-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The red line; the ghost phone; and the three numbers printed at the end. Which one is jittery and which one is smooth but wrong?</p>
+                    <label class="step" for="phone-1-explain"><b class="k">Explain.</b> What did the shake do to which sensor, and why did the other sensor not care? Then: why is the smooth blue line still off by a few degrees at the end?</label>
+                    <textarea class="box" id="phone-1-explain" data-field="explain" placeholder="What happened, and why do you think so? Point at the graph and the code..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>Look at <code>ax = g * sin(a) + shake * sin(40 * t)</code>. What two different things are mixed into that single number?</li>
+                                <li>From that one number alone, could the phone ever tell them apart? What would it need?</li>
+                                <li>The blue gyro line is smooth but ends off zero. How far off, and which line in the code put that error there, one small step at a time?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> with shake = 3 the red line jitters by up to fifteen degrees or so while the blue line stays smooth; the ghost phone shivers. The blue line ends about six degrees off &mdash; half a degree per second, for twelve seconds.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 2</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="2" hidden>
+                <div class="stage-head"><span>Stage 2 of 3 &middot; Change the physics</span><span class="aim">Aim: say what each percent of the blend buys</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Two sensors, each wrong in its own way. The interesting physics is not in either sensor &mdash; it is in the one line that combines them, and that line is what every phone, drone and rocket actually runs.</p>
+                    <p class="step"><b class="k">Do.</b> Set <code>shake = 3</code> and <code>gyro_drift = 2</code>. Change <code>trust_gyro = 0.0</code> to <code>trust_gyro = 0.98</code>. Predict, then Run. Then set <code>trust_gyro = 1.0</code>, predict, and Run.</p>
+                    <label class="step" for="phone-2-predict"><b class="k">Predict first.</b> With 98% gyro and 2% accelerometer, will the green line follow the truth, jitter like the red one, or drift like the blue one? What about 100% gyro?</label>
+                    <textarea class="box short" id="phone-2-predict" data-field="predict" placeholder="Two predictions, before you run..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The green line against the black one; the ghost phone; the printed numbers at the end.</p>
+                    <label class="step" for="phone-2-explain"><b class="k">Explain.</b> Why does 98% gyro plus 2% accelerometer beat either sensor on its own? In your own words, what does each part of the blend buy, and what went wrong at 100%?</label>
+                    <textarea class="box" id="phone-2-explain" data-field="explain" placeholder="What each percent buys, and where the code makes that happen..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>At <code>trust_gyro = 1.0</code> the blend is just the gyroscope. How many degrees off is it at the end, and why does the number match drift &times; time?</li>
+                                <li>At 0.98 the small accelerometer share keeps &ldquo;leaking&rdquo; the truth back in. Roughly how long does it take to pull the green line back after the shake stops &mdash; a second, five, the whole run?</li>
+                                <li>If a phone trusted the accelerometer 100% while you walked, what would the screen do? Which sensor handles the quick moves in the blend, and which one handles the slow correction?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at 0.98 the green line tracks the black one closely with only a small shiver, and ends within a degree or two. At 1.0 the green line is smooth and wrong, ending about 24 degrees off &mdash; two degrees per second for twelve seconds.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to stage 3</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+
+            <article class="stage" data-stage="3" hidden>
+                <div class="stage-head"><span>Stage 3 of 3 &middot; Find the edge</span><span class="aim">Aim: say what the model leaves out</span></div>
+                <div class="stage-body">
+                    <p class="step"><b class="k">Why this stage.</b> Every model leaves something out. Finding where the blend fails is how you learn what it is really doing &mdash; and what a real phone has to add on top.</p>
+                    <p class="step"><b class="k">Do.</b> Set <code>shake = 12</code> &mdash; harder than any hand can shake &mdash; with <code>trust_gyro = 0.98</code>. Predict, Run. Then set <code>shake = 0</code> and <code>gyro_drift = 20</code>, a badly broken gyroscope. Predict, Run.</p>
+                    <label class="step" for="phone-3-predict"><b class="k">Predict first.</b> Is there a shake the blend cannot handle? Is there a drift it cannot correct?</label>
+                    <textarea class="box short" id="phone-3-predict" data-field="predict" placeholder="What will break, and how..."></textarea>
+                    <p class="step"><b class="k">Run and watch.</b> The green line and the ghost phone. Does the blend fall apart, or just get worse? Where does the green line settle with the broken gyro?</p>
+                    <label class="step" for="phone-3-explain"><b class="k">Explain.</b> Where did the blend fail, and what does this model leave out &mdash; about real shaking, about real sensors, about the kinds of motion the two sensors here cannot see at all? Name one thing you would add or measure.</label>
+                    <textarea class="box" id="phone-3-explain" data-field="explain" placeholder="Where it broke, what is missing, and what you would add or measure..."></textarea>
+                    <div class="count" data-count></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 150 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">The three questions a coach would ask about this stage, and what the graph should show.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>A shake of 12 m/s&sup2; is bigger than gravity itself. What does &ldquo;down&rdquo; even mean to the accelerometer in that moment?</li>
+                                <li>With a 20-degree-per-second drift, the green line settles a fixed number of degrees off instead of running away. Why does the blend stop the drift but not remove it completely? What happens to that fixed error if you change 0.98 to 0.9?</li>
+                                <li>Spin the phone flat on a table. Neither sensor here would notice. Which sensor in a real phone would &mdash; and what does it measure?</li>
+                            </ol>
+                            <p class="step"><b>What the graph should show:</b> at shake = 12 the red line swings wildly, even flipping sign, and the green line gets noisy but stays roughly near the truth because the gyro carries it. With drift = 20 the green line settles about ten degrees high and stays there: the blend is pulling the error back at the same rate the gyro is creating it.</p>
+                        </div>
+                    </details>
+                    <div class="nextline"><button type="button" class="btn primary" data-next disabled>Go to the final reflection</button><span class="hint" data-nexthint>Opens when your explanation reaches 150 characters.</span></div>
+                </div>
+            </article>
+            </section>
+
+            <!-- ============================================================ FINAL (shared) -->
+            <section class="panel" id="panel-final" hidden>
+            <h2 class="sec">4 &middot; One reflection on the whole loop</h2>
+<p class="body">You have now run the loop three times on one thing. This is the reflection that matters, because it is the one you will run on your own topic later in the semester. Write it in one go &mdash; a paragraph or two &mdash; answering these four, in any order:</p>
+            <article class="stage final" data-stage="final">
+                <div class="stage-head"><span>Final reflection</span><span class="aim">Aim: what you understand now that you did not before</span></div>
+                <div class="stage-body">
+                    <ol class="step" style="margin-left:22px;">
+                        <li>What did you set out to understand, and what do you understand now that you did not before?</li>
+                        <li>Which one change taught you the most, and why that one?</li>
+                        <li>Where did a prediction of yours miss, and what does the miss tell you &mdash; about the model, or about how you were thinking?</li>
+                        <li>If you had one more hour with this model, what would you change, add, or measure?</li>
+                    </ol>
+                    <textarea class="box" id="final-text" data-field="final" style="min-height:180px;" placeholder="A paragraph or two, in your own words..."></textarea>
+                    <div class="count" data-count data-min="250"></div>
+                    <div class="actions">
+                        <button type="button" class="btn" data-ai>Get AI feedback</button>
+                        <span class="hint status">Works once you have written about 250 characters, and again after you revise.</span>
+                    </div>
+                    <div class="aibox" data-aibox></div>
+                    <details class="cy" data-check>
+                        <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check yourself <span class="noai">(Without using AI)</span></span><span class="rd">Three questions to hold your reflection against.</span></span></summary>
+                        <div class="cy-body">
+                            <ol>
+                                <li>Does your reflection name at least one physical quantity &mdash; a force, a speed, an angle, a rate &mdash; and say what it did?</li>
+                                <li>Is the &ldquo;what I understand now&rdquo; something you could not have written before you pressed Run the first time?</li>
+                                <li>Would a classmate reading this be able to tell what you actually changed, and what you actually saw?</li>
+                            </ol>
+                        </div>
+                    </details>
+                </div>
+            </article>
+
+            <h2 class="sec">5 &middot; Copy your summary into Canvas</h2>
+<p class="body">The button below gathers your topic, your predictions, your explanations, your final reflection, and any AI feedback you asked for, into plain text and copies it to your clipboard. Paste it into the <b>Week 2 &middot; Explore Physics Loop</b> box on Canvas. The text also appears below the button, so if the copy does not work in your browser you can select it there and copy by hand.</p>
+            <div class="namerow"><label for="student-name">Your name</label><input type="text" id="student-name" autocomplete="name" placeholder="as it appears on Canvas"></div>
+            <div class="actions">
+                <button type="button" class="btn primary" id="copy-btn">Copy my summary</button>
+                <span class="status" id="copy-status"></span>
+            </div>
+            <textarea class="summary-out" id="summary-out" readonly aria-label="Your summary as plain text"></textarea>
+            <p class="body" style="margin-top:12px;">If this pulled you in, the trail it belongs to is on the <a href="trailheads.html">Physics Trailheads</a> map &mdash; the spinning ball and the plane sit on <i>The Moving Body</i> and <i>Rockets &amp; Orbits</i>, the phone on <i>The Slab of Glass</i>. That is where the loop you just ran becomes your own topic.</p>
+            </section>
+
+            <p class="storenote" id="store-note">This browser is blocking local storage, so your writing here will not survive a reload. Copy your summary before you leave the page.</p>
+
+            <div class="pagenav">
+                <span><a href="trailheads.html">&larr; Physics Trailheads</a></span>
+                <span><a href="home.html">Course home &rarr;</a></span>
+            </div>
+            <div class="instructor">
+                <div class="nm">Prof. Sathya Narayanan</div>
+                <div class="links">
+                    <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack
+                </div>
+            </div>
+            <!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+            <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+            <footer class="page-footer">
+                <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Explore Physics Loop &middot; Draft v1 of 2026-08-28</span>
+            </footer>
+        </div>
+
+        <!-- ============================================================ COACH NOTES (hidden; sent to the AI with each request as ground truth) -->
+        <template id="coach-ball">
+TOPIC: Why a spinning ball curves. Model: Web VPython. A 0.43 kg, 0.11 m radius soccer ball kicked at 25 m/s, 15 degrees up, along +x; spin is about the vertical (y) axis; camera behind the kicker looking along +x, so +z is to the viewer's right. Forces each step: gravity; drag = -0.5*rho*Cd*area*|v|*v (grows with speed squared, opposes motion); Magnus = 0.5*rho*area*radius*cross(omega, v) (at right angles to both spin axis and velocity, so sideways; grows linearly with spin and with speed). Update: v = v + (F/m)*dt, pos = pos + v*dt. Graph: sideways position z against time. Printed: flight time, landing x, drift z.
+[STAGE 1] Expected: spin = 0 gives a straight trail and a flat graph, landing near x = 24 m with drag. spin = 5 (about 31 rad/s) drifts about 1 to 2 m to the viewer's LEFT (negative z), and the drift graph bends more and more because the sideways force keeps acting all flight, so sideways speed keeps accumulating. Negative spin flips the side. Common wrong ideas: spin makes the ball go faster or further (it mostly bends the path); the curve is caused by wind or by the ball rolling; the sideways push happens once at the kick. Good next experiment: double the spin and see whether the drift roughly doubles.
+[STAGE 2] Expected: drag off makes the ball fly further (about 30 m instead of about 24) and slightly higher, with a little more total drift because it is in the air longer; the Magnus formula itself did not change. Soft kick (speed 12, spin 10) lands much closer and drifts fewer metres in total, but bends more per metre travelled: the sideways force is smaller (proportional to v) but the ball spends longer over each metre, and deflection over a fixed distance goes like 1/v. Drag goes like speed squared (mag(v)*v), Magnus like speed to the first power. Common wrong ideas: no drag means no curve (they are separate forces); faster always curves more (true in metres of total drift for the same flight, false per metre of path). Good next experiment: negative spin, or spin 10 at speed 40.
+[STAGE 3] Expected: spin = 60 makes the Magnus force several times the weight; the trail hooks round in a loop or boomerang and the drift graph runs away. Unrealistic because a real ball's lift coefficient levels off around 0.3 to 0.4 at high spin, the spin itself slows during flight, and the flow around the ball changes; the code has no cap on lift and no spin decay. Radius 0.02 with the same mass: area is 30 times smaller, so almost no drag and almost no Magnus; a plain parabola landing near 32 m. Missing entirely: spin decay, wind, seams and roughness (drag coefficient changes with speed), bounce, and the ball's own rotation showing. Good next experiment: add a cap on the Magnus force, or make spin decay by multiplying omega by 0.999 each step.
+        </template>
+        <template id="coach-plane">
+TOPIC: How a plane stays up. Model: Web VPython. A 1000 kg wing, area 16 m^2, flying right at a fixed airspeed, vertical motion only. lift = 0.5*rho*speed^2*wing_area*CL(effective_angle); CL = 2*pi*angle_in_radians below the 15 degree stall, and 2*pi*radians(15)*0.35 (about 0.58) above it. effective_angle = angle - degrees(atan(vy/speed)): climbing lowers the working angle, sinking raises it. vy = vy + ((lift - weight)/mass)*dt. Weight 9800 N. Graphs: height against time; lift and weight against time. Printed: final height and climb rate. Steady flight means lift = weight, whether climbing, level, or descending.
+[STAGE 1] Expected: at speed 60 and angle 5, initial lift is about 19,000 N (twice the weight), the plane climbs, the working angle drops as it climbs, and it settles into a steady climb of about 2.5 m/s with lift equal to weight. At angle 0, initial lift is zero, the plane sinks, sinking raises the working angle, lift builds, and it settles into a steady glide down at about 2.5 m/s, again with lift equal to weight. Common wrong ideas: no angle means no lift ever (the relative wind changes as it sinks); lift equals weight only in level flight (also true in any steady climb or descent); it falls because of drag (there is no drag in this model). Good next experiment: angle 2, and watch where it settles.
+[STAGE 2] Expected: at speed 30 the first lift value is one quarter (about 4,700 N against 19,000 N at 60), below the weight; the plane sinks until the working angle is about 10 degrees, then holds a steady sink of about 3 m/s. At speed 120 lift starts at four times, the plane climbs hard and settles into a climb near 9 m/s. At angle 14 the plane holds height down to about 25 m/s (the stall speed for this wing and weight) and not below. Speed squared: double speed, four times lift; that is why heavy aircraft need long runways to reach a speed where lift can exceed weight. Common wrong ideas: lift doubles when speed doubles; the plane flies because air is pushed under the wing only. Good next experiment: find the slowest speed that holds height at angle 14.
+[STAGE 3] Expected: at speed 30 and angle 14 (just below stall) the plane holds and climbs gently. At angle 20 the lift line collapses at once to roughly a third, the plane sinks, and sinking raises the working angle further, so it stays stalled and falls to the ground. At mass 3000 and angle 14, even full lift (about 13,000 N) is short of the weight (29,400 N); it sinks, the working angle rises past 15, it stalls and falls. Real wings: the drop in lift past stall is real but not one sudden step, and lift partly returns at very high angles; a pilot recovers by pitching the nose down to lower the angle and by adding speed, which this model cannot do (no pitch control, no engine, no drag). Common wrong ideas: more angle always means more lift; a stalled plane's engine has stopped. Good next experiment: change the 0.35 to 0.7 and see whether the plane can survive a stall at 60 m/s.
+        </template>
+        <template id="coach-phone">
+TOPIC: How your phone knows which way is up. Model: Web VPython. The phone tilts from 0 to 40 degrees over 4 s, holds 4 s, returns over 4 s (rate +10, 0, -10 degrees per second). Accelerometer: ax = g*sin(tilt) + shake*sin(40t), ay = g*cos(tilt) + shake*sin(53t); tilt_acc = degrees(atan2(ax, ay)); it reads the direction gravity seems to come from and cannot separate shaking from gravity. Gyroscope: tilt_gyro accumulates (true_rate + gyro_drift)*dt; smooth, follows motion exactly, but a constant drift error grows with time. Blend (complementary filter): tilt_mix = trust_gyro*(tilt_mix + (rate+drift)*dt) + (1 - trust_gyro)*tilt_acc; with trust 0.98 and dt 0.01 the correction time constant is about half a second. Graph: true tilt, accelerometer alone, gyroscope alone, blend. Printed: the three answers when the true tilt is back to 0.
+[STAGE 1] Expected: shake 0 gives a red line on top of the black one; blue drifts to about +6 degrees by the end (0.5 degrees per second for 12 s); green equals red because trust_gyro is 0. shake = 3 makes the red line jitter by roughly plus or minus 15 degrees and the ghost phone shiver, while the blue gyro line is untouched by the shake (it measures turning, not gravity). Common wrong ideas: the gyroscope measures gravity; the accelerometer measures speed or position; the drift is random noise (it is a steady bias, added up). Good next experiment: shake 8, and watch how much worse red gets while blue does not change.
+[STAGE 2] Expected: with shake 3 and drift 2, trust_gyro 0.98 makes the green line track the black one closely with a small shiver and end within a degree or two: the gyro carries the fast motion and the 2 percent accelerometer share pulls the drift back over about half a second. trust_gyro 1.0 makes green identical to blue, smooth and wrong, ending about 24 degrees off (2 degrees per second for 12 s). Common wrong ideas: more gyro is always better; the accelerometer is useless once it jitters; the blend averages the two equally. Good next experiment: trust 0.5, and see jitter come back while drift disappears.
+[STAGE 3] Expected: shake 12 exceeds gravity, so atan2 swings wildly and can flip sign; the green line gets noisy but stays roughly near the truth because 98 percent of it is the gyro. drift 20 with trust 0.98 makes the green line settle about ten degrees high and stay there: the blend removes error at a rate proportional to the error, so it stops the drift growing but leaves a steady offset equal to drift times the half-second time constant; changing 0.98 to 0.9 shrinks the offset to about two degrees but lets more jitter through. Missing: real shaking is not a fixed wobble; real sensors have noise floors and limits; neither sensor here sees rotation about the vertical axis (a real phone uses the magnetometer, the compass, for that) or sideways position. Good next experiment: 0.9, then 0.999, and watch the trade-off between jitter and offset.
+        </template>
+
+        <script>
+        (function () {
+            'use strict';
+            // Explore Physics Loop — behaviour only. All words live in the markup above.
+            var MIN_EXPLAIN = 150;
+            var MIN_FINAL = 250;
+            var STORE_KEY = 'cst286_explore_loop_v1';
+            var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+            var TOPIC_TITLES = { ball: 'Why a spinning ball curves', plane: 'How a plane stays up', phone: 'How your phone knows which way is up' };
+            var TOPIC_TRAILS = { ball: 'The Moving Body / Game Feel', plane: 'Rockets & Orbits (motion)', phone: 'The Slab of Glass' };
+            var STAGE_NAMES = { 1: 'Stage 1 · See it move', 2: 'Stage 2 · Change the physics', 3: 'Stage 3 · Find the edge' };
+            var SYSTEM_PROMPT = 'You are a physics coach helping a first-year student who is exploring a running simulation. You are given the topic, the stage, what the student was asked to change, their prediction, their explanation, and coach notes with the expected behaviour and common mistakes. Reply in 3 or 4 short sentences, plain words, no jargon they have not seen on the page. First, name one specific thing in their explanation that is right, or one specific thing to look at again, quoting their words. Second, connect what they saw to one physical quantity or one line of the code, without giving the full explanation. Third, ask one question or suggest one small experiment in the simulation that would test their idea. Do not write or rewrite their explanation. Do not grade or score. If the explanation contains a wrong idea, do not confirm it; point them to the graph or the edit that would show them. If they say they do not know, give them the smallest next thing to look at.';
+
+            var storageOK = true;
+            var state = load();
+            var pageStart = Date.now();
+
+            function load() {
+                try {
+                    var raw = localStorage.getItem(STORE_KEY);
+                    if (raw) { return JSON.parse(raw); }
+                } catch (e) { storageOK = false; }
+                return { name: '', topic: null, topics: {}, final: { text: '', ai: [], checkOpened: false }, startedAt: new Date().toISOString() };
+            }
+            function save() {
+                try {
+                    state.updatedAt = new Date().toISOString();
+                    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+                    storageOK = true;
+                } catch (e) {
+                    storageOK = false;
+                    document.getElementById('store-note').style.display = 'block';
+                }
+            }
+            function topicState(id) {
+                if (!state.topics[id]) { state.topics[id] = { stages: {}, chosenAt: new Date().toISOString() }; }
+                return state.topics[id];
+            }
+            function stageState(topic, n) {
+                var ts = topicState(topic);
+                if (!ts.stages[n]) { ts.stages[n] = { predict: '', explain: '', ai: [], checkOpened: false, unlocked: n === 1 }; }
+                return ts.stages[n];
+            }
+            function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+            function $(sel, root) { return (root || document).querySelector(sel); }
+            function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+            // ---------- topic choice ----------
+            var cards = $all('.topic-card');
+            cards.forEach(function (card) {
+                card.addEventListener('click', function () { chooseTopic(card.getAttribute('data-topic'), true); });
+            });
+            function chooseTopic(id, byClick) {
+                state.topic = id;
+                topicState(id);
+                save();
+                cards.forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-topic') === id ? 'true' : 'false'); });
+                $all('.panel[data-topic]').forEach(function (p) { p.hidden = p.getAttribute('data-topic') !== id; });
+                var panel = $('#panel-' + id);
+                loadSim(panel);
+                restoreStages(id, panel);
+                $('#panel-final').hidden = !stageState(id, 3).nextUnlocked;
+                if (byClick) { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            }
+            function loadSim(panel) {
+                var frame = $('iframe[data-src]', panel);
+                if (!frame) { return; }
+                var src = frame.getAttribute('data-src');
+                if (src.indexOf('TRINKET_') !== -1) {
+                    if (!$('.pending', frame.parentNode)) {
+                        var note = document.createElement('div');
+                        note.className = 'pending';
+                        note.textContent = 'This model is being connected. Use the plain-text code link below to run it in a new trinket at trinket.io/glowscript in the meantime.';
+                        frame.parentNode.insertBefore(note, frame);
+                        frame.style.display = 'none';
+                    }
+                    return;
+                }
+                if (frame.getAttribute('src') !== src) { frame.setAttribute('src', src); }
+            }
+
+            // ---------- stages ----------
+            function restoreStages(topic, panel) {
+                $all('.stage[data-stage]', panel).forEach(function (art) {
+                    var n = parseInt(art.getAttribute('data-stage'), 10);
+                    var ss = stageState(topic, n);
+                    var predict = $('[data-field="predict"]', art);
+                    var explain = $('[data-field="explain"]', art);
+                    predict.value = ss.predict || '';
+                    explain.value = ss.explain || '';
+                    var prev = n === 1 ? { nextUnlocked: true } : stageState(topic, n - 1);
+                    art.hidden = !prev.nextUnlocked;
+                    var box = $('[data-aibox]', art);
+                    if (ss.ai && ss.ai.length) { showAi(box, ss.ai[ss.ai.length - 1].text, ss.ai.length); }
+                    refresh(art, topic, n);
+                });
+            }
+            function refresh(art, topic, n) {
+                var ss = stageState(topic, n);
+                var explain = $('[data-field="explain"]', art);
+                var len = explain.value.trim().length;
+                var count = $('[data-count]', art);
+                count.textContent = len + ' characters' + (len < MIN_EXPLAIN ? ' (about ' + MIN_EXPLAIN + ' opens the next stage)' : '');
+                count.className = 'count' + (len >= MIN_EXPLAIN ? ' ok' : '');
+                var aiBtn = $('[data-ai]', art);
+                var lastAiText = ss.ai && ss.ai.length ? ss.ai[ss.ai.length - 1].onText : null;
+                aiBtn.disabled = len < MIN_EXPLAIN || explain.value.trim() === lastAiText;
+                var next = $('[data-next]', art);
+                var hint = $('[data-nexthint]', art);
+                var ready = len >= MIN_EXPLAIN;
+                next.disabled = !ready;
+                if (ss.nextUnlocked) { hint.textContent = 'Open. You can keep editing this stage.'; }
+                else { hint.textContent = ready ? 'Ready when you are.' : 'Opens when your explanation reaches ' + MIN_EXPLAIN + ' characters.'; }
+            }
+            $all('.panel[data-topic]').forEach(function (panel) {
+                var topic = panel.getAttribute('data-topic');
+                $all('.stage[data-stage]', panel).forEach(function (art) {
+                    var n = parseInt(art.getAttribute('data-stage'), 10);
+                    var predict = $('[data-field="predict"]', art);
+                    var explain = $('[data-field="explain"]', art);
+                    var timer = null;
+                    function onInput() {
+                        var ss = stageState(topic, n);
+                        ss.predict = predict.value;
+                        ss.explain = explain.value;
+                        refresh(art, topic, n);
+                        if (timer) { clearTimeout(timer); }
+                        timer = setTimeout(save, 500);
+                    }
+                    predict.addEventListener('input', onInput);
+                    explain.addEventListener('input', onInput);
+                    explain.addEventListener('blur', save);
+                    $('[data-check]', art).addEventListener('toggle', function (ev) {
+                        if (ev.target.open) { stageState(topic, n).checkOpened = true; save(); }
+                    });
+                    $('[data-next]', art).addEventListener('click', function () {
+                        var ss = stageState(topic, n);
+                        ss.nextUnlocked = true;
+                        ss.nextUnlockedAt = ss.nextUnlockedAt || new Date().toISOString();
+                        save();
+                        refresh(art, topic, n);
+                        var target;
+                        if (n < 3) {
+                            target = $('.stage[data-stage="' + (n + 1) + '"]', panel);
+                            target.hidden = false;
+                            stageState(topic, n + 1);
+                        } else {
+                            target = $('#panel-final');
+                            target.hidden = false;
+                            restoreFinal();
+                        }
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                    $('[data-ai]', art).addEventListener('click', function () {
+                        askAi({ topic: topic, stage: n, art: art });
+                    });
+                });
+            });
+
+            // ---------- final ----------
+            var finalArt = $('.stage[data-stage="final"]');
+            var finalText = $('#final-text');
+            function refreshFinal() {
+                var len = finalText.value.trim().length;
+                var count = $('[data-count]', finalArt);
+                count.textContent = len + ' characters' + (len < MIN_FINAL ? ' (about ' + MIN_FINAL + ' for the AI button)' : '');
+                count.className = 'count' + (len >= MIN_FINAL ? ' ok' : '');
+                var last = state.final.ai.length ? state.final.ai[state.final.ai.length - 1].onText : null;
+                $('[data-ai]', finalArt).disabled = len < MIN_FINAL || finalText.value.trim() === last;
+            }
+            function restoreFinal() {
+                finalText.value = state.final.text || '';
+                if (state.final.ai.length) { showAi($('[data-aibox]', finalArt), state.final.ai[state.final.ai.length - 1].text, state.final.ai.length); }
+                refreshFinal();
+            }
+            var finalTimer = null;
+            finalText.addEventListener('input', function () {
+                state.final.text = finalText.value;
+                refreshFinal();
+                if (finalTimer) { clearTimeout(finalTimer); }
+                finalTimer = setTimeout(save, 500);
+            });
+            finalText.addEventListener('blur', save);
+            $('[data-check]', finalArt).addEventListener('toggle', function (ev) { if (ev.target.open) { state.final.checkOpened = true; save(); } });
+            $('[data-ai]', finalArt).addEventListener('click', function () { askAi({ topic: state.topic, stage: 'final', art: finalArt }); });
+
+            // ---------- AI feedback ----------
+            function showAi(box, text, count) {
+                box.style.display = 'block';
+                box.innerHTML = '<div class="lbl">AI feedback' + (count > 1 ? ' · round ' + count : '') + '</div>' + esc(text).replace(/\n/g, '<br>');
+            }
+            function coachNotes(topic, stage) {
+                var tpl = document.getElementById('coach-' + topic);
+                if (!tpl) { return ''; }
+                var all = tpl.innerHTML.trim();
+                if (stage === 'final') { return all; }
+                var head = all.split('[STAGE 1]')[0].trim();
+                var m = all.match(new RegExp('\\[STAGE ' + stage + '\\]([\\s\\S]*?)(\\[STAGE|$)'));
+                return head + '\n' + (m ? m[1].trim() : '');
+            }
+            function askAi(opts) {
+                var art = opts.art, topic = opts.topic, stage = opts.stage;
+                var btn = $('[data-ai]', art), box = $('[data-aibox]', art);
+                var isFinal = stage === 'final';
+                var text = isFinal ? finalText.value.trim() : $('[data-field="explain"]', art).value.trim();
+                var predict = isFinal ? '' : $('[data-field="predict"]', art).value.trim();
+                var doText = isFinal ? '' : $all('.step', art).filter(function (p) { return /^Do\./.test(p.textContent.trim()); }).map(function (p) { return p.textContent.trim(); }).join(' ');
+                var question = isFinal ? $all('ol.step li', art).map(function (li) { return li.textContent.trim(); }).join(' ') : $('label[for$="-explain"]', art).textContent.trim();
+                var userContent = 'Topic: ' + TOPIC_TITLES[topic] + '\n' +
+                    'Stage: ' + (isFinal ? 'Final reflection on the whole loop (three stages done)' : STAGE_NAMES[stage]) + '\n' +
+                    (doText ? 'What the student was asked to do: ' + doText + '\n' : '') +
+                    'The question they are answering: ' + question + '\n' +
+                    (predict ? 'Their prediction before running: """' + predict + '"""\n' : 'They did not write a prediction.\n') +
+                    'Their explanation: """' + text + '"""\n\n' +
+                    'Coach notes (ground truth for you, not to be quoted wholesale):\n' + coachNotes(topic, stage);
+                btn.disabled = true;
+                var label = btn.textContent;
+                btn.textContent = 'Thinking...';
+                box.style.display = 'block';
+                box.innerHTML = '<div class="lbl">AI feedback</div>Reading what you wrote...';
+                fetch(AI_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ system: SYSTEM_PROMPT, messages: [{ role: 'user', content: userContent }], max_tokens: 350 })
+                }).then(function (r) {
+                    if (!r.ok) { throw new Error('status ' + r.status); }
+                    return r.json();
+                }).then(function (data) {
+                    var reply = (data.content || data.text || '').trim();
+                    if (!reply) { throw new Error('empty'); }
+                    var rec = { at: new Date().toISOString(), onText: text, text: reply };
+                    if (isFinal) { state.final.ai.push(rec); } else { stageState(topic, stage).ai.push(rec); }
+                    save();
+                    var n = isFinal ? state.final.ai.length : stageState(topic, stage).ai.length;
+                    showAi(box, reply, n);
+                }).catch(function () {
+                    box.innerHTML = '<div class="lbl">AI feedback</div><span class="err">Could not get feedback right now. The Check yourself questions below carry the same ground; use those, and try the button again later.</span>';
+                }).then(function () {
+                    btn.textContent = label;
+                    if (isFinal) { refreshFinal(); } else { refresh(art, topic, stage); }
+                });
+            }
+
+            // ---------- summary + clipboard ----------
+            var nameInput = $('#student-name');
+            nameInput.value = state.name || '';
+            nameInput.addEventListener('input', function () { state.name = nameInput.value; save(); });
+            function line(label, value) { return '  ' + label + ' ' + (value ? value.replace(/\s*\n\s*/g, ' ') : '(not written)') + '\n'; }
+            function buildSummary() {
+                var topic = state.topic;
+                var out = 'CST286 Explore Physics Loop — summary\n';
+                out += 'Name: ' + (state.name || '(no name given)') + '\n';
+                out += 'Date: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '\n';
+                out += 'Time on the page this sitting: about ' + Math.max(1, Math.round((Date.now() - pageStart) / 60000)) + ' min\n';
+                if (!topic) { return out + '\nNo topic chosen yet.\n'; }
+                var ts = topicState(topic);
+                out += 'Topic: ' + TOPIC_TITLES[topic] + '   (trail: ' + TOPIC_TRAILS[topic] + ')\n';
+                var others = Object.keys(state.topics).filter(function (k) { return k !== topic; }).map(function (k) { return TOPIC_TITLES[k]; });
+                if (others.length) { out += 'Also opened: ' + others.join(', ') + '\n'; }
+                [1, 2, 3].forEach(function (n) {
+                    var ss = ts.stages[n];
+                    out += '\n' + STAGE_NAMES[n] + '\n';
+                    if (!ss) { out += '  (not started)\n'; return; }
+                    out += line('Predicted:', ss.predict);
+                    out += line('Explained:', ss.explain);
+                    out += '  Check-yourself opened: ' + (ss.checkOpened ? 'yes' : 'no') + '\n';
+                    out += '  AI feedback asked for: ' + (ss.ai.length ? ss.ai.length + (ss.ai.length === 1 ? ' time' : ' times') : 'no') + '\n';
+                    ss.ai.forEach(function (a, i) { out += '    AI feedback ' + (i + 1) + ': ' + a.text.replace(/\s*\n\s*/g, ' ') + '\n'; });
+                });
+                out += '\nFinal reflection\n';
+                out += line('', state.final.text);
+                out += '  Check-yourself opened: ' + (state.final.checkOpened ? 'yes' : 'no') + '\n';
+                out += '  AI feedback asked for: ' + (state.final.ai.length ? state.final.ai.length + (state.final.ai.length === 1 ? ' time' : ' times') : 'no') + '\n';
+                state.final.ai.forEach(function (a, i) { out += '    AI feedback ' + (i + 1) + ': ' + a.text.replace(/\s*\n\s*/g, ' ') + '\n'; });
+                out += '\n(Predictions, explanations and the final reflection are the student\'s own words. AI feedback is included as received, so the course can see how well it is working.)\n';
+                return out;
+            }
+            var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+            copyBtn.addEventListener('click', function () {
+                var text = buildSummary();
+                summaryOut.value = text;
+                state.copiedAt = new Date().toISOString();
+                save();
+                function fallback(msg) {
+                    copyStatus.className = 'status';
+                    copyStatus.textContent = msg || 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                    summaryOut.focus();
+                    summaryOut.select();
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        copyStatus.className = 'status ok';
+                        copyStatus.textContent = 'Copied ✓ — paste it into the Canvas box. The same text is below if you need it again.';
+                    }, function () { fallback(); });
+                } else { fallback(); }
+            });
+
+            // ---------- start ----------
+            if (!storageOK) { document.getElementById('store-note').style.display = 'block'; }
+            if (state.topic && TOPIC_TITLES[state.topic]) { chooseTopic(state.topic, false); restoreFinal(); }
+        })();
+        </script>
+    </body>
+</html>
