@@ -323,3 +323,31 @@ exception — the single place where having done the optional work changes the g
 or any two), whether the swapped-in activities carry the graded item's points or only remove the late
 penalty, and whether the swap has to be requested. The page states the flexibility without inventing the
 mechanics.
+
+
+## explore-physics-loop.html — 28 August 2026
+
+The Week 2 own-your-progress activity: one full run of the course's loop (choose → run a model →
+predict → change → watch → explain → AI feedback → final reflection → copy summary into Canvas),
+built the day trinket.io announced it closes on 31 August. That killed the planned trinket embeds
+three days before launch, so the sims run in **our own Web VPython runner** — `glowscript/sim.html`
+wraps the open-source GlowScript 3.2 libraries (MIT, github.com/vpython/glowscript) with a plain
+textarea editor, Run, and Reset-to-original; each iframe loads `sims/<name>.py` by relative URL.
+Nothing here depends on a third-party service. One coding gotcha is recorded as a comment in
+sim.html: the compiled program must define `__main__` in the eval scope, so no `use strict`.
+
+Sathya's direction, his words kept: students should be **trying to do something in a little
+world**, not watching a model — inspired, "not a math homework." So every topic is a mission with
+a visible win: **bend a free kick around a wall of defenders** (a gray ghost flies the same kick
+with no spin — the gap between the trails IS the Magnus force), **clear a 135 m ridge in a plane**
+(angle 6 misses by ten centimetres; the stall traps you once you fall), and **keep a shaken
+phone's arrow within 3°** (accelerometer honest-but-jittery, gyro smooth-but-drifting, and the
+0.98 blend that real phones run). Banners score each run — GOAL! / CRASHED 10 m below the top /
+ARROW LOST, up to 24.8° — and the graphs stay the referee.
+
+Every number in the stage cards and the hidden coach notes (the AI feedback button's ground
+truth) is verified against a plain-Python re-run of each model; the throttling trick (N physics
+steps per drawn frame) is because browsers cap rate() at the display rate. The two week-2 OYP
+rows this replaces ("What makes me tick", "How this course can make me better at learning on my
+own") are swapped out of home.html and assignments.html; registry row is `286-w02-oyp1`, due
+Fri 4 Sep. Trailheads still links trinket.io in one place — swap before Monday. — Alan
