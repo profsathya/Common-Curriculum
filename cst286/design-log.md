@@ -351,3 +351,14 @@ steps per drawn frame) is because browsers cap rate() at the display rate. The t
 rows this replaces ("What makes me tick", "How this course can make me better at learning on my
 own") are swapped out of home.html and assignments.html; registry row is `286-w02-oyp1`, due
 Fri 4 Sep. Trailheads still links trinket.io in one place — swap before Monday. — Alan
+
+**Addendum, same day — the run log (from TA feedback).** The TA asked for an explanation of the
+physics after every run and a comparison with the previous attempt. Built the comparison and the
+measurements; deliberately not the explanation — the explaining is the student's move (the
+reflection box, Check yourself, and the AI button carry it on demand). Each run now ends with a
+RESULT line in the scene caption stating what happened as measurements ("GOAL — crossed 1.6 m
+inside the post, 0.37 m off the ground"; "biggest sideways force 2.27 N against a 4.2 N weight"),
+and the runner keeps a run log across runs: "Run 2 · you changed spin 0→6, aim 0→12 · GOAL…"
+over "Run 1 · original settings · BLOCKED…". The changed-constants diff comes from comparing the
+editor against the original source; the result travels through `scene.caption` because GlowScript's
+print() has no home in the stripped-down runner. — Alan

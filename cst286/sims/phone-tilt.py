@@ -41,6 +41,7 @@ def tilt_things(deg, err_deg):
 tilt_gyro = 0
 tilt_mix = 0
 max_err = 0
+worst_t = 0
 t = 0
 while t < 12:
     rate(25)                          # one drawn frame...
@@ -67,6 +68,7 @@ while t < 12:
     err = tilt_mix - true_tilt
     if abs(err) > max_err:
         max_err = abs(err)
+        worst_t = t
     tilt_things(true_tilt, err)
     arrow_up.color = color.green if abs(err) <= win_limit else color.red
     true_c.plot(t, true_tilt)
@@ -81,5 +83,5 @@ else:
     banner.text = "ARROW LOST - up to " + str(round(max_err, 1)) + " deg off"
     banner.color = vector(0.8, 0.3, 0.1)
 banner.visible = True
-print(banner.text)
-print("At the end (true tilt 0): accelerometer says", round(tilt_acc, 1), ", gyroscope says", round(tilt_gyro, 1), ", the blend says", round(tilt_mix, 1))
+scene.caption = ("RESULT: " + banner.text + " - worst moment at t = " + str(round(worst_t, 1)) + " s\n" +
+    "Measured at the end (true tilt 0): accelerometer says " + str(round(tilt_acc, 1)) + " deg, gyroscope says " + str(round(tilt_gyro, 1)) + " deg, the blend says " + str(round(tilt_mix, 1)) + " deg.")

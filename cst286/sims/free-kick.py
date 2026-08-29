@@ -56,13 +56,13 @@ gdrift = gcurve(color=color.gray(0.6))
 def outcome(b, is_ball):
     # where is this ball, and is its flight over?  returns "" while still flying
     if 9.0 <= b.pos.x <= 9.4 and b.pos.y < wall_top and abs(b.pos.z) < wall_half:
-        return "BLOCKED by the wall"
+        return "BLOCKED - hit the wall at " + str(round(b.pos.y, 2)) + " m up, " + str(round(abs(b.pos.z), 2)) + " m from its centre (it blocks up to 2.0 m)"
     if b.pos.x >= 24:
         if b.pos.y < 2.44 and abs(b.pos.z) < 3.66:
-            return "GOAL!"
+            return "GOAL! - crossed " + str(round(3.66 - abs(b.pos.z), 1)) + " m inside the post, " + str(round(b.pos.y, 2)) + " m off the ground"
         if abs(b.pos.z) >= 3.66:
-            return "WIDE by " + str(round(abs(b.pos.z) - 3.66, 1)) + " m"
-        return "OVER the bar"
+            return "WIDE by " + str(round(abs(b.pos.z) - 3.66, 1)) + " m - crossed the line at z = " + str(round(abs(b.pos.z), 1)) + " m, the post is at 3.66"
+        return "OVER the bar - crossed at " + str(round(b.pos.y, 2)) + " m, the bar is at 2.44"
     if b.pos.y < radius:
         return "landed short, " + str(round(24 - b.pos.x, 1)) + " m from the goal"
     return ""
@@ -80,6 +80,7 @@ t = 0
 dt = 0.005
 ball_done = ""
 ghost_done = ""
+max_magnus = 0
 while (ball_done == "" or ghost_done == "") and t < 4:
     rate(50)                          # one drawn frame...
     for i in range(4):                # ...carries four small physics steps
@@ -91,6 +92,8 @@ while (ball_done == "" or ghost_done == "") and t < 4:
             ghost_done = outcome(ghost, False)
         t = t + dt
     F_magnus = 0.5 * rho * area * radius * cross(omega, ball.v)
+    if ball_done == "" and mag(F_magnus) > max_magnus:
+        max_magnus = mag(F_magnus)
     magnus_arrow.pos = ball.pos
     magnus_arrow.axis = F_magnus * 1.5                         # the sideways push, drawn on the ball
     if ball_done != "":
@@ -98,8 +101,9 @@ while (ball_done == "" or ghost_done == "") and t < 4:
     drift.plot(t, ball.pos.z)
     gdrift.plot(t, ghost.pos.z)
 
-banner.text = ball_done
-banner.color = color.green if ball_done == "GOAL!" else color.yellow
+banner.text = ball_done.split(" - ")[0]
+banner.color = color.green if ball_done.startswith("GOAL") else color.yellow
 banner.visible = True
-print("Your kick:", ball_done, " |  without the spin it would have:", ghost_done)
-print("Crossed the wall line at height", round(ball.pos.y, 1) if ball_done.startswith("BLOCKED") else "-", " |  sideways at the goal:", round(ball.pos.z, 2), "m")
+scene.caption = ("RESULT: your kick: " + ball_done + "  |  the ghost (same kick, no spin): " + ghost_done + "\n" +
+    "Measured: biggest sideways force on your ball " + str(round(max_magnus, 2)) + " N (its weight is " + str(round(mass * 9.8, 1)) + " N); " +
+    "your ball ended at z = " + str(round(ball.pos.z, 2)) + " m, the ghost at z = " + str(round(ghost.pos.z, 2)) + " m.")

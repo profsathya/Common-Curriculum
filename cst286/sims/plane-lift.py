@@ -54,6 +54,7 @@ t = 0
 dt = 0.02
 result = ""
 stalled = False
+first_lift = 0
 while result == "" and t < 30:
     rate(25)                          # one drawn frame...
     for i in range(2):                # ...carries two physics steps
@@ -61,6 +62,8 @@ while result == "" and t < 30:
         if effective_angle > stall_angle:
             stalled = True
         lift = 0.5 * rho * speed**2 * wing_area * lift_coefficient(effective_angle)
+        if first_lift == 0:
+            first_lift = lift
         weight = mass * g
         vy = vy + ((lift - weight) / mass) * dt                    # F = m a in the vertical direction only
         plane.pos = plane.pos + vector(speed * dt, vy * dt, 0)
@@ -88,5 +91,6 @@ banner.pos = plane.pos + vector(0, 40, 0)
 banner.text = result if result != "" else "still flying at " + str(round(plane.pos.y)) + " m"
 banner.color = color.green if result.startswith("CLEARED") else color.yellow
 banner.visible = True
-print(result if result != "" else "Ran out of time still flying.")
-print("Final height", round(plane.pos.y, 1), "m after", round(t, 1), "s, climbing at", round(vy, 2), "m/s.", "The wing stalled during this flight." if stalled else "The wing never stalled.")
+scene.caption = ("RESULT: " + (result if result != "" else "ran out of time still flying at " + str(round(plane.pos.y)) + " m") + "\n" +
+    "Measured: lift started at " + str(round(first_lift)) + " N against " + str(round(weight)) + " N of weight; the climb settled near " + str(round(vy, 2)) + " m/s; " +
+    "the working angle ended at " + str(round(effective_angle, 1)) + " degrees. " + ("The wing stalled during this flight." if stalled else "The wing never stalled."))
