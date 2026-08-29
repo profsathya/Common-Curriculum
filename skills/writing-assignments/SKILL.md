@@ -125,13 +125,19 @@ The repo is the source of truth; Canvas is the display.
    are spring artifacts of the retired pipeline, not inputs to this one.
 2. This skill produces the page → one HTML file in the course folder, house style,
    accessibility rules observed → publishes via the repo to GitHub Pages.
-3. Canvas shows the page in an iframe. The assignment description is an iframe of the
+3. **The Canvas assignment name carries its kind as a prefix — `OYP: ` or `GI: `**
+   (Sathya, 23 Aug 2026), so a student scanning the assignments list, the gradebook or
+   a to-do notification sees at a glance whether an item is graded. The prefix is a
+   Canvas-side display convention only: `assignments.html` keeps the plain title and
+   shows the kind as its own column, and the course pages link by id, so nothing
+   breaks. Apply it whenever an item is created in Canvas or renamed there.
+4. Canvas shows the page in an iframe. The assignment description is an iframe of the
    public page (width 100%, height ~1100, border 0, a title attribute) plus one
    fallback line linking the page in a new tab (settled 15 Aug 2026, both CST499
    week-1 assignments). On course pages, activity links open a NEW TAB in both
    contexts — the context resolver sets `_blank`, never `_top` (the `_top` still in the
    286/349 home-page scripts is the deviation to fix when their links go live).
-4. A reconcile pass diffs `assignments.html` against Canvas and applies only the
+5. A reconcile pass diffs `assignments.html` against Canvas and applies only the
    differences — modules, order, prerequisites, completion requirements, due dates.
    **Before the FIRST write into any Canvas shell, inventory what is already there**
    (semester imports, old drafts) and get a ruling — the CST499 shell held ~20 spring
@@ -140,7 +146,7 @@ The repo is the source of truth; Canvas is the display.
    publish-on-creation while the course shell is unpublished; once the course is live,
    new items stay unpublished until his explicit go.** After any Canvas write, read the
    result back through the API before reporting it done.
-5. Whenever `assignments.html` or an assignment page changes, the two links — the
+6. Whenever `assignments.html` or an assignment page changes, the two links — the
    Canvas assignment URL and the public HTML page URL — reach each course's Google Doc
    through the Common-Curriculum Apps Script sync (`apps-script/CourseDocSync.gs`,
    driven by GitHub Actions and `config/course-docs.json`), so the AI Dojo can point a
