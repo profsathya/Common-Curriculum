@@ -219,6 +219,12 @@ on slides. Three names for one thing reads as three things. (Learned live: "arti
 "piece of proof," and "portfolio piece" were one concept; the page got clearer the day
 it became "portfolio piece" everywhere.)
 
+**"Name" is not a verb here (Sathya, 28 Aug 2026).** Instructions to students say
+**identify** or **include**, not "name" — "identify one thing you would add," "include a
+quantity in your explanation," never "name a quantity" or "your answer names something the
+model leaves out." Caught live in his edit round on the Explore Physics Loop page; it is
+not how he uses the word, and the instruction reads clearer with the verb students expect.
+
 ## The test
 
 Read the finished page four times, once as each mode, testing the page rather than the
