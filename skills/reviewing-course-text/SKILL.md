@@ -25,7 +25,13 @@ At the end of writing, every time. The review is the last step before student-fa
 
 **4. Flip unnecessary negatives.** Apply the inspire-don't-scare rule (see `writing-learning-goals`) to body text: warnings, not-X constructions, and loss-frames used as hooks get their positive twin ("write an answer only this company could receive," not "if it could go to any company, it isn't done"). Honesty guardrails — no-guarantees, plan-not-promise — stay, but they never lead. Exclusivity and survival frames count as negatives too: “the professionals who stay valuable are the ones who…” gets the same flip as a warning — growth stated plainly as part of the profession (CST349 gate, 2026-08-11).
 
-**5. Place instructions at the point of action.** A "how to submit" line belongs in the submit box, not the intro; a hand-write-first rule belongs on the question that gets hand-written. A message in the wrong place forces a second copy in the right place — misplacement is where most duplication starts.
+**5. Keep it crisp — volume loses students (Sathya, 28 Aug 2026).** A page with a lot of
+text loses students unless it keeps them focused and guides their thinking. Purpose sections
+are one or two sentences. When a template block (skills, rationale, framing) inflates a page,
+compress it into the doing text or cut it — guide the student's thinking with the fewest
+words that keep them moving.
+
+**6. Place instructions at the point of action.** A "how to submit" line belongs in the submit box, not the intro; a hand-write-first rule belongs on the question that gets hand-written. A message in the wrong place forces a second copy in the right place — misplacement is where most duplication starts.
 
 ## The test
 
