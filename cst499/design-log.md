@@ -277,3 +277,43 @@ The instructor introduction moves into the session-1 deck instead: CST499 gets a
 still published — only the links from this home page are gone. Nothing else in the repo links
 `why-this-course.html` from cst499. If the page is meant to be retired rather than unlinked, that is a
 separate call.
+
+## 2026-08-29 — Week 2 built: three own-your-progress activities, one ikigai circle each
+
+Week 2 now runs as one loop across three activities, and each one fills a different circle of the
+three-circle ikigai frame (love / good at / world needs — three, not four, because the market pays for
+what the world needs). The frame is shown up front on all three pages as a static inline SVG with the
+current circle highlighted, so students can see what they are filling in and can re-run it later.
+
+- **Read the Market** (Wed 2 Sep) — what the world needs. Opens on the hiring numbers from the Ashby
+  session and the recruiter fireside, both linked in full and flagged as worth going through entirely.
+  Then a space, two things employers ask for now with quoted phrases and counts, and one expected change
+  written as a **driver** and a **signal** — both new glossary bubbles. Started live in the Wednesday
+  session, in pairs.
+- **What Would I Do Anyway** (Fri 4 Sep) — what you love. Carries the argument that this is a necessity
+  rather than a luxury: AI covers the surface layer, the depth underneath only happens on work someone
+  cares about.
+- **Find Your Gap** (Tue 8 Sep) — what you are good at, then the overlay. Ends in one specific gap and a
+  standing routine (a monthly prompt, or the same three questions on a calendar) that re-runs the market
+  read. For CST499 the gap has to be closable by one project this semester, and it is what the
+  `problem-spaces.html` list gets judged against.
+
+**Dates depart from the OYP convention on purpose.** Anything due Mon/Tue must be announced before the
+previous Wednesday class, which ruled out week 2's own Tuesday; Mon 7 Sep is Labor Day. So Wed / Fri /
+next-Tue, and `mk_assignments.py` gained a `NEXTTUE` day code with the reason in a comment.
+
+**Routes.** All three pages carry the two-route pattern, closed by default, "Use one, or both." The
+practice Dojo is offered inside the AI route as a **starting point on a condition** — ten minutes without
+a space to scan, or answers that still read like a cover letter — never as a preference or a fallback,
+and its output escalates into the student's own Dojo, which keeps context.
+
+**Hover text.** `class="gl"` count on `home.html`: 45 → 47 (driver, signal). Both bubbles sit in plain
+`.wm` text rather than the linked title, and `p.body` was added to each new page's `position:relative`
+list so the bubbles anchor to their paragraph. Verified by keyboard focus in a render check at 900px.
+
+**Registry.** `mk_assignments.py` edited and both registries regenerated — CST499 and CST349 reproduced
+byte-identical before the change, and the diff after it touches week 2 only. Canvas ids are not recorded;
+no Canvas work was done.
+
+**Open:** the Friday 4 Sep session row says the activity is due tonight and that the session plan will be
+posted — it does not claim the class does or does not meet. Needs Sathya's line.

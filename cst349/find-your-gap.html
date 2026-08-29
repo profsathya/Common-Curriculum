@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Your Gap | CST349</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+.draft{border:1px solid #E0C88A;background:#FBF6EC;border-radius:5px;padding:10px 13px;margin-bottom:18px;font-size:12.5px;color:#5e4a18;display:flex;gap:8px;align-items:flex-start;}
+.draft svg{width:15px;height:15px;flex:0 0 15px;margin-top:2px;}
+.draft b{font-weight:700;}
+
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:18px;}
+.course-header .eyebrow{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.7px;text-transform:uppercase;}
+.course-header h1{font-size:23px;font-weight:700;margin:3px 0 4px;}
+.course-header .sub{font-size:14px;color:var(--text);font-weight:600;}
+.course-header .lead{color:var(--muted);font-size:13px;max-width:690px;margin-top:6px;}
+.cti-logo{height:34px;width:auto;display:block;opacity:.9;}
+.cti-logo-fallback{display:none;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-align:right;line-height:1.2;}
+
+/* Program arc */
+.bigpic{border:1px solid var(--border);border-radius:6px;margin:0 0 20px;background:#fff;}
+details.bigpic > summary{list-style:none;cursor:pointer;}
+details.bigpic > summary::-webkit-details-marker{display:none;}
+.bigpic-head{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#FCFDFE;border-radius:5px;}
+details.bigpic[open] > summary > .bigpic-head{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.bigpic-head:hover{background:#F5F9FB;}
+.bigpic-head .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.bigpic[open] > summary > .bigpic-head .plus::after{content:"\2212";}
+details.bigpic:not([open]) > summary > .bigpic-head .plus::after{content:"+";}
+.bigpic-head .t{font-size:14px;font-weight:700;color:var(--text);}
+.bigpic-head .s{font-size:12.5px;color:var(--muted);}
+.bigpic-body{padding:14px;}
+.arc{margin:0 0 16px;}
+.arc .arc-caption{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
+.arc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+a.arc-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;padding:10px 11px;background:#FCFDFE;color:var(--text);}
+a.arc-card:hover,a.arc-card:focus{z-index:70;}
+a.arc-card > .bub{margin-top:8px;}
+a.arc-card:hover > .gl > .bub,a.arc-card:focus > .gl > .bub{display:block;}
+@media(min-width:1001px){.arc-grid > a:nth-child(n+5) .bub{left:auto;right:0;}}
+@media(max-width:1000px) and (min-width:621px){.arc-grid > a:nth-child(3n) .bub{left:auto;right:0;}}
+@media(max-width:620px){.arc-grid > a:nth-child(2n) .bub{left:auto;right:0;}}
+a.arc-card:hover{text-decoration:none;border-color:var(--blue);background:#F7FBFD;}
+.arc-card .s{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
+.arc-card .nm{font-size:13.5px;font-weight:700;margin:2px 0 1px;color:var(--blue-dark);line-height:1.25;}
+.arc-card .th{font-size:11.5px;color:var(--muted);line-height:1.3;}
+.arc-card .who{font-size:11px;color:var(--muted);margin-top:auto;padding-top:6px;}
+.arc-card .who b{color:var(--text);font-weight:600;}
+.arc-card.build{background:#F3F8FB;border-color:#A8CBE0;}
+@media(max-width:1000px){.arc-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:620px){.arc-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* Beyond the grade */
+.beyond{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:13px 15px;margin:0 0 22px;}
+.beyond .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
+.beyond .hd{font-size:15px;font-weight:700;margin-bottom:4px;}
+.beyond p{margin:0 0 6px;font-size:13px;color:#38503f;}
+.beyond p:last-child{margin-bottom:0;}
+
+/* Modules */
+.module{border:1px solid var(--border);border-radius:4px;margin-bottom:16px;}
+details.module > summary{list-style:none;cursor:pointer;}
+details.module > summary::-webkit-details-marker{display:none;}
+.module-head{background:var(--modhead);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;border-radius:3px 3px 0 0;}
+details.module:not([open]) > summary > .module-head{border-bottom:none;border-radius:3px;}
+.module-head .name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.module-head .tag{font-size:12px;color:var(--muted);white-space:nowrap;}
+.module-head .chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .15s ease;flex-shrink:0;}
+details.module[open] > summary > .module-head .chev{transform:rotate(90deg);}
+.module-head:hover{background:#EFEFEF;}
+
+.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);padding:11px 14px;}
+.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.goal .text{font-size:14px;color:var(--text);}
+.goal ul{margin:4px 0 0;padding-left:18px;}
+.goal li{margin:2px 0;}
+.prereq{padding:8px 14px 4px;color:var(--muted);font-size:12.5px;display:flex;gap:7px;align-items:flex-start;border-bottom:1px solid var(--border-light);}
+.prereq svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.prereq b{color:var(--text);font-weight:600;}
+
+.items{padding:2px 0 4px;}
+.item{display:flex;gap:11px;padding:11px 14px 11px 26px;border-bottom:1px solid var(--border-light);align-items:flex-start;}
+.item:last-child{border-bottom:none;}
+.item .ico{flex:0 0 18px;margin-top:1px;color:var(--muted);}
+.item .ico svg{width:18px;height:18px;display:block;}
+.item .body{flex:1;min-width:0;}
+.item .title{font-size:14.5px;font-weight:600;}
+.item .meta{color:var(--muted);font-size:12px;margin-top:2px;}
+
+.group-label{padding:10px 14px 4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:#FAFBFC;border-bottom:1px solid var(--border-light);}
+.group-label .gd{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:#7C8A93;border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
+.badge.key{background:var(--blue);}
+.badge.check{background:#8B9AA5;}
+.badge.live{background:var(--check);}
+.badge.optional{background:#7C8A93;}
+
+.item.keyitem{background:var(--goal-bg);}
+.item.keyitem .ico{color:var(--blue);}
+.item.live{background:var(--check-bg);}
+.item.live .ico{color:var(--check);}
+
+.note{padding:9px 14px;background:#FBF6EC;border-bottom:1px solid var(--border-light);font-size:12.5px;color:#5e4a18;display:flex;gap:7px;align-items:flex-start;}
+.note svg{width:14px;height:14px;flex:0 0 14px;margin-top:2px;}
+.note b{font-weight:700;}
+
+/* Canvas-page content (how-this-works, problem-spaces) */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+.pagehead .lead{font-size:13.5px;color:var(--muted);max-width:700px;margin-top:7px;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+p.body{font-size:13.5px;margin:0 0 10px;}
+table.grades{border-collapse:collapse;width:100%;margin:10px 0 0;font-size:13px;}
+table.grades th,table.grades td{border-bottom:1px solid var(--border-light);padding:6px 8px;text-align:left;}
+table.grades th{font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);font-weight:700;}
+table.grades td:first-child{font-weight:700;width:70px;}
+
+.ps-group{margin-bottom:20px;}
+.ps-group h3{font-size:14px;font-weight:700;color:var(--blue-dark);margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border-light);}
+.ps{border:1px solid var(--border-light);border-radius:5px;padding:10px 13px;margin-bottom:8px;}
+.ps .nm{font-size:14px;font-weight:700;}
+.ps .desc{font-size:13px;color:var(--muted);margin-top:2px;}
+.ps .goal-line{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border-light);}
+.ps .goal-line b{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+.provenance{margin-top:18px;border:1px solid var(--border-light);border-radius:6px;padding:11px 14px;font-size:11.5px;color:var(--muted);background:#FCFCFD;}
+.provenance b{color:var(--text);font-weight:700;}
+.provenance ul{margin:5px 0 0;padding-left:18px;}
+.provenance li{margin:2px 0;}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+.item .body,.goal li,.prereq,.note,p.body,.pagehead .lead,.course-header .lead,
+.ps .desc,.ps .goal-line,.beyond p,.arc-caption{position:relative;}
+.arc-card .gl{display:block;}
+.arc-card .gt{font:inherit;color:inherit;text-align:left;border-bottom:1px dashed var(--blue);}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+        .feedback-note { margin: 22px 0 0; padding-top: 14px; border-top: 1px solid var(--border-light); font-size: 12.5px; color: var(--muted); text-align: center; }
+        .feedback-note a { color: var(--blue-dark); }
+
+.page-footer img{height:20px;opacity:.55;}
+
+.copywrap{position:relative;}
+.copybtn{position:absolute;top:10px;right:10px;z-index:5;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#0374B5;background:#fff;border:1px solid #0374B5;border-radius:4px;padding:3px 10px;cursor:pointer;}
+.copybtn:hover{background:#F3F8FB;}
+
+.dojolink{display:inline-block;font-size:14px;font-weight:700;color:#fff;background:#0374B5;border-radius:5px;padding:9px 16px;}
+.dojolink:hover{background:#0a5a8a;text-decoration:none;color:#fff;}
+.keybox{border:1px solid #E0C88A;background:#FBF6EC;border-radius:6px;padding:11px 14px;font-size:13px;color:#5e4a18;margin:0 0 10px;}
+.keybox code{background:#fff;}
+/* Route expanders — the two ways to do an assignment; both closed by default */details.route { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; } details.route > summary { list-style: none; cursor: pointer; padding: 11px 14px; display: flex; gap: 11px; align-items: flex-start; border-radius: 5px; } details.route > summary::-webkit-details-marker { display: none; } details.route > summary:hover { background: #F5F9FB; } details.route > summary:focus-visible { outline: 2px solid rgba(3,116,181,.45); outline-offset: -2px; } details.route[open] > summary { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .route .plus { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.route:not([open]) > summary .plus::after { content: "+"; } details.route[open] > summary .plus::after { content: "\2212"; } .route .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .route .rt { font-size: 14.5px; font-weight: 700; color: var(--text); } .route .rt .noai { font-weight: 400; color: var(--muted); } .route .rd { font-size: 13px; color: var(--muted); } .route-body { padding: 13px 14px 3px; } @media print { details.route > summary .plus { display: none; } }
+/* Week 2 additions — 2026-08-29. Bubble anchoring + the three-circle figure. */
+p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
+.circlefig{margin:2px 0 16px;text-align:center;}
+.circlefig svg{width:100%;max-width:400px;height:auto;}
+.circlefig figcaption{font-size:12.5px;color:var(--muted);margin:6px auto 0;max-width:560px;line-height:1.5;}
+.qbox{background:#F3F8FB;border:1px solid #C7CDD1;border-radius:6px;padding:12px 14px;font-size:13.5px;margin:0 0 10px;}
+.promptbox{background:#FCFDFE;border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:6px;padding:12px 14px;font-size:13px;margin:0 0 10px;}
+.promptbox p{margin:0 0 9px;}
+.promptbox p:last-child{margin:0;}
+.stepnum{font-weight:700;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="crumb"><a href="home.html">CST349</a> &middot; Find Your Gap</div>
+<div class="pagehead">
+<div class="s">CST349 &middot; Fall 2026 &middot; Week 2 &middot; Own your progress &middot; not graded</div>
+<h1>Find Your Gap</h1>
+<div class="dt">Due Tuesday 8 September, 11:59 p.m. &middot; about 40 minutes</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Find the one thing worth closing next &mdash; the specific piece the market keeps asking for that you cannot yet prove &mdash; and set up the routine that keeps finding it after this week. Knowing your own gap is what turns a general worry about being ready into one thing you can go and do.</p>
+<p class="body">You come out of this with an honest audit of what you can prove today, one specific gap, and a routine you can re-run in thirty minutes a month.</p>
+<figure class="circlefig">
+<svg viewBox="0 0 400 300" role="img" aria-label="Three overlapping circles: what you love, what you are good at, and what the world needs. Highlighted here: all three.">
+<title>Three overlapping circles: what you love, what you are good at, and what the world needs. Highlighted here: all three.</title>
+<circle cx="145" cy="118" r="86" fill="#0374B5" fill-opacity=".13" stroke="#0374B5" stroke-width="2.2"/>
+<circle cx="255" cy="118" r="86" fill="#0374B5" fill-opacity=".13" stroke="#0374B5" stroke-width="2.2"/>
+<circle cx="200" cy="205" r="86" fill="#0374B5" fill-opacity=".13" stroke="#0374B5" stroke-width="2.2"/>
+<text x="92" y="66" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">What you</text>
+<text x="92" y="82" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">love</text>
+<text x="308" y="66" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">What you are</text>
+<text x="308" y="82" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">good at</text>
+<text x="200" y="264" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">What the world</text>
+<text x="200" y="280" text-anchor="middle" font-size="13" font-family="Lato, Helvetica, Arial, sans-serif" fill="#0a5a8a" font-weight="700">needs</text>
+</svg>
+<figcaption>All three, laid over each other. The gap is the piece that is missing &mdash; something the market keeps asking for, inside work you would do anyway, that you cannot prove yet.</figcaption>
+</figure>
+<h2 class="sec">What you are building on</h2>
+<p class="body"><b>From Wednesday: your market read.</b> Two things employers are asking for, with the counts behind them, and one expected change with its driver and its signal.</p>
+<p class="body"><b>From Friday: your moments.</b> The times work stopped feeling like work, and what runs through them.</p>
+<p class="body">Have both open. This activity is mostly about putting them next to each other and being honest about the third thing.</p>
+<h2 class="sec">What to work out</h2>
+<p class="body"><span class="stepnum">1. What can you prove today?</span> Take the two things employers are asking for from Wednesday, one at a time, and for each write what you could put in front of someone as evidence. Not what you have covered in a class &mdash; what you could show. A repository someone else has read, a thing you built that someone used, a piece of work with your decisions visible in it. Where you have nothing to show, write nothing. That blank is the useful part of this step, and it is not a verdict on you: almost every senior has several.</p>
+<p class="body"><span class="stepnum">2. Put the three next to each other.</span> What the market keeps asking for, what you would do anyway, what you can prove. Read across them and look for the piece that is missing. Sometimes the overlap is obvious. Sometimes what you would do anyway sits outside what the market is asking for, and then the interesting question is whether the market is asking somewhere you have not looked yet, or whether this is a thing you keep for yourself and aim at something adjacent. Both are real answers.</p>
+<p class="body"><span class="stepnum">3. Identify one <span class="gl"><button type="button" class="gt">gap</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the work you are aiming at asks for.</span><span class="br"><i>Why it matters.</i> It turns a vague sense of not being ready into one specific thing you can close. Vague gaps produce vague work.</span><span class="br"><i>What a good one looks like.</i> Specific, and closeable. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span>.</span> One sentence: something the market keeps asking for, inside work you would do anyway, that you cannot prove yet. One, not five. A common wrong turn is a gap so general it could belong to anyone in the room &mdash; if your sentence would fit your neighbour, it is not yours yet.</p>
+<p class="body"><span class="stepnum">4. Work out which shape your gap moves you toward.</span> Careers get described by three shapes, and the difference is real. An <b>I</b> is one skill you have gone deep in, with not much range beyond it. A <b>T</b> is that same depth plus enough range across neighbouring areas to work well with the people who have them. A <b>&pi;</b> is two deep skills plus that range, so you can carry two kinds of work and connect them &mdash; which is often where the interesting problems sit.</p>
+<p class="body">Do not pick the shape you like the sound of. Read it off your own evidence from Wednesday. If the phrases that kept repeating in the postings sit next to your existing depth, the market is asking you to widen &mdash; that is a T. If they keep pairing your depth with a second, different depth, that is a &pi;, and it is a longer piece of work you should start knowing it is longer. If everything that repeated is deeper in what you already do, the market is asking for more I, and widening now would be a detour. Write which one your evidence points at, and quote the evidence.</p>
+<p class="body"><span class="stepnum">5. Write the thing that keeps this current.</span> Everything above is a photograph of one week. Postings change, your signal from Wednesday either moves or it does not, and what you can prove grows. So finish by writing the routine that re-runs this. The last section on this page has both ways to do it.</p>
+<h2 class="sec">Two ways to do this</h2>
+<p class="body"><b>Use one, or both.</b> They end at the same gap and the same routine, go in the same Canvas box, and are worth the same. Whichever you do, give it about 40 minutes. Open the ones you want with the <b>+</b>.</p>
+<p class="body">Doing the audit on paper is where a lot of the thinking happens, and being the one who writes &ldquo;nothing&rdquo; in a row is worth the discomfort. Having an AI hold all three lists at once and ask what you are avoiding is a different skill, and that is worth practising too. If you want both, do the audit yourself first, then take it to your Dojo and ask it what you were generous about.</p>
+
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">With your AI Dojo</span><span class="rd">You give it all three lists; it asks the questions you would rather skip.</span></span></summary>
+<div class="route-body">
+<p class="body">Paste in your market read from Wednesday and your moments from Friday, then give it this:</p>
+<div class="promptbox">
+<p>Above are two things: what I found employers in my space are asking for, and the moments when work stopped feeling like work for me. Now interview me about the third thing &mdash; what I can actually prove today. Go one thing at a time. For each thing employers are asking for, ask me what I could put in front of someone as evidence, and push back when I answer with a course I took instead of something I could show.</p>
+<p>When we are done, tell me where the three do not line up, and ask me which single gap I think matters most. Argue with my choice if you think I picked the comfortable one. Do not pick it for me.</p>
+</div>
+<p class="body"><b>You decide, it argues.</b> A gap it chose for you is not one you will spend a semester on. Its job here is to make the comfortable answer harder to keep, and yours is to be the one who ends up saying the sentence.</p>
+<p class="body"><b>Then have it draft your standing prompt</b> from the template below &mdash; but fill in the space, the signal and the gap yourself. Those are the parts that make the routine yours, and an AI that invents them is just refreshing somebody's generic market summary once a month.</p>
+</div>
+</details>
+
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">On paper <span class="noai">(Without using AI)</span></span><span class="rd">Three columns, and a routine you put in your calendar.</span></span></summary>
+<div class="route-body">
+<p class="body">Same gap, same routine.</p>
+<p class="body"><b>Three columns.</b> Down the left, the things employers keep asking for. Middle column, what you could show for each one today &mdash; and a blank where there is nothing. Right column, whether that thing appears anywhere in Friday's moments. Then read across the rows.</p>
+<p class="body"><b>The row that matters</b> is one where the left column is loud, the right column says yes, and the middle is blank. That row is your gap. If several rows look like that, pick the one you would be most annoyed to still have blank a year from now.</p>
+<p class="body">Then write your routine &mdash; the last section on this page has the version that needs no AI.</p>
+</div>
+</details>
+<h2 class="sec">The routine that keeps this current</h2>
+<p class="body">This is the part that outlives the week. Fill in the brackets with your own answers &mdash; the space, the counts, the driver, the signal and the gap are all yours, and they are what stop this from being a generic market summary.</p>
+<div class="promptbox">
+<p>Re-run my market read. My space is <b>[SPACE]</b>. Last time, the two things employers were asking for were <b>[A]</b> and <b>[B]</b>, found in <b>[N]</b> of <b>[M]</b> postings, on <b>[DATE]</b>. The change I expected was <b>[CHANGE]</b>, driven by <b>[DRIVER]</b>, and the signal I said I would watch is <b>[SIGNAL]</b>.</p>
+<p>Do three things. First, pull 10 currently open postings in my space and tell me whether [A] and [B] still repeat, with the new count. Second, tell me what is repeating now that was not there last time. Third, check my signal: has [SIGNAL] moved, and what is your evidence? Quote the postings and link them, and tell me where you are guessing.</p>
+<p>Finish with one line: given my gap &mdash; <b>[GAP]</b> &mdash; has the most useful next thing for me to build changed?</p>
+</div>
+<p class="body">Filled in, it reads like this, and yours will look nothing like it: <i>&ldquo;My space is backend work on data pipelines at climate-tech companies. Last time the asks were &lsquo;own a service end to end&rsquo; and &lsquo;write and maintain tests&rsquo;, in 7 of 12 postings, on 8 September. The change I expected was more postings asking for evaluation of AI-generated code, driven by teams shipping more of it than they can review, and the signal I said I would watch is whether review and testing language starts appearing in junior postings. My gap: I can build the pipeline but I have never had to explain a modelling choice to someone who would be affected by it.&rdquo;</i></p>
+<p class="body"><b>Without AI, the same routine, on a calendar.</b> A recurring 30 minutes, once a month. The three questions written down so you do not have to remember them: do those phrases still repeat in ten fresh postings, what is repeating now that was not there before, and has my signal moved? Write the date and the answers underneath the last set, so you can see the drift.</p>
+<p class="body">Either way, run it once a month and again before any stretch of applications. Bring the answer to your check-in.</p>
+<h2 class="sec">Submit</h2>
+<p class="body">One text box in Canvas, whichever way you did it.</p>
+<p class="body"><b>1. Your audit.</b> For each thing employers are asking for: what you could show today, including the blanks.</p>
+<p class="body"><b>2. Your gap,</b> in one sentence, specific enough that it would not fit the person sitting next to you.</p>
+<p class="body"><b>3. Your standing routine,</b> filled in with your own space, signal and gap &mdash; the prompt if you use one, the calendar version if you do not.</p>
+<p class="body"><b>4. Which shape your evidence points at</b> &mdash; I, T or &pi; &mdash; and the evidence it points with.</p>
+<p class="body"><b>5. Your record, underneath.</b> The conversation, or your written work, or both.</p>
+
+<h2 class="sec">What done and good look like</h2>
+<p class="body">Not graded &mdash; and this is the one to spend the time on anyway, because the growth dimensions you set in Sprint 1 come out of it, and a vague gap makes for dimensions you cannot measure.</p>
+<p class="body"><b>Done</b> is an honest audit with its blanks left visible, one specific gap, and a routine you could actually run.</p>
+<p class="body"><b>Good</b> is a gap that surprised you a little. If it is the one you would have written on Monday without doing any of this, either you were already right or you have written the comfortable one &mdash; and it is worth twenty minutes to work out which.</p>
+
+<h2 class="sec">Before you finish</h2>
+<p class="body">Three questions, worth answering after the work.</p>
+<p class="body">Which row were you most tempted to be generous with yourself about?</p>
+<p class="body">What did the three circles disagree about &mdash; and what did you decide to do about the disagreement?</p>
+<p class="body">This week you did the whole loop once. What part of it would you actually keep doing, and what part felt like homework?</p>
+<div class="pagenav"><span><a href="never-feels-like-work.html">&larr; What Would I Do Anyway</a></span><span><a href="home.html">Course home &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+<!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; Find Your Gap &middot; Draft v1 of 2026-08-29</span>
+</footer>
+
+</div>
+</body>
+</html>
