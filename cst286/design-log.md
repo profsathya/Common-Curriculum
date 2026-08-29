@@ -371,3 +371,17 @@ never fires on the automatic first run, after Reset, once a prediction exists, o
 is opened standalone. The runner asks the course page through two same-origin hooks
 (`exploreLoopPrediction` / `exploreLoopFocusPrediction`), so the nudge knows which stage the
 student is on without the sims knowing anything about the page. — Alan
+
+**Addendum 3, same day — the page becomes an OYP assignment page.** Executed the reviewed
+revision prompt (`cowork/alan/explore-loop-oyp-revision-prompt-2026-08-28.md`) against the
+writing-assignments five-block anatomy: due line + the standard Own-your-progress bubble in the
+pagehead; Purpose gains "What this practices" (the loop, apply-and-analyze, the Sprint 1
+practice-run identity — Sathya's framing) and "What you'll come away knowing"; a builds-on block
+(Trailheads · one-line-of-code assumption · Dojo optional); a scannable "What you'll do" task
+list with the deliverable stated separately; "What done and good look like" with done-vs-good,
+two composed example explanations plainly labeled as ours (never student-voiced), a five-line
+student-runnable checklist, and the how-it-counts line; the copy section reshaped as Submit;
+the close now bridges to Sprint 1 ("notice which topic you would have picked if none of these
+three had been on the menu") and the final reflection pins question 4 as the Sprint 1 seed.
+Registry purpose line updated to match. Mechanics retested after the edit — gating, AI button,
+copy, reload all pass; Draft v3. Canvas step still parked for Sathya's go. — Alan

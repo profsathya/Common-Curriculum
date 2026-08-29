@@ -11,6 +11,21 @@
  .page-footer img { height: 20px; opacity: .55; } .copywrap { position: relative; } .copybtn { position: absolute; top: 10px; right: 10px; z-index: 5; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: #0374B5; background: #fff; border: 1px solid #0374B5; border-radius: 4px; padding: 3px 10px; cursor: pointer; } .copybtn:hover { background: #F3F8FB; } .dojolink { display: inline-block; font-size: 14px; font-weight: 700; color: #fff; background: #0374B5; border-radius: 5px; padding: 9px 16px; } .dojolink:hover { background: #0a5a8a; text-decoration: none; color: #fff; } .keybox { border: 1px solid #E0C88A; background: #FBF6EC; border-radius: 6px; padding: 11px 14px; font-size: 13px; color: #5e4a18; margin: 0 0 10px; } .keybox code { background: #fff; }/* Route expanders — the two ways to do an assignment; both closed by default */details.route { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; } details.route > summary { list-style: none; cursor: pointer; padding: 11px 14px; display: flex; gap: 11px; align-items: flex-start; border-radius: 5px; } details.route > summary::-webkit-details-marker { display: none; } details.route > summary:hover { background: #F5F9FB; } details.route > summary:focus-visible { outline: 2px solid rgba(3,116,181,.45); outline-offset: -2px; } details.route[open] > summary { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .route .plus { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.route:not([open]) > summary .plus::after { content: "+"; } details.route[open] > summary .plus::after { content: "\2212"; } .route .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .route .rt { font-size: 14.5px; font-weight: 700; color: var(--text); } .route .rt .noai { font-weight: 400; color: var(--muted); } .route .rd { font-size: 13px; color: var(--muted); } .route-body { padding: 13px 14px 3px; } @media print { details.route > summary .plus { display: none; } }</style>
         <style>/* Explore Physics Loop — page-specific. Content lives in the markup below; the script at the foot only shows, hides, saves and talks to the AI proxy. */
 .why { font-size: 13.5px; margin: 0 0 10px; }
+/* Glossary bubble — CSS-only (house pattern): hover, keyboard focus, and tap all work with no script */
+.gl { display: inline-block; position: relative; }
+.gt { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: help; border-bottom: 1px dashed var(--blue); border-radius: 0; }
+.gt:hover, .gt:focus { color: var(--blue); border-bottom-style: solid; }
+.gt:focus { outline: 2px solid rgba(3,116,181,.35); outline-offset: 2px; }
+.bub { display: none; position: absolute; z-index: 60; top: 100%; left: 0; margin-top: 7px; width: 340px; max-width: 90vw; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(45,59,69,.18); padding: 11px 13px; font-size: 12.5px; line-height: 1.5; color: var(--text); text-transform: none; letter-spacing: normal; font-weight: 400; text-align: left; }
+.gl:hover > .bub, .gl:focus-within > .bub { display: block; }
+.bub .bt { display: block; font-size: 13px; font-weight: 700; color: var(--blue-dark); padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid var(--border-light); }
+.bub .br { display: block; margin-bottom: 6px; color: var(--text); }
+.bub .br:last-child { margin-bottom: 0; }
+.bub .br i { font-style: normal; font-weight: 700; color: var(--muted); }
+ul.task { margin: 4px 0 12px 24px; padding: 0; font-size: 13.5px; }
+ul.task li { margin: 0 0 6px; }
+.example { border: 1px solid var(--border-light); border-left: 3px solid var(--blue); border-radius: 4px; background: #FAFBFC; padding: 10px 13px; font-size: 13px; line-height: 1.55; margin: 0 0 10px; }
+.example .exlabel { display: block; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 4px; }
 .topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 8px 0 16px; }
 .topic-card { text-align: left; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: 12px 14px; cursor: pointer; color: var(--text); }
 .topic-card:hover, .topic-card:focus-visible { border-color: var(--blue); outline: none; }
@@ -78,14 +93,46 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
                 <a href="home.html">CST286</a> &middot; Explore Physics Loop
             </div>
             <div class="pagehead">
-                <div class="s">CST286 &middot; Fall 2026 &middot; Week 2 &middot; Own your progress &middot; not graded</div>
+                <div class="s">CST286 &middot; Fall 2026 &middot; Week 2 &middot; <span class="gl"><button type="button" class="gt">Own your progress</button><span class="bub" role="tooltip"><b class="bt">Own your progress</b><span class="br"><i>What it is.</i> Your weekly practice: activities that develop the habits and skills of taking ownership of your own success.</span><span class="br"><i>Why practice it.</i> Here you apply it to the goals of this class &mdash; but the practice makes you more self-directed everywhere, able to set and accomplish goals in any context. That opens doors: people like working and partnering with someone who takes ownership.</span></span></span> &middot; not graded</div>
                 <h1>Explore Physics Loop</h1>
-                <div class="dt">One round of the loop this course runs on &middot; about 40&ndash;60 minutes &middot; laptop, not phone</div>
+                <div class="dt">Due Friday 4 September, 11:59 p.m. &middot; about 40&ndash;60 minutes &middot; laptop, not phone</div>
             </div>
 
             <h2 class="sec">Why this exists</h2>
-<p class="body">Everything you will do in this course comes back to one loop: take something you wonder about, get a model of it running, change the model, say what you expect before you look, watch what actually happens, and then explain it in your own words &mdash; well enough that someone could push back. That is what physicists do, it is what engineers do, and it is what you will be doing on your own topic in a few weeks. This page is one round of that loop with the model already built for you, so the only thing you have to bring is curiosity and honesty about what you see.</p>
-<p class="body">Nothing here is graded. What you write is for you, and the summary you copy at the end goes into the Week 2 own-your-progress box on Canvas so I can see how the loop is working for you and make it better. Do it in one sitting if you can; it takes about the length of a movie&rsquo;s first act.</p>
+<p class="body">Everything you will do in this course comes back to one loop: take something you wonder about, get a model of it running, change the model, say what you expect before you look, watch what actually happens, and then explain it in your own words &mdash; well enough that someone could push back. That is what physicists do, it is what engineers do, and this page is your practice run: one full round of the loop with the model already built for you, so the only thing you have to bring is curiosity and honesty about what you see.</p>
+<p class="body"><b>What this practices.</b> Running the loop scientists and engineers actually run &mdash; predict before you look, change one thing at a time, explain what you saw well enough that someone could push back. On the skills ladder this is apply-and-analyze work: you are not memorizing the physics, you are using it to make something happen &mdash; the exact loop you will run on a topic of your own in Sprint&nbsp;1, and the loop you will use to test anything you build, in any job.</p>
+<p class="body"><b>What you&rsquo;ll come away knowing.</b> One real piece of physics from the inside (the Magnus force, lift and stall, or sensor fusion &mdash; your pick), what a computational model is and how F&nbsp;=&nbsp;ma becomes a loop in code, and where a model stops matching the world.</p>
+<p class="body">Do it in one sitting if you can; it takes about the length of a movie&rsquo;s first act.</p>
+
+            <h2 class="sec">What you&rsquo;re building on</h2>
+<p class="body">This stands on the <a href="trailheads.html"><b>Physics Trailheads</b></a> map &mdash; if a topic here pulls at you, its trail is where that interest goes next. Browsing the map first helps, but is not required.</p>
+<p class="body">Assumed: you can open a course page and edit one line of text. That is all the coding this asks &mdash; each change is one number on one marked line.</p>
+<p class="body">If you want AI feedback along the way, the feedback button here works on its own &mdash; and if you would rather talk a stage through with your own coach, your <a href="setup-ai-dojo.html">CST286 AI Dojo</a> is set up for exactly that.</p>
+
+            <h2 class="sec">What you&rsquo;ll do</h2>
+
+            <ul class="task">
+                <li>Pick <b>one topic</b> &mdash; the one you have actually wondered about.</li>
+                <li>Run its model and watch the first attempt fail the mission &mdash; that failure is your starting point.</li>
+                <li>Work the <b>three stages</b>: predict, change one marked line, run, explain. About <b>150 characters</b> of explanation opens the next stage.</li>
+                <li>Write the <b>final reflection</b> &mdash; about <b>250 characters</b>, the part that matters most.</li>
+                <li>Copy your summary and paste it into <b>Week 2 &middot; Explore Physics Loop</b> on Canvas by <b>Friday 11:59 p.m.</b> &mdash; that one paste is what you hand in.</li>
+            </ul>
+
+            <h2 class="sec">What done and good look like</h2>
+<p class="body"><b>Done</b> is all three stages carrying a prediction and an explanation in your words, the final reflection answering its four questions, and the summary pasted into Canvas.</p>
+<p class="body"><b>Good</b> is when your predictions are committed before you run &mdash; right or wrong, and the wrong ones you then chase down are the best ones on the page; when your explanations name a quantity (a force, a speed, an angle) and point at what the graph or the banner showed; and when your stage-3 answer says something the model leaves out. Two examples of the level to aim for, written by us as models &mdash; not student work:</p>
+            <div class="example"><span class="exlabel">Example &middot; a strong stage-1 explanation (the ball)</span>The spin is what separated my ball from the ghost &mdash; same kick, and the ghost crossed 5 m out while mine bent back inside the post. The drift graph kept curving instead of jumping once, so the sideways force must act the whole flight, not just at the kick. That matches the Magnus line in the code: the force depends on the velocity, which is always there.</div>
+            <div class="example"><span class="exlabel">Example &middot; a strong stage-2 explanation (the phone)</span>At trust 0.98 the arrow held with a 2-degree wobble even though both sensors were lying. The gyro&rsquo;s 98% carried the fast motion because shaking never enters it, and the accelerometer&rsquo;s 2% slowly pulled the drift back out. At 1.0 the drift had nothing correcting it and the banner showed 24 degrees &mdash; two per second, for twelve seconds.</div>
+<p class="body">Before you paste, run this list &mdash; it is the same one we use when reading:</p>
+            <ul class="task">
+                <li>A prediction written before every run you counted.</li>
+                <li>A number from the run &mdash; graph, banner, or the Measured line &mdash; in every explanation.</li>
+                <li>Stage 3 names something the model leaves out.</li>
+                <li>The final reflection answers all four questions.</li>
+                <li>The summary is pasted into the Canvas box.</li>
+            </ul>
+<p class="body"><b>How it counts.</b> This is own-your-progress work: no points, and the summary is read, not graded. What it feeds: the loop you practice here is the loop your graded pursuit work runs on, and your reflections tell me where the course needs to meet you.</p>
 
             <h2 class="sec">1 &middot; Pick one</h2>
 <p class="body">Pick the one you have actually wondered about. Every card goes to the same depth and takes the same time, so the only reason to choose is that the question pulls at you. These are the ones that came up in class this week and in our Zoom check-ins.</p>
@@ -127,7 +174,7 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
             </div>
 
             <h2 class="sec">3 &middot; Three stages</h2>
-<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot. And if you press Run before writing a prediction, the panel counts you down &mdash; the common mistake here is running first and predicting never, and the pause is the whole discipline.</p>
 
             <article class="stage" data-stage="1">
                 <div class="stage-head"><span>Stage 1 of 3 &middot; Score the free kick</span><span class="aim">Aim: score, and say what pushed the ball sideways</span></div>
@@ -242,7 +289,7 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
             </div>
 
             <h2 class="sec">3 &middot; Three stages</h2>
-<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot. And if you press Run before writing a prediction, the panel counts you down &mdash; the common mistake here is running first and predicting never, and the pause is the whole discipline.</p>
 
             <article class="stage" data-stage="1">
                 <div class="stage-head"><span>Stage 1 of 3 &middot; Clear the ridge</span><span class="aim">Aim: get over, and say what two more degrees bought you</span></div>
@@ -357,7 +404,7 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
             </div>
 
             <h2 class="sec">3 &middot; Three stages</h2>
-<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot.</p>
+<p class="body">Each stage is the same shape: do one thing to the model, say what you expect <b>before</b> you run it, watch, then explain. The explaining is where the learning happens, so the next stage opens once you have written about 150 characters &mdash; three or four honest sentences. Beside each box you have two ways to push your explanation further: <b>use one, or both</b>. Writing it out and checking it yourself carries a lot of the thinking and is worth doing on its own; having an AI question what you wrote is a different skill, worth practising too. The graph is the referee either way &mdash; the AI can be wrong, the graph cannot. And if you press Run before writing a prediction, the panel counts you down &mdash; the common mistake here is running first and predicting never, and the pause is the whole discipline.</p>
 
             <article class="stage" data-stage="1">
                 <div class="stage-head"><span>Stage 1 of 3 &middot; Break the arrow</span><span class="aim">Aim: say which sensor the shake fooled, and why</span></div>
@@ -466,6 +513,7 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
                         <li>Where did a prediction of yours miss, and what does the miss tell you &mdash; about the model, or about how you were thinking?</li>
                         <li>If you had one more hour with this model, what would you change, add, or measure?</li>
                     </ol>
+                    <p class="step">Hold onto your answer to question 4. &ldquo;What would you change, add, or measure&rdquo; is the first question of your own loop in Sprint&nbsp;1.</p>
                     <textarea class="box" id="final-text" data-field="final" style="min-height:180px;" placeholder="A paragraph or two, in your own words..."></textarea>
                     <div class="count" data-count data-min="250"></div>
                     <div class="actions">
@@ -486,15 +534,16 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
                 </div>
             </article>
 
-            <h2 class="sec">5 &middot; Copy your summary into Canvas</h2>
-<p class="body">The button below gathers your topic, your predictions, your explanations, your final reflection, and any AI feedback you asked for, into plain text and copies it to your clipboard. Paste it into the <b>Week 2 &middot; Explore Physics Loop</b> box on Canvas. The text also appears below the button, so if the copy does not work in your browser you can select it there and copy by hand.</p>
+            <h2 class="sec">5 &middot; Submit</h2>
+<p class="body">One text box in Canvas: <b>Week 2 &middot; Explore Physics Loop</b>, by <b>Friday 11:59 p.m.</b></p>
+<p class="body"><b>1. Your summary.</b> The button below gathers your topic, your predictions, your explanations, any AI feedback you asked for, and your final reflection into plain text and copies it to your clipboard &mdash; paste it straight into the box. The text also appears below the button, so if the copy does not work in your browser you can select it there and copy by hand. If you explored a second topic, switch to it and copy again &mdash; paste both.</p>
             <div class="namerow"><label for="student-name">Your name</label><input type="text" id="student-name" autocomplete="name" placeholder="as it appears on Canvas"></div>
             <div class="actions">
                 <button type="button" class="btn primary" id="copy-btn">Copy my summary</button>
                 <span class="status" id="copy-status"></span>
             </div>
             <textarea class="summary-out" id="summary-out" readonly aria-label="Your summary as plain text"></textarea>
-            <p class="body" style="margin-top:12px;">If this pulled you in, the trail it belongs to is on the <a href="trailheads.html">Physics Trailheads</a> map &mdash; the spinning ball and the plane sit on <i>The Moving Body</i> and <i>Rockets &amp; Orbits</i>, the phone on <i>The Slab of Glass</i>. That is where the loop you just ran becomes your own topic.</p>
+            <p class="body" style="margin-top:12px;">You have now run the whole loop once &mdash; chosen, changed, predicted, watched, explained. That loop is yours to keep; in Sprint&nbsp;1 the topic will be yours too. As you finish, notice which topic you would have picked if none of these three had been on the menu &mdash; that is where your own exploration starts, and the <a href="trailheads.html">Physics Trailheads</a> map is where to look for it: the spinning ball and the plane sit on <i>The Moving Body</i> and <i>Rockets &amp; Orbits</i>, the phone on <i>The Slab of Glass</i>. Anything on this page confusing or stuck &mdash; ask me, in class or on Slack, any time.</p>
             </section>
 
             <p class="storenote" id="store-note">This browser is blocking local storage, so your writing here will not survive a reload. Copy your summary before you leave the page.</p>
@@ -513,7 +562,7 @@ details.cy .cy-body ol { margin: 4px 0 8px 22px; padding: 0; } details.cy .cy-bo
             <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
             <footer class="page-footer">
                 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Explore Physics Loop &middot; Draft v2 of 2026-08-28</span>
+                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Explore Physics Loop &middot; Draft v3 of 2026-08-28</span>
             </footer>
         </div>
 
