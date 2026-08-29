@@ -362,3 +362,12 @@ and the runner keeps a run log across runs: "Run 2 · you changed spin 0→6, ai
 over "Run 1 · original settings · BLOCKED…". The changed-constants diff comes from comparing the
 editor against the original source; the result travels through `scene.caption` because GlowScript's
 print() has no home in the stripped-down runner. — Alan
+
+**Addendum 2, same day — the prediction nudge (his idea).** Clicking Run while the active stage's
+prediction box is empty now shows "Predicted first? Running in 3…2…1" beside the Run button, with
+one escape — "I'll write it first" — which cancels the run and scrolls the course page to the
+prediction box; doing nothing lets the run happen, and clicking Run again runs immediately. It
+never fires on the automatic first run, after Reset, once a prediction exists, or when the runner
+is opened standalone. The runner asks the course page through two same-origin hooks
+(`exploreLoopPrediction` / `exploreLoopFocusPrediction`), so the nudge knows which stage the
+student is on without the sims knowing anything about the page. — Alan

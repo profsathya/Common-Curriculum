@@ -17,6 +17,8 @@
   #gserrors p { margin: 6px 0; }
   #runlog { flex: 0 0 auto; display: none; font-size: 12.5px; line-height: 1.5; padding: 7px 10px; border-bottom: 1px solid #C7CDD1; background: #F3F8FB; color: #2D3B45; }
   #runlog .prev { color: #6B7780; }
+  #nudge { display: none; align-items: center; gap: 8px; font-size: 12.5px; color: #5e4a18; background: #FBF6EC; border: 1px solid #E0C88A; border-radius: 5px; padding: 4px 9px; }
+  #nudge button { font-family: inherit; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 4px; cursor: pointer; border: 1px solid #a07c1f; color: #5e4a18; background: #fff; }
   .panes { flex: 1 1 auto; display: flex; min-height: 0; }
   .pane { min-width: 0; min-height: 0; overflow: auto; }
   .pane.left { flex: 0 0 44%; border-right: 1px solid #C7CDD1; display: flex; }
@@ -33,6 +35,7 @@
   <div class="bar">
     <button id="runbtn" type="button">&#9654; Run</button>
     <button id="resetbtn" type="button" class="secondary">Reset to original</button>
+    <span id="nudge"><span id="nudge-text"></span><button id="nudge-wait" type="button">I&rsquo;ll write it first</button></span>
     <span class="hint">Edit any line on the left, then press Run. Reset brings the original code back.</span>
   </div>
   <div id="gserrors"></div>
@@ -146,8 +149,47 @@ function ready(program) {
 
 function runCode() { localCompile(ready); }
 
-document.getElementById('runbtn').addEventListener('click', runCode);
+// --- the prediction nudge: if the course page reports that the active stage's
+// prediction box is empty, count down 3-2-1 before a manual Run; "I'll write it
+// first" cancels and the page scrolls to the box; doing nothing lets the run
+// happen. Never fires on the automatic first run, on Reset, or when the runner
+// is open standalone (no course page to ask).
+var nudgeEl = document.getElementById('nudge');
+var nudgeText = document.getElementById('nudge-text');
+var nudgeTimer = null;
+function predictionHook(name) {
+    try {
+        if (window.parent && window.parent !== window && typeof window.parent[name] === 'function') { return window.parent[name]; }
+    } catch (e) {}
+    return null;
+}
+function cancelNudge() {
+    if (nudgeTimer) { clearInterval(nudgeTimer); nudgeTimer = null; }
+    nudgeEl.style.display = 'none';
+}
+function runWithNudge() {
+    if (nudgeTimer) { cancelNudge(); runCode(); return; }   // Run again during the countdown = run now
+    var ask = predictionHook('exploreLoopPrediction');
+    var status = ask ? ask(sim) : null;
+    if (!status || !status.empty) { runCode(); return; }
+    var count = 3;
+    nudgeText.textContent = 'Predicted first? Running in ' + count + '\u2026';
+    nudgeEl.style.display = 'inline-flex';
+    nudgeTimer = setInterval(function () {
+        count--;
+        if (count <= 0) { cancelNudge(); runCode(); return; }
+        nudgeText.textContent = 'Predicted first? Running in ' + count + '\u2026';
+    }, 1000);
+}
+document.getElementById('nudge-wait').addEventListener('click', function () {
+    cancelNudge();
+    var focus = predictionHook('exploreLoopFocusPrediction');
+    if (focus) { focus(sim); }
+});
+
+document.getElementById('runbtn').addEventListener('click', runWithNudge);
 document.getElementById('resetbtn').addEventListener('click', function () {
+    cancelNudge();
     edit.value = original;
     gserrors.innerHTML = '';
     runCode();

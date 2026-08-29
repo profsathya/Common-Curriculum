@@ -838,6 +838,33 @@ TOPIC: How your phone knows which way is up — the keep-the-arrow-true mission.
                 } else { fallback(); }
             });
 
+            // ---------- the runner's prediction hooks (same-origin iframes ask before a manual Run) ----------
+            var SIM_TOPIC = { 'free-kick': 'ball', 'plane-lift': 'plane', 'phone-tilt': 'phone' };
+            function activeStage(topic) {
+                var panel = $('#panel-' + topic);
+                if (!panel) { return null; }
+                var active = null;
+                $all('.stage[data-stage]', panel).forEach(function (a) { if (!a.hidden) { active = a; } });
+                return active;
+            }
+            window.exploreLoopPrediction = function (simName) {
+                var topic = SIM_TOPIC[simName];
+                if (!topic || state.topic !== topic) { return null; }
+                var active = activeStage(topic);
+                if (!active) { return null; }
+                var predict = $('[data-field="predict"]', active);
+                return { empty: predict.value.trim().length === 0, stage: active.getAttribute('data-stage') };
+            };
+            window.exploreLoopFocusPrediction = function (simName) {
+                var topic = SIM_TOPIC[simName];
+                if (!topic) { return; }
+                var active = activeStage(topic);
+                if (!active) { return; }
+                var predict = $('[data-field="predict"]', active);
+                predict.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(function () { predict.focus(); }, 450);
+            };
+
             // ---------- start ----------
             if (!storageOK) { document.getElementById('store-note').style.display = 'block'; }
             if (state.topic && TOPIC_TITLES[state.topic]) { chooseTopic(state.topic, false); restoreFinal(); }
