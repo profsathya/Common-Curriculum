@@ -317,3 +317,64 @@ no Canvas work was done.
 
 **Open:** the Friday 4 Sep session row says the activity is due tonight and that the session plan will be
 posted — it does not claim the class does or does not meet. Needs Sathya's line.
+
+## 2026-08-29 (later) — Week 2 revised: the warm referral becomes the destination, and the pages become workspaces
+
+Two changes, both Sathya's, and the second is the one that matters.
+
+**The destination.** Every Week 2 page now opens on where the sequence is going: **a warm-referral email
+Prof. Sathya may send to one of his industry contacts in two to three months**, drafted by the student next
+week. Same option in both courses; he holds the final say and is open to doing it for as many students as
+he can; *may* means there is a bar and meeting it is the student's job. The bar is two questions, and they
+are now the standard the whole week is written against:
+
+> Would Prof. Sathya actually send this?
+> Would his contact actually be spurred to action by it?
+
+The second is the harder one and it is what finally answers *why are we reading job postings* — a busy
+contact acts on a specific opportunity plus a specific reason this person fits it, and neither exists
+without the market read. Each page says in one line which part of the email its work feeds: the market read
+gives the opportunity, the moments give the story, the gap gives the honest line.
+**Two slots are left visibly marked on the page for Sathya's own wording** — the promise sentence, and the
+150-word length cap. Neither should ship as written.
+
+**The pages became workspaces.** Following the `explore-physics-loop` model in CST286: every question is
+now a response box, each with a **Get AI feedback** button that reads *that answer* against per-question
+coach notes, and a **Check it yourself** list carrying the same questions without the AI. One **Copy my
+summary** button at the bottom assembles every box plus the AI feedback into the text that goes to Canvas —
+which replaces the old "paste your whole Dojo transcript" instruction. Work saves to `localStorage` as they
+type, namespaced per course and per page (`cc-w2:cst499-read-the-market`). No stage gating: the boxes are
+parts of one answer, not a sequence.
+
+**The four ways to develop an answer are tied to the state of the box, never offered as a menu** — something
+in it → the feedback button; anything at all → the reflection questions; empty and staying empty → that
+page's practice Dojo; the page's questions ran out → their own Dojo.
+
+**The practice-Dojo mapping was wrong and is corrected.** Read from the Symbiotic Thinking Dojo repo:
+- Slugs confirmed — `know-market` and `know-yourself` resolve via `TOPIC_SLUGS`.
+- **Know the Market** needs **3–5 real postings pasted as text** before it does anything and cannot browse,
+  so the old condition ("start here if you cannot settle on a space") was backwards. New condition: *you
+  have postings but the terms are not resolving into a pattern.* It covers the current-asks box richly and
+  does **nothing** for driver/signal — the page says so.
+- **Know Yourself** is not a what-you-love dojo. Its arc runs to an employer-facing value statement, a
+  niche test and a gap, so it moved off `never-feels-like-work` and onto **Find Your Gap**, where it
+  belongs. Its value statement is near enough the middle of next week's email.
+- **`never-feels-like-work` has no practice Dojo**, and the page explains why rather than leaving a hole.
+- The repo's **`ikigai`** topic is deliberately not linked: it is the four-quadrant version including "what
+  you can be paid for", against the three-circle framing locked for these courses.
+- Both dojos hand back their own summary (and Know the Market a Canvas JSON block). Each page says plainly
+  that those are **raw material to paste into the boxes**, not the submission.
+
+**Verified:** tag balance on all six pages; storage round-trip and restore after reload; no key collision
+across pages or courses; summary assembly with labels in order; the clipboard fallback path; the
+below-minimum gate on the feedback button; render at 900px.
+**Not verified — needs one click from Sathya:** the live AI call. Both this container and the device shell
+are blocked from reaching the `ai-proxy` endpoint, so only the failure path could be exercised (it degrades
+correctly, pointing at the Check-it-yourself questions, and re-enables the button for a retry). The request
+shape is byte-for-byte the same as the working CST286 page.
+
+**Fix caught in verification (2026-08-29).** The driver / signal / gap bubbles opened ~300px below their
+term: the boxes made `.qa` the nearest positioned ancestor, so `top:100%` dropped the bubble below the whole
+box instead of below its paragraph. Fixed by putting `.qa > .qh, .qa > .qt` in the `position:relative` list,
+which is exactly the anchoring failure `hover-text` documents. Re-verified by keyboard focus on every bubble
+in both pages that carry one.

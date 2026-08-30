@@ -194,8 +194,10 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 .keybox{border:1px solid #E0C88A;background:#FBF6EC;border-radius:6px;padding:11px 14px;font-size:13px;color:#5e4a18;margin:0 0 10px;}
 .keybox code{background:#fff;}
 /* Route expanders — the two ways to do an assignment; both closed by default */details.route { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; } details.route > summary { list-style: none; cursor: pointer; padding: 11px 14px; display: flex; gap: 11px; align-items: flex-start; border-radius: 5px; } details.route > summary::-webkit-details-marker { display: none; } details.route > summary:hover { background: #F5F9FB; } details.route > summary:focus-visible { outline: 2px solid rgba(3,116,181,.45); outline-offset: -2px; } details.route[open] > summary { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .route .plus { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.route:not([open]) > summary .plus::after { content: "+"; } details.route[open] > summary .plus::after { content: "\2212"; } .route .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .route .rt { font-size: 14.5px; font-weight: 700; color: var(--text); } .route .rt .noai { font-weight: 400; color: var(--muted); } .route .rd { font-size: 13px; color: var(--muted); } .route-body { padding: 13px 14px 3px; } @media print { details.route > summary .plus { display: none; } }
-/* Week 2 additions — 2026-08-29. Bubble anchoring + the three-circle figure. */
-p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
+/* Week 2 additions — 2026-08-29. Bubble anchoring, the three-circle figure, and the work boxes. */
+p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption,.qa,.refl{position:relative;}
+/* the bubble must anchor to the paragraph holding the term, not to the whole box */
+.qa > .qh,.qa > .qt{position:relative;}
 .circlefig{margin:2px 0 16px;text-align:center;}
 .circlefig svg{width:100%;max-width:400px;height:auto;}
 .circlefig figcaption{font-size:12.5px;color:var(--muted);margin:6px auto 0;max-width:560px;line-height:1.5;}
@@ -204,6 +206,48 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 .promptbox p{margin:0 0 9px;}
 .promptbox p:last-child{margin:0;}
 .stepnum{font-weight:700;}
+/* purpose / destination block */
+.dest{border:1px solid #A8CBE0;background:#F3F8FB;border-radius:6px;padding:13px 15px;margin:0 0 14px;font-size:13.5px;}
+.dest h2{font-size:14.5px;margin:0 0 7px;color:var(--blue-dark);}
+.dest p{margin:0 0 9px;line-height:1.55;}
+.dest p:last-child{margin:0;}
+.dest .bar{margin:9px 0;padding:9px 12px;background:#fff;border:1px solid var(--border);border-radius:5px;}
+.dest .bar b{display:block;margin:0 0 3px;}
+.dest .bar b:last-child{margin:0;}
+.slot{background:#FBF6EC;border:1px dashed #E0C88A;border-radius:4px;padding:1px 5px;font-size:12.5px;color:#5e4a18;}
+/* work boxes */
+.qa{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin:0 0 14px;background:#fff;}
+.qa > .qt{display:block;font-size:14px;font-weight:700;margin:0 0 4px;}
+.qa > .qh{font-size:13px;color:var(--text);margin:0 0 9px;line-height:1.55;}
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.count{font-size:12px;color:var(--muted);margin:4px 0 8px;}
+.count.ok{color:#1a7f4b;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.namerow{font-size:13px;margin:0 0 9px;}
+.namerow input{font-family:inherit;font-size:13.5px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;min-width:230px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
 </style>
 </head>
 <body>
@@ -215,6 +259,18 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <div class="dt">Due Tuesday 8 September, 11:59 p.m. &middot; about 40 minutes</div>
 </div>
 
+<div class="dest">
+<h2>Where this is going</h2>
+<p><b>In two to three months, Prof. Sathya may send an email about you to one of his industry contacts.</b> <span class="slot">[slot &mdash; Sathya&rsquo;s exact wording on the promise goes here]</span> He has the final say, and he is open to doing this for as many of you as he can. &ldquo;May&rdquo; means there is a bar, and meeting it is yours to do.</p>
+<p>Next week you draft that email yourself. Everything you do this week is the raw material for it: what the market is asking for gives the email something specific to point at, what you would be doing anyway gives it a story worth reading, and the gap you find gives it the honest line about what you are building next.</p>
+<div class="bar">
+<b>Would Prof. Sathya actually send this?</b>
+<b>Would his contact actually be spurred to action by it?</b>
+</div>
+<p>The second question is the harder one, and it is the reason this week starts with job postings. A busy person acts when they can see a specific opportunity and a specific reason you fit it. Neither is something you can write without having read the market first.</p>
+<p>It also has to be short enough to read in one go and sharp enough to hold attention from the first line &mdash; <b>under 150 words</b> <span class="slot">[slot &mdash; length is Sathya&rsquo;s call]</span>. That is a high bar, and holding yourself to it is the point.</p>
+<p><b>This page feeds the honest line &mdash; what you are building next, and why that one. It is what stops the email reading as a brag.</b></p>
+</div>
 <h2 class="sec">Purpose</h2>
 <p class="body">Find the one thing worth closing next &mdash; the specific piece the market keeps asking for that you cannot yet prove &mdash; and set up the routine that keeps finding it after this week. Knowing your own gap is what turns a general worry about being ready into one thing you can go and do.</p>
 <p class="body">You come out of this with an honest audit of what you can prove today, one specific gap, and a routine you can re-run in thirty minutes a month.</p>
@@ -238,66 +294,100 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <p class="body"><b>From Friday: your moments.</b> The times work stopped feeling like work, and what runs through them.</p>
 <p class="body">Have both open. This activity is mostly about putting them next to each other and being honest about the third thing.</p>
 <h2 class="sec">What to work out</h2>
-<p class="body"><span class="stepnum">1. What can you prove today?</span> Take the two things employers are asking for from Wednesday, one at a time, and for each write what you could put in front of someone as evidence. Not what you have covered in a class &mdash; what you could show. A repository someone else has read, a thing you built that someone used, a piece of work with your decisions visible in it. Where you have nothing to show, write nothing. That blank is the useful part of this step, and it is not a verdict on you: almost every senior has several.</p>
-<p class="body"><span class="stepnum">2. Put the three next to each other.</span> What the market keeps asking for, what you would do anyway, what you can prove. Read across them and look for the piece that is missing. Sometimes the overlap is obvious. Sometimes what you would do anyway sits outside what the market is asking for, and then the interesting question is whether the market is asking somewhere you have not looked yet, or whether this is a thing you keep for yourself and aim at something adjacent. Both are real answers.</p>
-<p class="body"><span class="stepnum">3. Identify one <span class="gl"><button type="button" class="gt">gap</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the work you are aiming at asks for.</span><span class="br"><i>Why it matters.</i> It turns a vague sense of not being ready into one specific thing you can close. Vague gaps produce vague work.</span><span class="br"><i>What a good one looks like.</i> Specific, and closeable. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span>.</span> One sentence: something the market keeps asking for, inside work you would do anyway, that you cannot prove yet. One, not five. A common wrong turn is a gap so general it could belong to anyone in the room &mdash; if your sentence would fit your neighbour, it is not yours yet.</p>
-<p class="body"><span class="stepnum">4. Work out which shape your gap moves you toward.</span> Careers get described by three shapes, and the difference is real. An <b>I</b> is one skill you have gone deep in, with not much range beyond it. A <b>T</b> is that same depth plus enough range across neighbouring areas to work well with the people who have them. A <b>&pi;</b> is two deep skills plus that range, so you can carry two kinds of work and connect them &mdash; which is often where the interesting problems sit.</p>
-<p class="body">Do not pick the shape you like the sound of. Read it off your own evidence from Wednesday. If the phrases that kept repeating in the postings sit next to your existing depth, the market is asking you to widen &mdash; that is a T. If they keep pairing your depth with a second, different depth, that is a &pi;, and it is a longer piece of work you should start knowing it is longer. If everything that repeated is deeper in what you already do, the market is asking for more I, and widening now would be a detour. Write which one your evidence points at, and quote the evidence.</p>
-<p class="body"><span class="stepnum">5. Write the thing that keeps this current.</span> Everything above is a photograph of one week. Postings change, your signal from Wednesday either moves or it does not, and what you can prove grows. So finish by writing the routine that re-runs this. The last section on this page has both ways to do it.</p>
-<h2 class="sec">Two ways to do this</h2>
-<p class="body"><b>Use one, or both.</b> They end at the same gap and the same routine, go in the same Canvas box, and are worth the same. Whichever you do, give it about 40 minutes. Open the ones you want with the <b>+</b>.</p>
-<p class="body">Doing the audit on paper is where a lot of the thinking happens, and being the one who writes &ldquo;nothing&rdquo; in a row is worth the discomfort. Having an AI hold all three lists at once and ask what you are avoiding is a different skill, and that is worth practising too. If you want both, do the audit yourself first, then take it to your Dojo and ask it what you were generous about.</p>
-
-<details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">With your AI Dojo</span><span class="rd">You give it all three lists; it asks the questions you would rather skip.</span></span></summary>
-<div class="route-body">
-<p class="body">Paste in your market read from Wednesday and your moments from Friday, then give it this:</p>
-<div class="promptbox">
-<p>Above are two things: what I found employers in my space are asking for, and the moments when work stopped feeling like work for me. Now interview me about the third thing &mdash; what I can actually prove today. Go one thing at a time. For each thing employers are asking for, ask me what I could put in front of someone as evidence, and push back when I answer with a course I took instead of something I could show.</p>
-<p>When we are done, tell me where the three do not line up, and ask me which single gap I think matters most. Argue with my choice if you think I picked the comfortable one. Do not pick it for me.</p>
+<p class="body">Four boxes. The first is the honest audit, the second is the gap it exposes, the third is what keeps this current after the week ends, and the fourth is what you do next.</p>
+<p class="body">One framing before you start, because it changes what a good answer looks like. Everything here is a photograph of one week. Postings change, the signal you named on Wednesday either moves or it does not, and what you can prove grows. So the gap is not a verdict &mdash; it is the thing you are about to go and close, which is exactly what a contact wants to hear someone say.</p>
+<h2 class="sec">Two ways to work on what you write</h2>
+<p class="body"><b>Use one, or both.</b> Under every box there is a <b>Get AI feedback</b> button that reads what you actually wrote against what a strong answer to that question looks like, and a <b>Check it yourself</b> list with the same questions, for you to run on your own. They go at the same thing from two directions and they end in the same box.</p>
+<p class="body">Working through the questions yourself is where a lot of the thinking happens, and it is worth doing for its own sake. Having something push back on what you just wrote is a different skill, and that is worth practising too. If you want both, answer first, run the check yourself, then press the button and see what it caught that you did not.</p>
+<p class="body">Your writing is saved in this browser as you type, so you can close the page and come back. Nothing is sent anywhere until you press the button or copy your summary.</p>
+<div class="qa" data-box="b1">
+<label class="qt" for="b1">1 &middot; What can you prove today?</label>
+<div class="qh">Take the two things employers are asking for from Wednesday, one at a time, and for each write what you could put in front of someone as evidence. Not what you have covered in a class &mdash; what you could <b>show</b>. A repository someone else has read, a thing you built that someone used, a piece of work with your decisions visible in it. <b>Where you have nothing to show, write nothing.</b> That blank is the useful part of this step, and it is not a verdict on you: almost every senior has several.</div>
+<textarea class="box" id="b1" data-field="b1" placeholder="For each thing employers are asking for: what you could show. Blanks included."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Is any of this a course you took rather than something you could show?</li><li>Did you leave the blanks visible, or fill every row to make it look better?</li><li>For each piece of evidence: could someone open it in one click and see what you did?</li><li>Would it survive a contact actually checking it?</li></ul></details>
 </div>
-<p class="body"><b>You decide, it argues.</b> A gap it chose for you is not one you will spend a semester on. Its job here is to make the comfortable answer harder to keep, and yours is to be the one who ends up saying the sentence.</p>
-<p class="body"><b>Then have it draft your standing prompt</b> from the template below &mdash; but fill in the space, the signal and the gap yourself. Those are the parts that make the routine yours, and an AI that invents them is just refreshing somebody's generic market summary once a month.</p>
+<div class="qa" data-box="b2">
+<label class="qt" for="b2">2 &middot; Identify one <span class="gl"><button type="button" class="gt">gap</button><span class="bub" role="tooltip"><b class="bt">The gap in your preparation</b><span class="br"><i>What it means.</i> The distance between what you can prove about your skills today and what the work you are aiming at asks for.</span><span class="br"><i>Why it matters.</i> It turns a vague sense of not being ready into one specific thing you can close. Vague gaps produce vague work.</span><span class="br"><i>What a good one looks like.</i> Specific, and closeable. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</span></span></span></label>
+<div class="qh">One sentence: something the market keeps asking for, inside work you would do anyway, that you cannot prove yet. One, not five. A common wrong turn is a gap so general it could belong to anyone in the room &mdash; if your sentence would fit your neighbour, it is not yours yet. &ldquo;I have never shipped code another engineer reviewed&rdquo; is a gap. &ldquo;I need more experience&rdquo; is not.</div>
+<textarea class="box short" id="b2" data-field="b2" placeholder="One sentence. Specific enough that it would not fit the person sitting next to you."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Would this sentence fit your neighbour? Then it is not yours yet.</li><li>Is it closeable, or is it the size of a degree?</li><li>Is it the one you would have written on Monday without doing any of this?</li><li>Read it as the honest line in an email about you. Does it make you more credible, or just smaller?</li></ul></details>
 </div>
-</details>
-
-<details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">On paper <span class="noai">(Without using AI)</span></span><span class="rd">Three columns, and a routine you put in your calendar.</span></span></summary>
-<div class="route-body">
-<p class="body">Same gap, same routine.</p>
-<p class="body"><b>Three columns.</b> Down the left, the things employers keep asking for. Middle column, what you could show for each one today &mdash; and a blank where there is nothing. Right column, whether that thing appears anywhere in Friday's moments. Then read across the rows.</p>
-<p class="body"><b>The row that matters</b> is one where the left column is loud, the right column says yes, and the middle is blank. That row is your gap. If several rows look like that, pick the one you would be most annoyed to still have blank a year from now.</p>
-<p class="body">Then write your routine &mdash; the last section on this page has the version that needs no AI.</p>
+<div class="qa" data-box="b3">
+<label class="qt" for="b3">3 &middot; Your standing routine, filled in</label>
+<div class="qh">The routine that re-runs Wednesday&rsquo;s read after this week. Fill in the brackets with your own answers &mdash; the space, the counts, the driver, the signal and the gap are all yours, and they are what stop this from being a generic market summary. The template and the no-AI version are in the section below. Run it once a month, and again before any stretch of applications.</div>
+<textarea class="box" id="b3" data-field="b3" placeholder="Your filled-in prompt, or your calendar version with the three questions and today’s answers."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Are the brackets actually filled, or is the template still sitting there?</li><li>Are the space and the signal yours, or did something else invent them?</li><li>Is there a date on it? Without one you cannot see the drift next time.</li></ul></details>
 </div>
-</details>
+<div class="qa" data-box="b4">
+<label class="qt" for="b4">4 &middot; Which shape your evidence points at</label>
+<div class="qh">Careers get described by three shapes. An <b>I</b> is one skill you have gone deep in, with not much range beyond it. A <b>T</b> is that depth plus enough range across neighbouring areas to work well with the people who have them. A <b>&pi;</b> is two deep skills plus that range, so you can carry two kinds of work and connect them. Do not pick the one you like the sound of &mdash; read it off your own evidence from Wednesday, and quote the evidence.</div>
+<textarea class="box short" id="b4" data-field="b4" placeholder="I, T or π — and the evidence from your postings that points there."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Did you quote the evidence, or state the shape and stop?</li><li>If the repeating phrases sit next to your existing depth, that is a T. If they keep pairing your depth with a second, different depth, that is a &pi;.</li><li>If everything that repeated is deeper in what you already do, the market is asking for more I, and widening now would be a detour. Is that your case?</li><li>Did you argue for &pi; because it sounds biggest?</li></ul></details>
+</div>
 <h2 class="sec">The routine that keeps this current</h2>
-<p class="body">This is the part that outlives the week. Fill in the brackets with your own answers &mdash; the space, the counts, the driver, the signal and the gap are all yours, and they are what stop this from being a generic market summary.</p>
+<p class="body">This is the part that outlives the week. Take one of these two, fill it in, and put the result in box 3.</p>
 <div class="promptbox">
 <p>Re-run my market read. My space is <b>[SPACE]</b>. Last time, the two things employers were asking for were <b>[A]</b> and <b>[B]</b>, found in <b>[N]</b> of <b>[M]</b> postings, on <b>[DATE]</b>. The change I expected was <b>[CHANGE]</b>, driven by <b>[DRIVER]</b>, and the signal I said I would watch is <b>[SIGNAL]</b>.</p>
 <p>Do three things. First, pull 10 currently open postings in my space and tell me whether [A] and [B] still repeat, with the new count. Second, tell me what is repeating now that was not there last time. Third, check my signal: has [SIGNAL] moved, and what is your evidence? Quote the postings and link them, and tell me where you are guessing.</p>
 <p>Finish with one line: given my gap &mdash; <b>[GAP]</b> &mdash; has the most useful next thing for me to build changed?</p>
 </div>
-<p class="body">Filled in, it reads like this, and yours will look nothing like it: <i>&ldquo;My space is backend work on data pipelines at climate-tech companies. Last time the asks were &lsquo;own a service end to end&rsquo; and &lsquo;write and maintain tests&rsquo;, in 7 of 12 postings, on 8 September. The change I expected was more postings asking for evaluation of AI-generated code, driven by teams shipping more of it than they can review, and the signal I said I would watch is whether review and testing language starts appearing in junior postings. My gap: I can build the pipeline but I have never had to explain a modelling choice to someone who would be affected by it.&rdquo;</i></p>
+<p class="body">Filled in, it reads like this, and yours will look nothing like it: <i>&ldquo;My space is backend work on data pipelines at climate-tech companies. Last time the asks were &lsquo;own a service end to end&rsquo; and &lsquo;write and maintain tests&rsquo;, in 7 of 12 postings, on 8 September. The change I expected was more postings asking for evaluation of AI-generated code, driven by teams shipping more of it than they can review, and the signal I said I would watch is whether review and testing language starts appearing in junior postings.&rdquo;</i></p>
 <p class="body"><b>Without AI, the same routine, on a calendar.</b> A recurring 30 minutes, once a month. The three questions written down so you do not have to remember them: do those phrases still repeat in ten fresh postings, what is repeating now that was not there before, and has my signal moved? Write the date and the answers underneath the last set, so you can see the drift.</p>
-<p class="body">Either way, run it once a month and again before any stretch of applications. Bring the answer to your check-in.</p>
-<h2 class="sec">Submit</h2>
-<p class="body">One text box in Canvas, whichever way you did it.</p>
-<p class="body"><b>1. Your audit.</b> For each thing employers are asking for: what you could show today, including the blanks.</p>
-<p class="body"><b>2. Your gap,</b> in one sentence, specific enough that it would not fit the person sitting next to you.</p>
-<p class="body"><b>3. Your standing routine,</b> filled in with your own space, signal and gap &mdash; the prompt if you use one, the calendar version if you do not.</p>
-<p class="body"><b>4. Which shape your evidence points at</b> &mdash; I, T or &pi; &mdash; and the evidence it points with.</p>
-<p class="body"><b>5. Your record, underneath.</b> The conversation, or your written work, or both.</p>
+<h2 class="sec">If you get stuck, or want to go further</h2>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">The Know Yourself practice Dojo</span><span class="rd">For when you have the audit but cannot get the gap down to one sentence.</span></span></summary>
+<div class="route-body">
+<p class="body"><b>The condition.</b> Box 1 is done and box 2 will not come. You keep writing sentences that would fit anyone. That is what this is for.</p>
+<p class="body"><b>What it does.</b> It starts from one real moment you were absorbed in, then plays the outside mirror &mdash; it points at a strength in your own story that you did not claim. From there it widens, looks for the unusual <b>combination</b> of two things you can do rather than any single skill, and then makes you say what that is worth <b>from the employer&rsquo;s side</b>: not what you are good at, but what problem you solve for them. It ends by testing that against a real niche and finding what is missing. That last part is your gap.</p>
+<p class="body">The employer-side sentence it helps you write is, near enough, the middle of next week&rsquo;s email. Keep it.</p>
+<p class="body"><b>What it will not do.</b> Market questions. If you ask it where the jobs are, it will send you away &mdash; correctly, because you already did that on Wednesday.</p>
+<p class="body">Open <code>https://dojo.symbioticthinking.ai/?topic=know-yourself</code> &mdash; if it asks for a key, use the link from the week 1 email, subject <i>Symbiotic Thinking Dojo API Key</i>.</p>
+<p class="body"><b>What you do with what it gives you.</b> It ends by handing you a summary block. That is raw material, not your submission &mdash; paste the parts you agree with into the boxes above, in your own words. What goes to Canvas is the boxes and the button at the bottom of this page.</p>
+</div>
+</details>
 
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Your own AI Dojo</span><span class="rd">For the audit, and for drafting the standing routine.</span></span></summary>
+<div class="route-body">
+<p class="body"><b>The condition.</b> You want something holding all three lists at once and asking what you are avoiding. Paste in your market read and your moments, then give it this:</p>
+<div class="promptbox">
+<p>Above are two things: what I found employers in my space are asking for, and the moments when work stopped feeling like work for me. Now interview me about the third thing &mdash; what I can actually prove today. Go one thing at a time. For each thing employers are asking for, ask me what I could put in front of someone as evidence, and push back when I answer with a course I took instead of something I could show.</p>
+<p>When we are done, tell me where the three do not line up, and ask me which single gap I think matters most. Argue with my choice if you think I picked the comfortable one. Do not pick it for me.</p>
+</div>
+<p class="body"><b>You decide, it argues.</b> A gap it chose for you is not one you will spend a semester on. Its job is to make the comfortable answer harder to keep; yours is to be the one who ends up saying the sentence. If you have it draft your standing routine, fill in the space, the signal and the gap yourself &mdash; those are the parts that make the routine yours.</p>
+</div>
+</details>
+<h2 class="sec">Submit</h2>
+<p class="body">Press the button. It gathers everything you wrote above into one block, copies it to your clipboard, and you paste that into the Canvas box. Your AI feedback comes along with it, so the course can see how well the feedback is working.</p>
+<div class="copywrap">
+<div class="namerow"><label for="student-name">Your name </label><input type="text" id="student-name" autocomplete="name" placeholder="First and last"></div>
+<button type="button" class="btn primary" id="copy-btn">Copy my summary</button>
+<div class="status" id="copy-status"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
 <h2 class="sec">What done and good look like</h2>
 <p class="body">Not graded &mdash; and this is the one to spend the time on anyway, because the growth dimensions you set in Sprint 1 come out of it, and a vague gap makes for dimensions you cannot measure.</p>
-<p class="body"><b>Done</b> is an honest audit with its blanks left visible, one specific gap, and a routine you could actually run.</p>
+<p class="body"><b>Done</b> is an honest audit with its blanks left visible, one specific gap, a routine you could actually run, and your next move.</p>
 <p class="body"><b>Good</b> is a gap that surprised you a little. If it is the one you would have written on Monday without doing any of this, either you were already right or you have written the comfortable one &mdash; and it is worth twenty minutes to work out which.</p>
 
 <h2 class="sec">Before you finish</h2>
 <p class="body">Three questions, worth answering after the work.</p>
 <p class="body">Which row were you most tempted to be generous with yourself about?</p>
 <p class="body">What did the three circles disagree about &mdash; and what did you decide to do about the disagreement?</p>
-<p class="body">This week you did the whole loop once. What part of it would you actually keep doing, and what part felt like homework?</p>
+<p class="body">If Prof. Sathya put your gap sentence in an email to someone who hires for this work, would it make them trust the rest of the email, or worry? What would have to change for it to be the first one?</p>
 <div class="pagenav"><span><a href="never-feels-like-work.html">&larr; What Would I Do Anyway</a></span><span><a href="home.html">Course home &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Prof. Sathya Narayanan</div>
@@ -307,9 +397,157 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
 <footer class="page-footer">
 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; Find Your Gap &middot; Draft v1 of 2026-08-29</span>
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; Find Your Gap &middot; Draft v2 of 2026-08-29</span>
 </footer>
 
 </div>
+<script>
+(function () {
+    'use strict';
+    var CFG = {"page": "cst349-find-your-gap", "course": "CST349", "pageTitle": "Find Your Gap", "destination": "A warm-referral email Prof. Sathya may send to one of his industry contacts in two to three months. The bar is two questions: would he actually send this, and would his contact actually be spurred to action by it? It has to be under 150 words.", "feeds": "The honest line — what the student is building next, and why that one. It is what stops the email reading as a brag.", "system": "You are a career coach reading ONE answer a student wrote in ONE box on a course page. Reply in 3 to 4 short sentences, plain words, no jargon. First, quote something specific from what they actually wrote and say whether it clears the bar or needs another look — be concrete about which. Second, connect it to the email this week is building toward: a busy industry contact who will act only on a specific opportunity and a specific reason this person fits it. Never rewrite their answer for them, and never hand them the words. Never praise generically — no 'great job', no 'this is a strong start' on its own. If the box is thin or generic, do not fill it in; ask the one question that would thicken it. Do not invent facts about the student, their postings, or the market. Work only from what they wrote. If what they wrote is genuinely strong, say so briefly and name the specific thing that makes it strong, then give them the next thing to push on.", "coach": {"b1": "STRONG: evidence that could be put in front of someone — a repository another person has read, a thing someone used, work with the student's decisions visible in it. Blanks left visible where there is nothing. WRONG TURNS: a course listed as evidence; 'familiar with'; filling every row rather than admitting a blank. The blanks are the useful part — do not push them to fill one. HOW IT FEEDS THE EMAIL: the contact will check. Everything claimed has to survive one click.", "b2": "STRONG: specific and closeable, and it would not fit the person sitting next to them — 'I have never shipped code another engineer reviewed and asked me to change'. WRONG TURNS: 'I need more experience'; a gap the size of a degree; the gap they would have written on Monday without doing any of this. HOW IT FEEDS THE EMAIL: this is the honest line. It is what stops the email reading as a brag, and it is the part that makes a contact trust the rest.", "b3": "STRONG: their own space, counts, driver, signal and gap in the brackets — not the template with the example still in it — and a date on it. WRONG TURNS: brackets left unfilled; an AI-invented space or signal; no date. HOW IT FEEDS THE EMAIL: not the email itself — it is what keeps the email accurate when it goes out in two or three months rather than this week.", "b4": "STRONG (CST349): the shape is read off the postings, not chosen by preference, and the evidence is quoted. If repeating phrases sit next to existing depth, that is a T; if they pair the depth with a second different depth, that is a pi; if everything repeating is deeper in what they already do, the market is asking for more I. WRONG TURNS: picking the shape that sounds most impressive; arguing for pi because it is the biggest; naming a shape with no evidence. HOW IT FEEDS THE EMAIL: this is what the student is doing next. A contact acts on someone who is already moving."}, "question": {"b1": "What they can prove today against each thing employers are asking for — with blanks left visible.", "b2": "One gap, in one sentence: something the market asks for, inside work they would do anyway, that they cannot prove yet.", "b3": "Their standing routine, filled in with their own space, counts, driver, signal and gap.", "b4": "Which shape (I, T or pi) their own evidence points at, and the evidence it points with."}, "label": {"b1": "What I can prove today", "b2": "My gap", "b3": "My standing routine", "b4": "The shape my evidence points at"}, "order": ["b1", "b2", "b3", "b4"], "min": {"b1": 200, "b2": 60, "b3": 200, "b4": 80}};
+    var KEY = 'cc-w2:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    var state = { name: '', boxes: {}, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var p = JSON.parse(raw); if (p && typeof p === 'object') { state = p; } }
+    } catch (e) { /* private mode, or storage blocked — the page still works, it just will not remember */ }
+    if (!state.boxes) { state.boxes = {}; }
+
+    var saveTimer = null;
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* nothing to do */ }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+
+    function boxState(id) {
+        if (!state.boxes[id]) { state.boxes[id] = { text: '', ai: [] }; }
+        if (!state.boxes[id].ai) { state.boxes[id].ai = []; }
+        return state.boxes[id];
+    }
+
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback \u00b7 round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+
+    function refresh(wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap);
+        var min = CFG.min[id] || 80;
+        var len = ta.value.trim().length;
+        var count = $('[data-count]', wrap);
+        count.textContent = len + ' characters' + (len < min ? ' (about ' + min + ' before the feedback button turns on)' : '');
+        count.className = 'count' + (len >= min ? ' ok' : '');
+        var st = boxState(id);
+        var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+        $('[data-ai]', wrap).disabled = len < min || ta.value.trim() === last;
+    }
+
+    function askAi(wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap), btn = $('[data-ai]', wrap), box = $('[data-aibox]', wrap);
+        var text = ta.value.trim();
+        var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 2)\n' +
+            'WHAT THIS WEEK IS BUILDING TOWARD: ' + CFG.destination + '\n' +
+            'WHAT THIS PAGE FEEDS IN THAT EMAIL: ' + CFG.feeds + '\n\n' +
+            'THE QUESTION THEY ARE ANSWERING: ' + CFG.question[id] + '\n\n' +
+            'WHAT THEY WROTE:\n\"\"\"' + text + '\"\"\"\n\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + CFG.coach[id];
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = (data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            boxState(id).ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, boxState(id).ai.length);
+        }).catch(function () {
+            box.style.display = 'block';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. ' +
+                'The Check it yourself questions under this box cover the same ground &mdash; use those, and try the button again later.</span>';
+        }).then(function () {
+            btn.textContent = label;
+            refresh(wrap);
+        });
+    }
+
+    $all('.qa[data-box]').forEach(function (wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap);
+        ta.value = boxState(id).text || '';
+        var st = boxState(id);
+        if (st.ai.length) { showAi($('[data-aibox]', wrap), st.ai[st.ai.length - 1].text, st.ai.length); }
+        ta.addEventListener('input', function () { boxState(id).text = ta.value; refresh(wrap); saveSoon(); });
+        ta.addEventListener('blur', save);
+        $('[data-ai]', wrap).addEventListener('click', function () { askAi(wrap); });
+        refresh(wrap);
+    });
+
+    var nameInput = $('#student-name');
+    if (nameInput) {
+        nameInput.value = state.name || '';
+        nameInput.addEventListener('input', function () { state.name = nameInput.value; saveSoon(); });
+    }
+
+    function flat(s) { return (s || '').replace(/\s*\n\s*/g, ' ').trim(); }
+
+    function buildSummary() {
+        var out = CFG.pageTitle + ' \u2014 ' + CFG.course + ', Week 2\n';
+        out += 'Name: ' + (state.name || '(not given)') + '\n';
+        out += 'Copied: ' + new Date().toLocaleString() + '\n\n';
+        CFG.order.forEach(function (id, i) {
+            var st = boxState(id);
+            out += (i + 1) + '. ' + CFG.label[id] + '\n';
+            out += (st.text ? st.text.trim() : '(left blank)') + '\n';
+            st.ai.forEach(function (a, k) { out += '   [AI feedback ' + (k + 1) + ': ' + flat(a.text) + ']\n'; });
+            out += '\n';
+        });
+        out += '(The answers above are the student\u2019s own words. AI feedback is included as received, so the course can see how well it is working.)\n';
+        return out;
+    }
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var text = buildSummary();
+            summaryOut.value = text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            function fallback() {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    copyStatus.className = 'status ok';
+                    copyStatus.textContent = 'Copied \u2713 \u2014 paste it into the Canvas box. The same text is below if you need it again.';
+                }, fallback);
+            } else { fallback(); }
+        });
+    }
+}());
+</script>
 </body>
 </html>

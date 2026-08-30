@@ -196,8 +196,10 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 .keybox code{background:#fff;}
 .steps{counter-reset:st;}
 /* Route expanders — the two ways to do an assignment; both closed by default */details.route { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 10px; background: #fff; } details.route > summary { list-style: none; cursor: pointer; padding: 11px 14px; display: flex; gap: 11px; align-items: flex-start; border-radius: 5px; } details.route > summary::-webkit-details-marker { display: none; } details.route > summary:hover { background: #F5F9FB; } details.route > summary:focus-visible { outline: 2px solid rgba(3,116,181,.45); outline-offset: -2px; } details.route[open] > summary { border-bottom: 1px solid var(--border-light); border-radius: 5px 5px 0 0; } .route .plus { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; border: 1px solid var(--blue); border-radius: 3px; color: var(--blue); font-size: 13px; font-weight: 700; line-height: 16px; text-align: center; } details.route:not([open]) > summary .plus::after { content: "+"; } details.route[open] > summary .plus::after { content: "\2212"; } .route .rtx { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .route .rt { font-size: 14.5px; font-weight: 700; color: var(--text); } .route .rt .noai { font-weight: 400; color: var(--muted); } .route .rd { font-size: 13px; color: var(--muted); } .route-body { padding: 13px 14px 3px; } @media print { details.route > summary .plus { display: none; } }
-/* Week 2 additions — 2026-08-29. Bubble anchoring + the three-circle figure. */
-p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
+/* Week 2 additions — 2026-08-29. Bubble anchoring, the three-circle figure, and the work boxes. */
+p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption,.qa,.refl{position:relative;}
+/* the bubble must anchor to the paragraph holding the term, not to the whole box */
+.qa > .qh,.qa > .qt{position:relative;}
 .circlefig{margin:2px 0 16px;text-align:center;}
 .circlefig svg{width:100%;max-width:400px;height:auto;}
 .circlefig figcaption{font-size:12.5px;color:var(--muted);margin:6px auto 0;max-width:560px;line-height:1.5;}
@@ -206,6 +208,48 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 .promptbox p{margin:0 0 9px;}
 .promptbox p:last-child{margin:0;}
 .stepnum{font-weight:700;}
+/* purpose / destination block */
+.dest{border:1px solid #A8CBE0;background:#F3F8FB;border-radius:6px;padding:13px 15px;margin:0 0 14px;font-size:13.5px;}
+.dest h2{font-size:14.5px;margin:0 0 7px;color:var(--blue-dark);}
+.dest p{margin:0 0 9px;line-height:1.55;}
+.dest p:last-child{margin:0;}
+.dest .bar{margin:9px 0;padding:9px 12px;background:#fff;border:1px solid var(--border);border-radius:5px;}
+.dest .bar b{display:block;margin:0 0 3px;}
+.dest .bar b:last-child{margin:0;}
+.slot{background:#FBF6EC;border:1px dashed #E0C88A;border-radius:4px;padding:1px 5px;font-size:12.5px;color:#5e4a18;}
+/* work boxes */
+.qa{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin:0 0 14px;background:#fff;}
+.qa > .qt{display:block;font-size:14px;font-weight:700;margin:0 0 4px;}
+.qa > .qh{font-size:13px;color:var(--text);margin:0 0 9px;line-height:1.55;}
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.count{font-size:12px;color:var(--muted);margin:4px 0 8px;}
+.count.ok{color:#1a7f4b;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.namerow{font-size:13px;margin:0 0 9px;}
+.namerow input{font-family:inherit;font-size:13.5px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;min-width:230px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
 </style>
 </head>
 <body>
@@ -217,8 +261,20 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <div class="dt">Due Friday 4 September, 11:59 p.m. &middot; about 30 minutes</div>
 </div>
 
+<div class="dest">
+<h2>Where this is going</h2>
+<p><b>In two to three months, Prof. Sathya may send an email about you to one of his industry contacts.</b> <span class="slot">[slot &mdash; Sathya&rsquo;s exact wording on the promise goes here]</span> He has the final say, and he is open to doing this for as many of you as he can. &ldquo;May&rdquo; means there is a bar, and meeting it is yours to do.</p>
+<p>Next week you draft that email yourself. Everything you do this week is the raw material for it: what the market is asking for gives the email something specific to point at, what you would be doing anyway gives it a story worth reading, and the gap you find gives it the honest line about what you are building next.</p>
+<div class="bar">
+<b>Would Prof. Sathya actually send this?</b>
+<b>Would his contact actually be spurred to action by it?</b>
+</div>
+<p>The second question is the harder one, and it is the reason this week starts with job postings. A busy person acts when they can see a specific opportunity and a specific reason you fit it. Neither is something you can write without having read the market first.</p>
+<p>It also has to be short enough to read in one go and sharp enough to hold attention from the first line &mdash; <b>under 150 words</b> <span class="slot">[slot &mdash; length is Sathya&rsquo;s call]</span>. That is a high bar, and holding yourself to it is the point.</p>
+<p><b>This page feeds the story in the middle of the email &mdash; the part a contact remembers after they have closed it.</b></p>
+</div>
 <h2 class="sec">Purpose</h2>
-<p class="body">Work out what you would be doing even if nobody asked you to, so that the market you aim at is one worth hitting. This is the question that decides whether the effort you put in over the next few years is effort you can actually sustain.</p>
+<p class="body">Work out what you would be doing even if nobody asked you to, so the market you aim at is one worth hitting. This is the question that decides whether the effort you put in over the next few years is effort you can actually sustain.</p>
 <p class="body">You come out of this with several concrete moments where the work stopped feeling like work, and an honest attempt at what runs through them.</p>
 <figure class="circlefig">
 <svg viewBox="0 0 400 300" role="img" aria-label="Three overlapping circles: what you love, what you are good at, and what the world needs. Highlighted here: What you love.">
@@ -236,54 +292,79 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <figcaption>The second circle. Wednesday you read what the world is asking for. Today you work out what you would be doing anyway &mdash; and on Tuesday the two get laid over what you are already good at.</figcaption>
 </figure>
 <h2 class="sec">What you are building on</h2>
-<p class="body"><b>From Wednesday: your market read.</b> Have the two things employers are asking for in front of you when you get to the last step &mdash; not at the start. You want to answer this one without checking whether the answer is convenient.</p>
+<p class="body"><b>From Wednesday: your market read.</b> Have it open for the last box &mdash; not for the first three. You want to answer this without checking whether the answer is convenient.</p>
 <p class="body"><b>Assumed: nothing.</b> You do not need to have decided anything about your career to answer this. If anything, having decided makes it harder.</p>
 <h2 class="sec">Why this is not the soft part of the week</h2>
 <p class="body">A question about purpose, sitting in the middle of a week about the job market, looks like the part you can skip. It is the opposite. It is the part that makes the rest work, and here is the argument.</p>
 <p class="body">AI is already good at the surface layer of most technical work &mdash; the first draft, the standard implementation, the obvious answer, the version that would have taken you an afternoon. What is left is the layer underneath: the problem you keep turning over for three weeks, the detail nobody asked you to fix, the question you follow past the point where it stopped being assigned. Think about the last time you fixed something nobody had asked you to fix. Nobody made you do that, and nobody does it on work they do not care about.</p>
 <p class="body">So caring is not a nice extra sitting on top of skill. It is what buys you the depth, and the depth is what makes the work yours rather than something anyone could have generated. That is why this question sits between the market questions instead of somewhere after them: the market tells you where the openings are, and this tells you which of them are worth your effort. Skip it and you end up optimising for a snapshot &mdash; aiming very precisely at whatever employers happened to be asking for in the week you looked.</p>
+<p class="body">There is a second reason, and it is the email. A contact reads a lot of messages about capable people. What they remember is the one that sounded like a person rather than a profile &mdash; and that only comes from something the student actually cares about.</p>
 <h2 class="sec">What to work out</h2>
 <div class="qbox"><b>What would my work purpose be?</b> What would you have to be doing so that it never quite feels like you are working? Answer it honestly, not impressively.</div>
-<p class="body"><span class="stepnum">Go for concrete moments, not adjectives.</span> &ldquo;I like solving hard problems&rdquo; is true of almost everyone and tells you nothing you can use. A time you lost track of the hour tells you a lot: what were you actually doing, who was it for, what made you keep going when it got tedious? Collect several of those before you try to say what they have in common.</p>
-<p class="body"><span class="stepnum">Give the second and third answer.</span> The first one is usually the impressive one &mdash; what you would say in an interview, or what sounds like the major you chose. The useful answer normally shows up once the presentable ones are out of the way.</p>
-<p class="body"><span class="stepnum">Then write what they have in common,</span> in a few sentences. Not a slogan. If the moments do not have anything in common yet, write that instead, and write which two are furthest apart &mdash; that is a real finding and it is worth more than a tidy sentence you do not believe.</p>
-<p class="body">A common wrong turn: writing the answer you think would go well with Wednesday's market scan. It is the wrong way round. This one is supposed to be able to disagree with the market, and on Tuesday you will find out where it does.</p>
-<h2 class="sec">Two ways to do this</h2>
-<p class="body"><b>Use one, or both.</b> They end at the same place, go in the same Canvas box, and are worth the same. Whichever you do, give it about 30 minutes in one sitting. Open the ones you want with the <b>+</b>.</p>
-<p class="body">Writing this out by hand is where a lot of the thinking happens, and it is worth doing for its own sake &mdash; a question like this one rewards a slow pen. Having an AI keep asking until you get past your first answer is a different skill, and that is worth practising too. If you want both, write your own answers first, then take them to your Dojo and let it push on the ones that sound rehearsed.</p>
+<p class="body">That is the whole question. The four boxes below are how you get at it without landing on a slogan &mdash; you collect the evidence first, take one honest run at what it means, and then argue with yourself.</p>
+<h2 class="sec">Two ways to work on what you write</h2>
+<p class="body"><b>Use one, or both.</b> Under every box there is a <b>Get AI feedback</b> button that reads what you actually wrote against what a strong answer to that question looks like, and a <b>Check it yourself</b> list with the same questions, for you to run on your own. They go at the same thing from two directions and they end in the same box.</p>
+<p class="body">Working through the questions yourself is where a lot of the thinking happens, and it is worth doing for its own sake. Having something push back on what you just wrote is a different skill, and that is worth practising too. If you want both, answer first, run the check yourself, then press the button and see what it caught that you did not.</p>
+<p class="body">Your writing is saved in this browser as you type, so you can close the page and come back. Nothing is sent anywhere until you press the button or copy your summary.</p>
+<div class="qa" data-box="b1">
+<label class="qt" for="b1">1 &middot; Six moments</label>
+<div class="qh">Six times you lost track of the hour. They do not all have to be about computing, or about work, and school counts. For each one: what were you doing, who was it for, and what kept you going when it got tedious? Go for concrete moments, not adjectives &mdash; &ldquo;I like solving hard problems&rdquo; is true of almost everyone and tells you nothing you can use.</div>
+<textarea class="box" id="b1" data-field="b1" placeholder="Six of them. What you were doing, who for, what kept you going."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Are these episodes you could date, or descriptions of the kind of person you are?</li><li>Did you get to six? The obvious ones run out around three, and that is where the useful ones start.</li><li>Did any of them get picked because they sound employable? Those are the ones to check.</li><li>For each: what kept you going when it got tedious? That answer is usually the real content.</li></ul></details>
+</div>
+<div class="qa" data-box="b2">
+<label class="qt" for="b2">2 &middot; What runs through them &mdash; first pass</label>
+<div class="qh">In one or two sentences, what do those moments have in common? This box is allowed to be the presentable answer &mdash; the one you would give in an interview. Write it, and leave it here.</div>
+<textarea class="box short" id="b2" data-field="b2" placeholder="One or two sentences. The first answer that comes."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Would this fit half the people in the room? That is fine for this box.</li><li>Did you write it down rather than skipping ahead? Box 3 needs something to argue with.</li></ul></details>
+</div>
+<div class="qa" data-box="b3">
+<label class="qt" for="b3">3 &middot; The second pass &mdash; what the first one missed</label>
+<div class="qh">Read your six moments again as if they belonged to someone else. What is actually going on in them that box 2 missed? If the moments do not have anything in common, write that instead, and write which two are furthest apart &mdash; that is a real finding and it is worth more than a tidy sentence you do not believe.</div>
+<textarea class="box" id="b3" data-field="b3" placeholder="A few sentences. Where the first pass was wrong, or too easy, or too small."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Does this disagree with box 2 anywhere? If not, you have written box 2 again in longer words.</li><li>Is it something you would be slightly reluctant to say out loud? That is usually the sign it is yours.</li><li>If you went for the two-furthest-apart answer: what does having both of them tell you?</li></ul></details>
+</div>
+<div class="qa" data-box="b4">
+<label class="qt" for="b4">4 &middot; Where it sits next to the market read</label>
+<div class="qh">Now open Wednesday&rsquo;s work. Look at the two things employers are asking for that you found. Does any of this sit inside them, outside them, or partly both? Any of the three is a real answer, and Tuesday is where you do something about it.</div>
+<textarea class="box short" id="b4" data-field="b4" placeholder="Inside, outside, or partly both — and which part."></textarea>
+<div class="count" data-count></div>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same questions, without the AI</summary><ul><li>Did you force an overlap because an overlap seemed like the right answer?</li><li>If it sits outside: is the market asking somewhere you have not looked, or is this a thing you keep for yourself and aim at something next to it?</li><li>Could a contact tell, from this, the difference between someone aimed at their world and someone aiming at any job?</li></ul></details>
+</div>
+<h2 class="sec">If you want to go further</h2>
+<p class="body">There is no practice Dojo for this one. The Know Yourself Dojo sounds like it fits, and its opening question is almost exactly the one above &mdash; but the rest of it runs toward employer language and a value statement, which is Tuesday&rsquo;s work, not today&rsquo;s. It is offered on the <b>Find Your Gap</b> page instead, where that arc actually lands.</p>
 
 <details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">With your AI Dojo</span><span class="rd">It interviews you, one question at a time, and does not let you stop at the first answer.</span></span></summary>
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Your own AI Dojo</span><span class="rd">For when this page&rsquo;s questions ran out and you are still working.</span></span></summary>
 <div class="route-body">
-<p class="body">Open the Dojo you set up in week 1 and give it this:</p>
+<p class="body"><b>The condition.</b> You have answered the boxes, run the feedback, and you are still circling something. A conversation is better than a box for that, and your own Dojo keeps the context for the rest of the semester.</p>
 <div class="promptbox">
 <p>I am working out what kind of work I would do even if nobody asked me to. Interview me about it &mdash; one question at a time, and wait for my answer before you ask the next one.</p>
 <p>Start from concrete moments rather than adjectives: ask me about times I lost track of the hour, what I was actually doing, who it was for, and what kept me going when it got tedious. When an answer of mine sounds like something I would put in a cover letter, say so and ask again. Do not summarise me until I have given you at least six real moments. Then play back what you heard, and I will tell you where you are wrong.</p>
 </div>
-<p class="body"><b>Stay past the first ten minutes.</b> The answers worth having show up once the obvious ones are gone, and this is exactly the kind of conversation people quit early.</p>
-<p class="body"><b>Correct it when it gets you wrong.</b> If the playback is off, say so and keep going until it matches what you meant. That correcting is the work &mdash; you are the one who knows, and it is drafting.</p>
-<p class="body"><b>If after ten minutes your answers still read like a cover letter</b>, start with the Know Yourself practice Dojo instead. It has more structure and asks the questions in a set order until something real comes out. Open <code>https://dojo.symbioticthinking.ai/?topic=know-yourself</code> &mdash; if it asks for a key, use the link from the week 1 email, subject <i>Symbiotic Thinking Dojo API Key</i>. Then bring what it produced back to your own Dojo, which keeps your context for the rest of the semester.</p>
-</div>
-</details>
-
-<details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">In writing <span class="noai">(Without using AI)</span></span><span class="rd">The same questions, in the same order, answered on paper.</span></span></summary>
-<div class="route-body">
-<p class="body">Work through these in order. What you write is what you hand in.</p>
-<p class="body"><b>1. Six moments.</b> Six times you lost track of the hour. They do not all have to be about computing, or about work, and school counts. For each: what were you doing, who was it for, and what kept you going when it got tedious?</p>
-<p class="body"><b>2. The first answer, written down and set aside.</b> In one sentence, what do those moments have in common? Write it, then draw a line under it. That is the presentable answer.</p>
-<p class="body"><b>3. Now go again.</b> Read your six moments as if they belonged to someone else. What is actually going on in them that your first sentence missed? Two or three sentences.</p>
-<p class="body"><b>4. The disagreement.</b> Which two of your six moments are furthest apart? What does having both of them tell you?</p>
-<p class="body"><b>5. Where it collides with Wednesday.</b> Look at the two things employers are asking for that you found on Wednesday. Does any of this week's work sit inside them, or outside them? Either answer is fine, and Tuesday is where you do something about it.</p>
+<p class="body"><b>Stay past the first ten minutes,</b> and correct it when it gets you wrong. If the playback is off, say so and keep going until it matches what you meant. That correcting is the work &mdash; you are the one who knows.</p>
 </div>
 </details>
 <h2 class="sec">Submit</h2>
-<p class="body">One text box in Canvas, whichever way you did it.</p>
-<p class="body"><b>1. Your moments.</b> Several of them, concrete &mdash; what you were doing, who for, what kept you going.</p>
-<p class="body"><b>2. What they have in common,</b> in a few sentences. Or what they do not, and which two are furthest apart.</p>
-<p class="body"><b>3. Where it sits next to Wednesday's market read.</b> Inside what employers are asking for, outside it, or partly both.</p>
-<p class="body"><b>4. Your record, underneath.</b> If you used a Dojo, paste the conversation. If you wrote it out, paste your writing as you wrote it. If you did both, include both.</p>
-
+<p class="body">Press the button. It gathers everything you wrote above into one block, copies it to your clipboard, and you paste that into the Canvas box. Your AI feedback comes along with it, so the course can see how well the feedback is working.</p>
+<div class="copywrap">
+<div class="namerow"><label for="student-name">Your name </label><input type="text" id="student-name" autocomplete="name" placeholder="First and last"></div>
+<button type="button" class="btn primary" id="copy-btn">Copy my summary</button>
+<div class="status" id="copy-status"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
 <h2 class="sec">What done and good look like</h2>
 <p class="body">This one is not graded, and it still matters more than most graded things this month, because the project you argue for in this sprint has to be work you would actually stay up for.</p>
 <p class="body"><b>Done</b> is several concrete moments and an honest attempt at what runs through them.</p>
@@ -292,7 +373,7 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <h2 class="sec">Before you finish</h2>
 <p class="body">Two questions, worth answering after the work.</p>
 <p class="body">What did you write down and then decide not to say out loud &mdash; and what made it feel unsayable?</p>
-<p class="body">If nothing you found overlaps with what the market is asking for, what would you want to do about that? There is more than one reasonable answer, and Tuesday is where you pick one.</p>
+<p class="body">If a contact of Prof. Sathya&rsquo;s read one of your six moments, which one would make them want to meet you? What is in that one that is not in the others?</p>
 <div class="pagenav"><span><a href="read-the-market.html">&larr; Read the Market</a></span><span><a href="home.html">Course home &rarr;</a></span></div>
 <div class="instructor">
 <div class="nm">Prof. Sathya Narayanan &middot; Paige Weisskirch</div>
@@ -302,9 +383,157 @@ p.body,.route-body li,.qbox,.promptbox,.circlefig figcaption{position:relative;}
 <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
 <footer class="page-footer">
 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST499 Computer Science Capstone &middot; What Would I Do Anyway &middot; Draft v1 of 2026-08-29</span>
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST499 Computer Science Capstone &middot; What Would I Do Anyway &middot; Draft v2 of 2026-08-29</span>
 </footer>
 
 </div>
+<script>
+(function () {
+    'use strict';
+    var CFG = {"page": "cst499-never-feels-like-work", "course": "CST499", "pageTitle": "What Would I Do Anyway", "destination": "A warm-referral email Prof. Sathya may send to one of his industry contacts in two to three months. The bar is two questions: would he actually send this, and would his contact actually be spurred to action by it? It has to be under 150 words.", "feeds": "The story in the middle of the email — the part a contact remembers after they have closed it.", "system": "You are a career coach reading ONE answer a student wrote in ONE box on a course page. Reply in 3 to 4 short sentences, plain words, no jargon. First, quote something specific from what they actually wrote and say whether it clears the bar or needs another look — be concrete about which. Second, connect it to the email this week is building toward: a busy industry contact who will act only on a specific opportunity and a specific reason this person fits it. Never rewrite their answer for them, and never hand them the words. Never praise generically — no 'great job', no 'this is a strong start' on its own. If the box is thin or generic, do not fill it in; ask the one question that would thicken it. Do not invent facts about the student, their postings, or the market. Work only from what they wrote. If what they wrote is genuinely strong, say so briefly and name the specific thing that makes it strong, then give them the next thing to push on.", "coach": {"b1": "STRONG: concrete and dateable — what they were doing, who it was for, what kept them going when it got tedious. Non-computing moments count. WRONG TURNS: adjectives instead of episodes ('I like hard problems'); fewer than six because the obvious ones ran out — that is exactly when the useful ones start; moments chosen because they sound employable. HOW IT FEEDS THE EMAIL: one of these becomes the story. A contact remembers a story and forgets a summary.", "b2": "STRONG: an honest attempt, even a clumsy one. This box is ALLOWED to be the presentable answer; naming it as such is the point, so do not push them to make it better here. WRONG TURNS: a slogan; skipping this box entirely and writing box 3 here. HOW IT FEEDS THE EMAIL: nothing yet — this is the draft that box 3 argues with. Do not ask them to sharpen it; ask whether they are ready to argue with it.", "b3": "STRONG: it disagrees with box 2 somewhere, or identifies the two moments furthest apart and what having both means. WRONG TURNS: restating box 2 in longer words; retreating to something safer; a tidy sentence the student clearly does not believe. HOW IT FEEDS THE EMAIL: this is the sentence that makes the story theirs rather than a template.", "b4": "STRONG: an honest placement — inside what employers are asking for, outside it, or partly both — with either answer treated as usable. WRONG TURNS: forcing an overlap that is not there because the overlap seems like the right answer. HOW IT FEEDS THE EMAIL: a contact can tell the difference between someone aimed at their world and someone aiming at a job."}, "question": {"b1": "Six times they lost track of the hour: what they were doing, who it was for, what kept them going when it got tedious.", "b2": "First pass: in one or two sentences, what those six moments have in common.", "b3": "Second pass: what the first pass missed, or which two moments are furthest apart and what that means.", "b4": "Where this sits next to the two things employers are asking for that they found on Wednesday."}, "label": {"b1": "Six moments", "b2": "What runs through them (first pass)", "b3": "The second pass", "b4": "Where it sits next to the market read"}, "order": ["b1", "b2", "b3", "b4"], "min": {"b1": 250, "b2": 60, "b3": 150, "b4": 80}};
+    var KEY = 'cc-w2:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    var state = { name: '', boxes: {}, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var p = JSON.parse(raw); if (p && typeof p === 'object') { state = p; } }
+    } catch (e) { /* private mode, or storage blocked — the page still works, it just will not remember */ }
+    if (!state.boxes) { state.boxes = {}; }
+
+    var saveTimer = null;
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* nothing to do */ }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+
+    function boxState(id) {
+        if (!state.boxes[id]) { state.boxes[id] = { text: '', ai: [] }; }
+        if (!state.boxes[id].ai) { state.boxes[id].ai = []; }
+        return state.boxes[id];
+    }
+
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback \u00b7 round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+
+    function refresh(wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap);
+        var min = CFG.min[id] || 80;
+        var len = ta.value.trim().length;
+        var count = $('[data-count]', wrap);
+        count.textContent = len + ' characters' + (len < min ? ' (about ' + min + ' before the feedback button turns on)' : '');
+        count.className = 'count' + (len >= min ? ' ok' : '');
+        var st = boxState(id);
+        var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+        $('[data-ai]', wrap).disabled = len < min || ta.value.trim() === last;
+    }
+
+    function askAi(wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap), btn = $('[data-ai]', wrap), box = $('[data-aibox]', wrap);
+        var text = ta.value.trim();
+        var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 2)\n' +
+            'WHAT THIS WEEK IS BUILDING TOWARD: ' + CFG.destination + '\n' +
+            'WHAT THIS PAGE FEEDS IN THAT EMAIL: ' + CFG.feeds + '\n\n' +
+            'THE QUESTION THEY ARE ANSWERING: ' + CFG.question[id] + '\n\n' +
+            'WHAT THEY WROTE:\n\"\"\"' + text + '\"\"\"\n\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + CFG.coach[id];
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = (data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            boxState(id).ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, boxState(id).ai.length);
+        }).catch(function () {
+            box.style.display = 'block';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. ' +
+                'The Check it yourself questions under this box cover the same ground &mdash; use those, and try the button again later.</span>';
+        }).then(function () {
+            btn.textContent = label;
+            refresh(wrap);
+        });
+    }
+
+    $all('.qa[data-box]').forEach(function (wrap) {
+        var id = wrap.getAttribute('data-box');
+        var ta = $('textarea', wrap);
+        ta.value = boxState(id).text || '';
+        var st = boxState(id);
+        if (st.ai.length) { showAi($('[data-aibox]', wrap), st.ai[st.ai.length - 1].text, st.ai.length); }
+        ta.addEventListener('input', function () { boxState(id).text = ta.value; refresh(wrap); saveSoon(); });
+        ta.addEventListener('blur', save);
+        $('[data-ai]', wrap).addEventListener('click', function () { askAi(wrap); });
+        refresh(wrap);
+    });
+
+    var nameInput = $('#student-name');
+    if (nameInput) {
+        nameInput.value = state.name || '';
+        nameInput.addEventListener('input', function () { state.name = nameInput.value; saveSoon(); });
+    }
+
+    function flat(s) { return (s || '').replace(/\s*\n\s*/g, ' ').trim(); }
+
+    function buildSummary() {
+        var out = CFG.pageTitle + ' \u2014 ' + CFG.course + ', Week 2\n';
+        out += 'Name: ' + (state.name || '(not given)') + '\n';
+        out += 'Copied: ' + new Date().toLocaleString() + '\n\n';
+        CFG.order.forEach(function (id, i) {
+            var st = boxState(id);
+            out += (i + 1) + '. ' + CFG.label[id] + '\n';
+            out += (st.text ? st.text.trim() : '(left blank)') + '\n';
+            st.ai.forEach(function (a, k) { out += '   [AI feedback ' + (k + 1) + ': ' + flat(a.text) + ']\n'; });
+            out += '\n';
+        });
+        out += '(The answers above are the student\u2019s own words. AI feedback is included as received, so the course can see how well it is working.)\n';
+        return out;
+    }
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var text = buildSummary();
+            summaryOut.value = text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            function fallback() {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    copyStatus.className = 'status ok';
+                    copyStatus.textContent = 'Copied \u2713 \u2014 paste it into the Canvas box. The same text is below if you need it again.';
+                }, fallback);
+            } else { fallback(); }
+        });
+    }
+}());
+</script>
 </body>
 </html>
