@@ -125,9 +125,12 @@ The repo is the source of truth; Canvas is the display.
    are spring artifacts of the retired pipeline, not inputs to this one.
 2. This skill produces the page → one HTML file in the course folder, house style,
    accessibility rules observed → publishes via the repo to GitHub Pages.
-3. **The Canvas assignment name carries its kind as a prefix — `OYP: ` or `GI: `**
-   (Sathya, 23 Aug 2026), so a student scanning the assignments list, the gradebook or
-   a to-do notification sees at a glance whether an item is graded. The prefix is a
+3. **The Canvas assignment name carries its kind as a prefix — `OYP: `, `GI: ` or
+   `Exam: `** (Sathya, 23 Aug 2026; `Exam: ` settled 29 Aug 2026), so a student scanning
+   the assignments list, the gradebook or a to-do notification sees at a glance whether
+   an item is graded. **Exams take their own prefix rather than riding under `GI: `**
+   because they carry different points or a different grade category — a student
+   should not have to open the item to find that out. The prefix is a
    Canvas-side display convention only: `assignments.html` keeps the plain title and
    shows the kind as its own column, and the course pages link by id, so nothing
    breaks. Apply it whenever an item is created in Canvas or renamed there.
