@@ -1,12 +1,13 @@
 Web VPython 3.2
-# Clear the ridge  -  how a plane stays up
-# A ridge crosses your path 600 m ahead, 135 m tall. You start at 100 m.
-# Pick the tilt and the speed that carry you over it - and mind the stall.
+# Clear the ridge  -  how the UAV stays up
+# The aircraft is a UAV - an Unmanned Aerial Vehicle - Drone.
+# A ridge crosses its path 600 m ahead, 135 m tall. The UAV starts at 100 m.
+# Pick the tilt and the speed that carry it over - and mind the stall.
 # Lines marked  # <-- change this  are yours. The Reset button brings this original back.
 
 speed = 60          # airspeed in m/s (60 m/s is about 134 mph). Try 30, 70, 120     # <-- change this
 angle = 5           # angle of attack in degrees. Try 3, 7, 14, 20                    # <-- change this
-mass = 1000         # kg, a light aircraft. Try 3000                                  # <-- change this
+mass = 1000         # kg, the UAV's mass. Try 3000                                  # <-- change this
 
 # --- the physics numbers -------------------------------------------------
 wing_area = 16      # square metres
@@ -69,9 +70,9 @@ while result == "" and t < 30:
         plane.pos = plane.pos + vector(speed * dt, vy * dt, 0)
         t = t + dt
         if plane.pos.y <= 0:
-            result = "STALLED and hit the ground" if stalled else "sank into the ground, " + str(round(ridge_x - plane.pos.x)) + " m short of the ridge"
+            result = "STALLED - the wing lost its lift and the UAV came down" if stalled else "came down " + str(round(ridge_x - plane.pos.x)) + " m short of the ridge"
         elif plane.pos.y < ridge_height(plane.pos.x):
-            result = "CRASHED into the ridge, " + str(round(ridge_top - plane.pos.y)) + " m below the top"
+            result = "HIT the ridge, " + str(round(ridge_top - plane.pos.y)) + " m below the top"
         elif plane.pos.x > ridge_x + 45:
             result = "CLEARED the ridge with " + str(round(plane.pos.y - ridge_top, 1)) + " m to spare"
     body.pos = plane.pos - vector(5, 0, 0)
