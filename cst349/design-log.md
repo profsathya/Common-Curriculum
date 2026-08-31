@@ -329,3 +329,56 @@ in both pages that carry one.
   and written back to `mk_assignments.py` in the same pass (ids, URLs, points, status). No module
   carries a cross-sprint prerequisite. Details and ids in `cowork/fall-2026-courses/HANDOFF.md`,
   2026-08-31 entries. — Alan
+
+## 2026-08-29 (third pass) — Tone and structure: the pages stop arguing and start guiding
+
+A Codex review of all six pages found the register was evaluative rather than guiding, and it was right
+against rules already in this project's own skills — asset-framing, inspire-don't-scare, and
+`reviewing-course-text` rules 4 and 5. The measured defect: **1,098 / 838 / 653 words before the first
+response box**, at 2.9 / 2.7 / 2.3 screens on a 1280×720 laptop.
+
+**After this pass: 393 / 390 / 329 words, at 1.19 / 1.07 / 1.00 screens.**
+
+**Sathya's three rulings, where the review would have overwritten his own decisions.**
+1. *Keep the necessity argument, state it positively.* It now reads as: the market has shifted toward work
+   that takes sustained attention, so knowing which work does that for you is what lets you aim well. No
+   threat framing, no absolutes about what people care about, three sentences instead of four paragraphs.
+2. *"Work that holds your attention" replaces "never quite feels like you are working."* Agreed on the
+   merits — it does not romanticize effort or exclude work that is hard or routine. His earlier wording is
+   retired everywhere it appeared: both home-page rows, both registries, the generator.
+3. *Keep the word "gap"; fix the framing around it.* It is course vocabulary. Find Your Gap now leads with
+   the constructive outcome — choose one capability a project this semester can make visible — and card 1
+   is a two-row table with an "Evidence I could build" column, which makes a blank productive without the
+   old "it is not a verdict" reassurance.
+
+**Structure.** Every page now runs: short opening → the progress figure beside *Today you will have* →
+what you are building on → four numbered cards with their boxes → the feedback box → *Review your work* →
+Submit → Optional, collapsed. The three-circle figure and the outcomes list sit side by side on wide
+screens, which is what got the first box near one screen without cutting either.
+
+**Register.** Removed and verified absent from all six pages: "there is a bar", "high bar", "not a
+verdict", "the harder one", "most embarrassing", "tempted to be generous", "unsayable", "the comfortable
+one", "or worry", the restaurant analogy, and "argue with yourself". Closing questions became revision
+questions inside the Review block.
+
+**Content restructured.** The three-paragraph market hook became a four-row **snapshot table** (signal ·
+what it means for this activity · source), moved to sit between card 1 and card 2 where it is actually
+used. Six moments became a four-column structure. Cards 2 and 3 on What Would I Do Anyway now ask the
+student to **revise, confirm or qualify** — confirming is a complete answer, and the page no longer
+requires disagreement or treats reluctance as evidence. The standing-routine template moved inside its own
+card. Recordings, the Coursera course and both Dojos are collapsed under Optional.
+
+**The AI contract was rewritten, because visible copy alone would not have fixed the tone.** The system
+prompt now asks for: one specific thing already present, one requested element not yet visible, one
+concrete revision question — using only the box's observable criteria, and never invoking readiness,
+employability, anyone's reaction, or pass/fail. All twelve coach notes were rewritten from *strong answer /
+wrong turns / how it feeds the email* to **requested elements / observable criteria / common omissions**,
+with omissions phrased as absence rather than error. Two carry explicit notes telling the model not to
+treat an expected state as a shortfall — the first-pass box, and an empty "can show now" column.
+
+**New on every page:** a fifth card, *What would you change about this activity?* — no minimum, **no AI
+feedback button** (it is feedback to the course, not work to improve), and it travels in the copy summary.
+
+**Verified:** the word and screen counts above; the removed phrases absent; tag balance on all ten files;
+storage round-trip including the new box; the summary carrying all five in order; no feedback button on
+box 5; bubble anchoring after the restructure; registries regenerated with only the intended rows changed.
