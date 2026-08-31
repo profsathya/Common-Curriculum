@@ -323,3 +323,9 @@ term: the boxes made `.qa` the nearest positioned ancestor, so `top:100%` droppe
 box instead of below its paragraph. Fixed by putting `.qa > .qh, .qa > .qt` in the `position:relative` list,
 which is exactly the anchoring failure `hover-text` documents. Re-verified by keyboard focus on every bubble
 in both pages that carry one.
+
+- **2026-08-31 — week 2 live in Canvas.** Assignments created/reconciled from the registry rows,
+  placed in the correct sprint's Own-your-progress module with a must-submit requirement, published,
+  and written back to `mk_assignments.py` in the same pass (ids, URLs, points, status). No module
+  carries a cross-sprint prerequisite. Details and ids in `cowork/fall-2026-courses/HANDOFF.md`,
+  2026-08-31 entries. — Alan

@@ -385,3 +385,9 @@ the close now bridges to Sprint 1 ("notice which topic you would have picked if 
 three had been on the menu") and the final reflection pins question 4 as the Sprint 1 seed.
 Registry purpose line updated to match. Mechanics retested after the edit — gating, AI button,
 copy, reload all pass; Draft v3. Canvas step still parked for Sathya's go. — Alan
+
+- **2026-08-31 — week 2 live in Canvas.** Assignments created/reconciled from the registry rows,
+  placed in the correct sprint's Own-your-progress module with a must-submit requirement, published,
+  and written back to `mk_assignments.py` in the same pass (ids, URLs, points, status). No module
+  carries a cross-sprint prerequisite. Details and ids in `cowork/fall-2026-courses/HANDOFF.md`,
+  2026-08-31 entries. — Alan
