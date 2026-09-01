@@ -52,12 +52,17 @@ def paragraphs(src):
     return [strip(m.group(1)).strip() for m in re.finditer(r'<p\b[^>]*>(.*?)</p>', src, re.S | re.I)]
 
 
+def drop_bubbles(fragment):
+    """Glossary bubbles are hidden until hover; their text is not part of the paragraph."""
+    return re.sub(r'<span class="bub".*?</span></span>', ' ', fragment, flags=re.S | re.I)
+
+
 def paragraphs_marked(src):
     """(text, inside_details) for each <p>. Paragraphs inside a collapsed section carry less weight."""
     spans = [(m.start(), m.end()) for m in re.finditer(r'<details\b.*?</details>', src, re.S | re.I)]
     out = []
     for m in re.finditer(r'<p\b[^>]*>(.*?)</p>', src, re.S | re.I):
-        t = strip(m.group(1)).strip()
+        t = strip(drop_bubbles(m.group(1))).strip()
         if t:
             out.append((t, any(a <= m.start() < b for a, b in spans)))
     return out
@@ -164,20 +169,29 @@ def report(path, ref=None):
 
 
 def cross_page(paths):
-    """30+ word passages repeated across sibling pages."""
-    seen, dupes = {}, Counter()
+    """Distinct passages of 30+ words that appear on more than one sibling page."""
+    seen, hits = {}, []
     for p in paths:
-        t = strip(open(p, encoding='utf-8').read())
-        ws = t.split()
-        for i in range(0, max(0, len(ws) - 30), 10):
+        ws = strip(open(p, encoding='utf-8').read()).split()
+        for i in range(0, max(0, len(ws) - 30), 3):
             key = ' '.join(ws[i:i + 30]).lower()
             if key in seen and seen[key] != p:
-                dupes[key] += 1
+                hits.append((p, i, key))
             seen.setdefault(key, p)
-    if dupes:
-        print(f'\n=== repeated across sibling pages: {len(dupes)} passage(s) of 30+ words')
-        for k, _ in dupes.most_common(5):
-            print(f'      · {k[:90]}...')
+    # merge overlapping windows so one repeated block is reported once, not thirty times
+    blocks, last = [], None
+    for path, i, key in hits:
+        if last and last[0] == path and i - last[1] <= 30:
+            last = (path, i)
+            continue
+        blocks.append(key)
+        last = (path, i)
+    if blocks:
+        print(f'\n=== repeated across sibling pages: {len(blocks)} distinct passage(s) of 30+ words')
+        for k in blocks[:6]:
+            print(f'      · {k[:88]}...')
+        print('      (shared instructions and a shared closing question are repeated on purpose — '
+              'judge each block, do not cut on sight)')
     elif len(paths) > 1:
         print('\n=== repeated across sibling pages: none of 30+ words')
 

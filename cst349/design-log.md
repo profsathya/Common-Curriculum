@@ -382,3 +382,44 @@ feedback button** (it is feedback to the course, not work to improve), and it tr
 **Verified:** the word and screen counts above; the removed phrases absent; tag balance on all ten files;
 storage round-trip including the new box; the summary carrying all five in order; no feedback button on
 box 5; bubble anchoring after the restructure; registries regenerated with only the intended rows changed.
+
+## 2026-08-29 (fourth pass) — TA feedback: reorder Find Your Gap, sharpen two questions, restore the enjoyment thread
+
+Sathya's TA worked through all three activities. Three changes came out of it.
+
+**Find Your Gap: the routine moved from box 3 to box 4.** The TA could not tell what box 3 was asking, and
+then read box 4 as a repeat of box 1. Both symptoms have one cause: the standing routine is the only box
+that is not about the student's situation now, and sitting in the middle it broke the run of
+audit → what to build next → what you would do about it. The order is now **audit · the one thing to make
+visible next · your next move (problem space for CST499, I/T/π for CST349) · the routine that keeps it
+current**. A takeaway belongs at the end.
+
+**What Would I Do Anyway box 2 is countable now.** It was "write the pattern you notice" — deliberately
+loose, because box 3 is where it gets tested, but loose read as vague. It now asks: *which three or more of
+your six moments share something, and what do they share, in one sentence.* The two-pass structure survives;
+the first pass is now answerable.
+
+**The gap has to touch Friday's pattern, and the page now says so.** The TA's conclusion was that CST499
+does not need the gap step at all — from talking to graduates, students should build what they enjoy. Read
+against the page, that is a fair reaction to a real defect rather than an argument against the step: box 1's
+audit is purely market-driven, and box 2's stated criteria asked it to connect to the market findings and
+said nothing about connecting to what holds the student's attention. So by the time a student reached the
+gap, the enjoyment thread had dropped out of view. Box 2 now states the three-way test explicitly, tells
+students to open Friday's pattern before writing, and accepts "these two of the three overlap, not all
+three" as a complete answer. The criteria and the coach note carry the same requirement.
+**Sathya's call: the gap keeps its place in CST499** — it is in the week-1 lead, the week-3 graded item and
+the project proposal, so removing it would be a course-design change rather than a page edit.
+
+**Two fixes found while verifying, both of the same kind as the earlier bubble bug.** The glossary term in
+box 2 was inside a `<label for>`, so clicking it jumped the cursor into the textarea; it moved into the help
+text. And once that help text contained a paragraph, the bubble anchored below the whole help block — fixed
+by adding `.qa > .qh p` to the `position:relative` list.
+
+**The new structure-gate script earned its place on this pass.** Run over the three pages it flagged a
+156-word paragraph that turned out to be the script counting hidden bubble text (fixed in the script), a
+70-word and an 86-word paragraph in the main flow (both trimmed), and a duplicate detector that missed
+repeats when they were merely misaligned (step reduced, and overlapping windows now merge so one repeated
+block reports once). Final state on all six pages: **zero long paragraphs in the main flow, zero tone flags,
+criteria before submit, 432–460 words before the first input.** The four passages it still reports as
+repeated across siblings are the shared callout, the where-this-fits line, the closing feedback question and
+the submit instruction — all intentional, and the script now says to judge rather than cut.
