@@ -5,7 +5,7 @@ description: Use whenever writing or revising text that students will read to le
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
 
-_Status: v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
+_Status: v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
 was presentation-register writing — describing the end state to readers who don't yet
 have what they need to get there. First test passed 2026-08-04, rewriting the CST499
 home page against it._
@@ -61,7 +61,8 @@ small — a reason to drive.
 **The achiever** is engaged and grade-driven — they will do everything asked,
 excellently, and stop there. They read asking *what gets the A?* A page loses them by
 letting points be the only visible why; it reaches them by attaching a payoff beyond
-the grade — the referral bar, work an employer actually reads — and honest bars worth
+the grade — work that goes into a portfolio they keep, a capability they can demonstrate
+afterwards — and honest standards worth
 chasing.
 
 **The resistor** has agency pointed away from the work, and may give a page one
@@ -95,9 +96,20 @@ where are we in the arc, and what does the student get from this page. ("Before 
 focus on any thinking skill — how we think is the most important tool we bring as
 professionals.")
 
-**Meet the feeling, and bound what's not needed.** Name the likely intimidation or
-misconception, then shrink it: "this may sound daunting — yes and no"; "you don't have
-to become an expert in how the brain works." Every bounded scope is a weight lifted.
+**Meet the feeling, and bound what's not needed — where a concept is being taught.**
+Name the likely intimidation or misconception, then shrink it: "this may sound daunting —
+yes and no"; "you don't have to become an expert in how the brain works." Every bounded
+scope is a weight lifted.
+
+**Scope note (2026-08-29).** This move belongs to teaching text that introduces a concept,
+where the reader has already committed to reading. It does not belong at the top of an
+activity page, where the reader is deciding whether to start. **Never invent an objection or
+an anxiety in order to open persuasively** — "this may look like the soft part of the week",
+"you might think this doesn't matter". Address a concern only when students have actually
+raised it and the answer changes what they do next. Naming a worry and then reassuring the
+student about it puts both halves on the page; both come out.
+(Traced 2026-08-29: this move, applied to an activity-page opening, produced the argumentative
+Week 2 pages. See `student-page-register-and-length` in project memory.)
 
 **Everyday example before technical example.** Each concept gets an example the student
 already owns — driving home on autopilot, buying a car, learning to ride a bike —
@@ -135,9 +147,12 @@ examples, edge cases, definitions) sit in expandable dropdowns and popup bubbles
 the point of use. The glossary tooltips and `<details>` blocks already on our pages
 are this pattern; use them deliberately, not decoratively.
 
-**The why at every seam.** Every change of direction carries its reason at the moment
-it's needed — "we test all the cases *because* one bug means the computer can't add" —
-not saved for a rationale section nobody reads.
+**The why once, and locally only when it changes a decision.** State the global why once,
+in the opening, and then stop making the case. Add a local reason at a change of direction only
+when it changes what the student does next — "we test all the cases *because* one bug means the
+computer can't add". A reason that only justifies the activity again is an argument, not a
+seam, and it belongs in the opening or nowhere. (Revised 2026-08-29; the earlier
+"why at every seam" produced a page that re-argued its value at every transition.)
 
 **Fellow learner, not lectern.** Write as "we"; keep honest hedges ("there's some
 controversy in the research — don't worry about it here"); let the instructor's own

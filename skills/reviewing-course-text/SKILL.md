@@ -5,7 +5,7 @@ description: Run as the final step whenever student-facing course text is create
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
 
-_Status: v1 (July 2026). Born from the Week 5 build: the same intro paragraph rendered twice on the self-check (page intro + engine description), and the referral application page needed a hard trim after team review._
+_Status: v2 (29 August 2026) — added the structure gate: compare against a similar page and report the numbers, plus `scripts/review_student_page.py`. v1 (July 2026). Born from the Week 5 build: the same intro paragraph rendered twice on the self-check (page intro + engine description), and the referral application page needed a hard trim after team review._
 
 # Reviewing course text
 
@@ -14,6 +14,46 @@ CTI is building an interactive, book-like experience that develops students' rea
 ## When to run
 
 At the end of writing, every time. The review is the last step before student-facing text is saved to a live surface, the way a build gets tested before it ships. It is not optional polish for long pieces; short blocks (a home-page meta line, a question's sub-note) are where padding hides best.
+
+## The structure gate — run it before the prose pass, and report the numbers
+
+Added 2026-08-29, after a review found three Week 2 pages that argued for the work before letting
+students do it: 1,098 / 838 / 653 words before the first response, at 2.9 / 2.7 / 2.3 screens on a
+1280×720 laptop. Every prose rule that would have prevented that was already in these skills and did
+not bite. A number did.
+
+**Compare against a similar page, not against a fixed threshold (Sathya, 2026-08-29).** A page teaching
+a new idea legitimately needs more before the first action than one asking students to list six moments,
+so a constant would be wrong on one of them. Instead:
+
+1. **Before writing**, find the closest existing page of the same kind and measure it.
+2. **After writing**, measure yours.
+3. **Report both, side by side.** A gap is not a violation — it is something to account for. *"400 words
+   longer than What Are My Priorities, because it introduces two new terms"* is a complete answer. A
+   number with no account is the thing this gate exists to catch.
+
+**Pending:** a nominated set of reference pages does not exist yet (Sathya, 2026-08-29 — revisit after
+several more pages have been through this process). Until it does, compare against the closest page by
+kind, and say which one you used.
+
+**What to report, every time:**
+
+- Visible words before the first response field or first required action, and the distance to it in screens.
+- The longest paragraph, and any paragraph over roughly 60–70 words.
+- Any run of three or more prose paragraphs with no heading, list, table, example or action between them.
+- Whether success criteria appear **before** the submit control. After it is a defect: the student meets
+  the standard only once the work is done.
+- Passages of 30–40 words repeated across sibling pages in the same week.
+- Every sentence that speculates about someone else's judgment — a recruiter's reaction, whether an
+  instructor would vouch for them, whether anyone would be impressed.
+- Every fear, scarcity, shame, survival or deficit frame, and every place a worry is raised and then
+  reassured about. Both halves come out.
+- **The hidden text too:** system prompts, coach notes, button labels and error messages are student-facing
+  course text and get the same pass as visible prose.
+- Whether every required reflection has somewhere to answer it, or is clearly marked optional.
+
+`scripts/review_student_page.py` produces the countable items. It reports; it never rewrites. The
+judgment about which flags matter stays with a person.
 
 ## The discipline
 

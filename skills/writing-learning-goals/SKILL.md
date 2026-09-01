@@ -5,7 +5,7 @@ description: Use whenever writing or reviewing a learning goal for a student-fac
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
 
-_Status: v1 (June 2026), refined as the program runs. Named-skill, credibility, inspire-not-scare, and name-the-outcome rules added 2026-06-27._
+_Status: v2 (29 August 2026) — the payoff is a capability the student holds, never someone else's reaction; "catch a recruiter's attention" was seeding gatekeeper framing downstream. v1 (June 2026), refined as the program runs. Named-skill, credibility, inspire-not-scare, and name-the-outcome rules added 2026-06-27._
 
 # Writing learning goals
 
@@ -15,7 +15,7 @@ This is the line students read first, and it sets whether the activity feels lik
 
 ## The discipline
 
-Write the goal as a single sentence carrying two things: the **what** — the action or outcome the student owns — and the **why** — the payoff the student actually cares about. The why is almost always tied to their real goal: getting hired, catching a recruiter's attention, targeting the right roles. It is not tied to where the activity sits in our process.
+Write the goal as a single sentence carrying two things: the **what** — the action or outcome the student owns — and the **why** — the payoff the student actually cares about. The why is a capability the student ends up holding — they can identify, compare, decide, build, demonstrate or revise something they could not before — pointed at a real goal of theirs: getting hired, targeting the right roles, having work worth showing. **Do not make the payoff someone else's reaction** (a recruiter noticing them, an instructor being willing to vouch for them). A reaction you cannot promise is not a payoff, and writing goals that way seeds gatekeeper framing through the rest of the page (traced 2026-08-29). It is not tied to where the activity sits in our process.
 
 Use plain, student-facing words. A student on their first day should understand every word. That rules out internal vocabulary (niche-drift, spine document, "Layer 3"), and it rules out references to our own machinery — other assignments named by version ("concrete fixes for Resume v2"), pipeline steps ("feeds the evaluation"), or week numbers. Those add nothing for the student and signal that the goal was written for us rather than for them.
 
@@ -30,7 +30,7 @@ Read the goal as a student who has never seen the program. If you cannot say bot
 Resume Story Swap:
 
 - Before: "Find where your resume drifts from — or is silent on — your niche, and leave with concrete fixes for Resume v2." Two clauses, internal terms (drifts from / silent on your niche), a forward reference to another assignment, and no stated payoff.
-- After: "Strengthen your resume with your niche to get a recruiter's attention." One sentence — what (strengthen the resume with the niche) and why (a recruiter's attention) — in words a student reads once and gets.
+- After: "Make your resume say in one read what kind of work you are for." One sentence — what (the resume states the niche) and why (a reader gets it in one pass) — in words a student reads once and gets. Note it states a property of the work, not a reaction from a reader.
 
 The pattern generalizes: lead with the student's outcome, attach the reason it is worth their time, and stop.
 
@@ -38,7 +38,7 @@ The pattern generalizes: lead with the student's outcome, attach the reason it i
 
 When the payoff is a recognizable, transferable skill — one a student already knows is worth having — name it. "Behavioral interview practice," "AI fluency practice," "interview practice" land harder than a description of the activity, because the student sees the value before reading another word. _Behavioral interview practice: answer questions about your mindset and approach_ sells itself; _reflect on the week's shift out loud_ only describes the motion and leaves the value for the student to infer.
 
-When no recognizable skill name fits, fall back to a plain, concrete payoff ("leave with a runnable plan," "make your niche obvious to a recruiter"). Lead with value either way — the named skill is just its strongest form.
+When no recognizable skill name fits, fall back to a plain, concrete payoff ("leave with a runnable plan," "have a niche a reader can state back to you"). Lead with value either way — the named skill is just its strongest form.
 
 When an activity carries two goals, make each a distinct payoff. The emerging pattern pairs a human skill with an AI-fluency skill — the Sharpen Your Bet breakout is behavioral interview practice plus AI fluency practice.
 

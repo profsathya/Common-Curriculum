@@ -5,7 +5,7 @@ description: Use when writing or revising any assignment or activity page studen
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+_Status: v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
 `schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
 first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
 the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
@@ -59,8 +59,12 @@ each assignment visibly extends an evolving piece of work rather than starting f
 ## Task — what to do
 
 Steps in the order the student should take them, each instruction at its point of
-action. Name the known wrong turns ("a common mistake here is…") instead of letting
-students find them. If a step needs a tool, link it in the step. The reader gets one
+action. **Prevent likely errors with a positive test, a structured field, or a paired
+example** — "quote the phrase and give the count" prevents paraphrasing without warning
+about it; two columns prevent a one-sided answer without naming the mistake. State a common
+mistake outright only when it is consequential, likely, and cannot be prevented more
+directly. (Revised 2026-08-29: the earlier "name the known wrong turns" turned instructions
+into warnings and produced coach notes written as errors rather than as criteria.) If a step needs a tool, link it in the step. The reader gets one
 sentence before deciding whether to keep reading — the backbone must survive a skim,
 with depth behind expandables (writing-to-teach governs every sentence).
 
@@ -166,7 +170,8 @@ neither is written down here again.
 
 - The five blocks are present, in order: Purpose · What you're building on · Task · Criteria · Reflection.
 - The first sentence of Purpose is the payoff, not the topic.
-- Every instruction sits at its point of action; known wrong turns are named.
+- Every instruction sits at its point of action; likely errors are prevented by a positive
+  test, a structured field, or a paired example rather than by a warning.
 - Criteria distinguish done from good, show two or more examples, and end in a
   student-runnable checklist; points and their route to the walkthrough are stated.
 - Reflection questions are answerable only after doing the work.
