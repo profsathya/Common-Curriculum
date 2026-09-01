@@ -17,6 +17,7 @@
   #gserrors p { margin: 6px 0; }
   #runlog { flex: 0 0 auto; display: none; font-size: 12.5px; line-height: 1.5; padding: 7px 10px; border-bottom: 1px solid #C7CDD1; background: #F3F8FB; color: #2D3B45; }
   #runlog .prev { color: #6B7780; }
+  #restorenote { flex: 0 0 auto; display: none; font-size: 12.5px; line-height: 1.5; padding: 6px 10px; border-bottom: 1px solid #E0C88A; background: #FBF6EC; color: #5e4a18; }
   #nudge { display: none; align-items: center; gap: 8px; font-size: 12.5px; color: #5e4a18; background: #FBF6EC; border: 1px solid #E0C88A; border-radius: 5px; padding: 4px 9px; }
   #nudge button { font-family: inherit; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 4px; cursor: pointer; border: 1px solid #a07c1f; color: #5e4a18; background: #fff; }
   .panes { flex: 1 1 auto; display: flex; min-height: 0; }
@@ -40,6 +41,7 @@
   </div>
   <div id="gserrors"></div>
   <div id="runlog"></div>
+  <div id="restorenote"></div>
   <div class="panes">
     <div class="pane left"><textarea id="edit" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Program code"></textarea></div>
     <div class="pane right" id="glows"></div>
@@ -61,6 +63,7 @@ var edit = document.getElementById('edit');
 var gserrors = document.getElementById('gserrors');
 var glows = document.getElementById('glows');
 var runlog = document.getElementById('runlog');
+var restorenote = document.getElementById('restorenote');
 var original = '';
 var runCount = 0;
 var lastResult = null;
@@ -147,7 +150,32 @@ function ready(program) {
     runprog(program);
 }
 
-function runCode() { localCompile(ready); }
+function runCode(report) { if (report) { reportCode(); } localCompile(ready); }
+
+// --- the student's code lives on the course page ---------------------------
+// This runner has no storage of its own, so the page that embeds it keeps the
+// edited code and hands it back on load. Same origin, so the messages are
+// checked against location.origin at both ends.
+function postToParent(msg) {
+    try {
+        if (window.parent && window.parent !== window) { window.parent.postMessage(msg, location.origin); }
+    } catch (e) {}
+}
+function reportCode() { if (sim) { postToParent({ type: 'sim-code', sim: sim, code: edit.value }); } }
+var codeTimer = null;
+edit.addEventListener('input', function () {
+    if (codeTimer) { clearTimeout(codeTimer); }
+    codeTimer = setTimeout(reportCode, 600);
+});
+window.addEventListener('message', function (ev) {
+    if (ev.origin !== location.origin) { return; }
+    var d = ev.data;
+    if (!d || typeof d !== 'object' || d.type !== 'restore-code' || d.sim !== sim) { return; }
+    if (typeof d.code !== 'string' || !d.code.trim() || d.code === edit.value) { return; }
+    edit.value = d.code;
+    restorenote.textContent = 'Your edits were restored. Press Run to see them.';
+    restorenote.style.display = 'block';
+});
 
 // --- the prediction nudge: if the course page reports that the active stage's
 // prediction box is empty, count down 3-2-1 before a manual Run; "I'll write it
@@ -168,16 +196,16 @@ function cancelNudge() {
     nudgeEl.style.display = 'none';
 }
 function runWithNudge() {
-    if (nudgeTimer) { cancelNudge(); runCode(); return; }   // Run again during the countdown = run now
+    if (nudgeTimer) { cancelNudge(); runCode(true); return; }   // Run again during the countdown = run now
     var ask = predictionHook('exploreLoopPrediction');
     var status = ask ? ask(sim) : null;
-    if (!status || !status.empty) { runCode(); return; }
+    if (!status || !status.empty) { runCode(true); return; }
     var count = 3;
     nudgeText.textContent = 'Predicted first? Running in ' + count + '\u2026';
     nudgeEl.style.display = 'inline-flex';
     nudgeTimer = setInterval(function () {
         count--;
-        if (count <= 0) { cancelNudge(); runCode(); return; }
+        if (count <= 0) { cancelNudge(); runCode(true); return; }
         nudgeText.textContent = 'Predicted first? Running in ' + count + '\u2026';
     }, 1000);
 }
@@ -192,7 +220,10 @@ document.getElementById('resetbtn').addEventListener('click', function () {
     cancelNudge();
     edit.value = original;
     gserrors.innerHTML = '';
-    runCode();
+    restorenote.style.display = 'none';
+    if (codeTimer) { clearTimeout(codeTimer); codeTimer = null; }
+    runCode(false);
+    postToParent({ type: 'sim-reset', sim: sim });   // the page drops its saved copy, so the reset survives a reload
 });
 
 if (!sim) {
@@ -204,7 +235,8 @@ if (!sim) {
     }).then(function (text) {
         original = text;
         edit.value = text;
-        runCode();
+        runCode(false);
+        postToParent({ type: 'sim-ready', sim: sim });
     }).catch(function () {
         showError('Could not load the model "' + sim + '". If you opened this file straight from disk, it needs to be served from the course site to load its code.');
     });
