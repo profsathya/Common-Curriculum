@@ -24,6 +24,10 @@ ol.method li { margin: 3px 0; }
 .pnamerow { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; margin: 0 0 8px; font-size: 12.5px; color: var(--muted); }
 .pnamerow input { font-family: inherit; font-size: 13px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 5px; min-width: 220px; color: var(--text); }
 .simjump { font-size: 12.5px; margin: 0 0 10px; }
+.canvasbar { display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: baseline; border: 1px solid var(--goal-border); border-left: 4px solid var(--goal-border); background: var(--goal-bg); border-radius: 5px; padding: 9px 13px; margin: 0 0 14px; font-size: 13px; }
+.canvasbar[hidden] { display: none; }
+.canvasbar a { color: var(--blue-dark); }
+@media print { .canvasbar { display: none !important; } }
 .tpanel[hidden] { display: none; }
 #simhost { scroll-margin-top: 10px; }
 @media print { .refl { break-inside: avoid; } }
@@ -31,6 +35,11 @@ ol.method li { margin: 3px 0; }
     </head>
     <body>
         <div class="page">
+            <div class="canvasbar" id="canvas-bar" hidden>
+                <span>This activity is running inside Canvas.</span>
+                <a href="https://profsathya.github.io/Common-Curriculum/cst286/explore-physics-loop.html" target="_blank" rel="noopener"><b>Open the full page in its own tab &nearr;</b></a>
+                <span>Open it before you start writing, so everything you type is saved in one place.</span>
+            </div>
             <div class="crumb">
                 <a href="home.html">CST286</a> &middot; Explore Physics Loop
             </div>
@@ -820,6 +829,17 @@ ol.method li { margin: 3px 0; }
             };
             var SYSTEM_PROMPT = 'You are a physics coach helping a first-year student who is exploring a running simulation. You are given the topic, the stage, what the student was asked to change, their prediction, their explanation, and coach notes with the expected behaviour and common mistakes. Reply in 3 or 4 short sentences, plain words, no jargon they have not seen on the page. First, identify one specific thing in their explanation that is right, or one specific thing to look at again, quoting their words. Second, connect what they saw to one physical quantity or one line of the code, without giving the full explanation. Third, ask one question or suggest one small experiment in the simulation that would test their idea. Do not write or rewrite their explanation. Do not grade or score. If the explanation contains a wrong idea, do not confirm it; point them to the graph or the edit that would show them. If they say they do not know, give them the smallest next thing to look at.';
             var REFLECT_PROMPT = 'You are a coach for one box on a first-year physics activity page. You are given the question that box asks, the student\'s answer, and a coach note listing that box\'s requested elements, its observable criteria, and the omissions that are common there. Reply in 3 or 4 short sentences, plain words. First, name one specific thing that is already present in the answer, quoting their words. Second, name one requested element that is not yet visible in the answer. Third, ask one concrete revision question whose answer would put that element in. Judge only against the observable criteria in the coach note; nothing else is a criterion. Never judge readiness, employability, prospects or ability. Never say whether anyone would be impressed or persuaded. Do not grade, score, pass or fail, and do not say whether the answer is good enough. Never write or rewrite any part of their answer. If the coach note says this box has an expected empty state and the answer is empty or thin, say what the box will hold once the conversation has happened, and stop there.';
+
+            // Embedded in Canvas the page runs in an 800px frame, so offer the way out to
+            // the full page. Shown when the page is framed, or when it is opened with
+            // ?context=canvas. Hidden when it is already the top-level page.
+            (function () {
+                var bar = document.getElementById('canvas-bar');
+                if (!bar) { return; }
+                var framed = true;
+                try { framed = window.top !== window.self; } catch (e) { framed = true; }
+                if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+            })();
 
             var storageOK = true;
             var state = load();
