@@ -391,3 +391,13 @@ copy, reload all pass; Draft v3. Canvas step still parked for Sathya's go. — A
   and written back to `mk_assignments.py` in the same pass (ids, URLs, points, status). No module
   carries a cross-sprint prerequisite. Details and ids in `cowork/fall-2026-courses/HANDOFF.md`,
   2026-08-31 entries. — Alan
+
+- **2026-09-01 — Explore Physics Loop moved to a fresh Canvas item (647097).** Sathya is redesigning the
+  activity and wanted the old submissions cleared so students see it as not-submitted. Canvas cannot
+  un-submit or reject a submission, and **refuses to unpublish an assignment that has student
+  submissions** (646585 had 17), so: a new assignment was created carrying the identical iframe body,
+  due date (Fri 4 Sep 11:59 pm), 100 points, Own-your-progress group and text-entry type; it replaced
+  the old one in the Sprint 0 · Own your progress module with a must-submit requirement; and 646585 was
+  renamed "RETIRED v1" and hidden from students via `only_visible_to_overrides` with no overrides. The
+  17 submissions are preserved and the hide is one flag away from reversal. Home page and registry now
+  point at 647097. — Alan
