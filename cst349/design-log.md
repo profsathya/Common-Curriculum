@@ -225,7 +225,7 @@ current circle highlighted, so students can see what they are filling in and can
   Then a space, two things employers ask for now with quoted phrases and counts, and one expected change
   written as a **driver** and a **signal** — both new glossary bubbles. Started live in the Wednesday
   session, as paired conversations on The Commons.
-- **What Would I Do Anyway** (Fri 4 Sep) — what you love. Carries the argument that this is a necessity
+- **Know What Makes Me Tick** (Fri 4 Sep) — what you love. Carries the argument that this is a necessity
   rather than a luxury: AI covers the surface layer, the depth underneath only happens on work someone
   cares about.
 - **Find Your Gap** (Tue 8 Sep) — what you are good at, then the overlay. Ends in one specific gap and a
@@ -254,7 +254,7 @@ no Canvas work was done.
 posted — it does not claim the class does or does not meet. Needs Sathya's line.
 
 **The Commons.** The Wednesday conversation runs on The Commons (Stage 6 join codes, live pairing). The
-**async** partner conversation for What Would I Do Anyway is **parked** until the tool is tested for async
+**async** partner conversation for Know What Makes Me Tick is **parked** until the tool is tested for async
 peer conversations — nothing on the page depends on it, and it stays written work in both courses until
 Sathya confirms.
 
@@ -363,7 +363,7 @@ questions inside the Review block.
 
 **Content restructured.** The three-paragraph market hook became a four-row **snapshot table** (signal ·
 what it means for this activity · source), moved to sit between card 1 and card 2 where it is actually
-used. Six moments became a four-column structure. Cards 2 and 3 on What Would I Do Anyway now ask the
+used. Six moments became a four-column structure. Cards 2 and 3 on Know What Makes Me Tick now ask the
 student to **revise, confirm or qualify** — confirming is a complete answer, and the page no longer
 requires disagreement or treats reluctance as evidence. The standing-routine template moved inside its own
 card. Recordings, the Coursera course and both Dojos are collapsed under Optional.
@@ -394,7 +394,7 @@ audit → what to build next → what you would do about it. The order is now **
 visible next · your next move (problem space for CST499, I/T/π for CST349) · the routine that keeps it
 current**. A takeaway belongs at the end.
 
-**What Would I Do Anyway box 2 is countable now.** It was "write the pattern you notice" — deliberately
+**Know What Makes Me Tick box 2 is countable now.** It was "write the pattern you notice" — deliberately
 loose, because box 3 is where it gets tested, but loose read as vague. It now asks: *which three or more of
 your six moments share something, and what do they share, in one sentence.* The two-pass structure survives;
 the first pass is now answerable.
@@ -423,3 +423,13 @@ block reports once). Final state on all six pages: **zero long paragraphs in the
 criteria before submit, 432–460 words before the first input.** The four passages it still reports as
 repeated across siblings are the shared callout, the where-this-fits line, the closing feedback question and
 the submit instruction — all intentional, and the script now says to judge rather than cut.
+
+## 2026-09-01 — What Would I Do Anyway is renamed Know What Makes Me Tick
+
+The visible title only; the filename stays `never-feels-like-work.html` so Canvas links keep working.
+Earlier entries in this log have been updated to the new title so the narrative reads in one name — this
+entry is the record that the page was called **What Would I Do Anyway** until today. Sathya's suggestion,
+adopted because it also matches the imperative-verb-plus-object pattern of Read the Market and Find Your
+Gap. The same day the page was restructured into five revealed sections, the six-moment requirement became
+up to five, "at least three" became "more than one", and a strength-and-weakness box moved in from Find
+Your Gap.
