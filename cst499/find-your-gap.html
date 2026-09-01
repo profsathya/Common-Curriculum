@@ -808,7 +808,6 @@ COMMON OMISSIONS: an activity is named and what was helpful in it is not; the wh
         var st = reflectState(key);
         var btn = $('[data-ai]', el), box = $('[data-aibox]', el);
         var text = $('[data-rtext]', el).value.trim();
-        var pn = $('[data-pname]', el);
         var tpl = document.getElementById('note-' + key);
         var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 2)\n' +
             'WHAT THIS WEEK IS BUILDING TOWARD: ' + CFG.destination + '\n' +
@@ -827,20 +826,16 @@ COMMON OMISSIONS: an activity is named and what was helpful in it is not; the wh
         var key = el.getAttribute('data-refl');
         var st = reflectState(key);
         var ta = $('[data-rtext]', el);
-        var pn = $('[data-pname]', el);
         ta.value = st.text || '';
-        if (pn) { pn.value = st.pname || ''; }
         var aibox = $('[data-aibox]', el);
         if (st.ai.length && aibox) { showAi(aibox, st.ai[st.ai.length - 1].text, st.ai.length); }
         function onInput() {
             st.text = ta.value;
-            if (pn) { st.pname = pn.value; }
             refreshRefl(el, key);
             saveSoon();
         }
         ta.addEventListener('input', onInput);
         ta.addEventListener('blur', save);
-        if (pn) { pn.addEventListener('input', onInput); pn.addEventListener('blur', save); }
         var goBtn = $('[data-ai]', el);
         if (goBtn) { goBtn.addEventListener('click', function () { askReflAi(el, key); }); }
         refreshRefl(el, key);
@@ -913,8 +908,7 @@ COMMON OMISSIONS: an activity is named and what was helpful in it is not; the wh
                 } else {
                     var key = el.getAttribute('data-refl');
                     var rs = reflectState(key);
-                    var pn = $('[data-pname]', el);
-                    out += '\nQ: ' + reflQuestion(el) + '\n';
+                                out += '\nQ: ' + reflQuestion(el) + '\n';
                     out += 'A:\n' + indent(rs.text) + '\n';
                     rs.ai.forEach(function (a, k) { out += '  [AI feedback ' + (k + 1) + ': ' + flat(a.text) + ']\n'; });
                 }

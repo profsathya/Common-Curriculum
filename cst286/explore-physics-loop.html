@@ -980,19 +980,15 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
                 REFL_KEYS.push(key);
                 var st = reflectState(key);
                 var ta = $('[data-rtext]', el);
-                var pn = $('[data-pname]', el);
                 ta.value = st.text || '';
-                if (pn) { pn.value = st.pname || ''; }
                 if (st.ai.length) { showAi($('[data-aibox]', el), st.ai[st.ai.length - 1].text, st.ai.length); }
                 function onInput() {
                     st.text = ta.value;
-                    if (pn) { st.pname = pn.value; }
                     refreshRefl(el, key);
                     queueSave();
                 }
                 ta.addEventListener('input', onInput);
                 ta.addEventListener('blur', save);
-                if (pn) { pn.addEventListener('input', onInput); pn.addEventListener('blur', save); }
                 $('[data-check]', el).addEventListener('toggle', function (ev) {
                     if (ev.target.open) { reflectState(key).checkOpened = true; save(); }
                 });
@@ -1094,7 +1090,6 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
             function askReflectAi(el, key) {
                 var st = reflectState(key);
                 var text = $('[data-rtext]', el).value.trim();
-                var pn = $('[data-pname]', el);
                 var user = 'Activity: CST286 Explore Physics Loop.\n' +
                     'Model the student is working on: ' + (state.topic ? TOPIC_TITLES[state.topic] : 'not chosen yet') + '\n' +
                     'Section: ' + SECTION_NAMES[parseInt(el.getAttribute('data-sec'), 10)] + '\n' +
@@ -1173,8 +1168,7 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
                     $all('.refl[data-sec="' + n + '"]').forEach(function (el) {
                         var key = el.getAttribute('data-refl');
                         var st = reflectState(key);
-                        var pn = $('[data-pname]', el);
-                        any = true;
+                                any = true;
                         out += '\nQ: ' + reflQuestion(el) + '\n';
                         out += 'A:\n' + wrap(st.text) + '\n';
                         out += '  [Check it yourself opened: ' + (st.checkOpened ? 'yes' : 'no') + ' · AI feedback asked for: ' + (st.ai.length ? st.ai.length + (st.ai.length === 1 ? ' time' : ' times') : 'no') + ']\n';
