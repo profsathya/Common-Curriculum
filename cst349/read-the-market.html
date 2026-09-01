@@ -349,6 +349,7 @@ ol.steps li{margin:3px 0;}
 <li>Evaluate against the criteria</li>
 <li>Final reflection</li>
 </ol>
+<p class="body">The <a href="setup-ai-dojo.html">CST349 AI Dojo</a> knows about this activity; asking it to &lsquo;Walk me through the Read the Market&rsquo; might be helpful if you feel stuck.</p>
 
 <div class="namerow"><label for="student-name"><b>Enter Full Name</b></label><input type="text" id="student-name" autocomplete="name" placeholder="First and last"></div>
 <p class="body">Asked once, here. It goes into the summary you paste into Canvas at the end.</p>
@@ -364,7 +365,7 @@ ol.steps li{margin:3px 0;}
 </details>
 
 <h2 class="sec">What you are building on</h2>
-<p class="body"><b>Nothing about the market</b> &mdash; if you have never read a job posting closely, this is the right place to start. The reading is the activity. <b>Your AI Dojo</b> from week 1 (<a href="setup-ai-dojo.html">Set Up Your CST349 AI Dojo</a>) is optional here; the feedback button is built into this page.</p>
+<p class="body"><b>Nothing about the market</b> &mdash; if you have never read a job posting closely, this is the right place to start. The reading is the activity.</p>
 
 <div class="callout">
 <p><b>Write your response first.</b> Then use <b>Check it yourself</b>, <b>AI feedback</b>, or both. Both are under every box and they go at the same thing from two directions.</p>
@@ -740,6 +741,17 @@ COMMON OMISSIONS: the partner is praised and no practice is named to carry over.
 
     function $(sel, root) { return (root || document).querySelector(sel); }
     function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in an 800px frame, so offer the way out to the
+    // full page. Shown when the page is framed, or when it is opened with ?context=canvas.
+    // Hidden when it is already the top-level page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
 
     var storageOK = true;
     var state = { name: '', boxes: {}, reflect: {}, section: 1, copiedAt: null };
