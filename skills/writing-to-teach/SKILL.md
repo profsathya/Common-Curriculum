@@ -5,7 +5,7 @@ description: Use whenever writing or revising text that students will read to le
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
 
-_Status: v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
+_Status: v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
 was presentation-register writing — describing the end state to readers who don't yet
 have what they need to get there. First test passed 2026-08-04, rewriting the CST499
 home page against it._
@@ -88,6 +88,35 @@ tools), and state the deliverable separately from the steps so what-to-hand-in i
 buried in how-to-do-it. Most pages carry both; know which sentence is doing which job,
 and never let task-text compression flatten the teaching, or teaching warmth blur an
 instruction.
+
+**Concise means low load, not few words (Sathya, 2 September 2026).** Students lose
+interest at every wasted sentence, so nothing on a student page is padding — but the
+measure of concise is how much work the reader does, not how short the line is. A
+fragment that saves four words and costs a second read has not been shortened; it has
+moved the work onto the student. The failure this names: a preview list at the top of
+Read the Market read "A space you can search, in one sentence · Two things employers in
+it are asking for now, with quoted phrases and counts · One thing you expect to change,
+with its driver and the signal you would watch." Every item was short, and every item
+was cryptic — noun fragments, written from the author's side, referring to "driver" and
+"signal" before the page had introduced them. His rewrite is longer and lighter: "Write
+down a unique problem, opportunity or domain in the job market that you can search ·
+Research and identify at least two things employers are asking for now, with specific
+terms, phrases and how often · Make note of at least one thing you expect to change,
+with its drivers and the signal you would watch." The rules that fall out of it:
+
+- **A preview or outcome list is task text, not a summary.** Each item is a complete
+  instruction, verb first, that a student could act on if it were the only line they
+  read. Never a noun phrase describing the finished product ("A two-row audit of…").
+- **Only words the student already has.** A term the page teaches later (driver,
+  signal, shape, gap) does not appear in the preview in its bare form; say the plain
+  thing it stands for, or hold the term for its point of use.
+- **Shortening is done by cutting sentences, not by compressing them.** Cut the
+  argument, the second example, the repeated frame, the caption under every button;
+  keep the full verb-led sentence in the line that survives. One complete sentence
+  beats two fragments.
+- **The test is the cold read.** Give the line to someone who has not seen the boxes
+  below it. If they have to scroll down to know what it means, it is cryptic, however
+  short.
 
 ## The moves — teaching register
 
@@ -264,6 +293,8 @@ you only the first sentence leave knowing the payoff?
   every pronoun resolves inside its own sentence.
 - Task text: verb first, one task per line, constraints bold, deliverable stated
   separately from the steps.
+- Preview and outcome lists: every item a complete verb-first instruction, readable
+  cold, using no term the page has not yet introduced.
 - One name per concept, on this page and its siblings; our terms carry a tooltip or
   parenthetical at first use.
 - The page ends with what the student can now do and where to ask questions.
