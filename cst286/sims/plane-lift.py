@@ -42,10 +42,10 @@ lift_arrow = arrow(pos=plane.pos, axis=vector(0, 0, 0), color=color.yellow, shaf
 weight_arrow = arrow(pos=plane.pos, axis=vector(0, 0, 0), color=color.red, shaftwidth=1.2)
 banner = label(pos=vector(0, 0, 0), text="", height=26, box=False, opacity=0, color=color.yellow, visible=False)
 
-g1 = graph(title="Height of the plane (the ridge top is the gray line)", xtitle="time (s)", ytitle="height (m)", width=600, height=220, fast=False)
-height_c = gcurve(color=color.blue, label="height")
-ridge_c = gcurve(color=color.gray(0.6), label="ridge top")
-g2 = graph(title="Lift versus weight", xtitle="time (s)", ytitle="force (N)", width=600, height=220, fast=False)
+g1 = graph(title="Height of the plane (the ridge top is the gray line)", xtitle="time (s)", ytitle="height (m)", width=600, height=220)
+height_c = gcurve(color=color.blue)
+ridge_c = gcurve(color=color.gray(0.6))
+g2 = graph(title="Lift versus weight", xtitle="time (s)", ytitle="force (N)", width=600, height=220)
 lift_c = gcurve(color=color.orange, label="lift")
 weight_c = gcurve(color=color.red, label="weight")
 
