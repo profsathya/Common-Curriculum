@@ -58,7 +58,7 @@ ol.method li { margin: 3px 0; }
             <ol class="steps">
                 <li>Understand the learning outcomes</li>
                 <li>Pick a model and meet it</li>
-                <li>Stage 1 &mdash; predict, change one line, run, explain</li>
+                <li>Stage 1 &mdash; predict, change, run, explain</li>
                 <li>Stage 2 &mdash; the relationship</li>
                 <li>Evaluate against the criteria</li>
                 <li>Final reflection</li>
@@ -72,7 +72,7 @@ ol.method li { margin: 3px 0; }
             <p class="body">You will work with the same partner throughout this activity.</p>
 
             <h2 class="sec">Learning outcomes</h2>
-            <p class="body">Five outcomes. The <b>+</b> under each one opens worked examples of what that outcome looks like when it is met &mdash; written by us as models, not student work.</p>
+            <p class="body">Four outcomes. The <b>+</b> under each one opens worked examples of what that outcome looks like when it is met &mdash; written by us as models, not student work.</p>
             <div class="lo">
                 <p class="step"><b class="k">1. A unit.</b> Learn one unit I did not know before — what it measures, and why the number would be meaningless without it.</p>
                 <details class="cy">
@@ -84,7 +84,7 @@ ol.method li { margin: 3px 0; }
                 </details>
             </div>
             <div class="lo">
-                <p class="step"><b class="k">2. An explanation.</b> Explain one of the scenarios well enough that a middle or high school student could tell me back what causes what.</p>
+                <p class="step"><b class="k">2. An explanation.</b> Explain one of the scenarios well enough that a 13-year-old could tell me back what causes what.</p>
                 <details class="cy">
                     <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Two worked examples</span><span class="rd">The spinning ball, and the wing.</span></span></summary>
                     <div class="cy-body">
@@ -104,17 +104,7 @@ ol.method li { margin: 3px 0; }
                 </details>
             </div>
             <div class="lo">
-                <p class="step"><b class="k">4. A line of code (optional).</b> Optional: explain one line of the simulation code — what it does, and what would break in the rest of the simulation if it were removed.</p>
-                <details class="cy">
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Two worked examples</span><span class="rd">One line from each model.</span></span></summary>
-                    <div class="cy-body">
-                        <p class="worked"><b>The free kick.</b> <code>b.v = v + (F / mass) * dt</code> — F = ma taken one tiny step at a time: divide the total force by the mass to get the acceleration, multiply by the 0.005 s step to get the change in velocity, add it on. Take this line out and every force calculated above it is still calculated and then ignored — the ball would fly straight at 25 m/s and land in exactly the same place as the ghost.</p>
-                        <p class="worked"><b>The UAV.</b> <code>vy = vy + ((lift - weight) / mass) * dt</code> — the whole question of whether the UAV climbs, in one line. Lift minus weight is the force left over, dividing by mass turns it into an acceleration, and multiplying by the 0.02 s step turns that into a small change in vertical speed. It is why the plane does not jump the instant lift beats weight, and why the height graph curves instead of stepping. Take the line out and <code>vy</code> stays 0 forever — the UAV flies dead level at 100 m and runs into the ridge face whatever angle or speed I pick.</p>
-                    </div>
-                </details>
-            </div>
-            <div class="lo">
-                <p class="step"><b class="k">5. The method &mdash; the loop I will run on my own topic later.</b></p>
+                <p class="step"><b class="k">4. The method &mdash; the loop I will run on my own topic later.</b></p>
                 <ol class="method">
                     <li>Pick one thing in the simulation I am curious to experiment with.</li>
                     <li>Write down what will happen if I made one change.</li>
@@ -143,7 +133,7 @@ ol.method li { margin: 3px 0; }
 
             <!-- ============================================================ SECTION 2 -->
             <section class="sect" id="sect-2" data-sect="2" hidden>
-            <h2 class="sec">2 &middot; Pick one, and meet the model</h2>
+            <h2 class="sec">Pick one, and meet the model</h2>
             <p class="body">Pick the one you have actually wondered about &mdash; every card goes to the same depth, so curiosity is the only reason to choose. These came up in class this week and in our check-ins.</p>
             <div class="topics" role="group" aria-label="Choose a topic">
                 <button type="button" class="topic-card" data-topic="ball" aria-pressed="false">
@@ -177,9 +167,14 @@ ol.method li { margin: 3px 0; }
                 </div>
                 <div class="meet">
                     <div class="mb"><b class="h">What you are looking at</b>A ball kicked at 25 m/s (about 56 mph), 15 degrees up. The yellow trail is your kick; the faint gray trail is a <b>ghost</b> flying the exact same kick with no spin, so the difference between the two is pure spin. A cyan arrow rides the ball showing the sideways push. The banner tells you how it ended &mdash; GOAL, blocked, wide &mdash; and the graph plots the sideways drift of both balls.</div>
+                </div>
+                <details class="cy">
+                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">The physics and the math behind it</span><span class="rd">Open this when you get to Explain.</span></span></summary>
+                    <div class="cy-body"><div class="meet">
                     <div class="mb"><b class="h">The physics in one breath</b>A spinning ball drags a thin layer of air around with it. On one side that layer moves <i>with</i> the oncoming air, on the other side <i>against</i> it. The air ends up pushing harder on the slow side than on the fast side, so the ball gets a sideways shove &mdash; the Magnus force. More spin, or more speed, means a bigger shove.</div>
                     <div class="mb"><b class="h">The math in one line</b><code>F = F + 0.5 * rho * area * radius * cross(omega, v)</code> &mdash; <code>omega</code> is the spin (how fast, and about which axis), <code>v</code> is the velocity, and <code>cross</code> makes a force at right angles to both, which is why it is sideways. The next line, <code>b.v = v + (F / mass) * dt</code>, is Newton&rsquo;s F = ma taken one tiny step at a time. That loop is the whole model.</div>
-                </div>
+                    </div></div>
+                </details>
             </div>
             <div class="tpanel" data-topic="plane" hidden>
                 <h3 class="rhead">Meet it &mdash; how the UAV stays up</h3>
@@ -194,9 +189,14 @@ ol.method li { margin: 3px 0; }
                 </div>
                 <div class="meet">
                     <div class="mb"><b class="h">What you are looking at</b>The UAV at 60 m/s (about 134 mph), the camera flying alongside. The yellow arrow is lift, the red arrow is weight. The top graph is the plane&rsquo;s height with the ridge top drawn as a gray line &mdash; the race between the blue curve and that line is the whole mission. The bottom graph draws lift and weight together. The banner tells you how the flight ended, to the metre.</div>
+                </div>
+                <details class="cy">
+                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">The physics and the math behind it</span><span class="rd">Open this when you get to Explain.</span></span></summary>
+                    <div class="cy-body"><div class="meet">
                     <div class="mb"><b class="h">The physics in one breath</b>A wing tilted slightly into the oncoming air pushes air downward, and the air pushes the wing up. That push is lift. It grows with the tilt (the <i>angle of attack</i>) and with the <i>square</i> of the speed &mdash; twice the speed, four times the lift. Past about 15 degrees the air can no longer follow the top of the wing, it breaks away, and most of the lift disappears. That is a stall.</div>
                     <div class="mb"><b class="h">The math in one line</b><code>lift = 0.5 * rho * speed**2 * wing_area * lift_coefficient(effective_angle)</code> &mdash; air density, times speed squared, times wing area, times a number that depends on the angle. Then <code>vy = vy + ((lift - weight) / mass) * dt</code> is F = ma in the up-and-down direction only, one small step at a time. The <code>effective_angle</code> line is the clever part: a climbing wing meets the air more head-on, so its working angle drops.</div>
-                </div>
+                    </div></div>
+                </details>
             </div>
             <div class="tpanel" data-topic="phone" hidden>
                 <h3 class="rhead">Meet it &mdash; how your phone knows which way is up</h3>
@@ -211,81 +211,28 @@ ol.method li { margin: 3px 0; }
                 </div>
                 <div class="meet">
                     <div class="mb"><b class="h">What you are looking at</b>The phone follows its true tilt; the green arrow is drawn from the phone&rsquo;s own <i>estimate</i>, so the arrow&rsquo;s wobble is exactly the software&rsquo;s error &mdash; it turns red the moment the error passes 3 degrees, and the banner scores the run by its biggest wobble. The graph draws four lines: true tilt (black), accelerometer alone (red), gyroscope alone (blue), and the blend the software actually uses (green).</div>
+                </div>
+                <details class="cy">
+                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">The physics and the math behind it</span><span class="rd">Open this when you get to Explain.</span></span></summary>
+                    <div class="cy-body"><div class="meet">
                     <div class="mb"><b class="h">The physics in one breath</b>Your phone has two tiny sensors. The <b>accelerometer</b> is a speck of silicon on springs; gravity pulls it, so it can tell which way &ldquo;down&rdquo; is &mdash; but any shake moves it too, and it cannot tell a shake from gravity. The <b>gyroscope</b> feels how fast the phone is <i>turning</i>; add up rate &times; time and you get the angle &mdash; but a tiny built-in error, added up for seconds, becomes a big one. Each is wrong in its own way, so the phone blends them.</div>
                     <div class="mb"><b class="h">The math in one line</b><code>tilt_acc = degrees(atan2(ax, ay))</code> reads the angle gravity seems to come from. <code>tilt_gyro = tilt_gyro + (true_rate + gyro_drift) * dt</code> is integration &mdash; adding up tiny steps &mdash; the same move the other models make with F = ma. The blend line, <code>trust_gyro * (...) + (1 - trust_gyro) * tilt_acc</code>, is what real phones do: mostly gyro, a little accelerometer.</div>
-                </div>
-            </div>
-            </div>
-            <h3 class="rhead">Reflection</h3>
-            <div class="refl" data-refl="s2q1" data-sec="2">
-                <label class="step" for="rq-s2q1">Pick a quantity in this model you recognise, or one you are curious about. What is it, and what is its unit?</label>
-                <textarea class="box" id="rq-s2q1" data-rtext placeholder="Your answer&hellip;"></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Find your quantity in the code on the left. Is it there under that name?</li>
-                            <li>Say what it measures in about five words, without using its own name.</li>
-                            <li>Write the unit on its own line. Is it a unit, or is it a number?</li>
-                        </ol>
-                    </div>
+                    </div></div>
                 </details>
             </div>
-            <div class="refl" data-refl="s2q2" data-sec="2">
-                <label class="step" for="rq-s2q2">Before you change anything: explain what this model is about, in a way a 13-year-old would understand.</label>
-                <textarea class="box" id="rq-s2q2" data-rtext placeholder="Your answer&hellip;"></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Read it back and mark every word a 13-year-old would stop at. Replace those.</li>
-                            <li>Find your “because”. Without one, the explanation is a list of parts rather than a cause.</li>
-                            <li>Could someone who has never opened this page say what the mission is, from your words alone?</li>
-                        </ol>
-                    </div>
-                </details>
-            </div>
-            <div class="refl" data-refl="s2q3" data-sec="2">
-                <label class="step" for="rq-s2q3"><b class="k">Partner pause.</b> Ask your partner which model they picked and why. Then ask them to explain it as they would to a 13-year-old, and listen for the place you stop following. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
-                <textarea class="box short" id="rq-s2q3" data-rtext placeholder="One sentence."></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Is your sentence about your own answer, rather than a summary of what your partner said?</li>
-                            <li>If nothing changed, does it say what you checked and kept?</li>
-                        </ol>
-                    </div>
-                </details>
             </div>
             <div class="nextline"><button type="button" class="btn primary" data-next="3">Continue &mdash; stage 1</button><span class="hint" data-nexthint></span></div>
             </section>
 
             <!-- ============================================================ SECTION 3 -->
             <section class="sect" id="sect-3" data-sect="3" hidden>
-            <h2 class="sec">3 &middot; Stage 1 &mdash; predict, change one line, run, explain</h2>
-            <p class="body">One move: predict <b>before</b> you run, change the marked line, watch, then explain. About <b>150 characters</b> of explanation opens stage&nbsp;2. The banner, the run log and the graph are your evidence &mdash; they show what the model actually did.</p>
+            <h2 class="sec">Stage 1 &mdash; predict, change, run, explain</h2>
+            <p class="body">One move: predict <b>before</b> you run, change the marked line or lines, watch, then explain. About <b>150 characters</b> of explanation opens stage&nbsp;2. The banner, the run log and the graph are your evidence &mdash; they show what the model actually did.</p>
             <p class="simjump"><a href="#simhost">&uarr; The model is above, still loaded, with your code in it.</a></p>
             <div class="tpanel" data-topic="ball" hidden>
                 <article class="stage" data-stage="1">
                     <div class="stage-head"><span>Stage 1 of 2 &middot; Score the free kick</span><span class="aim">Aim: score, and say what pushed the ball sideways</span></div>
                     <div class="stage-body">
-                        <p class="step"><b class="k">Why this stage.</b> Every free-kick taker solves this problem with their foot. You are going to solve it with the two lines that ARE the problem &mdash; where you aim, and how much you spin.</p>
                         <p class="step"><b class="k">Do.</b> Press Run as it is and watch the straight kick hit the wall. Then find <code>aim = 0</code> and change it to <code>aim = 12</code> &mdash; twelve degrees to the right of the goal. Predict, then Run. Then also change <code>spin = 0</code> to <code>spin = 6</code>. Predict again, then Run.</p>
                         <label class="step" for="ball-1-predict"><b class="k">Predict first.</b> Where does the aimed-but-spinless kick end up? And once you add the spin &mdash; which way will it bend, and by roughly how much: a hand&rsquo;s width, a metre, several metres?</label>
                         <textarea class="box short" id="ball-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
@@ -316,7 +263,6 @@ ol.method li { margin: 3px 0; }
                 <article class="stage" data-stage="1">
                     <div class="stage-head"><span>Stage 1 of 2 &middot; Clear the ridge</span><span class="aim">Aim: get over, and say what two more degrees bought you</span></div>
                     <div class="stage-body">
-                        <p class="step"><b class="k">Why this stage.</b> The first flight missed the ridge top by ten metres. Every lever you have lives in two lines of code &mdash; and the cheapest fix is smaller than you think.</p>
                         <p class="step"><b class="k">Do.</b> Press Run as it is (<code>speed = 60</code>, <code>angle = 5</code>) and watch it hit the ridge ten metres below the top. Then change <code>angle = 5</code> to <code>angle = 7</code>. Before you press Run again, write your prediction. If you are curious what the smallest fix is, try <code>angle = 6</code> too.</p>
                         <label class="step" for="plane-1-predict"><b class="k">Predict first.</b> Two more degrees of tilt &mdash; does that clear a ten-metre miss easily, barely, or not at all?</label>
                         <textarea class="box short" id="plane-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
@@ -347,7 +293,6 @@ ol.method li { margin: 3px 0; }
                 <article class="stage" data-stage="1">
                     <div class="stage-head"><span>Stage 1 of 2 &middot; Break the arrow</span><span class="aim">Aim: say which sensor the shake fooled, and why</span></div>
                     <div class="stage-body">
-                        <p class="step"><b class="k">Why this stage.</b> On a calm table the arrow holds all by itself &mdash; the first run proves it. Real phones do not live on calm tables. Before you can fix anything, you need to see exactly how it breaks.</p>
                         <p class="step"><b class="k">Do.</b> Press Run as it is (<code>shake = 0</code>, <code>trust_gyro = 0.0</code>) and watch the arrow hold. Then change <code>shake = 0</code> to <code>shake = 3</code> &mdash; a phone in a walking hand. Before you press Run again, write your prediction.</p>
                         <label class="step" for="phone-1-predict"><b class="k">Predict first.</b> Does the arrow survive the shaking? Which sensor gets fooled &mdash; the accelerometer (red) or the gyroscope (blue), and by how much &mdash; a degree, ten, more?</label>
                         <textarea class="box short" id="phone-1-predict" data-field="predict" placeholder="Write what you expect before you run it..."></textarea>
@@ -375,21 +320,20 @@ ol.method li { margin: 3px 0; }
                 </article>
             </div>
             <h3 class="rhead">Reflection</h3>
-            <div class="refl" data-refl="s3q1" data-sec="3">
-                <label class="step" for="rq-s3q1">What did you predict, what happened, and which number told you the difference?</label>
-                <textarea class="box" id="rq-s3q1" data-rtext placeholder="Your answer&hellip;"></textarea>
+            <div class="refl" data-refl="s2q2" data-sec="3">
+                <label class="step" for="rq-s2q2">Now that you have run it: explain what this model is about, in a way a 13-year-old would understand.</label>
+                <textarea class="box" id="rq-s2q2" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
                     <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
                     <div class="cy-body">
                         <ol>
-                            <li>Point at where your number came from — the banner, the run log, or a graph.</li>
-                            <li>Is the prediction written here the one you wrote before you pressed Run?</li>
-                            <li>If the prediction and the result matched, say which number shows that they matched.</li>
+                            <li>Read it back and mark every word a 13-year-old would stop at. Replace those.</li>
+                            <li>Find your “because”. Without one, the explanation is a list of parts rather than a cause.</li>
+                            <li>Could someone who has never opened this page say what the mission is, from your words alone?</li>
                         </ol>
                     </div>
                 </details>
@@ -399,7 +343,6 @@ ol.method li { margin: 3px 0; }
                 <textarea class="box" id="rq-s3q2" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -413,34 +356,20 @@ ol.method li { margin: 3px 0; }
                     </div>
                 </details>
             </div>
-            <div class="refl" data-refl="s3q3" data-sec="3">
-                <label class="step" for="rq-s3q3"><b class="k">Partner pause.</b> Show your partner your prediction and what the run actually did, and let them ask questions until one lands that you cannot answer. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
-                <textarea class="box short" id="rq-s3q3" data-rtext placeholder="One sentence."></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Is your sentence about your own answer, rather than a summary of what your partner said?</li>
-                            <li>If nothing changed, does it say what you checked and kept?</li>
-                        </ol>
-                    </div>
-                </details>
+            <div class="refl" data-refl="s2q3" data-sec="3">
+                <label class="step" for="rq-s2q3"><b class="k">Partner pause.</b> Ask your partner which model they picked and why, and to explain it as they would to a 13-year-old &mdash; listen for the place you stop following. Then show each other your prediction and what the run actually did. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
+                <textarea class="box short" id="rq-s2q3" data-rtext placeholder="One sentence."></textarea>
             </div>
             <div class="nextline"><button type="button" class="btn primary" data-next="4">Continue &mdash; stage 2</button><span class="hint" data-nexthint></span></div>
             </section>
 
             <!-- ============================================================ SECTION 4 -->
             <section class="sect" id="sect-4" data-sect="4" hidden>
-            <h2 class="sec">4 &middot; Stage 2 &mdash; the relationship</h2>
+            <h2 class="sec">Stage 2 &mdash; the relationship</h2>
             <article class="stage">
                 <div class="stage-head"><span>Stage 2 of 2 &middot; The same quantity, a second value</span><span class="aim">Aim: state how two quantities move together, and predict with it</span></div>
                 <div class="stage-body">
-                    <p class="step"><b class="k">Why this stage.</b> One run tells you what happened. The same quantity at a second value tells you how two quantities move together &mdash; and that is what lets you predict a number before you run it.</p>
+                    <p class="step">One run tells you what happened. The same quantity at a second value tells you how two quantities move together &mdash; which is what lets you predict a number before you run it.</p>
                     <p class="step"><b class="k">Do.</b> Go back to the model. Find the quantity you changed in stage&nbsp;1 &mdash; if you changed two, pick the one whose effect you want to pin down, and leave the other where it is &mdash; and set it to a second value &mdash; larger or smaller, your choice. Leave every other line exactly as it is: the two runs only compare if nothing else moved. Predict, then Run. Keep both pairs of numbers &mdash; the value you set each time, and the number the run gave back.</p>
                     <p class="simjump"><a href="#simhost">&uarr; The model is above, still loaded, with your code in it.</a></p>
                 </div>
@@ -451,7 +380,6 @@ ol.method li { margin: 3px 0; }
                 <textarea class="box" id="rq-s4q1" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -470,7 +398,6 @@ ol.method li { margin: 3px 0; }
                 <textarea class="box" id="rq-s4q2" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -489,7 +416,6 @@ ol.method li { margin: 3px 0; }
                 <textarea class="box" id="rq-s4q3" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -504,29 +430,15 @@ ol.method li { margin: 3px 0; }
                 </details>
             </div>
             <div class="refl" data-refl="s4q4" data-sec="4">
-                <label class="step" for="rq-s4q4"><b class="k">Partner pause.</b> Ask your partner to state the relationship they found and why they settled on it, then say yours back to them the same way. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
+                <label class="step" for="rq-s4q4"><b class="k">Partner pause.</b> Ask your partner to state the relationship they found and why they settled on it, then say yours back to them the same way.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
                 <textarea class="box short" id="rq-s4q4" data-rtext placeholder="One sentence."></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Is your sentence about your own answer, rather than a summary of what your partner said?</li>
-                            <li>If nothing changed, does it say what you checked and kept?</li>
-                        </ol>
-                    </div>
-                </details>
             </div>
             <div class="nextline"><button type="button" class="btn primary" data-next="5">Continue &mdash; the criteria</button><span class="hint" data-nexthint></span></div>
             </section>
 
             <!-- ============================================================ SECTION 5 -->
             <section class="sect" id="sect-5" data-sect="5" hidden>
-            <h2 class="sec">5 &middot; Evaluate against the criteria</h2>
+            <h2 class="sec">Evaluate against the criteria</h2>
             <p class="body">Before you paste, run this list:</p>
             <ul class="task">
                 <li>A prediction written before every run you counted.</li>
@@ -541,7 +453,6 @@ ol.method li { margin: 3px 0; }
                 <textarea class="box" id="rq-s5q1" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -556,36 +467,21 @@ ol.method li { margin: 3px 0; }
                 </details>
             </div>
             <div class="refl" data-refl="s5q2" data-sec="5">
-                <label class="step" for="rq-s5q2"><b class="k">Partner pause.</b> Ask your partner which of their answers they think is weakest, and work on it with them against the criteria above. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns, so each of you gets a turn being helped.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
+                <label class="step" for="rq-s5q2"><b class="k">Partner pause.</b> Ask your partner which of their answers they think is weakest, and work on it with them against the criteria above.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
                 <textarea class="box short" id="rq-s5q2" data-rtext placeholder="One sentence."></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Is your sentence about your own answer, rather than a summary of what your partner said?</li>
-                            <li>If nothing changed, does it say what you checked and kept?</li>
-                        </ol>
-                    </div>
-                </details>
             </div>
             <div class="nextline"><button type="button" class="btn primary" data-next="6">Continue &mdash; final reflection</button><span class="hint" data-nexthint></span></div>
             </section>
 
             <!-- ============================================================ SECTION 6 -->
             <section class="sect" id="sect-6" data-sect="6" hidden>
-            <h2 class="sec">6 &middot; Final reflection</h2>
+            <h2 class="sec">Final reflection</h2>
             <h3 class="rhead">Reflection</h3>
             <div class="refl" data-refl="s6q1" data-sec="6">
                 <label class="step" for="rq-s6q1">Describe the loop you just ran, in the order you would run it again on a topic nobody has set up for you.</label>
                 <textarea class="box" id="rq-s6q1" data-rtext placeholder="Your answer&hellip;"></textarea>
                 <div class="actions">
                     <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
                 </div>
                 <div class="aibox" data-aibox></div>
                 <details class="cy" data-check>
@@ -600,22 +496,8 @@ ol.method li { margin: 3px 0; }
                 </details>
             </div>
             <div class="refl" data-refl="s6q2" data-sec="6">
-                <label class="step" for="rq-s6q2"><b class="k">Partner pause.</b> Walk your partner through the loop you ran, step by step, and have them walk you through theirs. Ask each other questions until you understand the reasoning behind the answer, say what you are not convinced by, and work through the difference together. Take turns.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
+                <label class="step" for="rq-s6q2"><b class="k">Partner pause.</b> Walk your partner through the loop you ran, step by step, and have them walk you through theirs.<br><b class="k">Then record one sentence:</b> what you changed, what you kept, or what you still need to check.</label>
                 <textarea class="box short" id="rq-s6q2" data-rtext placeholder="One sentence."></textarea>
-                <div class="actions">
-                    <button type="button" class="btn" data-ai>Get AI feedback</button>
-                    <span class="hint status">Optional &mdash; it reads what you wrote against this box&rsquo;s criteria.</span>
-                </div>
-                <div class="aibox" data-aibox></div>
-                <details class="cy" data-check>
-                    <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it yourself <span class="noai">(Without using AI)</span></span><span class="rd">The questions to hold this answer against.</span></span></summary>
-                    <div class="cy-body">
-                        <ol>
-                            <li>Is your sentence about your own answer, rather than a summary of what your partner said?</li>
-                            <li>If nothing changed, does it say what you checked and kept?</li>
-                        </ol>
-                    </div>
-                </details>
             </div>
 
             <h3 class="rhead">One question about the activity</h3>
@@ -656,7 +538,7 @@ ol.method li { margin: 3px 0; }
             <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
             <footer class="page-footer">
                 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Explore Physics Loop &middot; Draft v4 of 2026-08-31</span>
+                <span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Explore Physics Loop &middot; Draft v5 of 2026-09-02</span>
             </footer>
         </div>
 
@@ -768,12 +650,12 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
             var SIM_TOPIC = { 'free-kick': 'ball', 'plane-lift': 'plane', 'phone-tilt': 'phone' };
             var STAGE1_NAMES = { ball: 'Stage 1 · Score the free kick', plane: 'Stage 1 · Clear the ridge', phone: 'Stage 1 · Break the arrow' };
             var SECTION_NAMES = {
-                1: 'Section 1 · Purpose, steps, learning outcomes',
-                2: 'Section 2 · Pick one, and meet the model',
-                3: 'Section 3 · Stage 1 — predict, change one line, run, explain',
-                4: 'Section 4 · Stage 2 — the relationship',
-                5: 'Section 5 · Evaluate against the criteria',
-                6: 'Section 6 · Final reflection'
+                1: 'Purpose, steps, learning outcomes',
+                2: 'Pick one, and meet the model',
+                3: 'Stage 1 — predict, change, run, explain',
+                4: 'Stage 2 — the relationship',
+                5: 'Evaluate against the criteria',
+                6: 'Final reflection'
             };
             var SYSTEM_PROMPT = 'You are a physics coach helping a first-year student who is exploring a running simulation. You are given the topic, the stage, what the student was asked to change, their prediction, their explanation, and coach notes with the expected behaviour and common mistakes. Reply in 3 or 4 short sentences, plain words, no jargon they have not seen on the page. First, identify one specific thing in their explanation that is right, or one specific thing to look at again, quoting their words. Second, connect what they saw to one physical quantity or one line of the code, without giving the full explanation. Third, ask one question or suggest one small experiment in the simulation that would test their idea. Do not write or rewrite their explanation. Do not grade or score. If the explanation contains a wrong idea, do not confirm it; point them to the graph or the edit that would show them. If they say they do not know, give them the smallest next thing to look at.';
             var REFLECT_PROMPT = 'You are a coach for one box on a first-year physics activity page. You are given the question that box asks, the student\'s answer, and a coach note listing that box\'s requested elements, its observable criteria, and the omissions that are common there. Reply in 3 or 4 short sentences, plain words. First, name one specific thing that is already present in the answer, quoting their words. Second, name one requested element that is not yet visible in the answer. Third, ask one concrete revision question whose answer would put that element in. Judge only against the observable criteria in the coach note; nothing else is a criterion. Never judge readiness, employability, prospects or ability. Never say whether anyone would be impressed or persuaded. Do not grade, score, pass or fail, and do not say whether the answer is good enough. Never write or rewrite any part of their answer. If the coach note says this box has an expected empty state and the answer is empty or thin, say what the box will hold once the conversation has happened, and stop there.';
@@ -982,7 +864,7 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
                 var st = reflectState(key);
                 var ta = $('[data-rtext]', el);
                 ta.value = st.text || '';
-                if (st.ai.length) { showAi($('[data-aibox]', el), st.ai[st.ai.length - 1].text, st.ai.length); }
+                if (st.ai.length && $('[data-aibox]', el)) { showAi($('[data-aibox]', el), st.ai[st.ai.length - 1].text, st.ai.length); }
                 function onInput() {
                     st.text = ta.value;
                     refreshRefl(el, key);
@@ -990,17 +872,19 @@ COMMON OMISSIONS: the partner's view is reported with no consequence for the stu
                 }
                 ta.addEventListener('input', onInput);
                 ta.addEventListener('blur', save);
-                $('[data-check]', el).addEventListener('toggle', function (ev) {
+                var chk = $('[data-check]', el), aiBtn = $('[data-ai]', el);
+                if (chk) { chk.addEventListener('toggle', function (ev) {
                     if (ev.target.open) { reflectState(key).checkOpened = true; save(); }
-                });
-                $('[data-ai]', el).addEventListener('click', function () { askReflectAi(el, key); });
+                }); }
+                if (aiBtn) { aiBtn.addEventListener('click', function () { askReflectAi(el, key); }); }
                 refreshRefl(el, key);
             });
             function refreshRefl(el, key) {
                 var st = reflectState(key);
                 var text = $('[data-rtext]', el).value.trim();
                 var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
-                $('[data-ai]', el).disabled = text.length === 0 || text === last;
+                var b = $('[data-ai]', el);
+                if (b) { b.disabled = text.length === 0 || text === last; }
             }
             function reflQuestion(el) {
                 var lab = $('label.step', el);
