@@ -21,7 +21,7 @@ arrow_up = arrow(pos=vector(0, -0.4, 0.09), axis=vector(0, 0.8, 0), color=color.
 truth_mark = arrow(pos=vector(0, 0.95, 0), axis=vector(0, 0.35, 0), color=color.gray(0.5), shaftwidth=0.03)
 banner = label(pos=vector(0, 1.62, 0), text="", height=22, box=False, opacity=0, color=color.yellow, visible=False)
 
-gr = graph(title="Tilt: the truth and three ways of measuring it", xtitle="time (s)", ytitle="tilt (degrees)", width=600, height=260)
+gr = graph(title="Tilt: the truth and three ways of measuring it", xtitle="time (s)", ytitle="tilt (degrees)", width=600, height=260, fast=False)
 true_c = gcurve(color=color.black, label="true tilt")
 acc_c = gcurve(color=color.red, label="accelerometer alone")
 gyro_c = gcurve(color=color.blue, label="gyroscope alone")

@@ -49,9 +49,9 @@ ghost.v = v0                                          # the ghost: your exact ki
 magnus_arrow = arrow(pos=ball.pos, axis=vector(0,0,0), color=color.cyan, shaftwidth=0.09)
 banner = label(pos=vector(12, 4.6, 0), text="", height=26, box=False, opacity=0, color=color.yellow, visible=False)
 
-gr = graph(title="Sideways drift: your kick (red) and the same kick with no spin (gray)", xtitle="time (s)", ytitle="sideways position z (m)", width=600, height=230)
-drift = gcurve(color=color.red)
-gdrift = gcurve(color=color.gray(0.6))
+gr = graph(title="Sideways drift: your kick (red) and the same kick with no spin (gray)", xtitle="time (s)", ytitle="sideways position z (m)", width=600, height=230, fast=False)
+drift = gcurve(color=color.red, label="your kick")
+gdrift = gcurve(color=color.gray(0.6), label="the ghost (no spin)")
 
 def outcome(b, is_ball):
     # where is this ball, and is its flight over?  returns "" while still flying
