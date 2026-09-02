@@ -252,6 +252,39 @@ def discover_pages(course_dir):
     return sorted(found, key=lambda p: (p.count(os.sep), os.path.dirname(p), p))
 
 
+def canvas_links(course_key):
+    """page filename -> its Canvas assignment URL, read from <course>/assignments.html.
+
+    The registry carries data-page and data-canvas-url on each row; rows whose
+    Canvas URL is still blank simply do not appear here, and the page falls back
+    to its published URL.
+    """
+    path = os.path.join(REPO_ROOT, course_key, "assignments.html")
+    if not os.path.isfile(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        markup = fh.read()
+    links = {}
+    for row in re.findall(r"<[^>]*\bdata-page=[^>]*>", markup):
+        page = re.search(r'data-page="([^"]*)"', row)
+        url = re.search(r'data-canvas-url="([^"]*)"', row)
+        if page and url and page.group(1).strip() and url.group(1).strip():
+            links.setdefault(page.group(1).strip(), url.group(1).strip())
+    return links
+
+
+def source_line(course_key, rel_path, site_base, canvas):
+    """Where a student goes to check this page for themselves.
+
+    Canvas when the assignment exists there, because that is where the work is
+    handed in; the published page otherwise.
+    """
+    url = canvas.get(os.path.basename(rel_path))
+    if not url:
+        url = site_base.rstrip("/") + "/" + course_key + "/" + rel_path.replace(os.sep, "/")
+    return "Source: " + url
+
+
 def ordered_pages(course_dir, explicit_order):
     on_disk = discover_pages(course_dir)
     ordered = [f for f in explicit_order if f in on_disk]
@@ -348,6 +381,8 @@ def build_course_section(course_key, config):
     pages = []
     titles = course.get("titles", {})
     skip = course.get("skip", [])
+    site_base = config.get("site_base", "")
+    canvas = canvas_links(course_key) if site_base else {}
     for rel_path in ordered_pages(course_dir, course.get("order", [])):
         if is_skipped(rel_path, skip):
             continue
@@ -360,6 +395,8 @@ def build_course_section(course_key, config):
             stem = name[:-5].replace("-", " ").replace("_", " ").strip()
             folder = os.path.dirname(rel_path)
             title = f"{folder} · {stem}" if folder else stem
+        if site_base:
+            content = source_line(course_key, rel_path, site_base, canvas) + "\n" + content
         pages.append({
             "path": f"{course_key}/{rel_path}",
             "title": title,
