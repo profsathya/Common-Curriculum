@@ -95,8 +95,10 @@ class PageConverter:
         return lines
 
 
+    # "label" matters: every reflection question and work-box title on the activity
+    # pages lives in <label class="qt">. Without it they are silently dropped.
     BLOCKS = ["p", "li", "h1", "h2", "h3", "h4", "h5", "h6",
-              "div", "section", "article", "td", "th"]
+              "div", "section", "article", "td", "th", "label"]
     HEADING_PREFIX = {"h1": "# ", "h2": "## ", "h3": "### ",
                       "h4": "### ", "h5": "### ", "h6": "### "}
 
