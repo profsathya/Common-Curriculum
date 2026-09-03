@@ -185,8 +185,7 @@ ol.tasks > li.task{margin:0 0 14px;padding:0;}
 <p class="body">Articulate in detail your understanding about the market, the project you will build this semester, the rubric you would use to assess the quality of your work, and why this project will be useful to its users and to your career.</p>
 
 <h2 class="sec">Tasks</h2>
-<div class="copyline"><button type="button" class="btn primary" id="copy-tasks">Copy the tasks</button><span>Paste this into a Google doc and answer each task under it.</span></div>
-<div class="pnamerow"><label for="student-name"><b>Enter Full Name</b></label><input type="text" id="student-name" autocomplete="name" placeholder="First and last"><span>Asked once. It goes at the top of <b>Copy my answers</b>.</span></div>
+<div class="copyline"><button type="button" class="btn primary" id="copy-tasks">Copy the questions</button><span>Paste this into a Google doc and answer each task under it.</span></div>
 <p class="body">Each <b>+</b> opens guidance, one example, a reflection question and a box to write in. Nothing under a <b>+</b> is required.</p>
 
 <ol class="tasks">
@@ -441,7 +440,7 @@ Team project: what I am accountable for — …"></textarea>
 
 <h2 class="sec">Submit</h2>
 <p class="body">Canvas text entry. <b>Submit the text itself &mdash; the markdown &mdash; pasted into the Canvas box; a link to a Google doc is not a submission.</b></p>
-<p class="body">Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press <b>Copy my answers</b>, which puts your full name, each task with your answer beneath it, and the rubric in full on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.</p>
+<p class="body">Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press <b>Copy my answers</b>, which puts each task with your answer beneath it, and the rubric in full on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.</p>
 <div class="copywrap">
 <button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
 <div class="status" id="copy-status"></div>
@@ -569,15 +568,13 @@ Team project: what I am accountable for — …"></textarea>
         var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
         return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
     }
-    // One builder, two payloads: the tasks alone (Copy the tasks), or the tasks with the
+    // One builder, two payloads: the tasks alone (Copy the questions), or the tasks with the
     // student's name and answers beneath each (Copy my answers). Returns {text, html}.
     function buildPayload(withAnswers) {
         var md = '', html = '';
         if (withAnswers) {
             md += CFG.pageTitle + ' — ' + CFG.course + ', Week 4\n';
-            md += 'Name: ' + ((state.name || '').trim() || '(not given)') + '\n\n';
             html += '<p><b>' + esc(CFG.pageTitle) + '</b> — ' + esc(CFG.course) + ', Week 4</p>';
-            html += '<p>Name: ' + esc((state.name || '').trim() || '(not given)') + '</p>';
         }
         html += '<ol>';
         TASKS.forEach(function (t, idx) {
@@ -729,15 +726,7 @@ Team project: what I am accountable for — …"></textarea>
         refreshBox(el, key);
     });
 
-    // ---------- name, asked once ----------
-    var nameInput = $('#student-name');
-    if (nameInput) {
-        nameInput.value = state.name || '';
-        nameInput.addEventListener('input', function () { state.name = nameInput.value; saveSoon(); });
-        nameInput.addEventListener('blur', save);
-    }
-
-    // ---------- Copy the tasks ----------
+    // ---------- Copy the questions ----------
     var tasksBtn = $('#copy-tasks');
     if (tasksBtn) {
         tasksBtn.addEventListener('click', function () {
