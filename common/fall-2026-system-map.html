@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fall 2026 system map &mdash; hypothesis, experiments, implementation, machinery | Common resources</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--teal:#0d9488;
+--live:#1a7f4b; --live-bg:#E9F5EE; --dec:#0a5a8a; --dec-bg:#EAF4FA; --open:#8a3b12; --open-bg:#FBEFE6; --no:#6B7780; --no-bg:#F1F3F5;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+.pagehead .lead{font-size:13.5px;color:var(--muted);max-width:760px;margin-top:7px;}
+
+.top{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px;}
+@media(max-width:760px){.top{grid-template-columns:1fr 1fr;}}
+.box{font:inherit;text-align:left;border:1px solid var(--border);border-radius:6px;background:#fff;padding:12px 14px;cursor:pointer;color:var(--text);display:flex;flex-direction:column;gap:4px;min-height:118px;}
+.box .n{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);}
+.box .t{font-size:16px;font-weight:700;}
+.box .q{font-size:12.5px;color:var(--muted);}
+.box .c{font-size:12px;color:var(--blue-dark);margin-top:auto;}
+.box:hover{border-color:var(--blue);}
+.box[aria-expanded="true"]{border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue);background:var(--goal-bg);}
+.box:focus-visible{outline:2px solid rgba(3,116,181,.5);outline-offset:2px;}
+.arrow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:-8px 0 16px;}
+.arrow span{flex:1;border-top:1px dashed var(--border);}
+
+.level{display:none;border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-bottom:18px;}
+.level[data-open]{display:block;}
+.level h2{font-size:17px;margin:0 0 4px;}
+.level .sub{font-size:13px;color:var(--muted);margin:0 0 12px;}
+.level h3{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:16px 0 6px;}
+.level p{margin:0 0 9px;max-width:76ch;}
+.level ul{margin:0 0 9px;padding-left:20px;}
+.level li{margin:0 0 4px;}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:5px;}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:12.5px;}
+th,td{border-bottom:1px solid var(--border-light);padding:9px 11px;vertical-align:top;text-align:left;}
+thead th{background:var(--modhead);font-size:13px;border-bottom:1px solid var(--border);}
+thead th .tag{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:1px;}
+tbody th[scope=row]{width:150px;font-size:12px;font-weight:700;color:var(--text);background:#FAFBFC;border-right:1px solid var(--border-light);}
+tbody th[scope=row] .hy{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+.st{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:3px;padding:1px 6px;margin-bottom:4px;}
+.st.live{color:var(--live);background:var(--live-bg);}
+.st.dec{color:var(--dec);background:var(--dec-bg);}
+.st.open{color:var(--open);background:var(--open-bg);}
+.st.no{color:var(--no);background:var(--no-bg);}
+td.dash{color:var(--muted);}
+.legend{font-size:12px;color:var(--muted);margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;}
+
+.note{border-left:3px solid var(--goal-border);background:var(--goal-bg);padding:9px 12px;font-size:13px;margin:12px 0;}
+.mach{width:100%;border-collapse:collapse;font-size:13px;}
+.mach th,.mach td{border-bottom:1px solid var(--border-light);padding:8px 10px;text-align:left;vertical-align:top;}
+.mach th{width:150px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
+.priv{font-size:11px;color:var(--muted);border:1px solid var(--border-light);border-radius:3px;padding:0 5px;margin-left:4px;}
+
+.provenance{margin-top:18px;border:1px solid var(--border-light);border-radius:6px;padding:11px 14px;font-size:11.5px;color:var(--muted);background:#FCFCFD;}
+.provenance b{color:var(--text);font-weight:700;}
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+@media print{.level{display:block;}.tablewrap{overflow:visible;border:none;}table{min-width:0;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="crumb">Common resources &middot; for the people building the courses</div>
+
+<div class="pagehead">
+<div class="s">Common resources</div>
+<h1>Fall 2026 system map</h1>
+<div class="dt">Hypothesis &middot; Experiments &middot; Implementation &middot; Machinery &middot; checked 2 September 2026</div>
+<div class="lead">One screen for the whole thing. Our hypothesis is what we believe; the experiments are what is decided and running; what students see is the implementation; everything else is machinery that supports the first three. Click a box to open that level.</div>
+</div>
+
+<div class="top" role="tablist" aria-label="The four levels">
+<button class="box" role="tab" aria-controls="lv-hyp" aria-expanded="false" data-level="lv-hyp"><span class="n">1 &middot; Hypothesis</span><span class="t">What we believe</span><span class="q">One framework, held in one place.</span><span class="c">Open &rarr;</span></button>
+<button class="box" role="tab" aria-controls="lv-exp" aria-expanded="false" data-level="lv-exp"><span class="n">2 &middot; Experiments</span><span class="t">What is decided and running</span><span class="q">Nine sub-experiments across five sites.</span><span class="c">Open the table &rarr;</span></button>
+<button class="box" role="tab" aria-controls="lv-imp" aria-expanded="false" data-level="lv-imp"><span class="n">3 &middot; Implementation</span><span class="t">What students see</span><span class="q">Three live course sites; two sites not yet started.</span><span class="c">Open &rarr;</span></button>
+<button class="box" role="tab" aria-controls="lv-mach" aria-expanded="false" data-level="lv-mach"><span class="n">4 &middot; Machinery</span><span class="t">What supports the other three</span><span class="q">Records, rules, registry, automation, your checklist.</span><span class="c">Open &rarr;</span></button>
+</div>
+<div class="arrow"><span></span>a decision travels left to right: believed &rarr; decided &rarr; in front of students &rarr; kept running<span></span></div>
+
+<!-- ===== 1 · HYPOTHESIS ===== -->
+<section class="level" id="lv-hyp" role="tabpanel">
+<h2>1 &middot; Hypothesis &mdash; what we believe</h2>
+<p class="sub">Stated once, here, in the terms we use. Everything in the other three levels is a way of testing some part of it.</p>
+<p><b>The professional of the AI era answers two questions with evidence</b> &mdash; did you tackle a problem you could not have on your own, with the help of AI, and how is what you did better because you were involved? That is <b>superagency plus human value</b>.</p>
+<p>Three capacities get them there: <b>self-directed learning</b>, <b>integrative solving</b>, and <b>adaptive building</b>. The courses add these one layer at a time (286 &rarr; 349 &rarr; 499).</p>
+<p>The practice that runs underneath is <b>Symbiotic Thinking</b> &mdash; the human-led pursuit of wisdom in partnership with other intelligences, human or artificial &mdash; done through two technique pairs, <b>reading/writing</b> and <b>talking/listening</b>, and three habits, <b>slow down</b>, <b>know yourself</b>, <b>take the lead</b>. The <b>six qualities of self-directed action</b> are what we watch move. The reason it holds is <b>self-determination</b>: autonomy, competence and relatedness are designed in, not hoped for.</p>
+<p>It runs in two learning environments: the <b>AI Dojo</b> and <b>The Commons</b>.</p>
+<h3>Where this is written for other readers</h3>
+<ul>
+<li><a href="../cti2.0/guidebooks/landscape.html">CTI landscape guidebook</a> &mdash; the six qualities and the portfolio view, for people outside the courses.</li>
+<li><a href="fall-2026-course-comparison.html">Three courses, one framework</a> &mdash; the student-facing version of the layers, the shared start, the two questions and the six qualities.</li>
+<li><a href="../fall-2026-vision.html">Fall 2026 vision</a> &mdash; the team&rsquo;s readable copy of the design record.</li>
+</ul>
+</section>
+
+<!-- ===== 2 · EXPERIMENTS ===== -->
+<section class="level" id="lv-exp" role="tabpanel">
+<h2>2 &middot; Experiments &mdash; what is decided and running</h2>
+<p class="sub">Rows are the sub-experiments; columns are where each one is being tested. A cell says what is being tried there and how far it has got. The student-facing version of the first three columns is <a href="fall-2026-course-comparison.html">Three courses, one framework</a>; the working detail per course is in each course&rsquo;s design log.</p>
+<div class="tablewrap" role="region" aria-label="Sub-experiments by site" tabindex="0">
+<table>
+<thead>
+<tr>
+<th scope="col">Sub-experiment<span class="tag">what it tests in the hypothesis</span></th>
+<th scope="col">CST 286<span class="tag">freshman physics &middot; <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst286/design-log.md">design log</a></span></th>
+<th scope="col">CST 349<span class="tag">junior proseminar &middot; <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst349/design-log.md">design log</a></span></th>
+<th scope="col">CST 499<span class="tag">CS capstone &middot; <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst499/design-log.md">design log</a></span></th>
+<th scope="col">De Anza<span class="tag">certificate for mid-career professionals</span></th>
+<th scope="col">Kinesiology<span class="tag">KIN 300 proseminar</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Conversation as the opening move<span class="hy">talking/listening &middot; relatedness</span></th>
+<td><span class="st live">Live</span><br>Week 1 sessions; Week 2 partner pauses inside the Explore Physics Loop, same partner throughout.</td>
+<td><span class="st live">Live</span><br>Read the Market run in pairs in class (2 Sep); partner pauses on all three Week 2 pages.</td>
+<td><span class="st live">Live</span><br>Same three Week 2 pages, Wed + Fri; pairs in class.</td>
+<td><span class="st no">Not yet</span><br>Course V2 in design.</td>
+<td><span class="st open">Open</span><br>First working meeting 10 Sep; their syllabus received 28 Aug.</td>
+</tr>
+<tr>
+<th scope="row">Symbiotic Thinking, named and practiced<span class="hy">the practice itself</span></th>
+<td><span class="st dec">Decided</span><br>Carried by the Dojo Core in the course doc; not yet named on a course page.</td>
+<td><span class="st dec">Decided</span><br>Same. The design log still lists it as not on any surface.</td>
+<td><span class="st dec">Decided</span><br>Same.</td>
+<td><span class="st open">Open</span><br>Which Dojo the course uses is undecided.</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">Self-directed learning<span class="hy">choose &middot; define done &middot; gather evidence &middot; transfer</span></th>
+<td><span class="st live">Live</span><br>Explore Physics Loop as the practice run of the loop (due 8 Sep); Sprint 1 opens week 3 on the student&rsquo;s own topic.</td>
+<td><span class="st live">Live</span><br>The Ikigai loop: Read the Market &rarr; Know What Makes Me Tick &rarr; Find Your Gap (week 2); weekly milestone loop from Sprint 1.</td>
+<td><span class="st live">Live</span><br>Same Week 2 loop, pointed at the capstone choice; problem spaces page with partner cards.</td>
+<td><span class="st open">Open</span><br>Course V2 in design; how much of the loop transfers to working professionals is the question.</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">Integrative solving<span class="hy">combine disciplines or stakeholder views to find new value</span></th>
+<td class="dash">not in scope</td>
+<td><span class="st dec">Decided</span><br>The professional shape (I &middot; T &middot; &pi;) planted in Find Your Gap; comb-shape work not yet built.</td>
+<td><span class="st live">Live</span><br>Partner problem-space cards: who offers it, who reacts to the work, questions to sit with.</td>
+<td class="dash">&mdash;</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">Adaptive building<span class="hy">build and iterate a portfolio piece</span></th>
+<td class="dash">not in scope</td>
+<td class="dash">not in scope</td>
+<td><span class="st live">Live</span><br>The capstone project; the referral email in Find Your Gap is the picture of the finished evidence.</td>
+<td class="dash">&mdash;</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">The two questions<span class="hy">superagency + human value</span></th>
+<td><span class="st dec">Decided</span><br>Plant early, not day one (10 Aug). Not yet on a page.</td>
+<td><span class="st dec">Decided</span><br>Same.</td>
+<td><span class="st dec">Decided</span><br>Same; why-this-course.html carries the three futures.</td>
+<td class="dash">&mdash;</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">Own your progress<span class="hy">the six qualities &middot; habits &middot; autonomy</span></th>
+<td><span class="st live">Live</span><br>Weekly not-graded items since week 1; alignment of each activity to named qualities not yet.</td>
+<td><span class="st live">Live</span><br>Same.</td>
+<td><span class="st live">Live</span><br>Same.</td>
+<td class="dash">&mdash;</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">Sprint Exam<span class="hy">hand-written &rarr; swap &rarr; AI form &rarr; discussion</span></th>
+<td><span class="st dec">Decided</span><br>Adopted 12 Aug; first one closes Sprint 1.</td>
+<td><span class="st dec">Decided</span><br>Same.</td>
+<td><span class="st open">Open</span><br>Once, mid-semester, is the leaning; waits on the conversation with the co-instructor.</td>
+<td class="dash">&mdash;</td>
+<td class="dash">&mdash;</td>
+</tr>
+<tr>
+<th scope="row">The two environments<span class="hy">AI Dojo &middot; The Commons</span></th>
+<td><span class="st live">Live</span><br>Course doc with Dojo tab; Commons for 1-on-1 sign-ups since 24 Aug. In-class use of the Commons is your call (1 Sep).</td>
+<td><span class="st live">Live</span><br>Same; practice Dojos (know-market, know-yourself) offered on the Week 2 pages.</td>
+<td><span class="st live">Live</span><br>Same.</td>
+<td><span class="st open">Open</span><br>Which Dojo, and whether the Commons is used.</td>
+<td class="dash">&mdash;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="legend"><span class="st live">Live</span> in front of people now &nbsp; <span class="st dec">Decided</span> decided, not yet built or shown &nbsp; <span class="st open">Open</span> a decision is still owed &nbsp; <span class="st no">Not yet</span> not started &nbsp; &mdash; not in scope or no information</div>
+<div class="note">Two more sites appear in the 8 August framing of this iteration &mdash; the TLA co-op and the cross-disciplinary micro-internship pre-pilot. They are not columns here until there is something to put in a cell.</div>
+</section>
+
+<!-- ===== 3 · IMPLEMENTATION ===== -->
+<section class="level" id="lv-imp" role="tabpanel">
+<h2>3 &middot; Implementation &mdash; what students see</h2>
+<p class="sub">Per site, the surfaces a student actually opens. Every page below is hand-edited and live; the Canvas shell wraps the same pages in an iframe with one text box each.</p>
+<div class="tablewrap" role="region" aria-label="What students open, per site" tabindex="0">
+<table>
+<thead><tr><th scope="col">Site</th><th scope="col">Course map</th><th scope="col">This week&rsquo;s activity pages</th><th scope="col">Canvas</th><th scope="col">AI Dojo</th><th scope="col">The Commons</th></tr></thead>
+<tbody>
+<tr><th scope="row">CST 286</th><td><a href="../cst286/home.html">home</a> &middot; <a href="../cst286/trailheads.html">trailheads</a></td><td><a href="../cst286/explore-physics-loop.html">Explore Physics Loop</a> (due 8 Sep)</td><td>course 33930</td><td>course doc (Course + Dojo tabs) &middot; <a href="dojo/dojo-library.html">Dojo library</a></td><td rowspan="3"><a href="https://the-commons.symbioticthinking.ai" target="_blank" rel="noopener">1-on-1 sign-ups</a></td></tr>
+<tr><th scope="row">CST 349</th><td><a href="../cst349/home.html">home</a></td><td><a href="../cst349/read-the-market.html">Read the Market</a> &middot; <a href="../cst349/never-feels-like-work.html">Know What Makes Me Tick</a> &middot; <a href="../cst349/find-your-gap.html">Find Your Gap</a></td><td>course 34789</td><td>course doc &middot; practice Dojos: know-market, know-yourself</td></tr>
+<tr><th scope="row">CST 499</th><td><a href="../cst499/home.html">home</a> &middot; <a href="../cst499/problem-spaces.html">problem spaces</a></td><td>same three as 349, pointed at the capstone</td><td>course 33649</td><td>course doc &middot; same practice Dojos</td></tr>
+<tr><th scope="row">De Anza</th><td colspan="5" class="dash">Nothing in front of students yet &mdash; course V2 in design.</td></tr>
+<tr><th scope="row">Kinesiology</th><td colspan="5" class="dash">Nothing yet &mdash; their syllabus is the starting material.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ===== 4 · MACHINERY ===== -->
+<section class="level" id="lv-mach" role="tabpanel">
+<h2>4 &middot; Machinery &mdash; what supports the other three</h2>
+<p class="sub">Each piece earns its place by what it supports. Items marked <span class="priv">private</span> live in the cowork repo and are not reachable from this site.</p>
+<table class="mach">
+<tr><th>Your checklist</th><td><a href="https://claude.ai/code/artifact/1e829f64-2907-4f38-bd32-4fb9e547718e" target="_blank" rel="noopener">Fall 2026 Operating Board</a> &mdash; the one list: today, tomorrow, this week, later. Ticks stay in your browser; the record is updated from what you say you ticked. Supports: running the experiments week to week.</td></tr>
+<tr><th>The record</th><td><a href="../fall-2026-vision.html">Fall 2026 vision</a> (public, the team&rsquo;s copy) &middot; CONTEXT.md and HANDOFF.md<span class="priv">private</span> (the dated decisions). Supports: level 2 &mdash; a cell in the experiments table changes only when the record does.</td></tr>
+<tr><th>The rules</th><td>Six writing skills in <a href="https://github.com/profsathya/Common-Curriculum/tree/main/skills">skills/</a>: writing-assignments &middot; writing-to-teach &middot; writing-learning-goals &middot; hover-text &middot; reviewing-course-text &middot; building-canvas-fall-2026. Supports: level 3 &mdash; how a page gets written and put in Canvas.</td></tr>
+<tr><th>The registry</th><td><a href="../cst286/assignments.html">286</a> &middot; <a href="../cst349/assignments.html">349</a> &middot; <a href="../cst499/assignments.html">499</a> assignments.html &mdash; one row per item, with its page and its Canvas link. Generated by mk_assignments.py<span class="priv">private</span>; Canvas IDs written back by scripts/pull-canvas-ids.sh. Supports: level 3.</td></tr>
+<tr><th>Automation</th><td>Push to main &rarr; the course Google Docs refresh (scripts/build_course_context.py + Apps Script, <a href="https://github.com/profsathya/Common-Curriculum/blob/main/docs/course-doc-sync.md">how it works</a>). Nothing else runs on its own for the courses yet; submission checks are by hand. Supports: level 3 (the Dojo reads the doc).</td></tr>
+<tr><th>Design logs</th><td>Per course, the status of each sub-experiment and a dated log of what changed: <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst286/design-log.md">286</a> &middot; <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst349/design-log.md">349</a> &middot; <a href="https://github.com/profsathya/Common-Curriculum/blob/main/cst499/design-log.md">499</a>. Supports: level 2 &mdash; the source of the cells above.</td></tr>
+<tr><th>The inventory</th><td>course-system-inventory-2026-09-02.md<span class="priv">private</span> &mdash; every store and process, who writes and reads it, and the nine seams. Supports: this page; consult it before adding anything here.</td></tr>
+</table>
+<div class="note">The rule for this level: a new tool, page or document gets a row here only after it says which of the other three levels it supports. If it cannot, it is not machinery, it is clutter.</div>
+</section>
+
+<div class="provenance">
+<b>Provenance.</b> Human (Dr. Narayanan): the four abstractions &mdash; hypothesis, experiments, implementation, machinery &mdash; and the framework stated in level 1; the call that the experiments level is a table of what is tested where, and that De Anza and Kinesiology belong in it. Human + AI: the table cells and status readings, drafted by Alan from the design logs and the Week 1&ndash;2 builds (2 September 2026) for his correction.
+</div>
+
+<footer class="page-footer">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; Common resources &middot; Fall 2026 system map &middot; Draft v1 of 2026-09-02</span>
+</footer>
+
+</div>
+<script>
+(function () {
+  var boxes = document.querySelectorAll('.box[data-level]');
+  var levels = document.querySelectorAll('.level');
+  function open(id, push) {
+    levels.forEach(function (l) { if (l.id === id) { l.setAttribute('data-open', ''); } else { l.removeAttribute('data-open'); } });
+    boxes.forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-level') === id ? 'true' : 'false'); });
+    if (push && history.replaceState) { history.replaceState(null, '', '#' + id); }
+  }
+  boxes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-level');
+      var already = b.getAttribute('aria-expanded') === 'true';
+      if (already) { levels.forEach(function (l) { l.removeAttribute('data-open'); }); b.setAttribute('aria-expanded', 'false'); if (history.replaceState) { history.replaceState(null, '', location.pathname); } }
+      else { open(id, true); }
+    });
+  });
+  var h = location.hash.replace('#', '');
+  open(document.getElementById(h) && document.getElementById(h).classList.contains('level') ? h : 'lv-exp', false);
+})();
+</script>
+</body>
+</html>
