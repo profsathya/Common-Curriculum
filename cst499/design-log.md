@@ -488,3 +488,8 @@ adopted because it also matches the imperative-verb-plus-object pattern of Read 
 Gap. The same day the page was restructured into five revealed sections, the six-moment requirement became
 up to five, "at least three" became "more than one", and a strength-and-weakness box moved in from Find
 Your Gap.
+
+## 2026-09-03 — Sprint 1–2 graded items decided, questions final
+
+Three graded items, layered (skeleton a student can take to a Google Doc; guidance, examples, reflection questions and AI feedback behind clicks): **Project Proposal** wk 4, Mon 21 Sep, 100 pts — page built (`project-proposal.html`, registry row 499-w04-gi1, home link); **Learning Plan** wk 6, Mon 5 Oct, 100 pts; **Mid-term** wk 8, Wed 14 Oct, 200 pts — all eight questions answered online before class, then a closed-book in-class subset written up on the student's own project. Question sets for all three are final (`cowork/fall-2026-courses/cst499-sprint1-2-gates-2026-09-03.md`, draft 5). Sathya's vocabulary: these are **graded items**, not gates — nothing is gated on them. This also settles the Sprint Exam question for 499: once, as the mid-term, in this form. Still to build: the Learning Plan and Mid-term pages; the Project Proposal page awaits his review, then Canvas.
+
