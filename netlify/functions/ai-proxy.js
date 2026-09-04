@@ -135,7 +135,13 @@ exports.handler = async (event) => {
         model: chosenModel,
         max_tokens: outTokens,
         messages,
-        ...(typeof system === 'string' && system ? { system } : {}),
+        // Prompt caching: the page's system prompt is the same for every
+        // student on that page, so mark it cacheable. Cached reads cost ~10%
+        // of a normal input token. Below the model's minimum size the flag is
+        // simply ignored, so it is safe to set unconditionally.
+        ...(typeof system === 'string' && system
+          ? { system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }] }
+          : {}),
       }),
     });
 
