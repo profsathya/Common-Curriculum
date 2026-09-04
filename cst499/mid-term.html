@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mid-term | CST499</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Mid-term (2026-09-04): the question list and its second layer; same shape as project-proposal.html --- */
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+/* How it works — the three parts of the mid-term, one block each */
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 10px;}
+.how .part{border:1px solid var(--border);border-radius:6px;background:#FCFDFE;padding:10px 13px;font-size:13.5px;line-height:1.55;position:relative;}
+.how .part .pl{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);margin-bottom:4px;}
+.how .part p{margin:0;}
+p.body.frame{font-style:italic;}
+@media (max-width:720px){.how{grid-template-columns:1fr;}}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas.</span>
+<a href="https://profsathya.github.io/Common-Curriculum/cst499/mid-term.html" target="_blank" rel="noopener"><b>Open the full page in its own tab &nearr;</b></a>
+<span>Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST499</a> &middot; Mid-term</div>
+<div class="pagehead">
+<div class="s">CST499 &middot; Fall 2026 &middot; Sprint 2</div>
+<h1>Mid-term</h1>
+<div class="dt">Week 8 &middot; Wednesday 14 October &middot; 200 points &middot; Mid-term</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Show the depth of your thinking about your project and the market it answers &mdash; at length in writing before class, briefly by hand in class, and in conversation with a partner afterwards.</p>
+
+<h2 class="sec">How it works</h2>
+<div class="how">
+<div class="part"><span class="pl">Take-home, before class</span><p>All eight answered at length, submitted before class, references allowed.</p></div>
+<div class="part"><span class="pl">In class, written</span><p>A subset of the eight is handed out; choose a smaller subset (5 given, answer 3) and summarise your answer in writing, <span class="gl"><button type="button" class="gt">closed book</button><span class="bub" role="tooltip"><b class="bt">Closed book</b><span class="br"><i>What it means.</i> Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood.</span><span class="br"><i>Why it matters.</i> A lesson you can put in your own words without looking is one you own. The take-home is where you work it out; the written part is where you show it is yours.</span></span></span>, on the specific aspect the paper names.</p></div>
+<div class="part"><span class="pl">Paired</span><p>Type up your partner&rsquo;s written answers, ask two follow-up questions, write a summary of their model of their own work.</p></div>
+</div>
+<p class="body">The questions are published now so you can work through them in week 7 while there is still time to change what you find.</p>
+
+<h2 class="sec">Questions</h2>
+<p class="body frame">Every question is answerable from what you understood about your own work, not from what you can recall &mdash; the written part is closed book, so nothing here needs a reference you would have to look up. &ldquo;You&rdquo; means you personally, also in a team project: your decisions, your contribution, your learning.</p>
+<div class="copyline"><button type="button" class="btn primary" id="copy-tasks">Copy the questions</button><span>Paste this into a Google doc and answer each question under it.</span></div>
+<p class="body">Each <b>+</b> opens guidance, one example, a reflection question and a box to write in. Nothing under a <b>+</b> is required.</p>
+
+<ol class="tasks">
+<li class="task" id="q-1">
+<div class="ttext"><span class="tn">1.</span><span class="tt">What you learned about the market you are aiming at: what employers expect now that they did not a few years ago, and what you expect to change next &mdash; and why you think so.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Write what you understood, not what you collected. The <span class="gl"><button type="button" class="gt">market</button><span class="bub" role="tooltip"><b class="bt">The market you are aiming at</b><span class="br"><i>What it means.</i> The niche of roles and employers you would apply to next year &mdash; the postings you read in weeks 2 and 4, and the people who hold those roles now.</span><span class="br"><i>What a good answer looks like.</i> A lesson you drew from those postings that changed a plan of yours, in your own words. The postings can be cited if you like; the lesson is what counts.</span></span></span> question asks for the expectations you did not know were there when you started, and for what you now think changes next.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;Three years ago the postings I aimed at asked for a language and a framework; now five of six ask for something shipped and kept working for real users, and two ask how I used AI to do it. I expect the second to become the default.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>What changed in your own plans because of this?</p></div>
+<div class="rbox" data-refl="q1">
+<label class="qt" for="rq-q1"><b>Your answer to question 1.</b> What employers expect now that they did not, what you expect to change next, and why.</label>
+<textarea class="box" id="rq-q1" data-rtext placeholder="What you understood about the market — and what you now expect to change next, and why."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says what employers expect now that they did not a few years ago.</li>
+<li>It says what you expect to change next, and why you think so.</li>
+<li>The lesson is in your own words; a reference, if you use one, supports it rather than replaces it.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-2">
+<div class="ttext"><span class="tn">2.</span><span class="tt">What problem your project solves, for whom, and what convinced you the need is real &mdash; the moment, conversation or evidence that settled it.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Three things: for whom, what it solves, and the moment, conversation or evidence that convinced you the need is real. Spend the most words on the third &mdash; the point where it stopped being a plausible idea and became a problem you wanted.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;It settled for me when the second transfer student gave up at seven minutes &mdash; the survey had said it, but watching it made it a problem I wanted.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>What would have un-convinced you?</p></div>
+<div class="rbox" data-refl="q2">
+<label class="qt" for="rq-q2"><b>Your answer to question 2.</b> The problem, who it is for, and what settled it.</label>
+<textarea class="box" id="rq-q2" data-rtext placeholder="For whom, what it solves, and the moment, conversation or evidence that settled it."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says what problem the project solves and for whom.</li>
+<li>It names the moment, conversation or evidence that convinced you &mdash; one you were there for or found yourself.</li>
+<li>Someone who was there would recognise the moment from your description.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-3">
+<div class="ttext"><span class="tn">3.</span><span class="tt">How your work answers what the market asks for: which expectations it speaks to, and which it does not.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Both halves. Name the expectations from question 1 that your work speaks to, and name the ones it does not. The second half is as much a part of the answer as the first.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;It speaks to &lsquo;shipped to real users&rsquo; and &lsquo;kept it working&rsquo;; it does not speak to &lsquo;worked in a team of engineers&rsquo;, and I know that.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Is the half it does not speak to one you should act on this semester or next?</p></div>
+<div class="rbox" data-refl="q3">
+<label class="qt" for="rq-q3"><b>Your answer to question 3.</b> The expectations your work speaks to, and the ones it does not.</label>
+<textarea class="box" id="rq-q3" data-rtext placeholder="Speaks to: …
+Does not speak to: …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It names expectations your work speaks to, and they are ones you named in question 1.</li>
+<li>It names expectations your work does not speak to.</li>
+<li>Each expectation is tied to something in your work, not to the project in general.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-4">
+<div class="ttext"><span class="tn">4.</span><span class="tt">How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>If you used AI, say how, and how it helped. Then say what human value you brought in that process &mdash; the judgment, the domain knowledge, the testing with real people, the part that needed a person. Your proposal named this as a goal in task 5; this is where you say what you actually brought.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;It built the first search page in ten minutes with invented data; I brought the survey, the offices, and the test with students who had never seen the page &mdash; everything that made the data real.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Where did you accept its output without checking, and what happened?</p></div>
+<div class="rbox" data-refl="q4">
+<label class="qt" for="rq-q4"><b>Your answer to question 4.</b> How you used AI, if you did; how it helped; what you brought.</label>
+<textarea class="box" id="rq-q4" data-rtext placeholder="How you used it, if you did — how it helped — what human value you brought."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says whether you used AI, and if so how, with something specific you gave it or got from it.</li>
+<li>It says how it helped.</li>
+<li>It says what you brought, specific to this project &mdash; something a classmate could not paste into their own answer unchanged.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-5">
+<div class="ttext"><span class="tn">5.</span><span class="tt">Pick one decision you made &mdash; design, scope or tool. Analyse what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>One decision &mdash; design, scope or tool. Name the other options you had, say why you chose this one, and give a good argument to revisit it now. The argument to revisit is the part that shows the decision is still yours rather than a habit.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;Static site over an app: the options were an app, a Canvas page, a static site; I chose static because an office can edit a file; the argument to revisit is that no office has edited one yet.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>What would make you actually revisit it?</p></div>
+<div class="rbox" data-refl="q5">
+<label class="qt" for="rq-q5"><b>Your answer to question 5.</b> The decision, the other options, why this one, and the argument to revisit it.</label>
+<textarea class="box" id="rq-q5" data-rtext placeholder="The decision — the other options — why this one — a good argument to revisit it now."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It is one decision, and it is a design, scope or tool decision.</li>
+<li>It names at least one other option you could have taken.</li>
+<li>It says why you chose this one, and gives an argument to revisit it that you would take seriously.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-6">
+<div class="ttext"><span class="tn">6.</span><span class="tt">One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>One thing, from what you set out to learn. Say how you know you can do it now, and how you would demonstrate it to a hiring manager &mdash; something they could look at or watch, not something you would tell them.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;I can run a usability test: three timed students, a script, and the changes I made from what they did; the demonstration is the before/after times.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Which item from your learning plan is this?</p></div>
+<div class="rbox" data-refl="q6">
+<label class="qt" for="rq-q6"><b>Your answer to question 6.</b> The thing you can now do, how you know, and how you would demonstrate it.</label>
+<textarea class="box" id="rq-q6" data-rtext placeholder="What you can now do — how you know — how you would demonstrate it to a hiring manager."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It is one thing, and it is something you set out to learn.</li>
+<li>It says how you know you can do it &mdash; something you did, not something you feel.</li>
+<li>The demonstration is something a hiring manager could look at or watch.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-7">
+<div class="ttext"><span class="tn">7.</span><span class="tt">Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>What is not working, what surprised you, and your next move. The hard part is the point of the question, not a confession.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;Offices reply slowly; I did not expect the bottleneck to be people; next move is one office in person on Thursday.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>What would a strong week look like?</p></div>
+<div class="rbox" data-refl="q7">
+<label class="qt" for="rq-q7"><b>Your answer to question 7.</b> What is not working, what surprised you, and what you will do next.</label>
+<textarea class="box" id="rq-q7" data-rtext placeholder="Not working: …
+Surprised me: …
+Next: …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It names something in your part of the work that is not working right now.</li>
+<li>It says what surprised you.</li>
+<li>The next move is something you could do this week, with a day or a person attached.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="q-8">
+<div class="ttext"><span class="tn">8.</span><span class="tt">What you now understand about the bar for the roles you want, from looking at real work by people who hold them &mdash; and where yours stands against it today.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>What you now understand about the <span class="gl"><button type="button" class="gt">bar</button><span class="bub" role="tooltip"><b class="bt">The bar</b><span class="br"><i>What it means.</i> The standard real work meets in the roles you want &mdash; what a portfolio piece, a repo or a write-up by someone who holds the role actually contains.</span><span class="br"><i>How you find it.</i> By looking at their work, not at a job description: the pieces people in those roles put in front of hiring managers.</span><span class="br"><i>What a good answer looks like.</i> A specific feature of their work that yours does not have yet, and what would put it there.</span></span></span>, from real work by people in the roles you want, and where yours stands against it today. Today, not where you hope it will be by December.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p>&ldquo;Their portfolio pieces have a user quote and a number; mine has neither yet &mdash; the timed tests give me the number by week 10.&rdquo;</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Which piece of theirs would you most like to have made?</p></div>
+<div class="rbox" data-refl="q8">
+<label class="qt" for="rq-q8"><b>Your answer to question 8.</b> What you understand about the bar, and where yours stands today.</label>
+<textarea class="box" id="rq-q8" data-rtext placeholder="What the bar is, from real work by people in the roles — and where yours stands today."></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says what the bar is, from real work you looked at by people who hold the roles.</li>
+<li>It says where your work stands against it today.</li>
+<li>The two are compared on the same feature &mdash; what theirs has and yours does or does not.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+</ol>
+
+<h2 class="sec">Criteria</h2>
+<div class="crit">
+<p><b>Done</b> &mdash; all eight answered at length in the take-home; each answer is about your own project and your own part in it; references, where used, support a lesson rather than replace one.</p>
+<p><b>Strong</b> &mdash; each answer could be summarised by hand, closed book, without losing its point &mdash; the lesson is yours, not the reference&rsquo;s; 1 and 3 connect the market to your work in both directions; 2 rests on the moment or evidence that settled it; 4 is honest about what AI did and what you did; 5 names a real alternative you could have taken; 6 names a demonstration a hiring manager could check; 7 and 8 say where you stand today, not where you hope to be.</p>
+<p><b>Checklist</b> &mdash; one line per question. Run it on your own draft; your reviewer runs the same list.</p>
+<ol>
+<li>Say what employers expect now that they did not a few years ago, what you expect to change next, and why.</li>
+<li>Name the problem, who it is for, and the moment, conversation or evidence that settled it.</li>
+<li>Name the expectations your work speaks to and the ones it does not.</li>
+<li>Say how you used AI, if you did, how it helped, and what you brought.</li>
+<li>Name one decision, the other options, why this one, and an argument to revisit it now.</li>
+<li>Name one thing you can now do, how you know, and how you would demonstrate it to a hiring manager.</li>
+<li>Say what is not working, what surprised you, and what you will do next.</li>
+<li>Say what the bar is, from real work by people in the roles, and where yours stands today.</li>
+</ol>
+</div>
+
+<h2 class="sec">Submit</h2>
+<p class="body"><b>Take-home:</b> Canvas text entry, before class on Wednesday 14 October. <b>Submit the text itself pasted into the Canvas box; a link to a Google doc is not a submission.</b></p>
+<p class="body">Two routes, equal. Answer the questions in your own document and paste the text. Or use the boxes under each question on this page and press <b>Copy my answers</b>, which puts each question with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+<p class="body"><b>In class and paired:</b> done on paper and in the room on 14 October. Nothing to submit here.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="project-proposal.html">Project Proposal &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan &middot; Paige Weisskirch</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">How this page was made</div>
+<p class="prov-lead">The purpose, the three parts and the eight questions are Prof. Sathya&rsquo;s, word for word, settled on 3 September 2026. The guidance, examples, reflection questions, criteria and the notes behind the AI feedback button were drafted by AI from that design; he reads them and edits by hand where they miss.</p>
+<details class="prov-more">
+<summary><span class="plus" aria-hidden="true"></span><span class="pm-t">What that looks like &mdash; what he decided, what AI built, and how it is checked</span></summary>
+<div class="prov-body">
+<h4>What he decided</h4>
+<ul>
+<li><b>The purpose, the three parts and the eight questions</b> are fixed wording from his question set of 3 September 2026. Nothing on this page rewrites, reorders or adds to them.</li>
+<li><b>Questions test lessons, not recall.</b> The written part is closed book, so every question is answerable from what you understood about your own work; nothing on this page asks for a reference, a name or a number you would have to look up.</li>
+<li><b>The two layers.</b> The questions stand on their own; everything under a <b>+</b> is optional. A student who copies the questions into a document and answers them there has done the whole take-home.</li>
+<li><b>The AI question is asked, not asserted.</b> Question 4 asks how you used AI, if you did, and what you brought. Nothing here states the answer for you.</li>
+<li><b>The submission is the text itself</b>, and the points are 200 for the mid-term as a whole.</li>
+</ul>
+<h4>What AI built</h4>
+<ul>
+<li><b>The second layer:</b> the guidance, the examples, and the reflection questions under each question, from his design and in his register. Every example runs on one project, Campus Compass, so the examples read as one student&rsquo;s process rather than eight unrelated ones.</li>
+<li><b>The criteria</b> &mdash; done, strong, and the checklist &mdash; proposed from the question set, for his edit.</li>
+<li><b>The page mechanics:</b> the copy buttons, the boxes that save in your browser, and the AI feedback button under each box.</li>
+<li><b>The notes behind the AI feedback button</b> &mdash; for each question, what is asked for and what is observable in an answer. The feedback uses only those criteria, quotes your own words, asks one question, and never rewrites what you wrote. It treats a lesson in your own words as meeting the criterion; a missing reference is never a missing element. It does not judge readiness or prospects, and it does not give a grade.</li>
+</ul>
+<h4>How it is checked</h4>
+<ul>
+<li>Prof. Sathya reads the page against his question set before it goes on Canvas, and again after the first submissions come in.</li>
+<li>The questions the copy button writes are compared word for word against the question set, and the page is opened inside Canvas and on its own before it is linked.</li>
+<li>The anonymous feedback link below reaches him directly; what is confusing on this page gets fixed while the questions are still open.</li>
+</ul>
+</div>
+</details>
+</div>
+
+<!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST499 Computer Science Capstone &middot; Mid-term &middot; Draft v1 of 2026-09-04</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+    // Mid-term — behaviour only. All words students read live in the markup above,
+    // except the question list below, which is the single source of truth for both copy buttons.
+    var QUESTIONS = [
+        {"n": 1, "text": "What you learned about the market you are aiming at: what employers expect now that they did not a few years ago, and what you expect to change next — and why you think so.", "parts": []},
+        {"n": 2, "text": "What problem your project solves, for whom, and what convinced you the need is real — the moment, conversation or evidence that settled it.", "parts": []},
+        {"n": 3, "text": "How your work answers what the market asks for: which expectations it speaks to, and which it does not.", "parts": []},
+        {"n": 4, "text": "How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?", "parts": []},
+        {"n": 5, "text": "Pick one decision you made — design, scope or tool. Analyse what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.", "parts": []},
+        {"n": 6, "text": "One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.", "parts": []},
+        {"n": 7, "text": "Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.", "parts": []},
+        {"n": 8, "text": "What you now understand about the bar for the roles you want, from looking at real work by people who hold them — and where yours stands against it today.", "parts": []}
+    ];
+
+    var REFLQ = "REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) {Q} If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.";
+    var LESSON = "NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood. ";
+    var CFG = {"page": "cst499-mid-term", "course": "CST499", "pageTitle": "Mid-term", "destination": "Week 8 is the mid-term, in three parts: a take-home in which the student answers all eight published questions at length before class; an in-class written part in which they summarise a subset by hand, closed book; and a paired part afterwards. The questions are about the student's own project, their own part in it, and the market evidence behind it. Depth of the student's own thinking is the bar, and every question is answerable from what they understood about their own work.", "feeds": "One of the eight mid-term questions, answered at length in the student's own words, before class. The same answer will be summarised by hand, closed book, in class.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the question asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording — if a requested element is missing, name it and ask for it. If everything the question asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {
+        "q1": "REQUESTED ELEMENTS: what employers in the student's market expect now that they did not a few years ago; what the student expects to change next; why they think so. OBSERVABLE CRITERIA: at least one expectation is named as a change — something expected now that was not before; at least one expected next change is named; the why is the student's own reasoning from what they read or heard; the answer is about what they understood rather than a list of what they collected. COMMON OMISSIONS: the now-versus-before contrast is missing, so the expectation reads as a standing fact; the next change has no reason attached; the answer lists postings without a lesson drawn from them. " + LESSON + REFLQ.replace("{Q}", "What changed in your own plans because of this?"),
+        "q2": "REQUESTED ELEMENTS: the problem the project solves; for whom; what convinced the student the need is real — the moment, conversation or evidence that settled it. OBSERVABLE CRITERIA: the problem is stated; the who is a particular person, team or kind of user; the convincing thing is a specific moment, conversation or item of evidence the student was there for or found themselves, described so someone who was there would recognise it. COMMON OMISSIONS: the need is asserted with no moment, conversation or evidence; the who is 'users' or 'people' with nothing particular; the evidence is described as a category ('feedback', 'research') rather than as what happened. " + LESSON + REFLQ.replace("{Q}", "What would have un-convinced you?"),
+        "q3": "REQUESTED ELEMENTS: which market expectations the student's work speaks to; which it does not. OBSERVABLE CRITERIA: both halves are present; each expectation named is one the student can tie to their own work, not to the project in general; the does-not half names at least one real expectation rather than saying there is none. COMMON OMISSIONS: only the speaks-to half is answered; the expectations are general qualities rather than things employers ask for; the connection to the student's own part of the work is missing. " + LESSON + REFLQ.replace("{Q}", "Is the half it does not speak to one you should act on this semester or next?"),
+        "q4": "REQUESTED ELEMENTS: how the student used AI for the project, if they did; how it helped; what human value the student brought in that process. OBSERVABLE CRITERIA: the answer says whether AI was used and, if so, how — with something specific given to it or got from it; it says how it helped; it says what the student brought, specific to this project and its user. COMMON OMISSIONS: the use is described in general terms with nothing specific; the help is asserted without saying what changed; what the student brought is the generic list (judgment, testing, domain knowledge) with nothing tied to this project. NOTE: 'I did not use AI' is a complete answer to the first part; then ask only about what the student did themselves. The finding is the student's own. Never state what a tool can or cannot build; only ask about what they observed. " + LESSON + REFLQ.replace("{Q}", "Where did you accept its output without checking, and what happened?"),
+        "q5": "REQUESTED ELEMENTS: one decision — design, scope or tool; the other options that were available; why the student made this choice; a good argument to revisit the decision now. OBSERVABLE CRITERIA: it is one decision and it is a design, scope or tool decision; at least one other option is named; the reason for the choice is stated; the argument to revisit is a real argument the student could act on, not a token one. COMMON OMISSIONS: no alternative is named, so the decision reads as the only possibility; the argument to revisit is missing or dismissed in the same sentence; several decisions are described where one was asked for. NOTE: never supply an alternative or an argument for this box. If one is missing, say which and ask the student for it. " + LESSON + REFLQ.replace("{Q}", "What would make you actually revisit it?"),
+        "q6": "REQUESTED ELEMENTS: one thing the student set out to learn and can now do; how they know they can; how they would demonstrate it to a hiring manager. OBSERVABLE CRITERIA: it is one thing and it is something they set out to learn; the how-they-know is something they did rather than something they feel; the demonstration is something a hiring manager could look at or watch. COMMON OMISSIONS: the how-they-know is a feeling of confidence with nothing done; the demonstration is telling rather than showing; several things are listed where one was asked for. " + LESSON + REFLQ.replace("{Q}", "Which item from your learning plan is this?"),
+        "q7": "REQUESTED ELEMENTS: where the student's part of the work is hard right now; what is not working; what surprised them; what they will do next. OBSERVABLE CRITERIA: something not working is named, in the student's own part of the work; a surprise is named; the next move is something they could do this week, with a day or a person attached where possible. COMMON OMISSIONS: nothing is reported as hard; the next move is a general intention rather than an action; the surprise is missing. NOTE: the hard part is the point of the question. Never treat difficulty as a fault or comment on whether the project is on track; ask only about the three elements. " + LESSON + REFLQ.replace("{Q}", "What would a strong week look like?"),
+        "q8": "REQUESTED ELEMENTS: what the student now understands about the bar for the roles they want, from looking at real work by people who hold those roles; where the student's own work stands against it today. OBSERVABLE CRITERIA: the bar is described from real work looked at, as a feature that work has; where the student's work stands is stated for today rather than as a hope; the two are compared on the same feature. COMMON OMISSIONS: the bar is described from a job posting or a general impression rather than from work looked at; the today half is replaced by a plan; the comparison is not on the same feature. NOTE: never judge the student's standing, distance from the bar or prospects; ask only whether the two halves are present and comparable. " + LESSON + REFLQ.replace("{Q}", "Which piece of theirs would you most like to have made?")
+    }, "question": {}, "label": {"q1": "The market", "q2": "The problem", "q3": "The gap it closes", "q4": "How I used AI", "q5": "One decision", "q6": "One thing I can now do", "q7": "Where my part is hard", "q8": "The bar"}, "order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"], "min": {"q1": 0, "q2": 0, "q3": 0, "q4": 0, "q5": 0, "q6": 0, "q7": 0, "q8": 0}};
+    var KEY = 'cc-gi:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in an 800px frame, so offer the way out to the
+    // full page. Shown when the page is framed, or when it is opened with ?context=canvas.
+    // Hidden when it is already the top-level page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- the question list, as text ----------
+    function letter(i) { return String.fromCharCode(97 + i); }
+    function questionPlain(t) {
+        var s = t.text;
+        t.parts.forEach(function (p, i) { s += ' ' + letter(i) + '. ' + p; });
+        return s;
+    }
+    QUESTIONS.forEach(function (t) { CFG.question['q' + t.n] = questionPlain(t); });
+
+    function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function indentLines(s, pad) {
+        return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n');
+    }
+    function answerHtml(s) {
+        var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
+        return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
+    }
+    // One builder, two payloads: the questions alone (Copy the questions), or the questions with the
+    // student's answers beneath each (Copy my answers). Returns {text, html}.
+    function buildPayload(withAnswers) {
+        var md = '', html = '';
+        if (withAnswers) {
+            md += CFG.pageTitle + ' — ' + CFG.course + ', Week 8\n';
+            html += '<p><b>' + esc(CFG.pageTitle) + '</b> — ' + esc(CFG.course) + ', Week 8</p>';
+        }
+        html += '<ol>';
+        QUESTIONS.forEach(function (t, idx) {
+            md += t.n + '. ' + t.text + '\n';
+            html += '<li>' + esc(t.text);
+            if (t.parts.length) {
+                html += '<ol type="a" style="list-style-type:lower-alpha">';
+                t.parts.forEach(function (p, i) {
+                    md += '   ' + letter(i) + '. ' + p + '\n';
+                    html += '<li>' + esc(p) + '</li>';
+                });
+                html += '</ol>';
+            }
+            if (withAnswers) {
+                var a = (answerState('q' + t.n).text || '').trim();
+                md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
+                html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
+                if (idx < QUESTIONS.length - 1) { md += '\n'; }
+            }
+            html += '</li>';
+        });
+        html += '</ol>';
+        return { text: md, html: html };
+    }
+
+    // The clipboard write, shared by both buttons: both types when the browser allows it,
+    // the markdown alone when it does not. Returns a promise.
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { name: '', answers: {}, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.answers) { state.answers = {}; }
+
+    var saveTimer = null;
+    function save() {
+        try {
+            window.localStorage.setItem(KEY, JSON.stringify(state));
+            storageOK = true;
+        } catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+
+    function answerState(key) {
+        if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
+        if (!state.answers[key].ai) { state.answers[key].ai = []; }
+        return state.answers[key];
+    }
+
+    // ---------- AI feedback ----------
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+    function aiError(box) {
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. ' +
+            'The Check it yourself list under this box covers the same ground — use that, and try the button again later.</span>';
+    }
+    function post(btn, box, content, onReply, done) {
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = (data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            onReply(reply);
+        }).catch(function () {
+            aiError(box);
+        }).then(function () {
+            btn.textContent = label;
+            done();
+        });
+    }
+
+    // ---------- the response boxes, one per question ----------
+    function refreshBox(el, key) {
+        var st = answerState(key);
+        var text = $('[data-rtext]', el).value.trim();
+        var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+        var btn = $('[data-ai]', el);
+        if (btn) { btn.disabled = text.length === 0 || text === last; }   // no minimum: any text turns the button on
+    }
+    function askAi(el, key) {
+        var st = answerState(key);
+        var btn = $('[data-ai]', el), box = $('[data-aibox]', el);
+        var text = $('[data-rtext]', el).value.trim();
+        var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 8)\n' +
+            'WHAT THIS ASSIGNMENT IS: ' + CFG.destination + '\n' +
+            'WHAT THIS BOX FEEDS: ' + CFG.feeds + '\n\n' +
+            'THE QUESTION THEY ARE ANSWERING (question ' + key.slice(1) + '): ' + CFG.question[key] + '\n\n' +
+            'WHAT THEY WROTE:\n\"\"\"' + text + '\"\"\"\n\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + CFG.coach[key];
+        post(btn, box, content, function (reply) {
+            st.ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, st.ai.length);
+        }, function () { refreshBox(el, key); });
+    }
+    $all('.rbox[data-refl]').forEach(function (el) {
+        var key = el.getAttribute('data-refl');
+        var st = answerState(key);
+        var ta = $('[data-rtext]', el);
+        ta.value = st.text || '';
+        var aibox = $('[data-aibox]', el);
+        if (st.ai.length && aibox) { showAi(aibox, st.ai[st.ai.length - 1].text, st.ai.length); }
+        ta.addEventListener('input', function () { st.text = ta.value; refreshBox(el, key); saveSoon(); });
+        ta.addEventListener('blur', save);
+        var goBtn = $('[data-ai]', el);
+        if (goBtn) { goBtn.addEventListener('click', function () { askAi(el, key); }); }
+        refreshBox(el, key);
+    });
+
+    // ---------- Copy the questions ----------
+    var tasksBtn = $('#copy-tasks');
+    if (tasksBtn) {
+        tasksBtn.addEventListener('click', function () {
+            var label = tasksBtn.textContent;
+            writeClipboard(buildPayload(false)).then(function () {
+                tasksBtn.textContent = 'Copied';
+                setTimeout(function () { tasksBtn.textContent = label; }, 2000);
+            }, function () {
+                tasksBtn.textContent = 'Copy did not work — use Copy my answers below';
+                setTimeout(function () { tasksBtn.textContent = label; }, 4000);
+            });
+        });
+    }
+
+    // ---------- Copy my answers ----------
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload(true);
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            function fallback() {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            }
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = 'Copied ✓ — paste it into a Google doc to edit, or straight into the Canvas box. The same text is below if you need it again.';
+            }, fallback);
+        });
+    }
+
+    // ---------- start ----------
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+</body>
+</html>
