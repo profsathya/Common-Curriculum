@@ -11,9 +11,12 @@
  *     other sites are refused. (A script can fake Origin, so this is a
  *     speed bump, not a lock — the spend cap on the Console workspace is
  *     the lock.)
- *   - Per-IP rate limit: 20 requests per 10 minutes. Netlify functions do not
+ *   - Rate limits: 200 requests per 10 minutes per IP (a classroom behind one
+ *     campus IP must fit) and 600 per instance. Netlify functions do not
  *     share memory between instances, so this is best-effort; it still
  *     stops a single loop from running away.
+ *   - Only text content blocks are accepted; image/document blocks are refused
+ *     so the input cap cannot be bypassed with base64 payloads.
  *   - Streaming is never enabled and nothing but system/messages is forwarded.
  *
  * Environment: ANTHROPIC_API_KEY (Netlify site env var).
@@ -37,9 +40,15 @@ const MAX_OUTPUT_TOKENS = 2500;
 const MAX_INPUT_CHARS = 60000;
 const MAX_MESSAGES = 40;
 
+// Rate limits. A whole classroom can sit behind one campus IP, so the
+// per-IP figure is sized for a class (40 students x 5 requests), not a
+// person; it is a brake on runaway loops, not the lock. The lock is the
+// spend cap on the Console workspace. A per-instance ceiling backs it up.
 const RATE_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT = 20;
+const RATE_LIMIT_PER_IP = 200;
+const RATE_LIMIT_GLOBAL = 600;
 const hits = new Map(); // ip -> [timestamps]
+const allHits = [];
 
 function corsHeaders(origin) {
   return {
@@ -56,19 +65,30 @@ function json(statusCode, headers, obj) {
 
 function rateLimited(ip) {
   const now = Date.now();
+  while (allHits.length && now - allHits[0] >= RATE_WINDOW_MS) allHits.shift();
+  allHits.push(now);
   const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
   recent.push(now);
   hits.set(ip, recent);
   if (hits.size > 5000) hits.clear(); // keep memory bounded
-  return recent.length > RATE_LIMIT;
+  return recent.length > RATE_LIMIT_PER_IP || allHits.length > RATE_LIMIT_GLOBAL;
 }
 
+// The course pages send text only. Anything else (images, documents,
+// tool blocks) is refused rather than measured, so the input cap cannot
+// be bypassed with base64 payloads. Returns -1 for a disallowed shape.
 function textLength(messages) {
   let n = 0;
   for (const m of messages) {
-    if (typeof m.content === 'string') n += m.content.length;
-    else if (Array.isArray(m.content)) {
-      for (const part of m.content) if (typeof part.text === 'string') n += part.text.length;
+    if (typeof m.content === 'string') {
+      n += m.content.length;
+    } else if (Array.isArray(m.content)) {
+      for (const part of m.content) {
+        if (!part || part.type !== 'text' || typeof part.text !== 'string') return -1;
+        n += part.text.length;
+      }
+    } else {
+      return -1;
     }
   }
   return n;
@@ -115,7 +135,11 @@ exports.handler = async (event) => {
   if (!messages.every((m) => m && (m.role === 'user' || m.role === 'assistant') && m.content != null)) {
     return json(400, headers, { error: 'Each message needs a role of user/assistant and content' });
   }
-  const inputChars = textLength(messages) + (typeof system === 'string' ? system.length : 0);
+  const msgChars = textLength(messages);
+  if (msgChars < 0 || (system !== undefined && typeof system !== 'string')) {
+    return json(400, headers, { error: 'Only text content is accepted' });
+  }
+  const inputChars = msgChars + (system ? system.length : 0);
   if (inputChars > MAX_INPUT_CHARS) {
     return json(413, headers, { error: 'Request too large' });
   }
