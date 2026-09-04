@@ -67,15 +67,25 @@ function json(statusCode, headers, obj) {
   return { statusCode, headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(obj) };
 }
 
-function rateLimited(ip) {
+// Per-IP check runs first, before the body is parsed, so one noisy client
+// is cut off cheaply. The per-instance quota is counted only for requests
+// that passed validation and are about to reach Anthropic; otherwise a
+// stream of malformed POSTs could fill it and lock real students out.
+function ipLimited(ip) {
   const now = Date.now();
-  while (allHits.length && now - allHits[0] >= RATE_WINDOW_MS) allHits.shift();
-  allHits.push(now);
   const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
   recent.push(now);
   hits.set(ip, recent);
   if (hits.size > 5000) hits.clear(); // keep memory bounded
-  return recent.length > RATE_LIMIT_PER_IP || allHits.length > RATE_LIMIT_GLOBAL;
+  return recent.length > RATE_LIMIT_PER_IP;
+}
+
+function globalLimited() {
+  const now = Date.now();
+  while (allHits.length && now - allHits[0] >= RATE_WINDOW_MS) allHits.shift();
+  if (allHits.length >= RATE_LIMIT_GLOBAL) return true;
+  allHits.push(now);
+  return false;
 }
 
 // The course pages send text only. Anything else (images, documents,
@@ -115,7 +125,7 @@ exports.handler = async (event) => {
   }
 
   const ip = (event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || 'unknown').split(',')[0].trim();
-  if (rateLimited(ip)) {
+  if (ipLimited(ip)) {
     console.warn('Rate limited:', ip);
     return json(429, headers, { error: 'Too many requests. Please wait a few minutes and try again.' });
   }
@@ -146,6 +156,11 @@ exports.handler = async (event) => {
   const inputChars = msgChars + (system ? system.length : 0);
   if (inputChars > MAX_INPUT_CHARS) {
     return json(413, headers, { error: 'Request too large' });
+  }
+
+  if (globalLimited()) {
+    console.warn('Instance quota reached');
+    return json(429, headers, { error: 'The AI helper is busy. Please wait a few minutes and try again.' });
   }
 
   const chosenModel = ALLOWED_MODELS[model] || DEFAULT_MODEL;
