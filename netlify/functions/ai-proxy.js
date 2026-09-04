@@ -1,77 +1,127 @@
 /**
- * Generic AI Proxy
+ * AI Proxy — hardened 2026-09-04 after the API-key spend incident.
  *
- * Thin Netlify serverless function that proxies requests to the Anthropic
- * Claude API. All prompt logic lives client-side — this function only
- * handles authentication, forwarding, and CORS.
+ * What changed and why:
+ *   - The caller no longer picks the model. Only the two course models are
+ *     allowed and anything else falls back to the default. The old proxy let
+ *     anyone POST { model: "claude-opus-5" } and run on the course key.
+ *   - Output is capped at 2,500 tokens and input at ~60k characters, which is
+ *     what the course pages actually need.
+ *   - Requests must come from a course page origin. Browser fetches from
+ *     other sites are refused. (A script can fake Origin, so this is a
+ *     speed bump, not a lock — the spend cap on the Console workspace is
+ *     the lock.)
+ *   - Per-IP rate limit: 20 requests per 10 minutes. Netlify functions do not
+ *     share memory between instances, so this is best-effort; it still
+ *     stops a single loop from running away.
+ *   - Streaming is never enabled and nothing but system/messages is forwarded.
  *
- * Environment Variables Required:
- *   ANTHROPIC_API_KEY - Anthropic API key
- *
- * Request Body:
- *   {
- *     "system": "System prompt text",
- *     "messages": [{ "role": "user", "content": "..." }],
- *     "model": "claude-haiku-4-5-20251001",   // optional, defaults to haiku
- *     "max_tokens": 1024                       // optional, defaults to 1024
- *   }
- *
- * Returns:
- *   {
- *     "content": "Raw text response from Claude",
- *     "usage": { "input_tokens": 0, "output_tokens": 0 }
- *   }
+ * Environment: ANTHROPIC_API_KEY (Netlify site env var).
+ * Request body: { system?, messages, model?, max_tokens? } — unchanged for pages.
+ * Response: { content, usage } — unchanged.
  */
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+const ALLOWED_ORIGINS = [
+  'https://profsathya.github.io',
+  'https://ai-assisted-pedagogy.netlify.app',
+  'https://csumb.instructure.com',
+];
+
+const ALLOWED_MODELS = {
+  'claude-sonnet-4-6': 'claude-sonnet-4-6',
+  'claude-sonnet-4-5-20250929': 'claude-sonnet-4-5-20250929',
+  'claude-haiku-4-5-20251001': 'claude-haiku-4-5-20251001',
 };
+const DEFAULT_MODEL = 'claude-sonnet-4-6';
+const MAX_OUTPUT_TOKENS = 2500;
+const MAX_INPUT_CHARS = 60000;
+const MAX_MESSAGES = 40;
+
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT = 20;
+const hits = new Map(); // ip -> [timestamps]
+
+function corsHeaders(origin) {
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
+
+function json(statusCode, headers, obj) {
+  return { statusCode, headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(obj) };
+}
+
+function rateLimited(ip) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) hits.clear(); // keep memory bounded
+  return recent.length > RATE_LIMIT;
+}
+
+function textLength(messages) {
+  let n = 0;
+  for (const m of messages) {
+    if (typeof m.content === 'string') n += m.content.length;
+    else if (Array.isArray(m.content)) {
+      for (const part of m.content) if (typeof part.text === 'string') n += part.text.length;
+    }
+  }
+  return n;
+}
 
 exports.handler = async (event) => {
-  // Handle CORS preflight
+  const origin = event.headers.origin || event.headers.Origin || '';
+  const originOk = ALLOWED_ORIGINS.includes(origin);
+  const headers = corsHeaders(originOk ? origin : ALLOWED_ORIGINS[0]);
+
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+    return { statusCode: originOk ? 204 : 403, headers, body: '' };
+  }
+  if (event.httpMethod !== 'POST') {
+    return json(405, headers, { error: 'Method not allowed' });
+  }
+  if (!originOk) {
+    console.warn('Refused origin:', origin || '(none)');
+    return json(403, headers, { error: 'This endpoint only serves the course pages.' });
   }
 
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+  const ip = (event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || 'unknown').split(',')[0].trim();
+  if (rateLimited(ip)) {
+    console.warn('Rate limited:', ip);
+    return json(429, headers, { error: 'Too many requests. Please wait a few minutes and try again.' });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return {
-      statusCode: 500,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Server configuration error: missing API key' }),
-    };
+    return json(500, headers, { error: 'Server configuration error: missing API key' });
   }
 
   let body;
   try {
-    body = JSON.parse(event.body);
+    body = JSON.parse(event.body || '');
   } catch {
-    return {
-      statusCode: 400,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Invalid JSON in request body' }),
-    };
+    return json(400, headers, { error: 'Invalid JSON in request body' });
   }
 
   const { system, messages, model, max_tokens } = body;
-
-  if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return {
-      statusCode: 400,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Missing required field: messages (non-empty array)' }),
-    };
+  if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+    return json(400, headers, { error: 'messages must be a non-empty array of at most ' + MAX_MESSAGES });
   }
+  if (!messages.every((m) => m && (m.role === 'user' || m.role === 'assistant') && m.content != null)) {
+    return json(400, headers, { error: 'Each message needs a role of user/assistant and content' });
+  }
+  const inputChars = textLength(messages) + (typeof system === 'string' ? system.length : 0);
+  if (inputChars > MAX_INPUT_CHARS) {
+    return json(413, headers, { error: 'Request too large' });
+  }
+
+  const chosenModel = ALLOWED_MODELS[model] || DEFAULT_MODEL;
+  const outTokens = Math.min(Number(max_tokens) || 1024, MAX_OUTPUT_TOKENS);
 
   try {
     const apiResponse = await fetch('https://api.anthropic.com/v1/messages', {
@@ -82,60 +132,29 @@ exports.handler = async (event) => {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: model || 'claude-haiku-4-5-20251001',
-        max_tokens: Math.min(max_tokens || 1024, 4096),
-        messages: messages,
-        ...(system ? { system } : {}),
+        model: chosenModel,
+        max_tokens: outTokens,
+        messages,
+        ...(typeof system === 'string' && system ? { system } : {}),
       }),
     });
 
     if (!apiResponse.ok) {
       const errorText = await apiResponse.text();
       console.error('Anthropic API error:', apiResponse.status, errorText);
-
-      // Parse Anthropic error for a user-useful message
-      let detail = '';
-      try {
-        const errJson = JSON.parse(errorText);
-        detail = errJson.error?.message || errorText;
-      } catch {
-        detail = errorText;
-      }
-
-      return {
-        statusCode: 502,
-        headers: CORS_HEADERS,
-        body: JSON.stringify({
-          error: `AI service error (${apiResponse.status}): ${detail}`,
-        }),
-      };
+      let detail = errorText;
+      try { detail = JSON.parse(errorText).error?.message || errorText; } catch {}
+      return json(502, headers, { error: `AI service error (${apiResponse.status}): ${detail}` });
     }
 
     const data = await apiResponse.json();
     const content = data.content?.[0]?.text;
+    if (!content) return json(502, headers, { error: 'Empty response from AI service' });
 
-    if (!content) {
-      return {
-        statusCode: 502,
-        headers: CORS_HEADERS,
-        body: JSON.stringify({ error: 'Empty response from AI service' }),
-      };
-    }
-
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
-      body: JSON.stringify({
-        content: content,
-        usage: data.usage || null,
-      }),
-    };
+    console.log('ai-proxy ok', JSON.stringify({ ip, origin, model: chosenModel, usage: data.usage || null }));
+    return json(200, headers, { content, usage: data.usage || null });
   } catch (error) {
     console.error('Function error:', error);
-    return {
-      statusCode: 500,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Internal server error' }),
-    };
+    return json(500, headers, { error: 'Internal server error' });
   }
 };
