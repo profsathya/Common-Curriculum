@@ -2,8 +2,8 @@
  * AI Proxy — hardened 2026-09-04 after the API-key spend incident.
  *
  * What changed and why:
- *   - The caller no longer picks the model. Only the two course models are
- *     allowed and anything else falls back to the default. The old proxy let
+ *   - The caller no longer picks the model. Sonnet requests go to Sonnet 5,
+ *     Haiku stays Haiku, and anything else falls back to the default. The old proxy let
  *     anyone POST { model: "claude-opus-5" } and run on the course key.
  *   - Output is capped at 2,500 tokens and input at ~60k characters, which is
  *     what the course pages actually need.
@@ -30,12 +30,16 @@ const ALLOWED_ORIGINS = [
   'https://csumb.instructure.com',
 ];
 
+// Sathya's call 2026-09-04: students get Sonnet 5. The pages still name
+// the older Sonnet models, so those names are mapped here rather than
+// edited in ten files. Haiku stays Haiku (used for short classifications).
 const ALLOWED_MODELS = {
-  'claude-sonnet-4-6': 'claude-sonnet-4-6',
-  'claude-sonnet-4-5-20250929': 'claude-sonnet-4-5-20250929',
+  'claude-sonnet-5': 'claude-sonnet-5',
+  'claude-sonnet-4-6': 'claude-sonnet-5',
+  'claude-sonnet-4-5-20250929': 'claude-sonnet-5',
   'claude-haiku-4-5-20251001': 'claude-haiku-4-5-20251001',
 };
-const DEFAULT_MODEL = 'claude-sonnet-4-6';
+const DEFAULT_MODEL = 'claude-sonnet-5';
 const MAX_OUTPUT_TOKENS = 2500;
 const MAX_INPUT_CHARS = 60000;
 const MAX_MESSAGES = 40;
