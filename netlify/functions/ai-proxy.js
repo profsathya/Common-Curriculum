@@ -11,8 +11,8 @@
  *     other sites are refused. (A script can fake Origin, so this is a
  *     speed bump, not a lock — the spend cap on the Console workspace is
  *     the lock.)
- *   - Rate limits: 200 requests per 10 minutes per IP (a classroom behind one
- *     campus IP must fit) and 600 per instance. Netlify functions do not
+ *   - Rate limits: 500 requests per 10 minutes per IP (an 80-student class
+ *     behind one campus IP must fit) and 1,500 per instance. Netlify functions do not
  *     share memory between instances, so this is best-effort; it still
  *     stops a single loop from running away.
  *   - Only text content blocks are accepted; image/document blocks are refused
@@ -45,12 +45,12 @@ const MAX_INPUT_CHARS = 60000;
 const MAX_MESSAGES = 40;
 
 // Rate limits. A whole classroom can sit behind one campus IP, so the
-// per-IP figure is sized for a class (40 students x 5 requests), not a
+// per-IP figure is sized for a class (80 students x 6 requests), not a
 // person; it is a brake on runaway loops, not the lock. The lock is the
 // spend cap on the Console workspace. A per-instance ceiling backs it up.
 const RATE_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_PER_IP = 200;
-const RATE_LIMIT_GLOBAL = 600;
+const RATE_LIMIT_PER_IP = 500;
+const RATE_LIMIT_GLOBAL = 1500;
 const hits = new Map(); // ip -> [timestamps]
 const allHits = [];
 
