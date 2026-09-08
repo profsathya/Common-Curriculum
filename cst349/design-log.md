@@ -433,3 +433,10 @@ adopted because it also matches the imperative-verb-plus-object pattern of Read 
 Gap. The same day the page was restructured into five revealed sections, the six-moment requirement became
 up to five, "at least three" became "more than one", and a strength-and-weakness box moved in from Find
 Your Gap.
+
+- **2026-09-08 — Sprint 1's two graded items created in Canvas.** "Define what growth means for you —
+  first pass" (648176, due Mon 14 Sep) and "Demonstrate growth in your Sprint 1 goal" (648177, due Mon
+  28 Sep), both 100 pts in Graded assignments, text entry, published, body = iframe of the course page
+  plus the fallback link. Both in Sprint 1 · Graded items with a must-submit requirement, in week order.
+  Home-page rows carry `data-canvas-href`; registry rows write back the ids and read Up-to-date on
+  Canvas. Same shape as the CST286 pair built the same day. — Alan
