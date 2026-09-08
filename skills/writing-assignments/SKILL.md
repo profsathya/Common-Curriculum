@@ -5,7 +5,7 @@ description: Use when writing or revising any assignment or activity page studen
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v5 (8 September 2026) — Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+_Status: v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
 `schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
 first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
 the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
@@ -99,6 +99,22 @@ student started.
 afterwards — named plainly: "you will be asked to explain this to a peer, the TA and/or the
 instructor, so make sure you are comfortable with the responses you have developed for this
 assignment." No hidden rubric.
+
+**The copy-the-questions line** (Sathya, 8 Sep 2026). Where a page offers a "Copy the
+questions" button, the line beside it names the trade the student is making, rather than
+just describing the button: "If you would like to work on the assignment in a Google doc
+without the guidance from this assignment, you can paste this into a Google doc and answer
+each task under it. The guidance structure provided in this page is the recommended
+approach to ensure you are being guided and challenged along the way." Both routes stay
+open — the earlier wording made the doc route look like the default.
+
+**The guidance line.** Where a page carries a second layer behind a `+`, say what the
+layer is *for*, never that it is optional (Sathya, 8 Sep 2026): "Each `+` opens guidance,
+examples, a reflection question and a box to write in. The guidance and reflection are
+provided to support you to do a high quality job of answering the questions." A student
+who is told the support is optional reads it as skippable, which is the opposite of the
+intent — the tasks standing on their own is a design fact for the record, not a line to
+put in front of the reader.
 
 **Examples live under each task, not here.** `writing-to-teach` wants at least two examples
 of what the characteristics look like in practice, and the place for them is the per-task
