@@ -401,3 +401,10 @@ copy, reload all pass; Draft v3. Canvas step still parked for Sathya's go. — A
   renamed "RETIRED v1" and hidden from students via `only_visible_to_overrides` with no overrides. The
   17 submissions are preserved and the hide is one flag away from reversal. Home page and registry now
   point at 647097. — Alan
+
+- **2026-09-08 — Sprint 1's two graded items created in Canvas.** "Physics learning goal — and how you
+  would demonstrate it" (648159, due Mon 14 Sep) and "One new thing I learned, and how I demonstrated it
+  to myself" (648160, due Mon 28 Sep), both 100 pts in Graded assignments, text entry, published, body =
+  iframe of the course page plus the fallback link. Both sit in Sprint 1 · Graded items with a
+  must-submit requirement, in week order. Home-page rows carry `data-canvas-href` so they resolve to
+  Canvas in the Canvas context; registry rows write back the ids and read Up-to-date on Canvas. — Alan
