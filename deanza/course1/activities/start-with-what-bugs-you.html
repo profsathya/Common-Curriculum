@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start with what bugs you | Working Draft</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity source-derived">
+    <a class="back-link" href="../sprint-11.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Working Draft &middot; Page</p>
+    <h1>Start with what bugs you</h1>
+
+
+
+    <section>
+<h2 id="take-five-minutes">Take five minutes</h2>
+<p>We are going to move into the problem identification process.</p>
+<p>Let&rsquo;s start somewhere relatively simple. Take five minutes. Write down three or four things that bug you.</p>
+<p>Things that irritate you, that you complain about, that you keep meaning to deal with, or that take longer than they should. A decision you keep postponing. Something you have been putting off for months. A condition you have decided you cannot change. Work, a job search, a volunteer role, caregiving, a side project. Anything.</p>
+<p>Rough is the point. A phrase each is fine. Do not filter, and do not decide yet whether any of them is worth anything.</p>
+<p>Nobody tells me when a client account changes hands. New volunteers sign up, come twice, and we never see them again. Every month I rebuild the same report by hand. I should be better at using AI at work.</p>
+<p>One nudge before you start. Try to include at least one thing that other people are involved in, not only things you do alone. It does not have to be at work, but it should touch somebody besides you.</p>
+<p>If nothing comes to mind, read on anyway. This page will give you other places to look.</p>
+</section>
+
+<section>
+<h2 id="notice-what-i-did-not-ask-for">Notice what I did not ask for</h2>
+<p>We started with things that bug you, because problems rarely arrive as well-defined problems. Almost nothing shows up already matching the definition this course uses for a problem: a gap between how something works now and how it could work, where the gap costs someone something real. What shows up instead is the feeling that something is off.</p>
+<p>That feeling is an indicator, something that points at a problem without being one. Your list is a list of indicators, and at this stage that is exactly what it should be.</p>
+</section>
+
+<section>
+<h2 id="getting-underneath">Getting underneath</h2>
+<h3 id="moving-from-indicator-to-problem">Moving from indicator to problem</h3>
+<p>Now you have a starting list of indicators. We are going to do some pushing on this list to see if any of them can be moved toward problems.</p>
+<p>Remember, a problem is a gap between how something works now and how it could work. So getting underneath something that bugs you means describing how it actually works now, in enough detail that you can see why it produces the thing that bugs you.</p>
+<p>That is the next move. Not describing why it bothers you. Not saying what would fix it. Describe how it currently works.</p>
+<table>
+<thead>
+<tr>
+<th><strong>What bugs you</strong></th>
+<th><strong>How it actually works now</strong></th>
+<th><strong>The gap starting to show</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nobody tells me when a client account changes hands</td>
+<td>Handovers happen in a conversation between two people. Nothing is written down and nobody owns telling anyone else</td>
+<td>People act on stale ownership for days, and the client repeats themselves to someone who should already know</td>
+</tr>
+<tr>
+<td>New volunteers sign up, come twice, and stop</td>
+<td>Signups are collected centrally. When a new volunteer comes they do whatever the person running that day improvises</td>
+<td>A new volunteer&rsquo;s first month depends entirely on who happened to be there, so most of them never find something that needs them</td>
+</tr>
+<tr>
+<td>Every month I rebuild the same report by hand</td>
+<td>The source system exports tables in a format that doesn&rsquo;t quite match the way we use them. Everyone who needs the report fixes it themselves</td>
+<td>Every reporting team spends the same twenty minutes solving the same problem, and nobody has ever counted how much time it&rsquo;s costing us</td>
+</tr>
+</tbody>
+</table>
+<p>Notice what the middle column does. It does not diagnose and it does not solve. It describes the current state carefully enough that the gap starts to become visible on its own.</p>
+<h3 id="try-it-now">Try it now</h3>
+<p>Take whichever of your indicators you have the most to say about. Write two or three sentences on how it actually works today. Not how it feels. What happens, in what order, and who does what.</p>
+<h3 id="if-the-move-stalls">If the move stalls</h3>
+<p>Sometimes &ldquo;how does it work now&rdquo; comes back thin. Usually that means what you wrote is too broad or too vague to describe yet. These can restart it:</p>
+<ul>
+<li>
+<p>What would this look like if you had never adapted to it?</p>
+</li>
+<li>
+<p>What specifically happened the last time this went wrong?</p>
+</li>
+<li>
+<p>Which part of this could actually move, and which part is fixed?</p>
+</li>
+<li>
+<p>What is it about this that you cannot tell?</p>
+</li>
+</ul>
+<p>Use whichever gets your thinking going. They are prompts, not a procedure. If you continue to struggle with one indicator, try another one.</p>
+<h3 id="one-pass-is-usually-not-enough">One pass is usually not enough</h3>
+<p>What you get first is often still too vague, or too small, or turns out to be a symptom of something else. Run the move again on what you just wrote: how does that work now?</p>
+<p>Here is the volunteer example going down three passes:</p>
+<p><strong>Pass 1.</strong> New volunteers sign up, come twice, and stop. <strong>How does that work now?</strong> Signups go to a central inbox. What happens on a first shift is whatever the person running that day improvises.</p>
+<p><strong>Pass 2.</strong> First shifts are improvised. <strong>How does that work now?</strong> Nobody owns deciding what a new volunteer should do on day one, so the shift lead invents something on the spot, usually the easiest thing to hand off.</p>
+<p><strong>Pass 3.</strong> Nobody owns a new volunteer&rsquo;s first day. <strong>How does that work now?</strong> We measure signups because signups are what the board asks about. Nobody has ever been responsible for what happens after someone arrives, so no one built it.</p>
+<p>Notice that pass 1 could not tell you who was paying or what it cost them. Pass 3 can.</p>
+<p>Three or four passes is normal. You stop when you reach something specific enough that you could say who it is costing and what it costs them.</p>
+<h3 id="if-the-move-does-nothing-at-all">If the move does nothing at all</h3>
+<p>Sometimes you run the move and get nothing back. Not thin, nothing.</p>
+<p>Look at the fourth example from the list above: &ldquo;I should be better at using AI at work.&rdquo;</p>
+<p>Ask how that works now and there is no answer, because &ldquo;use AI&rdquo; is not something that is happening. It is something you have decided to do. That is the tell: <strong>you have written down a solution, not an indicator.</strong> The move in this section only works on things that are already going on.</p>
+<p>The way out is not to push harder. It is to ask what made you want that solution in the first place. Someone who wrote that line might find, underneath it, that information arrives in email, Slack, and meeting notes and gets re-entered by hand into calendars, to-do lists, and reports, because nothing connects those systems. That is a current state, and this move works on it normally.</p>
+<p>Solutions you have handed yourself are common enough that they get their own treatment in “Things somebody handed you” on the next page, Two other places to look. If an item on your list resists this move completely, that is where to take it.</p>
+<h3 id="if-your-list-is-thin">If your list is thin</h3>
+<p>Things that bug you are a good first place to look, because you can feel them. There are at least two other places to look, and you cannot feel either one of those.</p>
+<p><strong>Things you stopped noticing.</strong> You stopped noticing them because you figured out a work-around, so they stopped registering as friction. These do not bug you any more, but they are places where a problem, a gap that costs someone something real, might exist. They have to be hunted rather than recalled.</p>
+<p><strong>Things somebody handed you.</strong> A request, from a manager, a client, or even from yourself. These arrive already looking like the answer, but there is a reasonable chance that they are a solution someone decided on before they carefully considered the actual problem.</p>
+<p>Two other places to look takes both in turn. Read it whether or not your list is thin, because the second one comes up constantly at work and it is the hardest of the three to spot.</p>
+<p>Keep your list and the current-state description you tried. Continue to Two other places to look before you settle on candidates.</p>
+</section>
+
+    <div class="submit">
+      <h2>What counts as done</h2>
+      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
+    </div>
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+  </div>
+</body>
+</html>

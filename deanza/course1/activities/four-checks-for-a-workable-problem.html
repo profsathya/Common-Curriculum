@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Four checks for a workable problem | Working Draft</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity source-derived">
+    <a class="back-link" href="../sprint-11.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Working Draft &middot; Page</p>
+    <h1>Four checks for a workable problem</h1>
+
+
+
+    <section>
+<h2 id="expect-most-of-them-to-fail">Expect most of them to fail</h2>
+<p>You are about to run four checks against each candidate problem, and most of your list will not survive. That is the intended outcome, not a sign that you gathered badly.</p>
+<p>A problem that fails now costs you twenty minutes. A problem that fails in week five costs you half the course. This is the cheapest place in the next ten weeks to find out.</p>
+<p>The bar is honest looking, not verification. You are not proving anything yet. You are answering each question as truthfully as you can from what you already know, and noticing where you cannot answer at all.</p>
+</section>
+
+<section>
+<h2 id="check-1-are-the-people-real-and-specific">Check 1. Are the people real and specific?</h2>
+<p>You already named who is paying in your gap statement. This check tests whether that answer is specific enough to act on.</p>
+<p><strong>Name people or roles, not categories.</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Does not pass</strong></th>
+<th><strong>Passes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The team</td>
+<td>The four account managers who cover renewals</td>
+</tr>
+<tr>
+<td>Everyone gets frustrated</td>
+<td>The shift lead, who improvises a job for every new arrival</td>
+</tr>
+<tr>
+<td>Our clients</td>
+<td>The two clients who have asked twice this quarter who owns their account</td>
+</tr>
+</tbody>
+</table>
+<p>If you cannot get more specific than a category, one of two things is true. Either the problem is bigger than you can see from where you sit, or the cost is mostly yours and you have been generous in describing who else pays.</p>
+</section>
+
+<section>
+<h2 id="check-2-is-something-already-handling-it-and-falling-short">Check 2. Is something already handling it, and falling short?</h2>
+<p><strong>Complete this sentence: &ldquo;X handles this today, but it does not ___.&rdquo;</strong></p>
+<p>The outgoing owner handles this today by telling the incoming owner directly, but it does not reach anyone else on the team.</p>
+<p>The shift lead handles this today by finding something for the new person to do, but it does not connect them to anything that continues after that day.</p>
+<p>Something already handles almost every real problem, usually badly, and often it is a person absorbing it manually. That person is your best lead for Sprint 3.</p>
+<p>If nothing handles it at all, look twice. Sometimes that means you found something genuinely neglected. More often it means nobody has needed it handled, which is a sign the cost is smaller than you thought.</p>
+</section>
+
+<section>
+<h2 id="check-3-is-it-live-right-now">Check 3. Is it live right now?</h2>
+<p><strong>Is this happening currently, or is it a memory or a hypothetical?</strong></p>
+<ul>
+<li>
+<p>A problem from a job you left is a memory. You cannot go look at it, and you cannot talk to anyone about how it works today.</p>
+</li>
+<li>
+<p>A problem that would appear if the team doubled is a hypothetical. There is nothing to observe yet.</p>
+</li>
+<li>
+<p>A problem that was fixed six months ago is a memory even if it still annoys you.</p>
+</li>
+</ul>
+<p>The test is simple: could you go watch this happen in the next two weeks? If not, it will not survive Sprint 3, where you have to talk to someone about the current state.</p>
+</section>
+
+<section>
+<h2 id="check-4-is-it-the-right-size">Check 4. Is it the right size?</h2>
+<p>This is the check that decides whether the next nine weeks have anywhere to go, and it is the one that most often goes wrong quietly. Wrong size fails in two directions.</p>
+<p><strong>Too small looks like:</strong> only you touch it. One conversation or one decision would resolve it. There is nothing you would have to find out, because you already know everything about it.</p>
+<p><strong>Too big looks like:</strong> you cannot describe how it works now in a single paragraph. Nobody owns it. Everyone is affected, which usually means you cannot name anyone.</p>
+<p>Neither is a reason to drop a candidate problem. Both are reasons to move it.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Problem</strong></th>
+<th><strong>Diagnosis</strong></th>
+<th><strong>The move</strong></th>
+<th><strong>Result</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The export format for my monthly report is wrong</td>
+<td>Too small. Only I touch it, and one ticket would fix it</td>
+<td>Go up. What is this an instance of?</td>
+<td>Nobody owns export definitions when the source system changes, so every reporting team patches by hand</td>
+</tr>
+<tr>
+<td>Our culture resists change</td>
+<td>Too big. Cannot describe the current state, cannot name who pays</td>
+<td>Go down. Pick one instance you have actually seen</td>
+<td>Decisions made in the Tuesday leadership meeting do not reach the people who execute them until the following week</td>
+</tr>
+</tbody>
+</table>
+<p>So this check is a calibration rather than a gate. You adjust the altitude until the problem fits, and it fits when all three of these are true:</p>
+<ul>
+<li>
+<p>You can describe how it works now in one paragraph.</p>
+</li>
+<li>
+<p>There is at least one person other than you with a stake in it, who would talk to you about it.</p>
+</li>
+<li>
+<p>There is at least one thing you would have to find out to move on it.</p>
+</li>
+</ul>
+<p>Those three are not arbitrary. The first is what makes the problem writable in your frame next week. The second is what Sprint 3 requires, when you go talk to someone. The third is what Sprint 4 requires, when you name a gap in your own knowledge and go close it. A problem that fails any of the three will stall in a specific week, and you can see which one from here.</p>
+</section>
+
+<section>
+<h2 id="what-to-write-for-each-check">What to write for each check</h2>
+<p>Use these response fields for every candidate in Test and Commit:</p>
+<ol>
+<li><strong>People:</strong> Name the specific people or roles who experience the cost. Explain how you know they are involved and how you could reach someone to learn more. You do not need to contact them yet.</li>
+<li><strong>Current handling:</strong> Name the person, process, or work-around handling the situation today. Describe what it does and the gap that remains.</li>
+<li><strong>Current occurrence:</strong> Describe a recent instance you know about and whether you could observe another one in the next two weeks. If you do not know when it last occurred, write that.</li>
+<li><strong>Size:</strong> Describe one bounded instance in a paragraph. Name someone besides you with a stake in it, and at least one thing you would need to find out. If you change the scope, write the changed version.</li>
+</ol>
+<p>The checks help you choose where further inquiry is possible. “I do not know yet” is a useful response when you also record what you would need to learn. Do not invent a person, an event, or evidence to make a candidate pass.</p>
+</section>
+
+    <div class="submit">
+      <h2>What counts as done</h2>
+      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
+    </div>
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+  </div>
+</body>
+</html>
