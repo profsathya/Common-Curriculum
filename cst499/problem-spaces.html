@@ -150,6 +150,20 @@ table.grades td:first-child{font-weight:700;width:70px;}
 .ps .qs li{margin:3px 0;color:var(--text);}
 .ps.partner{border-color:#A8CBE0;background:#FCFDFE;}
 .ps-group .gnote{font-size:12.5px;color:var(--muted);margin:0 0 9px;}
+.ps-group .gnote-lead{color:var(--text);font-size:13.5px;}
+.ps-group .gnote-lead b{font-weight:700;}
+.ps .goal-line ul.demo{margin:5px 0 0;padding-left:17px;}
+.ps .goal-line ul.demo li{color:var(--text);margin:0;}
+details.more{margin-top:7px;}
+details.more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.more > summary::-webkit-details-marker{display:none;}
+details.more .plus{flex:0 0 16px;width:16px;height:16px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:14px;text-align:center;}
+details.more:not([open]) > summary .plus::after{content:"+";}
+details.more[open] > summary .plus::after{content:"\2212";}
+details.more ul.mg{margin:6px 0 0;padding-left:17px;font-size:12.5px;}
+details.more ul.mg li{margin:5px 0;color:var(--text);}
+details.more ul.mg .dm{display:block;color:var(--muted);font-size:12px;}
+@media print{details.more > summary .plus{display:none;}}
 
 /* Two doors + area index (restructure, Sep 2026) */
 .doors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 8px;}
@@ -224,7 +238,7 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 </div>
 <div class="doors">
 <a class="door" href="#have-idea"><span class="dn">I have a project idea</span><span class="dd">Make the case for it, or find teammates to build it with you.</span></a>
-<a class="door" href="#starting-point"><span class="dn">I want a starting point</span><span class="dd">Browse problem spaces by area: partners, software, data, security, games.</span></a>
+<a class="door" href="#starting-point"><span class="dn">I want a starting point</span><span class="dd">Browse problem spaces by area: partner-proposed, software, data, security, games.</span></a>
 </div>
 
 <h2 class="sec" id="have-idea">I have a project idea</h2>
@@ -238,23 +252,34 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 
 <h2 class="sec" id="starting-point">I want a starting point</h2>
 <div class="chips">
-<a href="#g-partners">Local partners and mentors <span class="ct">&middot; 3</span></a>
+<a href="#g-partners">Proposed by local partners <span class="ct">&middot; 3</span></a>
 <a href="#g-software">Software engineering <span class="ct">&middot; 4</span></a>
 <a href="#g-data">Data science and machine learning <span class="ct">&middot; 4</span></a>
 <a href="#g-network">Network and security <span class="ct">&middot; 3</span></a>
 <a href="#g-games">Game development <span class="ct">&middot; 3</span></a>
 </div>
 <details class="bigpic grp" id="g-partners" open>
-<summary><div class="bigpic-head"><span class="plus"></span><span class="t">Local partners and mentors</span><span class="s">3 problem spaces</span></div></summary>
+<summary><div class="bigpic-head"><span class="plus"></span><span class="t">Proposed by local partners</span><span class="s">3 problem spaces</span></div></summary>
 <div class="bigpic-body">
 <div class="ps-group">
-<p class="gnote">Each of these comes with a person rather than an issue tracker, so the route in is a conversation. Read the space, sit with the questions under it, and bring your answers to the mentor named and to your Sprint 1 proposal.</p>
+<p class="gnote gnote-lead">If you are interested in one of these ideas as the starting point for your work, go through the process for developing your proposal with it as the starting point.</p>
+<p class="gnote gnote-lead"><b>How assignment works:</b> partner-proposed projects are assigned through your proposal. Propose it, and we match you and introduce you to the partner by <b>September 23</b>.</p>
+<p class="gnote">Each of these comes with a person rather than an issue tracker. Read the space, sit with the questions under it, and bring your answers to your Sprint 1 proposal.</p>
 
 <div class="ps partner">
 <div class="nm">Aprentech &middot; Autonomous low-speed vehicle</div>
 <div class="who"><b>Offered by</b> Aurelio Lopez, Aprentech LLC &mdash; industry mentor. &nbsp;<b>Who reacts to the work</b> Aprentech engineers, and the South Monterey County high-school volunteers who shadow the build.</div>
 <div class="desc">A low-speed electric vehicle brought up from a non-drivable state into a real research platform: drive-by-wire steering, braking and throttle, 360&deg; cameras with radar and LiDAR, and a ROS&nbsp;2 autonomy stack. It spans computer science, electrical work and mechanical restoration, and the open-source stack, the sensors and the actuator layout are yours to research and choose.</div>
-<div class="goal-line"><b>Sample goal</b><br>Take one subsystem &mdash; steering actuation, or obstacle detection in real outdoor light &mdash; from a bench setup to something that demonstrably works on the vehicle, with the safety case written down.</div>
+<div class="goal-line"><b>Sample goal</b><br>Take one subsystem &mdash; steering actuation, or obstacle detection in real outdoor light &mdash; from a bench setup to something that demonstrably works on the vehicle, with the safety case written down.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to take a piece of hardware and software from a bench test to working on a real vehicle, with the safety reasoning written down.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Research and choose the sensor set and actuator layout for the vehicle, and write up the comparison so Aprentech engineers can act on it.<span class="dm">Demonstrates your ability to evaluate options and make a technical recommendation others can act on.</span></li>
+<li>Bring up the ROS&nbsp;2 autonomy stack on the vehicle so one sensor&rsquo;s data (a camera, or the LiDAR) reaches it live, and document the setup so the next contributor can repeat it.<span class="dm">Demonstrates your ability to integrate an open-source stack with real hardware and hand off the setup.</span></li>
+<li>Build the bench setup for drive-by-wire braking or throttle, with a test procedure the high-school volunteers who shadow the build can follow.<span class="dm">Demonstrates your ability to design a test and explain your work to people newer than you.</span></li>
+</ul>
+</details>
 <div class="qs"><b>Questions to sit with</b>
 <ul>
 <li>Which single subsystem would you want working by December, and what would make that enough to prove?</li>
@@ -268,7 +293,16 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="nm">Aprentech &middot; Triqui Bajo language platform</div>
 <div class="who"><b>Offered by</b> Aurelio Lopez, Aprentech LLC &mdash; industry mentor. &nbsp;<b>Who reacts to the work</b> Indigenous teachers and families in Mexico who use the platform, plus Aprentech&rsquo;s engineering team.</div>
 <div class="desc">A working language-learning platform for Triqui Bajo that needs teacher and parent management across web and mobile &mdash; and underneath that, a data model guaranteeing the community keeps ownership of its own Cuentos, Poes&iacute;as and recordings. Python/Flask, Flutter, Firebase Auth and MongoDB are in place; the visual system, the permission design and what counts as community control are open.</div>
-<div class="goal-line"><b>Sample goal</b><br>Design and ship the permission model that lets a teacher run a classroom and a parent enroll their children while community materials stay under community control, and validate it with teachers who actually use it.</div>
+<div class="goal-line"><b>Sample goal</b><br>Design and ship the permission model that lets a teacher run a classroom and a parent enroll their children while community materials stay under community control, and validate it with teachers who actually use it.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to design and ship a feature across web and mobile for real users, and test it with the people who use it.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Build the teacher&rsquo;s classroom management screens in Flutter, test them with a teacher who uses the platform, and revise them from what you saw.<span class="dm">Demonstrates your ability to build a mobile feature and improve it from user feedback.</span></li>
+<li>Write down the data model for Cuentos, Poes&iacute;as and recordings in MongoDB so community ownership is enforced by the data itself, and prove it with tests.<span class="dm">Demonstrates your ability to design a data model around a hard requirement and prove it with tests.</span></li>
+<li>Design the visual system for the web and mobile apps and document it so Aprentech&rsquo;s engineering team can build new screens from it.<span class="dm">Demonstrates your ability to design consistently across platforms and document your work for a team.</span></li>
+</ul>
+</details>
 <div class="qs"><b>Questions to sit with</b>
 <ul>
 <li>If cultural material can never leave community control, what does that rule in and out about how you build &mdash; and what can this platform do that a commercial app cannot?</li>
@@ -282,7 +316,16 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="nm">Campus Compass &middot; finding what a campus already offers</div>
 <div class="who"><b>Offered by</b> Arlene Resendiz Lopez, CSUMB student &mdash; she has 22 student survey responses, personas, and administrator feedback from Cabrillo and Gavilan to hand over as background. &nbsp;<b>Who reacts to the work</b> Current CSUMB students, especially new and transfer students, and the campus offices that own the information.</div>
 <div class="desc">The resources exist and students still miss them, because the information lives across websites, emails, portals, social media and advisors. The research on the problem is already done and yours to build on; which need to serve first, what to build, and how the information stays true after you graduate are all still open.</div>
-<div class="goal-line"><b>Sample goal</b><br>Take one category of campus resource end to end &mdash; from the office that owns the information to a student who finds it in under a minute &mdash; and show it still holds a month later.</div>
+<div class="goal-line"><b>Sample goal</b><br>Take one category of campus resource end to end &mdash; from the office that owns the information to a student who finds it in under a minute &mdash; and show it still holds a month later.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to ship something real students use and keep the information behind it accurate over time.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Turn the 22 survey responses and the personas into the one need to serve first, then build a prototype for it and test it with new or transfer students.<span class="dm">Demonstrates your ability to work from real user research to a tested prototype.</span></li>
+<li>Build the process a campus office uses to keep its own information current, and get one office to use it for a month.<span class="dm">Demonstrates your ability to design for the people who maintain a system, and hand it off to them.</span></li>
+<li>Use the administrator feedback from Cabrillo and Gavilan to build the piece that would let a second campus run what you built.<span class="dm">Demonstrates your ability to build software that adapts to more than one organization.</span></li>
+</ul>
+</details>
 <div class="qs"><b>Questions to sit with</b>
 <ul>
 <li>Who owns each piece of information you want to show, and what would make it easy for them to keep it current?</li>
@@ -302,22 +345,58 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="ps">
 <div class="nm"><a href="https://world.openfoodfacts.org/" target="_blank" rel="noopener">Open Food Facts</a></div>
 <div class="desc">Open food-product data behind apps used worldwide. Work in apps, APIs, OCR, and data-quality rules.</div>
-<div class="goal-line"><b>Sample goal</b><br>Tighten how one product category&rsquo;s nutrition data is validated, so mislabeled entries stop reaching the apps that read the database.</div>
+<div class="goal-line"><b>Sample goal</b><br>Tighten how one product category&rsquo;s nutrition data is validated, so mislabeled entries stop reaching the apps that read the database.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to improve the quality of data that apps around the world read, and see the change through review.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Improve OCR for one kind of label text (an ingredient list, or a nutrition table) so fewer products need manual correction, with a measured before and after.<span class="dm">Demonstrates your ability to work with real, messy data and measure your improvement.</span></li>
+<li>Fix a reported bug in one of the apps and carry it through the maintainers&rsquo; review to release.<span class="dm">Demonstrates your ability to ship a change to software real people use and see it through review.</span></li>
+<li>Add or extend one API endpoint an app needs, with tests and documentation for other developers.<span class="dm">Demonstrates your ability to build and document an API other developers use.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://www.hotosm.org/" target="_blank" rel="noopener">Humanitarian OpenStreetMap</a></div>
 <div class="desc">Open mapping for crisis response. Work in geospatial tooling, mapping workflows, and the Tasking Manager.</div>
-<div class="goal-line"><b>Sample goal</b><br>Add a quality check to the Tasking Manager that flags incomplete mapping before a task can be marked done.</div>
+<div class="goal-line"><b>Sample goal</b><br>Add a quality check to the Tasking Manager that flags incomplete mapping before a task can be marked done.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to add a feature to a tool used in crisis response and get it through the project&rsquo;s review.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Fix a reported bug in the Tasking Manager and carry it from reproduction to a merged fix.<span class="dm">Demonstrates your ability to find and fix a bug in a large codebase and see it through review.</span></li>
+<li>Improve one step of the mapping workflow that volunteers repeat most often, and test the change with mappers.<span class="dm">Demonstrates your ability to improve a workflow for real users and test it with them.</span></li>
+<li>Build a small geospatial tool that reports how complete the mapping is for one region, with documentation.<span class="dm">Demonstrates your ability to work with geospatial data and document a tool for others.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://openaq.org/" target="_blank" rel="noopener">OpenAQ</a></div>
 <div class="desc">Global air-quality data. Work in the API, client SDKs, and ingestion pipelines.</div>
-<div class="goal-line"><b>Sample goal</b><br>Extend a client SDK so one country&rsquo;s official air-quality index can be retrieved in a single call, with tests.</div>
+<div class="goal-line"><b>Sample goal</b><br>Extend a client SDK so one country&rsquo;s official air-quality index can be retrieved in a single call, with tests.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to extend a public software library, with tests, so other developers can rely on it.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Add an ingestion pipeline for one air-quality source OpenAQ does not yet carry, and keep it running for a month.<span class="dm">Demonstrates your ability to build a data pipeline from a real source and keep it running.</span></li>
+<li>Fix a reported issue in the API and carry it through review to release.<span class="dm">Demonstrates your ability to fix a bug in a live API and see it through review.</span></li>
+<li>Write a worked example for one client SDK, from install to a chart of one city&rsquo;s data, and get it into the documentation.<span class="dm">Demonstrates your ability to document software so a new developer can use it.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://programminghistorian.org/" target="_blank" rel="noopener">Programming Historian</a></div>
 <div class="desc">Peer-reviewed digital-method tutorials. Work in lesson code, the publishing platform, and testing.</div>
-<div class="goal-line"><b>Sample goal</b><br>Repair a published lesson broken by a deprecated library, and add a test that catches the next break.</div>
+<div class="goal-line"><b>Sample goal</b><br>Repair a published lesson broken by a deprecated library, and add a test that catches the next break.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to maintain code other people depend on and add the test that keeps it working.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Check the code in every lesson for one language against current library versions, report which ones break, and fix one.<span class="dm">Demonstrates your ability to audit a codebase and report what you found clearly.</span></li>
+<li>Add automated testing to the publishing platform so a broken lesson is caught before it is published.<span class="dm">Demonstrates your ability to set up testing for a project that has little.</span></li>
+<li>Improve one part of the publishing platform (a build step, or the site&rsquo;s search) and see it through review.<span class="dm">Demonstrates your ability to improve a platform other people publish on and see it through review.</span></li>
+</ul>
+</details>
 </div>
 </div>
 <div class="totop"><a href="#top">Back to top</a></div>
@@ -330,22 +409,58 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="ps">
 <div class="nm"><a href="https://scikit-learn.org/stable/developers/contributing.html" target="_blank" rel="noopener">scikit-learn</a></div>
 <div class="desc">The standard Python machine-learning library, with documented routes for bug fixes, documentation, tests, and clearly labeled first issues.</div>
-<div class="goal-line"><b>Sample goal</b><br>Take a documented bug in one estimator from reproduction through to a merged fix with a regression test.</div>
+<div class="goal-line"><b>Sample goal</b><br>Take a documented bug in one estimator from reproduction through to a merged fix with a regression test.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to fix a bug in a widely used library and see it through code review to a merge.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Improve the documentation for one estimator with a worked example, through review.<span class="dm">Demonstrates your ability to document code so other developers can use it.</span></li>
+<li>Add tests to a module the maintainers have labeled as needing coverage.<span class="dm">Demonstrates your ability to strengthen test coverage in a large codebase.</span></li>
+<li>Take one labeled first issue through to a merged pull request, then a second, harder one.<span class="dm">Demonstrates your ability to contribute repeatedly to a project and take on harder work each time.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://github.com/owid/etl" target="_blank" rel="noopener">Our World in Data</a></div>
 <div class="desc">The open data pipelines and chart platform behind a site journalists and researchers use daily.</div>
-<div class="goal-line"><b>Sample goal</b><br>Repair or add one dataset&rsquo;s pipeline so a chart the public reads stays correct when the upstream source updates.</div>
+<div class="goal-line"><b>Sample goal</b><br>Repair or add one dataset&rsquo;s pipeline so a chart the public reads stays correct when the upstream source updates.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to work with real data the public reads and keep it correct when its source changes.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Add one new dataset to the pipeline from its source through to a published chart, with its provenance documented.<span class="dm">Demonstrates your ability to build a data pipeline end to end and document where the data comes from.</span></li>
+<li>Write a check that catches a broken or missing value before a chart is published, and carry it through review.<span class="dm">Demonstrates your ability to add a data-quality check to a live pipeline.</span></li>
+<li>Fix a reported issue in the chart platform and see it through review.<span class="dm">Demonstrates your ability to fix a bug in a tool the public uses.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://pypsa-earth.readthedocs.io/" target="_blank" rel="noopener">PyPSA-Earth</a></div>
 <div class="desc">Open energy-system modeling. Work in data retrieval, modeling, optimization, and country-specific analysis.</div>
-<div class="goal-line"><b>Sample goal</b><br>Fix hydro-data retrieval for an under-studied country and publish a first least-cost energy model for it.</div>
+<div class="goal-line"><b>Sample goal</b><br>Fix hydro-data retrieval for an under-studied country and publish a first least-cost energy model for it.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to repair a data pipeline and turn it into a result someone can use.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Run and document the model for one country from setup to result, then contribute back the fixes for whatever broke on the way.<span class="dm">Demonstrates your ability to reproduce a published result and contribute fixes.</span></li>
+<li>Check one country&rsquo;s retrieved data (demand, or renewable potential) against a published source, and fix what disagrees.<span class="dm">Demonstrates your ability to validate real data against a source and correct it.</span></li>
+<li>Improve the speed or memory use of one optimization step, with a measured before and after.<span class="dm">Demonstrates your ability to measure and improve performance.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://github.com/openml/openml-python" target="_blank" rel="noopener">OpenML</a></div>
 <div class="desc">An open platform for sharing datasets, models, and benchmarks. Work in the Python API and reproducibility tooling.</div>
-<div class="goal-line"><b>Sample goal</b><br>Add a dataset-quality check to the Python client that catches a common metadata error before upload.</div>
+<div class="goal-line"><b>Sample goal</b><br>Add a dataset-quality check to the Python client that catches a common metadata error before upload.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to add a check to a shared tool so other people&rsquo;s data uploads go right.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Fix a reported bug in the Python client and see it through review to release.<span class="dm">Demonstrates your ability to fix a bug in a library others use.</span></li>
+<li>Build a script that reproduces a published benchmark from OpenML end to end, and contribute back what you had to fix.<span class="dm">Demonstrates your ability to reproduce a result and share the fixes.</span></li>
+<li>Improve the documentation for one part of the Python API with a worked example.<span class="dm">Demonstrates your ability to document software for other developers.</span></li>
+</ul>
+</details>
 </div>
 </div>
 <div class="totop"><a href="#top">Back to top</a></div>
@@ -358,17 +473,44 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="ps">
 <div class="nm"><a href="https://www.zaproxy.org/docs/contribute/coding/" target="_blank" rel="noopener">OWASP ZAP</a></div>
 <div class="desc">A web-application security scanner with explicit good-first, good-second, and scan-rule paths. Java, with some JavaScript.</div>
-<div class="goal-line"><b>Sample goal</b><br>Write a passive scan rule for a vulnerability class ZAP does not yet flag, with tests and documentation.</div>
+<div class="goal-line"><b>Sample goal</b><br>Write a passive scan rule for a vulnerability class ZAP does not yet flag, with tests and documentation.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to write a security check, test it and document it in a tool professionals use.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Take one good-first issue and then one good-second issue through review to a merge.<span class="dm">Demonstrates your ability to contribute repeatedly to a project and take on harder work each time.</span></li>
+<li>Improve an existing scan rule that raises false positives, with test cases that show the fix.<span class="dm">Demonstrates your ability to reduce false positives and prove it with tests.</span></li>
+<li>Set up a deliberately vulnerable test application, run ZAP against it, and report what the scanner misses, with one fix.<span class="dm">Demonstrates your ability to evaluate a security tool and act on what you find.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://github.com/zeek/zeek/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22Good%20First%20Issue%22" target="_blank" rel="noopener">Zeek</a></div>
 <div class="desc">A network-security monitor with active good-first and larger project issues, including protocol-analysis work.</div>
-<div class="goal-line"><b>Sample goal</b><br>Extend a protocol analyzer to surface a field current detections miss, and demonstrate it firing on a real capture.</div>
+<div class="goal-line"><b>Sample goal</b><br>Extend a protocol analyzer to surface a field current detections miss, and demonstrate it firing on a real capture.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to extend security software and prove it works on real network data.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Write a Zeek script that detects one pattern of suspicious traffic, and test it on captures.<span class="dm">Demonstrates your ability to build a detection and test it on real traffic.</span></li>
+<li>Take one good-first issue through review to a merge.<span class="dm">Demonstrates your ability to fix a bug in a large codebase and see it through review.</span></li>
+<li>Add tests, built on capture files, for an analyzer that has few.<span class="dm">Demonstrates your ability to strengthen test coverage with real data.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://www.wireshark.org/develop" target="_blank" rel="noopener">Wireshark</a></div>
 <div class="desc">The widely used network protocol analyzer. Work in dissectors, capture tools, tests, and documentation. Higher onboarding cost than the others here.</div>
-<div class="goal-line"><b>Sample goal</b><br>Improve a dissector so a message type currently shown as raw bytes is decoded, with a capture file as the test.</div>
+<div class="goal-line"><b>Sample goal</b><br>Improve a dissector so a message type currently shown as raw bytes is decoded, with a capture file as the test.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to decode a protocol in a tool used every day and prove it with a real capture.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Write a dissector for a small, documented protocol Wireshark does not yet decode.<span class="dm">Demonstrates your ability to build a decoder from a specification.</span></li>
+<li>Fix a reported dissector bug and carry it through review to a merge.<span class="dm">Demonstrates your ability to fix a bug and see it through review.</span></li>
+<li>Write up the onboarding you went through as developer documentation, and get it accepted.<span class="dm">Demonstrates your ability to document what you learned so the next person starts faster.</span></li>
+</ul>
+</details>
 </div>
 </div>
 <div class="totop"><a href="#top">Back to top</a></div>
@@ -381,17 +523,44 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
 <div class="ps">
 <div class="nm"><a href="https://docs.godotengine.org/en/stable/contributing/ways_to_contribute.html" target="_blank" rel="noopener">Godot</a></div>
 <div class="desc">An open game engine with paths in engine code, editor tooling, testing, documentation, and demos.</div>
-<div class="goal-line"><b>Sample goal</b><br>Take a reproducible editor or engine bug from diagnosis to a reviewed pull request. Godot stopped accepting AI-authored contributions in June, so this path asks you to own every line.</div>
+<div class="goal-line"><b>Sample goal</b><br>Take a reproducible editor or engine bug from diagnosis to a reviewed pull request. Godot stopped accepting AI-authored contributions in June, so this path asks you to own every line.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to diagnose a bug in a large codebase and see your own fix through review.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Improve one editor tool (a workflow that takes too many clicks) and see it through review.<span class="dm">Demonstrates your ability to improve a tool developers use every day.</span></li>
+<li>Add unit tests to an engine module with thin coverage.<span class="dm">Demonstrates your ability to strengthen test coverage in a large codebase.</span></li>
+<li>Build a demo project that shows one engine feature, and get it into the official demos.<span class="dm">Demonstrates your ability to build a working example and document it for others.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://bevy.org/learn/contribute/introduction/" target="_blank" rel="noopener">Bevy</a></div>
 <div class="desc">A Rust game engine that explicitly welcomes new contributors. Work in engine code, examples, documentation, and plugins.</div>
-<div class="goal-line"><b>Sample goal</b><br>Fill a documented gap for newcomers with a worked example or a small reusable plugin, and carry it through review.</div>
+<div class="goal-line"><b>Sample goal</b><br>Fill a documented gap for newcomers with a worked example or a small reusable plugin, and carry it through review.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to learn a new language and ecosystem well enough to contribute something others use.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Fix a reported bug in the engine code and carry it through review to a merge.<span class="dm">Demonstrates your ability to fix a bug in a Rust codebase and see it through review.</span></li>
+<li>Improve the documentation for one engine system with a worked example.<span class="dm">Demonstrates your ability to document software for other developers.</span></li>
+<li>Build a small game with Bevy and contribute back what you had to fix or document along the way.<span class="dm">Demonstrates your ability to build working software and contribute back to the tools you used.</span></li>
+</ul>
+</details>
 </div>
 <div class="ps">
 <div class="nm"><a href="https://github.com/OpenRA/OpenRA/blob/bleed/CONTRIBUTING.md" target="_blank" rel="noopener">OpenRA</a></div>
 <div class="desc">An active C# strategy-game engine and game project. Work in bug fixes, engine behavior, tools, and tests.</div>
-<div class="goal-line"><b>Sample goal</b><br>Take a reproducible gameplay or tooling bug through diagnosis to a reviewed fix, with the reasoning written up.</div>
+<div class="goal-line"><b>Sample goal</b><br>Take a reproducible gameplay or tooling bug through diagnosis to a reviewed fix, with the reasoning written up.
+<ul class="demo"><li>Accomplishing this goal will demonstrate your ability to fix a bug in a live game project and explain your reasoning to reviewers.</li></ul></div>
+<details class="more">
+<summary><span class="plus" aria-hidden="true"></span><span class="mt">More goals</span></summary>
+<ul class="mg">
+<li>Add tests for one engine behavior that has none.<span class="dm">Demonstrates your ability to strengthen test coverage in a large codebase.</span></li>
+<li>Improve one of the project&rsquo;s tools (the map editor, or a utility) and see it through review.<span class="dm">Demonstrates your ability to improve a tool other contributors use.</span></li>
+<li>Take one player-reported gameplay issue from the report through diagnosis to a fix.<span class="dm">Demonstrates your ability to work from user reports to a fix.</span></li>
+</ul>
+</details>
 </div>
 </div>
 <div class="totop"><a href="#top">Back to top</a></div>
@@ -416,9 +585,26 @@ padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light)
             <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
             <footer class="page-footer">
 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST499 Computer Science Capstone &middot; Problem spaces &middot; Draft v7</span>
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST499 Computer Science Capstone &middot; Problem spaces &middot; Draft v8</span>
 </footer>
 
 </div>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('.chips a, a.door') : null;
+    if(!a) return;
+    var h = a.getAttribute('href');
+    if(!h || h.charAt(0) !== '#') return;
+    var t = document.getElementById(h.slice(1));
+    if(!t) return;
+    e.preventDefault();
+    if(t.tagName === 'DETAILS') t.open = true;
+    t.scrollIntoView(reduce ? {block:'start'} : {behavior:'smooth', block:'start'});
+    if(history.replaceState) history.replaceState(null, '', h);
+  });
+})();
+</script>
 </body>
 </html>
