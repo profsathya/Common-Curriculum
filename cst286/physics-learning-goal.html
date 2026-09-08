@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Physics Learning Goal | CST286</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task ol.parts{margin:4px 0 0;padding-left:26px;list-style:lower-alpha;}
+.task ol.parts li{margin:2px 0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas.</span>
+<a href="https://profsathya.github.io/Common-Curriculum/cst286/physics-learning-goal.html" target="_blank" rel="noopener"><b>Open the full page in its own tab &nearr;</b></a>
+<span>Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST286</a> &middot; Physics Learning Goal</div>
+<div class="pagehead">
+<div class="s">CST286 &middot; Fall 2026 &middot; Sprint 1</div>
+<h1>Physics Learning Goal</h1>
+<div class="dt">Week 3 &middot; due Monday 14 September, 11:59 p.m. &middot; 100 points &middot; Graded assignments</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Strengthen your understanding of the physics behind your interest. Whether it is sports, music or games that you care about, there is a fascinating physical science idea underneath it that you can learn &mdash; and this sprint is where you go after it.</p>
+
+<h2 class="sec">Tasks</h2>
+<div class="copyline"><button type="button" class="btn primary" id="copy-tasks">Copy the questions</button><span>Paste this into a Google doc and answer each task under it.</span></div>
+<p class="body">Each <b>+</b> opens guidance, examples, a reflection question and a box to write in. Nothing under a <b>+</b> is required.</p>
+
+<ol class="tasks">
+<li class="task" id="task-1">
+<div class="ttext"><span class="tn">1.</span><span class="tt">Identify the physical behavior you want to understand. Take it from the interest you wrote about this week, and write it as a question: <i>Why does ___ lead to ___?</i></span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Start from what you already watch. Write down three moments in your interest where something physical happens that you would like to be able to call in advance &mdash; the ball curves, the bike holds the corner, the battery dies early. Turn each one into a <i>Why does ___ lead to ___?</i> question, then widen it: what else could you change, and what else changes when you do? Cross out any you can already answer, and any that would take a whole course. Of what is left, pick the one you would most mind getting wrong.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>From mountain biking</b> &mdash; Why does leaning further into a turn keep the bike from sliding out?<br><b>From music</b> &mdash; Why does hitting a drum harder make it louder but not higher?<br><b>From a phone that dies on a cold morning</b> &mdash; Why does cold weather drain a battery faster?</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Which of your three questions would bother you most to get wrong?</p></div>
+<div class="rbox" data-refl="t1">
+<label class="qt" for="rq-t1"><b>Your answer to task 1.</b> The behavior, written as a why-question.</label>
+<textarea class="box" id="rq-t1" data-rtext placeholder="Why does ___ lead to ___?"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>The behavior is written as a <i>Why does ___ lead to ___?</i> question.</li>
+<li>It comes from the interest you wrote about this week.</li>
+<li>It is one behavior, not a whole field.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-2">
+<div class="ttext"><span class="tn">2.</span><span class="tt">Explain how understanding this will help you, or make things better for you personally. Answer from your own interest and curiosity.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>This is the question that decides whether the next four weeks are worth anything to you. Finish this sentence three different ways: <i>If I understood this, I could ___.</i> Keep going until one of the endings is something you would actually do. Cross out any ending that is about the grade or about finishing the course. Then write two or three sentences with the real one in them.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>Biking</b> &mdash; I ride the same descent every week and brake far too early into the corners because I do not trust the bike. If I understood what actually keeps the tyres gripping, I would know how much speed I can carry instead of guessing.</p><p><b>Music</b> &mdash; I record my own drums and the mix always sounds thin. If I understood what changes when I hit harder, I would know what I am actually controlling.</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Would this still matter to you if it were not an assignment?</p></div>
+<div class="rbox" data-refl="t2">
+<label class="qt" for="rq-t2"><b>Your answer to task 2.</b> What understanding this would change for you.</label>
+<textarea class="box" id="rq-t2" data-rtext placeholder="If I understood this, I could …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says what you personally would do or notice differently.</li>
+<li>It is about your own interest, not about the grade or the course.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-3">
+<div class="ttext"><span class="tn">3.</span><span class="tt">Describe your current understanding. What do you already understand about this? What are you not sure about?</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Say out loud &mdash; to a classmate, or to your Dojo &mdash; what you think is going on in this behavior and why. Write it down the way you said it. Then read it back and split it in two: the parts you could defend if someone pushed, and the parts you are not sure about. The second list is the useful one; it is what tasks 4 and 5 go after. Being unsure is the starting point of this assignment, not a problem with your answer.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>What I understand:</b> the tyres push sideways on the ground and the ground pushes back, and that push is what turns me.</p><p><b>What I am not sure about:</b> why leaning changes how much sideways push I get, and whether my weight matters more than my speed.</p></div>
+<div class="reflq"><h4>Reflection</h4><p>What is the one thing you are least sure about &mdash; and why do you think that is?</p></div>
+<div class="rbox" data-refl="t3">
+<label class="qt" for="rq-t3"><b>Your answer to task 3.</b> What you understand now, and what you are not sure about.</label>
+<textarea class="box" id="rq-t3" data-rtext placeholder="What I understand …  What I am not sure about …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It says what you already understand about this behavior.</li>
+<li>It says what you are not sure about.</li>
+<li>What you are unsure about is something tasks 4 and 5 could go after.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-4">
+<div class="ttext"><span class="tn">4.</span><span class="tt">Write down how you will confirm that you have actually learned it &mdash; the problem (predicting a physical behavior for a given input condition) you will be able to solve and explain step by step to a ten-year-old.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Set the bar now, before the work starts, so that at the end of the sprint you are measured against your own standard rather than a surprise one. Picture the last day: someone hands you a situation in your behavior and asks what happens. Write the kind of problem that would be &mdash; which conditions you would be given, and what you would work out. Then check it two ways. Could you tell whether you got it right, by running a simulation, taking a measurement, or comparing against a case where the answer is already known? And could a ten-year-old follow your explanation, step by step, without any of the words you have not explained to them?</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>Biking</b> &mdash; Given a rider’s speed and how far they are leaning, I will work out whether the tyres hold or slide, show each step, and explain to a ten-year-old why leaning helps. I will check it against a simulation where I can change the lean and watch what happens.</p><p><b>Drums</b> &mdash; Given how hard the stick hits, I will work out what changes in the sound and what does not, and explain to a ten-year-old why hitting harder does not make the note higher. I will check it by recording two hits and measuring them.</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Could you tell, honestly, whether you got the answer right?</p></div>
+<div class="rbox" data-refl="t4">
+<label class="qt" for="rq-t4"><b>Your answer to task 4.</b> The problem you will be able to solve, and who you will explain it to.</label>
+<textarea class="box" id="rq-t4" data-rtext placeholder="Given … I will be able to work out … and explain it to a ten-year-old by …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>It names one specific problem: the conditions you would be given, and what you would work out.</li>
+<li>It says how you could tell whether you got it right.</li>
+<li>It says how you would explain the steps to a ten-year-old.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-5">
+<div class="ttext"><span class="tn">5.</span><span class="tt">List the three resources you will learn from, with one line each on why you think it will help you learn. The AI Dojo is a default resource for everyone and does not count as one of the three.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Start from your question, not from a search box: type the question itself, in your own words. Look for one of each kind &mdash; a textbook chapter or an OpenStax section, a simulation or lab you can run, and one explainer, whether a video, an article or a person. Then spend ten minutes on each: who made it, who they made it for, and does anyone you would trust point to it or agree with it? Try it for twenty minutes on your own question before you keep it &mdash; a resource that is about your behavior but never gets to your question has not earned a place. Week 4 asks you to judge these properly; this week is the quick pass.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>OpenStax College Physics, the section on circular motion</b> &mdash; my question sits in that chapter and the worked examples use the same quantities I would need.</p><p><b>A PhET simulation of friction on a slope</b> &mdash; I can change one thing at a time and watch what happens, which is how I actually learn.</p><p><b>Marco, who races downhill</b> &mdash; he has explained cornering to me before, and he can tell me when the physics does not match what happens on the trail.</p></div>
+<div class="reflq"><h4>Reflection</h4><p>Which of your three would you drop first if you ran out of time?</p></div>
+<div class="rbox" data-refl="t5">
+<label class="qt" for="rq-t5"><b>Your answer to task 5.</b> Three resources, with a line each on why it will help you learn.</label>
+<textarea class="box" id="rq-t5" data-rtext placeholder="1. … — why it will help me learn …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
+<li>Three resources are listed.</li>
+<li>None of them is the AI Dojo.</li>
+<li>Each has one line on why you think it will help you learn.</li>
+</ul></details>
+</div>
+</div>
+</details>
+</li>
+
+</ol>
+
+<h2 class="sec">Criteria</h2>
+<div class="crit">
+<details class="route ck">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Check it before you submit &mdash; the same list your partner runs in week 4</span></span></summary>
+<div class="route-body more-body">
+<ul class="cklist">
+<li>The behavior is written as a <i>Why does ___ lead to ___?</i> question.</li>
+<li>It says what understanding this would change for you personally.</li>
+<li>It says what you understand now, and what you are not sure about.</li>
+<li>It names the problem you will be able to solve, and who you will explain it to.</li>
+<li>It lists three resources, none of them the AI Dojo, each with a line on why it will help you learn.</li>
+</ul>
+</div>
+</details>
+<p><b>What makes it strong</b> &mdash; the behavior in 1 is one you can work on in four weeks, not a whole field; the reason in 2 is personal and specific, something you would do or notice differently, rather than a general claim about your career; what you are unsure about in 3 is the same thing 4 and 5 go after, so the three answers point the same way; the problem in 4 is one a ten-year-old could follow you through, and one you could tell whether you got right; the resources in 5 are ones you have actually opened.</p>
+<p><b>Grading</b> &mdash; 100 points, in Graded assignments. You will be asked to explain this to a peer, the TA and/or the instructor, so make sure you are comfortable with the responses you have developed for this assignment.</p>
+</div>
+
+
+<h2 class="sec">Submit</h2>
+<p class="body">Canvas text entry. <b>Submit the text itself, pasted into the Canvas box; a link to a Google doc is not a submission.</b></p>
+<p class="body">Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press <b>Copy my answers</b>, which puts each task with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="assignments.html">Assignment registry &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">How this page was made</div>
+<p class="prov-lead">The purpose and the five tasks are Prof. Sathya&rsquo;s, word for word, settled on 8 September 2026. The guidance, the examples, the reflection questions and the notes behind the AI feedback button were drafted by AI from that design; he reads them and edits by hand where they miss.</p>
+<details class="prov-more">
+<summary><span class="plus" aria-hidden="true"></span><span class="pm-t">What that looks like &mdash; what he decided, what AI built, and how it is checked</span></summary>
+<div class="prov-body">
+<h4>What he decided</h4>
+<ul>
+<li><b>The purpose and the five tasks</b> are his wording from 8 September 2026. Nothing on this page rewrites, reorders or adds to them.</li>
+<li><b>The two layers.</b> The tasks stand on their own; everything under a <b>+</b> is optional. A student who copies the tasks into a document and answers them there has done the whole assignment.</li>
+<li><b>A behavior, not an academic problem.</b> The object of this goal is something physical you already care about and want to be able to predict. Where the word <i>problem</i> appears in task 4 it means predicting a physical behavior for a given input condition.</li>
+<li><b>Uncertainty is the starting point.</b> Task 3 asks what you are not sure about because that is what tasks 4 and 5 go after. It is never counted against you.</li>
+<li><b>The check-before-you-submit list is one list, two uses</b> &mdash; you run it on your own draft, and your partner runs the same list on theirs in the week-4 session.</li>
+</ul>
+<h4>What AI built</h4>
+<ul>
+<li><b>The guidance under each +</b> &mdash; a process for thinking the question through, rather than more explanation of it.</li>
+<li><b>The examples</b> &mdash; more than one per task, so that no single one becomes the thing to copy. They are illustrations, not answers.</li>
+<li><b>The reflection questions</b> and the criteria notes the AI feedback button reads from.</li>
+</ul>
+<h4>How it is checked</h4>
+<ul>
+<li>Every page is written against the course&rsquo;s own writing rules and then read by him; where a line misses, he edits it directly.</li>
+<li>The AI feedback button is held to the observable criteria for each box. It never judges you, never rewrites your answer, and never hands you wording.</li>
+<li>The <b>Check it yourself</b> list under each box is the same criteria without the AI, so the button is never the only route.</li>
+</ul>
+</div>
+</details>
+</div>
+
+<!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Physics Learning Goal &middot; Draft v1 of 2026-09-08</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+    // Physics Learning Goal — behaviour only. All words students read live in the markup above,
+    // except the task list below, which is the single source of truth for both copy buttons.
+    var TASKS = [
+        {
+                "n": 1,
+                "text": "Identify the physical behavior you want to understand. Take it from the interest you wrote about this week, and write it as a question: Why does ___ lead to ___?",
+                "parts": []
+        },
+        {
+                "n": 2,
+                "text": "Explain how understanding this will help you, or make things better for you personally. Answer from your own interest and curiosity.",
+                "parts": []
+        },
+        {
+                "n": 3,
+                "text": "Describe your current understanding. What do you already understand about this? What are you not sure about?",
+                "parts": []
+        },
+        {
+                "n": 4,
+                "text": "Write down how you will confirm that you have actually learned it — the problem (predicting a physical behavior for a given input condition) you will be able to solve and explain step by step to a ten-year-old.",
+                "parts": []
+        },
+        {
+                "n": 5,
+                "text": "List the three resources you will learn from, with one line each on why you think it will help you learn. The AI Dojo is a default resource for everyone and does not count as one of the three.",
+                "parts": []
+        }
+];
+
+    var REFLQ = "REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) {Q} If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.";
+    var CFG = {"page": "cst286-physics-learning-goal", "course": "CST286", "pageTitle": "Physics Learning Goal", "destination": "Week 3 is where the student points the rest of Sprint 1. The goal states one physical behavior from their own interest written as a why-question, what understanding it would change for them personally, what they understand and are unsure about today, the problem they will be able to solve and explain to a ten-year-old, and the three resources they will learn from. The simulation they build, the sources they judge in week 4 and the Sprint 1 Exam in week 6 all work on this behavior.", "feeds": "One of the five tasks in the learning goal, answered in the student's own words.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their ability or their prospects. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording — if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further. PHYSICS STANCE (instructor note, never quoted to the student): this is a goal-setting item written in week 3, before the learning happens. Never teach the physics, never correct the student's current understanding, and never say whether what they believe is right — that is what the sprint is for. Uncertainty in task 3 is the point of the task and is never treated as a missing element. Judge only whether the requested elements are present and specific.", "coach": {"t1": "REQUESTED ELEMENTS: one physical behavior the student wants to understand, taken from the interest they wrote about in week 3, written as a \"Why does ___ lead to ___?\" question. OBSERVABLE CRITERIA: the answer is in question form; it names a specific physical behavior rather than a field or a topic; it is narrow enough to work on in four weeks. COMMON OMISSIONS: a topic is given where a question was asked (\"aerodynamics\"); the question is so broad it is a course rather than a behavior; the behavior is not physical. REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) Which of your three questions would bother you most to get wrong? If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.", "t2": "REQUESTED ELEMENTS: how understanding this behavior would help the student or make something better for them personally, answered from their own interest and curiosity. OBSERVABLE CRITERIA: it names something the student would do, notice or decide differently; it is specific to their own life or interest rather than a general statement. COMMON OMISSIONS: the reason is about the grade, the course or a future career in general; the answer describes the topic as interesting without saying what it would change for them. NOTE: never supply a motivation or wording for this box. If the reason is general, say so and ask what it would change for them. REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) Would this still matter to you if it were not an assignment? If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.", "t3": "REQUESTED ELEMENTS: what the student already understands about the behavior, and what they are not sure about. OBSERVABLE CRITERIA: both halves are present; the \"not sure\" half names something specific rather than saying they know nothing; what they are unsure about relates to the behavior in task 1. COMMON OMISSIONS: only one half is answered; the unsure half is \"everything\" or \"nothing\"; the understanding described is about a different behavior from task 1. NOTE: uncertainty is expected here and is never a deficiency. Never supply the physics, correct their understanding, or tell them whether what they wrote is right &mdash; only whether both halves are there and specific. REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) What is the one thing you are least sure about &mdash; and why do you think that is? If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.", "t4": "REQUESTED ELEMENTS: the problem the student will be able to solve — predicting a physical behavior for a given input condition — and how they will explain it step by step to a ten-year-old. OBSERVABLE CRITERIA: the problem names the input conditions that would be given and what the student would work out; there is a way to tell whether the answer is right (a simulation, a measurement, or a known case); the explanation is aimed at a ten-year-old. COMMON OMISSIONS: the standard is a feeling rather than a problem (\"I will understand it better\"); no input conditions are named, so nothing could be posed to them; there is no way to check the answer. NOTE: never supply the problem or the physics. If a part is missing, name it and ask for it. REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) Could you tell, honestly, whether you got the answer right? If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.", "t5": "REQUESTED ELEMENTS: three resources the student will learn from, each with one line on why they think it will help them learn. The AI Dojo is a default for everyone and does not count as one of the three. OBSERVABLE CRITERIA: exactly three resources are named specifically enough that someone else could find them; none of them is the AI Dojo; each carries a reason that connects the resource to this student’s question or to how they learn. COMMON OMISSIONS: fewer than three; a resource named only by type (\"a YouTube video\"); a reason that describes the resource rather than saying why it will help them learn; the AI Dojo counted as one of the three. REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) Which of your three would you drop first if you ran out of time? If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element."}, "question": {}, "label": {"t1": "The question", "t2": "Why it matters to me", "t3": "Where I stand today", "t4": "How I will confirm I learned it", "t5": "My three resources"}, "order": ["t1", "t2", "t3", "t4", "t5"], "min": {"t1": 0, "t2": 0, "t3": 0, "t4": 0, "t5": 0}};
+    var KEY = 'cc-gi:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in an 800px frame, so offer the way out to the
+    // full page. Shown when the page is framed, or when it is opened with ?context=canvas.
+    // Hidden when it is already the top-level page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- the task list, as text ----------
+    function letter(i) { return String.fromCharCode(97 + i); }
+    function taskPlain(t) {
+        var s = t.text;
+        t.parts.forEach(function (p, i) { s += ' ' + letter(i) + '. ' + p; });
+        return s;
+    }
+    TASKS.forEach(function (t) { CFG.question['t' + t.n] = taskPlain(t); });
+
+    function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function indentLines(s, pad) {
+        return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n');
+    }
+    function answerHtml(s) {
+        var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
+        return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
+    }
+    // One builder, two payloads: the tasks alone (Copy the questions), or the tasks with the
+    // student's name and answers beneath each (Copy my answers). Returns {text, html}.
+    function buildPayload(withAnswers) {
+        var md = '', html = '';
+        if (withAnswers) {
+            md += CFG.pageTitle + ' — ' + CFG.course + ', Week 3\n';
+            html += '<p><b>' + esc(CFG.pageTitle) + '</b> — ' + esc(CFG.course) + ', Week 3</p>';
+        }
+        html += '<ol>';
+        TASKS.forEach(function (t, idx) {
+            md += t.n + '. ' + t.text + '\n';
+            html += '<li>' + esc(t.text);
+            if (t.parts.length) {
+                html += '<ol type="a" style="list-style-type:lower-alpha">';
+                t.parts.forEach(function (p, i) {
+                    md += '   ' + letter(i) + '. ' + p + '\n';
+                    html += '<li>' + esc(p) + '</li>';
+                });
+                html += '</ol>';
+            }
+            if (withAnswers) {
+                var a = (answerState('t' + t.n).text || '').trim();
+                md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
+                html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
+                if (idx < TASKS.length - 1) { md += '\n'; }
+            }
+            html += '</li>';
+        });
+        html += '</ol>';
+        return { text: md, html: html };
+    }
+
+    // The clipboard write, shared by both buttons: both types when the browser allows it,
+    // the markdown alone when it does not. Returns a promise.
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { name: '', answers: {}, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.answers) { state.answers = {}; }
+
+    var saveTimer = null;
+    function save() {
+        try {
+            window.localStorage.setItem(KEY, JSON.stringify(state));
+            storageOK = true;
+        } catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+
+    function answerState(key) {
+        if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
+        if (!state.answers[key].ai) { state.answers[key].ai = []; }
+        return state.answers[key];
+    }
+
+    // ---------- AI feedback ----------
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+    function aiError(box) {
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. ' +
+            'The Check it yourself list under this box covers the same ground — use that, and try the button again later.</span>';
+    }
+    function post(btn, box, content, onReply, done) {
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = (data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            onReply(reply);
+        }).catch(function () {
+            aiError(box);
+        }).then(function () {
+            btn.textContent = label;
+            done();
+        });
+    }
+
+    // ---------- the response boxes, one per task ----------
+    function refreshBox(el, key) {
+        var st = answerState(key);
+        var text = $('[data-rtext]', el).value.trim();
+        var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+        var btn = $('[data-ai]', el);
+        if (btn) { btn.disabled = text.length === 0 || text === last; }   // no minimum: any text turns the button on
+    }
+    function askAi(el, key) {
+        var st = answerState(key);
+        var btn = $('[data-ai]', el), box = $('[data-aibox]', el);
+        var text = $('[data-rtext]', el).value.trim();
+        var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 3)\n' +
+            'WHAT THIS ASSIGNMENT IS: ' + CFG.destination + '\n' +
+            'WHAT THIS BOX FEEDS: ' + CFG.feeds + '\n\n' +
+            'THE TASK THEY ARE ANSWERING (task ' + key.slice(1) + '): ' + CFG.question[key] + '\n\n' +
+            'WHAT THEY WROTE:\n\"\"\"' + text + '\"\"\"\n\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + CFG.coach[key];
+        post(btn, box, content, function (reply) {
+            st.ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, st.ai.length);
+        }, function () { refreshBox(el, key); });
+    }
+    $all('.rbox[data-refl]').forEach(function (el) {
+        var key = el.getAttribute('data-refl');
+        var st = answerState(key);
+        var ta = $('[data-rtext]', el);
+        ta.value = st.text || '';
+        var aibox = $('[data-aibox]', el);
+        if (st.ai.length && aibox) { showAi(aibox, st.ai[st.ai.length - 1].text, st.ai.length); }
+        ta.addEventListener('input', function () { st.text = ta.value; refreshBox(el, key); saveSoon(); });
+        ta.addEventListener('blur', save);
+        var goBtn = $('[data-ai]', el);
+        if (goBtn) { goBtn.addEventListener('click', function () { askAi(el, key); }); }
+        refreshBox(el, key);
+    });
+
+    // ---------- Copy the questions ----------
+    var tasksBtn = $('#copy-tasks');
+    if (tasksBtn) {
+        tasksBtn.addEventListener('click', function () {
+            var label = tasksBtn.textContent;
+            writeClipboard(buildPayload(false)).then(function () {
+                tasksBtn.textContent = 'Copied';
+                setTimeout(function () { tasksBtn.textContent = label; }, 2000);
+            }, function () {
+                tasksBtn.textContent = 'Copy did not work — use Copy my answers below';
+                setTimeout(function () { tasksBtn.textContent = label; }, 4000);
+            });
+        });
+    }
+
+    // ---------- Copy my answers ----------
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload(true);
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            function fallback() {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            }
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = 'Copied ✓ — paste it into a Google doc to edit, or straight into the Canvas box. The same text is below if you need it again.';
+            }, fallback);
+        });
+    }
+
+    // ---------- start ----------
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+</body>
+</html>

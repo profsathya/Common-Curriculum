@@ -5,7 +5,7 @@ description: Use when writing or revising any assignment or activity page studen
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+_Status: v5 (8 September 2026) — Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
 `schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
 first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
 the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
@@ -70,16 +70,41 @@ with depth behind expandables (writing-to-teach governs every sentence).
 
 ## Criteria for success — what done and good look like
 
-- **Done vs. good.** State what completing the task looks like, and separately what
-  strong work looks like — the difference is where the walkthrough conversation will
-  spend its time. Movement counts more than altitude: strong means further than where
-  the student started.
-- **Examples, plural.** Show at least two real examples of what the characteristics
-  look like in practice — more than one, so no single model becomes the thing to copy.
-- **A checklist the student can run.** Short, checkable-by-looking; the same list works
-  for self-check and for peer feedback.
-- **Grading, in the open.** The points, what earns them, and how this feeds the
-  walkthrough (which will sample this work). No hidden rubric.
+Three parts, in this order: the checklist, what makes it strong, and grading.
+
+**Check it before you submit — the checklist first.** The list of what a complete answer
+contains, one line per task, sitting behind a click-in `+` at the top of Criteria. Each
+line carries a checkbox box so it reads as a checklist rather than prose. Write the lines
+as **neutral statements** — "The behavior is written as a *Why does ___ lead to ___?*
+question," never "I wrote…" — because the same list has two users: the student checking
+their own draft, and the partner or reviewer checking theirs. One list, both uses; a list
+written in the first person breaks the second one. Where the course pairs students to
+review each other's work, say so in the summary line ("the same list your reviewer runs"),
+so the student meets the peer step here rather than being surprised by it later.
+
+**Cut a separate "Done" block when the checklist restates it** (Sathya, 8 Sep 2026). The
+earlier shape carried Done, Strong and Checklist; on a five-task item Done and the
+checklist said the same thing twice. Fold everything Done specified into checklist lines
+and drop the block. On a long item the checklist absorbs Done the same way — it just has
+more lines.
+
+**What makes it strong.** Separate from the checklist, because the difference between
+complete and strong is where the walkthrough conversation will spend its time. Write it as
+traceability between tasks — "the gap in 2 is traceable to the postings in 1", "what you
+are unsure about in 3 is the same thing 4 and 5 go after" — so a student can test their own
+draft against it. Movement counts more than altitude: strong means further than where the
+student started.
+
+**Grading, in the open.** The points, the grade group, and what happens to this work
+afterwards — named plainly: "you will be asked to explain this to a peer, the TA and/or the
+instructor, so make sure you are comfortable with the responses you have developed for this
+assignment." No hidden rubric.
+
+**Examples live under each task, not here.** `writing-to-teach` wants at least two examples
+of what the characteristics look like in practice, and the place for them is the per-task
+click-in — guidance, a worked example, a reflection question and a place to write — where a
+student meets the example at the moment they need it. Keep the Criteria block to the three
+parts above.
 
 ## Reflection — learn and grow from it
 
@@ -172,8 +197,10 @@ neither is written down here again.
 - The first sentence of Purpose is the payoff, not the topic.
 - Every instruction sits at its point of action; likely errors are prevented by a positive
   test, a structured field, or a paired example rather than by a warning.
-- Criteria distinguish done from good, show two or more examples, and end in a
-  student-runnable checklist; points and their route to the walkthrough are stated.
+- Criteria open with the "Check it before you submit" click-in — checkbox lines, one per
+  task, written as neutral statements a reviewer could run — then what makes it strong,
+  then grading with the peer/TA/instructor conversation named. Two or more worked examples
+  sit under the tasks, not in Criteria.
 - Reflection questions are answerable only after doing the work.
 - The qualities line and evidence linkage are in the record and absent from the page.
 - The `assignments.html` row exists and matches the page: kind and points as the course
