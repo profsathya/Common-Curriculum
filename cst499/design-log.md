@@ -552,3 +552,5 @@ asserted this — every graded item from week 6 on carries *Project Proposal app
 Canvas has caught up with the registry rather than the other way round.
 
 **Same day, later:** the week-3 item is **Name the gap my capstone needs to close** everywhere (Sathya). It had been created as “Name the problem space that closes your gap” while the home page's goal line already read the shorter form; Canvas 648293 and the registry now match the home page, which is the wording students see first.
+
+**Same day, later still:** each of the three Canvas bodies gained a **Submit** section (Sathya): a student may write their own summary, paste the chat log of their AI Dojo conversation, or use any other way of demonstrating the goal — what is read is the thinking, not the format. It sits on the Canvas assignment only, which is where submission happens; the home-page sections keep the goal and steps and point at Canvas. The registry's submission line for all three now names the flexibility first and the required substance second.
