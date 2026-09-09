@@ -440,3 +440,23 @@ Your Gap.
   plus the fallback link. Both in Sprint 1 · Graded items with a must-submit requirement, in week order.
   Home-page rows carry `data-canvas-href`; registry rows write back the ids and read Up-to-date on
   Canvas. Same shape as the CST286 pair built the same day. — Alan
+
+## 2026-09-09 — Week 3's two own-your-progress items go to Canvas
+
+Neither has a standalone activity page — the lead line and the steps live in the week-3 block on
+`home.html`, as CST499's week-3 and week-4 items do — so the Canvas body carries the same text,
+flattened: the lead paragraph, then the steps as an open list. **648298** Choose your growth
+opportunity (Wed 9 Sep) and **648299** Nutrition for Mind Plan (Fri 11 Sep); both 100 pts, text
+entry, published, group **Own your progress guidance (87097)**, items 1–2 of **Sprint 1 · Own your
+progress (302556)** with `must_submit` — a completion marker only, since that module is not
+sequential and no module in this course carries a prerequisite.
+
+Both bodies end with the **Submit** section adopted in CST499 the same day: a student may write their
+own summary, paste the chat log of their AI Dojo conversation, or use any other way of demonstrating
+the goal — what is read is the thinking, not the format. That section lives on the Canvas assignment
+only. On the home page, each of the two rows now carries `data-canvas-submit`, and the context
+resolver injects “Submit your progress assignment **here**” when the page is inside Canvas, so a
+student reading the week block has a route to the assignment; on the web the rows are unchanged. **All Canvas links on this page now open in a new tab** (Sathya, same day): the resolver was setting
+`target="_top"`, which navigated the whole Canvas page away from the course home; it now sets
+`_blank` with `rel="noopener"`, as CST286 and CST499 already did. All seven `data-canvas-href` links
+and both injected submit links verified — no `_top` left on the page.

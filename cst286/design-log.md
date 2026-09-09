@@ -426,3 +426,5 @@ is markup and CSS Canvas will not have; the bubble's content is worth keeping, s
 in CST499 the same day: a student may write their own summary, paste the chat log of their AI Dojo
 conversation, or use any other way of demonstrating the goal — the thinking is what is read, not the
 format. That section lives on the Canvas assignment only; the home page keeps the steps.
+
+**Same day, later:** `home.html` caught up — both week-3 rows carry `data-canvas-submit` and the context resolver injects “Submit your progress assignment **here**” inside Canvas only, so the rows are no longer dead ends for a student reading the week block. Verified headless: two links in the Canvas context, none on the web.

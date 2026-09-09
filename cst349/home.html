@@ -322,13 +322,13 @@
                             <span class="emo" aria-hidden="true">&#x1F331;</span> <span class="gl"><button type="button" class="gt">Own your progress guidance</button><span class="bub" role="tooltip"><b class="bt">Own your progress</b><span class="br"><i>What it is.</i> Your weekly practice: activities that develop the habits and skills of taking ownership of your own success.</span><span class="br"><i>Why practice it.</i> Here you apply it to the goals of this class &mdash; but the practice makes you more self-directed everywhere, able to set and accomplish goals in any context. That opens doors: people like working and partnering with someone who takes ownership.</span></span></span> <span class="hint">&middot; not graded</span>
                         </div>
                         <div class="wrow">
-                            <div class="wbody">
+                            <div class="wbody" data-canvas-submit="https://csumb.instructure.com/courses/34789/assignments/648298">
                                 <span class="wt">Choose your growth opportunity <span class="hint">&middot; due Wednesday 9 September</span></span>
                                 <span class="wm">Write up what you worked out in class. Everything here came out of the session &mdash; this is the record of it, plus one step further.<br><b>1.</b> The two or three things you could grow in that you brought to class, with what you would actually have to do differently for each.<br><b>2.</b> The one you put on Pear Deck, written as you would say it now &mdash; what makes it uncomfortable, and how it would help you stand out.<br><b>3.</b> The two questions your partner asked you &mdash; and which one you could not answer.<br><b>4.</b> One thing you would add or change after reading someone else&rsquo;s.</span>
                             </div>
                         </div>
                         <div class="wrow">
-                            <div class="wbody">
+                            <div class="wbody" data-canvas-submit="https://csumb.instructure.com/courses/34789/assignments/648299">
                                 <span class="wt">Nutrition for Mind Plan <span class="hint">&middot; due Friday 11 September</span></span>
                                 <span class="wm">Where does what you believe about your field come from &mdash; and what will you feed your mind from here?<br><b>1.</b> List where your picture of your field actually comes from right now: the feeds, the people, the videos, the courses, the conversations. Be honest about which ones take the most of your time.<br><b>2.</b> For each, what is it good for and what is it not? Mark any that told you something you later found was wrong.<br><b>3.</b> Write the plan: what you will add, what you will cut, and how often you will go to each. At least one of them should be a source you chose, not one an algorithm chose for you.</span>
                             </div>
@@ -1094,7 +1094,23 @@
   if (ctx === 'canvas') {
     document.querySelectorAll('[data-canvas-href]').forEach(function(a){
       a.setAttribute('href', a.getAttribute('data-canvas-href'));
-      a.setAttribute('target', '_top');
+      a.setAttribute('target', '_blank');   /* 2026-09-09 (Sathya): was _top; all three
+                                               courses now open Canvas links in a new tab */
+      a.setAttribute('rel', 'noopener');
+    });
+    /* 2026-09-09: the week-3 own-your-progress items have no standalone page - their
+       steps live in this block and the Canvas assignment carries the same text. Inside
+       Canvas only, point students at the assignment to submit. Injected rather than
+       shipped hidden so the markup stays clean in Pinegrow. Same mechanism as cst499
+       and cst286. */
+    document.querySelectorAll('[data-canvas-submit]').forEach(function(d){
+      var p = document.createElement('p');
+      p.className = 'csub';
+      p.setAttribute('style', 'margin:9px 0 0;font-size:12.5px;font-weight:600');
+      p.innerHTML = 'Submit your progress assignment <a href="' +
+        d.getAttribute('data-canvas-submit') +
+        '" target="_blank" rel="noopener">here</a>.';
+      d.appendChild(p);
     });
   } else {
     document.querySelectorAll('a[href]').forEach(function(a){
