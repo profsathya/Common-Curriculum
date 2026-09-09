@@ -5,7 +5,7 @@ description: Use whenever writing or revising text that students will read to le
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
 
-_Status: v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
+_Status: v4 (8 September 2026) — added "no telegrams" after the CST286 week-3 deck: noun-phrase-plus-em-dash lines that label an idea instead of saying it, on slides as much as on pages. v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
 was presentation-register writing — describing the end state to readers who don't yet
 have what they need to get there. First test passed 2026-08-04, rewriting the CST499
 home page against it._
@@ -150,6 +150,19 @@ does not." The boundary teaches more than the definition.
 rule is one new idea per sentence. A short sentence carrying three compressed ideas is
 presentation, not teaching. When a sentence needs two reads, split it and spend the
 words walking, not summarizing.
+
+**No telegrams (Sathya, 8 Sep 2026).** This is not the same failure as a long sentence or a
+declarative chain: it is writing a *label for an idea* instead of a sentence that says it.
+The tell is the em-dash appositive doing the work of a verb &mdash; "A whole-day time budget
+— where your attention actually goes", "A physics loop you ran, changed, and watched
+respond." Each packs a noun phrase and a gloss into one line and leaves the reader to
+assemble the claim, so it reads as a telegram rather than as someone talking. His rewrites
+of those two: "How you prioritize your time and attention" and "A trial run of a simple
+learning loop on a physics topic" — plainer, longer, and in the student's words rather than
+ours ("time budget" is our jargon). The rule: one idea per line, written as the plainest
+sentence that says it, and where an em-dash is carrying the meaning, rewrite the line
+without it. This governs slide bullets exactly as it governs page prose — the earlier
+"concise means low load" rule was being read as covering preview lists only.
 
 **Walk the chain — don't chain declaratives.** (2026-08-11, named by Sathya at the
 CST349 gate.) A run of short declaratives that each state a conclusion leaves the
