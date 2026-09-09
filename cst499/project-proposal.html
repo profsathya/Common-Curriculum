@@ -183,16 +183,12 @@ ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;heig
 .pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
 .pnote-sub li{margin:2px 0;}
 
-/* Click-to-play video embed (Panopto) — added 2026-09-09 */
+/* Video embed (Panopto) — direct player, added 2026-09-09; autoplay is blocked by Chrome on this
+   Panopto site (verified 25 Aug), so the student presses the player's own play button once. */
 .vembed{border:1px solid var(--border);border-radius:7px;background:#fff;margin:0 0 12px;overflow:hidden;}
-.vembed .vplay{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:var(--goal-bg);border:0;border-bottom:1px solid var(--border-light);padding:11px 13px;cursor:pointer;font:inherit;color:var(--text);}
-.vembed .vplay:hover{background:#EAF4FA;}
-.vembed .vplay:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;}
-.vembed .vico{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;line-height:30px;text-align:center;}
-.vembed .vtxt{display:block;font-size:13.5px;font-weight:600;color:var(--blue-dark);}
-.vembed .vsub{display:block;font-size:11.5px;font-weight:400;color:var(--muted);margin-top:1px;}
-.vembed .vnew{display:block;padding:7px 13px;font-size:12px;color:var(--blue-dark);}
+.vembed .vhead{display:block;padding:9px 13px;background:var(--goal-bg);border-bottom:1px solid var(--border-light);font-size:13.5px;font-weight:600;color:var(--blue-dark);}
 .vembed iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.vembed .vnew{display:block;padding:7px 13px;font-size:12px;color:var(--blue-dark);border-top:1px solid var(--border-light);}
 @media print{.vembed iframe{display:none;}}
 </style>
 </head>
@@ -213,7 +209,7 @@ ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;heig
 <h2 class="sec">Purpose</h2>
 <p class="body">Articulate in detail your understanding about the market, the project you will build this semester, the rubric you would use to assess the quality of your work, and why this project will be useful to its users and to your career.</p>
 <div class="pnote"><span class="hand" aria-hidden="true">&#128073;</span><div class="pnote-body"><p><b>Note: You can find project ideas you can use as a starting point to close your gap <a href="problem-spaces.html" target="_blank" rel="noopener">here</a>.</b></p><ul class="pnote-sub"><li>Partner-proposed projects are assigned through the same process: complete the proposal assignment using their ideas, and we match you and introduce you to the partner by September 23.</li></ul></div></div>
-<div class="vembed"><button type="button" class="vplay" data-panopto="e7625c9a-c6ee-44d0-ae2c-b4c0010773a8"><span class="vico" aria-hidden="true">&#9654;</span><span class="vtxt">Project Proposal walkthrough<span class="vsub">Video &middot; click to play</span></span></button><a class="vnew" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e7625c9a-c6ee-44d0-ae2c-b4c0010773a8" target="_blank" rel="noopener">Open in a new tab &nearr;</a></div>
+<div class="vembed"><span class="vhead">Project Proposal walkthrough</span><iframe src="https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e7625c9a-c6ee-44d0-ae2c-b4c0010773a8&amp;offerviewer=true&amp;showtitle=false&amp;showbrand=false&amp;captions=true&amp;interactivity=all" title="Project Proposal walkthrough" loading="lazy" allowfullscreen allow="fullscreen"></iframe><a class="vnew" href="https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e7625c9a-c6ee-44d0-ae2c-b4c0010773a8" target="_blank" rel="noopener">Open in a new tab &nearr;</a></div>
 
 <h2 class="sec">Tasks</h2>
 <p class="body"><b>This is an individual submission.</b> If you are working with a partner or a team, parts of the proposal may look similar or the same across members; your personal motivation, and how this project benefits you, need to be unique to you, based on your specific gap and your specific contribution to the project. There can be similarities, but they cannot be the same for everyone in the team.</p>
@@ -846,23 +842,6 @@ Team project: what I am accountable for — …"></textarea>
 }());
 </script>
 
-<script>
-/* Click-to-play: the Panopto player loads only when the student asks for it. */
-(function () {
-    document.querySelectorAll('.vembed .vplay').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var id = btn.getAttribute('data-panopto');
-            if (!id) { return; }
-            var f = document.createElement('iframe');
-            f.src = 'https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=' + id +
-                    '&autoplay=true&offerviewer=true&showtitle=false&showbrand=false&captions=true&interactivity=all';
-            f.setAttribute('allowfullscreen', '');
-            f.setAttribute('allow', 'autoplay; fullscreen');
-            f.setAttribute('title', btn.querySelector('.vtxt') ? btn.querySelector('.vtxt').textContent : 'Video');
-            btn.replaceWith(f);
-        });
-    });
-}());
-</script>
+
 </body>
 </html>
