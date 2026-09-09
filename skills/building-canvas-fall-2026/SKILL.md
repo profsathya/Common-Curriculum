@@ -59,6 +59,15 @@ explicit go.**
   reflection — it starts with the course's first graded assignment. Each reflection is one of the
   course's nine graded assignments, not an addition to them (16 Aug). *(Open: the reflection
   assignments themselves are not yet created for any sprint.)*
+- **CST499 is the one exception: the Project Proposal gates every later graded-items module**
+  (Sathya, 9 Sep 2026). Each graded-items module from Sprint 2 on carries
+  `prerequisite_module_ids: [<Sprint 1 · Graded items>]` — the Sprint 1 module, never the sprint
+  immediately before it. A star, not a chain: a student may skip Sprint 2's graded item and do
+  Sprint 3's, but nobody reaches either without submitting the proposal, because the capstone build
+  has no meaning until a project is approved. This holds in CST499 only; CST286 and CST349 keep the
+  no-cross-sprint-prerequisites rule above. Canvas will only accept a prerequisite module that sits
+  **above** the dependent module in module order and carries a completion requirement of its own, so
+  any new CST499 graded-items module must be created below Sprint 1 · Graded items.
 - Modules stay hidden from the student navigation — they are gating machinery; the course home page
   carries navigation. Requirements still gate direct links.
 
@@ -86,7 +95,8 @@ embeds by eye before diagnosing a failure.
   description is the iframe plus the fallback link.
 - Graded-items modules are sequential, Own-your-progress modules are not; every item requires
   submit; each sprint's Graded-items module opens with its reflection and no module carries a
-  cross-sprint prerequisite.
+  cross-sprint prerequisite — except in CST499, where every graded-items module after Sprint 1
+  carries the Sprint 1 · Graded items module as its only prerequisite.
 - Canvas ids, URLs and published state are written back and committed in the same pass.
 - Everything was read back via the API; embeds checked by eye.
 
@@ -98,4 +108,6 @@ placement. Human + AI: the type-split module architecture and reflection-as-gate
 conversation 15 Aug 2026 from Canvas's module-scoped sequencing and OR-less prerequisites.
 AI (Alan): this file's drafting, 15 Aug 2026, from the first CST499 build, for Sathya's edit.
 Revised 16 Aug 2026 after Sathya replaced the reflection-as-module gate with reflection-first
-ordering and no cross-sprint prerequisites, built that day on CST286.*
+ordering and no cross-sprint prerequisites, built that day on CST286. Revised 9 Sep 2026 with the
+CST499 exception — the Project Proposal as the single gate on every later graded-items module
+(Sathya), applied that day to Sprint 2 · Graded items and Mid-term.*

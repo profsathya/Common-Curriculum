@@ -497,3 +497,58 @@ Three graded items, layered (skeleton a student can take to a Google Doc; guidan
 ## 2026-09-04 — Paige's thirteen changes; the mid-term becomes two items
 
 After the Friday check-ins Sathya and Paige went through the three graded items; thirteen changes, all decided and applied the same day (change list: `cowork/fall-2026-courses/cst499-paige-2026-09-04-change-list.md`). The ones that change the design: the **mid-term is two 100-point items, and the word "exam" is gone** — a take-home mid-term (a week, all questions) and an in-class activity (questions given, some answered by hand, then a partner swap typed up; the typed versions are what count). Paige's reasoning: with no "exam" there is nothing for testing-centre accommodations to attach to, and neither part needs extra time. **Proposals are individual** — a team may share parts, but motivation and benefit-to-you are yours. **The proposal is where a project is approved or matched**; early proposals are read early. A **student-proposed projects** section goes on the problem-spaces page from the idea form, for students who want teammates. **Weeks 3–4 have no lectures**: class time is office hours (Paige in room 110 Wed/Fri 12–1, Sathya on Zoom Fri 12–1), not required. Grading stance for the proposal — minimal rigour, marked down for building blocks skipped, inclination to say yes — lives in the AI system prompt and coach notes, not in student copy. Canvas: 647796 renamed Take-home mid-term, 647804 In-class activity; registry rows 499-w08-exam + 499-w08-act. Still to do: the announcement (draft for Paige's OK, YAMM + Canvas Mon/Tue), the problem-spaces reorganisation and video walkthrough, and the green/blue/red submission triage once the first proposals land.
+
+## 2026-09-09 — Weeks 3–4 own-your-progress items go to Canvas; the registry generator catches up
+
+The three week-3/4 OYPs had no standalone pages — goal and steps live in the week blocks on
+`home.html` — so the Canvas assignments carry the same text, flattened: the bold Goal line, the steps
+as an open `<ol>`, the AI Dojo note. No iframe, no `+` expander. **648292** Inventory the evidence you
+already have (Fri 11 Sep), **648293** Name the problem space that closes your gap (Mon 14 Sep),
+**648294** What makes a proposal credible (Fri 18 Sep) — all 100 pts, text entry, published, group
+86639, and items 4–6 of **Sprint 1 · Own your progress (312024)** with `must_submit`. Sathya's
+first two dates moved a slot later than the registry had them (Wed→Fri, Fri→Mon) so all three land
+before the Project Proposal on Mon 21 Sep. `must_submit` is a completion marker only: sequential
+progress is off on that module and no module in the course has a prerequisite, so a student can skip
+one and submit the next.
+
+`home.html` gained a Canvas-only submit line. Rather than shipping hidden markup — which Pinegrow
+would render as an invisible block — each of the three `.woyp-body` divs carries
+`data-canvas-submit="…"`, and the existing context resolver injects
+“Submit your progress assignment **here**” only when `context=canvas` (or the page is iframed).
+Verified headless: three links in the Canvas context, none on the web.
+
+**Registry drift, healed.** Regenerating `cst499/assignments.html` would have reverted four rows: the
+3 Sep Project Proposal and Learning Plan builds and the 4 Sep mid-term split were written straight into
+the HTML and never reached `mk_assignments.py` — no version of the generator has ever contained the
+string “Take-home mid-term”. Ported into the generator before regenerating: the split
+(499-w08-exam at 100 pts as the take-home, plus a new 499-w08-act), a `due_time` parameter on `mk()` so
+the take-home keeps its 11:59 **am** deadline, the Project Proposal and Learning Plan rows with their
+pages, Canvas ids and rewritten completion lines, `page="mid-term.html"` on 499-w07-oyp2, and the
+CST499 header wording (`last_checked`, `exam_label`, the mid-term grade-group line and the totals note)
+as per-course keys so CST286 and CST349 still regenerate byte-identical. After the port the generator
+reproduced the 5 Sep registry exactly apart from the three intended OYP rows — 31 rows in, 31 rows
+out, none dropped.
+
+## 2026-09-09 — The Project Proposal becomes the gate (CST499 only)
+
+Sathya: *"every future graded item be gated by the sprint 1 project proposal — they could skip say
+sprint 2 graded items and do sprint 3, but not skip the project proposal assignment."* Set in Canvas
+the same hour: **Sprint 2 · Graded items (312324)** and **Mid-term (312325)** now carry
+`prerequisite_module_ids: [312025]` — the Sprint 1 · Graded items module, which holds the Project
+Proposal with a `must_submit` requirement.
+
+The shape is a star, not a chain. Every later graded-items module points at Sprint 1, never at the
+sprint immediately before it, so skipping Sprint 2's graded item still leaves Sprint 3 open — while
+nobody reaches any of them without submitting the proposal. That is the one thing the capstone cannot
+proceed without: there is no build to grade until a project is approved.
+
+This reverses the 16 Aug *no cross-sprint prerequisites* rule **for CST499 only** — CST286 and CST349
+keep it, since their sprints stand alone and gating one behind another would lock out a student who is
+catching up. `skills/building-canvas-fall-2026/SKILL.md` now carries the exception, including the
+Canvas constraint it implies: a prerequisite module must sit above the dependent module in module
+order and carry a completion requirement of its own, so any CST499 graded-items module built later
+must be created below Sprint 1 · Graded items and given the same prerequisite. The registry already
+asserted this — every graded item from week 6 on carries *Project Proposal approved (week 4)* — so
+Canvas has caught up with the registry rather than the other way round.
+
+**Same day, later:** the week-3 item is **Name the gap my capstone needs to close** everywhere (Sathya). It had been created as “Name the problem space that closes your gap” while the home page's goal line already read the shorter form; Canvas 648293 and the registry now match the home page, which is the wording students see first.

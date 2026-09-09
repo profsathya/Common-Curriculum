@@ -336,7 +336,7 @@
                                 <span class="wplus" aria-hidden="true"></span>
                                 <span class="wsr">steps</span>
                             </summary>
-                            <div class="woyp-body"><ol><li>List every piece of work you could put in front of an employer today &mdash; code, projects, coursework, work from a job or a club. Do not filter yet.</li><li>For each one, write what it proves you can do, and who or what could verify it &mdash; a repo, a link, a person.</li><li>Mark the ones you could walk someone through in detail. Those are your real evidence; the rest are candidates.</li></ol><p class="dojo">Use your AI Dojo to get started if you want a brainstorming partner on what counts as evidence &mdash; then have it challenge you on whether a hiring manager would actually find each piece convincing.</p></div>
+                            <div class="woyp-body" data-canvas-submit="https://csumb.instructure.com/courses/33649/assignments/648292"><ol><li>List every piece of work you could put in front of an employer today &mdash; code, projects, coursework, work from a job or a club. Do not filter yet.</li><li>For each one, write what it proves you can do, and who or what could verify it &mdash; a repo, a link, a person.</li><li>Mark the ones you could walk someone through in detail. Those are your real evidence; the rest are candidates.</li></ol><p class="dojo">Use your AI Dojo to get started if you want a brainstorming partner on what counts as evidence &mdash; then have it challenge you on whether a hiring manager would actually find each piece convincing.</p></div>
                         </details>
                         <details class="woyp">
                             <summary>
@@ -344,7 +344,7 @@
                                 <span class="wplus" aria-hidden="true"></span>
                                 <span class="wsr">steps</span>
                             </summary>
-                            <div class="woyp-body"><ol><li>Write down the niche you are aiming at &mdash; the kind of work, in the kind of company, solving the kind of problem.</li><li>Put your evidence list next to it and mark what those jobs ask for that you cannot yet show.</li><li>Write the gap as one sentence you could say out loud: what you cannot prove today, specifically.</li></ol><p class="dojo">Use your AI Dojo to brainstorm if the niche is still fuzzy &mdash; then ask it to argue that your gap is too vague to act on, or too big to close in one semester, and rewrite until that argument fails.</p></div>
+                            <div class="woyp-body" data-canvas-submit="https://csumb.instructure.com/courses/33649/assignments/648293"><ol><li>Write down the niche you are aiming at &mdash; the kind of work, in the kind of company, solving the kind of problem.</li><li>Put your evidence list next to it and mark what those jobs ask for that you cannot yet show.</li><li>Write the gap as one sentence you could say out loud: what you cannot prove today, specifically.</li></ol><p class="dojo">Use your AI Dojo to brainstorm if the niche is still fuzzy &mdash; then ask it to argue that your gap is too vague to act on, or too big to close in one semester, and rewrite until that argument fails.</p></div>
                         </details>
                     </div>
                     <div class="wsec wsec-grad">
@@ -394,7 +394,7 @@
                                 <span class="wplus" aria-hidden="true"></span>
                                 <span class="wsr">steps</span>
                             </summary>
-                            <div class="woyp-body"><ol><li>Read the criteria on the Project Proposal page and put them in your own words &mdash; what is this proposal meant to convince a reader of?</li><li>Find two real examples of work in your problem space &mdash; a merged contribution, a shipped feature, an issue someone actually resolved &mdash; and note what made each one credible.</li><li>Draft the one sentence a reviewer will judge: what you will deliver, and how it closes your gap.</li></ol><p class="dojo">Use your AI Dojo as a sparring partner while you draft that sentence &mdash; then have it play the skeptical reviewer and say where it does not believe you can finish by week 12.</p></div>
+                            <div class="woyp-body" data-canvas-submit="https://csumb.instructure.com/courses/33649/assignments/648294"><ol><li>Read the criteria on the Project Proposal page and put them in your own words &mdash; what is this proposal meant to convince a reader of?</li><li>Find two real examples of work in your problem space &mdash; a merged contribution, a shipped feature, an issue someone actually resolved &mdash; and note what made each one credible.</li><li>Draft the one sentence a reviewer will judge: what you will deliver, and how it closes your gap.</li></ol><p class="dojo">Use your AI Dojo as a sparring partner while you draft that sentence &mdash; then have it play the skeptical reviewer and say where it does not believe you can finish by week 12.</p></div>
                         </details>
                     </div>
                     <div class="wsec wsec-grad">
@@ -1217,6 +1217,19 @@
       a.setAttribute('href', a.getAttribute('data-canvas-href'));
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener');
+    });
+    /* 2026-09-09: week 3-4 OYPs have no standalone page - their steps live in this
+       block and the Canvas assignment carries the same text. Inside Canvas only,
+       point students at the assignment to submit. Injected rather than shipped
+       hidden so the markup stays clean in Pinegrow. */
+    document.querySelectorAll('[data-canvas-submit]').forEach(function(d){
+      var p = document.createElement('p');
+      p.className = 'csub';
+      p.setAttribute('style', 'margin:9px 0 0;font-size:12.5px;font-weight:600');
+      p.innerHTML = 'Submit your progress assignment <a href="' +
+        d.getAttribute('data-canvas-submit') +
+        '" target="_blank" rel="noopener">here</a>.';
+      d.appendChild(p);
     });
   } else {
     document.querySelectorAll('a[href]').forEach(function(a){
