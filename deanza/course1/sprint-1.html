@@ -116,6 +116,9 @@
       document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
         if (ctx === 'canvas') {
           a.href = a.getAttribute('data-canvas-href');
+          if (a.hasAttribute('data-canvas-target')) {
+            a.target = a.getAttribute('data-canvas-target');
+          }
         } else {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
