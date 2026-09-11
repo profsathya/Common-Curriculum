@@ -1651,9 +1651,11 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
     const iterContext = (question.aiContext || '') +
       '\n\nThis is iteration ' + (currentIterations + 1) + '. The student is refining their thinking. Push them to be more specific and go deeper.';
 
+    options.onAnswer({...savedData, discussionSummary: summaryText}, null);
     try {
       const fetchResponse = await fetch(aiEndpoint, {
         method: 'POST',
+        signal: AbortSignal.timeout(50000),
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           system: buildDiscussionSystemPrompt(course, questionCount),
@@ -1668,7 +1670,7 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       }
 
       const raw = await fetchResponse.json();
-      const data = parseDiscussionJson(raw.content);
+      const data = parseDiscussionQuestions(raw.content);
       loadingEl.style.display = 'none';
 
       // Replace observation and questions
