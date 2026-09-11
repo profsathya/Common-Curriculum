@@ -1499,6 +1499,18 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
     return container;
   }
 
+  function parseDiscussionQuestions(content) {
+    if (typeof content !== 'string' || !content.trim()) throw new Error('The AI returned no text. Your response is preserved; try again.');
+    const match = content.match(/\{[\s\S]*\}/);
+    let data;
+    try { data = match && JSON.parse(match[0]); } catch { /* handled below */ }
+    if (!data || !Array.isArray(data.questions) || !data.questions.length ||
+        !data.questions.every(q => typeof q === 'string' && q.trim())) {
+      throw new Error('The AI returned an unreadable question set. Your response is preserved; try again.');
+    }
+    return data;
+  }
+
   async function handleAiGenerate(question, responseText, options, container, effectivePrompt, savedData) {
     const loadingEl = document.getElementById(`ai-loading-${question.id}`);
     const errorEl = document.getElementById(`ai-error-${question.id}`);
@@ -1526,9 +1538,11 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
     const questionCount = question.numQuestions || 3;
     const prompt = effectivePrompt || question.prompt;
 
+    options.onAnswer({...savedData, enteredResponse: responseText, phase: savedData.phase || 'enter'}, null);
     try {
       const fetchResponse = await fetch(aiEndpoint, {
         method: 'POST',
+        signal: AbortSignal.timeout(50000),
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           system: buildDiscussionSystemPrompt(course, questionCount),
@@ -1543,7 +1557,7 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
       }
 
       const raw = await fetchResponse.json();
-      const data = parseDiscussionJson(raw.content);
+      const data = parseDiscussionQuestions(raw.content);
 
       // Hide loading
       loadingEl.style.display = 'none';

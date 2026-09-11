@@ -169,6 +169,7 @@ exports.handler = async (event) => {
   try {
     const apiResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
+      signal: AbortSignal.timeout(45000),
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
@@ -197,12 +198,17 @@ exports.handler = async (event) => {
     }
 
     const data = await apiResponse.json();
-    const content = data.content?.[0]?.text;
-    if (!content) return json(502, headers, { error: 'Empty response from AI service' });
+    const content = (Array.isArray(data.content) ? data.content : [])
+      .filter(block => block.type === 'text' && typeof block.text === 'string')
+      .map(block => block.text).join('\n').trim();
+    if (!content) return json(502, headers, { error: 'The AI service returned no text. Your response is preserved; please try again.' });
 
     console.log('ai-proxy ok', JSON.stringify({ ip, origin, model: chosenModel, usage: data.usage || null }));
     return json(200, headers, { content, usage: data.usage || null });
   } catch (error) {
+    if (error.name === 'TimeoutError' || error.name === 'AbortError') {
+      return json(504, headers, { error: 'The AI service timed out. Your response is preserved; please try again.' });
+    }
     console.error('Function error:', error);
     return json(500, headers, { error: 'Internal server error' });
   }
