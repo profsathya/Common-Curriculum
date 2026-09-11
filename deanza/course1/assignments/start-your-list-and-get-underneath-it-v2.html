@@ -98,6 +98,7 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+    
   </style>
   <script>
     (function() {
@@ -141,129 +142,103 @@
 .guided-workspace :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
 .guided-workspace table { width: 100%; border-collapse: collapse; font-size: .94em; }
 .guided-workspace th, .guided-workspace td { padding: 8px; border: 1px solid #ccd5df; vertical-align: top; overflow-wrap: anywhere; }
+.guided-workspace .teaching-table { overflow-x: auto; max-width: 100%; }
+.guided-workspace .teaching-table th, .guided-workspace .teaching-table td { min-width: 140px; }
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
+
+.guided-compact { max-width: 68ch; margin: 20px auto; }
+.guided-compact section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+.guided-compact section h2 { font-size: 1.2rem; line-height: 1.35; margin: 0 0 12px; }
+.guided-compact section p { margin: 10px 0; }
+.guided-compact blockquote { margin: 16px 0; padding: 2px 0 2px 18px; border-left: 3px solid #8ba2b8; }
+.guided-compact .response-task { padding: 0; }
+.guided-compact label { font-weight: 650; }
+.guided-compact #save-status { font-size: .875rem; color: #455568; }
+.guided-compact .compact-submit { margin-top: 22px; }
+.guided-compact details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; }
+.guided-compact #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+/* Textbook-style worked example: connected stages, readable without graphics. */
+.guided-compact blockquote { margin: 18px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+.guided-compact blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .875rem; }
+.guided-compact blockquote ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 16px 0 0; padding: 0; list-style-position: inside; }
+.guided-compact blockquote li { position: relative; margin: 0; padding: 14px; border: 1px solid #c3d2df; border-top: 4px solid #477b9b; border-radius: 8px; background: #fff; }
+.guided-compact blockquote li::marker { color: #315d7b; font-weight: 700; }
+.guided-compact blockquote li > p { margin: 8px 0 0; }
+.guided-compact blockquote li:not(:last-child)::after { content: ''; position: absolute; right: -18px; top: 28px; width: 9px; height: 9px; border-top: 2px solid #477b9b; border-right: 2px solid #477b9b; transform: rotate(45deg); }
+.guided-compact blockquote li:last-child { border-top-color: #367663; background: #f4faf7; }
+.guided-compact .response-task { padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-compact .task-teaching > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+@media (max-width: 640px) {
+  .guided-compact blockquote { padding: 16px; }
+  .guided-compact blockquote ol { grid-template-columns: 1fr; gap: 22px; }
+  .guided-compact blockquote li:not(:last-child)::after { top: auto; right: auto; left: 24px; bottom: -16px; transform: rotate(135deg); }
+  .guided-compact .response-task { padding: 16px; }
+}
+/* Optional raster illustrations; existing text-only activities retain their layout. */
+.guided-compact section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.guided-compact p:has(> img) + p { color: #455568; font-size: .875rem; }
 </style>
-<div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Find current situations and describe them closely enough to begin seeing a problem.</p><h2>What you are building on</h2><p>Bring your own observations. You do not need a chosen problem or AI setup.</p>
-<p>Answer the tasks in your own document, or use the optional response boxes here. Copy the final text into the Canvas assignment. Saving or copying here does not submit work to Canvas.</p>
-<details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
-<h2>Overview</h2>
-<h3 id="take-five-minutes">Take five minutes</h3>
-<p>We are going to move into the problem identification process.</p>
-<p>Let&rsquo;s start somewhere relatively simple. Take five minutes. Write down three or four things that bug you.</p>
-<p>Things that irritate you, that you complain about, that you keep meaning to deal with, or that take longer than they should. A decision you keep postponing. Something you have been putting off for months. A condition you have decided you cannot change. Work, a job search, a volunteer role, caregiving, a side project. Anything.</p>
-<p>Rough is the point. A phrase each is fine. Do not filter, and do not decide yet whether any of them is worth anything.</p>
-<p>Nobody tells me when a client account changes hands. New volunteers sign up, come twice, and we never see them again. Every month I rebuild the same report by hand. I should be better at using AI at work.</p>
-<p>One thing to consider before you start. Try to include at least one item that other people are involved in, not only things you do alone. It does not have to be at work, but it should touch somebody besides you.</p>
-<p>If nothing comes to mind, read on anyway. This page will give you other places to look.</p>
-<h3 id="what-we-did-not-ask-for">What we did not ask for</h3>
-<p>We started with things that bug you, because problems rarely arrive as well-defined problems. Almost nothing shows up already matching the definition this course uses for a problem: a gap between how something works now and how it could work, where the gap costs someone something real. What shows up instead is the feeling that something is off.</p>
-<p>That feeling is an indicator, something that points at a problem without being one. Your list is a list of indicators, and at this stage that is exactly what it should be.</p>
-<h3 id="moving-from-indicator-to-problem">Moving from indicator to problem</h3>
-<p>Now you have a starting list of indicators. You are going to do some pushing on this list to see if any of them can be moved toward problems.</p>
-<p>Remember, a problem is a gap between how something works now and how it could work. So getting underneath something that bugs you means describing how it actually works now, in enough detail that you can see why it produces the thing that bugs you.</p>
-<p>That is the next move. Not describing why it bothers you. Not saying what would fix it. Describe how it currently works.</p>
-<table>
-<thead>
-<tr>
-<th><strong>What bugs you</strong></th>
-<th><strong>How it actually works now</strong></th>
-<th><strong>The gap starting to show</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nobody tells me when a client account changes hands</td>
-<td>Handovers happen in a conversation between two people. Nothing is written down and nobody owns telling anyone else</td>
-<td>People act on stale ownership for days, and the client repeats themselves to someone who should already know</td>
-</tr>
-<tr>
-<td>New volunteers sign up, come twice, and stop</td>
-<td>Signups are collected centrally. When a new volunteer comes they do whatever the person running that day improvises</td>
-<td>A new volunteer&rsquo;s first month depends entirely on who happened to be there, so most of them never find something that needs them</td>
-</tr>
-<tr>
-<td>Every month I rebuild the same report by hand</td>
-<td>The source system exports tables in a format that doesn&rsquo;t quite match the way we use them. Everyone who needs the report fixes it themselves</td>
-<td>Every analyst spends thirty minutes solving the same formatting problem every month</td>
-</tr>
-</tbody>
-</table>
-<p>Notice what the middle column does. It does not diagnose and it does not solve. It describes the current state carefully enough that the gap in column 3 starts to become visible on its own.</p>
-<h3 id="one-pass-is-usually-not-enough">One pass is usually not enough</h3>
-<p>If what you get on your first pass is still too vague, or too small, or turns out to be a symptom of something else, run the move again on what you just wrote: how does that work now?</p>
-<p>Here is the volunteer example going down three passes. Each pass asks the same question of a different part of the previous answer.</p>
-<p><strong>Pass 1.</strong> New volunteers sign up, come twice, and stop. <strong>How does that work now?</strong> They sign up by sending us an email. We invite them to come on certain dates and times. They show up and help with whatever is going on that day. Then they maybe come a second time, but we often never see them again.</p>
-<p>That is a real answer, and it is the kind most people give first: it describes what a volunteer sees. What it does not say is who decides what a new person does on that first day. That is the part to ask about next.</p>
-<p><strong>Pass 2.</strong> A new volunteer shows up and helps with whatever is going on. <strong>How does that work now?</strong> Whoever is running the shift that day figures out something for them to do. Usually it is whatever is easiest to hand off, like sorting donations. Nobody plans it ahead of time, because we do not always know who is coming.</p>
-<p>Now there is a person, the shift lead, and a habit, improvising. What is still missing is why nobody plans it. Ask about that.</p>
-<p><strong>Pass 3.</strong> Nobody plans a new volunteer&rsquo;s first day. <strong>How does that work now?</strong> It is not anybody&rsquo;s job. The coordinator handles signups, because signups are what the board asks about. Nobody has ever been responsible for what happens after someone arrives, so nobody built anything for it.</p>
-<p>Notice that pass 1 could not tell you who was paying or what it cost them. Pass 3 can: new volunteers, who get handed the dullest job and do not come back, and the eight regulars who keep doing everything.</p>
-<p>The way between passes is the same each time. Find the part of your answer that says something happens without saying who does it or why, and ask how that part works now.</p>
-<p>Three or four passes is normal. You stop when the gap is specific enough to write in the third column: what is different from how it could be, and who feels it.</p>
-<h3 id="your-turn-build-your-table">Your turn: build your table</h3>
-<p>Now do this for your own list.</p>
-<p>Make a table with the same three columns: what bugs you, how it actually works now, the gap starting to show. One row per item. This table is where everything in the first half of the sprint collects, so keep it somewhere you can come back to. You will add to it twice more and then carry it into the graded work.</p>
-<p>Then run the move on every row. For each item, write two or three sentences in the middle column on how it actually works today. Not how it feels. What happens, in what order, and who does what.</p>
-<p>Three guardrails for the middle column:</p>
-<ul>
-<li>
-<p><strong>Describe, do not diagnose.</strong> If you find yourself writing &ldquo;because nobody cares,&rdquo; stop and write what actually happens instead.</p>
-</li>
-<li>
-<p><strong>No fixes yet.</strong> If a sentence starts with &ldquo;we should,&rdquo; it does not belong in this column.</p>
-</li>
-<li>
-<p><strong>Name who does what.</strong> &ldquo;The report gets fixed&rdquo; hides a person. &ldquo;I fix the report&rdquo; does not.</p>
-</li>
-</ul>
-<p>For the third column, one sentence is enough: what is different from how it could be, and who feels it. Rough is fine. A question mark at the end of a sentence you are not sure of is worth more than a confident guess.</p>
-<p><strong>Take one item further.</strong> Pick the row you have the most to say about and run the move again on what you just wrote, the way the volunteer example does: how does that work now? Two or three passes. Stop when you could say who it is costing and what it costs them.</p>
-<p><strong>If the move stalls.</strong> Sometimes &ldquo;how does it work now&rdquo; comes back thin. Usually that means what you wrote is too broad or too vague to describe yet. These can restart it:</p>
-<ul>
-<li>
-<p>What would this look like if you had never adapted to it?</p>
-</li>
-<li>
-<p>What specifically happened the last time this went wrong?</p>
-</li>
-<li>
-<p>Which part of this could actually move, and which part is fixed?</p>
-</li>
-<li>
-<p>What is it about this that you cannot tell?</p>
-</li>
-</ul>
-<p>Use whichever gets your thinking going. They are prompts, not a procedure. If you continue to struggle with one indicator, try another one.</p>
-<p><strong>If the move does nothing at all.</strong> Not thin, nothing. Leave the middle column empty and put a mark next to the row. Do not push harder. Items like that usually turn out to be something other than an indicator, and the third activity in this sequence is built for them.</p>
-<p><strong>It&rsquo;s best to do this activity without AI.</strong></p>
-<p>This is not a rule about AI being unhelpful. You will use it frequently in this course. The reason is narrower: the raw material here has to come from your own life, and AI does not have access to what you have stopped noticing, what you keep putting off, or what your team works around. It can produce a plausible list of problems for someone in your role, and every item will be generic, because generic is all it can see from where it sits.</p>
-<h3 id="if-your-list-is-thin">If your list is thin</h3>
-<p>Things that bug you are a good first place to look, because you can feel them. There are at least two other places to look, and you cannot feel either one of those.</p>
-<p><strong>Things you stopped noticing.</strong> You stopped noticing them because you figured out a work-around, so they stopped registering as friction. These do not bug you any more, but they are places where a problem, a gap that costs someone something real, might exist. They have to be hunted rather than recalled.</p>
-<p><strong>Things somebody handed you.</strong> A request, from a manager, a client, or even from yourself. These arrive already looking like the answer, but there is a reasonable chance that they are a solution someone decided on before they carefully considered the actual problem.</p>
-<p>The next two activities take each in turn. Do them whether or not your list is thin, because the second source comes up constantly at work and it is the hardest of the three to spot.</p>
-<h3 id="what-to-submit">What to submit</h3>
-<p>Your table, with every row carrying something in the middle column or a mark where the move gave nothing back. Rough is the point. Nobody grades this. Submitting it marks the activity complete and leaves you a copy to build on in the next two.</p>
+<div class="guided-workspace guided-compact" id="guided-workspace">
+<section>
+<h2 id="1-start-your-list">1. Start your list</h2>
+<p>Take five minutes. Write down three or four things that bug you.</p>
+<p>Use your own experience at work or elsewhere, and try to include something involving other people. A phrase per item is enough. Work without AI.</p>
 </section>
 
 <section>
-<h2 id="submit-in-canvas">Submit in Canvas</h2>
-<p>Copy your response and submit it as a text entry in Canvas. Saving in this activity keeps a browser draft; it does not submit your work. Keep your table in your own document so you can add to it in the next activity.</p>
-</section></details>
-<h2>Your tasks</h2>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<p>Open &quot;Read the full instructions and examples&quot; and read the teaching before you answer the tasks. Work in your own words. Saving keeps a draft in this browser; copying does not submit. When ready, copy your answers and submit them as a text entry in Canvas. This own-your-progress activity is encouraged and carries zero points. Submitting marks it complete; skipping it does not block the next activity.</p>
-<p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
-
-<section class="response-task" data-task="start-your-table"><h3>1. Take five minutes to list three or four things that bug you, using your own observations without AI. Build a rough table with three columns: what bugs you; how it actually works now; the gap starting to show. Describe who does what, then take one row through further passes. Mark uncertain statements and rows where the move gives nothing back. Submit your table and keep a copy to build on.</h3><details><summary>Guidance and self-check</summary><ul><li>For each row, write two or three sentences describing what happens, in what order, and who does what; one sentence can describe the emerging gap.</li><li>Describe actions rather than blame, and leave fixes out of the current-state column.</li><li>For one row, ask how an unexplained part works now through two or three passes, recording the result in your table.</li><li>If the move produces nothing, leave the middle column empty and mark that row for Things somebody handed you. If no initial observation comes to mind, say so and use the next two activities to look further.</li><li>The starting items come from your own experience and remain rough.</li><li>Each row describes who does what and shows an emerging gap, or is marked where the move produced nothing.</li><li>One row shows a further pass where possible; uncertainty stays marked.</li><li>The middle column describes the current state rather than diagnosing blame or prescribing a fix.</li></ul></details><label for="answer-start-your-table">Your response</label><textarea id="answer-start-your-table" data-answer="start-your-table" maxlength="20000" rows="6"></textarea></section>
-<p id="completion-status" role="status"></p>
+<h2 id="2-look-underneath-it">2. Look underneath it</h2>
+<p>An <strong>indicator</strong> is a sign that something may be wrong. Describe how it works now to find the gap underneath it.</p>
+<p>The example below follows an observation to a possible gap.</p>
+<blockquote>
+<p><strong>Worked example · Volunteer onboarding</strong></p>
+<ol>
+<li>
+<p><strong>Notice</strong></p>
+<p>New volunteers come twice, then stop.</p>
+</li>
+<li>
+<p><strong>Describe the process</strong></p>
+<p>The shift lead gives each arrival whatever task is easiest to hand off.</p>
+</li>
+<li>
+<p><strong>Find the possible gap</strong></p>
+<p>Nobody plans the first month. Volunteers may lack an ongoing role, leaving regulars to cover the work. (?)</p>
+</li>
+</ol>
+</blockquote>
+<p>The follow-up question is <strong>“Who plans a volunteer&rsquo;s first month?”</strong> It reveals a part of the process that the first description left out.</p>
+<p>Describe actions, rather than blame (“nobody cares”) or fixes (“buy an app”).</p>
+</section>
+<section class="task-teaching"><h2 id="3-build-your-table">3. Build your table</h2>
+<p>Use these three columns:</p>
+<ul>
+<li><strong>What bugs you:</strong> one item from your list.</li>
+<li><strong>How it actually works now:</strong> two or three sentences about who does what, and in what order.</li>
+<li><strong>The gap starting to show:</strong> one sentence about what could be different and who feels the cost.</li>
+</ul>
+<p>Fill in each row. Take one further by asking <strong>“How does that part work now?”</strong> two or three times where useful. Stop when the gap and the people affected are specific. Add the detail to your table and mark uncertain claims with <strong>(?)</strong>.</p>
+<p>Stuck? Describe the last time it happened. If nothing emerges, leave that part blank and mark the row for <strong>Things somebody handed you</strong>. If you have no starting observations, say so; the next activities offer other places to look.</p>
+<p>Keep your table to build on in the next activity.</p></section>
+<div class="response-task" data-task="start-your-table">
+<label for="answer-start-your-table">Your table (or use your own document)</label>
+<textarea id="answer-start-your-table" data-answer="start-your-table" maxlength="20000" rows="7" aria-describedby="save-status"></textarea>
+<p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
+<details><summary>Self-check</summary><ul><li>Rows come from your own experience and distinguish current actions from blame or proposed fixes.</li><li>Each row shows an emerging gap and who feels it, or marks where the move gave no result.</li><li>One row shows further examination where possible; uncertain claims remain marked.</li><li>A lack of initial observations is reported honestly.</li></ul></details>
+</div>
+<div class="compact-submit">
+<p>Optional practice · 0 points. Submit to mark it complete, or continue without submitting.</p>
 <button type="button" id="copy-answers">Copy my answers</button>
-<button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Copy any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<p>Paste into Canvas to submit. Copying or saving here does not submit your work. <a href="https://cti-courses.instructure.com/courses/180/assignments/7144" target="_blank" rel="noopener">Open the Canvas assignment</a></p>
 <p id="copy-status" role="status"></p>
-<label for="copy-output">The text to copy</label><textarea id="copy-output" readonly rows="8"></textarea>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-12-start-your-list-and-get-underneath-it-v2", "title": "Start your list and get underneath it", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Find current situations and describe them closely enough to begin seeing a problem.", "builds_on": "Bring your own observations. You do not need a chosen problem or AI setup.", "standing_instruction": "Open \"Read the full instructions and examples\" and read the teaching before you answer the tasks. Work in your own words. Saving keeps a draft in this browser; copying does not submit. When ready, copy your answers and submit them as a text entry in Canvas. This own-your-progress activity is encouraged and carries zero points. Submitting marks it complete; skipping it does not block the next activity.", "tasks": [{"id": "start-your-table", "kind": "response", "prompt": "Take five minutes to list three or four things that bug you, using your own observations without AI. Build a rough table with three columns: what bugs you; how it actually works now; the gap starting to show. Describe who does what, then take one row through further passes. Mark uncertain statements and rows where the move gives nothing back. Submit your table and keep a copy to build on.", "criteria": ["For each row, write two or three sentences describing what happens, in what order, and who does what; one sentence can describe the emerging gap.", "Describe actions rather than blame, and leave fixes out of the current-state column.", "For one row, ask how an unexplained part works now through two or three passes, recording the result in your table.", "If the move produces nothing, leave the middle column empty and mark that row for Things somebody handed you. If no initial observation comes to mind, say so and use the next two activities to look further.", "The starting items come from your own experience and remain rough.", "Each row describes who does what and shows an emerging gap, or is marked where the move produced nothing.", "One row shows a further pass where possible; uncertainty stays marked.", "The middle column describes the current state rather than diagnosing blame or prescribing a fix."]}]}</script>
+<details id="more-options"><summary>More options</summary>
+<button type="button" id="copy-tasks">Copy the questions</button>
+<button type="button" id="clear-draft">Clear this browser draft</button>
+<div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<label for="copy-output">Select and copy manually</label><textarea id="copy-output" readonly rows="6"></textarea>
+<p id="completion-status" hidden></p>
+</details>
+</div>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-12-start-your-list-and-get-underneath-it-v2", "title": "Start your list and get underneath it", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Find current situations and describe them closely enough to begin seeing a problem.", "builds_on": "Bring your own observations. You do not need a chosen problem or AI setup.", "standing_instruction": "Optional practice · 0 points. Submit to mark it complete, or continue without submitting.", "tasks": [{"id": "start-your-table", "kind": "response", "prompt": "Your table (or use your own document)", "criteria": ["Rows come from your own experience and distinguish current actions from blame or proposed fixes.", "Each row shows an emerging gap and who feels it, or marks where the move gave no result.", "One row shows further examination where possible; uncertain claims remain marked.", "A lack of initial observations is reported honestly."], "instruction_section": "3. Build your table"}], "presentation": "compact"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -363,14 +338,21 @@
   async function copy(withAnswers) {
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
-    catch (_) { byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.'; }
+    catch (_) {
+      if (['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
+    }
   }
   byId('copy-tasks').addEventListener('click', () => copy(false));
   byId('copy-answers').addEventListener('click', () => copy(true));
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
+    if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
   });
-  byId('cancel-clear').addEventListener('click', () => { byId('clear-confirmation').hidden = true; });
+  byId('cancel-clear').addEventListener('click', () => {
+    byId('clear-confirmation').hidden = true;
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
+  });
   byId('confirm-clear').addEventListener('click', () => {
     try { localStorage.removeItem(key); }
     catch (_) { byId('save-status').textContent = 'Could not clear the saved draft. Your current responses are still here.'; return; }
@@ -383,6 +365,7 @@
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
     update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
   if (!storageOK) byId('save-status').textContent = 'This browser could not load saved responses. Copy your work before leaving.';
@@ -390,7 +373,7 @@
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a href="https://cti-courses.instructure.com/courses/180/assignments/7144" target="_blank" rel="noopener">Open the Canvas assignment</a></p></div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>

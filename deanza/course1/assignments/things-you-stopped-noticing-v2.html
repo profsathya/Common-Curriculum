@@ -98,6 +98,7 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+    
   </style>
   <script>
     (function() {
@@ -141,42 +142,84 @@
 .guided-workspace :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
 .guided-workspace table { width: 100%; border-collapse: collapse; font-size: .94em; }
 .guided-workspace th, .guided-workspace td { padding: 8px; border: 1px solid #ccd5df; vertical-align: top; overflow-wrap: anywhere; }
+.guided-workspace .teaching-table { overflow-x: auto; max-width: 100%; }
+.guided-workspace .teaching-table th, .guided-workspace .teaching-table td { min-width: 140px; }
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
+
+.guided-compact { max-width: 68ch; margin: 20px auto; }
+.guided-compact section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+.guided-compact section h2 { font-size: 1.2rem; line-height: 1.35; margin: 0 0 12px; }
+.guided-compact section p { margin: 10px 0; }
+.guided-compact blockquote { margin: 16px 0; padding: 2px 0 2px 18px; border-left: 3px solid #8ba2b8; }
+.guided-compact .response-task { padding: 0; }
+.guided-compact label { font-weight: 650; }
+.guided-compact #save-status { font-size: .875rem; color: #455568; }
+.guided-compact .compact-submit { margin-top: 22px; }
+.guided-compact details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; }
+.guided-compact #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+/* Textbook-style worked example: connected stages, readable without graphics. */
+.guided-compact blockquote { margin: 18px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+.guided-compact blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .875rem; }
+.guided-compact blockquote ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 16px 0 0; padding: 0; list-style-position: inside; }
+.guided-compact blockquote li { position: relative; margin: 0; padding: 14px; border: 1px solid #c3d2df; border-top: 4px solid #477b9b; border-radius: 8px; background: #fff; }
+.guided-compact blockquote li::marker { color: #315d7b; font-weight: 700; }
+.guided-compact blockquote li > p { margin: 8px 0 0; }
+.guided-compact blockquote li:not(:last-child)::after { content: ''; position: absolute; right: -18px; top: 28px; width: 9px; height: 9px; border-top: 2px solid #477b9b; border-right: 2px solid #477b9b; transform: rotate(45deg); }
+.guided-compact blockquote li:last-child { border-top-color: #367663; background: #f4faf7; }
+.guided-compact .response-task { padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-compact .task-teaching > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+@media (max-width: 640px) {
+  .guided-compact blockquote { padding: 16px; }
+  .guided-compact blockquote ol { grid-template-columns: 1fr; gap: 22px; }
+  .guided-compact blockquote li:not(:last-child)::after { top: auto; right: auto; left: 24px; bottom: -16px; transform: rotate(135deg); }
+  .guided-compact .response-task { padding: 16px; }
+}
+/* Optional raster illustrations; existing text-only activities retain their layout. */
+.guided-compact section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.guided-compact p:has(> img) + p { color: #455568; font-size: .875rem; }
 </style>
-<div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Notice routines that have stopped registering as problems because you work around them.</p><h2>What you are building on</h2><p>Bring the table from Start your list and get underneath it.</p>
-<p>Answer the tasks in your own document, or use the optional response boxes here. Copy the final text into the Canvas assignment. Saving or copying here does not submit work to Canvas.</p>
-<details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
-<h2>Overview</h2>
-<h3 id="where-habits-hide-problems">Where habits hide problems</h3>
-<p>Say you pull a report every month. The system exports it in the wrong format, so you paste it into a spreadsheet and fix the columns by hand. Thirty minutes, every month, for two years. You probably don&rsquo;t even think about that as a problem anymore. You just think of it as &ldquo;how I do the report.&rdquo;</p>
-<p>That is how work-arounds go. They accumulate gradually enough that they just become the normal way you do things, and if someone asked whether anything was wrong, you would say no. The problem stops being stored in your memory as a problem. It gets stored as a habit.</p>
-<p>This is not a flaw. Getting through hard things without stopping to examine every friction is a skill, and it is how many of us function. It is also why some things worth fixing start to become invisible.</p>
-<h3 id="your-turn-watch-for-a-day-or-two">Your turn: watch for a day or two</h3>
-<p>For the next day or two, notice the moments where you route around something. The step you always redo. The person you always have to chase. The file you keep a private copy of because the shared one is wrong. Add them to your table as they happen.</p>
-<p>Then run the same move on each new row: how does it actually work now, and what gap is starting to show. Work-arounds are often easier to get under than complaints, because you already know the mechanics. You have been performing them by hand.</p>
-<p>Two new rows is a good haul. None is also a result. If a couple of days of watching turn up nothing, say so when you submit and move on. Your list from the first activity is still there.</p>
-<h3 id="what-to-submit">What to submit</h3>
-<p>Your table with the new rows added and the move run on each, or a line saying you watched and found nothing.</p>
-</section>
-
+<div class="guided-workspace guided-compact" id="guided-workspace">
 <section>
-<h2 id="submit-in-canvas">Submit in Canvas</h2>
-<p>Copy your response and submit it as a text entry in Canvas. Saving in this activity keeps a browser draft; it does not submit your work. Keep your table in your own document so you can add to it in the next activity.</p>
-</section></details>
-<h2>Your tasks</h2>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<p>Open &quot;Read the full instructions and examples&quot; and read the teaching before you answer the tasks. Work in your own words. Saving keeps a draft in this browser; copying does not submit. When ready, copy your answers and submit them as a text entry in Canvas. This own-your-progress activity is encouraged and carries zero points. Submitting marks it complete; skipping it does not block the next activity.</p>
-<p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
-
-<section class="response-task" data-task="notice-workarounds"><h3>1. For the next day or two, watch your routine for workarounds you have stopped noticing. Add them to your existing table using the same columns: what bugs you; how it actually works now; the gap starting to show. Describe each new row and keep uncertainty marked. Submit the updated table, or say you watched and found nothing. Keep your earlier rows either way.</h3><details><summary>Guidance and self-check</summary><ul><li>Look for a step you redo, someone you chase, or a private copy you maintain because a shared version does not work for you.</li><li>Two new rows is a good haul, not a minimum requirement. Preserve the day-or-two observation period and report no new observations honestly.</li><li>You watched your actual routine over a day or two rather than inventing a workaround.</li><li>Any new row includes how it works now and the gap beginning to show.</li><li>Earlier rows are kept, and uncertainty remains visible.</li><li>A report that you watched and found nothing is an acceptable result.</li></ul></details><label for="answer-notice-workarounds">Your response</label><textarea id="answer-notice-workarounds" data-answer="notice-workarounds" maxlength="20000" rows="6"></textarea></section>
-<p id="completion-status" role="status"></p>
+<h2 id="1-watch-your-routine">1. Watch your routine</h2>
+<p>Over the next <strong>day or two</strong>, notice a step you redo, a person you chase, or a private file you keep because the shared version does not work for you. Keep the table from <strong>Start your list and get underneath it</strong> nearby. Work without AI.</p>
+<p>A <strong>workaround</strong> is something you do to get around a difficulty. Repeating it can make its cost feel like an ordinary part of the job.</p>
+<blockquote>
+<p><strong>Illustrative worked example · Monthly report</strong></p>
+<p><img alt="An export orders its columns Date, Team, Total. The monthly report needs Team, Total, Date. An arrow labeled Reorder by hand connects them." src="assets/things-you-stopped-noticing-v2/fbf6daf2c9fd249a.webp"></p>
+<p><em>Illustrative column mismatch. Image created with AI for this course.</em></p>
+<p><strong>Notice:</strong> Every month, you fix the exported report columns by hand.</p>
+<p><strong>Current work:</strong> Each analyst rearranges the same columns in a separate copy.</p>
+<p><strong>Possible gap:</strong> The repeated fixes may cost the team time that one shared correction could save. (?)</p>
+</blockquote>
+</section>
+<section class="task-teaching"><h2 id="2-add-what-you-notice">2. Add what you notice</h2>
+<p>Add observations as they happen. Keep your earlier rows and use the same three columns:</p>
+<ul>
+<li><strong>What bugs you:</strong> the routine you noticed.</li>
+<li><strong>How it actually works now:</strong> the workaround and who performs it.</li>
+<li><strong>The gap starting to show:</strong> the cost or shortfall it reveals. Mark uncertainty with <strong>(?)</strong>.</li>
+</ul>
+<p>Two new rows is a useful result, not a minimum. If you watched and found nothing new, say so. Keep your cumulative table for <strong>Things somebody handed you</strong>.</p></section>
+<div class="response-task" data-task="notice-workarounds">
+<label for="answer-notice-workarounds">Your updated table (or what you observed)</label>
+<textarea id="answer-notice-workarounds" data-answer="notice-workarounds" maxlength="20000" rows="7" aria-describedby="save-status"></textarea>
+<p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
+<details><summary>Self-check</summary><ul><li>New rows reflect your actual routine observed over a day or two.</li><li>Each addition describes current handling and an emerging gap, with uncertainty visible.</li><li>Earlier rows are retained; finding nothing new is an acceptable, honestly reported result.</li></ul></details>
+</div>
+<div class="compact-submit">
+<p>Optional practice · 0 points. Submit to mark it complete, or continue without submitting.</p>
 <button type="button" id="copy-answers">Copy my answers</button>
-<button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Copy any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<p>Paste into Canvas to submit. Copying or saving here does not submit your work. <a href="https://cti-courses.instructure.com/courses/180/assignments/7147" target="_blank" rel="noopener">Open the Canvas assignment</a></p>
 <p id="copy-status" role="status"></p>
-<label for="copy-output">The text to copy</label><textarea id="copy-output" readonly rows="8"></textarea>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-12-things-you-stopped-noticing-v2", "title": "Things you stopped noticing", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Notice routines that have stopped registering as problems because you work around them.", "builds_on": "Bring the table from Start your list and get underneath it.", "standing_instruction": "Open \"Read the full instructions and examples\" and read the teaching before you answer the tasks. Work in your own words. Saving keeps a draft in this browser; copying does not submit. When ready, copy your answers and submit them as a text entry in Canvas. This own-your-progress activity is encouraged and carries zero points. Submitting marks it complete; skipping it does not block the next activity.", "tasks": [{"id": "notice-workarounds", "kind": "response", "prompt": "For the next day or two, watch your routine for workarounds you have stopped noticing. Add them to your existing table using the same columns: what bugs you; how it actually works now; the gap starting to show. Describe each new row and keep uncertainty marked. Submit the updated table, or say you watched and found nothing. Keep your earlier rows either way.", "criteria": ["Look for a step you redo, someone you chase, or a private copy you maintain because a shared version does not work for you.", "Two new rows is a good haul, not a minimum requirement. Preserve the day-or-two observation period and report no new observations honestly.", "You watched your actual routine over a day or two rather than inventing a workaround.", "Any new row includes how it works now and the gap beginning to show.", "Earlier rows are kept, and uncertainty remains visible.", "A report that you watched and found nothing is an acceptable result."]}]}</script>
+<details id="more-options"><summary>More options</summary>
+<button type="button" id="copy-tasks">Copy the questions</button>
+<button type="button" id="clear-draft">Clear this browser draft</button>
+<div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<label for="copy-output">Select and copy manually</label><textarea id="copy-output" readonly rows="6"></textarea>
+<p id="completion-status" hidden></p>
+</details>
+</div>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-12-things-you-stopped-noticing-v2", "title": "Things you stopped noticing", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Notice routines that have stopped registering as problems because you work around them.", "builds_on": "Bring the table from Start your list and get underneath it.", "standing_instruction": "Optional practice · 0 points. Submit to mark it complete, or continue without submitting.", "tasks": [{"id": "notice-workarounds", "kind": "response", "prompt": "Your updated table (or what you observed)", "criteria": ["New rows reflect your actual routine observed over a day or two.", "Each addition describes current handling and an emerging gap, with uncertainty visible.", "Earlier rows are retained; finding nothing new is an acceptable, honestly reported result."], "instruction_section": "2. Add what you notice"}], "presentation": "compact"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -276,14 +319,21 @@
   async function copy(withAnswers) {
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
-    catch (_) { byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.'; }
+    catch (_) {
+      if (['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
+    }
   }
   byId('copy-tasks').addEventListener('click', () => copy(false));
   byId('copy-answers').addEventListener('click', () => copy(true));
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
+    if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
   });
-  byId('cancel-clear').addEventListener('click', () => { byId('clear-confirmation').hidden = true; });
+  byId('cancel-clear').addEventListener('click', () => {
+    byId('clear-confirmation').hidden = true;
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
+  });
   byId('confirm-clear').addEventListener('click', () => {
     try { localStorage.removeItem(key); }
     catch (_) { byId('save-status').textContent = 'Could not clear the saved draft. Your current responses are still here.'; return; }
@@ -296,6 +346,7 @@
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
     update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
   if (!storageOK) byId('save-status').textContent = 'This browser could not load saved responses. Copy your work before leaving.';
@@ -303,7 +354,7 @@
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a href="https://cti-courses.instructure.com/courses/180/assignments/7147" target="_blank" rel="noopener">Open the Canvas assignment</a></p></div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>

@@ -98,6 +98,51 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
   </style>
   <script>
     (function() {
@@ -121,7 +166,7 @@
   </script>
 </head>
 <body>
-  <div class="activity source-derived">
+  <div class="activity source-derived reading-page">
     <a class="back-link" href="../sprint-12.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 1: Find the Problem Worth Solving (V2) &middot; Page</p>
     <h1>Introduction: Find the Problem Worth Solving</h1>
@@ -129,121 +174,52 @@
 
 
     <section>
-<h2>Overview</h2>
-<p>By the end of this course, you will have a deep understanding of a problem you are interested in solving. You will know what sits at the core of it, who it affects, and what you would need to find out next to move on it. You may also have a sense of what solving it could look like.</p>
-<p>Before you get there, the first step is to figure out a workable problem that you can spend the next ten weeks on. That is what Sprint 1 focuses on.</p>
-<p>Sprint 1 guides you through identifying several possible problems - we&rsquo;ll call them candidate problems - and checking each one against criteria that separate a problem you can actually work from one that will stall or fall flat in this course. You do not need to have a problem yet. In fact, it is very likely that you will &ldquo;try on&rdquo; more than one problem before you find one that works for this course.</p>
-<p>AI is your thinking partner for much of this work, but the context, the relationships, and the judgment calls are yours. That is your Human Value, the term from the Welcome module: what you contribute that AI does not. This is about you directing AI to get what you want. Your own thinking is non-negotiable. In most cases the pattern will be: you do and even write down your own thinking first, then you use the AI to widen what you have. That&rsquo;s intentional. It is hard for you to judge if AI is producing good work if you have not thought through whatever you&rsquo;re working on yourself. Your job is to decide what to keep, reject, revise, or verify.</p>
+<p>Choose a problem you can investigate through this course. Begin with your own experience; you do not need a problem picked out yet.</p>
+<p>A <strong>problem</strong> is a gap between how something works now and how it could work, where the gap costs someone something real. A <strong>candidate problem</strong> is one you are considering.</p>
+<p><img alt="Three colleagues review a workflow and pass a folder across a worktable." src="assets/introduction-find-the-problem-worth-solving-v2/c523ce8e1506648a.webp"></p>
+<p><em>Work moves between people. Illustration created with AI for this course.</em></p>
 </section>
 
 <section>
-<h2 id="sprint-1-road-map">Sprint 1 Road Map</h2>
-<p>What you will do:</p>
+<h2 id="your-first-half-route">Your first-half route</h2>
+<blockquote>
+<p><strong>From observations to a choice</strong></p>
 <ol>
-<li><strong>Build one working table through three own-your-progress activities.</strong> Start with things that bug you, notice work-arounds, and look underneath requests. Describe how each situation works now and what gap is starting to show.</li>
-<li><strong>Test each candidate problem against four checks.</strong> Find out which are real, current, and the right size. Expect most of them not to survive.</li>
-<li><strong>Commit to one problem.</strong> Choose the candidate problem that survived, and be able to say why it did and the others did not.</li>
-<li><strong>Use the Dojo to widen your frame.</strong> Generate framings you would not have reached alone, then decide which to keep.</li>
-<li><strong>Write your Goal Plan and Problem Frame.</strong> Produce the document that Sprints 2 through 5 build on.</li>
+<li>
+<p><strong>Gather</strong></p>
+<p>Build one table across <strong>Start your list and get underneath it</strong>, <strong>Things you stopped noticing</strong>, and <strong>Things somebody handed you</strong>.</p>
+</li>
+<li>
+<p><strong>Check your understanding</strong></p>
+<p>Use the six-question <strong>Concept check</strong> to test the distinctions you have practiced and review the feedback.</p>
+</li>
+<li>
+<p><strong>Choose</strong></p>
+<p>In <strong>Test and commit</strong>, compare three to five candidates and explain your choice, alternatives, and uncertainty.</p>
+</li>
 </ol>
+</blockquote>
+<p>Spread this work across several days in Week 1. <strong>Things you stopped noticing</strong> asks you to observe your routine for a day or two, so keep your table where you can add to it.</p>
 </section>
 
 <section>
-<h2 id="sprint-1-concepts">Sprint 1 Concepts</h2>
-<p>Sprint 1 introduces two terms, and the standard a problem has to meet.</p>
-<h3 id="term-1-problem">Term 1: Problem</h3>
-<p>What constitutes a &ldquo;problem&rdquo; can be different for different people. That&rsquo;s why, in this course, we&rsquo;re going to use a specific definition of problem.</p>
-<p><strong>A problem is a gap between how something works now and how it could work, where the gap costs someone something real.</strong> That is the whole bar.</p>
-<p>Here, we can see what that might look like in different situations:</p>
-<table>
-<thead>
-<tr>
-<th>Situation</th>
-<th>How it works now</th>
-<th>How it could work</th>
-<th>What the gap costs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Onboarding</td>
-<td>New hires wait days for system access because no one owns the handoff</td>
-<td>Access is ready on day one, and a missed step gets noticed</td>
-<td>New hires lose their first weeks; team leads cover the work</td>
-</tr>
-<tr>
-<td>Job search</td>
-<td>Your resume lists what you were responsible for, and it does not get you interviews</td>
-<td>Your resume shows evidence of solving the problems the role actually has</td>
-<td>Months of applications, and the wrong roles when they come</td>
-</tr>
-<tr>
-<td>Caregiving</td>
-<td>Your father&rsquo;s medications are tracked in three places and nobody holds the whole picture</td>
-<td>One record everyone works from, including the pharmacy</td>
-<td>Missed doses, and one sibling carrying it alone</td>
-</tr>
-<tr>
-<td>Volunteer work</td>
-<td>New volunteers sign up, come twice, and stop</td>
-<td>People who sign up find something useful to do in their first month</td>
-<td>The same eight people do everything, and burn out</td>
-</tr>
-</tbody>
-</table>
-<p>None of those is a crisis. All of them cost someone something, and all of them could be different. That is enough.</p>
-<h3 id="term-2-candidate-problems">Term 2: Candidate Problems</h3>
-<p>We mentioned that you will likely explore a few problems before you settle on one to frame for this course. These problems you are considering but have not committed to are called candidate problems. In this sprint you will gather three to five of them and test each one, expecting most not to survive. The word matters because it keeps the decision open: you are not choosing yet, you are collecting things worth examining.</p>
-<p>The problem frame, your written account of the problem you commit to, is introduced in the second half of the sprint, where you build one.</p>
-<h3 id="the-standard-what-makes-a-problem-workable">The Standard: What Makes a Problem Workable</h3>
-<p>In Sprint 1 you will consider several candidate problems before settling on one worth ten weeks. The criteria you will use are four checks:</p>
-<ol>
-<li><strong>Real people.</strong> Who specifically is affected, and what does it cost them?</li>
-<li><strong>Currently handled, and falling short.</strong> Something already handles this. Complete the sentence: &ldquo;X handles this, but it does not ___.&rdquo;</li>
-<li><strong>Live now.</strong> Is this happening currently, or is it a memory or a hypothetical?</li>
-<li><strong>The right size.</strong> Does this problem give the next nine weeks somewhere to go? You can describe how it works now in one paragraph, there is at least one person other than you with a stake in it or knowledge about it who would talk to you about it, and there is at least one thing you would have to find out.</li>
-</ol>
-<p>The bar is honest looking, not verification. If as you explore a problem you realize it&rsquo;s failing or murky in any of these places, it&rsquo;s an indication that it might not be a workable problem. Problems failing is a good thing. That&rsquo;s why we want you to explore 3-5 candidates. Expect 1 to emerge as a workable problem for this course. Better to rule something out now than find yourself in week 5 on a problem that has stalled.</p>
-<p>The fourth check works differently from the other three. It never rules a candidate problem out. It tells you to move it: up, to what it is an instance of, if it is too small, or down, to one instance you can see people in, if it is too big.</p>
-<p>You will work through these in detail in Test and commit.</p>
-</section>
-
-<section>
-<h2 id="two-week-sprint-map">Two-Week Sprint Map</h2>
-<p>This sprint runs across two weeks. Everything sits in one Canvas module, so use this as a pacing guide rather than looking for two separate sections.</p>
+<h2 id="what-to-keep-and-submit">What to keep and submit</h2>
 <ul>
-<li><strong>Sprint Week 1:</strong> Read this Introduction, then work through Start your list and get underneath it, Things you stopped noticing, and Things somebody handed you. Keep adding to the same table. Complete the concept check, then use Test and commit to select three to five candidates, run the four checks, and choose one problem with reasons and a runner-up.</li>
-<li><strong>Sprint Week 2:</strong> Widen your frame with the Dojo, write your Goal Plan and Problem Frame, then reflect on what changed.</li>
+<li><strong>Three practice activities · optional · 0 points.</strong> Submit to record completion, or continue without submitting.</li>
+<li><strong>Concept check · 5 points.</strong> Your instructor reviews completion.</li>
+<li><strong>Test and commit · 35 points.</strong> One submission: candidate descriptions, four checks, choice with reasons, and runner-up.</li>
 </ul>
-<p>The three own-your-progress activities are encouraged and worth zero points. Submitting one records its completion, but skipping one does not block the next activity. You can read the teaching and examples even when you choose not to submit an activity. The concept check carries five points for completion reviewed by your instructor. Test and commit is one submission worth 35 points. You do not use AI in the first-half guided activities; the AI work comes in the second half.</p>
+<p>Work <strong>without AI</strong> in this half. Use rough, specific notes; mark uncertainty with <strong>(?)</strong> and report honestly when a search produces nothing. You are choosing something to investigate, not proving its cause.</p>
+<p>Keep your full table, including set-aside rows, and your Test and commit answers. You may need an alternative if your thinking changes.</p>
 </section>
 
 <section>
-<h2 id="time-guidance">Time Guidance</h2>
-<p>Spread the first-half activities across several days. Start your list and get underneath it gives you the first version of your table. Things you stopped noticing asks you to watch for work-arounds over a day or two before adding rows. Keep the table somewhere you can return to as you notice more.</p>
+<h2 id="what-comes-next">What comes next</h2>
+<p>This module currently contains the first half of Sprint 1. The planned Week 2 sequence uses the Dojo to widen your view, followed by a Goal Plan and Problem Frame and a reflection. That second-half work is not available here yet.</p>
+<p>Begin with <strong>Start your list and get underneath it</strong>.</p>
 </section>
 
-<section>
-<h2 id="working-standard">Working Standard</h2>
-<p>Specific and honest work is better than polished generic work. Show what you tried, what changed, what evidence you have, and what remains uncertain.</p>
-<p>This sprint asks for rough writing in places and means it. Marked uncertainty is worth more than confidence you have not earned.</p>
-</section>
-
-<section>
-<h2 id="carry-forward">Carry Forward</h2>
-<p>Keep your working table, including rows you set aside, and your Test and commit submission. That submission holds your three to five candidate problems, uncertainty marks, four checks for each candidate, committed problem, reasons, and runner-up.</p>
-<p>The problem you choose becomes the starting point for framing in the second half. Keep what you do not know visible so later AI exploration and conversations with real people can help you investigate it.</p>
-</section>
-
-<section>
-<h2 id="next">Next</h2>
-<p>When you&rsquo;re ready, continue to Start your list and get underneath it. You do not need to arrive with a problem already chosen. The concept check follows the third own-your-progress activity, once you have worked with the ideas it asks about.</p>
-</section>
-
-    <div class="submit">
-      <h2>What counts as done</h2>
-      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
-    </div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>
