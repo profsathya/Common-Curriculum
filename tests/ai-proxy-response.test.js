@@ -20,3 +20,13 @@ test('discussion parser rejects malformed output instead of inventing questions'
  assert.throws(()=>ctx.parse(''),/no text/);
  assert.equal(ctx.parse('```json\n{"questions":["Which evidence?"]}\n```').questions[0],'Which evidence?');
 });
+test('saved AI drafts and failed generations do not unlock export',()=>{
+ const fs=require('node:fs'),vm=require('node:vm');
+ const source=fs.readFileSync(require.resolve('../js/activity-engine.js'),'utf8');
+ const start=source.indexOf('  function isQuestionSubstantiallyAnswered('),end=source.indexOf('\n  /**',start);
+ const ctx={};vm.runInNewContext(source.slice(start,end)+';this.ready=isQuestionSubstantiallyAnswered;',ctx);
+ const q={type:'ai-discussion'};
+ assert.equal(ctx.ready(q,{answer:{phase:'enter',enteredResponse:'Draft'}}),false);
+ assert.equal(ctx.ready(q,{answer:{phase:'discuss',aiQuestions:['Why?']}}),false);
+ assert.equal(ctx.ready(q,{answer:{phase:'summarize',aiQuestions:['Why?'],discussionSummary:'My revision.'}}),true);
+});

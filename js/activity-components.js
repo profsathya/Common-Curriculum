@@ -1315,6 +1315,8 @@ Generate ${questionCount} discussion questions for the partner to ask.`;
 
     textarea.addEventListener('input', () => {
       const count = textarea.value.length;
+      const draft = count ? {...savedData, enteredResponse: textarea.value, phase: 'enter'} : null;
+      options.onAnswer(draft, null, true);
       document.getElementById(`ai-charcount-${question.id}`).textContent = count;
       if (count < minLength) {
         charCount.classList.add('activity-open__charcount--insufficient');

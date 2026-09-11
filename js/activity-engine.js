@@ -361,8 +361,8 @@ const ActivityEngine = (function() {
     const requiredQuestions = config.questions.filter(q => !q.optional);
     const optionalQuestions = config.questions.filter(q => q.optional);
 
-    const requiredAnswered = requiredQuestions.filter(q => state.responses[q.id]).length;
-    const optionalAnswered = optionalQuestions.filter(q => state.responses[q.id]).length;
+    const requiredAnswered = requiredQuestions.filter(q => q.type === "ai-discussion" ? isQuestionSubstantiallyAnswered(q, state.responses[q.id]) : state.responses[q.id]).length;
+    const optionalAnswered = optionalQuestions.filter(q => q.type === "ai-discussion" ? isQuestionSubstantiallyAnswered(q, state.responses[q.id]) : state.responses[q.id]).length;
 
     const requiredTotal = requiredQuestions.length;
     const optionalTotal = optionalQuestions.length;
@@ -407,6 +407,8 @@ const ActivityEngine = (function() {
     if (ans === null || ans === undefined) return false;
 
     switch (question.type) {
+      case 'ai-discussion':
+        return ans.phase === 'summarize' && Array.isArray(ans.aiQuestions) && ans.aiQuestions.length > 0 && typeof ans.discussionSummary === 'string' && ans.discussionSummary.trim().length > 0;
       case 'partner-entry': {
         var text = (ans && typeof ans === 'object') ? (ans.text || '') : '';
         var min = question.minLength || 1;
