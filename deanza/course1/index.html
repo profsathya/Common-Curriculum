@@ -17,7 +17,7 @@ h1 { font-size:26px; line-height:1.25; letter-spacing:-.4px; margin:24px 0; }
 h2 { font-size:23px; line-height:1.3; margin:7px 0 10px; }
 p { margin:0 0 12px; }
 a { color:var(--blue); text-underline-offset:3px; }
-a:focus-visible, summary:focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+a:focus-visible, button:focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
 .current-sprint { background:var(--soft); padding:24px; border-radius:6px; }
 .eyebrow,.dates,.note { color:var(--secondary); font-size:15px; }
 .eyebrow { margin-bottom:0; }
@@ -26,8 +26,6 @@ a:focus-visible, summary:focus-visible { outline:3px solid var(--blue); outline-
 .primary:hover { background:#194a6c; }
 .quick-links { display:flex; gap:8px 26px; flex-wrap:wrap; margin-top:20px; }
 .quick-links a { display:inline-flex; align-items:center; min-height:44px; }
-details { border-top:1px solid var(--rule); margin-top:20px; padding-top:12px; }
-summary { cursor:pointer; min-height:44px; padding:8px 0; font-weight:600; }
 .activity-group h3 { margin:15px 0 4px; font-size:15px; font-weight:600; color:var(--secondary); }
 .activity-list { list-style:none; padding:0; margin:0; }
 .activity-list li + li { border-top:1px solid var(--rule); }
@@ -37,10 +35,16 @@ summary { cursor:pointer; min-height:44px; padding:8px 0; font-weight:600; }
 .activity-list a:hover .activity-title { text-decoration-thickness:2px; }
 .module-list { list-style:none; padding:0; margin:0; }
 .module-list > li { padding:12px 0; border-bottom:1px solid var(--rule); }
-.module-list > li > span:first-child { display:block; font-weight:600; padding:8px 0; }
-.directory-module { border:0; margin:0; padding:0; }
-.directory-module summary .module-dates { margin:4px 0 0 18px; font-weight:400; }
-.directory-module .activity-group { margin-left:18px; }
+.other-modules { margin-top:30px; }
+.other-modules h2 { font-size:21px; }
+.module-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.module-heading > div { min-width:0; }
+.module-title { display:inline-flex; align-items:center; min-height:44px; padding:7px 0; font-weight:600; }
+.module-toggle { display:inline-flex; justify-content:center; align-items:center; flex:0 0 44px; width:44px; height:44px; padding:0; border:1px solid var(--rule); border-radius:5px; background:#fff; color:var(--blue); cursor:pointer; }
+.module-toggle:hover { background:var(--soft); }
+.chevron { display:block; width:9px; height:9px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(-2px) rotate(45deg); }
+.module-toggle[aria-expanded="true"] .chevron { transform:translateY(2px) rotate(225deg); }
+.module-items { padding:0 14px 8px; margin-top:12px; border-left:3px solid var(--rule); }
 .module-dates,.availability { display:block; color:var(--secondary); font-size:15px; }
 .module-list [aria-current="step"] { text-decoration-thickness:2px; }
 footer { display:flex; flex-wrap:wrap; align-items:center; gap:12px; border-top:1px solid var(--rule); padding-top:18px; margin-top:28px; color:var(--secondary); font-size:14px; }
@@ -61,14 +65,18 @@ footer span { flex:1 1 220px; }
     <p id="sprint-summary">Get familiar with the course and prepare for your first sprint.</p>
     <p class="dates" id="sprint-dates">Sprint 1 begins 2026-10-05</p>
     <p class="note" id="sprint-note" hidden></p>
-    <p class="availability" id="sprint-unavailable" hidden>Materials are in preparation. Visit Modules for available work.</p>
-    <a class="primary" href="modules.html?context=web" id="course-modules">Go to Modules <span aria-hidden="true">→</span></a>
+    <p class="availability" id="sprint-unavailable" hidden>Materials are in preparation. Available modules are below.</p>
+    <a class="primary" href="sprint-6.html" id="sprint-action"><span id="sprint-action-label">Open orientation</span><span aria-hidden="true">→</span></a>
   </section>
   <p class="sr-only" id="schedule-announcement" aria-live="polite"></p>
+  <section class="other-modules" aria-labelledby="other-modules-title">
+    <h2 id="other-modules-title">Other modules</h2>
+    <ul class="module-list"><li data-module-key="orientation"><div class="module-heading"><div><a class="module-title" href="sprint-6.html" data-module-link>Welcome and orientation</a><span class="module-dates" id="orientation-dates">Before 2026-10-05</span></div><button class="module-toggle" type="button" aria-expanded="false" aria-controls="module-items-orientation" aria-label="Show activities for Welcome and orientation" data-module-toggle data-module-title="Welcome and orientation" hidden><span class="chevron" aria-hidden="true"></span></button></div><div class="module-items" id="module-items-orientation" hidden><section class="activity-group"><h3>Read these in order</h3><ul class="activity-list"><li><a href="activities/start-here-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17937"><span class="activity-title">Start Here</span> <span class="activity-meta">Read</span></a></li><li><a href="activities/welcome-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17938"><span class="activity-title">Welcome</span> <span class="activity-meta">Read</span></a></li><li><a href="activities/how-this-course-works-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17935"><span class="activity-title">How This Course Works</span> <span class="activity-meta">Read</span></a></li><li><a href="activities/your-first-week-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17939"><span class="activity-title">Your First Week</span> <span class="activity-meta">Read</span></a></li></ul></section><section class="activity-group"><h3>The one submission</h3><ul class="activity-list"><li><a href="activities/introduction-post-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17936"><span class="activity-title">Introduction Post</span> <span class="activity-meta">Post · Complete or incomplete</span></a></li></ul></section><section class="activity-group"><h3>Come back to this anytime</h3><ul class="activity-list"><li><a href="activities/help-and-resources-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17934"><span class="activity-title">Help and Resources</span> <span class="activity-meta">Read</span></a></li></ul></section></div></li><li data-module-key="1" data-sprint="1"><div class="module-heading"><div><a class="module-title" href="sprint-12.html" data-module-link>Sprint 1: Find the problem worth solving</a><span class="module-dates">2026-10-05 to 2026-10-18</span></div><button class="module-toggle" type="button" aria-expanded="false" aria-controls="module-items-1" aria-label="Show activities for Sprint 1: Find the problem worth solving" data-module-toggle data-module-title="Sprint 1: Find the problem worth solving" hidden><span class="chevron" aria-hidden="true"></span></button></div><div class="module-items" id="module-items-1" hidden><section class="activity-group"><h3>Introduction</h3><ul class="activity-list"><li><a href="activities/introduction-find-the-problem-worth-solving-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17969"><span class="activity-title">Introduction: Find the Problem Worth Solving</span> <span class="activity-meta">Read</span></a></li></ul></section><section class="activity-group"><h3>Build your table</h3><ul class="activity-list"><li><a href="assignments/start-your-list-and-get-underneath-it-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17971"><span class="activity-title">Start your list and get underneath it</span> <span class="activity-meta">Practice · Encouraged</span></a></li><li><a href="assignments/things-you-stopped-noticing-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17974"><span class="activity-title">Things you stopped noticing</span> <span class="activity-meta">Practice · Encouraged</span></a></li><li><a href="assignments/things-somebody-handed-you-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17973"><span class="activity-title">Things somebody handed you</span> <span class="activity-meta">Practice · Encouraged</span></a></li></ul></section><section class="activity-group"><h3>Check and commit</h3><ul class="activity-list"><li><a href="assignments/sprint-1-concept-check-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17970"><span class="activity-title">Sprint 1 Concept check</span> <span class="activity-meta">5 points</span></a></li><li><a href="assignments/test-and-commit-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17972"><span class="activity-title">Test and commit</span> <span class="activity-meta">35 points</span></a></li></ul></section></div></li><li data-module-key="2" data-sprint="2"><div class="module-heading"><div><span class="module-title">Sprint 2: Direct AI deliberately</span><span class="module-dates">2026-10-19 to 2026-11-01</span><span class="availability">Materials in preparation</span></div></div></li><li data-module-key="3" data-sprint="3"><div class="module-heading"><div><a class="module-title" href="sprint-7.html" data-module-link>Sprint 3: Integrate people and context</a><span class="module-dates">2026-11-02 to 2026-11-15</span></div><button class="module-toggle" type="button" aria-expanded="false" aria-controls="module-items-3" aria-label="Show activities for Sprint 3: Integrate people and context" data-module-toggle data-module-title="Sprint 3: Integrate people and context" hidden><span class="chevron" aria-hidden="true"></span></button></div><div class="module-items" id="module-items-3" hidden><section class="activity-group"><h3>Sprint Week 1: Understand and map</h3><ul class="activity-list"><li><a href="activities/introduction-integrate-people-and-context-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17919"><span class="activity-title">Introduction: Integrate People and Context</span> <span class="activity-meta">Read</span></a></li><li><a href="activities/sprint-3-concept-check-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17920"><span class="activity-title">Sprint 3 Concept Check</span> <span class="activity-meta">Practice · Ungraded</span></a></li><li><a href="assignments/dojo-lab-stakeholder-map-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17918"><span class="activity-title">Dojo Lab: Stakeholder Map</span> <span class="activity-meta">35 points</span></a></li></ul></section><section class="activity-group"><h3>Sprint Week 2: Validate and revise</h3><ul class="activity-list"><li><a href="assignments/stakeholder-conversation-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17922"><span class="activity-title">Stakeholder Conversation</span> <span class="activity-meta">50 points</span></a></li><li><a href="assignments/sprint-3-reflection-and-mid-course-goal-plan-revision-v2.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17921"><span class="activity-title">Sprint 3 Reflection and Mid-Course Goal Plan Revision</span> <span class="activity-meta">10 points</span></a></li></ul></section></div></li><li data-module-key="4" data-sprint="4"><div class="module-heading"><div><a class="module-title" href="sprint-8.html" data-module-link>Sprint 4: Close the learning gap</a><span class="module-dates">2026-11-16 to 2026-11-29</span></div><button class="module-toggle" type="button" aria-expanded="false" aria-controls="module-items-4" aria-label="Show activities for Sprint 4: Close the learning gap" data-module-toggle data-module-title="Sprint 4: Close the learning gap" hidden><span class="chevron" aria-hidden="true"></span></button></div><div class="module-items" id="module-items-4" hidden><section class="activity-group"><h3>Sprint Week 1: Name the gap</h3><ul class="activity-list"><li><a href="activities/introduction-close-the-learning-gap-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17952"><span class="activity-title">Introduction: Close the Learning Gap</span> <span class="activity-meta">Read</span></a></li><li><a href="activities/sprint-4-concept-check-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17955"><span class="activity-title">Sprint 4 Concept Check</span> <span class="activity-meta">Practice · Ungraded</span></a></li><li><a href="assignments/name-the-gap-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17954"><span class="activity-title">Name the Gap</span> <span class="activity-meta">15 points</span></a></li><li><a href="assignments/ai-exchange-is-this-a-gap-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17950"><span class="activity-title">AI Exchange: Is This a Gap?</span> <span class="activity-meta">AI exchange · 0 points</span></a></li></ul></section><section class="activity-group"><h3>Sprint Week 2: Plan, learn, and check</h3><ul class="activity-list"><li><a href="assignments/dojo-lab-design-the-learning-path-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17951"><span class="activity-title">Dojo Lab: Design the Learning Path</span> <span class="activity-meta">20 points</span></a></li><li><a href="assignments/learn-and-check-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17953"><span class="activity-title">Learn and Check</span> <span class="activity-meta">50 points</span></a></li><li><a href="assignments/sprint-4-reflection-what-i-learned-and-how-i-know-v3.html?context=web" data-activity-link data-canvas-href="https://cti-courses.instructure.com/courses/180/modules/items/17956"><span class="activity-title">Sprint 4 Reflection: What I Learned and How I Know</span> <span class="activity-meta">10 points</span></a></li></ul></section></div></li><li data-module-key="5" data-sprint="5"><div class="module-heading"><div><span class="module-title">Sprint 5: Synthesize and show readiness</span><span class="module-dates">2026-11-30 to 2026-12-13</span><span class="availability">Materials in preparation</span></div></div></li></ul>
+  </section>
   <nav class="quick-links" aria-label="Course navigation">
     <a href="activities/help-and-resources-v2.html?context=web" id="course-help">Help and resources</a>
   </nav>
-  <noscript><p>Use Modules and its dates to find your current sprint.</p></noscript>
+  <noscript><p>Use the module dates above to find your current sprint.</p></noscript>
   <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt=""><span>Computing Talent Initiative - De Anza College - CIS 501: Reframing Problems with AI</span></footer>
 </main>
 <script id="course-schedule" type="application/json">{"timezone": "America/Los_Angeles", "start": "2026-10-05", "override": null, "orientation": {"sprint": 6, "title": "Welcome and orientation", "summary": "Get familiar with the course and prepare for your first sprint.", "href": "sprint-6.html"}, "sprints": [{"number": 1, "sprint": 12, "ready": true, "title": "Find the problem worth solving", "summary": "Use your own observations to compare candidate problems and explain which one is worth investigating.", "note": "First half available. Work without AI in this half.", "start": "2026-10-05", "end": "2026-10-18", "until": "2026-10-19", "href": "sprint-12.html"}, {"number": 2, "sprint": null, "ready": false, "title": "Direct AI deliberately", "summary": "Give AI context, compare its suggestions, and record the judgment behind your choices.", "start": "2026-10-19", "end": "2026-11-01", "until": "2026-11-02", "href": null}, {"number": 3, "sprint": 7, "ready": true, "title": "Integrate people and context", "summary": "Talk with a real stakeholder and revise your problem frame using what you learn.", "start": "2026-11-02", "end": "2026-11-15", "until": "2026-11-16", "href": "sprint-7.html"}, {"number": 4, "sprint": 8, "ready": true, "title": "Close the learning gap", "summary": "Learn what your problem requires and check the claims you will rely on.", "start": "2026-11-16", "end": "2026-11-29", "until": "2026-11-30", "href": "sprint-8.html"}, {"number": 5, "sprint": 9, "ready": false, "title": "Synthesize and show readiness", "summary": "Connect your problem frame, stakeholder input, and learning evidence into one supported argument.", "start": "2026-11-30", "end": "2026-12-13", "until": "2026-12-14", "href": null}], "help": {"web": "activities/help-and-resources-v2.html?context=web", "canvas": "https://cti-courses.instructure.com/courses/180/pages/help-and-resources"}}</script>
@@ -123,6 +131,16 @@ footer span { flex:1 1 220px; }
     return url.href;
   }
   doc.querySelectorAll("[data-module-link]").forEach(link => { link.href = moduleHref(link.getAttribute("href")); });
+  doc.querySelectorAll("[data-module-toggle]").forEach(button => {
+    const panel = doc.getElementById(button.getAttribute("aria-controls"));
+    button.hidden = false;
+    button.addEventListener("click", () => {
+      const expanded = button.getAttribute("aria-expanded") !== "true";
+      button.setAttribute("aria-expanded", String(expanded));
+      button.setAttribute("aria-label", `${expanded ? "Hide" : "Show"} activities for ${button.dataset.moduleTitle}`);
+      panel.hidden = !expanded;
+    });
+  });
   doc.querySelectorAll("[data-activity-link]").forEach(link => {
     if (context === "canvas" && link.dataset.canvasHref) {
       link.href = link.dataset.canvasHref;
@@ -131,8 +149,6 @@ footer span { flex:1 1 220px; }
       link.href = moduleHref(link.getAttribute("href"));
     }
   });
-  const modules = doc.getElementById("course-modules");
-  if (modules) modules.href = moduleHref(modules.getAttribute("href"));
   const help = doc.getElementById("course-help");
   if (context === "canvas" && schedule.help.canvas) {
     help.href = schedule.help.canvas;
@@ -163,6 +179,16 @@ footer span { flex:1 1 220px; }
     note.textContent = entry.note || "";
     note.hidden = !entry.note;
     doc.getElementById("sprint-unavailable").hidden = Boolean(entry.href);
+    const action = doc.getElementById("sprint-action");
+    action.hidden = !entry.href;
+    if (entry.href) action.href = moduleHref(entry.href);
+    else action.removeAttribute("href");
+    doc.getElementById("sprint-action-label").textContent = orientation ? "Open orientation" : `Open Sprint ${entry.number}`;
+    doc.querySelectorAll("[data-module-key]").forEach(row => {
+      const featured = row.dataset.moduleKey === (orientation ? "orientation" : String(entry.number));
+      // Preserve focus if the calendar rolls over while someone is using a row.
+      row.hidden = featured && !row.contains(doc.activeElement);
+    });
     if (previousKey !== null) doc.getElementById("schedule-announcement").textContent = `The featured module is now ${orientation ? "orientation" : "Sprint " + entry.number}.`;
     previousKey = key;
   }
