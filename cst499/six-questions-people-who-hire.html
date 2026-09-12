@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six questions, answered by people who hire</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+img{max-width:100%;}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 16px 56px;}
+@media(min-width:700px){.page{padding:22px 22px 56px;}}
+
+/* ---- header ---- */
+.course-header{border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:14px;}
+.course-header .eyebrow{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.7px;text-transform:uppercase;}
+.course-header h1{font-size:23px;font-weight:700;margin:3px 0 4px;line-height:1.2;}
+.course-header .sub{font-size:14px;color:var(--text);font-weight:600;}
+.course-header .lead{color:var(--muted);font-size:13px;max-width:700px;margin-top:7px;}
+.honesty{font-size:12px;color:var(--muted);background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:10px 13px;margin:0 0 18px;max-width:760px;line-height:1.5;}
+.honesty b{color:var(--text);font-weight:700;}
+
+/* ---- segmented toggle ---- */
+.ways{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:5px;overflow:hidden;background:#fff;}
+.seg button{font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.3px;color:var(--blue);background:#fff;border:0;border-right:1px solid var(--border);padding:7px 14px;cursor:pointer;}
+.seg button:last-child{border-right:0;}
+.seg button:hover{background:#F3F8FB;}
+.seg button[aria-selected="true"]{background:var(--blue);color:#fff;}
+.seg button:focus-visible{outline:2px solid var(--blue-dark);outline-offset:-3px;}
+.ways .waynote{font-size:12.5px;color:var(--muted);}
+
+/* ---- question grid ---- */
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start;}
+@media(max-width:1000px){.qgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:620px){.qgrid{grid-template-columns:1fr;}}
+details.qcard{border:1px solid var(--border);border-radius:6px;background:#fff;min-width:0;}
+details.qcard[open]{grid-column:1/-1;border-color:var(--blue);}
+details.qcard > summary{list-style:none;cursor:pointer;padding:12px 14px;border-radius:5px;}
+details.qcard > summary::-webkit-details-marker{display:none;}
+details.qcard > summary:hover{background:#F5F9FB;}
+details.qcard > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.qcard[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;background:#FCFDFE;}
+.qcard .qrow{display:flex;gap:10px;align-items:flex-start;}
+.qcard .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.qcard:not([open]) > summary .plus::after{content:"+";}
+details.qcard[open] > summary .plus::after{content:"\2212";}
+.qcard .qn{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);}
+.qcard .qt{font-size:14.5px;font-weight:700;color:var(--blue-dark);line-height:1.25;margin:2px 0 0;}
+.qcard .qf{font-size:12.5px;color:var(--muted);line-height:1.45;margin:5px 0 0;}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 0;}
+.chip{font-size:10.5px;color:var(--text);background:#F5F7F8;border:1px solid var(--border-light);border-radius:10px;padding:1px 8px;white-space:nowrap;}
+.qstatus{font-size:11px;color:var(--muted);margin:7px 0 0;font-weight:700;letter-spacing:.2px;}
+.qstatus.done{color:var(--check);}
+.qcard-body{padding:12px 14px 14px;}
+
+/* ---- clip rows ---- */
+.clip{border:1px solid var(--border-light);border-radius:6px;padding:10px 13px;margin:0 0 9px;background:#FCFDFE;}
+.clip:last-child{margin-bottom:0;}
+.clip .chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
+.clip .who{font-size:13.5px;font-weight:700;color:var(--text);}
+.clip .role{font-size:12px;color:var(--muted);}
+.clip .len{font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--muted);margin-left:auto;white-space:nowrap;}
+.clip .qtag{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);margin:0 0 4px;}
+.clip .claim{font-size:13px;line-height:1.55;margin:5px 0 0;}
+.clip .cactions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:9px 0 0;}
+.clip .yt{font-size:12px;}
+.playbtn{font-family:inherit;font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.playbtn:hover{background:#F3F8FB;}
+.playbtn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.playbtn[aria-expanded="true"]{background:var(--blue);color:#fff;}
+.watchlbl{display:inline-flex;gap:6px;align-items:center;font-size:12px;color:var(--muted);cursor:pointer;}
+.watchlbl input{width:14px;height:14px;accent-color:var(--check);cursor:pointer;margin:0;}
+.watchlbl input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.watchlbl.on{color:var(--check);font-weight:700;}
+.frame{margin:10px 0 0;width:100%;max-width:640px;}
+.frame .ratio{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:5px;overflow:hidden;}
+.frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+
+/* ---- your move ---- */
+.move{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:11px 14px;margin:12px 0 0;}
+.move .lbl{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
+.move p{margin:0;font-size:13px;color:#38503f;line-height:1.55;}
+.move .donerow{margin:9px 0 0;}
+.move .watchlbl input{accent-color:var(--check);}
+
+/* ---- people ---- */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:1000px){.pgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:620px){.pgrid{grid-template-columns:1fr;}}
+button.pcard{font-family:inherit;text-align:left;display:flex;flex-direction:column;gap:2px;border:1px solid var(--border);border-radius:6px;background:#FCFDFE;padding:11px 13px;cursor:pointer;color:var(--text);min-width:0;}
+button.pcard:hover{border-color:var(--blue);background:#F7FBFD;}
+button.pcard:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+button.pcard .nm{font-size:14px;font-weight:700;color:var(--blue-dark);line-height:1.25;}
+button.pcard .rl{font-size:12px;color:var(--muted);line-height:1.35;}
+button.pcard .ct{font-size:11px;color:var(--muted);margin-top:5px;font-weight:700;letter-spacing:.3px;}
+.backbtn{font-family:inherit;font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:5px;cursor:pointer;border:1px solid var(--border);color:var(--blue);background:#fff;}
+.backbtn:hover{background:#F3F8FB;}
+.backbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.phead{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--border-light);}
+.phead h2{font-size:17px;font-weight:700;margin:0;color:var(--blue-dark);}
+.phead .rl{font-size:12.5px;color:var(--muted);}
+
+[hidden]{display:none !important;}
+
+/* ---- footer ---- */
+.sources{margin-top:26px;border:1px solid var(--border-light);border-radius:6px;padding:12px 14px;font-size:12.5px;color:var(--muted);background:#FCFCFD;}
+.sources b{color:var(--text);font-weight:700;}
+.sources ul{margin:6px 0 0;padding-left:18px;}
+.sources li{margin:4px 0;line-height:1.45;}
+.storenote{font-size:12.5px;color:#8a3b12;margin:14px 0 0;}
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);color:var(--muted);font-size:11.5px;}
+</style>
+</head>
+<body data-course="cst499">
+<div class="page">
+
+<div class="course-header">
+<div class="eyebrow" id="eyebrow">CST499 &middot; Resource</div>
+<h1>Six questions, answered by people who hire</h1>
+<div class="sub">Clips from founders and CEOs who decide who gets in &mdash; cut to the parts you can act on.</div>
+<div class="lead">You don&rsquo;t have to watch these in order. Start with the question you&rsquo;re actually asking yourself this week, watch two or three short clips, and take the one move at the bottom. Each clip is one to three minutes.</div>
+</div>
+
+<div class="honesty"><b>Where these come from:</b> four episodes of the Silicon Valley Girl podcast (Marina Mogilko), recorded 2026. We cut out the host&rsquo;s framing and kept the guests. Each guest speaks from their own company &mdash; Khan Academy is not HubSpot &mdash; so treat these as data points from people who hire, and check them against what you found in Read the Market.</div>
+
+<div class="ways">
+<div class="seg" role="tablist" aria-label="Two ways in">
+<button type="button" id="tab-q" role="tab" aria-selected="true" aria-controls="view-q">By question</button>
+<button type="button" id="tab-p" role="tab" aria-selected="false" aria-controls="view-p">By person</button>
+</div>
+<span class="waynote" id="waynote"></span>
+</div>
+
+<div id="view-q" role="tabpanel" aria-labelledby="tab-q"></div>
+<div id="view-p" role="tabpanel" aria-labelledby="tab-p" hidden></div>
+
+<div class="sources">
+<b>Source episodes</b> (full videos, if you want the whole conversation):
+<ul id="sourcelist"></ul>
+</div>
+
+<p class="storenote" id="store-note" hidden>This browser is blocking local storage, so the checkboxes on this page will not survive a reload.</p>
+
+<footer class="page-footer">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; Six questions, answered by people who hire</span>
+</footer>
+
+</div>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+var QUESTIONS = [
+{
+  id:"q1",
+  title:"Is the entry-level job gone?",
+  frame:"The honest answer from these three is: the job that was a list of tasks someone handed you is shrinking, and the job that needs your judgment is not. That’s a different problem from “no jobs,” and it has a different fix.",
+  clips:[
+    {person:"Andrew Ng", role:"co-founder of Coursera and Google Brain", videoId:"o-wv_szZ0V0", start:183, end:300,
+     claim:"Economists broke jobs into tasks. AI can do maybe 30–40% of many jobs, which makes the 60% a human does more valuable, not less. Software engineering is the most affected field and openings are up — but if you still write code the way people did in 2022, you’re in trouble."},
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman, former Chief Product Officer at YouTube", videoId:"JEZVl3BkSLk", start:608, end:676,
+     claim:"He won’t use the word “replaced” because it assumes a zero-sum game. Power drills didn’t end construction jobs; we built skyscrapers, and the number of construction workers went up."},
+    {person:"Ryan Roslansky", role:"ran LinkedIn for six years", videoId:"213rSCulKUQ", start:146, end:234,
+     claim:"In LinkedIn’s own data there is no linear career path. The skills listed for a given role changed more than 25% in the last couple of years, and he expects 70% by 2030. So the useful question is not “where am I in five years” but “what do I learn in the next few months.”"}
+  ],
+  moves:{
+    cst499:"Take your capstone idea and split it in two lists: the parts you’d expect AI to do most of, and the parts that need you — the judgment, the customer, the domain. If the second list is empty, the project is too small; if the first list is empty, you’re planning to do 2022 work. Bring both lists to your project proposal.",
+    cst349:"Take the role you chose in Read the Market and split its work in two lists: the parts you’d expect AI to do most of, and the parts that need a person — judgment, the customer, the domain. The second list is what you’re building toward this semester; add it to your gap."
+  }
+},
+{
+  id:"q2",
+  title:"What are they actually hiring for?",
+  frame:"Four people, four companies, and the same shape underneath: not “do you know AI,” but can you form a hypothesis and test it, ask the question that matters, go one level deeper than your role needs, and learn without ego.",
+  clips:[
+    {person:"Yamini Rangan", role:"CEO of HubSpot", videoId:"213rSCulKUQ", start:266, end:418,
+     claim:"She hires explorers, not map readers. With AI there is no playbook, so she looks for a scientist mindset (a hypothesis, tested fast), people close to the ground who know which part of the workflow is broken, and curiosity about the customer."},
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman", videoId:"JEZVl3BkSLk", start:946, end:1015,
+     claim:"His number-one hiring signal is how good you are at asking questions — finding the one question that, once answered, answers most of the others. He says it is learnable."},
+    {person:"Aaron Levie", role:"CEO of Box", videoId:"213rSCulKUQ", start:670, end:815,
+     claim:"Go deeper technically than your role strictly requires: understand what an agent is doing, how MCP, CLIs and skills work. Domain skills still matter; AI is how you amplify them. He names the tools he’d open first."},
+    {person:"Luana Lopes Lara", role:"co-founder of Kalshi", videoId:"213rSCulKUQ", start:864, end:995,
+     claim:"Using AI in her interviews is fine. What she reviews is your past projects and systems, and what she looks for is low ego and willingness to learn — including letting go of a skill you were proud of."}
+  ],
+  moves:{
+    cst499:"Of the three — a tested hypothesis, a sharp question, one level of technical depth — pick the one you’re weakest at and build it into your capstone plan as a named deliverable, so that by December you have an example to tell in an interview.",
+    cst349:"Of the three — a tested hypothesis, a sharp question, one level of technical depth — pick the one you’re weakest at and make it the skill you practice in your dojo this sprint, so that you have one concrete story by the end of the course."
+  }
+},
+{
+  id:"q3",
+  title:"How do I get seen before I apply?",
+  frame:"Every person here described someone whose work they had already seen before the interview. That’s the part you can start now, and it doesn’t need a finished capstone — it needs one thing that exists in public.",
+  clips:[
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman", videoId:"JEZVl3BkSLk", start:64, end:160,
+     claim:"Every job he’s taken and every interesting person he’s hired came through a conversation that wasn’t about a job. Applications go to a folder. Being interesting in the world — a project, a piece of writing someone passes around — is what gets you out of the folder."},
+    {person:"Sal Khan", role:"founder of Khan Academy", videoId:"213rSCulKUQ", start:76, end:124,
+     claim:"A strong resume is a signal, not an evaluation. What he actually does is look for videos of the person — anything that shows how they communicate — before he decides to spend interview hours on them."},
+    {person:"Sal Khan", role:"founder of Khan Academy", videoId:"213rSCulKUQ", start:1183, end:1225,
+     claim:"It is still easy to stand out. In 1996 “I have a webpage” got you hired; today the equivalent is “I come with a hundred agents” or a short video of your day with the workflows you automated. He’d hire that person tomorrow."}
+  ],
+  moves:{
+    cst499:"Record a two-minute screen video of one thing you have built actually working — even a rough first slice of the capstone — and say in plain words what problem it solves and what you’d do next. Put it somewhere a stranger can find it (LinkedIn, GitHub README, your site). That’s your first public artifact; you’ll replace it with a better one by December.",
+    cst349:"Record a two-minute screen video of one thing you have built or automated actually working, and say in plain words what problem it solves and what you’d do next. Put it somewhere a stranger can find it (LinkedIn, GitHub README, your site). Add the link to your Demonstrate Growth evidence."
+  }
+},
+{
+  id:"q4",
+  title:"What do I say in the interview?",
+  frame:"The weak answer is “I know how to use AI” — everyone can say it. The strong answer shows how you would rebuild the work in front of you, and asks the question the interviewer didn’t expect.",
+  clips:[
+    {person:"Conor Grennan", role:"Chief AI Architect at NYU Stern", videoId:"213rSCulKUQ", start:1023, end:1121,
+     claim:"Walk in knowing what the role does, then say: here’s my domain expertise, and here’s how I’d reinvent this process with AI — and here’s how the team around me could use it. Companies want someone who changes how the work is done, not someone who just does AI."},
+    {person:"Andrew Ng", role:"co-founder of Coursera", videoId:"o-wv_szZ0V0", start:1333, end:1486,
+     claim:"All of his marketers can code, and his interview question for them is “what have you built?” He describes what his marketing and finance teams built for themselves without waiting for an engineer."},
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman", videoId:"JEZVl3BkSLk", start:1024, end:1193,
+     claim:"His interview question for years: scientists invented a teleportation device, how do you bring it to market? Ask all your questions — then he tells you the scientists will only answer two. Which two you pick shows how you think."}
+  ],
+  moves:{
+    cst499:"Take one posting from Read the Market. Write a five-sentence answer to “how would you rebuild this role’s core process with AI, and how would the team use it?” using your capstone as the example. Then practice the teleportation question with a classmate: ask every question you can, then cut to two.",
+    cst349:"Take one posting from Read the Market. Write a five-sentence answer to “how would you rebuild this role’s core process with AI, and how would the team use it?” Then practice the teleportation question with a classmate: ask every question you can, then cut to two."
+  }
+},
+{
+  id:"q5",
+  title:"What should I build this semester?",
+  frame:"The people who build for a living agree that building got cheap; what’s scarce is knowing what to build and having the nerve to finish something small. Your advantage is the thing you already know from the inside.",
+  clips:[
+    {person:"Andrew Ng", role:"co-founder of Coursera", videoId:"cVGHg4Vd9uM", start:350, end:410,
+     claim:"The cost of building has collapsed, so the bottleneck moved to deciding what to build. His advice: learn AI, build fast, talk to customers. He builds something most weekends because someone on his team has a problem."},
+    {person:"Amjad Masad", role:"CEO of Replit", videoId:"cVGHg4Vd9uM", start:256, end:317,
+     claim:"When everyone can build an app, domain knowledge is the edge — the things you know from experience that never made it onto the internet. Models aren’t embodied; you are."},
+    {person:"Daniel Priestley", role:"entrepreneur and author", videoId:"cVGHg4Vd9uM", start:1277, end:1347,
+     claim:"Run an open-and-shut project with a 90-day end date. It isn’t a business; it’s one complete value-creation cycle, start to finish, so that you learn what that feels like."},
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman", videoId:"JEZVl3BkSLk", start:266, end:362,
+     claim:"Judgment is learned the way a sport is: not in the broadcast game but on the driveway. Practice the skill in a side project, with a friend, with fast feedback — before you need it at stake."}
+  ],
+  moves:{
+    cst499:"Write down one workflow you know from the inside — a job, a family business, a club, a campus office — where someone still does something by hand every week. Describe the mess in three sentences. That’s a capstone candidate; take it to Problem Spaces and check whether a real person would use the fix.",
+    cst349:"Write down one workflow you know from the inside — a job, a family business, a club, a campus office — where someone still does something by hand every week. Describe the mess in three sentences. That’s a semester-sized project with a natural end date; put it on your learning plan as your 90-day build."
+  }
+},
+{
+  id:"q6",
+  title:"Is AI making me worse at learning?",
+  frame:"The person who has taught AI to more people than anyone says yes, the way most students use it. The same person explains why human judgment stays valuable — and that judgment is exactly what offloading skips.",
+  clips:[
+    {person:"Andrew Ng", role:"co-founder of Coursera, taught ~8 million people AI", videoId:"o-wv_szZ0V0", start:842, end:949,
+     claim:"As most people use them, AI models are terrible for learning. Students who use AI score higher on homework and retain much less, because the AI did the work. He notices it in himself: six months later he has to ask again."},
+    {person:"Andrew Ng", role:"co-founder of Coursera", videoId:"o-wv_szZ0V0", start:713, end:815,
+     claim:"What people call taste or judgment has a technical basis: humans carry context — the customer’s face, what the manager said — that no model has. That context advantage is why more people with judgment are needed, not fewer."},
+    {person:"Shishir Mehrotra", role:"CEO of Superhuman", videoId:"JEZVl3BkSLk", start:916, end:1015,
+     claim:"You still need the person who comes up with the great idea; the model makes a hundred variations, and then you need to judge them. Judgment comes only from practice — and the easiest place to practice is a safe one."}
+  ],
+  moves:{
+    cst499:"Pick one capstone task you’d normally hand to AI. Do your own first pass — a sketch, a rough answer, a guess — before you prompt. Then compare and write two lines on what the model saw that you didn’t, and what you saw that it didn’t. That second line is your context advantage; it belongs in your mid-term reflection.",
+    cst349:"Pick one task this week you’d normally hand to AI. Do your own first pass — a sketch, a rough answer, a guess — before you prompt. Then compare and write two lines on what the model saw that you didn’t, and what you saw that it didn’t. Bring the second line to your dojo; it’s the thing your Sensei should hold you to."
+  }
+}
+];
+
+var PEOPLE = [
+{name:"Andrew Ng", role:"co-founder of Coursera and Google Brain"},
+{name:"Shishir Mehrotra", role:"CEO of Superhuman, former CPO at YouTube"},
+{name:"Sal Khan", role:"founder of Khan Academy"},
+{name:"Yamini Rangan", role:"CEO of HubSpot"},
+{name:"Aaron Levie", role:"CEO of Box"},
+{name:"Luana Lopes Lara", role:"co-founder of Kalshi"},
+{name:"Ryan Roslansky", role:"former CEO of LinkedIn"},
+{name:"Conor Grennan", role:"Chief AI Architect, NYU Stern"},
+{name:"Amjad Masad", role:"CEO of Replit"},
+{name:"Daniel Priestley", role:"entrepreneur and author"}
+];
+
+var SOURCES = [
+{title:"The Biggest AI Opportunities Are Hiding in Boring Businesses", videoId:"cVGHg4Vd9uM"},
+{title:"Superhuman CEO: How to Position Yourself Now Before the Next AI Phase (2026–2027)", videoId:"JEZVl3BkSLk"},
+{title:"Top 1% Career Strategy: How to Get Hired in the AI Era", videoId:"213rSCulKUQ"},
+{title:"Andrew Ng: The Biggest Opportunities in AI Aren’t Where You Think", videoId:"o-wv_szZ0V0"}
+];
+
+/* ============================================================
+   STORAGE (fails silently)
+   ============================================================ */
+var STORE_KEY = "sixq.progress.v1";
+var state = {};
+var storageOK = true;
+try{
+  var raw = window.localStorage.getItem(STORE_KEY);
+  if(raw){ state = JSON.parse(raw) || {}; }
+}catch(e){ storageOK = false; state = {}; }
+function save(){
+  try{ window.localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch(e){ storageOK = false; showStoreNote(); }
+}
+function showStoreNote(){
+  var n = document.getElementById("store-note");
+  if(n){ n.hidden = false; }
+}
+if(!storageOK){ showStoreNote(); }
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls){ n.className = cls; }
+  if(txt !== undefined && txt !== null){ n.textContent = txt; }
+  return n;
+}
+function mmss(sec){
+  var s = Math.max(0, Math.round(sec));
+  var m = Math.floor(s/60);
+  var r = s % 60;
+  return m + ":" + (r < 10 ? "0" : "") + r;
+}
+function clipKey(q, i){ return q.id + ".c" + i; }
+function moveKey(q){ return q.id + ".move"; }
+function courseId(){
+  var c = document.body.getAttribute("data-course");
+  return (c === "cst349") ? "cst349" : "cst499";
+}
+function embedSrc(c){
+  return "https://www.youtube.com/embed/" + c.videoId + "?start=" + c.start + "&end=" + c.end + "&rel=0&autoplay=1";
+}
+function watchUrl(c){
+  return "https://www.youtube.com/watch?v=" + c.videoId + "&t=" + c.start + "s";
+}
+
+/* ============================================================
+   CLIP ROW
+   ============================================================ */
+function renderClip(q, clip, idx, opts){
+  opts = opts || {};
+  var row = el("div", "clip");
+
+  if(opts.showQuestion){
+    row.appendChild(el("div", "qtag", q.title));
+  }
+
+  var head = el("div", "chead");
+  head.appendChild(el("span", "who", clip.person));
+  head.appendChild(el("span", "role", clip.role));
+  head.appendChild(el("span", "len", mmss(clip.end - clip.start)));
+  row.appendChild(head);
+
+  row.appendChild(el("p", "claim", clip.claim));
+
+  var actions = el("div", "cactions");
+
+  var btn = el("button", "playbtn", "Play clip");
+  btn.type = "button";
+  btn.setAttribute("aria-expanded", "false");
+  actions.appendChild(btn);
+
+  var link = el("a", "yt", "Open at this point on YouTube");
+  link.href = watchUrl(clip);
+  link.target = "_blank";
+  link.rel = "noopener";
+  actions.appendChild(link);
+
+  var key = clipKey(q, idx);
+  var lab = el("label", "watchlbl");
+  var cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = !!state[key];
+  lab.appendChild(cb);
+  lab.appendChild(document.createTextNode("Watched"));
+  if(cb.checked){ lab.classList.add("on"); }
+  cb.addEventListener("change", function(){
+    state[key] = cb.checked;
+    lab.classList.toggle("on", cb.checked);
+    save();
+    refreshStatuses();
+  });
+  actions.appendChild(lab);
+
+  row.appendChild(actions);
+
+  var frame = el("div", "frame");
+  frame.hidden = true;
+  row.appendChild(frame);
+
+  btn.addEventListener("click", function(){
+    if(frame.firstChild){
+      // already loaded — toggle visibility off/on without reloading
+      var nowHidden = !frame.hidden;
+      frame.hidden = nowHidden;
+      btn.setAttribute("aria-expanded", nowHidden ? "false" : "true");
+      btn.textContent = nowHidden ? "Play clip" : "Hide clip";
+      return;
+    }
+    var ratio = el("div", "ratio");
+    var f = document.createElement("iframe");
+    f.setAttribute("src", embedSrc(clip));
+    f.setAttribute("title", clip.person + " — " + q.title);
+    f.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+    f.setAttribute("allowfullscreen", "");
+    ratio.appendChild(f);
+    frame.appendChild(ratio);
+    frame.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    btn.textContent = "Hide clip";
+  });
+
+  return row;
+}
+
+/* ============================================================
+   BY QUESTION
+   ============================================================ */
+var statusNodes = [];
+
+function questionStatusText(q){
+  var n = 0;
+  for(var i = 0; i < q.clips.length; i++){
+    if(state[clipKey(q, i)]){ n++; }
+  }
+  var t = n + " of " + q.clips.length + " clips";
+  if(state[moveKey(q)]){ t += " · move done"; }
+  return { text:t, done:(n === q.clips.length && !!state[moveKey(q)]) };
+}
+
+function refreshStatuses(){
+  for(var i = 0; i < statusNodes.length; i++){
+    var s = questionStatusText(statusNodes[i].q);
+    statusNodes[i].node.textContent = s.text;
+    statusNodes[i].node.classList.toggle("done", s.done);
+  }
+}
+
+function renderQuestions(){
+  var wrap = document.getElementById("view-q");
+  wrap.textContent = "";
+  var grid = el("div", "qgrid");
+  statusNodes = [];
+
+  QUESTIONS.forEach(function(q, qi){
+    var d = document.createElement("details");
+    d.className = "qcard";
+    d.id = "card-" + q.id;
+
+    var sum = document.createElement("summary");
+    var qrow = el("div", "qrow");
+    qrow.appendChild(el("span", "plus"));
+    var txt = el("div", "");
+    txt.style.minWidth = "0";
+    txt.appendChild(el("div", "qn", "Q" + (qi + 1)));
+    txt.appendChild(el("div", "qt", q.title));
+    txt.appendChild(el("div", "qf", q.frame));
+
+    var chips = el("div", "chips");
+    var seen = {};
+    q.clips.forEach(function(c){
+      if(seen[c.person]){ return; }
+      seen[c.person] = true;
+      chips.appendChild(el("span", "chip", c.person));
+    });
+    txt.appendChild(chips);
+
+    var st = el("div", "qstatus", "");
+    txt.appendChild(st);
+    statusNodes.push({ q:q, node:st });
+
+    qrow.appendChild(txt);
+    sum.appendChild(qrow);
+    d.appendChild(sum);
+
+    var body = el("div", "qcard-body");
+    q.clips.forEach(function(c, ci){
+      body.appendChild(renderClip(q, c, ci, { showQuestion:false }));
+    });
+
+    var move = el("div", "move");
+    move.appendChild(el("div", "lbl", "Your move this week"));
+    move.appendChild(el("p", "", q.moves[courseId()]));
+    var drow = el("div", "donerow");
+    var dl = el("label", "watchlbl");
+    var dcb = document.createElement("input");
+    dcb.type = "checkbox";
+    var mk = moveKey(q);
+    dcb.checked = !!state[mk];
+    dl.appendChild(dcb);
+    dl.appendChild(document.createTextNode("Done"));
+    if(dcb.checked){ dl.classList.add("on"); }
+    dcb.addEventListener("change", function(){
+      state[mk] = dcb.checked;
+      dl.classList.toggle("on", dcb.checked);
+      save();
+      refreshStatuses();
+    });
+    drow.appendChild(dl);
+    move.appendChild(drow);
+    body.appendChild(move);
+
+    d.appendChild(body);
+    grid.appendChild(d);
+  });
+
+  wrap.appendChild(grid);
+  refreshStatuses();
+}
+
+/* ============================================================
+   BY PERSON
+   ============================================================ */
+function clipsFor(name){
+  var out = [];
+  QUESTIONS.forEach(function(q){
+    q.clips.forEach(function(c, ci){
+      if(c.person === name){ out.push({ q:q, clip:c, idx:ci }); }
+    });
+  });
+  return out;
+}
+
+function renderPeopleGrid(){
+  var wrap = document.getElementById("view-p");
+  wrap.textContent = "";
+  var grid = el("div", "pgrid");
+  PEOPLE.forEach(function(p){
+    var n = clipsFor(p.name).length;
+    var b = el("button", "pcard");
+    b.type = "button";
+    b.appendChild(el("span", "nm", p.name));
+    b.appendChild(el("span", "rl", p.role));
+    b.appendChild(el("span", "ct", n + (n === 1 ? " clip" : " clips")));
+    b.addEventListener("click", function(){ renderPerson(p); });
+    grid.appendChild(b);
+  });
+  wrap.appendChild(grid);
+}
+
+function renderPerson(p){
+  var wrap = document.getElementById("view-p");
+  wrap.textContent = "";
+
+  var back = el("button", "backbtn", "← All people");
+  back.type = "button";
+  back.addEventListener("click", function(){
+    renderPeopleGrid();
+    var first = wrap.querySelector("button.pcard");
+    if(first){ first.focus(); }
+  });
+  wrap.appendChild(back);
+
+  var head = el("div", "phead");
+  var h = el("h2", "", p.name);
+  h.tabIndex = -1;
+  head.appendChild(h);
+  head.appendChild(el("span", "rl", p.role));
+  wrap.appendChild(head);
+
+  var list = el("div", "plist");
+  clipsFor(p.name).forEach(function(row){
+    list.appendChild(renderClip(row.q, row.clip, row.idx, { showQuestion:true }));
+  });
+  wrap.appendChild(list);
+  h.focus();
+}
+
+/* ============================================================
+   TABS, HEADER, SOURCES
+   ============================================================ */
+function setView(which){
+  var tq = document.getElementById("tab-q");
+  var tp = document.getElementById("tab-p");
+  var vq = document.getElementById("view-q");
+  var vp = document.getElementById("view-p");
+  var isQ = (which === "q");
+  tq.setAttribute("aria-selected", isQ ? "true" : "false");
+  tp.setAttribute("aria-selected", isQ ? "false" : "true");
+  vq.hidden = !isQ;
+  vp.hidden = isQ;
+  document.getElementById("waynote").textContent = isQ
+    ? "Six questions. Open the one you’re asking this week."
+    : "Ten guests. Open one to see every clip they appear in.";
+  if(!isQ && !vp.firstChild){ renderPeopleGrid(); }
+}
+
+function initHeader(){
+  var c = courseId();
+  document.getElementById("eyebrow").textContent =
+    (c === "cst349" ? "CST349" : "CST499") + " · Resource";
+  document.title = "Six questions, answered by people who hire | " +
+    (c === "cst349" ? "CST349" : "CST499");
+}
+
+function initSources(){
+  var ul = document.getElementById("sourcelist");
+  SOURCES.forEach(function(s){
+    var li = document.createElement("li");
+    var a = el("a", "", s.title);
+    a.href = "https://www.youtube.com/watch?v=" + s.videoId;
+    a.target = "_blank";
+    a.rel = "noopener";
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+}
+
+document.getElementById("tab-q").addEventListener("click", function(){ setView("q"); });
+document.getElementById("tab-p").addEventListener("click", function(){ setView("p"); });
+
+initHeader();
+initSources();
+renderQuestions();
+setView("q");
+</script>
+</body>
+</html>
