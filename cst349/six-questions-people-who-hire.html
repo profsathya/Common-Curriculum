@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Six questions, answered by people who hire</title>
+<title>Learn from industry thought leaders</title>
 <style>
 :root{
 --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
@@ -31,6 +31,13 @@ img{max-width:100%;}
 .course-header .lead{color:var(--muted);font-size:13px;max-width:700px;margin-top:7px;}
 .honesty{font-size:12px;color:var(--muted);background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:10px 13px;margin:0 0 18px;max-width:760px;line-height:1.5;}
 .honesty b{color:var(--text);font-weight:700;}
+
+/* ---- purpose / task ---- */
+.goal{background:var(--goal-bg);border-left:4px solid var(--goal-border);border-radius:0 5px 5px 0;padding:11px 14px;margin:0 0 10px;}
+.goal .label{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.goal .text{font-size:13.5px;color:var(--text);line-height:1.55;}
+.goal.task{background:var(--teal-light);border-left-color:var(--teal);}
+.goal.task .label{color:var(--teal);}
 
 /* ---- segmented toggle ---- */
 .ways{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;}
@@ -89,6 +96,54 @@ details.qcard[open] > summary .plus::after{content:"\2212";}
 .frame .ratio{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:5px;overflow:hidden;}
 .frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
 
+/* ---- reflection box ---- */
+.rbox{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin:12px 0 0;background:#fff;}
+.rbox .qt{display:block;font-size:14px;font-weight:700;margin:0 0 3px;}
+.rbox .qh{font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.55;}
+textarea.box{width:100%;min-height:96px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;display:block;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.airow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 0;}
+.airow .opt{font-size:11.5px;color:var(--muted);}
+.aibox{display:none;margin:9px 0 0;padding:11px 13px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:12.5px;}
+.refl li{margin:0 0 5px;line-height:1.5;}
+
+/* ---- sticky copy bar ---- */
+.copybar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#fff;border-top:1px solid var(--border);box-shadow:0 -2px 10px rgba(45,59,69,.10);}
+.cbinner{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:flex-start;}
+@media(min-width:700px){.cbinner{padding:10px 22px;align-items:center;}}
+.cbtext{margin:0;font-size:12px;color:var(--muted);line-height:1.45;flex:1;min-width:0;}
+.cbtext b{color:var(--text);font-weight:700;}
+.cbside{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;align-items:flex-start;}
+.cbcounts{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.2px;}
+.cbstatus{font-size:12px;color:var(--muted);margin:6px 16px 0;max-width:1040px;}
+.cbstatus.ok{color:var(--check);font-weight:700;}
+.cbstatus.warn{color:#8a3b12;}
+textarea.sumout{display:block;width:calc(100% - 32px);margin:6px 16px 8px;max-height:110px;min-height:70px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.4;padding:8px 9px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+#copy-btn{white-space:nowrap;}
+.cbstatus:empty{display:none;}
+@media(max-width:699px){
+  .cbinner{flex-direction:column;gap:7px;padding:8px 16px;}
+  .cbtext{font-size:11px;line-height:1.35;}
+  .cbside{flex-direction:row;align-items:center;gap:10px;}
+  .cbcounts{font-size:10.5px;line-height:1.3;}
+  .cbstatus{font-size:11.5px;margin:0 16px 6px;}
+  textarea.sumout{margin:0 16px 8px;min-height:56px;max-height:80px;}
+}
+
 /* ---- your move ---- */
 .move{border:1px solid var(--check-border);background:var(--check-bg);border-radius:6px;padding:11px 14px;margin:12px 0 0;}
 .move .lbl{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--check);margin-bottom:4px;}
@@ -128,10 +183,20 @@ button.pcard .ct{font-size:11px;color:var(--muted);margin-top:5px;font-weight:70
 <div class="page">
 
 <div class="course-header">
-<div class="eyebrow" id="eyebrow">CST499 &middot; Resource</div>
-<h1>Six questions, answered by people who hire</h1>
+<div class="eyebrow" id="eyebrow">CST499 &middot; Optional activity</div>
+<h1>Learn from industry thought leaders</h1>
 <div class="sub">Interviews with founders, CEOs and thought leaders who think about and decide how to recruit talent for their organizations &mdash; specific parts that will give you ideas to act on.</div>
 <div class="lead">You don&rsquo;t have to watch these in order. Start with the question you&rsquo;re actually asking yourself this week, watch two or three short clips, and take the one move at the bottom. Each clip is one to three minutes.</div>
+</div>
+
+<div class="goal" id="purpose-block">
+<div class="label">Purpose</div>
+<div class="text">This activity gives you exposure to what industry thought leaders are saying about the current job market, and the option to explore it. It is your choice how far and how deep you go. Nothing here is required: watch one clip or all of them, reflect on one question or several, and submit whenever you have something you want to keep.</div>
+</div>
+
+<div class="goal task" id="task-block">
+<div class="label">Your task</div>
+<div class="text">Select the questions and clips that interest you, and reflect on what they say. When you are ready, press Copy to clipboard and paste the result into the Canvas text box as your submission.</div>
 </div>
 
 <div class="honesty"><b>Where these come from:</b> four episodes of the Silicon Valley Girl podcast (Marina Mogilko), recorded 2026. We organized this page in a way that would be useful to you, to hear what advice the well-placed guests on the podcast are giving &mdash; you are encouraged to consider the entire podcast. Please note, I am not endorsing everything in these videos (in particular the product placements are not necessarily helpful), but providing this as a source for you to learn. Each guest speaks from their own company &mdash; Khan Academy is not HubSpot &mdash; so check what they say against what you found in Read the Market.</div>
@@ -152,12 +217,24 @@ button.pcard .ct{font-size:11px;color:var(--muted);margin-top:5px;font-weight:70
 <ul id="sourcelist"></ul>
 </div>
 
-<p class="storenote" id="store-note" hidden>This browser is blocking local storage, so the checkboxes on this page will not survive a reload.</p>
+<p class="storenote" id="store-note" hidden>This browser is blocking local storage, so what you tick and write here will not survive a reload. Copy to clipboard before you leave the page.</p>
 
 <footer class="page-footer">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; Six questions, answered by people who hire</span>
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; Learn from industry thought leaders</span>
 </footer>
 
+</div>
+
+<div class="copybar" id="copybar">
+<div class="cbinner">
+<p class="cbtext"><b>Ready to submit?</b> The button gathers what you have watched, ticked and written into one block and copies it to your clipboard; paste it into the Canvas text box. You can do this at any point, and again later if you go further.</p>
+<div class="cbside">
+<button type="button" class="btn primary" id="copy-btn">Copy to clipboard</button>
+<div class="cbcounts" id="cb-counts"></div>
+</div>
+</div>
+<div class="cbstatus" id="copy-status" role="status"></div>
+<textarea class="sumout" id="summary-out" readonly hidden aria-label="The text that gets copied"></textarea>
 </div>
 
 <script>
@@ -273,6 +350,24 @@ var QUESTIONS = [
 }
 ];
 
+/* Coach notes — ground truth sent to the AI with each reflection, per question. */
+var COACH = {
+q1:"A specific thing heard = a claim from Ng (30–40% of tasks, the 60% more valuable; SWE openings up; coding like 2022 is trouble), Mehrotra (“replaced” is a zero-sum frame; power drills → skyscrapers) or Roslansky (no linear path; skills changing 25% now, 70% by 2030; think in months). The “about you” sentence should point at their own work — capstone or target role — and which part is the 60%.",
+q2:"Specific thing = Rangan (explorers vs map readers; hypothesis, close to the ground, customer curiosity), Mehrotra (asking questions is the #1 hiring signal; learnable), Levie (understand how agents/MCP/CLIs/skills work; domain skills still matter), Lopes Lara (AI allowed in interviews; project review; low ego). The “about you” sentence names which of these they are weakest at or would practise.",
+q3:"Specific thing = Mehrotra (the recruiting folder; projects and writing people might see), Khan (resume = signals; he looks for videos of how they communicate; “I come with a hundred agents”). The “about you” sentence names one public artifact they could make.",
+q4:"Specific thing = Grennan (show how you’d rebuild the role’s process and how the team would use it; “I know AI” is not enough), Ng (“what have you built?”; marketers who code), Mehrotra (teleportation question; only two questions). The “about you” sentence names a role or posting and what they’d say.",
+q5:"Specific thing = Ng (cost of building collapsed; deciding what to build is the bottleneck; build fast, talk to customers), Masad (domain/tacit knowledge is the edge), Priestley (90-day open-and-shut project), Mehrotra (practise judgment in low-stakes places). The “about you” sentence names a workflow they know from the inside.",
+q6:"Specific thing = Ng (AI terrible for learning as commonly used; higher homework scores, worse retention; the context advantage is the basis of judgment), Mehrotra (great ideas + judging hundreds of variants; judgment by practice). The “about you” sentence names one task they’d do a first pass on themselves before prompting."
+};
+
+var REFLECT_PROMPT = "What did you hear that you did not expect, and what does it change about how you see your own next step?";
+
+var CFG = {
+  pageTitle:"Learn from industry thought leaders",
+  system:"You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording — if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further."
+};
+var AI_ENDPOINT = "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy";
+
 var PEOPLE = [
 {name:"Andrew Ng", role:"co-founder of Coursera and Google Brain"},
 {name:"Shishir Mehrotra", role:"CEO of Superhuman, former CPO at YouTube"},
@@ -307,6 +402,11 @@ function save(){
   try{ window.localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
   catch(e){ storageOK = false; showStoreNote(); }
 }
+var saveTimer = null;
+function saveSoon(){
+  if(saveTimer){ clearTimeout(saveTimer); }
+  saveTimer = setTimeout(save, 500);
+}
 function showStoreNote(){
   var n = document.getElementById("store-note");
   if(n){ n.hidden = false; }
@@ -333,6 +433,71 @@ function moveKey(q){ return q.id + ".move"; }
 function courseId(){
   var c = document.body.getAttribute("data-course");
   return (c === "cst349") ? "cst349" : "cst499";
+}
+function courseLabel(){ return courseId().toUpperCase(); }
+function pageSlug(){ return courseId() + "-learn-from-industry-thought-leaders"; }
+
+/* reflection sub-state: { text, ai:[{at,onText,text}] } per question */
+function reflState(qid){
+  if(!state.refl){ state.refl = {}; }
+  if(!state.refl[qid]){ state.refl[qid] = { text:"", ai:[] }; }
+  if(!state.refl[qid].ai){ state.refl[qid].ai = []; }
+  return state.refl[qid];
+}
+
+/* ---- AI feedback: same request shape and behaviour as Read the Market ---- */
+function showAi(box, text, n){
+  box.style.display = "block";
+  box.textContent = "";
+  var lbl = el("span", "lbl", n > 1 ? ("AI feedback · round " + n) : "AI feedback");
+  box.appendChild(lbl);
+  box.appendChild(document.createTextNode(text));
+}
+function aiError(box){
+  box.style.display = "block";
+  box.textContent = "";
+  box.appendChild(el("span", "lbl", "AI feedback"));
+  box.appendChild(el("span", "err", "Could not get feedback right now. The Check it yourself questions under this box cover the same ground — use those, and try the button again later."));
+}
+function post(btn, box, content, onReply, done){
+  btn.disabled = true;
+  var label = btn.textContent;
+  btn.textContent = "Reading what you wrote...";
+  box.style.display = "block";
+  box.textContent = "";
+  box.appendChild(el("span", "lbl", "AI feedback"));
+  box.appendChild(document.createTextNode("Reading what you wrote..."));
+  fetch(AI_ENDPOINT, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ system:CFG.system, messages:[{ role:"user", content:content }], max_tokens:320 })
+  }).then(function(r){
+    if(!r.ok){ throw new Error("status " + r.status); }
+    return r.json();
+  }).then(function(data){
+    var reply = (data.content || data.text || "").trim();
+    if(!reply){ throw new Error("empty"); }
+    onReply(reply);
+  }).catch(function(){
+    aiError(box);
+  }).then(function(){
+    btn.textContent = label;
+    done();
+  });
+}
+
+function aiContent(q, text){
+  var watched = [];
+  q.clips.forEach(function(c, i){ if(state[clipKey(q, i)]){ watched.push(c.person); } });
+  var clipLines = q.clips.map(function(c){ return c.person + " — " + c.claim; }).join("\n");
+  return "PAGE: " + CFG.pageTitle + " (" + courseLabel() + ", optional activity)\n" +
+    "WHAT THIS ACTIVITY IS FOR: exposure to what industry leaders say about the job market, and a reflection the student writes for themselves. Nothing is required; the student chose this question.\n" +
+    "THE QUESTION THEY CHOSE: " + q.title + "\n" +
+    "CLIPS UNDER THIS QUESTION (guest — claim): \n" + clipLines + "\n" +
+    "CLIPS THEY MARKED AS WATCHED: " + (watched.length ? watched.join(", ") : "none marked") + "\n" +
+    "THE REFLECTION PROMPT: " + REFLECT_PROMPT + "\n" +
+    "WHAT THEY WROTE:\n\"\"\"" + text + "\"\"\"\n" +
+    "COACH NOTES (ground truth for you, not to be quoted back wholesale):\n" + (COACH[q.id] || "");
 }
 function embedSrc(c){
   return "https://www.youtube.com/embed/" + c.videoId + "?start=" + c.start + "&end=" + c.end + "&rel=0&autoplay=1";
@@ -421,6 +586,78 @@ function renderClip(q, clip, idx, opts){
 }
 
 /* ============================================================
+   REFLECTION BOX
+   ============================================================ */
+var CHECK_ITEMS = [
+  "Did you name one specific thing a guest said, rather than “they talked about AI”?",
+  "Is there a sentence about you — your situation, your next step — not only about them?",
+  "Could a classmate tell which clip you watched from what you wrote?"
+];
+
+function renderReflection(q){
+  var st = reflState(q.id);
+  var box = el("div", "rbox");
+
+  var lab = el("label", "qt", "Your reflection");
+  lab.setAttribute("for", "refl-" + q.id);
+  box.appendChild(lab);
+  box.appendChild(el("div", "qh", REFLECT_PROMPT + " Write in your own words; a few sentences is enough."));
+
+  var ta = document.createElement("textarea");
+  ta.className = "box";
+  ta.id = "refl-" + q.id;
+  ta.value = st.text || "";
+  ta.placeholder = "A few sentences, in your own words.";
+  box.appendChild(ta);
+
+  var row = el("div", "airow");
+  var btn = el("button", "btn", "Get AI feedback");
+  btn.type = "button";
+  row.appendChild(btn);
+  row.appendChild(el("span", "opt", "Optional."));
+  box.appendChild(row);
+
+  var aibox = el("div", "aibox");
+  box.appendChild(aibox);
+  if(st.ai.length){ showAi(aibox, st.ai[st.ai.length - 1].text, st.ai.length); }
+
+  var det = document.createElement("details");
+  det.className = "refl";
+  var sum = document.createElement("summary");
+  sum.appendChild(el("span", "plus"));
+  sum.appendChild(document.createTextNode("Check it yourself — the same questions, without the AI"));
+  det.appendChild(sum);
+  var ul = document.createElement("ul");
+  CHECK_ITEMS.forEach(function(t){ ul.appendChild(el("li", "", t)); });
+  det.appendChild(ul);
+  box.appendChild(det);
+
+  function refreshBtn(){
+    var text = ta.value.trim();
+    var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+    btn.disabled = (text.length === 0) || (text === last);
+  }
+  ta.addEventListener("input", function(){
+    st.text = ta.value;
+    refreshBtn();
+    saveSoon();
+    refreshCounts();
+  });
+  ta.addEventListener("blur", save);
+  btn.addEventListener("click", function(){
+    var text = ta.value.trim();
+    post(btn, aibox, aiContent(q, text), function(reply){
+      st.ai.push({ at:new Date().toISOString(), onText:text, text:reply });
+      save();
+      showAi(aibox, reply, st.ai.length);
+    }, refreshBtn);
+  });
+  refreshBtn();
+
+  return box;
+}
+
+/* ============================================================
    BY QUESTION
    ============================================================ */
 var statusNodes = [];
@@ -441,6 +678,7 @@ function refreshStatuses(){
     statusNodes[i].node.textContent = s.text;
     statusNodes[i].node.classList.toggle("done", s.done);
   }
+  refreshCounts();
 }
 
 function renderQuestions(){
@@ -485,8 +723,10 @@ function renderQuestions(){
       body.appendChild(renderClip(q, c, ci, { showQuestion:false }));
     });
 
+    body.appendChild(renderReflection(q));
+
     var move = el("div", "move");
-    move.appendChild(el("div", "lbl", "Your move this week"));
+    move.appendChild(el("div", "lbl", "One move you could make"));
     move.appendChild(el("p", "", q.moves[courseId()]));
     var drow = el("div", "donerow");
     var dl = el("label", "watchlbl");
@@ -574,6 +814,110 @@ function renderPerson(p){
 }
 
 /* ============================================================
+   COUNTS, SUMMARY, CLIPBOARD
+   ============================================================ */
+function flat(s){ return (s || "").replace(/\s*\n\s*/g, " ").trim(); }
+
+function tally(){
+  var clips = 0, refls = 0, moves = 0;
+  QUESTIONS.forEach(function(q){
+    q.clips.forEach(function(c, i){ if(state[clipKey(q, i)]){ clips++; } });
+    if((reflState(q.id).text || "").trim()){ refls++; }
+    if(state[moveKey(q)]){ moves++; }
+  });
+  return { clips:clips, refls:refls, moves:moves };
+}
+
+function refreshCounts(){
+  var t = tally();
+  var n = document.getElementById("cb-counts");
+  if(!n){ return; }
+  n.textContent = t.clips + (t.clips === 1 ? " clip watched" : " clips watched") + " · " +
+    t.refls + (t.refls === 1 ? " reflection written" : " reflections written") + " · " +
+    t.moves + (t.moves === 1 ? " move done" : " moves done");
+}
+
+/* A question is included only if it has a watched clip, a reflection, or a move marked. */
+function includedQuestions(){
+  return QUESTIONS.filter(function(q){
+    var any = false;
+    q.clips.forEach(function(c, i){ if(state[clipKey(q, i)]){ any = true; } });
+    if((reflState(q.id).text || "").trim()){ any = true; }
+    if(state[moveKey(q)]){ any = true; }
+    return any;
+  });
+}
+
+function buildSummary(){
+  var qs = includedQuestions();
+  if(!qs.length){ return null; }
+  var out = CFG.pageTitle + " — " + courseLabel() + "\n";
+  out += "Copied " + new Date().toLocaleString() + "\n";
+  qs.forEach(function(q){
+    var qi = QUESTIONS.indexOf(q) + 1;
+    out += "\nQ" + qi + " · " + q.title + "\n";
+    var watched = [];
+    q.clips.forEach(function(c, i){
+      if(state[clipKey(q, i)]){ watched.push(c.person + " (" + mmss(c.end - c.start) + ")"); }
+    });
+    if(watched.length){ out += "  Watched: " + watched.join("; ") + "\n"; }
+    var st = reflState(q.id);
+    out += "  Reflection: " + ((st.text || "").trim() ? flat(st.text) : "(none)") + "\n";
+    out += "  One move you could make: " + (state[moveKey(q)] ? "done" : "not marked") + "\n";
+    if(st.ai.length){
+      out += "  AI feedback taken: AI feedback (round " + st.ai.length + "): " +
+        flat(st.ai[st.ai.length - 1].text) + "\n";
+    }
+  });
+  return out;
+}
+
+function initCopyBar(){
+  var btn = document.getElementById("copy-btn");
+  var status = document.getElementById("copy-status");
+  var out = document.getElementById("summary-out");
+  if(!btn){ return; }
+
+  function setStatus(text, cls){
+    status.textContent = text;
+    status.className = "cbstatus" + (cls ? " " + cls : "");
+    fitBar();
+  }
+
+  btn.addEventListener("click", function(){
+    var text = buildSummary();
+    if(text === null){
+      out.hidden = true;
+      setStatus("Nothing selected yet — watch a clip, tick it, or write a reflection first", "warn");
+      return;
+    }
+    out.value = text;
+    function fallback(){
+      out.hidden = false;
+      setStatus("Copy did not work in this browser. Select the text below and copy it by hand.", "");
+      out.focus();
+      out.select();
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        out.hidden = true;
+        setStatus("Copied — paste it into the Canvas text box.", "ok");
+      }, fallback);
+    }else{
+      fallback();
+    }
+  });
+}
+
+/* Keep the fixed bar from covering the last card. */
+function fitBar(){
+  var bar = document.getElementById("copybar");
+  var page = document.querySelector(".page");
+  if(!bar || !page){ return; }
+  page.style.paddingBottom = (bar.offsetHeight + 24) + "px";
+}
+
+/* ============================================================
    TABS, HEADER, SOURCES
    ============================================================ */
 function setView(which){
@@ -593,11 +937,8 @@ function setView(which){
 }
 
 function initHeader(){
-  var c = courseId();
-  document.getElementById("eyebrow").textContent =
-    (c === "cst349" ? "CST349" : "CST499") + " · Resource";
-  document.title = "Six questions, answered by people who hire | " +
-    (c === "cst349" ? "CST349" : "CST499");
+  document.getElementById("eyebrow").textContent = courseLabel() + " · Optional activity";
+  document.title = CFG.pageTitle + " | " + courseLabel();
 }
 
 function initSources(){
@@ -619,7 +960,12 @@ document.getElementById("tab-p").addEventListener("click", function(){ setView("
 initHeader();
 initSources();
 renderQuestions();
+initCopyBar();
 setView("q");
+refreshCounts();
+fitBar();
+window.addEventListener("resize", fitBar);
+document.addEventListener("toggle", fitBar, true);
 </script>
 </body>
 </html>
