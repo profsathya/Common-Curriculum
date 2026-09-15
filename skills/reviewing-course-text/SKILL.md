@@ -61,7 +61,7 @@ judgment about which flags matter stays with a person.
 
 **2. Cut duplicates — across surfaces, not just within the page.** Each message appears once, in its strongest placement; every other occurrence goes. Check the full stack the student actually reads in sequence: home-page row → activity page → embedded engine description → Canvas assignment text → question blocks. Files that each look clean in isolation still read as repetition when stacked — the Week 5 self-check said "one reflection, by hand first, copy into Canvas" twice before the question appeared, because a page intro and a JSON description both carried it.
 
-**3. Cut sentences with no job.** If deleting a sentence changes nothing about what the student understands or does next, delete it. True is not a reason to keep; the reader's next move is.
+**3. Cut sentences with no job.** If deleting a sentence changes nothing about what the student understands or does next, delete it. True is not a reason to keep; the reader's next move is. Sathya's statement of the rule (15 Sep 2026): cut any sentence, phrase or flourish that is not necessary or relevant context for the action the student has to take; inside a sentence that stays, a clear explanatory narrative is helpful, so shorten by removing sentences, never by compressing the one that survives into a fragment or a slogan.
 
 **4. Flip unnecessary negatives.** Apply the inspire-don't-scare rule (see `writing-learning-goals`) to body text: warnings, not-X constructions, and loss-frames used as hooks get their positive twin ("write an answer only this company could receive," not "if it could go to any company, it isn't done"). Honesty guardrails — no-guarantees, plan-not-promise — stay, but they never lead. Exclusivity and survival frames count as negatives too: “the professionals who stay valuable are the ones who…” gets the same flip as a warning — growth stated plainly as part of the profession (CST349 gate, 2026-08-11).
 
@@ -69,7 +69,7 @@ judgment about which flags matter stays with a person.
 text loses students unless it keeps them focused and guides their thinking. Purpose sections
 are one or two sentences. When a template block (skills, rationale, framing) inflates a page,
 compress it into the doing text or cut it — guide the student's thinking with the fewest
-words that keep them moving.
+sentences that keep them moving (fewest sentences, not fewest words: see step 3).
 
 **6. Place instructions at the point of action.** A "how to submit" line belongs in the submit box, not the intro; a hand-write-first rule belongs on the question that gets hand-written. A message in the wrong place forces a second copy in the right place — misplacement is where most duplication starts.
 

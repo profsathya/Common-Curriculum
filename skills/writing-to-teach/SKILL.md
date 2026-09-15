@@ -90,6 +90,16 @@ buried in how-to-do-it. Most pages carry both; know which sentence is doing whic
 and never let task-text compression flatten the teaching, or teaching warmth blur an
 instruction.
 
+**Payoff-first belongs to teaching text; task text opens with the verb (Sathya, 15 Sep
+2026).** The rule that the first sentence carries the payoff applies to a page's opening
+and to concept introductions. It does not apply to a task line, a home-page item
+description, or a guidance block: there the first word is the action the student
+performs, and the reason follows in the same sentence or the next. Applying payoff-first
+to task text is what produced "You know your topic better than anyone. Say what a fair
+question would be", "Explaining it out loud is the fastest way to find...", "A move is
+something you do, at a time, that...": a claim or definition first, the action buried.
+The approved rewrites open "Propose...", "Explain...", "Choose...", "Ask the AI to...".
+
 **Concise means low load, not few words (Sathya, 2 September 2026).** Students lose
 interest at every wasted sentence, so nothing on a student page is padding — but the
 measure of concise is how much work the reader does, not how short the line is. A
@@ -312,7 +322,8 @@ you only the first sentence leave knowing the payoff?
 - No declarative chains: each claim carries its actor, mechanism, and connective;
   every pronoun resolves inside its own sentence.
 - Task text: verb first, one task per line, constraints bold, deliverable stated
-  separately from the steps.
+  separately from the steps. No task line, item description or guidance block opens
+  with a claim, a definition or a frame; the reason follows the verb.
 - Preview and outcome lists: every item a complete verb-first instruction, readable
   cold, using no term the page has not yet introduced.
 - One name per concept, on this page and its siblings; our terms carry a tooltip or
