@@ -105,7 +105,7 @@ Research and identify at least two things employers are asking for now, with spe
 terms, phrases and how often · Make note of at least one thing you expect to change,
 with its drivers and the signal you would watch." The rules that fall out of it:
 
-- **A preview or outcome list is task text, not a summary.** Each item is a complete
+- **A preview, outcome list, or home-page assignment description is task text, not a summary.** Each item is a complete
   instruction, verb first, that a student could act on if it were the only line they
   read. Never a noun phrase describing the finished product ("A two-row audit of…").
 - **Only words the student already has.** A term the page teaches later (driver,
@@ -119,12 +119,18 @@ with its drivers and the signal you would watch." The rules that fall out of it:
   below it. If they have to scroll down to know what it means, it is cryptic, however
   short.
 
+**Preserve who does what when revising (Sathya, 15 Sep 2026).** Check the actor,
+action, and object against the original instruction. "Ask the AI to keep asking you
+harder follow-up questions" has the student direct AI to challenge them. Shortening
+that to "ask follow-up questions" changes the learning activity. Preserve the roles,
+sequence, and intended challenge while improving the wording.
+
 ## The moves — teaching register
 
 **Locate the lesson, and name the payoff, before any content.** First lines answer:
-where are we in the arc, and what does the student get from this page. ("Before we
-focus on any thinking skill — how we think is the most important tool we bring as
-professionals.")
+where are we in the arc, and what does the student get from this page. State the
+purpose and how the course serves it in connected sentences. Avoid slogans such as
+"Professionals grow on purpose" followed by an unclear "build that" (Sathya, 15 Sep 2026).
 
 **Meet the feeling, and bound what's not needed — where a concept is being taught.**
 Name the likely intimidation or misconception, then shrink it: "this may sound daunting —
@@ -170,8 +176,7 @@ CST349 gate.) A run of short declaratives that each state a conclusion leaves th
 connections as reader homework — presentation in miniature, even when every sentence
 is short. Give each claim its actor and its concrete mechanism ("with the help of AI,
 you could complete the work" — never "work can be produced"), and write the
-connectives — but, so, because — into the prose. An aphorism may close a section; it
-never explains one. Corollary: describe integrity mechanisms as what holds us
+connectives — but, so, because — into the prose. State the conclusion plainly; do not add an aphorism as an opener or closer. Corollary: describe integrity mechanisms as what holds us
 accountable to our learning together, never as fake-detection.
 
 **Pronouns don't survive first contact.** A "they" or "it" whose antecedent lives in

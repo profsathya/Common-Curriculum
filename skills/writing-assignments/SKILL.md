@@ -124,6 +124,16 @@ parts above.
 
 ## Reflection — learn and grow from it
 
+**Keep the result open (Sathya, 15 Sep 2026).** Ask what the student did, how they
+checked it, and what they found. A check may confirm an answer, reveal an error, or
+leave uncertainty. Questions, examples, criteria, and AI feedback must all permit
+those outcomes; do not require a failure, an AI error, or a changed answer to prove
+that the student worked rigorously. Judge the testing and evidence. Clear reasoning
+can include justified uncertainty; "answer without hedging" is not a success criterion.
+Frame reflection around the student's experience, actions, circumstances, and support:
+what helped, what made progress difficult, and what they would adjust. Do not assume
+the cause is a personal limitation ("what about me limits me?").
+
 Two or three questions at the end of the page, written to be answered after the work:
 what changed in your understanding, what would you do differently, what does this tell
 you about how you work. These feed the course's own reflection rhythm. After grades come back, the

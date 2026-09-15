@@ -75,6 +75,15 @@ words that keep them moving.
 
 ## The test
 
+For substantive revisions, compare the old and new instruction: who directs whom,
+who performs the action, and what the action tests must survive the edit. Read each
+revised task together with its guidance, examples, answer labels, copied question text,
+checklist, and AI feedback instructions. Check that all allow confirmed results and
+justified uncertainty as well as errors or changes. A polished prompt still fails if
+its checklist or coach requires a predetermined result. Apply the complete-instruction
+test to home-page descriptions and the connected-explanation test to openings too.
+These checks were added after Sathya's five-change review on 15 September 2026.
+
 Read the finished text as a student who reads every word. They should never feel told twice, warned instead of invited, or made to hold an instruction for later. If the message map has each label exactly once and every label sits where the student acts on it, the text is done.
 
 ## Quoting students — an absolute rule
