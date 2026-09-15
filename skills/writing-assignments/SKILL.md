@@ -183,8 +183,8 @@ The repo is the source of truth; Canvas is the display.
    public page (width 100%, height ~1100, border 0, a title attribute) plus one
    fallback line linking the page in a new tab (settled 15 Aug 2026, both CST499
    week-1 assignments). On course pages, activity links open a NEW TAB in both
-   contexts — the context resolver sets `_blank`, never `_top` (the `_top` still in the
-   286/349 home-page scripts is the deviation to fix when their links go live).
+   contexts — the context resolver sets `_blank`, never `_top`. All three home pages do this
+   (the 286/349 `_top` was fixed 9 Sep 2026).
 5. A reconcile pass diffs `assignments.html` against Canvas and applies only the
    differences — modules, order, prerequisites, completion requirements, due dates.
    **Before the FIRST write into any Canvas shell, inventory what is already there**
@@ -205,7 +205,9 @@ The repo is the source of truth; Canvas is the display.
 Due days are rule-driven, not per-row: the course's design record sets the rhythm —
 which kind of work falls on which day, and why — and this skill applies it rather than
 restating it. The same goes for what each kind is worth. Both changed on 13 Aug 2026;
-neither is written down here again.
+neither is written down here again; the due-day rule itself lives in
+`cowork/fall-2026-courses/mk_assignments.py` (lines 19–25: one OYP in a week → Fri; two → Wed,
+Fri; three → Tue, Wed, Fri; graded → Mon).
 
 ## How own-your-progress and graded items are labelled and dated
 
@@ -235,7 +237,8 @@ you, but the grades for these activities will not affect your final grade". Appl
 all three `understand-the-course-design.html` pages, which still said "activities that are not
 graded". The phrase "not graded" should not survive anywhere a student reads.
 
-**The Canvas due-date field is not touched, and the body does not repeat the date.** Sathya,
+**The Canvas due-date field is set from data-due at build (see building-canvas-fall-2026 §2) and
+is not repeated in the assignment body.** Sathya,
 same day: the recommended date belongs on the home-page entry, because Canvas already prints
 its own due date at the top of every assignment and a second date in the body only competes
 with it.
@@ -280,8 +283,8 @@ block directly under the page head and above Purpose:
 
 *Provenance — Human (Sathya): the Purpose–Task–Criteria adaptation with reflection
 questions, the separate-skill decision and its place above writing-to-teach, the
-registry-as-source-of-truth + iframe pipeline and the 13 Aug call that the registry is
-`schedule.html` rather than a CSV, the due-day rhythm, the mirror mechanic, the
+registry-as-source-of-truth + iframe pipeline and the 13 Aug call that the record is
+`assignments.html` rather than a CSV, the due-day rhythm, the mirror mechanic, the
 qualities-per-activity principle. Source template: Transparent Assignment Template ©
 2013 Mary-Ann Winkelmes. Human + AI: the registry/page split, rule-driven due dates,
 reconcile-with-drift-report. AI (Alan): this file's drafting, 12 Aug 2026, for

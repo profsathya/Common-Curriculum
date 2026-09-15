@@ -52,7 +52,7 @@ kind, and say which one you used.
   course text and get the same pass as visible prose.
 - Whether every required reflection has somewhere to answer it, or is clearly marked optional.
 
-`scripts/review_student_page.py` produces the countable items. It reports; it never rewrites. The
+`skills/reviewing-course-text/scripts/review_student_page.py` produces the countable items. It reports; it never rewrites. The
 judgment about which flags matter stays with a person.
 
 ## The discipline

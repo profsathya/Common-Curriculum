@@ -48,7 +48,7 @@ Own your progress:
 > doors: people like working and partnering with someone who takes ownership.
 
 Not: "one to three ungraded activities per week." The mechanics ride behind the why, or on
-the page chrome (the "· not graded" hint) instead of in the bubble.
+the page chrome (the "· Will not affect your final grade" hint) instead of in the bubble.
 
 ## Format
 

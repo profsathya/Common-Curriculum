@@ -38,7 +38,9 @@ stay until their cleanup ruling — unpublished items never touch grades.
 ## 2. Assignments — one per assignments.html row
 
 Name, points, submission type, grade group and due date all come from the row (due time is
-11:59 p.m. Pacific, per the syllabi). The description is an iframe of the row's public page
+11:59 p.m. Pacific, per the syllabi). The Canvas due_at field is set at build from the row's
+data-due and is not edited afterwards from a page change; a date change goes into COURSES first and
+then to Canvas. The description is an iframe of the row's public page
 (width 100%, height ~1100, border 0, a title attribute) plus one fallback line linking the page in
 a new tab — never a rewrite of the page's content. **Publish policy: publish-on-creation while the
 course shell is unpublished; once the course is live, new items stay unpublished until Sathya's
@@ -50,15 +52,13 @@ explicit go.**
   requirements in sequential order* ON, and **"Sprint N · Own your progress"** with sequencing OFF.
 - Every item in both carries a **submit** completion requirement — satisfied even by a late
   submission. Skipping an Own-your-progress item never blocks the next one.
-- The sprint-opening **reflection is the first item inside that sprint's Graded-items module**
-  (Sathya, 16 Aug 2026 — this replaces the 15 Aug reflection-as-its-own-module design). Because
-  the module is sequential, the reflection is what a student does before anything else that
-  sprint. **Set no cross-sprint module prerequisites.** Leaving the next sprint ungated is what
-  delivers the catch-up: a student stuck mid-Sprint 1 opens Sprint 2 by submitting its
-  reflection, where gating Sprint 2 behind Sprint 1 would lock them out. Sprint 0 has no opening
-  reflection — it starts with the course's first graded assignment. Each reflection is one of the
-  course's nine graded assignments, not an addition to them (16 Aug). *(Open: the reflection
-  assignments themselves are not yet created for any sprint.)*
+- The sprint-opening **reflection is not a Canvas item at all — it is the first question inside
+  that sprint's first graded item** (Sathya, 8 Sep 2026, superseding the 16 Aug design). The
+  Graded-items module is sequential, so that first graded item is what a student does before
+  anything else in the sprint. **Set no cross-sprint module prerequisites.** Leaving the next
+  sprint ungated is what delivers the catch-up: a student stuck mid-Sprint 1 can still open
+  Sprint 2, where gating Sprint 2 behind Sprint 1 would lock them out. Sprint 0 starts with the
+  course's first graded assignment. Create no reflection assignments.
 - **CST499 is the one exception: the Project Proposal gates every later graded-items module**
   (Sathya, 9 Sep 2026). Each graded-items module from Sprint 2 on carries
   `prerequisite_module_ids: [<Sprint 1 · Graded items>]` — the Sprint 1 module, never the sprint
@@ -74,9 +74,8 @@ explicit go.**
 ## 4. Write-back — same pass, never later
 
 Canvas id, URL and published state go into that course's data file
-(`cowork/fall-2026-courses/assignments-data/<course>.py` — one file per course since 17 Aug 2026, so
-parallel work on two courses never touches the same file; `mk_assignments.py` is the shared renderer
-and changes only when the page's structure changes). Regenerate with
+(the `COURSES` dict for that course inside `cowork/fall-2026-courses/mk_assignments.py` — one
+generator for all three courses; per-course facts live in COURSES). Regenerate with
 `python3 mk_assignments.py <course>` and commit the page in the same working pass. The file never
 lags the shell.
 
@@ -128,7 +127,8 @@ time with a pause between, never a burst.
 - Every assignment's name, points, due date, submission type and group match its row; the
   description is the iframe plus the fallback link.
 - Graded-items modules are sequential, Own-your-progress modules are not; every item requires
-  submit; each sprint's Graded-items module opens with its reflection and no module carries a
+  submit; each sprint's Graded-items module opens with its first graded item, whose first
+  question is the sprint reflection, and no module carries a
   cross-sprint prerequisite — except in CST499, where every graded-items module after Sprint 1
   carries the Sprint 1 · Graded items module as its only prerequisite.
 - Canvas ids, URLs and published state are written back and committed in the same pass.

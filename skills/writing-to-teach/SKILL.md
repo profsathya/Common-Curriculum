@@ -20,8 +20,9 @@ our written pages now stand in for lectures, the pages must do what the lecture 
 have done.
 
 Worked references (private team archive, not in this repo):
-`alan/teaching-register-examples-2026-08-04.md` (four of Sathya's lecture transcripts
-with the moves marked) and `alan/loom-teaching-analysis.md` (the 24-video synthesis
+`alan/teaching-register-examples-2026-08-04.md` (private cowork file; if it is not mounted,
+use the register description in this skill and skip the file) — four of Sathya's lecture
+transcripts with the moves marked — and `alan/loom-teaching-analysis.md` (the 24-video synthesis
 with the research behind each move).
 
 ## Start from the reader — what they know, have, and have attention for
@@ -253,7 +254,8 @@ order, each visually distinct and anchored by its emoji:
   with a "+" that expands in place — native `<details>`, keyboard-safe — to details
   and links for slides or video. Expanding never navigates.
 - **🌱 Own your progress guidance** (green) — one to three items, a one-sentence
-  goal each; not graded (the 0% Canvas group). Each row links to its activity.
+  goal each; will not affect your final grade (the 0% Canvas group; never write the words
+  “not graded” where a student reads). Each row links to its activity.
 - **🎯 Graded item** (violet — deliberately not a warm or warning color) —
   "None." on most weeks, or the one graded item, or the Sprint Exam / mid-term.
 
@@ -266,7 +268,7 @@ reads as one-line week heads until the student opens the week they need, and
 `js/bookmarks.js` remembers each student's open sections — weeks included — in
 localStorage (`cc-open:` keys), so the page reopens the way they left it.
 Emojis are decorative (`aria-hidden`); expanders are native `<details>`. Item names,
-dates and points come from the course's record (`schedule.html`, once built) — this
+dates and points come from the course's record (`assignments.html`) — this
 skill owns the shape, never the list.
 
 ## One vocabulary
