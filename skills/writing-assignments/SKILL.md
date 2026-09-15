@@ -5,7 +5,7 @@ description: Use when writing or revising any assignment or activity page studen
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v6 (13 September 2026) — inside each task's click-in, the task's answer box now comes right after the guidance and examples, and the reflection question follows it with its own smaller box; the copied text carries a `Reflection:` line under each answer where one was written. Sathya's call after seeing the week-4 CST286 page: one box placed after the reflection question read as the reflection's box, and the reflection never reached the submission. Applied the same day to all eight pages that carry the shape (286 GI1, GI2, week-4 OYP; 349 GI1, GI2; 499 learning plan, mid-term, project proposal). v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+_Status: v7 (15 September 2026) — adds “How own-your-progress and graded items are labelled and dated”: the two section markers in Sathya's words, Recommended Date vs Due Date sourced from `assignments.html`, the ownership line on every OYP page, and the call that the Canvas due-date field stays as it is. v6 (13 September 2026) — inside each task's click-in, the task's answer box now comes right after the guidance and examples, and the reflection question follows it with its own smaller box; the copied text carries a `Reflection:` line under each answer where one was written. Sathya's call after seeing the week-4 CST286 page: one box placed after the reflection question read as the reflection's box, and the reflection never reached the submission. Applied the same day to all eight pages that carry the shape (286 GI1, GI2, week-4 OYP; 349 GI1, GI2; 499 learning plan, mid-term, project proposal). v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
 `schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
 first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
 the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
@@ -207,8 +207,56 @@ which kind of work falls on which day, and why — and this skill applies it rat
 restating it. The same goes for what each kind is worth. Both changed on 13 Aug 2026;
 neither is written down here again.
 
+## How own-your-progress and graded items are labelled and dated
+
+Sathya's call, 15 September 2026, applied to all three courses the same day. The wordings
+below are his; use them verbatim rather than paraphrasing.
+
+**The two section markers.** On every course home page and every activity page, the
+own-your-progress section head carries `&middot; Will not affect your final grade`. It never
+says "not graded" — a student reads that as "this does not count", which is the opposite of
+what the section is for. The graded-items section head carries
+`&middot; Will affect your final grade and Late penalty applies`. Both sit in the existing
+`.hint` span at the end of the section head.
+
+**Every row carries a date, and the label says what kind of date it is.** An
+own-your-progress row reads `Recommended Date: <Day D Month>`; a graded row reads
+`Due Date: <Day D Month>`. Take the date from that row's `data-due` in `assignments.html`
+and nowhere else — every row there has one, including rows not yet built in Canvas, so a
+week still being drafted is no reason to leave a row undated. The date goes in the item
+title's `.hint` span, right after the title, with the date itself wrapped in
+`<span class="wdate">` so every row reads the same way. A date buried in prose at the end of
+a description ("...started in class. **Due Wednesday.**") is the defect this replaced, and
+some rows carried no date at all.
+
+**Where the model is explained in prose, not labelled**, the same idea is carried in Sathya's
+longer wording rather than the short marker: own-your-progress activities are "provided to help
+you, but the grades for these activities will not affect your final grade". Applied 15 Sep 2026 to
+all three `understand-the-course-design.html` pages, which still said "activities that are not
+graded". The phrase "not graded" should not survive anywhere a student reads.
+
+**The Canvas due-date field is not touched, and the body does not repeat the date.** Sathya,
+same day: the recommended date belongs on the home-page entry, because Canvas already prints
+its own due date at the top of every assignment and a second date in the body only competes
+with it.
+
+**Every own-your-progress activity page opens with the ownership line**, in its own `.ownbar`
+block directly under the page head and above Purpose:
+
+> Take ownership of your progress &mdash; this activity is provided to help you, but the grade
+> for this activity will not affect your final grade.
+
 ## Checklist (checkable by looking)
 
+- The own-your-progress section head reads "Will not affect your final grade" and the
+  graded-items head reads "Will affect your final grade and Late penalty applies"; neither
+  says "not graded" anywhere on the page, including in prose that explains the model — there the
+  wording is "provided to help you, but the grades for these activities will not affect your
+  final grade".
+- Every own-your-progress row shows `Recommended Date:` and every graded row shows
+  `Due Date:`, each taken from that row's `data-due` in `assignments.html`, and no row that
+  has a date in `assignments.html` is missing one on the page.
+- Every own-your-progress activity page opens with the ownership line, above Purpose.
 - The five blocks are present, in order: Purpose · What you're building on · Task · Criteria · Reflection.
 - The first sentence of Purpose is the payoff, not the topic.
 - Every instruction sits at its point of action; likely errors are prevented by a positive

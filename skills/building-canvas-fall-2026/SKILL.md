@@ -11,7 +11,7 @@ module architecture — this file wins for these three courses and only these._
 
 _Derived from the lock record (`cowork/fall-2026-courses/CONTEXT.md`; the Canvas gating model locked
 15 Aug 2026) and the first live build (CST499 week 1, 15 Aug 2026). The design decisions this recipe
-implements are stated there, not here — this file is only the how. Last checked: 16 August 2026 (module architecture revised that day)._
+implements are stated there, not here — this file is only the how. Last checked: 15 September 2026 (section 6 added that day for the seven short own-your-progress activities)._
 
 # Building Canvas for the Fall 2026 courses
 
@@ -87,8 +87,42 @@ completion requirements, sequential flags, prerequisites — before reporting do
 anything student-visible. Cross-origin iframes can render blank in automated screenshots; verify
 embeds by eye before diagnosing a failure.
 
+## 6. Short own-your-progress activities — the description IS the page
+
+A few own-your-progress items have no standalone page: their steps live in a `woyp` block on
+the course home page, and the Canvas description carries the same content. For those the
+description is **not** an iframe — it is the content itself, written as styled HTML so it reads
+like one of the course's own pages instead of pasted text. Built 15 September 2026 for all
+seven of them (CST286 648296/648297, CST349 648298/648299, CST499 648292/648293/648294).
+
+The shape, in order: the ownership line in a tinted left-border box; `Goal: …` in bold; the
+lead paragraph where the item has one; the numbered steps; any coach note (AI Dojo, or a term
+being explained) in a bordered grey box; then Submission Options.
+
+**Submission Options, never "Submit".** The heading reads `Submission Options:` and the options
+are a bulleted list, one per bullet, each bullet except the last ending in a `(OR)` chip so the
+choice is visible at a glance rather than buried in a sentence. The closing line — what matters
+is that the thinking is visible, not the format it arrives in — sits under the list.
+
+**Canvas strips `font-weight` and `letter-spacing` out of inline `style` attributes.** Confirmed
+by read-back on 15 September 2026: a heading styled `font-weight:700` comes back with that
+declaration removed and renders flat, which is a large part of why these bodies read as plain
+text. Use `<strong>` or `<b>` tags for emphasis. `background`, `border`, `border-radius`,
+`color`, `padding`, `margin`, `font-size` and `line-height` all survive. Canvas also decodes
+HTML entities on save, so `&mdash;` comes back as the character — compare read-backs on
+structure, not on byte length.
+
+**Pace the writes.** These are student-visible edits to a live course: one assignment at a
+time with a pause between, never a burst.
+
 ## Checklist (checkable by looking)
 
+- Short own-your-progress assignments whose steps live in a home-page `woyp` block carry
+  styled HTML as their description — not an iframe, and not unstyled text.
+- Their heading reads "Submission Options:" and each option is its own bullet, with a `(OR)`
+  chip on every bullet but the last.
+- Emphasis is carried by `<strong>`/`<b>` tags, never by `font-weight` in a style attribute,
+  and the read-back confirms the expected number of tags survived.
 - The shell was inventoried before the first write; rulings on found content are recorded.
 - Groups match the course's grade-group cards and weighted grading is on.
 - Every assignment's name, points, due date, submission type and group match its row; the
