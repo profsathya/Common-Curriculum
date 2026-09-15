@@ -8,25 +8,25 @@ About 90 minutes. You can resubmit at the end of any sprint.
 
 ### Purpose
 
-Your approved proposal says what will exist in December. In this activity you write the three to five resume lines that describe that work as if it were already done, so that you can see now whether your plan produces lines worth putting on a resume, and change the plan while there is still time.
+Now that you have an approved capstone project, in this activity you write the three to five resume lines that describe your capstone k as if it were already done, so that you can plan ahead to make sure you produce something that will help with your job search.
 
 ### What you can earn
 
-If your section meets the bar below, you get a review session with Jeff D'Andria. Jeff works with CTI and spent years recruiting at Microsoft and Stripe and then in Stanford's recruiting office. He will read your section as a recruiter reads it and tell you what he would ask you about each line and what he would want to see behind it. [Length and format of the session: Jeff to confirm. Sessions per sprint: Jeff to confirm.]
+If the resume you write is ready for review by meeting the quality bar described below, you will get to meet with Jeff D'Andria for the review. Jeff works with CTI and spent years recruiting at Microsoft and Stripe and then in Stanford's recruiting office. He will read your section as a recruiter reads it and tell you what he would ask you about each line and what evidence he would want to see to support it. It will be 15 to 30 min session.
 
-Use the AI Dojo to test your submission multiple times to see if it meets the bar. Its Resume module knows the format below and will ask "show me" of each line.
+Use the AI Dojo to review your lines to see if it is ready for review. The better prepared you are, the more helpful the session with Jeff will be for you.
 
-### The bar
+### The quality bar
 
 Each line in your section has to answer one question a recruiter can ask: show me. Write each line in the format Laszlo Bock gives in [Apply Within](https://profsathya.github.io/Common-Curriculum/career-intelligence/resources/apply-within-laszlo-bock.pdf), and get as close to it as you can:
 
 **"Accomplished [X] as measured by [Y], by doing [Z]."**
 
-Read the resume guidance in it before you write. A line meets the bar when it does all of the following.
+Read the resume guidance in the document to learn. A line will impress a recruiter/hiring manager if it does all of the following.
 
 - It states what you accomplished, the [X], and points at something that will exist by December, such as a repository, a deployed service, a dataset, a report, a demo or a test suite, and that deliverable is in your approved proposal.
 - It includes the measure, the [Y], as a number or a claim someone could check, such as how many users, how many records, how fast, how much smaller or how many tests. Where the number does not exist yet, write the number you are building toward. You replace it with the real one in December.
-- It says how you did it, the [Z], in words you found employers in your niche using in Read the Market. A line that says "participated in code reviews on every merge" uses the words a posting used. A line that says "collaborated with team members" could describe any project.
+- It says how you, individually, not your team, did it, the [Z], in words you found employers in your niche using in Read the Market. A line that says "participated in code reviews on every merge for Y merges" uses the words a posting used. A line that says "collaborated with team members" could describe any project.
 
 A section that meets the bar has **three to five lines**, and every line describes your project and no other project in the class.
 
@@ -54,7 +54,7 @@ Route-Aware Campus Shuttle Tracker · Backend lead, team of 3 · Sep - Dec 2026
 - Cut the wait students reported at shuttle stops, as measured by a 20 percent drop in median wait-at-stop, by running a two-week pilot with 25 students.
   Points at the pilot report. The 20 percent is the target, and the real figure replaces it in December.
 
-The student who wrote the fourth line did not have 25 pilot users yet. Writing the number they were building toward is what put the pilot into their sprint plan.
+The idea is that when you write something similar to the fourth line, you did not have 25 pilot users yet. Writing the number gives them a goal to work towards.
 
 ### What to submit
 
@@ -62,4 +62,4 @@ Text entry in Canvas:
 
 - The project header.
 - Your three to five lines, with the one-sentence backing under each.
-- Two or three sentences on which line was hardest to write and what you changed in your plan because of it.
+- If you would like to include the chat transcript with the AI dojo as reference, that would help us understand your thinking.
