@@ -1,4 +1,4 @@
-<!-- CST499 · Own your progress · editable source for write-your-december-resume-section.html. Edit this file; Claude carries changes into the HTML. Items in [brackets] are open until Jeff confirms them. -->
+<!-- CST499 · Own your progress · editable source for write-your-december-resume-section.html. Edit this file; Claude carries changes into the HTML. -->
 
 # Write Your December Resume Section
 
@@ -8,7 +8,7 @@ About 90 minutes. You can resubmit at the end of any sprint.
 
 ### Purpose
 
-Now that you have an approved capstone project, in this activity you write the three to five resume lines that describe your capstone k as if it were already done, so that you can plan ahead to make sure you produce something that will help with your job search.
+Now that you have an approved capstone project, in this activity you write the three to five resume lines that describe your capstone work as if it were already done, so that you can plan ahead to make sure you produce something that will help with your job search.
 
 ### What you can earn
 
