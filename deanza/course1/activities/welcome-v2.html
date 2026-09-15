@@ -98,7 +98,54 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
-    
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
   </style>
   <script>
     (function() {
@@ -122,64 +169,43 @@
   </script>
 </head>
 <body>
-  <div class="activity">
+  <div class="activity source-derived reading-page">
     <a class="back-link" href="../sprint-6.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 0: Welcome and Orientation (V2) &middot; Page</p>
     <h1>Welcome</h1>
 
-    <div class="goal"><h2>Learning goal</h2><p>Understand Welcome and connect it to the work in this module.</p></div>
+
 
     <section>
-<h2>Overview</h2>
+<p>Take a real problem from your work or personal life and investigate what would make a meaningful difference. This course helps you clarify the problem and your goals before committing to a solution. AI supports your thinking; you make the decisions at every step.</p>
+<p><img alt="Two professionals examine connections among observations on a pinboard while one holds an open notebook." src="assets/welcome-v2/6aefac80f3a56e7e.png"></p>
+<p><em>Investigating a problem starts with observations, questions, and people who know the context. Illustration created with AI for this course.</em></p>
+</section>
+
+<section>
+<h2 id="start-with-your-own-experience">Start with your own experience</h2>
+<p>Your work, job search, community responsibilities, or caregiving can provide a problem to investigate. It needs to involve real people and consequences, so you can learn from what happens and from people who know the situation.</p>
+<p>You will investigate and choose in Sprint 1. You do not need to know what it is yet.</p>
+<p>This course is for working professionals and people changing careers. Your knowledge of how things happen, who is involved, and what has been tried is the starting point. You do not need a technical background to develop the valuable skill of directing AI with judgment.</p>
+</section>
+
+<section>
+<h2 id="what-you-will-have-by-the-end-of-the-course">What you will have by the end of the course</h2>
 <blockquote>
-<p>This course helps you take a real problem from your work or your personal life and turn it into a problem clear enough to actually solve. You bring the problem. AI helps you think it through. You make every call. In ten weeks you will have one document that shows the problem, the thinking behind it, and how your own thinking changed.</p>
+<p>The <strong>integrated problem document</strong> brings together your work across the five sprints. It explains the problem, possible causes, people affected, constraints, and what improvement would look like. It also traces how your thinking changed as you gathered evidence. A short readiness report explains what you are now equipped to do.</p>
 </blockquote>
+<p>Keep your notes, alternatives, and revised ideas. Even a candidate you set aside can show what you learned and why you changed direction. Individual activities have their own submissions; those pieces support the final document.</p>
 </section>
 
 <section>
-<h2 id="what-this-course-is">What this course is</h2>
-<p>You pick one real problem, something from your job, your job search, or something you are genuinely trying to change, and you spend ten weeks turning it into a problem that is clearly defined and actually actionable.</p>
-<p>The problem has to be real. Real people affected, real consequences. Most people bring something from their current work. A job search counts. Community work counts. Caregiving counts. What does not work is a made-up case study, because you will not stay with it for ten weeks.</p>
-<p>You choose it in Sprint 1. You do not need to know what it is yet.</p>
+<h2 id="what-you-and-ai-each-contribute">What you and AI each contribute</h2>
+<p><strong>Superagency</strong> means taking on work that was previously beyond your reach. <strong>Human Value</strong> is what you contribute: context, relationships, judgment, and responsibility for decisions. The two belong together. AI can offer different ways to view a problem; you judge which fit the people and circumstances involved.</p>
+<p>The course calls this partnership <strong>Symbiotic Thinking</strong>. You bring your own thinking first, use AI to examine possibilities, and check important claims against people and evidence.</p>
+<p>AI tools will change. The habits you practice here, framing a problem, judging suggestions, and explaining your reasoning, remain useful as the tools change.</p>
+<p>Continue to <a href="https://cti-courses.instructure.com/courses/180/pages/how-this-course-works">How This Course Works</a> to plan your weekly work.</p>
 </section>
 
-<section>
-<h2 id="what-you-walk-out-with">What you walk out with</h2>
-<p><strong>The integrated problem document.</strong> One document, built across all five sprints.</p>
-<p>It does two things. It lays out your problem: what it really is, who it affects, what the constraints are, and what would count as solving it. And it traces how your thinking moved from week 1 to week 10.</p>
-<p>Your movement in thinking is very important. Everything you produce in sprints 1 through 4 feeds this document. Nothing you do is thrown away.</p>
-</section>
-
-<section>
-<h2 id="who-this-is-for">Who this is for</h2>
-<p>Working professionals, and people in the middle of a career change.</p>
-<p>You may or may not be an undergraduate. Either way, this course is not built like a traditional undergraduate course. You already know how your organization actually works: the official process and the real one, the stated priority and the real one. That knowledge is the thing this course builds on. It is also exactly the thing AI cannot supply.</p>
-<p>You do not need a technical background. Directing AI well is not a technical skill.</p>
-</section>
-
-<section>
-<h2 id="the-two-ideas-underneath-all-of-this">The two ideas underneath all of this</h2>
-<p>Everything in this course comes back to two ideas. You will see them again in every sprint.</p>
-<p><strong>Superagency:</strong> taking on work you would not otherwise have taken on. By week 10 you should be able to point at something and say: I could not have done that in week 1.</p>
-<p><strong>Human Value:</strong> what you contribute that AI does not. The context. The relationships. The judgment calls. AI can generate ten possible framings of your problem in four seconds. It cannot know which one your director will actually fund, or which colleague will quietly block it, or what happened the last time someone tried.</p>
-<p>Underneath both sits a practice we call <strong>Symbiotic Thinking</strong>: treating AI as a partner in thinking, not as a faster way to do what you already do.</p>
-</section>
-
-<section>
-<h2 id="why-this-and-why-now">Why this, and why now</h2>
-<p>The AI tools you use today will not be the ones you use in three years. Anything built around a specific tool goes stale.</p>
-<p>So this course is not a tour of AI tools. What we are building is a way of working: how to frame a problem, how to judge what an AI hands you, how to explain your reasoning to another person. That survives the tools changing.</p>
-</section>
-
-<section>
-<h2 id="next">Next</h2>
-<p>Continue to <strong>How This Course Works</strong>: the five sprints, the weekly rhythm, and how you turn work in.</p>
-</section>
-
-    <div class="submit">
-      <h2>What counts as done</h2>
-      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
-    </div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>

@@ -98,7 +98,54 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
-    
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
   </style>
   <script>
     (function() {
@@ -122,65 +169,78 @@
   </script>
 </head>
 <body>
-  <div class="activity">
+  <div class="activity source-derived reading-page">
     <a class="back-link" href="../sprint-6.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 0: Welcome and Orientation (V2) &middot; Page</p>
     <h1>Help and Resources</h1>
 
-    <div class="goal"><h2>Learning goal</h2><p>Understand Help and Resources and connect it to the work in this module.</p></div>
+
 
     <section>
-<h2>Overview</h2>
+<p>Bookmark this page for submission steps, instructor contact, and key terms. Skim it during orientation, then return to the section you need.</p>
+</section>
+
+<section>
+<h2 id="contact-your-instructor">Contact your instructor</h2>
+<p>Open <strong>Canvas Inbox</strong>, select this course, and choose your instructor as the recipient. Include the activity title, your question, and what you have tried. If you are falling behind, explain where you stopped so you can discuss a next step.</p>
+</section>
+
+<section>
+<h2 id="submit-and-check-your-work">Submit and check your work</h2>
+<p>Open the activity from the course homepage or <strong>Modules</strong> and follow its submission directions.</p>
+<ul>
+<li><strong>Discussion:</strong> post in the Canvas discussion and check that your post appears. Sprint 0 uses this method.</li>
+<li><strong>Text entry:</strong> select <strong>Start Assignment</strong>, paste or type your response, then select <strong>Submit Assignment</strong>. If an activity has a <strong>Copy my answers</strong> control, use it to copy your work into Canvas. If copying fails, select and copy the response text manually.</li>
+<li><strong>File upload:</strong> select <strong>Start Assignment</strong>, choose the requested file, and select <strong>Submit Assignment</strong>.</li>
+</ul>
+<p>For assignments, check the submitted status and submission details. Saving in an activity, copying answers, or downloading a file is preparation; the Canvas submission step turns it in. If Canvas offers <strong>New Attempt</strong>, use it to submit a revision and check the updated details.</p>
+</section>
+
+<section>
+<h2 id="save-and-return-to-activity-work">Save and return to activity work</h2>
+<p>Sprint 1 guided activities save drafts in the browser you use. Keep a copy of important work in your own document before switching browsers or devices. Return to the same activity to continue, then submit through Canvas when the activity asks you to.</p>
+</section>
+
+<section>
+<h2 id="use-ai-tools-when-an-activity-introduces-them">Use AI tools when an activity introduces them</h2>
 <blockquote>
-<p>Bookmark this page. It has how-tos, definitions of every term the course uses, and how to reach your instructor. You are not expected to read it now. You are expected to find it later.</p>
+<p>The available first half of Sprint 1 is completed <strong>without AI</strong>. When a later activity calls for the Dojo or another AI partner, open it from that activity and follow its setup directions. Keep the activity page available so you can return to the prompts and submission instructions.</p>
 </blockquote>
 </section>
 
 <section>
-<h2 id="submitting-your-work-in-canvas">Submitting your work in Canvas</h2>
-<p>Open the assignment from the course homepage or Modules, then select <strong>Start Assignment</strong>. Follow the submission type shown: paste your response for text entry, or choose your saved file for a file upload. Select <strong>Submit Assignment</strong>, then check that Canvas shows a submitted status and submission details. Saving a response inside an activity does not submit it to Canvas. If Canvas offers <strong>New Attempt</strong>, use it to submit a revision and check the new submission details.</p>
-</section>
-
-<section>
-<h2 id="setting-up-and-using-the-dojo">Setting up and using the Dojo</h2>
-<p>Open the Dojo from the link in the relevant lab and follow that lab&rsquo;s instructions. Keep the lab page available so you can return to its prompts and submission directions. Sprint 1&rsquo;s currently available first half is completed without AI.</p>
-</section>
-
-<section>
-<h2 id="downloading-and-uploading-your-json">Downloading and uploading your JSON</h2>
-<p>A JSON file stores your activity responses in a structured text format so they can be reviewed together. In an interactive activity, save your responses and use its download/export control to save the JSON file. Return to the Canvas assignment, choose file upload, select that file, and submit it. Check the Canvas submission details; downloading the file alone does not turn it in.</p>
+<h2 id="download-a-json-file-only-when-requested">Download a JSON file only when requested</h2>
+<p>A <strong>JSON file</strong> stores responses in a structured text format so they can be reviewed together. If an activity asks for a JSON upload:</p>
+<ol>
+<li>Save your responses in the activity and use its download or export control.</li>
+<li>Keep the downloaded <code>.json</code> file where you can find it.</li>
+<li>Open the Canvas assignment, choose file upload, select that file, and submit.</li>
+<li>Check the submission details.</li>
+</ol>
+<p>The available Sprint 1 guided activities use Canvas text entry instead. Follow each activity&rsquo;s instructions for the required format.</p>
 </section>
 
 <section>
 <h2 id="key-terms">Key terms</h2>
-<p>Every term in this course, in plain language. You will meet several of these before they are formally taught. That is normal, and this is where you look them up.</p>
-<p><strong>Sprint.</strong> A two-week block of the course. There are five, plus this onboarding module. Each sprint produces one document.</p>
-<p><strong>Artifact.</strong> Anything you produce and turn in. The five sprint documents are the artifacts of this course. It is just a general word for &ldquo;the thing you made.&rdquo;</p>
-<p><strong>Frame, framing.</strong> Deciding what the problem actually is, before trying to solve it. Two people can look at the same situation and frame it completely differently, and the framing determines what solutions are even possible.</p>
-<p><strong>Reframing.</strong> Changing that decision once you learn something new. Reframing is not failure. It is most of the work in this course.</p>
-<p><strong>Root cause.</strong> The underlying reason something happens, as opposed to the symptom you noticed. &ldquo;The report is always late&rdquo; is a symptom. Why it is always late is the root cause.</p>
-<p><strong>The 3Cs: Context, Choices, Confirmation.</strong> The pattern for directing AI well, used in Sprint 2. Context: give the AI enough real detail about your situation to be useful. Choices: ask for a range of options and the tradeoffs, not one recommendation. Confirmation: name what still needs to be checked by a person or a source before you would act on it.</p>
-<p><strong>Stakeholder.</strong> Anyone affected by the problem or by any solution to it. Includes people who would have to change how they work, people who control resources, and people who can quietly block something.</p>
-<p><strong>Stakeholder map.</strong> A picture of who those people are and how they relate to the problem: what each one needs, what constrains them, and where their needs conflict with each other.</p>
-<p><strong>Integrated problem document.</strong> The final document, built across all five sprints. It lays out your problem as one argument and traces how your thinking changed from week 1 to week 10. This is what you walk out with.</p>
-<p><strong>Readiness report.</strong> The short companion piece to the integrated problem document. It says what you are now equipped to do that you were not equipped to do in week 1.</p>
-<p><strong>Superagency.</strong> Taking on work you would not otherwise have taken on. Being able to point at something and show it was out of reach before.</p>
-<p><strong>Human Value.</strong> What you contribute that AI does not: the context, the relationships, the judgment calls.</p>
-<p><strong>Symbiotic Thinking.</strong> Treating AI as a partner in thinking rather than as a faster way to do what you already do. The practice underneath Superagency and Human Value.</p>
-<p><strong>Dojo.</strong> A structured AI coaching setup used in this course. It is built to make you think harder, not to do the work for you: it asks one question at a time, pushes back on vague answers, and hands decisions back to you. Introduced in Sprint 1.</p>
-<p><strong>UMPIRE.</strong> A six-step problem-solving sequence: Understand, Map, Plan, Implement, Review, Evaluate. You may see the Dojo refer to it. CIS 501 lives in the first two steps, understanding the problem and mapping it, because those are the steps this course argues are usually skipped.</p>
+<p><strong>Sprint.</strong> A stage of course work, recommended to take two weeks. There are five, plus this orientation.</p>
+<p><strong>Artifact.</strong> Something you create as evidence of your thinking, such as a table, log, problem frame, or report. An activity tells you which work to submit.</p>
+<p><strong>Frame, framing.</strong> Defining the problem you are investigating before deciding how to solve it.</p>
+<p><strong>Reframing.</strong> Revising that definition as you learn more.</p>
+<p><strong>Root cause.</strong> An underlying reason something happens. A symptom, such as a late report, points to something to investigate; it does not establish the cause.</p>
+<p><strong>The 3Cs: Context, Choices, Confirmation.</strong> Give AI useful context, compare options and tradeoffs, and identify what a person or source must confirm before you act.</p>
+<p><strong>Stakeholder.</strong> Someone affected by the problem or a possible solution, including people who do the work or influence decisions.</p>
+<p><strong>Stakeholder map.</strong> A record of those people, their needs, constraints, and relationships.</p>
+<p><strong>Integrated problem document.</strong> The final argument about your problem, drawing on work across the five sprints and showing how your thinking changed.</p>
+<p><strong>Readiness report.</strong> A short account of what you are now equipped to do, supported by evidence of your progress.</p>
+<p><strong>Superagency.</strong> Taking on work that was previously beyond your reach.</p>
+<p><strong>Human Value.</strong> The context, relationships, judgment, and responsibility you bring to the work.</p>
+<p><strong>Symbiotic Thinking.</strong> Working with AI as a thinking partner while contributing your own knowledge and judgment.</p>
+<p><strong>Dojo.</strong> A structured AI coaching environment that uses questions to help you examine your thinking. Open it when an activity asks you to.</p>
+<p><strong>UMPIRE.</strong> Understand, Map, Plan, Implement, Review, Evaluate. You may encounter this sequence in the Dojo; CIS 501 focuses on understanding and mapping the problem.</p>
+<p>When you have finished orientation, begin <a href="https://cti-courses.instructure.com/courses/180/pages/introduction-find-the-problem-worth-solving-2">Sprint 1: Find the Problem Worth Solving</a>. Keep this page available for later questions.</p>
 </section>
 
-<section>
-<h2 id="getting-help-from-your-instructor">Getting help from your instructor</h2>
-<p>Use the Canvas <strong>Inbox</strong> to select this course and your instructor as the recipient. Include the activity title, your question, and what you have tried.</p>
-<p>Reach out earlier than feels necessary. Asking a question in week 2 is normal. Asking the same question in week 7, after six weeks of being stuck, is a much harder position to recover from.</p>
-</section>
-
-    <div class="submit">
-      <h2>What counts as done</h2>
-      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
-    </div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>

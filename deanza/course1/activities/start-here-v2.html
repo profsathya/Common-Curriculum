@@ -98,7 +98,54 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
-    
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
   </style>
   <script>
     (function() {
@@ -122,39 +169,43 @@
   </script>
 </head>
 <body>
-  <div class="activity">
+  <div class="activity source-derived reading-page">
     <a class="back-link" href="../sprint-6.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 0: Welcome and Orientation (V2) &middot; Page</p>
     <h1>Start Here</h1>
 
-    <div class="goal"><h2>Learning goal</h2><p>Understand Start Here and connect it to the work in this module.</p></div>
+
 
     <section>
-<h2>Overview</h2>
-<p>Welcome to CIS 501. This module has four short pages, plus one short introduction post at the end.</p>
-<p>You do not need to do anything technical yet. You do not need to have chosen a problem yet. You do not need any experience with AI tools.</p>
+<p>Welcome to CIS 501: Reframing Problems with AI. Use this orientation to understand the course, plan time for your work, and meet the people learning alongside you.</p>
 </section>
 
 <section>
-<h2 id="the-four-pages">The four pages</h2>
+<h2 id="by-the-end-of-orientation">By the end of orientation</h2>
+<p>You will be ready to:</p>
+<ul>
+<li>Explain what the integrated problem document will show and how the five sprints contribute to it.</li>
+<li>Plan 4-6 hours of weekly work within the recommended ten-week schedule.</li>
+<li>Recognize how AI partnership and your own context and judgment support the work.</li>
+<li>Find submission guidance and contact your instructor when you need help.</li>
+</ul>
+</section>
+
+<section>
+<h2 id="your-route-through-sprint-0">Your route through Sprint 0</h2>
+<p>This module has <strong>five pages and one discussion</strong>, including this page:</p>
 <ol>
-<li><strong>Welcome.</strong> Who is teaching this, what the course is, and what you walk out with.</li>
-<li><strong>How This Course Works.</strong> The five sprints, the weekly rhythm, what it asks of you, and how you turn work in.</li>
-<li><strong>Your First Week.</strong> A short checklist, ending in one thing you submit.</li>
-<li><strong>Help and Resources.</strong> How-tos and key terms. This page is built to be come back to, not read once.</li>
+<li><strong>Start Here:</strong> the route and goals you are reading now.</li>
+<li><strong><a href="https://cti-courses.instructure.com/courses/180/pages/welcome">Welcome</a>:</strong> what the course helps you do and what you will have by the end.</li>
+<li><strong><a href="https://cti-courses.instructure.com/courses/180/pages/how-this-course-works">How This Course Works</a>:</strong> the sprint roadmap, weekly rhythm, and submissions.</li>
+<li><strong><a href="https://cti-courses.instructure.com/courses/180/pages/your-first-week">Your First Week</a>:</strong> a checklist for getting ready.</li>
+<li><strong><a href="https://cti-courses.instructure.com/courses/180/discussion_topics/1533">Introduction Post</a>:</strong> your one orientation submission, graded complete or incomplete, worth zero points.</li>
+<li><strong><a href="https://cti-courses.instructure.com/courses/180/pages/help-and-resources">Help and Resources</a>:</strong> submission steps, key terms, and instructor contact. Read it after posting your introduction, then return when needed.</li>
 </ol>
-<p>Work through them in order. Page 4 is the exception: skim it now so you know what is on it, then come back whenever you need it.</p>
+<p>Continue to <a href="https://cti-courses.instructure.com/courses/180/pages/welcome">Welcome</a>.</p>
 </section>
 
-<section>
-<h2 id="next">Next</h2>
-<p>Continue to <strong>Welcome</strong>: who is teaching this course, what it is, and what you walk out with.</p>
-</section>
-
-    <div class="submit">
-      <h2>What counts as done</h2>
-      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
-    </div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>
