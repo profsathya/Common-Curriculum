@@ -186,8 +186,23 @@
           wrap.appendChild(status);
           button.addEventListener('click', async function() {
             var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
             try {
-              await navigator.clipboard.writeText(value);
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
               status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
             } catch (e) {
               var range = document.createRange();
