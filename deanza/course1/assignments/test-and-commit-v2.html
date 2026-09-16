@@ -117,6 +117,35 @@
             }
           } catch (e) { }
         });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            try {
+              await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
       });
     })();
   </script>
@@ -153,8 +182,14 @@
 :is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
 :is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
 :is(.guided-reading, .reading-page) p { margin: 10px 0; }
-:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; overflow-wrap: anywhere; }
 :is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p:first-child { color: var(--text); font: inherit; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p { color: var(--text); font: inherit; }
+.reading-page .copy-source { margin: 10px 0 4px; }
+.reading-page .copy-source pre { margin: 0 0 8px; }
+.reading-page .copy-source button { font: inherit; padding: 8px 12px; color: #fff; background: #204b76; border: 0; border-radius: 6px; cursor: pointer; }
+.reading-page .copy-source [role="status"] { margin: 6px 0 0; font-size: .875rem; color: #455568; }
 :is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
 :is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
 :is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
