@@ -98,7 +98,7 @@ Check it before you submit — the same list your partner can run.
 - The evidence and the external validation are things a hiring manager could look at, not only your own account.
 - Your move against the obstacle is specific enough for your partner to check whether you followed through.
 
-**Grading** — Own your progress — the grade for this activity will not affect your final grade, but you must submit it.
+**Grading** — Own your progress — the grade for this activity will not affect your final grade.
 
 ### Submit
 
