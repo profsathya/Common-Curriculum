@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stakeholder Map | Sprint 3: Integrate People and Context (V3)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity">
+    <a class="back-link" href="../sprint-15.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Assignment</p>
+    <h1>Stakeholder Map</h1>
+
+    <div class="goal"><h2>Learning goal</h2><p>Profile four stakeholders in your own problem, mark every field confirmed or inferred, and name the guesses a real conversation would have to settle.</p></div>
+
+    <section>
+<h2>Overview</h2>
+<p>Before you talk to anyone, write down what you already believe about the people connected to your problem, and be honest about which parts you actually know. This is your own work. No AI on this one. You will test and widen it with AI in the Dojo Lab afterward, and that only works if there is an independent view to test.</p>
+<p>Use the <strong>Stakeholder Map</strong>, a document template you copy once and keep for the whole sprint. <a href="https://docs.google.com/document/d/STAKEHOLDER-MAP-TEMPLATE-DOC-ID/copy">Make your copy of the Stakeholder Map</a>. Fill it in as you work through this page, then download it as a Word or PDF file and upload it when you are done.</p>
+</section>
+
+<section>
+<h2 id="start-with-what-you-already-think">Start with what you already think</h2>
+<p>Profile <strong>four stakeholders, one in each relationship</strong>: one Affected, one Influential, one Responsible for a constraint, and one Positioned to challenge your frame. If you don&rsquo;t have a workplace stakeholder, reach out to a mentor, community member, customer, or anyone with a genuine relationship to the problem.</p>
+<p>The fourth one is the hardest and the most valuable. Someone positioned to challenge your frame is the person most likely to tell you that you are solving the wrong problem, which is much cheaper to hear now than after you have built something.</p>
+<p>For each stakeholder, fill in the seven fields below. One to three sentences each is plenty; the example answers show the length to aim for. The last field asks for a question; write a first attempt, and sharpen it in the next section, which shows you what separates a question that tests from one that confirms.</p>
+<p><strong>Mark each field&rsquo;s status honestly.</strong> <strong>Confirmed</strong> means supported by evidence: a conversation, an observation, or reliable documentation. <strong>Inferred</strong> means a reasoned hypothesis based on what you currently know, that should be validated later.</p>
+<p>Each field below gives you the question to ask yourself, an example answer, and the trap that field tends to invite.</p>
+<p>The examples all describe the same person, so read together they form one complete profile. She is the account lead from the handover problem you saw in Sprint 1, the person Sprint 1&rsquo;s worked example ended by telling you to start with.</p>
+<h3 id="role">Role</h3>
+<ul>
+<li><strong>Ask yourself:</strong> Who is this person in relation to my problem, not on the org chart?</li>
+<li><strong>Example answer:</strong> Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. <em>Confirmed. I have watched her make the assignment twice.</em></li>
+<li><strong>Trap to avoid:</strong> A job title with no relationship attached. &ldquo;Account lead&rdquo; is a title. &ldquo;The only person who sees every handover&rdquo; is a relationship.</li>
+</ul>
+<h3 id="relationship-to-the-problem">Relationship to the problem</h3>
+<ul>
+<li><strong>Ask yourself:</strong> Which of the four applies? Does more than one?</li>
+<li><strong>Example answer:</strong> Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. <em>Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.</em></li>
+<li><strong>Trap to avoid:</strong> Picking one label because there is one row. Name every relationship that applies.</li>
+</ul>
+<h3 id="impact-level">Impact level</h3>
+<ul>
+<li><strong>Ask yourself:</strong> How directly and strongly does the problem affect this person?</li>
+<li><strong>Example answer:</strong> Low. She assigns the account and moves on. She does not carry a client relationship through the gap. <em>Inferred. I have not asked whether the fallout reaches her.</em></li>
+<li><strong>Trap to avoid:</strong> Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it.</li>
+</ul>
+<h3 id="influence-or-authority-level">Influence or authority level</h3>
+<ul>
+<li><strong>Ask yourself:</strong> How much say does this person have over any solution?</li>
+<li><strong>Example answer:</strong> High. Nothing about how handovers get announced changes without her. <em>Confirmed. She set the current practice.</em></li>
+<li><strong>Trap to avoid:</strong> Writing &ldquo;high&rdquo; with nothing attached. High over what, specifically?</li>
+</ul>
+<h3 id="need">Need</h3>
+<ul>
+<li><strong>Ask yourself:</strong> What does this person need from a solution, in their terms?</li>
+<li><strong>Example answer:</strong> To not add another step to a process she already considers finished. <em>Inferred. This is my read of her, not something she has said.</em></li>
+<li><strong>Trap to avoid:</strong> Writing a solution in the stakeholder&rsquo;s voice. &ldquo;She needs a shared tracker&rdquo; is your idea. &ldquo;She needs to not add a step&rdquo; is her interest.</li>
+</ul>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li><strong>Ask yourself:</strong> What constraint or risk might this person see that I haven&rsquo;t?</li>
+<li><strong>Example answer:</strong> She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. <em>Inferred. Nobody I asked remembers, which is not the same as nobody having tried.</em></li>
+<li><strong>Trap to avoid:</strong> Listing only budget and policy. A constraint can be a history, a relationship, or a reputation.</li>
+</ul>
+<h3 id="next-question-to-ask">Next question to ask</h3>
+<ul>
+<li><strong>Ask yourself:</strong> What would I still need to find out from this person?</li>
+<li><strong>Example answer:</strong> &ldquo;When an account changed hands badly in the past, what happened next?&rdquo;</li>
+<li><strong>Trap to avoid:</strong> A question you already know the answer to.</li>
+</ul>
+</section>
+
+<section>
+<h2 id="what-you-are-guessing-and-what-would-tell-you">What you are guessing, and what would tell you</h2>
+<p>Now step back and look at what you marked Inferred. Some of those guesses barely matter. A few of them hold your whole frame up.</p>
+<p><strong>What &ldquo;high-stakes&rdquo; means.</strong> An assumption is high-stakes if being wrong about it would change what you do next. Not a small correction, but a real change: a different problem, different people affected, or a different picture of what fixed would look like.</p>
+<p>Here is the test. Imagine the stakeholder tells you the opposite of what you assumed. Would that change your next move? If yes, it is high-stakes. If you would carry on the same way either way, it is not.</p>
+<p>This is about the assumption, not the person. A guess about someone with no authority at all can still be the riskiest thing in your map.</p>
+<h3 id="writing-questions-that-test-rather-than-confirm">Writing questions that test rather than confirm</h3>
+<p>A validation question should be open enough that a stakeholder could tell you something you haven&rsquo;t thought of. Some examples of weak versus strong:</p>
+<ul>
+<li><strong>Weak:</strong> &ldquo;Do you agree that X is the main problem?&rdquo; This invites a yes or no, and it leads people toward answering that X is the problem.</li>
+<li><strong>Strong:</strong> &ldquo;Walk me through the last time X happened. What did you actually do?&rdquo; This asks for a specific, real account, which is much harder to fake or soften.</li>
+<li><strong>Weak:</strong> &ldquo;Would a solution like Y help you?&rdquo; This pitches your idea and asks for approval.</li>
+<li><strong>Strong:</strong> &ldquo;What would need to be true for this to actually get easier for you?&rdquo; This leaves room for the stakeholder to name something you hadn&rsquo;t considered.</li>
+</ul>
+<p>Good validation questions ask about specific experiences, past behaviour, or concrete tradeoffs, rather than opinions about your idea.</p>
+<p><strong>Quick self-check.</strong> Does your question ask about a specific experience, a past behaviour, or a concrete tradeoff? If it asks for an opinion about your idea instead, rewrite it.</p>
+<h3 id="write-two-or-three-assumption-blocks">Write two or three assumption blocks</h3>
+<p>Pick the two or three assumptions that would change what you do next, and write a block for each. Four lines, in this order:</p>
+<blockquote>
+<p><strong>Assumption:</strong> Nobody has tried to fix the handover problem before.</p>
+<p><strong>Why it matters:</strong> If someone tried and it died, the real problem is whatever killed the fix, and that changes my Problem Frame.</p>
+<p><strong>Question to ask:</strong> &ldquo;When an account changed hands badly in the past, what happened next?&rdquo;</p>
+<p><strong>What a different answer changes:</strong> If she names a failed attempt, my next conversation is with whoever ran it, not with the four managers.</p>
+</blockquote>
+<p>The last line is also your test for whether an assumption belongs on this list at all. If you cannot say what a different answer would change, it probably isn&rsquo;t high-stakes.</p>
+</section>
+
+<section>
+<h2 id="who-you-will-talk-to-first">Who you will talk to first</h2>
+<p>Choose the one person you will reach out to first for your real validation conversation, and name a backup in case your first choice does not respond. Then explain your reasoning in two or three sentences: why this person, before anyone else?</p>
+<p>Some strong reasons to contact someone first:</p>
+<ul>
+<li>They can confirm or break your riskiest assumption: talking to them first tells you fastest whether your frame is pointed in the right direction.</li>
+<li>They&rsquo;re the most affected, and you know the least about them: your evidence is thin exactly where the stakes are high.</li>
+<li>They sit at a point of disagreement: if your map shows two people who seem to see the problem differently, talking to one of them first can clarify that tension early.</li>
+<li>They represent the largest group, not just one person: if a stakeholder role stands in for many people, they can tell you something that generalizes further.</li>
+</ul>
+</section>
+
+<section>
+<h2 id="submission-format">Submission Format</h2>
+<p>Upload your completed Stakeholder Map: your four stakeholder profiles, your two or three assumption blocks, and your first choice and backup with your reasoning.</p>
+</section>
+
+<section>
+<h2 id="portfolio-capture">Portfolio Capture</h2>
+<p>Save this stakeholder map with your portfolio. It is the draft you will test in the Dojo Lab and carry into your validation conversation. You keep working in this one file all sprint. You upload it here, change it in the Dojo Lab, change it again after your conversation, and upload it one last time with your Stakeholder Conversation. Keep it somewhere you can find it.</p>
+</section>
+
+    <div class="submit">
+      <h2>Submit to Canvas</h2>
+      <p>Use the Canvas assignment to submit your work.</p>
+      <p><a href="https://cti-courses.instructure.com/courses/180/assignments/7159" target="_blank" rel="noopener">Open the Canvas assignment</a></p>
+    </div>
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction: Integrate People and Context | Sprint 3: Integrate People and Context (V3)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p:first-child { color: var(--text); font: inherit; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p { color: var(--text); font: inherit; }
+.reading-page .copy-source { margin: 10px 0 4px; }
+.reading-page .copy-source pre { margin: 0 0 8px; }
+.reading-page .copy-source button { font: inherit; padding: 8px 12px; color: #fff; background: #204b76; border: 0; border-radius: 6px; cursor: pointer; }
+.reading-page .copy-source [role="status"] { margin: 6px 0 0; font-size: .875rem; color: #455568; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity reading-page">
+    <a class="back-link" href="../sprint-15.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Page</p>
+    <h1>Introduction: Integrate People and Context</h1>
+
+
+
+    <section>
+<p>A Problem Frame gets stronger when it meets real people and real constraints. In this sprint, you will identify the stakeholders connected to your problem across four relationships: <strong>Affected, Influential, Responsible for a constraint, Positioned to challenge your frame</strong>. You will draft a stakeholder map that shows what you actually know versus what you are assuming, test and widen it with AI, and then have at least one real validation conversation to test your Problem Frame against a person. Based on what you learn, you revise your Problem Frame.</p>
+<p>AI is your thinking partner throughout, but you own the goal, the standards, and the final judgment calls. Start with your own thinking first. Then use AI to challenge it, identify blind spots, or prepare for conversations with real people that AI can&rsquo;t replace. Your job is to decide what to keep, reject, revise, or verify. The thinking is yours.</p>
+<p><img alt="Three colleagues review a workflow and pass a folder across a worktable." src="assets/introduction-integrate-people-and-context-v3/c523ce8e1506648a.webp"></p>
+<p><em>Work moves between people, and so does the problem. Illustration created with AI for this course.</em></p>
+</section>
+
+<section>
+<h2 id="sprint-3-road-map">Sprint 3 Road Map</h2>
+<p>What you will do:</p>
+<ol>
+<li><strong>Identify your stakeholders.</strong> Name at least one person in each of the four relationships: <strong>Affected, Influential, Responsible for a constraint, Positioned to challenge your frame</strong>.</li>
+<li><strong>Draft a stakeholder map with honest evidence status.</strong> Lay out what you know for each stakeholder, and be clear about what is confirmed fact versus your own assumption.</li>
+<li><strong>Name what you are guessing, and write the questions that would settle it.</strong> Pull out the assumptions that would change what you do next if you turned out to be wrong, and write a question for each.</li>
+<li><strong>Test and widen your map with AI.</strong> Use your own AI chat to poke holes in what you wrote and to offer other ways to see the same situation. You decide what changes.</li>
+<li><strong>Conduct at least one real validation conversation.</strong> Talk to an actual stakeholder and see whether your Problem Frame holds up.</li>
+<li><strong>Revise your Problem Frame based on what you learn.</strong> Use what you heard to sharpen, adjust, or rebuild your frame.</li>
+</ol>
+</section>
+
+<section>
+<h2 id="sprint-3-concepts">Sprint 3 Concepts</h2>
+<p><strong>Stakeholder</strong></p>
+<p>A stakeholder is not just a category like &ldquo;users&rdquo; or &ldquo;management.&rdquo; In your problem context, a stakeholder is a specific person or role with a real relationship to your problem. It is someone whose life, work, or decisions actually touch it.</p>
+<p><strong>Stakeholder Relationship to the Problem</strong></p>
+<p>Any stakeholder can have one or more of these relationships to the problem.</p>
+<ul>
+<li><strong>Affected:</strong> they experience the problem directly, or feel the effects of any solution (a customer, a frontline employee, someone downstream of the process).</li>
+<li><strong>Influential:</strong> they can shape how the problem gets addressed, even if they aren&rsquo;t personally affected (a manager, a partner team, an expert whose opinion carries weight).</li>
+<li><strong>Responsible for a constraint:</strong> they control a resource, rule, budget, or approval that limits what solutions are possible (legal, finance, a system owner).</li>
+<li><strong>Positioned to challenge your frame:</strong> they have a different vantage point that might reveal you&rsquo;re solving the wrong problem, or solving it for the wrong reason (someone who tried this before, someone outside the obvious group).</li>
+</ul>
+<p>The same person can hold more than one of these relationships at once, and those relationships do not always go together. Someone can be highly affected by the problem and have almost no authority to change it. Someone else can approve or kill a solution but rarely experience the problem firsthand. Keep that separation visible on your map. Collapsing a person into a single label hides the thing you most need to see: the person who feels the problem most is often the one least able to change it.</p>
+<p><strong>Validation Conversation</strong></p>
+<p>A validation conversation is the conversation you will have with a stakeholder. Validation means testing your Problem Frame, not selling your solution. A good validation conversation isn&rsquo;t about getting a stakeholder to agree; it&rsquo;s about giving them room to tell you what they actually experience, need, fear, value, or see differently than you do. Their perspective gives you the context you need to judge whether your Problem Frame is right, incomplete, or off entirely.</p>
+<p>You will write your validation questions in the Stakeholder Map, test them with AI in the Dojo Lab, and put them to a real person in the Stakeholder Conversation.</p>
+<p><strong>Conflicts as Information</strong></p>
+<p>Expect stakeholder perspectives to be in conflict. This is normal, not a sign you did something wrong. When they do, resist the urge to smooth over the tension just to make your report look cleaner or more resolved. That tension is data. It can point to scope you missed, risk you underestimated, unclear authority, misaligned incentives, or evidence your original frame overlooked entirely.</p>
+<p><strong>An example.</strong> Your frame says handovers get dropped because there is no shared record of who owns an account.</p>
+<ul>
+<li>The <strong>account lead</strong> tells you the real issue is that managers are handed accounts with no notice, so a record would not have helped.</li>
+<li><strong>Another account manager</strong> tells you there <em>is</em> a shared tracker, and nobody updates it.</li>
+</ul>
+<p>Those two accounts conflict with each other, and neither one matches your frame. Do not average them into &ldquo;communication could be better.&rdquo; The conflict <em>is</em> the finding: one person is describing a timing problem, one is describing an adoption problem, and you assumed a tooling problem. That tells you exactly what to look at next.</p>
+<p><strong>Conflict can also show up inside a single conversation.</strong> A stakeholder tells you the current process works fine, and then, five minutes later, describes the workaround they built to survive it. Both are true to them. Write down both. The gap between what someone says works and what they actually do is usually where the problem lives.</p>
+<p>Continue onto the Concept Check.</p>
+</section>
+
+    
+
+    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+  </div>
+</body>
+</html>
