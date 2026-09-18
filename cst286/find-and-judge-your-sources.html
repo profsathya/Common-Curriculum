@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find and judge your sources | CST286</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box.box-sm{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox-refl{margin-top:8px;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task ol.parts{margin:4px 0 0;padding-left:26px;list-style:lower-alpha;}
+.task ol.parts li{margin:2px 0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+
+/* ================= v2 layout layer — 2026-09-17 =================
+   Adapted from Roman Friedman's Read the Market redesign: a type and spacing
+   scale, a reading measure, and a sticky task rail. Colours are unchanged
+   except --muted and --warn, darkened for contrast now that type is larger. */
+:root{
+--muted:#5C6873; --border-light:#E4E8EA; --warn:#8A5D00;
+--ground:#FBFBFC; --paper:#fff; --radius:8px;
+--fs-xs:.8125rem; --fs-sm:.9375rem; --fs-base:1.0625rem;
+--fs-lg:1.35rem; --fs-xl:1.6rem; --fs-2xl:2rem;
+--lh-body:1.65; --lh-tight:1.25; --measure:68ch;
+--sp-1:.35rem; --sp-2:.7rem; --sp-3:1.1rem; --sp-4:1.7rem; --sp-5:2.6rem;
+--rail-h:54px;
+}
+body{font-size:var(--fs-base);line-height:var(--lh-body);background:var(--ground);}
+.page{max-width:980px;padding:0 clamp(1rem,4vw,2.25rem) 4rem;background:transparent;}
+.crumb{font-size:var(--fs-xs);margin:var(--sp-4) 0 var(--sp-2);}
+.pagehead{border-bottom:0;padding-bottom:0;margin-bottom:var(--sp-4);}
+.pagehead .s{font-size:var(--fs-xs);letter-spacing:.06em;}
+.pagehead h1{font-size:var(--fs-2xl);line-height:var(--lh-tight);font-weight:900;
+letter-spacing:-.015em;max-width:24ch;margin:var(--sp-1) 0 var(--sp-2);}
+.pagehead .dt{font-size:var(--fs-sm);font-weight:600;}
+h2.sec{font-size:var(--fs-lg);font-weight:900;letter-spacing:-.01em;
+margin:var(--sp-5) 0 var(--sp-3);padding-bottom:var(--sp-1);}
+p.body,.crit p,.canvasbar,.pnote{font-size:var(--fs-base);line-height:var(--lh-body);}
+.copyline{font-size:var(--fs-sm);line-height:1.55;max-width:var(--measure);align-items:flex-start;}
+.copyline .btn{flex:0 0 auto;}
+p.body,.crit p{max-width:var(--measure);}
+.canvasbar,.pnote{max-width:var(--measure);}
+
+/* purpose — a lead line and the action goals */
+ul.goals{margin:var(--sp-2) 0 0;padding-left:1.2rem;max-width:var(--measure);}
+ul.goals li{margin:0 0 var(--sp-2);line-height:var(--lh-body);}
+
+/* ---- the sticky task rail ---- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);
+backdrop-filter:saturate(1.6) blur(6px);border-bottom:1px solid var(--border-light);}
+.rail-in{max-width:980px;margin:0 auto;padding:0 clamp(1rem,4vw,2.25rem);
+display:flex;align-items:center;gap:var(--sp-3);height:var(--rail-h);}
+.rail-label{font-size:var(--fs-xs);font-weight:900;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted);white-space:nowrap;flex:0 0 auto;}
+ol.rail-steps{display:flex;align-items:center;gap:var(--sp-1);list-style:none;
+margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+ol.rail-steps::-webkit-scrollbar{display:none;}
+.rail-steps a{display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+padding:.3rem .55rem;border-radius:999px;color:var(--muted);font-size:var(--fs-xs);font-weight:700;}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;
+width:1.3rem;height:1.3rem;border-radius:999px;border:1.5px solid var(--border);
+font-size:.75rem;font-weight:800;background:#fff;}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark);}
+.rail-steps a:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.rail-steps a.here{color:var(--blue-dark);background:var(--goal-bg);}
+.rail-steps a.here b{border-color:var(--blue);color:var(--blue-dark);}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff;}
+.rail-count{font-size:var(--fs-xs);font-weight:800;color:var(--muted);white-space:nowrap;}
+/* the page title stays beside the numbers at every width; the step words go first */
+@media (max-width:1080px){.rail-steps a span{display:none;}}
+@media (max-width:420px){.rail-label{font-size:.75rem;}}
+@media print{.rail{display:none;}}
+
+/* ---- tasks: the question, then the box, then the optional layer ---- */
+ol.tasks > li.task{margin:0 0 var(--sp-5);scroll-margin-top:calc(var(--rail-h) + 12px);}
+.task .ttext{font-size:1.1875rem;font-weight:600;line-height:1.45;
+gap:.75rem;margin:0 0 var(--sp-3);max-width:var(--measure);}
+.task .tn{flex:0 0 1.6rem;font-weight:900;color:var(--blue);}
+.task > .rbox{margin:0 0 var(--sp-2) 2.35rem;padding:var(--sp-3);border-radius:var(--radius);
+border-color:var(--border);background:var(--paper);}
+.task details.route{margin:0 0 0 2.35rem;border-radius:var(--radius);background:transparent;}
+.task .route .rt{font-size:var(--fs-sm);}
+.rbox > .qt{font-size:var(--fs-sm);line-height:1.5;margin-bottom:var(--sp-2);}
+textarea.box{font-size:var(--fs-base);line-height:1.55;min-height:132px;
+padding:var(--sp-2) var(--sp-3);border-radius:6px;}
+textarea.box.short,textarea.box.box-sm{min-height:72px;}
+textarea.box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(3,116,181,.15);}
+.btn{font-size:var(--fs-sm);padding:.5rem .9rem;border-radius:6px;}
+.aibox{font-size:var(--fs-sm);border-radius:var(--radius);}
+
+/* the criteria list, now always visible under each box */
+.selfcheck{margin:var(--sp-3) 0 0;padding-top:var(--sp-2);border-top:1px solid var(--border-light);}
+.selfcheck h4{font-size:var(--fs-xs);font-weight:800;letter-spacing:.05em;
+text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-1);}
+.selfcheck ul{margin:0;padding-left:1.1rem;font-size:var(--fs-sm);color:var(--muted);}
+.selfcheck li{margin:0 0 .25rem;line-height:1.5;}
+
+.more-body .example,.more-body .reflq{font-size:var(--fs-sm);border-radius:var(--radius);}
+.more-body p{font-size:var(--fs-sm);max-width:var(--measure);}
+ul.cklist{font-size:var(--fs-base);}
+ul.cklist li{padding-left:2rem;margin-bottom:var(--sp-2);}
+.copywrap,.rbox{border-radius:var(--radius);}
+.prov2,.instructor{border-radius:var(--radius);}
+
+/* ---- check-it-yourself lines: real checkboxes, saved with the answer (2026-09-18) ---- */
+.selfcheck ul.cks{list-style:none;padding-left:0;margin:0;}
+.selfcheck ul.cks li{display:flex;gap:.55rem;align-items:flex-start;margin:0 0 .4rem;}
+.selfcheck ul.cks input[type="checkbox"]{flex:0 0 auto;width:1rem;height:1rem;margin:.28rem 0 0;
+accent-color:var(--check);cursor:pointer;}
+.selfcheck ul.cks input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.selfcheck ul.cks label{cursor:pointer;line-height:1.5;}
+@media print{.selfcheck ul.cks input[type="checkbox"]{-webkit-appearance:checkbox;}}
+</style>
+</head>
+<body>
+<nav class="rail" aria-label="Tasks on this page">
+<div class="rail-in">
+<span class="rail-label">Find and judge your sources</span>
+<ol class="rail-steps" id="rail-steps">
+<li><a href="#task-1" data-rail="1"><b>1</b><span>Search</span></a></li>
+<li><a href="#task-2" data-rail="2"><b>2</b><span>Keep or not</span></a></li>
+<li><a href="#task-3" data-rail="3"><b>3</b><span>Trace</span></a></li>
+<li><a href="#task-4" data-rail="4"><b>4</b><span>Trust</span></a></li>
+</ol>
+<span class="rail-count" id="rail-count" aria-live="polite" title="tasks answered">0/4</span>
+</div>
+</nav>
+
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/find-and-judge-your-sources.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST286</a> &middot; Find and judge your sources</div>
+<div class="pagehead">
+<div class="s">CST286 &middot; Fall 2026 &middot; Sprint 1</div>
+<h1>Find and judge your sources</h1>
+<div class="dt">Week 4 &middot; due Monday 21 September, 11:59 p.m. &middot; 100 points &middot; Graded assignments</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Learning to judge whether a source can be entrusted, empowers you to learn, verify and defend what you have learned.</p>
+<p class="body"><b>By the time you submit, you will have:</b></p>
+<ul class="goals">
+<li>Sorted the prediction from your Physics Learning Goal assignment into the parts you can explain and the parts you cannot explain yet, and looked for sources for both.</li>
+<li>Decided which sources to keep and which one not to use, and explained how you ensured the credibility of each one you kept.</li>
+<li>Traced one statement about the physics back to its source, and used this experience to explain what peer review adds to a scientific source.</li>
+</ul>
+
+<h2 class="sec">What you are building on</h2>
+<ul class="goals">
+<li><b>The work this stands on:</b> your Physics Learning Goal submission. You need the prediction you wrote for question 4a and the three resources you listed for question 5 in that assignment.</li>
+<li><b>What you already did:</b> in the Physics Learning Goal you spent about ten minutes checking who made each resource and whether anyone you trust points to it. This assignment is the full check.</li>
+<li><b>Where to go back:</b> <a href="physics-learning-goal.html" target="_blank" rel="noopener">Physics Learning Goal</a>, if you want to reread the questions or the guidance on finding resources.</li>
+</ul>
+
+<h2 class="sec">Tasks</h2>
+<div class="copyline"><button type="button" class="btn primary" id="copy-tasks">Copy the questions</button><span>If you would like to work on the assignment in a Google doc without the guidance from this assignment, you can paste this into a Google doc and answer each task under it. The guidance structure provided in this page is the recommended approach to ensure you are being guided and challenged along the way.</span></div>
+<p class="body">Answer each task in the box under it. The <b>+</b> under each box opens guidance, examples and a reflection question. The guidance and reflection are provided to support you to do a high quality job of answering the questions.</p>
+
+<ol class="tasks">
+<li class="task" id="task-1">
+<div class="ttext"><span class="tn">1.</span><span class="tt">Open your Physics Learning Goal submission. Copy in the prediction you wrote for question 4a and the three resources you listed for question 5.
+<ol class="parts">
+<li>Write down which parts of that prediction you can already explain, and which parts you cannot explain yet.</li>
+<li>List every place you looked to learn the parts you cannot explain, or to check the parts you can. Include your three resources and anything new you found. For each new one, write what you searched for or asked.</li>
+</ol></span></div>
+<div class="rbox" data-refl="t1">
+<label class="qt" for="rq-t1"><b>Your answer to task 1.</b> Your prediction and three resources, the parts you can and cannot explain, and every place you looked.</label>
+<textarea class="box" id="rq-t1" data-rtext placeholder="My prediction: &hellip; My three resources: &hellip; I can already explain &hellip; I cannot explain yet &hellip; I looked at &hellip; I searched for &hellip;"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t1">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t1" aria-labelledby="ckh-t1">
+<li><input type="checkbox" id="ck-t1-1" data-ck><label for="ck-t1-1">The prediction from question 4a and the three resources from question 5 from the Physics Learning Goal assignment are copied in.</label></li>
+<li><input type="checkbox" id="ck-t1-2" data-ck><label for="ck-t1-2">It says which parts of the prediction you can already explain and which parts you cannot explain yet.</label></li>
+<li><input type="checkbox" id="ck-t1-3" data-ck><label for="ck-t1-3">It lists every place you looked, including the three resources.</label></li>
+<li><input type="checkbox" id="ck-t1-4" data-ck><label for="ck-t1-4">For each new place, it gives what you searched for or asked.</label></li>
+</ul></div>
+</div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples and a reflection question</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Read your prediction one step at a time, and after each step ask yourself whether you could explain to a friend why that step is true. Each step where you could is a part you can explain. Each step where you would have to say &ldquo;it just is&rdquo; is a part you cannot explain yet. Then take each part to your three resources and see whether they cover it. If a part is not covered, search for it using the words of the step itself, because a search for the whole topic returns pages that are too general to help. Keep a list as you go, because task 2 needs the places you looked at and did not use as well as the ones you kept.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>Parts</b> &mdash; My prediction: if I release a free throw at the same speed but a steeper angle, the ball stays in the air longer and lands shorter. I can explain why a steeper angle keeps the ball in the air longer, because more of the speed is pointing up. I cannot explain yet how to work out the distance, because I do not know how the time in the air and the sideways speed combine.</p>
+<p><b>Places I looked</b> &mdash; My three resources: OpenStax University Physics volume 1, section 4.3; the PhET Projectile Motion simulation; a YouTube video on free-throw arcs. New: I searched &ldquo;projectile range horizontal velocity times time of flight&rdquo; and found a Khan Academy article and a forum thread. I also asked my AI Dojo &ldquo;how do time in the air and horizontal speed combine to give the range&rdquo;.</p></div>
+<div class="reflq"><h4>Reflection question</h4><p>How did sorting your prediction into parts affect what you searched for?</p></div>
+<div class="rbox rbox-refl" data-refl="t1-r">
+<label class="qt" for="rq-t1-r"><b>Your reflection.</b> One or two lines is enough.</label>
+<textarea class="box box-sm" id="rq-t1-r" data-rtext placeholder="&hellip;"></textarea>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-2">
+<div class="ttext"><span class="tn">2.</span><span class="tt">From the places you listed, choose the sources you will keep learning from, and one you looked at and decided not to use.
+<ol class="parts">
+<li>For each source you are keeping, explain how you ensured its credibility: who made it, what they based it on, and whether another source you trust agrees with it.</li>
+<li>For the source you decided not to use, explain why.</li>
+</ol></span></div>
+<div class="rbox" data-refl="t2">
+<label class="qt" for="rq-t2"><b>Your answer to task 2.</b> Each source you are keeping and how you ensured its credibility, and one source you decided not to use and why.</label>
+<textarea class="box" id="rq-t2" data-rtext placeholder="I am keeping &hellip; Who made it: &hellip; What they based it on: &hellip; Another source that agrees: &hellip; I decided not to use &hellip; because &hellip;"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t2">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t2" aria-labelledby="ckh-t2">
+<li><input type="checkbox" id="ck-t2-1" data-ck><label for="ck-t2-1">Each source you are keeping is listed.</label></li>
+<li><input type="checkbox" id="ck-t2-2" data-ck><label for="ck-t2-2">For each one, it says who made it, what they based it on, and whether another source you trust agrees with it.</label></li>
+<li><input type="checkbox" id="ck-t2-3" data-ck><label for="ck-t2-3">One source you looked at and decided not to use is included, with the reason.</label></li>
+</ul></div>
+</div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples and a reflection question</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Work through the three questions for one source at a time. <i>Who made it:</i> look for an author, an &ldquo;About&rdquo; page, or the organization behind it, and write what you found, including when you found nothing. <i>What they based it on:</i> look for references, data, a description of how a simulation calculates its results, or a statement of who reviewed it. <i>Whether another source agrees:</i> take one specific thing the source says about your prediction and check it in a second source that was made by different people. For a simulation, you can check it against a case where you already know the answer. The source you decided not to use goes through the same three questions, and your reason comes from what those questions showed.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>Keeping</b> &mdash; OpenStax University Physics. Who made it: the book lists its authors, who are physics professors, and it is published by Rice University. What they based it on: the book lists the faculty who reviewed it before publication. Agreement: its range equation matches the one in the Khan Academy article, and the PhET simulation gave the same landing distance when I put in the same speed and angle.</p>
+<p><b>Not using</b> &mdash; The forum thread. Two answers disagreed about whether air resistance matters for a basketball, neither gave a source, and I could not find out who wrote them. I could not check it, so I am not learning from it.</p></div>
+<div class="reflq"><h4>Reflection question</h4><p>Which of the three questions was hardest to answer for your sources, and what did you do when you could not answer it?</p></div>
+<div class="rbox rbox-refl" data-refl="t2-r">
+<label class="qt" for="rq-t2-r"><b>Your reflection.</b> One or two lines is enough.</label>
+<textarea class="box box-sm" id="rq-t2-r" data-rtext placeholder="&hellip;"></textarea>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-3">
+<div class="ttext"><span class="tn">3.</span><span class="tt">Choose one statement about the physics, from a source you are keeping, that your prediction depends on.
+<ol class="parts">
+<li>Write the statement and where it appears in the source.</li>
+<li>Find out where the source got it. You can follow the source's own references and links, or ask the AI Dojo where the statement comes from and to give you links to the original sources. Open every link you are given. Write whether the page exists and whether it says what you were told. List each step.</li>
+<li>Write where the trail ended. Did you reach work that other scientists reviewed before it was published (peer review)?</li>
+</ol></span></div>
+<div class="rbox" data-refl="t3">
+<label class="qt" for="rq-t3"><b>Your answer to task 3.</b> The statement, each step you followed with what you found when you opened it, and where the trail ended.</label>
+<textarea class="box" id="rq-t3" data-rtext placeholder="The statement: &hellip; It appears in &hellip; Step 1: &hellip; I opened it and found &hellip; Step 2: &hellip; The trail ended at &hellip; Peer reviewed: &hellip;"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t3">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t3" aria-labelledby="ckh-t3">
+<li><input type="checkbox" id="ck-t3-1" data-ck><label for="ck-t3-1">The statement is written out, with where it appears in the source.</label></li>
+<li><input type="checkbox" id="ck-t3-2" data-ck><label for="ck-t3-2">Each step of the trail is listed.</label></li>
+<li><input type="checkbox" id="ck-t3-3" data-ck><label for="ck-t3-3">For every link, it says whether the page exists and whether it says what you were told.</label></li>
+<li><input type="checkbox" id="ck-t3-4" data-ck><label for="ck-t3-4">It says where the trail ended, and whether that work was peer reviewed.</label></li>
+</ul></div>
+</div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples and a reflection question</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>Choose a statement your prediction cannot work without, because then the result of the trace matters to you. Start with the source itself: a reference list, a &ldquo;further reading&rdquo; section, or a link in the text. A textbook often states a well-established result without a reference, and when that happens the AI Dojo can help. Ask it where the statement was first shown and who has tested it since, and ask for links. An AI can give a reference that looks correct and does not exist, so open each link and read enough of the page to see whether it supports the statement. A link that does not open, or a page that says something different, is a step in your trail, and you write it down as one. To find out whether a piece of work was peer reviewed, look at where it was published: a scientific journal describes its review process on its own website.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p><b>Statement</b> &mdash; &ldquo;The horizontal and vertical motions of a projectile are independent&rdquo;, OpenStax University Physics volume 1, section 4.3.</p>
+<p><b>Trail</b> &mdash; Step 1: the section gives no reference for it. Step 2: I asked my AI Dojo where it comes from. It said Galileo showed it in <i>Two New Sciences</i> (1638) and gave me a link to an English translation; I opened it and found the passage on projectiles in the Fourth Day. Step 3: I asked who has tested it since, and it gave me a link to a journal article on video analysis of basketball shots. The link opened, but the article was about shooting technique and did not test the statement.</p>
+<p><b>Where it ended</b> &mdash; Galileo's book was published before journals and peer review existed, so the original is not peer reviewed. The OpenStax book itself was reviewed by physics faculty before publication. I did not find a peer-reviewed test of the statement.</p></div>
+<div class="reflq"><h4>Reflection question</h4><p>What did you find when you opened the links, compared with what you were told you would find?</p></div>
+<div class="rbox rbox-refl" data-refl="t3-r">
+<label class="qt" for="rq-t3-r"><b>Your reflection.</b> One or two lines is enough.</label>
+<textarea class="box box-sm" id="rq-t3-r" data-rtext placeholder="&hellip;"></textarea>
+</div>
+</div>
+</details>
+</li>
+
+<li class="task" id="task-4">
+<div class="ttext"><span class="tn">4.</span><span class="tt">Explain how peer review adds to the credibility of a scientific source, using what you found in task 3. Then write which of your sources you now trust most, which you trust least, and why.</span></div>
+<div class="rbox" data-refl="t4">
+<label class="qt" for="rq-t4"><b>Your answer to task 4.</b> How peer review adds to credibility, using your trail from task 3, and the sources you trust most and least with your reasons.</label>
+<textarea class="box" id="rq-t4" data-rtext placeholder="Peer review adds &hellip; In my trail, &hellip; I trust &hellip; most because &hellip; I trust &hellip; least because &hellip;"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t4">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t4" aria-labelledby="ckh-t4">
+<li><input type="checkbox" id="ck-t4-1" data-ck><label for="ck-t4-1">It explains how peer review adds to the credibility of a scientific source.</label></li>
+<li><input type="checkbox" id="ck-t4-2" data-ck><label for="ck-t4-2">The explanation uses what you found in task 3.</label></li>
+<li><input type="checkbox" id="ck-t4-3" data-ck><label for="ck-t4-3">It says which source you trust most and which you trust least, with a reason for each.</label></li>
+</ul></div>
+</div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, examples and a reflection question</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>First write what happens in peer review: before a journal publishes a piece of work, other scientists in the same field read it, question the method and the reasoning, and can ask for changes or recommend against publishing. Then connect that to your trail. If your trail reached peer-reviewed work, say what that review lets you rely on that you could not rely on otherwise. If it did not, say what is standing in for it, such as a textbook's own reviewers, agreement between sources made by different people, or a check you ran yourself, and how that compares. Your most and least trusted sources should follow from tasks 2 and 3, so a reader can see the reason in what you already wrote.</p>
+<div class="example"><span class="exl">Examples, to shape your thinking &mdash; not models to copy</span>
+<p>Peer review means that before work is published, other scientists who did not do the work check the method and the reasoning, so a mistake has a chance of being caught by someone with no stake in the result. My trail did not reach a peer-reviewed paper. What I have is a textbook that was reviewed by faculty, and a simulation that agrees with it. I trust the OpenStax section most, because I know who wrote it, who reviewed it, and two other sources agree with its equation. I trust the YouTube video least, because it gives no sources and I only kept it for the slow-motion footage.</p></div>
+<div class="reflq"><h4>Reflection question</h4><p>How will what you found change the way you choose a source for your next learning goal?</p></div>
+<div class="rbox rbox-refl" data-refl="t4-r">
+<label class="qt" for="rq-t4-r"><b>Your reflection.</b> One or two lines is enough.</label>
+<textarea class="box box-sm" id="rq-t4-r" data-rtext placeholder="&hellip;"></textarea>
+</div>
+</div>
+</details>
+</li>
+</ol>
+
+<h2 class="sec">Criteria</h2>
+<div class="crit">
+<details class="route ck">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt"><b>Check it before you submit</b> &mdash; the same list your reviewer runs</span></span></summary>
+<div class="route-body more-body">
+<ul class="cklist">
+<li>The prediction from question 4a and the three resources from question 5 of your Physics Learning Goal are copied in.</li>
+<li>It says which parts of the prediction you can already explain and which you cannot explain yet.</li>
+<li>It lists every place you looked, and what you searched for or asked for each new one.</li>
+<li>For each source you are keeping, it says who made it, what they based it on, and whether another source you trust agrees with it.</li>
+<li>One source you decided not to use is included, with the reason.</li>
+<li>One statement your prediction depends on is traced step by step, and for every link it says whether the page exists and whether it says what you were told.</li>
+<li>It says where the trail ended and whether that work was peer reviewed.</li>
+<li>It explains how peer review adds to credibility, using the trail, and says which source you trust most and least, and why.</li>
+</ul>
+</div>
+</details>
+<p><b>What makes it strong</b> &mdash; the places you looked in task 1 follow from the parts of the prediction you sorted, so a reader can see why you searched for what you searched for; the credibility answers in task 2 report what you found when you looked, including where you found nothing; the statement in task 3 is one your prediction cannot work without, and every step says what you saw when you opened it; the sources you trust most and least in task 4 follow from what you wrote in tasks 2 and 3.</p>
+<p><b>Grading</b> &mdash; 100 points, in Graded assignments. You will be asked to explain this to a peer, the TA and/or the instructor, so make sure you are comfortable with the responses you have developed for this assignment.</p>
+</div>
+
+
+<h2 class="sec">Submit</h2>
+<p class="body">Canvas text entry. <b>Submit the text itself, pasted into the Canvas box; a link to a Google doc is not a submission.</b></p>
+<p class="body">Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press <b>Copy my answers</b>, which puts each task with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="assignments.html">Assignment registry &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">How this page was made</div>
+<p class="prov-lead">The four tasks were set by Prof. Sathya on 18 September 2026, in a design conversation with AI: he chose tracing one statement back to its origin as the way peer review enters, tied task 1 to the Physics Learning Goal, asked for the credibility wording in task 2, and added the AI Dojo as a way to follow the trail. The purpose, the guidance, the examples, the check-it-yourself lines and the reflection questions were drafted by AI from that design; he reads them and edits by hand where they miss.</p>
+
+
+<details class="prov-more">
+<summary><span class="plus" aria-hidden="true"></span><span class="pm-t">What that looks like &mdash; what he decided, what AI built, and how it is checked</span></summary>
+<div class="prov-body">
+<h4>What he decided</h4>
+<ul>
+<li><b>The four tasks</b> are his, set on 18 September 2026. Nothing on this page rewrites, reorders or adds to them.</li>
+<li><b>Task 1 starts from the Physics Learning Goal</b> &mdash; the prediction and the three resources you already submitted in week 3, rather than a fresh topic.</li>
+<li><b>Tracing one statement</b> is how peer review enters: he chose it as the route in task 3, and added the AI Dojo as a way to follow the trail.</li>
+<li><b>The credibility wording in task 2</b> &mdash; who made it, what they based it on, and whether another source you trust agrees &mdash; is his.</li>
+<li><b>The two layers.</b> The tasks stand on their own; everything under a <b>+</b> is optional. A student who copies the tasks into a document and answers them there has done the whole assignment.</li>
+</ul>
+<h4>What AI built</h4>
+<ul>
+<li><b>The purpose, the guidance under each +, the examples, the check-it-yourself lines and the reflection questions</b> were drafted by AI from that design; he reads them and edits by hand where they miss.</li>
+<li><b>The examples</b> &mdash; more than one per task, so that no single one becomes the thing to copy. They are illustrations, not answers.</li>
+<li><b>The criteria notes the AI feedback button reads from.</b></li>
+</ul>
+<h4>How it is checked</h4>
+<ul>
+<li>Every page is written against the course&rsquo;s own writing rules and then read by him; where a line misses, he edits it directly.</li>
+<li>The AI feedback button is held to the observable criteria for each box. It never judges you, never rewrites your answer, and never hands you wording.</li>
+<li>The <b>Check it yourself</b> list under each box is the same criteria without the AI, so the button is never the only route.</li>
+</ul>
+</div>
+</details>
+</div>
+
+<!-- Anonymous course feedback &mdash; same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Find and judge your sources &middot; Draft v1 of 2026-09-18</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+    // Find and judge your sources — behaviour only. All words students read live in the markup above,
+    // except the task list below, which is the single source of truth for both copy buttons.
+    var TASKS = [
+        {
+                "n": 1,
+                "head": "Task 1 — Search",
+                "text": "Open your Physics Learning Goal submission. Copy in the prediction you wrote for question 4a and the three resources you listed for question 5.",
+                "parts": [
+                        "Write down which parts of that prediction you can already explain, and which parts you cannot explain yet.",
+                        "List every place you looked to learn the parts you cannot explain, or to check the parts you can. Include your three resources and anything new you found. For each new one, write what you searched for or asked."
+                ],
+                "checks": [
+                        "The prediction from question 4a and the three resources from question 5 from the Physics Learning Goal assignment are copied in.",
+                        "It says which parts of the prediction you can already explain and which parts you cannot explain yet.",
+                        "It lists every place you looked, including the three resources.",
+                        "For each new place, it gives what you searched for or asked."
+                ]
+        },
+        {
+                "n": 2,
+                "head": "Task 2 — Keep or not",
+                "text": "From the places you listed, choose the sources you will keep learning from, and one you looked at and decided not to use.",
+                "parts": [
+                        "For each source you are keeping, explain how you ensured its credibility: who made it, what they based it on, and whether another source you trust agrees with it.",
+                        "For the source you decided not to use, explain why."
+                ],
+                "checks": [
+                        "Each source you are keeping is listed.",
+                        "For each one, it says who made it, what they based it on, and whether another source you trust agrees with it.",
+                        "One source you looked at and decided not to use is included, with the reason."
+                ]
+        },
+        {
+                "n": 3,
+                "head": "Task 3 — Trace",
+                "text": "Choose one statement about the physics, from a source you are keeping, that your prediction depends on.",
+                "parts": [
+                        "Write the statement and where it appears in the source.",
+                        "Find out where the source got it. You can follow the source's own references and links, or ask the AI Dojo where the statement comes from and to give you links to the original sources. Open every link you are given. Write whether the page exists and whether it says what you were told. List each step.",
+                        "Write where the trail ended. Did you reach work that other scientists reviewed before it was published (peer review)?"
+                ],
+                "checks": [
+                        "The statement is written out, with where it appears in the source.",
+                        "Each step of the trail is listed.",
+                        "For every link, it says whether the page exists and whether it says what you were told.",
+                        "It says where the trail ended, and whether that work was peer reviewed."
+                ]
+        },
+        {
+                "n": 4,
+                "head": "Task 4 — Trust",
+                "text": "Explain how peer review adds to the credibility of a scientific source, using what you found in task 3. Then write which of your sources you now trust most, which you trust least, and why.",
+                "parts": [],
+                "checks": [
+                        "It explains how peer review adds to the credibility of a scientific source.",
+                        "The explanation uses what you found in task 3.",
+                        "It says which source you trust most and which you trust least, with a reason for each."
+                ]
+        }
+];
+
+    var REFLQ = "REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) {Q} If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.";
+    var CFG = {"page": "cst286-find-and-judge-your-sources", "course": "CST286", "pageTitle": "Find and judge your sources", "destination": "Week 4 of Sprint 1. The student takes the prediction and the three resources from their Physics Learning Goal, sorts the prediction into parts they can and cannot explain, records where they looked, decides which sources to keep and one not to use with a credibility check on each, traces one physics statement back toward its origin, and explains what peer review adds to a scientific source. Carries GE B3 outcomes: find sources, evaluate credibility, explain peer review.", "feeds": "One of the four tasks in the week-4 graded item, answered in the student's own words.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would hire them, or would respond. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording — if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further. EVIDENCE STANCE (instructor note, never quoted to the student): judge only whether the requested elements are present and specific. Never judge whether the student's physics is correct, whether a source is good, or whether the student chose well. A search that found nothing new, a trail that never reached peer-reviewed work, a link that did not open, and a student who can already explain every part of the prediction are all complete and valuable answers, never missing elements. Never supply sources, references, links or the origin of a statement yourself; finding and opening them is the student's work. Never state as fact whether a particular source is peer reviewed; ask what the student saw.", "coach": {"t1": "REQUESTED ELEMENTS: the prediction from question 4a and the three resources from question 5 of the Physics Learning Goal, copied in; which parts of the prediction the student can already explain and which they cannot explain yet; every place they looked, including the three resources; for each new place, what they searched for or asked. OBSERVABLE CRITERIA: the prediction and the three resources are present as text; the parts are sorted into can / cannot yet; places are listed; each new place carries a search phrase or a question asked. 'I can already explain all of it' is a complete answer to (a) when the parts are listed. COMMON OMISSIONS: the prediction described rather than copied in; places listed with no search words; the three original resources left out of the list. REFLECTION: How did sorting your prediction into parts affect what you searched for? Invite further reflection when useful; never treat an unanswered reflection as a missing task element.", "t2": "REQUESTED ELEMENTS: the sources the student is keeping; for each, how they ensured its credibility — who made it, what they based it on, and whether another source they trust agrees with it; one source they looked at and decided not to use, with the reason. OBSERVABLE CRITERIA: each kept source has all three answers; 'I could not find who made it' is a reported finding and counts as an answer; the source not used is identified and has a reason tied to what the student found. COMMON OMISSIONS: credibility asserted ('it is a trusted site') with none of the three answers; agreement claimed without saying which second source; no source not used. Never say whether a source is credible. REFLECTION: Which of the three questions was hardest to answer for your sources, and what did you do when you could not answer it? Invite further reflection when useful; never treat an unanswered reflection as a missing task element.", "t3": "REQUESTED ELEMENTS: one statement about the physics that the prediction depends on, with where it appears in the source; each step followed to find where the source got it (the source's own references, or links given by the AI Dojo); for every link, whether the page exists and whether it says what the student was told; where the trail ended and whether that work was peer reviewed. OBSERVABLE CRITERIA: the statement is written out with a location; steps are listed in order; every link carries what the student saw on opening it; an end point is given with a yes/no/unsure on peer review and what that is based on. A dead link, a page that says something else, and a trail that never reaches peer-reviewed work are complete answers. COMMON OMISSIONS: links listed without saying what was found on opening them; an AI's account of the origin reported with no link opened; no end point. Never provide the origin, a reference or a link yourself. REFLECTION: What did you find when you opened the links, compared with what you were told you would find? Invite further reflection when useful; never treat an unanswered reflection as a missing task element.", "t4": "REQUESTED ELEMENTS: an explanation of how peer review adds to the credibility of a scientific source, using what the student found in task 3; which source they now trust most and which least, with a reason for each. OBSERVABLE CRITERIA: the explanation says what happens in peer review and connects it to the student's own trail; most-trusted and least-trusted sources are identified, each with a reason. If the trail did not reach peer-reviewed work, an account of what stands in for it is complete. COMMON OMISSIONS: a general definition of peer review with no connection to the trail; most and least trusted given with no reasons. Never tell the student which source to trust. REFLECTION: How will what you found change the way you choose a source for your next learning goal? Invite further reflection when useful; never treat an unanswered reflection as a missing task element."}, "question": {}, "label": {"t1": "The search", "t2": "Keep or not", "t3": "The trace", "t4": "Trust"}, "order": ["t1", "t2", "t3", "t4"], "min": {"t1": 0, "t2": 0, "t3": 0, "t4": 0}};
+    var KEY = 'cc-gi:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in an 800px frame, so offer the way out to the
+    // full page. Shown when the page is framed, or when it is opened with ?context=canvas.
+    // Hidden when it is already the top-level page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- the task list, as text ----------
+    function letter(i) { return String.fromCharCode(97 + i); }
+    function taskPlain(t) {
+        var s = t.text;
+        t.parts.forEach(function (p, i) { s += ' ' + letter(i) + '. ' + p; });
+        return s;
+    }
+    TASKS.forEach(function (t) { CFG.question['t' + t.n] = taskPlain(t); });
+
+    function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function indentLines(s, pad) {
+        return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n');
+    }
+    function answerHtml(s) {
+        var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
+        return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
+    }
+    // One builder, two payloads: the tasks alone (Copy the questions), or the tasks with the
+    // student's name and answers beneath each (Copy my answers). Returns {text, html}.
+    function buildPayload(withAnswers) {
+        var md = '', html = '';
+        if (withAnswers) {
+            md += CFG.pageTitle + ' \u2014 ' + CFG.course + ', Week 4\n\n';
+            html += '<p><b>' + esc(CFG.pageTitle) + '</b> \u2014 ' + esc(CFG.course) + ', Week 4</p>';
+        }
+        TASKS.forEach(function (t, idx) {
+            var key = 't' + t.n;
+            md += t.head + '\n' + t.text + '\n';
+            html += '<p><b>' + esc(t.head) + '</b><br>' + esc(t.text) + '</p>';
+            if (t.parts.length) {
+                html += '<ol type="a" style="list-style-type:lower-alpha">';
+                t.parts.forEach(function (p, i) {
+                    md += '   ' + letter(i) + '. ' + p + '\n';
+                    html += '<li>' + esc(p) + '</li>';
+                });
+                html += '</ol>';
+            }
+            if (withAnswers) {
+                var a = (answerState(key).text || '').trim();
+                md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
+                html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
+                var r = (answerState(key + '-r').text || '').trim();
+                if (r) {
+                    md += indentLines('Reflection: ' + r.replace(/\s*\n\s*/g, ' '), '   ') + '\n';
+                    html += '<p><b>Reflection:</b> ' + esc(r.replace(/\s*\n\s*/g, ' ')) + '</p>';
+                }
+            }
+            var ticks = withAnswers ? checkState(key) : [];
+            md += '\n   Check it yourself:\n';
+            html += '<p><b>Check it yourself:</b></p><ul style="list-style:none;padding-left:0">';
+            t.checks.forEach(function (c, i) {
+                var on = !!ticks[i];
+                md += '   ' + (on ? '[x]' : '[ ]') + ' ' + c + '\n';
+                html += '<li>' + (on ? '[x]' : '[ ]') + ' ' + esc(c) + '</li>';
+            });
+            html += '</ul>';
+            if (idx < TASKS.length - 1) { md += '\n'; }
+        });
+        return { text: md, html: html };
+    }
+
+    // The clipboard write, shared by both buttons: both types when the browser allows it,
+    // the markdown alone when it does not. Returns a promise.
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { name: '', answers: {}, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.answers) { state.answers = {}; }
+
+    var saveTimer = null;
+    function save() {
+        try {
+            window.localStorage.setItem(KEY, JSON.stringify(state));
+            storageOK = true;
+        } catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+
+    function answerState(key) {
+        if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
+        if (!state.answers[key].ai) { state.answers[key].ai = []; }
+        return state.answers[key];
+    }
+
+    // the Check it yourself boxes ride along with the answers, one array of booleans per task
+    function checkState(key) {
+        if (!state.checks) { state.checks = {}; }
+        if (!state.checks[key]) { state.checks[key] = []; }
+        return state.checks[key];
+    }
+
+    // ---------- AI feedback ----------
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+    function aiError(box) {
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. ' +
+            'The Check it yourself list under this box covers the same ground — use that, and try the button again later.</span>';
+    }
+    function post(btn, box, content, onReply, done) {
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = (data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            onReply(reply);
+        }).catch(function () {
+            aiError(box);
+        }).then(function () {
+            btn.textContent = label;
+            done();
+        });
+    }
+
+    // ---------- the response boxes, one per task ----------
+    function refreshBox(el, key) {
+        var st = answerState(key);
+        var text = $('[data-rtext]', el).value.trim();
+        var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+        var btn = $('[data-ai]', el);
+        if (btn) { btn.disabled = text.length === 0 || text === last; }   // no minimum: any text turns the button on
+    }
+    function askAi(el, key) {
+        var st = answerState(key);
+        var btn = $('[data-ai]', el), box = $('[data-aibox]', el);
+        var text = $('[data-rtext]', el).value.trim();
+        var content = 'PAGE: ' + CFG.pageTitle + ' (' + CFG.course + ', Week 4)\n' +
+            'WHAT THIS ASSIGNMENT IS: ' + CFG.destination + '\n' +
+            'WHAT THIS BOX FEEDS: ' + CFG.feeds + '\n\n' +
+            'THE TASK THEY ARE ANSWERING (task ' + key.slice(1) + '): ' + CFG.question[key] + '\n\n' +
+            'WHAT THEY WROTE:\n\"\"\"' + text + '\"\"\"\n\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + CFG.coach[key];
+        post(btn, box, content, function (reply) {
+            st.ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, st.ai.length);
+        }, function () { refreshBox(el, key); });
+    }
+    $all('.rbox[data-refl]').forEach(function (el) {
+        var key = el.getAttribute('data-refl');
+        var st = answerState(key);
+        var ta = $('[data-rtext]', el);
+        ta.value = st.text || '';
+        var aibox = $('[data-aibox]', el);
+        if (st.ai.length && aibox) { showAi(aibox, st.ai[st.ai.length - 1].text, st.ai.length); }
+        ta.addEventListener('input', function () { st.text = ta.value; refreshBox(el, key); saveSoon(); });
+        ta.addEventListener('blur', save);
+        var goBtn = $('[data-ai]', el);
+        if (goBtn) { goBtn.addEventListener('click', function () { askAi(el, key); }); }
+        refreshBox(el, key);
+    });
+
+    // ---------- the Check it yourself lines ----------
+    $all('ul.cks[data-cks]').forEach(function (ul) {
+        var ticks = checkState(ul.getAttribute('data-cks'));
+        $all('input[type="checkbox"]', ul).forEach(function (cb, i) {
+            cb.checked = !!ticks[i];
+            cb.addEventListener('change', function () { ticks[i] = cb.checked; save(); });
+        });
+    });
+
+    // ---------- Copy the questions ----------
+    var tasksBtn = $('#copy-tasks');
+    if (tasksBtn) {
+        tasksBtn.addEventListener('click', function () {
+            var label = tasksBtn.textContent;
+            writeClipboard(buildPayload(false)).then(function () {
+                tasksBtn.textContent = 'Copied';
+                setTimeout(function () { tasksBtn.textContent = label; }, 2000);
+            }, function () {
+                tasksBtn.textContent = 'Copy did not work — use Copy my answers below';
+                setTimeout(function () { tasksBtn.textContent = label; }, 4000);
+            });
+        });
+    }
+
+    // ---------- Copy my answers ----------
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload(true);
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            function fallback() {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            }
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = 'Copied ✓ — paste it into a Google doc to edit, or straight into the Canvas box. The same text is below if you need it again.';
+            }, fallback);
+        });
+    }
+
+    // ---------- start ----------
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+
+<script>
+/* v2 task rail — progress and position. Additive: if it throws, the page is unchanged. */
+(function () {
+    'use strict';
+    var N = 4;
+    var count = document.getElementById('rail-count');
+    var links = {};
+    for (var i = 1; i <= N; i++) {
+        links[i] = document.querySelector('.rail-steps a[data-rail="' + i + '"]');
+    }
+    function box(n) { return document.getElementById('rq-t' + n); }
+
+    function refresh() {
+        var done = 0;
+        for (var i = 1; i <= N; i++) {
+            var ta = box(i), a = links[i];
+            var filled = !!(ta && ta.value.trim().length);
+            if (filled) { done++; }
+            if (a) { a.className = a.className.replace(/\s*done/, '') + (filled ? ' done' : ''); }
+        }
+        if (count) {
+            count.textContent = done + '/' + N;
+        }
+    }
+
+    for (var j = 1; j <= N; j++) {
+        var t = box(j);
+        if (t) { t.addEventListener('input', refresh); }
+    }
+    refresh();
+
+    /* which task the reader is in */
+    var here = 0;
+    function mark() {
+        var top = (document.querySelector('.rail') || {}).offsetHeight || 54;
+        var cur = 0;
+        for (var i = 1; i <= N; i++) {
+            var el = document.getElementById('task-' + i);
+            if (el && el.getBoundingClientRect().top - top - 24 <= 0) { cur = i; }
+        }
+        if (cur === here) { return; }
+        if (here && links[here]) { links[here].className = links[here].className.replace(/\s*here/, ''); }
+        if (cur && links[cur]) { links[cur].className += ' here'; }
+        here = cur;
+    }
+    var ticking = false;
+    function onScroll() {
+        if (ticking) { return; }
+        ticking = true;
+        window.requestAnimationFrame(function () { mark(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    mark();
+}());
+</script>
+</body>
+</html>
