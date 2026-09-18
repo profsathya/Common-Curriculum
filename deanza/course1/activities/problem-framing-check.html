@@ -19,11 +19,13 @@
   <script src="../../../js/activity-components.js"></script>
   <script src="../../../js/activity-engine.js"></script>
   <script>
+    const activityContext = new URLSearchParams(location.search).get('context')
+      || (window.self !== window.top ? 'canvas' : 'web');
     ActivityEngine.init({
       containerId: 'activity-container',
       configUrl: "../../../activities/deanza/course1/problem-framing-check.json?v=210d3ec6ee957875",
       courseTheme: "cst349",
-      canvasUrl: "https://cti-courses.instructure.com/courses/180/assignments/6945"
+      canvasUrl: activityContext === 'canvas' ? "https://cti-courses.instructure.com/courses/180/assignments/6945" : null
     });
   </script>
 </body>

@@ -87,6 +87,7 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
     .back-link {
@@ -161,6 +162,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -252,7 +265,7 @@
 <p><strong>Superagency</strong> means taking on work that was previously beyond your reach. <strong>Human Value</strong> is what you contribute: context, relationships, judgment, and responsibility for decisions. The two belong together. AI can offer different ways to view a problem; you judge which fit the people and circumstances involved.</p>
 <p>The course calls this partnership <strong>Symbiotic Thinking</strong>. You bring your own thinking first, use AI to examine possibilities, and check important claims against people and evidence.</p>
 <p>AI tools will change. The habits you practice here, framing a problem, judging suggestions, and explaining your reasoning, remain useful as the tools change.</p>
-<p>Continue to <a href="https://cti-courses.instructure.com/courses/180/pages/how-this-course-works" target="_top">How This Course Works</a> to plan your weekly work.</p>
+<p>Continue to <a data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/how-this-course-works" data-canvas-target="_top" href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/how-this-course-works-v2.html?context=web" target="_top">How This Course Works</a> to plan your weekly work.</p>
 </section>
 
     

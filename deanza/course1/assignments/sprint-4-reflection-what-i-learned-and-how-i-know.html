@@ -48,6 +48,7 @@
     }
     a.button { color: #fff; background: #4f46e5; }
     a.secondary { color: #065f46; background: #d1fae5; }
+    a[data-canvas-only][hidden] { display: none !important; }
     a { color: #4f46e5; word-break: break-word; }
     .back-link {
       display: none;
@@ -63,6 +64,27 @@
       if (ctx !== 'canvas') {
         document.documentElement.classList.add('ctx-web');
       }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            u.searchParams.set('context', ctx === 'canvas' ? 'canvas' : 'web');
+            a.href = u.href;
+          } catch (e) { }
+        });
+      });
     })();
   </script>
 </head>
@@ -120,14 +142,14 @@
       <h2>Start the AI activity</h2>
       <p>Complete the interactive activity in one sitting on the same device. Your responses are saved in this browser while you work.</p>
       <div class="actions">
-        <a class="button" href="../activities/sprint-4-reflection-what-i-learned-and-how-i-know.html?context=web">Open activity &rarr;</a>
+        <a class="button" href="../activities/sprint-4-reflection-what-i-learned-and-how-i-know.html?context=web" data-keep-context>Open activity &rarr;</a>
       </div>
     </div>
 
     <div class="submit">
       <h2>Submit to Canvas</h2>
       <p>When you finish, copy or download the JSON response file from the activity and upload it to the Canvas assignment.</p>
-      <div class="actions"><a class="secondary" href="https://cti-courses.instructure.com/courses/180/assignments/6964" target="_top">Submit on Canvas</a></div>
+      <div class="actions"><a class="secondary" hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/6964" data-canvas-target="_top">Submit on Canvas</a></div>
     </div>
   </div>
 </body>

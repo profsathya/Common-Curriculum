@@ -87,6 +87,7 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
     .back-link {
@@ -161,6 +162,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -267,13 +280,13 @@
 
 <section>
 <h2 id="turning-in-your-work">Turning in your work</h2>
-<p>Submit through Canvas using the type specified by the activity: discussion, text entry, or file upload. Saving, copying, or downloading work inside an activity does not submit it to Canvas. Use <a href="https://cti-courses.instructure.com/courses/180/pages/help-and-resources" target="_top">Help and Resources</a> for the steps and for checking that a submission went through.</p>
+<p>Submit through Canvas using the type specified by the activity: discussion, text entry, or file upload. Saving, copying, or downloading work inside an activity does not submit it to Canvas. Use <a data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/help-and-resources" data-canvas-target="_top" href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/help-and-resources-v2.html?context=web" target="_top">Help and Resources</a> for the steps and for checking that a submission went through.</p>
 </section>
 
 <section>
 <h2 id="continuing-into-course-2">Continuing into Course 2</h2>
 <p>CIS 501 develops your problem frame and goals. In <strong>CIS 502: Designing Solutions with AI</strong>, you use the integrated problem document to begin building and refining a solution. Continuing into CIS 502 is recommended to complete the certificate sequence.</p>
-<p>Continue to <a href="https://cti-courses.instructure.com/courses/180/pages/your-first-week" target="_top">Your First Week</a> for your orientation checklist.</p>
+<p>Continue to <a data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/your-first-week" data-canvas-target="_top" href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/your-first-week-v2.html?context=web" target="_top">Your First Week</a> for your orientation checklist.</p>
 </section>
 
     

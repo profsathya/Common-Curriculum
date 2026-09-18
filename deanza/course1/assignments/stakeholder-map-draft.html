@@ -87,6 +87,7 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
     .back-link {
@@ -108,6 +109,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -221,7 +234,7 @@
     <div class="submit">
       <h2>Submit to Canvas</h2>
       <p>Use the Canvas assignment to submit your work.</p>
-      <p><a href="https://cti-courses.instructure.com/courses/180/assignments/6954" target="_top">Open the Canvas assignment</a></p>
+      <p><a hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/6954" data-canvas-target="_top">Open the Canvas assignment</a></p>
     </div>
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>

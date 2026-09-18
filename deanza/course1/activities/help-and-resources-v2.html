@@ -87,6 +87,7 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
     .back-link {
@@ -161,6 +162,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -253,7 +266,7 @@
 
 <section>
 <h2 id="use-ai-tools-when-an-activity-introduces-them">Use AI tools when an activity introduces them</h2>
-<p>Use <a href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/set-up-your-ai-dojo-v2.html" target="_top">Set up your AI Dojo</a> to prepare your coach.</p>
+<p>Use <a data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/set-up-your-ai-dojo" data-canvas-target="_top" href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/set-up-your-ai-dojo-v2.html?context=web" target="_top">Set up your AI Dojo</a> to prepare your coach.</p>
 <blockquote>
 <p>In Sprint 1, complete Brainstorm your list, Get underneath three to five, and First frames <strong>without AI</strong>. Use the Dojo when the Dojo Lab introduces it. Keep the activity page available so you can return to its prompts and submission instructions.</p>
 </blockquote>
@@ -288,7 +301,7 @@
 <p><strong>Symbiotic Thinking.</strong> Working with AI as a thinking partner while contributing your own knowledge and judgment.</p>
 <p><strong>Dojo.</strong> A structured AI coaching environment that uses questions to help you examine your thinking. Open it when an activity asks you to.</p>
 <p><strong>UMPIRE.</strong> Understand, Map, Plan, Implement, Review, Evaluate. You may encounter this sequence in the Dojo; CIS 501 focuses on understanding and mapping the problem.</p>
-<p>When you have finished orientation, begin <a href="https://cti-courses.instructure.com/courses/180/pages/introduction-find-the-problem-worth-solving-2" target="_top">Sprint 1: Find the Problem Worth Solving</a>. Keep this page available for later questions.</p>
+<p>When you have finished orientation, begin <a data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/introduction-find-the-problem-worth-solving-3" data-canvas-target="_top" href="https://profsathya.github.io/Common-Curriculum/deanza/course1/activities/introduction-find-the-problem-worth-solving.html?context=web" target="_top">Sprint 1: Find the Problem Worth Solving</a>. Keep this page available for later questions.</p>
 </section>
 
     
