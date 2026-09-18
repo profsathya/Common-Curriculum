@@ -5,11 +5,11 @@
 
 # Find and judge your sources
 
-Week 4 · due Monday 21 September, 11:59 p.m. · 100 points · Graded assignments
+Week 5 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignments
 
 ## Purpose
 
-Learning to judge whether a source can be entrusted, empowers you to learn, verify and defend what you have learned.
+Learning to judge whether a source can be trusted empowers you to learn, verify and defend what you have learned.
 
 **By the time you submit, you will have:**
 
