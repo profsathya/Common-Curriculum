@@ -292,7 +292,7 @@
 <div class="response-task" data-task="your-table"><label for="answer-your-table">Your table, three to five rows, four columns each. Paste Part B of your Candidate Log, or a link to it.</label><textarea id="answer-your-table" data-answer="your-table" maxlength="20000" rows="7" aria-describedby="save-status"></textarea><details><summary>Self-check</summary><ul><li>Include three to five situations from your own list.</li><li>Describe actions in each current-state column rather than blame or fixes.</li><li>Name a person or role for each cost.</li><li>State who lacks or must redo what in each gap, rather than only describing a process.</li></ul></details></div>
 <p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
 <div class="reading-submit">
-<p>Own your progress · 0 points. Submit to mark it complete, or continue without submitting.</p>
+<p>Own your progress · 0 points. Submit to complete this module requirement.</p>
 <button type="button" id="copy-answers">Copy my answers</button>
 <p>Paste into Canvas to submit. Copying or saving here does not submit your work. <a href="https://cti-courses.instructure.com/courses/180/assignments/7152" target="_blank" rel="noopener">Open the Canvas assignment</a></p>
 <p id="copy-status" role="status"></p>
@@ -304,11 +304,12 @@
 <p id="completion-status"></p>
 </details>
 </div>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-get-underneath-three-to-five", "title": "Get underneath three to five", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Describe three to five situations closely enough to identify a gap and who bears its cost.", "builds_on": "Bring Part A of your Candidate Log from Brainstorm your list. Work without AI.", "standing_instruction": "Own your progress · 0 points. Submit to mark it complete, or continue without submitting.", "tasks": [{"id": "your-table", "kind": "response", "prompt": "Your table, three to five rows, four columns each. Paste Part B of your Candidate Log, or a link to it.", "criteria": ["Include three to five situations from your own list.", "Describe actions in each current-state column rather than blame or fixes.", "Name a person or role for each cost.", "State who lacks or must redo what in each gap, rather than only describing a process."]}], "presentation": "reading"}</script>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-get-underneath-three-to-five", "title": "Get underneath three to five", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Describe three to five situations closely enough to identify a gap and who bears its cost.", "builds_on": "Bring Part A of your Candidate Log from Brainstorm your list. Work without AI.", "standing_instruction": "Own your progress · 0 points. Submit to complete this module requirement.", "tasks": [{"id": "your-table", "kind": "response", "prompt": "Your table, three to five rows, four columns each. Paste Part B of your Candidate Log, or a link to it.", "criteria": ["Include three to five situations from your own list.", "Describe actions in each current-state column rather than blame or fixes.", "Name a person or role for each cost.", "State who lacks or must redo what in each gap, rather than only describing a process."]}], "presentation": "reading"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
   const key = 'course-response:' + config.artifactId + ':' + config.version;
+  const transcriptMode = config.dojoSubmission && config.dojoSubmission.mode === 'transcript';
   const byId = id => document.getElementById(id);
   const find = (attr, id) => document.querySelector('[' + attr + '="' + id + '"]');
   let state = {answers: Object.create(null), checks: Object.create(null), feedback: Object.create(null)};
@@ -337,6 +338,7 @@
     return raw;
   }
   function payload(withAnswers) {
+    if (transcriptMode) return withAnswers ? answer(config.tasks[0]) : config.transcriptRequest;
     const lines = [config.title, config.module, '', config.standing_instruction || '', ''];
     config.tasks.forEach((task, i) => {
       lines.push((i + 1) + '. ' + task.prompt);
@@ -405,11 +407,23 @@
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
     catch (_) {
-      if (['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      if (transcriptMode || ['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
       byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
     }
   }
-  byId('copy-tasks').addEventListener('click', () => copy(false));
+  const copyTasks = byId('copy-tasks');
+  if (copyTasks) copyTasks.addEventListener('click', () => copy(false));
+  const copyTranscriptRequest = byId('copy-transcript-request');
+  if (copyTranscriptRequest) copyTranscriptRequest.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(config.transcriptRequest);
+      byId('copy-status').textContent = 'Transcript request copied. Paste it into the same Dojo conversation.';
+    } catch (_) {
+      const requestText = byId('transcript-request-text');
+      requestText.focus(); requestText.select();
+      byId('copy-status').textContent = 'Select and copy the transcript request above.';
+    }
+  });
   byId('copy-answers').addEventListener('click', () => copy(true));
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;

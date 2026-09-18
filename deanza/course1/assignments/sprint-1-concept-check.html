@@ -267,6 +267,7 @@
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
   const key = 'course-response:' + config.artifactId + ':' + config.version;
+  const transcriptMode = config.dojoSubmission && config.dojoSubmission.mode === 'transcript';
   const byId = id => document.getElementById(id);
   const find = (attr, id) => document.querySelector('[' + attr + '="' + id + '"]');
   let state = {answers: Object.create(null), checks: Object.create(null), feedback: Object.create(null)};
@@ -295,6 +296,7 @@
     return raw;
   }
   function payload(withAnswers) {
+    if (transcriptMode) return withAnswers ? answer(config.tasks[0]) : config.transcriptRequest;
     const lines = [config.title, config.module, '', config.standing_instruction || '', ''];
     config.tasks.forEach((task, i) => {
       lines.push((i + 1) + '. ' + task.prompt);
@@ -363,11 +365,23 @@
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
     catch (_) {
-      if (['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      if (transcriptMode || ['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
       byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
     }
   }
-  byId('copy-tasks').addEventListener('click', () => copy(false));
+  const copyTasks = byId('copy-tasks');
+  if (copyTasks) copyTasks.addEventListener('click', () => copy(false));
+  const copyTranscriptRequest = byId('copy-transcript-request');
+  if (copyTranscriptRequest) copyTranscriptRequest.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(config.transcriptRequest);
+      byId('copy-status').textContent = 'Transcript request copied. Paste it into the same Dojo conversation.';
+    } catch (_) {
+      const requestText = byId('transcript-request-text');
+      requestText.focus(); requestText.select();
+      byId('copy-status').textContent = 'Select and copy the transcript request above.';
+    }
+  });
   byId('copy-answers').addEventListener('click', () => copy(true));
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
