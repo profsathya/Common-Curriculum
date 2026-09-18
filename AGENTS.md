@@ -1,6 +1,7 @@
 # Course writing
 
-For student-facing writing or review, read `skills/writing-to-teach/SKILL.md` first.
+Before any writing in Sathya's voice, read `skills/writing-foundation/SKILL.md` (a dated copy; the canonical file is in the Alan repo at `executive-assistant/skills/writing-foundation/SKILL.md` — use that one when the Alan folder is mounted).
+For student-facing writing or review, then read `skills/writing-to-teach/SKILL.md`.
 For assignment or activity pages, also read `skills/writing-assignments/SKILL.md`.
 Use `skills/reviewing-course-text/SKILL.md` for the final pass, including copied
 questions and AI feedback instructions. Use `skills/README.md` to find other skills
