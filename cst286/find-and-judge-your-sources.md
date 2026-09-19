@@ -5,7 +5,7 @@
 
 # Find and judge your sources
 
-Week 5 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignments
+Week 4 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignments
 
 ## Purpose
 
