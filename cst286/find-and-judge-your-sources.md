@@ -11,18 +11,6 @@ Week 4 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignment
 
 Learning to judge whether a source can be trusted empowers you to learn, verify and defend what you have learned.
 
-**By the time you submit, you will have:**
-
-- Sorted the prediction from your Physics Learning Goal assignment into the parts you can explain and the parts you cannot explain yet, and looked for sources for both.
-- Decided which sources to keep and which one not to use, and explained how you ensured the credibility of each one you kept.
-- Traced one statement about the physics back to its source, and used this experience to explain what peer review adds to a scientific source.
-
-## What you are building on
-
-- **The work this stands on:** your Physics Learning Goal submission. You need the prediction you wrote for question 4a and the three resources you listed for question 5 in that assignment.
-- **What you already did:** in the Physics Learning Goal you spent about ten minutes checking who made each resource and whether anyone you trust points to it. This assignment is the full check.
-- **Where to go back:** [Physics Learning Goal](physics-learning-goal.html), if you want to reread the questions or the guidance on finding resources.
-
 ## Tasks
 
 **Button:** Copy the questions — If you would like to work on the assignment in a Google doc without the guidance from this assignment, you can paste this into a Google doc and answer each task under it. The guidance structure provided in this page is the recommended approach to ensure you are being guided and challenged along the way.
