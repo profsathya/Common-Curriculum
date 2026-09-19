@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprint 1 Exam &mdash; the paired half | CST286</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0B874B; --warn:#9B6A00;
+--teal:#0d9488; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box.box-sm{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox-refl{margin-top:8px;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task ol.parts{margin:4px 0 0;padding-left:26px;list-style:lower-alpha;}
+.task ol.parts li{margin:2px 0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+
+/* ================= v2 layout layer — 2026-09-17 =================
+   Adapted from Roman Friedman's Read the Market redesign: a type and spacing
+   scale, a reading measure, and a sticky task rail. Colours are unchanged
+   except --muted and --warn, darkened for contrast now that type is larger. */
+:root{
+--muted:#5C6873; --border-light:#E4E8EA; --warn:#8A5D00;
+--ground:#FBFBFC; --paper:#fff; --radius:8px;
+--fs-xs:.8125rem; --fs-sm:.9375rem; --fs-base:1.0625rem;
+--fs-lg:1.35rem; --fs-xl:1.6rem; --fs-2xl:2rem;
+--lh-body:1.65; --lh-tight:1.25; --measure:68ch;
+--sp-1:.35rem; --sp-2:.7rem; --sp-3:1.1rem; --sp-4:1.7rem; --sp-5:2.6rem;
+--rail-h:54px;
+}
+body{font-size:var(--fs-base);line-height:var(--lh-body);background:var(--ground);}
+.page{max-width:980px;padding:0 clamp(1rem,4vw,2.25rem) 4rem;background:transparent;}
+.crumb{font-size:var(--fs-xs);margin:var(--sp-4) 0 var(--sp-2);}
+.pagehead{border-bottom:0;padding-bottom:0;margin-bottom:var(--sp-4);}
+.pagehead .s{font-size:var(--fs-xs);letter-spacing:.06em;}
+.pagehead h1{font-size:var(--fs-2xl);line-height:var(--lh-tight);font-weight:900;
+letter-spacing:-.015em;max-width:24ch;margin:var(--sp-1) 0 var(--sp-2);}
+.pagehead .dt{font-size:var(--fs-sm);font-weight:600;}
+h2.sec{font-size:var(--fs-lg);font-weight:900;letter-spacing:-.01em;
+margin:var(--sp-5) 0 var(--sp-3);padding-bottom:var(--sp-1);}
+p.body,.crit p,.canvasbar,.pnote{font-size:var(--fs-base);line-height:var(--lh-body);}
+.copyline{font-size:var(--fs-sm);line-height:1.55;max-width:var(--measure);align-items:flex-start;}
+.copyline .btn{flex:0 0 auto;}
+p.body,.crit p{max-width:var(--measure);}
+.canvasbar,.pnote{max-width:var(--measure);}
+
+/* purpose — a lead line and the action goals */
+ul.goals{margin:var(--sp-2) 0 0;padding-left:1.2rem;max-width:var(--measure);}
+ul.goals li{margin:0 0 var(--sp-2);line-height:var(--lh-body);}
+
+/* ---- the sticky task rail ---- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);
+backdrop-filter:saturate(1.6) blur(6px);border-bottom:1px solid var(--border-light);}
+.rail-in{max-width:980px;margin:0 auto;padding:0 clamp(1rem,4vw,2.25rem);
+display:flex;align-items:center;gap:var(--sp-3);height:var(--rail-h);}
+.rail-label{font-size:var(--fs-xs);font-weight:900;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted);white-space:nowrap;flex:0 0 auto;}
+ol.rail-steps{display:flex;align-items:center;gap:var(--sp-1);list-style:none;
+margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+ol.rail-steps::-webkit-scrollbar{display:none;}
+.rail-steps a{display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+padding:.3rem .55rem;border-radius:999px;color:var(--muted);font-size:var(--fs-xs);font-weight:700;}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;
+width:1.3rem;height:1.3rem;border-radius:999px;border:1.5px solid var(--border);
+font-size:.75rem;font-weight:800;background:#fff;}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark);}
+.rail-steps a:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.rail-steps a.here{color:var(--blue-dark);background:var(--goal-bg);}
+.rail-steps a.here b{border-color:var(--blue);color:var(--blue-dark);}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff;}
+.rail-count{font-size:var(--fs-xs);font-weight:800;color:var(--muted);white-space:nowrap;}
+/* the page title stays beside the numbers at every width; the step words go first */
+@media (max-width:1080px){.rail-steps a span{display:none;}}
+@media (max-width:420px){.rail-label{font-size:.75rem;}}
+@media print{.rail{display:none;}}
+
+/* ---- tasks: the question, then the box, then the optional layer ---- */
+ol.tasks > li.task{margin:0 0 var(--sp-5);scroll-margin-top:calc(var(--rail-h) + 12px);}
+.task .ttext{font-size:1.1875rem;font-weight:600;line-height:1.45;
+gap:.75rem;margin:0 0 var(--sp-3);max-width:var(--measure);}
+.task .tn{flex:0 0 1.6rem;font-weight:900;color:var(--blue);}
+.task > .rbox{margin:0 0 var(--sp-2) 2.35rem;padding:var(--sp-3);border-radius:var(--radius);
+border-color:var(--border);background:var(--paper);}
+.task details.route{margin:0 0 0 2.35rem;border-radius:var(--radius);background:transparent;}
+.task .route .rt{font-size:var(--fs-sm);}
+.rbox > .qt{font-size:var(--fs-sm);line-height:1.5;margin-bottom:var(--sp-2);}
+textarea.box{font-size:var(--fs-base);line-height:1.55;min-height:132px;
+padding:var(--sp-2) var(--sp-3);border-radius:6px;}
+textarea.box.short,textarea.box.box-sm{min-height:72px;}
+textarea.box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(3,116,181,.15);}
+.btn{font-size:var(--fs-sm);padding:.5rem .9rem;border-radius:6px;}
+.aibox{font-size:var(--fs-sm);border-radius:var(--radius);}
+
+/* the criteria list, now always visible under each box */
+.selfcheck{margin:var(--sp-3) 0 0;padding-top:var(--sp-2);border-top:1px solid var(--border-light);}
+.selfcheck h4{font-size:var(--fs-xs);font-weight:800;letter-spacing:.05em;
+text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-1);}
+.selfcheck ul{margin:0;padding-left:1.1rem;font-size:var(--fs-sm);color:var(--muted);}
+.selfcheck li{margin:0 0 .25rem;line-height:1.5;}
+
+.more-body .example,.more-body .reflq{font-size:var(--fs-sm);border-radius:var(--radius);}
+.more-body p{font-size:var(--fs-sm);max-width:var(--measure);}
+ul.cklist{font-size:var(--fs-base);}
+ul.cklist li{padding-left:2rem;margin-bottom:var(--sp-2);}
+.copywrap,.rbox{border-radius:var(--radius);}
+.prov2,.instructor{border-radius:var(--radius);}
+
+/* ---- check-it-yourself lines: real checkboxes, saved with the answer (2026-09-18) ---- */
+.selfcheck ul.cks{list-style:none;padding-left:0;margin:0;}
+.selfcheck ul.cks li{display:flex;gap:.55rem;align-items:flex-start;margin:0 0 .4rem;}
+.selfcheck ul.cks input[type="checkbox"]{flex:0 0 auto;width:1rem;height:1rem;margin:.28rem 0 0;
+accent-color:var(--check);cursor:pointer;}
+.selfcheck ul.cks input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.selfcheck ul.cks label{cursor:pointer;line-height:1.5;}
+@media print{.selfcheck ul.cks input[type="checkbox"]{-webkit-appearance:checkbox;}}
+
+/* Sprint 1 Exam, paired half — the few controls this page adds to the v2 shell. */
+.pnamerow label{color:var(--text);font-weight:700;}
+.pnamerow input:focus-visible,.fuq input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+fieldset.pick{border:1px solid var(--border-light);border-radius:6px;margin:0 0 12px;padding:10px 13px;background:#FCFDFE;}
+fieldset.pick legend{font-size:13.5px;font-weight:700;padding:0 5px;}
+fieldset.pick .opt{display:flex;gap:9px;align-items:flex-start;margin:0 0 8px;}
+fieldset.pick .opt:last-child{margin-bottom:0;}
+fieldset.pick input[type="radio"]{margin-top:3px;flex:0 0 auto;width:16px;height:16px;}
+fieldset.pick input[type="radio"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+fieldset.pick label{font-size:13.5px;line-height:1.5;}
+fieldset.pick label b{display:block;}
+.qshow{border-left:3px solid var(--goal-border);background:var(--goal-bg);padding:9px 12px;margin:0 0 10px;font-size:13.5px;line-height:1.55;border-radius:0 5px 5px 0;}
+.qshow .qlab{display:block;font-weight:700;margin-bottom:3px;}
+.fuq{margin:0 0 12px;}
+.fuq .fulab{display:block;font-size:13.5px;font-weight:700;margin:0 0 5px;}
+.fuq input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;width:100%;color:var(--text);}
+.fuq textarea{margin-top:6px;}
+.suggest{margin:0 0 12px;}
+.suggest ol{margin:8px 0 0;padding-left:22px;}
+.suggest li{font-size:13.5px;line-height:1.55;margin:0 0 5px;}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/sprint-1-exam-paired.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST286</a> &middot; Sprint 1 Exam &middot; the paired half</div>
+<div class="pagehead">
+<div class="s">CST286 &middot; Fall 2026 &middot; Sprint 1</div>
+<h1>Sprint 1 Exam &mdash; the paired half</h1>
+<div class="dt">Week 6 &middot; Wednesday 30 September, in class &middot; 100 points &middot; Sprint 1 Exam</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<!-- ALAN-REVIEW -->
+<p class="body">Questioning someone closely about work they did themselves, and writing down what they actually understand, is the same skill you are graded on when it is your turn to be questioned.</p>
+
+<h2 class="sec">Tasks</h2>
+<!-- ALAN-REVIEW -->
+<p class="body">You have your partner's paper in front of you. Work down this page, then press <b>Copy my answers</b> at the bottom and paste the text into the Canvas box.</p>
+<ul class="goals">
+<li><b>Swap and type.</b> Exchange papers with a partner and type their handwritten answers into the AI form. Both students do this at the same time.</li>
+<li><b>Then the conversation.</b> Question your partner about what they wrote &mdash; at least two follow-up questions &mdash; and write a summary of how they understand their own work. Take turns, so each of you is interviewed once.</li>
+</ul>
+
+<ol class="tasks">
+
+<li class="task" id="task-1">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">1.</span><span class="tt">Write down who wrote the paper and who is typing it.</span></div>
+<div class="rbox">
+<div class="pnamerow"><label for="f-you">Your name</label><input type="text" id="f-you" data-field="you" autocomplete="off" placeholder="the person typing"></div>
+<div class="pnamerow"><label for="f-partner">Your partner's name</label><input type="text" id="f-partner" data-field="partner" autocomplete="off" placeholder="the person who wrote the paper"></div>
+</div>
+</li>
+
+<li class="task" id="task-2">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">2.</span><span class="tt">Say which second question your partner chose. Question 2 is on every paper; each student then chose question 4 or question 7.</span></div>
+<div class="rbox">
+<fieldset class="pick">
+<legend>Which question did your partner choose?</legend>
+<div class="opt"><input type="radio" name="chosen" id="pick-q4" value="4" data-pick><label for="pick-q4"><b>Question 4</b>Did your curiosity about the topic help you persist when things got difficult? If yes, how; if not, why not.</label></div>
+<div class="opt"><input type="radio" name="chosen" id="pick-q7" value="7" data-pick><label for="pick-q7"><b>Question 7</b>Identify what still remains to be learned &mdash; where this is still hard for you, and what you will do next.</label></div>
+</fieldset>
+</div>
+</li>
+
+<li class="task" id="task-3">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">3.</span><span class="tt">Type your partner's handwritten answer to question 2. Type what they wrote, not your version of it. If a word is unreadable, ask them.</span></div>
+<div class="qshow"><span class="qlab">Question 2, as it was set in <a href="one-new-thing-i-learned.html" target="_blank" rel="noopener">One new thing I learned</a></span>Answer your question. Pick a situation, predict what happens, and explain each step to a ten-year-old. Your prediction has to include a quantitative component: the quantities involved, the mathematical relationship between them, and what happens to one when the other changes. Say how you checked whether you got it right.</div>
+<div class="rbox">
+<!-- ALAN-REVIEW -->
+<label class="qt" for="f-a2"><b>Your partner's answer to question 2,</b> typed as they wrote it.</label>
+<textarea class="box" id="f-a2" data-field="a2" placeholder="Type what is on the paper&hellip;"></textarea>
+</div>
+</li>
+
+<li class="task" id="task-4">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">4.</span><span class="tt">Type your partner's handwritten answer to the question they chose.</span></div>
+<div class="rbox">
+<!-- ALAN-REVIEW -->
+<label class="qt" for="f-a3"><b>Your partner's answer to question 4 or 7,</b> typed as they wrote it.</label>
+<textarea class="box" id="f-a3" data-field="a3" placeholder="Type what is on the paper&hellip;"></textarea>
+</div>
+</li>
+
+<li class="task" id="task-5">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">5.</span><span class="tt">Question your partner about what they wrote. Ask at least two follow-up questions, and write down each question and the short version of what they said back.</span></div>
+<div class="suggest">
+<!-- ALAN-REVIEW -->
+<button type="button" class="btn" id="ai-btn" disabled>Suggest follow-up questions</button>
+<!-- ALAN-REVIEW -->
+<p class="body" style="margin-top:7px;">The suggestions are a starting point for your own questions, not a list to read out. You can ask something better. Type both answers above first.</p>
+<div class="aibox" id="ai-box" role="status" aria-live="polite"></div>
+<details class="refl">
+<summary><span class="plus" aria-hidden="true"></span>Ask your own &mdash; what a follow-up question is doing</summary>
+<!-- ALAN-REVIEW -->
+<ul>
+<li>Pick one claim in their answer and ask how they know it.</li>
+<li>Ask what they would have to see for the answer to be wrong.</li>
+<li>Ask them to say the same thing again without the words they used the first time.</li>
+<li>Ask what they tried that is not written on the paper.</li>
+</ul>
+</details>
+</div>
+<!-- ALAN-REVIEW -->
+<div class="rbox">
+<div class="fuq"><label class="fulab" for="f-q1">Follow-up question 1 &mdash; what you asked</label><input type="text" id="f-q1" data-field="q1" autocomplete="off"><label class="qt" for="f-r1" style="margin-top:7px;">What your partner said back, in brief</label><textarea class="box box-sm" id="f-r1" data-field="r1"></textarea></div>
+<div class="fuq"><label class="fulab" for="f-q2">Follow-up question 2 &mdash; what you asked</label><input type="text" id="f-q2" data-field="q2" autocomplete="off"><label class="qt" for="f-r2" style="margin-top:7px;">What your partner said back, in brief</label><textarea class="box box-sm" id="f-r2" data-field="r2"></textarea></div>
+<div class="fuq"><label class="fulab" for="f-q3">Follow-up question 3 &mdash; what you asked (only if you asked a third)</label><input type="text" id="f-q3" data-field="q3" autocomplete="off"><label class="qt" for="f-r3" style="margin-top:7px;">What your partner said back, in brief</label><textarea class="box box-sm" id="f-r3" data-field="r3"></textarea></div>
+</div>
+</li>
+
+<li class="task" id="task-6">
+<!-- ALAN-REVIEW -->
+<div class="ttext"><span class="tn">6.</span><span class="tt">Write a summary of how your partner understands their own work: what they can account for, what they were less sure about, and what the follow-up questions showed that the paper did not.</span></div>
+<div class="rbox">
+<!-- ALAN-REVIEW -->
+<label class="qt" for="f-sum"><b>Your summary of how your partner understands their own work.</b> Write about what they said, not about whether you think they are right.</label>
+<textarea class="box" id="f-sum" data-field="summary" placeholder="On the paper they wrote &hellip; When I asked &hellip; they could account for &hellip; They were less sure about &hellip;"></textarea>
+</div>
+</li>
+
+</ol>
+
+<h2 class="sec">Criteria</h2>
+<div class="crit">
+<details class="route ck">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt"><b>Check it before you submit</b> &mdash; the same list your partner runs on yours</span></span></summary>
+<div class="route-body more-body">
+<!-- ALAN-REVIEW -->
+<ul class="cklist">
+<li>Both names are there, and the question your partner chose is marked.</li>
+<li>Their answer to question 2 is typed as they wrote it, not summarised.</li>
+<li>Their answer to question 4 or question 7 is typed as they wrote it.</li>
+<li>At least two follow-up questions are written down, each with what your partner said back.</li>
+<li>The follow-up questions ask about something in their answer, rather than starting a new topic.</li>
+<li>The summary says what your partner can account for and what they were less sure about.</li>
+<li>The summary reports what they said rather than judging whether they are right.</li>
+</ul>
+</div>
+</details>
+<!-- ALAN-REVIEW -->
+<p class="body"><b>What makes it strong</b> &mdash; the follow-up questions in 5 go at the part of the answer in 3 or 4 that carries the most weight, and the summary in 6 is traceable to what your partner actually said when you asked, rather than repeating the paper back.</p>
+<!-- ALAN-REVIEW -->
+<p class="body"><b>Grading</b> &mdash; 100 points, the paired half of the Sprint 1 Exam. You will be asked to explain this to a peer, the TA and/or the instructor, so make sure you are comfortable with what you have written here.</p>
+</div>
+
+<h2 class="sec">Submit</h2>
+<!-- ALAN-REVIEW -->
+<p class="body">Canvas text entry. Press <b>Copy my answers</b> and paste the text into the Canvas box. <b>Submit the text itself; a link is not a submission.</b> If the copy button does not work in your browser, the same text is in the box below it &mdash; select it and copy it by hand.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status" role="status" aria-live="polite"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="assignments.html">Assignment registry &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">How this page was made</div>
+<!-- ALAN-REVIEW -->
+<p class="prov-lead">The exam shape &mdash; question 2 on every paper, a choice of question 4 or question 7, papers swapped and typed, at least two follow-up questions and a written summary &mdash; was set by Prof. Sathya on 8 September 2026. The questions on this page are the week-5 graded item's questions, unchanged. The labels, the checklist and the follow-up suggestions were drafted by AI from that design; he reads them and edits by hand where they miss.</p>
+</div>
+
+<!-- Anonymous course feedback &mdash; same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+
+</div>
+
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; Sprint 1 Exam, the paired half &middot; Draft v1 of 2026-09-19</span>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+    // Sprint 1 Exam, paired half — behaviour only. Every word a student reads lives in the
+    // markup above or in the two strings below (the AI note and the AI error line).
+    var CFG = {"page": "cst286-sprint-1-exam-paired", "course": "CST286", "aicontext": "CST286 Physics of Computing (with AI), Sprint 1. The author spent weeks 3 to 5 on a physics question of their own choosing, made a quantitative prediction about a situation, explained it in terms a ten-year-old could follow, and checked it.", "q2": "Answer your question. Pick a situation, predict what happens, and explain each step to a ten-year-old. Your prediction has to include a quantitative component: the quantities involved, the mathematical relationship between them, and what happens to one when the other changes. Say how you checked whether you got it right.", "q4": "Did your curiosity about the topic help you persist when things got difficult? If yes, how; if not, why not.", "q7": "Identify what still remains to be learned \u2014 where this is still hard for you, and what you will do next.", "system": "You are helping a student who has just typed out, word for word, what a classmate wrote by hand in an exam. The student is about to interview that classmate about it, face to face, in class. Suggest four follow-up questions the student could ask. Each question must point at something specific in what the classmate wrote, quoting or naming it, and must be answerable out loud in a minute or two. Reply with the four questions and nothing else, one per line, no numbering, no preamble. Do not judge the classmate, their work, their ability or their prospects. Do not say whether the answer is right, good, complete or convincing. Do not supply physics, evidence, sources or answers of your own. Do not ask the author to justify choosing their topic or their goal. An answer that reports uncertainty, a check that came back against the author, or a step that did not work is a normal answer, never a fault to question.", "errline": "Could not get suggestions right now. Ask your own questions \u2014 the list just above this button says what a follow-up question is doing, and the questions you write in the boxes below are what is graded.", "copyok": "Copied \u2713 \u2014 paste it into the Canvas box. The same text is below if you need it again.", "copyfail": "Copy did not work in this browser. Select the text below and copy it by hand."};
+    var KEY = 'cc-exam:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in a fixed frame, so offer the way out to the full page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { fields: {}, chosen: '', ai: [], copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.fields) { state.fields = {}; }
+    if (!state.ai) { state.ai = []; }
+
+    var saveTimer = null;
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
+        catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function val(k) { return (state.fields[k] || '').trim(); }
+
+    // ---------- the fields ----------
+    $all('[data-field]').forEach(function (el) {
+        var k = el.getAttribute('data-field');
+        el.value = state.fields[k] || '';
+        el.addEventListener('input', function () { state.fields[k] = el.value; refreshAiBtn(); saveSoon(); });
+        el.addEventListener('blur', save);
+    });
+    $all('[data-pick]').forEach(function (el) {
+        el.checked = (state.chosen === el.value);
+        el.addEventListener('change', function () { if (el.checked) { state.chosen = el.value; save(); } });
+    });
+
+    // ---------- AI: suggest follow-up questions ----------
+    // One call per press. The button is off until both answers are typed, and off again
+    // until one of them changes, so a student cannot spend a second call on the same text.
+    function aiInput() { return val('a2') + '\u0000' + val('a3'); }
+    var aiBtn = $('#ai-btn'), aiBox = $('#ai-box');
+    function refreshAiBtn() {
+        if (!aiBtn) { return; }
+        var ready = val('a2').length > 0 && val('a3').length > 0;
+        var last = state.ai.length ? state.ai[state.ai.length - 1].onInput : null;
+        aiBtn.disabled = !ready || aiInput() === last;
+    }
+    function showQuestions(list, n) {
+        aiBox.style.display = 'block';
+        aiBox.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('Suggested follow-up questions · round ' + n) : 'Suggested follow-up questions';
+        aiBox.appendChild(lbl);
+        var ol = document.createElement('ol');
+        list.forEach(function (q) { var li = document.createElement('li'); li.textContent = q; ol.appendChild(li); });
+        var wrap = document.createElement('div');
+        wrap.className = 'suggest';
+        wrap.appendChild(ol);
+        aiBox.appendChild(wrap);
+    }
+    function aiError() {
+        aiBox.style.display = 'block';
+        aiBox.innerHTML = '<span class="lbl">Suggested follow-up questions</span>' +
+            '<span class="err">' + CFG.errline + '</span>';
+    }
+    function parseQuestions(reply) {
+        var out = [];
+        String(reply).split('\n').forEach(function (line) {
+            var s = line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, '').trim();
+            if (s.length > 8 && s.indexOf('?') > -1) { out.push(s); }
+        });
+        return out;
+    }
+    if (aiBtn) {
+        aiBtn.addEventListener('click', function () {
+            var input = aiInput();
+            var label = aiBtn.textContent;
+            aiBtn.disabled = true;
+            aiBtn.textContent = 'Reading what you typed...';
+            aiBox.style.display = 'block';
+            aiBox.innerHTML = '<span class="lbl">Suggested follow-up questions</span>Reading what you typed...';
+            var chosen = state.chosen === '7' ? CFG.q7 : (state.chosen === '4' ? CFG.q4 : '(not yet marked)');
+            var content = 'COURSE AND SPRINT: ' + CFG.aicontext + '\n\n' +
+                'QUESTION 2, WHICH EVERY AUTHOR ANSWERED: ' + CFG.q2 + '\n' +
+                'WHAT THE AUTHOR WROTE FOR QUESTION 2:\n"""' + val('a2') + '"""\n\n' +
+                'THE SECOND QUESTION THE AUTHOR CHOSE: ' + chosen + '\n' +
+                'WHAT THE AUTHOR WROTE FOR IT:\n"""' + val('a3') + '"""';
+            fetch(AI_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 400 })
+            }).then(function (r) {
+                if (!r.ok) { throw new Error('status ' + r.status); }
+                return r.json();
+            }).then(function (data) {
+                var list = parseQuestions((data.content || data.text || '').trim());
+                if (!list.length) { throw new Error('empty'); }
+                state.ai.push({ at: new Date().toISOString(), onInput: input, questions: list });
+                save();
+                showQuestions(list, state.ai.length);
+            }).catch(function () {
+                aiError();
+            }).then(function () {
+                aiBtn.textContent = label;
+                refreshAiBtn();
+            });
+        });
+    }
+    if (state.ai.length) { showQuestions(state.ai[state.ai.length - 1].questions, state.ai.length); }
+
+    // ---------- the text that gets copied ----------
+    function block(title, body) { return title + '\n' + (body ? body : '(not answered)') + '\n\n'; }
+    function buildPayload() {
+        var chosenN = state.chosen || '?';
+        var chosenQ = state.chosen === '7' ? CFG.q7 : (state.chosen === '4' ? CFG.q4 : '(not marked)');
+        var md = CFG.course + ' — Sprint 1 Exam, the paired half\n\n';
+        md += 'Typed by: ' + (val('you') || '(no name)') + '\n';
+        md += 'Partner who wrote the paper: ' + (val('partner') || '(no name)') + '\n';
+        md += 'Second question the partner chose: question ' + chosenN + '\n\n';
+        md += block('QUESTION 2\n' + CFG.q2 + '\nTheir answer, as they wrote it:', val('a2'));
+        md += block('QUESTION ' + chosenN + '\n' + chosenQ + '\nTheir answer, as they wrote it:', val('a3'));
+        md += 'FOLLOW-UP QUESTIONS AND WHAT THEY SAID BACK\n';
+        var any = false;
+        [['q1', 'r1'], ['q2', 'r2'], ['q3', 'r3']].forEach(function (pair, i) {
+            var q = val(pair[0]), r = val(pair[1]);
+            if (!q && !r) { return; }
+            any = true;
+            md += (i + 1) + '. ' + (q || '(question not written down)') + '\n';
+            md += '   They said: ' + (r || '(not written down)') + '\n';
+        });
+        if (!any) { md += '(none written down)\n'; }
+        md += '\n';
+        md += block('HOW MY PARTNER UNDERSTANDS THEIR OWN WORK', val('summary'));
+        var html = '<pre style="white-space:pre-wrap;font-family:inherit">' +
+            md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+        return { text: md.replace(/\n+$/, '\n'), html: html };
+    }
+
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload();
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = CFG.copyok;
+            }, function () {
+                copyStatus.className = 'status';
+                copyStatus.textContent = CFG.copyfail;
+                summaryOut.focus();
+                summaryOut.select();
+            });
+        });
+    }
+
+    refreshAiBtn();
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+</body>
+</html>
