@@ -28,6 +28,11 @@ a:hover{text-decoration:underline;color:var(--blue-dark);}
 .pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
 .pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
 h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 p.body{font-size:13.5px;margin:0 0 10px;}
 
 .pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
@@ -141,7 +146,8 @@ details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);bo
 .prov-body li b{font-weight:700;color:var(--text);}
 @media print{details.prov-more{display:none;}}
 
-/* --- Learning Plan (2026-09-04): the task list and its second layer; same rules as project-proposal.html --- */
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
 .copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
 ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
 ol.tasks > li.task{margin:0 0 14px;padding:0;}
@@ -162,14 +168,146 @@ ol.tasks > li.task{margin:0 0 14px;padding:0;}
 .more-body .reflq h4{color:var(--blue-dark);}
 .more-body .reflq p{margin:0;}
 .crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
 .crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
 .crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
 .crit ol li{margin:0 0 4px;line-height:1.5;}
 @media (max-width:620px){.task details.route{margin-left:0;}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+
+/* ================= v2 layout layer — 2026-09-17 =================
+   Adapted from Roman Friedman's Read the Market redesign: a type and spacing
+   scale, a reading measure, and a sticky task rail. Colours are unchanged
+   except --muted and --warn, darkened for contrast now that type is larger. */
+:root{
+--muted:#5C6873; --border-light:#E4E8EA; --warn:#8A5D00;
+--ground:#FBFBFC; --paper:#fff; --radius:8px;
+--fs-xs:.8125rem; --fs-sm:.9375rem; --fs-base:1.0625rem;
+--fs-lg:1.35rem; --fs-xl:1.6rem; --fs-2xl:2rem;
+--lh-body:1.65; --lh-tight:1.25; --measure:68ch;
+--sp-1:.35rem; --sp-2:.7rem; --sp-3:1.1rem; --sp-4:1.7rem; --sp-5:2.6rem;
+--rail-h:54px;
+}
+body{font-size:var(--fs-base);line-height:var(--lh-body);background:var(--ground);}
+.page{max-width:980px;padding:0 clamp(1rem,4vw,2.25rem) 4rem;background:transparent;}
+.crumb{font-size:var(--fs-xs);margin:var(--sp-4) 0 var(--sp-2);}
+.pagehead{border-bottom:0;padding-bottom:0;margin-bottom:var(--sp-4);}
+.pagehead .s{font-size:var(--fs-xs);letter-spacing:.06em;}
+.pagehead h1{font-size:var(--fs-2xl);line-height:var(--lh-tight);font-weight:900;
+letter-spacing:-.015em;max-width:24ch;margin:var(--sp-1) 0 var(--sp-2);}
+.pagehead .dt{font-size:var(--fs-sm);font-weight:600;}
+h2.sec{font-size:var(--fs-lg);font-weight:900;letter-spacing:-.01em;
+margin:var(--sp-5) 0 var(--sp-3);padding-bottom:var(--sp-1);}
+p.body,.crit p,.canvasbar,.pnote{font-size:var(--fs-base);line-height:var(--lh-body);}
+.copyline{font-size:var(--fs-sm);line-height:1.55;max-width:var(--measure);align-items:flex-start;}
+.copyline .btn{flex:0 0 auto;}
+p.body,.crit p{max-width:var(--measure);}
+.canvasbar,.pnote{max-width:var(--measure);}
+
+/* purpose — a lead line and the action goals */
+ul.goals{margin:var(--sp-2) 0 0;padding-left:1.2rem;max-width:var(--measure);}
+ul.goals li{margin:0 0 var(--sp-2);line-height:var(--lh-body);}
+
+/* ---- the sticky task rail ---- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);
+backdrop-filter:saturate(1.6) blur(6px);border-bottom:1px solid var(--border-light);}
+.rail-in{max-width:980px;margin:0 auto;padding:0 clamp(1rem,4vw,2.25rem);
+display:flex;align-items:center;gap:var(--sp-3);height:var(--rail-h);}
+.rail-label{font-size:var(--fs-xs);font-weight:900;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted);white-space:nowrap;flex:0 0 auto;}
+ol.rail-steps{display:flex;align-items:center;gap:var(--sp-1);list-style:none;
+margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+ol.rail-steps::-webkit-scrollbar{display:none;}
+.rail-steps a{display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+padding:.3rem .55rem;border-radius:999px;color:var(--muted);font-size:var(--fs-xs);font-weight:700;}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;
+width:1.3rem;height:1.3rem;border-radius:999px;border:1.5px solid var(--border);
+font-size:.75rem;font-weight:800;background:#fff;}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark);}
+.rail-steps a:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.rail-steps a.here{color:var(--blue-dark);background:var(--goal-bg);}
+.rail-steps a.here b{border-color:var(--blue);color:var(--blue-dark);}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff;}
+.rail-count{font-size:var(--fs-xs);font-weight:800;color:var(--muted);white-space:nowrap;}
+/* the page title stays beside the numbers at every width; the step words go first */
+@media (max-width:1080px){.rail-steps a span{display:none;}}
+@media (max-width:420px){.rail-label{font-size:.75rem;}}
+@media print{.rail{display:none;}}
+
+/* ---- tasks: the question, then the box, then the optional layer ---- */
+ol.tasks > li.task{margin:0 0 var(--sp-5);scroll-margin-top:calc(var(--rail-h) + 12px);}
+.task .ttext{font-size:1.1875rem;font-weight:600;line-height:1.45;
+gap:.75rem;margin:0 0 var(--sp-3);max-width:var(--measure);}
+.task .tn{flex:0 0 1.6rem;font-weight:900;color:var(--blue);}
+.task > .rbox{margin:0 0 var(--sp-2) 2.35rem;padding:var(--sp-3);border-radius:var(--radius);
+border-color:var(--border);background:var(--paper);}
+.task details.route{margin:0 0 0 2.35rem;border-radius:var(--radius);background:transparent;}
+.task .route .rt{font-size:var(--fs-sm);}
+.rbox > .qt{font-size:var(--fs-sm);line-height:1.5;margin-bottom:var(--sp-2);}
+textarea.box{font-size:var(--fs-base);line-height:1.55;min-height:132px;
+padding:var(--sp-2) var(--sp-3);border-radius:6px;}
+textarea.box.short,textarea.box.box-sm{min-height:72px;}
+textarea.box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(3,116,181,.15);}
+.btn{font-size:var(--fs-sm);padding:.5rem .9rem;border-radius:6px;}
+.aibox{font-size:var(--fs-sm);border-radius:var(--radius);}
+
+/* the criteria list, now always visible under each box */
+.selfcheck{margin:var(--sp-3) 0 0;padding-top:var(--sp-2);border-top:1px solid var(--border-light);}
+.selfcheck h4{font-size:var(--fs-xs);font-weight:800;letter-spacing:.05em;
+text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-1);}
+.selfcheck ul{margin:0;padding-left:1.1rem;font-size:var(--fs-sm);color:var(--muted);}
+.selfcheck li{margin:0 0 .25rem;line-height:1.5;}
+
+.more-body .example,.more-body .reflq{font-size:var(--fs-sm);border-radius:var(--radius);}
+.more-body p{font-size:var(--fs-sm);max-width:var(--measure);}
+ul.cklist{font-size:var(--fs-base);}
+ul.cklist li{padding-left:2rem;margin-bottom:var(--sp-2);}
+.copywrap,.rbox{border-radius:var(--radius);}
+.prov2,.instructor{border-radius:var(--radius);}
+
+/* ---- check-it-yourself lines: real checkboxes, saved with the answer (2026-09-18) ---- */
+.selfcheck ul.cks{list-style:none;padding-left:0;margin:0;}
+.selfcheck ul.cks li{display:flex;gap:.55rem;align-items:flex-start;margin:0 0 .4rem;}
+.selfcheck ul.cks input[type="checkbox"]{flex:0 0 auto;width:1rem;height:1rem;margin:.28rem 0 0;
+accent-color:var(--check);cursor:pointer;}
+.selfcheck ul.cks input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.selfcheck ul.cks label{cursor:pointer;line-height:1.5;}
+@media print{.selfcheck ul.cks input[type="checkbox"]{-webkit-appearance:checkbox;}}
+
+/* ---- page-specific: this page's step names (its own task labels) are wider than the rail at
+   every width, so the rail shows numbers only, as the shell itself does below 1080px ---- */
+.rail-steps a span{display:none;}
+/* ---- page-specific: the Checklist click-in keeps its numbered, one-line-per-task list ---- */
+.crit details.route.ck ol{font-size:var(--fs-base);max-width:var(--measure);}
+.crit details.route.ck ol li{margin:0 0 var(--sp-2);line-height:1.5;}
 </style>
 </head>
 <body>
+<nav class="rail" aria-label="Tasks on this page">
+<div class="rail-in">
+<span class="rail-label">Learning Plan</span>
+<ol class="rail-steps" id="rail-steps">
+<li><a href="#task-1" data-rail="1"><b>1</b><span>What I must learn</span></a></li>
+<li><a href="#task-2" data-rail="2"><b>2</b><span>Why the build needs it</span></a></li>
+<li><a href="#task-3" data-rail="3"><b>3</b><span>Resources</span></a></li>
+<li><a href="#task-4" data-rail="4"><b>4</b><span>Action steps</span></a></li>
+<li><a href="#task-5" data-rail="5"><b>5</b><span>Verification</span></a></li>
+<li><a href="#task-6" data-rail="6"><b>6</b><span>Where the build stands (optional)</span></a></li>
+</ol>
+<span class="rail-count" id="rail-count" aria-live="polite" title="tasks answered">0/6</span>
+</div>
+</nav>
+
 <div class="page">
 <div class="canvasbar" id="canvas-bar" hidden>
 <span>This activity is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst499/learning-plan.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span>
@@ -192,13 +330,6 @@ ol.tasks > li.task{margin:0 0 14px;padding:0;}
 <ol class="tasks">
 <li class="task" id="task-1">
 <div class="ttext"><span class="tn">1.</span><span class="tt">Identify what you individually must learn to complete the whole project &mdash; the skills, tools, concepts or domain knowledge you do not have yet. List each one.</span></div>
-<details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
-<div class="route-body more-body">
-<h4>Guidance</h4>
-<p>List the specific skills, tools, concepts or domain knowledge you do not have yet and the project needs &mdash; one line each, numbered, because tasks 2 to 5 come back to this list item by item. The list is yours even on a team project: what you must learn, not what a teammate already knows.</p>
-<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
-<p><b>Item 1</b> &mdash; how the offices that own campus information actually publish and update it (interviews, and one office&rsquo;s process end to end).<br><b>Item 2</b> &mdash; a form of accessible search on a static site.<br><b>Item 3</b> &mdash; a way for an office to edit its own entry without me.</p></div>
 <div class="rbox" data-refl="t1">
 <label class="qt" for="rq-t1"><b>Your answer to task 1.</b> Each thing you must learn, one line each, numbered Item 1, Item 2, &hellip;</label>
 <textarea class="box" id="rq-t1" data-rtext placeholder="Item 1 — …
@@ -206,12 +337,20 @@ Item 2 — …
 Item 3 — …"></textarea>
 <button type="button" class="btn" data-ai>Get AI feedback</button>
 <div class="aibox" data-aibox></div>
-<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
-<li>Each item is a specific skill, tool, concept or piece of domain knowledge &mdash; something you could name to a person who would know whether you have it.</li>
-<li>Each item is something you do not have yet, and the project needs it.</li>
-<li>The items are numbered, so tasks 2 to 5 can refer to them.</li>
-</ul></details>
+<div class="selfcheck"><h4 id="ckh-t1">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t1" aria-labelledby="ckh-t1">
+<li><input type="checkbox" id="ck-t1-1" data-ck><label for="ck-t1-1">Each item is a specific skill, tool, concept or piece of domain knowledge &mdash; something you could name to a person who would know whether you have it.</label></li>
+<li><input type="checkbox" id="ck-t1-2" data-ck><label for="ck-t1-2">Each item is something you do not have yet, and the project needs it.</label></li>
+<li><input type="checkbox" id="ck-t1-3" data-ck><label for="ck-t1-3">The items are numbered, so tasks 2 to 5 can refer to them.</label></li>
+</ul></div>
 </div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
+<div class="route-body more-body">
+<h4>Guidance</h4>
+<p>List the specific skills, tools, concepts or domain knowledge you do not have yet and the project needs &mdash; one line each, numbered, because tasks 2 to 5 come back to this list item by item. The list is yours even on a team project: what you must learn, not what a teammate already knows.</p>
+<div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
+<p><b>Item 1</b> &mdash; how the offices that own campus information actually publish and update it (interviews, and one office&rsquo;s process end to end).<br><b>Item 2</b> &mdash; a form of accessible search on a static site.<br><b>Item 3</b> &mdash; a way for an office to edit its own entry without me.</p></div>
 <div class="reflq"><h4>Reflection</h4><p>Which item did you find hardest to admit to the list?</p></div>
 <div class="rbox rbox-refl" data-refl="t1-r">
 <label class="qt" for="rq-t1-r"><b>Your reflection.</b> One or two lines is enough.</label>
@@ -223,6 +362,18 @@ Item 3 — …"></textarea>
 
 <li class="task" id="task-2">
 <div class="ttext"><span class="tn">2.</span><span class="tt">For each item, explain why the build needs it: which part of the work cannot be done, or cannot be done well, without it.</span></div>
+<div class="rbox" data-refl="t2">
+<label class="qt" for="rq-t2"><b>Your answer to task 2.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
+<textarea class="box" id="rq-t2" data-rtext placeholder="Item 1 — which part of the work cannot be done, or done well, without it.
+Item 2 — …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t2">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t2" aria-labelledby="ckh-t2">
+<li><input type="checkbox" id="ck-t2-1" data-ck><label for="ck-t2-1">Every item from task 1 has an answer here, labelled with the same number.</label></li>
+<li><input type="checkbox" id="ck-t2-2" data-ck><label for="ck-t2-2">Each answer points at a part of the project a reader could find &mdash; a feature, a step, a decision &mdash; not at the project as a whole.</label></li>
+</ul></div>
+</div>
 <details class="route">
 <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
 <div class="route-body more-body">
@@ -230,17 +381,6 @@ Item 3 — …"></textarea>
 <p>For each item in your list, name the part of the work that cannot be done, or cannot be done well, without it. One or two sentences per item is enough; the test is that a reader could point at the part of the project you mean.</p>
 <div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
 <p><b>Item 1</b> &mdash; without it, the resource list is wrong the first time an office changes its hours.<br><b>Item 3</b> &mdash; without it, the site dies when I graduate.</p></div>
-<div class="rbox" data-refl="t2">
-<label class="qt" for="rq-t2"><b>Your answer to task 2.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
-<textarea class="box" id="rq-t2" data-rtext placeholder="Item 1 — which part of the work cannot be done, or done well, without it.
-Item 2 — …"></textarea>
-<button type="button" class="btn" data-ai>Get AI feedback</button>
-<div class="aibox" data-aibox></div>
-<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
-<li>Every item from task 1 has an answer here, labelled with the same number.</li>
-<li>Each answer points at a part of the project a reader could find &mdash; a feature, a step, a decision &mdash; not at the project as a whole.</li>
-</ul></details>
-</div>
 <div class="reflq"><h4>Reflection</h4><p>Is there an item whose answer here is weak enough that it should come off the list?</p></div>
 <div class="rbox rbox-refl" data-refl="t2-r">
 <label class="qt" for="rq-t2-r"><b>Your reflection.</b> One or two lines is enough.</label>
@@ -252,6 +392,18 @@ Item 2 — …"></textarea>
 
 <li class="task" id="task-3">
 <div class="ttext"><span class="tn">3.</span><span class="tt">For each item, name the resources you will learn from &mdash; a course, documentation, a book, a person, a tool &mdash; with links where they exist.</span></div>
+<div class="rbox" data-refl="t3">
+<label class="qt" for="rq-t3"><b>Your answer to task 3.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
+<textarea class="box" id="rq-t3" data-rtext placeholder="Item 1 — resource (link), resource (link) …
+Item 2 — …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t3">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t3" aria-labelledby="ckh-t3">
+<li><input type="checkbox" id="ck-t3-1" data-ck><label for="ck-t3-1">Every item from task 1 has at least one resource here, labelled with the same number.</label></li>
+<li><input type="checkbox" id="ck-t3-2" data-ck><label for="ck-t3-2">Each resource is one someone could find: a link where a link exists, a title where it does not, a named person where the resource is a person.</label></li>
+</ul></div>
+</div>
 <details class="route">
 <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
 <div class="route-body more-body">
@@ -259,17 +411,6 @@ Item 2 — …"></textarea>
 <p>For each item, name what you will learn from: a course, documentation, a book, a person, a tool. Link each one where a link exists. A person counts as a resource &mdash; name them, and say how you will reach them.</p>
 <div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
 <p><b>Item 1</b> &mdash; a 20-minute conversation with the Tutoring Center coordinator (booked for 8 Oct), and Arlene&rsquo;s administrator feedback from Cabrillo and Gavilan.<br><b>Item 2</b> &mdash; the Pagefind docs (link).</p></div>
-<div class="rbox" data-refl="t3">
-<label class="qt" for="rq-t3"><b>Your answer to task 3.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
-<textarea class="box" id="rq-t3" data-rtext placeholder="Item 1 — resource (link), resource (link) …
-Item 2 — …"></textarea>
-<button type="button" class="btn" data-ai>Get AI feedback</button>
-<div class="aibox" data-aibox></div>
-<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
-<li>Every item from task 1 has at least one resource here, labelled with the same number.</li>
-<li>Each resource is one someone could find: a link where a link exists, a title where it does not, a named person where the resource is a person.</li>
-</ul></details>
-</div>
 <div class="reflq"><h4>Reflection</h4><p>Which resource is a person, and have you asked them yet?</p></div>
 <div class="rbox rbox-refl" data-refl="t3-r">
 <label class="qt" for="rq-t3-r"><b>Your reflection.</b> One or two lines is enough.</label>
@@ -281,6 +422,19 @@ Item 2 — …"></textarea>
 
 <li class="task" id="task-4">
 <div class="ttext"><span class="tn">4.</span><span class="tt">For each item, describe the action steps you will take to learn it: what you will do, in what order, and when.</span></div>
+<div class="rbox" data-refl="t4">
+<label class="qt" for="rq-t4"><b>Your answer to task 4.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
+<textarea class="box" id="rq-t4" data-rtext placeholder="Item 1 — date: step. date: step. date: step.
+Item 2 — …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t4">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t4" aria-labelledby="ckh-t4">
+<li><input type="checkbox" id="ck-t4-1" data-ck><label for="ck-t4-1">Every item from task 1 has steps here, labelled with the same number.</label></li>
+<li><input type="checkbox" id="ck-t4-2" data-ck><label for="ck-t4-2">Each step says what you will do, and the steps are in the order you will do them.</label></li>
+<li><input type="checkbox" id="ck-t4-3" data-ck><label for="ck-t4-3">Each step has a date, and the dates fall between now and the mid-term.</label></li>
+</ul></div>
+</div>
 <details class="route">
 <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
 <div class="route-body more-body">
@@ -288,18 +442,6 @@ Item 2 — …"></textarea>
 <p>For each item, write what you will do, in what order, and when. Small steps with dates beat one big one: a step you can finish in a sitting, with the day you will do it, is one you can check off.</p>
 <div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
 <p><b>Item 1</b> &mdash; 8 Oct: the conversation with the coordinator. 9 Oct: write up the office&rsquo;s current process in one page. 12 Oct: show it back to the coordinator and correct it.</p></div>
-<div class="rbox" data-refl="t4">
-<label class="qt" for="rq-t4"><b>Your answer to task 4.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
-<textarea class="box" id="rq-t4" data-rtext placeholder="Item 1 — date: step. date: step. date: step.
-Item 2 — …"></textarea>
-<button type="button" class="btn" data-ai>Get AI feedback</button>
-<div class="aibox" data-aibox></div>
-<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
-<li>Every item from task 1 has steps here, labelled with the same number.</li>
-<li>Each step says what you will do, and the steps are in the order you will do them.</li>
-<li>Each step has a date, and the dates fall between now and the mid-term.</li>
-</ul></details>
-</div>
 <div class="reflq"><h4>Reflection</h4><p>Which step could you do today?</p></div>
 <div class="rbox rbox-refl" data-refl="t4-r">
 <label class="qt" for="rq-t4-r"><b>Your reflection.</b> One or two lines is enough.</label>
@@ -311,6 +453,19 @@ Item 2 — …"></textarea>
 
 <li class="task" id="task-5">
 <div class="ttext"><span class="tn">5.</span><span class="tt">For each item, state how you will verify you learned it: what you will be able to show, what it will demonstrate, and what external verification step, if any, you will use to confirm it &mdash; a review by someone who knows the area, a test with a real user, a result others can check.</span></div>
+<div class="rbox" data-refl="t5">
+<label class="qt" for="rq-t5"><b>Your answer to task 5.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
+<textarea class="box" id="rq-t5" data-rtext placeholder="Item 1 — what I will show; what it demonstrates; external step (or none planned).
+Item 2 — …"></textarea>
+<button type="button" class="btn" data-ai>Get AI feedback</button>
+<div class="aibox" data-aibox></div>
+<div class="selfcheck"><h4 id="ckh-t5">Check it yourself &mdash; the same criteria, without the AI</h4>
+<ul class="cks" data-cks="t5" aria-labelledby="ckh-t5">
+<li><input type="checkbox" id="ck-t5-1" data-ck><label for="ck-t5-1">Every item from task 1 has a verification here, labelled with the same number.</label></li>
+<li><input type="checkbox" id="ck-t5-2" data-ck><label for="ck-t5-2">Each one says what you will show and what it demonstrates, and a stranger could check it by looking.</label></li>
+<li><input type="checkbox" id="ck-t5-3" data-ck><label for="ck-t5-3">Each one says whether an external step is planned, and at least one item has one: a named reviewer, a real user, or a result others can check.</label></li>
+</ul></div>
+</div>
 <details class="route">
 <summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance, an example, a question, and a place to write</span></span></summary>
 <div class="route-body more-body">
@@ -318,18 +473,6 @@ Item 2 — …"></textarea>
 <p>For each item, write three things: what you will be able to show, what it demonstrates, and what <span class="gl"><button type="button" class="gt">external verification step</button><span class="bub" role="tooltip"><b class="bt">External verification</b><span class="br"><i>What it is.</i> Someone or something outside you confirming that what you show is real: a review by a person who knows the area, a test with a real user, a result others can check for themselves.</span><span class="br"><i>Why it matters.</i> A hiring manager can only take your word for what you learned; they can act on a coordinator&rsquo;s email or a timed test with three students. The external step is what turns a claim into evidence.</span></span></span>, if any, you will use. Not every item needs an external step; say for each whether you plan one.</p>
 <div class="example"><span class="exl">An example, to shape your thinking &mdash; not a model to copy</span>
 <p><b>Item 1</b> &mdash; the one-page process description, confirmed by the coordinator as accurate (their email).<br><b>Item 2</b> &mdash; a new student finds tutoring hours from the search box in under a minute, timed, three students.</p></div>
-<div class="rbox" data-refl="t5">
-<label class="qt" for="rq-t5"><b>Your answer to task 5.</b> Label each answer by item, matching task 1: Item 1 &mdash; &hellip;, Item 2 &mdash; &hellip;</label>
-<textarea class="box" id="rq-t5" data-rtext placeholder="Item 1 — what I will show; what it demonstrates; external step (or none planned).
-Item 2 — …"></textarea>
-<button type="button" class="btn" data-ai>Get AI feedback</button>
-<div class="aibox" data-aibox></div>
-<details class="refl"><summary><span class="plus" aria-hidden="true"></span>Check it yourself &mdash; the same criteria, without the AI</summary><ul>
-<li>Every item from task 1 has a verification here, labelled with the same number.</li>
-<li>Each one says what you will show and what it demonstrates, and a stranger could check it by looking.</li>
-<li>Each one says whether an external step is planned, and at least one item has one: a named reviewer, a real user, or a result others can check.</li>
-</ul></details>
-</div>
 <div class="reflq"><h4>Reflection</h4><p>Which verification would carry the most weight with a hiring manager?</p></div>
 <div class="rbox rbox-refl" data-refl="t5-r">
 <label class="qt" for="rq-t5-r"><b>Your reflection.</b> One or two lines is enough.</label>
@@ -357,9 +500,9 @@ Item 2 — …"></textarea>
 
 <h2 class="sec">Criteria</h2>
 <div class="crit">
-<p><b>Done</b> &mdash; task 1 lists each thing to be learned; tasks 2 to 5 cover every item in that list; the resources in 3 are linked where links exist; the action steps in 4 say what, in what order, and when; the verification in 5 says what will be shown and what it demonstrates, and says whether an external verification step is planned.</p>
-<p><b>Strong</b> &mdash; each item in 1 is something the project cannot be finished without, and 2 says which part; the resources in 3 are ones you have opened, not a search result; the action steps in 4 have dates that fit between now and the <span class="gl"><button type="button" class="gt">mid-term scope</button><span class="bub" role="tooltip"><b class="bt">The mid-term scope</b><span class="br"><i>What it is.</i> What you said in task 6a of your Project Proposal would exist by week 8 &mdash; the mid-term, Wednesday 14 October.</span><span class="br"><i>Why it matters here.</i> The learning that scope needs has to happen before it; steps dated after 14 October belong to a later part of the project.</span></span></span>; the verification in 5 is something a stranger could check, and at least one item has an external step &mdash; a person who knows the area, a real user, a result others can check.</p>
-<p><b>Checklist</b> &mdash; one line per task. Run it on your own draft; your reviewer runs the same list.</p>
+<details class="route ck">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt"><b>Checklist</b> &mdash; one line per task. Run it on your own draft; your reviewer runs the same list.</span></span></summary>
+<div class="route-body more-body">
 <ol>
 <li>List each thing you must learn, one line each, numbered.</li>
 <li>For each item, say which part of the work cannot be done, or done well, without it.</li>
@@ -368,6 +511,10 @@ Item 2 — …"></textarea>
 <li>For each item, say what you will show, what it demonstrates, and whether an external verification step is planned.</li>
 <li>Optional: link or screenshot what exists and runs today.</li>
 </ol>
+</div>
+</details>
+<p><b>Done</b> &mdash; task 1 lists each thing to be learned; tasks 2 to 5 cover every item in that list; the resources in 3 are linked where links exist; the action steps in 4 say what, in what order, and when; the verification in 5 says what will be shown and what it demonstrates, and says whether an external verification step is planned.</p>
+<p><b>Strong</b> &mdash; each item in 1 is something the project cannot be finished without, and 2 says which part; the resources in 3 are ones you have opened, not a search result; the action steps in 4 have dates that fit between now and the <span class="gl"><button type="button" class="gt">mid-term scope</button><span class="bub" role="tooltip"><b class="bt">The mid-term scope</b><span class="br"><i>What it is.</i> What you said in task 6a of your Project Proposal would exist by week 8 &mdash; the mid-term, Wednesday 14 October.</span><span class="br"><i>Why it matters here.</i> The learning that scope needs has to happen before it; steps dated after 14 October belong to a later part of the project.</span></span></span>; the verification in 5 is something a stranger could check, and at least one item has an external step &mdash; a person who knows the area, a real user, a result others can check.</p>
 </div>
 
 <h2 class="sec">Submit</h2>
@@ -431,12 +578,12 @@ Item 2 — …"></textarea>
     // Learning Plan — behaviour only. All words students read live in the markup above,
     // except the task list below, which is the single source of truth for both copy buttons.
     var TASKS = [
-        {"n": 1, "text": "Identify what you individually must learn to complete the whole project — the skills, tools, concepts or domain knowledge you do not have yet. List each one.", "parts": []},
-        {"n": 2, "text": "For each item, explain why the build needs it: which part of the work cannot be done, or cannot be done well, without it.", "parts": []},
-        {"n": 3, "text": "For each item, name the resources you will learn from — a course, documentation, a book, a person, a tool — with links where they exist.", "parts": []},
-        {"n": 4, "text": "For each item, describe the action steps you will take to learn it: what you will do, in what order, and when.", "parts": []},
-        {"n": 5, "text": "For each item, state how you will verify you learned it: what you will be able to show, what it will demonstrate, and what external verification step, if any, you will use to confirm it — a review by someone who knows the area, a test with a real user, a result others can check.", "parts": []},
-        {"n": 6, "text": "Optional: show where the build stands today — what exists and runs, with a link or screenshot.", "parts": []}
+        {"n": 1, "head": "Task 1 — What I must learn", "text": "Identify what you individually must learn to complete the whole project — the skills, tools, concepts or domain knowledge you do not have yet. List each one.", "parts": [], "checks": ["Each item is a specific skill, tool, concept or piece of domain knowledge — something you could name to a person who would know whether you have it.", "Each item is something you do not have yet, and the project needs it.", "The items are numbered, so tasks 2 to 5 can refer to them."]},
+        {"n": 2, "head": "Task 2 — Why the build needs it", "text": "For each item, explain why the build needs it: which part of the work cannot be done, or cannot be done well, without it.", "parts": [], "checks": ["Every item from task 1 has an answer here, labelled with the same number.", "Each answer points at a part of the project a reader could find — a feature, a step, a decision — not at the project as a whole."]},
+        {"n": 3, "head": "Task 3 — Resources", "text": "For each item, name the resources you will learn from — a course, documentation, a book, a person, a tool — with links where they exist.", "parts": [], "checks": ["Every item from task 1 has at least one resource here, labelled with the same number.", "Each resource is one someone could find: a link where a link exists, a title where it does not, a named person where the resource is a person."]},
+        {"n": 4, "head": "Task 4 — Action steps", "text": "For each item, describe the action steps you will take to learn it: what you will do, in what order, and when.", "parts": [], "checks": ["Every item from task 1 has steps here, labelled with the same number.", "Each step says what you will do, and the steps are in the order you will do them.", "Each step has a date, and the dates fall between now and the mid-term."]},
+        {"n": 5, "head": "Task 5 — Verification", "text": "For each item, state how you will verify you learned it: what you will be able to show, what it will demonstrate, and what external verification step, if any, you will use to confirm it — a review by someone who knows the area, a test with a real user, a result others can check.", "parts": [], "checks": ["Every item from task 1 has a verification here, labelled with the same number.", "Each one says what you will show and what it demonstrates, and a stranger could check it by looking.", "Each one says whether an external step is planned, and at least one item has one: a named reviewer, a real user, or a result others can check."]},
+        {"n": 6, "head": "Task 6 — Where the build stands (optional)", "text": "Optional: show where the build stands today — what exists and runs, with a link or screenshot.", "parts": [], "checks": []}
     ];
 
     var REFLQ = "REFLECTION QUESTIONS: the instructions for this box also list a reflection question for the student to consider. It is optional depth and the student decides how far to take it. Question listed here: (1) {Q} If the answer already engages it, say so and what it added. If it is not engaged, you may point at it as a way to take the answer further, worded as an invitation. Never treat an unanswered reflection question as a missing element.";
@@ -489,13 +636,13 @@ Item 2 — …"></textarea>
     function buildPayload(withAnswers) {
         var md = '', html = '';
         if (withAnswers) {
-            md += CFG.pageTitle + ' — ' + CFG.course + ', Week 6\n';
+            md += CFG.pageTitle + ' — ' + CFG.course + ', Week 6\n\n';
             html += '<p><b>' + esc(CFG.pageTitle) + '</b> — ' + esc(CFG.course) + ', Week 6</p>';
         }
-        html += '<ol>';
         TASKS.forEach(function (t, idx) {
-            md += t.n + '. ' + t.text + '\n';
-            html += '<li>' + esc(t.text);
+            var key = 't' + t.n;
+            md += t.head + '\n' + t.text + '\n';
+            html += '<p><b>' + esc(t.head) + '</b><br>' + esc(t.text) + '</p>';
             if (t.parts.length) {
                 html += '<ol type="a" style="list-style-type:lower-alpha">';
                 t.parts.forEach(function (p, i) {
@@ -505,19 +652,28 @@ Item 2 — …"></textarea>
                 html += '</ol>';
             }
             if (withAnswers) {
-                var a = (answerState('t' + t.n).text || '').trim();
+                var a = (answerState(key).text || '').trim();
                 md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
                 html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
-                var r = (answerState('t' + t.n + '-r').text || '').trim();
+                var r = (answerState(key + '-r').text || '').trim();
                 if (r) {
                     md += indentLines('Reflection: ' + r.replace(/\s*\n\s*/g, ' '), '   ') + '\n';
                     html += '<p><b>Reflection:</b> ' + esc(r.replace(/\s*\n\s*/g, ' ')) + '</p>';
                 }
-                if (idx < TASKS.length - 1) { md += '\n'; }
             }
-            html += '</li>';
+            if (t.checks.length) {
+                var ticks = withAnswers ? checkState(key) : [];
+                md += '\n   Check it yourself:\n';
+                html += '<p><b>Check it yourself:</b></p><ul style="list-style:none;padding-left:0">';
+                t.checks.forEach(function (c, i) {
+                    var on = !!ticks[i];
+                    md += '   ' + (on ? '[x]' : '[ ]') + ' ' + c + '\n';
+                    html += '<li>' + (on ? '[x]' : '[ ]') + ' ' + esc(c) + '</li>';
+                });
+                html += '</ul>';
+            }
+            if (idx < TASKS.length - 1) { md += '\n'; }
         });
-        html += '</ol>';
         return { text: md, html: html };
     }
 
@@ -567,6 +723,13 @@ Item 2 — …"></textarea>
         if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
         return state.answers[key];
+    }
+
+    // the Check it yourself boxes ride along with the answers, one array of booleans per task
+    function checkState(key) {
+        if (!state.checks) { state.checks = {}; }
+        if (!state.checks[key]) { state.checks[key] = []; }
+        return state.checks[key];
     }
 
     // ---------- AI feedback ----------
@@ -647,6 +810,15 @@ Item 2 — …"></textarea>
         refreshBox(el, key);
     });
 
+    // ---------- the Check it yourself lines ----------
+    $all('ul.cks[data-cks]').forEach(function (ul) {
+        var ticks = checkState(ul.getAttribute('data-cks'));
+        $all('input[type="checkbox"]', ul).forEach(function (cb, i) {
+            cb.checked = !!ticks[i];
+            cb.addEventListener('change', function () { ticks[i] = cb.checked; save(); });
+        });
+    });
+
     // ---------- Copy the questions ----------
     var tasksBtn = $('#copy-tasks');
     if (tasksBtn) {
@@ -688,6 +860,63 @@ Item 2 — …"></textarea>
         var sn = document.getElementById('store-note');
         if (sn) { sn.style.display = 'block'; }
     }
+}());
+</script>
+
+<script>
+/* v2 task rail — progress and position. Additive: if it throws, the page is unchanged. */
+(function () {
+    'use strict';
+    var N = 6;
+    var count = document.getElementById('rail-count');
+    var links = {};
+    for (var i = 1; i <= N; i++) {
+        links[i] = document.querySelector('.rail-steps a[data-rail="' + i + '"]');
+    }
+    function box(n) { return document.getElementById('rq-t' + n); }
+
+    function refresh() {
+        var done = 0;
+        for (var i = 1; i <= N; i++) {
+            var ta = box(i), a = links[i];
+            var filled = !!(ta && ta.value.trim().length);
+            if (filled) { done++; }
+            if (a) { a.className = a.className.replace(/\s*done/, '') + (filled ? ' done' : ''); }
+        }
+        if (count) {
+            count.textContent = done + '/' + N;
+        }
+    }
+
+    for (var j = 1; j <= N; j++) {
+        var t = box(j);
+        if (t) { t.addEventListener('input', refresh); }
+    }
+    refresh();
+
+    /* which task the reader is in */
+    var here = 0;
+    function mark() {
+        var top = (document.querySelector('.rail') || {}).offsetHeight || 54;
+        var cur = 0;
+        for (var i = 1; i <= N; i++) {
+            var el = document.getElementById('task-' + i);
+            if (el && el.getBoundingClientRect().top - top - 24 <= 0) { cur = i; }
+        }
+        if (cur === here) { return; }
+        if (here && links[here]) { links[here].className = links[here].className.replace(/\s*here/, ''); }
+        if (cur && links[cur]) { links[cur].className += ' here'; }
+        here = cur;
+    }
+    var ticking = false;
+    function onScroll() {
+        if (ticking) { return; }
+        ticking = true;
+        window.requestAnimationFrame(function () { mark(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    mark();
 }());
 </script>
 </body>
