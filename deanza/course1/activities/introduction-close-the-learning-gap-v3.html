@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Introduction: Close the Learning Gap | Sprint 4: Close The Learning Gap (V2)</title>
+  <title>Introduction: Close the Learning Gap | Sprint 4: Close the Learning Gap (V3)</title>
   <style>
     :root {
       --bg: #fafafa;
@@ -99,7 +99,60 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
-    
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p:first-child { color: var(--text); font: inherit; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p { color: var(--text); font: inherit; }
+.reading-page .copy-source { margin: 10px 0 4px; }
+.reading-page .copy-source pre { margin: 0 0 8px; }
+.reading-page .copy-source button { font: inherit; padding: 8px 12px; color: #fff; background: #204b76; border: 0; border-radius: 6px; cursor: pointer; }
+.reading-page .copy-source [role="status"] { margin: 6px 0 0; font-size: .875rem; color: #455568; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
   </style>
   <script>
     (function() {
@@ -179,92 +232,64 @@
   </script>
 </head>
 <body>
-  <div class="activity">
+  <div class="activity reading-page">
     <a class="back-link" href="../sprint-8.html?context=web" data-keep-context>&larr; Back to Module</a>
-    <p class="meta">Sprint 4: Close The Learning Gap (V2) &middot; Page</p>
+    <p class="meta">Sprint 4: Close the Learning Gap (V3) &middot; Page</p>
     <h1>Introduction: Close the Learning Gap</h1>
 
-    <div class="goal"><h2>Learning goal</h2><p>Understand Introduction: Close the Learning Gap and connect it to the work in this module.</p></div>
+
 
     <section>
-<h2>Overview</h2>
-<p>By the end of Sprint 3 you had a problem frame that had survived contact with a real person. You also had something that did not fit: a thing they said that you had no answer to, or a number you have been quoting that you cannot actually back up.</p>
-<p>That gap is the subject of this sprint.</p>
-<p>AI is very good at closing gaps like this. It explains things clearly, sequences what to learn first, and adapts to where you are stuck. It will also produce a fluent, confident, entirely plausible explanation of something it has wrong, and you will get no signal that it did. That is the problem this sprint is built around.</p>
+<p>You have been naming what you do not know since Sprint 1. Part 7 of your Problem Frame asks for it directly. In Sprint 3 you marked fields on your stakeholder map as Inferred, wrote assumption blocks for the guesses that would change your next move, and ended your validation report with what still needs validation.</p>
+<p>This sprint calls those open items gaps, and it is where they stop sitting at the end of a report and become a plan. You will not close them all in two weeks. You will plan how to close them, and that planning will show you which parts of your frame you can trust and which you cannot yet.</p>
+<p>AI is very good at helping with this. It can suggest what to learn first, where to look, and how to check what you find. But it will also produce a clear, confident answer that may not be true for your situation. That is why your own list comes first, and why every plan names a way to check that is not AI.</p>
+<p>By the end of this sprint you can say, about your own problem, what you know, what you are guessing, and how you will find out. Most people cannot say that about the work in front of them. You got there the same way you have all term: your own thinking first, a real person&rsquo;s view from Sprint 3, and AI to widen the options before you decided which ones fit.</p>
 </section>
 
 <section>
 <h2 id="sprint-4-road-map">Sprint 4 Road Map</h2>
 <ol>
-<li><strong>Name the gap.</strong> Write your own list first, before you ask any AI. Mark what is blocking you and what is just interesting. Commit to one.</li>
-<li><strong>Test it.</strong> Take your committed gap to the AI Exchange and find out whether it is really a gap or a topic in disguise.</li>
-<li><strong>Plan the route.</strong> Use the Dojo to sequence the learning and to design the checks that will tell you whether what you learned is true.</li>
-<li><strong>Learn it, and check it.</strong> Do the learning. Run two checks. At least one has to be independent of AI.</li>
-<li><strong>Say what changed.</strong> Update your Goal Plan and say what you can now do that you could not do two weeks ago.</li>
+<li><strong>Gather your gaps.</strong> Bring together what Sprint 1 and Sprint 3 already left open, in your own words, before any AI. Add anything new. Sort each one as blocking, useful, or interesting.</li>
+<li><strong>Test and plan.</strong> In the Dojo Lab, AI tests your list, helps you build the plan, and tests how you will check your answers. You decide what to keep.</li>
+<li><strong>Write the plan.</strong> For each gap, say why it matters, where you will learn it, the steps, and how you will know.</li>
+<li><strong>Update your frame.</strong> Revise parts 6 and 7 of your Problem Frame to match your plan.</li>
+<li><strong>Say what changed.</strong> Reflect on how planning changed your view of the problem.</li>
 </ol>
 </section>
 
 <section>
-<h2 id="concepts-in-sprint-4">Concepts in Sprint 4</h2>
-<h3 id="a-topic-is-not-a-gap">A Topic Is Not a Gap</h3>
-<p>A topic is something you would like to understand. A gap is something whose absence is stopping you.</p>
-<p>The difference matters because a topic has no end. You can read about onboarding best practices for a year and never reach a point where you would say you were finished. A gap closes.</p>
-<p>Here is the test. Try to finish this sentence:</p>
-<blockquote>
-<p>&ldquo;Until I know this, I can&rsquo;t ___.&rdquo;</p>
-</blockquote>
-<p>Topic: &ldquo;I need to learn more about onboarding best practices.&rdquo; Nothing fills the blank.</p>
-<p>Gap: &ldquo;I don&rsquo;t know how our ticket system counts the age of a reassigned ticket, so I can&rsquo;t tell whether the nine day figure I have been quoting is real.&rdquo; The blank fills itself.</p>
-<h3 id="blocking-useful-interesting">Blocking, Useful, Interesting</h3>
-<p>Not everything you do not know is in your way. Some of it has a decision waiting on it. Some of it would improve the work without stopping anything. And some of it you simply want to know.</p>
-<p>Interesting is the one that quietly eats the sprint. Curiosity has no stopping point, and it is very easy to mistake for necessity. Naming it as its own category is what keeps it from hiding inside &ldquo;essential.&rdquo;</p>
-<p>You will sort your own gaps into those three in Name the Gap, and you will commit to a blocking one. If more than one is blocking, which is common, choose the one you actually want to spend a week on. Wanting to know it is what gets the work done. It is just not what makes something a gap.</p>
-<h3 id="knowing-what-closed-looks-like">Knowing What &ldquo;Closed&rdquo; Looks Like</h3>
-<p>Before you plan how to learn something, write down how you will know you are finished. It has to be something you could point at rather than a feeling, or you will stop when you get tired instead of when you are done.</p>
-<p>You are not becoming an expert. The standard is that you know enough to make the next decision and to defend it if someone pushed back.</p>
-<h3 id="an-explanation-is-not-evidence">An Explanation Is Not Evidence</h3>
-<p>When something explains a thing to you clearly and you understand it, it feels like knowledge. It is not, yet. It is an explanation you found convincing.</p>
-<p>Two words you will use for the rest of this course, carried over from Sprint 1 and Sprint 3:</p>
-<blockquote>
-<p><strong>Confirmed.</strong> You checked it against something independent, and it held.</p>
-<p><strong>Inferred.</strong> You believe it, and you have not checked it.</p>
-</blockquote>
-<p>A clear, confident AI explanation is inferred. So is something a colleague said in passing. So is your own reasonable assumption. Most of what you learn in two weeks will be inferred, and that is fine. Marking it honestly is what makes your final report defensible.</p>
-<h3 id="a-check-that-cannot-fail-is-not-a-check">A Check That Cannot Fail Is Not a Check</h3>
-<p>Before you go look, write down what result would tell you that you were wrong. Do it in that order. If you write it afterward, you will find a version that matches whatever you discovered.</p>
-<p>The best checks come from your real setting: your own admin console, your team&rsquo;s policy document, watching the thing happen, asking the person who would know. Those are also the checks a general purpose AI cannot do for you, because it does not know how your instance is configured or what your policy says.</p>
-<p>You will design your two checks in the Dojo Lab, and @auditor will tell you where they are weak.</p>
-<h3 id="most-results-come-back-yes-but">Most Results Come Back &ldquo;Yes, But&rdquo;</h3>
-<p>A check has three possible outcomes, and only two of them are the ones people expect. It can confirm your claim, contradict it, or complicate it.</p>
-<p>Complicated is the most common and the most useful. It is the result where the honest answer is &ldquo;yes, but,&rdquo; and the &ldquo;but&rdquo; is usually the finding. It is also the one people round off to confirmed, because &ldquo;yes, but&rdquo; takes more work to write down than &ldquo;yes.&rdquo; Do not round it off.</p>
-<p>And a check that comes back confirmed is still a real result. Report it, and say what would have changed your mind.</p>
-<h3 id="what-you-are-choosing-not-to-learn">What You Are Choosing Not to Learn</h3>
-<p>Deciding what to set aside is scope control, not laziness. But an exclusion is only legitimate if you can say what it costs you.</p>
-<p>You will write that down for each gap you are not closing, in Name the Gap.</p>
+<h2 id="sprint-4-concepts">Sprint 4 Concepts</h2>
+<p><strong>A gap, not a topic.</strong> A topic is something you would like to understand. A gap is something whose absence is stopping you. Test it with this sentence: &ldquo;Until I know this, I can&rsquo;t ___.&rdquo;</p>
+<ul>
+<li>Topic: &ldquo;I should learn more about how teams handle account handovers.&rdquo; Nothing fills the blank.</li>
+<li>Gap: &ldquo;I don&rsquo;t know whether the other account managers really find out late when an account changes hands, so I can&rsquo;t tell whether my problem is real for the whole team.&rdquo; The blank fills itself.</li>
+</ul>
+<p><strong>Blocking, useful, interesting.</strong> Not everything you do not know is in your way. Sprint 3 called an assumption high-stakes if being wrong about it would change your next move. Blocking is that same test, with two more shelves for the things that do not pass it.</p>
+<ul>
+<li><strong>Blocking:</strong> a decision or next step is waiting on it.</li>
+<li><strong>Useful:</strong> it would improve the work, but nothing is stopped.</li>
+<li><strong>Interesting:</strong> you want to know it, and nothing you do next depends on it.</li>
+</ul>
+<p>Interesting is the one that quietly eats your time. Naming it keeps it from hiding inside &ldquo;essential.&rdquo;</p>
+<p><strong>Closed means answered.</strong> A gap is closed when you have an answer you can stand behind, whether that answer confirms what you thought or shows you were wrong. It does not mean the problem is solved.</p>
+<p><strong>Confirmed and inferred.</strong> The same marks you used on your stakeholder map in Sprint 3. <strong>Confirmed</strong> means you checked it against something independent, and it held. <strong>Inferred</strong> means you believe it but have not checked it. A clear AI explanation is inferred until you check it. Your plan is how inferred things become confirmed later.</p>
 </section>
 
 <section>
 <h2 id="two-week-sprint-map">Two-Week Sprint Map</h2>
 <ul>
-<li><strong>Week 1.</strong> Read this page. Pass the Concept Check. Write Name the Gap. Take it through the AI Exchange.</li>
-<li><strong>Week 2.</strong> Design the path in the Dojo, at the start of the week. Do the learning. Run your checks. Write up Learn and Check and finish with the reflection.</li>
+<li><strong>Week 1.</strong> Read this page. Take the Concept Check. Write Name the Gap, without AI, and upload it. Then run the Dojo Lab at the end of the same week, while your list is fresh. These two go back to back, so plan for both.</li>
+<li><strong>Week 2.</strong> Write your Learning Plan and update your Problem Frame. Finish with the reflection.</li>
 </ul>
 </section>
 
 <section>
-<h2 id="carry-forward">Carry Forward</h2>
-<p>Keep your gap list, the path you designed, the sources you actually used, the prompts you steered with, and your check results. In Sprint 5 the Integrated Problem Document and Readiness Report asks what you can now do that you could not do in week 1. This sprint is where a large part of that answer comes from.</p>
+<h2 id="portfolio-capture">Portfolio Capture</h2>
+<p>Keep everything in your Learning Plan template. In Sprint 5, your readiness report asks what you are ready to do next. Your plan is a large part of that answer, and it is where you start in CIS 502.</p>
+<p>Next: take the Sprint 4 Concept Check, then start Name the Gap.</p>
 </section>
 
-<section>
-<h2 id="next">Next</h2>
-<p>Take the Sprint 4 Concept Check, then start Name the Gap.</p>
-</section>
-
-    <div class="submit">
-      <h2>What counts as done</h2>
-      <p>Read this page in full and continue to the next Canvas item. No Canvas submission is required for this information page.</p>
-    </div>
+    
 
     <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
   </div>
