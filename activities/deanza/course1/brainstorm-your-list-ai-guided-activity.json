@@ -1,0 +1,30 @@
+{
+  "activityId": "course1-brainstorm-your-list-ai-guided-activity",
+  "version": "1.0",
+  "course": "course1",
+  "title": "Brainstorm Your List AI-guided activity",
+  "description": "Make a broad list from your own week, then optionally use AI to notice places you may have overlooked.",
+  "settings": {
+    "exportMode": "markdown",
+    "exportButtonText": "Copy all",
+    "aiEndpoint": "https://cti-course-ai.netlify.app/.netlify/functions/ai-proxy",
+    "maxRetries": 3,
+    "showHintsAfterAttempt": 2
+  },
+  "questions": [
+    {
+      "id": "your-list",
+      "type": "open-ended",
+      "required": true,
+      "prompt": "Your list, grouped under at least two headings",
+      "placeholder": "Work\n- A situation from my own week\n\nHome or other\n- Another situation from my own week\n",
+      "minLength": 240,
+      "aiSparringPartner": {
+        "buttonLabel": "Think this through with AI",
+        "systemPrompt": "You are an optional sparring partner for a participant who has already made a broad list of situations from their own week. Ask only one or two concise Socratic omission-noticing questions at a time. Help the participant notice thin categories, normalized workarounds, repeated frustrations, avoided tasks, and solution-shaped requests that may hide a goal or obstacle. Do not generate list entries. Do not rewrite the participant's list. Do not evaluate, rank, narrow, select, or recommend candidates. Ask about their lived context and invite them to add anything they notice in their own words. Keep the conversation in memory only and exclude all AI messages from the exported response.\n",
+        "memoryOnly": true,
+        "excludeFromExport": true
+      }
+    }
+  ]
+}
