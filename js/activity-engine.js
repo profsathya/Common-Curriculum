@@ -658,6 +658,10 @@ const ActivityEngine = (function() {
     card.style.cssText = 'background:white;border-radius:12px;max-width:720px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;';
 
     const isJsonExport = exportMode === 'json';
+    const markdownExportInstruction = String(
+      (config.settings && config.settings.exportInstruction) ||
+      'Now paste into your Sprint 4 Google Doc (Cmd/Ctrl+V) and export as PDF.'
+    );
     const heading = copied
       ? (isJsonExport ? 'JSON copied to clipboard ✓' : 'Copied to clipboard ✓')
       : (isJsonExport ? 'Copy your JSON responses' : 'Copy your responses');
@@ -670,7 +674,7 @@ const ActivityEngine = (function() {
       '<h2 style="margin:0 0 12px 0;font-size:20px;font-weight:700;color:#0f172a;">' + heading + '</h2>' +
       fallbackNote +
       '<textarea id="activity-export-modal-textarea" readonly rows="15" style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;padding:12px;border:1px solid #e2e8f0;border-radius:8px;resize:vertical;box-sizing:border-box;"></textarea>' +
-      '<p style="margin:12px 0 16px 0;font-size:14px;color:#334155;">' + (isJsonExport ? 'Upload this JSON to the Canvas assignment.' : 'Now paste into your Sprint 4 Google Doc (Cmd/Ctrl+V) and export as PDF.') + '</p>' +
+      '<p style="margin:12px 0 16px 0;font-size:14px;color:#334155;">' + (isJsonExport ? 'Upload this JSON to the Canvas assignment.' : escapeHtmlText(markdownExportInstruction)) + '</p>' +
       '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">' +
         '<button type="button" id="activity-export-modal-copy" style="background:#14b8a6;color:white;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">' + (isJsonExport ? 'Copy JSON again' : 'Copy again') + '</button>' +
         '<span id="activity-export-modal-flash" style="font-size:13px;color:#0f766e;font-weight:600;opacity:0;transition:opacity 0.2s;">Copied ✓</span>' +
