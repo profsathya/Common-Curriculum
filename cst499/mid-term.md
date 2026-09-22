@@ -8,7 +8,7 @@
 
 # Mid-term
 
-Week 8 · Wednesday 14 October · two items, 100 points each · Mid-term
+Take-home due Wednesday 14 October · in-class activity Wednesday 21 October · two items, 100 points each · Mid-term
 
 ## Purpose
 
@@ -16,8 +16,8 @@ Show the depth of your thinking about your project and the market it answers —
 
 ## How it works
 
-- **Take-home mid-term · 100 points** — All eight answered at length, submitted in Canvas before class on 14 October, references allowed. You have a week; nothing here needs more time than that.
-- **In-class activity · 100 points · first part** — Five of the eight questions are handed out; choose three and summarise your answers by hand, one page, two sides at most, closed book, on the specific aspect the paper names.
+- **Take-home mid-term · 100 points** — All eight answered at length, submitted in Canvas by Wednesday 14 October, references allowed. You have a week; nothing here needs more time than that.
+- **In-class activity · 100 points · first part** — On Wednesday 21 October, five of the eight questions are handed out; choose three and summarise your answers by hand, one page, two sides at most, closed book, on the specific aspect the paper names.
   *Tooltip on “closed book”* — **Closed book** — *What it means.* Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood. *Why it matters.* A lesson you can put in your own words without looking is one you own. The take-home is where you work it out; the written part is where you show it is yours.
 - **In-class activity · second part, paired** — Swap with a partner: type up their written answers, ask two follow-up questions, write a summary of their model of their own work, and submit the typed version in Canvas. The handwritten sheets are collected; the typed versions are what count. Do your best in the hour — write what you can.
 
@@ -238,13 +238,13 @@ What you now understand about the bar for the roles you want, from looking at re
 
 ## Submit
 
-**Take-home:** Canvas text entry, before class on Wednesday 14 October. **Submit the text itself pasted into the Canvas box; a link to a Google doc is not a submission.**
+**Take-home:** Canvas text entry, by Wednesday 14 October. **Submit the text itself pasted into the Canvas box; a link to a Google doc is not a submission.**
 
 Two routes, equal. Answer the questions in your own document and paste the text. Or use the boxes under each question on this page and press **Copy my answers**, which puts each question with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.
 
 **Button:** Copy my answers
 
-**In class and paired:** done on paper and in the room on 14 October. Nothing to submit here.
+**In class and paired:** done on paper and in the room on Wednesday 21 October. Nothing to submit here.
 
 ## How this page was made
 
