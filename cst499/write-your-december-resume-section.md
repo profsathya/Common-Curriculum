@@ -8,13 +8,13 @@ About 90 minutes. You can resubmit at the end of any sprint.
 
 ### Purpose
 
-Now that you have an approved capstone project, in this activity you write the three to five resume lines that describe your capstone work as if it were already done, so that you can plan ahead to make sure you produce something that will help with your job search.
+Write three to five resume lines describing your approved capstone as if it were complete. Use them to plan the work and evidence you want to have by December.
 
 ### What you can earn
 
-If the resume you write is ready for review by meeting the quality bar described below, you will get to meet with Jeff D'Andria for the review. Jeff works with CTI and spent years recruiting at Microsoft and Stripe and then in Stanford's recruiting office. He will read your section as a recruiter reads it and tell you what he would ask you about each line and what evidence he would want to see to support it. It will be 15 to 30 min session.
+If the resume you write is ready for review by meeting the quality bar described below, you will get to meet with Jeff D'Andria for the review. Jeff works with CTI and spent years recruiting at Microsoft and Stripe and then in Stanford's recruiting office. He will read your section as a recruiter reads it and tell you what he would ask you about each line and what evidence he would want to see to support it. The session will last 15 to 30 minutes.
 
-Use the AI Dojo to review your lines to see if it is ready for review. The better prepared you are, the more helpful the session with Jeff will be for you.
+Use the AI Dojo to check your lines against the quality bar below. The better prepared you are, the more helpful the session with Jeff will be for you.
 
 ### The quality bar
 
@@ -22,7 +22,7 @@ Each line in your section has to answer one question a recruiter can ask: show m
 
 **"Accomplished [X] as measured by [Y], by doing [Z]."**
 
-Read the resume guidance in the document to learn. A line will impress a recruiter/hiring manager if it does all of the following.
+Use the resume guidance in the document to check that each line includes the following.
 
 - It states what you accomplished, the [X], and points at something that will exist by December, such as a repository, a deployed service, a dataset, a report, a demo or a test suite, and that deliverable is in your approved proposal.
 - It includes the measure, the [Y], as a number or a claim someone could check, such as how many users, how many records, how fast, how much smaller or how many tests. Where the number does not exist yet, write the number you are building toward. You replace it with the real one in December.
@@ -54,7 +54,7 @@ Route-Aware Campus Shuttle Tracker · Backend lead, team of 3 · Sep - Dec 2026
 - Cut the wait students reported at shuttle stops, as measured by a 20 percent drop in median wait-at-stop, by running a two-week pilot with 25 students.
   Points at the pilot report. The 20 percent is the target, and the real figure replaces it in December.
 
-The idea is that when you write something similar to the fourth line, you did not have 25 pilot users yet. Writing the number gives them a goal to work towards.
+The numbers in this example are targets for December. In your own lines, name the targets you plan to work toward, then replace them with actual results in December.
 
 ### What to submit
 

@@ -1,7 +1,7 @@
 <!-- CST286 · Graded item · editable source for find-and-judge-your-sources.html.
      Edit this file; Claude carries the changes into the HTML.
      Draft 1 of 2026-09-18 — the four tasks were settled with Sathya in conversation that day;
-     everything else is a first draft for his edit. No .html exists yet. -->
+     everything else is a first draft for his edit. The HTML page is published. -->
 
 # Find and judge your sources
 
@@ -9,13 +9,13 @@ Week 4 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignment
 
 ## Purpose
 
-Learning to judge whether a source can be trusted empowers you to learn, verify and defend what you have learned.
+Judge the sources behind your physics prediction so you can decide which to learn from and explain why you trust them.
 
 ## Tasks
 
-**Button:** Copy the questions — If you would like to work on the assignment in a Google doc without the guidance from this assignment, you can paste this into a Google doc and answer each task under it. The guidance structure provided in this page is the recommended approach to ensure you are being guided and challenged along the way.
+**Button:** Copy the questions — We recommend working on this page so you can use the guidance as you answer. To work in your own document, copy the questions and write your answer under each one.
 
-Answer each task in the box under it. The **+** under each box opens guidance, examples and a reflection question. The guidance and reflection are provided to support you to do a high quality job of answering the questions.
+Answer each task in the box under it. The **+** under each box opens guidance, examples and a reflection question. Use these to develop and check your answer.
 
 ### Task 1 — Search
 
@@ -138,7 +138,7 @@ Explain how peer review adds to the credibility of a scientific source, using wh
 
 Canvas text entry. **Submit the text itself, pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press **Copy my answers**, which puts each task with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.
+If you used the boxes on this page, press **Copy my answers**. If you worked in your own document, copy the questions and your answers. Review the text, then paste it into Canvas.
 
 ## How this page was made
 
