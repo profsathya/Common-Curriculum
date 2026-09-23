@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stakeholder Conversation Canvas Walkthrough | Sprint 3: Integrate People and Context (V3)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity source-derived">
+    <a class="back-link" href="../sprint-16.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Assignment</p>
+    <h1>Stakeholder Conversation Canvas Walkthrough</h1>
+
+
+
+    <style>.guided-walkthrough { max-width: 1100px; margin: 0 auto; color: #233342; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.guided-walkthrough p { margin: 0 0 12px; }
+.activity:has(.guided-walkthrough) { max-width: 1100px; }
+.guided-walkthrough .walk-intro { margin-bottom: 16px; padding: 12px 16px; background: #eef5fa; border-left: 4px solid #3d7190; border-radius: 0 8px 8px 0; }
+.guided-walkthrough .walk-intro h2 { margin: 0 0 6px; color: #17344a; font-size: 1.08rem; line-height: 1.3; }
+.guided-walkthrough .walk-intro p { margin: 2px 0; }
+.guided-walkthrough .walk-step { margin: 20px 0; padding: 20px; border: 1px solid #c9d7e1; border-radius: 12px; background: #fff; box-shadow: 0 2px 8px rgba(27, 55, 76, .04); }
+.guided-walkthrough .walk-step-number { margin: 0; color: #47677d; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.guided-walkthrough .walk-step h2 { margin: 2px 0 14px; color: #17344a; font-size: 1.25rem; line-height: 1.3; }
+.guided-walkthrough .walk-teaching h2 { font-size: 1rem; }
+.guided-walkthrough .walk-check { margin: 14px 0; padding: 10px 14px; border: 1px solid #d4dee5; border-radius: 7px; }
+.guided-walkthrough .walk-check summary { cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-entry { margin: 18px 0; padding: 16px; border: 1px solid #d4dee5; border-radius: 9px; }
+.guided-walkthrough .walk-entry summary { cursor: pointer; font-weight: 700; }
+.guided-walkthrough .walk-entry[open] summary { margin-bottom: 14px; }
+.guided-walkthrough .walk-table-scroll { position: relative; overflow-x: auto; border-radius: 8px; }
+.guided-walkthrough .walk-table-with-feedback { box-sizing: border-box; padding-right: 154px; }
+.guided-walkthrough .walk-table-help { margin: 0 0 8px; color: #526b7b; font-size: .9rem; }
+.guided-walkthrough .walk-table-scroll-hint { display: none; margin: 8px 0; color: #47677d; font-size: .9rem; }
+.guided-walkthrough .walk-source-table { width: 100%; min-width: max(100%, var(--walk-table-min-width)); border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-source-table th, .guided-walkthrough .walk-source-table td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; }
+.guided-walkthrough .walk-source-table thead th { background: #eaf1f6; color: #1f4058; text-align: left; font-size: .9rem; font-weight: 700; line-height: 1.3; }
+.guided-walkthrough .walk-source-table .walk-source-static-row td { background: #f8fafc; color: #3b4d5b; font-size: .89rem; }
+.guided-walkthrough .walk-source-table .walk-source-response-row:nth-child(odd) td { background: #fbfdfe; }
+.guided-walkthrough .walk-source-cell-text { white-space: pre-wrap; line-height: 1.42; }
+.guided-walkthrough .walk-source-input-cell .walk-source-cell-text { padding: 10px 12px 0; }
+.guided-walkthrough .walk-source-cell-text + textarea { margin-top: 9px; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell { padding: 0; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell:focus-within { background: #fff; }
+.guided-walkthrough .walk-source-table td.walk-feedback-anchor { position: relative; }
+.guided-walkthrough .walk-source-table td textarea { min-height: 62px; max-height: 320px; padding: 10px 12px; border: 0; border-radius: 0; background: transparent; resize: none; line-height: 1.4; }
+.guided-walkthrough .walk-source-table td textarea::placeholder { color: #8799a6; opacity: 1; font-size: .88rem; }
+.guided-walkthrough .walk-source-table td textarea:focus-visible { outline: 3px solid #b66400; outline-offset: -3px; background: #fff; }
+.guided-walkthrough .walk-row-feedback-control { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); width: 138px; z-index: 1; }
+.guided-walkthrough .walk-row-feedback-control button { box-sizing: border-box; width: 100%; margin: 0; padding: 6px 8px; border-color: #7997a8; background: #fff; color: #244e66; font-size: .82rem; font-weight: 650; line-height: 1.2; }
+.guided-walkthrough .walk-row-feedback-control button small { display: block; margin-top: 2px; font-size: .76rem; font-weight: 500; }
+.guided-walkthrough .walk-row-feedback-control button:not(:disabled):hover { background: #e8f2f7; }
+.guided-walkthrough .walk-row-feedback-results:has(.walk-feedback:not(:empty)) { margin-top: 14px; }
+.guided-walkthrough .walk-row-feedback-result:has(.walk-feedback:empty) { display: none; }
+.guided-walkthrough .walk-row-feedback-result { margin-top: 8px; padding: 12px 14px; border: 1px solid #bdd7cb; border-radius: 8px; background: #f1f8f4; }
+.guided-walkthrough .walk-row-feedback-result strong { color: #235140; }
+.guided-walkthrough .walk-row-feedback-result .walk-feedback { margin: 8px 0 0; }
+.guided-walkthrough .walk-rich-output { margin: 12px 0; padding: 12px; border: 1px solid #8095a7; overflow-x: auto; background: #fff; }
+.guided-walkthrough .walk-rich-output table { border-collapse: collapse; min-width: max(100%, var(--walk-table-min-width)); }
+.guided-walkthrough .walk-rich-output th, .guided-walkthrough .walk-rich-output td { border: 1px solid #8999a5; padding: 8px; vertical-align: top; }
+.guided-walkthrough .walk-rich-output th { background: #f2f5f7; }
+.guided-walkthrough .walk-copy-staging { position: fixed; left: -10000px; top: 0; width: 900px; }
+.guided-walkthrough .walk-plain-output { margin: 12px 0; }
+.guided-walkthrough .walk-response-table { width: 100%; min-width: 680px; border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { padding: 10px; border: 1px solid #cad6df; vertical-align: top; }
+.guided-walkthrough .walk-response-table thead th { background: #eaf2f7; text-align: left; font-size: .88rem; }
+.guided-walkthrough .walk-response-table tbody th { width: 22%; background: #f7fafc; text-align: left; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance { margin-top: 7px; font-size: .85rem; font-weight: 400; line-height: 1.4; }
+.guided-walkthrough .walk-field-guidance summary { width: fit-content; color: #315f7c; cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance p { margin: 8px 0 0; }
+.guided-walkthrough .walk-response-table td { width: 39%; }
+.guided-walkthrough .walk-response-table textarea { min-height: 66px; }
+.guided-walkthrough .walk-response-table td select + label + textarea { margin-top: 8px; }
+.guided-walkthrough .walk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.guided-walkthrough .walk-field { display: block; margin: 13px 0; font-weight: 650; }
+.guided-walkthrough .walk-field span { display: block; margin-bottom: 5px; }
+.guided-walkthrough input, .guided-walkthrough textarea, .guided-walkthrough select { box-sizing: border-box; display: block; width: 100%; padding: 10px 12px; border: 1px solid #8095a7; border-radius: 5px; color: #17212b; background: #fff; font: inherit; }
+.guided-walkthrough textarea { min-height: 98px; resize: vertical; }
+.guided-walkthrough button { margin: 6px 10px 6px 0; padding: 10px 14px; border: 1px solid #315f7c; border-radius: 6px; background: #315f7c; color: #fff; font: inherit; cursor: pointer; }
+.guided-walkthrough button:disabled { opacity: .55; cursor: not-allowed; }
+.guided-walkthrough :focus-visible { outline: 3px solid #b66400; outline-offset: 3px; }
+.guided-walkthrough .walk-feedback { white-space: pre-wrap; margin-top: 10px; padding: 10px 12px; border-left: 3px solid #40806d; background: #edf6f2; }
+.guided-walkthrough .walk-feedback:empty { display: none; }
+.guided-walkthrough .walk-finish { margin: 20px 0; padding: 20px; background: #edf6f2; border: 1px solid #bdd7cb; border-radius: 10px; }
+.guided-walkthrough .walk-finish h2 { margin: 0 0 8px; color: #1c4638; font-size: 1.2rem; line-height: 1.3; }
+.guided-walkthrough .walk-finish .walk-secondary { background: #fff; color: #315f7c; }
+.guided-walkthrough #walk-output { margin: 8px 0 12px; min-height: 200px; }
+.guided-walkthrough #walk-clear { background: #fff; color: #315f7c; }
+@media (max-width: 650px) {
+  .guided-walkthrough .walk-table-scroll-hint { display: block; }
+  .guided-walkthrough .walk-step, .guided-walkthrough .walk-entry { padding: 14px; }
+  .guided-walkthrough button { width: 100%; }
+  .guided-walkthrough .walk-response-table { min-width: 0; display: block; }
+  .guided-walkthrough .walk-response-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .guided-walkthrough .walk-response-table tbody, .guided-walkthrough .walk-response-table tr,
+  .guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { display: block; width: 100%; }
+  .guided-walkthrough .walk-response-table tr { margin-bottom: 12px; border: 1px solid #cad6df; border-radius: 7px; overflow: hidden; }
+  .guided-walkthrough .walk-response-table tbody th { width: 100%; border: 0; border-bottom: 1px solid #cad6df; }
+  .guided-walkthrough .walk-response-table td { border: 0; }
+  .guided-walkthrough .walk-response-table td + td { border-top: 1px solid #e1e8ed; }
+  .guided-walkthrough .walk-response-table td::before { content: attr(data-label); display: block; font-size: .83rem; font-weight: 700; color: #47677d; margin-bottom: 5px; }
+}
+@media print { .guided-walkthrough button, .guided-walkthrough .walk-feedback, .guided-walkthrough .walk-intro { display: none; } }
+</style>
+<div class="guided-workspace guided-walkthrough" id="guided-workspace">
+<aside class="walk-intro"><h2>How this walk-through works</h2><p>This is a Canvas walk-through assignment. Work through the activity one step at a time, writing in the spaces provided. Your draft saves in this browser on this device when storage is available. At the bottom, download your work and submit the file in Canvas.</p>
+<p>Keep your own copy in <a href="https://docs.google.com/document/d/1MUOWS7Y8nMMFu5wWP3_aK2-eGQvvEBUr3yV3d36_Ekw/copy" target="_blank" rel="noopener">your own Stakeholder Validation Report document</a>. Use the copy control below to paste your completed tables and responses into that document, or download a Word copy before leaving this page.</p>
+<p>AI feedback is optional and is not a grade. It reviews only the response you choose to send. Remove confidential or identifying details before asking for feedback.</p>
+<p id="walk-save-status" role="status" aria-live="polite">Your draft will save as you type.</p></aside>
+<section>
+<p>Now test your Problem Frame with a real stakeholder. This report keeps your preparation, their account, your first impressions, and your evidence-based conclusion together. Bring your current Stakeholder Map and Problem Frame. You will submit the report, your updated map, and the JSON file from the question-check activity.</p>
+<p><strong>Send the ask first.</strong> Choose a channel the person uses. Ask for 20 to 30 minutes, then work through your questions while you wait. If there is no reply in three days, follow up once and offer a shorter or written option. If there is still no reply by day five, contact your backup and note the switch on your map. Confirm the format, time, and length when someone agrees.</p>
+<p>Write before requesting optional AI feedback. It sees only the selected row, cannot know what happened in your workplace, and cannot supply evidence. Use roles or initials in feedback requests, leave out confidential details, and keep a path through every step without feedback. You decide what to revise.</p>
+</section><section class="walk-step" data-walk-step="report-name">
+<p class="walk-step-number">Step 1</p><h2>Your name</h2>
+<div class="walk-teaching">
+<p>Enter your name for the report you will keep with your portfolio. This setup field stays out of AI feedback.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Record your name in your own working copy.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="Your name table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Your name</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Your name</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-report-name-row-1-column-2">Your name: Your answer</label><textarea id="walk-report-name-row-1-column-2" data-walk-answer="report-name.row-1.column-2" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><section class="walk-step" data-walk-step="meeting-plan">
+<p class="walk-step-number">Step 2</p><h2>A. Before the meeting</h2>
+<div class="walk-teaching">
+<p>Carry the stakeholder, relationship, assumption, and starting Problem Frame over from your Stakeholder Map. Do not write a new assumption just for this report. Record the planned format, date, and time, then correct those details if the conversation moves. The map names four stakeholder relationships: affected, influential, responsible for a constraint, and positioned to challenge your frame. Name each relationship that applies.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Carry over the selected stakeholder, relationship, and assumption from your Stakeholder Map. Record the actual conversation format, date, and time. Keep the starting Problem Frame as it stands before this conversation.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="A. Before the meeting table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">A. Before the meeting</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Stakeholder name and role</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-meeting-plan-row-1-column-2">Stakeholder name and role: Your answer</label><textarea id="walk-meeting-plan-row-1-column-2" data-walk-answer="meeting-plan.row-1.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Relationship to the problem<br>Which of the four, and does more than one apply?</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-meeting-plan-row-2-column-2">Relationship to the problem: Your answer</label><textarea id="walk-meeting-plan-row-2-column-2" data-walk-answer="meeting-plan.row-2.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Format, date, and time<br>In person, phone, video, or written.</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-meeting-plan-row-3-column-2">Format, date, and time: Your answer</label><textarea id="walk-meeting-plan-row-3-column-2" data-walk-answer="meeting-plan.row-3.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">The assumption this conversation is meant to test<br>One assumption, from your map.</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-meeting-plan-row-4-column-2">The assumption this conversation is meant to test: Your answer</label><textarea id="walk-meeting-plan-row-4-column-2" data-walk-answer="meeting-plan.row-4.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Your starting Problem Frame<br>A sentence or two, as it stands right now.</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-meeting-plan-row-5-column-2">Your starting Problem Frame: Your answer</label><textarea id="walk-meeting-plan-row-5-column-2" data-walk-answer="meeting-plan.row-5.column-2" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><section class="walk-step" data-walk-step="validation-questions">
+<p class="walk-step-number">Step 3</p><h2>Your three validation questions</h2>
+<div class="walk-teaching">
+<p>Bring the questions from your map&rsquo;s assumption blocks that this person can answer. If only two fit, take the third from that stakeholder&rsquo;s <strong>Next question to ask</strong> field. For each question, state what you hope to learn about the one assumption you are testing. Ask about a specific experience, past behavior, decision, or tradeoff. A question that invites approval of your solution is unlikely to reveal much.</p>
+<p>After writing your draft questions here, <a href="https://profsathya.github.io/Common-Curriculum/deanza/course1/assignments/stakeholder-conversation-v3.html" target="_top">open the existing Part 1 AI question exchange</a>. Give it your three questions, this stakeholder&rsquo;s relationship to the problem, what you hope to learn, and the one assumption you are testing. Use its follow-up questions to diagnose leading wording, vague questions, or missing evidence. <strong>Rewrite the weak questions yourself</strong> in this table. Download the JSON response file from that exchange. Use that page for the AI exchange and JSON download, then return to this walkthrough to finish the report. Upload all three files through this Canvas assignment. The AI exchange is preparation; your real conversation supplies the evidence.</p>
+<p>The row feedback in this walkthrough is optional and narrower than the Part 1 exchange. It checks only the question or learning statement you choose, so it cannot judge whether all three questions work together. If feedback is unavailable, use the criteria above and continue.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>For the selected question row, ask about an experience, decision, or tradeoff the chosen stakeholder can describe without nudging toward your preferred solution. For the selected learning row, say what that question could reveal about the single assumption. Review only this row.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Your three validation questions table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Your three validation questions</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question 1</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-1-column-2">Question 1: Your answer</label><textarea id="walk-validation-questions-row-1-column-2" data-walk-answer="validation-questions.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-1" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 1" aria-controls="walk-feedback-validation-questions-row-1" disabled><span>AI feedback</span><small>Question 1</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What I hope to learn</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-2-column-2">Question 1: what I hope to learn: Your answer</label><textarea id="walk-validation-questions-row-2-column-2" data-walk-answer="validation-questions.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-2" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 1: what I hope to learn" aria-controls="walk-feedback-validation-questions-row-2" disabled><span>AI feedback</span><small>Question 1: what I hope to learn</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question 2</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-3-column-2">Question 2: Your answer</label><textarea id="walk-validation-questions-row-3-column-2" data-walk-answer="validation-questions.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-3" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 2" aria-controls="walk-feedback-validation-questions-row-3" disabled><span>AI feedback</span><small>Question 2</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What I hope to learn</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-4-column-2">Question 2: what I hope to learn: Your answer</label><textarea id="walk-validation-questions-row-4-column-2" data-walk-answer="validation-questions.row-4.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-4" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 2: what I hope to learn" aria-controls="walk-feedback-validation-questions-row-4" disabled><span>AI feedback</span><small>Question 2: what I hope to learn</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question 3</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-5-column-2">Question 3: Your answer</label><textarea id="walk-validation-questions-row-5-column-2" data-walk-answer="validation-questions.row-5.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-5" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 3" aria-controls="walk-feedback-validation-questions-row-5" disabled><span>AI feedback</span><small>Question 3</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What I hope to learn</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-validation-questions-row-6-column-2">Question 3: what I hope to learn: Your answer</label><textarea id="walk-validation-questions-row-6-column-2" data-walk-answer="validation-questions.row-6.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="validation-questions.row-6" data-checkpoint="validation-questions" aria-label="Get AI feedback on Question 3: what I hope to learn" aria-controls="walk-feedback-validation-questions-row-6" disabled><span>AI feedback</span><small>Question 3: what I hope to learn</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Question 1</strong><p id="walk-feedback-validation-questions-row-1" class="walk-feedback" data-walk-feedback-result="validation-questions.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question 1: what I hope to learn</strong><p id="walk-feedback-validation-questions-row-2" class="walk-feedback" data-walk-feedback-result="validation-questions.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question 2</strong><p id="walk-feedback-validation-questions-row-3" class="walk-feedback" data-walk-feedback-result="validation-questions.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question 2: what I hope to learn</strong><p id="walk-feedback-validation-questions-row-4" class="walk-feedback" data-walk-feedback-result="validation-questions.row-4" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question 3</strong><p id="walk-feedback-validation-questions-row-5" class="walk-feedback" data-walk-feedback-result="validation-questions.row-5" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question 3: what I hope to learn</strong><p id="walk-feedback-validation-questions-row-6" class="walk-feedback" data-walk-feedback-result="validation-questions.row-6" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="conversation-notes">
+<p class="walk-step-number">Step 4</p><h2>B. During the meeting</h2>
+<div class="walk-teaching">
+<p>Ask your prepared questions and stay open to answers you did not expect. Keep these notes short so you can listen. Record the person&rsquo;s words as closely as you can, or paraphrase sensitive material without changing its meaning. Leave your interpretation for Sections C and D. This table has no AI button because it may contain another person&rsquo;s account.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Record the stakeholder’s words or a privacy-safe paraphrase. Keep observation separate from your interpretation.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="B. During the meeting table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">B. During the meeting</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Their words, as close as you can capture them</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-conversation-notes-row-1-column-2">Their words, as close as you can capture them: Your answer</label><textarea id="walk-conversation-notes-row-1-column-2" data-walk-answer="conversation-notes.row-1.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Anything you did not expect</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-conversation-notes-row-2-column-2">Anything you did not expect: Your answer</label><textarea id="walk-conversation-notes-row-2-column-2" data-walk-answer="conversation-notes.row-2.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Anything they offered to follow up on</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-conversation-notes-row-3-column-2">Anything they offered to follow up on: Your answer</label><textarea id="walk-conversation-notes-row-3-column-2" data-walk-answer="conversation-notes.row-3.column-2" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><section class="walk-step" data-walk-step="first-impressions">
+<p class="walk-step-number">Step 5</p><h2>C. Within five minutes of finishing</h2>
+<div class="walk-teaching">
+<p>While the conversation is still fresh, write a line or two for each first impression. What did the person confirm? What challenged or complicated your view? Does the Problem Frame seem to change? What would you ask next? These are provisional notes, not a polished conclusion. Optional row feedback can help you check whether an impression points to actual evidence.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>For the selected row, name the evidence or uncertainty behind the first impression. Do not treat a possible change to the Problem Frame as settled before examining the whole conversation.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="C. Within five minutes of finishing table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">C. Within five minutes of finishing</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What they confirmed</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-impressions-row-1-column-2">What they confirmed: Your answer</label><textarea id="walk-first-impressions-row-1-column-2" data-walk-answer="first-impressions.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-impressions.row-1" data-checkpoint="first-impressions" aria-label="Get AI feedback on What they confirmed" aria-controls="walk-feedback-first-impressions-row-1" disabled><span>AI feedback</span><small>What they confirmed</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What they challenged or complicated</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-impressions-row-2-column-2">What they challenged or complicated: Your answer</label><textarea id="walk-first-impressions-row-2-column-2" data-walk-answer="first-impressions.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-impressions.row-2" data-checkpoint="first-impressions" aria-label="Get AI feedback on What they challenged or complicated" aria-controls="walk-feedback-first-impressions-row-2" disabled><span>AI feedback</span><small>What they challenged or complicated</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Your first read: does the Problem Frame change?</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-impressions-row-3-column-2">Your first read: does the Problem Frame change?: Your answer</label><textarea id="walk-first-impressions-row-3-column-2" data-walk-answer="first-impressions.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-impressions.row-3" data-checkpoint="first-impressions" aria-label="Get AI feedback on Your first read: does the Problem Frame change?" aria-controls="walk-feedback-first-impressions-row-3" disabled><span>AI feedback</span><small>Your first read: does the Problem Frame change?</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">The next question you would ask</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-impressions-row-4-column-2">The next question you would ask: Your answer</label><textarea id="walk-first-impressions-row-4-column-2" data-walk-answer="first-impressions.row-4.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-impressions.row-4" data-checkpoint="first-impressions" aria-label="Get AI feedback on The next question you would ask" aria-controls="walk-feedback-first-impressions-row-4" disabled><span>AI feedback</span><small>The next question you would ask</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>What they confirmed</strong><p id="walk-feedback-first-impressions-row-1" class="walk-feedback" data-walk-feedback-result="first-impressions.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What they challenged or complicated</strong><p id="walk-feedback-first-impressions-row-2" class="walk-feedback" data-walk-feedback-result="first-impressions.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Your first read: does the Problem Frame change?</strong><p id="walk-feedback-first-impressions-row-3" class="walk-feedback" data-walk-feedback-result="first-impressions.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>The next question you would ask</strong><p id="walk-feedback-first-impressions-row-4" class="walk-feedback" data-walk-feedback-result="first-impressions.row-4" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="report-conclusion">
+<p class="walk-step-number">Step 6</p><h2>D. Afterward, same day or next</h2>
+<div class="walk-teaching">
+<p>Give each answer a short paragraph. Revise your Problem Frame using what the stakeholder actually said, or explain honestly why your original frame held. Identify what moved from <strong>Inferred</strong> to <strong>Confirmed</strong> on your map, and what still needs validation. A clear confirmation is a useful result; do not force a change to show progress.</p>
+<p>Then update your Stakeholder Map: correct fields this conversation settled, keep uncertainty visible, and add any stakeholder this person helped you identify. Keep your <strong>What changed, and why</strong> paragraph at the top. Download this report as a Word document below. In Canvas, submit <strong>three files</strong>: the Part 1 AI JSON response, this completed report, and the updated Stakeholder Map. Downloading or saving a browser draft does not submit them.</p></div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>For the selected row, distinguish what the real stakeholder confirmed from what remains inferred. A supported no-change conclusion is valid. Do not invent evidence or replace the participant’s judgment.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="D. Afterward, same day or next table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">D. Afterward, same day or next</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Revised Problem Frame, or an honest statement that it held</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-report-conclusion-row-1-column-2">Revised Problem Frame, or an honest statement that it held: Your answer</label><textarea id="walk-report-conclusion-row-1-column-2" data-walk-answer="report-conclusion.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="report-conclusion.row-1" data-checkpoint="report-conclusion" aria-label="Get AI feedback on Revised Problem Frame, or an honest statement that it held" aria-controls="walk-feedback-report-conclusion-row-1" disabled><span>AI feedback</span><small>Revised Problem Frame, or an honest statement that it held</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What moved from Inferred to Confirmed on your map</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-report-conclusion-row-2-column-2">What moved from Inferred to Confirmed on your map: Your answer</label><textarea id="walk-report-conclusion-row-2-column-2" data-walk-answer="report-conclusion.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="report-conclusion.row-2" data-checkpoint="report-conclusion" aria-label="Get AI feedback on What moved from Inferred to Confirmed on your map" aria-controls="walk-feedback-report-conclusion-row-2" disabled><span>AI feedback</span><small>What moved from Inferred to Confirmed on your map</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What still needs validation</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-report-conclusion-row-3-column-2">What still needs validation: Your answer</label><textarea id="walk-report-conclusion-row-3-column-2" data-walk-answer="report-conclusion.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="report-conclusion.row-3" data-checkpoint="report-conclusion" aria-label="Get AI feedback on What still needs validation" aria-controls="walk-feedback-report-conclusion-row-3" disabled><span>AI feedback</span><small>What still needs validation</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Revised Problem Frame, or an honest statement that it held</strong><p id="walk-feedback-report-conclusion-row-1" class="walk-feedback" data-walk-feedback-result="report-conclusion.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What moved from Inferred to Confirmed on your map</strong><p id="walk-feedback-report-conclusion-row-2" class="walk-feedback" data-walk-feedback-result="report-conclusion.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What still needs validation</strong><p id="walk-feedback-report-conclusion-row-3" class="walk-feedback" data-walk-feedback-result="report-conclusion.row-3" role="status" aria-live="polite"></p></div></section></section>
+<section class="walk-finish"><h2>Submit this walk-through in Canvas</h2><p>Download your Word document. In Canvas, select Submit Assignment, upload the file, and submit it. Saving, copying, or downloading here does not submit your work.</p>
+<button type="button" id="walk-download">Download Word document for Canvas submission</button><button type="button" id="walk-copy" class="walk-secondary">Copy work for your records</button><button type="button" id="walk-text-download" class="walk-secondary">Download text copy</button>
+<p id="walk-copy-status" role="status" aria-live="polite"></p>
+<details class="walk-plain-output"><summary>Plain text backup</summary><label for="walk-output">Your assembled responses as text</label><textarea id="walk-output" readonly rows="12"></textarea></details><div id="walk-rich-output" class="walk-rich-output" hidden tabindex="0" aria-label="Tables and responses for manual copying"></div>
+<button type="button" id="walk-clear">Clear this browser draft</button><div id="walk-clear-confirm" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="walk-clear-yes">Clear draft</button><button type="button" id="walk-clear-no">Keep draft</button></div>
+</section><script type="application/json" id="guided-config">{"artifactId": "course1-stakeholder-conversation-canvas-walkthrough", "title": "Stakeholder Conversation Canvas Walkthrough", "version": "1.0", "tasks": [{"id": "report-name", "kind": "table", "prompt": "Your name", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Your name"}, {"text": "  ", "response": true}], "label": "Your name"}], "header_rows": 0, "criteria": ["Record your name in your own working copy."], "instruction_section": "Set up your report", "feedback_enabled": false, "feedback_omission_reason": "Identity field is setup and does not need AI feedback."}, {"id": "meeting-plan", "kind": "table", "prompt": "A. Before the meeting", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Stakeholder name and role"}, {"text": "  ", "response": true}], "label": "Stakeholder name and role"}, {"id": "row-2", "cells": [{"text": "Relationship to the problem\nWhich of the four, and does more than one apply?"}, {"text": "  ", "response": true}], "label": "Relationship to the problem"}, {"id": "row-3", "cells": [{"text": "Format, date, and time\nIn person, phone, video, or written."}, {"text": "  ", "response": true}], "label": "Format, date, and time"}, {"id": "row-4", "cells": [{"text": "The assumption this conversation is meant to test\nOne assumption, from your map."}, {"text": "  ", "response": true}], "label": "The assumption this conversation is meant to test"}, {"id": "row-5", "cells": [{"text": "Your starting Problem Frame\nA sentence or two, as it stands right now."}, {"text": "  ", "response": true}], "label": "Your starting Problem Frame"}], "header_rows": 0, "criteria": ["Carry over the selected stakeholder, relationship, and assumption from your Stakeholder Map. Record the actual conversation format, date, and time. Keep the starting Problem Frame as it stands before this conversation."], "instruction_section": "A. Before the meeting", "feedback_enabled": false, "feedback_omission_reason": "This table records identity, plans, and carried-over material; review the question wording and analysis in later steps."}, {"id": "validation-questions", "kind": "table", "prompt": "Your three validation questions", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Question 1"}, {"text": "  ", "response": true}], "label": "Question 1"}, {"id": "row-2", "cells": [{"text": "What I hope to learn"}, {"text": "  ", "response": true}], "label": "Question 1: what I hope to learn"}, {"id": "row-3", "cells": [{"text": "Question 2"}, {"text": "  ", "response": true}], "label": "Question 2"}, {"id": "row-4", "cells": [{"text": "What I hope to learn"}, {"text": "  ", "response": true}], "label": "Question 2: what I hope to learn"}, {"id": "row-5", "cells": [{"text": "Question 3"}, {"text": "  ", "response": true}], "label": "Question 3"}, {"id": "row-6", "cells": [{"text": "What I hope to learn"}, {"text": "  ", "response": true}], "label": "Question 3: what I hope to learn"}], "header_rows": 0, "criteria": ["For the selected question row, ask about an experience, decision, or tradeoff the chosen stakeholder can describe without nudging toward your preferred solution. For the selected learning row, say what that question could reveal about the single assumption. Review only this row."], "instruction_section": "Your three validation questions", "feedback_enabled": true}, {"id": "conversation-notes", "kind": "table", "prompt": "B. During the meeting", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Their words, as close as you can capture them"}, {"text": "  ", "response": true}], "label": "Their words, as close as you can capture them"}, {"id": "row-2", "cells": [{"text": "Anything you did not expect"}, {"text": "  ", "response": true}], "label": "Anything you did not expect"}, {"id": "row-3", "cells": [{"text": "Anything they offered to follow up on"}, {"text": "  ", "response": true}], "label": "Anything they offered to follow up on"}], "header_rows": 0, "criteria": ["Record the stakeholder’s words or a privacy-safe paraphrase. Keep observation separate from your interpretation."], "instruction_section": "B. During the meeting", "feedback_enabled": false, "feedback_omission_reason": "Conversation notes may contain another person’s words or identifying context. Keep them private and use the self-check."}, {"id": "first-impressions", "kind": "table", "prompt": "C. Within five minutes of finishing", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "What they confirmed"}, {"text": "  ", "response": true}], "label": "What they confirmed"}, {"id": "row-2", "cells": [{"text": "What they challenged or complicated"}, {"text": "  ", "response": true}], "label": "What they challenged or complicated"}, {"id": "row-3", "cells": [{"text": "Your first read: does the Problem Frame change?"}, {"text": "  ", "response": true}], "label": "Your first read: does the Problem Frame change?"}, {"id": "row-4", "cells": [{"text": "The next question you would ask"}, {"text": "  ", "response": true}], "label": "The next question you would ask"}], "header_rows": 0, "criteria": ["For the selected row, name the evidence or uncertainty behind the first impression. Do not treat a possible change to the Problem Frame as settled before examining the whole conversation."], "instruction_section": "C. Within five minutes of finishing", "feedback_enabled": true}, {"id": "report-conclusion", "kind": "table", "prompt": "D. Afterward, same day or next", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Revised Problem Frame, or an honest statement that it held"}, {"text": "  ", "response": true}], "label": "Revised Problem Frame, or an honest statement that it held"}, {"id": "row-2", "cells": [{"text": "What moved from Inferred to Confirmed on your map"}, {"text": "  ", "response": true}], "label": "What moved from Inferred to Confirmed on your map"}, {"id": "row-3", "cells": [{"text": "What still needs validation"}, {"text": "  ", "response": true}], "label": "What still needs validation"}], "header_rows": 0, "criteria": ["For the selected row, distinguish what the real stakeholder confirmed from what remains inferred. A supported no-change conclusion is valid. Do not invent evidence or replace the participant’s judgment."], "instruction_section": "D. Afterward, same day or next", "feedback_enabled": true}], "hasWritable": true, "feedbackEndpoint": "https://cti-course-ai.netlify.app/.netlify/functions/walkthrough-feedback", "feedbackOmissionReason": null, "exportFilename": "stakeholder-validation-report.docx", "submissionType": "file_upload", "documentPrefix": ["Complete this report across the conversation: Section A before, Section B during, Section C within five minutes, and Section D the same day or next.", "Submit this report together with the JSON response file from the Part 1 AI exchange and your updated Stakeholder Map."], "documentSuffix": []}</script>
+<script>/* Shared, answer-filled representation for table copying and feedback. */
+(function (root) {
+  'use strict';
+  const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const key = (task, row, column) => task.id + '.' + row.id + '.' + column.id;
+  function answer(task, row, column, answers) {
+    return String(answers[key(task, row, column)] || '');
+  }
+  function cellText(task, row, index, answers) {
+    const cell = row.cells[index];
+    const written = cell.response ? answer(task, row, task.columns[index], answers) : '';
+    return [cell.text, written].filter(Boolean).join('\n');
+  }
+  function filledRow(task, row, answers) {
+    return task.columns.map((_, index) => cellText(task, row, index, answers));
+  }
+  function rowResponse(task, row, answers) {
+    if (!row.cells.some((cell, index) => cell.response &&
+      answer(task, row, task.columns[index], answers).trim())) return '';
+    return task.columns.map((column, index) => {
+      const cell = row.cells[index];
+      const written = cell.response ? answer(task, row, column, answers).trim() || '(not entered)' : '';
+      return column.label + ': ' + [cell.text, written].filter(Boolean).join('\n');
+    }).join('\n');
+  }
+  function html(task, answers) {
+    const widths = task.columns.map(column => column.width || 1);
+    const total = widths.reduce((sum, width) => sum + width, 0);
+    const colgroup = '<colgroup>' + widths.map(width =>
+      '<col style="width:' + (width / total * 100).toFixed(4) + '%">').join('') + '</colgroup>';
+    const heads = task.columns.map(column =>
+      '<th scope="col" style="border:1px solid #8999a5;padding:8px;background:#f2f5f7;text-align:left">' +
+      escape(column.label) + '</th>').join('');
+    const rows = task.rows.map(row => '<tr>' + filledRow(task, row, answers).map(value =>
+      '<td style="border:1px solid #8999a5;padding:8px;vertical-align:top">' +
+      escape(value).replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('');
+    return '<table style="border-collapse:collapse;width:100%;--walk-table-min-width:' +
+      (task.columns.length * 180) + 'px">' + colgroup +
+      (task.header_rows === 0 ? '' : '<thead><tr>' + heads + '</tr></thead>') + '<tbody>' + rows + '</tbody></table>';
+  }
+  function tsv(task, answers) {
+    const quote = value => /[\t\r\n"]/.test(value) ? '"' + value.replace(/"/g, '""') + '"' : value;
+    return [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+      ...task.rows.map(row => filledRow(task, row, answers))]
+      .map(row => row.map(value => quote(String(value))).join('\t')).join('\n');
+  }
+  root.WalkthroughTables = {answer, cellText, filledRow, rowResponse, html, tsv};
+}(globalThis));
+</script><script>/* Client-side Word export; participant responses never reach an export service. */
+(function (root) {
+  'use strict';
+  const encoder = new TextEncoder();
+  const bytes = text => encoder.encode(text);
+  const escape = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  function crc32(data) {
+    let crc = 0xffffffff;
+    for (const octet of data) {
+      crc ^= octet;
+      for (let i = 0; i < 8; i++) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+  function u16(value) { return [value & 255, (value >>> 8) & 255]; }
+  function u32(value) { return [value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]; }
+  function zip(entries) {
+    const parts = [], directory = [];
+    let offset = 0;
+    for (const [name, text] of entries) {
+      const nameBytes = bytes(name), data = bytes(text), crc = crc32(data);
+      const local = new Uint8Array([
+        ...u32(0x04034b50), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+      ]);
+      parts.push(local, nameBytes, data);
+      directory.push(new Uint8Array([
+        ...u32(0x02014b50), ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+        ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(offset),
+      ]), nameBytes);
+      offset += local.length + nameBytes.length + data.length;
+    }
+    const directorySize = directory.reduce((sum, part) => sum + part.length, 0);
+    parts.push(...directory, new Uint8Array([
+      ...u32(0x06054b50), ...u16(0), ...u16(0), ...u16(entries.length), ...u16(entries.length),
+      ...u32(directorySize), ...u32(offset), ...u16(0),
+    ]));
+    return new Blob(parts, {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  }
+  function paragraph(text, style) {
+    const heading = style ? '<w:pPr><w:pStyle w:val="' + style + '"/></w:pPr>' : '';
+    return '<w:p>' + heading + '<w:r><w:t xml:space="preserve">' + escape(text) + '</w:t></w:r></w:p>';
+  }
+  function cell(text, width, header) {
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/>' +
+      (header ? '<w:shd w:fill="F2F5F7"/>' : '') + '</w:tcPr>' +
+      String(text).split('\n').map(line => header
+        ? '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">' + escape(line) + '</w:t></w:r></w:p>'
+        : paragraph(line)).join('') + '</w:tc>';
+  }
+  function table(rows, weights, hasHeader = true) {
+    const widths = weights ? weights.map(weight => Math.round(weight / weights.reduce((sum, n) => sum + n, 0) * 10500))
+      : rows[0].length === 3 ? [2400, 4200, 3900] : [3500, 7000];
+    return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders>' +
+      ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(edge =>
+        '<w:' + edge + ' w:val="single" w:sz="4" w:color="B8C8D2"/>').join('') +
+      '</w:tblBorders></w:tblPr><w:tblGrid>' + widths.map(width => '<w:gridCol w:w="' + width + '"/>').join('') + '</w:tblGrid>' +
+      rows.map((row, index) => '<w:tr>' + (hasHeader && index === 0 ? '<w:trPr><w:tblHeader w:val="1"/></w:trPr>' : '') +
+        row.map((value, column) => cell(value, widths[column], hasHeader && index === 0)).join('') + '</w:tr>').join('') + '</w:tbl>';
+  }
+  function build(config, answers) {
+    const blocks = [paragraph(config.title, 'Title')];
+    for (const line of config.documentPrefix || []) blocks.push(paragraph(line));
+    for (const task of config.tasks) {
+      blocks.push(paragraph(task.prompt, 'Heading1'));
+      if (task.kind === 'table') {
+        const rows = [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+          ...task.rows.map(row => globalThis.WalkthroughTables.filledRow(task, row, answers))];
+        blocks.push(table(rows, task.columns.map(column => column.width || 1), task.header_rows !== 0));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          blocks.push(paragraph(task.repeat_labels?.[i - 1] || 'Entry ' + i, 'Heading2'));
+          const evidence = task.fields.some(field => field.evidence_status);
+          const rows = [evidence ? ['Field', 'Your answer', 'Confirmed or Inferred, and why'] : ['Field', 'Your answer']];
+          for (const field of task.fields) {
+            const key = task.id + '.' + i + '.' + field.id;
+            const status = answers[key + '.status'] || '';
+            const reason = answers[key + '.reason'] || '';
+            const row = [field.label, answers[key] || ''];
+            if (evidence) row.push(field.evidence_status ? [status, reason].filter(Boolean).join(': ') : '');
+            rows.push(row);
+          }
+          blocks.push(table(rows));
+        }
+      } else {
+        const value = String(answers[task.id] || '');
+        for (const line of value.split('\n')) blocks.push(paragraph(line));
+      }
+      for (const line of task.document_after || []) blocks.push(paragraph(line));
+    }
+    for (const line of config.documentSuffix || []) blocks.push(paragraph(line));
+    const documentXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+      blocks.join('') + '<w:sectPr/></w:body></w:document>';
+    const types = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '</Types>';
+    const relationships = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '</Relationships>';
+    return zip([['[Content_Types].xml', types], ['_rels/.rels', relationships], ['word/document.xml', documentXml]]);
+  }
+  root.WalkthroughDocx = {build};
+}(globalThis));
+</script><script>(function () {
+  'use strict';
+  const config = JSON.parse(document.getElementById('guided-config').textContent);
+  const key = 'course-response:' + config.artifactId;
+  const output = document.getElementById('walk-output');
+  const saveStatus = document.getElementById('walk-save-status');
+  const copyStatus = document.getElementById('walk-copy-status');
+  const richOutput = document.getElementById('walk-rich-output');
+  const hasTable = config.tasks.some(task => task.kind === 'table');
+  const inputs = Array.from(document.querySelectorAll('[data-walk-answer]'));
+  const buttons = Array.from(document.querySelectorAll('[data-walk-feedback]'));
+  let state = {answers: Object.create(null), feedback: Object.create(null)};
+  let saveTimer;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && saved.answers && typeof saved.answers === 'object' && !Array.isArray(saved.answers)) {
+      state.answers = Object.assign(Object.create(null), saved.answers);
+      for (const input of inputs) {
+        const value = saved.answers[input.dataset.walkAnswer];
+        if (typeof value === 'string') state.answers[input.dataset.walkAnswer] = value.slice(0, 16000);
+      }
+      if (saved.feedback && typeof saved.feedback === 'object') {
+        for (const button of buttons) {
+          const value = saved.feedback[button.dataset.walkFeedback];
+          if (value && typeof value.text === 'string' && typeof value.onText === 'string') {
+            state.feedback[button.dataset.walkFeedback] = value;
+          }
+        }
+      }
+      if (config.hasWritable && Object.values(state.answers).some(value => typeof value === 'string' && value.trim())) {
+        saveStatus.textContent = 'Your saved responses from this browser are loaded. Keep your own copy before leaving.';
+      }
+    }
+  } catch (_) {
+    saveStatus.textContent = 'This browser could not load a saved draft. Copy your work before leaving.';
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(key, JSON.stringify(state));
+      saveStatus.textContent = 'Saved in this browser on this device. Keep your own copy before leaving.';
+    } catch (_) {
+      saveStatus.textContent = 'Browser saving is unavailable. Copy or download your work before leaving.';
+    }
+  }
+
+  function responseFor(task, index) {
+    if (task.kind === 'table') {
+      const row = task.rows.find(item => item.id === index);
+      return row ? globalThis.WalkthroughTables.rowResponse(task, row, state.answers) : '';
+    }
+    if (task.kind !== 'group') return String(state.answers[task.id] || '').trim();
+    return task.fields.map(field => {
+      const value = String(state.answers[task.id + '.' + index + '.' + field.id] || '').trim();
+      const status = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.status'] || '').trim() : '';
+      const reason = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.reason'] || '').trim() : '';
+      return value || status || reason ? field.label + ': ' + (value || '(not entered)') +
+        (field.evidence_status ? ' | ' + (status || 'Status not entered') + ': ' + (reason || 'reason not entered') : '') : '';
+    }).filter(Boolean).join('\n');
+  }
+
+  function assembledText() {
+    const lines = [config.title, '', ...(config.documentPrefix || []), ''];
+    for (const task of config.tasks) {
+      lines.push(task.prompt);
+      if (task.kind === 'table') {
+        lines.push(globalThis.WalkthroughTables.tsv(task, state.answers));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          lines.push('', task.repeat_labels?.[i - 1] || 'Entry ' + i, responseFor(task, i) || '(not entered)');
+        }
+      } else lines.push(responseFor(task) || '(not entered)');
+      lines.push('');
+      if (task.document_after) lines.push(...task.document_after, '');
+    }
+    lines.push(...(config.documentSuffix || []));
+    return lines.join('\n').trim() + '\n';
+  }
+
+  function responseForButton(button) {
+    const task = config.tasks.find(item => item.id === button.dataset.checkpoint);
+    if (!task) return '';
+    const suffix = button.dataset.walkFeedback.slice(task.id.length + 1);
+    return responseFor(task, task.kind === 'table' ? suffix : suffix ? Number(suffix) : undefined);
+  }
+
+  function assembledHtml() {
+    const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const parts = ['<div>', '<h1>' + escape(config.title) + '</h1>'];
+    for (const line of config.documentPrefix || []) parts.push('<p>' + escape(line) + '</p>');
+    for (const task of config.tasks) {
+      parts.push('<h2>' + escape(task.prompt) + '</h2>');
+      if (task.kind === 'table') parts.push(globalThis.WalkthroughTables.html(task, state.answers));
+      else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          parts.push('<h3>' + escape(task.repeat_labels?.[i - 1] || 'Entry ' + i) + '</h3>');
+          parts.push('<p>' + escape(responseFor(task, i)).replace(/\n/g, '<br>') + '</p>');
+        }
+      } else parts.push('<p>' + escape(responseFor(task)).replace(/\n/g, '<br>') + '</p>');
+      for (const line of task.document_after || []) parts.push('<p>' + escape(line) + '</p>');
+    }
+    for (const line of config.documentSuffix || []) parts.push('<p>' + escape(line) + '</p>');
+    parts.push('</div>');
+    return parts.join('');
+  }
+
+  async function copyTables() {
+    const html = assembledHtml(), plain = assembledText();
+    let asyncWrite;
+    try {
+      asyncWrite = navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([plain], {type: 'text/plain'}),
+      })]);
+    } catch (_) { /* Canvas may not expose the async Clipboard API. */ }
+    richOutput.innerHTML = html;
+    richOutput.hidden = false;
+    richOutput.classList.add('walk-copy-staging');
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(richOutput);
+    selection.removeAllRanges(); selection.addRange(range);
+    let copied = false;
+    const handleCopy = event => {
+      if (!event.clipboardData) return;
+      event.clipboardData.setData('text/html', html);
+      event.clipboardData.setData('text/plain', plain);
+      event.preventDefault();
+      copied = true;
+    };
+    document.addEventListener('copy', handleCopy);
+    try { copied = document.execCommand('copy') && copied; }
+    catch (_) { copied = false; }
+    document.removeEventListener('copy', handleCopy);
+    if (asyncWrite) {
+      try { await asyncWrite; copied = true; }
+      catch (_) { /* Keep the synchronous copy result or show the fallback. */ }
+    }
+    richOutput.classList.remove('walk-copy-staging');
+    if (copied) {
+      selection.removeAllRanges();
+      richOutput.hidden = true;
+      copyStatus.textContent = !config.hasWritable
+        ? 'Copied the reference table. Paste it into a document if useful; copying has not submitted anything to Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Copied as a table for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied as a table. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } else {
+      richOutput.focus();
+      range.selectNodeContents(richOutput);
+      selection.removeAllRanges(); selection.addRange(range);
+      copyStatus.textContent = config.submissionType === 'file_upload' && config.hasWritable
+        ? 'Clipboard access is unavailable. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Clipboard access is unavailable. Copy the selected table below, or download the Word document. Copying has not submitted your work.';
+    }
+  }
+
+  function showFeedback(button, message, stale, preview) {
+    const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    target.textContent = (preview
+      ? (stale ? 'Preview sample feedback on an earlier draft: ' : 'Preview sample feedback: ')
+      : (stale ? 'AI feedback on an earlier draft: ' : 'AI feedback: ')) + message;
+    target.hidden = false;
+  }
+
+  function update() {
+    for (const button of buttons) {
+      const response = responseForButton(button);
+      const previous = state.feedback[button.dataset.walkFeedback];
+      button.disabled = Boolean(!response || (previous && previous.onText === response && !previous.preview));
+      if (previous) showFeedback(button, previous.text, previous.onText !== response, previous.preview);
+    }
+    if (output.value) output.value = assembledText();
+  }
+
+  function resizeTableInput(input) {
+    if (!input.closest('.walk-source-table')) return;
+    input.style.height = 'auto';
+    input.style.height = Math.max(62, Math.min(input.scrollHeight, 320)) + 'px';
+    input.style.overflowY = input.scrollHeight > 320 ? 'auto' : 'hidden';
+  }
+
+  inputs.forEach(input => {
+    input.value = state.answers[input.dataset.walkAnswer] || '';
+    resizeTableInput(input);
+    input.addEventListener('input', () => {
+      state.answers[input.dataset.walkAnswer] = input.value;
+      resizeTableInput(input);
+      update(); clearTimeout(saveTimer); saveTimer = setTimeout(save, 350);
+    });
+    input.addEventListener('blur', save);
+  });
+
+  buttons.forEach(button => button.addEventListener('click', async () => {
+    const response = responseForButton(button);
+    if (!response) return;
+    if (response.length > 16000) {
+      const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+      target.hidden = false;
+      target.textContent = 'This row is too long for feedback. Shorten it before asking, or continue using your own review.';
+      return;
+    }
+    const responseKey = response;
+    button.disabled = true;
+    const result = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    result.hidden = false;
+    result.textContent = 'Reviewing what you wrote...';
+    if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+      state.feedback[button.dataset.walkFeedback] = {
+        onText: responseKey, preview: true,
+        text: 'The live service will review this response against this step. What could you make more specific or verify before submitting?'
+      };
+      save(); update(); return;
+    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 45000);
+    try {
+      const reply = await fetch(config.feedbackEndpoint, {
+        method: 'POST', signal: controller.signal, headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({activity: config.artifactId, checkpoint: button.dataset.checkpoint, response}),
+      });
+      const data = await reply.json();
+      if (!reply.ok || typeof data.content !== 'string' || !data.content.trim()) throw new Error('Unavailable');
+      state.feedback[button.dataset.walkFeedback] = {onText: responseKey, text: data.content.trim()};
+      save(); update();
+    } catch (_) {
+      result.textContent = 'AI feedback is unavailable. Your writing is still here; use the self-check above and try again later.';
+      button.disabled = false;
+    } finally { clearTimeout(timeout); }
+  }));
+
+  document.getElementById('walk-copy').addEventListener('click', async () => {
+    output.value = assembledText();
+    if (hasTable) { await copyTables(); return; }
+    try {
+      await navigator.clipboard.writeText(output.value);
+      copyStatus.textContent = config.submissionType === 'file_upload'
+        ? 'Copied. This copy is for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } catch (_) {
+      output.focus(); output.select();
+      copyStatus.textContent = config.submissionType === 'file_upload'
+        ? 'Select and copy the text shown here for your records. Download the Word document to submit in Canvas.'
+        : 'Select and copy the text shown here. Then paste it into the Canvas text-entry box and submit. Copying here has not submitted your work.';
+    }
+  });
+  document.getElementById('walk-text-download').addEventListener('click', () => {
+    const blob = new Blob([assembledText()], {type: 'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = config.artifactId + '-responses.txt'; link.hidden = true;
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    copyStatus.textContent = 'Text copy downloaded. Keep it for your records; downloading is not a Canvas submission.';
+  });
+  const download = document.getElementById('walk-download');
+  if (download) download.addEventListener('click', () => {
+    try {
+      const blob = globalThis.WalkthroughDocx.build(config, state.answers);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = config.exportFilename; link.hidden = true;
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      copyStatus.textContent = !config.hasWritable
+        ? 'Reference Word document downloaded for your records. Downloading has not submitted anything to Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Word document downloaded. Upload it through this Canvas assignment; downloading is not a submission.'
+        : 'Word document downloaded for your records. Submit your response through this Canvas assignment; downloading is not a submission.';
+    } catch (_) {
+      if (hasTable) {
+        richOutput.innerHTML = assembledHtml(); richOutput.hidden = false; richOutput.focus();
+        copyStatus.textContent = 'Download is unavailable. Select and copy the table below into a document.';
+      } else {
+        output.value = assembledText(); output.focus(); output.select();
+        copyStatus.textContent = 'Download is unavailable. Copy this text into a document, then upload that document to Canvas.';
+      }
+    }
+  });
+  const clearButton = document.getElementById('walk-clear');
+  if (clearButton) {
+    clearButton.addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = false; });
+    document.getElementById('walk-clear-no').addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = true; });
+    document.getElementById('walk-clear-yes').addEventListener('click', () => {
+      clearTimeout(saveTimer);
+      try { localStorage.removeItem(key); }
+      catch (_) { saveStatus.textContent = 'Could not clear the saved draft. Keep a copy of your responses.'; return; }
+      state = {answers: Object.create(null), feedback: Object.create(null)};
+      inputs.forEach(input => { input.value = ''; resizeTableInput(input); });
+      buttons.forEach(button => {
+        document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]').textContent = '';
+      });
+      output.value = ''; copyStatus.textContent = '';
+      if (richOutput) { richOutput.innerHTML = ''; richOutput.hidden = true; }
+      document.getElementById('walk-clear-confirm').hidden = true;
+      saveStatus.textContent = 'This browser draft was cleared.';
+      update();
+    });
+  }
+  update();
+}());
+</script></div>
+
+    
+
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
+  </div>
+</body>
+</html>
