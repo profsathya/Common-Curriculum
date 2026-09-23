@@ -54,9 +54,7 @@ Guidance, examples, a question, and a place to write
 
 #### Guidance
 
-Two halves, and the second is what makes this a demonstration rather than a claim. First: what can you do now that you could not two weeks ago? Say it as something you did, with when and where. Second: put it against the bar you set yourself in week 3.
-
-If your evidence was a person, what did they actually say — their words, not your summary of them. If it was data, give the numbers. If the evidence came back against you, write that; an honest miss is worth more here than a claim nobody could check, and it is the thing you can act on in Sprint 2.
+Two halves, and the second is what makes this a demonstration rather than a claim. First: what can you do now that you could not two weeks ago? Say it as something you did, with when and where. Second: put it against the bar you set yourself in week 3. If your evidence was a person, what did they actually say — their words, not your summary of them. If it was data, give the numbers. If the evidence came back against you, write that; an honest miss is worth more here than a claim nobody could check, and it is the thing you can act on in Sprint 2.
 
 Examples, to shape your thinking — not models to copy
 **What I can do now:** On 24 September I presented an unfinished prototype to two people at the Salinas meetup and answered their questions myself.
@@ -205,9 +203,7 @@ Guidance, examples, a question, and a place to write
 
 #### Guidance
 
-Two things: where you are still short, and what you will do about it.
-
-Be specific enough to start in the first week of Sprint 2. “Keep practising” is not a next step; “present at the October meetup and ask two people afterwards what they took away” is. If the goal turned out to be bigger than you thought, say so — a goal that grew as you worked on it is a sign you understand it better, not a sign you failed at it.
+Two things: where you are still short, and what you will do about it. Be specific enough to start in the first week of Sprint 2. “Keep practising” is not a next step; “present at the October meetup and ask two people afterwards what they took away” is. If the goal turned out to be bigger than you thought, say so — a goal that grew as you worked on it is a sign you understand it better, not a sign you failed at it.
 
 Examples, to shape your thinking — not models to copy
 I can explain what I built. I still cannot defend why I built it that way when someone pushes, which is the harder half and the one interviews actually test. In Sprint 2 I am taking one design decision from the project and writing the case for it and the case against it, then putting both to Priya.

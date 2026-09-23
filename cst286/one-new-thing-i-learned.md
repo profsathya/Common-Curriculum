@@ -55,13 +55,9 @@ Guidance, examples, a question, and a place to write
 Start with what you know about the situation and show how you use the mathematical relationship to make your prediction. Then explain those steps in language a ten-year-old could follow.
 
 Examples, to shape your thinking — not models to copy
-**Biking** — Given: a 12 m corner, 8 m/s, dry tarmac. The sideways acceleration needed to hold the turn is **v²/r**. At 8 m/s through a 12 m corner, it is about 5.3 m/s², requiring a sideways force about 0.54 times the total weight.
+**Biking** — Given: a 12 m corner, 8 m/s, dry tarmac. The sideways acceleration needed to hold the turn is **v²/r**. At 8 m/s through a 12 m corner, it is about 5.3 m/s², requiring a sideways force about 0.54 times the total weight. The available grip is the coefficient of friction times the weight. Going to 11 m/s nearly doubles what the turn asks for while the grip stays where it was. **For a ten-year-old:** going round a corner is the road pushing you sideways. Going twice as fast means the road has to push four times as hard, and it can only push so hard before your wheels slip. I checked it in a simulation by raising the speed until the tyres let go.
 
-The available grip is the coefficient of friction times the weight. Going to 11 m/s nearly doubles what the turn asks for while the grip stays where it was. **For a ten-year-old:** going round a corner is the road pushing you sideways. Going twice as fast means the road has to push four times as hard, and it can only push so hard before your wheels slip. I checked it in a simulation by raising the speed until the tyres let go.
-
-**Drums** — Given: the same drum, hit twice as hard.
-
-Loudness climbs with the **square of how far the skin moves**, so twice the movement is about four times the sound energy; the pitch depends on how fast the skin goes back and forth, which the size and tension set, and hitting harder does not change either. **For a ten-year-old:** hitting harder makes the skin swing wider, not quicker — wider means louder, quicker would mean higher, and only quicker changes the note. I checked it by recording two hits and measuring both.
+**Drums** — Given: the same drum, hit twice as hard. Loudness climbs with the **square of how far the skin moves**, so twice the movement is about four times the sound energy; the pitch depends on how fast the skin goes back and forth, which the size and tension set, and hitting harder does not change either. **For a ten-year-old:** hitting harder makes the skin swing wider, not quicker — wider means louder, quicker would mean higher, and only quicker changes the note. I checked it by recording two hits and measuring both.
 
 **Your answer to task 2.** One situation worked through, with the relationship, the ten-year-old version, and how you checked it.
 
@@ -122,9 +118,7 @@ Guidance, examples, a question, and a place to write
 
 #### Guidance
 
-Think of the point in the last two weeks when you nearly stopped — the reading that made no sense, the simulation that would not run, the evening when there was no time. What got you past it, or what did not? Curiosity is not the only honest answer.
-
-If what kept you going was the deadline, or a partner, or if nothing did and the work stalled, say that and say why. This question is here so you learn what actually moves you, which is worth more than the right-sounding answer.
+Think of the point in the last two weeks when you nearly stopped — the reading that made no sense, the simulation that would not run, the evening when there was no time. What got you past it, or what did not? Curiosity is not the only honest answer. If what kept you going was the deadline, or a partner, or if nothing did and the work stalled, say that and say why. This question is here so you learn what actually moves you, which is worth more than the right-sounding answer.
 
 Examples, to shape your thinking — not models to copy
 **Yes** — I stalled for four days on the v²/r step because the algebra kept coming out wrong. What got me back was that I still wanted to know the answer for my own riding, so I tried it as a simulation instead of algebra and it clicked.
@@ -182,14 +176,10 @@ Guidance, examples, a question, and a place to write
 
 #### Guidance
 
-Describe what you actually did with it, not what it is for. Which parts did you ask about, and what did it give you back? The checking is the part that matters most: name a place where you tested what it said against the textbook, a simulation or a measurement, and say what happened — whether it held up or not.
-
-Then say what was yours: the judgement, the situation you chose, the step you knew was wrong, the thing you had to go and find out. If you did not use AI for this, say so; that is a complete answer.
+Describe what you actually did with it, not what it is for. Which parts did you ask about, and what did it give you back? The checking is the part that matters most: name a place where you tested what it said against the textbook, a simulation or a measurement, and say what happened — whether it held up or not. Then say what was yours: the judgement, the situation you chose, the step you knew was wrong, the thing you had to go and find out. If you did not use AI for this, say so; that is a complete answer.
 
 Examples, to shape your thinking — not models to copy
-I asked it to check my algebra on the v²/r step and it found a sign error I had missed.
-
-I also asked it what friction number to use for tarmac and it gave me 0.7 with no source; when I looked, published values run from about 0.5 to 0.9 depending on how wet it is, so the single number would have made my prediction look far more certain than it is. What I brought was the corner itself — my corner, measured — and the decision to give a range rather than one number.
+I asked it to check my algebra on the v²/r step and it found a sign error I had missed. I also asked it what friction number to use for tarmac and it gave me 0.7 with no source; when I looked, published values run from about 0.5 to 0.9 depending on how wet it is, so the single number would have made my prediction look far more certain than it is. What I brought was the corner itself — my corner, measured — and the decision to give a range rather than one number.
 
 **Your answer to task 6.** How you used AI, what you checked, and what you brought.
 
