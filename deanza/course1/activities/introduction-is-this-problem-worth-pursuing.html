@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction: Is this problem worth pursuing? | Sprint 2: Is This Problem Worth Pursuing?</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    /* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p:first-child { color: var(--text); font: inherit; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p { color: var(--text); font: inherit; }
+.reading-page .copy-source { margin: 10px 0 4px; }
+.reading-page .copy-source pre { margin: 0 0 8px; }
+.reading-page .copy-source button { font: inherit; padding: 8px 12px; color: #fff; background: #204b76; border: 0; border-radius: 6px; cursor: pointer; }
+.reading-page .copy-source [role="status"] { margin: 6px 0 0; font-size: .875rem; color: #455568; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
+
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity reading-page">
+    <a class="back-link" href="../sprint-16.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">course1 &middot; Sprint 16 &middot; Sprint 2: Is This Problem Worth Pursuing? &middot; Page</p>
+    <h1>Introduction: Is this problem worth pursuing?</h1>
+
+
+
+    <section>
+<p>You have started a Problem Frame for one problem. Now it&rsquo;s time to dig into that problem to make sure it&rsquo;s one you want to carry through this course. By the end of this sprint you should be able to say, with reasons, that this problem seems worth pursuing, or that it does not.</p>
+</section>
+
+<section>
+<h2 id="your-route-through-this-sprint">Your route through this sprint</h2>
+<p><strong>Week 1: understanding your assumptions</strong></p>
+<ol>
+<li>Read the Introduction.</li>
+<li><strong>Dig into your assumptions.</strong> Walk Part 6: your assumptions, and rate how risky each one is to your problem. (Own your progress, 0 points.)</li>
+<li><strong>Dojo Lab: test your assumptions.</strong> Have AI push back on your walk. (Own your progress, 0 points.)</li>
+<li>Take the <strong>Self-check</strong> (5 points).</li>
+<li><strong>Which assumptions.</strong> Submit your tables (20 points).</li>
+</ol>
+<p><strong>Week 2: what exists, and your verdict on proceeding</strong></p>
+<ol start="6">
+<li><strong>What solutions already exist.</strong> From the template, start your What already exists table on your own: what you know of, what you guess, and what you want to find out. (Own your progress, 0 points.)</li>
+<li><strong>Dojo Lab: explore what already exists.</strong> Work with AI and on your own to fill in the gaps in the table, then do a deeper dive to better understand the existing solutions. (Own your progress, 0 points.)</li>
+<li><strong>What exists, and what it means</strong> (20 points). Summarize what you uncovered about what already exists.</li>
+<li><strong>Problem Frame: is it worth pursuing?</strong> Bring your frame up to date and write your verdict (45 points).</li>
+<li><strong>Write the Reflection</strong> (10 points).</li>
+</ol>
+</section>
+
+<section>
+<h2 id="if-you-determine-your-first-problem-is-not-worth-solving">If you determine your first problem is not worth solving</h2>
+<p>If as you go through these activities you discover that the problem you picked is not worth solving, that is this sprint working. Sometimes the honest verdict is that this problem is not worth eight weeks: something already handles it, or the person who could confirm it says it is not real, or a change would cost more than the problem does. In that case, you move to your runner-up. The Problem Frame item tells you how to bring your runner-up to the same standard, so that you can make the same call about it.</p>
+</section>
+
+<section>
+<h2 id="about-ai-in-this-sprint">About AI in this sprint</h2>
+<p>The rule is the one you know from Sprint 1. In most cases, for AI to be useful, you need to have your own view written down so that AI can react to it. The more guidance you can give AI about what it&rsquo;s trying to do, the better the results. So, your work first, then AI. The Dojo Lab activities are where AI tests what you wrote.</p>
+</section>
+
+<section>
+<h2 id="how-to-work">How to work</h2>
+<p>It cannot be stressed enough: the point of this course is for you to understand a problem deeply. It is not for you to checkbox the activities and exercises. Activities and exercises have been included to help you get there. The work you do in the own-your-progress activities will guide you directly to what you need to submit in the graded items. Your work needs to be useful to you, to better understand the problem and do the graded items. Remember, marking something as &ldquo;I do not know&rdquo; is more useful than making something up.</p>
+</section>
+
+<section>
+<h2 id="where-to-write">Where to write</h2>
+<p>Two documents this sprint. Your Problem Frame, which will carry from here through the rest of the course; you make your copy at the start of the first activity. And the What already exists table, a one-page document for week 2; you make your copy when week 2 starts. The rest of your written work this sprint will be in the activity boxes within Canvas pages.</p>
+<p>Next up: <strong>Dig into your assumptions</strong>.</p>
+</section>
+
+    
+
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprint 2 Reflection: what the world said back | Sprint 2: Is This Problem Worth Pursuing?</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: #111827;
+      background: #f8fafc;
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .meta {
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 24px; line-height: 1.25; margin: 0 0 18px; }
+    section, .launch, .submit {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 0 0 16px;
+    }
+    section h2, .launch h2, .submit h2 { margin: 0 0 10px; font-size: 17px; }
+    .launch {
+      border-left: 4px solid #4f46e5;
+      background: #eef2ff;
+    }
+    .submit {
+      border-left: 4px solid #059669;
+      background: #ecfdf5;
+    }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    a.button, a.secondary {
+      display: inline-block;
+      padding: 11px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    a.button { color: #fff; background: #4f46e5; }
+    a.secondary { color: #065f46; background: #d1fae5; }
+    a[data-canvas-only][hidden] { display: none !important; }
+    a { color: #4f46e5; word-break: break-word; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+    .ctx-web .back-link { display: inline-block; }
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            u.searchParams.set('context', ctx === 'canvas' ? 'canvas' : 'web');
+            a.href = u.href;
+          } catch (e) { }
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="activity">
+    <a class="back-link" href="../sprint-16.html?context=web">&larr; Back to Module</a>
+    <p class="meta">Sprint 2: Is This Problem Worth Pursuing? &middot; Assignment &middot; 10 points</p>
+    <h1>Sprint 2 Reflection: what the world said back</h1>
+
+    <section>
+<p>This sprint you rated the risk in your own assumptions and looked at what already exists. Write about what came back from outside your own head, in three parts. Where did something in the world change your view of your problem, and where did AI change it? What did you push back on, from either, and what did it cost you to push back? And what is the one thing in your frame you are least sure how to find out?</p>
+</section>
+
+    <div class="launch">
+      <h2>Start the AI activity</h2>
+      <p>Complete the interactive activity in one sitting on the same device. Your responses are saved in this browser while you work.</p>
+      <div class="actions">
+        <a class="button" href="../activities/sprint-2-reflection-what-the-world-said-back.html?context=web&v=v2-consistency-20260911" data-keep-context>Open activity &rarr;</a>
+      </div>
+    </div>
+
+    <div class="submit">
+      <h2>Submit to Canvas</h2>
+      <p>When you finish, copy or download the JSON response file from the activity and upload it to the Canvas assignment.</p>
+      <div class="actions"><a class="secondary" hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7173" data-canvas-target="_top">Submit on Canvas</a></div>
+    </div>
+  </div>
+</body>
+</html>
