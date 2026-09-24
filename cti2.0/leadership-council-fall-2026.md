@@ -15,11 +15,11 @@ At our September 2025 meeting, the Council urged us to respond to AI faster and 
 - **Short experiments.** We run six- to ten-week programs so we can learn quickly and adjust the next one.
 - **Designing around human value.** We design learning around the question of how people make work better when they use AI.
 
-We are applying this approach in Sathya’s CSUMB courses and the two-course Applying AI at Work certificate with De Anza College for mid-career professionals. It also shaped June’s six-week Career Intelligence program for new graduates. We are beginning conversations with other disciplines, starting with kinesiology.
-
 The [Human Value Framework](https://computingtalentinitiative.org/framework/) starts from our hypothesis that human value can grow as AI gets better. It connects two outcomes: **superagency**, the ability to take on bigger problems with AI, and **human value**, the ability to explain how one’s involvement made the work better than AI could have done alone.
 
 To build these outcomes, we teach **Symbiotic Thinking**, our core thinking skill for working with people and AI. It supports three capabilities: **self-directed learning, integrative solving and adaptive building**.
+
+We are applying this approach in Sathya’s CSUMB courses and the two-course Applying AI at Work certificate with De Anza College for mid-career professionals. It also shaped June’s six-week Career Intelligence program for new graduates. We are beginning conversations with other disciplines, starting with kinesiology.
 
 ## What makes the CTI approach distinct
 
