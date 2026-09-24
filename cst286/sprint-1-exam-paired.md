@@ -2,7 +2,7 @@
      Edit this file; the HTML is carried to match (regenerate with
      cowork/fall-2026-courses/mk_sprint1_exam_paired.py, which will not overwrite this file
      unless it is run with --force-md).
-     Draft v2 of 2026-09-19. The exam shape and the two routes in task 5 are Sathya's; the
+     Draft v3 of 2026-09-24 (v2 of 2026-09-19 + the Read it aloud button). The exam shape and the two routes in task 5 are Sathya's; the
      replacement wording below is his assistant's; the lines marked ALAN-REVIEW are AI
      drafts awaiting his edit. -->
 
@@ -41,17 +41,26 @@ Select the question your partner chose to answer: question 4 or question 7.
 
 ### Task 3
 
-Type your partner's handwritten answer to question 2 exactly as they wrote it. If you cannot read a word, ask your partner.
+Type your partner's handwritten answer to question 2 exactly as they wrote it, or read it aloud into the box with the button beside it. If you cannot read a word, ask your partner.
 
 *Question 2, shown on the page verbatim from One new thing I learned:* Answer your question. Pick a situation, predict what happens, and explain each step to a ten-year-old. Your prediction has to include a quantitative component: the quantities involved, the mathematical relationship between them, and what happens to one when the other changes. Say how you checked whether you got it right.
 
 *Box label:* **Your partner's answer to question 2**
+*Beside the box (optional):* **Read it aloud** button. Press it, read the paper aloud, and the words land in the box. It becomes **Pause** while listening and **Continue** after a pause. The box stays an ordinary text box, so the student edits by hand afterwards.
+*Status line beside the button:* Listening - read the paper aloud. Press Pause to ask your partner about a word. / Paused - fix anything in the box, then press Continue. / Not available in this browser - use Chrome, Edge or Safari, or type. / The microphone is blocked. Allow it in the address bar, or open the full page in its own tab, or type. / Listening stopped. Press Continue to try again, or type.
+*Hover note on the (?) beside the button:*
+- Press it, read the paper aloud, and the words land in the box. Press *Pause* to ask your partner about a word, *Continue* to keep reading. Edit the text in the box afterwards.
+- **Browsers** Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.
+- **Privacy** Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.
+- **Inside Canvas** the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.
+- **Check it** against the paper before you move on. Names, numbers and symbols come out wrong most often.
 
 ### Task 4
 
 Type your partner's handwritten answer to the question they chose, exactly as they wrote it.
 
 *Box label:* **Your partner's answer to question 4 or question 7**
+*Beside the box (optional):* the same **Read it aloud** button and hover note as task 3.
 
 ### Task 5
 
