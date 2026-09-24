@@ -12,29 +12,26 @@ Week 6 - Wednesday 30 September, in class - 100 points - Sprint 1 Exam
 
 ## Purpose
 
-Learn how your partner understands their own work by asking them about what they wrote, and write down what you learned.
+Practice exploratory partnership by asking questions and engaging in deep conversation.
 
 ## Tasks
 
 You have your partner's paper. Complete the tasks below in order. When you finish, press **Copy my answers** and paste the text into the Canvas box.
 
-- **Swap and type.** Exchange papers with a partner and type their handwritten answers into the AI form. Both students do this at the same time.
-- **Then the conversation.** Question your partner about what they wrote — at least two follow-up questions — and write a summary of how they understand their own work. Take turns, so each of you is interviewed once.
+- **Swap and type.** Exchange papers with your partner and type their handwritten answers into the AI form. Both students do this at the same time.
+- **Then the conversation.** Question your partner about what they wrote — start from a place of wanting to help them think better and more deeply, and ask follow-up questions — then write a summary of how they understand their own work. Take turns, so each of you is interviewed once.
 
 *(Both bullets are verbatim from the assignments registry row 286-w06-exam; they are the one place an em-dash survives, because the registry wording is quoted unchanged.)*
 
 ### Task 1
 
-Select your name and your partner's name.
+Select your partner's name.
 
-*Field:* Your name -> a text box with the course roster as suggestions ("Firstname L.").
-*Field:* Your partner's name -> the same list. A name that is not on the list can still be typed.
+*Field:* Your partner's name -> a text box with the course roster as suggestions ("Firstname L."). A name that is not on the list can still be typed.
 
 ### Task 2
 
-Select the question your partner chose to answer: question 4 or question 7.
-
-*Legend:* Which question did your partner choose?
+Which question did your partner choose?
 
 - **Question 4** Did your curiosity about the topic help you persist when things got difficult? If yes, how; if not, why not.
 - **Question 7** Identify what still remains to be learned — where this is still hard for you, and what you will do next.
@@ -96,7 +93,7 @@ Write a summary of how your partner understands their own work. Include what the
 
 **Check it before you submit** - the same list your partner runs on yours  <!-- ALAN-REVIEW -->
 
-- Both names are selected, and the question your partner chose is marked.
+- Your partner's name is selected, and the question they chose is marked.
 - Their answer to question 2 is typed as they wrote it, not summarised.
 - Their answer to question 4 or question 7 is typed as they wrote it.
 - Two follow-up questions are written down, each with what your partner said.

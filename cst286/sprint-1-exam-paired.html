@@ -333,21 +333,20 @@ ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
 </div>
 
 <h2 class="sec">Purpose</h2>
-<p class="body">Learn how your partner understands their own work by asking them about what they wrote, and write down what you learned.</p>
+<p class="body">Practice exploratory partnership by asking questions and engaging in deep conversation.</p>
 
 <h2 class="sec">Tasks</h2>
 <p class="body">You have your partner's paper. Complete the tasks below in order. When you finish, press <b>Copy my answers</b> and paste the text into the Canvas box.</p>
 <ul class="goals">
-<li><b>Swap and type.</b> Exchange papers with a partner and type their handwritten answers into the AI form. Both students do this at the same time.</li>
-<li><b>Then the conversation.</b> Question your partner about what they wrote &mdash; at least two follow-up questions &mdash; and write a summary of how they understand their own work. Take turns, so each of you is interviewed once.</li>
+<li><b>Swap and type.</b> Exchange papers with your partner and type their handwritten answers into the AI form. Both students do this at the same time.</li>
+<li><b>Then the conversation.</b> Question your partner about what they wrote &mdash; start from a place of wanting to help them think better and more deeply, and ask follow-up questions &mdash; then write a summary of how they understand their own work. Take turns, so each of you is interviewed once.</li>
 </ul>
 
 <ol class="tasks">
 
 <li class="task" id="task-1">
-<div class="ttext"><span class="tn">1.</span><span class="tt">Select your name and your partner's name.</span></div>
+<div class="ttext"><span class="tn">1.</span><span class="tt">Select your partner's name.</span></div>
 <div class="rbox">
-<div class="pnamerow"><label for="f-you">Your name</label><input type="text" id="f-you" data-field="you" list="roster" autocomplete="off"></div>
 <div class="pnamerow"><label for="f-partner">Your partner's name</label><input type="text" id="f-partner" data-field="partner" list="roster" autocomplete="off"></div>
 <datalist id="roster">
 <option value="Adam S."></option>
@@ -404,10 +403,9 @@ ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
 </li>
 
 <li class="task" id="task-2">
-<div class="ttext"><span class="tn">2.</span><span class="tt">Select the question your partner chose to answer: question 4 or question 7.</span></div>
+<div class="ttext"><span class="tn">2.</span><span class="tt">Which question did your partner choose?</span></div>
 <div class="rbox">
-<fieldset class="pick">
-<legend>Which question did your partner choose?</legend>
+<fieldset class="pick" aria-label="Which question did your partner choose?">
 <div class="opt"><input type="radio" name="chosen" id="pick-q4" value="4" data-pick><label for="pick-q4"><b>Question 4</b>Did your curiosity about the topic help you persist when things got difficult? If yes, how; if not, why not.</label></div>
 <div class="opt"><input type="radio" name="chosen" id="pick-q7" value="7" data-pick><label for="pick-q7"><b>Question 7</b>Identify what still remains to be learned &mdash; where this is still hard for you, and what you will do next.</label></div>
 </fieldset>
@@ -486,7 +484,7 @@ ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
 <div class="route-body more-body">
 <!-- ALAN-REVIEW -->
 <ul class="cklist">
-<li>Both names are selected, and the question your partner chose is marked.</li>
+<li>Your partner's name is selected, and the question they chose is marked.</li>
 <li>Their answer to question 2 is typed as they wrote it, not summarised.</li>
 <li>Their answer to question 4 or question 7 is typed as they wrote it.</li>
 <li>Two follow-up questions are written down, each with what your partner said.</li>
@@ -742,7 +740,6 @@ ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
         var chosenN = state.chosen || '?';
         var chosenQ = state.chosen === '7' ? CFG.q7 : (state.chosen === '4' ? CFG.q4 : '(not marked)');
         var md = CFG.course + ' - Sprint 1 Exam, the paired half\n\n';
-        md += 'Typed by: ' + (val('you') || '(no name)') + '\n';
         md += 'Partner who wrote the paper: ' + (val('partner') || '(no name)') + '\n';
         md += 'Second question the partner chose: question ' + chosenN + '\n\n';
         md += block('QUESTION 2\n' + CFG.q2 + '\nTheir answer, as they wrote it:', val('a2'));
