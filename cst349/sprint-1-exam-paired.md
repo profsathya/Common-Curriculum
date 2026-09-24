@@ -2,7 +2,7 @@
      Edit this file; the HTML is carried to match (regenerate with
      cowork/fall-2026-courses/mk_sprint1_exam_paired.py, which will not overwrite this file
      unless it is run with --force-md).
-     Draft v3 of 2026-09-24 (v2 of 2026-09-19 + the Read it aloud button). The exam shape and the two routes in task 5 are Sathya's; the
+     Draft v3 of 2026-09-24 (v2 of 2026-09-19 + the Read it aloud button; tasks 2 and 3 swapped so the pick sits above the box it labels). The exam shape and the two routes in task 5 are Sathya's; the
      replacement wording below is his assistant's; the lines marked ALAN-REVIEW are AI
      drafts awaiting his edit. -->
 
@@ -12,31 +12,25 @@ Week 6 - Wednesday 30 September, in class - 100 points - Sprint 1 Exam
 
 ## Purpose
 
-Practice exploratory partnership by asking questions and engaging in deep conversation.
+Learn how your partner understands their own work by asking them about what they wrote, and write down what you learned.
 
 ## Tasks
 
 You have your partner's paper. Complete the tasks below in order. When you finish, press **Copy my answers** and paste the text into the Canvas box.
 
-- **Swap and type.** Exchange papers with your partner and type their handwritten answers into the AI form. Both students do this at the same time.
-- **Then the conversation.** Question your partner about what they wrote — start from a place of wanting to help them think better and more deeply, and ask follow-up questions — then write a summary of how they understand their own work. Take turns, so each of you is interviewed once.
+- **Swap and type.** Exchange papers with a partner and type their handwritten answers into the AI form. Both students do this at the same time.
+- **Then the conversation.** Question your partner about what they wrote — at least two follow-up questions — and write a summary of how they understand their own work. Take turns, so each of you is interviewed once.
 
 *(Both bullets are verbatim from the assignments registry row 349-w06-exam; they are the one place an em-dash survives, because the registry wording is quoted unchanged.)*
 
 ### Task 1
 
-Select your partner's name.
+Select your name and your partner's name.
 
-*Field:* Your partner's name -> a text box with the course roster as suggestions ("Firstname L."). A name that is not on the list can still be typed.
+*Field:* Your name -> a text box with the course roster as suggestions ("Firstname L.").
+*Field:* Your partner's name -> the same list. A name that is not on the list can still be typed.
 
 ### Task 2
-
-Which question did your partner choose?
-
-- **Question 4** Did moving out of your comfort zone get easier as you worked at it? If yes, what made the difference; if not, why not.
-- **Question 7** Identify what still remains — where you are not yet where you want to be on this, and what you will do about it in Sprint 2.
-
-### Task 3
 
 Type your partner's handwritten answer to question 2 exactly as they wrote it, or read it aloud into the box with the button beside it. If you cannot read a word, ask your partner.
 
@@ -51,6 +45,15 @@ Type your partner's handwritten answer to question 2 exactly as they wrote it, o
 - **Privacy** Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.
 - **Inside Canvas** the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.
 - **Check it** against the paper before you move on. Names, numbers and symbols come out wrong most often.
+
+### Task 3
+
+Select the question your partner chose to answer: question 4 or question 7.
+
+*Legend:* Which question did your partner choose?
+
+- **Question 4** Did moving out of your comfort zone get easier as you worked at it? If yes, what made the difference; if not, why not.
+- **Question 7** Identify what still remains — where you are not yet where you want to be on this, and what you will do about it in Sprint 2.
 
 ### Task 4
 
@@ -93,7 +96,7 @@ Write a summary of how your partner understands their own work. Include what the
 
 **Check it before you submit** - the same list your partner runs on yours  <!-- ALAN-REVIEW -->
 
-- Your partner's name is selected, and the question they chose is marked.
+- Both names are selected, and the question your partner chose is marked.
 - Their answer to question 2 is typed as they wrote it, not summarised.
 - Their answer to question 4 or question 7 is typed as they wrote it.
 - Two follow-up questions are written down, each with what your partner said.
@@ -101,7 +104,7 @@ Write a summary of how your partner understands their own work. Include what the
 - The summary says what your partner could explain and what they were less sure about.
 - The summary reports what they said rather than judging whether they are right.
 
-**What makes it strong** - the follow-up questions in 5 go at the part of the answer in 3 or 4 that carries the most weight, and the summary in 6 is traceable to what your partner actually said when you asked, rather than repeating the paper back.  <!-- ALAN-REVIEW -->
+**What makes it strong** - the follow-up questions in 5 go at the part of the answer in 2 or 4 that carries the most weight, and the summary in 6 is traceable to what your partner actually said when you asked, rather than repeating the paper back.  <!-- ALAN-REVIEW -->
 
 **Grading** - 100 points, the paired half of the Sprint 1 Exam. You will be asked to explain this to a peer, the TA and/or the instructor, so make sure you are comfortable with what you have written here.  <!-- ALAN-REVIEW -->
 
