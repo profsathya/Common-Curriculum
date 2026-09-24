@@ -11,7 +11,7 @@
 
 At our September 2025 meeting, the Council urged us to respond to AI faster and with clearer purpose. Three changes now shape our work:
 
-- **Foundational skills for every discipline.** Our focus is naturally broadening to foundational skills beyond computer science skills, led by the underlying problem we are trying to solve.
+- **Foundational skills for every discipline.** Our focus is naturally broadening from computer science to foundational skills, led by the underlying problem we are trying to solve.
 - **Short experiments.** We run six- to ten-week programs so we can learn quickly and adjust the next one.
 - **Designing around human value.** We design learning around the question of how people make work better when they use AI.
 
@@ -31,8 +31,8 @@ Our focus is the broad range of learners served by community colleges and CSUs. 
 
 [Diagram: three circles (the problem, concretely · a framework for outcomes and how · testing with the middle of society), CTI in the overlap]
 
-- **The change students need to make.** Point A is completing short tasks with guidance at each step. Point B is working toward a goal with AI: choosing tasks, learning from results and adapting the approach. We argued that the independence once expected of senior professionals is increasingly expected of new graduates working with AI.
-- **A framework that connects teaching to outcomes.** The Human Value Framework describes the outcomes we want and how we think students can develop them. Each teaching practice connects to an intended outcome.
+- **The change students need to make.** Students need to move from Point A, completing short tasks with guidance at each step, to Point B, working toward a goal with AI: choosing the tasks, learning from the results and adapting the approach. We argued that the independence once expected of senior professionals is increasingly expected of new graduates working with AI.
+- **A framework that connects teaching to outcomes.** The Human Value Framework describes the outcomes we want and how we think students can develop them, so that each teaching practice connects to an intended outcome.
 - **Testing across stages of education and work.** We are testing the framework with community college and CSU learners, from first-year students to new graduates and mid-career professionals, and adjusting as we learn.
 
 We asked the Council to challenge both our direction and our assumptions. The breakout rooms discussed three questions: *Are we on the right path? What is not clear? What questions are we not asking?*
@@ -43,33 +43,24 @@ Thank you to everyone who joined us on September 18. We shared how CTI is helpin
 
 - **Our direction.** We are testing the Human Value Framework through short programs and courses, with the aim of helping students take on bigger problems with AI and explain how their own contribution improves the work.
 - **The Council’s feedback.** Council members suggested that we make each pilot’s hypothesis and expected outcomes clear, share the evidence, and follow students beyond a single course. They also suggested that, as we expand into other fields, we first learn how those fields work and help instructors develop the teaching practices this requires.
-- **Our early evidence.** We are looking for six learner qualities in coursework from 129 students at CSUMB. The draft AI ratings show examples of these qualities; they do not yet establish growth or the framework’s effectiveness.
-
-## What we heard from the Council
-
-- **Name what each pilot is testing.** Council members suggested that we state each pilot’s hypothesis, the outcomes we expect, and how we plan to report results.
-- **Software work beyond computing roles.** Council members noted that people outside computing are now building their own tools. They suggested these workers may need help with governance, connecting systems and handing work over, and they asked what computing knowledge these workers need.
-- **Start from each field’s needs.** Council members suggested that, as we expand into other fields, we first learn how those fields work before proposing how we can help. They also suggested we keep sharing the results we already have.
-- **Employers describe the same shift.** Council members described growing employer demand for people who can work toward a goal with AI.
-- **Teaching methods matter as much as content.** Council members suggested that teaching methods matter as much as content, and asked how instructors, especially at community colleges, can develop the skills to facilitate this learning.
-- **Follow students over time.** Council members suggested following students as alumni, so that we can understand outcomes beyond a single course or program.
+- **Our early evidence.** We are looking for six learner qualities in the coursework of 129 students at CSUMB. The draft AI ratings show examples of these qualities; they do not yet establish growth or the framework’s effectiveness.
 
 ## How you can help
 
-- Share the CTI LinkedIn series when it starts.
 - Introduce us to education, workforce and industry partners or committees who should hear about this work.
 - Pass along funding leads. Michelle can send a one-page summary for any conversation.
+- Amplify our message. We plan to post on LinkedIn. If you repost with your own thoughts, observations and endorsement, that validation will go a long way toward getting us noticed in a noisy environment.
 - Share questions or concerns about our direction with Sathya at [snarayanan@csumb.edu](mailto:snarayanan@csumb.edu).
 
-## An early look: the six qualities in our courses
+## An early look at evidence: the six qualities in our courses
 
 *CST286 and CST349 at CSUMB, Fall 2026, work submitted through 19 September*
 
-In Sathya’s fall courses, we are testing whether six learner qualities can be identified in everyday coursework and where AI can help assess them. We group self-knowledge, self-regulation and owning the outcome as inward-facing qualities; initiative, working with uncertainty and adaptability as outward-facing qualities.
+There was a lot of interest at the meeting in how we can verify that what we are doing helps students. Our hypothesis is that six student qualities give us the most rapid feedback on whether students are developing the higher-order, durable capabilities we are aiming for. In Sathya’s fall courses, we are testing whether these six qualities can be identified in everyday coursework and where AI can help assess them. Self-knowledge, self-regulation and owning the outcome are inward-facing qualities; initiative, working with uncertainty and adaptability are outward-facing qualities.
 
-The chart summarizes draft ratings for 129 students in CST286 and CST349. For each quality, it shows the share of students whose work showed a specific or reasoned signal of that quality at least once. These signals are the top two levels of a four-level scale for each quality. This is an early snapshot of evidence in student work, not a measure of growth over time.
+The chart summarizes draft ratings for 129 students in CST286 and CST349. For each quality, it shows the share of students whose work showed a specific or reasoned signal of that quality at least once. These signals are the top two levels of a four-level scale for each quality. This is an early snapshot of evidence in student work, not yet a measure of growth over time.
 
-**These ratings were produced and reviewed by AI assistants; Sathya has not yet reviewed them.** The levels describe different behaviors for each quality, so they should not be compared directly across qualities. Select a chart segment or a quality below for the criteria and examples. Assessment details follow at the end.
+**Sathya reviewed the level descriptions. The ratings of the student work were produced by Alan, our AI assistant, and checked by Astra, a second AI assistant; Sathya has not yet reviewed the individual ratings.** The levels describe different behaviors for each quality, so they should not be compared directly across qualities. Select a chart segment or a quality below for the criteria and examples. Assessment details follow at the end.
 
 [Chart: one line, “Specific or reasoned signals”, built from the ratings data. Edit the words around it here; the chart itself is regenerated from the data.]
 
@@ -241,7 +232,7 @@ Explains what they changed or kept and how the exchange informed that decision. 
 
 Assignments reviewed: CST286 OYP: Explore Physics Loop; CST286 OYP: Why physics matters, and how simulations model the world; CST349 OYP: Choose your growth opportunity; CST349 OYP: Read the Market. 81 of 129 students had at least one rating on this quality; the other 48 are counted as not yet seen, which is different from a low level.
 
-**How we assessed the work.** We wrote four-level criteria for the qualities each assignment asks students to demonstrate. Alan, our AI assistant, rated submissions against these criteria. Astra, a second AI assistant, reviewed the criteria and a sample of ratings; the assistants then worked through disagreements. Human review is still pending. We want to learn where AI can assess these qualities reliably and where human judgment is needed.
+**How we assessed the work.** We wrote four-level criteria for the qualities each assignment asks students to demonstrate, and Sathya reviewed the level descriptions. Alan rated the submissions against these criteria. Astra reviewed the criteria and a sample of ratings, and the two assistants then worked through their disagreements. Sathya’s review of the individual ratings is still pending. We want to learn where AI can assess these qualities reliably and where human judgment is needed.
 
 Each quality was assessed only in assignments that ask for it, so the number of opportunities to demonstrate each quality varies. All percentages use the full group of 129 students. Students without a rating on a quality are counted as “not yet seen,” not at a low level. Percentages are rounded.
 
