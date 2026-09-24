@@ -56,7 +56,7 @@ Thank you to everyone who joined us on September 18. We shared how CTI is helpin
 
 *CST286 and CST349 at CSUMB, Fall 2026, work submitted through 19 September*
 
-There was a lot of interest at the meeting in how we can verify that what we are doing helps students. Our hypothesis is that six student qualities give us the most rapid feedback on whether students are developing the higher-order, durable capabilities we are aiming for. In Sathya’s fall courses, we are testing whether these six qualities can be identified in everyday coursework and whether we can use AI to assess and track them. Self-knowledge, self-regulation and owning the outcome are inward-facing qualities; initiative, working with uncertainty and adaptability are outward-facing qualities.
+There was a lot of interest at the meeting in how we can verify that what we are doing helps students. Our hypothesis is that these six qualities give us the earliest feedback on whether students are developing the higher-order, durable capabilities we are aiming for. In Sathya’s fall courses, we are testing whether these six qualities can be identified in everyday coursework and whether we can use AI to assess and track them. Self-knowledge, self-regulation and owning the outcome are inward-facing qualities; initiative, working with uncertainty and adaptability are outward-facing qualities.
 
 The chart summarizes draft ratings for 129 students in CST286 and CST349. For each quality, it shows the share of students whose work showed a specific or reasoned signal of that quality at least once. These signals are the top two levels of a four-level scale for each quality. This is an early snapshot of evidence in student work, not yet a measure of growth over time.
 
