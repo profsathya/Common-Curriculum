@@ -46,6 +46,12 @@ a new tab — never a rewrite of the page's content. **Publish policy: publish-o
 course shell is unpublished; once the course is live, new items stay unpublished until Sathya's
 explicit go.**
 
+**OYP assignments (decided 2026-09-25):** every Own-your-progress assignment is created with
+`grading_type=pass_fail` (Complete/Incomplete) and `omit_from_final_grade=true`, points_possible
+stays 100, submission type online text entry. Students see a check mark, not a score. Never use
+"Not Graded": Canvas forces its submission type to No Submission, which breaks the must-submit
+module requirement.
+
 ## 3. Modules — per sprint, split by type
 
 - Two modules per sprint: **"Sprint N · Graded items"** with *students must move through
