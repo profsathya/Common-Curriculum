@@ -355,7 +355,7 @@
         const result = find('data-result', task.id);
         if (selected === undefined || selected === '') { result.textContent = 'Choose an answer first.'; return; }
         state.checks[task.id] = (Number(state.checks[task.id]) || 0) + 1;
-        result.textContent = (Number(selected) === task.correct_index ? 'That fits. ' : 'Revisit the idea. ') + task.explanation;
+        result.textContent = Number(selected) === task.correct_index ? 'That fits. ' + task.explanation : 'Not quite. Reread the details in the question and try again.';
         save();
       });
     } else {
