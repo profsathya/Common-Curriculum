@@ -194,7 +194,7 @@ Earlier pilots have run in high schools, colleges and workplaces, from first yea
 **QR 2 caption:** computingtalentinitiative.org
 
 **Contact 1:** Partnerships Manager · Michelle Skoor · michelle@computingtalentinitiative.org
-**Contact 2 [OPEN — Leslie's CTI address is a guess from Michelle's pattern; confirm]:** Associate Director · Leslie Maxwell · leslie@computingtalentinitiative.org
+**Contact 2:** Associate Director · Leslie Maxwell · leslie@computingtalentinitiative.org
 **Contact 3:** Director · Sathya Narayanan · snarayanan@computingtalentinitiative.org
 
 **Tagline (bottom right, larger):** Learn. Connect. Solve.
