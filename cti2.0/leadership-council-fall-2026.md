@@ -96,7 +96,7 @@ Assignments reviewed: CST286 GI: Physics Learning Goal; CST286 GI: What Are My P
 ### Self-regulation (Inward-facing) — Specific or reasoned signals: 57%
 
 <!-- LOCKED DEFINITION: do not edit without Sathya -->
-**What we mean:** Managing your attention, effort, emotions and routines so you stay with something you chose.
+**What we mean:** Managing your attention, effort, emotions and routines so you stay with something you chose, including saying no to what gets in its way.
 
 **Level 1: No change** (7 students (5%))  
 Gives no account of their time or work, proposes no change, or proposes a change without describing it.
@@ -121,32 +121,37 @@ Describes how they will check whether the approach works, or how they adjusted i
 
 Assignments reviewed: CST286 GI: Physics Learning Goal; CST349 GI: Define what growth means for you; CST349 OYP: Nutrition for Mind Plan. 111 of 129 students had at least one rating on this quality; the other 18 are counted as not yet seen, which is different from a low level.
 
-### Owning the outcome (Inward-facing) — Specific or reasoned signals: 43%
+### Owning the outcome (Inward-facing) — Specific or reasoned signals: 40%
 
-<!-- LOCKED DEFINITION: do not edit without Sathya -->
-**What we mean:** Stepping back from what you did to ask what it meant — to the work, to other people, and to where you're headed.
+<!-- LOCKED DEFINITION: do not edit without Sathya (revised 27 Sep 2026) -->
+**What we mean:** Understanding the outcome the tasks add up to and doing each task for that outcome, checking that the work is aligning toward it and adjusting or reaching out when it is not, rather than just completing the tasks.
 
-**Level 1: No commitment** (2 students (2%))  
-Describes no attempt or plan, postpones action, or describes a hoped-for benefit without saying what they will do.
+> **Re-read on 27 Sep 2026.** The first ladders for this quality rated whether a student's plan was checkable, which reads a plan rather than this definition. The ratings below come from a new ladder that reads the look-back task on each course's Sprint 1 graded item: does the student tie the work to the outcome it is for, and do they check or adjust against it. We read it conservatively: only passages where the student speaks about how they approach the work count, not answers to the page's own "why does this matter" and "how will you confirm it" questions. All of it is the student's own account.
 
-- *Example:* A student listed what a change would give them, without saying what they would do.
+**Level 1: Completion treated as the point** (0 students (0%))  
+States that getting the task done is what matters, with nothing beyond that named.
 
-**Level 2: Wish or direction** (27 students (21%))  
-States a wish or direction without an action someone could verify later.
+- *Example:* Not seen in either cohort.
 
-- *Example:* A student wrote that they want to spend more time on homework.
+**Level 2: Outcome named, work not tied to it** (58 students (45%))  
+Names an outcome the page supplied (a category from the time audit, a skill from the job postings) and a change of time or method, without saying in their own words what the work is for.
 
-**Level 3: Checkable** (29 students (22%))  
-Specifies an action with an amount, trigger, occasion, date or product that makes it possible to check.
+- *Example:* A student moved gaming hours to homework hours.
+- *Example:* A student decided to learn a second programming language because the postings asked for it.
 
-- *Example:* A student set a routine with a date and a length: thirty minutes on one Sunday each month reviewing job postings.
+**Level 3: Work tied to its outcome** (41 students (32%))  
+Says in their own words what the work adds up to, or separates the outcome from completing the task in a specific episode of their own.
 
-**Level 4: Checkable and owned** (27 students (21%))  
-Specifies a checkable action that responds to something they discovered about their time, discomfort, limits or gaps.
+- *Example:* A student wrote that they had done an activity quickly just to get it turned in and were confused about what they were supposed to learn from it.
+- *Example:* A student realized that finishing class assignments would not show what they can do, and that a complete project someone could run would.
 
-- *Example:* A student found a specific gap in their own portfolio and committed to a project that closes it, with a deadline before the application season.
+**Level 4: Checked against the outcome, and adjusted** (11 students (9%))  
+Reports checking whether the work was serving its outcome and responds: a change of method, scope or timing, help sought, or a reasoned decision to keep going. Almost all of these are reported checks with a planned response.
 
-Assignments reviewed: CST286 GI: What Are My Priorities; CST349 OYP: Choose your growth opportunity; CST349 OYP: Find Your Gap; CST349 OYP: Nutrition for Mind Plan. 85 of 129 students had at least one rating on this quality; the other 44 are counted as not yet seen, which is different from a low level.
+- *Example:* A student noticed their predictions did not match the model and decided to explain the graphs after each run to check whether they understood the relationship.
+- *Example:* A student found that monthly prototypes had produced nothing to show and switched to weekly planning.
+
+Assignments reviewed: CST286 GI: Physics Learning Goal; CST349 GI: Define what growth means for you (the look-back task on each). 110 of 129 students had a rating on this quality; the other 19 did not submit and are counted as not yet seen, which is different from a low level. Earlier ratings from the plan-reading ladder (four assignments) are kept in the record and are not counted here.
 
 ### Initiative (Outward-facing) — Specific or reasoned signals: 43%
 
