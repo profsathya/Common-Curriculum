@@ -150,12 +150,12 @@ For each skill, state how you will verify you learned it: what you will be able 
 
 Optional: show where the build stands today — what exists and runs, with a link or screenshot.
 
-*The + reads:* Guidance and a place to write
+*Box label:* **Your answer to task 6, optional.** A link, or one line saying what your screenshot shows; paste the screenshot itself into the Canvas box with your text.
+*Placeholder:* Link — … / Screenshot: what it shows.
+
+*The + reads:* Guidance
 
 **Guidance (behind the +).** A link to what exists and runs today, or a screenshot of it, if you have one. Nothing to explain; skip this task if there is nothing to show yet.
-
-*Box label (behind the +):* **Your answer to task 6, optional.** A link, or one line saying what your screenshot shows; paste the screenshot itself into the Canvas box with your text.
-*Placeholder:* Link — … / Screenshot: what it shows.
 
 ## Criteria
 
