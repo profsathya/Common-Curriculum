@@ -151,7 +151,7 @@ Reports checking whether the work was serving its outcome and responds: a change
 - *Example:* A student noticed their predictions did not match the model and decided to explain the graphs after each run to check whether they understood the relationship.
 - *Example:* A student found that monthly prototypes had produced nothing to show and switched to weekly planning.
 
-Assignments reviewed: CST286 GI: Physics Learning Goal; CST349 GI: Define what growth means for you (the look-back task on each). 110 of 129 students had a rating on this quality; the other 19 did not submit and are counted as not yet seen, which is different from a low level. Earlier ratings from the plan-reading ladder (four assignments) are kept in the record and are not counted here.
+Assignments reviewed: CST286 GI: Physics Learning Goal; CST349 GI: Define what growth means for you (the look-back task on each). 110 of 129 students had a rating on this quality; the other 19 did not submit and are counted as not yet seen, which is different from a low level. Earlier ratings from the plan-reading ladder (four assignments) were retired on 27 Sep and are not counted.
 
 ### Initiative (Outward-facing) — Specific or reasoned signals: 43%
 
