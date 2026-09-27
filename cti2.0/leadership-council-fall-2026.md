@@ -176,10 +176,12 @@ Explains their choice, its purpose, and what they learned from it or what they r
 
 Assignments reviewed: CST286 OYP: AI Dojo Setup; CST286 OYP: Explore Physics Loop; CST286 OYP: Understand my interest; CST349 OYP: Know what makes me tick; CST349 OYP: Read the Market. 95 of 129 students had at least one rating on this quality; the other 34 are counted as not yet seen, which is different from a low level.
 
-### Working with uncertainty (Outward-facing) — Specific or reasoned signals: 70%
+### Working with uncertainty (Outward-facing) — Current data doesn’t measure this
 
 <!-- LOCKED DEFINITION: do not edit without Sathya -->
 **What we mean:** Willingness to act even without all questions answered, cultivating the skill to find the right point to act.
+
+> **Why there is no value on the chart.** The assignments reviewed ask students how they would confirm a learning goal or a milestone. The ratings below read whether the written answer names a check that could fail, and how the student would read the result. That is a signal of testable thinking in a plan, not of acting before all questions are answered, so it does not measure this quality. Almost all of the evidence is planned work, not work carried out. The levels are kept here for the record and will be replaced when we have evidence that fits the quality, most likely from conversations rather than written assignments.
 
 **Level 1: No testable claim** (5 students (4%))  
 Offers no testable prediction, uses a check that can only confirm the claim, or avoids comparing the prediction with the result.
