@@ -5,7 +5,7 @@ description: Use when writing or revising any assignment or activity page studen
 
 _Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
 
-_Status: v9 (19 September 2026) — Purpose is one crisp statement and nothing else; the “By the time you submit, you will have” goal list and the separate “What you’re building on” block are retired from student pages (Sathya, 19 Sep 2026, on reading the CST286 sources item with fresh eyes: neither helps the student). The connection to earlier work is carried by the task itself, by question number. v8 (18 September 2026) — adds “The question the student can copy carries every required answer element” under Task, “The notes behind the AI feedback button” and “The editable twin” under Reflection, from the September 17–18 writing review: requirements found only in guidance, sub-points that restate the question, and guidance that praises or rephrases instead of helping. Routes prose rules to the new `writing-foundation` skill. v7 (15 September 2026) — adds “How own-your-progress and graded items are labelled and dated”: the two section markers in Sathya's words, Recommended Date vs Due Date sourced from `assignments.html`, the ownership line on every OYP page, and the call that the Canvas due-date field stays as it is. v6 (13 September 2026) — inside each task's click-in, the task's answer box now comes right after the guidance and examples, and the reflection question follows it with its own smaller box; the copied text carries a `Reflection:` line under each answer where one was written. Sathya's call after seeing the week-4 CST286 page: one box placed after the reflection question read as the reflection's box, and the reflection never reached the submission. Applied the same day to all eight pages that carry the shape (286 GI1, GI2, week-4 OYP; 349 GI1, GI2; 499 learning plan, mid-term, project proposal). v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
+_Status: v10 (27 September 2026) — the Criteria checklist becomes the Self-check (Sathya, 27 Sep 2026, after several rounds of grading): about ten items, each a clickable checkbox and one line saying what a 5 looks like, with its points beside it; items in submission order; points set per item, not equal. The 3 and 1 rungs of each item, its learning-priority rank and the quality it evidences stay off the page and in the record — the rungs surface in the feedback comment, the priority picks the one or two items the comment addresses, the quality tag feeds the internal tracker. The checked boxes travel with the copied submission; a checked box earns nothing, the grader verifies each item. v9 (19 September 2026) — Purpose is one crisp statement and nothing else; the “By the time you submit, you will have” goal list and the separate “What you’re building on” block are retired from student pages (Sathya, 19 Sep 2026, on reading the CST286 sources item with fresh eyes: neither helps the student). The connection to earlier work is carried by the task itself, by question number. v8 (18 September 2026) — adds “The question the student can copy carries every required answer element” under Task, “The notes behind the AI feedback button” and “The editable twin” under Reflection, from the September 17–18 writing review: requirements found only in guidance, sub-points that restate the question, and guidance that praises or rephrases instead of helping. Routes prose rules to the new `writing-foundation` skill. v7 (15 September 2026) — adds “How own-your-progress and graded items are labelled and dated”: the two section markers in Sathya's words, Recommended Date vs Due Date sourced from `assignments.html`, the ownership line on every OYP page, and the call that the Canvas due-date field stays as it is. v6 (13 September 2026) — inside each task's click-in, the task's answer box now comes right after the guidance and examples, and the reflection question follows it with its own smaller box; the copied text carries a `Reflection:` line under each answer where one was written. Sathya's call after seeing the week-4 CST286 page: one box placed after the reflection question read as the reflection's box, and the reflection never reached the submission. Applied the same day to all eight pages that carry the shape (286 GI1, GI2, week-4 OYP; 349 GI1, GI2; 499 learning plan, mid-term, project proposal). v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
 `schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
 first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
 the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
@@ -89,21 +89,26 @@ this live in `skills/writing-foundation/SKILL.md`.
 
 Three parts, in this order: the checklist, what makes it strong, and grading.
 
-**Check it before you submit — the checklist first.** The list of what a complete answer
-contains, one line per task, sitting behind a click-in `+` at the top of Criteria. Each
-line carries a checkbox box so it reads as a checklist rather than prose. Write the lines
-as **neutral statements** — "The behavior is written as a *Why does ___ lead to ___?*
-question," never "I wrote…" — because the same list has two users: the student checking
-their own draft, and the partner or reviewer checking theirs. One list, both uses; a list
-written in the first person breaks the second one. Where the course pairs students to
-review each other's work, say so in the summary line ("the same list your reviewer runs"),
-so the student meets the peer step here rather than being surprised by it later.
+**The Self-check — the checklist first (Sathya, 27 Sep 2026).** About ten items, behind a
+click-in `+` at the top of Criteria, in the order the student meets them in the submission.
+Each item is one line: a clickable checkbox, a statement of what a 5 looks like for that
+item, and its points. Write the statement as a **neutral, observable** line — "The behavior
+is written as a *Why does ___ lead to ___?* question" — never "I wrote…", because the same
+list has two users: the student checking their own draft, and the grader checking it after.
+Points are set per item by what the item carries, not divided equally; the items add up to
+the assignment total (100 in Sathya's courses; other courses have their own totals). Ten or
+so is the cap because a student reads ten lines and scans twenty. Fold anything a separate
+"Done" block would say into these lines and cut the block (Sathya, 8 Sep 2026).
 
-**Cut a separate "Done" block when the checklist restates it** (Sathya, 8 Sep 2026). The
-earlier shape carried Done, Strong and Checklist; on a five-task item Done and the
-checklist said the same thing twice. Fold everything Done specified into checklist lines
-and drop the block. On a long item the checklist absorbs Done the same way — it just has
-more lines.
+**The checked boxes travel with the submission.** The copy-to-clipboard button carries each
+item's checked or unchecked state into the copied text. A checked box earns no points: the
+grader verifies every item. The box is the student's claim, and the place where a student
+marks an item done that is not done is what the grader and the feedback look at first.
+
+**What stays off the page.** Each item has a 5/3/1 ladder, a learning-priority rank and a
+quality tag; only the 5 line is shown. The 3 and 1 rungs are not on the page and are not
+behind a dropdown — they reach the student in the feedback comment, where the rung text is
+the nudge. See "The internal lines" below.
 
 **What makes it strong.** Separate from the checklist, because the difference between
 complete and strong is where the walkthrough conversation will spend its time. Write it as
@@ -112,10 +117,11 @@ are unsure about in 3 is the same thing 4 and 5 go after" — so a student can t
 draft against it. Movement counts more than altitude: strong means further than where the
 student started.
 
-**Grading, in the open.** The points, the grade group, and what happens to this work
+**Grading, in the open.** The points per item, the grade group, and what happens to this work
 afterwards — named plainly: "you will be asked to explain this to a peer, the TA and/or the
 instructor, so make sure you are comfortable with the responses you have developed for this
-assignment." No hidden rubric.
+assignment." What earns full points on each item is on the page; how partial credit is
+described (the 3 and 1 rungs) is in the record and comes back to the student in the comment.
 
 **The copy-the-questions line** (Sathya, 8 Sep 2026). Where a page offers a "Copy the
 questions" button, the line beside it names the trade the student is making, rather than
@@ -165,6 +171,14 @@ Each assignment's record — not its page — carries:
   focus at this point in the course), and one line on what movement would look like.
 - **Evidence linkage** — which of the course's evidence standards the walkthrough
   samples from this work.
+- **Per Self-check item (27 Sep 2026)** — three things beside each item's 5 line: the
+  **3 and 1 rungs**, written as what is observable in the submission at that level (the 3
+  rung is written so it can be pasted into a comment as the nudge); the **learning-priority
+  rank**, used by the grader to choose the one or two lowest-scored, highest-priority items
+  the comment addresses, so the comment is never a laundry list; and the **quality tag**,
+  the one nurture-track quality the item evidences, so the internal tracker reads quality
+  from the item scores and nothing is scored twice. The grader scores each item once on its
+  ladder; feedback and tracking both read that score.
 
 **The notes behind the AI feedback button** (18 Sep 2026). They are written from the
 question, not from the guidance: feedback identifies a requirement the question asks for
@@ -307,10 +321,13 @@ block directly under the page head and above Purpose:
 - The first sentence of Purpose is the payoff, not the topic.
 - Every instruction sits at its point of action; likely errors are prevented by a positive
   test, a structured field, or a paired example rather than by a warning.
-- Criteria open with the "Check it before you submit" click-in — checkbox lines, one per
-  task, written as neutral statements a reviewer could run — then what makes it strong,
-  then grading with the peer/TA/instructor conversation named. Two or more worked examples
-  sit under the tasks, not in Criteria.
+- Criteria open with the Self-check click-in — about ten items in submission order, each a
+  clickable checkbox, a neutral observable line saying what a 5 looks like, and its points;
+  the points add up to the assignment total; the checked state is carried by the copy button —
+  then what makes it strong, then grading with the peer/TA/instructor conversation named.
+  Two or more worked examples sit under the tasks, not in Criteria.
+- No 3 or 1 rung, priority rank or quality tag appears on the page; each item has all three
+  in the record.
 - Reflection questions are answerable only after doing the work.
 - The qualities line and evidence linkage are in the record and absent from the page.
 - The `assignments.html` row exists and matches the page: kind and points as the course
