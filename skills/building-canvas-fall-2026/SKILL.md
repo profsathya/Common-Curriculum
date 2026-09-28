@@ -79,11 +79,10 @@ module requirement.
 
 ## 4. Write-back — same pass, never later
 
-Canvas id, URL and published state go into that course's data file
-(the `COURSES` dict for that course inside `cowork/fall-2026-courses/mk_assignments.py` — one
-generator for all three courses; per-course facts live in COURSES). Regenerate with
-`python3 mk_assignments.py <course>` and commit the page in the same working pass. The file never
-lags the shell.
+Canvas id, URL and published state go straight into that course's `assignments.html` row
+(the Canvas URL, Canvas assignment id and published cells) in the same working pass. The
+generator `mk_assignments.py` was retired on 28 Sep 2026 (Sathya): the three assignments.html
+files are hand-edited and must never be regenerated. The file never lags the shell.
 
 ## 5. Verify
 

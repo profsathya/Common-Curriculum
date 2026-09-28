@@ -262,9 +262,10 @@ The repo is the source of truth; Canvas is the display.
 Due days are rule-driven, not per-row: the course's design record sets the rhythm —
 which kind of work falls on which day, and why — and this skill applies it rather than
 restating it. The same goes for what each kind is worth. Both changed on 13 Aug 2026;
-neither is written down here again; the due-day rule itself lives in
-`cowork/fall-2026-courses/mk_assignments.py` (lines 19–25: one OYP in a week → Fri; two → Wed,
-Fri; three → Tue, Wed, Fri; graded → Mon).
+the due-day rule (Sathya, 14 Aug 2026) is: one OYP in a week → Fri; two → Wed, Fri;
+three → Tue, Wed, Fri; a graded item → the Monday that follows the week. It used to live in
+`mk_assignments.py`; that generator was retired on 28 Sep 2026 and `assignments.html` is now
+edited by hand, so this is the rule's home.
 
 ## How own-your-progress and graded items are labelled and dated
 
