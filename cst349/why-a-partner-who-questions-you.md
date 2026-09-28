@@ -1,4 +1,4 @@
-<!-- Editable text companion to why-a-partner-who-questions-you.html (not yet built). Draft 28 Sep 2026 for Sathya's review. Timestamps are TED's own paragraph times (verified). -->
+<!-- Editable text companion to why-a-partner-who-questions-you.html. Keep both versions aligned. Draft 28 Sep 2026; Dojo route added the same day. Timestamps are TED's own paragraph times (verified). -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
@@ -10,13 +10,17 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 ## Purpose
 
-Explore how a partner's questions can help you examine the reasoning behind your growth goal.
+Explore how a partner's questions can help you examine the reasoning behind your growth goal. Knowing this before your first online chat on The Commons changes how you use the questions you receive.
 
 ## Watch
 
 Watch before your first online chat on The Commons: Margaret Heffernan, [Dare to disagree](https://www.youtube.com/watch?v=PY_kd46RfVE), TEDGlobal 2012, about 13 minutes.
 
 Heffernan describes how Alice Stewart and George Kneale worked together to examine the evidence behind Stewart's research findings.
+
+## Choose how you will do this
+
+☐ **I am OK with using the AI Dojo to complete this activity.** Tick this to answer the questions as a conversation with your Dojo; the page then shows the Dojo route below instead of the four boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
 
 ## Tasks
 
@@ -41,3 +45,19 @@ Write your answer to each task in the box under it. The first three tasks link t
 ## Submit
 
 This activity is marked complete when all four tasks have an answer. Press **Copy my answers**, review the text, and paste it into the Canvas text box.
+
+## Dojo route (shown when the box at the top is ticked)
+
+**1. Start the conversation.** After watching the video, paste this into your AI Dojo:
+
+> I just watched Margaret Heffernan's TED talk "Dare to disagree". (1) How did Kneale's efforts to prove Dr. Stewart wrong help her assess her conclusion, and what did he do to test her finding? (2) What could a classmate with different experience or a different approach help me notice about my growth goal, connected to Heffernan's advice about choosing people to think with? (3) What happened after Joe raised his concern at work, how did his colleagues respond, and what did that make possible? (4) What is one question a classmate could ask to help me examine an assumption behind my Sprint 2 growth goal, and what would answering it help me understand? Ask me these four questions one at a time, and follow up until each answer says what I actually think, not a summary of the video. Do not answer for me, and do not summarize until I ask you to.
+
+**2. Keep going until it meets the bar.** The conversation is done when each of the four questions has an answer in your own words that uses a detail from the talk, and question 4 is a real question about your own goal.
+
+**3. Ask for the summary.** When the bar is met, paste this:
+
+> Organize a summary of our conversation under four headings, keeping my exact language: How Kneale's testing helped Stewart · What a different classmate could help me notice · What Joe's speaking up made possible · The question that would test my goal. Use only what I said; if I did not answer one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
+
+If any heading says "not yet answered", go back to step 2.
+
+**4. Submit.** Copy the Dojo's whole reply, the summary with the chat under it, and paste it into the Canvas text box.

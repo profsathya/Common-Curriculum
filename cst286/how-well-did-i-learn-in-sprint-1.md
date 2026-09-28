@@ -1,4 +1,4 @@
-<!-- Editable text companion to how-well-did-i-learn-in-sprint-1.html (not yet built). Draft 28 Sep 2026 for Sathya's review. Keep both versions aligned once the .html exists. -->
+<!-- Editable text companion to how-well-did-i-learn-in-sprint-1.html. Keep both versions aligned. Sathya's revision 28 Sep 2026; Dojo prompts aligned to the five tasks the same day. -->
 
 CST286 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
@@ -44,20 +44,18 @@ Start in Monday's class. Write your answer to each task in the box under it.
 
 This activity is marked complete when all five tasks have an answer. Press **Copy my answers**, review the text, and paste it into the Canvas text box.
 
-
 ## Dojo route (shown when the box at the top is ticked)
 
-**1. Start the conversation.** Paste this into your AI Dojo, with your Sprint 1 learning goal filled in:
+**1. Start the conversation.** Paste this into your AI Dojo:
 
-> I want to look back at how I went about my Sprint 1 learning goal. Start by asking me what my goal was. Ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these five things, in any order: one thing that worked and one that did not; how much I cared about the goal and how that care affected my learning; how my partners and I helped each other, or why that did not happen; whether I used AI, how well it worked and how I checked it; and whether I said no to something interesting to stay focused on the goal, or what pulled me away. Do not answer for me, and do not summarize until I ask you to.
+> I want to look back at how I went about my Sprint 1 physics learning goal. Start by asking me what my goal was. Then ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these five things, in any order: what helped my progress and what made it difficult; how interested I was in the topic and how that affected my approach; how my partner and I affected each other's learning, or why we did not work together; whether I used AI, what I asked it, what it gave me and how I checked it; and how I balanced this course with other interests and responsibilities, what that did to my progress, and what I will do better in Sprint 2. Do not answer for me, and do not summarize until I ask you to.
 
 **2. Keep going until it meets the bar.** The conversation is done when each of the five things has a specific moment from the sprint attached to it: what you did, when, and what happened. If you can only give a general answer to one of them, that is the one to keep talking about.
 
 **3. Ask for the summary.** When the bar is met, paste this:
 
-> Organize our conversation under five headings - keep my exact language: What worked and what did not · How much I cared and its effect · How my partners and I helped each other · How I used AI and how I checked it · What I said no to, or what pulled me away. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered".
+> Organize a summary of our conversation under five headings, keeping my exact language: What helped and what made it difficult · My interest in the topic and its effect · How my partner and I affected each other's learning · How I used AI and how I checked it · How I balanced my time, and what I will do better in Sprint 2. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
 
 If any heading says "not yet answered", go back to step 2.
 
-**4. Submit.** Copy the summary and paste it at the top of the Canvas box. Under it, paste the entire chat.
-
+**4. Submit.** Copy the Dojo's whole reply, the summary with the chat under it, and paste it into the Canvas text box.

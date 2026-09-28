@@ -1,4 +1,4 @@
-<!-- Editable text companion to my-sprint-2-growth-goal-online-chat.html (not yet built). Revised 28 Sep 2026 after writing review. Keep both versions aligned once the HTML exists. Self-check: nine items totaling 100 points; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
+<!-- Editable text companion to my-sprint-2-growth-goal-online-chat.html Revised 28 Sep 2026 after writing review. Keep both versions aligned once the HTML exists. Self-check: nine items totaling 100 points; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
@@ -8,7 +8,7 @@ Week 7 · due Monday 12 October, 11:59 p.m. · 100 points · Graded assignments
 
 ## Purpose
 
-Develop a specific Sprint 2 growth goal and use questions with three classmates to examine whether each goal is clear, useful, and feasible within two weeks.
+Develop a specific Sprint 2 growth goal and use questions with three classmates to examine whether each goal is clear, useful, and feasible within two weeks. Questions from classmates show you where your goal is still vague before you spend two weeks on it, and asking them shows you what a clear goal looks like.
 
 ## Tasks
 
