@@ -3,350 +3,41 @@ name: writing-assignments
 description: Use when writing or revising any assignment or activity page students will act on, whatever the course calls that kind of work. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (assignments.html → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
 ---
 
-_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026 (assignment kinds and point values re-checked that day)._
+# Assignment pages - the checks to run before a page reaches Sathya
 
-_Status: v10 (27 September 2026) — the Criteria checklist becomes the Self-check (Sathya, 27 Sep 2026, after several rounds of grading): about ten items, each a clickable checkbox and one line saying what a 5 looks like, with its points beside it; items in submission order; points set per item, not equal. The 3 and 1 rungs of each item, its learning-priority rank and the quality it evidences stay off the page and in the record — the rungs surface in the feedback comment, the priority picks the one or two items the comment addresses, the quality tag feeds the internal tracker. The checked boxes travel with the copied submission; a checked box earns nothing, the grader verifies each item. v9 (19 September 2026) — Purpose is one crisp statement and nothing else; the “By the time you submit, you will have” goal list and the separate “What you’re building on” block are retired from student pages (Sathya, 19 Sep 2026, on reading the CST286 sources item with fresh eyes: neither helps the student). The connection to earlier work is carried by the task itself, by question number. v8 (18 September 2026) — adds “The question the student can copy carries every required answer element” under Task, “The notes behind the AI feedback button” and “The editable twin” under Reflection, from the September 17–18 writing review: requirements found only in guidance, sub-points that restate the question, and guidance that praises or rephrases instead of helping. Routes prose rules to the new `writing-foundation` skill. v7 (15 September 2026) — adds “How own-your-progress and graded items are labelled and dated”: the two section markers in Sathya's words, Recommended Date vs Due Date sourced from `assignments.html`, the ownership line on every OYP page, and the call that the Canvas due-date field stays as it is. v6 (13 September 2026) — inside each task's click-in, the task's answer box now comes right after the guidance and examples, and the reflection question follows it with its own smaller box; the copied text carries a `Reflection:` line under each answer where one was written. Sathya's call after seeing the week-4 CST286 page: one box placed after the reflection question read as the reflection's box, and the reflection never reached the submission. Applied the same day to all eight pages that carry the shape (286 GI1, GI2, week-4 OYP; 349 GI1, GI2; 499 learning plan, mid-term, project proposal). v5 (8 September 2026) — the guidance line says what the second layer is for rather than that it is optional, the copy-the-questions line now names the trade between the doc route and the guided page; Criteria restructured: the checklist comes first as a click-in "Check it before you submit" with checkbox lines written as neutral statements so a reviewer can run the same list, the separate "Done" block is cut where the checklist restates it, and examples were moved out of Criteria into the per-task click-ins. Born from the CST286 GI1 build (Sathya, 8 Sep) and applied back to `cst499/project-proposal.html` the same day. v4 (29 August 2026) — "name the known wrong turns" replaced by preventing likely errors with a positive test, a structured field or a paired example; it had been turning instructions into warnings and coach notes into error lists. v3 (15 August 2026) — the file the pipeline centers on is `assignments.html` (renamed from
-`schedule.html` 14 Aug; call it plain assignments.html, not "the registry"); pipeline hardened from the
-first live Canvas build (CST499 week 1, 15 Aug): shell inventory before first write, ids written back in
-the same pass, links live in one place, the iframe/description pattern, the new-tab rule, and the
-publish-on-creation policy. v2 (13 August 2026) — the assignment-kind labels and the per-kind point values were removed and handed back to each course's design record, after three renamings in eight days. v1 (12 August 2026). Born from the assignment-pipeline conversation of 11–12
-August (Sathya + Alan); the shape adapts the Transparent Assignment Template © 2013
-Mary-Ann Winkelmes (TILT Higher Ed), whose national study showed that making purpose,
-task, and criteria explicit measurably improves learning. First test: the first fall
-2026 assignment built through it._
+One screen. The page shape, the pipeline, his corrections and the version history are in `references/rules.md` in this folder - read that once at the start, then run this list on the page. Every line traces to a section there, named in parentheses; the tests picked are the ones his corrections show were missed. Prose rules come from `writing-foundation` and `writing-to-teach`, the goal line from `writing-learning-goals`, the final trim from `reviewing-course-text`. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).
 
-# Writing assignments
+## Before the first draft
 
-An assignment page tells a student five things, in this order: why this work is worth
-their time, what it builds on, what exactly to do, how they'll know they did it well,
-and what to take from it afterward. Every assignment and activity page in the fall
-courses carries these five blocks. The design conversation decides the assignment; this skill makes the page
-uniform.
+- The `.md` twin is drafted first, beside the `.html`, with the student-facing content in page order and none of the machinery; once he has edited it, every change goes into both files. (The internal lines - The editable twin)
+- Each task's question has been compared with its guidance, checklist, examples and AI-feedback instructions, and any count, resource type, time requirement or demanded result found only in the support is flagged for the author. (Task)
 
-## Purpose — why this exists
+## On every page
 
-**Current rule (Sathya, 19 Sep 2026): a crisp Purpose is sufficient — one or two sentences carrying the payoff. Do not add a “By the time you submit, you will have” list or skills/knowledge bullets to the page.** The rest of this section is kept as background for the design conversation, not as page content.
+- The blocks are Purpose · Task · Criteria · Reflection, in that order; there is no "What you're building on" block and no "By the time you submit, you will have" list; earlier work is named inside the task, by assignment name and question number. (Purpose; What you're building on)
+- Purpose is one or two sentences, and the first carries the payoff, not the topic. (Purpose; Checklist)
+- An own-your-progress page opens with the ownership line, verbatim, in its `.ownbar` block under the page head and above Purpose. (How own-your-progress and graded items are labelled and dated)
+- The words "not graded" appear nowhere a student reads; the section heads carry his two markers verbatim. (How own-your-progress and graded items are labelled and dated)
+- Every row shows `Recommended Date:` (OYP) or `Due Date:` (graded) from its `data-due`, in the title's `.hint` span with the date in `span.wdate`; no due date is repeated in the Canvas assignment body. (How own-your-progress and graded items are labelled and dated)
 
-First sentence carries the payoff, in the student's terms. Then, plainly:
+## On every task
 
-- **The skills this practices** — named in student language, and honest about where
-  they sit on the ladder from simple to complex (understand → apply → analyze →
-  synthesize → evaluate → create). Say where the skill matters beyond this assignment:
-  in the course, in the field, in working life.
-- **The knowledge it builds** — the two or three pieces of content the student will
-  come away knowing.
+- Likely errors are prevented by a positive test, a structured field or a paired example; a common mistake is named outright only when it is consequential, likely, and cannot be prevented more directly. (Task)
+- Sub-points (a/b/c) are distinct answer elements, never a restatement of the main instruction, and separate requirements stay visible. (Task)
+- Guidance under the `+` gives a way to work out an answer; no sentence praises, justifies or rephrases the question. (Task)
+- Examples sit in the task's click-in, not in Criteria, and none predicts an employer's reaction or tells the student which goal is best. (Task; Criteria for success - Examples live under each task)
+- Inside the click-in, the answer box comes right after the guidance and examples, and the reflection question follows with its own smaller box; the copied text carries a `Reflection:` line under each answer. (History, v6)
 
-When an assignment deliberately withholds the how — the struggle is the point — the
-purpose says so in so many words ("the purpose here is for you to feel stuck and invent
-your own approach; that experience is the skill"). Confusion a student was warned about
-reads as design; confusion they weren't reads as not belonging.
+## On Criteria and Reflection
 
-## What you're building on — the prerequisite block (RETIRED from student pages, 19 Sep 2026)
+- The Self-check click-in `+` opens Criteria: about ten items in submission order, each a checkbox, a neutral observable line saying what a 5 looks like (never "I wrote…"), and its points; points set per item, adding up to the assignment total; no separate "Done" block; the copy button carries each item's checked state. (Criteria for success - The Self-check; The checked boxes travel)
+- No 3 or 1 rung, priority rank or quality tag is on the page or behind a dropdown; each item has all three in the record. (Criteria for success - What stays off the page; The internal lines)
+- "What makes it strong" is written as traceability between tasks; grading names points per item, the grade group, and the peer/TA/instructor conversation. (Criteria for success)
+- The copy-the-questions line and the guidance line use his wording: the first names the trade between the doc route and the guided page, the second says what the `+` layer is for, never that it is optional. (Criteria for success)
+- No question, example, criterion or AI note requires a failure, an AI error or a changed answer; justified uncertainty is allowed; "answer without hedging" is not a criterion; no question assumes a personal limitation; the questions are answerable only after the work. (Reflection; Checklist)
+- The AI feedback notes are written from the question, say nothing when every requested element is present, and supply no goal, ranking or reader reaction; a change to the question wording changed the copied questions, answer labels, checklists and notes in the same pass. (The internal lines - The notes behind the AI feedback button)
 
-**Do not put this block on the page.** Where a task needs earlier work, the task says so at its point of action, by assignment name and question number (“Copy in the prediction you wrote for question 4a of your Physics Learning Goal”). The prerequisite still lives in the `assignments.html` row and the Canvas module. The text below is the retired shape, kept for the record.
+## Before it reaches him
 
-Its own short block, placed right before Task — the moment the student needs the prior
-work is the moment they start this one. Three lines, concrete:
-
-- **The prior activity this stands on**, named, with the artifact in hand: "bring your
-  evidence inventory from Sprint 0," never "recall previous material."
-- **The knowledge or skill assumed**, in one plain sentence, so the student can
-  self-check before starting.
-- **Where to go back** if it's shaky — a link to the earlier page, framed as a
-  refresher rather than a remediation.
-
-This block is the student-language mirror of the machinery: the prerequisite field in
-`assignments.html` and the Canvas module requirement name the same prior work the page names —
-one link, three views. It is also what makes the course feel cumulative on every page:
-each assignment visibly extends an evolving piece of work rather than starting fresh.
-
-## Task — what to do
-
-Steps in the order the student should take them, each instruction at its point of
-action. **Prevent likely errors with a positive test, a structured field, or a paired
-example** — "quote the phrase and give the count" prevents paraphrasing without warning
-about it; two columns prevent a one-sided answer without naming the mistake. State a common
-mistake outright only when it is consequential, likely, and cannot be prevented more
-directly. (Revised 2026-08-29: the earlier "name the known wrong turns" turned instructions
-into warnings and produced coach notes written as errors rather than as criteria.) If a step needs a tool, link it in the step. The reader gets one
-sentence before deciding whether to keep reading — the backbone must survive a skim,
-with depth behind expandables (writing-to-teach governs every sentence).
-
-**The question the student can copy carries every required answer element** (18 Sep
-2026). Before drafting, compare each task's question with its guidance, checklist, examples
-and AI-feedback instructions. Any count, resource type, time requirement or demanded result
-that appears only in the supporting text is flagged; the author decides whether to add it
-to the question or remove it from the support. A student who works from the copied
-questions alone must not miss a requirement. Sub-points (a/b/c) are for distinct answer
-elements only — never a restatement of the main instruction — and genuinely separate
-requirements stay visible rather than being folded away to reduce clutter. Guidance under
-the `+` gives a way to work out an answer; sentences that praise, justify or rephrase the
-question are cut. An example demonstrates the requested relationship without predicting an
-employer's reaction or telling the student which goal is best. The prose rules for all of
-this live in `skills/writing-foundation/SKILL.md`.
-
-## Criteria for success — what done and good look like
-
-Three parts, in this order: the checklist, what makes it strong, and grading.
-
-**The Self-check — the checklist first (Sathya, 27 Sep 2026).** About ten items, behind a
-click-in `+` at the top of Criteria, in the order the student meets them in the submission.
-Each item is one line: a clickable checkbox, a statement of what a 5 looks like for that
-item, and its points. Write the statement as a **neutral, observable** line — "The behavior
-is written as a *Why does ___ lead to ___?* question" — never "I wrote…", because the same
-list has two users: the student checking their own draft, and the grader checking it after.
-Points are set per item by what the item carries, not divided equally; the items add up to
-the assignment total (100 in Sathya's courses; other courses have their own totals). Ten or
-so is the cap because a student reads ten lines and scans twenty. Fold anything a separate
-"Done" block would say into these lines and cut the block (Sathya, 8 Sep 2026).
-
-**The checked boxes travel with the submission.** The copy-to-clipboard button carries each
-item's checked or unchecked state into the copied text. A checked box earns no points: the
-grader verifies every item. The box is the student's claim, and the place where a student
-marks an item done that is not done is what the grader and the feedback look at first.
-
-**What stays off the page.** Each item has a 5/3/1 ladder, a learning-priority rank and a
-quality tag; only the 5 line is shown. The 3 and 1 rungs are not on the page and are not
-behind a dropdown — they reach the student in the feedback comment, where the rung text is
-the nudge. See "The internal lines" below.
-
-**What makes it strong.** Separate from the checklist, because the difference between
-complete and strong is where the walkthrough conversation will spend its time. Write it as
-traceability between tasks — "the gap in 2 is traceable to the postings in 1", "what you
-are unsure about in 3 is the same thing 4 and 5 go after" — so a student can test their own
-draft against it. Movement counts more than altitude: strong means further than where the
-student started.
-
-**Grading, in the open.** The points per item, the grade group, and what happens to this work
-afterwards — named plainly: "you will be asked to explain this to a peer, the TA and/or the
-instructor, so make sure you are comfortable with the responses you have developed for this
-assignment." What earns full points on each item is on the page; how partial credit is
-described (the 3 and 1 rungs) is in the record and comes back to the student in the comment.
-
-**The copy-the-questions line** (Sathya, 8 Sep 2026). Where a page offers a "Copy the
-questions" button, the line beside it names the trade the student is making, rather than
-just describing the button: "If you would like to work on the assignment in a Google doc
-without the guidance from this assignment, you can paste this into a Google doc and answer
-each task under it. The guidance structure provided in this page is the recommended
-approach to ensure you are being guided and challenged along the way." Both routes stay
-open — the earlier wording made the doc route look like the default.
-
-**The guidance line.** Where a page carries a second layer behind a `+`, say what the
-layer is *for*, never that it is optional (Sathya, 8 Sep 2026): "Each `+` opens guidance,
-examples, a reflection question and a box to write in. The guidance and reflection are
-provided to support you to do a high quality job of answering the questions." A student
-who is told the support is optional reads it as skippable, which is the opposite of the
-intent — the tasks standing on their own is a design fact for the record, not a line to
-put in front of the reader.
-
-**Examples live under each task, not here.** `writing-to-teach` wants at least two examples
-of what the characteristics look like in practice, and the place for them is the per-task
-click-in — guidance, a worked example, a reflection question and a place to write — where a
-student meets the example at the moment they need it. Keep the Criteria block to the three
-parts above.
-
-## Reflection — learn and grow from it
-
-**Keep the result open (Sathya, 15 Sep 2026).** Ask what the student did, how they
-checked it, and what they found. A check may confirm an answer, reveal an error, or
-leave uncertainty. Questions, examples, criteria, and AI feedback must all permit
-those outcomes; do not require a failure, an AI error, or a changed answer to prove
-that the student worked rigorously. Judge the testing and evidence. Clear reasoning
-can include justified uncertainty; "answer without hedging" is not a success criterion.
-Frame reflection around the student's experience, actions, circumstances, and support:
-what helped, what made progress difficult, and what they would adjust. Do not assume
-the cause is a personal limitation ("what about me limits me?").
-
-Two or three questions at the end of the page, written to be answered after the work:
-what changed in your understanding, what would you do differently, what does this tell
-you about how you work. These feed the course's own reflection rhythm. After grades come back, the
-reflection is where a student adjusts strategy — ask for that explicitly when the
-assignment is one they'll build on.
-
-## The internal lines (never on the student page)
-
-Each assignment's record — not its page — carries:
-
-- **Qualities** — the named nurture-track subset this activity carries (chosen by its
-  focus at this point in the course), and one line on what movement would look like.
-- **Evidence linkage** — which of the course's evidence standards the walkthrough
-  samples from this work.
-- **Per Self-check item (27 Sep 2026)** — three things beside each item's 5 line: the
-  **3 and 1 rungs**, written as what is observable in the submission at that level (the 3
-  rung is written so it can be pasted into a comment as the nudge); the **learning-priority
-  rank**, used by the grader to choose the one or two lowest-scored, highest-priority items
-  the comment addresses, so the comment is never a laundry list; and the **quality tag**,
-  the one nurture-track quality the item evidences, so the internal tracker reads quality
-  from the item scores and nothing is scored twice. The grader scores each item once on its
-  ladder; feedback and tracking both read that score.
-
-**The notes behind the AI feedback button** (18 Sep 2026). They are written from the
-question, not from the guidance: feedback identifies a requirement the question asks for
-and the answer does not contain, and says nothing when all requested elements are present.
-It accepts an answer that confirms, changes, or stays uncertain, provided the student shows
-support. It does not supply a goal, rank the student's choices, predict how an employer or
-reader would react, or require a changed belief or an admitted mistake. Reflection stays
-optional in feedback unless the assignment says otherwise. When the question wording
-changes, the copied questions, the answer labels, the local checklists and these notes
-change with it in the same pass.
-
-**The editable twin** (Sathya, 15 Sep 2026). Every assignment page has a `.md` beside its
-`.html` carrying the student-facing content in page order and none of the machinery. The
-`.md` is drafted first and Sathya edits it; the HTML is built from it. After that, every
-change goes into both files: Sathya edits only the `.md` and says so, and the HTML is
-carried to match.
-
-## The pipeline this page lands in
-
-The repo is the source of truth; Canvas is the display.
-
-1. The design conversation decides the assignment → one row in the course's
-   `assignments.html` (mechanics only: id · week · module · title · kind · points ·
-   due-day · submission type · completion requirement · prerequisite · qualities ·
-   html path and its public page URL · the Canvas assignment URL, id and published
-   state — written back **in the same pass that creates them in Canvas**, so the file
-   never lags the shell). Canvas URLs are hand-maintained in exactly ONE place — this
-   file; home pages and the course Google Docs derive from it or are diffed against
-   it. The 15 Aug dead-link incident was a home page carrying its own copies of
-   Canvas URLs that outlived the objects they pointed at. When Canvas objects are
-   deleted or recreated, sweep the link consumers the same day — module-item URLs die
-   with their modules.
-
-   **The kinds themselves are course design, not this skill (Sathya, 13 Aug 2026).**
-   `kind` is a field this skill fills in from whatever the course has decided to call
-   its categories, and what each is worth. Naming them here means every renaming
-   downstream — and there have been three — has to come back and edit this file.
-   Read the course's own design record for the current set.
-
-   **assignments.html is a web page, not a CSV (Sathya, 13 Aug 2026; named
-   `assignments.html` 14 Aug — it holds assignments only, no session dates).** Both hold
-   the same fields; the page is the one he can actually review — sprints group into
-   expandable sections, so the semester reads at a glance and opens where he wants
-   detail. A record this wide is unreadable as a spreadsheet, which is why the earlier
-   `assignments.csv` plan was dropped. `config/cst349-assignments.csv` and `config/cst395-assignments.csv`
-   are spring artifacts of the retired pipeline, not inputs to this one.
-2. This skill produces the page → one HTML file in the course folder, house style,
-   accessibility rules observed → publishes via the repo to GitHub Pages.
-3. **The Canvas assignment name carries its kind as a prefix — `OYP: `, `GI: ` or
-   `Exam: `** (Sathya, 23 Aug 2026; `Exam: ` settled 29 Aug 2026), so a student scanning
-   the assignments list, the gradebook or a to-do notification sees at a glance whether
-   an item is graded. **Exams take their own prefix rather than riding under `GI: `**
-   because they carry different points or a different grade category — a student
-   should not have to open the item to find that out. The prefix is a
-   Canvas-side display convention only: `assignments.html` keeps the plain title and
-   shows the kind as its own column, and the course pages link by id, so nothing
-   breaks. Apply it whenever an item is created in Canvas or renamed there.
-4. Canvas shows the page in an iframe. The assignment description is an iframe of the
-   public page (width 100%, height ~1100, border 0, a title attribute) plus one
-   fallback line linking the page in a new tab (settled 15 Aug 2026, both CST499
-   week-1 assignments). On course pages, activity links open a NEW TAB in both
-   contexts — the context resolver sets `_blank`, never `_top`. All three home pages do this
-   (the 286/349 `_top` was fixed 9 Sep 2026).
-5. A reconcile pass diffs `assignments.html` against Canvas and applies only the
-   differences — modules, order, prerequisites, completion requirements, due dates.
-   **Before the FIRST write into any Canvas shell, inventory what is already there**
-   (semester imports, old drafts) and get a ruling — the CST499 shell held ~20 spring
-   items and four stale drafts on 15 Aug. Hand-edits in Canvas surface as drift to
-   report, never silently overwritten. **Publish policy (Sathya, 15 Aug 2026):
-   publish-on-creation while the course shell is unpublished; once the course is live,
-   new items stay unpublished until his explicit go.** After any Canvas write, read the
-   result back through the API before reporting it done.
-6. Whenever `assignments.html` or an assignment page changes, the two links — the
-   Canvas assignment URL and the public HTML page URL — reach each course's Google Doc
-   through the Common-Curriculum Apps Script sync (`apps-script/CourseDocSync.gs`,
-   driven by GitHub Actions and `config/course-docs.json`), so the AI Dojo can point a
-   student straight at the right assignment on either surface (Sathya, 15 Aug 2026 —
-   keep this step; the doc is downstream of the repo, and edits made in a synced tab
-   are lost on the next sync).
-
-Due days are rule-driven, not per-row: the course's design record sets the rhythm —
-which kind of work falls on which day, and why — and this skill applies it rather than
-restating it. The same goes for what each kind is worth. Both changed on 13 Aug 2026;
-the due-day rule (Sathya, 14 Aug 2026) is: one OYP in a week → Fri; two → Wed, Fri;
-three → Tue, Wed, Fri; a graded item → the Monday that follows the week. It used to live in
-`mk_assignments.py`; that generator was retired on 28 Sep 2026 and `assignments.html` is now
-edited by hand, so this is the rule's home.
-
-## How own-your-progress and graded items are labelled and dated
-
-Sathya's call, 15 September 2026, applied to all three courses the same day. The wordings
-below are his; use them verbatim rather than paraphrasing.
-
-**The two section markers.** On every course home page and every activity page, the
-own-your-progress section head carries `&middot; Will not affect your final grade`. It never
-says "not graded" — a student reads that as "this does not count", which is the opposite of
-what the section is for. The graded-items section head carries
-`&middot; Will affect your final grade and Late penalty applies`. Both sit in the existing
-`.hint` span at the end of the section head.
-
-**Every row carries a date, and the label says what kind of date it is.** An
-own-your-progress row reads `Recommended Date: <Day D Month>`; a graded row reads
-`Due Date: <Day D Month>`. Take the date from that row's `data-due` in `assignments.html`
-and nowhere else — every row there has one, including rows not yet built in Canvas, so a
-week still being drafted is no reason to leave a row undated. The date goes in the item
-title's `.hint` span, right after the title, with the date itself wrapped in
-`<span class="wdate">` so every row reads the same way. A date buried in prose at the end of
-a description ("...started in class. **Due Wednesday.**") is the defect this replaced, and
-some rows carried no date at all.
-
-**Where the model is explained in prose, not labelled**, the same idea is carried in Sathya's
-longer wording rather than the short marker: own-your-progress activities are "provided to help
-you, but the grades for these activities will not affect your final grade". Applied 15 Sep 2026 to
-all three `understand-the-course-design.html` pages, which still said "activities that are not
-graded". The phrase "not graded" should not survive anywhere a student reads.
-
-**The Canvas due-date field is set from data-due at build (see building-canvas-fall-2026 §2) and
-is not repeated in the assignment body.** Sathya,
-same day: the recommended date belongs on the home-page entry, because Canvas already prints
-its own due date at the top of every assignment and a second date in the body only competes
-with it.
-
-**Every own-your-progress activity page opens with the ownership line**, in its own `.ownbar`
-block directly under the page head and above Purpose:
-
-> Take ownership of your progress &mdash; this activity is provided to help you, but the grade
-> for this activity will not affect your final grade.
-
-## Checklist (checkable by looking)
-
-- The own-your-progress section head reads "Will not affect your final grade" and the
-  graded-items head reads "Will affect your final grade and Late penalty applies"; neither
-  says "not graded" anywhere on the page, including in prose that explains the model — there the
-  wording is "provided to help you, but the grades for these activities will not affect your
-  final grade".
-- Every own-your-progress row shows `Recommended Date:` and every graded row shows
-  `Due Date:`, each taken from that row's `data-due` in `assignments.html`, and no row that
-  has a date in `assignments.html` is missing one on the page.
-- Every own-your-progress activity page opens with the ownership line, above Purpose.
-- The blocks are present, in order: Purpose (one crisp statement, no goal list) · Task · Criteria · Reflection. No “What you’re building on” block; earlier work is named inside the task that needs it.
-- The first sentence of Purpose is the payoff, not the topic.
-- Every instruction sits at its point of action; likely errors are prevented by a positive
-  test, a structured field, or a paired example rather than by a warning.
-- Criteria open with the Self-check click-in — about ten items in submission order, each a
-  clickable checkbox, a neutral observable line saying what a 5 looks like, and its points;
-  the points add up to the assignment total; the checked state is carried by the copy button —
-  then what makes it strong, then grading with the peer/TA/instructor conversation named.
-  Two or more worked examples sit under the tasks, not in Criteria.
-- No 3 or 1 rung, priority rank or quality tag appears on the page; each item has all three
-  in the record.
-- Reflection questions are answerable only after doing the work.
-- The qualities line and evidence linkage are in the record and absent from the page.
-- The `assignments.html` row exists and matches the page: kind and points as the course
-  design defines them, due day by the rhythm rule, submission type, completion
-  requirement — and the builds-on block, the row's prerequisite, and the Canvas
-  requirement all name the same prior work. If the assignment exists in Canvas, the
-  row carries its id, URL and published state.
-- The page renders in both contexts (web and Canvas iframe).
-- The course Google Doc carries this assignment's current Canvas link and page link
-  (via the Apps Script sync).
-
----
-
-*Provenance — Human (Sathya): the Purpose–Task–Criteria adaptation with reflection
-questions, the separate-skill decision and its place above writing-to-teach, the
-registry-as-source-of-truth + iframe pipeline and the 13 Aug call that the record is
-`assignments.html` rather than a CSV, the due-day rhythm, the mirror mechanic, the
-qualities-per-activity principle. Source template: Transparent Assignment Template ©
-2013 Mary-Ann Winkelmes. Human + AI: the registry/page split, rule-driven due dates,
-reconcile-with-drift-report. AI (Alan): this file's drafting, 12 Aug 2026, for
-Sathya's edit.*
+- The `assignments.html` row matches the page, with kind and points from the course design and the due day by the rhythm rule (one OYP Fri; two Wed, Fri; three Tue, Wed, Fri; a graded item the following Monday). (The pipeline this page lands in)
+- The Canvas name carries its prefix, `OYP: `, `GI: ` or `Exam: `; activity links open a new tab (`_blank`, never `_top`); the page renders on the web and in the Canvas iframe, and the course Google Doc carries its current Canvas link and page link. (The pipeline, 3, 4 and 6; Checklist)

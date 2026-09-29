@@ -3,52 +3,32 @@ name: writing-foundation
 description: Read before drafting or revising anything in Sathya's voice — a student page, an assignment question, a proposal paragraph, a slide, an email, a protocol someone will follow. The rules that apply to all of it, each with the correction it came from. Purpose-specific skills (writing-to-teach, writing-assignments, slides) add what their purpose needs and do not restate these.
 ---
 
-_Dated copy, 28 September 2026, of the canonical file in the Alan repo (`executive-assistant/skills/writing-foundation/SKILL.md`). Refresh this copy whenever the canonical changes; do not edit it here. Status: v1.1 (28 September 2026; v1 18 September 2026) — added the home-page and session-plan section. Consolidated from `WritingStyle.md` standing corrections and the Common-Curriculum writing skills after the September 17–18 review, which found the same defect across teaching pages, assignment questions, a proposal and a TA protocol: sentences the reader has to decode to find what is being asked. Canonical copy lives here (Alan, `skills/writing-foundation/`); Common-Curriculum carries a dated copy for sessions that mount only that repo._
+# Writing foundation - the checks to run before a draft reaches Sathya
 
-# Writing foundation
+One screen. This folder holds a dated copy of the canonical skill in the Alan repo (`executive-assistant/skills/writing-foundation/`); refresh it from there rather than editing it here. The rules, the corrections they came from and the version history are in `references/rules.md` - read that once, then run this list on every draft in his voice. There is one test per numbered rule, each checked by looking at the sentence, and every line names its rule in parentheses. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).
 
-These rules apply to every draft in Sathya's voice. Quoted before/after wording comes from his recorded corrections (sources at the end); an empty after means he removed the sentence. `WritingStyle.md` keeps the corrections as evidence and the channel observations; this file is the rule set.
+## On every sentence - one test per numbered rule
 
-1. **Start an instruction with what the reader should do.** Keep the action, its object, and any required count in the instruction. A reader should be able to identify the requested response without opening the guidance. Before: “A space you can search, in one sentence”. Sathya's replacement: “Write down a unique problem, opportunity or domain in the job market that you can search”. A purpose paragraph may explain the benefit first; this rule concerns instructions. [1: Concise means low load]
+- An instruction opens with the action the reader performs and keeps its object and any required count. A purpose paragraph may lead with the benefit. (1)
+- In a revision, who directs whom, who acts, and what they act on match the original instruction. (2)
+- No instruction is a compressed label or metaphor; the instruction verb is "identify" or "include", not "name". Short headings may stay labels. (3)
+- Each claim names its actor, no passive conclusion hides how something happens, and a sentence that depends on the one before carries because, so or but. (4)
+- In directions, each sentence changes the reader's next action or supplies context needed to take it, and an instruction repeated in the task, guidance or submission area passes the same test. Explanations that teach an unfamiliar concept stay. (5)
+- No worry appears that the reader did not raise, and no reassurance of one. (6)
+- A shared difficulty is written as "we", Sathya's own experience or responsibility in first person, and a genuine question stays a question. Nothing personal is invented. (7)
+- A collaborative invitation opens with what he hopes to build ("I'm hoping we can work together to…"); no manufactured not-X/but-Y contrast, aphoristic closer or clever turn; US spelling; a spaced hyphen for an aside. In proposal prose, also no colon-led triplet or First/Second/Third cadence, and a long sentence joining two complete thoughts at "and" is split. (8)
 
-2. **Keep who directs whom, who acts, and what they act on when revising.** Compare those three things before and after shortening. Incorrect shortening: “Ask follow-up questions”. Original instruction to preserve: “Ask the AI to keep asking you harder follow-up questions”. The student directs AI to challenge them; reversing those roles changes the activity. [1: Preserve who does what]
+## On every assignment question
 
-3. **Replace compressed labels and metaphors with the action or meaning they stand for.** Use “identify” or “include” instead of “name” as an instruction verb. Before: “A whole-day time budget — where your attention actually goes”. Sathya's replacement: “How you prioritize your time and attention”. In an instruction, add the verb the task requires. Short headings may remain labels; the rule targets wording the reader has to decode. [1: No telegrams; One vocabulary]
+- Every required answer element is in the question the student can copy; any extra count, resource type, time requirement or demanded result found only in guidance, checklist, examples or AI feedback instructions is flagged for the author. (Applying the foundation to assignments)
+- Sub-points exist only for distinct answer elements and none repeats the main instruction; separate requirements stay visible. (Applying the foundation to assignments)
+- Guidance gives a way to work out an answer; no sentence merely praises, justifies or rephrases the question; no example predicts an employer's reaction or says which goal is best. (Applying the foundation to assignments)
+- The question, example, criterion and AI feedback all allow the evidence to confirm, change, or leave the answer uncertain; no reflection assumes a mistake or changed belief. (Applying the foundation to assignments)
 
-4. **Write the actor and the connection between claims.** Replace a passive conclusion that hides how something happens. Before: “work can be produced”. Correction recorded in Sathya's words: “with the help of AI, you could complete the work”. Use because, so, or but where the next sentence depends on that connection. Do not split an explanation into punchy declarations and leave the reader to supply the link. [1: Walk the chain; 2: Standing corrections]
+## On every home page and session plan
 
-5. **In directions, delete background sentences that do not change the reader's next action or supply context needed to take it.** Before: “Sathya runs his own check-ins in a different room”. After: deleted from the TA protocol. Apply the same test to repeated instructions in the task, guidance, and submission area. Teaching an unfamiliar concept can require explanations and examples; do not remove those by treating all prose as directions. [2: Directions someone will follow]
-
-6. **Remove an invented worry and its reassurance together.** Before: “You do not need an answer yet. You need to start looking for one.” After: deleted from the class deck. Address a concern when the reader has actually raised it and the answer helps them proceed. Do not add a reassuring sentence merely to make the prose sound warm. [3: Register]
-
-7. **Express Sathya's actual position and involvement.** Before: “It is not common to start with this question.” Sathya's replacement: “We are probably not used to talking about our curiosity”. Use “we” for a shared difficulty and first person for his own experience or responsibility. Preserve a genuine question or uncertainty instead of upgrading it into a settled definition. Do not invent personal experience to achieve this register. [3: Register; 2: Questions at the pivot]
-
-8. **Open a collaborative invitation with what Sathya hopes to build.** Before: “I don't want to do this alone.” The recorded preferred opening is “I'm hoping we can work together to…”. Remove manufactured not-X/but-Y contrasts, aphoristic closers, and clever turns. Use US spelling and a spaced hyphen for an aside. In proposal prose specifically, also remove colon-led triplets and First/Second/Third cadence; split a long sentence at “and” when it joins two complete thoughts. These proposal corrections are explicit, but a complete original/revised proposal pair was not recovered in this review. [2: May 30 revision; Standing corrections]
-
-## Applying the foundation to assignments
-
-These are proposed assignment-specific rules, kept separate so they do not become universal prose rules.
-
-- **Put every required answer element in the question the student can copy.** Compare that question with its guidance, checklist, examples, and AI feedback instructions. Flag any extra count, resource type, time requirement, or demanded result before drafting. The author decides whether to add it to the question or remove it from the supporting text.
-- **Use sub-points only for distinct answer elements.** Do not repeat the main instruction as a sub-point. Keep genuinely separate requirements visible; do not strip a/b structure wholesale to reduce clutter.
-- **Make guidance give a way to work out an answer.** Remove sentences that merely praise, justify, or rephrase the question. An example should demonstrate the requested relationship without predicting an employer's reaction or telling the student which goal is best.
-- **Allow the evidence to confirm, change, or leave the student's answer uncertain.** Apply this to the question, example, criterion, and AI feedback together. A reflection must not assume a mistake or changed belief. This is the September 15 rule in writing-assignments.
-
-## Applying the foundation to course home pages and session plans
-
-Added 28 September 2026 from Sathya's edit of the Sprint 2 home-page preview (CST286 tab). Before/after wording is his. The home page is the page students scan most and read least, so it carries less than any other page.
-
-- **A session-plan entry is an agenda, not a walkthrough.** A title that names what the session is about, then two to five lines each naming one thing that will happen. Before: "What I learned from Sprint 1, and the changes I am making. Then you start on yours." followed by a 110-word first-person paragraph (I open with… then, in pairs… your partner's job is… we close with…). Sathya's replacement: "Look back at Sprint 1" with two lines under it — "Lessons about making the course better by Prof. Sathya" and "Lessons about learning better by each student". The walkthrough belongs in the class plan and the slides, not on the home page.
-- **Agenda lines are noun phrases that say who does what.** "Examples of quantitative relationships", "Additional resources on Canvas", "Exploratory conversation with a new partner", "Using The Commons for more exploratory conversations". Where a person matters, name them in the third person: "by Prof. Sathya", "by each student", "Jesus hosts".
-- **Sprint outcomes name the course content in the course's own terms.** Before: "State what you can predict about the thing you care about, and why being able to predict it is useful." Sathya's replacement: "Strengthen your understanding of a quantitative relationship between two physical parameters." Then a later outcome may build on the earlier one: "Use that understanding to predict how a system will behave in the physical world." One capability per line; no meta-language about the process ("the thing you care about", "the gap between what you predicted and what you observed").
-- **Do not explain the page's own structure.** Before: "Two words carry this sprint. How I learned is about the way you went about your goal. What I found is about what your work actually showed. Week 7 is the first; weeks 8 and 9 are the second; the exam asks both." After: deleted. The week titles carry it.
-- **A sprint title names the activity and its purpose.** Before: "Reflect, adapt and support each other". Sathya's replacement: "Exploratory conversations to reflect and adapt".
-- **The assignment summary on the home page states what to do, in what shape, and what is graded — and stops.** Keep every required element (rule: put every required answer element in the question), keep the grading line, and cut the second example, the motivational clause and the sentence that repeats the section header. The assignment page carries the rest.
-
-## Sources
-
-1. Writing to teach — `skills/writing-to-teach/SKILL.md`.
-2. `WritingStyle.md` in the Alan repo (Standing corrections; Channel observations).
-3. Course slides — `skills/slides/SKILL.md`.
-
-Evidence status: the correction examples are recorded in maintained guidance, not newly verified against the original chat logs. Rule 8's proposal-specific clauses still need the original before/after passage. It has not yet passed a reader's test.
+- A session-plan entry is a title naming what the session is about and two to five agenda lines; no walkthrough paragraph. (Applying the foundation to course home pages and session plans)
+- Agenda lines are noun phrases that say who does what, with any person named in the third person ("by Prof. Sathya", "by each student"). (Applying the foundation to course home pages and session plans)
+- Sprint outcomes name the course content in the course's own terms, one capability per line, with no meta-language about the process. (Applying the foundation to course home pages and session plans)
+- No sentence explains the page's own structure; a sprint title names the activity and its purpose. (Applying the foundation to course home pages and session plans)
+- The home-page assignment summary states what to do, in what shape, every required element and the grading line, and stops: no second example, motivational clause, or repeat of the section header. (Applying the foundation to course home pages and session plans)

@@ -2,6 +2,10 @@
 
 The discipline files an AI assistant loads while helping design a CTI course. This folder holds the **design-level** skills — the ones about deciding what a course, its sprints, its modules, and its components should be. The operational skills that publish and assess a live course (submission evaluation, Dojo construction) stay in the CTI team repo (`cti-chief-of-staff/skills/`), which also carries the shared **Authoring rules** every new skill here is written against; Canvas builds and slides for the fall courses live here.
 
+## Structure (29 September 2026)
+
+Every skill is two files that point at each other. `SKILL.md` is one screen: the frontmatter, one paragraph pointing at the reference, and a checklist of tests to run on the output before it reaches Sathya or goes live - each test checkable by looking at the draft, each ending with the section of the reference it traces to. `references/rules.md` holds the complete rules, the corrections they came from, and the version history. A rule changes in `references/rules.md` and its test in `SKILL.md` in the same edit. The split was made on 29 September 2026 after the CST286 assignment review repeated defects whose rules were already written but buried in a 7,000-word file; nothing was added or removed in the move - the old body is the new `references/rules.md` verbatim.
+
 Each skill lives in its own subfolder as a `SKILL.md` with YAML frontmatter: a `name`, and a `description` written as the moment the skill should load. The body is self-contained.
 
 **Status (15 September 2026).** Seven skills. The scale skills below are named gaps. Each gets written the first time real work exercises it, so its content comes from use rather than from invention — `writing-to-teach/` is the first skill grown this way, promoted 8 August 2026 after passing its first test on the CST499 home page.

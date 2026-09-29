@@ -3,150 +3,41 @@ name: building-canvas-fall-2026
 description: Use when creating or updating assignment groups, modules, or assignments in the Fall 2026 Canvas shells (CST286 33930 · CST349 34789 · CST499 33649). The ordered build recipe — grade groups and weights, assignments from assignments.html rows, per-sprint type-split modules with submit requirements, the reflection-first ordering, same-pass id write-back, and the verification and publish rules. Fall-2026-specific by decision; whether other programs adopt a similar structure is deliberately left open.
 ---
 
-_Scope (Sathya, 15 August 2026): this is the build process for the three Fall 2026 CSUMB courses
-only. It lives here rather than in the team repo's `updating-canvas` on his call — it is not (yet) a
-CTI-wide pattern, and nothing in it is a rule for other programs. `updating-canvas` (Career
-Intelligence, June 2026) remains the general Canvas-build skill; where the two differ — most visibly
-module architecture — this file wins for these three courses and only these._
+# Building Canvas for Fall 2026 - the checks to run before each write
 
-_Derived from the lock record (`cowork/fall-2026-courses/CONTEXT.md`; the Canvas gating model locked
-15 Aug 2026) and the first live build (CST499 week 1, 15 Aug 2026). The design decisions this recipe
-implements are stated there, not here — this file is only the how. Last checked: 15 September 2026 (section 6 added that day for the seven short own-your-progress activities)._
-
-# Building Canvas for the Fall 2026 courses
-
-The course's `assignments.html` is the source of truth; Canvas is the display. The
-`writing-assignments` skill governs the page and the pipeline around it; this file is the
-Canvas-side recipe: what to create, in what order, with what settings.
+One screen. The build recipe, its Fall-2026-only scope and its history are in `references/rules.md` in this folder - read that once at the start of a build, then run this list before each write and on the read-back. Every line traces to a section there, named in parentheses. It covers the CST286, CST349 and CST499 shells only; `updating-canvas` stays the general skill. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).
 
 ## Before the first write
 
-Inventory the shell — assignments, groups, modules. Course copies arrive carrying semester imports
-and old drafts (the CST499 shell held ~20 spring items and four stale drafts on 15 Aug). Surface
-what is there and get a ruling; never silently overwrite, duplicate, or delete. When Canvas objects
-are deleted or recreated, their module-item URLs die with them — sweep the link consumers
-(home pages, course Google Docs) the same day.
+- The shell's assignments, groups and modules are inventoried and each found item has a recorded ruling; nothing was overwritten, duplicated or deleted silently. (Before the first write)
+- Where a Canvas object is deleted or recreated, the link consumers (home pages, course Google Docs) are swept the same day. (Before the first write)
+- The grade groups match the course's `assignments.html` grade-group cards and weighted assignment groups are on; legacy imported groups stay until their cleanup ruling. (1. Grade groups)
 
-## 1. Grade groups — once per course
+## On every assignment
 
-Create the course's grade-group set exactly as its `assignments.html` grade-group cards state
-(CST499: Own your progress guidance 0% · Graded items 40% · Mid-term 10% · Interviews 50% —
-the groups mirror the syllabus grade table rows; CST286/349 carry their own four-group sets per
-their syllabi), then turn on weighted assignment groups. Legacy groups from an import
-stay until their cleanup ruling — unpublished items never touch grades.
+- Name, points, submission type, grade group and due date match its `assignments.html` row; the due time is 11:59 p.m. Pacific. (2. Assignments)
+- A date change went into COURSES first, then to Canvas; `due_at` was not edited from a page change. (2. Assignments)
+- The description is an iframe of the row's public page (width 100%, height ~1100, border 0, a title attribute) plus one fallback line linking the page in a new tab - never a rewrite of the page, except the short OYP items below. (2. Assignments; 6. Short own-your-progress activities)
+- Published on creation only while the course shell is unpublished; in a live course, a new item stays unpublished until Sathya's explicit go. (2. Assignments)
+- Every OYP assignment: `grading_type=pass_fail`, `omit_from_final_grade=true`, points_possible 100, online text entry; never "Not Graded". (2. Assignments - OYP assignments)
 
-## 2. Assignments — one per assignments.html row
+## On every short own-your-progress description (steps in a home-page `woyp` block)
 
-Name, points, submission type, grade group and due date all come from the row (due time is
-11:59 p.m. Pacific, per the syllabi). The Canvas due_at field is set at build from the row's
-data-due and is not edited afterwards from a page change; a date change goes into COURSES first and
-then to Canvas. The description is an iframe of the row's public page
-(width 100%, height ~1100, border 0, a title attribute) plus one fallback line linking the page in
-a new tab — never a rewrite of the page's content. **Publish policy: publish-on-creation while the
-course shell is unpublished; once the course is live, new items stay unpublished until Sathya's
-explicit go.**
+- It is styled HTML content - not an iframe, not unstyled text - in the order: ownership line in a tinted left-border box, bold `Goal: …`, the lead paragraph if any, numbered steps, any coach note in a bordered grey box, then Submission Options. (6. Short own-your-progress activities)
+- The heading reads `Submission Options:`, one option per bullet, a `(OR)` chip on every bullet but the last, and the closing line under the list. (6. Submission Options, never "Submit")
+- Emphasis is `<strong>` or `<b>`; no `font-weight` or `letter-spacing` in a style attribute; the read-back shows the expected tags survived, compared on structure, not byte length. (6. Canvas strips font-weight; Checklist)
+- Writes go one assignment at a time with a pause between, never a burst. (6. Pace the writes)
 
-**OYP assignments (decided 2026-09-25):** every Own-your-progress assignment is created with
-`grading_type=pass_fail` (Complete/Incomplete) and `omit_from_final_grade=true`, points_possible
-stays 100, submission type online text entry. Students see a check mark, not a score. Never use
-"Not Graded": Canvas forces its submission type to No Submission, which breaks the must-submit
-module requirement.
+## On every module
 
-## 3. Modules — per sprint, split by type
+- Two per sprint: "Sprint N · Graded items" with sequential order ON, "Sprint N · Own your progress" with it OFF. (3. Modules)
+- Every item in both carries a **submit** completion requirement. (3. Modules)
+- No reflection assignment exists; each sprint's Graded-items module opens with its first graded item, whose first question is the sprint reflection. (3. Modules)
+- CST286 and CST349: no module carries a cross-sprint prerequisite. CST499: every graded-items module after Sprint 1 has Sprint 1 · Graded items as its only prerequisite and sits below it in module order. (3. Modules)
+- Modules are hidden from the student navigation. (3. Modules)
 
-- Two modules per sprint: **"Sprint N · Graded items"** with *students must move through
-  requirements in sequential order* ON, and **"Sprint N · Own your progress"** with sequencing OFF.
-- Every item in both carries a **submit** completion requirement — satisfied even by a late
-  submission. Skipping an Own-your-progress item never blocks the next one.
-- The sprint-opening **reflection is not a Canvas item at all — it is the first question inside
-  that sprint's first graded item** (Sathya, 8 Sep 2026, superseding the 16 Aug design). The
-  Graded-items module is sequential, so that first graded item is what a student does before
-  anything else in the sprint. **Set no cross-sprint module prerequisites.** Leaving the next
-  sprint ungated is what delivers the catch-up: a student stuck mid-Sprint 1 can still open
-  Sprint 2, where gating Sprint 2 behind Sprint 1 would lock them out. Sprint 0 starts with the
-  course's first graded assignment. Create no reflection assignments.
-- **CST499 is the one exception: the Project Proposal gates every later graded-items module**
-  (Sathya, 9 Sep 2026). Each graded-items module from Sprint 2 on carries
-  `prerequisite_module_ids: [<Sprint 1 · Graded items>]` — the Sprint 1 module, never the sprint
-  immediately before it. A star, not a chain: a student may skip Sprint 2's graded item and do
-  Sprint 3's, but nobody reaches either without submitting the proposal, because the capstone build
-  has no meaning until a project is approved. This holds in CST499 only; CST286 and CST349 keep the
-  no-cross-sprint-prerequisites rule above. Canvas will only accept a prerequisite module that sits
-  **above** the dependent module in module order and carries a completion requirement of its own, so
-  any new CST499 graded-items module must be created below Sprint 1 · Graded items.
-- Modules stay hidden from the student navigation — they are gating machinery; the course home page
-  carries navigation. Requirements still gate direct links.
+## Before reporting done
 
-## 4. Write-back — same pass, never later
-
-Canvas id, URL and published state go straight into that course's `assignments.html` row
-(the Canvas URL, Canvas assignment id and published cells) in the same working pass. The
-generator `mk_assignments.py` was retired on 28 Sep 2026 (Sathya): the three assignments.html
-files are hand-edited and must never be regenerated. The file never lags the shell.
-
-## 5. Verify
-
-Read everything back through the API after writing — weights, due dates, submission types,
-completion requirements, sequential flags, prerequisites — before reporting done. Screenshot
-anything student-visible. Cross-origin iframes can render blank in automated screenshots; verify
-embeds by eye before diagnosing a failure.
-
-## 6. Short own-your-progress activities — the description IS the page
-
-A few own-your-progress items have no standalone page: their steps live in a `woyp` block on
-the course home page, and the Canvas description carries the same content. For those the
-description is **not** an iframe — it is the content itself, written as styled HTML so it reads
-like one of the course's own pages instead of pasted text. Built 15 September 2026 for all
-seven of them (CST286 648296/648297, CST349 648298/648299, CST499 648292/648293/648294).
-
-The shape, in order: the ownership line in a tinted left-border box; `Goal: …` in bold; the
-lead paragraph where the item has one; the numbered steps; any coach note (AI Dojo, or a term
-being explained) in a bordered grey box; then Submission Options.
-
-**Submission Options, never "Submit".** The heading reads `Submission Options:` and the options
-are a bulleted list, one per bullet, each bullet except the last ending in a `(OR)` chip so the
-choice is visible at a glance rather than buried in a sentence. The closing line — what matters
-is that the thinking is visible, not the format it arrives in — sits under the list.
-
-**Canvas strips `font-weight` and `letter-spacing` out of inline `style` attributes.** Confirmed
-by read-back on 15 September 2026: a heading styled `font-weight:700` comes back with that
-declaration removed and renders flat, which is a large part of why these bodies read as plain
-text. Use `<strong>` or `<b>` tags for emphasis. `background`, `border`, `border-radius`,
-`color`, `padding`, `margin`, `font-size` and `line-height` all survive. Canvas also decodes
-HTML entities on save, so `&mdash;` comes back as the character — compare read-backs on
-structure, not on byte length.
-
-**Pace the writes.** These are student-visible edits to a live course: one assignment at a
-time with a pause between, never a burst.
-
-## Checklist (checkable by looking)
-
-- Short own-your-progress assignments whose steps live in a home-page `woyp` block carry
-  styled HTML as their description — not an iframe, and not unstyled text.
-- Their heading reads "Submission Options:" and each option is its own bullet, with a `(OR)`
-  chip on every bullet but the last.
-- Emphasis is carried by `<strong>`/`<b>` tags, never by `font-weight` in a style attribute,
-  and the read-back confirms the expected number of tags survived.
-- The shell was inventoried before the first write; rulings on found content are recorded.
-- Groups match the course's grade-group cards and weighted grading is on.
-- Every assignment's name, points, due date, submission type and group match its row; the
-  description is the iframe plus the fallback link.
-- Graded-items modules are sequential, Own-your-progress modules are not; every item requires
-  submit; each sprint's Graded-items module opens with its first graded item, whose first
-  question is the sprint reflection, and no module carries a
-  cross-sprint prerequisite — except in CST499, where every graded-items module after Sprint 1
-  carries the Sprint 1 · Graded items module as its only prerequisite.
-- Canvas ids, URLs and published state are written back and committed in the same pass.
-- Everything was read back via the API; embeds checked by eye.
-
----
-
-*Provenance — Human (Sathya): the gating model and its Fall-2026-only scope, the publish policy,
-the everything-100 points call, the iframe-embed and new-tab decisions, the keep-it-out-of-Athena
-placement. Human + AI: the type-split module architecture and reflection-as-gate, worked out in
-conversation 15 Aug 2026 from Canvas's module-scoped sequencing and OR-less prerequisites.
-AI (Alan): this file's drafting, 15 Aug 2026, from the first CST499 build, for Sathya's edit.
-Revised 16 Aug 2026 after Sathya replaced the reflection-as-module gate with reflection-first
-ordering and no cross-sprint prerequisites, built that day on CST286. Revised 9 Sep 2026 with the
-CST499 exception — the Project Proposal as the single gate on every later graded-items module
-(Sathya), applied that day to Sprint 2 · Graded items and Mid-term.*
+- The Canvas id, URL and published state are in the row's cells, written in the same pass; `assignments.html` was hand-edited, not regenerated. (4. Write-back)
+- Weights, due dates, submission types, completion requirements, sequential flags and prerequisites were read back through the API. (5. Verify)
+- Anything student-visible was screenshotted, and embeds were checked by eye before a blank iframe is called a failure. (5. Verify)

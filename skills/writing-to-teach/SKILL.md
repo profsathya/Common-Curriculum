@@ -3,354 +3,42 @@ name: writing-to-teach
 description: Use whenever writing or revising text that students will read to learn — a course or sprint home page, a concept introduction, the framing at the top of an activity, or any page standing in for a lecture. Triggers when drafting a new student-facing page, when converting lecture or video material into text, and whenever a draft reads like a summary for colleagues instead of teaching — short sentences that describe the end state without walking the reader there. Covers starting from what the reader knows, has, and has attention for; the four engagement modes a page must reach; the two registers (teaching text vs task text) and which rules govern each; the teaching moves; and a backbone-plus-expandables page structure; also the fall home-page weekly block (session plan / own-your-progress guidance / graded item). Does not cover goal lines (writing-learning-goals), assignment structure (writing-assignments), or the final trim pass (reviewing-course-text).
 ---
 
-_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+# Writing to teach - the checks to run before a page reaches Sathya
 
-_Status: v5 (18 September 2026) — read `skills/writing-foundation/SKILL.md` first; it holds the prose rules that apply to all of Sathya's writing (start with the action, keep who does what, no telegrams, walk the chain, cut what does not change the reader's next action). This skill adds what teaching requires. Where the two overlap, the foundation is the current wording; overlapping passages here are due to move out in the next revision. v4 (8 September 2026) — added "no telegrams" after the CST286 week-3 deck: noun-phrase-plus-em-dash lines that label an idea instead of saying it, on slides as much as on pages. v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
-was presentation-register writing — describing the end state to readers who don't yet
-have what they need to get there. First test passed 2026-08-04, rewriting the CST499
-home page against it._
+One screen. The reader facts, the two registers, the teaching moves, his corrections and the version history are in `references/rules.md` in this folder - read that once at the start, then run this list on the page. Every line traces to a section there, named in parentheses; the tests picked are the ones his corrections show were missed. Read `writing-foundation` first; where the two overlap, its wording is current. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).
 
-# Writing to teach
+## On every task line (a task, a home-page item description, a guidance block, a preview or outcome list)
 
-Teaching is different from presenting. A presentation assumes the reader could have
-written the page themselves; teaching assumes the reader does not yet have everything
-needed to understand — and meets them at their starting point, then guides their
-thinking and actions, step by step, in simple direct language, to the end point. Since
-our written pages now stand in for lectures, the pages must do what the lecture would
-have done.
+- It opens with the verb the student performs; the reason follows in the same sentence or the next, never a claim, definition or frame first. (The two registers - Payoff-first belongs to teaching text)
+- Each preview or outcome item is a complete verb-first instruction a student could act on cold, never a noun phrase describing the finished product, and uses no term the page teaches later. (The two registers - Concise means low load)
+- One task per line, real constraints in bold, the deliverable stated apart from the steps. (The two registers)
+- In a revision, the actor, action and object match the original instruction. (The two registers - Preserve who does what)
 
-Worked references (private team archive, not in this repo):
-`alan/teaching-register-examples-2026-08-04.md` (private cowork file; if it is not mounted,
-use the register description in this skill and skip the file) — four of Sathya's lecture
-transcripts with the moves marked — and `alan/loom-teaching-analysis.md` (the 24-video synthesis
-with the research behind each move).
+## On every teaching passage
 
-## Start from the reader — what they know, have, and have attention for
+- The opening says where we are in the arc and what the student gets, in connected sentences, with no slogan. (The moves - Locate the lesson)
+- No invented objection or anxiety opens an activity page; where a worry is named and then reassured, both halves come out. (The moves - Scope note)
+- Each concept has an everyday example before or beside its technical one, and each definition a non-example. (The moves - Everyday example)
+- No sentence introduces more than one new idea. (The moves - Short sentences, light load)
+- No line leans on an em-dash appositive to carry its meaning; it is rewritten as the plainest sentence that says it. (The moves - No telegrams)
+- Each claim carries its actor and concrete mechanism, the connectives (but, so, because) are written in, and there is no aphorism as opener or closer. (The moves - Walk the chain)
+- Every pronoun resolves inside its own sentence; two new sibling terms get a frame before the contrast. (The moves - Pronouns; Sibling terms)
+- The global why is stated once, in the opening; a later reason appears only where it changes what the student does next. (The moves - The why once)
+- The backbone reads top-to-bottom with every expandable closed; detail sits behind clicks at the point of use. (The moves - Backbone visible)
+- The page ends with what the student can now do and the invitation to ask, never a warning. (The moves - Close on agency)
 
-Before any mode or mood: the material starting point. Write every page against these
-four facts about the room.
+## Promises, frames and words
 
-**Evidence.** Some students arrive with GitHubs and internships; many arrive with
-coursework only. Write so a thin-evidence reader sees a path, never a verdict.
+- Growth reads as part of the profession, never survival or exclusivity; a promised skill is unpacked into its parts where it is promised; promises match the grading truth (effort, a plan, not arrival). (Promises and frames)
+- The loop names reflection as a step; independence reads as fading guidance; conversations include peers; verbs are student-humane. (Promises and frames)
+- One name per concept across the page, its siblings, Canvas and slides; our terms carry a tooltip or parenthetical at first use. (One vocabulary; Start from the reader - Vocabulary)
+- Instructions say "identify" or "include", never "name". (One vocabulary)
 
-**The first move.** Many have done well for years by executing what was asked and have
-never once been asked to generate their own idea. Stalling at "choose your own" is
-missing practice, not missing ability — so the first step on any page must be small,
-concrete, and takeable today.
+## On a home-page weekly block
 
-**Time and attention.** Some read around shift work and family load, and attention is
-earned a line at a time: assume you get one sentence — maybe three to five lines —
-before the reader decides whether to continue. The first sentence carries the payoff;
-the backbone must survive a skim; depth waits behind clicks.
+- Three sections in order - 🗓️ Session plan, 🌱 Own your progress guidance, 🎯 Graded item - with a one-sentence goal per row; the OYP section never says "not graded"; rows that open work open a new tab; expanders are native `<details>`, weeks closed by default; item names, dates and points come from `assignments.html`. (The home-page weekly block)
 
-**Vocabulary.** No insider terms unassisted. A term of ours gets its tooltip or
-parenthetical at the point of first use, every time.
+## Before it reaches him
 
-## The four modes a page must reach
-
-We use Rebecca Winthrop's engagement modes — passenger, achiever, resistor, explorer —
-as internal language for how a student meets a page. Two ground rules: modes are
-*states, not types* — the same student moves between them week to week, and our pages
-are part of the environment that moves them; and this is working language for us, never
-a label put on a student and never cited to students as established research.
-
-**The passenger** is capable and coasting — doing what's in front of them without
-taking the wheel. They read asking *what do I have to do?* A page loses them by being
-one more task list; it reaches them by making the payoff personal and the first step
-small — a reason to drive.
-
-**The achiever** is engaged and grade-driven — they will do everything asked,
-excellently, and stop there. They read asking *what gets the A?* A page loses them by
-letting points be the only visible why; it reaches them by attaching a payoff beyond
-the grade — work that goes into a portfolio they keep, a capability they can demonstrate
-afterwards — and honest standards worth
-chasing.
-
-**The resistor** has agency pointed away from the work, and may give a page one
-sentence while looking for a reason to dismiss it. A page loses them with lecture-tone
-and warnings; it reaches them by respecting their judgment, being honest about what
-the work is for, and offering something their agency can point at — real choice, real
-stakes, their own interests.
-
-**The explorer** is curious and self-driven where the environment permits it. They read
-asking *what's here for me?* A page loses them by over-constraining; it reaches them
-with room to run — open problem spaces, expandable depth, explicit permission to go
-beyond the assignment.
-
-## The two registers
-
-Course text does two different jobs, and different rules govern them.
-
-**Teaching text** explains, motivates, and builds a mental model — the register of the
-transcripts. It flows, gives examples, meets feelings, and may return to an idea from a
-new angle. **Task text** tells the student what to do — it is scannable and minimal:
-start with the verb, one task per line, bold the real constraints (dates, counts,
-tools), and state the deliverable separately from the steps so what-to-hand-in is never
-buried in how-to-do-it. Most pages carry both; know which sentence is doing which job,
-and never let task-text compression flatten the teaching, or teaching warmth blur an
-instruction.
-
-**Payoff-first belongs to teaching text; task text opens with the verb (Sathya, 15 Sep
-2026).** The rule that the first sentence carries the payoff applies to a page's opening
-and to concept introductions. It does not apply to a task line, a home-page item
-description, or a guidance block: there the first word is the action the student
-performs, and the reason follows in the same sentence or the next. Applying payoff-first
-to task text is what produced "You know your topic better than anyone. Say what a fair
-question would be", "Explaining it out loud is the fastest way to find...", "A move is
-something you do, at a time, that...": a claim or definition first, the action buried.
-The approved rewrites open "Propose...", "Explain...", "Choose...", "Ask the AI to...".
-
-**Concise means low load, not few words (Sathya, 2 September 2026).** Students lose
-interest at every wasted sentence, so nothing on a student page is padding — but the
-measure of concise is how much work the reader does, not how short the line is. A
-fragment that saves four words and costs a second read has not been shortened; it has
-moved the work onto the student. The failure this names: a preview list at the top of
-Read the Market read "A space you can search, in one sentence · Two things employers in
-it are asking for now, with quoted phrases and counts · One thing you expect to change,
-with its driver and the signal you would watch." Every item was short, and every item
-was cryptic — noun fragments, written from the author's side, referring to "driver" and
-"signal" before the page had introduced them. His rewrite is longer and lighter: "Write
-down a unique problem, opportunity or domain in the job market that you can search ·
-Research and identify at least two things employers are asking for now, with specific
-terms, phrases and how often · Make note of at least one thing you expect to change,
-with its drivers and the signal you would watch." The rules that fall out of it:
-
-- **A preview, outcome list, or home-page assignment description is task text, not a summary.** Each item is a complete
-  instruction, verb first, that a student could act on if it were the only line they
-  read. Never a noun phrase describing the finished product ("A two-row audit of…").
-- **Only words the student already has.** A term the page teaches later (driver,
-  signal, shape, gap) does not appear in the preview in its bare form; say the plain
-  thing it stands for, or hold the term for its point of use.
-- **Shortening is done by cutting sentences, not by compressing them.** Cut the
-  argument, the second example, the repeated frame, the caption under every button;
-  keep the full verb-led sentence in the line that survives. One complete sentence
-  beats two fragments.
-- **The test is the cold read.** Give the line to someone who has not seen the boxes
-  below it. If they have to scroll down to know what it means, it is cryptic, however
-  short.
-
-**Preserve who does what when revising (Sathya, 15 Sep 2026).** Check the actor,
-action, and object against the original instruction. "Ask the AI to keep asking you
-harder follow-up questions" has the student direct AI to challenge them. Shortening
-that to "ask follow-up questions" changes the learning activity. Preserve the roles,
-sequence, and intended challenge while improving the wording.
-
-## The moves — teaching register
-
-**Locate the lesson, and name the payoff, before any content.** First lines answer:
-where are we in the arc, and what does the student get from this page. State the
-purpose and how the course serves it in connected sentences. Avoid slogans such as
-"Professionals grow on purpose" followed by an unclear "build that" (Sathya, 15 Sep 2026).
-
-**Meet the feeling, and bound what's not needed — where a concept is being taught.**
-Name the likely intimidation or misconception, then shrink it: "this may sound daunting —
-yes and no"; "you don't have to become an expert in how the brain works." Every bounded
-scope is a weight lifted.
-
-**Scope note (2026-08-29).** This move belongs to teaching text that introduces a concept,
-where the reader has already committed to reading. It does not belong at the top of an
-activity page, where the reader is deciding whether to start. **Never invent an objection or
-an anxiety in order to open persuasively** — "this may look like the soft part of the week",
-"you might think this doesn't matter". Address a concern only when students have actually
-raised it and the answer changes what they do next. Naming a worry and then reassuring the
-student about it puts both halves on the page; both come out.
-(Traced 2026-08-29: this move, applied to an activity-page opening, produced the argumentative
-Week 2 pages. See `student-page-register-and-length` in project memory.)
-
-**Everyday example before technical example.** Each concept gets an example the student
-already owns — driving home on autopilot, buying a car, learning to ride a bike —
-before any example from the field. **Pair definitions with a non-example**: "'backend
-work on data pipelines at climate-tech companies' passes; 'full-stack at a startup'
-does not." The boundary teaches more than the definition.
-
-**Short sentences, light load.** Keep sentences short even when teaching — but the real
-rule is one new idea per sentence. A short sentence carrying three compressed ideas is
-presentation, not teaching. When a sentence needs two reads, split it and spend the
-words walking, not summarizing.
-
-**No telegrams (Sathya, 8 Sep 2026).** This is not the same failure as a long sentence or a
-declarative chain: it is writing a *label for an idea* instead of a sentence that says it.
-The tell is the em-dash appositive doing the work of a verb &mdash; "A whole-day time budget
-— where your attention actually goes", "A physics loop you ran, changed, and watched
-respond." Each packs a noun phrase and a gloss into one line and leaves the reader to
-assemble the claim, so it reads as a telegram rather than as someone talking. His rewrites
-of those two: "How you prioritize your time and attention" and "A trial run of a simple
-learning loop on a physics topic" — plainer, longer, and in the student's words rather than
-ours ("time budget" is our jargon). The rule: one idea per line, written as the plainest
-sentence that says it, and where an em-dash is carrying the meaning, rewrite the line
-without it. This governs slide bullets exactly as it governs page prose — the earlier
-"concise means low load" rule was being read as covering preview lists only.
-
-**Walk the chain — don't chain declaratives.** (2026-08-11, named by Sathya at the
-CST349 gate.) A run of short declaratives that each state a conclusion leaves the
-connections as reader homework — presentation in miniature, even when every sentence
-is short. Give each claim its actor and its concrete mechanism ("with the help of AI,
-you could complete the work" — never "work can be produced"), and write the
-connectives — but, so, because — into the prose. State the conclusion plainly; do not add an aphorism as an opener or closer. Corollary: describe integrity mechanisms as what holds us
-accountable to our learning together, never as fake-detection.
-
-**Pronouns don't survive first contact.** A "they" or "it" whose antecedent lives in
-an earlier sentence fails a first-time reader (found live: first TA review,
-2026-08-11). Repeat the nouns until the pair itself has a name.
-
-**Sibling terms need a frame before the contrast.** Two new terms arriving inside an
-either/or read as interchangeable (same review). First the frame ("it comes in two
-kinds"), then one definition sentence per term.
-
-**Backbone visible, detours behind clicks.** In a lecture a detour works because the
-key points are tied back across it; on a page, the same content laid flat becomes a
-wall. So: the backbone — payoff, core idea, everyday example, next action — reads
-top-to-bottom on its own and survives a skim, and the detours (added detail, extra
-examples, edge cases, definitions) sit in expandable dropdowns and popup bubbles at
-the point of use. The glossary tooltips and `<details>` blocks already on our pages
-are this pattern; use them deliberately, not decoratively.
-
-**The why once, and locally only when it changes a decision.** State the global why once,
-in the opening, and then stop making the case. Add a local reason at a change of direction only
-when it changes what the student does next — "we test all the cases *because* one bug means the
-computer can't add". A reason that only justifies the activity again is an argument, not a
-seam, and it belongs in the opening or nowhere. (Revised 2026-08-29; the earlier
-"why at every seam" produced a page that re-argued its value at every transition.)
-
-**Fellow learner, not lectern.** Write as "we"; keep honest hedges ("there's some
-controversy in the research — don't worry about it here"); let the instructor's own
-mistakes and provenance show. This is where trust comes from — and it is what keeps a
-resistor reading.
-
-**Varied repetition.** Returning to an idea from a new angle builds transfer — that is
-teaching, and it stays. Repeating it in nearly the same words teaches skimming — that
-gets cut. (This is the boundary with `reviewing-course-text`: its duplicate-cutting
-rule targets verbatim and cross-surface repetition, not varied returns.)
-
-**Interleave action.** Where a lecture says "pause the video and try it," a page says
-*do this now* — a small action mid-page, before more reading. Understanding built on an
-action just taken holds; understanding built on ten paragraphs does not.
-
-**Close on agency, and an open door.** End with what the student can now do — the
-zoom-out ("you have built the piece that lets a computer add") — and the standing
-invitation to ask. Never end on a warning.
-
-## Promises and frames
-
-Born from the CST349 home-page gate (2026-08-11), where the instructor's edit round
-read as eight page rules. The four that govern promises and framing:
-
-**Growth is part of the profession, never survival.** No fear levers, no exclusivity
-("the ones who stay valuable"). State growth as what professionals do.
-
-**A promised skill gets unpacked into its parts at the moment it is promised** —
-"build that skill" becomes "recognize the growth needed, develop a plan, follow
-through."
-
-**Metaphor decorates; capability claims.** The literal capability carries the
-sentence ("cross domains, disciplines and systems"); the image (ladder, pillar)
-illustrates it.
-
-**Page promises match the grading truth.** If the course grades movement, the page
-promises "a meaningful effort," "an initial plan," "an ability you will need" —
-never arrival.
-
-And three that govern the actors on the page: **reflection is a named step wherever
-the loop appears** (set → work → reflect → revise → adapt — never compressed to
-"read and adapt"); **independence is a fading scaffold** ("decreasing levels of
-guidance"), never an anti-instructor contrast; **conversations include peers and
-audiences include collaborators** — instructor/TA and peer conversations, sitting
-beside interviewers and managers. Use **student-humane verbs**: students recognize
-their starting point and reflect on their experience; they do not "get set" or
-"read their data."
-
-## The home-page weekly block (adopted 2026-08-13)
-
-Every week on a fall course home page carries the same three sections, in the same
-order, each visually distinct and anchored by its emoji:
-
-- **🗓️ Session plan** (blue) — one row per session day (CST286 Mon + Wed ·
-  CST349 Wed · CST499 Wed + Fri). Each row is a one-sentence goal for the session,
-  with a "+" that expands in place — native `<details>`, keyboard-safe — to details
-  and links for slides or video. Expanding never navigates.
-- **🌱 Own your progress guidance** (green) — one to three items, a one-sentence
-  goal each; will not affect your final grade (the 0% Canvas group; never write the words
-  “not graded” where a student reads). Each row links to its activity.
-- **🎯 Graded item** (violet — deliberately not a warm or warning color) —
-  "None." on most weeks, or the one graded item, or the Sprint Exam / mid-term.
-
-Rows that open work open it in a **new tab** — a course page in the web context, the
-Canvas assignment inside Canvas. The sprint module keeps its "By the end of this
-sprint you will be able to" box, and each week keeps a one-line title beside its
-dates. The split is the point: expand in place for information, navigate for work.
-Weeks themselves are `<details>`, closed by default (adopted 2026-08-20): a sprint
-reads as one-line week heads until the student opens the week they need, and
-`js/bookmarks.js` remembers each student's open sections — weeks included — in
-localStorage (`cc-open:` keys), so the page reopens the way they left it.
-Emojis are decorative (`aria-hidden`); expanders are native `<details>`. Item names,
-dates and points come from the course's record (`assignments.html`) — this
-skill owns the shape, never the list.
-
-## One vocabulary
-
-The same thing has the same name everywhere — on this page, on its siblings, in Canvas,
-on slides. Three names for one thing reads as three things. (Learned live: "artifact,"
-"piece of proof," and "portfolio piece" were one concept; the page got clearer the day
-it became "portfolio piece" everywhere.)
-
-**"Name" is not a verb here (Sathya, 28 Aug 2026).** Instructions to students say
-**identify** or **include**, not "name" — "identify one thing you would add," "include a
-quantity in your explanation," never "name a quantity" or "your answer names something the
-model leaves out." Caught live in his edit round on the Explore Physics Loop page; it is
-not how he uses the word, and the instruction reads clearer with the verb students expect.
-
-## The test
-
-Read the finished page four times, once as each mode, testing the page rather than the
-student. The passenger: is there a reason to take the wheel, and a first step small
-enough to take today? The achiever: is there a payoff beyond the grade? The resistor:
-is the page honest, respectful, and offering something their agency can point at? The
-explorer: is there room to run? Then check the support stack: where the page asks for
-something hard, it supplies inspiration, a mental model, steps, and tools — whichever
-of the four the moment needs. Finally, the attention check: would a reader who gives
-you only the first sentence leave knowing the payoff?
-
-## Closing checklist — checkable by looking
-
-- The first sentence carries the student's payoff; where-this-fits appears before any
-  mechanics.
-- Every concept has an everyday example before or beside its technical one.
-- Every definition carries a non-example.
-- The backbone reads top-to-bottom with every expandable closed; detail sits behind
-  clicks at the point of use.
-- No sentence introduces more than one new idea.
-- No declarative chains: each claim carries its actor, mechanism, and connective;
-  every pronoun resolves inside its own sentence.
-- Task text: verb first, one task per line, constraints bold, deliverable stated
-  separately from the steps. No task line, item description or guidance block opens
-  with a claim, a definition or a frame; the reason follows the verb.
-- Preview and outcome lists: every item a complete verb-first instruction, readable
-  cold, using no term the page has not yet introduced.
-- One name per concept, on this page and its siblings; our terms carry a tooltip or
-  parenthetical at first use.
-- The page ends with what the student can now do and where to ask questions.
-- Promises match the grading truth; growth framed as profession, not survival; loop
-  descriptions name reflection; independence reads as fading guidance.
-
-Judgment calls — does it meet the feeling, is the voice right, is the hope honest — are
-not checklist items. They go to a person: that is what the publish-as-a-doc gate is for.
-
-## Relation to other skills
-
-`writing-learning-goals` owns the goal line itself. `reviewing-course-text` owns the
-final trim, with the varied-repetition boundary noted above. `updating-canvas` and
-`slides` own where the text lands. This skill owns how teaching text gets written in
-the first place.
-
----
-
-*Addendum 2026-08-11: the Promises-and-frames section was extracted from Sathya's direct-edit round on the CST349 fall home page — the gate's second output, per the pattern-extraction practice.*
-
-*Provenance — Human (Sathya): the teach-vs-present diagnosis; the personas idea and the
-choice of Winthrop's modes; the light-load-sentences, backbone-plus-expandables, and
-attention-span additions; the four-layer support stack; and the lecture transcripts the
-moves are drawn from. Human + AI: the two-register split, the moves extraction, the
-two-lens shape (modes for engagement, resources for the starting point). AI (Alan): the
-drafting; the Winthrop research and its use-as-language-not-measure boundary (private
-archive: `alan/winthrop-four-modes-2026-08-01.md`); cross-checked against the June Loom
-analysis.*
+- A reader given only the first sentence leaves knowing the payoff, and the page passes the four mode reads and the support-stack check. (The test)
+- Judgment calls (does it meet the feeling, is the voice right, is the hope honest) are named for a person, not ticked here. (Closing checklist)

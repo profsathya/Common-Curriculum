@@ -1,0 +1,58 @@
+# Writing learning goals - the rules, and where they came from
+
+_This is the reference behind `../SKILL.md`, the one-screen checklist run on every learning goal before it reaches Sathya. Read this file once at the start; run the checklist on the output. Every checklist line traces to a section here. When a rule changes here, change its test in SKILL.md in the same edit; when a test is added there, its rule and the correction it came from go here. Version history is at the end._
+
+_Derived from the Fall 2026 four-layer lock record (`cowork/fall-2026-courses/CONTEXT.md`), which holds the decisions this skill assumes. This file governs how to write the thing; where it states a decision the record does not, that is drift to fix here. Last checked against the record: 13 August 2026._
+
+A learning goal is one sentence that tells a student what they will do and why it matters to them — in language they understand the first time they read it, before they know anything about the program.
+
+This is the line students read first, and it sets whether the activity feels like something worth doing or a box to check. A goal that names the student's real payoff orients them toward the work. A goal written in our internal language, or one that just describes the activity's mechanics, leaves the student to decode what it is for.
+
+## The discipline
+
+Write the goal as a single sentence carrying two things: the **what** — the action or outcome the student owns — and the **why** — the payoff the student actually cares about. The why is a capability the student ends up holding — they can identify, compare, decide, build, demonstrate or revise something they could not before — pointed at a real goal of theirs: getting hired, targeting the right roles, having work worth showing. **Do not make the payoff someone else's reaction** (a recruiter noticing them, an instructor being willing to vouch for them). A reaction you cannot promise is not a payoff, and writing goals that way seeds gatekeeper framing through the rest of the page (traced 2026-08-29). It is not tied to where the activity sits in our process.
+
+Use plain, student-facing words. A student on their first day should understand every word. That rules out internal vocabulary (niche-drift, spine document, "Layer 3"), and it rules out references to our own machinery — other assignments named by version ("concrete fixes for Resume v2"), pipeline steps ("feeds the evaluation"), or week numbers. Those add nothing for the student and signal that the goal was written for us rather than for them.
+
+Cut anything that does not change what the student understands or why they would bother. If a clause survives only because it is true, not because it helps the student, it goes.
+
+## The test
+
+Read the goal as a student who has never seen the program. If you cannot say both what you are doing and why you would want to — or if any word needs the rest of the course to decode — rewrite it.
+
+## Example
+
+Resume Story Swap:
+
+- Before: "Find where your resume drifts from — or is silent on — your niche, and leave with concrete fixes for Resume v2." Two clauses, internal terms (drifts from / silent on your niche), a forward reference to another assignment, and no stated payoff.
+- After: "Make your resume say in one read what kind of work you are for." One sentence — what (the resume states the niche) and why (a reader gets it in one pass) — in words a student reads once and gets. Note it states a property of the work, not a reaction from a reader.
+
+The pattern generalizes: lead with the student's outcome, attach the reason it is worth their time, and stop.
+
+## Name the skill, when there is one
+
+When the payoff is a recognizable, transferable skill — one a student already knows is worth having — name it. "Behavioral interview practice," "AI fluency practice," "interview practice" land harder than a description of the activity, because the student sees the value before reading another word. _Behavioral interview practice: answer questions about your mindset and approach_ sells itself; _reflect on the week's shift out loud_ only describes the motion and leaves the value for the student to infer.
+
+When no recognizable skill name fits, fall back to a plain, concrete payoff ("leave with a runnable plan," "have a niche a reader can state back to you"). Lead with value either way — the named skill is just its strongest form.
+
+When an activity carries two goals, make each a distinct payoff. The emerging pattern pairs a human skill with an AI-fluency skill — the Sharpen Your Bet breakout is behavioral interview practice plus AI fluency practice.
+
+## Keep it credible
+
+Crisp value still has to be true. State the real payoff, not an inflated one: "puts you in the path of good opportunities," not "lands you the job." A goal that overpromises wins attention once and loses trust the first week it does not deliver. Sharp and honest, not hype.
+
+## Inspire, don't scare
+
+Frame the payoff as something to move toward, not a loss to avoid. "Learn from the experiment you set up, so you can adapt" pulls a student forward; "catch a broken experiment before you waste two weeks" pushes with fear. Both point at the same work, but the fearful version makes the program feel like a series of traps to dodge rather than a way to get better. Lead with the gain — avoid FOMO, dread, and warnings as the hook.
+
+## Name the outcome, not the inventory
+
+State what the student walks away with, then stop — do not list the parts, steps, or artifacts they produce to get there. "Leave with a runnable plan" is the goal; "leave with a bet, 10 + 10 applications, and the signal you'll watch" is the packing list, and it belongs in the activity steps, not the goal. The inventory makes the goal longer without making the value clearer, and the student meets every item soon enough in the work itself.
+
+## Relation to other skills
+
+The `updating-canvas` skill already says a module's "Week's Learning Goals" should be phrased as the student's own goals and never a completion checklist. This skill is the sharper, per-goal rule that sits underneath that one and applies anywhere a single goal is written — an activity page, a slide, a self-check — not only the module block.
+
+## History
+
+_Status: v2 (29 August 2026) — the payoff is a capability the student holds, never someone else's reaction; "catch a recruiter's attention" was seeding gatekeeper framing downstream. v1 (June 2026), refined as the program runs. Named-skill, credibility, inspire-not-scare, and name-the-outcome rules added 2026-06-27._
