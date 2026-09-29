@@ -210,6 +210,10 @@
 .guided-walkthrough .walk-table-with-feedback { box-sizing: border-box; padding-right: 154px; }
 .guided-walkthrough .walk-table-help { margin: 0 0 8px; color: #526b7b; font-size: .9rem; }
 .guided-walkthrough .walk-table-scroll-hint { display: none; margin: 8px 0; color: #47677d; font-size: .9rem; }
+/* Ordinary Markdown tables in walkthrough prose (a reference table above a step) share the source-grid lines. */
+.guided-walkthrough table:not(.walk-source-table) { width: 100%; border-collapse: collapse; margin: 0 0 14px; }
+.guided-walkthrough table:not(.walk-source-table) th, .guided-walkthrough table:not(.walk-source-table) td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; text-align: left; }
+.guided-walkthrough table:not(.walk-source-table) thead th { background: #eaf1f6; color: #1f4058; font-size: .9rem; font-weight: 700; line-height: 1.3; }
 .guided-walkthrough .walk-source-table { width: 100%; min-width: max(100%, var(--walk-table-min-width)); border-collapse: collapse; table-layout: fixed; }
 .guided-walkthrough .walk-source-table th, .guided-walkthrough .walk-source-table td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; }
 .guided-walkthrough .walk-source-table thead th { background: #eaf1f6; color: #1f4058; text-align: left; font-size: .9rem; font-weight: 700; line-height: 1.3; }
@@ -495,7 +499,19 @@
         ? '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">' + escape(line) + '</w:t></w:r></w:p>'
         : paragraph(line)).join('') + '</w:tc>';
   }
-  function table(rows, weights, hasHeader = true) {
+  function fieldCell(text, width, task, askLabel) {
+    const match = /^([^\n]+)(\n+)([\s\S]+)$/.exec(String(text));
+    if (!match) return cell(text, width, false);
+    const [, name, gap, question] = match;
+    const run = (value, bold) => '<w:r>' + (bold ? '<w:rPr><w:b/></w:rPr>' : '') +
+      '<w:t xml:space="preserve">' + escape(value) + '</w:t></w:r>';
+    const paragraphs = ['<w:p>' + run(name, task.bold_field_names) + '</w:p>'];
+    for (let i = 1; i < gap.length; i++) paragraphs.push(paragraph(''));
+    question.split('\n').forEach((line, index) => paragraphs.push('<w:p>' +
+      (index === 0 && task.label_field_questions ? run(askLabel + ': ', true) : '') + run(line, false) + '</w:p>'));
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/></w:tcPr>' + paragraphs.join('') + '</w:tc>';
+  }
+  function table(rows, weights, hasHeader = true, renderCell = null) {
     const widths = weights ? weights.map(weight => Math.round(weight / weights.reduce((sum, n) => sum + n, 0) * 10500))
       : rows[0].length === 3 ? [2400, 4200, 3900] : [3500, 7000];
     return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders>' +
@@ -503,7 +519,8 @@
         '<w:' + edge + ' w:val="single" w:sz="4" w:color="B8C8D2"/>').join('') +
       '</w:tblBorders></w:tblPr><w:tblGrid>' + widths.map(width => '<w:gridCol w:w="' + width + '"/>').join('') + '</w:tblGrid>' +
       rows.map((row, index) => '<w:tr>' + (hasHeader && index === 0 ? '<w:trPr><w:tblHeader w:val="1"/></w:trPr>' : '') +
-        row.map((value, column) => cell(value, widths[column], hasHeader && index === 0)).join('') + '</w:tr>').join('') + '</w:tbl>';
+        row.map((value, column) => (renderCell && renderCell(value, widths[column], hasHeader ? index - 1 : index, column)) ||
+          cell(value, widths[column], hasHeader && index === 0)).join('') + '</w:tr>').join('') + '</w:tbl>';
   }
   function build(config, answers) {
     const blocks = [paragraph(config.title, 'Title')];
@@ -513,7 +530,10 @@
       if (task.kind === 'table') {
         const rows = [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
           ...task.rows.map(row => globalThis.WalkthroughTables.filledRow(task, row, answers))];
-        blocks.push(table(rows, task.columns.map(column => column.width || 1), task.header_rows !== 0));
+        const styled = task.bold_field_names || task.label_field_questions;
+        const renderCell = styled ? (value, width, rowIndex, column) => column === 0 && rowIndex >= 0 &&
+          !task.rows[rowIndex].cells[0].response ? fieldCell(value, width, task, config.askLabel || 'Ask yourself') : null : null;
+        blocks.push(table(rows, task.columns.map(column => column.width || 1), task.header_rows !== 0, renderCell));
       } else if (task.kind === 'group') {
         for (let i = 1; i <= task.repeat_count; i++) {
           blocks.push(paragraph(task.repeat_labels?.[i - 1] || 'Entry ' + i, 'Heading2'));
