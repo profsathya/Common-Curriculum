@@ -1,4 +1,4 @@
-<!-- Editable text companion to my-sprint-2-growth-goal-online-chat.html Revised 28 Sep 2026 after writing review. Keep both versions aligned once the HTML exists. Self-check: nine items totaling 100 points; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
+<!-- Editable text companion to my-sprint-2-growth-goal-online-chat.html Revised 29 Sep 2026: the work moved to The Commons; this page points there, holds the paste box and the self-check, and copies on each tick. Keep both versions aligned once the HTML exists. Self-check: nine items totaling 100 points; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
@@ -12,55 +12,13 @@ Develop a specific Sprint 2 growth goal and use questions with three classmates 
 
 ## Tasks
 
-Complete tasks 1 and 2 on The Commons. In task 3, paste your post and conversations into this page. Each **+** opens guidance and examples to help you develop your goal and questions.
+Everything you write for this assignment happens on The Commons. This page is where you bring the result back and check it before you submit on Canvas.
 
-1. Post your Sprint 2 growth goal on the class wall on The Commons. Describe your current ability with an example of something you have done, what you want to be able to do in two weeks, and a career situation where that ability is useful. Use this format:
+1. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address.
 
-   > Given what I can already do: ___. In two weeks I want to be able to do this: ___. Being able to do it is useful for my career because: ___.
+2. Find the **How I learned, and my Sprint 2 growth goal** online chat activity in your dashboard. Follow the instructions there: post your Sprint 2 growth goal on the class wall, then open three classmates' posts and chat with each of them. The activity explains the goal format and how to ask useful questions.
 
-   Include **one learning resource** you will use, with its title, a link, or the person's name. Do not include your name, your pseudonym, or anything that identifies you. Choose an ability you can practice and demonstrate within **two weeks**.
-
-   **+ Guidance and examples**
-
-   Review the growth opportunity and milestone you set in week 3 and the work you did through week 5. Use what you learned to choose a manageable next step. You may continue, narrow, or extend your earlier goal.
-
-   You could learn something new or become more capable, independent, or consistent at something you already do. Explain how that growth would be useful in a career situation.
-
-   *Hypothetical example: explaining a project*
-
-   - **Given what I can already do:** I have explained a finished project to a teammate who knows the work.
-   - **In two weeks I want to be able to do this:** explain an unfinished project to two people outside my team, answer questions about what I know, and identify what I need to investigate.
-   - **Being able to do it is useful because:** an internship team may need an update before a project is finished so they can offer feedback or coordinate their work.
-   - **Learning resource:** a classmate who can listen to a practice explanation and give feedback.
-
-   *Hypothetical example: working with data*
-
-   - **Given what I can already do:** I have written SQL queries using tables someone else identified for me.
-   - **In two weeks I want to be able to do this:** take a question about a sample database, identify the relevant tables independently, and explain the answer with the query attached.
-   - **Being able to do it is useful because:** a data analyst needs to connect a colleague's question to the data available to answer it.
-   - **Learning resource:** the documentation for the sample database I choose.
-
-2. Open the posts of **three different classmates** on The Commons and start an online chat with each. Posts and chats are anonymous: no name or pseudonym appears on the wall or in a chat, so choose posts by what they say, not by who wrote them.
-
-   In each chat, ask **at least three questions** that help the student clarify or test their goal. Across your questions, address the starting ability, what could be demonstrated within two weeks, and where that ability would be useful in a career.
-
-   Refer to specific details in the student's post or replies. Read their replies and follow up on what they say.
-
-   **+ Guidance and examples**
-
-   Read the three parts of the goal and identify something worth examining more closely. For example: "You want to explain your project to people outside the team. How will you check whether they understood your explanation?" This gives the student a specific issue to consider. A general question such as "Can you say more?" needs a reference to what you want to understand.
-
-   Use one or both of these approaches to develop your questions:
-
-   *Without AI* - For each part of the post, note what you understand and what you would like to clarify or test. Write questions about those details. Choose questions that help you and the student assess the goal, whether the answers support it or suggest an adjustment.
-
-   *With the AI Dojo* - Paste the classmate's post with this prompt:
-
-   > Suggest six questions I could ask about this Sprint 2 growth goal. Cover the starting ability, what could be demonstrated within two weeks, and where that ability would be useful in a career. Ground each question in a detail from the post. Help me examine the goal without assuming it has a flaw or needs to change. Leave decisions about the goal to the student.
-
-   Choose questions you understand well enough to follow up on, and ask them in your own words. Use the student's replies to decide what to ask next.
-
-3. After the three chats, press **Copy for submission** on The Commons. Paste your post and all three conversations into the box below, with your post included once at the top. Check that the copied text contains your questions and the replies you received.
+3. When the three chats are done, press **Copy for submission** on The Commons and paste the copied text into the box below. Check that it contains your post once at the top, followed by all three conversations with your questions and the replies you received.
 
    **Your submission.** Your goal post and three conversations, copied from The Commons.
 
@@ -74,7 +32,7 @@ Complete tasks 1 and 2 on The Commons. In task 3, paste your post and conversati
 - [ ] The post identifies one learning resource by title, link, or person's name · 10 pts
 - [ ] Three chats with different classmates are included, with at least three questions asked in each · 15 pts
 - [ ] The questions refer to specific details in the classmate's post or replies · 15 pts
-- [ ] In each chat, the questions examine the three aspects of the goal listed in task 2 · 10 pts
+- [ ] In each chat, the questions examine the three aspects of the goal named in the activity: the starting ability, what could be demonstrated within two weeks, and where that ability would be useful in a career · 10 pts
 - [ ] The follow-up replies respond to what each classmate wrote · 5 pts
 - [ ] The submission includes the goal post once, followed by all three conversations · 5 pts
 
@@ -84,4 +42,4 @@ Complete tasks 1 and 2 on The Commons. In task 3, paste your post and conversati
 
 ## Submit
 
-Complete the Self-check, then press **Copy my answers** to copy your submission and checked boxes. Review the text and paste it into the Canvas text box.
+Go through the Self-check and tick each line your submission meets. Each tick updates the text under the box and copies it to your clipboard, so once you have ticked the last line, open the Canvas text box and paste. If you copied something else in between, press **Copy again if needed** and then paste.
