@@ -211,6 +211,9 @@ ul.selfcheck input{flex:0 0 16px;width:16px;height:16px;margin:2px 0 0;accent-co
 ul.selfcheck input:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
 ul.selfcheck label{flex:1;min-width:0;cursor:pointer;}
 ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--blue-dark);padding-left:6px;}
+ul.selfcheck li.sc-group{display:block;}
+.sc-sub{display:block;margin:0 0 9px;font-weight:600;}
+ul.selfcheck ul.selfcheck{margin:0 0 0 25px;}
 .route .rd{font-weight:400;}
 </style>
 </head>
@@ -252,24 +255,25 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
 <h2 class="sec">Criteria</h2>
 <div class="crit">
 <details class="route ck">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Self-check</span><span class="rd">check each line your submission meets. Your checked boxes are copied with the submission; the grader verifies each item.</span></span></summary>
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Self-check</span><span class="rd">tick each line your submission meets. Your ticks are copied with the submission; the grader verifies each one.</span></span></summary>
 <div class="route-body more-body">
 <ul class="selfcheck">
-<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">The post describes the current ability with an example of something the student has done</label><span class="pts">10 pts</span></li>
-<li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">The post describes a specific new or improved ability to demonstrate within two weeks</label><span class="pts">15 pts</span></li>
-<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">The post explains a career situation where that ability is useful</label><span class="pts">15 pts</span></li>
-<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">The post identifies one learning resource by title, link, or person's name</label><span class="pts">10 pts</span></li>
-<li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">Three chats with different classmates are included, with at least three questions asked in each</label><span class="pts">15 pts</span></li>
-<li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">The questions refer to specific details in the classmate's post or replies</label><span class="pts">15 pts</span></li>
-<li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">In each chat, the questions examine the three aspects of the goal named in the activity: the starting ability, what could be demonstrated within two weeks, and where that ability would be useful in a career</label><span class="pts">10 pts</span></li>
-<li><input type="checkbox" id="sc-8" data-check="sc-8"><label for="sc-8">The follow-up replies respond to what each classmate wrote</label><span class="pts">5 pts</span></li>
-<li><input type="checkbox" id="sc-9" data-check="sc-9"><label for="sc-9">The submission includes the goal post once, followed by all three conversations</label><span class="pts">5 pts</span></li>
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">My post uses the three-part format with all three parts filled in, and names one learning resource</label><span class="pts">10 pts</span></li>
+<li class="sc-group"><span class="sc-sub" id="sc-sub">With at least two of my three partners:</span>
+<ul class="selfcheck" aria-labelledby="sc-sub">
+<li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">I asked questions to make sure I fully understood the point they were making</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">I asked questions that helped them go deeper into their topic or goal</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">My questions showed care and interest in their goal</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">I got help from the AI Sensei or other sources to make sure I was helping them</label><span class="pts">10 pts</span></li>
+</ul></li>
+<li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">At least one chat ended with the partner revising or sharpening their goal or plan because of our conversation</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">Three chats with three different partners are included, with my post once at the top</label><span class="pts">10 pts</span></li>
 </ul>
 <p class="status" id="check-status" role="status" aria-live="polite"></p>
 </div>
 </details>
-<p><b>What makes it strong</b> - The intended growth builds on the current ability and has a clear career use. The questions help each student explain their reasoning and assess their goal. The conversation may confirm the goal, suggest a revision, or identify something that needs further investigation.</p>
-<p><b>Grading</b> - 100 points, in Graded assignments. Your grade is based on your post, questions, and follow-up replies. Your week 8 live conversation and week 9 result build on this goal.</p>
+<p><b>What makes it strong</b> - Your questions show that you understood each partner's goal before you pushed on it, and the partner's replies show the conversation helped them: they explain more than they did in the post, or they change something. Your own post builds the intended growth on the current ability, with a clear career use.</p>
+<p><b>Grading</b> - 100 points, in Graded assignments. Your grade is based on your post and on how you engaged with your partners in the three chats. Your week 8 live conversation and week 9 result build on this goal.</p>
 </div>
 
 <h2 class="sec">Submit</h2>
@@ -336,39 +340,35 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
  "checks": [
   {
    "id": "sc-1",
-   "text": "The post describes the current ability with an example of something the student has done · 10 pts"
+   "text": "My post uses the three-part format with all three parts filled in, and names one learning resource · 10 pts"
+  },
+  {
+   "sub": true,
+   "text": "With at least two of my three partners:"
   },
   {
    "id": "sc-2",
-   "text": "The post describes a specific new or improved ability to demonstrate within two weeks · 15 pts"
+   "text": "I asked questions to make sure I fully understood the point they were making · 15 pts"
   },
   {
    "id": "sc-3",
-   "text": "The post explains a career situation where that ability is useful · 15 pts"
+   "text": "I asked questions that helped them go deeper into their topic or goal · 20 pts"
   },
   {
    "id": "sc-4",
-   "text": "The post identifies one learning resource by title, link, or person's name · 10 pts"
+   "text": "My questions showed care and interest in their goal · 15 pts"
   },
   {
    "id": "sc-5",
-   "text": "Three chats with different classmates are included, with at least three questions asked in each · 15 pts"
+   "text": "I got help from the AI Sensei or other sources to make sure I was helping them · 10 pts"
   },
   {
    "id": "sc-6",
-   "text": "The questions refer to specific details in the classmate's post or replies · 15 pts"
+   "text": "At least one chat ended with the partner revising or sharpening their goal or plan because of our conversation · 20 pts"
   },
   {
    "id": "sc-7",
-   "text": "In each chat, the questions examine the three aspects of the goal named in the activity: the starting ability, what could be demonstrated within two weeks, and where that ability would be useful in a career · 10 pts"
-  },
-  {
-   "id": "sc-8",
-   "text": "The follow-up replies respond to what each classmate wrote · 5 pts"
-  },
-  {
-   "id": "sc-9",
-   "text": "The submission includes the goal post once, followed by all three conversations · 5 pts"
+   "text": "Three chats with three different partners are included, with my post once at the top · 10 pts"
   }
  ]
 };
@@ -471,6 +471,7 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
             md += 'Self-check\n';
             h += '<p><b>Self-check</b><br>';
             PAGE.checks.forEach(function (c, i) {
+                if (c.sub) { md += c.text + '\n'; h += esc(c.text) + '<br>'; return; }
                 var on = !!state.checks[c.id];
                 md += (on ? '[x] ' : '[ ] ') + c.text + '\n';
                 h += (on ? '[x] ' : '[ ] ') + esc(c.text) + (i < PAGE.checks.length - 1 ? '<br>' : '');

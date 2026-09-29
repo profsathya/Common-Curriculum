@@ -1,4 +1,4 @@
-<!-- Editable text companion to my-sprint-2-goal-online-chat.html Revised 29 Sep 2026: the work moved to The Commons; this page points there, holds the paste box and the self-check, and copies on each tick. Keep both versions aligned once the HTML exists. Self-check: nine items totaling 100 points; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
+<!-- Editable text companion to my-sprint-2-goal-online-chat.html Revised 29 Sep 2026: the work moved to The Commons; this page points there, holds the paste box and the self-check, and copies on each tick. Keep both versions aligned once the HTML exists. Self-check: seven items totaling 100 points (10 checklist · 80 quality of engagement · 10 checklist), revised 29 Sep; partial-credit descriptions, priority ranks, and quality tags belong in the assignment record. -->
 
 CST286 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
@@ -24,21 +24,23 @@ Everything you write for this assignment happens on The Commons. This page is wh
 
 ## Criteria
 
-**+ Self-check** - check each line your submission meets. Your checked boxes are copied with the submission; the grader verifies each item.
+**+ Self-check** - tick each line your submission meets. Your ticks are copied with the submission; the grader verifies each one.
 
-- [ ] The post identifies specific quantities or conditions available for the prediction · 10 pts
-- [ ] The post identifies a specific physical quantity to predict and a goal that can be tested within two weeks · 15 pts
-- [ ] The post explains a real physical situation where the prediction is useful · 15 pts
-- [ ] The post identifies one learning resource by title, link, or person's name · 10 pts
-- [ ] Three chats with different classmates are included, with at least three questions asked in each · 15 pts
-- [ ] The questions refer to specific details in the classmate's post or replies · 15 pts
-- [ ] In each chat, the questions examine the three aspects of the goal named in the activity: the quantities or assumptions in the prediction, how it could be tested within two weeks, and where it would be useful · 10 pts
-- [ ] The follow-up replies respond to what each classmate wrote · 5 pts
-- [ ] The submission includes the goal post once, followed by all three conversations · 5 pts
+- [ ] My post uses the three-part format with all three parts filled in, and names one learning resource · 10 pts
 
-**What makes it strong** - The known quantities and conditions support the prediction, and the prediction has a clear use. The questions help each student explain their reasoning and assess their goal. The conversation may confirm the goal, suggest a revision, or identify something that needs further investigation.
+With at least two of my three partners:
 
-**Grading** - 100 points, in Graded assignments. Your grade is based on your post, questions, and follow-up replies. Your week 8 live conversation and week 9 result build on this goal.
+- [ ] I asked questions to make sure I fully understood the point they were making · 15 pts
+- [ ] I asked questions that helped them go deeper into their topic or goal · 20 pts
+- [ ] My questions showed care and interest in their goal · 15 pts
+- [ ] I got help from the AI Sensei or other sources to make sure I was helping them · 10 pts
+
+- [ ] At least one chat ended with the partner revising or sharpening their goal or plan because of our conversation · 20 pts
+- [ ] Three chats with three different partners are included, with my post once at the top · 10 pts
+
+**What makes it strong** - Your questions show that you understood each partner's goal before you pushed on it, and the partner's replies show the conversation helped them: they explain more than they did in the post, or they change something. The prediction in your own post connects the quantities you know to the one you want to predict, with a clear use.
+
+**Grading** - 100 points, in Graded assignments. Your grade is based on your post and on how you engaged with your partners in the three chats. Your week 8 live conversation and week 9 result build on this goal.
 
 ## Submit
 
