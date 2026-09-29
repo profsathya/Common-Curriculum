@@ -16,7 +16,9 @@ Everything you write for this assignment happens on The Commons. This page is wh
 
 1. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address.
 
-2. Find the **How I learned, and my Sprint 2 goal** online chat activity in your dashboard. Follow the instructions there: post your Sprint 2 physics goal on the class wall, then open three classmates' posts and chat with each of them. The activity explains the goal format and how to ask useful questions.
+2. Before you post your goal, watch **How to write the prediction statement** (3 minutes): [youtu.be/uYH_QvUXskE](https://youtu.be/uYH_QvUXskE)
+
+   Find the **How I learned, and my Sprint 2 goal** online chat activity in your dashboard. Follow the instructions there: post your Sprint 2 physics goal on the class wall, then open three classmates' posts and chat with each of them. The activity explains the goal format and how to ask useful questions.
 
 3. When the three chats are done, press **Copy for submission** on The Commons and paste the copied text into the box below. Check that it contains your post once at the top, followed by all three conversations with your questions and the replies you received.
 
