@@ -2,7 +2,7 @@
 
 CST286 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
-# How well did I learn in Sprint 1
+# What misconceptions about learning we all have
 
 Own your progress · Recommended Date: Monday 5 October
 
@@ -48,13 +48,13 @@ This activity is marked complete when all five tasks have an answer. Press **Cop
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> I want to look back at how I went about my Sprint 1 physics learning goal. Start by asking me what my goal was. Then ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these five things, in any order: what helped my progress and what made it difficult; how interested I was in the topic and how that affected my approach; how my partner and I affected each other's learning, or why we did not work together; whether I used AI, what I asked it, what it gave me and how I checked it; and how I balanced this course with other interests and responsibilities, what that did to my progress, and what I will do better in Sprint 2. Do not answer for me, and do not summarize until I ask you to.
+> I want to look back at how I went about my Sprint 1 physics learning goal. Start by asking me what my goal was. Then ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these six things, in any order: what helped my progress and what made it difficult; how my existing ideas and misconceptions shaped what I saw; how interested I was in the topic and how that affected my approach; how my partner and I affected each other's learning, or why we did not work together; whether I used AI, what I asked it, what it gave me and how I checked it; and how I balanced this course with other interests and responsibilities, what that did to my progress, and what I will do better in Sprint 2. Do not answer for me, and do not summarize until I ask you to.
 
-**2. Keep going until it meets the bar.** The conversation is done when each of the five things has a specific moment from the sprint attached to it: what you did, when, and what happened. If you can only give a general answer to one of them, that is the one to keep talking about.
+**2. Keep going until it meets the bar.** The conversation is done when each of the six things has a specific moment from the sprint attached to it: what you did, when, and what happened. If you can only give a general answer to one of them, that is the one to keep talking about.
 
 **3. Ask for the summary.** When the bar is met, paste this:
 
-> Organize a summary of our conversation under five headings, keeping my exact language: What helped and what made it difficult · My interest in the topic and its effect · How my partner and I affected each other's learning · How I used AI and how I checked it · How I balanced my time, and what I will do better in Sprint 2. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
+> Organize a summary of our conversation under six headings, keeping my exact language: What helped and what made it difficult · How existing ideas and misconceptions shaped what I saw · My interest in the topic and its effect · How my partner and I affected each other's learning · How I used AI and how I checked it · How I balanced my time, and what I will do better in Sprint 2. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
 
 If any heading says "not yet answered", go back to step 2.
 
