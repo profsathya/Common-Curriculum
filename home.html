@@ -42,6 +42,15 @@
   .more a:hover{background:#E6EDF4;}
   .more b{display:block;font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:4px;}
   .more span{color:var(--ink-soft);font-size:15px;}
+  .tabs{display:flex;gap:4px;border-bottom:2px solid var(--rule);margin:0 0 28px;}
+  .tabs[hidden]{display:none;}
+  .tabs button{font:inherit;font-size:17px;font-weight:500;color:var(--ink-soft);background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;padding:10px 18px;cursor:pointer;}
+  .tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--blue);}
+  .tabs button:hover{color:var(--navy);}
+  .tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+  .grid.fill{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+  .card.past{border-top-color:#0d9488;}
+  .card.past .code{color:#0d9488;}
   footer{border-top:1px solid var(--rule);padding:24px 0 40px;color:var(--ink-soft);font-size:14px;}
   footer a{color:var(--ink-soft);}
 </style>
@@ -57,6 +66,12 @@
 
 <main>
   <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Term" hidden>
+      <button type="button" role="tab" id="tab-fall-2026" aria-controls="fall-2026" aria-selected="true">Fall 2026</button>
+      <button type="button" role="tab" id="tab-spring-2026" aria-controls="spring-2026" aria-selected="false">Spring 2026</button>
+    </div>
+
+    <section id="fall-2026" role="tabpanel" aria-labelledby="tab-fall-2026">
     <h2>Running now</h2>
     <p class="lead">Four courses, four audiences. Each one is an experiment in how to scaffold the practice of thinking with AI for a different group of learners.</p>
 
@@ -90,6 +105,22 @@
         <span class="open">Open the course &rarr;</span>
       </a>
     </div>
+    </section>
+
+    <section id="spring-2026" role="tabpanel" aria-labelledby="tab-spring-2026">
+    <h2>Spring 2026</h2>
+    <p class="lead">A course that ran in Spring 2026. Its pages stay open as students used them.</p>
+
+    <div class="grid fill">
+      <a class="card past" href="cst395/home.html">
+        <p class="who">CSUMB &middot; Spring 2026</p>
+        <p class="code">CST395</p>
+        <h3>AI-Native Solution Engineering</h3>
+        <p>Four sprints. Each sprint, students solve a problem for someone further from their own experience: themselves, a close acquaintance, an external organization, then a problem of their choice.</p>
+        <span class="open">Open the course &rarr;</span>
+      </a>
+    </div>
+    </section>
 
     <h2>Go further</h2>
     <p class="lead">The framework behind the courses, an early look at the evidence, and the repository where all of this lives.</p>
@@ -104,5 +135,33 @@
 <footer>
   <div class="wrap">Computing Talent Initiative &middot; California State University, Monterey Bay &middot; <a href="https://computingtalentinitiative.org">computingtalentinitiative.org</a></div>
 </footer>
+<script>
+(function(){
+  var list=document.querySelector('.tabs'); if(!list) return;
+  var tabs=[].slice.call(list.querySelectorAll('[role="tab"]'));
+  function show(tab,focus){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute('aria-selected',on?'true':'false');
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+    if(focus) tab.focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t);history.replaceState(null,'','#'+t.getAttribute('aria-controls'));});
+    t.addEventListener('keydown',function(e){
+      var n=null;
+      if(e.key==='ArrowRight') n=tabs[(i+1)%tabs.length];
+      else if(e.key==='ArrowLeft') n=tabs[(i-1+tabs.length)%tabs.length];
+      else if(e.key==='Home') n=tabs[0];
+      else if(e.key==='End') n=tabs[tabs.length-1];
+      if(n){e.preventDefault();show(n,true);}
+    });
+  });
+  list.hidden=false;
+  var start=tabs.filter(function(t){return '#'+t.getAttribute('aria-controls')===location.hash;})[0]||tabs[0];
+  show(start);
+})();
+</script>
 </body>
 </html>
