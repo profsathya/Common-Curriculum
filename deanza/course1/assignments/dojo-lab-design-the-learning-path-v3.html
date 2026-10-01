@@ -185,8 +185,27 @@
       });
     })();
   </script>
+<style>
+.native-canvas-notice { margin: 12px auto; padding: 12px 16px; max-width: 960px; border: 1px solid #cbd5e1; border-radius: 8px; color: #334155; background: #f8fafc; font: 14px/1.5 system-ui, sans-serif; }
+.native-canvas-notice[hidden] { display: none; }
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+  document.addEventListener('DOMContentLoaded', function () {
+    var notice = document.querySelector('[data-native-canvas-navigation]');
+    if (notice) notice.hidden = false;
+  });
+})();
+</script>
 </head>
 <body>
+<aside class="native-canvas-notice" data-native-canvas-navigation hidden>
+Use Modules in Canvas to open activities and check your completion. Submit work in the Canvas activity that contains these instructions. Saving or downloading here does not submit your work.
+</aside>
   <div class="activity">
     <a class="back-link" href="../sprint-8.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 4: Close the Learning Gap (V3) &middot; Assignment</p>
@@ -376,7 +395,7 @@ Start with one header line: CIS501 — Dojo transcript — [today’s date].
 <p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
 <p>Own your progress · 0 points. Submit to complete this module requirement.</p>
 <button type="button" id="copy-answers">Copy transcript</button>
-<p>Paste the complete transcript into Canvas to submit. Copying or saving here does not submit your work. <a hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7132" data-canvas-target="_top">Open the Canvas assignment</a></p>
+<p>Paste the complete transcript into Canvas to submit. Copying or saving here does not submit your work. </p>
 <p id="copy-status" role="status"></p>
 <details id="more-options"><summary>More options</summary>
 <button type="button" id="clear-draft">Clear this browser draft</button>
@@ -534,7 +553,7 @@ Start with one header line: CIS501 — Dojo transcript — [today’s date].
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7132" data-canvas-target="_top">Open the Canvas assignment</a></p></div>
+    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p></p></div>
 
 <footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
   </div>

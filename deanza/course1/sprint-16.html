@@ -81,8 +81,27 @@
   .page-footer .brand-logo.deanza-logo{height:24px;}
   .page-footer .footer-copy{flex:1 1 220px;}
 </style>
+<style>
+.native-canvas-notice { margin: 12px auto; padding: 12px 16px; max-width: 960px; border: 1px solid #cbd5e1; border-radius: 8px; color: #334155; background: #f8fafc; font: 14px/1.5 system-ui, sans-serif; }
+.native-canvas-notice[hidden] { display: none; }
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+  document.addEventListener('DOMContentLoaded', function () {
+    var notice = document.querySelector('[data-native-canvas-navigation]');
+    if (notice) notice.hidden = false;
+  });
+})();
+</script>
 </head>
 <body>
+<aside class="native-canvas-notice" data-native-canvas-navigation hidden>
+Use Modules in Canvas to open activities and check your completion. Submit work in the Canvas activity that contains these instructions. Saving or downloading here does not submit your work.
+</aside>
   <div class="page">
     <a class="back-link" href="home.html?context=web" data-keep-context>&larr; Back to course home</a>
     <div class="course-header">
@@ -92,24 +111,23 @@
       </div>
       <div><div class="brand-row" aria-label="Course partners"><span class="cti-mark"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><span class="cti-logo-fallback">Computing Talent<br>Initiative</span></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></div>
     </div>
-    <div class="progress-status" id="progress-status" hidden></div>
     <details class="module" open><summary class="module-head"><span class="name">Sprint 2: Is this problem worth pursuing?</span><span class="tag">Assumptions and what exists</span><span class="chev">&#9656;</span></summary><div class="goal"><div class="label">Module Learning Goals</div><div class="text"><ul class="goal-list">
 <li>Walk the assumptions in your Problem Frame and rate how risky each one is to the problem.</li>
 <li>Find out what already exists that could solve or ease your problem, with AI helping you explore and by looking for yourself.</li>
 <li>Bring your Problem Frame up to date and give a verdict, in your own words, on whether the problem is worth pursuing.</li>
 </ul></div></div><div class="prereq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg><span>Carry forward the Problem Frame you wrote at the end of Sprint 1. Walk your assumptions and start your table without AI, then use AI to push on each.</span></div><div class="items"><div class="group-label">Sprint Week 1: Understanding your assumptions</div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-introduction-is-this-problem-worth-pursuing" data-canvas-module-item-id="18004" data-completion-requirement="must_view" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/introduction-is-this-problem-worth-pursuing.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/introduction-is-this-problem-worth-pursuing" data-canvas-target="_top">Introduction: Is This Problem Worth Pursuing?</a></div><div class="meta">Page - the route through the sprint, the key terms, and where things get written</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-dig-into-your-assumptions-walk-through" data-canvas-module-item-id="18011" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dig-into-your-assumptions-walk-through.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7178" data-canvas-target="_top">Dig into your assumptions Canvas Walkthrough</a></div><div class="meta">Canvas Walkthrough - rate the risk of each assumption without AI; submit the Word document to complete the module, 0 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-dojo-lab-test-your-assumptions" data-canvas-module-item-id="18003" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dojo-lab-test-your-assumptions.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7171" data-canvas-target="_top">Dojo Lab: test your assumptions</a></div><div class="meta">Guided assignment - have AI push on your walk and your risk ratings; 0 points, submit the complete Dojo transcript to complete the module</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-which-assumptions" data-canvas-module-item-id="18010" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/which-assumptions.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7177" data-canvas-target="_top">Your updated assumptions</a></div><div class="meta">Guided assignment - submit your updated assumption tables and what the Dojo changed; 20 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/introduction-is-this-problem-worth-pursuing.html?context=web">Introduction: Is This Problem Worth Pursuing?</a></div><div class="meta">Page - the route through the sprint, the key terms, and where things get written</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dig-into-your-assumptions-walk-through.html?context=web">Dig into your assumptions Canvas Walkthrough</a></div><div class="meta">Canvas Walkthrough - rate the risk of each assumption without AI; submit the Word document to complete the module, 0 points</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dojo-lab-test-your-assumptions.html?context=web">Dojo Lab: test your assumptions</a></div><div class="meta">Guided assignment - have AI push on your walk and your risk ratings; 0 points, submit the complete Dojo transcript to complete the module</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/which-assumptions.html?context=web">Your updated assumptions</a></div><div class="meta">Guided assignment - submit your updated assumption tables and what the Dojo changed; 20 points</div></div></div>
 <div class="group-label">Sprint Week 2: What exists, and is it worth it?</div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-working-with-ai-context" data-canvas-module-item-id="18013" data-completion-requirement="must_view" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/working-with-ai-context.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/pages/working-with-ai-context" data-canvas-target="_top">Working with AI: Context</a></div><div class="meta">Page - what Context means when you work with AI, and the two other kinds you can give it</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-what-solutions-already-exist-walk-through" data-canvas-module-item-id="18012" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/what-solutions-already-exist-walk-through.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7179" data-canvas-target="_top">What solutions already exist Canvas Walkthrough</a></div><div class="meta">Canvas Walkthrough - start your table of existing solutions without AI; submit the Word document to complete the module, 0 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-dojo-lab-explore-what-already-exists" data-canvas-module-item-id="18002" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dojo-lab-explore-what-already-exists.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7170" data-canvas-target="_top">Dojo Lab: explore what already exists</a></div><div class="meta">Guided assignment - fill the table with AI and by looking for yourself, one row at a time; 0 points, submit the complete Dojo transcript to complete the module</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-what-exists-and-what-it-means" data-canvas-module-item-id="18008" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/what-exists-and-what-it-means.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7175" data-canvas-target="_top">What exists, and what it means</a></div><div class="meta">Guided assignment - write up what exists, what you made of it, and whether it changes your problem; 20 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item selfcheck" data-progress-id="course1-sprints-sprint-16-sprint-2-self-check" data-canvas-module-item-id="18007" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/sprint-2-self-check.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7174" data-canvas-target="_top">Sprint 2 Concept check</a><span class="badge">Self-check</span></div><div class="meta">Guided concept check - five questions from both weeks, before you write your verdict; 5 completion points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-problem-frame-is-it-worth-pursuing" data-canvas-module-item-id="18005" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/problem-frame-is-it-worth-pursuing.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7172" data-canvas-target="_top">Problem Frame: taking stock of where you are</a></div><div class="meta">Guided assignment - what fixing this would ask of people, your Problem Frame up to date, and your verdict; 45 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div>
-<div class="item" data-progress-id="course1-sprints-sprint-16-sprint-2-reflection-what-the-world-said-back" data-canvas-module-item-id="18006" data-completion-requirement="must_submit" data-progress-state="unavailable"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/sprint-2-reflection-what-the-world-said-back.html?context=web" data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7173" data-canvas-target="_top">Sprint 2 Reflection</a></div><div class="meta">Assignment - five questions on how you are working, what AI made possible, what you brought, and how the course is landing; text entry, 10 points</div></div><span class="progress-check" aria-label="Progress unavailable" title="Progress unavailable"><span class="progress-box"></span><span class="progress-label">Progress unavailable</span></span></div></div></details>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h11l3 3v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="activities/working-with-ai-context.html?context=web">Working with AI: Context</a></div><div class="meta">Page - what Context means when you work with AI, and the two other kinds you can give it</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/what-solutions-already-exist-walk-through.html?context=web">What solutions already exist Canvas Walkthrough</a></div><div class="meta">Canvas Walkthrough - start your table of existing solutions without AI; submit the Word document to complete the module, 0 points</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/dojo-lab-explore-what-already-exists.html?context=web">Dojo Lab: explore what already exists</a></div><div class="meta">Guided assignment - fill the table with AI and by looking for yourself, one row at a time; 0 points, submit the complete Dojo transcript to complete the module</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/what-exists-and-what-it-means.html?context=web">What exists, and what it means</a></div><div class="meta">Guided assignment - write up what exists, what you made of it, and whether it changes your problem; 20 points</div></div></div>
+<div class="item selfcheck"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/sprint-2-self-check.html?context=web">Sprint 2 Concept check</a><span class="badge">Self-check</span></div><div class="meta">Guided concept check - five questions from both weeks, before you write your verdict; 5 completion points</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/problem-frame-is-it-worth-pursuing.html?context=web">Problem Frame: taking stock of where you are</a></div><div class="meta">Guided assignment - what fixing this would ask of people, your Problem Frame up to date, and your verdict; 45 points</div></div></div>
+<div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span><div class="body"><div class="title"><a target="_blank" rel="noopener" href="assignments/sprint-2-reflection-what-the-world-said-back.html?context=web">Sprint 2 Reflection</a></div><div class="meta">Assignment - five questions on how you are working, what AI made possible, what you brought, and how the course is landing; text entry, 10 points</div></div></div></div></details>
     <footer class="page-footer">
       <div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="" onerror="this.style.display='none'"></div>
       <span class="footer-copy">Computing Talent Initiative - De Anza College - CIS 501: Reframing Problems with AI</span>
@@ -141,89 +159,6 @@
         } catch (e) { }
       });
 
-      var progressEndpoint = "https://canvas-progress-lti.netlify.app/.netlify/functions/canvas-progress";
-      var courseKey = "course1";
-      var statusEl = document.getElementById('progress-status');
-      function setStatus(text, visible) {
-        if (!statusEl) return;
-        statusEl.textContent = text || '';
-        statusEl.hidden = !visible;
-      }
-      function setItemState(item, state, label) {
-        item.setAttribute('data-progress-state', state);
-        var check = item.querySelector('.progress-check');
-        var labelEl = item.querySelector('.progress-label');
-        if (check) {
-          check.setAttribute('aria-label', label);
-          check.setAttribute('title', label);
-        }
-        if (labelEl) labelEl.textContent = label;
-      }
-      function progressToken() {
-        var params = new URLSearchParams(location.search);
-        var fromQuery = params.get('progress_token');
-        var hash = new URLSearchParams((location.hash || '').replace(/^#/, ''));
-        var fromHash = hash.get('progress_token');
-        var token = fromHash || fromQuery || sessionStorage.getItem('canvas_progress_token');
-        if (fromHash || fromQuery) {
-          try {
-            sessionStorage.setItem('canvas_progress_token', token);
-            params.delete('progress_token');
-            hash.delete('progress_token');
-            var next = location.pathname + (params.toString() ? '?' + params.toString() : '') + (hash.toString() ? '#' + hash.toString() : '');
-            history.replaceState(null, '', next);
-          } catch (e) { }
-        }
-        return token;
-      }
-      function loadProgress() {
-        var items = Array.prototype.slice.call(document.querySelectorAll('.item[data-progress-id]'));
-        if (!items.length) return;
-        if (ctx !== 'canvas') {
-          items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress available in Canvas'); });
-          return;
-        }
-        var token = progressToken();
-        if (!token) {
-          setStatus('Progress is unavailable until this page is opened through Canvas.', true);
-          items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress unavailable'); });
-          return;
-        }
-        items.forEach(function(item) { setItemState(item, 'loading', 'Checking progress'); });
-        setStatus('Checking Canvas progress...', true);
-        var url = new URL(progressEndpoint, location.href);
-        if (courseKey) url.searchParams.set('course', courseKey);
-        fetch(url.href, { headers: { Authorization: 'Bearer ' + token } })
-          .then(function(response) {
-            if (!response.ok) throw new Error('Progress request failed');
-            return response.json();
-          })
-          .then(function(data) {
-            var byModuleItem = {};
-            (data.items || []).forEach(function(item) {
-              if (item.moduleItemId != null) byModuleItem[String(item.moduleItemId)] = item;
-            });
-            var completeCount = 0;
-            items.forEach(function(row) {
-              var moduleItemId = row.getAttribute('data-canvas-module-item-id');
-              var progress = moduleItemId ? byModuleItem[String(moduleItemId)] : null;
-              if (progress && progress.completed) {
-                completeCount += 1;
-                setItemState(row, 'complete', 'Completed in Canvas');
-              } else if (progress) {
-                setItemState(row, 'incomplete', 'Not completed in Canvas');
-              } else {
-                setItemState(row, 'unavailable', 'Progress unavailable for this item');
-              }
-            });
-            setStatus(completeCount + ' of ' + items.length + ' items completed in Canvas.', true);
-          })
-          .catch(function() {
-            setStatus('Canvas progress could not be loaded right now.', true);
-            items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress unavailable'); });
-          });
-      }
-      loadProgress();
     })();
   </script>
 </body>

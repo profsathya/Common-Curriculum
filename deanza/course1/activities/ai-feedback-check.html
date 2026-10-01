@@ -12,8 +12,27 @@
       min-height: 100vh;
     }
   </style>
+<style>
+.native-canvas-notice { margin: 12px auto; padding: 12px 16px; max-width: 960px; border: 1px solid #cbd5e1; border-radius: 8px; color: #334155; background: #f8fafc; font: 14px/1.5 system-ui, sans-serif; }
+.native-canvas-notice[hidden] { display: none; }
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+  document.addEventListener('DOMContentLoaded', function () {
+    var notice = document.querySelector('[data-native-canvas-navigation]');
+    if (notice) notice.hidden = false;
+  });
+})();
+</script>
 </head>
 <body>
+<aside class="native-canvas-notice" data-native-canvas-navigation hidden>
+Use Modules in Canvas to open activities and check your completion. Submit work in the Canvas activity that contains these instructions. Saving or downloading here does not submit your work.
+</aside>
   <div id="activity-container"></div>
 
   <script src="../../../js/activity-components.js?v=v2-consistency-20260911"></script>
@@ -25,7 +44,7 @@
       containerId: 'activity-container',
       configUrl: "../../../activities/deanza/course1/ai-feedback-check.json?v=210d3ec6ee957875",
       courseTheme: "cst349",
-      canvasUrl: activityContext === 'canvas' ? "https://cti-courses.instructure.com/courses/180/assignments/7148" : null
+      canvasUrl: null
     });
   </script>
 </body>
