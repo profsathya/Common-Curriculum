@@ -81,8 +81,131 @@
   .page-footer .brand-logo.deanza-logo{height:24px;}
   .page-footer .footer-copy{flex:1 1 220px;}
 </style>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style>
+.native-canvas-notice { margin: 12px auto; padding: 12px 16px; max-width: 960px; border: 1px solid #cbd5e1; border-radius: 8px; color: #334155; background: #f8fafc; font: 14px/1.5 system-ui, sans-serif; }
+.native-canvas-notice[hidden] { display: none; }
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+  document.addEventListener('DOMContentLoaded', function () {
+    var notice = document.querySelector('[data-native-canvas-navigation]');
+    if (notice) notice.hidden = false;
+  });
+})();
+</script>
 </head>
 <body>
+<aside class="native-canvas-notice" data-native-canvas-navigation hidden>
+Use Modules in Canvas to open activities and check your completion. Submit work in the Canvas activity that contains these instructions. Saving or downloading here does not submit your work.
+</aside>
   <div class="page">
     <a class="back-link" href="home.html?context=web" data-keep-context>&larr; Back to course home</a>
     <div class="course-header">
@@ -92,7 +215,6 @@
       </div>
       <div><div class="brand-row" aria-label="Course partners"><span class="cti-mark"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><span class="cti-logo-fallback">Computing Talent<br>Initiative</span></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></div>
     </div>
-    <div class="progress-status" id="progress-status" hidden></div>
     <details class="module" open><summary class="module-head"><span class="name">Sprint 3: Integrate People And Context</span><span class="tag">People and Context</span><span class="chev">&#9656;</span></summary><div class="goal"><div class="label">Module Learning Goals</div><div class="text"><ul class="goal-list">
 <li>Identify stakeholders and their relationship to the problem.</li>
 <li>Design validation questions for stakeholders that produce real evidence.</li>
@@ -139,89 +261,6 @@
         } catch (e) { }
       });
 
-      var progressEndpoint = "https://canvas-progress-lti.netlify.app/.netlify/functions/canvas-progress";
-      var courseKey = "course1";
-      var statusEl = document.getElementById('progress-status');
-      function setStatus(text, visible) {
-        if (!statusEl) return;
-        statusEl.textContent = text || '';
-        statusEl.hidden = !visible;
-      }
-      function setItemState(item, state, label) {
-        item.setAttribute('data-progress-state', state);
-        var check = item.querySelector('.progress-check');
-        var labelEl = item.querySelector('.progress-label');
-        if (check) {
-          check.setAttribute('aria-label', label);
-          check.setAttribute('title', label);
-        }
-        if (labelEl) labelEl.textContent = label;
-      }
-      function progressToken() {
-        var params = new URLSearchParams(location.search);
-        var fromQuery = params.get('progress_token');
-        var hash = new URLSearchParams((location.hash || '').replace(/^#/, ''));
-        var fromHash = hash.get('progress_token');
-        var token = fromHash || fromQuery || sessionStorage.getItem('canvas_progress_token');
-        if (fromHash || fromQuery) {
-          try {
-            sessionStorage.setItem('canvas_progress_token', token);
-            params.delete('progress_token');
-            hash.delete('progress_token');
-            var next = location.pathname + (params.toString() ? '?' + params.toString() : '') + (hash.toString() ? '#' + hash.toString() : '');
-            history.replaceState(null, '', next);
-          } catch (e) { }
-        }
-        return token;
-      }
-      function loadProgress() {
-        var items = Array.prototype.slice.call(document.querySelectorAll('.item[data-progress-id]'));
-        if (!items.length) return;
-        if (ctx !== 'canvas') {
-          items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress available in Canvas'); });
-          return;
-        }
-        var token = progressToken();
-        if (!token) {
-          setStatus('Progress is unavailable until this page is opened through Canvas.', true);
-          items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress unavailable'); });
-          return;
-        }
-        items.forEach(function(item) { setItemState(item, 'loading', 'Checking progress'); });
-        setStatus('Checking Canvas progress...', true);
-        var url = new URL(progressEndpoint, location.href);
-        if (courseKey) url.searchParams.set('course', courseKey);
-        fetch(url.href, { headers: { Authorization: 'Bearer ' + token } })
-          .then(function(response) {
-            if (!response.ok) throw new Error('Progress request failed');
-            return response.json();
-          })
-          .then(function(data) {
-            var byModuleItem = {};
-            (data.items || []).forEach(function(item) {
-              if (item.moduleItemId != null) byModuleItem[String(item.moduleItemId)] = item;
-            });
-            var completeCount = 0;
-            items.forEach(function(row) {
-              var moduleItemId = row.getAttribute('data-canvas-module-item-id');
-              var progress = moduleItemId ? byModuleItem[String(moduleItemId)] : null;
-              if (progress && progress.completed) {
-                completeCount += 1;
-                setItemState(row, 'complete', 'Completed in Canvas');
-              } else if (progress) {
-                setItemState(row, 'incomplete', 'Not completed in Canvas');
-              } else {
-                setItemState(row, 'unavailable', 'Progress unavailable for this item');
-              }
-            });
-            setStatus(completeCount + ' of ' + items.length + ' items completed in Canvas.', true);
-          })
-          .catch(function() {
-            setStatus('Canvas progress could not be loaded right now.', true);
-            items.forEach(function(item) { setItemState(item, 'unavailable', 'Progress unavailable'); });
-          });
-      }
-      loadProgress();
     })();
   </script>
 </body>
