@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -182,6 +185,110 @@
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
 <style data-native-canvas-navigation>
 html.native-canvas-context .back-link { display: none !important; }
 </style>
@@ -194,11 +301,11 @@ html.native-canvas-context .back-link { display: none !important; }
 </script>
 </head>
 <body>
-
   <div class="activity">
     <a class="back-link" href="../sprint-14.html?context=web" data-keep-context>&larr; Back to Module</a>
-    <p class="meta">course1 &middot; Sprint 14 &middot; Sprint 1: Find the Problem Worth Solving (V2) &middot; Assignment</p>
+    <p class="meta">course1 &middot; Sprint 14 &middot; Sprint 1: Find the Problem Worth Solving (V2) &middot; Page</p>
     <h1>Sprint 1 Concept check</h1>
+    
 
 
 
@@ -275,24 +382,15 @@ html.native-canvas-context .back-link { display: none !important; }
 </style>
 <div class="guided-workspace guided-reading" id="guided-workspace">
 
+<p>Practice with the questions and check your answers. No submission or grade; viewing this page counts for Canvas module progress.</p>
 <section class="task-teaching"><h2 id="practice-before-first-frames">Practice before First frames</h2>
 <p>Practice the judgment you&rsquo;ll use in First frames on a sample first. Then use the same judgment on your own frames. Answer all six from your own thinking, without AI.</p>
 <p>These questions use a handover example you&rsquo;ll see throughout the course. Some details are made up for practice.</p></section><section class="response-task choice-task" data-task="indicator"><h3 id="question-indicator"><span class="question-number">1.</span> You write, &quot;I dread the weekly handover&quot; on your list. What is that, at this stage?</h3><fieldset aria-labelledby="question-indicator"><label class="choice"><input type="radio" name="indicator" value="0"><span>A confirmed cause you can now fix</span></label><label class="choice"><input type="radio" name="indicator" value="1"><span>An indicator, a sign to dig under</span></label><label class="choice"><input type="radio" name="indicator" value="2"><span>A solution idea you should build next</span></label></fieldset><button type="button" class="secondary" data-check="indicator">Check my answer<span class="sr-only">: question 1</span></button><p data-result="indicator" role="status"></p></section><section class="response-task choice-task" data-task="current-actions"><h3 id="question-current-actions"><span class="question-number">2.</span> Preparing for your First frames, which sentence best answers &quot;How does it work now?&quot;</h3><fieldset aria-labelledby="question-current-actions"><label class="choice"><input type="radio" name="current-actions" value="0"><span>We should buy an app that tracks every handover.</span></label><label class="choice"><input type="radio" name="current-actions" value="1"><span>Nobody on this team really cares about communicating.</span></label><label class="choice"><input type="radio" name="current-actions" value="2"><span>The old owner tells the new one. Others hear later.</span></label></fieldset><button type="button" class="secondary" data-check="current-actions">Check my answer<span class="sr-only">: question 2</span></button><p data-result="current-actions" role="status"></p></section><section class="response-task choice-task" data-task="finished-gap"><h3 id="question-finished-gap"><span class="question-number">3.</span> Preparing for your First frames: a sample gap reads, &quot;The process is manual and inconsistent.&quot; Is it finished?</h3><fieldset aria-labelledby="question-finished-gap"><label class="choice"><input type="radio" name="finished-gap" value="0"><span>Yes. It clearly says what is wrong.</span></label><label class="choice"><input type="radio" name="finished-gap" value="1"><span>No. It doesn&#x27;t say who is stuck, or how.</span></label><label class="choice"><input type="radio" name="finished-gap" value="2"><span>No. It still needs a solution added.</span></label></fieldset><button type="button" class="secondary" data-check="finished-gap">Check my answer<span class="sr-only">: question 3</span></button><p data-result="finished-gap" role="status"></p></section><section class="response-task choice-task" data-task="changed-state"><h3 id="question-changed-state"><span class="question-number">4.</span> Preparing for your First frames, which of these is a changed state, not a solution?</h3><fieldset aria-labelledby="question-changed-state"><label class="choice"><input type="radio" name="changed-state" value="0"><span>We build a shared checklist for every handover.</span></label><label class="choice"><input type="radio" name="changed-state" value="1"><span>We set up an alert when an account changes owners.</span></label><label class="choice"><input type="radio" name="changed-state" value="2"><span>The whole team knows within a day of a handover.</span></label></fieldset><button type="button" class="secondary" data-check="changed-state">Check my answer<span class="sr-only">: question 4</span></button><p data-result="changed-state" role="status"></p></section><section class="response-task choice-task" data-task="failure-moment"><h3 id="question-failure-moment"><span class="question-number">5.</span> Preparing for your First frames, which sentence names the moment the current way stops working?</h3><fieldset aria-labelledby="question-failure-moment"><label class="choice"><input type="radio" name="failure-moment" value="0"><span>Clients end up repeating their history to the team.</span></label><label class="choice"><input type="radio" name="failure-moment" value="1"><span>Handovers here are informal and never written down.</span></label><label class="choice"><input type="radio" name="failure-moment" value="2"><span>A third person needs to know who the new owner is.</span></label></fieldset><button type="button" class="secondary" data-check="failure-moment">Check my answer<span class="sr-only">: question 5</span></button><p data-result="failure-moment" role="status"></p></section><section class="response-task choice-task" data-task="specific-goal"><h3 id="question-specific-goal"><span class="question-number">6.</span> Preparing for your First frames: a sample goal reads, &quot;Better client communication.&quot; What&#x27;s wrong with it?</h3><fieldset aria-labelledby="question-specific-goal"><label class="choice"><input type="radio" name="specific-goal" value="0"><span>Nobody on the team would disagree with it.</span></label><label class="choice"><input type="radio" name="specific-goal" value="1"><span>It could fit almost any client problem anywhere.</span></label><label class="choice"><input type="radio" name="specific-goal" value="2"><span>It names a solution instead of a goal.</span></label></fieldset><button type="button" class="secondary" data-check="specific-goal">Check my answer<span class="sr-only">: question 6</span></button><p data-result="specific-goal" role="status"></p></section>
-<p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
-<div class="reading-submit">
-<p>Submit all six answers for 5 completion points reviewed by your instructor.</p>
-<button type="button" id="copy-answers">Copy my answers</button>
-<p>Paste into Canvas to submit. Copying or saving here does not submit your work. </p>
-<p id="copy-status" role="status"></p>
-<details id="more-options"><summary>More options</summary>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
-<label for="copy-output">Select and copy manually</label><textarea id="copy-output" readonly rows="6"></textarea>
-<p id="completion-status"></p>
-</details>
-</div>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-sprint-1-concept-check", "title": "Sprint 1 Concept check", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Practice the judgment you'll use in First frames on a sample first, then use the same judgment on your own frames.", "builds_on": "Complete Brainstorm your list, Get underneath three to five, and read The problem frame.", "standing_instruction": "Submit all six answers for 5 completion points reviewed by your instructor.", "tasks": [{"id": "indicator", "kind": "choice", "prompt": "You write, \"I dread the weekly handover\" on your list. What is that, at this stage?", "criteria": ["Choose the answer that matches how indicators are used before a cause is confirmed."], "options": ["A confirmed cause you can now fix", "An indicator, a sign to dig under", "A solution idea you should build next"], "correct_index": 1, "explanation": "A feeling that something is off points toward a problem. Describing how it works now is what shows the gap.", "instruction_section": "Practice before First frames"}, {"id": "current-actions", "kind": "choice", "prompt": "Preparing for your First frames, which sentence best answers \"How does it work now?\"", "criteria": ["Choose the sentence that describes actions without blame or a proposed fix."], "options": ["We should buy an app that tracks every handover.", "Nobody on this team really cares about communicating.", "The old owner tells the new one. Others hear later."], "correct_index": 2, "explanation": "That part describes what happens and who does what. It doesn't suggest a fix or blame anyone."}, {"id": "finished-gap", "kind": "choice", "prompt": "Preparing for your First frames: a sample gap reads, \"The process is manual and inconsistent.\" Is it finished?", "criteria": ["Choose the answer that names what the gap is missing."], "options": ["Yes. It clearly says what is wrong.", "No. It doesn't say who is stuck, or how.", "No. It still needs a solution added."], "correct_index": 1, "explanation": "A process isn't a gap yet. A gap says who can't know, can't do, or has to redo something."}, {"id": "changed-state", "kind": "choice", "prompt": "Preparing for your First frames, which of these is a changed state, not a solution?", "criteria": ["Choose the outcome that does not say what to build."], "options": ["We build a shared checklist for every handover.", "We set up an alert when an account changes owners.", "The whole team knows within a day of a handover."], "correct_index": 2, "explanation": "A changed state says what's true once the problem is gone, not what you built. Solutions come later in the course."}, {"id": "failure-moment", "kind": "choice", "prompt": "Preparing for your First frames, which sentence names the moment the current way stops working?", "criteria": ["Choose the condition under which the current handling breaks."], "options": ["Clients end up repeating their history to the team.", "Handovers here are informal and never written down.", "A third person needs to know who the new owner is."], "correct_index": 2, "explanation": "The breaking point is when the current way fails. What follows, like clients repeating themselves, is the result."}, {"id": "specific-goal", "kind": "choice", "prompt": "Preparing for your First frames: a sample goal reads, \"Better client communication.\" What's wrong with it?", "criteria": ["Choose the test that makes a goal point to this problem rather than its neighbours."], "options": ["Nobody on the team would disagree with it.", "It could fit almost any client problem anywhere.", "It names a solution instead of a goal."], "correct_index": 1, "explanation": "A goal has to point at your problem, not every problem nearby."}], "presentation": "reading"}</script>
+<p id="save-status" role="status">Practice answers save in this browser.</p>
+<p id="completion-status" role="status"></p>
+<button type="button" id="clear-draft">Clear practice answers</button>
+<div id="clear-confirmation" hidden><p>Clear this practice draft?</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-sprint-1-concept-check", "title": "Sprint 1 Concept check", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "practiceOnly": true, "version": "1.0", "purpose": "Practice the judgment you'll use in First frames on a sample first, then use the same judgment on your own frames.", "builds_on": "Complete Brainstorm your list, Get underneath three to five, and read The problem frame.", "standing_instruction": "Practice with the questions and check your answers. No submission or grade; viewing this page counts for Canvas module progress.", "tasks": [{"id": "indicator", "kind": "choice", "prompt": "You write, \"I dread the weekly handover\" on your list. What is that, at this stage?", "criteria": ["Choose the answer that matches how indicators are used before a cause is confirmed."], "options": ["A confirmed cause you can now fix", "An indicator, a sign to dig under", "A solution idea you should build next"], "correct_index": 1, "explanation": "A feeling that something is off points toward a problem. Describing how it works now is what shows the gap.", "instruction_section": "Practice before First frames"}, {"id": "current-actions", "kind": "choice", "prompt": "Preparing for your First frames, which sentence best answers \"How does it work now?\"", "criteria": ["Choose the sentence that describes actions without blame or a proposed fix."], "options": ["We should buy an app that tracks every handover.", "Nobody on this team really cares about communicating.", "The old owner tells the new one. Others hear later."], "correct_index": 2, "explanation": "That part describes what happens and who does what. It doesn't suggest a fix or blame anyone."}, {"id": "finished-gap", "kind": "choice", "prompt": "Preparing for your First frames: a sample gap reads, \"The process is manual and inconsistent.\" Is it finished?", "criteria": ["Choose the answer that names what the gap is missing."], "options": ["Yes. It clearly says what is wrong.", "No. It doesn't say who is stuck, or how.", "No. It still needs a solution added."], "correct_index": 1, "explanation": "A process isn't a gap yet. A gap says who can't know, can't do, or has to redo something."}, {"id": "changed-state", "kind": "choice", "prompt": "Preparing for your First frames, which of these is a changed state, not a solution?", "criteria": ["Choose the outcome that does not say what to build."], "options": ["We build a shared checklist for every handover.", "We set up an alert when an account changes owners.", "The whole team knows within a day of a handover."], "correct_index": 2, "explanation": "A changed state says what's true once the problem is gone, not what you built. Solutions come later in the course."}, {"id": "failure-moment", "kind": "choice", "prompt": "Preparing for your First frames, which sentence names the moment the current way stops working?", "criteria": ["Choose the condition under which the current handling breaks."], "options": ["Clients end up repeating their history to the team.", "Handovers here are informal and never written down.", "A third person needs to know who the new owner is."], "correct_index": 2, "explanation": "The breaking point is when the current way fails. What follows, like clients repeating themselves, is the result."}, {"id": "specific-goal", "kind": "choice", "prompt": "Preparing for your First frames: a sample goal reads, \"Better client communication.\" What's wrong with it?", "criteria": ["Choose the test that makes a goal point to this problem rather than its neighbours."], "options": ["Nobody on the team would disagree with it.", "It could fit almost any client problem anywhere.", "It names a solution instead of a goal."], "correct_index": 1, "explanation": "A goal has to point at your problem, not every problem nearby."}], "presentation": "reading"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -318,7 +416,7 @@ html.native-canvas-context .back-link { display: none !important; }
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -337,9 +435,9 @@ html.native-canvas-context .back-link { display: none !important; }
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -412,7 +510,14 @@ html.native-canvas-context .back-link { display: none !important; }
       byId('copy-status').textContent = 'Select and copy the transcript request above.';
     }
   });
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
     if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
@@ -432,7 +537,7 @@ html.native-canvas-context .back-link { display: none !important; }
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
     if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
