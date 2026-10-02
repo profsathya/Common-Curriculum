@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 &mdash; How does your phone know it moved?</title>
+<!-- trail-accelerometer.md in this folder is the editable companion to this page: the words are edited there and carried into this file. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#6B7780;
+    --border:#C7CDD1; --border-light:#E8EAEC; --teal:#0d9488;
+    --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#C2551F; --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --warn:#8A6D1C; --vista:#B08018;
+    --t-phone:#2F6BA8; --t-phone-soft:#E2EAF3;
+    --tc:var(--t-phone); --tsoft:var(--t-phone-soft);
+    --on-tc:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+      --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E;
+    --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+    --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Atkinson Hyperlegible",var(--font); color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word}
+  .page{max-width:920px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  a{color:var(--blaze)}
+  p{margin:0 0 12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible,iframe:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:3px}
+  .mono,.num,code{font-family:"IBM Plex Mono",monospace}
+
+  .canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--line);border-left:4px solid var(--tc);background:var(--tsoft);color:var(--ink);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:14px}
+  .canvasbar[hidden]{display:none}
+  .canvasbar a{color:var(--blue-dark)}
+
+  .crumb{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.06em; margin-bottom:12px}
+  .crumb a{color:var(--ink-soft); text-decoration:none}
+  .crumb a::before{content:"\2190\00a0"}
+  .crumb a:hover{color:var(--blaze); text-decoration:underline}
+
+  /* hero */
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; position:relative; overflow:hidden}
+  .hero-inner{padding:38px 34px 34px; position:relative; z-index:1}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:#9FB2C4; margin:0 0 14px}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem); font-weight:900; line-height:1.05; letter-spacing:-.01em; color:var(--hero-cream)}
+  .hero .intro{font-size:1.08rem; color:#DCE3E8; margin:18px 0 0; max-width:62ch; border-left:3px solid var(--blaze); padding:4px 0 4px 16px}
+  .contours{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.55}
+
+  /* goal */
+  .goalcard{margin:26px 0 14px; border:1.5px solid var(--tc); border-radius:6px; background:var(--card); padding:18px 22px 18px}
+  .goalcard h2{font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--tc); margin:0 0 10px}
+  .goalcard blockquote{margin:0 0 14px; padding:0}
+  .goalcard blockquote p{font-family:Fraunces,Georgia,serif; font-size:1.14rem; line-height:1.5; margin:0 0 6px; color:var(--ink)}
+  .goalcard blockquote p strong{font-weight:650; color:var(--tc)}
+  .goalcard.small{margin:8px 0 12px; padding:14px 18px; border-width:1px; border-left:5px solid var(--tc)}
+  .goalcard.small blockquote p{font-size:1.04rem}
+  .lede{max-width:74ch}
+
+  /* buttons */
+  button{font:inherit}
+  .copybtn,.stepbtn,.simbtn{font-family:"Atkinson Hyperlegible",var(--font); font-size:.9rem; font-weight:700; padding:8px 14px; min-height:40px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--on-tc); background:var(--tc)}
+  .copybtn::before{content:"\29C9\00a0\00a0"}
+  .copybtn.done::before{content:"\2713\00a0\00a0"}
+  .stepbtn.alt,.prompt .copybtn{background:transparent; color:var(--tc)}
+  .copybtn:hover,.stepbtn:hover,.simbtn:hover{filter:brightness(1.1)}
+  .stepbtn[aria-disabled="true"]{opacity:.5; cursor:default; border-style:dashed}
+  .simbtn::before{content:"\25B8\00a0\00a0"}
+  .simbtn[aria-expanded="true"]::before{content:"\25BE\00a0\00a0"}
+
+  /* trail map */
+  .trailmap{margin:26px 0 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:8px 10px 4px}
+  .mapwrap{position:relative; max-width:860px; margin:0 auto}
+  .trailsvg{display:block; width:100%; height:auto}
+  .stoplist{list-style:none; margin:0; padding:0}
+  .stoplist li{position:absolute; left:var(--x); top:var(--y); width:0; height:0}
+  .stopbtn{position:absolute; left:-80px; top:-20px; width:160px; display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; text-decoration:none; color:var(--ink); border-radius:6px; padding:0 2px 3px}
+  .stopbtn .no{flex:0 0 40px; width:40px; height:40px; border-radius:50%; background:var(--card); border:3px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1.05rem; display:flex; align-items:center; justify-content:center}
+  .stopbtn .lab{display:flex; flex-direction:column; align-items:center; background:var(--card); border-radius:4px; padding:0 5px}
+  .stopbtn .nm{font-size:.9rem; font-weight:700; line-height:1.25; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px}
+  .stopbtn:hover .nm{color:var(--blaze); text-decoration-color:var(--blaze)}
+  .stopbtn:hover .no{border-color:var(--blaze); color:var(--blaze)}
+  .stopbtn .mark{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-soft)}
+  .stopbtn .mark[hidden]{display:none}
+  .stopbtn.opened .no{background:var(--tc); color:var(--on-tc)}
+  @media (max-width:640px){
+    .trailsvg{display:none}
+    .trailmap{padding:6px 10px}
+    .stoplist li{position:static; width:auto; height:auto; border-top:1px dashed var(--line)}
+    .stoplist li:first-child{border-top:0}
+    .stopbtn{position:static; width:auto; flex-direction:row; align-items:center; text-align:left; gap:12px; padding:8px 4px}
+    .stopbtn .no{flex-basis:36px; width:36px; height:36px}
+    .stopbtn .lab{align-items:flex-start; padding:0}
+  }
+
+  /* stops */
+  .stops{margin-top:22px; display:grid; gap:12px}
+  details.stop{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--tc); border-radius:5px; scroll-margin-top:10px}
+  details.stop > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:14px; padding:14px 18px}
+  details.stop > summary::-webkit-details-marker{display:none}
+  details.stop > summary h2{font-size:1.28rem; font-weight:650; flex:1 1 auto; color:var(--ink)}
+  details.stop > summary .sno{flex:0 0 34px; width:34px; height:34px; border-radius:50%; border:2px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; display:flex; align-items:center; justify-content:center}
+  details.stop > summary::after{content:"+"; flex:0 0 26px; width:26px; height:26px; border:1.5px solid var(--tc); border-radius:4px; color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:23px; text-align:center}
+  details.stop[open] > summary::after{content:"\2212"}
+  details.stop[open] > summary{border-bottom:1px solid var(--line-soft)}
+  details.stop > summary:hover h2{color:var(--blaze)}
+  .stopbody{padding:6px 20px 18px}
+  .stopbody > p{max-width:74ch; margin-top:14px}
+  .part{margin-top:20px}
+  .part p,.part li{max-width:74ch}
+  .k{font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--tc); margin:0 0 6px}
+  .part-after p{font-family:Fraunces,Georgia,serif; font-size:1.08rem}
+
+  /* watch */
+  .vid{margin:0 0 10px}
+  .vidbtn{display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; width:100%; max-width:640px; text-align:left; cursor:pointer; background:var(--hero-ink); color:var(--hero-cream); border:1px solid var(--hero-ink); border-radius:6px; padding:12px 16px 12px 14px; min-height:56px; white-space:pre-wrap}
+  .vidbtn::before{content:"\25B6"; flex:0 0 34px; width:34px; height:34px; margin-right:12px; border-radius:50%; background:var(--blaze); color:#fff; font-size:.8rem; display:flex; align-items:center; justify-content:center; padding-left:2px}
+  .vidbtn .vt{font-weight:700}
+  .vidbtn .vm{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:#B9C6D1}
+  .vidbtn:hover{border-color:var(--blaze)}
+  .vidbtn[hidden]{display:none}
+  .player{position:relative; width:100%; max-width:640px; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden}
+  .player iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .vlinks{display:block; font-size:.9rem; margin-top:4px; white-space:pre-wrap}
+  .vid .vlinks .dot:first-child{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)}
+  p.vlinks.plain{margin:10px 0 0}
+  .newvideo{margin:18px 0 0; max-width:640px; border:1.5px dashed var(--line); border-radius:6px; padding:14px 16px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-size:.84rem; background:var(--paper)}
+
+  /* worked example */
+  .part-worked .question{font-weight:700}
+  .predictline{border-left:3px solid var(--blaze); padding:2px 0 2px 12px}
+  .steps{margin:6px 0 12px; padding-left:26px}
+  .steps li{margin:0 0 8px; padding-left:4px}
+  .steps li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .stepctl{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px}
+  .stepctl[hidden]{display:none}
+
+  /* units check */
+  .part-units{background:var(--tsoft); border:1px solid var(--line); border-left:5px solid var(--warn); border-radius:5px; padding:14px 18px 6px}
+  .part-units .k{color:var(--warn)}
+  .part-units .num{font-weight:600; white-space:nowrap; font-size:.94em}
+
+  /* try it + sims */
+  .trylist{margin:0; padding-left:20px}
+  .trylist li{margin:0 0 12px}
+  .simblock{margin:4px 0 10px}
+  .simrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:.92rem}
+  .sim{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:#fff; margin:10px 0 8px}
+  .sim[hidden]{display:none}
+  .sim iframe{width:100%; height:640px; border:0; display:block}
+
+  /* dojo prompts */
+  .prompt{display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 14px; background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:5px; padding:12px 14px; margin:0 0 10px; max-width:820px}
+  .prompt .ptext{flex:1 1 320px; margin:0; font-family:"IBM Plex Mono",monospace; font-size:.86rem; line-height:1.55; max-width:none}
+  .prompt .copybtn{flex:0 0 auto}
+  .mine{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line)}
+  .mine .k{font-family:Fraunces,Georgia,serif; font-size:1.12rem; font-weight:650; letter-spacing:0; text-transform:none; color:var(--ink)}
+  .dojolbl{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; letter-spacing:.08em; color:var(--ink-soft); margin:10px 0 4px}
+
+  /* provenance (house two-layer block; this page has the trust layer only) */
+  .prov2{margin-top:30px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:0; font-size:.88rem; color:var(--ink)}
+  .prov2 .prov-head{padding:12px 16px 0; font-family:"Atkinson Hyperlegible",var(--font); font-size:.95rem; font-weight:700}
+  .prov2 .prov-lead{padding:5px 16px 14px; margin:0; line-height:1.55; max-width:none}
+  .pagenav{margin-top:20px; padding-top:14px; border-top:1px solid var(--line); font-size:.9rem}
+  .pagenav a{color:var(--blue-dark)}
+  .pagenav a::before{content:"\2190\00a0"}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+
+  @media (max-width:520px){
+    .page{padding:14px 16px 40px}
+    .hero-inner{padding:26px 20px 24px}
+    .goalcard{padding:16px 16px}
+    .stopbody{padding:4px 14px 16px}
+    details.stop > summary{padding:12px 14px; gap:10px}
+    details.stop > summary h2{font-size:1.12rem}
+    .sim iframe{height:520px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none !important; transition:none !important}
+  }
+  @media print{
+    body{background:#fff; color:#000; font-size:11.5pt}
+    .canvasbar,.trailmap,.crumb,.pagenav,.copybtn,.stepctl,.simbtn,.sim,.player,iframe,.contours{display:none !important}
+    .hero{background:none; color:#000; border:0}
+    .hero h1,.hero .intro,.hero .kicker{color:#000}
+    .hero-inner{padding:0 0 12px}
+    details.stop{break-inside:auto; border-color:#999}
+    details.stop > summary::after{display:none}
+    details.stop::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
+    .steps li[hidden]{display:list-item !important}
+    .vidbtn,.vidbtn[hidden]{display:block !important; background:none; color:#000; border:0; padding:0; min-height:0}
+    .vidbtn::before{display:none}
+    .vidbtn .vm{color:#000}
+    .part-units,.prompt,.goalcard,.newvideo{background:none}
+    a{color:#000}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden><span>This page is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/trail-accelerometer.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a>.</span></div>
+<div class="crumb"><a href="trailheads.html">All trailheads</a></div>
+
+<main>
+<header class="hero">
+<svg class="contours" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+<g fill="none" stroke="#2A3B4C" stroke-width="1.1">
+<path d="M-40,340 C160,290 260,380 470,330 S820,250 1240,320"/>
+<path d="M-40,300 C170,250 300,330 500,285 S840,205 1240,275"/>
+<path d="M-40,255 C190,210 330,285 540,240 S860,165 1240,230"/>
+<path d="M-40,205 C220,170 360,235 580,195 S880,120 1240,180"/>
+<path d="M-40,155 C240,125 400,185 620,150 S900,80 1240,130"/>
+</g>
+</svg>
+<div class="hero-inner">
+<p class="kicker">CST286 · Fall 2026 · A trail you can take as your Sprint 2 goal</p>
+<h1>How does your phone know it moved?</h1>
+<p class="intro">Turn your phone sideways and the screen turns with it. Walk, and the phone counts your steps. Drop it, and some phones call for help. Each of these starts from one small sensor, the accelerometer, and the sensor works because of physics you can learn in this sprint.</p>
+</div>
+</header>
+
+<section class="goalcard" aria-labelledby="goal-h">
+<h2 id="goal-h">A goal you can take as written</h2>
+<blockquote id="goal-text">
+<p><strong>Given</strong> the push on my phone, in newtons, and the phone's mass, in kilograms,</p>
+<p><strong>I can predict</strong> the acceleration its sensor will report, in meters per second squared.</p>
+<p><strong>This is useful because</strong> a step counter, a screen that rotates and a fall alert all start from that one number.</p>
+</blockquote>
+<button type="button" class="copybtn" data-copy="Given the push on my phone, in newtons, and the phone&#x27;s mass, in kilograms, I can predict the acceleration its sensor will report, in meters per second squared. This is useful because a step counter, a screen that rotates and a fall alert all start from that one number.">Copy this goal</button>
+</section>
+<p class="lede"><strong>Copy this goal</strong> - paste it into your Sprint 2 goal post as it is, or change it at stop 7.</p>
+<p class="lede">The trail has seven stops. The videos add up to about 2 hours 40 minutes, so with the examples the trail takes about five to six hours across the sprint. You can open the stops in any order. If you are not sure where to begin, begin at stop 1, because every later stop depends on getting units right.</p>
+
+<nav class="trailmap" aria-label="Trail map">
+<div class="mapwrap">
+<svg class="trailsvg" viewBox="0 0 700 360" role="img" aria-label="Trail map: a winding trail with seven numbered stops" preserveAspectRatio="xMidYMid meet">
+<g fill="none" stroke="var(--line)" stroke-width="1">
+<path d="M-10,128 C120,96 250,150 380,118 S600,96 710,132"/>
+<path d="M-10,236 C130,206 270,262 410,228 S610,206 710,244"/>
+<path d="M-10,338 C140,312 280,356 420,330 S620,312 710,342"/>
+</g>
+<path d="M 14,84 Q 56,62 98,62 C 170,62 250,36 322,62 S 480,88 560,62 C 664,34 690,150 584,170 C 540,178 502,160 462,172 C 380,194 292,150 210,172 C 96,200 34,262 140,282 C 232,298 330,258 420,282 S 590,304 664,268" fill="none" stroke="var(--tc)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 9"/>
+<g stroke="var(--tc)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M 664,268 V 236"/><path d="M 664,236 L 684,243 L 664,250" fill="var(--tc)"/></g>
+</svg>
+<ol class="stoplist">
+<li style="--x:14.00%;--y:17.22%"><a class="stopbtn" href="#stop-1" data-stop="1"><span class="no" aria-hidden="true">1</span><span class="lab"><span class="nm">Stop 1 · Units</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:46.00%;--y:17.22%"><a class="stopbtn" href="#stop-2" data-stop="2"><span class="no" aria-hidden="true">2</span><span class="lab"><span class="nm">Stop 2 · Describing motion</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:80.00%;--y:17.22%"><a class="stopbtn" href="#stop-3" data-stop="3"><span class="no" aria-hidden="true">3</span><span class="lab"><span class="nm">Stop 3 · Newton's first law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:66.00%;--y:47.78%"><a class="stopbtn" href="#stop-4" data-stop="4"><span class="no" aria-hidden="true">4</span><span class="lab"><span class="nm">Stop 4 · Newton's second law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:30.00%;--y:47.78%"><a class="stopbtn" href="#stop-5" data-stop="5"><span class="no" aria-hidden="true">5</span><span class="lab"><span class="nm">Stop 5 · Newton's third law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:20.00%;--y:78.33%"><a class="stopbtn" href="#stop-6" data-stop="6"><span class="no" aria-hidden="true">6</span><span class="lab"><span class="nm">Stop 6 · Inside the sensor</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:60.00%;--y:78.33%"><a class="stopbtn" href="#stop-7" data-stop="7"><span class="no" aria-hidden="true">7</span><span class="lab"><span class="nm">Stop 7 · Make it yours</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+</ol>
+</div>
+</nav>
+
+<div class="stops">
+<details class="stop" id="stop-1" data-stop="1">
+<summary><span class="sno" aria-hidden="true">1</span><h2>Stop 1 · Units</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>The sensor in your phone reports a number, and an app can use that number only if it knows the unit. A step counter that reads 9.8 and does not know whether it means meters per second squared or feet per second squared will count the wrong steps.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>convert a quantity from one unit to another by lining up conversion factors so the units you do not want cancel.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="H2ECsg6lxgg" data-title="Units &amp; Measurements"><span class="vt">Units &amp; Measurements</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/H2ECsg6lxgg" target="_blank" rel="noopener">youtu.be/H2ECsg6lxgg</a><span class="dot"> · </span><a href="https://docs.google.com/presentation/d/1WNMl2gCaXzvLytnWBTNDmPVOMl2dWLSAWbwY3iNjDVU" target="_blank" rel="noopener">slides</a></span></div>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">How many liters of water fill a container of 75 cubic inches?</p>
+<p class="predictline"><em>Predict first:</em> is the answer closer to 0.2 liters, 1 liter or 75 liters?</p>
+<ol class="steps">
+<li>Write where you start and where you want to end: 75 in³ → liters.</li>
+<li>Find the conversion factors that connect them: 1 in = 2.54 cm, and 1 L = 1000 cm³.</li>
+<li>The container is measured in cubic inches, so the inch-to-centimeter factor is used three times: 1 in³ = 2.54 × 2.54 × 2.54 = 16.39 cm³.</li>
+<li>Line them up so the units cancel: 75 in³ × 16.39 cm³ / 1 in³ × 1 L / 1000 cm³.</li>
+<li>Cubic inches cancel, then cubic centimeters cancel, and liters are left: <strong>1.23 L</strong>.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>Run step 3 with <span class="num">2.54</span> used once instead of three times. The answer becomes <span class="num">0.19 L</span>, about six times too small, and nothing in the arithmetic warns you. The units do warn you: in³ × cm / in leaves in² · cm, which is not a volume. In 1999 NASA lost the Mars Climate Orbiter because one team sent numbers in pound-force seconds and the other team read them as newton-seconds.</p>
+</section>
+<div class="newvideo" data-video="B">Short video: Same number, wrong unit - being added</div>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me one unit conversion that needs two conversion factors. Do not solve it. Ask me to set up the chain, and tell me only whether my units cancel.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me one unit conversion that needs two conversion factors. Do not solve it. Ask me to set up the chain, and tell me only whether my units cancel.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I will explain why 20 cm is 0.2 m and not 2000 m. Ask me questions until my explanation would convince someone who has never used the metric system.</span>&quot;</p><button type="button" class="copybtn" data-copy="I will explain why 20 cm is 0.2 m and not 2000 m. Ask me questions until my explanation would convince someone who has never used the metric system.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-2" data-stop="2">
+<summary><span class="sno" aria-hidden="true">2</span><h2>Stop 2 · Describing motion</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>The sensor reports acceleration with a direction: it gives three numbers, one for each direction the phone can move. To read those numbers you need to tell apart the quantities that carry a direction from the ones that do not.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>tell distance from displacement and speed from velocity, and calculate a speed in consistent units.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="ihNZlp7iUHE" data-title="Intro to vectors and scalars"><span class="vt">Intro to vectors and scalars</span><span class="vsep"> - </span><span class="vm">Khan Academy, 9 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/ihNZlp7iUHE" target="_blank" rel="noopener">youtu.be/ihNZlp7iUHE</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="Rmmp6X59Lpg" data-title="Questions 1 to 4, worked"><span class="vt">Questions 1 to 4, worked</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 12 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/Rmmp6X59Lpg" target="_blank" rel="noopener">youtu.be/Rmmp6X59Lpg</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="dgV-u-BmIkY" data-title="Question 5, a launched object"><span class="vt">Question 5, a launched object</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 6 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/dgV-u-BmIkY" target="_blank" rel="noopener">youtu.be/dgV-u-BmIkY</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="F-1UkYUWxoQ" data-title="Question 6, the detour"><span class="vt">Question 6, the detour</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/F-1UkYUWxoQ" target="_blank" rel="noopener">youtu.be/F-1UkYUWxoQ</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1JzEkEWldFH_Y05a1hzHBevOPjGw9OSM7TszoygXa4oQ" target="_blank" rel="noopener">Slides</a><span class="dot"> · </span><a href="https://docs.google.com/document/d/1l8scaU7V5UcMh5aeyt1PW_qYaEG09BSd51Dz2nb5jis" target="_blank" rel="noopener">worksheet</a></p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">A teacher walks 4 m east, 2 m south, 4 m west and 2 m north. What distance did she walk, and what is her displacement?</p>
+<p class="predictline"><em>Predict first:</em> are the two answers the same number?</p>
+<ol class="steps">
+<li>Draw it on paper with north, east, south and west marked.</li>
+<li>Distance has no direction, so add every part: 4 + 2 + 4 + 2 = <strong>12 m</strong>.</li>
+<li>Displacement has a direction, so parts in opposite directions cancel. The 4 m east cancels the 4 m west, and the 2 m south cancels the 2 m north.</li>
+<li>She ends where she started, so her displacement is <strong>0 m</strong>.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>A driver plans a trip at <span class="num">32 km/h</span>. A closed road makes the last part <span class="num">28 km</span> longer, so he drives it at <span class="num">40 km/h</span> and still arrives <span class="num">30</span> minutes late. If x is the planned distance for that last part, the planned time is x/<span class="num">32</span> and the real time is (x + <span class="num">28</span>)/<span class="num">40</span>, both in hours. The <span class="num">30</span> minutes must also be in hours, so the equation is x/<span class="num">32</span> = (x + <span class="num">28</span>)/<span class="num">40</span> − <span class="num">0.5</span>, and x = <span class="num">32 km</span>. Write <span class="num">30</span> instead of <span class="num">0.5</span> and the same equation gives x = <span class="num">−4,688 km</span>, a negative distance, because the equation now says he was <span class="num">30</span> hours late.</p>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<p>Mark a 10 m line outside. Time yourself walking it and calculate your speed in meters per second. Then walk back to the start and state your distance and your displacement for the round trip.</p>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me for three everyday quantities, one at a time, and have me say whether each is a vector or a scalar and why. Correct me only after I give my reason.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me for three everyday quantities, one at a time, and have me say whether each is a vector or a scalar and why. Correct me only after I give my reason.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I drove 300 miles in 5 hours. Ask me what I can calculate from that and what I cannot, and why.</span>&quot;</p><button type="button" class="copybtn" data-copy="I drove 300 miles in 5 hours. Ask me what I can calculate from that and what I cannot, and why.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-3" data-stop="3">
+<summary><span class="sno" aria-hidden="true">3</span><h2>Stop 3 · Newton's first law</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>Inside the sensor is a small mass that is free to move a little. When the phone speeds up, the mass keeps doing what it was doing, so it falls behind the phone. That falling behind is the first law at work, and it is what the sensor measures.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>predict what an object will do when the thing carrying it speeds up, slows down or turns.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="5-ZFOhHQS68" data-title="Newton&#x27;s first law"><span class="vt">Newton's first law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 5 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/5-ZFOhHQS68" target="_blank" rel="noopener">youtu.be/5-ZFOhHQS68</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="hOlmn-kd1nw" data-title="Concept questions"><span class="vt">Concept questions</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/hOlmn-kd1nw" target="_blank" rel="noopener">youtu.be/hOlmn-kd1nw</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">What does the headrest on a car seat protect you from? (a) Nothing, it is a place to rest your head. (b) Injury to your head in a front collision. (c) Injury to your neck when the car is hit from behind. (d) Both b and c.</p>
+<p class="predictline"><em>Predict first:</em> choose one before you read on.</p>
+<ol class="steps">
+<li>Take the car hit from behind. The car is pushed forward suddenly, and the seat pushes your body forward with it.</li>
+<li>Nothing pushes your head forward, so by the first law your head stays where it was while your body moves ahead.</li>
+<li>Your head therefore snaps backward compared with your body, and your neck takes the strain.</li>
+<li>The headrest is behind your head, so it stops the head after a short distance.</li>
+<li>In a front collision your head keeps moving forward, away from the headrest, so the headrest does not help there. The answer is <strong>(c)</strong>.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>"The car rounds the curve at a constant <span class="num">60 mi/h</span>." The speed is constant, and the velocity is still changing, because velocity includes direction and the direction changes all the way around the curve. A change in velocity needs an unbalanced force, so there is one on the car even though the number on the speedometer stays at <span class="num">60</span>. In metric units <span class="num">60 mi/h</span> is <span class="num">26.8 m/s</span>.</p>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">A ball sits in the middle of a wagon and the wagon is pulled forward suddenly. Ask me where the ball ends up and why. Then ask me how this is like the mass inside my phone's sensor.</span>&quot;</p><button type="button" class="copybtn" data-copy="A ball sits in the middle of a wagon and the wagon is pulled forward suddenly. Ask me where the ball ends up and why. Then ask me how this is like the mass inside my phone&#x27;s sensor.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to explain why a seat belt is needed, using the first law, and keep asking 'what force?' until I name one.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to explain why a seat belt is needed, using the first law, and keep asking &#x27;what force?&#x27; until I name one.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-4" data-stop="4">
+<summary><span class="sno" aria-hidden="true">4</span><h2>Stop 4 · Newton's second law</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>The goal on this page is a second-law prediction. The push on the phone is a force, the phone has a mass, and the second law connects them to the acceleration that the sensor reports.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>use F = ma to predict any one of force, mass and acceleration from the other two, with the units carried through.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="ou9YMWlJgkE" data-title="Newton&#x27;s second law"><span class="vt">Newton's second law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 7 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/ou9YMWlJgkE" target="_blank" rel="noopener">youtu.be/ou9YMWlJgkE</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="f4MusblLa1k" data-title="Concept questions, part 1"><span class="vt">Concept questions, part 1</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 25 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/f4MusblLa1k" target="_blank" rel="noopener">youtu.be/f4MusblLa1k</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="bcvbnbfFwrQ" data-title="Concept questions, part 2"><span class="vt">Concept questions, part 2</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 19 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/bcvbnbfFwrQ" target="_blank" rel="noopener">youtu.be/bcvbnbfFwrQ</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">An object weighs 98 N on Earth and 37 N on Mars. It sits on a frictionless surface. On which planet do you need more force to accelerate it sideways at 10 m/s²?</p>
+<p class="predictline"><em>Predict first:</em> Earth, Mars, or the same?</p>
+<ol class="steps">
+<li>Weight is the force of gravity on the object, so on Earth 98 N = m × 9.8 m/s².</li>
+<li>Divide to find the mass: m = 98 ÷ 9.8 = 10 kg.</li>
+<li>Check with Mars, where gravity gives about 3.7 m/s²: 10 kg × 3.7 m/s² = 37 N. The mass is the same on both planets.</li>
+<li>Gravity pulls down and the push is sideways, so gravity does not change the sideways force you need.</li>
+<li>F = ma = 10 kg × 10 m/s² = <strong>100 N on both planets</strong>.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+<p>Now the goal on this page: a phone has a mass of 0.2 kg, and you push it along a smooth table with 1 N. The sensor reports a = F ÷ m = 1 N ÷ 0.2 kg = <strong>5 m/s²</strong> in the direction of the push.</p>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>In the example, use the weight in place of the mass: <span class="num">98</span> × <span class="num">10</span> gives <span class="num">980</span>, almost ten times too large. The units show the mistake, because newtons times meters per second squared is not a force. Mass is in kilograms and weight is in newtons, and one newton is one kilogram meter per second squared.</p>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<div class="simblock" data-sim="push-a-cart"><div class="simrow"><button type="button" class="simbtn" aria-expanded="false">Open the starter code</button> <a href="glowscript/sim.html?sim=push-a-cart" target="_blank" rel="noopener">open it in its own tab</a></div><div class="sim" hidden><iframe title="Web VPython simulation: a force pushing a cart" data-src="glowscript/sim.html?sim=push-a-cart" allowfullscreen></iframe></div></div><p>The starter code has a cart, a force and a mass. Predict the acceleration on paper, run the code, and compare. Then double the mass and predict again before you run it.</p>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me a force and a mass and ask me to predict the acceleration, with units. If I am right, change one number and ask me to predict how the answer changes before I calculate.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me a force and a mass and ask me to predict the acceleration, with units. If I am right, change one number and ask me to predict how the answer changes before I calculate.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">A cart is already moving when the same force acts on it for the same time. Ask me whether its speed increases by more, by less or by the same amount as a cart that starts from rest, and make me defend my answer with numbers.</span>&quot;</p><button type="button" class="copybtn" data-copy="A cart is already moving when the same force acts on it for the same time. Ask me whether its speed increases by more, by less or by the same amount as a cart that starts from rest, and make me defend my answer with numbers.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-5" data-stop="5">
+<summary><span class="sno" aria-hidden="true">5</span><h2>Stop 5 · Newton's third law</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>When your hand pushes the phone, the phone pushes back on your hand with the same force. Inside the sensor the same thing happens between the spring and the small mass. To predict what the mass does, you need to know which of those forces act on the mass and which act on something else.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>list the forces that act on one object and use only those to decide whether it accelerates.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="By-ggTfeuJU" data-title="Newton&#x27;s third law"><span class="vt">Newton's third law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/By-ggTfeuJU" target="_blank" rel="noopener">youtu.be/By-ggTfeuJU</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="JAZIdG1dlpM" data-title="Concept questions"><span class="vt">Concept questions</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 18 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/JAZIdG1dlpM" target="_blank" rel="noopener">youtu.be/JAZIdG1dlpM</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">You push a table. The table pushes back on you with an equal force. Why does the table move at all?</p>
+<p class="predictline"><em>Predict first:</em> do the two forces cancel?</p>
+<ol class="steps">
+<li>Your push acts on the table. The table's push back acts on you. They act on different objects, so they cannot cancel each other.</li>
+<li>To decide whether the table moves, list only the forces on the table: your push, and the friction between its legs and the floor.</li>
+<li>On a smooth floor your push is larger than the friction, so there is a net force on the table and it accelerates, by the second law.</li>
+<li>If the legs are nailed down, the floor matches your push and the table stays.</li>
+<li>To decide whether you move, list only the forces on you: the table's push back, and the friction under your feet. On ice that friction is small, so you slide backward.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>A phone with a mass of <span class="num">200 g</span> rests on a table. Its weight is <span class="num">0.2 kg</span> × <span class="num">9.8 m/s²</span> = <span class="num">1.96 N</span>, so the table pushes up on it with <span class="num">1.96 N</span>. Use <span class="num">200</span> in place of <span class="num">0.2</span> and the weight comes out as <span class="num">1,960 N</span>, which is the weight of a motorcycle. Grams must become kilograms before the answer is in newtons.</p>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">A locomotive pulls wagons and the wagons pull back with an equal force. Ask me how the train can start moving, and do not accept an answer that says one pull is larger.</span>&quot;</p><button type="button" class="copybtn" data-copy="A locomotive pulls wagons and the wagons pull back with an equal force. Ask me how the train can start moving, and do not accept an answer that says one pull is larger.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to name the action and reaction pair when a bird flies, and then ask me which object each force acts on.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to name the action and reaction pair when a bird flies, and then ask me which object each force acts on.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-6" data-stop="6">
+<summary><span class="sno" aria-hidden="true">6</span><h2>Stop 6 · Inside the sensor</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>This is where the three laws become a number on your phone. A small mass sits on a spring inside the chip. When the phone accelerates, the mass lags behind and the spring stretches until it pulls the mass along at the same acceleration. The phone measures how far the spring stretched.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>predict how far the mass shifts for a given acceleration, and say what the sensor reports when the phone is still, pushed or falling.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="gxZ7Hdrs3Yk" data-title="Principle of the accelerometer"><span class="vt">Principle of the accelerometer</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/gxZ7Hdrs3Yk" target="_blank" rel="noopener">youtu.be/gxZ7Hdrs3Yk</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="T_iXLNkkjFo" data-title="How an accelerometer works"><span class="vt">How an accelerometer works</span><span class="vsep"> - </span><span class="vm">5 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/T_iXLNkkjFo" target="_blank" rel="noopener">youtu.be/T_iXLNkkjFo</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1P84I3PjGN-kAnTG6XqtGjv84gSKp-SCuNiLrsPANhZA" target="_blank" rel="noopener">Slides</a></p>
+</section>
+<div class="newvideo" data-video="A">Short video: Inside the sensor - being added</div>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">A large model of the sensor has a mass of 0.01 kg on a spring with a spring constant of 20 N/m. The model is accelerated at 2 m/s². How far does the mass shift?</p>
+<p class="predictline"><em>Predict first:</em> a millimeter, a centimeter or a meter?</p>
+<ol class="steps">
+<li>The spring is the only thing that pulls the mass along, so the spring force equals the mass times the acceleration: kx = ma.</li>
+<li>Solve for the shift: x = ma ÷ k.</li>
+<li>Put in the numbers with their units: x = 0.01 kg × 2 m/s² ÷ 20 N/m.</li>
+<li>x = 0.001 m, which is <strong>1 mm</strong>.</li>
+<li>The sensor works the other way around. It measures x and calculates a = kx ÷ m.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+<p>In a real phone the mass and the spring are a few thousandths of a millimeter across. The shift changes the gap between two tiny metal plates, the phone reads the change electrically, and three of these sit at right angles so the phone gets one number for each direction.</p>
+</section>
+<section class="part part-still">
+<h3 class="k">What a still phone reads</h3>
+<p>A phone lying on a table is not accelerating, and its sensor reads about 9.8 m/s² pointing up. The reason is that the spring has to hold the small mass up against gravity, so it is stretched even though nothing moves. A phone in free fall reads about 0, because the mass and the phone fall together and the spring is not stretched.</p>
+</section>
+<div class="newvideo" data-video="C">Short video: What a still phone reads - being added</div>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>In the worked example, give the mass as <span class="num">10 g</span> and use <span class="num">10</span> in the formula. The shift comes out as <span class="num">1 m</span>, which is larger than the phone. The spring constant is in newtons per meter, and a newton contains kilograms, so the mass must be in kilograms.</p>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<ul class="trylist">
+<li><div class="simblock" data-sim="sensor-spring"><div class="simrow"><button type="button" class="simbtn" aria-expanded="false">Open the starter code</button> <a href="glowscript/sim.html?sim=sensor-spring" target="_blank" rel="noopener">open it in its own tab</a></div><div class="sim" hidden><iframe title="Web VPython simulation: a mass on a spring inside a box" data-src="glowscript/sim.html?sim=sensor-spring" allowfullscreen></iframe></div></div><p>The starter code has a box with a mass on a spring inside. Set the acceleration, predict the shift with x = ma ÷ k, run the code, and compare. Then make the spring stiffer and predict whether the shift grows or shrinks.</p></li>
+<li><p>On your own phone: install the free app <strong>phyphox</strong> and open "Acceleration with g". Lay the phone flat and read the three numbers. Stand it on its long edge and read them again. Before each move, write down which number you expect to be near 9.8.</p></li>
+</ul>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I will explain why a phone at rest reads 9.8 and a falling phone reads 0. Ask me questions wherever my explanation skips a step.</span>&quot;</p><button type="button" class="copybtn" data-copy="I will explain why a phone at rest reads 9.8 and a falling phone reads 0. Ask me questions wherever my explanation skips a step.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me what the sensor reports when the phone moves at a steady speed in a straight line, and why.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me what the sensor reports when the phone moves at a steady speed in a straight line, and why.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-7" data-stop="7">
+<summary><span class="sno" aria-hidden="true">7</span><h2>Stop 7 · Make it yours</h2></summary>
+<div class="stopbody">
+<p>The goal at the top of this page is one of many that use the same physics. Each goal below keeps the three-part form and changes what you predict. Choose one, or write your own in the same form, and take the Dojo prompt to your coach.</p>
+<section class="mine">
+<h3 class="k">Step counter</h3>
+<div class="goalcard small"><blockquote><p>Given the up-and-down acceleration my phone records while I walk, I can predict how many steps it will count in one minute. This is useful because it tells me when a step counter can be trusted and when it cannot.</p></blockquote><button type="button" class="copybtn" data-copy="Given the up-and-down acceleration my phone records while I walk, I can predict how many steps it will count in one minute. This is useful because it tells me when a step counter can be trusted and when it cannot.">Copy this goal</button></div>
+<p class="dojolbl">Dojo:</p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Help me plan how to record my phone's acceleration for one minute of walking and count the peaks. Ask me what could make the count wrong before I record anything.</span>&quot;</p><button type="button" class="copybtn" data-copy="Help me plan how to record my phone&#x27;s acceleration for one minute of walking and count the peaks. Ask me what could make the count wrong before I record anything.">Copy prompt</button></div>
+</section>
+<section class="mine">
+<h3 class="k">Fall alert</h3>
+<div class="goalcard small"><blockquote><p>Given the height my phone falls from, I can predict how long its sensor will read close to zero. This is useful because a phone or a watch uses that time to decide whether someone has fallen.</p></blockquote><button type="button" class="copybtn" data-copy="Given the height my phone falls from, I can predict how long its sensor will read close to zero. This is useful because a phone or a watch uses that time to decide whether someone has fallen.">Copy this goal</button></div>
+<p class="dojolbl">Dojo:</p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to predict how long a phone is in free fall from 1 meter. Do not give me the formula until I have tried to reason from 9.8 m/s² second by second.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to predict how long a phone is in free fall from 1 meter. Do not give me the formula until I have tried to reason from 9.8 m/s² second by second.">Copy prompt</button></div>
+</section>
+<section class="mine">
+<h3 class="k">Tilt control in a game</h3>
+<div class="goalcard small"><blockquote><p>Given the angle I tilt my phone, I can predict the reading along the screen. This is useful because a game turns that reading into steering.</p></blockquote><button type="button" class="copybtn" data-copy="Given the angle I tilt my phone, I can predict the reading along the screen. This is useful because a game turns that reading into steering.">Copy this goal</button></div>
+<p class="dojolbl">Dojo:</p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me what the sensor reads along the screen when the phone is flat and when it is upright, and then help me work out what happens in between.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me what the sensor reads along the screen when the phone is flat and when it is upright, and then help me work out what happens in between.">Copy prompt</button></div>
+<p class="dojolbl">Starter code:</p>
+<div class="simblock" data-sim="phone-tilt"><div class="simrow"><button type="button" class="simbtn" aria-expanded="false">Open the starter code</button> <a href="glowscript/sim.html?sim=phone-tilt" target="_blank" rel="noopener">open it in its own tab</a></div><div class="sim" hidden><iframe title="Web VPython simulation: a phone&#x27;s tilt sensors" data-src="glowscript/sim.html?sim=phone-tilt" allowfullscreen></iframe></div></div>
+</section>
+<section class="mine">
+<h3 class="k">Car airbag</h3>
+<div class="goalcard small"><blockquote><p>Given a car's speed and the time it takes to stop in a crash, I can predict the acceleration the car's sensor reports. This is useful because the airbag fires only above a set value.</p></blockquote><button type="button" class="copybtn" data-copy="Given a car&#x27;s speed and the time it takes to stop in a crash, I can predict the acceleration the car&#x27;s sensor reports. This is useful because the airbag fires only above a set value.">Copy this goal</button></div>
+<p class="dojolbl">Dojo:</p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">A car going 15 m/s stops in 0.1 s. Ask me to predict the acceleration and compare it with 9.8 m/s². Then ask me why hard braking does not fire the airbag.</span>&quot;</p><button type="button" class="copybtn" data-copy="A car going 15 m/s stops in 0.1 s. Ask me to predict the acceleration and compare it with 9.8 m/s². Then ask me why hard braking does not fire the airbag.">Copy prompt</button></div>
+</section>
+<section class="mine">
+<h3 class="k">Earthquake detector</h3>
+<div class="goalcard small"><blockquote><p>Given how strongly the ground shakes, I can predict whether a phone lying on a table will register it. This is useful because thousands of phones together can report an earthquake seconds before the shaking arrives somewhere else.</p></blockquote><button type="button" class="copybtn" data-copy="Given how strongly the ground shakes, I can predict whether a phone lying on a table will register it. This is useful because thousands of phones together can report an earthquake seconds before the shaking arrives somewhere else.">Copy this goal</button></div>
+<p class="dojolbl">Dojo:</p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Help me find out how small an acceleration a phone sensor can detect, and ask me how I would tell an earthquake from someone bumping the table.</span>&quot;</p><button type="button" class="copybtn" data-copy="Help me find out how small an acceleration a phone sensor can detect, and ask me how I would tell an earthquake from someone bumping the table.">Copy prompt</button></div>
+</section>
+</div></details>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">Where this page comes from</div>
+<p class="prov-lead">The videos by Prof. Sathya and the worked examples at stops 1 to 5 come from earlier offerings of CST286. The Khan Academy videos and the video at stop 6 on how an accelerometer works are by their own authors. The trail layout, the units checks, the stop 6 example, the simulations and the goals at stop 7 were drafted with AI and reviewed by Prof. Sathya.</p>
+</div>
+</main>
+
+<div class="pagenav"><a href="trailheads.html">All trailheads</a></div>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
+
+(function () {
+    'use strict';
+    function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    var calm = false;
+    try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { calm = false; }
+    var live = document.getElementById('live');
+
+    // ---------- opened stops: remembered in this browser when storage allows ----------
+    var KEY = 'cst286.trail-accelerometer.opened';
+    var opened = {};
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        var saved = raw ? JSON.parse(raw) : null;
+        if (saved && typeof saved === 'object') { opened = saved; }
+    } catch (e) { opened = {}; }
+    function save() { try { window.localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) { /* page works without it */ } }
+    function paint() {
+        all('.stopbtn').forEach(function (b) {
+            var on = !!opened[b.getAttribute('data-stop')];
+            b.classList.toggle('opened', on);
+            var m = b.querySelector('.mark');
+            if (m) { m.hidden = !on; }
+        });
+    }
+    function markOpened(n) { if (!opened[n]) { opened[n] = true; save(); } paint(); }
+    paint();
+
+    all('details.stop').forEach(function (d) {
+        d.addEventListener('toggle', function () { if (d.open) { markOpened(d.getAttribute('data-stop')); } });
+    });
+
+    // ---------- trail map: open the stop, then go to it ----------
+    function goTo(n, viaHash) {
+        var d = document.getElementById('stop-' + n);
+        if (!d) { return; }
+        d.open = true;
+        markOpened(String(n));
+        var s = d.querySelector('summary');
+        try { d.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); } catch (e) { d.scrollIntoView(); }
+        if (s && !viaHash) { try { s.focus({ preventScroll: true }); } catch (e) { s.focus(); } }
+    }
+    all('.stopbtn').forEach(function (b) {
+        b.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            var n = b.getAttribute('data-stop');
+            goTo(n, false);
+            try { history.replaceState(null, '', '#stop-' + n); } catch (e) { /* fine */ }
+        });
+    });
+    var hm = /^#stop-([1-7])$/.exec(location.hash || '');
+    if (hm) { goTo(hm[1], true); }
+
+    // ---------- worked examples: steps one at a time (all visible without this script) ----------
+    all('ol.steps').forEach(function (ol) {
+        var ctl = ol.nextElementSibling;
+        if (!ctl || !ctl.classList.contains('stepctl')) { return; }
+        var items = all('li', ol);
+        var btns = all('button', ctl);
+        items.forEach(function (li) { li.hidden = true; });
+        ol.setAttribute('aria-live', 'polite');
+        ctl.hidden = false;
+        function sync() {
+            var left = items.filter(function (li) { return li.hidden; }).length;
+            btns.forEach(function (b) { if (left === 0) { b.setAttribute('aria-disabled', 'true'); } else { b.removeAttribute('aria-disabled'); } });
+        }
+        btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+                var hiddenOnes = items.filter(function (li) { return li.hidden; });
+                if (!hiddenOnes.length) { return; }
+                if (b.getAttribute('data-act') === 'all') { hiddenOnes.forEach(function (li) { li.hidden = false; }); }
+                else { hiddenOnes[0].hidden = false; }
+                sync();
+            });
+        });
+        sync();
+    });
+
+    // ---------- copy buttons ----------
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        ta.style.top = (window.pageYOffset || 0) + 'px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok ? Promise.resolve() : Promise.reject(new Error('no clipboard'));
+    }
+    function writeClipboard(text) {
+        var nc = null;
+        try { nc = navigator.clipboard; } catch (e) { nc = null; }
+        if (nc && nc.writeText) {
+            try { return nc.writeText(text).catch(function () { return fallbackCopy(text); }); }
+            catch (e) { return fallbackCopy(text); }
+        }
+        return fallbackCopy(text);
+    }
+    function selectNear(btn) {
+        // Copy was refused: select the text so it can be copied by hand.
+        var box = btn.parentNode ? btn.parentNode.querySelector('.ct, blockquote') : null;
+        if (!box || !window.getSelection) { return; }
+        try { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* nothing more to try */ }
+    }
+    all('.copybtn').forEach(function (btn) {
+        var label = btn.textContent;
+        var timer = null;
+        btn.addEventListener('click', function () {
+            writeClipboard(btn.getAttribute('data-copy') || '').then(function () {
+                btn.textContent = 'Copied';
+                btn.classList.add('done');
+                if (live) { live.textContent = ''; live.textContent = 'Copied'; }
+                if (timer) { clearTimeout(timer); }
+                timer = setTimeout(function () {
+                    btn.textContent = label;
+                    btn.classList.remove('done');
+                    if (live) { live.textContent = ''; }
+                }, 2000);
+            }, function () { selectNear(btn); });
+        });
+    });
+
+    // ---------- videos: the player loads only when asked for ----------
+    all('.vidbtn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var id = btn.getAttribute('data-yt');
+            if (!id) { return; }
+            var box = document.createElement('div');
+            box.className = 'player';
+            var f = document.createElement('iframe');
+            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0');
+            f.setAttribute('title', btn.getAttribute('data-title') || '');
+            f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            f.setAttribute('allowfullscreen', '');
+            f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            box.appendChild(f);
+            btn.parentNode.insertBefore(box, btn);
+            btn.hidden = true;
+            try { f.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+        });
+    });
+
+    // ---------- starter code: the runner is mounted once, on demand ----------
+    all('.simblock').forEach(function (blk) {
+        var btn = blk.querySelector('.simbtn');
+        var host = blk.querySelector('.sim');
+        var frame = blk.querySelector('iframe[data-src]');
+        if (!btn || !host || !frame) { return; }
+        btn.addEventListener('click', function () {
+            var src = frame.getAttribute('data-src');
+            // Set once. Re-setting src reloads the runner and throws away edited code.
+            if (frame.getAttribute('src') !== src) { frame.setAttribute('src', src); }
+            host.hidden = false;
+            btn.setAttribute('aria-expanded', 'true');
+        });
+    });
+
+    // ---------- print: every stop and every step on paper ----------
+    var reopen = [];
+    window.addEventListener('beforeprint', function () {
+        reopen = all('details.stop').filter(function (d) { return !d.open; });
+        reopen.forEach(function (d) { d.open = true; });
+    });
+    window.addEventListener('afterprint', function () {
+        reopen.forEach(function (d) { d.open = false; });
+        reopen = [];
+    });
+}());
+</script>
+</body>
+</html>
