@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -182,6 +185,110 @@
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
 <style data-native-canvas-navigation>
 html.native-canvas-context .back-link { display: none !important; }
 </style>
@@ -194,11 +301,11 @@ html.native-canvas-context .back-link { display: none !important; }
 </script>
 </head>
 <body>
-
   <div class="activity">
     <a class="back-link" href="../sprint-14.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">course1 &middot; Sprint 14 &middot; Sprint 1: Find the Problem Worth Solving (V2) &middot; Assignment</p>
     <h1>Problem Frame</h1>
+    
 
 
 
@@ -295,9 +402,9 @@ html.native-canvas-context .back-link { display: none !important; }
 </blockquote>
 <p>If nothing held up, or the only survivor does not matter to you, go back to your brainstorm list and work through a different problem. Items you set aside are still there. Take the new one through Get underneath and First frames on your own, in your Word files, and test it in your Dojo the same way. Then write it up here, and say what you tried first and why it did not survive.</p>
 </section><div class="response-task" data-task="which-and-why"><label for="answer-which-and-why">Which problem you selected and why: the four questions, in order.</label><textarea id="answer-which-and-why" data-answer="which-and-why" maxlength="20000" rows="7" aria-describedby="save-status"></textarea><details><summary>Self-check</summary><ul><li>All four questions answered.</li><li>Why not the others covers every frame you tested.</li><li>A runner-up named, or the reason none is workable.</li></ul></details></div><section class="task-teaching"><h2 id="part-2-your-problem-frame">Part 2. Your Problem Frame</h2>
-<p>Open your First frames Word file and find the frame you chose. If you haven&rsquo;t already, bring it up to date with everything that changed as a result of the Dojo Lab. In Part 6, each assumption is its own line, marked confirmed or unverified, with who could tell you. Leave 3c blank; Sprint 2 fills it. From here on, that table in your Word file is your Problem Frame document: keep it, and update it as the course goes on.</p>
+<p>Open your First frames Word file and find the frame you chose. If you haven&rsquo;t already, bring it up to date with everything that changed as a result of the Dojo Lab. In Part 6, each assumption is its own line, with the part it comes from and who could tell you. Leave 3c blank; Sprint 2 fills it. From here on, that table in your Word file is your Problem Frame document: keep it, and update it as the course goes on.</p>
 <p>Then paste the whole frame into the box below.</p>
-</section><div class="response-task" data-task="problem-frame"><label for="answer-problem-frame">Your Problem Frame, pasted whole: all seven parts, Part 6 with every assumption marked, 3c blank.</label><textarea id="answer-problem-frame" data-answer="problem-frame" maxlength="20000" rows="7" aria-describedby="save-status"></textarea><details><summary>Self-check</summary><ul><li>All seven parts present, in your own words.</li><li>Every assumption in Part 6 marked confirmed or unverified, each unverified one with who could tell you.</li><li>Part 3c left blank for Sprint 2.</li></ul></details></div><section class="task-teaching"><h2 id="part-3-what-changed-after-the-dojo-conversation-and-why">Part 3. What changed after the Dojo conversation, and why</h2>
+</section><div class="response-task" data-task="problem-frame"><label for="answer-problem-frame">Your Problem Frame, pasted whole: all seven parts, Part 6 with every assumption on its own line, 3c blank.</label><textarea id="answer-problem-frame" data-answer="problem-frame" maxlength="20000" rows="7" aria-describedby="save-status"></textarea><details><summary>Self-check</summary><ul><li>All seven parts present, in your own words.</li><li>Every assumption in Part 6 names the part it comes from and who could tell you.</li><li>Part 3c left blank for Sprint 2.</li></ul></details></div><section class="task-teaching"><h2 id="part-3-what-changed-after-the-dojo-conversation-and-why">Part 3. What changed after the Dojo conversation, and why</h2>
 <p>The Dojo should have pushed your thinking in some areas, even if you ultimately decided to reject its feedback or accept it with adjustments. Capture what happened in that exchange here. Review the recap your Dojo gave you, check your First frames file against your updated Problem Frame, then, in a few sentences each, answer:</p>
 <ol>
 <li><strong>What moved</strong> between your draft and your Problem Frame.</li>
@@ -319,7 +426,7 @@ html.native-canvas-context .back-link { display: none !important; }
 <p id="completion-status"></p>
 </details>
 </div>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-problem-frame", "title": "Problem Frame", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Write up the one problem you chose and say why this one.", "builds_on": "Bring your First frames Word file, brought up to date after the Dojo Lab.", "standing_instruction": "Submit all three responses together as one Canvas text entry · 50 points.", "tasks": [{"id": "which-and-why", "kind": "response", "prompt": "Which problem you selected and why: the four questions, in order.", "criteria": ["All four questions answered.", "Why not the others covers every frame you tested.", "A runner-up named, or the reason none is workable."], "instruction_section": "Part 1. Which problem you selected and why"}, {"id": "problem-frame", "kind": "response", "prompt": "Your Problem Frame, pasted whole: all seven parts, Part 6 with every assumption marked, 3c blank.", "criteria": ["All seven parts present, in your own words.", "Every assumption in Part 6 marked confirmed or unverified, each unverified one with who could tell you.", "Part 3c left blank for Sprint 2."], "instruction_section": "Part 2. Your Problem Frame"}, {"id": "what-changed", "kind": "response", "prompt": "What moved, what moved it, and one thing the Dojo suggested that you rejected, and why.", "criteria": ["At least one change, or a stated reason nothing changed.", "The evidence or argument that moved it, named.", "One rejected suggestion with a reason."], "instruction_section": "Part 3. What changed after the Dojo conversation, and why"}], "presentation": "reading"}</script>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-14-problem-frame", "title": "Problem Frame", "module": "Sprint 1: Find the Problem Worth Solving (V2)", "version": "1.0", "purpose": "Write up the one problem you chose and say why this one.", "builds_on": "Bring your First frames Word file, brought up to date after the Dojo Lab.", "standing_instruction": "Submit all three responses together as one Canvas text entry · 50 points.", "tasks": [{"id": "which-and-why", "kind": "response", "prompt": "Which problem you selected and why: the four questions, in order.", "criteria": ["All four questions answered.", "Why not the others covers every frame you tested.", "A runner-up named, or the reason none is workable."], "instruction_section": "Part 1. Which problem you selected and why"}, {"id": "problem-frame", "kind": "response", "prompt": "Your Problem Frame, pasted whole: all seven parts, Part 6 with every assumption on its own line, 3c blank.", "criteria": ["All seven parts present, in your own words.", "Every assumption in Part 6 names the part it comes from and who could tell you.", "Part 3c left blank for Sprint 2."], "instruction_section": "Part 2. Your Problem Frame"}, {"id": "what-changed", "kind": "response", "prompt": "What moved, what moved it, and one thing the Dojo suggested that you rejected, and why.", "criteria": ["At least one change, or a stated reason nothing changed.", "The evidence or argument that moved it, named.", "One rejected suggestion with a reason."], "instruction_section": "Part 3. What changed after the Dojo conversation, and why"}], "presentation": "reading"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
