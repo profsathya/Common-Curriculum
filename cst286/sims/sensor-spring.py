@@ -65,4 +65,4 @@ while t < run_time - dt / 2:
     else:
         readout.text = "shift = " + str(round(1000 * shift, 2)) + " mm"
 
-print("RESULT shift_mm=" + str(round(1000 * shift, 3)))
+scene.caption = "RESULT: settled shift = " + str(round(1000 * shift, 3)) + " mm\n"

@@ -53,4 +53,4 @@ while t < run_time - dt / 2 and position < track_length:
         "speed = " + str(round(speed, 2)) + " m/s\n" +
         "time = " + str(round(t, 2)) + " s")
 
-print("RESULT acceleration=" + str(round(acceleration, 3)) + " speed_at_end=" + str(round(speed, 3)) + " time=" + str(round(t, 3)))
+scene.caption = "RESULT: acceleration = " + str(round(acceleration, 3)) + " m/s^2, speed after " + str(round(t, 2)) + " s = " + str(round(speed, 3)) + " m/s\n"
