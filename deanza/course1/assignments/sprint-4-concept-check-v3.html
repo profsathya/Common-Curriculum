@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -182,13 +185,127 @@
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
-<aside class="retired-concept-check"><strong>Archived concept check.</strong> Use <a href="../assignments/sprint-4-concept-check-v4.html?context=web" target="_top">the current Sprint 4 Concept Check</a>. In Canvas, open that activity from Modules to submit your five answers.</aside>
   <div class="activity">
     <a class="back-link" href="../sprint-8.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Sprint 4: Close the Learning Gap (V3) &middot; Assignment</p>
     <h1>Sprint 4 Concept Check</h1>
+    
 
 
 
@@ -271,18 +388,18 @@
 <p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
 <div class="reading-submit">
 <p>Submit all five answers for 5 completion points reviewed by your instructor.</p>
-<button type="button" id="copy-answers">Copy my answers</button>
+<button type="button" id="download-answers">Download my answers</button>
 <p>Paste into Canvas to submit. Copying or saving here does not submit your work. </p>
 <p id="copy-status" role="status"></p>
 <details id="more-options"><summary>More options</summary>
-<button type="button" id="copy-tasks">Copy the questions</button>
+
 <button type="button" id="clear-draft">Clear this browser draft</button>
 <div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
-<label for="copy-output">Select and copy manually</label><textarea id="copy-output" readonly rows="6"></textarea>
+
 <p id="completion-status"></p>
 </details>
 </div>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-sprint-4-concept-check-v3", "title": "Sprint 4 Concept Check", "module": "Sprint 4: Close the Learning Gap (V3)", "version": "1.0", "purpose": "Practice the judgment you'll use in Name the Gap on a sample first, then use the same judgment on your own list.", "builds_on": "Read Introduction: Close the Learning Gap.", "standing_instruction": "Submit all five answers for 5 completion points reviewed by your instructor.", "tasks": [{"id": "gap-vs-topic", "kind": "choice", "prompt": "Preparing for your Name the Gap activity, which of these is a gap, not a topic?", "criteria": ["Choose the one that fills \"Until I know this, I can't ___.\""], "options": ["I want to learn more about change management, because handovers involve change.", "I don't know if anyone tried to fix handovers before, so I can't tell what the real problem is.", "I should learn more about how teams handle account handovers.", "I should read more about client communication to see what works."], "correct_index": 1, "explanation": "Only one fills \"Until I know this, I can't ___.\" The others are things you'd like to know.", "instruction_section": "Practice before Name the Gap"}, {"id": "blocking", "kind": "choice", "prompt": "You don't know whether the other managers really find out late when an account changes hands. You can't say the problem is real for the whole team until you know. Preparing for your Name the Gap activity, how would you sort it?", "criteria": ["Choose the sort that matches whether a next step is waiting on it."], "options": ["Blocking", "Useful", "Interesting"], "correct_index": 0, "explanation": "A next step is waiting on it, so it's blocking."}, {"id": "useful", "kind": "choice", "prompt": "You don't know how many handovers happen each month. Knowing would show how big the problem is, but you can plan your next conversations without it. Preparing for your Name the Gap activity, how would you sort it?", "criteria": ["Choose the sort that matches whether anything is stopped without it."], "options": ["Blocking", "Useful", "Interesting"], "correct_index": 1, "explanation": "It would improve the work, but nothing is waiting on it. That makes it useful, not blocking."}, {"id": "ai-inferred", "kind": "choice", "prompt": "In the Dojo Lab, AI gives you a clear, confident explanation of why managers find out late. You understand it. How do you mark it?", "criteria": ["Choose the mark that matches whether it has been checked against something independent."], "options": ["Confirmed, because you understood it", "Inferred, until you check it against something outside AI", "Confirmed, if the AI seemed sure"], "correct_index": 1, "explanation": "A clear AI answer is still inferred until you check it against something independent."}, {"id": "closed-means-answered", "kind": "choice", "prompt": "You ask the managers, and most of them knew about the last three handovers the same day. Your frame said they find out late. Is the gap closed?", "criteria": ["Choose the answer that matches what closed means in this sprint."], "options": ["No, because the answer proved you wrong", "Yes, because you now have an answer you can stand behind", "No, not until the handover problem is solved"], "correct_index": 1, "explanation": "Closed means answered, even when the answer shows you were wrong."}], "presentation": "reading"}</script>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-sprint-4-concept-check-v3", "title": "Sprint 4 Concept Check", "module": "Sprint 4: Close the Learning Gap (V3)", "practiceOnly": false, "version": "1.0", "purpose": "Practice the judgment you'll use in Name the Gap on a sample first, then use the same judgment on your own list.", "builds_on": "Read Introduction: Close the Learning Gap.", "standing_instruction": "Submit all five answers for 5 completion points reviewed by your instructor.", "tasks": [{"id": "gap-vs-topic", "kind": "choice", "prompt": "Preparing for your Name the Gap activity, which of these is a gap, not a topic?", "criteria": ["Choose the one that fills \"Until I know this, I can't ___.\""], "options": ["I want to learn more about change management, because handovers involve change.", "I don't know if anyone tried to fix handovers before, so I can't tell what the real problem is.", "I should learn more about how teams handle account handovers.", "I should read more about client communication to see what works."], "correct_index": 1, "explanation": "Only one fills \"Until I know this, I can't ___.\" The others are things you'd like to know.", "instruction_section": "Practice before Name the Gap"}, {"id": "blocking", "kind": "choice", "prompt": "You don't know whether the other managers really find out late when an account changes hands. You can't say the problem is real for the whole team until you know. Preparing for your Name the Gap activity, how would you sort it?", "criteria": ["Choose the sort that matches whether a next step is waiting on it."], "options": ["Blocking", "Useful", "Interesting"], "correct_index": 0, "explanation": "A next step is waiting on it, so it's blocking."}, {"id": "useful", "kind": "choice", "prompt": "You don't know how many handovers happen each month. Knowing would show how big the problem is, but you can plan your next conversations without it. Preparing for your Name the Gap activity, how would you sort it?", "criteria": ["Choose the sort that matches whether anything is stopped without it."], "options": ["Blocking", "Useful", "Interesting"], "correct_index": 1, "explanation": "It would improve the work, but nothing is waiting on it. That makes it useful, not blocking."}, {"id": "ai-inferred", "kind": "choice", "prompt": "In the Dojo Lab, AI gives you a clear, confident explanation of why managers find out late. You understand it. How do you mark it?", "criteria": ["Choose the mark that matches whether it has been checked against something independent."], "options": ["Confirmed, because you understood it", "Inferred, until you check it against something outside AI", "Confirmed, if the AI seemed sure"], "correct_index": 1, "explanation": "A clear AI answer is still inferred until you check it against something independent."}, {"id": "closed-means-answered", "kind": "choice", "prompt": "You ask the managers, and most of them knew about the last three handovers the same day. Your frame said they find out late. Is the gap closed?", "criteria": ["Choose the answer that matches what closed means in this sprint."], "options": ["No, because the answer proved you wrong", "Yes, because you now have an answer you can stand behind", "No, not until the handover problem is solved"], "correct_index": 1, "explanation": "Closed means answered, even when the answer shows you were wrong."}], "presentation": "reading"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -308,7 +425,7 @@
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -327,9 +444,9 @@
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -402,7 +519,14 @@
       byId('copy-status').textContent = 'Select and copy the transcript request above.';
     }
   });
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
     if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
@@ -422,7 +546,7 @@
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
     if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();

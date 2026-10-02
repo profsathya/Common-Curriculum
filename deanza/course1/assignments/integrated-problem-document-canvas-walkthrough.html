@@ -289,6 +289,16 @@ html :is(.activity, .course-home) { overflow-wrap: anywhere; }
 html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
 html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
 </style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
   <div class="activity">

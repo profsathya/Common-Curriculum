@@ -289,6 +289,16 @@ html :is(.activity, .course-home) { overflow-wrap: anywhere; }
 html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
 html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
 </style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
   <div class="activity">
@@ -317,18 +327,18 @@ html #activity-container button, html .course-home .primary { border-radius: var
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
 </style>
 <div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.</p><h2>What you are building on</h2><p>Bring your Integrated Problem Document Word file.</p><p>Answer the tasks in your own document, or use the optional response boxes here. Copy the final text into the Canvas assignment. Saving or copying here does not submit work to Canvas.</p><details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
+<h2>Purpose</h2><p>Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.</p><h2>What you are building on</h2><p>Bring your Integrated Problem Document Word file.</p><p>Answer the tasks in your own document, or use the optional response boxes here. Download your answers, then use them in the Canvas assignment. Saving or copying here does not submit work to Canvas.</p><details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
 <p>This page is a placeholder in the Sprint 5 shell. Its content is being written; see course1/design/sprint-5-outline-v0.3.md for what it will ask. It is not published to learners.</p>
-</section></details><h2>Your tasks</h2><button type="button" id="copy-tasks">Copy the questions</button><p>Own your progress · 0 points. Submit to complete this module requirement.</p><p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
+</section></details><h2>Your tasks</h2><p>Own your progress · 0 points. Submit to complete this module requirement.</p><p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
 <section class="response-task" data-task="dojo-transcript"><h3>1. Paste the complete Dojo transcript, in order.</h3><details><summary>Guidance and self-check</summary><ul><li>The required header and every turn, in order.</li></ul></details><label for="answer-dojo-transcript">Your response</label><textarea id="answer-dojo-transcript" data-answer="dojo-transcript" maxlength="20000" rows="6"></textarea></section>
 
 <p id="completion-status" role="status"></p>
-<button type="button" id="copy-answers">Copy my answers</button>
+<button type="button" id="download-answers">Download my answers</button>
 <button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Copy any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Save any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
 <p id="copy-status" role="status"></p>
-<label for="copy-output">The text to copy</label><textarea id="copy-output" readonly rows="8"></textarea>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-dojo-lab-audit-your-argument", "title": "Dojo Lab: audit your argument for gaps", "module": "Sprint 5: Synthesize And Show Readiness (V2)", "version": "1.0", "purpose": "Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.", "builds_on": "Bring your Integrated Problem Document Word file.", "standing_instruction": "Own your progress · 0 points. Submit to complete this module requirement.", "tasks": [{"id": "dojo-transcript", "kind": "response", "prompt": "Paste the complete Dojo transcript, in order.", "criteria": ["The required header and every turn, in order."]}]}</script>
+
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-dojo-lab-audit-your-argument", "title": "Dojo Lab: audit your argument for gaps", "module": "Sprint 5: Synthesize And Show Readiness (V2)", "practiceOnly": false, "version": "1.0", "purpose": "Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.", "builds_on": "Bring your Integrated Problem Document Word file.", "standing_instruction": "Own your progress · 0 points. Submit to complete this module requirement.", "tasks": [{"id": "dojo-transcript", "kind": "response", "prompt": "Paste the complete Dojo transcript, in order.", "criteria": ["The required header and every turn, in order."]}]}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -354,7 +364,7 @@ html #activity-container button, html .course-home .primary { border-radius: var
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -373,9 +383,9 @@ html #activity-container button, html .course-home .primary { border-radius: var
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -448,7 +458,14 @@ html #activity-container button, html .course-home .primary { border-radius: var
       byId('copy-status').textContent = 'Select and copy the transcript request above.';
     }
   });
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
     if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
@@ -468,7 +485,7 @@ html #activity-container button, html .course-home .primary { border-radius: var
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
     if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
@@ -477,7 +494,7 @@ html #activity-container button, html .course-home .primary { border-radius: var
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7186" data-canvas-target="_top">Open the Canvas assignment</a></p></div>
+    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p></p></div>
 
 <footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
   </div>

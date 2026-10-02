@@ -289,6 +289,16 @@ html :is(.activity, .course-home) { overflow-wrap: anywhere; }
 html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
 html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
 </style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
   <div class="activity">
@@ -306,7 +316,7 @@ html #activity-container button, html .course-home .primary { border-radius: var
     <div class="submit">
       <h2>Submit to Canvas</h2>
       <p>Use the Canvas assignment to submit your work.</p>
-      <p><a hidden data-canvas-only data-canvas-href="https://cti-courses.instructure.com/courses/180/assignments/7191" data-canvas-target="_top">Open the Canvas assignment</a></p>
+      <p></p>
     </div>
 
 <footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>

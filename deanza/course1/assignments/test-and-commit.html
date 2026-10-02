@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -87,8 +90,14 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
     .back-link {
       display: none;
       font-size: 13px;
@@ -98,6 +107,7 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+    
   </style>
   <script>
     (function() {
@@ -107,6 +117,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -116,15 +138,174 @@
             }
           } catch (e) { }
         });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
   <div class="activity source-derived">
     <a class="back-link" href="../sprint-11.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Working Draft &middot; Assignment</p>
     <h1>Test and Commit</h1>
+    
 
 
 
@@ -141,12 +322,12 @@
 .guided-workspace :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
 .guided-workspace table { width: 100%; border-collapse: collapse; font-size: .94em; }
 .guided-workspace th, .guided-workspace td { padding: 8px; border: 1px solid #ccd5df; vertical-align: top; overflow-wrap: anywhere; }
+.guided-workspace .teaching-table { overflow-x: auto; max-width: 100%; }
+.guided-workspace .teaching-table th, .guided-workspace .teaching-table td { min-width: 140px; }
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
 </style>
 <div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Use four checks to choose a problem you can investigate, then defend your choice, name a runner-up, and keep uncertainty visible.</p><h2>What you are building on</h2><p>Your Candidate List and the examples on Four checks for a workable problem. Keep the same candidate names across your responses so you can compare the results.</p>
-<p>Answer the tasks in your own document, or use the optional response boxes here. Copy the final text into the Canvas assignment. Saving or copying here does not submit work to Canvas.</p>
-<details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
+<h2>Purpose</h2><p>Use four checks to choose a problem you can investigate, then defend your choice, name a runner-up, and keep uncertainty visible.</p><h2>What you are building on</h2><p>Your Candidate List and the examples on Four checks for a workable problem. Keep the same candidate names across your responses so you can compare the results.</p><p>Answer the tasks in your own document, or use the optional response boxes here. Download your answers, then use them in the Canvas assignment. Saving or copying here does not submit work to Canvas.</p><details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
 <h2 id="run-all-four-on-each-candidate">Run all four on each candidate</h2>
 <p>Go through your list one at a time. A few sentences per check. Rough is fine.</p>
 <p>Where you cannot answer a check, write that instead of guessing. &ldquo;I do not know who else this costs&rdquo; is a result, and a more useful one than an invented answer.</p>
@@ -284,24 +465,21 @@
 </tbody>
 </table>
 <p>The strongest work makes your reasoning visible. Agreeing with AI is not the goal; deciding what its challenge means in your actual context is.</p>
-</section></details>
-<h2>Your tasks</h2>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<p>Complete the first four tasks from your own observations before using AI feedback. In each of those tasks, answer the named check for every candidate and label the candidates consistently. Keep ? marks wherever a claim is uncertain. Then use AI to challenge assumptions, make your own decision, and copy your final answers into Canvas. Guidance and reflection are self-checks, not extra submissions.</p>
-<p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
-<p>Optional AI feedback sends only the response you choose and its task criteria to the course feedback service. Remove confidential details first. Feedback is guidance, not a grade; the self-check works without it.</p>
+</section></details><h2>Your tasks</h2><p>Complete the first four tasks from your own observations before using AI feedback. In each of those tasks, answer the named check for every candidate and label the candidates consistently. Keep ? marks wherever a claim is uncertain. Then use AI to challenge assumptions, make your own decision, and copy your final answers into Canvas. Guidance and reflection are self-checks, not extra submissions.</p><p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p><p>Optional AI feedback sends only the response you choose and its task criteria to the course feedback service. Remove confidential details first. Feedback is guidance, not a grade; the self-check works without it.</p>
 <section class="response-task" data-task="check-people"><h3>1. Check 1. Are the people real and specific?</h3><details><summary>Guidance and self-check</summary><ul><li>For every candidate, name the specific people or roles who pay the cost. Use names only in your private notes; use non-identifying roles in anything shared with AI.</li><li>Explain what you know about their involvement. Categories such as everyone or the team are not enough by themselves.</li><li>If you cannot name who is affected, write that as a result rather than inventing an answer. Note how you could find out; an interview is not required yet.</li></ul><p><strong>Reflect:</strong> Which person or role could tell you something about the current state that you do not already know?</p></details><label for="answer-check-people">Your response</label><textarea id="answer-check-people" data-answer="check-people" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="check-people">Get AI feedback</button><p data-feedback-result="check-people" role="status"></p></section><section class="response-task" data-task="check-current-handling"><h3>2. Check 2. Is something already handling it, and falling short?</h3><details><summary>Guidance and self-check</summary><ul><li>For every candidate, complete: X handles this today, but it does not ___. Name the person, process, or work-around and the remaining gap.</li><li>Describe current handling rather than proposing a new solution. Include a concrete example when you have one.</li><li>If nothing appears to handle it, distinguish what you have observed from what you have not checked. Keep uncertainty visible.</li></ul><p><strong>Reflect:</strong> Who is absorbing the cost of the current arrangement, and which part of that claim is still a guess?</p></details><label for="answer-check-current-handling">Your response</label><textarea id="answer-check-current-handling" data-answer="check-current-handling" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="check-current-handling">Get AI feedback</button><p data-feedback-result="check-current-handling" role="status"></p></section><section class="response-task" data-task="check-current-occurrence"><h3>3. Check 3. Is it live right now?</h3><details><summary>Guidance and self-check</summary><ul><li>For every candidate, say whether it is happening currently. Describe a recent instance you know about or state that you do not know when it last happened.</li><li>Explain whether you could observe it in the next two weeks. A past irritation or hypothetical future event does not supply current evidence.</li><li>Do not fabricate an event to make a candidate pass. Record the candidate as uncertain or set it aside when the evidence calls for that.</li></ul><p><strong>Reflect:</strong> What could you actually observe, rather than remember or imagine?</p></details><label for="answer-check-current-occurrence">Your response</label><textarea id="answer-check-current-occurrence" data-answer="check-current-occurrence" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="check-current-occurrence">Get AI feedback</button><p data-feedback-result="check-current-occurrence" role="status"></p></section><section class="response-task" data-task="check-size"><h3>4. Check 4. Is it the right size?</h3><details><summary>Guidance and self-check</summary><ul><li>For every candidate, check whether you can describe how it works now in one paragraph, name at least one other person with a stake, and identify at least one thing you need to find out.</li><li>If it is too small, ask what larger pattern it is an instance of. If it is too big, choose one instance you have actually seen. Write any changed scope.</li><li>Read all four check results together. State whether the candidate fails, is murky, needs a size adjustment, or passes, and keep unanswerable checks visible.</li></ul><p><strong>Reflect:</strong> What could you still learn about this candidate that would change your understanding?</p></details><label for="answer-check-size">Your response</label><textarea id="answer-check-size" data-answer="check-size" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="check-size">Get AI feedback</button><p data-feedback-result="check-size" role="status"></p></section><section class="response-task" data-task="ai-challenges"><h3>5. Record two or three challenges from your AI exchange, and your response to each.</h3><details><summary>Guidance and self-check</summary><ul><li>After completing your own four checks, use the optional AI feedback on your responses or take your two or three strongest candidate gaps and check answers to an AI tool permitted for your context. Remove confidential details first.</li><li>Ask which claims you are asserting rather than knowing and where someone familiar with the work might disagree. Ask it not to choose the problem for you.</li><li>Record two or three challenges and your response to each: accept, reject, or investigate, with a reason grounded in what you know. Keep new uncertainty visible.</li><li>If the feedback service is unavailable, your answers remain here and the self-check criteria still work. Use another permitted AI tool for the exchange if available; if you cannot complete the exchange, record the limitation honestly instead of inventing AI feedback.</li></ul><p><strong>Reflect:</strong> Which challenge changed your thinking, and which did you reject because you have direct evidence?</p></details><label for="answer-ai-challenges">Your response</label><textarea id="answer-ai-challenges" data-answer="ai-challenges" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="ai-challenges">Get AI feedback</button><p data-feedback-result="ai-challenges" role="status"></p></section><section class="response-task" data-task="committed-gap"><h3>6. Write your committed problem as a gap.</h3><details><summary>Guidance and self-check</summary><ul><li>Choose the candidate that came through the checks in the best shape and write it using the five fields: Right now; It could; The gap costs; This has been going on; It has not been fixed because.</li><li>Keep the gap grounded in the current situation and retain uncertainty marks. Do not turn the commitment into a promise to build a specific solution.</li><li>If nothing survived, say so and describe your next attempt: adjust the size of a candidate or go looking for another current work-around. Do not force a choice you do not believe in.</li></ul><p><strong>Reflect:</strong> Does this still describe a gap you can investigate, or has a preferred solution slipped into the statement?</p></details><label for="answer-committed-gap">Your response</label><textarea id="answer-committed-gap" data-answer="committed-gap" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="committed-gap">Get AI feedback</button><p data-feedback-result="committed-gap" role="status"></p></section><section class="response-task" data-task="decision-reasons"><h3>7. Why this one. Why not the others. What would make you switch.</h3><details><summary>Guidance and self-check</summary><ul><li>Explain which checks made the chosen problem worth pursuing and why it can support further inquiry. Use your actual situation rather than importance alone.</li><li>Give one or two sentences for each alternative, naming the deciding check and acknowledging what the alternative had going for it.</li><li>Name one condition that would make you switch. If no candidate survived, explain the failures and why your recovery plan is the next reasonable step.</li></ul><p><strong>Reflect:</strong> What is the strongest reason for your runner-up, and why does your present choice still make sense?</p></details><label for="answer-decision-reasons">Your response</label><textarea id="answer-decision-reasons" data-answer="decision-reasons" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="decision-reasons">Get AI feedback</button><p data-feedback-result="decision-reasons" role="status"></p></section><section class="response-task" data-task="runner-up"><h3>8. Name your runner-up.</h3><details><summary>Guidance and self-check</summary><ul><li>Name the candidate you would return to if your chosen problem became a dead end. One line is enough.</li><li>Keep any uncertainty marks visible. If no candidate is viable, state that and refer to the recovery plan you described rather than inventing a fallback.</li></ul><p><strong>Reflect:</strong> Could you return to this option without starting again from a blank page?</p></details><label for="answer-runner-up">Your response</label><textarea id="answer-runner-up" data-answer="runner-up" maxlength="20000" rows="6"></textarea><button type="button" data-feedback="runner-up">Get AI feedback</button><p data-feedback-result="runner-up" role="status"></p></section>
+
 <p id="completion-status" role="status"></p>
-<button type="button" id="copy-answers">Copy my answers</button>
+<button type="button" id="download-answers">Download my answers</button>
 <button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Copy any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Save any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
 <p id="copy-status" role="status"></p>
-<label for="copy-output">The text to copy</label><textarea id="copy-output" readonly rows="8"></textarea>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprint-one-v2-test-and-commit", "title": "Test and Commit", "module": "Working Draft", "version": "1", "purpose": "Use four checks to choose a problem you can investigate, then defend your choice, name a runner-up, and keep uncertainty visible.", "builds_on": "Your Candidate List and the examples on Four checks for a workable problem. Keep the same candidate names across your responses so you can compare the results.", "standing_instruction": "Complete the first four tasks from your own observations before using AI feedback. In each of those tasks, answer the named check for every candidate and label the candidates consistently. Keep ? marks wherever a claim is uncertain. Then use AI to challenge assumptions, make your own decision, and copy your final answers into Canvas. Guidance and reflection are self-checks, not extra submissions.", "feedback_endpoint": "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy", "tasks": [{"id": "check-people", "kind": "response", "prompt": "Check 1. Are the people real and specific?", "criteria": ["For every candidate, name the specific people or roles who pay the cost. Use names only in your private notes; use non-identifying roles in anything shared with AI.", "Explain what you know about their involvement. Categories such as everyone or the team are not enough by themselves.", "If you cannot name who is affected, write that as a result rather than inventing an answer. Note how you could find out; an interview is not required yet."], "reflection": "Which person or role could tell you something about the current state that you do not already know?"}, {"id": "check-current-handling", "kind": "response", "prompt": "Check 2. Is something already handling it, and falling short?", "criteria": ["For every candidate, complete: X handles this today, but it does not ___. Name the person, process, or work-around and the remaining gap.", "Describe current handling rather than proposing a new solution. Include a concrete example when you have one.", "If nothing appears to handle it, distinguish what you have observed from what you have not checked. Keep uncertainty visible."], "reflection": "Who is absorbing the cost of the current arrangement, and which part of that claim is still a guess?"}, {"id": "check-current-occurrence", "kind": "response", "prompt": "Check 3. Is it live right now?", "criteria": ["For every candidate, say whether it is happening currently. Describe a recent instance you know about or state that you do not know when it last happened.", "Explain whether you could observe it in the next two weeks. A past irritation or hypothetical future event does not supply current evidence.", "Do not fabricate an event to make a candidate pass. Record the candidate as uncertain or set it aside when the evidence calls for that."], "reflection": "What could you actually observe, rather than remember or imagine?"}, {"id": "check-size", "kind": "response", "prompt": "Check 4. Is it the right size?", "criteria": ["For every candidate, check whether you can describe how it works now in one paragraph, name at least one other person with a stake, and identify at least one thing you need to find out.", "If it is too small, ask what larger pattern it is an instance of. If it is too big, choose one instance you have actually seen. Write any changed scope.", "Read all four check results together. State whether the candidate fails, is murky, needs a size adjustment, or passes, and keep unanswerable checks visible."], "reflection": "What could you still learn about this candidate that would change your understanding?"}, {"id": "ai-challenges", "kind": "response", "prompt": "Record two or three challenges from your AI exchange, and your response to each.", "criteria": ["After completing your own four checks, use the optional AI feedback on your responses or take your two or three strongest candidate gaps and check answers to an AI tool permitted for your context. Remove confidential details first.", "Ask which claims you are asserting rather than knowing and where someone familiar with the work might disagree. Ask it not to choose the problem for you.", "Record two or three challenges and your response to each: accept, reject, or investigate, with a reason grounded in what you know. Keep new uncertainty visible.", "If the feedback service is unavailable, your answers remain here and the self-check criteria still work. Use another permitted AI tool for the exchange if available; if you cannot complete the exchange, record the limitation honestly instead of inventing AI feedback."], "reflection": "Which challenge changed your thinking, and which did you reject because you have direct evidence?"}, {"id": "committed-gap", "kind": "response", "prompt": "Write your committed problem as a gap.", "criteria": ["Choose the candidate that came through the checks in the best shape and write it using the five fields: Right now; It could; The gap costs; This has been going on; It has not been fixed because.", "Keep the gap grounded in the current situation and retain uncertainty marks. Do not turn the commitment into a promise to build a specific solution.", "If nothing survived, say so and describe your next attempt: adjust the size of a candidate or go looking for another current work-around. Do not force a choice you do not believe in."], "reflection": "Does this still describe a gap you can investigate, or has a preferred solution slipped into the statement?"}, {"id": "decision-reasons", "kind": "response", "prompt": "Why this one. Why not the others. What would make you switch.", "criteria": ["Explain which checks made the chosen problem worth pursuing and why it can support further inquiry. Use your actual situation rather than importance alone.", "Give one or two sentences for each alternative, naming the deciding check and acknowledging what the alternative had going for it.", "Name one condition that would make you switch. If no candidate survived, explain the failures and why your recovery plan is the next reasonable step."], "reflection": "What is the strongest reason for your runner-up, and why does your present choice still make sense?"}, {"id": "runner-up", "kind": "response", "prompt": "Name your runner-up.", "criteria": ["Name the candidate you would return to if your chosen problem became a dead end. One line is enough.", "Keep any uncertainty marks visible. If no candidate is viable, state that and refer to the recovery plan you described rather than inventing a fallback."], "reflection": "Could you return to this option without starting again from a blank page?"}]}</script>
+
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprint-one-v2-test-and-commit", "title": "Test and Commit", "module": "Working Draft", "practiceOnly": false, "version": "1", "purpose": "Use four checks to choose a problem you can investigate, then defend your choice, name a runner-up, and keep uncertainty visible.", "builds_on": "Your Candidate List and the examples on Four checks for a workable problem. Keep the same candidate names across your responses so you can compare the results.", "standing_instruction": "Complete the first four tasks from your own observations before using AI feedback. In each of those tasks, answer the named check for every candidate and label the candidates consistently. Keep ? marks wherever a claim is uncertain. Then use AI to challenge assumptions, make your own decision, and copy your final answers into Canvas. Guidance and reflection are self-checks, not extra submissions.", "feedback_endpoint": "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy", "tasks": [{"id": "check-people", "kind": "response", "prompt": "Check 1. Are the people real and specific?", "criteria": ["For every candidate, name the specific people or roles who pay the cost. Use names only in your private notes; use non-identifying roles in anything shared with AI.", "Explain what you know about their involvement. Categories such as everyone or the team are not enough by themselves.", "If you cannot name who is affected, write that as a result rather than inventing an answer. Note how you could find out; an interview is not required yet."], "reflection": "Which person or role could tell you something about the current state that you do not already know?"}, {"id": "check-current-handling", "kind": "response", "prompt": "Check 2. Is something already handling it, and falling short?", "criteria": ["For every candidate, complete: X handles this today, but it does not ___. Name the person, process, or work-around and the remaining gap.", "Describe current handling rather than proposing a new solution. Include a concrete example when you have one.", "If nothing appears to handle it, distinguish what you have observed from what you have not checked. Keep uncertainty visible."], "reflection": "Who is absorbing the cost of the current arrangement, and which part of that claim is still a guess?"}, {"id": "check-current-occurrence", "kind": "response", "prompt": "Check 3. Is it live right now?", "criteria": ["For every candidate, say whether it is happening currently. Describe a recent instance you know about or state that you do not know when it last happened.", "Explain whether you could observe it in the next two weeks. A past irritation or hypothetical future event does not supply current evidence.", "Do not fabricate an event to make a candidate pass. Record the candidate as uncertain or set it aside when the evidence calls for that."], "reflection": "What could you actually observe, rather than remember or imagine?"}, {"id": "check-size", "kind": "response", "prompt": "Check 4. Is it the right size?", "criteria": ["For every candidate, check whether you can describe how it works now in one paragraph, name at least one other person with a stake, and identify at least one thing you need to find out.", "If it is too small, ask what larger pattern it is an instance of. If it is too big, choose one instance you have actually seen. Write any changed scope.", "Read all four check results together. State whether the candidate fails, is murky, needs a size adjustment, or passes, and keep unanswerable checks visible."], "reflection": "What could you still learn about this candidate that would change your understanding?"}, {"id": "ai-challenges", "kind": "response", "prompt": "Record two or three challenges from your AI exchange, and your response to each.", "criteria": ["After completing your own four checks, use the optional AI feedback on your responses or take your two or three strongest candidate gaps and check answers to an AI tool permitted for your context. Remove confidential details first.", "Ask which claims you are asserting rather than knowing and where someone familiar with the work might disagree. Ask it not to choose the problem for you.", "Record two or three challenges and your response to each: accept, reject, or investigate, with a reason grounded in what you know. Keep new uncertainty visible.", "If the feedback service is unavailable, your answers remain here and the self-check criteria still work. Use another permitted AI tool for the exchange if available; if you cannot complete the exchange, record the limitation honestly instead of inventing AI feedback."], "reflection": "Which challenge changed your thinking, and which did you reject because you have direct evidence?"}, {"id": "committed-gap", "kind": "response", "prompt": "Write your committed problem as a gap.", "criteria": ["Choose the candidate that came through the checks in the best shape and write it using the five fields: Right now; It could; The gap costs; This has been going on; It has not been fixed because.", "Keep the gap grounded in the current situation and retain uncertainty marks. Do not turn the commitment into a promise to build a specific solution.", "If nothing survived, say so and describe your next attempt: adjust the size of a candidate or go looking for another current work-around. Do not force a choice you do not believe in."], "reflection": "Does this still describe a gap you can investigate, or has a preferred solution slipped into the statement?"}, {"id": "decision-reasons", "kind": "response", "prompt": "Why this one. Why not the others. What would make you switch.", "criteria": ["Explain which checks made the chosen problem worth pursuing and why it can support further inquiry. Use your actual situation rather than importance alone.", "Give one or two sentences for each alternative, naming the deciding check and acknowledging what the alternative had going for it.", "Name one condition that would make you switch. If no candidate survived, explain the failures and why your recovery plan is the next reasonable step."], "reflection": "What is the strongest reason for your runner-up, and why does your present choice still make sense?"}, {"id": "runner-up", "kind": "response", "prompt": "Name your runner-up.", "criteria": ["Name the candidate you would return to if your chosen problem became a dead end. One line is enough.", "Keep any uncertainty marks visible. If no candidate is viable, state that and refer to the recovery plan you described rather than inventing a fallback."], "reflection": "Could you return to this option without starting again from a blank page?"}]}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
   const key = 'course-response:' + config.artifactId + ':' + config.version;
+  const transcriptMode = config.dojoSubmission && config.dojoSubmission.mode === 'transcript';
   const byId = id => document.getElementById(id);
   const find = (attr, id) => document.querySelector('[' + attr + '="' + id + '"]');
   let state = {answers: Object.create(null), checks: Object.create(null), feedback: Object.create(null)};
@@ -322,7 +500,7 @@
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -330,6 +508,7 @@
     return raw;
   }
   function payload(withAnswers) {
+    if (transcriptMode) return withAnswers ? answer(config.tasks[0]) : config.transcriptRequest;
     const lines = [config.title, config.module, '', config.standing_instruction || '', ''];
     config.tasks.forEach((task, i) => {
       lines.push((i + 1) + '. ' + task.prompt);
@@ -340,9 +519,9 @@
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -363,7 +542,7 @@
         const result = find('data-result', task.id);
         if (selected === undefined || selected === '') { result.textContent = 'Choose an answer first.'; return; }
         state.checks[task.id] = (Number(state.checks[task.id]) || 0) + 1;
-        result.textContent = (Number(selected) === task.correct_index ? 'That fits. ' : 'Revisit the idea. ') + task.explanation;
+        result.textContent = Number(selected) === task.correct_index ? 'That fits. ' + task.explanation : 'Not quite. Reread the details in the question and try again.';
         save();
       });
     } else {
@@ -397,14 +576,40 @@
   async function copy(withAnswers) {
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
-    catch (_) { byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.'; }
+    catch (_) {
+      if (transcriptMode || ['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
+    }
   }
-  byId('copy-tasks').addEventListener('click', () => copy(false));
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyTasks = byId('copy-tasks');
+  if (copyTasks) copyTasks.addEventListener('click', () => copy(false));
+  const copyTranscriptRequest = byId('copy-transcript-request');
+  if (copyTranscriptRequest) copyTranscriptRequest.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(config.transcriptRequest);
+      byId('copy-status').textContent = 'Transcript request copied. Paste it into the same Dojo conversation.';
+    } catch (_) {
+      const requestText = byId('transcript-request-text');
+      requestText.focus(); requestText.select();
+      byId('copy-status').textContent = 'Select and copy the transcript request above.';
+    }
+  });
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
+    if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
   });
-  byId('cancel-clear').addEventListener('click', () => { byId('clear-confirmation').hidden = true; });
+  byId('cancel-clear').addEventListener('click', () => {
+    byId('clear-confirmation').hidden = true;
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
+  });
   byId('confirm-clear').addEventListener('click', () => {
     try { localStorage.removeItem(key); }
     catch (_) { byId('save-status').textContent = 'Could not clear the saved draft. Your current responses are still here.'; return; }
@@ -416,7 +621,8 @@
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
   if (!storageOK) byId('save-status').textContent = 'This browser could not load saved responses. Copy your work before leaving.';
@@ -424,9 +630,9 @@
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a href="https://cti-courses.instructure.com/courses/180/assignments/7141" target="_blank" rel="noopener">Open the Canvas assignment</a></p></div>
+    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p></div>
 
-    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
   </div>
 </body>
 </html>

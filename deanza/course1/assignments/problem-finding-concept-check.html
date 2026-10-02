@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -87,8 +90,14 @@
     }
     .submit h2 { color: #065f46; }
     .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
     footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
     footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
     .back-link {
       display: none;
       font-size: 13px;
@@ -98,6 +107,7 @@
     }
     .back-link:hover { text-decoration: underline; }
     .ctx-web .back-link { display: inline-block; }
+    
   </style>
   <script>
     (function() {
@@ -107,6 +117,18 @@
         document.documentElement.classList.add('ctx-web');
       }
       document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
         document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
           try {
             var u = new URL(a.getAttribute('href'), location.href);
@@ -116,15 +138,174 @@
             }
           } catch (e) { }
         });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
 </head>
 <body>
   <div class="activity source-derived">
     <a class="back-link" href="../sprint-11.html?context=web" data-keep-context>&larr; Back to Module</a>
     <p class="meta">Working Draft &middot; Assignment</p>
     <h1>Problem-Finding Concept Check</h1>
+    
 
 
 
@@ -141,33 +322,30 @@
 .guided-workspace :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
 .guided-workspace table { width: 100%; border-collapse: collapse; font-size: .94em; }
 .guided-workspace th, .guided-workspace td { padding: 8px; border: 1px solid #ccd5df; vertical-align: top; overflow-wrap: anywhere; }
+.guided-workspace .teaching-table { overflow-x: auto; max-width: 100%; }
+.guided-workspace .teaching-table th, .guided-workspace .teaching-table td { min-width: 140px; }
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
 </style>
 <div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Check how you distinguish indicators, current states, goals, candidate gaps, and uncertain explanations before you examine and commit to a problem.</p><h2>What you are building on</h2><p>Start with what bugs you, Two other places to look, and your Candidate List. These questions use the ideas from that work.</p>
-<p>Answer the tasks in your own document, or use the optional response boxes here. Copy the final text into the Canvas assignment. Saving or copying here does not submit work to Canvas.</p>
-<details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
+<h2>Purpose</h2><p>Check how you distinguish indicators, current states, goals, candidate gaps, and uncertain explanations before you examine and commit to a problem.</p><h2>What you are building on</h2><p>Start with what bugs you, Two other places to look, and your Candidate List. These questions use the ideas from that work.</p><p>Answer the tasks in your own document, or use the optional response boxes here. Download your answers, then use them in the Canvas assignment. Saving or copying here does not submit work to Canvas.</p><details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
 <p>Use the ideas from your reading and Candidate List to answer these five questions. Choose the strongest answer for each. These questions ask you to interpret examples and decide what to do next.</p>
 <p>You can check each answer, read its explanation, and revise your choice. The feedback helps you examine your thinking; it does not calculate a grade.</p>
 <p>When you have answered all five, copy your final answers into the Canvas assignment text-entry box and submit there. Your instructor reviews completion for the five points. Keep your Candidate List for the four checks that follow.</p>
-</section></details>
-<h2>Your tasks</h2>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<p>Choose an answer for each question. Use Check my answer for formative feedback, revisit the explanation, and revise your choice if needed. Copy your final answers into the Canvas assignment and submit there. The five points are for completion reviewed by your instructor; the answer checks do not calculate or submit a grade.</p>
-<p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
-
+</section></details><h2>Your tasks</h2><p>Choose an answer for each question. Use Check my answer for formative feedback, revisit the explanation, and revise your choice if needed. Copy your final answers into the Canvas assignment and submit there. The five points are for completion reviewed by your instructor; the answer checks do not calculate or submit a grade.</p><p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
 <section class="response-task" data-task="recognize-a-candidate-gap"><h3>1. Compare these four statements about account handovers. Which one goes furthest toward a candidate problem rather than an indicator, a proposed solution, or a broad goal?</h3><details><summary>Guidance and self-check</summary><ul><li>Distinguish an indicator, a gap, a proposed solution, and a desired outcome.</li><li>Look for a current state, a possible state, and a specific cost to people.</li></ul></details><label class="choice"><input type="radio" name="recognize-a-candidate-gap" value="0"> Nobody tells me when a client account changes hands.</label><label class="choice"><input type="radio" name="recognize-a-candidate-gap" value="1"> Handovers happen between two account owners without an announcement. The rest of the team could know within a day, but instead people act on stale ownership and clients repeat information.</label><label class="choice"><input type="radio" name="recognize-a-candidate-gap" value="2"> We need an app that announces every account handover to the whole team.</label><label class="choice"><input type="radio" name="recognize-a-candidate-gap" value="3"> We want clients to have a smooth experience when their account changes hands.</label><button type="button" data-check="recognize-a-candidate-gap">Check my answer</button><p data-result="recognize-a-candidate-gap" role="status"></p></section><section class="response-task" data-task="describe-how-it-works-now"><h3>2. The volunteer example starts with “New volunteers sign up, come twice, and stop.” Which follow-up best makes the next move: describing how it actually works now?</h3><details><summary>Guidance and self-check</summary><ul><li>Look for observable steps and who does what.</li><li>Distinguish current handling from a diagnosis, a desired state, or a proposed fix.</li></ul></details><label class="choice"><input type="radio" name="describe-how-it-works-now" value="0"> Volunteers probably stop because they do not feel that their contribution matters.</label><label class="choice"><input type="radio" name="describe-how-it-works-now" value="1"> The organization should give every new volunteer a mentor for their first month.</label><label class="choice"><input type="radio" name="describe-how-it-works-now" value="2"> The volunteer experience should be more welcoming and consistent across shifts.</label><label class="choice"><input type="radio" name="describe-how-it-works-now" value="3"> Signups go to a central inbox. On a first shift, the person running that day improvises something for the new volunteer to do.</label><button type="button" data-check="describe-how-it-works-now">Check my answer</button><p data-result="describe-how-it-works-now" role="status"></p></section><section class="response-task" data-task="trace-a-surface-request"><h3>3. In the new-hire example, “We need an app to track where new hires are” leads to the goal that new hires should contribute to their teams as quickly as possible. What does reaching that goal statement allow you to do next?</h3><details><summary>Guidance and self-check</summary><ul><li>Keep the goal separate from both candidate problems and solutions.</li><li>Consider what the goal reveals and what it cannot decide for you.</li></ul></details><label class="choice"><input type="radio" name="trace-a-surface-request" value="0"> Look for different problems standing in the way of that goal, then choose which one to investigate instead of treating the requested app as the answer.</label><label class="choice"><input type="radio" name="trace-a-surface-request" value="1"> Use the goal as evidence that the requested tracking app is the right project, then define the app’s features.</label><label class="choice"><input type="radio" name="trace-a-surface-request" value="2"> Replace the app request with a broader onboarding system so that every plausible cause is covered at once.</label><label class="choice"><input type="radio" name="trace-a-surface-request" value="3"> Use the goal itself as the final problem statement, since everyone would support it.</label><button type="button" data-check="trace-a-surface-request">Check my answer</button><p data-result="trace-a-surface-request" role="status"></p></section><section class="response-task" data-task="keep-several-candidates-live"><h3>4. You have one candidate that feels promising and two rough indicators you have not examined. What is the strongest next step for the Candidate List submission?</h3><details><summary>Guidance and self-check</summary><ul><li>Consider whether the next step creates meaningful alternatives from your own situation.</li><li>Keep gathering and describing separate from defending a choice.</li></ul></details><label class="choice"><input type="radio" name="keep-several-candidates-live" value="0"> Commit to the promising candidate now, then use the other two only if it later becomes impossible.</label><label class="choice"><input type="radio" name="keep-several-candidates-live" value="1"> Write three variations of the promising candidate so that your submission has the required number of entries.</label><label class="choice"><input type="radio" name="keep-several-candidates-live" value="2"> Work underneath the two rough indicators and write three candidate gaps before defending a favorite.</label><label class="choice"><input type="radio" name="keep-several-candidates-live" value="3"> Ask AI to rank the promising candidate against two plausible problems typical of your role.</label><button type="button" data-check="keep-several-candidates-live">Check my answer</button><p data-result="keep-several-candidates-live" role="status"></p></section><section class="response-task" data-task="show-what-you-do-not-know"><h3>5. In the handover example, “It has not been fixed because each individual handover feels small enough to handle informally” is a proposed explanation. If you have not checked that explanation, how should you include it in your Candidate List?</h3><details><summary>Guidance and self-check</summary><ul><li>Distinguish a plausible explanation from an established fact.</li><li>Keep the five-field gap complete without hiding what you do not know.</li></ul></details><label class="choice"><input type="radio" name="show-what-you-do-not-know" value="0"> Keep it as a factual sentence because the explanation fits the process you described.</label><label class="choice"><input type="radio" name="show-what-you-do-not-know" value="1"> Keep it as your best current guess and put a question mark at the end, so the uncertainty remains visible.</label><label class="choice"><input type="radio" name="show-what-you-do-not-know" value="2"> Remove the entire candidate because you cannot yet explain why the gap has persisted.</label><label class="choice"><input type="radio" name="show-what-you-do-not-know" value="3"> Replace it with a more confident explanation before submitting, so the five-line gap statement is complete.</label><button type="button" data-check="show-what-you-do-not-know">Check my answer</button><p data-result="show-what-you-do-not-know" role="status"></p></section>
+
 <p id="completion-status" role="status"></p>
-<button type="button" id="copy-answers">Copy my answers</button>
+<button type="button" id="download-answers">Download my answers</button>
 <button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Copy any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Save any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
 <p id="copy-status" role="status"></p>
-<label for="copy-output">The text to copy</label><textarea id="copy-output" readonly rows="8"></textarea>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprint-one-v2-problem-finding-concept-check", "title": "Problem-Finding Concept Check", "module": "Working Draft", "version": "1", "purpose": "Check how you distinguish indicators, current states, goals, candidate gaps, and uncertain explanations before you examine and commit to a problem.", "builds_on": "Start with what bugs you, Two other places to look, and your Candidate List. These questions use the ideas from that work.", "standing_instruction": "Choose an answer for each question. Use Check my answer for formative feedback, revisit the explanation, and revise your choice if needed. Copy your final answers into the Canvas assignment and submit there. The five points are for completion reviewed by your instructor; the answer checks do not calculate or submit a grade.", "tasks": [{"id": "recognize-a-candidate-gap", "kind": "choice", "prompt": "Compare these four statements about account handovers. Which one goes furthest toward a candidate problem rather than an indicator, a proposed solution, or a broad goal?", "options": ["Nobody tells me when a client account changes hands.", "Handovers happen between two account owners without an announcement. The rest of the team could know within a day, but instead people act on stale ownership and clients repeat information.", "We need an app that announces every account handover to the whole team.", "We want clients to have a smooth experience when their account changes hands."], "correct_index": 1, "explanation": "The second statement describes the current state, a possible state, and the cost of the gap to identifiable people. The complaint is a useful indicator, the app is a proposed solution, and a smooth experience is a goal. You can investigate the candidate without committing to an app.", "criteria": ["Distinguish an indicator, a gap, a proposed solution, and a desired outcome.", "Look for a current state, a possible state, and a specific cost to people."]}, {"id": "describe-how-it-works-now", "kind": "choice", "prompt": "The volunteer example starts with “New volunteers sign up, come twice, and stop.” Which follow-up best makes the next move: describing how it actually works now?", "options": ["Volunteers probably stop because they do not feel that their contribution matters.", "The organization should give every new volunteer a mentor for their first month.", "The volunteer experience should be more welcoming and consistent across shifts.", "Signups go to a central inbox. On a first shift, the person running that day improvises something for the new volunteer to do."], "correct_index": 3, "explanation": "Describe the observable sequence and who does what before diagnosing or proposing a fix. The central inbox and improvised first shift give you a current state to examine. You can then make further passes to find what the arrangement costs people.", "criteria": ["Look for observable steps and who does what.", "Distinguish current handling from a diagnosis, a desired state, or a proposed fix."]}, {"id": "trace-a-surface-request", "kind": "choice", "prompt": "In the new-hire example, “We need an app to track where new hires are” leads to the goal that new hires should contribute to their teams as quickly as possible. What does reaching that goal statement allow you to do next?", "options": ["Look for different problems standing in the way of that goal, then choose which one to investigate instead of treating the requested app as the answer.", "Use the goal as evidence that the requested tracking app is the right project, then define the app’s features.", "Replace the app request with a broader onboarding system so that every plausible cause is covered at once.", "Use the goal itself as the final problem statement, since everyone would support it."], "correct_index": 0, "explanation": "The goal opens up several candidate problems: handoffs, assignment expectations, or training that does not prepare people for the work. It does not decide which candidate you should pursue or which solution would help. That choice still requires your judgment about the actual situation.", "criteria": ["Keep the goal separate from both candidate problems and solutions.", "Consider what the goal reveals and what it cannot decide for you."]}, {"id": "keep-several-candidates-live", "kind": "choice", "prompt": "You have one candidate that feels promising and two rough indicators you have not examined. What is the strongest next step for the Candidate List submission?", "options": ["Commit to the promising candidate now, then use the other two only if it later becomes impossible.", "Write three variations of the promising candidate so that your submission has the required number of entries.", "Work underneath the two rough indicators and write three candidate gaps before defending a favorite.", "Ask AI to rank the promising candidate against two plausible problems typical of your role."], "correct_index": 2, "explanation": "The source asks for three to five candidate problems so you have a real choice rather than a defense of the first idea. Work from your own context, investigate the rough indicators, and postpone commitment until you have alternatives worth comparing. Merely duplicating an entry does not create that choice.", "criteria": ["Consider whether the next step creates meaningful alternatives from your own situation.", "Keep gathering and describing separate from defending a choice."]}, {"id": "show-what-you-do-not-know", "kind": "choice", "prompt": "In the handover example, “It has not been fixed because each individual handover feels small enough to handle informally” is a proposed explanation. If you have not checked that explanation, how should you include it in your Candidate List?", "options": ["Keep it as a factual sentence because the explanation fits the process you described.", "Keep it as your best current guess and put a question mark at the end, so the uncertainty remains visible.", "Remove the entire candidate because you cannot yet explain why the gap has persisted.", "Replace it with a more confident explanation before submitting, so the five-line gap statement is complete."], "correct_index": 1, "explanation": "The fifth field asks for your best current guess about why the gap persists. The source asks you to mark uncertain sentences rather than sound more confident. Keeping the guess visible gives later inquiry something specific to test; uncertainty does not disqualify the candidate.", "criteria": ["Distinguish a plausible explanation from an established fact.", "Keep the five-field gap complete without hiding what you do not know."]}]}</script>
+
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprint-one-v2-problem-finding-concept-check", "title": "Problem-Finding Concept Check", "module": "Working Draft", "practiceOnly": false, "version": "1", "purpose": "Check how you distinguish indicators, current states, goals, candidate gaps, and uncertain explanations before you examine and commit to a problem.", "builds_on": "Start with what bugs you, Two other places to look, and your Candidate List. These questions use the ideas from that work.", "standing_instruction": "Choose an answer for each question. Use Check my answer for formative feedback, revisit the explanation, and revise your choice if needed. Copy your final answers into the Canvas assignment and submit there. The five points are for completion reviewed by your instructor; the answer checks do not calculate or submit a grade.", "tasks": [{"id": "recognize-a-candidate-gap", "kind": "choice", "prompt": "Compare these four statements about account handovers. Which one goes furthest toward a candidate problem rather than an indicator, a proposed solution, or a broad goal?", "options": ["Nobody tells me when a client account changes hands.", "Handovers happen between two account owners without an announcement. The rest of the team could know within a day, but instead people act on stale ownership and clients repeat information.", "We need an app that announces every account handover to the whole team.", "We want clients to have a smooth experience when their account changes hands."], "correct_index": 1, "explanation": "The second statement describes the current state, a possible state, and the cost of the gap to identifiable people. The complaint is a useful indicator, the app is a proposed solution, and a smooth experience is a goal. You can investigate the candidate without committing to an app.", "criteria": ["Distinguish an indicator, a gap, a proposed solution, and a desired outcome.", "Look for a current state, a possible state, and a specific cost to people."]}, {"id": "describe-how-it-works-now", "kind": "choice", "prompt": "The volunteer example starts with “New volunteers sign up, come twice, and stop.” Which follow-up best makes the next move: describing how it actually works now?", "options": ["Volunteers probably stop because they do not feel that their contribution matters.", "The organization should give every new volunteer a mentor for their first month.", "The volunteer experience should be more welcoming and consistent across shifts.", "Signups go to a central inbox. On a first shift, the person running that day improvises something for the new volunteer to do."], "correct_index": 3, "explanation": "Describe the observable sequence and who does what before diagnosing or proposing a fix. The central inbox and improvised first shift give you a current state to examine. You can then make further passes to find what the arrangement costs people.", "criteria": ["Look for observable steps and who does what.", "Distinguish current handling from a diagnosis, a desired state, or a proposed fix."]}, {"id": "trace-a-surface-request", "kind": "choice", "prompt": "In the new-hire example, “We need an app to track where new hires are” leads to the goal that new hires should contribute to their teams as quickly as possible. What does reaching that goal statement allow you to do next?", "options": ["Look for different problems standing in the way of that goal, then choose which one to investigate instead of treating the requested app as the answer.", "Use the goal as evidence that the requested tracking app is the right project, then define the app’s features.", "Replace the app request with a broader onboarding system so that every plausible cause is covered at once.", "Use the goal itself as the final problem statement, since everyone would support it."], "correct_index": 0, "explanation": "The goal opens up several candidate problems: handoffs, assignment expectations, or training that does not prepare people for the work. It does not decide which candidate you should pursue or which solution would help. That choice still requires your judgment about the actual situation.", "criteria": ["Keep the goal separate from both candidate problems and solutions.", "Consider what the goal reveals and what it cannot decide for you."]}, {"id": "keep-several-candidates-live", "kind": "choice", "prompt": "You have one candidate that feels promising and two rough indicators you have not examined. What is the strongest next step for the Candidate List submission?", "options": ["Commit to the promising candidate now, then use the other two only if it later becomes impossible.", "Write three variations of the promising candidate so that your submission has the required number of entries.", "Work underneath the two rough indicators and write three candidate gaps before defending a favorite.", "Ask AI to rank the promising candidate against two plausible problems typical of your role."], "correct_index": 2, "explanation": "The source asks for three to five candidate problems so you have a real choice rather than a defense of the first idea. Work from your own context, investigate the rough indicators, and postpone commitment until you have alternatives worth comparing. Merely duplicating an entry does not create that choice.", "criteria": ["Consider whether the next step creates meaningful alternatives from your own situation.", "Keep gathering and describing separate from defending a choice."]}, {"id": "show-what-you-do-not-know", "kind": "choice", "prompt": "In the handover example, “It has not been fixed because each individual handover feels small enough to handle informally” is a proposed explanation. If you have not checked that explanation, how should you include it in your Candidate List?", "options": ["Keep it as a factual sentence because the explanation fits the process you described.", "Keep it as your best current guess and put a question mark at the end, so the uncertainty remains visible.", "Remove the entire candidate because you cannot yet explain why the gap has persisted.", "Replace it with a more confident explanation before submitting, so the five-line gap statement is complete."], "correct_index": 1, "explanation": "The fifth field asks for your best current guess about why the gap persists. The source asks you to mark uncertain sentences rather than sound more confident. Keeping the guess visible gives later inquiry something specific to test; uncertainty does not disqualify the candidate.", "criteria": ["Distinguish a plausible explanation from an established fact.", "Keep the five-field gap complete without hiding what you do not know."]}]}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
   const key = 'course-response:' + config.artifactId + ':' + config.version;
+  const transcriptMode = config.dojoSubmission && config.dojoSubmission.mode === 'transcript';
   const byId = id => document.getElementById(id);
   const find = (attr, id) => document.querySelector('[' + attr + '="' + id + '"]');
   let state = {answers: Object.create(null), checks: Object.create(null), feedback: Object.create(null)};
@@ -188,7 +366,7 @@
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -196,6 +374,7 @@
     return raw;
   }
   function payload(withAnswers) {
+    if (transcriptMode) return withAnswers ? answer(config.tasks[0]) : config.transcriptRequest;
     const lines = [config.title, config.module, '', config.standing_instruction || '', ''];
     config.tasks.forEach((task, i) => {
       lines.push((i + 1) + '. ' + task.prompt);
@@ -206,9 +385,9 @@
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -229,7 +408,7 @@
         const result = find('data-result', task.id);
         if (selected === undefined || selected === '') { result.textContent = 'Choose an answer first.'; return; }
         state.checks[task.id] = (Number(state.checks[task.id]) || 0) + 1;
-        result.textContent = (Number(selected) === task.correct_index ? 'That fits. ' : 'Revisit the idea. ') + task.explanation;
+        result.textContent = Number(selected) === task.correct_index ? 'That fits. ' + task.explanation : 'Not quite. Reread the details in the question and try again.';
         save();
       });
     } else {
@@ -263,14 +442,40 @@
   async function copy(withAnswers) {
     const text = payload(withAnswers); byId('copy-output').value = text;
     try { await navigator.clipboard.writeText(text); byId('copy-status').textContent = 'Copied. Paste into your document or Canvas text-entry box. This has not submitted your work.'; }
-    catch (_) { byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.'; }
+    catch (_) {
+      if (transcriptMode || ['compact', 'reading'].includes(config.presentation)) byId('more-options').open = true;
+      byId('copy-output').focus(); byId('copy-output').select(); byId('copy-status').textContent = 'Select and copy the text below. This has not submitted your work.';
+    }
   }
-  byId('copy-tasks').addEventListener('click', () => copy(false));
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyTasks = byId('copy-tasks');
+  if (copyTasks) copyTasks.addEventListener('click', () => copy(false));
+  const copyTranscriptRequest = byId('copy-transcript-request');
+  if (copyTranscriptRequest) copyTranscriptRequest.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(config.transcriptRequest);
+      byId('copy-status').textContent = 'Transcript request copied. Paste it into the same Dojo conversation.';
+    } catch (_) {
+      const requestText = byId('transcript-request-text');
+      requestText.focus(); requestText.select();
+      byId('copy-status').textContent = 'Select and copy the transcript request above.';
+    }
+  });
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
+    if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
   });
-  byId('cancel-clear').addEventListener('click', () => { byId('clear-confirmation').hidden = true; });
+  byId('cancel-clear').addEventListener('click', () => {
+    byId('clear-confirmation').hidden = true;
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
+  });
   byId('confirm-clear').addEventListener('click', () => {
     try { localStorage.removeItem(key); }
     catch (_) { byId('save-status').textContent = 'Could not clear the saved draft. Your current responses are still here.'; return; }
@@ -282,7 +487,8 @@
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
   if (!storageOK) byId('save-status').textContent = 'This browser could not load saved responses. Copy your work before leaving.';
@@ -290,9 +496,9 @@
 </script>
 </div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p><a href="https://cti-courses.instructure.com/courses/180/assignments/7140" target="_blank" rel="noopener">Open the Canvas assignment</a></p></div>
+    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p></div>
 
-    <footer><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"></footer>
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
   </div>
 </body>
 </html>

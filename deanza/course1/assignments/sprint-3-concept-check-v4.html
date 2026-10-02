@@ -24,6 +24,9 @@
       background: var(--bg);
     }
     .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
     .source-derived table { width: 100%; border-collapse: collapse; }
     .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
     .meta {
@@ -182,6 +185,110 @@
       });
     })();
   </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
 <style data-native-canvas-navigation>
 html.native-canvas-context .back-link { display: none !important; }
 </style>
@@ -194,10 +301,9 @@ html.native-canvas-context .back-link { display: none !important; }
 </script>
 </head>
 <body>
-
   <div class="activity">
     <a class="back-link" href="../sprint-15.html?context=web" data-keep-context>&larr; Back to Module</a>
-    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Assignment</p>
+    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Page</p>
     <h1>Sprint 3 Concept Check</h1>
     <p class="item-sequence" style="color: #526175; font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 1rem;">Item 2 of 6 · 4 items remaining</p>
 
@@ -276,24 +382,15 @@ html.native-canvas-context .back-link { display: none !important; }
 </style>
 <div class="guided-workspace guided-reading" id="guided-workspace">
 
+<p>Practice with the questions and check your answers. No submission or grade; viewing this page counts for Canvas module progress.</p>
 <section class="task-teaching"><h2 id="practice-before-the-stakeholder-map">Practice before the Stakeholder Map</h2>
 <p>Practice the judgment you&rsquo;ll use in the Stakeholder Map on a sample first. Then use the same judgment on your own map. Answer all five from your own thinking, without AI.</p>
 <p>These questions use the handover example from earlier sprints. Some details are made up for practice, so they may not match the example exactly.</p></section><section class="response-task choice-task" data-task="dana-relationship"><h3 id="question-dana-relationship"><span class="question-number">1.</span> Dana, the account lead, decides how handovers get announced. She has also been there the longest, so she may know whether anyone tried to fix this before. On your stakeholder map, what is her relationship to the problem?</h3><fieldset aria-labelledby="question-dana-relationship"><label class="choice"><input type="radio" name="dana-relationship" value="0"><span>Affected only</span></label><label class="choice"><input type="radio" name="dana-relationship" value="1"><span>Responsible for a constraint only</span></label><label class="choice"><input type="radio" name="dana-relationship" value="2"><span>Responsible for a constraint, and positioned to challenge your frame</span></label><label class="choice"><input type="radio" name="dana-relationship" value="3"><span>Affected and influential</span></label></fieldset><button type="button" class="secondary" data-check="dana-relationship">Check my answer<span class="sr-only">: question 1</span></button><p data-result="dana-relationship" role="status"></p></section><section class="response-task choice-task" data-task="managers-relationship"><h3 id="question-managers-relationship"><span class="question-number">2.</span> The four managers take over the client after each handover, and clients repeat their history to them. None of them decides how handovers work. On your stakeholder map, what is their relationship to the problem?</h3><fieldset aria-labelledby="question-managers-relationship"><label class="choice"><input type="radio" name="managers-relationship" value="0"><span>Affected</span></label><label class="choice"><input type="radio" name="managers-relationship" value="1"><span>Influential</span></label><label class="choice"><input type="radio" name="managers-relationship" value="2"><span>Responsible for a constraint</span></label><label class="choice"><input type="radio" name="managers-relationship" value="3"><span>Positioned to challenge your frame</span></label></fieldset><button type="button" class="secondary" data-check="managers-relationship">Check my answer<span class="sr-only">: question 2</span></button><p data-result="managers-relationship" role="status"></p></section><section class="response-task choice-task" data-task="confirmed-inferred"><h3 id="question-confirmed-inferred"><span class="question-number">3.</span> Nobody you&#x27;ve asked remembers anyone trying to fix handovers before. You haven&#x27;t asked Dana yet. On your stakeholder map, how do you mark &quot;nobody has tried before&quot;?</h3><fieldset aria-labelledby="question-confirmed-inferred"><label class="choice"><input type="radio" name="confirmed-inferred" value="0"><span>Confirmed, because nobody remembers a past attempt</span></label><label class="choice"><input type="radio" name="confirmed-inferred" value="1"><span>Inferred, until you ask Dana</span></label><label class="choice"><input type="radio" name="confirmed-inferred" value="2"><span>Confirmed, if AI agrees with you</span></label></fieldset><button type="button" class="secondary" data-check="confirmed-inferred">Check my answer<span class="sr-only">: question 3</span></button><p data-result="confirmed-inferred" role="status"></p></section><section class="response-task choice-task" data-task="validation-question"><h3 id="question-validation-question"><span class="question-number">4.</span> On your stakeholder map, which is the strongest &quot;next question to ask&quot; one of the four managers?</h3><fieldset aria-labelledby="question-validation-question"><label class="choice"><input type="radio" name="validation-question" value="0"><span>Do you agree that handovers are the main problem?</span></label><label class="choice"><input type="radio" name="validation-question" value="1"><span>Walk me through the last time you took over an account. When did you find out, and what did you do?</span></label><label class="choice"><input type="radio" name="validation-question" value="2"><span>Would a shared handover note help you?</span></label><label class="choice"><input type="radio" name="validation-question" value="3"><span>Don&#x27;t handovers seem messy to you?</span></label></fieldset><button type="button" class="secondary" data-check="validation-question">Check my answer<span class="sr-only">: question 4</span></button><p data-result="validation-question" role="status"></p></section><section class="response-task choice-task" data-task="disagreement"><h3 id="question-disagreement"><span class="question-number">5.</span> Dana thinks the handover process works fine. The managers say clients keep repeating their history. On your stakeholder map, who should you talk to first?</h3><fieldset aria-labelledby="question-disagreement"><label class="choice"><input type="radio" name="disagreement" value="0"><span>Nobody yet. Wait until the picture is clearer</span></label><label class="choice"><input type="radio" name="disagreement" value="1"><span>Either Dana or a manager. The disagreement is worth understanding early</span></label><label class="choice"><input type="radio" name="disagreement" value="2"><span>Only the managers, since Dana won&#x27;t want to change anything</span></label><label class="choice"><input type="radio" name="disagreement" value="3"><span>Whoever is easiest to reach</span></label></fieldset><button type="button" class="secondary" data-check="disagreement">Check my answer<span class="sr-only">: question 5</span></button><p data-result="disagreement" role="status"></p></section>
-<p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
-<div class="reading-submit">
-<p>Submit all five answers for 5 completion points reviewed by your instructor.</p>
-<button type="button" id="copy-answers">Copy my answers</button>
-<p>Paste into Canvas to submit. Copying or saving here does not submit your work. </p>
-<p id="copy-status" role="status"></p>
-<details id="more-options"><summary>More options</summary>
-<button type="button" id="copy-tasks">Copy the questions</button>
-<button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
-<label for="copy-output">Select and copy manually</label><textarea id="copy-output" readonly rows="6"></textarea>
-<p id="completion-status"></p>
-</details>
-</div>
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-15-sprint-3-concept-check-v4", "title": "Sprint 3 Concept Check", "module": "Sprint 3: Integrate People and Context (V3)", "version": "1.0", "purpose": "Practice the judgment you'll use in the Stakeholder Map on a sample first, then use the same judgment on your own map.", "builds_on": "Read Introduction: Integrate People and Context.", "standing_instruction": "Submit all five answers for 5 completion points reviewed by your instructor.", "tasks": [{"id": "dana-relationship", "kind": "choice", "prompt": "Dana, the account lead, decides how handovers get announced. She has also been there the longest, so she may know whether anyone tried to fix this before. On your stakeholder map, what is her relationship to the problem?", "criteria": ["Choose every relationship the facts support."], "options": ["Affected only", "Responsible for a constraint only", "Responsible for a constraint, and positioned to challenge your frame", "Affected and influential"], "correct_index": 2, "explanation": "Dana controls how handovers are announced, and she may know why past fixes failed, so her relationship is both.", "instruction_section": "Practice before the Stakeholder Map"}, {"id": "managers-relationship", "kind": "choice", "prompt": "The four managers take over the client after each handover, and clients repeat their history to them. None of them decides how handovers work. On your stakeholder map, what is their relationship to the problem?", "criteria": ["Choose the relationship that matches feeling the problem without power to change it."], "options": ["Affected", "Influential", "Responsible for a constraint", "Positioned to challenge your frame"], "correct_index": 0, "explanation": "The managers feel the problem, but they can't change the process. That makes them affected."}, {"id": "confirmed-inferred", "kind": "choice", "prompt": "Nobody you've asked remembers anyone trying to fix handovers before. You haven't asked Dana yet. On your stakeholder map, how do you mark \"nobody has tried before\"?", "criteria": ["Choose the mark that matches whether the right person has been asked."], "options": ["Confirmed, because nobody remembers a past attempt", "Inferred, until you ask Dana", "Confirmed, if AI agrees with you"], "correct_index": 1, "explanation": "Nobody remembering is not the same as nobody trying. It stays inferred until you ask Dana."}, {"id": "validation-question", "kind": "choice", "prompt": "On your stakeholder map, which is the strongest \"next question to ask\" one of the four managers?", "criteria": ["Choose the question that asks about a real, recent experience."], "options": ["Do you agree that handovers are the main problem?", "Walk me through the last time you took over an account. When did you find out, and what did you do?", "Would a shared handover note help you?", "Don't handovers seem messy to you?"], "correct_index": 1, "explanation": "Asking about a real handover gets what actually happened. The others push toward your answer or your fix."}, {"id": "disagreement", "kind": "choice", "prompt": "Dana thinks the handover process works fine. The managers say clients keep repeating their history. On your stakeholder map, who should you talk to first?", "criteria": ["Choose the answer that treats the disagreement as information."], "options": ["Nobody yet. Wait until the picture is clearer", "Either Dana or a manager. The disagreement is worth understanding early", "Only the managers, since Dana won't want to change anything", "Whoever is easiest to reach"], "correct_index": 1, "explanation": "Either side works. A disagreement is information, so talking to someone in it early helps you understand it."}], "presentation": "reading"}</script>
+<p id="save-status" role="status">Practice answers save in this browser.</p>
+<p id="completion-status" role="status"></p>
+<button type="button" id="clear-draft">Clear practice answers</button>
+<div id="clear-confirmation" hidden><p>Clear this practice draft?</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-15-sprint-3-concept-check-v4", "title": "Sprint 3 Concept Check", "module": "Sprint 3: Integrate People and Context (V3)", "practiceOnly": true, "version": "1.0", "purpose": "Practice the judgment you'll use in the Stakeholder Map on a sample first, then use the same judgment on your own map.", "builds_on": "Read Introduction: Integrate People and Context.", "standing_instruction": "Practice with the questions and check your answers. No submission or grade; viewing this page counts for Canvas module progress.", "tasks": [{"id": "dana-relationship", "kind": "choice", "prompt": "Dana, the account lead, decides how handovers get announced. She has also been there the longest, so she may know whether anyone tried to fix this before. On your stakeholder map, what is her relationship to the problem?", "criteria": ["Choose every relationship the facts support."], "options": ["Affected only", "Responsible for a constraint only", "Responsible for a constraint, and positioned to challenge your frame", "Affected and influential"], "correct_index": 2, "explanation": "Dana controls how handovers are announced, and she may know why past fixes failed, so her relationship is both.", "instruction_section": "Practice before the Stakeholder Map"}, {"id": "managers-relationship", "kind": "choice", "prompt": "The four managers take over the client after each handover, and clients repeat their history to them. None of them decides how handovers work. On your stakeholder map, what is their relationship to the problem?", "criteria": ["Choose the relationship that matches feeling the problem without power to change it."], "options": ["Affected", "Influential", "Responsible for a constraint", "Positioned to challenge your frame"], "correct_index": 0, "explanation": "The managers feel the problem, but they can't change the process. That makes them affected."}, {"id": "confirmed-inferred", "kind": "choice", "prompt": "Nobody you've asked remembers anyone trying to fix handovers before. You haven't asked Dana yet. On your stakeholder map, how do you mark \"nobody has tried before\"?", "criteria": ["Choose the mark that matches whether the right person has been asked."], "options": ["Confirmed, because nobody remembers a past attempt", "Inferred, until you ask Dana", "Confirmed, if AI agrees with you"], "correct_index": 1, "explanation": "Nobody remembering is not the same as nobody trying. It stays inferred until you ask Dana."}, {"id": "validation-question", "kind": "choice", "prompt": "On your stakeholder map, which is the strongest \"next question to ask\" one of the four managers?", "criteria": ["Choose the question that asks about a real, recent experience."], "options": ["Do you agree that handovers are the main problem?", "Walk me through the last time you took over an account. When did you find out, and what did you do?", "Would a shared handover note help you?", "Don't handovers seem messy to you?"], "correct_index": 1, "explanation": "Asking about a real handover gets what actually happened. The others push toward your answer or your fix."}, {"id": "disagreement", "kind": "choice", "prompt": "Dana thinks the handover process works fine. The managers say clients keep repeating their history. On your stakeholder map, who should you talk to first?", "criteria": ["Choose the answer that treats the disagreement as information."], "options": ["Nobody yet. Wait until the picture is clearer", "Either Dana or a manager. The disagreement is worth understanding early", "Only the managers, since Dana won't want to change anything", "Whoever is easiest to reach"], "correct_index": 1, "explanation": "Either side works. A disagreement is information, so talking to someone in it early helps you understand it."}], "presentation": "reading"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -319,7 +416,7 @@ html.native-canvas-context .back-link { display: none !important; }
     catch (_) { storageOK = false; }
     byId('save-status').textContent = storageOK
       ? 'Saved in this browser on this device. Keep your own copy before leaving.'
-      : 'This browser cannot save your responses. Copy the text below before leaving or reloading.';
+      : 'This browser cannot save your responses. Save your work before leaving or reloading.';
   }
   function answer(task) {
     const raw = state.answers[task.id] || '';
@@ -338,9 +435,9 @@ html.native-canvas-context .back-link { display: none !important; }
     return lines.join('\n');
   }
   function update() {
-    byId('copy-output').value = payload(true);
+    if (byId('copy-output')) byId('copy-output').value = payload(true);
     const filled = config.tasks.filter(t => answer(t).trim()).length;
-    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + ' response fields filled. Review the criteria before submitting; this count is not a grade.';
+    byId('completion-status').textContent = filled + ' of ' + config.tasks.length + (config.practiceOnly ? ' practice answers selected. No submission or grade; Canvas tracks viewing this page.' : ' response fields filled. Review the criteria before submitting; this count is not a grade.');
   }
   function showFeedback(task) {
     const el = find('data-feedback-result', task.id);
@@ -413,7 +510,14 @@ html.native-canvas-context .back-link { display: none !important; }
       byId('copy-status').textContent = 'Select and copy the transcript request above.';
     }
   });
-  byId('copy-answers').addEventListener('click', () => copy(true));
+  const copyAnswers = byId('copy-answers');
+  if (copyAnswers) copyAnswers.addEventListener('click', () => copy(true));
+  const downloadAnswers = byId('download-answers');
+  if (downloadAnswers) downloadAnswers.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([payload(true)], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = config.artifactId + '.txt';
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
   byId('clear-draft').addEventListener('click', () => {
     byId('clear-confirmation').hidden = false;
     if (['compact', 'reading'].includes(config.presentation)) byId('cancel-clear').focus();
@@ -433,7 +537,7 @@ html.native-canvas-context .back-link { display: none !important; }
         find('data-result', task.id).textContent = '';
       } else { find('data-answer', task.id).value = ''; showFeedback(task); }
     }
-    update(); byId('clear-confirmation').hidden = true; byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
+    update(); byId('clear-confirmation').hidden = true; if (byId('copy-status')) byId('copy-status').textContent = ''; byId('save-status').textContent = 'This browser draft was cleared.';
     if (['compact', 'reading'].includes(config.presentation)) byId('clear-draft').focus();
   });
   update();
