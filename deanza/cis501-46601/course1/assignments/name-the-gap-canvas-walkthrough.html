@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name the Gap Canvas Walkthrough | Sprint 4: Close the Learning Gap (V3)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
+</head>
+<body>
+  <div class="activity source-derived">
+    <a class="back-link" href="../sprint-8.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Sprint 4: Close the Learning Gap (V3) &middot; Assignment</p>
+    <h1>Name the Gap Canvas Walkthrough</h1>
+    <p class="item-sequence" style="color: #526175; font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 1rem;">Item 3 of 6 · 3 items remaining</p>
+
+
+
+    <style>.guided-walkthrough { max-width: 1100px; margin: 0 auto; color: #233342; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.guided-walkthrough p { margin: 0 0 12px; }
+.activity:has(.guided-walkthrough) { max-width: 1100px; }
+.guided-walkthrough .walk-intro { margin-bottom: 16px; padding: 12px 16px; background: #eef5fa; border-left: 4px solid #3d7190; border-radius: 0 8px 8px 0; }
+.guided-walkthrough .walk-intro h2 { margin: 0 0 6px; color: #17344a; font-size: 1.08rem; line-height: 1.3; }
+.guided-walkthrough .walk-intro p { margin: 2px 0; }
+.guided-walkthrough .walk-step { margin: 20px 0; padding: 20px; border: 1px solid #c9d7e1; border-radius: 12px; background: #fff; box-shadow: 0 2px 8px rgba(27, 55, 76, .04); }
+.guided-walkthrough .walk-step-number { margin: 0; color: #47677d; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.guided-walkthrough .walk-step h2 { margin: 2px 0 14px; color: #17344a; font-size: 1.25rem; line-height: 1.3; }
+.guided-walkthrough .walk-teaching h2 { font-size: 1rem; }
+.guided-walkthrough .walk-check { margin: 14px 0; padding: 10px 14px; border: 1px solid #d4dee5; border-radius: 7px; }
+.guided-walkthrough .walk-check summary { cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-entry { margin: 18px 0; padding: 16px; border: 1px solid #d4dee5; border-radius: 9px; }
+.guided-walkthrough .walk-entry summary { cursor: pointer; font-weight: 700; }
+.guided-walkthrough .walk-entry[open] summary { margin-bottom: 14px; }
+.guided-walkthrough .walk-table-scroll { position: relative; overflow-x: auto; border-radius: 8px; }
+.guided-walkthrough .walk-table-with-feedback { box-sizing: border-box; padding-right: 154px; }
+.guided-walkthrough .walk-table-help { margin: 0 0 8px; color: #526b7b; font-size: .9rem; }
+.guided-walkthrough .walk-table-scroll-hint { display: none; margin: 8px 0; color: #47677d; font-size: .9rem; }
+/* Ordinary Markdown tables in walkthrough prose (a reference table above a step) share the source-grid lines. */
+.guided-walkthrough table:not(.walk-source-table) { width: 100%; border-collapse: collapse; margin: 0 0 14px; }
+.guided-walkthrough table:not(.walk-source-table) th, .guided-walkthrough table:not(.walk-source-table) td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; text-align: left; }
+.guided-walkthrough table:not(.walk-source-table) thead th { background: #eaf1f6; color: #1f4058; font-size: .9rem; font-weight: 700; line-height: 1.3; }
+.guided-walkthrough .walk-source-table { width: 100%; min-width: max(100%, var(--walk-table-min-width)); border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-source-table th, .guided-walkthrough .walk-source-table td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; }
+.guided-walkthrough .walk-source-table thead th { background: #eaf1f6; color: #1f4058; text-align: left; font-size: .9rem; font-weight: 700; line-height: 1.3; }
+.guided-walkthrough .walk-source-table .walk-source-static-row td { background: #f8fafc; color: #3b4d5b; font-size: .89rem; }
+.guided-walkthrough .walk-source-table .walk-source-response-row:nth-child(odd) td { background: #fbfdfe; }
+.guided-walkthrough .walk-source-cell-text { white-space: pre-wrap; line-height: 1.42; }
+.guided-walkthrough .walk-source-input-cell .walk-source-cell-text { padding: 10px 12px 0; }
+.guided-walkthrough .walk-source-cell-text + textarea { margin-top: 9px; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell { padding: 0; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell:focus-within { background: #fff; }
+.guided-walkthrough .walk-source-table td.walk-feedback-anchor { position: relative; }
+.guided-walkthrough .walk-source-table td textarea { min-height: 62px; max-height: 320px; padding: 10px 12px; border: 0; border-radius: 0; background: transparent; resize: none; line-height: 1.4; }
+.guided-walkthrough .walk-source-table td textarea::placeholder { color: #8799a6; opacity: 1; font-size: .88rem; }
+.guided-walkthrough .walk-source-table td textarea:focus-visible { outline: 3px solid #b66400; outline-offset: -3px; background: #fff; }
+.guided-walkthrough .walk-row-feedback-control { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); width: 138px; z-index: 1; }
+.guided-walkthrough .walk-row-feedback-control button { box-sizing: border-box; width: 100%; margin: 0; padding: 6px 8px; border-color: #7997a8; background: #fff; color: #244e66; font-size: .82rem; font-weight: 650; line-height: 1.2; }
+.guided-walkthrough .walk-row-feedback-control button small { display: block; margin-top: 2px; font-size: .76rem; font-weight: 500; }
+.guided-walkthrough .walk-row-feedback-control button:not(:disabled):hover { background: #e8f2f7; }
+.guided-walkthrough .walk-row-feedback-results:has(.walk-feedback:not(:empty)) { margin-top: 14px; }
+.guided-walkthrough .walk-row-feedback-result:has(.walk-feedback:empty) { display: none; }
+.guided-walkthrough .walk-row-feedback-result { margin-top: 8px; padding: 12px 14px; border: 1px solid #bdd7cb; border-radius: 8px; background: #f1f8f4; }
+.guided-walkthrough .walk-row-feedback-result strong { color: #235140; }
+.guided-walkthrough .walk-row-feedback-result .walk-feedback { margin: 8px 0 0; }
+.guided-walkthrough .walk-rich-output { margin: 12px 0; padding: 12px; border: 1px solid #8095a7; overflow-x: auto; background: #fff; }
+.guided-walkthrough .walk-rich-output table { border-collapse: collapse; min-width: max(100%, var(--walk-table-min-width)); }
+.guided-walkthrough .walk-rich-output th, .guided-walkthrough .walk-rich-output td { border: 1px solid #8999a5; padding: 8px; vertical-align: top; }
+.guided-walkthrough .walk-rich-output th { background: #f2f5f7; }
+.guided-walkthrough .walk-copy-staging { position: fixed; left: -10000px; top: 0; width: 900px; }
+.guided-walkthrough .walk-plain-output { margin: 12px 0; }
+.guided-walkthrough .walk-response-table { width: 100%; min-width: 680px; border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { padding: 10px; border: 1px solid #cad6df; vertical-align: top; }
+.guided-walkthrough .walk-response-table thead th { background: #eaf2f7; text-align: left; font-size: .88rem; }
+.guided-walkthrough .walk-response-table tbody th { width: 22%; background: #f7fafc; text-align: left; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance { margin-top: 7px; font-size: .85rem; font-weight: 400; line-height: 1.4; }
+.guided-walkthrough .walk-field-guidance summary { width: fit-content; color: #315f7c; cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance p { margin: 8px 0 0; }
+.guided-walkthrough .walk-response-table td { width: 39%; }
+.guided-walkthrough .walk-response-table textarea { min-height: 66px; }
+.guided-walkthrough .walk-response-table td select + label + textarea { margin-top: 8px; }
+.guided-walkthrough .walk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.guided-walkthrough .walk-field { display: block; margin: 13px 0; font-weight: 650; }
+.guided-walkthrough .walk-field span { display: block; margin-bottom: 5px; }
+.guided-walkthrough input, .guided-walkthrough textarea, .guided-walkthrough select { box-sizing: border-box; display: block; width: 100%; padding: 10px 12px; border: 1px solid #8095a7; border-radius: 5px; color: #17212b; background: #fff; font: inherit; }
+.guided-walkthrough textarea { min-height: 98px; resize: vertical; }
+.guided-walkthrough button { margin: 6px 10px 6px 0; padding: 10px 14px; border: 1px solid #315f7c; border-radius: 6px; background: #315f7c; color: #fff; font: inherit; cursor: pointer; }
+.guided-walkthrough button:disabled { opacity: .55; cursor: not-allowed; }
+.guided-walkthrough :focus-visible { outline: 3px solid #b66400; outline-offset: 3px; }
+.guided-walkthrough .walk-feedback { white-space: pre-wrap; margin-top: 10px; padding: 10px 12px; border-left: 3px solid #40806d; background: #edf6f2; }
+.guided-walkthrough .walk-feedback:empty { display: none; }
+.guided-walkthrough .walk-finish { margin: 20px 0; padding: 20px; background: #edf6f2; border: 1px solid #bdd7cb; border-radius: 10px; }
+.guided-walkthrough .walk-finish h2 { margin: 0 0 8px; color: #1c4638; font-size: 1.2rem; line-height: 1.3; }
+.guided-walkthrough .walk-finish .walk-secondary { background: #fff; color: #315f7c; }
+.guided-walkthrough #walk-output { margin: 8px 0 12px; min-height: 200px; }
+.guided-walkthrough #walk-clear { background: #fff; color: #315f7c; }
+@media (max-width: 650px) {
+  .guided-walkthrough .walk-table-scroll-hint { display: block; }
+  .guided-walkthrough .walk-step, .guided-walkthrough .walk-entry { padding: 14px; }
+  .guided-walkthrough button { width: 100%; }
+  .guided-walkthrough .walk-response-table { min-width: 0; display: block; }
+  .guided-walkthrough .walk-response-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .guided-walkthrough .walk-response-table tbody, .guided-walkthrough .walk-response-table tr,
+  .guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { display: block; width: 100%; }
+  .guided-walkthrough .walk-response-table tr { margin-bottom: 12px; border: 1px solid #cad6df; border-radius: 7px; overflow: hidden; }
+  .guided-walkthrough .walk-response-table tbody th { width: 100%; border: 0; border-bottom: 1px solid #cad6df; }
+  .guided-walkthrough .walk-response-table td { border: 0; }
+  .guided-walkthrough .walk-response-table td + td { border-top: 1px solid #e1e8ed; }
+  .guided-walkthrough .walk-response-table td::before { content: attr(data-label); display: block; font-size: .83rem; font-weight: 700; color: #47677d; margin-bottom: 5px; }
+}
+@media print { .guided-walkthrough button, .guided-walkthrough .walk-feedback, .guided-walkthrough .walk-intro { display: none; } }
+</style>
+<div class="guided-workspace guided-walkthrough" id="guided-workspace">
+<aside class="walk-intro"><h2>How this Canvas Walkthrough works</h2><p>This Canvas Walkthrough takes you through the activity one step at a time, writing in the spaces provided. Your draft saves in this browser on this device when storage is available. At the bottom, download your work as a Word document and submit it in Canvas.</p>
+<p>Keep the downloaded Word document as your durable copy after submitting it.</p>
+<p>AI feedback is optional and is not a grade. It reviews only the response you choose to send. Remove confidential or identifying details before asking for feedback.</p>
+<p id="walk-save-status" role="status" aria-live="polite">Your draft will save as you type.</p></aside>
+<section>
+<h2>Overview</h2>
+<p><strong>Learning goal:</strong> Gather what you do not yet know about your own problem, in your own words, before any AI gets involved. Sort and rank it as blocking, useful, or interesting, and determine which part of your Problem Frame each gap holds up.</p>
+</section>
+
+<section>
+<h2 id="do-this-part-without-ai">Do this part without AI</h2>
+<p>If you ask an AI what someone working on your problem would need to learn, it will hand you a clean, sensible list. But it will be generic, not tailored to you. AI comes in at the Dojo Lab. Right now, the list has to come from your thinking.</p>
+<p>Write first, without AI. The Get AI feedback buttons are optional and only for after you have written.</p>
+</section><section class="walk-step" data-walk-step="template-timing">
+<p class="walk-step-number">Step 1</p><h2>When to fill each part</h2>
+<div class="walk-teaching">
+<p>Your Learning Plan has four parts (A–D). This walkthrough covers Part A and C1. The <a href="https://docs.google.com/document/d/1XgCf1cTadZOCQtHdLEoebhJ8FWNjV6IzKUslKAtqxIA/copy" target="_top">Learning Plan template</a> is available if you want to compare the layout. Part B begins in the Dojo Lab and is completed in Week 2 of this sprint; C2 is updated then. Part D stays empty until CIS 502. The table below keeps that schedule visible. Download and keep your Week 1 Word file. You will attach it alongside a separate Week 2 Word file in the Learning Plan assignment.</p>
+</div>
+
+<p class="walk-table-help">Use this table as a reference.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="When to fill each part table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">When to fill each part</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><thead><tr><th scope="col">Part</th><th scope="col">Fill it in during</th></tr></thead><tbody><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">A. My gaps</div></td><td><div class="walk-source-cell-text">Name the Gap (Week 1)</div></td></tr><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">B. My learning plan</div></td><td><div class="walk-source-cell-text">Dojo Lab (Week 1), then Learning Plan (Week 2)</div></td></tr><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">C. My Problem Frame: C1 coming in, C2 updated</div></td><td><div class="walk-source-cell-text">C1 in Name the Gap (Week 1), C2 in Learning Plan (Week 2)</div></td></tr><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">D. Results</div></td><td><div class="walk-source-cell-text">CIS 502</div></td></tr></tbody></table></div></section><section class="walk-step" data-walk-step="what-i-know">
+<p class="walk-step-number">Step 2</p><h2>A1. What I already understand well enough</h2>
+<div class="walk-teaching">
+<h3 id="start-with-your-frame">Start with your frame</h3>
+<p>Open your Problem Frame document. It should say &ldquo;Last updated: Sprint 3&rdquo; at the top, from the update you made after your stakeholder conversation. Copy that version into C1 (Step 7 below) first, then come back here. After this week, leave C1 as it is. It is your record of where your frame stood coming into this sprint.</p>
+<p>If your document does not say Sprint 3 at the top, bring it up to date before you copy it. The version you submitted is in your Sprint 3 Stakeholder Conversation report, under &ldquo;Update your Problem Frame.&rdquo;</p>
+<p>Write two or three things about your problem that you understand well enough. One line each on how you know.</p>
+<p><em>Example:</em> I know the outgoing manager tells the incoming manager directly. I have watched it happen twice, and Dana described it the same way.</p>
+<p>Keep this short. It is here so you start from solid ground, not a list of everything you do not know.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Name two or three things and the observation, conversation, or record that supports each.</li></ul></details>
+<label class="walk-field" for="walk-what-i-know"><span>Your response</span>
+<textarea id="walk-what-i-know" data-walk-answer="what-i-know" maxlength="16000" rows="6"></textarea></label>
+<button type="button" data-walk-feedback="what-i-know" data-checkpoint="what-i-know" disabled>Get AI feedback</button><p class="walk-feedback" data-walk-feedback-result="what-i-know" role="status" aria-live="polite"></p></section><section class="walk-step" data-walk-step="gap-inventory">
+<p class="walk-step-number">Step 3</p><h2>A2. What I do not know yet</h2>
+<div class="walk-teaching">
+<h3 id="where-to-look-for-gaps">Where to look for gaps</h3>
+<p>With your Problem Frame document in front of you, and your Sprint 3 Stakeholder Conversation Canvas Walkthrough open next to it, look for four things:</p>
+<ol>
+<li><strong>Your assumptions</strong> (part 6): anything still unverified or inferred. If your frame never marked them, mark them now.</li>
+<li><strong>What you do not know yet</strong> (part 7).</li>
+<li><strong>Section D of your Sprint 3 Stakeholder Conversation Canvas Walkthrough:</strong> what still needs validation.</li>
+<li><strong>Anything you describe vaguely</strong> because you do not know the specifics.</li>
+</ol>
+<p>The fourth is the easiest to miss. Vagueness in how you describe your own problem is usually a gap you have been routing around.</p>
+<p>Write your gaps, one line each.</p>
+<p><strong>How many should you have?</strong> It depends on where Sprint 3 left you. You tested one assumption with a real person, so one of your assumptions may already be settled, and that conversation probably raised things you had not thought of before. Some people arrive with two open items, some with six.</p>
+<p>You have enough when you can read your Problem Frame end to end and every part that could still be wrong has a gap pointing at it. Nothing unnamed. Most people land between three and five, but the number is a result, not a target.</p>
+<p><strong>If you only find one or two,</strong> look again in three places: what your stakeholder said that you had no answer for, anything in your frame you describe vaguely, and the parts of the frame the conversation never touched.</p>
+<p>Run the sentence test on each: “Until I know this, I can’t ___.” If the blank will not fill, you have written a topic. Rewrite it or replace it.</p>
+<p>Then sort each one:</p>
+<ul>
+<li><strong>Blocking.</strong> A decision or next step is waiting on it. If you cannot name the decision, it is not blocking.</li>
+<li><strong>Useful.</strong> It would improve the work, but nothing is stopped.</li>
+<li><strong>Interesting.</strong> You want to know it, and nothing you do next depends on it.</li>
+</ul>
+<p>A finished list looks like this:</p>
+<ol>
+<li>I don’t know whether the other managers really find out late when an account changes hands. <strong>Blocking.</strong> I can’t say the problem is real for the whole team until I know.</li>
+<li>I don’t know whether anyone tried to fix handovers before. <strong>Blocking.</strong> If a fix was tried and failed, the real problem is whatever killed it.</li>
+<li>I don’t know how many handovers happen each month. <strong>Useful.</strong> It would show the size of the problem, but I can move without it.</li>
+<li>I don’t know how other companies handle handovers. <strong>Interesting.</strong> Nothing I do next depends on it.</li>
+</ol>
+<p>Be honest about the marks. There is no right number of blocking gaps. If none are blocking, go back to “Where to look for gaps,” especially the vagueness step. Lists with nothing blocking are usually too polite. If you have looked twice and still find none, say so and describe what you looked at.</p>
+<p>Keep the numbered rows and leave unused rows blank.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Each unknown names a decision or next step, then marks its priority honestly.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="A2. What I do not know yet table" style="--walk-table-min-width:720px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">A2. What I do not know yet</caption><colgroup><col style="width:25.0000%"><col style="width:25.0000%"><col style="width:25.0000%"><col style="width:25.0000%"></colgroup><thead><tr><th scope="col">#</th><th scope="col">What I do not know</th><th scope="col">Until I know this, I can&#x27;t...</th><th scope="col">Blocking, useful, or interesting</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">1</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-1-column-2">Entry 1: What I do not know</label><textarea id="walk-gap-inventory-row-1-column-2" data-walk-answer="gap-inventory.row-1.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-1-column-3">Entry 1: Until I know this, I can&#x27;t...</label><textarea id="walk-gap-inventory-row-1-column-3" data-walk-answer="gap-inventory.row-1.column-3" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-1-column-4">Entry 1: Blocking, useful, or interesting</label><textarea id="walk-gap-inventory-row-1-column-4" data-walk-answer="gap-inventory.row-1.column-4" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="gap-inventory.row-1" data-checkpoint="gap-inventory" aria-label="Get AI feedback on Entry 1" aria-controls="walk-feedback-gap-inventory-row-1" disabled><span>AI feedback</span><small>Entry 1</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">2</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-2-column-2">Entry 2: What I do not know</label><textarea id="walk-gap-inventory-row-2-column-2" data-walk-answer="gap-inventory.row-2.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-2-column-3">Entry 2: Until I know this, I can&#x27;t...</label><textarea id="walk-gap-inventory-row-2-column-3" data-walk-answer="gap-inventory.row-2.column-3" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-2-column-4">Entry 2: Blocking, useful, or interesting</label><textarea id="walk-gap-inventory-row-2-column-4" data-walk-answer="gap-inventory.row-2.column-4" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="gap-inventory.row-2" data-checkpoint="gap-inventory" aria-label="Get AI feedback on Entry 2" aria-controls="walk-feedback-gap-inventory-row-2" disabled><span>AI feedback</span><small>Entry 2</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">3</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-3-column-2">Entry 3: What I do not know</label><textarea id="walk-gap-inventory-row-3-column-2" data-walk-answer="gap-inventory.row-3.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-3-column-3">Entry 3: Until I know this, I can&#x27;t...</label><textarea id="walk-gap-inventory-row-3-column-3" data-walk-answer="gap-inventory.row-3.column-3" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-3-column-4">Entry 3: Blocking, useful, or interesting</label><textarea id="walk-gap-inventory-row-3-column-4" data-walk-answer="gap-inventory.row-3.column-4" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="gap-inventory.row-3" data-checkpoint="gap-inventory" aria-label="Get AI feedback on Entry 3" aria-controls="walk-feedback-gap-inventory-row-3" disabled><span>AI feedback</span><small>Entry 3</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">4</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-4-column-2">Entry 4: What I do not know</label><textarea id="walk-gap-inventory-row-4-column-2" data-walk-answer="gap-inventory.row-4.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-4-column-3">Entry 4: Until I know this, I can&#x27;t...</label><textarea id="walk-gap-inventory-row-4-column-3" data-walk-answer="gap-inventory.row-4.column-3" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-gap-inventory-row-4-column-4">Entry 4: Blocking, useful, or interesting</label><textarea id="walk-gap-inventory-row-4-column-4" data-walk-answer="gap-inventory.row-4.column-4" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="gap-inventory.row-4" data-checkpoint="gap-inventory" aria-label="Get AI feedback on Entry 4" aria-controls="walk-feedback-gap-inventory-row-4" disabled><span>AI feedback</span><small>Entry 4</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Entry 1</strong><p id="walk-feedback-gap-inventory-row-1" class="walk-feedback" data-walk-feedback-result="gap-inventory.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Entry 2</strong><p id="walk-feedback-gap-inventory-row-2" class="walk-feedback" data-walk-feedback-result="gap-inventory.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Entry 3</strong><p id="walk-feedback-gap-inventory-row-3" class="walk-feedback" data-walk-feedback-result="gap-inventory.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Entry 4</strong><p id="walk-feedback-gap-inventory-row-4" class="walk-feedback" data-walk-feedback-result="gap-inventory.row-4" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="other-gaps">
+<p class="walk-step-number">Step 4</p><h2>More gaps, if your list needs them</h2>
+<div class="walk-teaching">
+<p>The table above has four rows. If your frame still contains a consequential unknown, add it here using the same fields: unknown, decision it affects, and priority. Do not stop at four merely because the table ends.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Use the same three fields as A2 for every additional gap.</li></ul></details>
+<label class="walk-field" for="walk-other-gaps"><span>Your response</span>
+<textarea id="walk-other-gaps" data-walk-answer="other-gaps" maxlength="16000" rows="6"></textarea></label>
+<button type="button" data-walk-feedback="other-gaps" data-checkpoint="other-gaps" disabled>Get AI feedback</button><p class="walk-feedback" data-walk-feedback-result="other-gaps" role="status" aria-live="polite"></p></section><section class="walk-step" data-walk-step="learning-order">
+<p class="walk-step-number">Step 5</p><h2>A3. My learning order</h2>
+<div class="walk-teaching">
+<p>Every blocking gap goes into your plan. Rank them. Ask: <strong>which answer could change what the other gaps mean?</strong> That one goes first.</p>
+<p>Useful gaps can go into your plan too, below the blocking ones. You decide.</p>
+<p>Interesting gaps stay on your list but not in your plan. For each one, write one line: what would tell you it has started to matter.</p>
+<p><em>Example:</em> Not in my plan: how other companies handle handovers. It starts to matter if Dana says the team wants to copy another company’s approach.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Include every blocking gap, explain what goes first, and state when an interesting gap would start to matter.</li></ul></details>
+<label class="walk-field" for="walk-learning-order"><span>Your response</span>
+<textarea id="walk-learning-order" data-walk-answer="learning-order" maxlength="16000" rows="6"></textarea></label>
+<button type="button" data-walk-feedback="learning-order" data-checkpoint="learning-order" disabled>Get AI feedback</button><p class="walk-feedback" data-walk-feedback-result="learning-order" role="status" aria-live="polite"></p></section><section class="walk-step" data-walk-step="frame-dependencies">
+<p class="walk-step-number">Step 6</p><h2>A4. Why each planned gap matters to my frame</h2>
+<div class="walk-teaching">
+<p>For each gap going into your plan, write one or two sentences: <strong>which part of your Problem Frame depends on it, and what would change if the answer went the other way?</strong></p>
+<p><em>Example:</em> Gap 1 sits under part 3 of my frame, who is affected, where I wrote that all four managers are affected. If most managers already know about handovers, the problem is smaller than I said, and it may only affect new managers.</p>
+<p>If the answer would change nothing in your frame, it is not blocking. Move it down.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>For each planned gap, name the frame part that depends on it and what a different answer would change.</li></ul></details>
+<label class="walk-field" for="walk-frame-dependencies"><span>Your response</span>
+<textarea id="walk-frame-dependencies" data-walk-answer="frame-dependencies" maxlength="16000" rows="6"></textarea></label>
+<button type="button" data-walk-feedback="frame-dependencies" data-checkpoint="frame-dependencies" disabled>Get AI feedback</button><p class="walk-feedback" data-walk-feedback-result="frame-dependencies" role="status" aria-live="polite"></p></section><section class="walk-step" data-walk-step="frame-c1">
+<p class="walk-step-number">Step 7</p><h2>C1. My frame coming in</h2>
+<div class="walk-teaching">
+<p>Copy your frame from your Problem Frame document into the table below, one part per row. The table has the same seven parts: the goal, the problem, who is affected, how it is handled today, what fixed looks like, your assumptions, and what you do not know yet. Do not edit the frame here. C1 is a copy of where your frame stood coming into this sprint. If your Sprint 3 revision came out as a paragraph rather than seven parts, split it back out as best you can. A slot you cannot fill is a finding, not a failure. Note it and carry on.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Copy the frame from your Problem Frame document into all seven slots; note a slot you cannot yet fill.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="C1. My frame coming in table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">C1. My frame coming in</caption><colgroup><col style="width:33.3333%"><col style="width:66.6667%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Your answer</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">1. The goal it serves</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-1-answer">1. The goal it serves: Your answer</label><textarea id="walk-frame-c1-row-1-answer" data-walk-answer="frame-c1.row-1.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">2. The problem</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-2-answer">2. The problem: Your answer</label><textarea id="walk-frame-c1-row-2-answer" data-walk-answer="frame-c1.row-2.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">3. Who is affected, what it costs them, and what fixing it would ask of them</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-3-answer">3. Who is affected, what it costs them, and what fixing it would ask of them: Your answer</label><textarea id="walk-frame-c1-row-3-answer" data-walk-answer="frame-c1.row-3.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">4. How it is handled today, and where that falls short</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-4-answer">4. How it is handled today, and where that falls short: Your answer</label><textarea id="walk-frame-c1-row-4-answer" data-walk-answer="frame-c1.row-4.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">5. What fixed would look like</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-5-answer">5. What fixed would look like: Your answer</label><textarea id="walk-frame-c1-row-5-answer" data-walk-answer="frame-c1.row-5.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">6. Assumptions</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-6-answer">6. Assumptions: Your answer</label><textarea id="walk-frame-c1-row-6-answer" data-walk-answer="frame-c1.row-6.answer" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">7. What I do not know yet</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text"> </div><label class="walk-sr-only" for="walk-frame-c1-row-7-answer">7. What I do not know yet: Your answer</label><textarea id="walk-frame-c1-row-7-answer" data-walk-answer="frame-c1.row-7.answer" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><section class="walk-step" data-walk-step="later-results">
+<p class="walk-step-number">Step 8</p><h2>Part D. Results for CIS 502</h2>
+<div class="walk-teaching">
+<p>The template includes this results table for CIS 502. Keep it with your Word file, but leave it blank now.</p>
+<p>Select <strong>Download as Word document</strong> below. In Canvas, select <strong>Start Assignment</strong>, attach your Week 1 Word file, and select <strong>Submit Assignment</strong>. Part A and C1 are graded here. Keep this file for the Dojo Lab and Week 2. Saving a browser draft or downloading the file alone does not submit your work.</p>
+<p>Next: take your list to the Dojo Lab, later this week. Leave yourself time for it. The Dojo Lab only works once this list exists, so the two go back to back.</p></div>
+
+<p class="walk-table-help">Use this table as a reference.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="Part D. Results for CIS 502 table" style="--walk-table-min-width:720px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Part D. Results for CIS 502</caption><colgroup><col style="width:25.0000%"><col style="width:25.0000%"><col style="width:25.0000%"><col style="width:25.0000%"></colgroup><thead><tr><th scope="col">Gap</th><th scope="col">What I found</th><th scope="col">Confirmed, wrong, or complicated</th><th scope="col">What it changed in my frame</th></tr></thead><tbody><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">1</div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td></tr><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">2</div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td></tr><tr class="walk-source-static-row"><td><div class="walk-source-cell-text">3</div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td><td><div class="walk-source-cell-text"> </div></td></tr></tbody></table></div></section><details class="walk-check walk-shared-check" open><summary>What to check in your work</summary><ul><li>A1, What I already understand well enough, names two or three things, and each one says how you know. (6 points)</li><li>In A2, What I do not know yet, each gap is marked blocking, useful, or interesting, and each blocking gap names the decision or next step that is waiting on it. (14 points)</li><li>A3, My learning order, puts every blocking gap in order, says why the first one goes first, and says for each interesting gap what would make it start to matter. (10 points)</li><li>In A4, Why each planned gap matters to my frame, each gap in your plan names the part of your Problem Frame that depends on it, and what would change if the answer went the other way. (14 points)</li><li>C1, My frame coming in, holds your Sprint 3 Problem Frame in all seven slots, or a note on a slot you cannot fill yet. (6 points)</li></ul></details>
+<section class="walk-finish"><h2>Submit your work in Canvas</h2><p>Select Download as Word document below. In Canvas, select Start Assignment, attach the Word document and any other files named in the instructions above, then select Submit Assignment. Saving or downloading here does not submit your work.</p>
+<button type="button" id="walk-download">Download as Word document</button>
+<p id="walk-copy-status" role="status" aria-live="polite"></p>
+<details class="walk-plain-output" hidden><summary>Plain text backup</summary><label for="walk-output">Your assembled responses as text</label><textarea id="walk-output" readonly rows="12"></textarea></details><div id="walk-rich-output" class="walk-rich-output" hidden tabindex="0" aria-label="Tables and responses for manual copying"></div>
+<button type="button" id="walk-clear">Clear this browser draft</button><div id="walk-clear-confirm" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="walk-clear-yes">Clear draft</button><button type="button" id="walk-clear-no">Keep draft</button></div>
+</section><script type="application/json" id="guided-config">{"artifactId": "course1-name-the-gap-canvas-walkthrough", "title": "Name the Gap Canvas Walkthrough", "version": "1.0", "tasks": [{"id": "template-timing", "kind": "table", "prompt": "When to fill each part", "columns": [{"id": "column-1", "label": "Part"}, {"id": "column-2", "label": "Fill it in during"}], "rows": [{"id": "row-1", "cells": [{"text": "A. My gaps"}, {"text": "Name the Gap (Week 1)"}]}, {"id": "row-2", "cells": [{"text": "B. My learning plan"}, {"text": "Dojo Lab (Week 1), then Learning Plan (Week 2)"}]}, {"id": "row-3", "cells": [{"text": "C. My Problem Frame: C1 coming in, C2 updated"}, {"text": "C1 in Name the Gap (Week 1), C2 in Learning Plan (Week 2)"}]}, {"id": "row-4", "cells": [{"text": "D. Results"}, {"text": "CIS 502"}]}], "read_only": true, "instruction_section": "Keep your Week 7 Word file"}, {"id": "what-i-know", "kind": "response", "prompt": "A1. What I already understand well enough", "criteria": ["Name two or three things and the observation, conversation, or record that supports each."], "instruction_section": "A1. Start from what you know"}, {"id": "gap-inventory", "kind": "table", "prompt": "A2. What I do not know yet", "columns": [{"id": "column-1", "label": "#"}, {"id": "column-2", "label": "What I do not know"}, {"id": "column-3", "label": "Until I know this, I can't..."}, {"id": "column-4", "label": "Blocking, useful, or interesting"}], "rows": [{"id": "row-1", "cells": [{"text": "1"}, {"text": " ", "response": true}, {"text": " ", "response": true}, {"text": " ", "response": true}], "label": "Entry 1"}, {"id": "row-2", "cells": [{"text": "2"}, {"text": " ", "response": true}, {"text": " ", "response": true}, {"text": " ", "response": true}], "label": "Entry 2"}, {"id": "row-3", "cells": [{"text": "3"}, {"text": " ", "response": true}, {"text": " ", "response": true}, {"text": " ", "response": true}], "label": "Entry 3"}, {"id": "row-4", "cells": [{"text": "4"}, {"text": " ", "response": true}, {"text": " ", "response": true}, {"text": " ", "response": true}], "label": "Entry 4"}], "criteria": ["Each unknown names a decision or next step, then marks its priority honestly."], "instruction_section": "A2. Name and sort your gaps"}, {"id": "other-gaps", "kind": "response", "prompt": "More gaps, if your list needs them", "criteria": ["Use the same three fields as A2 for every additional gap."], "instruction_section": "If you need more than four rows"}, {"id": "learning-order", "kind": "response", "prompt": "A3. My learning order", "criteria": ["Include every blocking gap, explain what goes first, and state when an interesting gap would start to matter."], "instruction_section": "A3. Put them in order"}, {"id": "frame-dependencies", "kind": "response", "prompt": "A4. Why each planned gap matters to my frame", "criteria": ["For each planned gap, name the frame part that depends on it and what a different answer would change."], "instruction_section": "A4. Explain the stakes"}, {"id": "frame-c1", "kind": "table", "prompt": "C1. My frame coming in", "columns": [{"id": "field", "label": "Field", "width": 4}, {"id": "answer", "label": "Your answer", "width": 8}], "rows": [{"id": "row-1", "label": "1. The goal it serves", "cells": [{"text": "1. The goal it serves"}, {"text": " ", "response": true}]}, {"id": "row-2", "label": "2. The problem", "cells": [{"text": "2. The problem"}, {"text": " ", "response": true}]}, {"id": "row-3", "label": "3. Who is affected, what it costs them, and what fixing it would ask of them", "cells": [{"text": "3. Who is affected, what it costs them, and what fixing it would ask of them"}, {"text": " ", "response": true}]}, {"id": "row-4", "label": "4. How it is handled today, and where that falls short", "cells": [{"text": "4. How it is handled today, and where that falls short"}, {"text": " ", "response": true}]}, {"id": "row-5", "label": "5. What fixed would look like", "cells": [{"text": "5. What fixed would look like"}, {"text": " ", "response": true}]}, {"id": "row-6", "label": "6. Assumptions", "cells": [{"text": "6. Assumptions"}, {"text": " ", "response": true}]}, {"id": "row-7", "label": "7. What I do not know yet", "cells": [{"text": "7. What I do not know yet"}, {"text": " ", "response": true}]}], "criteria": ["Copy the frame from your Problem Frame document into all seven slots; note a slot you cannot yet fill."], "instruction_section": "C1. Keep your Sprint 3 frame", "feedback_enabled": false, "feedback_omission_reason": "C1 carries the participant's existing Sprint 3 frame; feedback belongs with the new gap judgments."}, {"id": "later-results", "kind": "table", "prompt": "Part D. Results for CIS 502", "columns": [{"id": "column-1", "label": "Gap"}, {"id": "column-2", "label": "What I found"}, {"id": "column-3", "label": "Confirmed, wrong, or complicated"}, {"id": "column-4", "label": "What it changed in my frame"}], "rows": [{"id": "row-1", "cells": [{"text": "1"}, {"text": " "}, {"text": " "}, {"text": " "}]}, {"id": "row-2", "cells": [{"text": "2"}, {"text": " "}, {"text": " "}, {"text": " "}]}, {"id": "row-3", "cells": [{"text": "3"}, {"text": " "}, {"text": " "}, {"text": " "}]}], "read_only": true, "instruction_section": "Keep Part D for later"}], "hasWritable": true, "feedbackEndpoint": "https://cti-course-ai.netlify.app/.netlify/functions/walkthrough-feedback", "feedbackOmissionReason": null, "exportFilename": "learning-plan-week-7.docx", "submissionType": "file_upload", "pdfFromDocument": false, "documentPrefix": ["Name the Gap, Sprint 4 Week 1. Keep this Word file unchanged with your Sprint 4 work. You will attach it alongside a separate Week 2 Word file in the Learning Plan assignment."], "documentSuffix": []}</script>
+<script>/* Shared, answer-filled representation for table copying and feedback. */
+(function (root) {
+  'use strict';
+  const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const key = (task, row, column) => task.id + '.' + row.id + '.' + column.id;
+  function answer(task, row, column, answers) {
+    return String(answers[key(task, row, column)] || '');
+  }
+  function cellText(task, row, index, answers) {
+    const cell = row.cells[index];
+    const written = cell.response ? answer(task, row, task.columns[index], answers) : '';
+    return [cell.text, written].filter(Boolean).join('\n');
+  }
+  function filledRow(task, row, answers) {
+    return task.columns.map((_, index) => cellText(task, row, index, answers));
+  }
+  function rowResponse(task, row, answers) {
+    if (!row.cells.some((cell, index) => cell.response &&
+      answer(task, row, task.columns[index], answers).trim())) return '';
+    return task.columns.map((column, index) => {
+      const cell = row.cells[index];
+      const written = cell.response ? answer(task, row, column, answers).trim() || '(not entered)' : '';
+      return column.label + ': ' + [cell.text, written].filter(Boolean).join('\n');
+    }).join('\n');
+  }
+  function html(task, answers) {
+    const widths = task.columns.map(column => column.width || 1);
+    const total = widths.reduce((sum, width) => sum + width, 0);
+    const colgroup = '<colgroup>' + widths.map(width =>
+      '<col style="width:' + (width / total * 100).toFixed(4) + '%">').join('') + '</colgroup>';
+    const heads = task.columns.map(column =>
+      '<th scope="col" style="border:1px solid #8999a5;padding:8px;background:#f2f5f7;text-align:left">' +
+      escape(column.label) + '</th>').join('');
+    const rows = task.rows.map(row => '<tr>' + filledRow(task, row, answers).map(value =>
+      '<td style="border:1px solid #8999a5;padding:8px;vertical-align:top">' +
+      escape(value).replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('');
+    return '<table style="border-collapse:collapse;width:100%;--walk-table-min-width:' +
+      (task.columns.length * 180) + 'px">' + colgroup +
+      (task.header_rows === 0 ? '' : '<thead><tr>' + heads + '</tr></thead>') + '<tbody>' + rows + '</tbody></table>';
+  }
+  function tsv(task, answers) {
+    const quote = value => /[\t\r\n"]/.test(value) ? '"' + value.replace(/"/g, '""') + '"' : value;
+    return [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+      ...task.rows.map(row => filledRow(task, row, answers))]
+      .map(row => row.map(value => quote(String(value))).join('\t')).join('\n');
+  }
+  root.WalkthroughTables = {answer, cellText, filledRow, rowResponse, html, tsv};
+}(globalThis));
+</script><script>/* Client-side Word export; participant responses never reach an export service. */
+(function (root) {
+  'use strict';
+  const encoder = new TextEncoder();
+  const bytes = text => encoder.encode(text);
+  const escape = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  function crc32(data) {
+    let crc = 0xffffffff;
+    for (const octet of data) {
+      crc ^= octet;
+      for (let i = 0; i < 8; i++) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+  function u16(value) { return [value & 255, (value >>> 8) & 255]; }
+  function u32(value) { return [value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]; }
+  function zip(entries) {
+    const parts = [], directory = [];
+    let offset = 0;
+    for (const [name, text] of entries) {
+      const nameBytes = bytes(name), data = bytes(text), crc = crc32(data);
+      const local = new Uint8Array([
+        ...u32(0x04034b50), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+      ]);
+      parts.push(local, nameBytes, data);
+      directory.push(new Uint8Array([
+        ...u32(0x02014b50), ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+        ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(offset),
+      ]), nameBytes);
+      offset += local.length + nameBytes.length + data.length;
+    }
+    const directorySize = directory.reduce((sum, part) => sum + part.length, 0);
+    parts.push(...directory, new Uint8Array([
+      ...u32(0x06054b50), ...u16(0), ...u16(0), ...u16(entries.length), ...u16(entries.length),
+      ...u32(directorySize), ...u32(offset), ...u16(0),
+    ]));
+    return new Blob(parts, {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  }
+  function paragraph(text, style) {
+    const heading = style ? '<w:pPr><w:pStyle w:val="' + style + '"/></w:pPr>' : '';
+    return '<w:p>' + heading + '<w:r><w:t xml:space="preserve">' + escape(text) + '</w:t></w:r></w:p>';
+  }
+  function cell(text, width, header) {
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/>' +
+      (header ? '<w:shd w:fill="F2F5F7"/>' : '') + '</w:tcPr>' +
+      String(text).split('\n').map(line => header
+        ? '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">' + escape(line) + '</w:t></w:r></w:p>'
+        : paragraph(line)).join('') + '</w:tc>';
+  }
+  function fieldCell(text, width, task, askLabel) {
+    const match = /^([^\n]+)(\n+)([\s\S]+)$/.exec(String(text));
+    if (!match) return cell(text, width, false);
+    const [, name, gap, question] = match;
+    const run = (value, bold) => '<w:r>' + (bold ? '<w:rPr><w:b/></w:rPr>' : '') +
+      '<w:t xml:space="preserve">' + escape(value) + '</w:t></w:r>';
+    const paragraphs = ['<w:p>' + run(name, task.bold_field_names) + '</w:p>'];
+    for (let i = 1; i < gap.length; i++) paragraphs.push(paragraph(''));
+    question.split('\n').forEach((line, index) => paragraphs.push('<w:p>' +
+      (index === 0 && task.label_field_questions ? run(askLabel + ': ', true) : '') + run(line, false) + '</w:p>'));
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/></w:tcPr>' + paragraphs.join('') + '</w:tc>';
+  }
+  function table(rows, weights, hasHeader = true, renderCell = null) {
+    const widths = weights ? weights.map(weight => Math.round(weight / weights.reduce((sum, n) => sum + n, 0) * 10500))
+      : rows[0].length === 3 ? [2400, 4200, 3900] : [3500, 7000];
+    return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders>' +
+      ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(edge =>
+        '<w:' + edge + ' w:val="single" w:sz="4" w:color="B8C8D2"/>').join('') +
+      '</w:tblBorders></w:tblPr><w:tblGrid>' + widths.map(width => '<w:gridCol w:w="' + width + '"/>').join('') + '</w:tblGrid>' +
+      rows.map((row, index) => '<w:tr>' + (hasHeader && index === 0 ? '<w:trPr><w:tblHeader w:val="1"/></w:trPr>' : '') +
+        row.map((value, column) => (renderCell && renderCell(value, widths[column], hasHeader ? index - 1 : index, column)) ||
+          cell(value, widths[column], hasHeader && index === 0)).join('') + '</w:tr>').join('') + '</w:tbl>';
+  }
+  function build(config, answers) {
+    const blocks = [paragraph(config.title, 'Title')];
+    for (const line of config.documentPrefix || []) blocks.push(paragraph(line));
+    for (const task of config.tasks) {
+      blocks.push(paragraph(task.prompt, 'Heading1'));
+      if (task.kind === 'table') {
+        const rows = [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+          ...task.rows.map(row => globalThis.WalkthroughTables.filledRow(task, row, answers))];
+        const styled = task.bold_field_names || task.label_field_questions;
+        const renderCell = styled ? (value, width, rowIndex, column) => column === 0 && rowIndex >= 0 &&
+          !task.rows[rowIndex].cells[0].response ? fieldCell(value, width, task, config.askLabel || 'Ask yourself') : null : null;
+        blocks.push(table(rows, task.columns.map(column => column.width || 1), task.header_rows !== 0, renderCell));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          blocks.push(paragraph(task.repeat_labels?.[i - 1] || 'Entry ' + i, 'Heading2'));
+          const evidence = task.fields.some(field => field.evidence_status);
+          const rows = [evidence ? ['Field', 'Your answer', 'Confirmed or Inferred, and why'] : ['Field', 'Your answer']];
+          for (const field of task.fields) {
+            const key = task.id + '.' + i + '.' + field.id;
+            const status = answers[key + '.status'] || '';
+            const reason = answers[key + '.reason'] || '';
+            const row = [field.label, answers[key] || ''];
+            if (evidence) row.push(field.evidence_status ? [status, reason].filter(Boolean).join(': ') : '');
+            rows.push(row);
+          }
+          blocks.push(table(rows));
+        }
+      } else {
+        const value = String(answers[task.id] || '');
+        for (const line of value.split('\n')) blocks.push(paragraph(line));
+      }
+      for (const line of task.document_after || []) blocks.push(paragraph(line));
+    }
+    for (const line of config.documentSuffix || []) blocks.push(paragraph(line));
+    const documentXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+      blocks.join('') + '<w:sectPr/></w:body></w:document>';
+    const types = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '</Types>';
+    const relationships = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '</Relationships>';
+    return zip([['[Content_Types].xml', types], ['_rels/.rels', relationships], ['word/document.xml', documentXml]]);
+  }
+  root.WalkthroughDocx = {build};
+}(globalThis));
+</script><script>(function () {
+  'use strict';
+  const config = JSON.parse(document.getElementById('guided-config').textContent);
+  const key = 'course-response:' + config.artifactId;
+  const output = document.getElementById('walk-output');
+  const saveStatus = document.getElementById('walk-save-status');
+  const copyStatus = document.getElementById('walk-copy-status');
+  const richOutput = document.getElementById('walk-rich-output');
+  const hasTable = config.tasks.some(task => task.kind === 'table');
+  const pdfFromDocument = Boolean(config.pdfFromDocument);
+  const inputs = Array.from(document.querySelectorAll('[data-walk-answer]'));
+  const buttons = Array.from(document.querySelectorAll('[data-walk-feedback]'));
+  let state = {answers: Object.create(null), feedback: Object.create(null)};
+  let saveTimer;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && saved.answers && typeof saved.answers === 'object' && !Array.isArray(saved.answers)) {
+      state.answers = Object.assign(Object.create(null), saved.answers);
+      for (const input of inputs) {
+        const value = saved.answers[input.dataset.walkAnswer];
+        if (typeof value === 'string') state.answers[input.dataset.walkAnswer] = value.slice(0, 16000);
+      }
+      if (saved.feedback && typeof saved.feedback === 'object') {
+        for (const button of buttons) {
+          const value = saved.feedback[button.dataset.walkFeedback];
+          if (value && typeof value.text === 'string' && typeof value.onText === 'string') {
+            state.feedback[button.dataset.walkFeedback] = value;
+          }
+        }
+      }
+      if (config.hasWritable && Object.values(state.answers).some(value => typeof value === 'string' && value.trim())) {
+        saveStatus.textContent = 'Your saved responses from this browser are loaded. Keep your own copy before leaving.';
+      }
+    }
+  } catch (_) {
+    saveStatus.textContent = 'This browser could not load a saved draft. Copy your work before leaving.';
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(key, JSON.stringify(state));
+      saveStatus.textContent = 'Saved in this browser on this device. Keep your own copy before leaving.';
+    } catch (_) {
+      saveStatus.textContent = 'Browser saving is unavailable. Copy or download your work before leaving.';
+    }
+  }
+
+  function responseFor(task, index) {
+    if (task.kind === 'table') {
+      const row = task.rows.find(item => item.id === index);
+      return row ? globalThis.WalkthroughTables.rowResponse(task, row, state.answers) : '';
+    }
+    if (task.kind !== 'group') return String(state.answers[task.id] || '').trim();
+    return task.fields.map(field => {
+      const value = String(state.answers[task.id + '.' + index + '.' + field.id] || '').trim();
+      const status = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.status'] || '').trim() : '';
+      const reason = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.reason'] || '').trim() : '';
+      return value || status || reason ? field.label + ': ' + (value || '(not entered)') +
+        (field.evidence_status ? ' | ' + (status || 'Status not entered') + ': ' + (reason || 'reason not entered') : '') : '';
+    }).filter(Boolean).join('\n');
+  }
+
+  function assembledText() {
+    const lines = [config.title, '', ...(config.documentPrefix || []), ''];
+    for (const task of config.tasks) {
+      lines.push(task.prompt);
+      if (task.kind === 'table') {
+        lines.push(globalThis.WalkthroughTables.tsv(task, state.answers));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          lines.push('', task.repeat_labels?.[i - 1] || 'Entry ' + i, responseFor(task, i) || '(not entered)');
+        }
+      } else lines.push(responseFor(task) || '(not entered)');
+      lines.push('');
+      if (task.document_after) lines.push(...task.document_after, '');
+    }
+    lines.push(...(config.documentSuffix || []));
+    return lines.join('\n').trim() + '\n';
+  }
+
+  function responseForButton(button) {
+    const task = config.tasks.find(item => item.id === button.dataset.checkpoint);
+    if (!task) return '';
+    const suffix = button.dataset.walkFeedback.slice(task.id.length + 1);
+    return responseFor(task, task.kind === 'table' ? suffix : suffix ? Number(suffix) : undefined);
+  }
+
+  function assembledHtml() {
+    const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const parts = ['<div>', '<h1>' + escape(config.title) + '</h1>'];
+    for (const line of config.documentPrefix || []) parts.push('<p>' + escape(line) + '</p>');
+    for (const task of config.tasks) {
+      parts.push('<h2>' + escape(task.prompt) + '</h2>');
+      if (task.kind === 'table') parts.push(globalThis.WalkthroughTables.html(task, state.answers));
+      else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          parts.push('<h3>' + escape(task.repeat_labels?.[i - 1] || 'Entry ' + i) + '</h3>');
+          parts.push('<p>' + escape(responseFor(task, i)).replace(/\n/g, '<br>') + '</p>');
+        }
+      } else parts.push('<p>' + escape(responseFor(task)).replace(/\n/g, '<br>') + '</p>');
+      for (const line of task.document_after || []) parts.push('<p>' + escape(line) + '</p>');
+    }
+    for (const line of config.documentSuffix || []) parts.push('<p>' + escape(line) + '</p>');
+    parts.push('</div>');
+    return parts.join('');
+  }
+
+  async function copyTables() {
+    const html = assembledHtml(), plain = assembledText();
+    let asyncWrite;
+    try {
+      asyncWrite = navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([plain], {type: 'text/plain'}),
+      })]);
+    } catch (_) { /* Canvas may not expose the async Clipboard API. */ }
+    richOutput.innerHTML = html;
+    richOutput.hidden = false;
+    richOutput.classList.add('walk-copy-staging');
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(richOutput);
+    selection.removeAllRanges(); selection.addRange(range);
+    let copied = false;
+    const handleCopy = event => {
+      if (!event.clipboardData) return;
+      event.clipboardData.setData('text/html', html);
+      event.clipboardData.setData('text/plain', plain);
+      event.preventDefault();
+      copied = true;
+    };
+    document.addEventListener('copy', handleCopy);
+    try { copied = document.execCommand('copy') && copied; }
+    catch (_) { copied = false; }
+    document.removeEventListener('copy', handleCopy);
+    if (asyncWrite) {
+      try { await asyncWrite; copied = true; }
+      catch (_) { /* Keep the synchronous copy result or show the fallback. */ }
+    }
+    richOutput.classList.remove('walk-copy-staging');
+    if (copied) {
+      selection.removeAllRanges();
+      richOutput.hidden = true;
+      copyStatus.textContent = !config.hasWritable
+        ? 'Copied the reference table. Paste it into a document if useful; copying has not submitted anything to Canvas.'
+        : pdfFromDocument
+        ? 'Copied as a table. Paste it into your continuing document, export the completed document as PDF, then submit that PDF in Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Copied as a table for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied as a table. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } else {
+      richOutput.focus();
+      range.selectNodeContents(richOutput);
+      selection.removeAllRanges(); selection.addRange(range);
+      copyStatus.textContent = pdfFromDocument
+        ? 'Clipboard access is unavailable. Select and copy the table below into your continuing document, then export it as PDF for Canvas.'
+        : config.submissionType === 'file_upload' && config.hasWritable
+        ? 'Clipboard access is unavailable. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Clipboard access is unavailable. Copy the selected table below, or download the Word document. Copying has not submitted your work.';
+    }
+  }
+
+  function showFeedback(button, message, stale, preview) {
+    const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    target.textContent = (preview
+      ? (stale ? 'Preview sample feedback on an earlier draft: ' : 'Preview sample feedback: ')
+      : (stale ? 'AI feedback on an earlier draft: ' : 'AI feedback: ')) + message;
+    target.hidden = false;
+  }
+
+  function update() {
+    for (const button of buttons) {
+      const response = responseForButton(button);
+      const previous = state.feedback[button.dataset.walkFeedback];
+      button.disabled = Boolean(!response || (previous && previous.onText === response && !previous.preview));
+      if (previous) showFeedback(button, previous.text, previous.onText !== response, previous.preview);
+    }
+    if (output.value) output.value = assembledText();
+  }
+
+  function resizeTableInput(input) {
+    if (!input.closest('.walk-source-table')) return;
+    input.style.height = 'auto';
+    input.style.height = Math.max(62, Math.min(input.scrollHeight, 320)) + 'px';
+    input.style.overflowY = input.scrollHeight > 320 ? 'auto' : 'hidden';
+  }
+
+  inputs.forEach(input => {
+    input.value = state.answers[input.dataset.walkAnswer] || '';
+    resizeTableInput(input);
+    input.addEventListener('input', () => {
+      state.answers[input.dataset.walkAnswer] = input.value;
+      resizeTableInput(input);
+      update(); clearTimeout(saveTimer); saveTimer = setTimeout(save, 350);
+    });
+    input.addEventListener('blur', save);
+  });
+
+  buttons.forEach(button => button.addEventListener('click', async () => {
+    const response = responseForButton(button);
+    if (!response) return;
+    if (response.length > 16000) {
+      const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+      target.hidden = false;
+      target.textContent = 'This row is too long for feedback. Shorten it before asking, or continue using your own review.';
+      return;
+    }
+    const responseKey = response;
+    button.disabled = true;
+    const result = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    result.hidden = false;
+    result.textContent = 'Reviewing what you wrote...';
+    if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+      state.feedback[button.dataset.walkFeedback] = {
+        onText: responseKey, preview: true,
+        text: 'The live service will review this response against this step. What could you make more specific or verify before submitting?'
+      };
+      save(); update(); return;
+    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 45000);
+    try {
+      const reply = await fetch(config.feedbackEndpoint, {
+        method: 'POST', signal: controller.signal, headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({activity: config.artifactId, checkpoint: button.dataset.checkpoint, response}),
+      });
+      const data = await reply.json();
+      if (!reply.ok || typeof data.content !== 'string' || !data.content.trim()) throw new Error('Unavailable');
+      state.feedback[button.dataset.walkFeedback] = {onText: responseKey, text: data.content.trim()};
+      save(); update();
+    } catch (_) {
+      result.textContent = 'AI feedback is unavailable. Your writing is still here; use the self-check above and try again later.';
+      button.disabled = false;
+    } finally { clearTimeout(timeout); }
+  }));
+
+  const copyButton = document.getElementById('walk-copy');
+  if (copyButton) copyButton.addEventListener('click', async () => {
+    output.value = assembledText();
+    if (hasTable) { await copyTables(); return; }
+    try {
+      await navigator.clipboard.writeText(output.value);
+      copyStatus.textContent = pdfFromDocument
+        ? 'Copied. Paste it into your continuing document, export the completed document as PDF, then submit that PDF in Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Copied. This copy is for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } catch (_) {
+      output.focus(); output.select();
+      copyStatus.textContent = pdfFromDocument
+        ? 'Select and copy this text into your continuing document, then export it as PDF for Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Select and copy the text shown here for your records. Download the Word document to submit in Canvas.'
+        : 'Select and copy the text shown here. Then paste it into the Canvas text-entry box and submit. Copying here has not submitted your work.';
+    }
+  });
+  const textDownload = document.getElementById('walk-text-download');
+  if (textDownload) textDownload.addEventListener('click', () => {
+    const blob = new Blob([assembledText()], {type: 'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = config.artifactId + '-responses.txt'; link.hidden = true;
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    copyStatus.textContent = 'Text copy downloaded. Keep it for your records; downloading is not a Canvas submission.';
+  });
+  const download = document.getElementById('walk-download');
+  if (download) download.addEventListener('click', () => {
+    try {
+      const blob = globalThis.WalkthroughDocx.build(config, state.answers);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = config.exportFilename; link.hidden = true;
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      copyStatus.textContent = !config.hasWritable
+        ? 'Reference Word document downloaded for your records. Downloading has not submitted anything to Canvas.'
+        : pdfFromDocument
+        ? 'Word backup downloaded. Keep working in your continuing document and export that completed document as PDF for Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Word document downloaded. In Canvas, select Start Assignment, attach it with any other required files, then select Submit Assignment. Downloading is not a submission.'
+        : 'Word document downloaded for your records. Submit your response through this Canvas assignment; downloading is not a submission.';
+    } catch (_) {
+      if (hasTable) {
+        richOutput.innerHTML = assembledHtml(); richOutput.hidden = false; richOutput.focus();
+        copyStatus.textContent = 'Download is unavailable. Select and copy the table below into a document.';
+      } else {
+        output.value = assembledText(); output.focus(); output.select();
+        copyStatus.textContent = pdfFromDocument
+          ? 'Download is unavailable. Copy this text into your continuing document, then export it as PDF for Canvas.'
+          : 'Download is unavailable. Copy this text into a document, then upload that document to Canvas.';
+      }
+    }
+  });
+  const clearButton = document.getElementById('walk-clear');
+  if (clearButton) {
+    clearButton.addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = false; });
+    document.getElementById('walk-clear-no').addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = true; });
+    document.getElementById('walk-clear-yes').addEventListener('click', () => {
+      clearTimeout(saveTimer);
+      try { localStorage.removeItem(key); }
+      catch (_) { saveStatus.textContent = 'Could not clear the saved draft. Keep a copy of your responses.'; return; }
+      state = {answers: Object.create(null), feedback: Object.create(null)};
+      inputs.forEach(input => { input.value = ''; resizeTableInput(input); });
+      buttons.forEach(button => {
+        document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]').textContent = '';
+      });
+      output.value = ''; copyStatus.textContent = '';
+      if (richOutput) { richOutput.innerHTML = ''; richOutput.hidden = true; }
+      document.getElementById('walk-clear-confirm').hidden = true;
+      saveStatus.textContent = 'This browser draft was cleared.';
+      update();
+    });
+  }
+  update();
+}());
+</script></div>
+
+    
+
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
+  </div>
+</body>
+</html>
