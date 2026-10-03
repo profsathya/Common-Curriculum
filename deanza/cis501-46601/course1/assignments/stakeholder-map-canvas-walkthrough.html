@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stakeholder Map Canvas Walkthrough | Sprint 3: Integrate People and Context (V3)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #e0e0e0;
+      --accent: #2c5282;
+      --accent-light: #ebf4ff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .activity { max-width: 760px; margin: 0 auto; }
+    .course-video { margin: 16px 0 24px; }
+    .course-video video { display: block; width: 100%; height: auto; background: #111; }
+    .course-video figcaption { margin-top: 6px; font-size: 14px; }
+    .source-derived table { width: 100%; border-collapse: collapse; }
+    .source-derived th, .source-derived td { border: 1px solid #ccd5df; padding: 8px; vertical-align: top; overflow-wrap: anywhere; }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 6px;
+    }
+    h1 { font-size: 22px; font-weight: 700; margin: 0 0 18px; line-height: 1.3; }
+    .goal {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 20px;
+    }
+    .goal h2, .submit h2 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .goal h2 { color: var(--accent); }
+    .goal p { margin: 0; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 0 0 16px;
+    }
+    section h2 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+    section h3 { margin: 16px 0 8px; font-size: 15px; }
+    section p { margin: 8px 0; }
+    ol, ul { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+    a { color: var(--accent); word-break: break-word; }
+    .submit {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-left: 4px solid #10b981;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 22px 0 12px;
+    }
+    .submit h2 { color: #065f46; }
+    .submit p { margin: 4px 0; }
+    a[data-canvas-only][hidden] { display: none !important; }
+    footer { text-align: center; margin: 28px 0 8px; opacity: 0.55; }
+    footer img { height: 22px; }
+    .brand-row { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { display: block; width: auto; object-fit: contain; }
+    .brand-logo.cti-logo { height: 22px; }
+    .brand-logo.deanza-logo { height: 26px; }
+    .brand-divider { width: 1px; height: 22px; background: #cbd5e1; }
+    .back-link {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .ctx-web .back-link { display: inline-block; }
+    
+  </style>
+  <script>
+    (function() {
+      var ctx = new URLSearchParams(location.search).get('context')
+        || (window.self !== window.top ? 'canvas' : 'web');
+      if (ctx !== 'canvas') {
+        document.documentElement.classList.add('ctx-web');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[data-canvas-href]').forEach(function(a) {
+          if (ctx === 'canvas') {
+            a.href = a.getAttribute('data-canvas-href');
+            a.hidden = false;
+            if (a.hasAttribute('data-canvas-target')) {
+              a.target = a.getAttribute('data-canvas-target');
+            }
+          } else if (a.hasAttribute('data-canvas-only')) {
+            a.removeAttribute('href');
+            a.hidden = true;
+          }
+        });
+        document.querySelectorAll('a[data-keep-context]').forEach(function(a) {
+          try {
+            var u = new URL(a.getAttribute('href'), location.href);
+            if (!u.searchParams.has('context')) {
+              u.searchParams.set('context', ctx);
+              a.href = u.href;
+            }
+          } catch (e) { }
+        });
+        document.querySelectorAll('pre code.language-copy').forEach(function(code) {
+          var pre = code.closest('pre');
+          if (!pre || pre.parentElement.classList.contains('copy-source')) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'copy-source';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Copy URL';
+          var status = document.createElement('p');
+          status.setAttribute('role', 'status');
+          wrap.appendChild(button);
+          wrap.appendChild(status);
+          button.addEventListener('click', async function() {
+            var value = code.textContent.trim();
+            var copied = false;
+            // Canvas may block the async Clipboard API in its cross-origin
+            // iframe. Copy synchronously while the click still has activation.
+            var field = document.createElement('textarea');
+            field.value = value;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            document.body.appendChild(field);
+            try {
+              field.focus();
+              field.select();
+              copied = document.execCommand('copy');
+            } catch (e) { }
+            field.remove();
+            button.focus({preventScroll:true});
+            try {
+              if (!copied) await navigator.clipboard.writeText(value);
+              status.textContent = 'Copied. Paste this URL into your Dojo source or knowledge field.';
+            } catch (e) {
+              var range = document.createRange();
+              range.selectNodeContents(code);
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+              status.textContent = 'Copy the selected URL, then paste it into your Dojo source or knowledge field.';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+<style data-course-theme="applying-ai-at-work">
+/* Applying AI at Work: existing reading palette, shared by every delivery.
+   Layouts still own their reading widths, table scrolling, density and states.
+   html adds specificity above embedded component CSS without !important. */
+:root {
+  --course-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --course-text: #1a1a1a;
+  --course-muted: #455568;
+  --course-heading: #17344a;
+  --course-accent: #204b76;
+  --course-accent-hover: #17344a;
+  --course-soft: #f0f5fa;
+  --course-border: #cbd8e4;
+  --course-input-border: #8294a7;
+  --course-focus: #bf6b00;
+  --course-bg: #fafafa;
+  --course-surface: #fff;
+  --course-control-radius: 6px;
+  --course-card-radius: 12px;
+  --bg: var(--course-bg);
+  --surface: var(--course-surface);
+  --text: var(--course-text);
+  --muted: var(--course-muted);
+  --border: var(--course-border);
+  --accent: var(--course-accent);
+  --accent-light: var(--course-soft);
+  /* Scheduled homepage aliases; preserve its navigation layout. */
+  --ink: var(--course-text);
+  --secondary: var(--course-muted);
+  --rule: var(--course-border);
+  --blue: var(--course-accent);
+  --soft: var(--course-soft);
+}
+html body {
+  font-family: var(--course-font);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--course-text);
+  background: var(--course-bg);
+}
+html .guided-walkthrough, html #activity-container .activity {
+  font-family: var(--course-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--course-text);
+}
+html .activity > h1, html .activity__title {
+  color: var(--course-heading);
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+html .activity > .meta, html .activity__description { color: var(--course-muted); }
+html .activity a:not(.button):not(.secondary) { color: var(--course-accent); }
+html .activity :is(section, .launch) { border-color: var(--course-border); }
+html .activity .launch { border-left-color: var(--course-accent); background: var(--course-soft); }
+html .activity :is(.response-task, .category-card, .walk-step, .example-once) {
+  border-color: var(--course-border);
+  border-radius: var(--course-card-radius);
+}
+html :is(.guided-workspace, .guided-walkthrough, .reading-page) :is(input[type="text"], textarea, select) {
+  color: var(--course-text);
+  border-color: var(--course-input-border);
+}
+html :is(.guided-workspace, .guided-walkthrough, .copy-source) button,
+html .activity a.button {
+  background: var(--course-accent);
+  border-color: var(--course-accent);
+  border-radius: var(--course-control-radius);
+  color: var(--course-surface);
+}
+/* Secondary actions and accordion headers are not primary submit buttons. */
+html :is(.guided-workspace, .guided-walkthrough) :is(button.secondary, #more-options button, .walk-secondary, #walk-clear, .walk-row-feedback-control button) {
+  background: var(--course-surface);
+  color: var(--course-accent);
+  border: 1px solid var(--course-input-border);
+}
+html .guided-walkthrough .walk-accordion-toggle {
+  background: transparent;
+  color: var(--course-heading);
+  border: 0;
+  border-radius: var(--course-card-radius);
+}
+html .guided-walkthrough .walk-accordion-toggle:hover { background: var(--course-soft); }
+html .activity a.secondary { color: var(--course-accent); background: var(--course-soft); }
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--course-focus);
+  outline-offset: 3px;
+}
+/* Keep outlines inside clipped table cells and accordion headers. */
+html .guided-walkthrough :is(.walk-source-table textarea, .walk-accordion-toggle):focus-visible { outline-offset: -3px; }
+/* Theme the existing activity engine locally, without changing its runtime,
+   configuration, feedback semantics or other courses that share its CSS. */
+html #activity-container .activity[data-theme] {
+  --activity-primary: var(--course-accent);
+  --activity-primary-light: #477b9b;
+  --activity-primary-dark: var(--course-accent-hover);
+  --activity-primary-bg: var(--course-soft);
+}
+html .course-home .primary:hover { background: var(--course-accent-hover); }
+html :is(.activity, .course-home) { overflow-wrap: anywhere; }
+
+html #activity-container :is(button, input, textarea, select) { font-family: var(--course-font); }
+html #activity-container button, html .course-home .primary { border-radius: var(--course-control-radius); }
+</style>
+<style data-native-canvas-navigation>
+html.native-canvas-context .back-link { display: none !important; }
+</style>
+<script>
+(function () {
+  var ctx = new URLSearchParams(location.search).get('context') || (self !== top ? 'canvas' : 'web');
+  if (ctx !== 'canvas') return;
+  document.documentElement.classList.add('native-canvas-context');
+})();
+</script>
+</head>
+<body>
+  <div class="activity source-derived">
+    <a class="back-link" href="../sprint-15.html?context=web" data-keep-context>&larr; Back to Module</a>
+    <p class="meta">Sprint 3: Integrate People and Context (V3) &middot; Assignment</p>
+    <h1>Stakeholder Map Canvas Walkthrough</h1>
+    <p class="item-sequence" style="color: #526175; font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 1rem;">Item 3 of 6 · 3 items remaining</p>
+
+
+
+    <style>.guided-walkthrough { max-width: 1100px; margin: 0 auto; color: #233342; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.guided-walkthrough p { margin: 0 0 12px; }
+.activity:has(.guided-walkthrough) { max-width: 1100px; }
+.guided-walkthrough .walk-intro { margin-bottom: 16px; padding: 12px 16px; background: #eef5fa; border-left: 4px solid #3d7190; border-radius: 0 8px 8px 0; }
+.guided-walkthrough .walk-intro h2 { margin: 0 0 6px; color: #17344a; font-size: 1.08rem; line-height: 1.3; }
+.guided-walkthrough .walk-intro p { margin: 2px 0; }
+.guided-walkthrough .walk-step { margin: 20px 0; padding: 20px; border: 1px solid #c9d7e1; border-radius: 12px; background: #fff; box-shadow: 0 2px 8px rgba(27, 55, 76, .04); }
+.guided-walkthrough .walk-step-number { margin: 0; color: #47677d; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.guided-walkthrough .walk-step h2 { margin: 2px 0 14px; color: #17344a; font-size: 1.25rem; line-height: 1.3; }
+.guided-walkthrough .walk-teaching h2 { font-size: 1rem; }
+.guided-walkthrough .walk-check { margin: 14px 0; padding: 10px 14px; border: 1px solid #d4dee5; border-radius: 7px; }
+.guided-walkthrough .walk-check summary { cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-entry { margin: 18px 0; padding: 16px; border: 1px solid #d4dee5; border-radius: 9px; }
+.guided-walkthrough .walk-entry summary { cursor: pointer; font-weight: 700; }
+.guided-walkthrough .walk-entry[open] summary { margin-bottom: 14px; }
+.guided-walkthrough .walk-table-scroll { position: relative; overflow-x: auto; border-radius: 8px; }
+.guided-walkthrough .walk-table-with-feedback { box-sizing: border-box; padding-right: 154px; }
+.guided-walkthrough .walk-table-help { margin: 0 0 8px; color: #526b7b; font-size: .9rem; }
+.guided-walkthrough .walk-table-scroll-hint { display: none; margin: 8px 0; color: #47677d; font-size: .9rem; }
+/* Ordinary Markdown tables in walkthrough prose (a reference table above a step) share the source-grid lines. */
+.guided-walkthrough table:not(.walk-source-table) { width: 100%; border-collapse: collapse; margin: 0 0 14px; }
+.guided-walkthrough table:not(.walk-source-table) th, .guided-walkthrough table:not(.walk-source-table) td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; text-align: left; }
+.guided-walkthrough table:not(.walk-source-table) thead th { background: #eaf1f6; color: #1f4058; font-size: .9rem; font-weight: 700; line-height: 1.3; }
+.guided-walkthrough .walk-source-table { width: 100%; min-width: max(100%, var(--walk-table-min-width)); border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-source-table th, .guided-walkthrough .walk-source-table td { padding: 10px 12px; border: 1px solid #aebdc9; vertical-align: top; }
+.guided-walkthrough .walk-source-table thead th { background: #eaf1f6; color: #1f4058; text-align: left; font-size: .9rem; font-weight: 700; line-height: 1.3; }
+.guided-walkthrough .walk-source-table .walk-source-static-row td { background: #f8fafc; color: #3b4d5b; font-size: .89rem; }
+.guided-walkthrough .walk-source-table .walk-source-response-row:nth-child(odd) td { background: #fbfdfe; }
+.guided-walkthrough .walk-source-cell-text { white-space: pre-wrap; line-height: 1.42; }
+.guided-walkthrough .walk-source-input-cell .walk-source-cell-text { padding: 10px 12px 0; }
+.guided-walkthrough .walk-source-cell-text + textarea { margin-top: 9px; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell { padding: 0; }
+.guided-walkthrough .walk-source-table td.walk-source-input-cell:focus-within { background: #fff; }
+.guided-walkthrough .walk-source-table td.walk-feedback-anchor { position: relative; }
+.guided-walkthrough .walk-source-table td textarea { min-height: 62px; max-height: 320px; padding: 10px 12px; border: 0; border-radius: 0; background: transparent; resize: none; line-height: 1.4; }
+.guided-walkthrough .walk-source-table td textarea::placeholder { color: #8799a6; opacity: 1; font-size: .88rem; }
+.guided-walkthrough .walk-source-table td textarea:focus-visible { outline: 3px solid #b66400; outline-offset: -3px; background: #fff; }
+.guided-walkthrough .walk-row-feedback-control { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); width: 138px; z-index: 1; }
+.guided-walkthrough .walk-row-feedback-control button { box-sizing: border-box; width: 100%; margin: 0; padding: 6px 8px; border-color: #7997a8; background: #fff; color: #244e66; font-size: .82rem; font-weight: 650; line-height: 1.2; }
+.guided-walkthrough .walk-row-feedback-control button small { display: block; margin-top: 2px; font-size: .76rem; font-weight: 500; }
+.guided-walkthrough .walk-row-feedback-control button:not(:disabled):hover { background: #e8f2f7; }
+.guided-walkthrough .walk-row-feedback-results:has(.walk-feedback:not(:empty)) { margin-top: 14px; }
+.guided-walkthrough .walk-row-feedback-result:has(.walk-feedback:empty) { display: none; }
+.guided-walkthrough .walk-row-feedback-result { margin-top: 8px; padding: 12px 14px; border: 1px solid #bdd7cb; border-radius: 8px; background: #f1f8f4; }
+.guided-walkthrough .walk-row-feedback-result strong { color: #235140; }
+.guided-walkthrough .walk-row-feedback-result .walk-feedback { margin: 8px 0 0; }
+.guided-walkthrough .walk-rich-output { margin: 12px 0; padding: 12px; border: 1px solid #8095a7; overflow-x: auto; background: #fff; }
+.guided-walkthrough .walk-rich-output table { border-collapse: collapse; min-width: max(100%, var(--walk-table-min-width)); }
+.guided-walkthrough .walk-rich-output th, .guided-walkthrough .walk-rich-output td { border: 1px solid #8999a5; padding: 8px; vertical-align: top; }
+.guided-walkthrough .walk-rich-output th { background: #f2f5f7; }
+.guided-walkthrough .walk-copy-staging { position: fixed; left: -10000px; top: 0; width: 900px; }
+.guided-walkthrough .walk-plain-output { margin: 12px 0; }
+.guided-walkthrough .walk-response-table { width: 100%; min-width: 680px; border-collapse: collapse; table-layout: fixed; }
+.guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { padding: 10px; border: 1px solid #cad6df; vertical-align: top; }
+.guided-walkthrough .walk-response-table thead th { background: #eaf2f7; text-align: left; font-size: .88rem; }
+.guided-walkthrough .walk-response-table tbody th { width: 22%; background: #f7fafc; text-align: left; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance { margin-top: 7px; font-size: .85rem; font-weight: 400; line-height: 1.4; }
+.guided-walkthrough .walk-field-guidance summary { width: fit-content; color: #315f7c; cursor: pointer; font-weight: 650; }
+.guided-walkthrough .walk-field-guidance p { margin: 8px 0 0; }
+.guided-walkthrough .walk-response-table td { width: 39%; }
+.guided-walkthrough .walk-response-table textarea { min-height: 66px; }
+.guided-walkthrough .walk-response-table td select + label + textarea { margin-top: 8px; }
+.guided-walkthrough .walk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.guided-walkthrough .walk-field { display: block; margin: 13px 0; font-weight: 650; }
+.guided-walkthrough .walk-field span { display: block; margin-bottom: 5px; }
+.guided-walkthrough input, .guided-walkthrough textarea, .guided-walkthrough select { box-sizing: border-box; display: block; width: 100%; padding: 10px 12px; border: 1px solid #8095a7; border-radius: 5px; color: #17212b; background: #fff; font: inherit; }
+.guided-walkthrough textarea { min-height: 98px; resize: vertical; }
+.guided-walkthrough button { margin: 6px 10px 6px 0; padding: 10px 14px; border: 1px solid #315f7c; border-radius: 6px; background: #315f7c; color: #fff; font: inherit; cursor: pointer; }
+.guided-walkthrough button:disabled { opacity: .55; cursor: not-allowed; }
+.guided-walkthrough :focus-visible { outline: 3px solid #b66400; outline-offset: 3px; }
+.guided-walkthrough .walk-feedback { white-space: pre-wrap; margin-top: 10px; padding: 10px 12px; border-left: 3px solid #40806d; background: #edf6f2; }
+.guided-walkthrough .walk-feedback:empty { display: none; }
+.guided-walkthrough .walk-finish { margin: 20px 0; padding: 20px; background: #edf6f2; border: 1px solid #bdd7cb; border-radius: 10px; }
+.guided-walkthrough .walk-finish h2 { margin: 0 0 8px; color: #1c4638; font-size: 1.2rem; line-height: 1.3; }
+.guided-walkthrough .walk-finish .walk-secondary { background: #fff; color: #315f7c; }
+.guided-walkthrough #walk-output { margin: 8px 0 12px; min-height: 200px; }
+.guided-walkthrough #walk-clear { background: #fff; color: #315f7c; }
+@media (max-width: 650px) {
+  .guided-walkthrough .walk-table-scroll-hint { display: block; }
+  .guided-walkthrough .walk-step, .guided-walkthrough .walk-entry { padding: 14px; }
+  .guided-walkthrough button { width: 100%; }
+  .guided-walkthrough .walk-response-table { min-width: 0; display: block; }
+  .guided-walkthrough .walk-response-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .guided-walkthrough .walk-response-table tbody, .guided-walkthrough .walk-response-table tr,
+  .guided-walkthrough .walk-response-table th, .guided-walkthrough .walk-response-table td { display: block; width: 100%; }
+  .guided-walkthrough .walk-response-table tr { margin-bottom: 12px; border: 1px solid #cad6df; border-radius: 7px; overflow: hidden; }
+  .guided-walkthrough .walk-response-table tbody th { width: 100%; border: 0; border-bottom: 1px solid #cad6df; }
+  .guided-walkthrough .walk-response-table td { border: 0; }
+  .guided-walkthrough .walk-response-table td + td { border-top: 1px solid #e1e8ed; }
+  .guided-walkthrough .walk-response-table td::before { content: attr(data-label); display: block; font-size: .83rem; font-weight: 700; color: #47677d; margin-bottom: 5px; }
+}
+@media print { .guided-walkthrough button, .guided-walkthrough .walk-feedback, .guided-walkthrough .walk-intro { display: none; } }
+</style><style>.guided-walkthrough .walk-accordion-step { padding: 0; }
+.guided-walkthrough .walk-step .walk-accordion-heading { margin: 0; font-size: 1.25rem; line-height: 1.3; }
+.guided-walkthrough .walk-accordion-toggle { display: grid; grid-template-columns: 1fr auto auto; column-gap: 12px; align-items: center; box-sizing: border-box; width: 100%; margin: 0; padding: 16px 20px; border: 0; border-radius: 12px; background: transparent; color: #17344a; font: inherit; text-align: left; }
+.guided-walkthrough .walk-accordion-toggle:hover { background: #f4f8fb; }
+.guided-walkthrough .walk-accordion-toggle:focus-visible { outline-offset: -3px; }
+.guided-walkthrough .walk-accordion-toggle::after { content: ""; grid-column: 3; grid-row: 1 / span 2; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid #47677d; border-bottom: 2px solid #47677d; transform: rotate(45deg); }
+.guided-walkthrough .walk-accordion-toggle[aria-expanded="true"]::after { margin: 4px 4px 0; transform: rotate(-135deg); }
+.guided-walkthrough .walk-accordion-toggle[aria-expanded="true"] { border-radius: 12px 12px 0 0; }
+.guided-walkthrough .walk-accordion-toggle .walk-step-number { grid-column: 1; display: block; }
+.guided-walkthrough .walk-accordion-title { grid-column: 1; display: block; margin-top: 2px; font-size: 1.25rem; font-weight: 700; }
+.guided-walkthrough .walk-accordion-status { grid-column: 2; grid-row: 1 / span 2; padding: 3px 10px; border: 1px solid #c9d7e1; border-radius: 999px; background: #f4f7f9; color: #3f5b6e; font-size: .82rem; font-weight: 650; white-space: nowrap; }
+.guided-walkthrough .walk-accordion-status:empty { display: none; }
+.guided-walkthrough .walk-accordion-status[data-state="in-progress"] { border-color: #e0b56a; background: #fff5e3; color: #6e4300; }
+.guided-walkthrough .walk-accordion-status[data-state="done"] { border-color: #86b9a2; background: #edf6f2; color: #1c4638; }
+.guided-walkthrough .walk-accordion-panel { padding: 4px 20px 20px; }
+.guided-walkthrough .walk-accordion-panel[hidden] { display: none; }
+.guided-walkthrough .walk-accordion-done { margin-top: 16px; }
+.guided-walkthrough .walk-field-guide { margin: 16px 0 20px; }
+.guided-walkthrough .walk-field-guide h3 { margin: 0 0 6px; color: #17344a; font-size: 1rem; }
+.guided-walkthrough .walk-guide-table { table-layout: fixed; font-size: .92rem; }
+.guided-walkthrough .walk-guide-table tbody th { background: #f7fafc; }
+.guided-walkthrough .walk-guide-table td p { margin: 0 0 8px; }
+.guided-walkthrough .walk-guide-table td p:last-child { margin-bottom: 0; }
+.guided-walkthrough .walk-shared-check { margin: 20px 0; padding: 14px 20px; border-color: #c9d7e1; border-radius: 12px; background: #fff; }
+.guided-walkthrough .walk-shared-check p { margin: 10px 0 0; }
+@media (max-width: 650px) {
+  .guided-walkthrough .walk-accordion-step { padding: 0; }
+  .guided-walkthrough .walk-accordion-toggle { grid-template-columns: minmax(0, 1fr) auto; padding: 14px; }
+  .guided-walkthrough .walk-accordion-toggle::after { grid-column: 2; grid-row: 1 / span 3; }
+  .guided-walkthrough .walk-accordion-title { font-size: 1.1rem; overflow-wrap: anywhere; }
+  .guided-walkthrough .walk-accordion-status { grid-column: 1; grid-row: 3; justify-self: start; margin-top: 6px; white-space: normal; }
+  .guided-walkthrough .walk-accordion-panel { padding: 4px 14px 14px; }
+  .guided-walkthrough .walk-shared-check { padding: 12px 14px; }
+  .guided-walkthrough .walk-guide-table, .guided-walkthrough .walk-guide-table tbody,
+  .guided-walkthrough .walk-guide-table tr, .guided-walkthrough .walk-guide-table th,
+  .guided-walkthrough .walk-guide-table td { display: block; width: 100%; box-sizing: border-box; }
+  .guided-walkthrough .walk-guide-table colgroup { display: none; }
+  .guided-walkthrough .walk-guide-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .guided-walkthrough .walk-guide-table tr { margin-bottom: 12px; border: 1px solid #aebdc9; border-radius: 7px; overflow: hidden; }
+  .guided-walkthrough .walk-guide-table tbody th, .guided-walkthrough .walk-guide-table td { border: 0; }
+  .guided-walkthrough .walk-guide-table td { border-top: 1px solid #d4dee5; }
+  .guided-walkthrough .walk-guide-table td::before { content: attr(data-label); display: block; margin-bottom: 4px; color: #47677d; font-size: .83rem; font-weight: 700; }
+}
+@media print {
+  .guided-walkthrough .walk-accordion-panel[hidden] { display: block; }
+  .guided-walkthrough .walk-accordion-status { display: none; }
+}
+</style>
+<div class="guided-workspace guided-walkthrough" id="guided-workspace">
+<aside class="walk-intro"><h2>How this Canvas Walkthrough works</h2><p>This Canvas Walkthrough takes you through the activity one step at a time, writing in the spaces provided. Your draft saves in this browser on this device when storage is available. At the bottom, download your work as a Word document and submit it in Canvas.</p>
+<p>Keep the downloaded Word document as your durable copy after submitting it.</p>
+<p>AI feedback is optional and is not a grade. It reviews only the response you choose to send. Remove confidential or identifying details before asking for feedback.</p>
+<p id="walk-save-status" role="status" aria-live="polite">Your draft will save as you type.</p></aside>
+<section>
+<p>Before you talk to anyone, write down what you already believe about the people connected to your problem, and be honest about which parts you actually know. This is your own work, so write it yourself first. The optional AI feedback on each row can point to a gap, but it cannot know your situation or supply your evidence. You will test and widen your map with AI in the Dojo Lab afterward, and that only works because you have an independent view to test.</p>
+<p><strong>Write each response yourself before asking for feedback.</strong></p>
+</section><section class="walk-step" data-walk-step="map-context">
+<p class="walk-step-number">Step 1</p><h2>Set up your map</h2>
+<div class="walk-teaching">
+<p>Write your name and your problem, from <strong>The problem</strong> (Part 2) of your Problem Frame as you left it at the end of Sprint 2. This is the map you will keep working in throughout the sprint. Use roles or initials for other people, and keep confidential details out of responses you send for feedback.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Bring the Problem Frame you are already working on.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="Set up your map table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Set up your map</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Your name</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-map-context-row-1-column-2">Your name: Your answer</label><textarea id="walk-map-context-row-1-column-2" data-walk-answer="map-context.row-1.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Your problem, from The problem (Part 2) of your Problem Frame as you left it in Sprint 2</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-map-context-row-2-column-2">Your problem, from The problem (Part 2) of your Problem Frame as you left it in Sprint 2: Your answer</label><textarea id="walk-map-context-row-2-column-2" data-walk-answer="map-context.row-2.column-2" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><section class="walk-step walk-accordion-step" data-walk-step="stakeholder-1" data-walk-repeated-table>
+<h2 class="walk-accordion-heading"><button type="button" class="walk-accordion-toggle" id="walk-toggle-stakeholder-1" aria-expanded="true" aria-controls="walk-panel-stakeholder-1">
+<span class="walk-step-number">Step 2</span><span class="walk-accordion-title">Stakeholder Table 1</span>
+<span class="walk-accordion-status" data-walk-status></span></button></h2>
+<div class="walk-accordion-panel" id="walk-panel-stakeholder-1" role="region" aria-labelledby="walk-toggle-stakeholder-1">
+<div class="walk-teaching">
+<h3 id="start-with-what-you-already-think">Start with what you already think</h3>
+<p>Identify four stakeholders. You have already started naming them. Look back at your Problem Frame: <strong>Who is affected</strong> (Part 3a), <strong>What fixing this would ask of people</strong> (Part 3c), and the <strong>Who could tell me</strong> column in <strong>Your assumptions</strong> (Part 6). Start with the people you named there. People can hold more than one relationship, so choose who makes sense for your problem. If you can, push yourself to cover all four: Affected, Influential, Responsible for a constraint, and Positioned to challenge your frame. If you don&rsquo;t have a workplace stakeholder, reach out to a mentor, community member, customer, or anyone with a genuine relationship to the problem.</p>
+<p>For each stakeholder, fill in the seven corresponding questions. One to three sentences each is plenty; the example answers below show the length to aim for. The last field asks you for a question; write a first attempt, and sharpen it in the next sections.</p>
+<p>Mark each field&rsquo;s status honestly. <strong>Confirmed</strong> means supported by evidence: a conversation, an observation, or reliable documentation. <strong>Inferred</strong> means a reasoned hypothesis based on what you currently know, that should be validated later. For the question field, mark whether the concern behind your question is Confirmed or Inferred and say why. In Sprint 1 you marked your assumptions confirmed or unverified. Sprint 3 uses the same idea with one change: Inferred means unverified, but you can say why you believe it.</p>
+<p>Below is an example of how someone would answer each question in the table. The example stakeholder is the account lead from the handover problem. Sprint 1&rsquo;s worked example ended with &ldquo;Start with the account lead,&rdquo; and Sprint 2&rsquo;s verdict left the question she can answer: if the fix is that easy, why has it not happened? Feedback beside a row reviews only that row.</p>
+<p>If you can, start with someone who is <strong>Affected</strong>: the problem reaches them directly. This person may also hold other relationships to the problem; name any that apply.</p>
+</div>
+<section class="walk-field-guide" aria-labelledby="walk-field-guide-stakeholder-1"><h3 id="walk-field-guide-stakeholder-1">How to fill in each field</h3><p>All four stakeholder tables use these seven fields. To see this guide again while you work on a later table, reopen Step 2.</p><table class="walk-guide-table"><caption class="walk-sr-only">How to fill in each field</caption><colgroup><col style="width:20%"><col style="width:28%"><col style="width:52%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Ask yourself</th><th scope="col">Example and guidance</th></tr></thead><tbody><tr><th scope="row" data-label="Field"><strong>Role</strong></th><td data-label="Ask yourself">Who is this person in relation to my problem?</td><td data-label="Example and guidance"><p><strong>Example:</strong> Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. Confirmed. I have watched her make the assignment twice.</p><p><strong>Trap to avoid:</strong> A job title with no relationship attached. &quot;Account lead&quot; is a title. &quot;The only person who sees every handover&quot; is a relationship.</p></td></tr><tr><th scope="row" data-label="Field"><strong>Relationship to the problem</strong></th><td data-label="Ask yourself">Which of the four applies? Does more than one?</td><td data-label="Example and guidance"><p><strong>Example:</strong> Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.</p><p><strong>Trap to avoid:</strong> Picking one label because there is one row. Name every relationship that applies.</p></td></tr><tr><th scope="row" data-label="Field"><strong>Impact level</strong></th><td data-label="Ask yourself">How directly and strongly does the problem affect this person?</td><td data-label="Example and guidance"><p><strong>Example:</strong> Low. She assigns the account and moves on. She does not carry a client relationship through the gap. Inferred. I have not asked whether the fallout reaches her.</p><p><strong>Trap to avoid:</strong> Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it.</p></td></tr><tr><th scope="row" data-label="Field"><strong>Influence or authority level</strong></th><td data-label="Ask yourself">How much say does this person have over any solution?</td><td data-label="Example and guidance"><p><strong>Example:</strong> High. Nothing about how handovers get announced changes without her. Confirmed. She set the current practice.</p><p><strong>Trap to avoid:</strong> Writing &quot;high&quot; with nothing attached. High over what, specifically?</p></td></tr><tr><th scope="row" data-label="Field"><strong>Need</strong></th><td data-label="Ask yourself">What does this person need from a solution, in their terms?</td><td data-label="Example and guidance"><p><strong>Example:</strong> To not add another step to a process she already considers finished. Inferred. This is my read of her, not something she has said.</p><p><strong>Trap to avoid:</strong> Writing a solution in the stakeholder&#x27;s voice. &quot;She needs a shared tracker&quot; is your idea. &quot;She needs to not add a step&quot; is her interest.</p></td></tr><tr><th scope="row" data-label="Field"><strong>Constraints</strong></th><td data-label="Ask yourself">What constraint or risk might this person see that I have not?</td><td data-label="Example and guidance"><p><strong>Example:</strong> She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. Inferred. Nobody I asked remembers, which is not the same as nobody having tried.</p><p><strong>Trap to avoid:</strong> Listing only budget and policy. A constraint can be a history, a relationship, or a reputation.</p></td></tr><tr><th scope="row" data-label="Field"><strong>Next question to ask</strong></th><td data-label="Ask yourself">What would I still need to find out from this person?</td><td data-label="Example and guidance"><p><strong>Example:</strong> &quot;When an account changed hands badly in the past, what happened next?&quot;</p><p><strong>Trap to avoid:</strong> A question you already know the answer to.</p></td></tr></tbody></table></section>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Stakeholder Table 1 table" style="--walk-table-min-width:540px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Stakeholder Table 1</caption><colgroup><col style="width:28.5714%"><col style="width:35.7143%"><col style="width:35.7143%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Your answer</th><th scope="col">Confirmed or Inferred, and why</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Role</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-1-column-2">Role: Your answer</label><textarea id="walk-stakeholder-1-row-1-column-2" data-walk-answer="stakeholder-1.row-1.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-1-column-3">Role: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-1-column-3" data-walk-answer="stakeholder-1.row-1.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-1" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Role" aria-controls="walk-feedback-stakeholder-1-row-1" disabled><span>AI feedback</span><small>Role</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Relationship to the problem</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-2-column-2">Relationship to the problem: Your answer</label><textarea id="walk-stakeholder-1-row-2-column-2" data-walk-answer="stakeholder-1.row-2.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-2-column-3">Relationship to the problem: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-2-column-3" data-walk-answer="stakeholder-1.row-2.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-2" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Relationship to the problem" aria-controls="walk-feedback-stakeholder-1-row-2" disabled><span>AI feedback</span><small>Relationship to the problem</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Impact level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-3-column-2">Impact level: Your answer</label><textarea id="walk-stakeholder-1-row-3-column-2" data-walk-answer="stakeholder-1.row-3.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-3-column-3">Impact level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-3-column-3" data-walk-answer="stakeholder-1.row-3.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-3" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Impact level" aria-controls="walk-feedback-stakeholder-1-row-3" disabled><span>AI feedback</span><small>Impact level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Influence or authority level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-4-column-2">Influence or authority level: Your answer</label><textarea id="walk-stakeholder-1-row-4-column-2" data-walk-answer="stakeholder-1.row-4.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-4-column-3">Influence or authority level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-4-column-3" data-walk-answer="stakeholder-1.row-4.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-4" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Influence or authority level" aria-controls="walk-feedback-stakeholder-1-row-4" disabled><span>AI feedback</span><small>Influence or authority level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Need</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-5-column-2">Need: Your answer</label><textarea id="walk-stakeholder-1-row-5-column-2" data-walk-answer="stakeholder-1.row-5.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-5-column-3">Need: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-5-column-3" data-walk-answer="stakeholder-1.row-5.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-5" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Need" aria-controls="walk-feedback-stakeholder-1-row-5" disabled><span>AI feedback</span><small>Need</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Constraints</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-6-column-2">Constraints: Your answer</label><textarea id="walk-stakeholder-1-row-6-column-2" data-walk-answer="stakeholder-1.row-6.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-6-column-3">Constraints: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-6-column-3" data-walk-answer="stakeholder-1.row-6.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-6" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Constraints" aria-controls="walk-feedback-stakeholder-1-row-6" disabled><span>AI feedback</span><small>Constraints</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Next question to ask</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-7-column-2">Next question to ask: Your answer</label><textarea id="walk-stakeholder-1-row-7-column-2" data-walk-answer="stakeholder-1.row-7.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-1-row-7-column-3">Next question to ask: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-1-row-7-column-3" data-walk-answer="stakeholder-1.row-7.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-1.row-7" data-checkpoint="stakeholder-1" aria-label="Get AI feedback on Next question to ask" aria-controls="walk-feedback-stakeholder-1-row-7" disabled><span>AI feedback</span><small>Next question to ask</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Role</strong><p id="walk-feedback-stakeholder-1-row-1" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Relationship to the problem</strong><p id="walk-feedback-stakeholder-1-row-2" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Impact level</strong><p id="walk-feedback-stakeholder-1-row-3" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Influence or authority level</strong><p id="walk-feedback-stakeholder-1-row-4" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-4" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Need</strong><p id="walk-feedback-stakeholder-1-row-5" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-5" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Constraints</strong><p id="walk-feedback-stakeholder-1-row-6" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-6" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Next question to ask</strong><p id="walk-feedback-stakeholder-1-row-7" class="walk-feedback" data-walk-feedback-result="stakeholder-1.row-7" role="status" aria-live="polite"></p></div></section>
+<button type="button" class="walk-accordion-done" data-walk-done>Done, go to next</button></div></section><section class="walk-step walk-accordion-step" data-walk-step="stakeholder-2" data-walk-repeated-table>
+<h2 class="walk-accordion-heading"><button type="button" class="walk-accordion-toggle" id="walk-toggle-stakeholder-2" aria-expanded="true" aria-controls="walk-panel-stakeholder-2">
+<span class="walk-step-number">Step 3</span><span class="walk-accordion-title">Stakeholder Table 2</span>
+<span class="walk-accordion-status" data-walk-status></span></button></h2>
+<div class="walk-accordion-panel" id="walk-panel-stakeholder-2" role="region" aria-labelledby="walk-toggle-stakeholder-2">
+<div class="walk-teaching">
+<p>If you can, choose someone who is <strong>Influential</strong>: they have a say over what changes. This person may also hold other relationships to the problem; name any that apply. Keep impact and authority separate: the person who feels the problem most may have the least power to change it. If you write “high,” say what this person has influence over.</p>
+</div>
+
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Stakeholder Table 2 table" style="--walk-table-min-width:540px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Stakeholder Table 2</caption><colgroup><col style="width:28.5714%"><col style="width:35.7143%"><col style="width:35.7143%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Your answer</th><th scope="col">Confirmed or Inferred, and why</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Role</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-1-column-2">Role: Your answer</label><textarea id="walk-stakeholder-2-row-1-column-2" data-walk-answer="stakeholder-2.row-1.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-1-column-3">Role: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-1-column-3" data-walk-answer="stakeholder-2.row-1.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-1" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Role" aria-controls="walk-feedback-stakeholder-2-row-1" disabled><span>AI feedback</span><small>Role</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Relationship to the problem</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-2-column-2">Relationship to the problem: Your answer</label><textarea id="walk-stakeholder-2-row-2-column-2" data-walk-answer="stakeholder-2.row-2.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-2-column-3">Relationship to the problem: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-2-column-3" data-walk-answer="stakeholder-2.row-2.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-2" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Relationship to the problem" aria-controls="walk-feedback-stakeholder-2-row-2" disabled><span>AI feedback</span><small>Relationship to the problem</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Impact level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-3-column-2">Impact level: Your answer</label><textarea id="walk-stakeholder-2-row-3-column-2" data-walk-answer="stakeholder-2.row-3.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-3-column-3">Impact level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-3-column-3" data-walk-answer="stakeholder-2.row-3.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-3" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Impact level" aria-controls="walk-feedback-stakeholder-2-row-3" disabled><span>AI feedback</span><small>Impact level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Influence or authority level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-4-column-2">Influence or authority level: Your answer</label><textarea id="walk-stakeholder-2-row-4-column-2" data-walk-answer="stakeholder-2.row-4.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-4-column-3">Influence or authority level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-4-column-3" data-walk-answer="stakeholder-2.row-4.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-4" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Influence or authority level" aria-controls="walk-feedback-stakeholder-2-row-4" disabled><span>AI feedback</span><small>Influence or authority level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Need</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-5-column-2">Need: Your answer</label><textarea id="walk-stakeholder-2-row-5-column-2" data-walk-answer="stakeholder-2.row-5.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-5-column-3">Need: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-5-column-3" data-walk-answer="stakeholder-2.row-5.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-5" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Need" aria-controls="walk-feedback-stakeholder-2-row-5" disabled><span>AI feedback</span><small>Need</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Constraints</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-6-column-2">Constraints: Your answer</label><textarea id="walk-stakeholder-2-row-6-column-2" data-walk-answer="stakeholder-2.row-6.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-6-column-3">Constraints: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-6-column-3" data-walk-answer="stakeholder-2.row-6.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-6" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Constraints" aria-controls="walk-feedback-stakeholder-2-row-6" disabled><span>AI feedback</span><small>Constraints</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Next question to ask</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-7-column-2">Next question to ask: Your answer</label><textarea id="walk-stakeholder-2-row-7-column-2" data-walk-answer="stakeholder-2.row-7.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-2-row-7-column-3">Next question to ask: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-2-row-7-column-3" data-walk-answer="stakeholder-2.row-7.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-2.row-7" data-checkpoint="stakeholder-2" aria-label="Get AI feedback on Next question to ask" aria-controls="walk-feedback-stakeholder-2-row-7" disabled><span>AI feedback</span><small>Next question to ask</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Role</strong><p id="walk-feedback-stakeholder-2-row-1" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Relationship to the problem</strong><p id="walk-feedback-stakeholder-2-row-2" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Impact level</strong><p id="walk-feedback-stakeholder-2-row-3" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Influence or authority level</strong><p id="walk-feedback-stakeholder-2-row-4" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-4" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Need</strong><p id="walk-feedback-stakeholder-2-row-5" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-5" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Constraints</strong><p id="walk-feedback-stakeholder-2-row-6" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-6" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Next question to ask</strong><p id="walk-feedback-stakeholder-2-row-7" class="walk-feedback" data-walk-feedback-result="stakeholder-2.row-7" role="status" aria-live="polite"></p></div></section>
+<button type="button" class="walk-accordion-done" data-walk-done>Done, go to next</button></div></section><section class="walk-step walk-accordion-step" data-walk-step="stakeholder-3" data-walk-repeated-table>
+<h2 class="walk-accordion-heading"><button type="button" class="walk-accordion-toggle" id="walk-toggle-stakeholder-3" aria-expanded="true" aria-controls="walk-panel-stakeholder-3">
+<span class="walk-step-number">Step 4</span><span class="walk-accordion-title">Stakeholder Table 3</span>
+<span class="walk-accordion-status" data-walk-status></span></button></h2>
+<div class="walk-accordion-panel" id="walk-panel-stakeholder-3" role="region" aria-labelledby="walk-toggle-stakeholder-3">
+<div class="walk-teaching">
+<p>If you can, choose someone who is <strong>Responsible for a constraint</strong>: they control a condition any change must work within. This person may also hold other relationships to the problem; name any that apply. A constraint can be a policy or budget, but it can also be a history, a relationship, or a reputation. Mark what you are guessing.</p>
+</div>
+
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Stakeholder Table 3 table" style="--walk-table-min-width:540px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Stakeholder Table 3</caption><colgroup><col style="width:28.5714%"><col style="width:35.7143%"><col style="width:35.7143%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Your answer</th><th scope="col">Confirmed or Inferred, and why</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Role</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-1-column-2">Role: Your answer</label><textarea id="walk-stakeholder-3-row-1-column-2" data-walk-answer="stakeholder-3.row-1.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-1-column-3">Role: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-1-column-3" data-walk-answer="stakeholder-3.row-1.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-1" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Role" aria-controls="walk-feedback-stakeholder-3-row-1" disabled><span>AI feedback</span><small>Role</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Relationship to the problem</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-2-column-2">Relationship to the problem: Your answer</label><textarea id="walk-stakeholder-3-row-2-column-2" data-walk-answer="stakeholder-3.row-2.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-2-column-3">Relationship to the problem: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-2-column-3" data-walk-answer="stakeholder-3.row-2.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-2" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Relationship to the problem" aria-controls="walk-feedback-stakeholder-3-row-2" disabled><span>AI feedback</span><small>Relationship to the problem</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Impact level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-3-column-2">Impact level: Your answer</label><textarea id="walk-stakeholder-3-row-3-column-2" data-walk-answer="stakeholder-3.row-3.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-3-column-3">Impact level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-3-column-3" data-walk-answer="stakeholder-3.row-3.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-3" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Impact level" aria-controls="walk-feedback-stakeholder-3-row-3" disabled><span>AI feedback</span><small>Impact level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Influence or authority level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-4-column-2">Influence or authority level: Your answer</label><textarea id="walk-stakeholder-3-row-4-column-2" data-walk-answer="stakeholder-3.row-4.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-4-column-3">Influence or authority level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-4-column-3" data-walk-answer="stakeholder-3.row-4.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-4" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Influence or authority level" aria-controls="walk-feedback-stakeholder-3-row-4" disabled><span>AI feedback</span><small>Influence or authority level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Need</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-5-column-2">Need: Your answer</label><textarea id="walk-stakeholder-3-row-5-column-2" data-walk-answer="stakeholder-3.row-5.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-5-column-3">Need: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-5-column-3" data-walk-answer="stakeholder-3.row-5.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-5" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Need" aria-controls="walk-feedback-stakeholder-3-row-5" disabled><span>AI feedback</span><small>Need</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Constraints</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-6-column-2">Constraints: Your answer</label><textarea id="walk-stakeholder-3-row-6-column-2" data-walk-answer="stakeholder-3.row-6.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-6-column-3">Constraints: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-6-column-3" data-walk-answer="stakeholder-3.row-6.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-6" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Constraints" aria-controls="walk-feedback-stakeholder-3-row-6" disabled><span>AI feedback</span><small>Constraints</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Next question to ask</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-7-column-2">Next question to ask: Your answer</label><textarea id="walk-stakeholder-3-row-7-column-2" data-walk-answer="stakeholder-3.row-7.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-3-row-7-column-3">Next question to ask: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-3-row-7-column-3" data-walk-answer="stakeholder-3.row-7.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-3.row-7" data-checkpoint="stakeholder-3" aria-label="Get AI feedback on Next question to ask" aria-controls="walk-feedback-stakeholder-3-row-7" disabled><span>AI feedback</span><small>Next question to ask</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Role</strong><p id="walk-feedback-stakeholder-3-row-1" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Relationship to the problem</strong><p id="walk-feedback-stakeholder-3-row-2" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Impact level</strong><p id="walk-feedback-stakeholder-3-row-3" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Influence or authority level</strong><p id="walk-feedback-stakeholder-3-row-4" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-4" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Need</strong><p id="walk-feedback-stakeholder-3-row-5" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-5" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Constraints</strong><p id="walk-feedback-stakeholder-3-row-6" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-6" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Next question to ask</strong><p id="walk-feedback-stakeholder-3-row-7" class="walk-feedback" data-walk-feedback-result="stakeholder-3.row-7" role="status" aria-live="polite"></p></div></section>
+<button type="button" class="walk-accordion-done" data-walk-done>Done, go to next</button></div></section><section class="walk-step walk-accordion-step" data-walk-step="stakeholder-4" data-walk-repeated-table>
+<h2 class="walk-accordion-heading"><button type="button" class="walk-accordion-toggle" id="walk-toggle-stakeholder-4" aria-expanded="true" aria-controls="walk-panel-stakeholder-4">
+<span class="walk-step-number">Step 5</span><span class="walk-accordion-title">Stakeholder Table 4</span>
+<span class="walk-accordion-status" data-walk-status></span></button></h2>
+<div class="walk-accordion-panel" id="walk-panel-stakeholder-4" role="region" aria-labelledby="walk-toggle-stakeholder-4">
+<div class="walk-teaching">
+<p>If you can, choose someone who is <strong>Positioned to challenge your frame</strong>. This person may also hold other relationships to the problem; name any that apply. This one is the hardest to find and the most valuable. They are the person most likely to tell you that you are solving the wrong problem, which is much cheaper to hear now than after you have built something.</p>
+</div>
+
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Stakeholder Table 4 table" style="--walk-table-min-width:540px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Stakeholder Table 4</caption><colgroup><col style="width:28.5714%"><col style="width:35.7143%"><col style="width:35.7143%"></colgroup><thead><tr><th scope="col">Field</th><th scope="col">Your answer</th><th scope="col">Confirmed or Inferred, and why</th></tr></thead><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Role</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-1-column-2">Role: Your answer</label><textarea id="walk-stakeholder-4-row-1-column-2" data-walk-answer="stakeholder-4.row-1.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-1-column-3">Role: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-1-column-3" data-walk-answer="stakeholder-4.row-1.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-1" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Role" aria-controls="walk-feedback-stakeholder-4-row-1" disabled><span>AI feedback</span><small>Role</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Relationship to the problem</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-2-column-2">Relationship to the problem: Your answer</label><textarea id="walk-stakeholder-4-row-2-column-2" data-walk-answer="stakeholder-4.row-2.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-2-column-3">Relationship to the problem: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-2-column-3" data-walk-answer="stakeholder-4.row-2.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-2" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Relationship to the problem" aria-controls="walk-feedback-stakeholder-4-row-2" disabled><span>AI feedback</span><small>Relationship to the problem</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Impact level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-3-column-2">Impact level: Your answer</label><textarea id="walk-stakeholder-4-row-3-column-2" data-walk-answer="stakeholder-4.row-3.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-3-column-3">Impact level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-3-column-3" data-walk-answer="stakeholder-4.row-3.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-3" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Impact level" aria-controls="walk-feedback-stakeholder-4-row-3" disabled><span>AI feedback</span><small>Impact level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Influence or authority level</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-4-column-2">Influence or authority level: Your answer</label><textarea id="walk-stakeholder-4-row-4-column-2" data-walk-answer="stakeholder-4.row-4.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-4-column-3">Influence or authority level: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-4-column-3" data-walk-answer="stakeholder-4.row-4.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-4" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Influence or authority level" aria-controls="walk-feedback-stakeholder-4-row-4" disabled><span>AI feedback</span><small>Influence or authority level</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Need</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-5-column-2">Need: Your answer</label><textarea id="walk-stakeholder-4-row-5-column-2" data-walk-answer="stakeholder-4.row-5.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-5-column-3">Need: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-5-column-3" data-walk-answer="stakeholder-4.row-5.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-5" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Need" aria-controls="walk-feedback-stakeholder-4-row-5" disabled><span>AI feedback</span><small>Need</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Constraints</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-6-column-2">Constraints: Your answer</label><textarea id="walk-stakeholder-4-row-6-column-2" data-walk-answer="stakeholder-4.row-6.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-6-column-3">Constraints: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-6-column-3" data-walk-answer="stakeholder-4.row-6.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-6" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Constraints" aria-controls="walk-feedback-stakeholder-4-row-6" disabled><span>AI feedback</span><small>Constraints</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text"><strong>Next question to ask</strong></div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-7-column-2">Next question to ask: Your answer</label><textarea id="walk-stakeholder-4-row-7-column-2" data-walk-answer="stakeholder-4.row-7.column-2" maxlength="16000" rows="2"></textarea></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-stakeholder-4-row-7-column-3">Next question to ask: Confirmed or Inferred, and why</label><textarea id="walk-stakeholder-4-row-7-column-3" data-walk-answer="stakeholder-4.row-7.column-3" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="stakeholder-4.row-7" data-checkpoint="stakeholder-4" aria-label="Get AI feedback on Next question to ask" aria-controls="walk-feedback-stakeholder-4-row-7" disabled><span>AI feedback</span><small>Next question to ask</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Role</strong><p id="walk-feedback-stakeholder-4-row-1" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Relationship to the problem</strong><p id="walk-feedback-stakeholder-4-row-2" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Impact level</strong><p id="walk-feedback-stakeholder-4-row-3" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Influence or authority level</strong><p id="walk-feedback-stakeholder-4-row-4" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-4" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Need</strong><p id="walk-feedback-stakeholder-4-row-5" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-5" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Constraints</strong><p id="walk-feedback-stakeholder-4-row-6" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-6" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Next question to ask</strong><p id="walk-feedback-stakeholder-4-row-7" class="walk-feedback" data-walk-feedback-result="stakeholder-4.row-7" role="status" aria-live="polite"></p></div></section>
+<button type="button" class="walk-accordion-done" data-walk-done>Done, go to next</button></div></section><details class="walk-check walk-shared-check" open><summary>What to check in your work</summary><p>These checks apply to every stakeholder table.</p><ul><li>Describe the person in relation to your real problem. Name every relationship that applies.</li><li>Write one to three sentences per field. Mark each field Confirmed or Inferred and explain why.</li><li>Distinguish impact from authority. State a need in the stakeholder’s terms and ask a question that could surprise you.</li></ul></details><section class="walk-step" data-walk-step="assumption-1">
+<p class="walk-step-number">Step 6</p><h2>Assumption 1</h2>
+<div class="walk-teaching">
+<h3 id="what-you-are-guessing-and-what-would-tell-you">What you are guessing, and what would tell you</h3>
+<p>Now step back. Start with <strong>Your assumptions</strong> (Part 6) in your Problem Frame: the rows you rated high risk in Sprint 2 are your first candidates. Then look at what you marked <strong>Inferred</strong> on this map. Inferred works like unverified in your Problem Frame: something you believe but have not checked yet. Some of those guesses barely matter. A few of them hold your whole frame up and are high-stakes.</p>
+<p><strong>What “high-stakes” means.</strong> An assumption is high-stakes if being wrong about it would change what you do next. Not a small correction, but a real change: a different problem, different people affected, or a different picture of what a fixed problem would look like.</p>
+<p>In Sprint 2 you also weighed how likely each answer was. Here the question is only what a different answer would change, because you are about to find out.</p>
+<p>Here is the test. Imagine the stakeholder tells you the opposite of what you assumed. Would that change your next move? If yes, it is high-stakes. If you would carry on the same way either way, it is not.</p>
+<p>This is about the assumption, not the person. A guess about someone with no authority at all can still be the highest-stakes thing in your map.</p>
+<h3 id="writing-questions-that-test-rather-than-confirm">Writing questions that test rather than confirm</h3>
+<p>A validation question should be open enough that a stakeholder could tell you something you haven&rsquo;t thought of. Some examples of weak versus strong:</p>
+<ul>
+<li><strong>Weak:</strong> “Do you agree that X is the main problem?” This invites a yes or no, and it leads people toward answering that X is the problem.</li>
+<li><strong>Strong:</strong> “Walk me through the last time X happened. What did you actually do?” This asks for a specific, real account, which is much harder to fake or soften.</li>
+<li><strong>Weak:</strong> “Would a solution like Y help you?” This pitches your idea and asks for approval.</li>
+<li><strong>Strong:</strong> “What would need to be true for this to actually get easier for you?” This leaves room for the stakeholder to name something you hadn&rsquo;t considered.</li>
+</ul>
+<p>Good validation questions ask about specific experiences, past behavior, or concrete tradeoffs, rather than opinions about your idea.</p>
+<p><strong>Quick self-check.</strong> Does your question ask about a specific experience, a past behavior, or a concrete tradeoff? If it asks for an opinion about your idea instead, rewrite it.</p>
+<h3 id="write-two-or-three-assumption-blocks">Write two or three assumption blocks</h3>
+<p>Pick the two or three high-stakes assumptions that would change what you do next, and write a block for each. Four lines, in this order.</p>
+<p>This is the walk you did in Sprint 2, on new material: the questions behind an assumption and what a different answer would change. What is new is that you will ask the question of a real person.</p>
+<blockquote>
+<p><strong>Illustrative example from the handover problem</strong></p>
+<p><strong>Assumption:</strong> Nobody has tried to fix the handover problem before.</p>
+<p><strong>Why it matters:</strong> If someone tried and it died, the real problem is whatever killed the fix, and that changes my Problem Frame.</p>
+<p><strong>Question to ask:</strong> “When an account changed hands badly in the past, what happened next?”</p>
+<p><strong>What a different answer changes:</strong> If she names a failed attempt, my next conversation is with whoever ran it, not with the four managers.</p>
+</blockquote>
+<p>The last line is also your test for whether an assumption belongs on this list at all. If you cannot say what a different answer would change, it probably isn&rsquo;t high-stakes.</p>
+<p>Write your own four lines below.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>If this assumption turned out wrong, your next step would change.</li><li>Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.</li><li>“What a different answer changes” names a specific change to your frame or your plan.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Assumption 1 table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Assumption 1</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Assumption<br>The thing you are guessing.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-1-row-1-column-2">Assumption: Your answer</label><textarea id="walk-assumption-1-row-1-column-2" data-walk-answer="assumption-1.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-1.row-1" data-checkpoint="assumption-1" aria-label="Get AI feedback on Assumption" aria-controls="walk-feedback-assumption-1-row-1" disabled><span>AI feedback</span><small>Assumption</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Why it matters<br>What it holds up in your frame.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-1-row-2-column-2">Why it matters: Your answer</label><textarea id="walk-assumption-1-row-2-column-2" data-walk-answer="assumption-1.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-1.row-2" data-checkpoint="assumption-1" aria-label="Get AI feedback on Why it matters" aria-controls="walk-feedback-assumption-1-row-2" disabled><span>AI feedback</span><small>Why it matters</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question to ask<br>The question that would settle it.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-1-row-3-column-2">Question to ask: Your answer</label><textarea id="walk-assumption-1-row-3-column-2" data-walk-answer="assumption-1.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-1.row-3" data-checkpoint="assumption-1" aria-label="Get AI feedback on Question to ask" aria-controls="walk-feedback-assumption-1-row-3" disabled><span>AI feedback</span><small>Question to ask</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What a different answer changes<br>If you cannot answer this, it is probably not high stakes.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-1-row-4-column-2">What a different answer changes: Your answer</label><textarea id="walk-assumption-1-row-4-column-2" data-walk-answer="assumption-1.row-4.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-1.row-4" data-checkpoint="assumption-1" aria-label="Get AI feedback on What a different answer changes" aria-controls="walk-feedback-assumption-1-row-4" disabled><span>AI feedback</span><small>What a different answer changes</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Assumption</strong><p id="walk-feedback-assumption-1-row-1" class="walk-feedback" data-walk-feedback-result="assumption-1.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Why it matters</strong><p id="walk-feedback-assumption-1-row-2" class="walk-feedback" data-walk-feedback-result="assumption-1.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question to ask</strong><p id="walk-feedback-assumption-1-row-3" class="walk-feedback" data-walk-feedback-result="assumption-1.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What a different answer changes</strong><p id="walk-feedback-assumption-1-row-4" class="walk-feedback" data-walk-feedback-result="assumption-1.row-4" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="assumption-2">
+<p class="walk-step-number">Step 7</p><h2>Assumption 2</h2>
+<div class="walk-teaching">
+<p>Choose a second assumption and complete all four lines. Ask about a specific experience, past behavior, or concrete tradeoff. If your question asks the stakeholder to approve your solution, rewrite it.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>If this assumption turned out wrong, your next step would change.</li><li>Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.</li><li>“What a different answer changes” names a specific change to your frame or your plan.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Assumption 2 table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Assumption 2</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Assumption<br>The thing you are guessing.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-2-row-1-column-2">Assumption: Your answer</label><textarea id="walk-assumption-2-row-1-column-2" data-walk-answer="assumption-2.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-2.row-1" data-checkpoint="assumption-2" aria-label="Get AI feedback on Assumption" aria-controls="walk-feedback-assumption-2-row-1" disabled><span>AI feedback</span><small>Assumption</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Why it matters<br>What it holds up in your frame.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-2-row-2-column-2">Why it matters: Your answer</label><textarea id="walk-assumption-2-row-2-column-2" data-walk-answer="assumption-2.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-2.row-2" data-checkpoint="assumption-2" aria-label="Get AI feedback on Why it matters" aria-controls="walk-feedback-assumption-2-row-2" disabled><span>AI feedback</span><small>Why it matters</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question to ask<br>The question that would settle it.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-2-row-3-column-2">Question to ask: Your answer</label><textarea id="walk-assumption-2-row-3-column-2" data-walk-answer="assumption-2.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-2.row-3" data-checkpoint="assumption-2" aria-label="Get AI feedback on Question to ask" aria-controls="walk-feedback-assumption-2-row-3" disabled><span>AI feedback</span><small>Question to ask</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What a different answer changes<br>If you cannot answer this, it is probably not high stakes.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-2-row-4-column-2">What a different answer changes: Your answer</label><textarea id="walk-assumption-2-row-4-column-2" data-walk-answer="assumption-2.row-4.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-2.row-4" data-checkpoint="assumption-2" aria-label="Get AI feedback on What a different answer changes" aria-controls="walk-feedback-assumption-2-row-4" disabled><span>AI feedback</span><small>What a different answer changes</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Assumption</strong><p id="walk-feedback-assumption-2-row-1" class="walk-feedback" data-walk-feedback-result="assumption-2.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Why it matters</strong><p id="walk-feedback-assumption-2-row-2" class="walk-feedback" data-walk-feedback-result="assumption-2.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question to ask</strong><p id="walk-feedback-assumption-2-row-3" class="walk-feedback" data-walk-feedback-result="assumption-2.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What a different answer changes</strong><p id="walk-feedback-assumption-2-row-4" class="walk-feedback" data-walk-feedback-result="assumption-2.row-4" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="assumption-3">
+<p class="walk-step-number">Step 8</p><h2>Assumption 3 (only if you have a third)</h2>
+<div class="walk-teaching">
+<p>Add a third block if another assumption would change your next move. Otherwise, leave this table blank. If you cannot say what a different answer would change, the assumption probably does not belong on this list.</p>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>If this assumption turned out wrong, your next step would change.</li><li>Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.</li><li>“What a different answer changes” names a specific change to your frame or your plan.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Assumption 3 (only if you have a third) table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Assumption 3 (only if you have a third)</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Assumption<br>The thing you are guessing.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-3-row-1-column-2">Assumption: Your answer</label><textarea id="walk-assumption-3-row-1-column-2" data-walk-answer="assumption-3.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-3.row-1" data-checkpoint="assumption-3" aria-label="Get AI feedback on Assumption" aria-controls="walk-feedback-assumption-3-row-1" disabled><span>AI feedback</span><small>Assumption</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Why it matters<br>What it holds up in your frame.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-3-row-2-column-2">Why it matters: Your answer</label><textarea id="walk-assumption-3-row-2-column-2" data-walk-answer="assumption-3.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-3.row-2" data-checkpoint="assumption-3" aria-label="Get AI feedback on Why it matters" aria-controls="walk-feedback-assumption-3-row-2" disabled><span>AI feedback</span><small>Why it matters</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Question to ask<br>The question that would settle it.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-3-row-3-column-2">Question to ask: Your answer</label><textarea id="walk-assumption-3-row-3-column-2" data-walk-answer="assumption-3.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-3.row-3" data-checkpoint="assumption-3" aria-label="Get AI feedback on Question to ask" aria-controls="walk-feedback-assumption-3-row-3" disabled><span>AI feedback</span><small>Question to ask</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">What a different answer changes<br>If you cannot answer this, it is probably not high stakes.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-assumption-3-row-4-column-2">What a different answer changes: Your answer</label><textarea id="walk-assumption-3-row-4-column-2" data-walk-answer="assumption-3.row-4.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="assumption-3.row-4" data-checkpoint="assumption-3" aria-label="Get AI feedback on What a different answer changes" aria-controls="walk-feedback-assumption-3-row-4" disabled><span>AI feedback</span><small>What a different answer changes</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>Assumption</strong><p id="walk-feedback-assumption-3-row-1" class="walk-feedback" data-walk-feedback-result="assumption-3.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Why it matters</strong><p id="walk-feedback-assumption-3-row-2" class="walk-feedback" data-walk-feedback-result="assumption-3.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Question to ask</strong><p id="walk-feedback-assumption-3-row-3" class="walk-feedback" data-walk-feedback-result="assumption-3.row-3" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>What a different answer changes</strong><p id="walk-feedback-assumption-3-row-4" class="walk-feedback" data-walk-feedback-result="assumption-3.row-4" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="first-contact">
+<p class="walk-step-number">Step 9</p><h2>Who you will talk to first</h2>
+<div class="walk-teaching">
+<p>Choose the one person you will reach out to first for your real validation conversation, and name a backup in case your first choice does not respond. Then explain your reasoning in two or three sentences: why this person, before anyone else?</p>
+<p>Start with what you already have: the <strong>Who could tell me</strong> column in <strong>Your assumptions</strong> (Part 6), and whoever your Sprint 2 verdict said could settle what is still uncertain.</p>
+<p>Some strong reasons to contact someone first:</p>
+<ul>
+<li>They can confirm or break your high-stakes assumption: talking to them first tells you fastest whether your frame is pointed in the right direction.</li>
+<li>They&rsquo;re the most affected, and you know the least about them: your evidence is thin exactly where the stakes are high.</li>
+<li>They sit at a point of disagreement: if your map shows two people who seem to see the problem differently, talking to one of them first can clarify that tension early.</li>
+<li>They represent the largest group, not just one person: if a stakeholder role stands in for many people, they can tell you something that generalizes further.</li>
+</ul>
+</div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Your first choice can test your highest-stakes assumption, or knows the part of your map where your evidence is thinnest.</li><li>Your backup is someone you can actually reach.</li><li>Your reason explains why this person comes before anyone else, not just why they’re relevant.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Use the AI feedback control beside a row after you write in it.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll walk-table-with-feedback" role="region" aria-label="Who you will talk to first table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Who you will talk to first</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">First choice<br>Name and role.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-contact-row-1-column-2">First choice: Your answer</label><textarea id="walk-first-contact-row-1-column-2" data-walk-answer="first-contact.row-1.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-contact.row-1" data-checkpoint="first-contact" aria-label="Get AI feedback on First choice" aria-controls="walk-feedback-first-contact-row-1" disabled><span>AI feedback</span><small>First choice</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Backup<br>In case your first choice does not respond.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-contact-row-2-column-2">Backup: Your answer</label><textarea id="walk-first-contact-row-2-column-2" data-walk-answer="first-contact.row-2.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-contact.row-2" data-checkpoint="first-contact" aria-label="Get AI feedback on Backup" aria-controls="walk-feedback-first-contact-row-2" disabled><span>AI feedback</span><small>Backup</small></button></div></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Why this person, before anyone else?<br>Two or three sentences.</div></td><td class="walk-source-input-cell walk-feedback-anchor"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-first-contact-row-3-column-2">Why this person, before anyone else?: Your answer</label><textarea id="walk-first-contact-row-3-column-2" data-walk-answer="first-contact.row-3.column-2" maxlength="16000" rows="2"></textarea><div class="walk-row-feedback-control"><button type="button" data-walk-feedback="first-contact.row-3" data-checkpoint="first-contact" aria-label="Get AI feedback on Why this person, before anyone else?" aria-controls="walk-feedback-first-contact-row-3" disabled><span>AI feedback</span><small>Why this person, before anyone else?</small></button></div></td></tr></tbody></table></div><section class="walk-row-feedback-results" aria-label="AI feedback results"><div class="walk-row-feedback-result"><strong>First choice</strong><p id="walk-feedback-first-contact-row-1" class="walk-feedback" data-walk-feedback-result="first-contact.row-1" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Backup</strong><p id="walk-feedback-first-contact-row-2" class="walk-feedback" data-walk-feedback-result="first-contact.row-2" role="status" aria-live="polite"></p></div><div class="walk-row-feedback-result"><strong>Why this person, before anyone else?</strong><p id="walk-feedback-first-contact-row-3" class="walk-feedback" data-walk-feedback-result="first-contact.row-3" role="status" aria-live="polite"></p></div></section></section><section class="walk-step" data-walk-step="outreach-log">
+<p class="walk-step-number">Step 10</p><h2>Outreach log</h2>
+<div class="walk-teaching">
+<p>Plan your outreach to your first choice. This is optional, but strongly encouraged. Setting your dates now makes it much easier to follow through, and to switch to your backup on time if you need to. In the Stakeholder Conversation, you will look back at whether you kept to them.</p></div>
+<details class="walk-check"><summary>What to check in your work</summary><ul><li>Optional: your dates follow the 3-day follow-up and day-5 switch.</li></ul></details>
+<p class="walk-table-help">Write in the open cells. Each row grows as you type.</p><p class="walk-table-scroll-hint">Scroll sideways to see all columns.</p><div class="walk-table-scroll" role="region" aria-label="Outreach log table" style="--walk-table-min-width:360px" tabindex="0"><table class="walk-source-table"><caption class="walk-sr-only">Outreach log</caption><colgroup><col style="width:50.0000%"><col style="width:50.0000%"></colgroup><tbody><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Date I will send the ask</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-outreach-log-row-1-column-2">Date I will send the ask: Your answer</label><textarea id="walk-outreach-log-row-1-column-2" data-walk-answer="outreach-log.row-1.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Date I will follow up (if no reply after 3 days)</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-outreach-log-row-2-column-2">Date I will follow up (if no reply after 3 days): Your answer</label><textarea id="walk-outreach-log-row-2-column-2" data-walk-answer="outreach-log.row-2.column-2" maxlength="16000" rows="2"></textarea></td></tr><tr class="walk-source-response-row"><td><div class="walk-source-cell-text">Date I will switch to my backup (if no reply by day 5)</div></td><td class="walk-source-input-cell"><div class="walk-source-cell-text">  </div><label class="walk-sr-only" for="walk-outreach-log-row-3-column-2">Date I will switch to my backup (if no reply by day 5): Your answer</label><textarea id="walk-outreach-log-row-3-column-2" data-walk-answer="outreach-log.row-3.column-2" maxlength="16000" rows="2"></textarea></td></tr></tbody></table></div></section><details class="walk-check walk-shared-check" open><summary>What to check in your work</summary><ul><li>Four stakeholders, each defined by their relationship to your problem.</li><li>All seven fields are complete for every stakeholder, and each one is marked Confirmed or Inferred with a specific reason.</li><li>Your fields show real thinking.</li><li>Two or three complete assumption blocks, each with all four lines.</li><li>A first choice, a backup and your reasoning, submitted as one Word document.</li></ul></details>
+<section class="walk-finish"><h2>Submit your work in Canvas</h2><p>Select Download as Word document below. In Canvas, select Start Assignment, attach the Word document and any other files named in the instructions above, then select Submit Assignment. Saving or downloading here does not submit your work.</p>
+<button type="button" id="walk-download">Download as Word document</button>
+<p id="walk-copy-status" role="status" aria-live="polite"></p>
+<details class="walk-plain-output" hidden><summary>Plain text backup</summary><label for="walk-output">Your assembled responses as text</label><textarea id="walk-output" readonly rows="12"></textarea></details><div id="walk-rich-output" class="walk-rich-output" hidden tabindex="0" aria-label="Tables and responses for manual copying"></div>
+<button type="button" id="walk-clear">Clear this browser draft</button><div id="walk-clear-confirm" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="walk-clear-yes">Clear draft</button><button type="button" id="walk-clear-no">Keep draft</button></div>
+</section><script type="application/json" id="guided-config">{"artifactId": "course1-stakeholder-map-canvas-walkthrough", "title": "Stakeholder Map Canvas Walkthrough", "version": "1.1", "tasks": [{"id": "map-context", "kind": "table", "prompt": "Set up your map", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Your name"}, {"text": "  ", "response": true}], "label": "Your name"}, {"id": "row-2", "cells": [{"text": "Your problem, from The problem (Part 2) of your Problem Frame as you left it in Sprint 2"}, {"text": "  ", "response": true}], "label": "Your problem, from The problem (Part 2) of your Problem Frame as you left it in Sprint 2"}], "header_rows": 0, "criteria": ["Bring the Problem Frame you are already working on."], "instruction_section": "Set up your map", "feedback_enabled": false, "feedback_omission_reason": "Setup records your identity and existing frame; feedback belongs with the stakeholder judgments below."}, {"id": "stakeholder-1", "kind": "table", "prompt": "Stakeholder Table 1", "bold_field_names": true, "label_field_questions": true, "columns": [{"id": "column-1", "label": "Field", "width": 4}, {"id": "column-2", "label": "Your answer", "width": 5}, {"id": "column-3", "label": "Confirmed or Inferred, and why", "width": 5}], "rows": [{"id": "row-1", "cells": [{"text": "Role\nWho is this person in relation to my problem?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Role", "guidance": {"example": "Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. Confirmed. I have watched her make the assignment twice.", "avoid": "A job title with no relationship attached. \"Account lead\" is a title. \"The only person who sees every handover\" is a relationship."}}, {"id": "row-2", "cells": [{"text": "Relationship to the problem\nWhich of the four applies? Does more than one?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Relationship to the problem", "guidance": {"example": "Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.", "avoid": "Picking one label because there is one row. Name every relationship that applies."}}, {"id": "row-3", "cells": [{"text": "Impact level\nHow directly and strongly does the problem affect this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Impact level", "guidance": {"example": "Low. She assigns the account and moves on. She does not carry a client relationship through the gap. Inferred. I have not asked whether the fallout reaches her.", "avoid": "Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it."}}, {"id": "row-4", "cells": [{"text": "Influence or authority level\nHow much say does this person have over any solution?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Influence or authority level", "guidance": {"example": "High. Nothing about how handovers get announced changes without her. Confirmed. She set the current practice.", "avoid": "Writing \"high\" with nothing attached. High over what, specifically?"}}, {"id": "row-5", "cells": [{"text": "Need\nWhat does this person need from a solution, in their terms?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Need", "guidance": {"example": "To not add another step to a process she already considers finished. Inferred. This is my read of her, not something she has said.", "avoid": "Writing a solution in the stakeholder's voice. \"She needs a shared tracker\" is your idea. \"She needs to not add a step\" is her interest."}}, {"id": "row-6", "cells": [{"text": "Constraints\nWhat constraint or risk might this person see that I have not?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Constraints", "guidance": {"example": "She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. Inferred. Nobody I asked remembers, which is not the same as nobody having tried.", "avoid": "Listing only budget and policy. A constraint can be a history, a relationship, or a reputation."}}, {"id": "row-7", "cells": [{"text": "Next question to ask\nWhat would I still need to find out from this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Next question to ask", "guidance": {"example": "\"When an account changed hands badly in the past, what happened next?\"", "avoid": "A question you already know the answer to."}}], "criteria": ["Describe the person in relation to your real problem. Name every relationship that applies.", "Write one to three sentences per field. Mark each field Confirmed or Inferred and explain why.", "Distinguish impact from authority. State a need in the stakeholder’s terms and ask a question that could surprise you."], "instruction_section": "Stakeholder Table 1"}, {"id": "stakeholder-2", "kind": "table", "prompt": "Stakeholder Table 2", "bold_field_names": true, "label_field_questions": true, "columns": [{"id": "column-1", "label": "Field", "width": 4}, {"id": "column-2", "label": "Your answer", "width": 5}, {"id": "column-3", "label": "Confirmed or Inferred, and why", "width": 5}], "rows": [{"id": "row-1", "cells": [{"text": "Role\nWho is this person in relation to my problem?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Role", "guidance": {"example": "Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. Confirmed. I have watched her make the assignment twice.", "avoid": "A job title with no relationship attached. \"Account lead\" is a title. \"The only person who sees every handover\" is a relationship."}}, {"id": "row-2", "cells": [{"text": "Relationship to the problem\nWhich of the four applies? Does more than one?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Relationship to the problem", "guidance": {"example": "Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.", "avoid": "Picking one label because there is one row. Name every relationship that applies."}}, {"id": "row-3", "cells": [{"text": "Impact level\nHow directly and strongly does the problem affect this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Impact level", "guidance": {"example": "Low. She assigns the account and moves on. She does not carry a client relationship through the gap. Inferred. I have not asked whether the fallout reaches her.", "avoid": "Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it."}}, {"id": "row-4", "cells": [{"text": "Influence or authority level\nHow much say does this person have over any solution?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Influence or authority level", "guidance": {"example": "High. Nothing about how handovers get announced changes without her. Confirmed. She set the current practice.", "avoid": "Writing \"high\" with nothing attached. High over what, specifically?"}}, {"id": "row-5", "cells": [{"text": "Need\nWhat does this person need from a solution, in their terms?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Need", "guidance": {"example": "To not add another step to a process she already considers finished. Inferred. This is my read of her, not something she has said.", "avoid": "Writing a solution in the stakeholder's voice. \"She needs a shared tracker\" is your idea. \"She needs to not add a step\" is her interest."}}, {"id": "row-6", "cells": [{"text": "Constraints\nWhat constraint or risk might this person see that I have not?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Constraints", "guidance": {"example": "She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. Inferred. Nobody I asked remembers, which is not the same as nobody having tried.", "avoid": "Listing only budget and policy. A constraint can be a history, a relationship, or a reputation."}}, {"id": "row-7", "cells": [{"text": "Next question to ask\nWhat would I still need to find out from this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Next question to ask", "guidance": {"example": "\"When an account changed hands badly in the past, what happened next?\"", "avoid": "A question you already know the answer to."}}], "criteria": ["Describe the person in relation to your real problem. Name every relationship that applies.", "Write one to three sentences per field. Mark each field Confirmed or Inferred and explain why.", "Distinguish impact from authority. State a need in the stakeholder’s terms and ask a question that could surprise you."], "instruction_section": "Stakeholder Table 2"}, {"id": "stakeholder-3", "kind": "table", "prompt": "Stakeholder Table 3", "bold_field_names": true, "label_field_questions": true, "columns": [{"id": "column-1", "label": "Field", "width": 4}, {"id": "column-2", "label": "Your answer", "width": 5}, {"id": "column-3", "label": "Confirmed or Inferred, and why", "width": 5}], "rows": [{"id": "row-1", "cells": [{"text": "Role\nWho is this person in relation to my problem?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Role", "guidance": {"example": "Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. Confirmed. I have watched her make the assignment twice.", "avoid": "A job title with no relationship attached. \"Account lead\" is a title. \"The only person who sees every handover\" is a relationship."}}, {"id": "row-2", "cells": [{"text": "Relationship to the problem\nWhich of the four applies? Does more than one?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Relationship to the problem", "guidance": {"example": "Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.", "avoid": "Picking one label because there is one row. Name every relationship that applies."}}, {"id": "row-3", "cells": [{"text": "Impact level\nHow directly and strongly does the problem affect this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Impact level", "guidance": {"example": "Low. She assigns the account and moves on. She does not carry a client relationship through the gap. Inferred. I have not asked whether the fallout reaches her.", "avoid": "Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it."}}, {"id": "row-4", "cells": [{"text": "Influence or authority level\nHow much say does this person have over any solution?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Influence or authority level", "guidance": {"example": "High. Nothing about how handovers get announced changes without her. Confirmed. She set the current practice.", "avoid": "Writing \"high\" with nothing attached. High over what, specifically?"}}, {"id": "row-5", "cells": [{"text": "Need\nWhat does this person need from a solution, in their terms?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Need", "guidance": {"example": "To not add another step to a process she already considers finished. Inferred. This is my read of her, not something she has said.", "avoid": "Writing a solution in the stakeholder's voice. \"She needs a shared tracker\" is your idea. \"She needs to not add a step\" is her interest."}}, {"id": "row-6", "cells": [{"text": "Constraints\nWhat constraint or risk might this person see that I have not?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Constraints", "guidance": {"example": "She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. Inferred. Nobody I asked remembers, which is not the same as nobody having tried.", "avoid": "Listing only budget and policy. A constraint can be a history, a relationship, or a reputation."}}, {"id": "row-7", "cells": [{"text": "Next question to ask\nWhat would I still need to find out from this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Next question to ask", "guidance": {"example": "\"When an account changed hands badly in the past, what happened next?\"", "avoid": "A question you already know the answer to."}}], "criteria": ["Describe the person in relation to your real problem. Name every relationship that applies.", "Write one to three sentences per field. Mark each field Confirmed or Inferred and explain why.", "Distinguish impact from authority. State a need in the stakeholder’s terms and ask a question that could surprise you."], "instruction_section": "Stakeholder Table 3"}, {"id": "stakeholder-4", "kind": "table", "prompt": "Stakeholder Table 4", "bold_field_names": true, "label_field_questions": true, "columns": [{"id": "column-1", "label": "Field", "width": 4}, {"id": "column-2", "label": "Your answer", "width": 5}, {"id": "column-3", "label": "Confirmed or Inferred, and why", "width": 5}], "rows": [{"id": "row-1", "cells": [{"text": "Role\nWho is this person in relation to my problem?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Role", "guidance": {"example": "Dana, the account lead. She assigns accounts when they change hands and is the only person who sees every handover. Confirmed. I have watched her make the assignment twice.", "avoid": "A job title with no relationship attached. \"Account lead\" is a title. \"The only person who sees every handover\" is a relationship."}}, {"id": "row-2", "cells": [{"text": "Relationship to the problem\nWhich of the four applies? Does more than one?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Relationship to the problem", "guidance": {"example": "Responsible for a constraint, and positioned to challenge my frame. She controls how handovers get announced, and she has been here longest, so she may know this was tried before. Constraint: Confirmed. She sets the practice. Challenge: Inferred. I am guessing at her history.", "avoid": "Picking one label because there is one row. Name every relationship that applies."}}, {"id": "row-3", "cells": [{"text": "Impact level\nHow directly and strongly does the problem affect this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Impact level", "guidance": {"example": "Low. She assigns the account and moves on. She does not carry a client relationship through the gap. Inferred. I have not asked whether the fallout reaches her.", "avoid": "Merging impact with authority. They are separate fields because they are separate facts: the person who feels the problem most is often the one least able to change it."}}, {"id": "row-4", "cells": [{"text": "Influence or authority level\nHow much say does this person have over any solution?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Influence or authority level", "guidance": {"example": "High. Nothing about how handovers get announced changes without her. Confirmed. She set the current practice.", "avoid": "Writing \"high\" with nothing attached. High over what, specifically?"}}, {"id": "row-5", "cells": [{"text": "Need\nWhat does this person need from a solution, in their terms?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Need", "guidance": {"example": "To not add another step to a process she already considers finished. Inferred. This is my read of her, not something she has said.", "avoid": "Writing a solution in the stakeholder's voice. \"She needs a shared tracker\" is your idea. \"She needs to not add a step\" is her interest."}}, {"id": "row-6", "cells": [{"text": "Constraints\nWhat constraint or risk might this person see that I have not?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Constraints", "guidance": {"example": "She may have tried a fix before and watched it die, which would mean my real problem is whatever killed it. Inferred. Nobody I asked remembers, which is not the same as nobody having tried.", "avoid": "Listing only budget and policy. A constraint can be a history, a relationship, or a reputation."}}, {"id": "row-7", "cells": [{"text": "Next question to ask\nWhat would I still need to find out from this person?"}, {"text": "  ", "response": true}, {"text": "  ", "response": true}], "label": "Next question to ask", "guidance": {"example": "\"When an account changed hands badly in the past, what happened next?\"", "avoid": "A question you already know the answer to."}}], "criteria": ["Describe the person in relation to your real problem. Name every relationship that applies.", "Write one to three sentences per field. Mark each field Confirmed or Inferred and explain why.", "Distinguish impact from authority. State a need in the stakeholder’s terms and ask a question that could surprise you."], "instruction_section": "Stakeholder Table 4"}, {"id": "assumption-1", "kind": "table", "prompt": "Assumption 1", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Assumption\nThe thing you are guessing."}, {"text": "  ", "response": true}], "label": "Assumption"}, {"id": "row-2", "cells": [{"text": "Why it matters\nWhat it holds up in your frame."}, {"text": "  ", "response": true}], "label": "Why it matters"}, {"id": "row-3", "cells": [{"text": "Question to ask\nThe question that would settle it."}, {"text": "  ", "response": true}], "label": "Question to ask"}, {"id": "row-4", "cells": [{"text": "What a different answer changes\nIf you cannot answer this, it is probably not high stakes."}, {"text": "  ", "response": true}], "label": "What a different answer changes"}], "header_rows": 0, "criteria": ["If this assumption turned out wrong, your next step would change.", "Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.", "“What a different answer changes” names a specific change to your frame or your plan."], "instruction_section": "Assumption 1"}, {"id": "assumption-2", "kind": "table", "prompt": "Assumption 2", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Assumption\nThe thing you are guessing."}, {"text": "  ", "response": true}], "label": "Assumption"}, {"id": "row-2", "cells": [{"text": "Why it matters\nWhat it holds up in your frame."}, {"text": "  ", "response": true}], "label": "Why it matters"}, {"id": "row-3", "cells": [{"text": "Question to ask\nThe question that would settle it."}, {"text": "  ", "response": true}], "label": "Question to ask"}, {"id": "row-4", "cells": [{"text": "What a different answer changes\nIf you cannot answer this, it is probably not high stakes."}, {"text": "  ", "response": true}], "label": "What a different answer changes"}], "header_rows": 0, "criteria": ["If this assumption turned out wrong, your next step would change.", "Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.", "“What a different answer changes” names a specific change to your frame or your plan."], "instruction_section": "Assumption 2"}, {"id": "assumption-3", "kind": "table", "prompt": "Assumption 3 (only if you have a third)", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Assumption\nThe thing you are guessing."}, {"text": "  ", "response": true}], "label": "Assumption"}, {"id": "row-2", "cells": [{"text": "Why it matters\nWhat it holds up in your frame."}, {"text": "  ", "response": true}], "label": "Why it matters"}, {"id": "row-3", "cells": [{"text": "Question to ask\nThe question that would settle it."}, {"text": "  ", "response": true}], "label": "Question to ask"}, {"id": "row-4", "cells": [{"text": "What a different answer changes\nIf you cannot answer this, it is probably not high stakes."}, {"text": "  ", "response": true}], "label": "What a different answer changes"}], "header_rows": 0, "criteria": ["If this assumption turned out wrong, your next step would change.", "Your question asks about a real experience, a past decision, or a tradeoff, not their opinion of your idea.", "“What a different answer changes” names a specific change to your frame or your plan."], "instruction_section": "Assumption 3 (only if you have a third)"}, {"id": "first-contact", "kind": "table", "prompt": "Who you will talk to first", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "First choice\nName and role."}, {"text": "  ", "response": true}], "label": "First choice"}, {"id": "row-2", "cells": [{"text": "Backup\nIn case your first choice does not respond."}, {"text": "  ", "response": true}], "label": "Backup"}, {"id": "row-3", "cells": [{"text": "Why this person, before anyone else?\nTwo or three sentences."}, {"text": "  ", "response": true}], "label": "Why this person, before anyone else?"}], "header_rows": 0, "criteria": ["Your first choice can test your highest-stakes assumption, or knows the part of your map where your evidence is thinnest.", "Your backup is someone you can actually reach.", "Your reason explains why this person comes before anyone else, not just why they’re relevant."], "instruction_section": "Who you will talk to first"}, {"id": "outreach-log", "kind": "table", "prompt": "Outreach log", "columns": [{"id": "column-1", "label": "Field"}, {"id": "column-2", "label": "Your answer"}], "rows": [{"id": "row-1", "cells": [{"text": "Date I will send the ask"}, {"text": "  ", "response": true}], "label": "Date I will send the ask"}, {"id": "row-2", "cells": [{"text": "Date I will follow up (if no reply after 3 days)"}, {"text": "  ", "response": true}], "label": "Date I will follow up (if no reply after 3 days)"}, {"id": "row-3", "cells": [{"text": "Date I will switch to my backup (if no reply by day 5)"}, {"text": "  ", "response": true}], "label": "Date I will switch to my backup (if no reply by day 5)"}], "header_rows": 0, "criteria": ["Optional: your dates follow the 3-day follow-up and day-5 switch."], "instruction_section": "Outreach log", "feedback_enabled": false, "feedback_omission_reason": "Optional planning dates; no AI feedback is needed."}], "hasWritable": true, "feedbackEndpoint": "https://cti-course-ai.netlify.app/.netlify/functions/walkthrough-feedback", "feedbackOmissionReason": null, "exportFilename": "stakeholder-map.docx", "submissionType": "file_upload", "pdfFromDocument": false, "documentPrefix": ["Keep this file. You will update it in the Dojo Lab and after your stakeholder conversation.", "Write in your own words. Keep your first draft before revising it with optional feedback."], "documentSuffix": [], "askLabel": "Ask yourself"}</script>
+<script>/* Shared, answer-filled representation for table copying and feedback. */
+(function (root) {
+  'use strict';
+  const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const key = (task, row, column) => task.id + '.' + row.id + '.' + column.id;
+  function answer(task, row, column, answers) {
+    return String(answers[key(task, row, column)] || '');
+  }
+  function cellText(task, row, index, answers) {
+    const cell = row.cells[index];
+    const written = cell.response ? answer(task, row, task.columns[index], answers) : '';
+    return [cell.text, written].filter(Boolean).join('\n');
+  }
+  function filledRow(task, row, answers) {
+    return task.columns.map((_, index) => cellText(task, row, index, answers));
+  }
+  function rowResponse(task, row, answers) {
+    if (!row.cells.some((cell, index) => cell.response &&
+      answer(task, row, task.columns[index], answers).trim())) return '';
+    return task.columns.map((column, index) => {
+      const cell = row.cells[index];
+      const written = cell.response ? answer(task, row, column, answers).trim() || '(not entered)' : '';
+      return column.label + ': ' + [cell.text, written].filter(Boolean).join('\n');
+    }).join('\n');
+  }
+  function html(task, answers) {
+    const widths = task.columns.map(column => column.width || 1);
+    const total = widths.reduce((sum, width) => sum + width, 0);
+    const colgroup = '<colgroup>' + widths.map(width =>
+      '<col style="width:' + (width / total * 100).toFixed(4) + '%">').join('') + '</colgroup>';
+    const heads = task.columns.map(column =>
+      '<th scope="col" style="border:1px solid #8999a5;padding:8px;background:#f2f5f7;text-align:left">' +
+      escape(column.label) + '</th>').join('');
+    const rows = task.rows.map(row => '<tr>' + filledRow(task, row, answers).map(value =>
+      '<td style="border:1px solid #8999a5;padding:8px;vertical-align:top">' +
+      escape(value).replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('');
+    return '<table style="border-collapse:collapse;width:100%;--walk-table-min-width:' +
+      (task.columns.length * 180) + 'px">' + colgroup +
+      (task.header_rows === 0 ? '' : '<thead><tr>' + heads + '</tr></thead>') + '<tbody>' + rows + '</tbody></table>';
+  }
+  function tsv(task, answers) {
+    const quote = value => /[\t\r\n"]/.test(value) ? '"' + value.replace(/"/g, '""') + '"' : value;
+    return [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+      ...task.rows.map(row => filledRow(task, row, answers))]
+      .map(row => row.map(value => quote(String(value))).join('\t')).join('\n');
+  }
+  root.WalkthroughTables = {answer, cellText, filledRow, rowResponse, html, tsv};
+}(globalThis));
+</script><script>/* Client-side Word export; participant responses never reach an export service. */
+(function (root) {
+  'use strict';
+  const encoder = new TextEncoder();
+  const bytes = text => encoder.encode(text);
+  const escape = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  function crc32(data) {
+    let crc = 0xffffffff;
+    for (const octet of data) {
+      crc ^= octet;
+      for (let i = 0; i < 8; i++) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+  function u16(value) { return [value & 255, (value >>> 8) & 255]; }
+  function u32(value) { return [value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]; }
+  function zip(entries) {
+    const parts = [], directory = [];
+    let offset = 0;
+    for (const [name, text] of entries) {
+      const nameBytes = bytes(name), data = bytes(text), crc = crc32(data);
+      const local = new Uint8Array([
+        ...u32(0x04034b50), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+      ]);
+      parts.push(local, nameBytes, data);
+      directory.push(new Uint8Array([
+        ...u32(0x02014b50), ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0),
+        ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(nameBytes.length), ...u16(0),
+        ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(offset),
+      ]), nameBytes);
+      offset += local.length + nameBytes.length + data.length;
+    }
+    const directorySize = directory.reduce((sum, part) => sum + part.length, 0);
+    parts.push(...directory, new Uint8Array([
+      ...u32(0x06054b50), ...u16(0), ...u16(0), ...u16(entries.length), ...u16(entries.length),
+      ...u32(directorySize), ...u32(offset), ...u16(0),
+    ]));
+    return new Blob(parts, {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  }
+  function paragraph(text, style) {
+    const heading = style ? '<w:pPr><w:pStyle w:val="' + style + '"/></w:pPr>' : '';
+    return '<w:p>' + heading + '<w:r><w:t xml:space="preserve">' + escape(text) + '</w:t></w:r></w:p>';
+  }
+  function cell(text, width, header) {
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/>' +
+      (header ? '<w:shd w:fill="F2F5F7"/>' : '') + '</w:tcPr>' +
+      String(text).split('\n').map(line => header
+        ? '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">' + escape(line) + '</w:t></w:r></w:p>'
+        : paragraph(line)).join('') + '</w:tc>';
+  }
+  function fieldCell(text, width, task, askLabel) {
+    const match = /^([^\n]+)(\n+)([\s\S]+)$/.exec(String(text));
+    if (!match) return cell(text, width, false);
+    const [, name, gap, question] = match;
+    const run = (value, bold) => '<w:r>' + (bold ? '<w:rPr><w:b/></w:rPr>' : '') +
+      '<w:t xml:space="preserve">' + escape(value) + '</w:t></w:r>';
+    const paragraphs = ['<w:p>' + run(name, task.bold_field_names) + '</w:p>'];
+    for (let i = 1; i < gap.length; i++) paragraphs.push(paragraph(''));
+    question.split('\n').forEach((line, index) => paragraphs.push('<w:p>' +
+      (index === 0 && task.label_field_questions ? run(askLabel + ': ', true) : '') + run(line, false) + '</w:p>'));
+    return '<w:tc><w:tcPr><w:tcW w:w="' + width + '" w:type="dxa"/></w:tcPr>' + paragraphs.join('') + '</w:tc>';
+  }
+  function table(rows, weights, hasHeader = true, renderCell = null) {
+    const widths = weights ? weights.map(weight => Math.round(weight / weights.reduce((sum, n) => sum + n, 0) * 10500))
+      : rows[0].length === 3 ? [2400, 4200, 3900] : [3500, 7000];
+    return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders>' +
+      ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(edge =>
+        '<w:' + edge + ' w:val="single" w:sz="4" w:color="B8C8D2"/>').join('') +
+      '</w:tblBorders></w:tblPr><w:tblGrid>' + widths.map(width => '<w:gridCol w:w="' + width + '"/>').join('') + '</w:tblGrid>' +
+      rows.map((row, index) => '<w:tr>' + (hasHeader && index === 0 ? '<w:trPr><w:tblHeader w:val="1"/></w:trPr>' : '') +
+        row.map((value, column) => (renderCell && renderCell(value, widths[column], hasHeader ? index - 1 : index, column)) ||
+          cell(value, widths[column], hasHeader && index === 0)).join('') + '</w:tr>').join('') + '</w:tbl>';
+  }
+  function build(config, answers) {
+    const blocks = [paragraph(config.title, 'Title')];
+    for (const line of config.documentPrefix || []) blocks.push(paragraph(line));
+    for (const task of config.tasks) {
+      blocks.push(paragraph(task.prompt, 'Heading1'));
+      if (task.kind === 'table') {
+        const rows = [...(task.header_rows === 0 ? [] : [task.columns.map(column => column.label)]),
+          ...task.rows.map(row => globalThis.WalkthroughTables.filledRow(task, row, answers))];
+        const styled = task.bold_field_names || task.label_field_questions;
+        const renderCell = styled ? (value, width, rowIndex, column) => column === 0 && rowIndex >= 0 &&
+          !task.rows[rowIndex].cells[0].response ? fieldCell(value, width, task, config.askLabel || 'Ask yourself') : null : null;
+        blocks.push(table(rows, task.columns.map(column => column.width || 1), task.header_rows !== 0, renderCell));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          blocks.push(paragraph(task.repeat_labels?.[i - 1] || 'Entry ' + i, 'Heading2'));
+          const evidence = task.fields.some(field => field.evidence_status);
+          const rows = [evidence ? ['Field', 'Your answer', 'Confirmed or Inferred, and why'] : ['Field', 'Your answer']];
+          for (const field of task.fields) {
+            const key = task.id + '.' + i + '.' + field.id;
+            const status = answers[key + '.status'] || '';
+            const reason = answers[key + '.reason'] || '';
+            const row = [field.label, answers[key] || ''];
+            if (evidence) row.push(field.evidence_status ? [status, reason].filter(Boolean).join(': ') : '');
+            rows.push(row);
+          }
+          blocks.push(table(rows));
+        }
+      } else {
+        const value = String(answers[task.id] || '');
+        for (const line of value.split('\n')) blocks.push(paragraph(line));
+      }
+      for (const line of task.document_after || []) blocks.push(paragraph(line));
+    }
+    for (const line of config.documentSuffix || []) blocks.push(paragraph(line));
+    const documentXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+      blocks.join('') + '<w:sectPr/></w:body></w:document>';
+    const types = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '</Types>';
+    const relationships = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '</Relationships>';
+    return zip([['[Content_Types].xml', types], ['_rels/.rels', relationships], ['word/document.xml', documentXml]]);
+  }
+  root.WalkthroughDocx = {build};
+}(globalThis));
+</script><script>(function () {
+  'use strict';
+  const config = JSON.parse(document.getElementById('guided-config').textContent);
+  const key = 'course-response:' + config.artifactId;
+  const output = document.getElementById('walk-output');
+  const saveStatus = document.getElementById('walk-save-status');
+  const copyStatus = document.getElementById('walk-copy-status');
+  const richOutput = document.getElementById('walk-rich-output');
+  const hasTable = config.tasks.some(task => task.kind === 'table');
+  const pdfFromDocument = Boolean(config.pdfFromDocument);
+  const inputs = Array.from(document.querySelectorAll('[data-walk-answer]'));
+  const buttons = Array.from(document.querySelectorAll('[data-walk-feedback]'));
+  let state = {answers: Object.create(null), feedback: Object.create(null)};
+  let saveTimer;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && saved.answers && typeof saved.answers === 'object' && !Array.isArray(saved.answers)) {
+      state.answers = Object.assign(Object.create(null), saved.answers);
+      for (const input of inputs) {
+        const value = saved.answers[input.dataset.walkAnswer];
+        if (typeof value === 'string') state.answers[input.dataset.walkAnswer] = value.slice(0, 16000);
+      }
+      if (saved.feedback && typeof saved.feedback === 'object') {
+        for (const button of buttons) {
+          const value = saved.feedback[button.dataset.walkFeedback];
+          if (value && typeof value.text === 'string' && typeof value.onText === 'string') {
+            state.feedback[button.dataset.walkFeedback] = value;
+          }
+        }
+      }
+      if (config.hasWritable && Object.values(state.answers).some(value => typeof value === 'string' && value.trim())) {
+        saveStatus.textContent = 'Your saved responses from this browser are loaded. Keep your own copy before leaving.';
+      }
+    }
+  } catch (_) {
+    saveStatus.textContent = 'This browser could not load a saved draft. Copy your work before leaving.';
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(key, JSON.stringify(state));
+      saveStatus.textContent = 'Saved in this browser on this device. Keep your own copy before leaving.';
+    } catch (_) {
+      saveStatus.textContent = 'Browser saving is unavailable. Copy or download your work before leaving.';
+    }
+  }
+
+  function responseFor(task, index) {
+    if (task.kind === 'table') {
+      const row = task.rows.find(item => item.id === index);
+      return row ? globalThis.WalkthroughTables.rowResponse(task, row, state.answers) : '';
+    }
+    if (task.kind !== 'group') return String(state.answers[task.id] || '').trim();
+    return task.fields.map(field => {
+      const value = String(state.answers[task.id + '.' + index + '.' + field.id] || '').trim();
+      const status = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.status'] || '').trim() : '';
+      const reason = field.evidence_status ? String(state.answers[task.id + '.' + index + '.' + field.id + '.reason'] || '').trim() : '';
+      return value || status || reason ? field.label + ': ' + (value || '(not entered)') +
+        (field.evidence_status ? ' | ' + (status || 'Status not entered') + ': ' + (reason || 'reason not entered') : '') : '';
+    }).filter(Boolean).join('\n');
+  }
+
+  function assembledText() {
+    const lines = [config.title, '', ...(config.documentPrefix || []), ''];
+    for (const task of config.tasks) {
+      lines.push(task.prompt);
+      if (task.kind === 'table') {
+        lines.push(globalThis.WalkthroughTables.tsv(task, state.answers));
+      } else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          lines.push('', task.repeat_labels?.[i - 1] || 'Entry ' + i, responseFor(task, i) || '(not entered)');
+        }
+      } else lines.push(responseFor(task) || '(not entered)');
+      lines.push('');
+      if (task.document_after) lines.push(...task.document_after, '');
+    }
+    lines.push(...(config.documentSuffix || []));
+    return lines.join('\n').trim() + '\n';
+  }
+
+  function responseForButton(button) {
+    const task = config.tasks.find(item => item.id === button.dataset.checkpoint);
+    if (!task) return '';
+    const suffix = button.dataset.walkFeedback.slice(task.id.length + 1);
+    return responseFor(task, task.kind === 'table' ? suffix : suffix ? Number(suffix) : undefined);
+  }
+
+  function assembledHtml() {
+    const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const parts = ['<div>', '<h1>' + escape(config.title) + '</h1>'];
+    for (const line of config.documentPrefix || []) parts.push('<p>' + escape(line) + '</p>');
+    for (const task of config.tasks) {
+      parts.push('<h2>' + escape(task.prompt) + '</h2>');
+      if (task.kind === 'table') parts.push(globalThis.WalkthroughTables.html(task, state.answers));
+      else if (task.kind === 'group') {
+        for (let i = 1; i <= task.repeat_count; i++) {
+          parts.push('<h3>' + escape(task.repeat_labels?.[i - 1] || 'Entry ' + i) + '</h3>');
+          parts.push('<p>' + escape(responseFor(task, i)).replace(/\n/g, '<br>') + '</p>');
+        }
+      } else parts.push('<p>' + escape(responseFor(task)).replace(/\n/g, '<br>') + '</p>');
+      for (const line of task.document_after || []) parts.push('<p>' + escape(line) + '</p>');
+    }
+    for (const line of config.documentSuffix || []) parts.push('<p>' + escape(line) + '</p>');
+    parts.push('</div>');
+    return parts.join('');
+  }
+
+  async function copyTables() {
+    const html = assembledHtml(), plain = assembledText();
+    let asyncWrite;
+    try {
+      asyncWrite = navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], {type: 'text/html'}),
+        'text/plain': new Blob([plain], {type: 'text/plain'}),
+      })]);
+    } catch (_) { /* Canvas may not expose the async Clipboard API. */ }
+    richOutput.innerHTML = html;
+    richOutput.hidden = false;
+    richOutput.classList.add('walk-copy-staging');
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(richOutput);
+    selection.removeAllRanges(); selection.addRange(range);
+    let copied = false;
+    const handleCopy = event => {
+      if (!event.clipboardData) return;
+      event.clipboardData.setData('text/html', html);
+      event.clipboardData.setData('text/plain', plain);
+      event.preventDefault();
+      copied = true;
+    };
+    document.addEventListener('copy', handleCopy);
+    try { copied = document.execCommand('copy') && copied; }
+    catch (_) { copied = false; }
+    document.removeEventListener('copy', handleCopy);
+    if (asyncWrite) {
+      try { await asyncWrite; copied = true; }
+      catch (_) { /* Keep the synchronous copy result or show the fallback. */ }
+    }
+    richOutput.classList.remove('walk-copy-staging');
+    if (copied) {
+      selection.removeAllRanges();
+      richOutput.hidden = true;
+      copyStatus.textContent = !config.hasWritable
+        ? 'Copied the reference table. Paste it into a document if useful; copying has not submitted anything to Canvas.'
+        : pdfFromDocument
+        ? 'Copied as a table. Paste it into your continuing document, export the completed document as PDF, then submit that PDF in Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Copied as a table for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied as a table. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } else {
+      richOutput.focus();
+      range.selectNodeContents(richOutput);
+      selection.removeAllRanges(); selection.addRange(range);
+      copyStatus.textContent = pdfFromDocument
+        ? 'Clipboard access is unavailable. Select and copy the table below into your continuing document, then export it as PDF for Canvas.'
+        : config.submissionType === 'file_upload' && config.hasWritable
+        ? 'Clipboard access is unavailable. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Clipboard access is unavailable. Copy the selected table below, or download the Word document. Copying has not submitted your work.';
+    }
+  }
+
+  function showFeedback(button, message, stale, preview) {
+    const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    target.textContent = (preview
+      ? (stale ? 'Preview sample feedback on an earlier draft: ' : 'Preview sample feedback: ')
+      : (stale ? 'AI feedback on an earlier draft: ' : 'AI feedback: ')) + message;
+    target.hidden = false;
+  }
+
+  function update() {
+    for (const button of buttons) {
+      const response = responseForButton(button);
+      const previous = state.feedback[button.dataset.walkFeedback];
+      button.disabled = Boolean(!response || (previous && previous.onText === response && !previous.preview));
+      if (previous) showFeedback(button, previous.text, previous.onText !== response, previous.preview);
+    }
+    if (output.value) output.value = assembledText();
+  }
+
+  function resizeTableInput(input) {
+    if (!input.closest('.walk-source-table')) return;
+    input.style.height = 'auto';
+    input.style.height = Math.max(62, Math.min(input.scrollHeight, 320)) + 'px';
+    input.style.overflowY = input.scrollHeight > 320 ? 'auto' : 'hidden';
+  }
+
+  inputs.forEach(input => {
+    input.value = state.answers[input.dataset.walkAnswer] || '';
+    resizeTableInput(input);
+    input.addEventListener('input', () => {
+      state.answers[input.dataset.walkAnswer] = input.value;
+      resizeTableInput(input);
+      update(); clearTimeout(saveTimer); saveTimer = setTimeout(save, 350);
+    });
+    input.addEventListener('blur', save);
+  });
+
+  buttons.forEach(button => button.addEventListener('click', async () => {
+    const response = responseForButton(button);
+    if (!response) return;
+    if (response.length > 16000) {
+      const target = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+      target.hidden = false;
+      target.textContent = 'This row is too long for feedback. Shorten it before asking, or continue using your own review.';
+      return;
+    }
+    const responseKey = response;
+    button.disabled = true;
+    const result = document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]');
+    result.hidden = false;
+    result.textContent = 'Reviewing what you wrote...';
+    if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+      state.feedback[button.dataset.walkFeedback] = {
+        onText: responseKey, preview: true,
+        text: 'The live service will review this response against this step. What could you make more specific or verify before submitting?'
+      };
+      save(); update(); return;
+    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 45000);
+    try {
+      const reply = await fetch(config.feedbackEndpoint, {
+        method: 'POST', signal: controller.signal, headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({activity: config.artifactId, checkpoint: button.dataset.checkpoint, response}),
+      });
+      const data = await reply.json();
+      if (!reply.ok || typeof data.content !== 'string' || !data.content.trim()) throw new Error('Unavailable');
+      state.feedback[button.dataset.walkFeedback] = {onText: responseKey, text: data.content.trim()};
+      save(); update();
+    } catch (_) {
+      result.textContent = 'AI feedback is unavailable. Your writing is still here; use the self-check above and try again later.';
+      button.disabled = false;
+    } finally { clearTimeout(timeout); }
+  }));
+
+  const copyButton = document.getElementById('walk-copy');
+  if (copyButton) copyButton.addEventListener('click', async () => {
+    output.value = assembledText();
+    if (hasTable) { await copyTables(); return; }
+    try {
+      await navigator.clipboard.writeText(output.value);
+      copyStatus.textContent = pdfFromDocument
+        ? 'Copied. Paste it into your continuing document, export the completed document as PDF, then submit that PDF in Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Copied. This copy is for your records. Download the Word document and upload it through Submit Assignment in Canvas.'
+        : 'Copied. In Canvas, select Submit Assignment, paste into the text-entry box, and submit. Copying here has not submitted your work.';
+    } catch (_) {
+      output.focus(); output.select();
+      copyStatus.textContent = pdfFromDocument
+        ? 'Select and copy this text into your continuing document, then export it as PDF for Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Select and copy the text shown here for your records. Download the Word document to submit in Canvas.'
+        : 'Select and copy the text shown here. Then paste it into the Canvas text-entry box and submit. Copying here has not submitted your work.';
+    }
+  });
+  const textDownload = document.getElementById('walk-text-download');
+  if (textDownload) textDownload.addEventListener('click', () => {
+    const blob = new Blob([assembledText()], {type: 'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = config.artifactId + '-responses.txt'; link.hidden = true;
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    copyStatus.textContent = 'Text copy downloaded. Keep it for your records; downloading is not a Canvas submission.';
+  });
+  const download = document.getElementById('walk-download');
+  if (download) download.addEventListener('click', () => {
+    try {
+      const blob = globalThis.WalkthroughDocx.build(config, state.answers);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = config.exportFilename; link.hidden = true;
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      copyStatus.textContent = !config.hasWritable
+        ? 'Reference Word document downloaded for your records. Downloading has not submitted anything to Canvas.'
+        : pdfFromDocument
+        ? 'Word backup downloaded. Keep working in your continuing document and export that completed document as PDF for Canvas.'
+        : config.submissionType === 'file_upload'
+        ? 'Word document downloaded. In Canvas, select Start Assignment, attach it with any other required files, then select Submit Assignment. Downloading is not a submission.'
+        : 'Word document downloaded for your records. Submit your response through this Canvas assignment; downloading is not a submission.';
+    } catch (_) {
+      if (hasTable) {
+        richOutput.innerHTML = assembledHtml(); richOutput.hidden = false; richOutput.focus();
+        copyStatus.textContent = 'Download is unavailable. Select and copy the table below into a document.';
+      } else {
+        output.value = assembledText(); output.focus(); output.select();
+        copyStatus.textContent = pdfFromDocument
+          ? 'Download is unavailable. Copy this text into your continuing document, then export it as PDF for Canvas.'
+          : 'Download is unavailable. Copy this text into a document, then upload that document to Canvas.';
+      }
+    }
+  });
+  const clearButton = document.getElementById('walk-clear');
+  if (clearButton) {
+    clearButton.addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = false; });
+    document.getElementById('walk-clear-no').addEventListener('click', () => { document.getElementById('walk-clear-confirm').hidden = true; });
+    document.getElementById('walk-clear-yes').addEventListener('click', () => {
+      clearTimeout(saveTimer);
+      try { localStorage.removeItem(key); }
+      catch (_) { saveStatus.textContent = 'Could not clear the saved draft. Keep a copy of your responses.'; return; }
+      state = {answers: Object.create(null), feedback: Object.create(null)};
+      inputs.forEach(input => { input.value = ''; resizeTableInput(input); });
+      buttons.forEach(button => {
+        document.querySelector('[data-walk-feedback-result="' + button.dataset.walkFeedback + '"]').textContent = '';
+      });
+      output.value = ''; copyStatus.textContent = '';
+      if (richOutput) { richOutput.innerHTML = ''; richOutput.hidden = true; }
+      document.getElementById('walk-clear-confirm').hidden = true;
+      saveStatus.textContent = 'This browser draft was cleared.';
+      update();
+    });
+  }
+  update();
+}());
+</script><script>(function () {
+  'use strict';
+  // Collapsible repeated-table steps. Closed panels stay in the page, so drafts save and export as before.
+  const steps = Array.from(document.querySelectorAll('[data-walk-repeated-table]'));
+  if (!steps.length) return;
+  const config = JSON.parse(document.getElementById('guided-config').textContent);
+  const key = 'course-response:' + config.artifactId + ':steps';
+  const ids = steps.map(step => step.dataset.walkStep);
+  let open = new Set([ids[0]]);
+  let done = new Set();
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && Array.isArray(saved.open) && Array.isArray(saved.done)) {
+      open = new Set(saved.open.filter(id => ids.includes(id)));
+      done = new Set(saved.done.filter(id => ids.includes(id)));
+    }
+  } catch (_) { /* Storage is unavailable; use the default state for this visit. */ }
+
+  function persist() {
+    try { localStorage.setItem(key, JSON.stringify({open: [...open], done: [...done]})); }
+    catch (_) { /* Open and done state still works for this visit. */ }
+  }
+
+  function resize(step) {
+    step.querySelectorAll('.walk-source-table textarea').forEach(input => {
+      input.style.height = 'auto';
+      input.style.height = Math.max(62, Math.min(input.scrollHeight, 320)) + 'px';
+      input.style.overflowY = input.scrollHeight > 320 ? 'auto' : 'hidden';
+    });
+  }
+
+  function showStatus(step) {
+    const id = step.dataset.walkStep;
+    const writing = Array.from(step.querySelectorAll('[data-walk-answer]')).some(input => input.value.trim());
+    const state = done.has(id) ? 'done' : writing ? 'in-progress' : 'not-started';
+    const status = step.querySelector('[data-walk-status]');
+    status.dataset.state = state;
+    status.textContent = {'done': 'Done', 'in-progress': 'In progress', 'not-started': 'Not started'}[state];
+  }
+
+  function render(step) {
+    const expanded = open.has(step.dataset.walkStep);
+    const panel = step.querySelector('.walk-accordion-panel');
+    step.querySelector('.walk-accordion-toggle').setAttribute('aria-expanded', String(expanded));
+    const opening = expanded && panel.hidden;
+    panel.hidden = !expanded;
+    if (opening) resize(step);
+    showStatus(step);
+  }
+
+  steps.forEach((step, index) => {
+    const id = ids[index];
+    const toggle = step.querySelector('.walk-accordion-toggle');
+    toggle.addEventListener('click', () => {
+      if (open.has(id)) open.delete(id); else open.add(id);
+      render(step); persist();
+    });
+    step.addEventListener('input', () => showStatus(step));
+    step.querySelector('[data-walk-done]').addEventListener('click', () => {
+      done.add(id); open.delete(id);
+      const next = steps[index + 1];
+      if (next) open.add(ids[index + 1]);
+      steps.forEach(render); persist();
+      const target = next ? next.querySelector('.walk-accordion-toggle')
+        : step.nextElementSibling?.querySelector('summary') || toggle;
+      target.focus({preventScroll: true});
+      const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      (next || step.nextElementSibling || step).scrollIntoView({block: 'start', behavior: still ? 'auto' : 'smooth'});
+    });
+  });
+
+  const clearYes = document.getElementById('walk-clear-yes');
+  if (clearYes) clearYes.addEventListener('click', () => {
+    // The draft script hides the confirmation only after it clears the draft.
+    if (!document.getElementById('walk-clear-confirm').hidden) return;
+    open = new Set([ids[0]]); done = new Set();
+    try { localStorage.removeItem(key); } catch (_) { /* Nothing saved to remove. */ }
+    steps.forEach(render);
+  });
+
+  steps.forEach(render);
+}());
+</script></div>
+
+    
+
+<footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
+  </div>
+</body>
+</html>
