@@ -1,4 +1,4 @@
-<!-- Editable text for how-i-learn-and-one-learning-trail.html (the .html is NOT built yet; it is built from this file after Prof. Sathya's edits). DRAFT 1, 4 Oct 2026.
+<!-- Editable text for how-i-learn-and-one-learning-trail.html (the .html is NOT built yet; it is built from this file after Prof. Sathya's edits). DRAFT 2, 4 Oct 2026 (Prof. Sathya's edits to Purpose and Part 1 carried in; Part 2 is being redesigned: problems move into the learning trail).
 Notes for the editor, not shown to students:
 - Part 1 is the five tasks of the OYP "What misconceptions about learning we all have" (how-well-did-i-learn-in-sprint-1.md), word for word. Tasks 6 and 7 are NEW drafts: task 6 puts the misconceptions question into the boxes route (the OYP had it only in the Dojo route); task 7 is the one lesson the student carries into Part 2.
 - Canvas OYP 653059 stays as it is (7 submissions). Those students may paste and improve their answers here.
@@ -26,7 +26,8 @@ Reflect on how you learned in Sprint 1 so that you can improve your learning ski
 ## Choose how you will do this
 
 ☐ **I am OK with using the AI Dojo to complete this graded item.** Tick this to do both parts as conversations with your Dojo; the page then shows the Dojo route below instead of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
-If students click the checkbox, put a bright reminder that this will work only if they have a Google doc linked in their AI Dojo project context, so that the tool is depending on the latest information about the course.
+
+**Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder as soon as the box is ticked.)
 
 ## Part 1 · Look back at how you learned in Sprint 1
 
@@ -36,17 +37,17 @@ Write your answer to each task in the box under it. If you submitted the activit
 
    **Your answer to task 1.** What habits affected your progress, with specific moments from the sprint.
 
-2. Reflect on your interest,how much you cared about learning the topic, how that interest helped your learning - give a specific moment as an example, if possible.
+2. Reflect on your interest: how much you cared about learning the topic, and how that interest helped your learning. Give a specific moment as an example, if possible.
 
    **Your answer to task 2.** The interest in your goal and how it influenced your approach.
 
-3. Describe how you and your partner impacted each others' learning experience. If you had little or no opportunity to work together, how do you think you can improve on that going forward.
+3. Describe how you and your partner impacted each others' learning experience. If you had little or no opportunity to work together, describe how you can improve on that going forward.
 
-   **Your answer to task 3.** Your experience working with partners, any challenges in working together, how you can improve going forward.
+   **Your answer to task 3.** Your experience working with partners, any challenges in working together, and how you can improve going forward.
 
-4. Describe how you used AI Dojo, if you used it. Include what you asked it to do, in what ways it helped your learning and how did you confirm that. If you did not use AI, share your reasons.
+4. Describe how you used the AI Dojo, if you used it. Include what you asked it to do, in what ways it helped your learning, and how you confirmed that. If you did not use AI, share your reasons.
 
-   **Your answer to task 4.** Your AI Dojo use, in what ways it helped your learning and how did you confirm that.
+   **Your answer to task 4.** Your AI Dojo use, in what ways it helped your learning and how you confirmed that, or your reasons for not using AI.
 
 5. Since you had a lot of freedom to use your time in this course, describe how you balanced your work in this course with other interests and responsibilities, and how your choices affected your progress. Based on your reflections, identify how you will do better in sprint 2.
 
@@ -56,7 +57,7 @@ Write your answer to each task in the box under it. If you submitted the activit
 
    **Your answer to task 6.** The belief, and the moment that made you question it.
 
-7. Can you identify one lesson from tasks 1 to 6 that you will apply while you work through the learning trail in Part 2. Write it as something you will do.
+7. Identify one lesson from tasks 1 to 6 that you will apply while you work through the learning trail in Part 2. Write it as something you will do.
 
    **Your answer to task 7.** The one lesson, written as an action.
 
@@ -128,13 +129,13 @@ This graded item is complete when every task in Part 1 and Part 2 has an answer.
 
 **1. Start the Part 1 conversation.** Paste this into your AI Dojo:
 
-> I want to look back at how I went about my Sprint 1 physics learning goal. Start by asking me what my goal was. Then ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these seven things, in any order: what helped my progress and what made it difficult; how my existing ideas and misconceptions shaped what I saw; how interested I was in the topic and how that affected my approach; how my partner and I affected each other's learning, or why we did not work together; whether I used AI, what I asked it, what it gave me and how I checked it; how I balanced this course with other interests and responsibilities, what that did to my progress, and what I will do better in Sprint 2; and the one lesson I will apply while I work through a learning trail this week, written as something I will do. Do not answer for me, guide my thinking and help me to figure out the answers if I am struggling. Do not summarize until I ask you to.
+> I want to look back at how I went about my Sprint 1 physics learning goal. Start by asking me what my goal was. Then ask me one question at a time and follow up until each answer includes something that actually happened, not a general statement. Cover these seven things, in any order: what habits helped my progress and what made it difficult; how my existing ideas and misconceptions shaped what I saw; how much I cared about learning the topic and how that interest helped my learning; how my partner and I affected each other's learning, or how I can improve on working together going forward; whether I used the AI Dojo, what I asked it to do, in what ways it helped my learning and how I confirmed that, or my reasons for not using AI; how I balanced this course with other interests and responsibilities, what that did to my progress, and what I will do better in Sprint 2; and the one lesson I will apply while I work through a learning trail this week, written as something I will do. Do not answer for me, guide my thinking and help me to figure out the answers if I am struggling. Do not summarize until I ask you to.
 
 **2. Keep going until it meets the bar.** The conversation is done when each of the first six things has a specific moment from the sprint attached to it, and the seventh is written as an action.
 
 **3. Ask for the Part 1 summary.** When the bar is met, paste this:
 
-> Organize a summary of our conversation under seven headings, keeping my exact language: What helped and what made it difficult · How existing ideas and misconceptions shaped what I saw · My interest in the topic and its effect · How my partner and I affected each other's learning · How I used AI and how I checked it · How I balanced my time, and what I will do better in Sprint 2 · The one lesson I will apply on the learning trail. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
+> Organize a summary of our conversation under seven headings, keeping my exact language: What habits helped and what made it difficult · How existing ideas and misconceptions shaped what I saw · My interest in the topic and its effect · How my partner and I affected each other's learning · How I used the AI Dojo and how I confirmed it helped · How I balanced my time, and what I will do better in Sprint 2 · The one lesson I will apply on the learning trail. Use only what I said. Under each heading keep the specific moment I gave; if I did not give one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
 
 If any heading says "not yet answered", go back to step 2. Copy the Dojo's whole reply and keep it for step 7.
 
