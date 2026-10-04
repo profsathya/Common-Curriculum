@@ -212,9 +212,6 @@ ul.selfcheck input:focus-visible{outline:2px solid var(--blue-dark);outline-offs
 ul.selfcheck label{flex:1;min-width:0;cursor:pointer;}
 ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--blue-dark);padding-left:6px;}
 .route .rd{font-weight:400;}
-.vidwrap{position:relative;width:100%;max-width:760px;aspect-ratio:16/9;margin:0 0 8px;background:#000;border-radius:6px;overflow:hidden;}
-.vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-.vidnote{font-size:12.5px;color:#5B6770;margin:0 0 12px;}
 </style>
 </head>
 <body>
@@ -235,8 +232,6 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
 <p class="body">Explore how questioning an explanation can help you check your understanding.</p>
 <h2 class="sec">Watch</h2>
 <p class="body">Derek Muller (Veritasium), <a href="https://www.youtube.com/watch?v=eVtCO84MDj8" target="_blank" rel="noopener">Khan Academy and the Effectiveness of Science Videos</a>, about 8 minutes.</p><p class="body">Muller describes a study comparing what students understood before and after watching different physics explanations.</p>
-<div class="vidwrap"><iframe id="yt-player" title="Video: Khan Academy and the Effectiveness of Science Videos (Veritasium)" src="https://www.youtube.com/embed/eVtCO84MDj8?enablejsapi=1&amp;rel=0&amp;playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-<p class="vidnote">The video plays at 1.25x speed. You can change the speed with the gear icon in the player.</p>
 <div class="choose"><input type="checkbox" id="watched-tick" aria-controls="after-watch" aria-expanded="false"><label for="watched-tick"><b>I have watched the video.</b> Tick this to see the rest of the page.</label></div>
 <noscript><style>#after-watch[hidden]{display:block !important;}</style></noscript>
 <div id="after-watch" hidden>
@@ -244,7 +239,7 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
 <div class="choose"><input type="checkbox" id="dojo-tick" aria-controls="tasks-block dojo-block" aria-expanded="false"><label for="dojo-tick"><b>I am OK with using the AI Dojo to complete this activity.</b> Tick this to answer the questions as a conversation with your Dojo; the page then shows the Dojo route below instead of the four boxes. Leave it unticked to write your answers in the boxes.</label></div>
 <div id="tasks-block">
 <h2 class="sec">Tasks</h2>
-<p class="body">Write your answer to each task in the box under it. The links move the video above to approximate starting places.</p>
+<p class="body">Write your answer to each task in the box under it. The links point to approximate starting places in the video.</p>
 <ol class="tasks">
 <li class="task" id="task-1">
 <div class="ttext"><span class="tn">1.</span><span class="tt">Compare the scores Muller reports before and after students watched the clear explanation: 6 and 6.3 out of 26. What do these results suggest about their learning in this study? <a href="https://www.youtube.com/watch?v=eVtCO84MDj8&amp;t=70s" target="_blank" rel="noopener">Watch this part, ~1:10–2:30</a></span></div>
@@ -410,36 +405,6 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
         return state.answers[key];
     }
-
-    // ---------- the embedded video: starts at 1.25x, and the "Watch this part" links seek it ----------
-    // If the YouTube player API does not load, the video still plays at normal speed and the links open YouTube.
-    (function () {
-        var frame = document.getElementById('yt-player');
-        if (!frame) { return; }
-        var RATE = 1.25, player = null, ready = false, rateSet = false;
-        function setRate() { try { player.setPlaybackRate(RATE); } catch (e) { /* stays at normal speed */ } }
-        var prev = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = function () {
-            if (typeof prev === 'function') { prev(); }
-            player = new YT.Player('yt-player', { events: {
-                onReady: function () { ready = true; setRate(); },
-                onStateChange: function (ev) { if (ev.data === 1 && !rateSet) { rateSet = true; setRate(); } }
-            } });
-        };
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        tag.async = true;
-        document.head.appendChild(tag);
-        document.addEventListener('click', function (ev) {
-            var a = ev.target.closest ? ev.target.closest('a[href*="youtube.com/watch"][href*="t="]') : null;
-            if (!a || !ready || !player) { return; }
-            var m = /[?&]t=(\d+)s?/.exec(a.getAttribute('href'));
-            if (!m) { return; }
-            ev.preventDefault();
-            try { player.seekTo(parseInt(m[1], 10), true); player.playVideo(); } catch (e) { window.open(a.href, '_blank', 'noopener'); return; }
-            frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-    }());
 
     // ---------- the watched tick: the rest of the page shows once the student says they watched the video ----------
     // Remembered per page on this browser; with storage blocked the student ticks it again on each visit.
