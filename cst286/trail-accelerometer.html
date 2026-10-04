@@ -127,6 +127,19 @@
   .k{font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--tc); margin:0 0 6px}
   .part-after p{font-family:Fraunces,Georgia,serif; font-size:1.08rem}
 
+  /* more practice: a quiet shelf, off the trail */
+  details.shelf{margin-top:18px; border:1px dashed var(--line); border-radius:5px; background:transparent}
+  details.shelf > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:11px 18px}
+  details.shelf > summary::-webkit-details-marker{display:none}
+  details.shelf > summary h2{font-size:1.05rem; font-weight:650; flex:1 1 auto; color:var(--ink-soft)}
+  details.shelf > summary::after{content:"+"; flex:0 0 24px; width:24px; height:24px; border:1.5px solid var(--ink-soft); border-radius:4px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:21px; text-align:center}
+  details.shelf[open] > summary::after{content:"\2212"}
+  details.shelf[open] > summary{border-bottom:1px dashed var(--line)}
+  details.shelf > summary:hover h2{color:var(--blaze)}
+  .shelfbody{padding:6px 20px 16px}
+  .shelfbody > p{max-width:74ch; margin-top:14px; color:var(--ink-soft)}
+  .shelfbody .k{color:var(--ink-soft)}
+
   /* watch */
   .vid{margin:0 0 10px}
   .vidbtn{display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; width:100%; max-width:640px; text-align:left; cursor:pointer; background:var(--hero-ink); color:var(--hero-cream); border:1px solid var(--hero-ink); border-radius:6px; padding:12px 16px 12px 14px; min-height:56px; white-space:pre-wrap}
@@ -186,7 +199,7 @@
     .page{padding:14px 16px 40px}
     .hero-inner{padding:26px 20px 24px}
     .goalcard{padding:16px 16px}
-    .stopbody{padding:4px 14px 16px}
+    .stopbody,.shelfbody{padding:4px 14px 16px}
     details.stop > summary{padding:12px 14px; gap:10px}
     details.stop > summary h2{font-size:1.12rem}
     .sim iframe{height:520px}
@@ -202,8 +215,8 @@
     .hero h1,.hero .intro,.hero .kicker{color:#000}
     .hero-inner{padding:0 0 12px}
     details.stop{break-inside:auto; border-color:#999}
-    details.stop > summary::after{display:none}
-    details.stop::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
+    details.stop > summary::after,details.shelf > summary::after{display:none}
+    details.stop::details-content,details.shelf::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
     .steps li[hidden]{display:list-item !important}
     .vidbtn,.vidbtn[hidden]{display:block !important; background:none; color:#000; border:0; padding:0; min-height:0}
     .vidbtn::before{display:none}
@@ -245,12 +258,12 @@
 </blockquote>
 <button type="button" class="copybtn" data-copy="Given the push on my phone, in newtons, and the phone&#x27;s mass, in kilograms, I can predict the acceleration its sensor will report, in meters per second squared. This is useful because a step counter, a screen that rotates and a fall alert all start from that one number.">Copy this goal</button>
 </section>
-<p class="lede"><strong>Copy this goal</strong> - paste it into your Sprint 2 goal post as it is, or change it at stop 7.</p>
-<p class="lede">The trail has seven stops. The videos add up to about 2 hours 40 minutes, so with the examples the trail takes about five to six hours across the sprint. You can open the stops in any order. If you are not sure where to begin, begin at stop 1, because every later stop depends on getting units right.</p>
+<p class="lede"><strong>Copy this goal</strong> - paste it into your Sprint 2 goal post as it is, or change it at stop 6.</p>
+<p class="lede">The trail has six stops and about 45 minutes of video. With the examples and the simulations it takes about two to three hours. Stops 1 and 2 are short and prepare you to read the sensor's numbers. Stops 3 and 4 are the two laws the sensor depends on. Stop 5 is the sensor, and stop 6 is where you practice on problems that start from your phone.</p>
 
 <nav class="trailmap" aria-label="Trail map">
 <div class="mapwrap">
-<svg class="trailsvg" viewBox="0 0 700 360" role="img" aria-label="Trail map: a winding trail with seven numbered stops" preserveAspectRatio="xMidYMid meet">
+<svg class="trailsvg" viewBox="0 0 700 360" role="img" aria-label="Trail map: a winding trail with six numbered stops" preserveAspectRatio="xMidYMid meet">
 <g fill="none" stroke="var(--line)" stroke-width="1">
 <path d="M-10,128 C120,96 250,150 380,118 S600,96 710,132"/>
 <path d="M-10,236 C130,206 270,262 410,228 S610,206 710,244"/>
@@ -261,12 +274,11 @@
 </svg>
 <ol class="stoplist">
 <li style="--x:14.00%;--y:17.22%"><a class="stopbtn" href="#stop-1" data-stop="1"><span class="no" aria-hidden="true">1</span><span class="lab"><span class="nm">Stop 1 · Units</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
-<li style="--x:46.00%;--y:17.22%"><a class="stopbtn" href="#stop-2" data-stop="2"><span class="no" aria-hidden="true">2</span><span class="lab"><span class="nm">Stop 2 · Describing motion</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:46.00%;--y:17.22%"><a class="stopbtn" href="#stop-2" data-stop="2"><span class="no" aria-hidden="true">2</span><span class="lab"><span class="nm">Stop 2 · Direction</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
 <li style="--x:80.00%;--y:17.22%"><a class="stopbtn" href="#stop-3" data-stop="3"><span class="no" aria-hidden="true">3</span><span class="lab"><span class="nm">Stop 3 · Newton's first law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
 <li style="--x:66.00%;--y:47.78%"><a class="stopbtn" href="#stop-4" data-stop="4"><span class="no" aria-hidden="true">4</span><span class="lab"><span class="nm">Stop 4 · Newton's second law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
-<li style="--x:30.00%;--y:47.78%"><a class="stopbtn" href="#stop-5" data-stop="5"><span class="no" aria-hidden="true">5</span><span class="lab"><span class="nm">Stop 5 · Newton's third law</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
-<li style="--x:20.00%;--y:78.33%"><a class="stopbtn" href="#stop-6" data-stop="6"><span class="no" aria-hidden="true">6</span><span class="lab"><span class="nm">Stop 6 · Inside the sensor</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
-<li style="--x:60.00%;--y:78.33%"><a class="stopbtn" href="#stop-7" data-stop="7"><span class="no" aria-hidden="true">7</span><span class="lab"><span class="nm">Stop 7 · Make it yours</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:30.00%;--y:47.78%"><a class="stopbtn" href="#stop-5" data-stop="5"><span class="no" aria-hidden="true">5</span><span class="lab"><span class="nm">Stop 5 · Inside the sensor</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:60.00%;--y:78.33%"><a class="stopbtn" href="#stop-6" data-stop="6"><span class="no" aria-hidden="true">6</span><span class="lab"><span class="nm">Stop 6 · Explore from the phone</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
 </ol>
 </div>
 </nav>
@@ -285,24 +297,24 @@
 </section>
 <section class="part part-watch">
 <h3 class="k">Watch</h3>
-<div class="vid"><button type="button" class="vidbtn" data-yt="H2ECsg6lxgg" data-title="Units &amp; Measurements"><span class="vt">Units &amp; Measurements</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/H2ECsg6lxgg" target="_blank" rel="noopener">youtu.be/H2ECsg6lxgg</a><span class="dot"> · </span><a href="https://docs.google.com/presentation/d/1WNMl2gCaXzvLytnWBTNDmPVOMl2dWLSAWbwY3iNjDVU" target="_blank" rel="noopener">slides</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="H2ECsg6lxgg" data-start="790" data-end="955" data-title="Prof. Sathya sets up one conversion"><span class="vt">Prof. Sathya sets up one conversion</span><span class="vsep"> - </span><span class="vm">3 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/H2ECsg6lxgg?t=790" target="_blank" rel="noopener">youtu.be/H2ECsg6lxgg</a><span class="dot"> · </span><a href="https://docs.google.com/presentation/d/1WNMl2gCaXzvLytnWBTNDmPVOMl2dWLSAWbwY3iNjDVU" target="_blank" rel="noopener">slides</a></span></div>
 </section>
 <section class="part part-worked">
 <h3 class="k">Worked example</h3>
-<p class="question">How many liters of water fill a container of 75 cubic inches?</p>
-<p class="predictline"><em>Predict first:</em> is the answer closer to 0.2 liters, 1 liter or 75 liters?</p>
+<p class="question">The clip sets this problem up and leaves the last step to you. You have 1.5 pounds of gold, and the density of gold is 19.3 grams per cubic centimeter. What is its volume in cubic centimeters?</p>
+<p class="predictline"><em>Predict first:</em> a golf ball is about 40 cm³. Is the gold larger or smaller than a golf ball?</p>
 <ol class="steps">
-<li>Write where you start and where you want to end: 75 in³ → liters.</li>
-<li>Find the conversion factors that connect them: 1 in = 2.54 cm, and 1 L = 1000 cm³.</li>
-<li>The container is measured in cubic inches, so the inch-to-centimeter factor is used three times: 1 in³ = 2.54 × 2.54 × 2.54 = 16.39 cm³.</li>
-<li>Line them up so the units cancel: 75 in³ × 16.39 cm³ / 1 in³ × 1 L / 1000 cm³.</li>
-<li>Cubic inches cancel, then cubic centimeters cancel, and liters are left: <strong>1.23 L</strong>.</li>
+<li>Write where you start and where you want to end: 1.5 lb → cm³.</li>
+<li>Find the conversion factors that connect them: 2.2 lb = 1 kg, 1 kg = 1000 g, and for gold 19.3 g fills 1 cm³.</li>
+<li>Line them up so each unit you do not want cancels: 1.5 lb × 1 kg / 2.2 lb × 1000 g / 1 kg × 1 cm³ / 19.3 g.</li>
+<li>Pounds cancel, then kilograms, then grams, and cubic centimeters are left.</li>
+<li>Multiply and divide the numbers: 1.5 × 1000 ÷ 2.2 ÷ 19.3 = <strong>35.3 cm³</strong>, a little smaller than a golf ball.</li>
 </ol>
 <div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
 </section>
 <section class="part part-units">
 <h3 class="k">Units check</h3>
-<p>Run step 3 with <span class="num">2.54</span> used once instead of three times. The answer becomes <span class="num">0.19 L</span>, about six times too small, and nothing in the arithmetic warns you. The units do warn you: in³ × cm / in leaves in² · cm, which is not a volume. In 1999 NASA lost the Mars Climate Orbiter because one team sent numbers in pound-force seconds and the other team read them as newton-seconds.</p>
+<p>In step 3, turn the density factor upside down and multiply by <span class="num">19.3</span> instead of dividing. The answer becomes <span class="num">13,159</span>, and nothing in the arithmetic warns you. The units do warn you, because grams times grams per cubic centimeter leaves g² / cm³, which is not a volume. In 1999 NASA lost the Mars Climate Orbiter because one team sent numbers in pound-force seconds and the other team read them as newton-seconds.</p>
 </section>
 <div class="newvideo" data-video="B">Short video: Same number, wrong unit - being added</div>
 <section class="part part-dojo">
@@ -313,39 +325,36 @@
 </div></details>
 
 <details class="stop" id="stop-2" data-stop="2">
-<summary><span class="sno" aria-hidden="true">2</span><h2>Stop 2 · Describing motion</h2></summary>
+<summary><span class="sno" aria-hidden="true">2</span><h2>Stop 2 · Direction</h2></summary>
 <div class="stopbody">
 <section class="part part-why">
 <h3 class="k">Why this stop</h3>
-<p>The sensor reports acceleration with a direction: it gives three numbers, one for each direction the phone can move. To read those numbers you need to tell apart the quantities that carry a direction from the ones that do not.</p>
+<p>The sensor reports acceleration with a direction. It gives three numbers, one for each direction the phone can move, and each number can be positive or negative. To read those numbers you need to tell apart the quantities that carry a direction from the ones that do not.</p>
 </section>
 <section class="part part-after">
 <h3 class="k">After this stop you can</h3>
-<p>tell distance from displacement and speed from velocity, and calculate a speed in consistent units.</p>
+<p>tell distance from displacement and speed from velocity, and say what the sign of a sensor reading means.</p>
 </section>
 <section class="part part-watch">
 <h3 class="k">Watch</h3>
-<div class="vid"><button type="button" class="vidbtn" data-yt="ihNZlp7iUHE" data-title="Intro to vectors and scalars"><span class="vt">Intro to vectors and scalars</span><span class="vsep"> - </span><span class="vm">Khan Academy, 9 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/ihNZlp7iUHE" target="_blank" rel="noopener">youtu.be/ihNZlp7iUHE</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="Rmmp6X59Lpg" data-title="Questions 1 to 4, worked"><span class="vt">Questions 1 to 4, worked</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 12 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/Rmmp6X59Lpg" target="_blank" rel="noopener">youtu.be/Rmmp6X59Lpg</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="dgV-u-BmIkY" data-title="Question 5, a launched object"><span class="vt">Question 5, a launched object</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 6 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/dgV-u-BmIkY" target="_blank" rel="noopener">youtu.be/dgV-u-BmIkY</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="F-1UkYUWxoQ" data-title="Question 6, the detour"><span class="vt">Question 6, the detour</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/F-1UkYUWxoQ" target="_blank" rel="noopener">youtu.be/F-1UkYUWxoQ</a></span></div>
-<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1JzEkEWldFH_Y05a1hzHBevOPjGw9OSM7TszoygXa4oQ" target="_blank" rel="noopener">Slides</a><span class="dot"> · </span><a href="https://docs.google.com/document/d/1l8scaU7V5UcMh5aeyt1PW_qYaEG09BSd51Dz2nb5jis" target="_blank" rel="noopener">worksheet</a></p>
+<div class="vid"><button type="button" class="vidbtn" data-yt="Rmmp6X59Lpg" data-start="0" data-end="260" data-title="Prof. Sathya works the teacher-walk problem"><span class="vt">Prof. Sathya works the teacher-walk problem</span><span class="vsep"> - </span><span class="vm">4 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/Rmmp6X59Lpg?t=0" target="_blank" rel="noopener">youtu.be/Rmmp6X59Lpg</a><span class="dot"> · </span><a href="https://docs.google.com/presentation/d/1JzEkEWldFH_Y05a1hzHBevOPjGw9OSM7TszoygXa4oQ" target="_blank" rel="noopener">slides</a></span></div>
 </section>
 <section class="part part-worked">
 <h3 class="k">Worked example</h3>
-<p class="question">A teacher walks 4 m east, 2 m south, 4 m west and 2 m north. What distance did she walk, and what is her displacement?</p>
-<p class="predictline"><em>Predict first:</em> are the two answers the same number?</p>
+<p class="question">You push your phone to the right along a desk, and the sensor's first number, x, reads +5 m/s². Then you push it just as hard to the left. What does x read now?</p>
+<p class="predictline"><em>Predict first:</em> +5, −5 or 0?</p>
 <ol class="steps">
-<li>Draw it on paper with north, east, south and west marked.</li>
-<li>Distance has no direction, so add every part: 4 + 2 + 4 + 2 = <strong>12 m</strong>.</li>
-<li>Displacement has a direction, so parts in opposite directions cancel. The 4 m east cancels the 4 m west, and the 2 m south cancels the 2 m north.</li>
-<li>She ends where she started, so her displacement is <strong>0 m</strong>.</li>
+<li>Acceleration is a vector, so it has a size and a direction.</li>
+<li>The sensor shows the direction along the desk as the sign of x. A push to the right gives a positive x.</li>
+<li>The second push has the same size, so the number is still 5.</li>
+<li>The second push points the other way, so the sign changes: x reads <strong>−5 m/s²</strong>.</li>
+<li>The size of the push did not change. Only its direction did, and the sign is how the sensor tells you.</li>
 </ol>
 <div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
 </section>
 <section class="part part-units">
 <h3 class="k">Units check</h3>
-<p>A driver plans a trip at <span class="num">32 km/h</span>. A closed road makes the last part <span class="num">28 km</span> longer, so he drives it at <span class="num">40 km/h</span> and still arrives <span class="num">30</span> minutes late. If x is the planned distance for that last part, the planned time is x/<span class="num">32</span> and the real time is (x + <span class="num">28</span>)/<span class="num">40</span>, both in hours. The <span class="num">30</span> minutes must also be in hours, so the equation is x/<span class="num">32</span> = (x + <span class="num">28</span>)/<span class="num">40</span> − <span class="num">0.5</span>, and x = <span class="num">32 km</span>. Write <span class="num">30</span> instead of <span class="num">0.5</span> and the same equation gives x = <span class="num">−4,688 km</span>, a negative distance, because the equation now says he was <span class="num">30</span> hours late.</p>
+<p>You walk <span class="num">10 m</span> in <span class="num">8 s</span>, so your speed is <span class="num">1.25 m/s</span>. The same walk is <span class="num">4.5 km/h</span> and <span class="num">2.8 mi/h</span>. The number is <span class="num">1.25</span>, <span class="num">4.5</span> or <span class="num">2.8</span> depending on the unit, so a number without its unit does not tell anyone how fast you walked. Add "toward the door" and the speed becomes a velocity, because now it has a direction.</p>
 </section>
 <section class="part part-try">
 <h3 class="k">Try it</h3>
@@ -372,19 +381,19 @@
 <section class="part part-watch">
 <h3 class="k">Watch</h3>
 <div class="vid"><button type="button" class="vidbtn" data-yt="5-ZFOhHQS68" data-title="Newton&#x27;s first law"><span class="vt">Newton's first law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 5 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/5-ZFOhHQS68" target="_blank" rel="noopener">youtu.be/5-ZFOhHQS68</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="hOlmn-kd1nw" data-title="Concept questions"><span class="vt">Concept questions</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/hOlmn-kd1nw" target="_blank" rel="noopener">youtu.be/hOlmn-kd1nw</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="hOlmn-kd1nw" data-start="222" data-end="466" data-title="Prof. Sathya works the headrest question"><span class="vt">Prof. Sathya works the headrest question</span><span class="vsep"> - </span><span class="vm">4 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/hOlmn-kd1nw?t=222" target="_blank" rel="noopener">youtu.be/hOlmn-kd1nw</a></span></div>
 <p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
 </section>
 <section class="part part-worked">
 <h3 class="k">Worked example</h3>
-<p class="question">What does the headrest on a car seat protect you from? (a) Nothing, it is a place to rest your head. (b) Injury to your head in a front collision. (c) Injury to your neck when the car is hit from behind. (d) Both b and c.</p>
+<p class="question">A ball sits in the middle of a wagon, and nothing holds it in place. Someone pulls the wagon forward suddenly. Where does the ball end up: at the same spot in the wagon, toward the front, or toward the back?</p>
 <p class="predictline"><em>Predict first:</em> choose one before you read on.</p>
 <ol class="steps">
-<li>Take the car hit from behind. The car is pushed forward suddenly, and the seat pushes your body forward with it.</li>
-<li>Nothing pushes your head forward, so by the first law your head stays where it was while your body moves ahead.</li>
-<li>Your head therefore snaps backward compared with your body, and your neck takes the strain.</li>
-<li>The headrest is behind your head, so it stops the head after a short distance.</li>
-<li>In a front collision your head keeps moving forward, away from the headrest, so the headrest does not help there. The answer is <strong>(c)</strong>.</li>
+<li>Before the pull, the ball and the wagon are both at rest.</li>
+<li>The pull is a force on the wagon, so the wagon starts to move forward.</li>
+<li>Nothing pushes the ball forward, so by the first law the ball stays where it was.</li>
+<li>The wagon moves forward under the ball, so the ball ends up <strong>toward the back</strong> of the wagon.</li>
+<li>The small mass inside your phone's sensor does the same thing when the phone speeds up.</li>
 </ol>
 <div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
 </section>
@@ -394,7 +403,7 @@
 </section>
 <section class="part part-dojo">
 <h3 class="k">Ask your Dojo</h3>
-<div class="prompt"><p class="ptext">&quot;<span class="ct">A ball sits in the middle of a wagon and the wagon is pulled forward suddenly. Ask me where the ball ends up and why. Then ask me how this is like the mass inside my phone's sensor.</span>&quot;</p><button type="button" class="copybtn" data-copy="A ball sits in the middle of a wagon and the wagon is pulled forward suddenly. Ask me where the ball ends up and why. Then ask me how this is like the mass inside my phone&#x27;s sensor.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">A cup of coffee sits on a car's dashboard and the driver brakes hard. Ask me what the cup does and why. Then ask me how this is like the mass inside my phone's sensor.</span>&quot;</p><button type="button" class="copybtn" data-copy="A cup of coffee sits on a car&#x27;s dashboard and the driver brakes hard. Ask me what the cup does and why. Then ask me how this is like the mass inside my phone&#x27;s sensor.">Copy prompt</button></div>
 <div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to explain why a seat belt is needed, using the first law, and keep asking 'what force?' until I name one.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to explain why a seat belt is needed, using the first law, and keep asking &#x27;what force?&#x27; until I name one.">Copy prompt</button></div>
 </section>
 </div></details>
@@ -413,27 +422,25 @@
 <section class="part part-watch">
 <h3 class="k">Watch</h3>
 <div class="vid"><button type="button" class="vidbtn" data-yt="ou9YMWlJgkE" data-title="Newton&#x27;s second law"><span class="vt">Newton's second law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 7 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/ou9YMWlJgkE" target="_blank" rel="noopener">youtu.be/ou9YMWlJgkE</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="f4MusblLa1k" data-title="Concept questions, part 1"><span class="vt">Concept questions, part 1</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 25 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/f4MusblLa1k" target="_blank" rel="noopener">youtu.be/f4MusblLa1k</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="bcvbnbfFwrQ" data-title="Concept questions, part 2"><span class="vt">Concept questions, part 2</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 19 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/bcvbnbfFwrQ" target="_blank" rel="noopener">youtu.be/bcvbnbfFwrQ</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="f4MusblLa1k" data-start="1066" data-end="1455" data-title="Prof. Sathya works the Earth and Mars question"><span class="vt">Prof. Sathya works the Earth and Mars question</span><span class="vsep"> - </span><span class="vm">6 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/f4MusblLa1k?t=1066" target="_blank" rel="noopener">youtu.be/f4MusblLa1k</a></span></div>
 <p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
 </section>
 <section class="part part-worked">
 <h3 class="k">Worked example</h3>
-<p class="question">An object weighs 98 N on Earth and 37 N on Mars. It sits on a frictionless surface. On which planet do you need more force to accelerate it sideways at 10 m/s²?</p>
-<p class="predictline"><em>Predict first:</em> Earth, Mars, or the same?</p>
+<p class="question">A phone has a mass of 0.2 kg. You push it along a smooth table with a force of 1 N. What acceleration does its sensor report?</p>
+<p class="predictline"><em>Predict first:</em> more than 1 m/s² or less than 1 m/s²?</p>
 <ol class="steps">
-<li>Weight is the force of gravity on the object, so on Earth 98 N = m × 9.8 m/s².</li>
-<li>Divide to find the mass: m = 98 ÷ 9.8 = 10 kg.</li>
-<li>Check with Mars, where gravity gives about 3.7 m/s²: 10 kg × 3.7 m/s² = 37 N. The mass is the same on both planets.</li>
-<li>Gravity pulls down and the push is sideways, so gravity does not change the sideways force you need.</li>
-<li>F = ma = 10 kg × 10 m/s² = <strong>100 N on both planets</strong>.</li>
+<li>The second law says the net force on an object equals its mass times its acceleration: F = ma.</li>
+<li>You know the force and the mass, so solve for the acceleration: a = F ÷ m.</li>
+<li>Put in the numbers with their units: a = 1 N ÷ 0.2 kg.</li>
+<li>One newton is one kilogram meter per second squared, so the kilograms cancel and m/s² is left.</li>
+<li>a = <strong>5 m/s²</strong> in the direction of the push. Double the mass and the same push gives 2.5 m/s².</li>
 </ol>
 <div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
-<p>Now the goal on this page: a phone has a mass of 0.2 kg, and you push it along a smooth table with 1 N. The sensor reports a = F ÷ m = 1 N ÷ 0.2 kg = <strong>5 m/s²</strong> in the direction of the push.</p>
 </section>
 <section class="part part-units">
 <h3 class="k">Units check</h3>
-<p>In the example, use the weight in place of the mass: <span class="num">98</span> × <span class="num">10</span> gives <span class="num">980</span>, almost ten times too large. The units show the mistake, because newtons times meters per second squared is not a force. Mass is in kilograms and weight is in newtons, and one newton is one kilogram meter per second squared.</p>
+<p>A phone's mass is often given as <span class="num">200 g</span>. Use <span class="num">200</span> in place of <span class="num">0.2</span> and the acceleration comes out as <span class="num">0.005</span>, which is a thousand times too small. A newton contains kilograms, so the mass must be in kilograms before the answer is in meters per second squared. The clip shows a second version of this mistake: weight is a force in newtons, and mass is in kilograms.</p>
 </section>
 <section class="part part-try">
 <h3 class="k">Try it</h3>
@@ -447,52 +454,11 @@
 </div></details>
 
 <details class="stop" id="stop-5" data-stop="5">
-<summary><span class="sno" aria-hidden="true">5</span><h2>Stop 5 · Newton's third law</h2></summary>
+<summary><span class="sno" aria-hidden="true">5</span><h2>Stop 5 · Inside the sensor</h2></summary>
 <div class="stopbody">
 <section class="part part-why">
 <h3 class="k">Why this stop</h3>
-<p>When your hand pushes the phone, the phone pushes back on your hand with the same force. Inside the sensor the same thing happens between the spring and the small mass. To predict what the mass does, you need to know which of those forces act on the mass and which act on something else.</p>
-</section>
-<section class="part part-after">
-<h3 class="k">After this stop you can</h3>
-<p>list the forces that act on one object and use only those to decide whether it accelerates.</p>
-</section>
-<section class="part part-watch">
-<h3 class="k">Watch</h3>
-<div class="vid"><button type="button" class="vidbtn" data-yt="By-ggTfeuJU" data-title="Newton&#x27;s third law"><span class="vt">Newton's third law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/By-ggTfeuJU" target="_blank" rel="noopener">youtu.be/By-ggTfeuJU</a></span></div>
-<div class="vid"><button type="button" class="vidbtn" data-yt="JAZIdG1dlpM" data-title="Concept questions"><span class="vt">Concept questions</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 18 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/JAZIdG1dlpM" target="_blank" rel="noopener">youtu.be/JAZIdG1dlpM</a></span></div>
-<p class="vlinks plain"><a href="https://docs.google.com/presentation/d/1stGiLbKXIaxam4nGDW-h4carQIVJDodHdklFGbaEPSU" target="_blank" rel="noopener">Slides</a></p>
-</section>
-<section class="part part-worked">
-<h3 class="k">Worked example</h3>
-<p class="question">You push a table. The table pushes back on you with an equal force. Why does the table move at all?</p>
-<p class="predictline"><em>Predict first:</em> do the two forces cancel?</p>
-<ol class="steps">
-<li>Your push acts on the table. The table's push back acts on you. They act on different objects, so they cannot cancel each other.</li>
-<li>To decide whether the table moves, list only the forces on the table: your push, and the friction between its legs and the floor.</li>
-<li>On a smooth floor your push is larger than the friction, so there is a net force on the table and it accelerates, by the second law.</li>
-<li>If the legs are nailed down, the floor matches your push and the table stays.</li>
-<li>To decide whether you move, list only the forces on you: the table's push back, and the friction under your feet. On ice that friction is small, so you slide backward.</li>
-</ol>
-<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
-</section>
-<section class="part part-units">
-<h3 class="k">Units check</h3>
-<p>A phone with a mass of <span class="num">200 g</span> rests on a table. Its weight is <span class="num">0.2 kg</span> × <span class="num">9.8 m/s²</span> = <span class="num">1.96 N</span>, so the table pushes up on it with <span class="num">1.96 N</span>. Use <span class="num">200</span> in place of <span class="num">0.2</span> and the weight comes out as <span class="num">1,960 N</span>, which is the weight of a motorcycle. Grams must become kilograms before the answer is in newtons.</p>
-</section>
-<section class="part part-dojo">
-<h3 class="k">Ask your Dojo</h3>
-<div class="prompt"><p class="ptext">&quot;<span class="ct">A locomotive pulls wagons and the wagons pull back with an equal force. Ask me how the train can start moving, and do not accept an answer that says one pull is larger.</span>&quot;</p><button type="button" class="copybtn" data-copy="A locomotive pulls wagons and the wagons pull back with an equal force. Ask me how the train can start moving, and do not accept an answer that says one pull is larger.">Copy prompt</button></div>
-<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to name the action and reaction pair when a bird flies, and then ask me which object each force acts on.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to name the action and reaction pair when a bird flies, and then ask me which object each force acts on.">Copy prompt</button></div>
-</section>
-</div></details>
-
-<details class="stop" id="stop-6" data-stop="6">
-<summary><span class="sno" aria-hidden="true">6</span><h2>Stop 6 · Inside the sensor</h2></summary>
-<div class="stopbody">
-<section class="part part-why">
-<h3 class="k">Why this stop</h3>
-<p>This is where the three laws become a number on your phone. A small mass sits on a spring inside the chip. When the phone accelerates, the mass lags behind and the spring stretches until it pulls the mass along at the same acceleration. The phone measures how far the spring stretched.</p>
+<p>This is where the two laws become a number on your phone. A small mass sits on a spring inside the chip. When the phone accelerates, the mass lags behind and the spring stretches until it pulls the mass along at the same acceleration. The phone measures how far the spring stretched.</p>
 </section>
 <section class="part part-after">
 <h3 class="k">After this stop you can</h3>
@@ -542,10 +508,10 @@
 </section>
 </div></details>
 
-<details class="stop" id="stop-7" data-stop="7">
-<summary><span class="sno" aria-hidden="true">7</span><h2>Stop 7 · Make it yours</h2></summary>
+<details class="stop" id="stop-6" data-stop="6">
+<summary><span class="sno" aria-hidden="true">6</span><h2>Stop 6 · Explore from the phone</h2></summary>
 <div class="stopbody">
-<p>The goal at the top of this page is one of many that use the same physics. Each goal below keeps the three-part form and changes what you predict. Choose one, or write your own in the same form, and take the Dojo prompt to your coach.</p>
+<p>You now have what the sensor needs: units, direction and the two laws. This stop is where you practice. Each problem below starts from something a phone or a car does with its sensor, and each one is written as a goal in the three-part form. Choose one to work on with your Dojo, or write your own in the same form. If you choose one, it can replace the goal at the top of this page as your Sprint 2 goal.</p>
 <section class="mine">
 <h3 class="k">Step counter</h3>
 <div class="goalcard small"><blockquote><p>Given the up-and-down acceleration my phone records while I walk, I can predict how many steps it will count in one minute. This is useful because it tells me when a step counter can be trusted and when it cannot.</p></blockquote><button type="button" class="copybtn" data-copy="Given the up-and-down acceleration my phone records while I walk, I can predict how many steps it will count in one minute. This is useful because it tells me when a step counter can be trusted and when it cannot.">Copy this goal</button></div>
@@ -581,9 +547,42 @@
 </div></details>
 </div>
 
+<details class="shelf" id="more-practice">
+<summary><h2>More practice</h2></summary>
+<div class="shelfbody">
+<p>These are the full videos and the extra problems from earlier offerings of CST286. Open one when you want more worked problems on a topic, or when your Dojo suggests one.</p>
+<section class="part">
+<h3 class="k">Units</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="H2ECsg6lxgg" data-title="Units &amp; Measurements, the full video"><span class="vt">Units &amp; Measurements, the full video</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/H2ECsg6lxgg" target="_blank" rel="noopener">youtu.be/H2ECsg6lxgg</a></span></div>
+</section>
+<section class="part">
+<h3 class="k">Direction and motion</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="ihNZlp7iUHE" data-title="Intro to vectors and scalars"><span class="vt">Intro to vectors and scalars</span><span class="vsep"> - </span><span class="vm">Khan Academy, 9 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/ihNZlp7iUHE" target="_blank" rel="noopener">youtu.be/ihNZlp7iUHE</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="Rmmp6X59Lpg" data-title="Distance, displacement, speed and velocity, questions 1 to 4"><span class="vt">Distance, displacement, speed and velocity, questions 1 to 4</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 12 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/Rmmp6X59Lpg" target="_blank" rel="noopener">youtu.be/Rmmp6X59Lpg</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="dgV-u-BmIkY" data-title="Question 5, a launched object"><span class="vt">Question 5, a launched object</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 6 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/dgV-u-BmIkY" target="_blank" rel="noopener">youtu.be/dgV-u-BmIkY</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="F-1UkYUWxoQ" data-title="Question 6, the detour"><span class="vt">Question 6, the detour</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/F-1UkYUWxoQ" target="_blank" rel="noopener">youtu.be/F-1UkYUWxoQ</a></span></div>
+<p class="vlinks plain"><a href="https://docs.google.com/document/d/1l8scaU7V5UcMh5aeyt1PW_qYaEG09BSd51Dz2nb5jis" target="_blank" rel="noopener">Worksheet</a></p>
+</section>
+<section class="part">
+<h3 class="k">Newton's first law</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="hOlmn-kd1nw" data-title="Concept questions, the full video"><span class="vt">Concept questions, the full video</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 16 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/hOlmn-kd1nw" target="_blank" rel="noopener">youtu.be/hOlmn-kd1nw</a></span></div>
+</section>
+<section class="part">
+<h3 class="k">Newton's second law</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="f4MusblLa1k" data-title="Concept questions, part 1"><span class="vt">Concept questions, part 1</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 25 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/f4MusblLa1k" target="_blank" rel="noopener">youtu.be/f4MusblLa1k</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="bcvbnbfFwrQ" data-title="Concept questions, part 2"><span class="vt">Concept questions, part 2</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 19 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/bcvbnbfFwrQ" target="_blank" rel="noopener">youtu.be/bcvbnbfFwrQ</a></span></div>
+</section>
+<section class="part">
+<h3 class="k">Newton's third law</h3>
+<p>When your hand pushes the phone, the phone pushes back on your hand with the same force. These two videos show how to decide which forces act on which object.</p>
+<div class="vid"><button type="button" class="vidbtn" data-yt="By-ggTfeuJU" data-title="Newton&#x27;s third law"><span class="vt">Newton's third law</span><span class="vsep"> - </span><span class="vm">Khan Academy, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/By-ggTfeuJU" target="_blank" rel="noopener">youtu.be/By-ggTfeuJU</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="JAZIdG1dlpM" data-title="Concept questions"><span class="vt">Concept questions</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 18 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/JAZIdG1dlpM" target="_blank" rel="noopener">youtu.be/JAZIdG1dlpM</a></span></div>
+</section>
+</div></details>
+
 <div class="provenance prov2">
 <div class="prov-head">Where this page comes from</div>
-<p class="prov-lead">The videos by Prof. Sathya and the worked examples at stops 1 to 5 come from earlier offerings of CST286. The Khan Academy videos and the video at stop 6 on how an accelerometer works are by their own authors. The trail layout, the units checks, the stop 6 example, the simulations and the goals at stop 7 were drafted with AI and reviewed by Prof. Sathya.</p>
+<p class="prov-lead">The videos and clips by Prof. Sathya, and the worked examples at stops 1 and 3, come from earlier offerings of CST286. The Khan Academy videos and the video at stop 5 on how an accelerometer works are by their own authors. The trail layout, the units checks, the examples at stops 2, 4 and 5, the simulations and the problems at stop 6 were drafted with AI and reviewed by Prof. Sathya.</p>
 </div>
 </main>
 
@@ -642,7 +641,7 @@
             try { history.replaceState(null, '', '#stop-' + n); } catch (e) { /* fine */ }
         });
     });
-    var hm = /^#stop-([1-7])$/.exec(location.hash || '');
+    var hm = /^#stop-([1-9])$/.exec(location.hash || '');
     if (hm) { goTo(hm[1], true); }
 
     // ---------- worked examples: steps one at a time (all visible without this script) ----------
@@ -757,7 +756,11 @@
             var f = document.createElement('iframe');
             var origin = '';
             try { if (/^https?:/.test(location.protocol)) { origin = '&origin=' + encodeURIComponent(location.origin); } } catch (e) { origin = ''; }
-            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&enablejsapi=1' + origin);
+            // A clip carries its start and end, in seconds; a full video carries neither.
+            var clip = '';
+            var t0 = btn.getAttribute('data-start'), t1 = btn.getAttribute('data-end');
+            if (t0 !== null && t1 !== null) { clip = '&start=' + encodeURIComponent(t0) + '&end=' + encodeURIComponent(t1); }
+            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&enablejsapi=1' + clip + origin);
             startAtSpeed(f, 1.25);
             f.setAttribute('title', btn.getAttribute('data-title') || '');
             f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
@@ -788,7 +791,7 @@
     // ---------- print: every stop and every step on paper ----------
     var reopen = [];
     window.addEventListener('beforeprint', function () {
-        reopen = all('details.stop').filter(function (d) { return !d.open; });
+        reopen = all('details.stop, details.shelf').filter(function (d) { return !d.open; });
         reopen.forEach(function (d) { d.open = true; });
     });
     window.addEventListener('afterprint', function () {
