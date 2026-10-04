@@ -21,41 +21,42 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-Reflect on how you learned in Sprint 1 so that you can decide what to keep and what to adjust. Then explore one physics topic deeply on a learning trail, and apply one lesson from your reflection as you work.
+Reflect on how you learned in Sprint 1 so that you can improve your learning skill. Then explore one physics topic deeply on a learning trail, and apply at least one lesson from your reflection as you work.
 
 ## Choose how you will do this
 
 ☐ **I am OK with using the AI Dojo to complete this graded item.** Tick this to do both parts as conversations with your Dojo; the page then shows the Dojo route below instead of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
+If students click the checkbox, put a bright reminder that this will work only if they have a Google doc linked in their AI Dojo project context, so that the tool is depending on the latest information about the course.
 
 ## Part 1 · Look back at how you learned in Sprint 1
 
-Write your answer to each task in the box under it. If you submitted the activity *What misconceptions about learning we all have*, paste your answers to tasks 1 to 5 here and improve them.
+Write your answer to each task in the box under it. If you submitted the activity *What misconceptions about learning we all have*, paste your answers to tasks 1 to 5 here and revise them.
 
-1. Describe what helped you make progress toward your physics learning goal and what, if anything, made progress difficult. Use specific moments from Sprint 1 to explain what happened and what you learned from it.
+1. Describe what habits helped you make progress toward your physics learning goal and what, if anything, made progress difficult. Use specific moments from Sprint 1 to explain what happened and what you learned from it.
 
-   **Your answer to task 1.** What affected your progress, with specific moments from the sprint.
+   **Your answer to task 1.** What habits affected your progress, with specific moments from the sprint.
 
-2. Explain how interested you were to learn the topic you chose and how that interest affected your approach to learning. Describe one moment that illustrates your interest.
+2. Reflect on your interest,how much you cared about learning the topic, how that interest helped your learning - give a specific moment as an example, if possible.
 
    **Your answer to task 2.** The interest in your goal and how it influenced your approach.
 
-3. Describe how you and your partner impacted each others' learning experience. If you had little or no opportunity to work together, describe why.
+3. Describe how you and your partner impacted each others' learning experience. If you had little or no opportunity to work together, how do you think you can improve on that going forward.
 
-   **Your answer to task 3.** Your experience working with partners, or any challenges in working together.
+   **Your answer to task 3.** Your experience working with partners, any challenges in working together, how you can improve going forward.
 
-4. Describe how you used AI, if you used it. Include what you asked it to do, what it gave you, and how you checked its response. If you did not use AI, say so.
+4. Describe how you used AI Dojo, if you used it. Include what you asked it to do, in what ways it helped your learning and how did you confirm that. If you did not use AI, share your reasons.
 
-   **Your answer to task 4.** Your AI use, your check, and what you learned, or a statement that you did not use AI.
+   **Your answer to task 4.** Your AI Dojo use, in what ways it helped your learning and how did you confirm that.
 
 5. Since you had a lot of freedom to use your time in this course, describe how you balanced your work in this course with other interests and responsibilities, and how your choices affected your progress. Based on your reflections, identify how you will do better in sprint 2.
 
    **Your answer to task 5.** Your choices and their effects, and what you will do going forward.
 
-6. Name one belief about learning that shaped how you worked in Sprint 1 and that you now question. Describe the moment in Sprint 1 that made you question it.
+6. Name one belief about learning that shaped how you worked in Sprint 1 and that you now want to refine. If there is a specific moment when you noticed this, please share.
 
    **Your answer to task 6.** The belief, and the moment that made you question it.
 
-7. Choose one lesson from tasks 1 to 6 that you will apply while you work through the learning trail in Part 2. Write it as something you will do.
+7. Can you identify one lesson from tasks 1 to 6 that you will apply while you work through the learning trail in Part 2. Write it as something you will do.
 
    **Your answer to task 7.** The one lesson, written as an action.
 
