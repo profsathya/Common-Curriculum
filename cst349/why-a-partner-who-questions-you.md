@@ -22,7 +22,7 @@ Heffernan describes how Alice Stewart and George Kneale worked together to exami
 
 ## Choose how you will do this
 
-☐ **I am OK with using the AI Dojo to complete this activity.** Tick this to answer the questions as a conversation with your Dojo; the page then shows the Dojo route below instead of the four boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
+☐ **I would like to use the AI Dojo to complete this activity.** Tick this to answer the questions as a conversation with your Dojo; the page then shows the Dojo route below instead of the four boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
 
 ## Tasks
 

@@ -20,7 +20,7 @@ Reflect on how you learned in Sprint 1 so that you can improve your learning ski
 
 ## Choose how you will do this
 
-☐ **I am OK with using the AI Dojo to complete this graded item.** Tick this to do both parts as conversations with your Dojo; the page then shows the Dojo route below instead of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
+☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to do both parts as conversations with your Dojo; the page then shows the Dojo route below instead of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder as soon as the box is ticked.)
 

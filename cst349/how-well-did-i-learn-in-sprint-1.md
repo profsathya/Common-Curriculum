@@ -14,7 +14,7 @@ Reflect on how you approached your Sprint 1 growth goal to decide what to keep a
 
 ## Choose how you will do this
 
-☐ **I am OK with using the AI Dojo to complete this activity.** Tick this to do the reflection as a conversation with your Dojo; the page then shows the Dojo route below instead of the five boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
+☐ **I would like to use the AI Dojo to complete this activity.** Tick this to do the reflection as a conversation with your Dojo; the page then shows the Dojo route below instead of the five boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
 
 ## Tasks
 
