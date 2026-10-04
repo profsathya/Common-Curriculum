@@ -10,7 +10,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 ## Purpose
 
-Explore how questioning an explanation can help you check your understanding, then consider how to use that approach in your Commons conversations. Knowing this before your first online chat on The Commons changes how you use the questions you receive.
+Explore how questioning an explanation can help you check your understanding.
 
 ## Watch
 
