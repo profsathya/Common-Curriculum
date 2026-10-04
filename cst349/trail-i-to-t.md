@@ -35,9 +35,18 @@ Page note: two sliders, each 0 to 100. The drawing updates as they move.
 
 ### Step 2. Find the evidence, one experience at a time
 
-An interviewer who wants to know how you work will ask about something you have already done, because what you did is stronger evidence than what you say you would do. These questions usually begin with "Tell me about a time when…". They are called behavioral interview questions.
+**Why this is worth learning.** A software interview includes more than coding problems. Amazon's own interview guide says: "Our interviews are rooted in behavioral-based questions." These questions ask about a situation you have already faced and how you handled it, because what you did is stronger evidence than what you say you would do. The same guide says that Amazon avoids brain teasers, and it recommends the STAR method for answering.
 
-The STAR method is a way to answer them so that the listener hears the whole story:
+Behavioral questions usually begin with "Tell me about a time when…". Here are two places to read real ones:
+
+- [Amazon's interviewing guide](https://amazonstores.turtl.co/story/interviewing-at-amazon-guide/page/5) lists questions about choosing between several possible solutions, taking a risk or failing, taking the lead on a project, motivating a group, and using data to decide.
+- [Indeed's guide to the STAR technique](https://www.indeed.com/career-advice/interviewing/how-to-use-the-star-interview-response-technique) lists fifteen questions, including ones about working with other departments, persuading someone, disagreeing with your manager and delivering bad news.
+
+Read the two lists. How many of the questions could you answer with code alone?
+
+Note for Sathya: both sources were read on 3 Oct 2026. I described the questions in my own words and kept one short quote from Amazon. If you would rather show a few of the questions word for word, tell me which.
+
+**The STAR method** is a way to answer these questions so that the listener hears the whole story:
 
 - **Situation.** Where you were and what was going on.
 - **Task.** What you were responsible for.
@@ -48,6 +57,8 @@ The STAR method is a way to answer them so that the listener hears the whole sto
 
 - [Behavioral interview questions and answers: use the STAR technique](https://youtu.be/zoGZQatkqKg), Indeed, 9:51
 - [STAR method example responses](https://youtu.be/GAUM1i6ebEU), University of Arizona career services, 3:36
+
+Note for Sathya: the PlayPosit links on this page open without a login only after each bulb is assigned to a PlayPosit class with "Do not require login" switched on (LINK, then Advanced settings). Until then they ask students to sign in.
 
 Prefer questions as you watch? Open the PlayPosit version of the [first video](https://www.wevideo.com/interactive/player_v2?type=share&bulb_id=230126) or the [second video](https://www.wevideo.com/interactive/player_v2?type=share&bulb_id=230127). No points are attached.
 
@@ -61,7 +72,7 @@ In the second video one student answers the same question three times. Notice wh
 | **Partial** | A real situation of your own, with one part still general. Most often it is the action or the result. | Second attempt: the task is clear, and the action is "some hard work". |
 | **Not yet** | You do not have a situation for this part yet. | Leave the box empty and choose "Not yet". |
 
-**Answer the eight questions.** Each question belongs to one part of the T. Answer with a real situation of your own from a class, a project, a job, a club or your family. Write the answer in STAR form, then mark it Full, Partial or Not yet using the table above.
+**Answer the eight questions.** Each question belongs to one part of the T, and the questions are modeled on the kinds of questions in the two lists above. Answer with a real situation of your own from a class, a project, a job, a club or your family. Write the answer in STAR form, then mark it Full, Partial or Not yet using the table above.
 
 *The bar*
 
@@ -77,7 +88,15 @@ In the second video one student answers the same question three times. Notice wh
 7. **Depth in computing.** Tell me about a project you are proud of. What was the hardest technical problem in it, how did you solve it, and where could someone see the work?
 8. **Understanding a system.** Tell me about a time you learned how a field that uses computing works, such as health care, education, transportation or agriculture, well enough to talk with someone who works in it.
 
-Page note: each question has one answer box with the four STAR labels as light prompts, and a three-way choice: Full · Partial · Not yet.
+Page note: each question has one answer box with the four STAR labels as light prompts, a **Get AI feedback** button, a collapsed **Check it yourself** list, and a three-way choice: Full · Partial · Not yet.
+
+**Get AI feedback (optional).** Each answer box has a button. The AI tells you which of the four STAR parts it can see in what you wrote, and it asks you one question. You decide the mark.
+
+**Check it yourself.**
+
+- Can a listener tell where you were and what you were responsible for?
+- Does the action say what you did yourself, in steps someone could picture?
+- Does the result include something another person could confirm?
 
 **Practice out loud (recommended).** We recommend that you say your answers to your AI Dojo, to a partner, or to both, and ask them to challenge you. An answer that has been questioned is easier to mark.
 
@@ -196,7 +215,7 @@ Note for Sathya: the paragraph above is new. The old videos treat a GitHub page 
 2. **The flip side.** Describe how each quality could come across differently to someone who does not know you yet. For example, a person who is passionate can come across as someone who does not take feedback.
 3. **Action.** Write one precise action for each quality that keeps the strength and addresses the flip side. "I will be on time" is general. "I am in my seat five minutes early with my notebook open" is precise.
 
-Page note: three rows, each with boxes for quality, flip side and action.
+Page note: three rows, each with boxes for quality, flip side and action. Each row has a **Get AI feedback** button.
 
 **Case to explore.** A teammate describes you in three words you would not have chosen. Ask your Dojo to play that teammate, so that you can practice asking what they saw and listening to the answer.
 
@@ -226,7 +245,7 @@ Page note: three rows, each with boxes for quality, flip side and action.
 3. Connect each strength to what the target needs.
 4. Support each strength with one of your STAR situations from stop 1.
 
-Page note: four boxes, then the page assembles them into one paragraph the student can copy.
+Page note: four boxes, then the page assembles them into one paragraph the student can copy. The assembled paragraph has a **Get AI feedback** button.
 
 Note for Sathya: YouTube has no transcript for the PVP video, so I wrote this stop from the two readings. Please check the four moves against what the video teaches.
 
@@ -254,7 +273,7 @@ Example: "By 16 October I will explain my class project to my cousin who works i
 
 Note for Sathya: the example is mine. Please replace it with one you prefer.
 
-Page note: three boxes and a **Copy to my growth plan** button.
+Page note: three boxes, a **Get AI feedback** button on the action, and a **Copy to my growth plan** button.
 
 **Case to explore.** The action you wrote feels uncomfortable. Ask your Dojo to help you size it, so that it is a real stretch and you can still finish it in two weeks.
 
@@ -269,3 +288,43 @@ You now have a shape drawn from your own evidence and one action that will add t
 More trails are on the way: Ethical Reasoning, Future of Work, and UMPIRE as a way of thinking.
 
 Page note: provenance block in the house pattern, same visible passage as the course home page. Behind the +: the videos are Prof. Sathya's own recordings from earlier semesters of this course, plus one each from Indeed and the University of Arizona; the employer data is from NACE (2025); the readings are from Harvard Business Review.
+
+---
+
+## AI feedback on this page (page notes, not shown to students)
+
+The buttons use the same AI feedback service as the other CST349 pages. Feedback is optional everywhere. Each reply is three or four short sentences: one thing already present, quoting the student's words; one requested element not yet visible; one concrete question. It uses only the criteria listed for that box.
+
+**Instructions that apply to every button on this page**
+
+- Never write or reword the student's answer, and never supply an example situation for them.
+- Never judge the person, their readiness or their prospects, and never say how an interviewer or employer would react.
+- MARKING STANCE: the student chooses Full, Partial or Not yet. Never assign or suggest a mark. Say which STAR parts are visible and let the student decide.
+- STARTING-POINT STANCE: having no situation yet for a part of the T is an expected state at this point in the degree. Never treat it as a shortfall, and never push the student to stretch a weak example to fill a box.
+- SHAPE STANCE: never tell the student what shape they are, and never say that one kind of growth is worth more than another.
+
+**Stop 1, questions 1 to 8**
+
+- REQUESTED ELEMENTS: a real situation of the student's own that fits the question; the task they were responsible for; the action they took themselves; the result, with something another person could confirm.
+- OBSERVABLE CRITERIA: a specific time and place is identified; the student's own responsibility is stated; the action uses "I" and gives at least one concrete step; the result states what changed and who or what could confirm it; the situation fits the part of the T the question belongs to.
+- COMMON OMISSIONS: the action given as a general effort with no step; "we" throughout with no account of the student's own part; a result with nothing a second person could confirm; a description of what the student would do in place of what they did.
+- Per question, the fit to check: 1 the listener was outside computing · 2 a team decision and the student's response to it · 3 the other person's field is identified · 4 the group's view before and after · 5 the people affected are identified · 6 the relationship and what came of it · 7 the hardest technical problem and where the work can be seen · 8 the system is identified and what the student learned about how it works.
+
+**Stop 4, each row**
+
+- REQUESTED ELEMENTS: one quality; one way it could come across differently; one precise action.
+- OBSERVABLE CRITERIA: the flip side describes how another person could experience the quality; the action states what the student will do, when, and how someone could see that it happened.
+- COMMON OMISSIONS: a flip side that restates the quality; an action with no time or observable behavior.
+
+**Stop 5, the assembled paragraph**
+
+- REQUESTED ELEMENTS: one target role or team; two or three strengths; the link between each strength and what the target needs; one supporting situation.
+- OBSERVABLE CRITERIA: the target is specific enough that another person could find such a role; each strength is tied to a need of the target; at least one strength is backed by a situation with an action and a result.
+- COMMON OMISSIONS: strengths with no target; a strength stated with no situation behind it.
+
+**Stop 6, the action**
+
+- REQUESTED ELEMENTS: one action for the next two weeks; the question from stop 1 it will let the student answer.
+- OBSERVABLE CRITERIA: the action involves at least one other person; it has a date; it ends in a result another person could confirm; it matches the question chosen.
+- COMMON OMISSIONS: an action done alone; no date; a result only the student could verify.
+- NOTE: never choose the stretch or suggest a different one. If the action seems too small or too large, ask what makes it a stretch and whether it fits in two weeks.

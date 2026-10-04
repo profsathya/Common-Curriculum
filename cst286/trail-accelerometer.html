@@ -718,6 +718,35 @@
         });
     });
 
+    // Each video starts at 1.25x. The speed is set once, when the video first plays,
+    // so a speed the student picks afterwards in the player is kept.
+    function startAtSpeed(frame, rate) {
+        var done = false, tries = 0;
+        function send(obj) {
+            try { frame.contentWindow.postMessage(JSON.stringify(obj), '*'); } catch (e) { /* fine */ }
+        }
+        function onMessage(ev) {
+            if (done || ev.source !== frame.contentWindow) { return; }
+            if (!/^https:\/\/www\.youtube(-nocookie)?\.com$/.test(ev.origin)) { return; }
+            var data;
+            try { data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; } catch (e) { return; }
+            var state = data && data.info && data.info.playerState;
+            if (state === 1) {
+                send({ event: 'command', func: 'setPlaybackRate', args: [rate] });
+                done = true;
+                window.removeEventListener('message', onMessage);
+            }
+        }
+        window.addEventListener('message', onMessage);
+        frame.addEventListener('load', function () {
+            var timer = setInterval(function () {
+                tries += 1;
+                if (done || tries > 20) { clearInterval(timer); return; }
+                send({ event: 'listening', id: 1, channel: 'widget' });
+            }, 500);
+        });
+    }
+
     // ---------- videos: the player loads only when asked for ----------
     all('.vidbtn').forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -726,7 +755,10 @@
             var box = document.createElement('div');
             box.className = 'player';
             var f = document.createElement('iframe');
-            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0');
+            var origin = '';
+            try { if (/^https?:/.test(location.protocol)) { origin = '&origin=' + encodeURIComponent(location.origin); } } catch (e) { origin = ''; }
+            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&enablejsapi=1' + origin);
+            startAtSpeed(f, 1.25);
             f.setAttribute('title', btn.getAttribute('data-title') || '');
             f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
             f.setAttribute('allowfullscreen', '');
