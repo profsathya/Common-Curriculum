@@ -718,7 +718,7 @@
         });
     });
 
-    // Each video starts at 1.25x. The speed is set once, when the video first plays,
+    // Each video starts at 1.25x. The speed is set once, when the player first reports in,
     // so a speed the student picks afterwards in the player is kept.
     function startAtSpeed(frame, rate) {
         var done = false, tries = 0;
@@ -731,7 +731,7 @@
             var data;
             try { data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; } catch (e) { return; }
             var state = data && data.info && data.info.playerState;
-            if (state === 1) {
+            if (state !== undefined && state !== null) {
                 send({ event: 'command', func: 'setPlaybackRate', args: [rate] });
                 done = true;
                 window.removeEventListener('message', onMessage);

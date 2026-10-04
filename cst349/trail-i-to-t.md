@@ -14,6 +14,8 @@ A common picture for this is a letter. The vertical stem of a T is your depth: y
 
 On this trail you find out what shape your own experiences support today, and then you choose one thing to build next.
 
+Page note: every embedded YouTube video on this page starts at 1.25x speed (the student can change it in the player).
+
 Page note: silent video 1, "From I to T" (about 40 seconds), sits here. Placeholder until the YouTube link exists.
 
 ---
