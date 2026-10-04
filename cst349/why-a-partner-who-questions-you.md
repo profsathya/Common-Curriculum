@@ -10,13 +10,15 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 ## Purpose
 
-Explore how a partner's questions can help you examine the reasoning behind your growth goal. Knowing this before your first online chat on The Commons changes how you use the questions you receive.
+Explore how a partner's questions can help you examine the reasoning behind your growth goal.
 
 ## Watch
 
-Watch before your first online chat on The Commons: Margaret Heffernan, [Dare to disagree](https://www.youtube.com/watch?v=PY_kd46RfVE), TEDGlobal 2012, about 13 minutes.
+Margaret Heffernan, [Dare to disagree](https://www.youtube.com/watch?v=PY_kd46RfVE), TEDGlobal 2012, about 13 minutes.
 
 Heffernan describes how Alice Stewart and George Kneale worked together to examine the evidence behind Stewart's research findings.
+
+☐ **I have watched the video.** Tick this to see the rest of the page. (Page note: everything below this line stays hidden until the box is ticked; the tick is remembered on this browser.)
 
 ## Choose how you will do this
 

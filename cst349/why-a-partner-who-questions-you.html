@@ -229,9 +229,12 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
 <div class="ownbar">Take ownership of your progress — this activity is provided to help you, but the grade for this activity will not affect your final grade.</div>
 
 <h2 class="sec">Purpose</h2>
-<p class="body">Explore how a partner's questions can help you examine the reasoning behind your growth goal. Knowing this before your first online chat on The Commons changes how you use the questions you receive.</p>
+<p class="body">Explore how a partner's questions can help you examine the reasoning behind your growth goal.</p>
 <h2 class="sec">Watch</h2>
-<p class="body">Watch before your first online chat on The Commons: Margaret Heffernan, <a href="https://www.youtube.com/watch?v=PY_kd46RfVE" target="_blank" rel="noopener">Dare to disagree</a>, TEDGlobal 2012, about 13 minutes.</p><p class="body">Heffernan describes how Alice Stewart and George Kneale worked together to examine the evidence behind Stewart's research findings.</p>
+<p class="body">Margaret Heffernan, <a href="https://www.youtube.com/watch?v=PY_kd46RfVE" target="_blank" rel="noopener">Dare to disagree</a>, TEDGlobal 2012, about 13 minutes.</p><p class="body">Heffernan describes how Alice Stewart and George Kneale worked together to examine the evidence behind Stewart's research findings.</p>
+<div class="choose"><input type="checkbox" id="watched-tick" aria-controls="after-watch" aria-expanded="false"><label for="watched-tick"><b>I have watched the video.</b> Tick this to see the rest of the page.</label></div>
+<noscript><style>#after-watch[hidden]{display:block !important;}</style></noscript>
+<div id="after-watch" hidden>
 <h2 class="sec">Choose how you will do this</h2>
 <div class="choose"><input type="checkbox" id="dojo-tick" aria-controls="tasks-block dojo-block" aria-expanded="false"><label for="dojo-tick"><b>I am OK with using the AI Dojo to complete this activity.</b> Tick this to answer the questions as a conversation with your Dojo; the page then shows the Dojo route below instead of the four boxes. Leave it unticked to write your answers in the boxes.</label></div>
 <div id="tasks-block">
@@ -294,6 +297,7 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
 <li><p><b>Submit.</b> Copy the Dojo's whole reply, the summary with the chat under it, and paste it into the Canvas text box.</p>
 </li>
 </ol>
+</div>
 </div>
 
 <div class="pagenav"><span><a href="home.html">&larr; Course home</a></span></div>
@@ -401,6 +405,25 @@ ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--b
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
         return state.answers[key];
     }
+
+    // ---------- the watched tick: the rest of the page shows once the student says they watched the video ----------
+    // Remembered per page on this browser; with storage blocked the student ticks it again on each visit.
+    (function () {
+        var w = document.getElementById('watched-tick');
+        var rest = document.getElementById('after-watch');
+        if (!w || !rest) { return; }
+        var WATCHED_KEY = TICK_KEY + ':watched';
+        function apply(on) {
+            rest.hidden = !on;
+            w.setAttribute('aria-expanded', on ? 'true' : 'false');
+        }
+        try { w.checked = window.localStorage.getItem(WATCHED_KEY) === '1'; } catch (e) { w.checked = false; }
+        apply(w.checked);
+        w.addEventListener('change', function () {
+            apply(w.checked);
+            try { window.localStorage.setItem(WATCHED_KEY, w.checked ? '1' : '0'); } catch (e) { /* not remembered */ }
+        });
+    }());
 
     // ---------- the Dojo tick: which route the page shows ----------
     // Unticked (default): Tasks and Submit shown, Dojo route hidden. Ticked: the reverse.

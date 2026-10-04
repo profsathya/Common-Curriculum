@@ -14,9 +14,11 @@ Explore how questioning an explanation can help you check your understanding, th
 
 ## Watch
 
-Watch before your first online chat on The Commons: Derek Muller (Veritasium), [Khan Academy and the Effectiveness of Science Videos](https://www.youtube.com/watch?v=eVtCO84MDj8), about 8 minutes.
+Derek Muller (Veritasium), [Khan Academy and the Effectiveness of Science Videos](https://www.youtube.com/watch?v=eVtCO84MDj8), about 8 minutes.
 
 Muller describes a study comparing what students understood before and after watching different physics explanations.
+
+☐ **I have watched the video.** Tick this to see the rest of the page. (Page note: everything below this line stays hidden until the box is ticked; the tick is remembered on this browser.)
 
 ## Choose how you will do this
 
