@@ -14,10 +14,11 @@ CST286 · Fall 2026 · A trail you can take as your Sprint 2 goal
 Turn your phone sideways and the screen turns with it. Walk, and the phone counts your steps. Drop it, and some phones call for help. Each of these starts from one small sensor, the accelerometer, and the sensor works because of physics you can learn in this sprint.
 
 ## A goal you can take as written
-
-> **Given** the push on my phone, in newtons, and the phone's mass, in kilograms,
-> **I can predict** the acceleration its sensor will report, in meters per second squared.
-> **This is useful because** a step counter, a screen that rotates and a fall alert all start from that one number.
+Goal: Understand how an accelerometer in the phone knows when the phone is pushed.
+A quantitative relationship I will be able to use:
+> **Given** the push on my phone, and the phone's mass, in the right units,
+> **I can predict** the acceleration its sensor will report, in the right unit.
+> **This is useful because** knowing how this works supports a many useful applications, likes a step counter, a screen that rotates and a fall alert.
 
 **Copy this goal** - paste it into your Sprint 2 goal post as it is, or change it at stop 6.
 
