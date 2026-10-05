@@ -7,6 +7,7 @@ Notes for the editor, not shown to students:
 - [VIDEO A/B/C] mark three new short silent videos. They are made (mp4 files in cowork/fall-2026-courses/content-tracks/cst286/videos/) and wait for Prof. Sathya to upload them to YouTube; until the links are in, the page shows a "being added" placeholder for each.
 - With the Dojo box ticked, the page hides Part 1, the Practice blocks, Apply your lesson and Submit, and shows the Dojo route; the videos and examples of the six stops stay visible.
 - The section "For your AI Dojo" is hidden on the page and is copied into the course Google Doc by the sync script. The passcode appears twice in this file and must be the same in both places.
+- Simulations (5 Oct): practice part c at stop 4 uses the PhET simulation Forces and Motion: Basics, embedded under Try it; practice part c at stop 5 uses the sensor-spring starter code. Nothing on the page blocks a student from moving on: every stop opens at any time, and no step is labelled optional (Prof. Sathya, 5 Oct).
 - "What a complete submission has" is a draft; it is not yet a points rubric. -->
 
 CST286 · Fall 2026 · Sprint 2 · Week 7 · Look back, then complete one learning trail
@@ -213,7 +214,9 @@ b. Explain how the small mass inside the phone's sensor behaves in the same way 
 
 **Units check.** A phone's mass is often given as 200 g. Use 200 in place of 0.2 and the acceleration comes out as 0.005, which is a thousand times too small. A newton contains kilograms, so the mass must be in kilograms before the answer is in meters per second squared. The clip shows a second version of this mistake: weight is a force in newtons, and mass is in kilograms.
 
-**Try it.** [SIM push-a-cart] The starter code has a cart, a force and a mass. Predict the acceleration on paper, run the code, and compare. Then double the mass and predict again before you run it.
+**Try it.**
+- [SIM push-a-cart] The starter code has a cart, a force and a mass. Predict the acceleration on paper, run the code, and compare. Then double the mass and predict again before you run it.
+- [PHET forces-and-motion-basics] *Forces and Motion: Basics* by PhET Interactive Simulations, University of Colorado Boulder. Choose the Acceleration screen and set Friction to None. Choose an object and an applied force, predict the acceleration, and compare. Part c of the practice below uses this simulation.
 
 **Practice.** A phone has a mass of [m] g. You push it along a smooth table with a force of [F] N. (Page note: m from 120 to 220 in steps of 10; F from 0.4 to 1.2 in steps of 0.2.)
 
@@ -224,6 +227,12 @@ a. Predict the acceleration its sensor reports.
 b. The same push acts on a tablet with a mass of [M] g. Before you calculate, say whether the acceleration is larger or smaller and why. Then calculate it. (Page note: M from 450 to 700 in steps of 50.)
 
    **Your answer.** A number box and a unit box; the page checks both. A text box for your reasoning, with the AI feedback button.
+
+c. Test the second law in the PhET simulation under *Try it* above. Choose the Acceleration screen, set Friction to None, and tick Masses, Values and Acceleration. Choose any object and any applied force. Predict the acceleration before you let it run, and then compare your prediction with the acceleration the simulation shows.
+
+   **Your answer.** Four rows with a number box and a unit box: the mass in the simulation, the force you applied, your prediction, and what the simulation shows. (Page note: the student chooses the numbers here, so the page checks the prediction against force ÷ mass from what they entered, and checks that the simulation reading agrees within 5%.)
+
+   **What you noticed.** Whether the simulation agreed with your prediction, and what explains any difference. A text box with the AI feedback button.
 
 **Ask your Dojo.**
 - "Give me a force and a mass and ask me to predict the acceleration, with units. If I am right, change one number and ask me to predict how the answer changes before I calculate."
@@ -275,6 +284,10 @@ a. Predict how far the mass shifts.
 b. Explain what the sensor reads when the phone lies flat on a table and what it reads when the phone is in free fall, and why the two readings differ.
 
    **Your explanation.** A text box with the AI feedback button.
+
+c. Check your prediction in the starter code under *Try it* above. Set phone_acceleration, mass and spring_k to your numbers, press Run, and enter the settled shift it reports.
+
+   **Your answer.** A number box and a unit box; the page checks that it matches your numbers within 3%.
 
 **Ask your Dojo.**
 - "I will explain why a phone at rest reads 9.8 and a falling phone reads 0. Ask me questions wherever my explanation skips a step."
@@ -406,10 +419,10 @@ Practice problems for Part 2. Choose the numbers inside these ranges, and choose
 - Stop 1, Units. A car slows down by N miles per hour every second, with N from 10 to 30 in steps of 5. (a) Convert to meters per second squared using 1 mi = 1609 m and 1 h = 3600 s, with the chain of conversion factors written out. The answer is N × 1609 ÷ 3600 m/s². (b) Explain how the units showed that each conversion factor was the right way up.
 - Stop 2, Direction. The student walks A m east, then B m west, in T s, with A from 20 to 50, B from 5 to 15, and T from 10 to 25. (a) Distance is A + B, displacement is A − B east, speed is distance ÷ T, and velocity is displacement ÷ T east. (b) Explain why speed and velocity came out as different numbers.
 - Stop 3, Newton's first law. A phone lies on a smooth car seat and the driver brakes hard. (a) The phone keeps moving forward and slides toward the front of the car, because no force slowed it. (b) Explain how the small mass inside the sensor behaves the same way when the phone slows down.
-- Stop 4, Newton's second law. A phone of mass m grams, with m from 120 to 220, is pushed with a force of F newtons, with F from 0.4 to 1.2. (a) The acceleration is F ÷ (m ÷ 1000) m/s². (b) The same push on a tablet of mass M grams, with M from 450 to 700: the student says larger or smaller and why before calculating.
-- Stop 5, Inside the sensor. A model sensor has a mass of m kg, from 0.01 to 0.04, on a spring of k N/m, from 20 to 80, accelerated at a m/s², from 2 to 8. (a) The shift is m × a ÷ k meters. (b) Flat on a table the sensor reads about 9.8 m/s² pointing up, and in free fall it reads about 0; the student explains why.
+- Stop 4, Newton's second law. A phone of mass m grams, with m from 120 to 220, is pushed with a force of F newtons, with F from 0.4 to 1.2. (a) The acceleration is F ÷ (m ÷ 1000) m/s². (b) The same push on a tablet of mass M grams, with M from 450 to 700: the student says larger or smaller and why before calculating. (c) The student opens the PhET simulation Forces and Motion: Basics at this stop, on the Acceleration screen with Friction set to None, chooses any object and any applied force, and reports the mass, the force, their prediction and the acceleration the simulation shows. Check that the prediction equals force ÷ mass, and ask what explains any difference from the simulation.
+- Stop 5, Inside the sensor. A model sensor has a mass of m kg, from 0.01 to 0.04, on a spring of k N/m, from 20 to 80, accelerated at a m/s², from 2 to 8. (a) The shift is m × a ÷ k meters. (b) Flat on a table the sensor reads about 9.8 m/s² pointing up, and in free fall it reads about 0; the student explains why. (c) The student sets the same three numbers in the sensor-spring starter code at this stop, runs it, and reports the settled shift it shows; it should match the prediction.
 - Stop 6, Explore from the phone. (a) The student chooses one of the five problems at this stop or writes their own as "Given ___, I can predict ___. This is useful because ___." (b) They work on it as far as they can with numbers and units. (c) They identify one part they cannot explain yet.
 
 ## Where this page comes from
 
-The videos and clips by Prof. Sathya, and the worked examples at stops 1 and 3, come from earlier offerings of CST286. The Khan Academy videos and the video at stop 5 on how an accelerometer works are by their own authors. The reflection tasks in Part 1 are by Prof. Sathya. The trail layout, the units checks, the examples at stops 2, 4 and 5, the simulations the practice problems and the problems at stop 6 were drafted with AI and reviewed by Prof. Sathya.
+The videos and clips by Prof. Sathya, and the worked examples at stops 1 and 3, come from earlier offerings of CST286. The simulation at stop 4, Forces and Motion: Basics, is by PhET Interactive Simulations, University of Colorado Boulder (phet.colorado.edu). The Khan Academy videos and the video at stop 5 on how an accelerometer works are by their own authors. The reflection tasks in Part 1 are by Prof. Sathya. The trail layout, the units checks, the examples at stops 2, 4 and 5, the simulations the practice problems and the problems at stop 6 were drafted with AI and reviewed by Prof. Sathya.
