@@ -1,4 +1,4 @@
-<!-- Editable text companion to trail-accelerometer.html. DRAFT 3, 4 Oct 2026 (adds a Practice block at stops 1 to 5, "Your work at this stop" at stop 6, "Copy your trail work", and a hidden "For your AI Dojo" section; the .html does NOT have these yet). Keep both files aligned.
+<!-- Editable text companion to trail-accelerometer.html. DRAFT 2, 4 Oct 2026; goal block revised by Prof. Sathya 5 Oct. The version with Practice blocks now lives inside how-i-learn-and-one-learning-trail.md (Part 2). Keep both files aligned.
 Notes for the editor, not shown to students:
 - Draft 2 follows Prof. Sathya's 3-4 Oct decisions: six stops instead of seven; Units and Direction keep their own short stops; each of his videos is clipped to one worked example; the main path needs only Newton's first and second laws; Newton's third law, the other motion problems and the full videos sit in a closed "More practice" shelf; practice happens at stop 6 from the phone's point of view. Draft 1 (seven stops) is kept in cowork/fall-2026-courses/content-tracks/cst286/trail-accelerometer-draft1-7stops.md.
 - Clip times come from the captions and are approximate. Check each by watching: Units 13:10-15:55 · teacher walk 0:00-4:20 · headrest 3:42-7:46 · Earth and Mars 17:46-24:15.
@@ -18,7 +18,7 @@ Goal: Understand how an accelerometer in the phone knows when the phone is pushe
 A quantitative relationship I will be able to use:
 > **Given** the push on my phone, and the phone's mass, in the right units,
 > **I can predict** the acceleration its sensor will report, in the right unit.
-> **This is useful because** knowing how this works supports a many useful applications, likes a step counter, a screen that rotates and a fall alert.
+> **This is useful because** knowing how this works supports many useful applications, like a step counter, a screen that rotates and a fall alert.
 
 **Copy this goal** - paste it into your Sprint 2 goal post as it is, or change it at stop 6.
 
@@ -48,16 +48,6 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 
 [VIDEO B - Same number, wrong unit]
 
-**Practice.** A car slows down by [N] miles per hour every second. (Page note: N is chosen for each student from 10, 15, 20, 25 or 30; "Try again with new numbers" picks another.)
-
-a. Convert this to meters per second squared, using 1 mi = 1609 m and 1 h = 3600 s. Write out the chain of conversion factors.
-
-   **Your answer.** A number box and a unit box; the page checks both. A box for the chain of factors.
-
-b. Explain how the units told you that each conversion factor was the right way up.
-
-   **Your explanation.** A text box with the AI feedback button.
-
 **Ask your Dojo.**
 - "Give me one unit conversion that needs two conversion factors. Do not solve it. Ask me to set up the chain, and tell me only whether my units cancel."
 - "I will explain why 20 cm is 0.2 m and not 2000 m. Ask me questions until my explanation would convince someone who has never used the metric system."
@@ -85,16 +75,6 @@ b. Explain how the units told you that each conversion factor was the right way 
 **Units check.** You walk 10 m in 8 s, so your speed is 1.25 m/s. The same walk is 4.5 km/h and 2.8 mi/h. The number is 1.25, 4.5 or 2.8 depending on the unit, so a number without its unit does not tell anyone how fast you walked. Add "toward the door" and the speed becomes a velocity, because now it has a direction.
 
 **Try it.** Mark a 10 m line outside. Time yourself walking it and calculate your speed in meters per second. Then walk back to the start and state your distance and your displacement for the round trip.
-
-**Practice.** You walk [A] m east, then turn around and walk [B] m west. The whole walk takes [T] s. (Page note: A from 20, 30, 40 or 50; B from 5, 10 or 15; T from 10, 20 or 25.)
-
-a. Calculate your distance, your displacement, your speed and your velocity.
-
-   **Your answer.** Four number boxes with unit boxes, and a direction for displacement and velocity; the page checks them.
-
-b. Explain why your speed and your velocity came out as different numbers.
-
-   **Your explanation.** A text box with the AI feedback button.
 
 **Ask your Dojo.**
 - "Ask me for three everyday quantities, one at a time, and have me say whether each is a vector or a scalar and why. Correct me only after I give my reason."
@@ -124,13 +104,6 @@ b. Explain why your speed and your velocity came out as different numbers.
 5. The small mass inside your phone's sensor does the same thing when the phone speeds up.
 
 **Units check.** "The car rounds the curve at a constant 60 mi/h." The speed is constant, and the velocity is still changing, because velocity includes direction and the direction changes all the way around the curve. A change in velocity needs an unbalanced force, so there is one on the car even though the number on the speedometer stays at 60. In metric units 60 mi/h is 26.8 m/s.
-
-**Practice.** Your phone lies on a smooth car seat, and the driver brakes hard.
-
-a. Predict where the phone ends up on the seat, and use the first law to explain why.
-b. Explain how the small mass inside the phone's sensor behaves in the same way when the phone itself slows down.
-
-   **Your explanation.** A text box with the AI feedback button. (Page note: this stop has no numbers to check.)
 
 **Ask your Dojo.**
 - "A cup of coffee sits on a car's dashboard and the driver brakes hard. Ask me what the cup does and why. Then ask me how this is like the mass inside my phone's sensor."
@@ -162,16 +135,6 @@ b. Explain how the small mass inside the phone's sensor behaves in the same way 
 **Units check.** A phone's mass is often given as 200 g. Use 200 in place of 0.2 and the acceleration comes out as 0.005, which is a thousand times too small. A newton contains kilograms, so the mass must be in kilograms before the answer is in meters per second squared. The clip shows a second version of this mistake: weight is a force in newtons, and mass is in kilograms.
 
 **Try it.** [SIM push-a-cart] The starter code has a cart, a force and a mass. Predict the acceleration on paper, run the code, and compare. Then double the mass and predict again before you run it.
-
-**Practice.** A phone has a mass of [m] g. You push it along a smooth table with a force of [F] N. (Page note: m from 120 to 220 in steps of 10; F from 0.4 to 1.2 in steps of 0.2.)
-
-a. Predict the acceleration its sensor reports.
-
-   **Your answer.** A number box and a unit box; the page checks both.
-
-b. The same push acts on a tablet with a mass of [M] g. Before you calculate, say whether the acceleration is larger or smaller and why. Then calculate it. (Page note: M from 450 to 700 in steps of 50.)
-
-   **Your answer.** A number box and a unit box; the page checks both. A text box for your reasoning, with the AI feedback button.
 
 **Ask your Dojo.**
 - "Give me a force and a mass and ask me to predict the acceleration, with units. If I am right, change one number and ask me to predict how the answer changes before I calculate."
@@ -214,16 +177,6 @@ In a real phone the mass and the spring are a few thousandths of a millimeter ac
 - [SIM sensor-spring] The starter code has a box with a mass on a spring inside. Set the acceleration, predict the shift with x = ma ÷ k, run the code, and compare. Then make the spring stiffer and predict whether the shift grows or shrinks.
 - On your own phone: install the free app **phyphox** and open "Acceleration with g". Lay the phone flat and read the three numbers. Stand it on its long edge and read them again. Before each move, write down which number you expect to be near 9.8.
 
-**Practice.** A large model of the sensor has a mass of [m] kg on a spring with a spring constant of [k] N/m. The model is accelerated at [a] m/s². (Page note: m from 0.01, 0.02, 0.03 or 0.04; k from 20, 40, 50 or 80; a a whole number from 2 to 8.)
-
-a. Predict how far the mass shifts.
-
-   **Your answer.** A number box and a unit box; the page checks both and accepts meters or millimeters.
-
-b. Explain what the sensor reads when the phone lies flat on a table and what it reads when the phone is in free fall, and why the two readings differ.
-
-   **Your explanation.** A text box with the AI feedback button.
-
 **Ask your Dojo.**
 - "I will explain why a phone at rest reads 9.8 and a falling phone reads 0. Ask me questions wherever my explanation skips a step."
 - "Ask me what the sensor reports when the phone moves at a steady speed in a straight line, and why."
@@ -258,33 +211,6 @@ Dojo: "A car going 15 m/s stops in 0.1 s. Ask me to predict the acceleration and
 > Given how strongly the ground shakes, I can predict whether a phone lying on a table will register it. This is useful because thousands of phones together can report an earthquake seconds before the shaking arrives somewhere else.
 
 Dojo: "Help me find out how small an acceleration a phone sensor can detect, and ask me how I would tell an earthquake from someone bumping the table."
-
-**Your work at this stop.**
-
-a. Choose one of the five problems above, or write your own in the same form. Write it as a goal: Given ___, I can predict ___. This is useful because ___.
-b. Work on the problem as far as you can. Show your prediction with numbers and units.
-c. Identify one part of the problem that you cannot explain yet.
-
-   **Your answer.** A text box with the AI feedback button.
-
----
-
-## Copy your trail work
-
-Press **Copy my trail work**. Go back to the graded item *How I learn, and one learning trail to explore* and paste it into the box in Part 2. (Page note: the copy holds, for each stop, the numbers you were given, your answers, the number of tries and your explanations.)
-
----
-
-## For your AI Dojo (hidden on the page; copied into the course Google Doc)
-
-Practice problems for the learning trail "How does your phone know it moved?". Choose the numbers inside these ranges, and choose new ones when the student tries again. Work out the answer yourself first. Check the number and the unit. Do not give the answer.
-
-- Stop 1, Units. A car slows down by N miles per hour every second, with N from 10 to 30 in steps of 5. (a) Convert to meters per second squared using 1 mi = 1609 m and 1 h = 3600 s, with the chain of conversion factors written out. The answer is N × 1609 ÷ 3600 m/s². (b) Explain how the units showed that each conversion factor was the right way up.
-- Stop 2, Direction. The student walks A m east, then B m west, in T s, with A from 20 to 50, B from 5 to 15, and T from 10 to 25. (a) Distance is A + B, displacement is A − B east, speed is distance ÷ T, and velocity is displacement ÷ T east. (b) Explain why speed and velocity came out as different numbers.
-- Stop 3, Newton's first law. A phone lies on a smooth car seat and the driver brakes hard. (a) The phone keeps moving forward and slides toward the front of the car, because no force slowed it. (b) Explain how the small mass inside the sensor behaves the same way when the phone slows down.
-- Stop 4, Newton's second law. A phone of mass m grams, with m from 120 to 220, is pushed with a force of F newtons, with F from 0.4 to 1.2. (a) The acceleration is F ÷ (m ÷ 1000) m/s². (b) The same push on a tablet of mass M grams, with M from 450 to 700: the student says larger or smaller and why before calculating.
-- Stop 5, Inside the sensor. A model sensor has a mass of m kg, from 0.01 to 0.04, on a spring of k N/m, from 20 to 80, accelerated at a m/s², from 2 to 8. (a) The shift is m × a ÷ k meters. (b) Flat on a table the sensor reads about 9.8 m/s² pointing up, and in free fall it reads about 0; the student explains why.
-- Stop 6, Explore from the phone. (a) The student chooses one of the five problems at this stop or writes their own as "Given ___, I can predict ___. This is useful because ___." (b) They work on it as far as they can with numbers and units. (c) They identify one part they cannot explain yet.
 
 ---
 
