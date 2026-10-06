@@ -10,7 +10,7 @@ Notes for the editor, not shown to students:
 - Simulations (5 Oct): practice part c at stop 4 uses the PhET simulation Forces and Motion: Basics, embedded under Try it; practice part c at stop 5 uses the sensor-spring starter code. Nothing on the page blocks a student from moving on: every stop opens at any time, and no step is labelled optional (Prof. Sathya, 5 Oct).
 - "What a complete submission has" is a draft; it is not yet a points rubric. -->
 
-CST286 · Fall 2026 · Sprint 2 · Week 7 · Look back, then complete one learning trail
+CST286 · Fall 2026 · Sprint 2 · Week 7 · Reflect on your learning, practice on full learning trail
 
 # How I learn, and one learning trail to explore
 
@@ -20,7 +20,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-Reflect on how you learned in Sprint 1 so that you can improve your learning skill. Then explore one physics topic deeply on a learning trail, and apply at least one lesson from your reflection as you work.
+Reflect on how you learned in Sprint 1 to identify one change you will make to improve your learning skill. Then explore one physics topic deeply on a learning trail, and apply the one learning skill change from your reflection to your learning experience.
 
 ## Choose how you will do this
 
@@ -30,9 +30,9 @@ Reflect on how you learned in Sprint 1 so that you can improve your learning ski
 
 ## Part 1 · Look back at how you learned in Sprint 1
 
-Write your answer to each task in the box under it. If you submitted the activity *What misconceptions about learning we all have*, paste your answers to tasks 1 to 5 here and revise them.
+Write your answer to each task in the box under it. If you submitted the activity *What misconceptions about learning we all have*, you could refer to those responses as starting point here. Responding to all reflections questions is encouraged but not required. Make this activity useful to yourself. 
 
-1. Describe what habits helped you make progress toward your physics learning goal and what, if anything, made progress difficult. Use specific moments from Sprint 1 to explain what happened and what you learned from it.
+1. Describe 1 to 3 habits you have that helped you make progress toward your physics learning goal and 1 to 3 habits that made progress a bit difficult. Use specific moments from Sprint 1, whenver possible, eto explain what happened and what you learned from it.
 
    **Your answer to task 1.** What habits affected your progress, with specific moments from the sprint.
 
@@ -40,11 +40,11 @@ Write your answer to each task in the box under it. If you submitted the activit
 
    **Your answer to task 2.** The interest in your goal and how it influenced your approach.
 
-3. Describe how you and your partner impacted each others' learning experience. If you had little or no opportunity to work together, describe how you can improve on that going forward.
+3. Describe how you and your partner supported each others' learning experience. If you had little or no opportunity to work together, reflect on why and how you can improve on that going forward.
 
    **Your answer to task 3.** Your experience working with partners, any challenges in working together, and how you can improve going forward.
 
-4. Describe how you used the AI Dojo, if you used it. Include what you asked it to do, in what ways it helped your learning, and how you confirmed that. If you did not use AI, share your reasons.
+4. Describe how you used the AI Dojo, if you used it. Consider what you asked it to do, in what ways it helped your learning, and how you confirmed what it provided. If you did not use AI, reflect on your reasons.
 
    **Your answer to task 4.** Your AI Dojo use, in what ways it helped your learning and how you confirmed that, or your reasons for not using AI.
 
@@ -62,7 +62,7 @@ Write your answer to each task in the box under it. If you submitted the activit
 
 ## Part 2 · Explore one topic deeply on the learning trail
 
-Work through the six stops below in order. At each stop, watch the video, work through the example, and then do the practice. The page checks your numbers and units, and the AI feedback button responds to your explanations. You can try a problem again with new numbers.
+The learning trail is provided as an example for you to experience self-directed learning with sufficient support. Work through the six stops below in order. At each stop, watch the video, work through the example, and then do the practice. The page checks your numbers and units, and the AI feedback button responds to your explanations. You can try a problem again with new numbers. If anything is not clear or you have doubt about, please reach out to us or check-in with your group.
 
 (With the Dojo box ticked, this paragraph reads: Work through the six stops below in order. At each stop, watch the video and work through the example, and then tell your Dojo that you have finished the stop.)
 
