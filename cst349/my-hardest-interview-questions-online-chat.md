@@ -25,7 +25,7 @@ Use the behavioral interview questions that are hardest for you to answer today 
 
 ## Start with your Dojo (shown only when the box is ticked)
 
-Passcode for this graded item: **QUESTIONS-1012**
+Passcode for this graded item: **STAR-1012**
 
 **Start the conversation.** Keep this page open next to your Dojo chat. Paste this into your AI Dojo:
 
@@ -35,7 +35,7 @@ Passcode for this graded item: **QUESTIONS-1012**
 
 ## The four questions
 
-Behavioral interview questions ask you to describe something you actually did. Interviewers ask some variation of these four questions often, because the answers show how you learn, your initiative, and how you work with other people. STAR method is a well-known technique to respond to such questions. (Page Note: make the STAR method hover text with what STAR stands for and an example)
+Behavioral interview questions ask you to describe something you actually did. Interviewers ask some variation of these four questions often, because the answers show how you learn, your initiative, and how you work with other people. The STAR method is a well-known technique for answering such questions. (Page Note: make the STAR method hover text with what STAR stands for and an example)
 
 1. Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.
 2. Tell me about a time you took on work outside your role or your area because the team needed it.
@@ -68,7 +68,7 @@ Behavioral interview questions ask you to describe something you actually did. I
 
 4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The interview questions I find hardest** online chat activity in your dashboard. Post your hard question using this format: The question I find hardest is: ___. It is hard for me because: ___. Write the reason as you see it now, after reading the three answers.
 
-5. Open three classmates' posts and chat with each of them. Ask questions to understand their challenge, and help them how to plan and prepare for them: is the experience missing, or is it there and not yet thought through? Respond to the questions you receive from others.
+5. Open three classmates' posts and chat with each of them. Ask questions to understand their challenge, and help them plan how to prepare for it: is the experience missing, or is it there and not yet thought through? Respond to the questions you receive from others.
 
 6. After completing at least three chat conversations to a meaningful conclusion, write what you now see about your own question.
 
@@ -149,7 +149,7 @@ Go through the Self-check and tick each line your work meets. Each tick updates 
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Plan your professional preparation intentionally around behavioral interview questions. Course: CST349. Due: Monday 12 October. Passcode: QUESTIONS-1012.
+Graded item: Plan your professional preparation intentionally around behavioral interview questions. Course: CST349. Due: Monday 12 October. Passcode: STAR-1012.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 

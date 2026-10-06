@@ -88,7 +88,7 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 
 **After this stop you can** convert a quantity from one unit to another by lining up conversion factors so the units you do not want cancel.
 
-**Watch.** Prof. Sathya sets up one conversion - 3 min clip [CLIP H2ECsg6lxgg 790 955] · [slides](https://docs.google.com/presentation/d/1WNMl2gCaXzvLytnWBTNDmPVOMl2dWLSAWbwY3iNjDVU)
+**Watch.** Prof. Sathya sets up one conversion - 3 min clip [CLIP H2ECsg6lxgg 790 955] · [slides](https://docs.google.com/presentation/d/1WNMl2gCaXzvLytnWBTNDmPVOMl2dWLSAWbwY3iNjDVU) More examples in the video if you are curious.
 
 **Worked example.** The clip sets this problem up and leaves the last step to you. You have 1.5 pounds of gold, and the density of gold is 19.3 grams per cubic centimeter. What is its volume in cubic centimeters?
 
@@ -116,13 +116,13 @@ b. Explain how the units told you that each conversion factor was the right way 
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand why a number needs its unit, and to convert a quantity from one unit to another correctly. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then tell me what I understand well and what I should review.
+> My learning goal is to understand why a number needs its unit, and to convert a quantity from one unit to another correctly. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 
 ### Stop 2 · Direction
 
-**Why this stop.** The sensor reports acceleration with a direction. It gives three numbers, one for each direction the phone can move, and each number can be positive or negative. To read those numbers you need to tell apart the quantities that carry a direction from the ones that do not.
+**Why this stop.** Understanding the difference between scalar and vector quantities is applicable in many situations. The sensor reports acceleration with a direction. It gives three numbers, one for each direction the phone can move, and each number can be positive or negative. To read those numbers you need to tell apart the quantities that carry a direction from the ones that do not.
 
 **After this stop you can** tell distance from displacement and speed from velocity, and say what the sign of a sensor reading means.
 
@@ -154,7 +154,7 @@ b. Explain why your speed and your velocity came out as different numbers.
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand which quantities have a direction and which do not, to tell distance from displacement and speed from velocity, and to explain what a positive or negative sensor reading means. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then tell me what I understand well and what I should review.
+> My learning goal is to understand which quantities have a direction and which do not, to tell distance from displacement and speed from velocity, and to explain what a positive or negative sensor reading means. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 
@@ -190,7 +190,7 @@ b. Explain how the small mass inside the phone's sensor behaves in the same way 
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand Newton's first law of motion and apply it to different scenarios to correctly predict the expected behavior. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then tell me what I understand well and what I should review.
+> My learning goal is to understand Newton's first law of motion and apply it to different scenarios to correctly predict the expected behavior. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 
@@ -239,15 +239,15 @@ c. Test the second law in the PhET simulation under *Try it* above. Choose the A
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand Newton's second law of motion and apply it to different situations to correctly predict the force, the mass or the acceleration, with the right units. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then tell me what I understand well and what I should review.
+> My learning goal is to understand Newton's second law of motion and apply it to different situations to correctly predict the force, the mass or the acceleration, with the right units. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 
 ### Stop 5 · Inside the sensor
 
-**Why this stop.** This is where the two laws become a number on your phone. A small mass sits on a spring inside the chip. When the phone accelerates, the mass lags behind and the spring stretches until it pulls the mass along at the same acceleration. The phone measures how far the spring stretched.
+**Why this stop.** This is where we understand how the two laws of nature can be used to build a sensor in your phone. 
 
-**After this stop you can** predict how far the mass shifts for a given acceleration, and say what the sensor reports when the phone is still, pushed or falling.
+**After this stop you can** explain the design of a simple accelerometer and how it can exactly predict the movement/push on it.
 
 **Watch.**
 - Principle of the accelerometer - Prof. Sathya, 8 min · [youtu.be/gxZ7Hdrs3Yk](https://youtu.be/gxZ7Hdrs3Yk)
@@ -294,7 +294,7 @@ c. Check your prediction in the starter code under *Try it* above. Set phone_acc
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand how the accelerometer in my phone uses Newton's first and second laws to measure acceleration, and to predict what it reads when the phone is still, pushed or falling. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then tell me what I understand well and what I should review.
+> My learning goal is to understand how the accelerometer in my phone uses Newton's first and second laws to measure acceleration, and to predict what it reads when the phone is still, pushed or falling. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 
