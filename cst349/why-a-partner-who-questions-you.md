@@ -4,7 +4,7 @@ CST349 · Fall 2026 · Sprint 2 · Week 7 · How I learned
 
 # Why a partner who questions you is worth having
 
-Own your progress · Recommended Date: Wednesday 7 October · Margaret Heffernan, TED, 13 min
+Own your progress · Recommended Date: Friday 9 October · Margaret Heffernan, TED, 13 min
 
 Take ownership of your progress — this activity is provided to help you, but the grade for this activity will not affect your final grade.
 
