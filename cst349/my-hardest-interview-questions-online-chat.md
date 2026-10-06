@@ -66,7 +66,7 @@ Behavioral interview questions ask you to describe something you actually did. I
 
    **My choice for the question that would be hard for me.** The answer I would like the most as the interviewer, and what in it convinced me.
 
-4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The behavioral interview question that provides me the biggest opportunity for growth** online chat activity in your dashboard. Post your hard question using this format: The question I find hardest is: ___. It is hard for me because: ___. Write the reason as you see it now, after reading the three answers.
+4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The behavioral interview question that provides me the biggest opportunity for growth** online chat activity in your dashboard. Post your hard question using this format: The question that gives me the biggest opportunity for growth is: ___. I will find it hard to answer now because: ___. The opportunity for growth it gives me is: ___. Write the reason as you see it now, after reading the three answers.
 
 5. Open three classmates' posts and chat with each of them. Ask questions to understand their challenge, and help them plan how to prepare for it: is the experience missing, or is it there and not yet thought through? Respond to the questions you receive from others.
 
@@ -168,7 +168,7 @@ First part, tasks 1 and 2 on this page. Ask the student what they would say toda
 
 Second part, task 3 on this page. The student reads three sample answers for each of their two questions on the page; you do not have the sample answers. Ask the student to tell you briefly what each candidate did, then which answer they would like the most as the interviewer and what in it convinced them. Ask what the interviewer learns about the candidate from that answer. Do not say which answer is best; the three answers are different and there is no single correct choice.
 
-When the second part is done, tell the student to post their hard question on The Commons, chat with three classmates' posts, and come back to this conversation afterwards. The post uses this format: The question I find hardest is: ___. It is hard for me because: ___. The student writes the post in their own words. If they ask for help with a classmate's post, help them ask questions that show the classmate why the question is hard for that classmate; do not write the questions for them.
+When the second part is done, tell the student to post their hard question on The Commons, chat with three classmates' posts, and come back to this conversation afterwards. The post uses this format: The question that gives me the biggest opportunity for growth is: ___. I will find it hard to answer now because: ___. The opportunity for growth it gives me is: ___. The student writes the post in their own words. If they ask for help with a classmate's post, help them ask questions that show the classmate why the question is hard for that classmate; do not write the questions for them.
 
 Third part, task 6 on this page. When the student returns, ask what their classmates asked them and what they noticed in the chats. Follow up until the student can say what they now understand about why their question is hard for them, and one thing they could do in Sprint 2 to answer it better.
 
