@@ -24,7 +24,7 @@ Reflect on how you learned in Sprint 1 to identify one change you will make to i
 
 ## Choose how you will do this
 
-☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to do both parts as a conversation with your Dojo; the page then shows the Dojo route in place of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.)
+☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to do both parts as a conversation with your Dojo; the page then shows the Dojo route in place of the boxes. Leave it unticked to write your answers in the boxes. (Page note: the tick is remembered on this browser.) << I am wondering if we should still have them walk through the sequence we have built for this trail and include the AI dojo guidance in the trail, rather than changing the entire assignment to be AI dojo based if they check this box>>
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder as soon as the box is ticked.)
 
@@ -68,12 +68,12 @@ The learning trail is provided as an example for you to experience self-directed
 
 ### How does your phone know it moved?
 
-Turn your phone sideways and the screen turns with it. Walk, and the phone counts your steps. Drop it, and some phones call for help. Each of these starts from one small sensor, the accelerometer, and the sensor works because of physics you can learn in this sprint.
+Turn your phone sideways and the screen turns with it. Walk, and the phone counts your steps. Drop it, and some phones call for help. There are a few sensors in the phone that makes these things possible - one of them is, the accelerometer, and the physics behind the sensor is explored in this learning trail.
 Goal: Understand how an accelerometer in the phone knows when the phone is pushed.
 A quantitative relationship I will be able to use:
 > **Given** the push on my phone, and the phone's mass, in the right units,
-> **I can predict** the acceleration its sensor will report, in the right unit.
-> **This is useful because** knowing how this works supports many useful applications, like a step counter, a screen that rotates and a fall alert.
+> **I can predict** the exact output the accelerometer will report, the right quantity in the right unit.
+> **This is useful because** knowing how this works supports many useful applications, like a step counter, a screen that rotates and a fall alert. And, my ability to learn this will help me dig into the physics of how things works.
 
 The trail has six stops and about 45 minutes of video. With the examples and the simulations it takes about two to three hours. Stops 1 and 2 are short and prepare you to read the sensor's numbers. Stops 3 and 4 are the two laws the sensor depends on. Stop 5 is the sensor, and stop 6 is where you practice on problems that start from your phone.
 
@@ -82,6 +82,8 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 ### Stop 1 · Units
 
 **Why this stop.** The sensor in your phone reports a number, and an app can use that number only if it knows the unit. A step counter that reads 9.8 and does not know whether it means meters per second squared or feet per second squared will count the wrong steps.
+
+<<Lets include the story about the mars lander disaster as a callout box to make the importance of units - we could also have a more close to them example of 'if someone says they will pay to 200 per week, you would want to know dollors or cents or Japanese Yen>>
 
 **After this stop you can** convert a quantity from one unit to another by lining up conversion factors so the units you do not want cancel.
 
@@ -157,7 +159,7 @@ b. Explain why your speed and your velocity came out as different numbers.
 
 ### Stop 3 · Newton's first law
 
-**Why this stop.** Inside the sensor is a small mass that is free to move a little. When the phone speeds up, the mass keeps doing what it was doing, so it falls behind the phone. That falling behind is the first law at work, and it is what the sensor measures.
+**Why this stop.** Understand Newton's first law of motion and how it applies to various situation. The understanding is the starting point for understanding how the accelerometer works.
 
 **After this stop you can** predict what an object will do when the thing carrying it speeds up, slows down or turns.
 
@@ -186,14 +188,14 @@ b. Explain how the small mass inside the phone's sensor behaves in the same way 
    **Your explanation.** A text box with the AI feedback button. (Page note: this stop has no numbers to check.)
 
 **Ask your Dojo.**
-- "A cup of coffee sits on a car's dashboard and the driver brakes hard. Ask me what the cup does and why. Then ask me how this is like the mass inside my phone's sensor."
+- <<The ask the dojo questions should be about the learning goal and have the AI tool come up with as many questions as possible until you can be sure I really understanding the learning goal. In this case the learning goal would understanding Newton's first law of motion and being able to apply it to different scenarios and correctly predict the expected behavior>>"A cup of coffee sits on a car's dashboard and the driver brakes hard. Ask me what the cup does and why. Then ask me how this is like the mass inside my phone's sensor."
 - "Ask me to explain why a seat belt is needed, using the first law, and keep asking 'what force?' until I name one."
 
 ---
 
 ### Stop 4 · Newton's second law
 
-**Why this stop.** The goal on this page is a second-law prediction. The push on the phone is a force, the phone has a mass, and the second law connects them to the acceleration that the sensor reports.
+**Why this stop.** Understand Newton's second law of motion and how it applies to various situations. This is relevant to how the accelerometer works.
 
 **After this stop you can** use F = ma to predict any one of force, mass and acceleration from the other two, with the units carried through.
 
