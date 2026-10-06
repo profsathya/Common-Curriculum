@@ -294,7 +294,7 @@ c. Check your prediction in the starter code under *Try it* above. Set phone_acc
 
 **Ask your Dojo.** Paste this prompt to check whether you have reached the goal of this stop.
 
-> My learning goal is to understand how the accelerometer in my phone uses Newton's first and second laws to measure acceleration, and to predict what it reads when the phone is still, pushed or falling. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
+> My learning goal is to explain the design of a simple accelerometer, and how it uses Newton's first and second laws to exactly predict the push on it. Ask me questions about this goal, one at a time, and use a different everyday situation in each question. After each answer, tell me whether my answer and my reasoning are correct, and do not solve anything for me. Keep asking new questions until you are confident that I really understand this goal. Then report back your assessment of what I understand well and what I should review.
 
 ---
 

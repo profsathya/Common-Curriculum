@@ -52,9 +52,9 @@ Behavioral interview questions ask you to describe something you actually did. I
 
    *With your Dojo:* talk through which question you have a possible answer to and which one would be hard for you. When you have a reason for each that is about you and your experience, write your answers in the boxes and mark the two questions.
 
-   **A question I have a possible answer to.** The question, and the experience I would talk about.
+   **A question I have a possible answer to.** The question, and the experience I could talk about.
 
-   **A question that would be hard for me.** The question, and why it is hard for me.
+   **A question that would be hard for me - gives me the biggest opportunity for growth.** The question, why I will find it hard to answer now, and what opportunities for growth it provides for me.
 
    (Page note: when the student marks the two questions, the page opens the sample answers for those two questions only.)
 
@@ -66,7 +66,7 @@ Behavioral interview questions ask you to describe something you actually did. I
 
    **My choice for the question that would be hard for me.** The answer I would like the most as the interviewer, and what in it convinced me.
 
-4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The interview questions I find hardest** online chat activity in your dashboard. Post your hard question using this format: The question I find hardest is: ___. It is hard for me because: ___. Write the reason as you see it now, after reading the three answers.
+4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The behavioral interview question that provides me the biggest opportunity for growth** online chat activity in your dashboard. Post your hard question using this format: The question I find hardest is: ___. It is hard for me because: ___. Write the reason as you see it now, after reading the three answers.
 
 5. Open three classmates' posts and chat with each of them. Ask questions to understand their challenge, and help them plan how to prepare for it: is the experience missing, or is it there and not yet thought through? Respond to the questions you receive from others.
 
