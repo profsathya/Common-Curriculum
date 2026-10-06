@@ -19,13 +19,23 @@ Use the behavioral interview questions that are hardest for you to answer today 
 
 ## Choose how you will do this
 
-☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to choose your questions and think through the sample answers as a conversation with your Dojo; the page then shows the Dojo route, with one box for the Dojo's summary in place of the answer boxes. Leave it unticked to write your answers in the boxes. On both routes, your post and your three chats happen on The Commons. (Page note: the tick is remembered on this browser.)
+☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to think through the tasks as a conversation with your Dojo; the page then adds the Dojo steps to the tasks below, and one box at the end for the Dojo's summary. You write your answers in the same boxes on both routes. On both routes, Part II is you posting your chosen question and reasoning behind why it is challenging and have conversations on The Commons platform (demo in class). (Page note: the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo: this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course.** (Page note: shown as a bright reminder as soon as the box is ticked.)
 
+## Start with your Dojo (shown only when the box is ticked)
+
+Passcode for this graded item: **QUESTIONS-1012**
+
+**Start the conversation.** Keep this page open next to your Dojo chat. Paste this into your AI Dojo:
+
+> Walk me through the graded item "Plan your professional preparation intentionally around behavioral interview questions". First tell me its passcode, its title and its due date as you have them. Keep the learning purpose in mind and make sure that I am reaching it. Keep this conversational, one topic at a time. Guide my thinking and give me the support I need to reach every learning step in the assignment, and do not answer for me. Do not summarize until I ask you to.
+
+**Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+
 ## The four questions
 
-Behavioral interview questions ask you to describe something you actually did. Interviewers ask some variation of these four questions often, because the answers show how you learn, how far you are willing to go for the work, and how you work with other people.
+Behavioral interview questions ask you to describe something you actually did. Interviewers ask some variation of these four questions often, because the answers show how you learn, your initiative, and how you work with other people. STAR method is a well-known technique to respond to such questions. (Page Note: make the STAR method hover text with what STAR stands for and an example)
 
 1. Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.
 2. Tell me about a time you took on work outside your role or your area because the team needed it.
@@ -36,7 +46,11 @@ Behavioral interview questions ask you to describe something you actually did. I
 
 1. Read the four questions. For each one, ask yourself what you would say if an interviewer asked it today.
 
+   *With your Dojo:* tell your Dojo what you would say to each question today. (Page note: the "With your Dojo" lines are shown only when the box is ticked.)
+
 2. Choose one question you have a possible answer to, and one question that would be hard for you to answer. Explain your reason for each choice.
+
+   *With your Dojo:* talk through which question you have a possible answer to and which one would be hard for you. When you have a reason for each that is about you and your experience, write your answers in the boxes and mark the two questions.
 
    **A question I have a possible answer to.** The question, and the experience I would talk about.
 
@@ -44,7 +58,9 @@ Behavioral interview questions ask you to describe something you actually did. I
 
    (Page note: when the student marks the two questions, the page opens the sample answers for those two questions only.)
 
-3. Read the three sample answers for each of your two questions. Imagine that you are the interviewer and these are three candidates. Decide which answer you would like the most, and explain what in the answer convinced you. The three answers are different from each other and there is no single correct choice, so your reasons are what count.
+3. Read the three sample answers for each of your two questions. Imagine that you are the interviewer and these are three candidates. Decide which answer you would like the most, and articulate why you think that answer is best. There is no right choice here - the goal is for you to think through the responses in detail.
+
+   *With your Dojo:* read the three answers on this page, then tell your Dojo what each candidate did and which answer you would like the most. When you can explain your choice for both questions, write your answers in the boxes.
 
    **My choice for the question I have a possible answer to.** The answer I would like the most as the interviewer, and what in it convinced me.
 
@@ -52,11 +68,23 @@ Behavioral interview questions ask you to describe something you actually did. I
 
 4. Log in to [the-commons.symbioticthinking.ai](https://the-commons.symbioticthinking.ai) with your csumb.edu email address, and find the **The interview questions I find hardest** online chat activity in your dashboard. Post your hard question using this format: The question I find hardest is: ___. It is hard for me because: ___. Write the reason as you see it now, after reading the three answers.
 
-5. Open three classmates' posts and chat with each of them. Ask questions that help your classmate see why the question is hard for them: is the experience missing, or is it there and not yet thought through? Answer the questions you receive in the same way.
+5. Open three classmates' posts and chat with each of them. Ask questions to understand their challenge, and help them how to plan and prepare for them: is the experience missing, or is it there and not yet thought through? Respond to the questions you receive from others.
 
-6. After your three chats, write what you now see about your own question.
+6. After completing at least three chat conversations to a meaningful conclusion, write what you now see about your own question.
+
+   *With your Dojo:* go back to the same Dojo chat. Tell your Dojo what your classmates asked you and what you noticed in the chats, then write your answer in the box.
 
    **What I learned from the chats.** What I now understand about why this question is hard for me, and one thing I could do in Sprint 2 to answer it better.
+
+## Your Dojo summary (shown after task 6, only when the box is ticked)
+
+**Ask for the summary.** When you have finished task 6, paste this into your Dojo:
+
+> Organize a summary of our conversation under five headings, keeping my exact language: A question I have a possible answer to, and the experience I would talk about · A question that would be hard for me, and why · My choice as the interviewer for the first question, and why · My choice as the interviewer for the hard question, and why · What I learned from the chats, and one thing I could do in Sprint 2. Use only what I said; if I did not answer one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
+
+If any heading says "not yet answered", go back to the task it belongs to.
+
+   **Your Dojo summary.** The Dojo's whole reply: the summary under its five headings, with the entire chat under it.
 
 ## Sample answers
 
@@ -64,11 +92,11 @@ Behavioral interview questions ask you to describe something you actually did. I
 
 ### Question 1. Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.
 
-**Answer A.** In my software engineering course, our team of four was building a scheduling app and I was assigned the database. I had never written SQL, and my teammates needed the tables within a week to connect their pages. I spent two evenings on a tutorial and realized I was following along without understanding it. So I stopped and built a small practice database from our own project data, because I learn faster when I can break something and see why. When my queries ran slowly, I read about indexes and tested the speed before and after adding them. I delivered the tables on day six and all three pages connected to them. Now when I have to learn something new, I start with a small version of the real problem.
+**Answer A.** In my software engineering course, our team of four was building a scheduling app and I was assigned the database. I had never written SQL, and my teammates needed the tables within a week to connect their pages. I spent two evenings on a tutorial and realized I was following along without understanding it. So I stopped and built a small practice database from our own project data, because I learn faster when I can apply what I am learning and see what works. When my queries ran slowly, I read about indexes and tested the speed before and after adding them. I delivered the tables on day six and all three pages connected to them. Now when I have to learn something new, I start with a small version of the real problem.
 
 **Answer B.** I work part-time at the campus IT help desk. My supervisor asked me to take over the spreadsheet that tracks laptop loans, because the student who built it had graduated. The staff used it every day and it was full of formulas I could not read. I told my supervisor what I did not know yet and asked for three days. I asked two coworkers which parts they used the most and what usually broke, and I emailed the student who built it with three specific questions. Each afternoon I posted a short note in the team chat saying what I had fixed and what was still open. By the end of the week the sheet was working again, and I wrote a one-page guide so the next person would not start from zero.
 
-**Answer C.** I am on the software side of the robotics club. A month before our competition the robot's arm kept missing its target, and the member who understood the mechanical design had left the club. The rest of the team was waiting on a fix. Nobody in software knew much about gears or torque, including me. I started going to the mechanical subteam's meetings, read the chapter on torque from a physics textbook, and asked the engineering lab technician to check my calculation. I found that our code assumed a gear ratio that did not match the arm that was actually built. I corrected the value and the arm hit the target in eight out of ten tries. The team used that version at the competition.
+**Answer C.** I am on the software side of the robotics club. A month before our competition the robot's arm kept missing its target, and the member who understood the mechanical design had left the club. The rest of the team was waiting on a fix. Nobody in software knew much about gears or torque, including me. I started going to the mechanical subteam's meetings, read the chapter on torque from a physics textbook, worked through more than 5 different problems from the textbook and asked the engineering lab technician to check my calculation. I found that our code assumed a gear ratio that did not match the arm that was actually built. I corrected the value and the arm hit the target in eight out of ten tries. The team used that version at the competition.
 
 ### Question 2. Tell me about a time you took on work outside your role or your area because the team needed it.
 
@@ -119,34 +147,6 @@ With at least two of my three online chat partners:
 
 Go through the Self-check and tick each line your work meets. Each tick updates the text under the boxes and copies it to your clipboard, so once you have ticked the last line, open the Canvas text box and paste. If you copied something else in between, press **Copy again if needed** and then paste.
 
-## Dojo route (shown above the four questions when the box is ticked; the answer boxes in tasks 2, 3 and 6 are hidden)
-
-Passcode for this graded item: **QUESTIONS-1012**
-
-**1. Start the conversation.** Paste this into your AI Dojo:
-
-> Walk me through the graded item "Plan your professional preparation intentionally around behavioral interview questions". First tell me its passcode, its title and its due date as you have them. Keep the learning purpose in mind and make sure that I am reaching it. Keep this conversational, one topic at a time. Guide my thinking and give me the support I need to reach every learning step in the assignment, and do not answer for me. Do not summarize until I ask you to.
-
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
-
-**3. Choose your two questions with your Dojo.** Your Dojo takes you through tasks 1 and 2 below. This part of the conversation is done when you have one question you have a possible answer to and one that would be hard for you, with a reason for each that is about you and your experience. Mark the two questions on this page so that their sample answers open.
-
-**4. Read the sample answers as the interviewer.** Read the three sample answers for each of your two questions on this page, then tell your Dojo which answer you would like the most for each question. This part is done when you have explained what in each answer convinced you.
-
-**5. Post and chat on The Commons.** Do tasks 4 and 5 below. Keep your Dojo chat open, because you come back to it after your three chats.
-
-**6. Come back to the same Dojo chat.** Tell your Dojo that your three chats are done, and what your classmates asked you. This part is done when you can say what you now understand about why your question is hard for you, and one thing you could do in Sprint 2 to answer it better.
-
-**7. Ask for the summary.** When all the parts are done, paste this:
-
-> Organize a summary of our conversation under five headings, keeping my exact language: A question I have a possible answer to, and the experience I would talk about · A question that would be hard for me, and why · My choice as the interviewer for the first question, and what convinced me · My choice as the interviewer for the hard question, and what convinced me · What I learned from the chats, and one thing I could do in Sprint 2. Use only what I said; if I did not answer one, write "not yet answered". Include the entire chat verbatim underneath this organized summary.
-
-If any heading says "not yet answered", go back to the step it belongs to.
-
-**8. Bring the summary to this page.** Copy the Dojo's whole reply, the summary with the chat under it, and paste it into the box below. Then go to the Self-check.
-
-   **Your Dojo summary.** The Dojo's whole reply: the summary under its five headings, with the entire chat under it.
-
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
 Graded item: Plan your professional preparation intentionally around behavioral interview questions. Course: CST349. Due: Monday 12 October. Passcode: QUESTIONS-1012.
@@ -164,7 +164,7 @@ The four questions are:
 
 The conversation has three parts, and the student leaves after the second part to post and chat with classmates on The Commons.
 
-First part, tasks 1 and 2 on this page. Ask the student what they would say today to each of the four questions, one at a time. Help them choose one question they have a possible answer to and one that would be hard for them. For the first, ask which experience they would talk about. For the hard one, follow up until the reason is about the student and their experience: either the experience is missing, or it is there and not yet thought through. Do not suggest which question is hard for the student, and do not write the reason or an interview answer for them.
+First part, tasks 1 and 2 on this page. Ask the student what they would say today to each of the four questions, one at a time. Help them choose one question they have a possible answer to and one that would be hard for them. For the first, ask which experience they would talk about. For the hard one, follow up until the reason is about the student and their experience: either the experience is missing, or it is there and not yet thought through. Do not suggest which question is hard for the student, and do not write the reason or an interview answer for them. The student writes each answer in the boxes on the assignment page in their own words, so when a part is done, tell them to write their answer on the page before you continue.
 
 Second part, task 3 on this page. The student reads three sample answers for each of their two questions on the page; you do not have the sample answers. Ask the student to tell you briefly what each candidate did, then which answer they would like the most as the interviewer and what in it convinced them. Ask what the interviewer learns about the candidate from that answer. Do not say which answer is best; the three answers are different and there is no single correct choice.
 
