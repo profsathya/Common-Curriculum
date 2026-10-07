@@ -4,7 +4,7 @@ Notes for the editor, not shown to students:
 - Clip times come from the captions and are approximate. Check each by watching: Units 13:10-15:55 · teacher walk 0:00-4:20 · headrest 3:42-7:46 · Earth and Mars 17:46-24:15.
 - "About 45 minutes of video" = 3 + 4 + 5 + 4 + 7 + 6.5 + 8 + 5 + 3 minutes of new silent videos. "Two to three hours" is my estimate.
 - NEW content that is not in the old videos: the still-phone and falling-phone readings and the phyphox app (stop 5); the direction example at stop 2; the numbers in the stop 5 example; the five problems at stop 6. Computed here because the video leaves it to students: the gold volume, 35.3 cm³.
-- [VIDEO A/B/C] mark the three new silent videos. [SIM] marks starter code that opens in the course runner. [CLIP id start end] gives the YouTube id and the start and end of a clip in seconds.
+- [VIDEO A/B/C] mark the three new short videos. [SIM] marks starter code that opens in the course runner. [CLIP id start end] gives the YouTube id and the start and end of a clip in seconds.
 - All embedded videos start at 1.25x (his request, 3 Oct). -->
 
 CST286 · Fall 2026 · A trail you can take as your Sprint 2 goal
@@ -46,7 +46,7 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 
 **Units check.** In step 3, turn the density factor upside down and multiply by 19.3 instead of dividing. The answer becomes 13,159, and nothing in the arithmetic warns you. The units do warn you, because grams times grams per cubic centimeter leaves g² / cm³, which is not a volume. In 1999 NASA lost the Mars Climate Orbiter because one team sent numbers in pound-force seconds and the other team read them as newton-seconds.
 
-[VIDEO B - Same number, wrong unit · https://youtu.be/xY5AkhUWb9w]
+[VIDEO B - Same number, wrong unit]
 
 **Ask your Dojo.**
 - "Give me one unit conversion that needs two conversion factors. Do not solve it. Ask me to set up the chain, and tell me only whether my units cancel."
@@ -153,7 +153,7 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 - How an accelerometer works - 5 min · [youtu.be/T_iXLNkkjFo](https://youtu.be/T_iXLNkkjFo)
 - [Slides](https://docs.google.com/presentation/d/1P84I3PjGN-kAnTG6XqtGjv84gSKp-SCuNiLrsPANhZA)
 
-[VIDEO A - Inside the sensor · https://youtu.be/4WpKaoNtNNo]
+[VIDEO A - Inside the sensor · https://youtu.be/O_PRqMp7gXg]
 
 **Worked example.** A large model of the sensor has a mass of 0.01 kg on a spring with a spring constant of 20 N/m. The model is accelerated at 2 m/s². How far does the mass shift?
 
@@ -169,7 +169,7 @@ In a real phone the mass and the spring are a few thousandths of a millimeter ac
 
 **What a still phone reads.** A phone lying on a table is not accelerating, and its sensor reads about 9.8 m/s² pointing up. The reason is that the spring has to hold the small mass up against gravity, so it is stretched even though nothing moves. A phone in free fall reads about 0, because the mass and the phone fall together and the spring is not stretched.
 
-[VIDEO C - What a still phone reads · https://youtu.be/HgG_xNY1YoE]
+[VIDEO C - What a still phone reads · https://youtu.be/IYGsbg9F3VU]
 
 **Units check.** In the worked example, give the mass as 10 g and use 10 in the formula. The shift comes out as 1 m, which is larger than the phone. The spring constant is in newtons per meter, and a newton contains kilograms, so the mass must be in kilograms.
 
