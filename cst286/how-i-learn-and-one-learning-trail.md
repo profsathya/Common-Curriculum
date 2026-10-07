@@ -403,6 +403,8 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Each explanation in Part 2 is in my own words and uses the physics from that stop · 15 pts
 - [ ] The last answer connects my task-7 lesson to a moment on the learning trail · 10 pts
 
+**What makes it strong.** Your task-7 lesson is specific enough that someone could watch you doing it on the trail, and your reason for choosing it comes from a moment in Sprint 1. On the trail, your calculations carry units at every step, and your explanations say what the physics at that stop predicts and why, in your own words. The last answer names the stop where the lesson changed what you did.
+
 ## Submit
 
 This graded item is complete when task 7 in Part 1 has an answer, the practice at every stop is done, and the last answer is written. Answering the other tasks in Part 1 is encouraged. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
