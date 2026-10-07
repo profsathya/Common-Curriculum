@@ -46,7 +46,7 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 
 **Units check.** In step 3, turn the density factor upside down and multiply by 19.3 instead of dividing. The answer becomes 13,159, and nothing in the arithmetic warns you. The units do warn you, because grams times grams per cubic centimeter leaves g² / cm³, which is not a volume. In 1999 NASA lost the Mars Climate Orbiter because one team sent numbers in pound-force seconds and the other team read them as newton-seconds.
 
-[VIDEO B - Same number, wrong unit]
+[VIDEO B - Same number, wrong unit · https://youtu.be/xY5AkhUWb9w]
 
 **Ask your Dojo.**
 - "Give me one unit conversion that needs two conversion factors. Do not solve it. Ask me to set up the chain, and tell me only whether my units cancel."
@@ -153,7 +153,7 @@ The trail has six stops and about 45 minutes of video. With the examples and the
 - How an accelerometer works - 5 min · [youtu.be/T_iXLNkkjFo](https://youtu.be/T_iXLNkkjFo)
 - [Slides](https://docs.google.com/presentation/d/1P84I3PjGN-kAnTG6XqtGjv84gSKp-SCuNiLrsPANhZA)
 
-[VIDEO A - Inside the sensor]
+[VIDEO A - Inside the sensor · https://youtu.be/4WpKaoNtNNo]
 
 **Worked example.** A large model of the sensor has a mass of 0.01 kg on a spring with a spring constant of 20 N/m. The model is accelerated at 2 m/s². How far does the mass shift?
 
@@ -169,7 +169,7 @@ In a real phone the mass and the spring are a few thousandths of a millimeter ac
 
 **What a still phone reads.** A phone lying on a table is not accelerating, and its sensor reads about 9.8 m/s² pointing up. The reason is that the spring has to hold the small mass up against gravity, so it is stretched even though nothing moves. A phone in free fall reads about 0, because the mass and the phone fall together and the spring is not stretched.
 
-[VIDEO C - What a still phone reads]
+[VIDEO C - What a still phone reads · https://youtu.be/HgG_xNY1YoE]
 
 **Units check.** In the worked example, give the mass as 10 g and use 10 in the formula. The shift comes out as 1 m, which is larger than the phone. The spring constant is in newtons per meter, and a newton contains kilograms, so the mass must be in kilograms.
 

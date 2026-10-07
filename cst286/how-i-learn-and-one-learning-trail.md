@@ -4,7 +4,7 @@ Notes for the editor, not shown to students:
 - Part 2 is the six stops of the accelerometer learning trail with a Practice block at each stop. trail-accelerometer.md/.html stay as the plain trail without practice.
 - [N], [A], [m] and so on in a Practice block are numbers the page chooses for each student inside the range in the page note. "Try again with new numbers" picks another set. The page checks number and unit; the AI feedback button responds to the text boxes.
 - Clip times come from the captions and are approximate; check each by watching: Units 13:10-15:55 · teacher walk 0:00-4:20 · headrest 3:42-7:46 · Earth and Mars 17:46-24:15. The page plays each clip from the full YouTube video between those times, so no separate clip files are needed.
-- [VIDEO A/B/C] mark three new short silent videos. They are made (mp4 files in cowork/fall-2026-courses/content-tracks/cst286/videos/) and wait for Prof. Sathya to upload them to YouTube; until the links are in, the page shows a "being added" placeholder for each.
+- [VIDEO A/B/C] mark three new short silent videos. They are on YouTube as unlisted videos (uploaded 7 Oct 2026; the mp4 files are in cowork/fall-2026-courses/content-tracks/cst286/videos/), and each marker carries its link.
 - The Dojo option covers Part 1 only (Prof. Sathya, 6 Oct). With the Dojo box in Part 1 ticked, the page hides the seven Part 1 answer boxes and shows the Dojo route with one box for the Dojo summary. Part 2, Apply your lesson and Submit are the same for every student.
 - The section "For your AI Dojo" is hidden on the page and is copied into the course Google Doc by the sync script. The passcode appears twice in this file and must be the same in both places.
 - Simulations (5 Oct): practice part c at stop 4 uses the PhET simulation Forces and Motion: Basics, embedded under Try it; practice part c at stop 5 uses the sensor-spring starter code. Nothing on the page blocks a student from moving on: every stop opens at any time, and no step is labelled optional (Prof. Sathya, 5 Oct).
@@ -105,7 +105,7 @@ Work through the six stops in order. At each stop, watch the video, work through
 
 **Units check.** In step 3, turn the density factor upside down and multiply by 19.3 instead of dividing. The answer becomes 13,159, and nothing in the arithmetic warns you. The units do warn you, because grams times grams per cubic centimeter leaves g² / cm³, which is not a volume.
 
-[VIDEO B - Same number, wrong unit]
+[VIDEO B - Same number, wrong unit · https://youtu.be/xY5AkhUWb9w]
 
 **Practice.** A car slows down by [N] miles per hour every second. (Page note: N is chosen for each student from 10, 15, 20, 25 or 30; "Try again with new numbers" picks another.)
 
@@ -257,7 +257,7 @@ c. Test the second law in the PhET simulation under *Try it* above. Choose the A
 - How an accelerometer works - 5 min · [youtu.be/T_iXLNkkjFo](https://youtu.be/T_iXLNkkjFo)
 - [Slides](https://docs.google.com/presentation/d/1P84I3PjGN-kAnTG6XqtGjv84gSKp-SCuNiLrsPANhZA)
 
-[VIDEO A - Inside the sensor]
+[VIDEO A - Inside the sensor · https://youtu.be/4WpKaoNtNNo]
 
 **How the sensor works.** A small mass sits on a spring inside the sensor. When the phone accelerates, the mass lags behind because of the first law, so the spring stretches. The spring keeps stretching until it pulls the mass along at the same acceleration as the phone, and by the second law that pull equals the mass times the acceleration. The phone measures how far the spring stretched, and from that stretch it calculates the acceleration.
 
@@ -275,7 +275,7 @@ In a real phone the mass and the spring are a few thousandths of a millimeter ac
 
 **What a still phone reads.** A phone lying on a table is not accelerating, and its sensor reads about 9.8 m/s² pointing up. The reason is that the spring has to hold the small mass up against gravity, so it is stretched even though nothing moves. A phone in free fall reads about 0, because the mass and the phone fall together and the spring is not stretched.
 
-[VIDEO C - What a still phone reads]
+[VIDEO C - What a still phone reads · https://youtu.be/HgG_xNY1YoE]
 
 **Units check.** In the worked example, give the mass as 10 g and use 10 in the formula. The shift comes out as 1 m, which is larger than the phone. The spring constant is in newtons per meter, and a newton contains kilograms, so the mass must be in kilograms.
 
