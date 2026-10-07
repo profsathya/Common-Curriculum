@@ -17,6 +17,8 @@ Week 7 · due Monday 12 October, 11:59 p.m. · 100 points · Graded assignments
 
 Use the behavioral interview questions that are hardest for you to answer today to anchor your professional growth. Identifying them early helps you prepare for them.
 
+[VIDEO - Prof. Sathya explains why this assignment, and how it helps you, 2 min · https://youtu.be/D-JU_YSscKI] (Page note: the video is shown on the page under Purpose, at normal speed.)
+
 ## Choose how you will do this
 
 ☐ **I would like to use the AI Dojo to complete this graded item.** Tick this to think through the tasks as a conversation with your Dojo; the page then adds the Dojo steps to the tasks below, and one box at the end for the Dojo's summary. You write your answers in the same boxes on both routes. On both routes, Part II is you posting your chosen question and reasoning behind why it is challenging and have conversations on The Commons platform (demo in class). (Page note: the tick is remembered on this browser.)

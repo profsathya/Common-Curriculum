@@ -24,6 +24,8 @@ This graded item will affect your final grade, and the late penalty applies.
 
 Reflect on how you learned in Sprint 1 to identify one change you will make to improve your learning skill. Then explore one physics topic deeply on a learning trail, and apply the one learning skill change from your reflection to your learning experience.
 
+[VIDEO D - Prof. Sathya explains why this assignment, and how it helps you, 2 min · https://youtu.be/qX298vL7SGY] (Page note: plays at normal speed; the recording is already sped up.)
+
 ## Part 1 · Look back at how you learned in Sprint 1
 
 Write your answer to each task in the box under it. If you submitted the activity *What misconceptions about learning we all have*, you could refer to those responses as a starting point here. Responding to all reflection questions is encouraged but not required. Task 7 is the one task you need to answer, because you will use it in Part 2. Make this activity useful to yourself.
