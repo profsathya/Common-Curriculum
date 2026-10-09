@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Sprint 2 goal and plan | CST286</title>
+<!-- my-sprint-2-goal-and-plan.md in this folder is the editable companion to this page: the words are edited there and carried into this file. The engine (boxes, AI feedback, Dojo tick, self-check, copy) is the one on how-i-learn-and-one-learning-trail.html. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+    --border:#C7CDD1; --border-light:#E8EAEC; --teal:#0F766E;
+    --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#B04A18; --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --warn:#6F5612; --vista:#B08018;
+    --t-phone:#2F6BA8; --t-phone-soft:#E2EAF3;
+    --tc:var(--t-phone); --tsoft:var(--t-phone-soft);
+    --on-tc:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+      --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E;
+    --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+    --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Atkinson Hyperlegible",var(--font); color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word}
+  .page{max-width:920px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  a{color:var(--blaze)}
+  p{margin:0 0 12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible,iframe:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:3px}
+  .mono,.num,code{font-family:"IBM Plex Mono",monospace}
+
+  .canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--line);border-left:4px solid var(--tc);background:var(--tsoft);color:var(--ink);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:14px}
+  .canvasbar[hidden]{display:none}
+  .canvasbar a{color:var(--blue-dark)}
+
+  .crumb{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.06em; margin-bottom:12px}
+  .crumb a{color:var(--ink-soft); text-decoration:none}
+  .crumb a::before{content:"\2190\00a0"}
+  .crumb a:hover{color:var(--blaze); text-decoration:underline}
+
+  /* hero */
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; position:relative; overflow:hidden}
+  .hero-inner{padding:38px 34px 34px; position:relative; z-index:1}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.16em; text-transform:uppercase; color:#9FB2C4; margin:0 0 14px}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem); font-weight:900; line-height:1.05; letter-spacing:-.01em; color:var(--hero-cream)}
+  .hero .intro{font-size:1.08rem; color:#DCE3E8; margin:18px 0 0; max-width:62ch; border-left:3px solid var(--blaze); padding:4px 0 4px 16px}
+  .contours{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.55}
+
+  /* goal */
+  .goalcard{margin:26px 0 14px; border:1.5px solid var(--tc); border-radius:6px; background:var(--card); padding:18px 22px 18px}
+  .goalcard h2{font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--tc); margin:0 0 10px}
+  .goalcard blockquote{margin:0 0 14px; padding:0}
+  .goalcard blockquote p{font-family:Fraunces,Georgia,serif; font-size:1.14rem; line-height:1.5; margin:0 0 6px; color:var(--ink)}
+  .goalcard blockquote p strong{font-weight:650; color:var(--tc)}
+  .goalcard.small{margin:8px 0 12px; padding:14px 18px; border-width:1px; border-left:5px solid var(--tc)}
+  .goalcard.small blockquote p{font-size:1.04rem}
+  .lede{max-width:74ch}
+
+  /* buttons */
+  button{font:inherit}
+  .copybtn,.stepbtn,.simbtn{font-family:"Atkinson Hyperlegible",var(--font); font-size:.9rem; font-weight:700; padding:8px 14px; min-height:40px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--on-tc); background:var(--tc)}
+  .copybtn::before{content:"\29C9\00a0\00a0"}
+  .copybtn.done::before{content:"\2713\00a0\00a0"}
+  .stepbtn.alt,.prompt .copybtn{background:transparent; color:var(--tc)}
+  .copybtn:hover,.stepbtn:hover,.simbtn:hover{filter:brightness(1.1)}
+  .stepbtn[aria-disabled="true"]{opacity:.5; cursor:default; border-style:dashed}
+  .simbtn::before{content:"\25B8\00a0\00a0"}
+  .simbtn[aria-expanded="true"]::before{content:"\25BE\00a0\00a0"}
+
+  /* trail map */
+  .trailmap{margin:26px 0 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:8px 10px 4px}
+  .mapwrap{position:relative; max-width:860px; margin:0 auto}
+  .trailsvg{display:block; width:100%; height:auto}
+  .stoplist{list-style:none; margin:0; padding:0}
+  .stoplist li{position:absolute; left:var(--x); top:var(--y); width:0; height:0}
+  .stopbtn{position:absolute; left:-80px; top:-20px; width:160px; display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; text-decoration:none; color:var(--ink); border-radius:6px; padding:0 2px 3px}
+  .stopbtn .no{flex:0 0 40px; width:40px; height:40px; border-radius:50%; background:var(--card); border:3px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1.05rem; display:flex; align-items:center; justify-content:center}
+  .stopbtn .lab{display:flex; flex-direction:column; align-items:center; background:var(--card); border-radius:4px; padding:0 5px}
+  .stopbtn .nm{font-size:.9rem; font-weight:700; line-height:1.25; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px}
+  .stopbtn:hover .nm{color:var(--blaze); text-decoration-color:var(--blaze)}
+  .stopbtn:hover .no{border-color:var(--blaze); color:var(--blaze)}
+  .stopbtn .mark{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-soft)}
+  .stopbtn .mark[hidden]{display:none}
+  .stopbtn.opened .no{background:var(--tc); color:var(--on-tc)}
+  @media (max-width:640px){
+    .trailsvg{display:none}
+    .trailmap{padding:6px 10px}
+    .stoplist li{position:static; width:auto; height:auto; border-top:1px dashed var(--line)}
+    .stoplist li:first-child{border-top:0}
+    .stopbtn{position:static; width:auto; flex-direction:row; align-items:center; text-align:left; gap:12px; padding:8px 4px}
+    .stopbtn .no{flex-basis:36px; width:36px; height:36px}
+    .stopbtn .lab{align-items:flex-start; padding:0}
+  }
+
+  /* stops */
+  .stops{margin-top:22px; display:grid; gap:12px}
+  details.stop{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--tc); border-radius:5px; scroll-margin-top:10px}
+  details.stop > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:14px; padding:14px 18px}
+  details.stop > summary::-webkit-details-marker{display:none}
+  details.stop > summary h2{font-size:1.28rem; font-weight:650; flex:1 1 auto; color:var(--ink)}
+  details.stop > summary .sno{flex:0 0 34px; width:34px; height:34px; border-radius:50%; border:2px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; display:flex; align-items:center; justify-content:center}
+  details.stop > summary::after{content:"+"; flex:0 0 26px; width:26px; height:26px; border:1.5px solid var(--tc); border-radius:4px; color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:23px; text-align:center}
+  details.stop[open] > summary::after{content:"\2212"}
+  details.stop[open] > summary{border-bottom:1px solid var(--line-soft)}
+  details.stop > summary:hover h2{color:var(--blaze)}
+  .stopbody{padding:6px 20px 18px}
+  .stopbody > p{max-width:74ch; margin-top:14px}
+  .part{margin-top:20px}
+  .part p,.part li{max-width:74ch}
+  .k{font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--tc); margin:0 0 6px}
+  .part-after p{font-family:Fraunces,Georgia,serif; font-size:1.08rem}
+
+  /* more practice: a quiet shelf, off the trail */
+  details.shelf{margin-top:18px; border:1px dashed var(--line); border-radius:5px; background:transparent}
+  details.shelf > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:11px 18px}
+  details.shelf > summary::-webkit-details-marker{display:none}
+  details.shelf > summary h2{font-size:1.05rem; font-weight:650; flex:1 1 auto; color:var(--ink-soft)}
+  details.shelf > summary::after{content:"+"; flex:0 0 24px; width:24px; height:24px; border:1.5px solid var(--ink-soft); border-radius:4px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:21px; text-align:center}
+  details.shelf[open] > summary::after{content:"\2212"}
+  details.shelf[open] > summary{border-bottom:1px dashed var(--line)}
+  details.shelf > summary:hover h2{color:var(--blaze)}
+  .shelfbody{padding:6px 20px 16px}
+  .shelfbody > p{max-width:74ch; margin-top:14px; color:var(--ink-soft)}
+  .shelfbody .k{color:var(--ink-soft)}
+
+  /* watch */
+  .vid{margin:0 0 10px}
+  .vidbtn{display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; width:100%; max-width:640px; text-align:left; cursor:pointer; background:var(--hero-ink); color:var(--hero-cream); border:1px solid var(--hero-ink); border-radius:6px; padding:12px 16px 12px 14px; min-height:56px; white-space:pre-wrap}
+  .vidbtn::before{content:"\25B6"; flex:0 0 34px; width:34px; height:34px; margin-right:12px; border-radius:50%; background:var(--blaze); color:#fff; font-size:.8rem; display:flex; align-items:center; justify-content:center; padding-left:2px}
+  .vidbtn .vt{font-weight:700}
+  .vidbtn .vm{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:#B9C6D1}
+  .vidbtn:hover{border-color:var(--blaze)}
+  .vidbtn[hidden]{display:none}
+  .player{position:relative; width:100%; max-width:640px; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden}
+  .player iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .vlinks{display:block; font-size:.9rem; margin-top:4px; white-space:pre-wrap}
+  .vid .vlinks .dot:first-child{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)}
+  p.vlinks.plain{margin:10px 0 0}
+  .newvideo{margin:18px 0 0; max-width:640px; border:1.5px dashed var(--line); border-radius:6px; padding:14px 16px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-size:.84rem; background:var(--paper)}
+
+  /* worked example */
+  .part-worked .question{font-weight:700}
+  .predictline{border-left:3px solid var(--blaze); padding:2px 0 2px 12px}
+  .steps{margin:6px 0 12px; padding-left:26px}
+  .steps li{margin:0 0 8px; padding-left:4px}
+  .steps li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .stepctl{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px}
+  .stepctl[hidden]{display:none}
+
+  /* units check */
+  .part-units{background:var(--tsoft); border:1px solid var(--line); border-left:5px solid var(--warn); border-radius:5px; padding:14px 18px 6px}
+  .part-units .k{color:var(--warn)}
+  .part-units .num{font-weight:600; white-space:nowrap; font-size:.94em}
+
+  /* try it + sims */
+  .trylist{margin:0; padding-left:20px}
+  .trylist li{margin:0 0 12px}
+  .simblock{margin:4px 0 10px}
+  .simrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:.92rem}
+  .sim{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:#fff; margin:10px 0 8px}
+  .sim[hidden]{display:none}
+  .sim iframe{width:100%; height:640px; border:0; display:block}
+
+  /* dojo prompts */
+  .prompt{display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 14px; background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:5px; padding:12px 14px; margin:0 0 10px; max-width:820px}
+  .prompt .ptext{flex:1 1 320px; margin:0; font-family:"IBM Plex Mono",monospace; font-size:.86rem; line-height:1.55; max-width:none}
+  .prompt .copybtn{flex:0 0 auto}
+  .mine{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line)}
+  .mine .k{font-family:Fraunces,Georgia,serif; font-size:1.12rem; font-weight:650; letter-spacing:0; text-transform:none; color:var(--ink)}
+  .dojolbl{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; letter-spacing:.08em; color:var(--ink-soft); margin:10px 0 4px}
+
+  /* provenance (house two-layer block; this page has the trust layer only) */
+  .prov2{margin-top:30px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:0; font-size:.88rem; color:var(--ink)}
+  .prov2 .prov-head{padding:12px 16px 0; font-family:"Atkinson Hyperlegible",var(--font); font-size:.95rem; font-weight:700}
+  .prov2 .prov-lead{padding:5px 16px 14px; margin:0; line-height:1.55; max-width:none}
+  .pagenav{margin-top:20px; padding-top:14px; border-top:1px solid var(--line); font-size:.9rem}
+  .pagenav a{color:var(--blue-dark)}
+  .pagenav a::before{content:"\2190\00a0"}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+
+  @media (max-width:520px){
+    .page{padding:14px 16px 40px}
+    .hero-inner{padding:26px 20px 24px}
+    .goalcard{padding:16px 16px}
+    .stopbody,.shelfbody{padding:4px 14px 16px}
+    details.stop > summary{padding:12px 14px; gap:10px}
+    details.stop > summary h2{font-size:1.12rem}
+    .sim iframe{height:520px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none !important; transition:none !important}
+  }
+  @media print{
+    body{background:#fff; color:#000; font-size:11.5pt}
+    .canvasbar,.trailmap,.crumb,.pagenav,.copybtn,.stepctl,.simbtn,.sim,.player,iframe,.contours{display:none !important}
+    .hero{background:none; color:#000; border:0}
+    .hero h1,.hero .intro,.hero .kicker{color:#000}
+    .hero-inner{padding:0 0 12px}
+    details.stop{break-inside:auto; border-color:#999}
+    details.stop > summary::after,details.shelf > summary::after{display:none}
+    details.stop::details-content,details.shelf::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
+    .steps li[hidden]{display:list-item !important}
+    .vidbtn,.vidbtn[hidden]{display:block !important; background:none; color:#000; border:0; padding:0; min-height:0}
+    .vidbtn::before{display:none}
+    .vidbtn .vm{color:#000}
+    .part-units,.prompt,.goalcard,.newvideo{background:none}
+    a{color:#000}
+  }
+
+  /* ---------- graded item layer (5 Oct 2026): reflection boxes, practice with checked numbers, Dojo route ---------- */
+  [hidden]{display:none !important}
+  body.dojo-on .p1-boxes{display:none !important}
+  body:not(.dojo-on) .dojo-only{display:none !important}
+  /* ---------- 6 Oct 2026: callout box, glossary bubbles on physics words ---------- */
+  .callout{margin:14px 0 0; max-width:820px; background:var(--card); border:1px solid var(--line); border-left:5px solid var(--blaze); border-radius:5px; padding:14px 18px}
+  .callout h3{margin:0 0 8px}
+  .callout p{margin:0 0 10px}
+  .callout p:last-child{margin-bottom:0}
+  .part p,.steps li,.stopbody > p,.abc li{position:relative}
+  .gl{display:inline}
+  .gt{font:inherit; color:inherit; background:none; border:0; padding:0; margin:0; cursor:help; border-bottom:1px dashed var(--blue); border-radius:0; min-height:0}
+  .gt:hover,.gt:focus{color:var(--blue); border-bottom-style:solid}
+  .gt:focus{outline:2px solid rgba(3,116,181,.35); outline-offset:2px}
+  .bub{display:none; position:absolute; z-index:60; top:100%; left:0; margin-top:7px; width:340px; max-width:100%; background:#fff; border:1px solid var(--border); border-radius:6px; box-shadow:0 8px 24px rgba(45,59,69,.18); padding:11px 13px; font-family:var(--font); font-size:.9rem; line-height:1.5; color:var(--text); text-align:left; font-weight:400; font-style:normal; letter-spacing:0; text-transform:none; white-space:normal}
+  .gl:hover > .bub,.gl:focus-within > .bub{display:block}
+  .bub .bt{display:block; font-weight:700; color:var(--blue-dark); padding-bottom:5px; margin-bottom:6px; border-bottom:1px solid var(--border-light)}
+  .bub .br{display:block; margin-bottom:6px; color:var(--text)}
+  .bub .br:last-child{margin-bottom:0}
+  .bub .br i{font-style:normal; font-weight:700; color:var(--muted)}
+  .dojosum{margin-top:6px}
+  #dojo-block{margin-top:18px}
+  .gibar{margin:14px 0 0; border:1px solid var(--line); border-left:5px solid var(--blaze); background:var(--card); border-radius:5px; padding:11px 16px; font-size:.95rem}
+  .gibar b{font-family:"IBM Plex Mono",monospace; font-size:.86rem; letter-spacing:.02em}
+  h2.sec{font-size:1.5rem; font-weight:650; margin:38px 0 12px; padding-bottom:7px; border-bottom:2px solid var(--line)}
+  h2.sec.minor{font-size:1.2rem; margin-top:30px}
+  .body{max-width:74ch}
+  .choose{display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-left:5px solid var(--teal); border-radius:5px; padding:14px 16px}
+  .choose input{flex:0 0 20px; width:20px; height:20px; margin:3px 0 0; accent-color:var(--tc); cursor:pointer}
+  .choose label{cursor:pointer}
+  .dojowarn{margin:12px 0 0; background:#FFF1B8; border:2px solid #B87A00; color:#2E2100; border-radius:6px; padding:12px 16px; font-weight:700}
+  .passcode{font-family:"IBM Plex Mono",monospace; font-size:1.05rem; background:var(--card); border:1.5px dashed var(--tc); border-radius:5px; padding:9px 14px; display:inline-block; margin:0 0 14px}
+  .dsteps{padding-left:24px; margin:0}
+  .dsteps > li{margin:0 0 16px; padding-left:4px}
+  .dsteps > li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .tasks{list-style:none; margin:0; padding:0; display:grid; gap:14px}
+  .task{background:var(--card); border:1px solid var(--line); border-radius:5px; padding:14px 16px 12px}
+  .task .ttext{display:flex; gap:10px; margin:0 0 10px}
+  .task .tn{flex:0 0 24px; font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .task .tt{flex:1; min-width:0; max-width:74ch}
+  .rbox{margin:8px 0 0}
+  label.qt{display:block; font-size:.92rem; margin:0 0 6px; color:var(--ink)}
+  textarea.box{display:block; width:100%; min-height:120px; font:inherit; font-size:.97rem; line-height:1.5; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:10px 12px; resize:vertical}
+  textarea.box.small{min-height:84px}
+  textarea.box:focus-visible,.fld:focus-visible{outline:3px solid var(--blaze); outline-offset:1px}
+  .btn{font:inherit; font-size:.9rem; font-weight:700; padding:8px 14px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--tc); background:var(--card)}
+  .btn.primary{background:var(--tc); color:var(--on-tc)}
+  .btn[disabled]{opacity:.45; cursor:not-allowed}
+  .airow{margin:8px 0 0}
+  .aibox{display:none; margin:9px 0 0; padding:12px 14px; background:var(--tsoft); border:1px solid var(--line); border-radius:6px; font-size:.93rem; line-height:1.55; white-space:pre-wrap; max-width:74ch}
+  .aibox .lbl{display:block; font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--tc); font-weight:600; margin-bottom:4px}
+  .aibox .err{color:var(--blaze)}
+  .part-practice{background:var(--card); border:2px solid var(--tc); border-radius:6px; padding:16px 18px 16px; margin-top:26px}
+  .part-practice .pq{font-weight:700; font-size:1.03rem; margin:0}
+  .part-practice .pq .num{font-size:1.02em}
+  .pitem{margin:14px 0 0; padding-top:12px; border-top:1px dashed var(--line)}
+  .pitem > p{margin:0 0 8px}
+  .abc{list-style:lower-alpha; padding-left:24px; margin:0 0 6px}
+  .abc li{margin:0 0 6px}
+  .ansrow{display:flex; flex-wrap:wrap; gap:8px 12px; align-items:flex-end; margin:10px 0 0}
+  .ansrow .rlabel{flex:0 0 150px; font-weight:700; font-size:.93rem; padding-bottom:8px}
+  .ansrow label{display:flex; flex-direction:column; gap:3px; font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft)}
+  .fld{font-family:"IBM Plex Mono",monospace; font-size:.95rem; text-transform:none; letter-spacing:0; padding:7px 9px; border:1px solid var(--line); border-radius:5px; background:var(--paper); color:var(--ink); width:10.5em}
+  select.fld{width:8em}
+  .verdict{margin:5px 0 0; font-size:.93rem; font-weight:700; min-height:0}
+  .verdict:empty{display:none}
+  .verdict.ok{color:#1A7F4B}
+  .verdict.no{color:var(--blaze)}
+  .retryrow{display:flex; flex-wrap:wrap; gap:10px 12px; align-items:center; margin:14px 0 4px}
+  .tries{font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink-soft)}
+  ul.selfcheck{list-style:none;margin:0 0 4px;padding:0;font-size:14px}
+  ul.selfcheck li{display:flex;gap:9px;align-items:flex-start;margin:0 0 9px;line-height:1.5;max-width:74ch}
+  ul.selfcheck input{flex:0 0 16px;width:16px;height:16px;margin:3px 0 0;accent-color:var(--blue);cursor:pointer}
+  ul.selfcheck input:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+  ul.selfcheck label{flex:1;min-width:0;cursor:pointer}
+  ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--blue-dark);padding-left:6px}
+  .sc-total{font-weight:700;margin:6px 0 0}
+  .copywrap{margin:6px 0 0}
+  .status{font-size:.9rem; color:var(--ink-soft); margin:8px 0 0}
+  .status.ok{color:#1A7F4B; font-weight:700}
+  .sumout{display:block; width:100%; min-height:150px; font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:10px 12px; margin-top:4px}
+  .storenote{display:none; font-size:.9rem; color:var(--blaze); margin:8px 0 0}
+  .instructor{margin-top:22px; text-align:center; font-size:.9rem}
+  .instructor .nm{font-weight:700}
+  .instructor a,.feedback-note a{color:var(--blue-dark)}
+  .feedback-note{margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line); font-size:.86rem; color:var(--ink-soft); text-align:center}
+  .page-footer{margin-top:16px; font-size:.78rem; color:var(--ink-soft); text-align:center}
+  .page-footer img{height:20px; opacity:.55; vertical-align:middle; margin-right:8px}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .verdict.ok, :root:not([data-theme="light"]) .status.ok{color:#6FCF97} }
+  @media (max-width:520px){ .ansrow .rlabel{flex-basis:100%; padding-bottom:0} .fld{width:9em} }
+  @media print{ .btn,.airow,.retryrow,.choose,.dojo-only{display:none !important} textarea.box{border:1px solid #999; background:none} }
+
+  /* ---------- my-sprint-2-goal-and-plan (9 Oct 2026): starting point, the form beside the worked examples ---------- */
+  .page{max-width:1180px}
+  body.dojo-on .airow{display:none !important}
+  fieldset.startpick{border:0; margin:0; padding:0; min-width:0}
+  fieldset.startpick > legend{padding:0; width:100%; float:left}
+  fieldset.startpick > legend + *{clear:both}
+  .opts{display:grid; gap:12px; max-width:900px}
+  label.opt{display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1.5px solid var(--line); border-radius:6px; padding:16px 18px; cursor:pointer; line-height:1.55}
+  label.opt input{flex:0 0 24px; width:24px; height:24px; margin:2px 0 0; accent-color:var(--tc); cursor:pointer}
+  label.opt:has(input:checked){border:2px solid var(--tc); background:var(--tsoft)}
+  label.opt input:focus-visible,.choose input:focus-visible{outline:3px solid var(--blaze); outline-offset:2px}
+  .choose{margin-top:16px; max-width:900px}
+  .choose input{flex-basis:24px; width:24px; height:24px; margin-top:2px}
+  .dojowarn{max-width:900px}
+  .formgrid{display:grid; gap:24px; margin-top:4px}
+  @media (min-width:900px){ .formgrid{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:start} }
+  .formcol > h3{font-size:1.18rem; font-weight:650; margin:24px 0 8px}
+  .formcol > h3:first-child{margin-top:4px}
+  .formcol .task{margin:0}
+  .formcol .tasks{gap:12px}
+  .planex{margin:14px 0 0; max-width:74ch; border-left:3px solid var(--tc); padding:2px 0 2px 12px; font-size:.95rem}
+  .examples h2.sec{margin-top:4px; font-size:1.2rem}
+  .examples > p{font-size:.93rem; color:var(--ink-soft)}
+  .excard{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--tc); border-radius:5px; padding:12px 14px 6px; margin:0 0 12px; font-size:.93rem; line-height:1.5}
+  .excard h3{font-size:1rem; font-weight:650; margin:0 0 8px}
+  .excard dl{margin:0}
+  .excard dt{font-style:italic; font-weight:700; color:var(--ink-soft); font-size:.86rem}
+  .excard dd{margin:0 0 8px}
+  #dojo-block{margin-top:6px; max-width:900px}
+  @media print{ fieldset.startpick label.opt{border:1px solid #999; background:none} }
+</style>
+<style id="a11y-pass-1">
+/* Accessibility pass 2026-10-06. Keep this block last in <head>. */
+p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
+.gl.a11y-esc > .bub { display: none !important; }
+.a11y-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.starter { margin: 4px 0 6px; font-size: 13px; line-height: 1.45; font-style: italic; color: var(--muted, #5C6873); }
+.copybtn { min-height: 24px; }
+code { overflow-wrap: anywhere; }
+@media print {
+  .bub { display: block !important; position: static !important; width: auto !important; max-width: none !important; margin: 4px 0 6px 12px !important; padding: 2px 0 2px 10px !important; border: 0 !important; border-left: 2px solid #999 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; }
+}
+</style>
+</head>
+<body class="dojo-on">
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden><span>This graded item is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/my-sprint-2-goal-and-plan.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span></div>
+<div class="crumb"><a href="home.html">CST286</a></div>
+
+<main>
+<header class="hero">
+<div class="hero-inner">
+<p class="kicker">CST286 · Fall 2026 · Sprint 2 · Week 8 · Set your goal</p>
+<h1>My Sprint 2 goal and plan</h1>
+<p class="intro">Graded item · Due Date: Monday 19 October · 100 pts</p>
+</div>
+</header>
+<div class="gibar">This graded item will affect your final grade, and the late penalty applies.</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Nurture your curiosity, cultivate your self-directed learning capability, and strengthen your goal setting and follow-through, by learning something about the physical world that you truly want to understand.</p>
+
+<fieldset class="startpick"><legend><h2 class="sec">Choose your starting point</h2></legend>
+<div class="opts">
+<label class="opt" for="sp-build"><input type="radio" name="startpoint" id="sp-build" value="build" checked><span><b>Build on what you learned in the previous assignment.</b> The form opens with the trail's goal already filled in, as Example A, for you to take further. Change the boxes so that your goal goes beyond the trail: the role of another sensor, such as the one that tells the phone its orientation, a different quantity the accelerometer could tell you, or another thing your phone does that starts from a sensor reading. Your Dojo or the AI feedback button helps you find the step beyond.</span></label>
+<label class="opt" for="sp-own"><input type="radio" name="startpoint" id="sp-own" value="own"><span><b>Write my own.</b> The form opens empty. Choose one thing you have wanted to understand, and use the examples beside the form as templates.</span></label>
+</div>
+</fieldset>
+<div class="choose"><input type="checkbox" id="dojo-tick" checked aria-controls="dojo-block" aria-expanded="true"><label for="dojo-tick"><b>I would like to use the AI Dojo to work out my goal and plan.</b> With this ticked, the Dojo steps appear under the form; your Dojo asks you questions until each line is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box.</label></div>
+<p class="dojowarn dojo-only" role="note">Before you start with the AI Dojo: this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course.</p>
+
+<h2 class="sec">The form</h2>
+<div class="formgrid">
+<div class="formcol">
+<h3>Part 1 · What I want to understand</h3>
+<div class="task"><p class="tt" id="q-understand">One thing that happens in the physical world, in your own words. One sentence is enough. "How a gyroscope stays upright" and "how waves form at the beach" are precise; "the physics of flight" is a field, try to narrow down to a specific behavior of the plane or a bird.</p><div class="rbox"><label class="qt" for="bx-understand"><b>What I want to understand.</b></label><p class="starter" id="st-understand">I want to understand how ...</p><textarea class="box small" id="bx-understand" data-key="understand" aria-describedby="st-understand"></textarea><div class="airow"><button type="button" class="btn" data-ai="understand">AI feedback</button></div><div class="aibox" data-aibox="understand" role="status" aria-live="polite"></div></div></div>
+<h3>Part 2 · What I will be able to predict</h3>
+<p class="body">Inside the phenomenon you chose sits a relationship between quantities. Try to articulate it in the following three lines.</p>
+<ol class="tasks">
+<li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-given"><b>Given what I know or can measure.</b> The quantities you will start from, each with its unit.</span></div><div class="rbox"><label class="qt" for="bx-given"><b>Given ...</b></label><p class="starter" id="st-given">The quantities I start from, with their units.</p><textarea class="box small" id="bx-given" data-key="given" aria-describedby="st-given"></textarea><div class="airow"><button type="button" class="btn" data-ai="given">AI feedback</button></div><div class="aibox" data-aibox="given" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-predict"><b>I will be able to predict.</b> The one quantity you will work out, with its unit, and the condition under which the relationship holds. The condition matters: in week 9 you will show where your prediction works and where it stops working.</span></div><div class="rbox"><label class="qt" for="bx-predict"><b>I will be able to predict ...</b></label><p class="starter" id="st-predict">One quantity, its unit, and the condition it depends on.</p><textarea class="box small" id="bx-predict" data-key="predict" aria-describedby="st-predict"></textarea><div class="airow"><button type="button" class="btn" data-ai="predict">AI feedback</button></div><div class="aibox" data-aibox="predict" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">3.</span><span class="tt" id="q-useful"><b>Predicting it is useful because.</b> One real situation where being able to predict this will be useful.</span></div><div class="rbox"><label class="qt" for="bx-useful"><b>Predicting it is useful because ...</b></label><p class="starter" id="st-useful">The situation, and how it helps.</p><textarea class="box small" id="bx-useful" data-key="useful" aria-describedby="st-useful"></textarea><div class="airow"><button type="button" class="btn" data-ai="useful">AI feedback</button></div><div class="aibox" data-aibox="useful" role="status" aria-live="polite"></div></div></li>
+</ol>
+<h3>Part 3 · My plan</h3>
+<p class="body">One for each of the graded items that remain in this sprint: when will you work on it outside of class and what resources will you use.</p>
+<ol class="tasks">
+<li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-plan9"><b>Week 9 → Five real-world scenarios, due Monday 26 October.</b> To write those scenarios you need the relationship itself, where it comes from, and the condition it depends on. Say what you will learn by then, and from which resource, by title, link or person's name.</span></div><div class="rbox"><label class="qt" for="bx-plan9"><b>By Monday 26 October I will have learned ...</b></label><p class="starter" id="st-plan9">The relationship, when I will work on it outside class, and the resource I will learn it from.</p><textarea class="box small" id="bx-plan9" data-key="plan9" aria-describedby="st-plan9"></textarea><div class="airow"><button type="button" class="btn" data-ai="plan9">AI feedback</button></div><div class="aibox" data-aibox="plan9" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-plan10"><b>Week 10 → The Sprint 2 exam, Wednesday 28 October.</b> On paper, with no aids, you will work one of your own scenarios from the given quantities to the predicted one. Say what you need to be able to do on paper by then.</span></div><div class="rbox"><label class="qt" for="bx-plan10"><b>On paper, by Wednesday 28 October, I will be able to ...</b></label><p class="starter" id="st-plan10">The steps I will carry out without aids, and when I will practice them.</p><textarea class="box small" id="bx-plan10" data-key="plan10" aria-describedby="st-plan10"></textarea><div class="airow"><button type="button" class="btn" data-ai="plan10">AI feedback</button></div><div class="aibox" data-aibox="plan10" role="status" aria-live="polite"></div></div></li>
+</ol>
+<p class="planex">A plan written for Example D would read: <i>By Monday 26 October I will have learned the range relationship for a projectile, and why it needs a 45° angle for the longest throw, from the PhET simulation Projectile Motion and chapter 3 of OpenStax College Physics 2e, working on it Tuesday and Thursday evenings.</i> And: <i>On paper, by Wednesday 28 October, I will be able to take a release speed and an angle, work out the distance and the time in the air, and show the unit at each step, practicing one scenario a day in the last week.</i></p>
+</div>
+<aside class="examples" aria-labelledby="ex-h">
+<h2 class="sec" id="ex-h">Worked examples</h2>
+<p>Each example is written in the form's own shape. Example A is the learning trail's goal, the starting point if you build on it. Examples B, C and D are built from the kinds of goals this class wrote in Sprint 1.</p>
+<section class="excard" id="ex-a" aria-labelledby="ex-a-h"><h3 id="ex-a-h">Example A · The learning trail's goal, your starting point to build on</h3><dl><dt>What I want to understand:</dt><dd data-fill="understand">how an accelerometer in the phone knows when the phone is pushed.</dd><dt>Given</dt><dd data-fill="given">the push on my phone, and the phone's mass, in the right units,</dd><dt>I will be able to predict</dt><dd data-fill="predict">the exact output the accelerometer will report, the right quantity in the right unit, as long as the push is the only unbalanced force on the phone.</dd><dt>Predicting it is useful because</dt><dd data-fill="useful">knowing how this works supports many useful applications, like a step counter, a screen that rotates and a fall alert. And, my ability to learn this will help me dig into the physics of how things work.</dd></dl></section>
+<section class="excard" id="ex-b" aria-labelledby="ex-b-h"><h3 id="ex-b-h">Example B · From "why do planes fly"</h3><dl><dt>What I want to understand:</dt><dd>how a wing holds a plane up.</dd><dt>Given</dt><dd>the plane's airspeed in m/s, the wing area in m², the density of the air in kg/m³, and the wing's lift coefficient at its angle,</dd><dt>I will be able to predict</dt><dd>the lift force in newtons, and so whether it is larger than the plane's weight, for steady flight with the wing below its stall angle.</dd><dt>Predicting it is useful because</dt><dd>it gives the slowest speed at which a plane, or a drone, can stay in the air, which is what a pilot needs to know at takeoff and landing.</dd></dl></section>
+<section class="excard" id="ex-c" aria-labelledby="ex-c-h"><h3 id="ex-c-h">Example C · From "how a guitar makes its notes"</h3><dl><dt>What I want to understand:</dt><dd>why a guitar string plays the note it plays.</dd><dt>Given</dt><dd>the length of string that can vibrate in m, its tension in N, and its mass per meter in kg/m,</dd><dt>I will be able to predict</dt><dd>the frequency of its lowest note in hertz, for a string held fixed at both ends.</dd><dt>Predicting it is useful because</dt><dd>it says where each fret has to sit and why a thicker string sounds lower, which is what anyone tuning or building a guitar relies on.</dd></dl></section>
+<section class="excard" id="ex-d" aria-labelledby="ex-d-h"><h3 id="ex-d-h">Example D · From "how far a thrown ball goes"</h3><dl><dt>What I want to understand:</dt><dd>what decides how far a thrown ball travels.</dd><dt>Given</dt><dd>the speed at which the ball leaves my hand in m/s, and the angle above horizontal in degrees,</dd><dt>I will be able to predict</dt><dd>the distance it lands from me in meters, and the time it spends in the air in seconds, as long as air resistance is small enough to ignore.</dd><dt>Predicting it is useful because</dt><dd>a throw to a base, a free kick and a water fountain's arc all depend on it, and the same relationship shows why the longest throw is close to 45°.</dd></dl></section>
+</aside>
+</div>
+
+<div id="dojo-block" class="dojo-only">
+<h2 class="sec">Dojo route</h2>
+<p class="passcode">Passcode for this graded item: <b>GOAL-1019</b></p>
+<ol class="dsteps">
+<li><p><b>Start the conversation.</b> Paste this into your AI Dojo:</p>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item &quot;My Sprint 2 goal and plan&quot;. First tell me its passcode, its title and its due date as you have them. Then help me fill in the six lines of its form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;My Sprint 2 goal and plan&quot;. First tell me its passcode, its title and its due date as you have them. Then help me fill in the six lines of its form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
+<li><p><b>Check the passcode.</b> Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.</p></li>
+<li><p><b>Work out your goal with your Dojo.</b> If you are building on the learning trail, say so, and let your Dojo ask you where you want to go beyond it. If you are writing your own, start with the phenomenon and let your Dojo ask until a quantity appears.</p></li>
+<li><p><b>Ask for the form.</b> When all six lines feel right, paste this:</p>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-2">Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · By Monday 26 October I will have learned · On paper, by Wednesday 28 October, I will be able to. Use only my words. If a line is not settled, write &quot;not yet settled&quot; on it.</span></p><button type="button" class="copybtn" data-copy="Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · By Monday 26 October I will have learned · On paper, by Wednesday 28 October, I will be able to. Use only my words. If a line is not settled, write &quot;not yet settled&quot; on it.">Copy prompt</button></div></li>
+<li><p><b>Fill in the form.</b> Copy each of the six lines from your Dojo's reply into the box it belongs to, above. Then go through the Self-check and submit.</p></li>
+</ol>
+</div>
+
+<h2 class="sec">Self-check</h2>
+<p class="body">Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.</p>
+<ul class="selfcheck">
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Part 1 names one phenomenon, not a field, and if I built on the trail, my goal goes beyond Example A</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">"Given" names the quantities I start from, each with its unit</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">"Predict" names one quantity with its unit</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">"Predict" states the condition the relationship depends on</label><span class="pts">10 pts</span></li>
+<li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">"Useful" names a real situation where being able to predict this helps</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">My week-9 line says what I will learn, when I will work on it, and names the resource by title, link or person</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">My week-10 line says what I will be able to do on paper, and when I will practice</label><span class="pts">15 pts</span></li>
+</ul>
+<p class="sc-total" id="sc-total" role="status" aria-live="polite">0 of 100 points ticked</p>
+<p class="body"><b>What makes it strong.</b> Someone who reads your "given" and "predict" lines could set up the calculation without asking you anything, and your condition is the first thing you would check before trusting the prediction in a new situation.</p>
+
+<h2 class="sec">Submit</h2>
+<p class="body">This graded item is complete when all six boxes have text. Go through the Self-check, press <b>Copy my answers</b>, review the text, and paste it into the Canvas text box.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status" role="status" aria-live="polite"></div>
+<label class="qt" for="summary-out" style="margin-top:10px">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<!-- For the AI Dojo. Hidden on the page; scripts/build_course_context.py copies this text into the course Google Doc.
+     The passcode here must match the passcode shown in the Dojo route. -->
+<section id="for-ai-dojo" hidden>
+<h2>For your AI Dojo: My Sprint 2 goal and plan</h2>
+<p>Graded item: My Sprint 2 goal and plan. Course: CST286. Due: Monday 19 October. Passcode: GOAL-1019.</p>
+<p>When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.</p>
+<p>Learning purpose: the student turns one physical phenomenon they are curious about into a goal written as a prediction, precise enough that they can check in three weeks whether they reached it, and writes a plan for the two graded items that remain in Sprint 2.</p>
+<p>The form has six lines: (1) What I want to understand: one phenomenon, not a field. (2) Given what I know or can measure: the starting quantities, each with a unit. (3) I will be able to predict: one quantity with its unit, and the condition under which the relationship holds. (4) Predicting it is useful because: one real situation where being able to predict this helps. (5) By Monday 26 October I will have learned: the relationship, when the student will work on it outside class, and the resource, named by title, link or person. (6) On paper, by Wednesday 28 October, I will be able to: the steps the student will carry out without aids, and when they will practice.</p>
+<p>Work one line at a time. Ask questions and do not write the line for the student. A student who builds on the learning trail starts from its goal (the accelerometer: given the push on the phone and its mass, predict the acceleration the sensor reports) and must go beyond it; ask where they want to go further, for example the sensor that tells the phone its orientation, another quantity the accelerometer could tell them, or another phone behavior that starts from a sensor reading. Keeping the trail's goal unchanged does not complete this graded item. When a plan line has no time in it, ask when outside class they will work on it. When a student's phenomenon is a whole field, ask which single thing inside it they would most like to predict. When "predict" has no quantity, ask what number they would expect to be able to work out, and in what unit. When "predict" has no condition, ask what would have to be true for the relationship to hold. When a resource is a category ("a video on the topic"), ask for the title or link.</p>
+<p>Do not summarize until the student asks. When they ask, give the six lines in the form's order, using only the student's words, and write "not yet settled" on any line that is not.</p>
+</section>
+
+<div class="provenance prov2">
+<div class="prov-head">Where this page comes from</div>
+<p class="prov-lead">The three-part prediction goal and the learning trail's goal are by Prof. Sathya. The form layout, the examples B, C and D, the plan lines, the self-check and the Dojo prompts were drafted with AI from the kinds of goals this class wrote in Sprint 1 and reviewed by Prof. Sathya.</p>
+</div>
+</main>
+
+<div class="pagenav"><a href="home.html">Course home</a></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+<!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST286 Physics of Computing (with AI) &middot; My Sprint 2 goal and plan &middot; Draft v2 of 2026-10-09 &middot; words: my-sprint-2-goal-and-plan.md</span>
+</footer>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
+
+(function () {
+    'use strict';
+    // My Sprint 2 goal and plan: the graded-item layer (engine of how-i-learn-and-one-learning-trail.html).
+    // Words students read live in the markup. This script saves what they type, remembers the starting
+    // point and the Dojo tick, fills Example A into empty boxes when "Build on" is chosen, asks for AI
+    // feedback on each box, and builds the copy.
+    var PAGE = { page: 'cst286-my-sprint-2-goal-and-plan', course: 'CST286', week: '8', title: 'My Sprint 2 goal and plan' };
+    var KEY = 'cc-gi:' + PAGE.page;
+    var TICK_KEY = 'cc-dojo-tick:' + PAGE.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    function indentLines(s, pad) { return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n'); }
+    function clean(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+    var live = document.getElementById('live');
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { answers: {}, checks: {}, start: 'build', copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.answers) { state.answers = {}; }
+    if (!state.checks) { state.checks = {}; }
+    if (state.start !== 'own') { state.start = 'build'; }
+    function showStoreNote() { $all('.storenote').forEach(function (n) { n.style.display = 'block'; }); }
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
+        catch (e) { storageOK = false; showStoreNote(); }
+    }
+    var saveTimer = null;
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function answerState(key) {
+        if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
+        if (!state.answers[key].ai) { state.answers[key].ai = []; }
+        return state.answers[key];
+    }
+
+    // ---------- the Dojo tick ----------
+    // Ticked (the default): the Dojo route shows under the form and the AI feedback buttons are hidden.
+    // Unticked: the Dojo route hides and an AI feedback button shows under each box. The boxes are the submission either way.
+    (function () {
+        var tick = document.getElementById('dojo-tick');
+        if (!tick) { return; }
+        function apply(on) {
+            document.body.classList.toggle('dojo-on', on);
+            tick.setAttribute('aria-expanded', on ? 'true' : 'false');
+        }
+        var stored = null;
+        try { stored = window.localStorage.getItem(TICK_KEY); } catch (e) { stored = null; }
+        tick.checked = stored !== '0';
+        apply(tick.checked);
+        tick.addEventListener('change', function () {
+            apply(tick.checked);
+            try { window.localStorage.setItem(TICK_KEY, tick.checked ? '1' : '0'); } catch (e) { /* not remembered */ }
+        });
+    }());
+
+    // ---------- copy buttons on the Dojo prompts ----------
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        ta.style.top = (window.pageYOffset || 0) + 'px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok ? Promise.resolve() : Promise.reject(new Error('no clipboard'));
+    }
+    function writeClipboard(text) {
+        var nc = null;
+        try { nc = navigator.clipboard; } catch (e) { nc = null; }
+        if (nc && nc.writeText) {
+            try { return nc.writeText(text).catch(function () { return fallbackCopy(text); }); }
+            catch (e) { return fallbackCopy(text); }
+        }
+        return fallbackCopy(text);
+    }
+    function selectNear(btn) {
+        var box = btn.parentNode ? btn.parentNode.querySelector('.ct') : null;
+        if (!box || !window.getSelection) { return; }
+        try { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* nothing more to try */ }
+    }
+    $all('.copybtn').forEach(function (btn) {
+        var label = btn.textContent;
+        var timer = null;
+        btn.addEventListener('click', function () {
+            writeClipboard(btn.getAttribute('data-copy') || '').then(function () {
+                btn.textContent = 'Copied';
+                btn.classList.add('done');
+                if (live) { live.textContent = ''; live.textContent = 'Copied'; }
+                if (timer) { clearTimeout(timer); }
+                timer = setTimeout(function () {
+                    btn.textContent = label;
+                    btn.classList.remove('done');
+                    if (live) { live.textContent = ''; }
+                }, 2000);
+            }, function () { selectNear(btn); });
+        });
+    });
+
+    // ---------- AI feedback on what is written in a box ----------
+    var SYS_GOAL = "You are helping a student make one line of their goal-and-plan form precise. The form turns one physical phenomenon they are curious about into a goal written as a prediction, and adds a plan for the next two graded items. Reply in two or three sentences, in plain words: first, what the line already does, quoting their words; then the one thing that would make it precise, asked as a question or named as what is missing. Use only the criteria for this line, listed below. Never rewrite the student's line and never hand them wording. Do not supply a phenomenon, quantity, condition or resource for them. If every criterion is met, say which ones are met and nothing more. Do not judge the person, their ability or their prospects, and do not use pass/fail language.";
+    var EXA = {};
+    $all('#ex-a dd[data-fill]').forEach(function (dd) { EXA[dd.getAttribute('data-fill')] = clean(dd.textContent); });
+    var META = {
+        understand: { coach: 'CRITERIA: one phenomenon, not a field; a thing that happens, not a device name alone. If the text is Example A unchanged, say that the trail\'s goal is the starting point and ask where the student will take it further.\nEXAMPLE A, THE TRAIL\'S GOAL FOR THIS LINE: ' + (EXA.understand || '') },
+        given: { coach: 'CRITERIA: at least one quantity, each with a unit; quantities the student could know or measure.' },
+        predict: { coach: 'CRITERIA: exactly one quantity with its unit; a condition under which the relationship holds.' },
+        useful: { coach: 'CRITERIA: one real situation and how predicting this helps there.' },
+        plan9: { coach: 'CRITERIA: a relationship named, a time outside class, and a resource named by title, link or person, not a category.' },
+        plan10: { coach: 'CRITERIA: something the student will do on paper, written as steps, and when they will practice.' }
+    };
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+    function boxLabel(key) { var l = $('label[for="bx-' + key + '"]'); return l ? clean(l.textContent) : key; }
+    function questionFor(key) {
+        var q = document.getElementById('q-' + key);
+        var st = document.getElementById('st-' + key);
+        return (q ? clean(q.textContent) + ' ' : '') + 'Box: ' + boxLabel(key) + (st ? ' ' + clean(st.textContent) : '');
+    }
+    function otherLines(key) {
+        var s = '';
+        $all('textarea[data-key]').forEach(function (ta) {
+            var k = ta.getAttribute('data-key');
+            if (k === key) { return; }
+            s += '- ' + boxLabel(k) + ' ' + (clean(ta.value) || '(empty)') + '\n';
+        });
+        return s;
+    }
+    function askAi(key, ta, btn, box, refresh) {
+        var meta = META[key];
+        if (!meta) { return; }
+        var st = answerState(key);
+        var text = ta.value.trim();
+        var content = 'PAGE: ' + PAGE.title + ' (' + PAGE.course + ', Week ' + PAGE.week + ', graded item)\n' +
+            'THE LINE THEY ARE WRITING: ' + questionFor(key) + '\n\n' +
+            'WHAT THEY WROTE:\n"""' + text + '"""\n\n' +
+            'THE OTHER LINES OF THEIR FORM (context only; give feedback on the line above):\n' + otherLines(key) + '\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + meta.coach;
+        var label = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: SYS_GOAL, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = String(data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            st.ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, st.ai.length);
+        }).catch(function () {
+            box.style.display = 'block';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer is saved; try the button again later.</span>';
+        }).then(function () { btn.textContent = label; refresh(); });
+    }
+    var refreshers = {};
+    $all('textarea[data-key]').forEach(function (ta) {
+        var key = ta.getAttribute('data-key');
+        var st = answerState(key);
+        ta.value = st.text || '';
+        var btn = $('[data-ai="' + key + '"]');
+        var box = $('[data-aibox="' + key + '"]');
+        if (st.ai.length && box) { showAi(box, st.ai[st.ai.length - 1].text, st.ai.length); }
+        function refresh() {
+            if (!btn) { return; }
+            var t = ta.value.trim();
+            var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+            btn.disabled = t.length === 0 || t === last;
+        }
+        refreshers[key] = refresh;
+        ta.addEventListener('input', function () { st.text = ta.value; refresh(); saveSoon(); });
+        ta.addEventListener('blur', save);
+        if (btn && box) { btn.addEventListener('click', function () { askAi(key, ta, btn, box, refresh); }); }
+        refresh();
+    });
+
+    // ---------- starting point ----------
+    // "Build on" (the default) fills every empty box of Parts 1 and 2 with Example A. It never overwrites typed text.
+    // "Write my own" changes nothing in the boxes.
+    function fillFromExampleA() {
+        var changed = false;
+        Object.keys(EXA).forEach(function (key) {
+            var ta = document.getElementById('bx-' + key);
+            if (!ta || ta.value.trim()) { return; }
+            ta.value = EXA[key];
+            answerState(key).text = ta.value;
+            if (refreshers[key]) { refreshers[key](); }
+            changed = true;
+        });
+        if (changed) { save(); }
+    }
+    (function () {
+        var radios = $all('input[name="startpoint"]');
+        if (!radios.length) { return; }
+        radios.forEach(function (r) { r.checked = r.value === state.start; });
+        if (state.start === 'build') { fillFromExampleA(); }
+        radios.forEach(function (r) {
+            r.addEventListener('change', function () {
+                if (!r.checked) { return; }
+                state.start = r.value;
+                if (r.value === 'build') { fillFromExampleA(); }
+                save();
+            });
+        });
+    }());
+
+    // ---------- Copy my answers ----------
+    function txt(key) { return (answerState(key).text || '').trim(); }
+    function block(label, key) { var a = txt(key); return label + '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n\n'; }
+    function buildText() {
+        var out = PAGE.title + ' — ' + PAGE.course + ', Week ' + PAGE.week + '\n\n';
+        var pick = $('input[name="startpoint"]:checked');
+        var pickLabel = pick ? $('label[for="' + pick.id + '"] b') : null;
+        out += 'Choose your starting point: ' + (pickLabel ? clean(pickLabel.textContent) : '') + '\n';
+        var tick = document.getElementById('dojo-tick');
+        var tickLabel = $('label[for="dojo-tick"] b');
+        out += (tick && tick.checked ? '[x] ' : '[ ] ') + (tickLabel ? clean(tickLabel.textContent) : '') + '\n\n';
+        $all('.formcol > h3').forEach(function (h) {
+            out += clean(h.textContent).toUpperCase() + '\n\n';
+            var el = h.nextElementSibling;
+            while (el && el.tagName !== 'H3') {
+                $all('textarea[data-key]', el).forEach(function (ta) { var k = ta.getAttribute('data-key'); out += block(boxLabel(k), k); });
+                el = el.nextElementSibling;
+            }
+        });
+        out += 'SELF-CHECK (ticked by me; the grader verifies each line)\n';
+        var total = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li), on = cb && cb.checked;
+            var pts = parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10);
+            if (on) { total += pts; }
+            out += (on ? '[x] ' : '[ ] ') + clean($('label', li).textContent) + ' · ' + pts + ' pts\n';
+        });
+        out += 'Self-check total: ' + total + ' of 100\n';
+        return out.replace(/\n+$/, '\n');
+    }
+
+    // ---------- Self-check ticks: remembered on this browser, copied with the answers ----------
+    function scTotal() {
+        var t = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li);
+            if (cb && cb.checked) { t += parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10); }
+        });
+        var el = $('#sc-total');
+        if (el) { el.textContent = t + ' of 100 points ticked'; }
+    }
+    $all('input[data-check]').forEach(function (cb) {
+        var id = cb.getAttribute('data-check');
+        cb.checked = !!state.checks[id];
+        cb.addEventListener('change', function () { state.checks[id] = cb.checked; save(); scTotal(); });
+    });
+    scTotal();
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var text = buildText();
+            summaryOut.value = text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            writeClipboard(text).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = 'Copied. Paste it into the Canvas text box. The same text is below if you need it again.';
+            }, function () {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            });
+        });
+    }
+    if (!storageOK) { showStoreNote(); }
+}());
+
+</script>
+<script id="a11y-pass-1-js">
+(function () {
+  // Escape closes an open glossary bubble (hover or focus); it comes back on the next hover or focus.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.gl:hover, .gl:focus-within').forEach(function (g) {
+      g.classList.add('a11y-esc');
+      function clear() { g.classList.remove('a11y-esc'); g.removeEventListener('mouseleave', clear); g.removeEventListener('focusout', clear); }
+      g.addEventListener('mouseleave', clear); g.addEventListener('focusout', clear);
+    });
+  });
+})();
+</script>
+</body>
+</html>
