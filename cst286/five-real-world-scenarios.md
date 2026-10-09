@@ -89,15 +89,15 @@ Each of these looks like one of the scenarios in Part 2. The whole point is the 
 
 Each pair is one scenario where the prediction applies and one that looks similar but does not. They are written in the form's shape, shorter than yours will be.
 
-**Pair A · The learning trail's goal.** Relationship: acceleration = push ÷ mass, a = F/m, with F in newtons, m in kilograms and a in m/s². Condition: the push is the only unbalanced force on the phone.
+**Pair A · The learning trail's goal.** Relationship: acceleration = push ÷ mass, a = F/m, with the push in newtons, the mass in kilograms and the acceleration in meters per second squared. Condition: the push is the only unbalanced force on the phone.
 
-- *Applies.* The phone, mass 0.20 kg, lies on a smooth icy tray and I push it with 0.30 N. Given F = 0.30 N and m = 0.20 kg; a = 0.30 N ÷ 0.20 kg = 1.5 m/s², along the push. The condition holds: on ice, friction is close to nothing, so my push is the only unbalanced force.
-- *Looks similar, does not apply.* The same phone, the same push, on a wooden desk. It looks the same because the push and the mass are identical. The subtle difference: the desk pushes back with friction, so the push is no longer the only unbalanced force. Using a = F/m anyway predicts 1.5 m/s², and the sensor reads less, because the net force is the push minus the friction.
+- *Applies.* The phone, mass 0.20 kilograms, lies on a smooth icy tray and I push it with 0.30 newtons. Given a push of 0.30 newtons and a mass of 0.20 kilograms; acceleration = 0.30 newtons ÷ 0.20 kilograms = 1.5 meters per second squared, along the push. The condition holds: on ice, friction is close to nothing, so my push is the only unbalanced force.
+- *Looks similar, does not apply.* The same phone, the same push, on a wooden desk. It looks the same because the push and the mass are identical. The subtle difference: the desk pushes back with friction, so the push is no longer the only unbalanced force. Using a = F/m anyway predicts 1.5 meters per second squared, and the sensor reads less, because the net force is the push minus the friction.
 
-**Pair B · A thrown ball (Example D on the goal form).** Relationship: the distance a ball lands from me, from its release speed and angle, with speed in m/s, angle in degrees and distance in meters. Condition: air resistance is small enough to ignore.
+**Pair B · A thrown ball (Example D on the goal form).** Relationship: the distance a ball lands from me, from its release speed and angle, with speed in meters per second, angle in degrees and distance in meters. Condition: air resistance is small enough to ignore.
 
-- *Applies.* A baseball thrown at 20 m/s at 30° above horizontal. Worked through the relationship, it lands about 35 m away after about 2 s. The condition holds: a baseball is dense and the throw is short, so the air slows it very little.
-- *Looks similar, does not apply.* A badminton shuttlecock hit at 20 m/s at 30°. It looks the same because the speed and the angle are identical. The subtle difference: the shuttle is light with a wide skirt, so air resistance is the largest force on it after the hit. Using the relationship anyway predicts about 35 m, and the shuttle drops within a few meters, because the air takes most of its speed in the first second.
+- *Applies.* A baseball thrown at 20 meters per second at 30 degrees above horizontal. Worked through the relationship, it lands about 35 meters away after about 2 seconds. The condition holds: a baseball is dense and the throw is short, so the air slows it very little.
+- *Looks similar, does not apply.* A badminton shuttlecock hit at 20 meters per second at 30 degrees. It looks the same because the speed and the angle are identical. The subtle difference: the shuttle is light with a wide skirt, so air resistance is the largest force on it after the hit. Using the relationship anyway predicts about 35 meters, and the shuttle drops within a few meters, because the air takes most of its speed in the first second.
 
 ## Self-check
 
@@ -119,7 +119,7 @@ This graded item is complete when Part 1 and all five scenarios have text. Go th
 
 ## Dojo route (shown under the form while the Dojo box is ticked)
 
-Passcode for this graded item: **LIMITS-1026**
+AI Dojo Passcode for this Graded Item: **LIMITS-1026**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 

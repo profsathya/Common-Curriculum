@@ -40,7 +40,7 @@ Nurture your curiosity, cultivate your self-directed learning capability, and st
 
 ## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-Passcode for this graded item: **GOAL-1019**
+AI Dojo Passcode for this Graded Item: **GOAL-1019**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
@@ -111,21 +111,21 @@ Each example is written in the form's own shape. Example A is the learning trail
 **Example B · From "why do planes fly"**
 
 - *What I want to understand:* how a wing holds a plane up.
-- *Given* the plane's airspeed in m/s, the wing area in m², the density of the air in kg/m³, and the wing's lift coefficient at its angle,
+- *Given* the plane's airspeed in meters per second, the wing area in square meters, the density of the air in kilograms per cubic meter, and the wing's lift coefficient at its angle,
 - *I will be able to predict* the lift force in newtons, and so whether it is larger than the plane's weight, for steady flight with the wing below its stall angle.
 - *Predicting it is useful because* it gives the slowest speed at which a plane, or a drone, can stay in the air, which is what a pilot needs to know at takeoff and landing.
 
 **Example C · From "how a guitar makes its notes"**
 
 - *What I want to understand:* why a guitar string plays the note it plays.
-- *Given* the length of string that can vibrate in m, its tension in N, and its mass per meter in kg/m,
+- *Given* the length of string that can vibrate in meters, its tension in newtons, and its mass per meter in kilograms per meter,
 - *I will be able to predict* the frequency of its lowest note in hertz, for a string held fixed at both ends.
 - *Predicting it is useful because* it says where each fret has to sit and why a thicker string sounds lower, which is what anyone tuning or building a guitar relies on.
 
 **Example D · From "how far a thrown ball goes"**
 
 - *What I want to understand:* what decides how far a thrown ball travels.
-- *Given* the speed at which the ball leaves my hand in m/s, and the angle above horizontal in degrees,
+- *Given* the speed at which the ball leaves my hand in meters per second, and the angle above horizontal in degrees,
 - *I will be able to predict* the distance it lands from me in meters, and the time it spends in the air in seconds, as long as air resistance is small enough to ignore.
 - *Predicting it is useful because* a throw to a base, a free kick and a water fountain's arc all depend on it, and the same relationship shows why the longest throw is close to 45°.
 
