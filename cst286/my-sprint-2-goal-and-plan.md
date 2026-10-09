@@ -20,15 +20,15 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-Turn your curiosity about one thing in the physical world into a goal precise enough that you can tell, three weeks from now, whether you reached it. A goal written as a prediction does that: it names what you start from, what you will be able to work out, and why that matters, so that every hour you spend in Sprint 2 moves you toward something you can check.
+Nurture your curiosity, cultivate your self-directed learning capability and, strengthen yor goal setting and follow through, by learning something about the physical world that you truly want to understand.
 
 ## Choose your starting point
 
 (Page note: two choices, shown as large radio buttons; the first is selected when the page opens, and the choice is remembered on this browser.)
+<To Alan: I am not sure we should give the option to keep the trail, they should build on it - may be adding the role of another sensor to figure out the orientation or other phone behavior>
+◉ **Build on the work you what you learned in the previous assignment.** This form opens with the trail's goal already filled in, as Example A. Get guidance to change any box to go further: a different quantity the sensor could tell you, a situation the trail did not cover.
 
-◉ **Keep or build on the learning trail's relationship.** The form opens with the trail's goal already filled in, as Example A. Keep it as it is, or change any box to go further: a different quantity the sensor could tell you, a situation the trail did not cover, or the same relationship inside a device you care about.
-
-○ **Write my own.** The form opens empty. Choose one thing you have wanted to understand, and use the examples beside the form to get from "I want to understand how X works" to a prediction.
+○ **Write my own.** This form opens empty. Choose one thing you have wanted to understand, and use the templates provided.
 
 ☑ **I would like to use the AI Dojo to work out my goal and plan.** With this ticked, the Dojo steps appear under the form; your Dojo asks you questions until each line is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -40,13 +40,13 @@ Turn your curiosity about one thing in the physical world into a goal precise en
 
 ### Part 1 · What I want to understand
 
-One thing that happens in the physical world, in your own words. One sentence is enough. "How a gyroscope stays upright" and "how waves form at the beach" are the right size; "the physics of flight" is a field, not a phenomenon.
+One thing that happens in the physical world, in your own words. One sentence is enough. "How a gyroscope stays upright" and "how waves form at the beach" are precise; "the physics of flight" is a field, try to narrow down to a specific behavior of the plane or a bird.
 
    **What I want to understand.** I want to understand how ...
 
 ### Part 2 · What I will be able to predict
 
-Inside the phenomenon you chose sits a relationship between quantities. These three lines say which one you will learn.
+Inside the phenomenon you chose sits a relationship between quantities. Try to articulate it in the following three lines.
 
 1. **Given what I know or can measure.** The quantities you will start from, each with its unit.
 
@@ -56,13 +56,13 @@ Inside the phenomenon you chose sits a relationship between quantities. These th
 
    **I will be able to predict ...** One quantity, its unit, and the condition it depends on.
 
-3. **Predicting it is useful because.** One real situation where someone needs that number.
+3. **Predicting it is useful because.** One real situation where being able to predict this will be useful.
 
-   **Predicting it is useful because ...** The situation, and who needs the number.
+   **Predicting it is useful because ...** The situation, and how it helps.
 
 ### Part 3 · My plan
 
-Two lines, one for each of the graded items that remain in this sprint. Write each so that you can read it on the Monday it is due and say whether you did it.
+One for each of the graded items that remain in this sprint - when will you work on it outside of class and what resources will you use.
 
 1. **Week 9 → Five real-world scenarios, due Monday 26 October.** To write those scenarios you need the relationship itself, where it comes from, and the condition it depends on. Say what you will learn by then, and from which resource, by title, link or person's name.
 
