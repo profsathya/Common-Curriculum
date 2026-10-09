@@ -25,7 +25,12 @@ Nurture your curiosity, cultivate your self-directed learning capability, and st
 ## Choose your starting point
 
 (Page note: two choices, shown as large radio buttons; the first is selected when the page opens, and the choice is remembered on this browser.)
-◉ **Build on what you learned in the previous assignment.** The form opens with the trail's goal already filled in, as Example A, for you to take further. Change the boxes so that your goal goes beyond the trail: the role of another sensor, such as the one that tells the phone its orientation, a different quantity the accelerometer could tell you, or another thing your phone does that starts from a sensor reading. Your Dojo or the AI feedback button helps you find the step beyond.
+◉ **Build on what you learned in the previous assignment.** The form opens with the trail's goal already filled in, as Example A, for you to take further.
+- Change the boxes so that your goal goes beyond the trail, in one of these directions:
+  - add the role of another sensor, such as the one that tells the phone its orientation;
+  - predict a different quantity the accelerometer could tell you;
+  - explain another thing your phone does that starts from a sensor reading.
+- Ask your Dojo, or press the AI feedback button, to help you find the step beyond.
 
 ○ **Write my own.** The form opens empty. Choose one thing you have wanted to understand, and use the examples beside the form as templates.
 
