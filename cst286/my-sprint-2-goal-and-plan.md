@@ -1,4 +1,4 @@
-<!-- Editable text for my-sprint-2-goal-and-plan.html (not built yet). DRAFT 4, 9 Oct 2026 (Prof. Sathya's edits of 9 Oct folded in). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
+<!-- Editable text for my-sprint-2-goal-and-plan.html (not built yet). DRAFT 5, 9 Oct 2026 (Prof. Sathya's edits of 9 Oct folded in). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
 Notes for the editor, not shown to students:
 - This is the week-8 graded item of CST286 Sprint 2 (Prof. Sathya, 9 Oct): a strict form, not prose. Six boxes in all: one for the phenomenon, three for the prediction, two for the plan, plus nothing else to write.
 - Starting point (Prof. Sathya, 9 Oct): "Build on what you learned in the previous assignment" is the first choice and is selected when the page opens; choosing it fills any empty box in Parts 1 and 2 with Example A below as a starting point the student changes. Keeping the trail's goal unchanged is not a route (his 9 Oct note): the Dojo text, the AI feedback and the self-check all ask for a goal that goes further than Example A. "Write my own" leaves the boxes as they are. Switching never erases what a student typed.
@@ -52,7 +52,7 @@ AI Dojo Passcode for this Graded Item: **GOAL-1019**
 
 **4. Ask for the form.** When all six lines feel right, paste this:
 
-> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · By Monday 26 October I will have learned · On paper, by Wednesday 28 October, I will be able to. Use only my words. If a line is not settled, write "not yet settled" on it.
+> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · I will work on this on · I will explain what I learned to. Use only my words. If a line is not settled, write "not yet settled" on it.
 
 **5. Fill in the form.** Copy each of the six lines from your Dojo's reply into the box it belongs to, below. Then go through the Self-check and submit.
 
@@ -85,17 +85,17 @@ Inside the phenomenon you chose sits a relationship between quantities. Try to a
 
 ### Part 3 · My plan
 
-One for each of the graded items that remain in this sprint: when will you work on it outside of class and what resources will you use.
+Two lines that make the goal happen: when you will work on it outside class, and who will hear you explain what you learned.
 
-1. **Week 9 → Five real-world scenarios, due Monday 26 October.** To write those scenarios you need the relationship itself, where it comes from, and the condition it depends on. Say what you will learn by then, and from which resource, by title, link or person's name.
+1. **When I will work on it.** Name the days and times outside class you will give to this goal between now and the exam on Wednesday 28 October, and block them in your calendar now. The five scenarios are due Monday 26 October, so place most of the time before then.
 
-   **By Monday 26 October I will have learned ...** The relationship, when I will work on it outside class, and the resource I will learn it from.
+   **I will work on this on ...** The days and times, blocked in my calendar, between now and the exam.
 
-2. **Week 10 → The Sprint 2 exam, Wednesday 28 October.** On paper, with no aids, you will work one of your own scenarios from the given quantities to the predicted one. Say what you need to be able to do on paper by then.
+2. **Who I will explain it to.** Name the person, or people, who will hear you explain what you learned and tell you whether it was understandable: a member of your guide group, a classmate, a friend, or Jesus. Say when you will do it, so that there is time to fix what they did not follow before the exam.
 
-   **On paper, by Wednesday 28 October, I will be able to ...** The steps I will carry out without aids, and when I will practice them.
+   **I will explain what I learned to ...** The person, when, and how I will know whether they understood me.
 
-A plan written for Example D would read: *By Monday 26 October I will have learned the range relationship for a projectile, and why it needs a 45° angle for the longest throw, from the PhET simulation Projectile Motion and chapter 3 of OpenStax College Physics 2e, working on it Tuesday and Thursday evenings.* And: *On paper, by Wednesday 28 October, I will be able to take a release speed and an angle, work out the distance and the time in the air, and show the unit at each step, practicing one scenario a day in the last week.*
+A plan written for Example D would read: *I will work on this on Tuesday and Thursday evenings, 7 to 8:30, from 13 to 27 October, blocked in my calendar.* And: *I will explain what I learned to my roommate on Sunday 25 October, and I will know she understood me if she can tell me what changes when I throw at a lower angle.*
 
 ## Worked examples (shown beside the form)
 
@@ -138,8 +138,8 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] "Predict" names one quantity with its unit · 15 pts
 - [ ] "Predict" states the condition the relationship depends on · 10 pts
 - [ ] "Useful" names a real situation where being able to predict this helps · 15 pts
-- [ ] My week-9 line says what I will learn, when I will work on it, and names the resource by title, link or person · 15 pts
-- [ ] My week-10 line says what I will be able to do on paper, and when I will practice · 15 pts
+- [ ] My plan names the days and times I will work on this outside class, and they are in my calendar · 15 pts
+- [ ] My plan names who will hear me explain what I learned, and when · 15 pts
 
 **What makes it strong.** Someone who reads your "given" and "predict" lines could set up the calculation without asking you anything, and your condition is the first thing you would check before trusting the prediction in a new situation.
 
@@ -153,11 +153,11 @@ Graded item: My Sprint 2 goal and plan. Course: CST286. Due: Monday 19 October. 
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student turns one physical phenomenon they are curious about into a goal written as a prediction, precise enough that they can check in three weeks whether they reached it, and writes a plan for the two graded items that remain in Sprint 2.
+Learning purpose: the student turns one physical phenomenon they are curious about into a goal written as a prediction, precise enough that they can check in three weeks whether they reached it, and plans when they will work on it outside class and who will hear them explain what they learned.
 
-The form has six lines: (1) What I want to understand: one phenomenon, not a field. (2) Given what I know or can measure: the starting quantities, each with a unit. (3) I will be able to predict: one quantity with its unit, and the condition under which the relationship holds. (4) Predicting it is useful because: one real situation where being able to predict this helps. (5) By Monday 26 October I will have learned: the relationship, when the student will work on it outside class, and the resource, named by title, link or person. (6) On paper, by Wednesday 28 October, I will be able to: the steps the student will carry out without aids, and when they will practice.
+The form has six lines: (1) What I want to understand: one phenomenon, not a field. (2) Given what I know or can measure: the starting quantities, each with a unit. (3) I will be able to predict: one quantity with its unit, and the condition under which the relationship holds. (4) Predicting it is useful because: one real situation where being able to predict this helps. (5) I will work on this on: the days and times outside class, blocked in the student's calendar, between now and the exam on Wednesday 28 October. (6) I will explain what I learned to: the person who will hear the student explain it and say whether it was understandable, and when.
 
-Work one line at a time. Ask questions and do not write the line for the student. A student who builds on the learning trail starts from its goal (the accelerometer: given the push on the phone and its mass, predict the acceleration the sensor reports) and must go beyond it; ask where they want to go further, for example the sensor that tells the phone its orientation, another quantity the accelerometer could tell them, or another phone behavior that starts from a sensor reading. Keeping the trail's goal unchanged does not complete this graded item. When a plan line has no time in it, ask when outside class they will work on it. When a student's phenomenon is a whole field, ask which single thing inside it they would most like to predict. When "predict" has no quantity, ask what number they would expect to be able to work out, and in what unit. When "predict" has no condition, ask what would have to be true for the relationship to hold. When a resource is a category ("a video on the topic"), ask for the title or link.
+Work one line at a time. Ask questions and do not write the line for the student. A student who builds on the learning trail starts from its goal (the accelerometer: given the push on the phone and its mass, predict the acceleration the sensor reports) and must go beyond it; ask where they want to go further, for example the sensor that tells the phone its orientation, another quantity the accelerometer could tell them, or another phone behavior that starts from a sensor reading. Keeping the trail's goal unchanged does not complete this graded item. When the first plan line has no days and times, ask for them and ask the student to block them in their calendar. When the second has no person, ask who will hear them explain it, and when. When a student's phenomenon is a whole field, ask which single thing inside it they would most like to predict. When "predict" has no quantity, ask what number they would expect to be able to work out, and in what unit. When "predict" has no condition, ask what would have to be true for the relationship to hold. When a resource is a category ("a video on the topic"), ask for the title or link.
 
 Do not summarize until the student asks. When they ask, give the six lines in the form's order, using only the student's words, and write "not yet settled" on any line that is not.
 
@@ -167,8 +167,8 @@ Do not summarize until the student asks. When they ask, give the six lines in th
 - Given: at least one quantity, each with a unit; quantities the student could know or measure.
 - Predict: exactly one quantity with its unit; a condition under which the relationship holds.
 - Useful: one real situation and how predicting this helps there.
-- Week 9: a relationship named, a time outside class, and a resource named by title, link or person, not a category.
-- Week 10: something the student will do on paper, written as steps, and when they will practice.
+- When I will work on it: days and times outside class, between now and 28 October; not only "this week".
+- Who I will explain it to: a named person or role, a time, and how the student will know whether they were understood.
 
 The reply is two or three sentences: what the line already does, then the one thing that would make it precise. No rewriting of the student's line.
 

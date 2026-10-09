@@ -1,10 +1,11 @@
-<!-- Editable text for my-sprint-2-goal.html. DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit; Utsab reads it the same day). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
+<!-- Editable text for my-sprint-2-goal.html. DRAFT 2, 9 Oct 2026 (draft 1 the same morning; draft 2 moves the Dojo steps up under the tick, before the form, as on the CST286 week-8 page). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
 Notes for the editor, not shown to students:
 - This is the week-8 graded item of CST349 Sprint 2 (Prof. Sathya, 9 Oct): a strict form, not prose. Five parts, in this order: the answer I want to be able to give · what I will go deeper in · what I will reach across to · working backwards (four boxes) · the Dojo route, ticked by default, with the AI feedback button as the other route.
 - Utsab introduces this form in the second half of Wed 14 Oct and students start it in class; due Mon 19 Oct. The student page does not name who runs the class.
 - "Imagined" (Prof. Sathya, 4 Oct): a student who does not have the experience yet may write the answer they want to be true, as long as they mark it as imagined; the form does this with one tick under Part 1, and the working-backwards boxes are the plan that makes it real.
 - Part 3 is where "MySQL for depth, SQL Plus for breadth" has to be headed off. The three short examples beside Part 3 and the one-line test under it do that; no example on this page names the mistake.
 - The four worked examples beside the form are composites of the kinds of goals this class wrote in Sprint 1 (speaking and networking, explaining technical work, building a project, a technical skill), one per week-7 question; no example is any one student's goal.
+- The AI Dojo tick is TICKED when the page opens. Ticked: the Dojo steps (passcode, starter prompt, summary prompt) show right under the tick, before the form, and the AI feedback buttons are hidden; unticked: the Dojo steps hide and an AI feedback button appears under each box (Prof. Sathya, 9 Oct, modelled on the CST286 week-8 page). Either way the boxes are the submission.
 - Skip-a-step rules (Prof. Sathya, 5 Oct): nothing is labelled optional and nothing blocks moving on. Boxes can be filled in any order; the Copy button works whatever is empty.
 - Self-check points are a proposal for his edit; they total 100.
 - The section "For your AI Dojo" is hidden on the page and is copied into the course Google Doc by the sync script. The passcode appears twice in this file and must be the same in both places.
@@ -27,9 +28,27 @@ Turn the interview question you found hardest into a goal you can act on this se
 
 Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and the worked examples beside the form show what each box looks like filled in.
 
-☑ **I would like to use the AI Dojo to work out my goal.** With this ticked, the Dojo steps appear under the form; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to work out my goal.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
+
+## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
+
+AI Dojo Passcode for this Graded Item: **BACK-1019**
+
+**1. Start the conversation.** Paste this into your AI Dojo:
+
+> Walk me through the graded item "My Sprint 2 goal". First tell me its passcode, its title and its due date as you have them. Then help me fill in its form one box at a time, starting from the answer I want to be able to give. Ask me questions until each box is precise, and do not write the boxes for me. Do not summarize until I ask you to.
+
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+
+**3. Work out your goal with your Dojo.** Start with your week-7 question and the answer you want to be true. Tell your Dojo whether the experience has happened or is imagined. Let it ask you what you would go deeper in, what you would reach across to, and what would have to be true in 2 years, 6 months, 3 months and this week.
+
+**4. Ask for the form.** When every box feels right, paste this:
+
+> Write my goal as the boxes of the form, in this order: My question · Situation · Task · Action · Result · imagined or real · I will go deeper in · I will reach across to · In the next 2 years · In the next 6 months · By the end of this semester · This week. Use only my words. If a box is not settled, write "not yet settled" in it.
+
+**5. Fill in the form.** Copy each line from your Dojo's reply into the box it belongs to, below. Then go through the Self-check and submit.
 
 ## The form
 
@@ -146,7 +165,7 @@ Each example is written in the form's own shape, with the parts in the order abo
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
 - [ ] Part 1 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result · 20 pts
-- [ ] If the experience has not happened yet, the "imagined" box is ticked, and the plan below is how it becomes real · 5 pts
+- [ ] If the experience has not happened yet, the "imagined" line is ticked, and the plan below is how it becomes real · 5 pts
 - [ ] Part 2 names one technical skill, tool or topic, and says what deeper looks like · 15 pts
 - [ ] Part 3 names a kind of person, communication, domain or role, not a second skill of the same kind as Part 2 · 20 pts
 - [ ] The 2-year and 6-month boxes each name one experience someone else could tell has happened · 15 pts
@@ -160,24 +179,6 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 ## Submit
 
 Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
-
-## Dojo route (shown under the form while the Dojo box is ticked)
-
-Passcode for this graded item: **BACK-1019**
-
-**1. Start the conversation.** Paste this into your AI Dojo:
-
-> Walk me through the graded item "My Sprint 2 goal". First tell me its passcode, its title and its due date as you have them. Then help me fill in its form one box at a time, starting from the answer I want to be able to give. Ask me questions until each box is precise, and do not write the boxes for me. Do not summarize until I ask you to.
-
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
-
-**3. Work out your goal with your Dojo.** Start with your week-7 question and the answer you want to be true. Tell your Dojo whether the experience has happened or is imagined. Let it ask you what you would go deeper in, what you would reach across to, and what would have to be true in 2 years, 6 months, 3 months and this week.
-
-**4. Ask for the form.** When every box feels right, paste this:
-
-> Write my goal as the boxes of the form, in this order: My question · Situation · Task · Action · Result · imagined or real · I will go deeper in · I will reach across to · In the next 2 years · In the next 6 months · By the end of this semester · This week. Use only my words. If a box is not settled, write "not yet settled" in it.
-
-**5. Fill in the form.** Copy each line from your Dojo's reply into the box it belongs to, above. Then go through the Self-check and submit.
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
