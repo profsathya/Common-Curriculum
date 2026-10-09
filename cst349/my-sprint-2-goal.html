@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Sprint 2 goal | CST349</title>
+<!-- my-sprint-2-goal.md in this folder is the editable companion to this page: the words are edited there and carried into this file. The engine (boxes, AI feedback, Dojo tick, self-check, copy) is the one on cst286/my-sprint-2-goal-and-plan.html. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+    --border:#C7CDD1; --border-light:#E8EAEC; --teal:#0F766E;
+    --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#B04A18; --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --warn:#6F5612;
+    --t-phone:#2F6BA8; --t-phone-soft:#E2EAF3;
+    --tc:var(--t-phone); --tsoft:var(--t-phone-soft);
+    --on-tc:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A;
+      --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E;
+    --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A;
+    --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Atkinson Hyperlegible",var(--font); color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word}
+  .page{max-width:1180px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  a{color:var(--blaze)}
+  p{margin:0 0 12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:3px}
+
+  .canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--line);border-left:4px solid var(--tc);background:var(--tsoft);color:var(--ink);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:14px}
+  .canvasbar[hidden]{display:none}
+  .canvasbar a{color:var(--blue-dark)}
+
+  .crumb{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.06em; margin-bottom:12px; color:var(--ink-soft)}
+  .crumb a{color:var(--ink-soft); text-decoration:none}
+  .crumb a::before{content:"\2190\00a0"}
+  .crumb a:hover{color:var(--blaze); text-decoration:underline}
+
+  /* hero */
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; position:relative; overflow:hidden}
+  .hero-inner{padding:38px 34px 34px; position:relative; z-index:1}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.16em; text-transform:uppercase; color:#9FB2C4; margin:0 0 14px}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem); font-weight:900; line-height:1.05; letter-spacing:-.01em; color:var(--hero-cream)}
+  .hero .intro{font-size:1.08rem; color:#DCE3E8; margin:18px 0 0; max-width:62ch; border-left:3px solid var(--blaze); padding:4px 0 4px 16px}
+
+  /* buttons */
+  button{font:inherit}
+  .copybtn{font-family:"Atkinson Hyperlegible",var(--font); font-size:.9rem; font-weight:700; padding:8px 14px; min-height:40px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--tc); background:transparent}
+  .copybtn::before{content:"\29C9\00a0\00a0"}
+  .copybtn.done::before{content:"\2713\00a0\00a0"}
+  .copybtn:hover{filter:brightness(1.1)}
+
+  /* dojo prompts */
+  .prompt{display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 14px; background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:5px; padding:12px 14px; margin:0 0 10px; max-width:820px}
+  .prompt .ptext{flex:1 1 320px; margin:0; font-family:"IBM Plex Mono",monospace; font-size:.86rem; line-height:1.55; max-width:none}
+  .prompt .copybtn{flex:0 0 auto}
+
+  /* provenance */
+  .prov2{margin-top:30px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:0; font-size:.88rem; color:var(--ink)}
+  .prov2 .prov-head{padding:12px 16px 0; font-family:"Atkinson Hyperlegible",var(--font); font-size:.95rem; font-weight:700}
+  .prov2 .prov-lead{padding:5px 16px 14px; margin:0; line-height:1.55; max-width:none}
+  .pagenav{margin-top:20px; padding-top:14px; border-top:1px solid var(--line); font-size:.9rem}
+  .pagenav a{color:var(--blue-dark)}
+  .pagenav a::before{content:"\2190\00a0"}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+
+  @media (max-width:520px){
+    .page{padding:14px 16px 40px}
+    .hero-inner{padding:26px 20px 24px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none !important; transition:none !important}
+  }
+
+  /* ---------- graded item layer ---------- */
+  [hidden]{display:none !important}
+  body:not(.dojo-on) .dojo-only{display:none !important}
+  body.dojo-on .airow{display:none !important}
+  .gl{display:inline}
+  .gt{font:inherit; color:inherit; background:none; border:0; padding:0; margin:0; cursor:help; border-bottom:1px dashed var(--blue); border-radius:0; min-height:0}
+  .gt:hover,.gt:focus{color:var(--blue); border-bottom-style:solid}
+  .gt:focus{outline:2px solid rgba(3,116,181,.35); outline-offset:2px}
+  .bub{display:none; position:absolute; z-index:60; top:100%; left:0; margin-top:7px; width:340px; max-width:100%; background:#fff; border:1px solid var(--border); border-radius:6px; box-shadow:0 8px 24px rgba(45,59,69,.18); padding:11px 13px; font-family:var(--font); font-size:.9rem; line-height:1.5; color:var(--text); text-align:left; font-weight:400; font-style:normal; letter-spacing:0; text-transform:none; white-space:normal}
+  .gl:hover > .bub,.gl:focus-within > .bub,.gl.open > .bub{display:block}
+  .gl.closed > .bub{display:none !important}
+  .bub .bt{display:block; font-weight:700; color:var(--blue-dark); padding-bottom:5px; margin-bottom:6px; border-bottom:1px solid var(--border-light)}
+  .gibar{margin:14px 0 0; border:1px solid var(--line); border-left:5px solid var(--blaze); background:var(--card); border-radius:5px; padding:11px 16px; font-size:.95rem}
+  h2.sec{font-size:1.5rem; font-weight:650; margin:38px 0 12px; padding-bottom:7px; border-bottom:2px solid var(--line)}
+  .body{max-width:74ch}
+  .choose{display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-left:5px solid var(--teal); border-radius:5px; padding:14px 16px; margin-top:16px; max-width:900px}
+  .choose input{flex:0 0 24px; width:24px; height:24px; margin:2px 0 0; accent-color:var(--tc); cursor:pointer}
+  .choose input:focus-visible{outline:3px solid var(--blaze); outline-offset:2px}
+  .choose label{cursor:pointer}
+  .dojowarn{margin:12px 0 0; max-width:900px; background:#FFF1B8; border:2px solid #B87A00; color:#2E2100; border-radius:6px; padding:12px 16px; font-weight:700}
+  .passcode{font-family:"IBM Plex Mono",monospace; font-size:1.05rem; background:var(--card); border:1.5px dashed var(--tc); border-radius:5px; padding:9px 14px; display:inline-block; margin:0 0 14px}
+  .dsteps{padding-left:24px; margin:0}
+  .dsteps > li{margin:0 0 16px; padding-left:4px}
+  .dsteps > li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  #dojo-block{margin-top:6px; max-width:900px}
+  .tasks{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+  .task{background:var(--card); border:1px solid var(--line); border-radius:5px; padding:14px 16px 12px; margin:0}
+  .task .ttext{display:flex; gap:10px; margin:0 0 10px}
+  .task .tn{flex:0 0 24px; font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .task .tt{flex:1; min-width:0; max-width:74ch; position:relative}
+  .rbox{margin:10px 0 0}
+  label.qt{display:block; font-size:.92rem; margin:0 0 6px; color:var(--ink)}
+  textarea.box{display:block; width:100%; min-height:120px; font:inherit; font-size:.97rem; line-height:1.5; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:10px 12px; resize:vertical}
+  textarea.box.small{min-height:84px}
+  textarea.box:focus-visible{outline:3px solid var(--blaze); outline-offset:1px}
+  .btn{font:inherit; font-size:.9rem; font-weight:700; padding:8px 14px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--tc); background:var(--card)}
+  .btn.primary{background:var(--tc); color:var(--on-tc)}
+  .btn[disabled]{opacity:.45; cursor:not-allowed}
+  .airow{margin:8px 0 0}
+  .aibox{display:none; margin:9px 0 0; padding:12px 14px; background:var(--tsoft); border:1px solid var(--line); border-radius:6px; font-size:.93rem; line-height:1.55; white-space:pre-wrap; max-width:74ch}
+  .aibox .lbl{display:block; font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--tc); font-weight:600; margin-bottom:4px}
+  .aibox .err{color:var(--blaze)}
+  .imagined{display:flex; gap:10px; align-items:flex-start; margin:14px 0 2px; padding:10px 12px; border:1px dashed var(--tc); border-radius:5px; background:var(--tsoft); max-width:74ch}
+  .imagined input{flex:0 0 20px; width:20px; height:20px; margin:3px 0 0; accent-color:var(--tc); cursor:pointer}
+  .imagined input:focus-visible{outline:3px solid var(--blaze); outline-offset:2px}
+  .imagined label{flex:1; min-width:0; cursor:pointer}
+  ul.selfcheck{list-style:none;margin:0 0 4px;padding:0;font-size:14px}
+  ul.selfcheck li{display:flex;gap:9px;align-items:flex-start;margin:0 0 9px;line-height:1.5;max-width:74ch}
+  ul.selfcheck input{flex:0 0 16px;width:16px;height:16px;margin:3px 0 0;accent-color:var(--blue);cursor:pointer}
+  ul.selfcheck input:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+  ul.selfcheck label{flex:1;min-width:0;cursor:pointer}
+  ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--blue-dark);padding-left:6px}
+  .sc-total{font-weight:700;margin:6px 0 12px}
+  .copywrap{margin:6px 0 0}
+  .status{font-size:.9rem; color:var(--ink-soft); margin:8px 0 0}
+  .status.ok{color:#1A7F4B; font-weight:700}
+  .sumout{display:block; width:100%; min-height:150px; font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:10px 12px; margin-top:4px}
+  .storenote{display:none; font-size:.9rem; color:var(--blaze); margin:8px 0 0}
+  .instructor{margin-top:22px; text-align:center; font-size:.9rem}
+  .instructor .nm{font-weight:700}
+  .instructor a,.feedback-note a{color:var(--blue-dark)}
+  .feedback-note{margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line); font-size:.86rem; color:var(--ink-soft); text-align:center}
+  .page-footer{margin-top:16px; font-size:.78rem; color:var(--ink-soft); text-align:center}
+  .page-footer img{height:20px; opacity:.55; vertical-align:middle; margin-right:8px}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .status.ok{color:#6FCF97} }
+  :root[data-theme="dark"] .status.ok{color:#6FCF97}
+
+  /* the form beside the worked examples */
+  .formgrid{display:grid; gap:24px; margin-top:4px}
+  @media (min-width:900px){ .formgrid{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:start} }
+  .formcol > h3{font-size:1.18rem; font-weight:650; margin:24px 0 8px}
+  .formcol > h3:first-child{margin-top:4px}
+  .formcol > .body{font-size:.98rem}
+  .p3grid{display:grid; gap:14px}
+  @media (min-width:600px){ .p3grid{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); align-items:start} }
+  .p3test{margin:12px 0 0; max-width:74ch; border-left:3px solid var(--tc); padding:2px 0 2px 12px; font-size:.95rem}
+  .pairs{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:5px; padding:10px 12px; font-size:.88rem; line-height:1.5}
+  .pairs ul{margin:0; padding:0; list-style:none}
+  .pairs li{margin:0 0 10px; padding-bottom:10px; border-bottom:1px dashed var(--line)}
+  .pairs li:last-child{margin-bottom:0; padding-bottom:0; border-bottom:0}
+  .examples h2.sec{margin-top:4px; font-size:1.2rem}
+  .examples > p{font-size:.93rem; color:var(--ink-soft)}
+  .excard{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--tc); border-radius:5px; padding:12px 14px 6px; margin:0 0 12px; font-size:.93rem; line-height:1.5}
+  .excard h3{font-size:1rem; font-weight:650; margin:0 0 8px}
+  .excard dl{margin:0}
+  .excard dt{font-style:italic; font-weight:700; color:var(--ink-soft); font-size:.86rem}
+  .excard dd{margin:0 0 8px}
+
+  @media print{
+    body{background:#fff; color:#000; font-size:11.5pt}
+    .canvasbar,.crumb,.pagenav,.copybtn,.btn,.airow,.choose,.dojo-only{display:none !important}
+    .hero{background:none; color:#000; border:0}
+    .hero h1,.hero .intro,.hero .kicker{color:#000}
+    .hero-inner{padding:0 0 12px}
+    .prompt,.excard,.task,.pairs{background:none}
+    textarea.box{border:1px solid #999; background:none}
+    a{color:#000}
+  }
+</style>
+<style id="a11y-pass-1">
+/* Accessibility pass 2026-10-06. Keep this block last in <head>. */
+p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
+.gl.a11y-esc > .bub { display: none !important; }
+.a11y-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.starter { margin: 4px 0 6px; font-size: 13px; line-height: 1.45; font-style: italic; color: var(--muted, #5C6873); }
+.copybtn { min-height: 24px; }
+code { overflow-wrap: anywhere; }
+@media print {
+  .bub { display: block !important; position: static !important; width: auto !important; max-width: none !important; margin: 4px 0 6px 12px !important; padding: 2px 0 2px 10px !important; border: 0 !important; border-left: 2px solid #999 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; }
+}
+</style>
+</head>
+<body class="dojo-on">
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden><span>This graded item is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst349/my-sprint-2-goal.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span></div>
+<div class="crumb"><a href="home.html">CST349</a> &middot; My Sprint 2 goal</div>
+
+<main>
+<header class="hero">
+<div class="hero-inner">
+<p class="kicker">CST349 · Fall 2026 · Sprint 2 · Week 8 · Set your goal</p>
+<h1>My Sprint 2 goal</h1>
+<p class="intro">Graded item · Due Date: Monday 19 October · 100 pts</p>
+</div>
+</header>
+<div class="gibar">This graded item will affect your final grade, and the late penalty applies.</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Turn the interview question you found hardest into a goal you can act on this semester, by imagining the answer you want to give and working backwards to what you will do this week.</p>
+
+<h2 class="sec">How this form works</h2>
+<p class="body">Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and the worked examples beside the form show what each box looks like filled in.</p>
+<div class="choose"><input type="checkbox" id="dojo-tick" checked aria-controls="dojo-block" aria-expanded="true"><label for="dojo-tick"><b>I would like to use the AI Dojo to work out my goal.</b> With this ticked, the Dojo steps appear under the form; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box.</label></div>
+<p class="dojowarn dojo-only" role="note">Before you start with the AI Dojo: this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course.</p>
+
+<h2 class="sec">The form</h2>
+<div class="formgrid">
+<div class="formcol">
+
+<h3>Part 1 · The answer I want to be able to give</h3>
+<ol class="tasks">
+<li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-question"><b>My question.</b> The question you chose in the week-7 graded item as the one that gives you the biggest opportunity for growth. Copy it here in full.</span></div>
+<div class="rbox"><label class="qt" for="bx-question"><b>My question is ...</b></label><p class="starter" id="st-question">The behavioral interview question, in full.</p><textarea class="box small" id="bx-question" data-key="question" data-q="q-question" aria-describedby="st-question"></textarea><div class="airow"><button type="button" class="btn" data-ai="question">AI feedback</button></div><div class="aibox" data-aibox="question" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-answer"><b>The answer I want to be true by the end of this semester.</b> Write it the way you would say it in an interview, in <span class="gl"><button type="button" class="gt" id="star-term" aria-describedby="star-bub" aria-expanded="false">STAR</button><span class="bub" role="tooltip" id="star-bub"><span class="bt">STAR</span>Situation, Task, Action, Result: the four parts of an answer to a "tell me about a time" question. Where you were, what you had to do, what you did, and what came of it.</span></span> form: the situation, what you had to do, what you did, and what came of it. If you do not have this experience yet, write the one you want to have. That is what the rest of the form is for.</span></div>
+<div class="rbox"><label class="qt" for="bx-situation"><b>Situation ...</b></label><p class="starter" id="st-situation">Where I was and what was going on.</p><textarea class="box small" id="bx-situation" data-key="situation" data-q="q-answer" aria-describedby="st-situation"></textarea><div class="airow"><button type="button" class="btn" data-ai="situation">AI feedback</button></div><div class="aibox" data-aibox="situation" role="status" aria-live="polite"></div></div>
+<div class="rbox"><label class="qt" for="bx-task"><b>Task ...</b></label><p class="starter" id="st-task">What I had to do, and why it mattered to someone other than me.</p><textarea class="box small" id="bx-task" data-key="task" data-q="q-answer" aria-describedby="st-task"></textarea><div class="airow"><button type="button" class="btn" data-ai="task">AI feedback</button></div><div class="aibox" data-aibox="task" role="status" aria-live="polite"></div></div>
+<div class="rbox"><label class="qt" for="bx-action"><b>Action ...</b></label><p class="starter" id="st-action">What I did, step by step.</p><textarea class="box" id="bx-action" data-key="action" data-q="q-answer" aria-describedby="st-action"></textarea><div class="airow"><button type="button" class="btn" data-ai="action">AI feedback</button></div><div class="aibox" data-aibox="action" role="status" aria-live="polite"></div></div>
+<div class="rbox"><label class="qt" for="bx-result"><b>Result ...</b></label><p class="starter" id="st-result">What came of it, and what I know now that I did not know before.</p><textarea class="box small" id="bx-result" data-key="result" data-q="q-answer" aria-describedby="st-result"></textarea><div class="airow"><button type="button" class="btn" data-ai="result">AI feedback</button></div><div class="aibox" data-aibox="result" role="status" aria-live="polite"></div></div>
+<div class="imagined"><input type="checkbox" id="imagined-tick"><label for="imagined-tick"><b>This answer is imagined. The experience in it has not happened yet, and my plan below is how I will make it real.</b></label></div>
+</li>
+</ol>
+
+<h3>Part 2 · What I will go deeper in</h3>
+<p class="body" id="q-deeper">The answer above rests on something you can do well. Name the one technical thing you will go deeper in so that the answer holds up when the interviewer asks a follow-up question. One skill, tool or topic, narrow enough that you could say how you will know you have gone deeper.</p>
+<div class="task"><div class="rbox"><label class="qt" for="bx-deeper"><b>I will go deeper in ...</b></label><p class="starter" id="st-deeper">The one technical skill, tool or topic, and what "deeper" looks like.</p><textarea class="box small" id="bx-deeper" data-key="deeper" data-q="q-deeper" aria-describedby="st-deeper"></textarea><div class="airow"><button type="button" class="btn" data-ai="deeper">AI feedback</button></div><div class="aibox" data-aibox="deeper" role="status" aria-live="polite"></div></div></div>
+
+<h3>Part 3 · What I will reach across to</h3>
+<p class="body" id="q-across">Every answer the interviewers like in the week-7 samples has a second part: the candidate went past their own area. They explained something to a person who did not share their background, took on a role nobody had assigned, or learned a domain so they could build for it. Name the one thing you will reach across to: a kind of person, a kind of communication, a domain or a role.</p>
+<div class="p3grid">
+<div>
+<div class="task"><div class="rbox"><label class="qt" for="bx-across"><b>I will reach across to ...</b></label><p class="starter" id="st-across">The people, the communication, the domain or the role, and what reaching across looks like in my answer.</p><textarea class="box small" id="bx-across" data-key="across" data-q="q-across" aria-describedby="st-across"></textarea><div class="airow"><button type="button" class="btn" data-ai="across">AI feedback</button></div><div class="aibox" data-aibox="across" role="status" aria-live="polite"></div></div></div>
+<p class="p3test">The test: if you could learn it from the same textbook, course or tutorial as Part 2, it belongs in Part 2. Reaching across is a different kind of thing.</p>
+</div>
+<aside class="pairs" aria-label="Deeper and across, three examples">
+<ul>
+<li><i>Deeper:</i> writing SQL queries that run fast on a large table. <i>Across:</i> the nurse who will use the report, so that the query answers the question she actually asks.</li>
+<li><i>Deeper:</i> building a React front end. <i>Across:</i> presenting the demo to the client and taking their questions without a teammate beside me.</li>
+<li><i>Deeper:</i> reading network traffic in Wireshark. <i>Across:</i> explaining a security risk to a manager who has to decide whether to spend money on it.</li>
+</ul>
+</aside>
+</div>
+
+<h3>Part 4 · Working backwards</h3>
+<p class="body">Start from the answer in Part 1 and work back to this week. Each box is one experience you will build, written so that someone else could tell whether it happened.</p>
+<ol class="tasks">
+<li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-y2"><b>In the next 2 years.</b> The experience that makes the whole answer real: an internship, a shipped project, a role in a team, a person you worked with.</span></div><div class="rbox"><label class="qt" for="bx-y2"><b>In the next 2 years I will have ...</b></label><p class="starter" id="st-y2">The experience, and where it would happen.</p><textarea class="box small" id="bx-y2" data-key="y2" data-q="q-y2" aria-describedby="st-y2"></textarea><div class="airow"><button type="button" class="btn" data-ai="y2">AI feedback</button></div><div class="aibox" data-aibox="y2" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-m6"><b>In the next 6 months.</b> By the end of spring. The part of that experience that has to be under way by then.</span></div><div class="rbox"><label class="qt" for="bx-m6"><b>In the next 6 months I will have ...</b></label><p class="starter" id="st-m6">What will be real by the end of spring.</p><textarea class="box small" id="bx-m6" data-key="m6" data-q="q-m6" aria-describedby="st-m6"></textarea><div class="airow"><button type="button" class="btn" data-ai="m6">AI feedback</button></div><div class="aibox" data-aibox="m6" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">3.</span><span class="tt" id="q-m3"><b>In the next 3 months.</b> By the end of this semester. Two of these are already on the Sprint 2 calendar: on Wednesday 21 October you give your answer aloud to a classmate and take their questions, and by Monday 2 November you report on the first step you took. Say what you want to have done by December, beyond those two.</span></div><div class="rbox"><label class="qt" for="bx-m3"><b>By the end of this semester I will have ...</b></label><p class="starter" id="st-m3">What will be real by December, with the Sprint 2 milestones in it.</p><textarea class="box small" id="bx-m3" data-key="m3" data-q="q-m3" aria-describedby="st-m3"></textarea><div class="airow"><button type="button" class="btn" data-ai="m3">AI feedback</button></div><div class="aibox" data-aibox="m3" role="status" aria-live="polite"></div></div></li>
+<li class="task"><div class="ttext"><span class="tn">4.</span><span class="tt" id="q-week"><b>This week.</b> The first step, before Wednesday 21 October. Something you can do in the next seven days that moves the 3-month box: a message sent, a meeting booked, a repository created, a first chapter read. In the week-9 graded item you write one line about this step, taken or not, and what happened.</span></div><div class="rbox"><label class="qt" for="bx-week"><b>This week I will ...</b></label><p class="starter" id="st-week">The one step, and the day I will do it.</p><textarea class="box small" id="bx-week" data-key="week" data-q="q-week" aria-describedby="st-week"></textarea><div class="airow"><button type="button" class="btn" data-ai="week">AI feedback</button></div><div class="aibox" data-aibox="week" role="status" aria-live="polite"></div></div></li>
+</ol>
+</div>
+
+<aside class="examples" aria-labelledby="ex-h">
+<h2 class="sec" id="ex-h">Worked examples</h2>
+<p>Each example is written in the form's own shape, with the parts in the order above. They are built from the kinds of goals this class wrote in Sprint 1, one for each of the four week-7 questions. Every answer in them is imagined, the way yours may be.</p>
+<section class="excard" id="ex-a" aria-labelledby="ex-a-h"><h3 id="ex-a-h">Example A · From a goal about talking to people</h3><dl>
+<dt>My question:</dt><dd>Tell me about a time you took on work outside your role or your area because the team needed it.</dd>
+<dt>The answer I want to be true (imagined):</dt><dd>Situation: our capstone team had built a working app for a campus food pantry, and the pantry coordinator asked for a demo at a staff meeting. Task: the teammate who presented got a job interview the same morning; someone had to give the demo and take questions from eight staff who do not write code. Action: I volunteered, because I knew the app best. I asked the coordinator which two things the staff worried about, rewrote the demo around those, and practiced twice with a teammate interrupting me with questions. Result: the staff asked to start using the app the following week, and one of them asked for a change we had not thought of. I found out that presenting is preparation, not personality.</dd>
+<dt>I will go deeper in:</dt><dd>the full stack of my own capstone project, so that I can answer any question about how it works without looking.</dd>
+<dt>I will reach across to:</dt><dd>non-technical users. Running a demo and a question session with people who will use what I built, not with classmates.</dd>
+<dt>In the next 2 years I will have:</dt><dd>presented a working project to the people who use it, at least twice, once in an internship or a job.</dd>
+<dt>In the next 6 months I will have:</dt><dd>given the capstone demo to a real partner, and run one user interview on my own.</dd>
+<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and presented one project I already built to three people outside my major, with their questions written down.</dd>
+<dt>This week I will:</dt><dd>ask two people outside my major, by Friday, if I can show them my CST 338 project for fifteen minutes next week.</dd>
+</dl></section>
+<section class="excard" id="ex-b" aria-labelledby="ex-b-h"><h3 id="ex-b-h">Example B · From a goal about explaining technical work</h3><dl>
+<dt>My question:</dt><dd>Tell me about a time you disagreed with someone who may have had more knowledge about the subject than you did.</dd>
+<dt>The answer I want to be true (imagined):</dt><dd>Situation: as an IT intern, I was asked to roll out a password policy that the senior administrator had written. Task: I noticed from the help-desk log that most lockouts came from one group of staff, and I thought the policy would make it worse. Action: before I said anything, I asked the administrator why the policy was written that way and listened. Then I pulled three months of lockout data, showed which group it came from, and proposed a change for that group only, with a way to check after a month. Result: she kept the policy for everyone else, took my change for that group, and lockouts for them dropped by half. I learned to disagree with data and a question, not an opinion.</dd>
+<dt>I will go deeper in:</dt><dd>reading and analyzing logs with Python and a spreadsheet, so that I can find a pattern and show it in one chart.</dd>
+<dt>I will reach across to:</dt><dd>people with authority over a decision. Asking why first, then presenting evidence to someone senior to me and proposing a test instead of a verdict.</dd>
+<dt>In the next 2 years I will have:</dt><dd>changed one decision at an internship or a job by bringing evidence to someone senior.</dd>
+<dt>In the next 6 months I will have:</dt><dd>presented a finding from real data to someone who did not ask for it, at a job, a club or a lab, and proposed a change.</dd>
+<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and analyzed one real log or dataset from my job or a club and shown the pattern to the person who owns it.</dd>
+<dt>This week I will:</dt><dd>ask my supervisor at the help desk, on Tuesday, whether I can look at the ticket log for the last three months.</dd>
+</dl></section>
+<section class="excard" id="ex-c" aria-labelledby="ex-c-h"><h3 id="ex-c-h">Example C · From a goal about building a project</h3><dl>
+<dt>My question:</dt><dd>Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.</dd>
+<dt>The answer I want to be true (imagined):</dt><dd>Situation: a student club that tutors high-school students asked our team to build a tool that answers tutors' questions from the club's own guides. Task: I took the part that finds the right passage before the AI model answers, which I had never built, and three teammates' parts depended on it being ready in three weeks. Action: I built the smallest version first, with ten of the club's real questions as my test, and wrote down the answer each one should find. When half of them found the wrong passage, I read about how documents are split and chunked, changed the split, and re-ran the ten. Result: nine of ten found the right passage, the team connected their parts on time, and the tutors used it during the fall. I learned to start from a test I can run, not from a tutorial.</dd>
+<dt>I will go deeper in:</dt><dd>building a retrieval step in Python that finds the right passage before the model answers, tested with questions whose right answer I know.</dd>
+<dt>I will reach across to:</dt><dd>the people whose questions the tool answers. Collecting their real questions and their judgement of what a correct answer is, before I build.</dd>
+<dt>In the next 2 years I will have:</dt><dd>shipped a retrieval-based tool that a group outside the class uses, with a test set that came from them.</dd>
+<dt>In the next 6 months I will have:</dt><dd>built a working version for one real group and had them judge twenty answers.</dd>
+<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built the smallest version with ten real questions and a score.</dd>
+<dt>This week I will:</dt><dd>message the tutoring club's lead on Wednesday to ask for ten questions tutors actually get asked.</dd>
+</dl></section>
+<section class="excard" id="ex-d" aria-labelledby="ex-d-h"><h3 id="ex-d-h">Example D · From a goal about a technical skill</h3><dl>
+<dt>My question:</dt><dd>Tell me about a time you noticed that the project was not going in the right direction and you had to go above and beyond to get it on the right track.</dd>
+<dt>The answer I want to be true (imagined):</dt><dd>Situation: in a course project, four of us were building a database-backed inventory app for a small store. Task: two weeks before the deadline, every page worked alone but the reports took a minute to load, and nobody owned the database. Action: I took it on. I learned how to read the query plan, found that two reports scanned the whole table, and added the right index for each, measuring the time before and after. Then I went to the store owner with the three reports and asked which one she opened every morning, and made that one load first. Result: the reports loaded in under a second, we delivered on time, and the owner started using the morning report. I learned that the right fix comes from asking who is waiting for it.</dd>
+<dt>I will go deeper in:</dt><dd>SQL on a real database, far enough to read a query plan and know which index to add and why.</dd>
+<dt>I will reach across to:</dt><dd>the owner of the business or process the data describes. Asking them which question matters most before I decide what to make fast.</dd>
+<dt>In the next 2 years I will have:</dt><dd>taken ownership of the data layer in a team project at a job or an internship, with a measured improvement I can name.</dd>
+<dt>In the next 6 months I will have:</dt><dd>improved one slow query in a project that someone else depends on, with the time before and after.</dd>
+<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built one database with real data from a club or a job where I can measure a query.</dd>
+<dt>This week I will:</dt><dd>set up PostgreSQL on my laptop on Saturday and load one public dataset of at least a hundred thousand rows.</dd>
+</dl></section>
+</aside>
+</div>
+
+<div id="dojo-block" class="dojo-only">
+<h2 class="sec">Dojo route</h2>
+<p class="passcode">Passcode for this graded item: <b>BACK-1019</b></p>
+<ol class="dsteps">
+<li><p><b>Start the conversation.</b> Paste this into your AI Dojo:</p>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item &quot;My Sprint 2 goal&quot;. First tell me its passcode, its title and its due date as you have them. Then help me fill in its form one box at a time, starting from the answer I want to be able to give. Ask me questions until each box is precise, and do not write the boxes for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;My Sprint 2 goal&quot;. First tell me its passcode, its title and its due date as you have them. Then help me fill in its form one box at a time, starting from the answer I want to be able to give. Ask me questions until each box is precise, and do not write the boxes for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
+<li><p><b>Check the passcode.</b> Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.</p></li>
+<li><p><b>Work out your goal with your Dojo.</b> Start with your week-7 question and the answer you want to be true. Tell your Dojo whether the experience has happened or is imagined. Let it ask you what you would go deeper in, what you would reach across to, and what would have to be true in 2 years, 6 months, 3 months and this week.</p></li>
+<li><p><b>Ask for the form.</b> When every box feels right, paste this:</p>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-2">Write my goal as the boxes of the form, in this order: My question · Situation · Task · Action · Result · imagined or real · I will go deeper in · I will reach across to · In the next 2 years · In the next 6 months · By the end of this semester · This week. Use only my words. If a box is not settled, write &quot;not yet settled&quot; in it.</span></p><button type="button" class="copybtn" data-copy="Write my goal as the boxes of the form, in this order: My question · Situation · Task · Action · Result · imagined or real · I will go deeper in · I will reach across to · In the next 2 years · In the next 6 months · By the end of this semester · This week. Use only my words. If a box is not settled, write &quot;not yet settled&quot; in it.">Copy prompt</button></div></li>
+<li><p><b>Fill in the form.</b> Copy each line from your Dojo's reply into the box it belongs to, above. Then go through the Self-check and submit.</p></li>
+</ol>
+</div>
+
+<h2 class="sec">Self-check</h2>
+<p class="body">Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.</p>
+<ul class="selfcheck">
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Part 1 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">If the experience has not happened yet, the "imagined" box is ticked, and the plan below is how it becomes real</label><span class="pts">5 pts</span></li>
+<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">Part 2 names one technical skill, tool or topic, and says what deeper looks like</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Part 3 names a kind of person, communication, domain or role, not a second skill of the same kind as Part 2</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">The 2-year and 6-month boxes each name one experience someone else could tell has happened</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">The 3-month box includes the two Sprint 2 milestones and one thing beyond them</label><span class="pts">10 pts</span></li>
+<li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">This week's step is one action with a day, that can be done before Wednesday 21 October</label><span class="pts">15 pts</span></li>
+</ul>
+<p class="sc-total" id="sc-total" role="status" aria-live="polite">0 of 100 points ticked</p>
+<p class="body"><b>What makes it strong.</b> Someone reading the four working-backwards boxes from the bottom up can see how this week's step leads to the 3-month box, and the 3-month box to the answer in Part 1, without you explaining it. Your Part 3 could not be learned from the same place as your Part 2.</p>
+<p class="body"><b>Grading.</b> 100 points, in Graded assignments. The grade is based on the boxes of this form.</p>
+
+<h2 class="sec">Submit</h2>
+<p class="body">Go through the Self-check, press <b>Copy my answers</b>, review the text, and paste it into the Canvas text box.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status" role="status" aria-live="polite"></div>
+<label class="qt" for="summary-out" style="margin-top:10px">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<!-- For the AI Dojo. Hidden on the page; scripts/build_course_context.py copies this text into the course Google Doc.
+     The passcode here must match the passcode shown in the Dojo route. -->
+<section id="for-ai-dojo" hidden>
+<h2>For your AI Dojo</h2>
+<p>Graded item: My Sprint 2 goal. Course: CST349. Due: Monday 19 October. Passcode: BACK-1019.</p>
+<p>When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.</p>
+<p>Learning purpose: the student turns the behavioral interview question they found hardest in week 7 into a goal for the semester, by backcasting: they write the STAR answer they want to be able to give, say what technical depth and what reaching across that answer needs, and work backwards from 2 years to this week to the first step they will take. The answer may be imagined, and the student marks it so; the plan is what makes it real.</p>
+<p>The form has these boxes: (1) My question, copied in full from the week-7 graded item. (2) The answer the student wants to be true by the end of the semester, in STAR form: Situation, Task, Action, Result, with a tick if the answer is imagined. (3) I will go deeper in: one technical skill, tool or topic, and what deeper looks like. (4) I will reach across to: a kind of person, a kind of communication, a domain or a role, and what reaching across looks like in the answer. (5) Working backwards, four boxes: the experience in the next 2 years, in the next 6 months, by the end of this semester (which includes giving the answer aloud on Wednesday 21 October and reporting the first step by Monday 2 November), and this week, the first step with a day.</p>
+<p>Work one box at a time, starting from the answer. Ask questions and do not write the box for the student. When the answer has no result, ask what came of it and what the student knows now. When the experience has not happened, say that an imagined answer is welcome here as long as it is marked, and move to the plan that makes it real. When "deeper" is a field, ask which one skill inside it the interviewer's follow-up question would test. When "reach across" is a second tool or skill of the same kind as "deeper", ask who the answer is for, who the student would have to talk to, or which role nobody has assigned, and help them name that instead. When a working-backwards box could not be checked by someone else, ask what would be visible if it happened. When this week's step has no day, ask which day.</p>
+<p>Do not summarize until the student asks. When they ask, give the boxes in the form's order, using only the student's words, and write "not yet settled" in any box that is not.</p>
+</section>
+
+<div class="provenance prov2">
+<div class="prov-head">Where this page comes from</div>
+<p class="prov-lead">Backcasting, the four time horizons and the goal of a single anchor question are by Prof. Sathya, from his planning with Utsab. The form layout, the four worked examples, the self-check and the Dojo prompts were drafted with AI from the kinds of goals this class wrote in Sprint 1 and reviewed by Prof. Sathya.</p>
+</div>
+</main>
+
+<div class="pagenav"><a href="home.html">Course home</a></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+<!-- Anonymous course feedback — same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; My Sprint 2 goal &middot; Draft 1 of 2026-10-09 &middot; words: my-sprint-2-goal.md</span>
+</footer>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
+
+(function () {
+    'use strict';
+    // My Sprint 2 goal (CST349): the graded-item layer (engine of cst286/my-sprint-2-goal-and-plan.html).
+    // Words students read live in the markup. This script saves what they type, remembers the Dojo tick and
+    // the "imagined" tick, asks for AI feedback on each box, and builds the copy. No box is required and
+    // nothing blocks moving on; Copy works whatever is empty.
+    var PAGE = { page: 'cst349-my-sprint-2-goal', course: 'CST349', week: '8', title: 'My Sprint 2 goal' };
+    var KEY = 'cc-gi:' + PAGE.page;
+    var TICK_KEY = 'cc-dojo-tick:' + PAGE.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    function indentLines(s, pad) { return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n'); }
+    function clean(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+    var live = document.getElementById('live');
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { answers: {}, checks: {}, imagined: false, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.answers) { state.answers = {}; }
+    if (!state.checks) { state.checks = {}; }
+    state.imagined = !!state.imagined;
+    function showStoreNote() { $all('.storenote').forEach(function (n) { n.style.display = 'block'; }); }
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
+        catch (e) { storageOK = false; showStoreNote(); }
+    }
+    var saveTimer = null;
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function answerState(key) {
+        if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
+        if (!state.answers[key].ai) { state.answers[key].ai = []; }
+        return state.answers[key];
+    }
+
+    // ---------- the Dojo tick ----------
+    // Ticked (the default): the reminder and the Dojo route under the form show, and the AI feedback buttons are hidden.
+    // Unticked: the inverse. The boxes are the submission either way.
+    (function () {
+        var tick = document.getElementById('dojo-tick');
+        if (!tick) { return; }
+        function apply(on) {
+            document.body.classList.toggle('dojo-on', on);
+            tick.setAttribute('aria-expanded', on ? 'true' : 'false');
+        }
+        var stored = null;
+        try { stored = window.localStorage.getItem(TICK_KEY); } catch (e) { stored = null; }
+        tick.checked = stored !== '0';
+        apply(tick.checked);
+        tick.addEventListener('change', function () {
+            apply(tick.checked);
+            try { window.localStorage.setItem(TICK_KEY, tick.checked ? '1' : '0'); } catch (e) { /* not remembered */ }
+        });
+    }());
+
+    // ---------- glossary bubble: CSS opens it on hover and focus; this adds tap, Escape and aria-expanded ----------
+    $all('.gl').forEach(function (gl) {
+        var btn = $('.gt', gl);
+        if (!btn) { return; }
+        function sync() {
+            var shown = !gl.classList.contains('closed') &&
+                (gl.classList.contains('open') || gl.matches(':hover') || gl.contains(document.activeElement));
+            btn.setAttribute('aria-expanded', shown ? 'true' : 'false');
+        }
+        btn.addEventListener('click', function () {
+            if (gl.classList.contains('open')) { gl.classList.remove('open'); gl.classList.add('closed'); }
+            else { gl.classList.add('open'); gl.classList.remove('closed'); }
+            sync();
+        });
+        btn.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' || e.key === 'Esc') { gl.classList.remove('open'); gl.classList.add('closed'); sync(); }
+        });
+        btn.addEventListener('focus', sync);
+        btn.addEventListener('blur', function () { gl.classList.remove('open'); gl.classList.remove('closed'); setTimeout(sync, 0); });
+        gl.addEventListener('mouseenter', sync);
+        gl.addEventListener('mouseleave', function () { gl.classList.remove('closed'); setTimeout(sync, 0); });
+        document.addEventListener('click', function (e) { if (!gl.contains(e.target)) { gl.classList.remove('open'); sync(); } });
+    });
+
+    // ---------- copy buttons on the Dojo prompts ----------
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        ta.style.top = (window.pageYOffset || 0) + 'px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok ? Promise.resolve() : Promise.reject(new Error('no clipboard'));
+    }
+    function writeClipboard(text) {
+        var nc = null;
+        try { nc = navigator.clipboard; } catch (e) { nc = null; }
+        if (nc && nc.writeText) {
+            try { return nc.writeText(text).catch(function () { return fallbackCopy(text); }); }
+            catch (e) { return fallbackCopy(text); }
+        }
+        return fallbackCopy(text);
+    }
+    function selectNear(btn) {
+        var box = btn.parentNode ? btn.parentNode.querySelector('.ct') : null;
+        if (!box || !window.getSelection) { return; }
+        try { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* nothing more to try */ }
+    }
+    $all('.copybtn').forEach(function (btn) {
+        var label = btn.textContent;
+        var timer = null;
+        btn.addEventListener('click', function () {
+            writeClipboard(btn.getAttribute('data-copy') || '').then(function () {
+                btn.textContent = 'Copied';
+                btn.classList.add('done');
+                if (live) { live.textContent = ''; live.textContent = 'Copied'; }
+                if (timer) { clearTimeout(timer); }
+                timer = setTimeout(function () {
+                    btn.textContent = label;
+                    btn.classList.remove('done');
+                    if (live) { live.textContent = ''; }
+                }, 2000);
+            }, function () { selectNear(btn); });
+        });
+    });
+
+    // ---------- AI feedback on what is written in a box ----------
+    var SYS_GOAL = "You are helping a student make one box of their goal form precise. The form turns the behavioral interview question they found hardest into a goal for the semester: the STAR answer they want to be able to give (it may be imagined), the one technical thing they will go deeper in, the one thing they will reach across to (a kind of person, communication, domain or role), and four working-backwards boxes from 2 years to this week. Reply in two or three sentences, in plain words: first, what the box already does, quoting their words; then the one thing that would make it precise, asked as a question or named as what is missing. Use only the criteria for this box, listed below. Never rewrite the student's box and never hand them wording. Do not supply an experience, skill, person or step for them. If every criterion is met, say which ones are met and nothing more. Do not judge the person, their ability or their prospects, and do not use pass/fail language.";
+    var STAR = 'Situation, Task, Action, Result: each box carries its own part; Task says why it mattered to someone other than the student; Action is what the student did, in steps; Result says what came of it and what the student knows now.';
+    var Y2M6 = 'one experience each, written so that someone else could tell whether it happened.';
+    var META = {
+        question: { coach: 'CRITERIA: one of the four week-7 questions, or a behavioral question in the same form, in full.' },
+        situation: { coach: 'CRITERIA (this is the Situation box): ' + STAR },
+        task: { coach: 'CRITERIA (this is the Task box): ' + STAR },
+        action: { coach: 'CRITERIA (this is the Action box): ' + STAR },
+        result: { coach: 'CRITERIA (this is the Result box): ' + STAR },
+        deeper: { coach: 'CRITERIA: one skill, tool or topic, not a field; a sentence on what deeper looks like.' },
+        across: { coach: 'CRITERIA: a kind of person, communication, domain or role; if the text is a second skill or tool of the same kind as Part 2, ask who the answer is for or who the student would have to talk to.' },
+        y2: { coach: 'CRITERIA (2 years): ' + Y2M6 },
+        m6: { coach: 'CRITERIA (6 months): ' + Y2M6 },
+        m3: { coach: 'CRITERIA: the two Sprint 2 milestones and one thing beyond them.' },
+        week: { coach: 'CRITERIA: one action, with a day, that can be done before Wednesday 21 October.' }
+    };
+    function showAi(el, text, n) {
+        el.style.display = 'block';
+        el.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+        el.appendChild(lbl);
+        el.appendChild(document.createTextNode(text));
+    }
+    function boxLabel(key) { var l = $('label[for="bx-' + key + '"]'); return l ? clean(l.textContent) : key; }
+    function questionFor(key) {
+        var ta = document.getElementById('bx-' + key);
+        var q = ta ? document.getElementById(ta.getAttribute('data-q')) : null;
+        var st = document.getElementById('st-' + key);
+        return (q ? clean(q.textContent) + ' ' : '') + 'Box: ' + boxLabel(key) + (st ? ' ' + clean(st.textContent) : '');
+    }
+    function otherLines(key) {
+        var s = '';
+        $all('textarea[data-key]').forEach(function (ta) {
+            var k = ta.getAttribute('data-key');
+            if (k === key) { return; }
+            s += '- ' + boxLabel(k) + ' ' + (clean(ta.value) || '(empty)') + '\n';
+        });
+        s += '- The answer is marked imagined: ' + (state.imagined ? 'yes' : 'no') + '\n';
+        return s;
+    }
+    function askAi(key, ta, btn, box, refresh) {
+        var meta = META[key];
+        if (!meta) { return; }
+        var st = answerState(key);
+        var text = ta.value.trim();
+        var content = 'PAGE: ' + PAGE.title + ' (' + PAGE.course + ', Week ' + PAGE.week + ', graded item)\n' +
+            'THE BOX THEY ARE WRITING: ' + questionFor(key) + '\n\n' +
+            'WHAT THEY WROTE:\n"""' + text + '"""\n\n' +
+            'THE OTHER BOXES OF THEIR FORM (context only; give feedback on the box above):\n' + otherLines(key) + '\n' +
+            'COACH NOTES (ground truth for you, not to be quoted back wholesale):\n' + meta.coach;
+        var label = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Reading what you wrote...';
+        box.style.display = 'block';
+        box.innerHTML = '<span class="lbl">AI feedback</span>Reading what you wrote...';
+        fetch(AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ system: SYS_GOAL, messages: [{ role: 'user', content: content }], max_tokens: 320 })
+        }).then(function (r) {
+            if (!r.ok) { throw new Error('status ' + r.status); }
+            return r.json();
+        }).then(function (data) {
+            var reply = String(data.content || data.text || '').trim();
+            if (!reply) { throw new Error('empty'); }
+            st.ai.push({ at: new Date().toISOString(), onText: text, text: reply });
+            save();
+            showAi(box, reply, st.ai.length);
+        }).catch(function () {
+            box.style.display = 'block';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer is saved; try the button again later.</span>';
+        }).then(function () { btn.textContent = label; refresh(); });
+    }
+    $all('textarea[data-key]').forEach(function (ta) {
+        var key = ta.getAttribute('data-key');
+        var st = answerState(key);
+        ta.value = st.text || '';
+        var btn = $('[data-ai="' + key + '"]');
+        var box = $('[data-aibox="' + key + '"]');
+        if (st.ai.length && box) { showAi(box, st.ai[st.ai.length - 1].text, st.ai.length); }
+        function refresh() {
+            if (!btn) { return; }
+            var t = ta.value.trim();
+            var last = st.ai.length ? st.ai[st.ai.length - 1].onText : null;
+            btn.disabled = t.length === 0 || t === last;
+        }
+        ta.addEventListener('input', function () { st.text = ta.value; refresh(); saveSoon(); });
+        ta.addEventListener('blur', save);
+        if (btn && box) { btn.addEventListener('click', function () { askAi(key, ta, btn, box, refresh); }); }
+        refresh();
+    });
+
+    // ---------- the "imagined" tick under the STAR boxes ----------
+    var imaginedTick = document.getElementById('imagined-tick');
+    if (imaginedTick) {
+        imaginedTick.checked = state.imagined;
+        imaginedTick.addEventListener('change', function () { state.imagined = imaginedTick.checked; save(); });
+    }
+
+    // ---------- Copy my answers ----------
+    function txt(key) { return (answerState(key).text || '').trim(); }
+    function block(label, key) { var a = txt(key); return label + '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n\n'; }
+    function buildText() {
+        var out = PAGE.title + ' — ' + PAGE.course + ', Week ' + PAGE.week + '\n\n';
+        var tick = document.getElementById('dojo-tick');
+        var tickLabel = $('label[for="dojo-tick"] b');
+        out += (tick && tick.checked ? '[x] ' : '[ ] ') + (tickLabel ? clean(tickLabel.textContent) : '') + '\n\n';
+        $all('.formcol > h3').forEach(function (h) {
+            out += clean(h.textContent).toUpperCase() + '\n\n';
+            var el = h.nextElementSibling;
+            while (el && el.tagName !== 'H3') {
+                $all('textarea[data-key]', el).forEach(function (ta) {
+                    var k = ta.getAttribute('data-key');
+                    out += block(boxLabel(k), k);
+                    if (k === 'result' && state.imagined) { out += 'This answer is imagined.\n\n'; }
+                });
+                el = el.nextElementSibling;
+            }
+        });
+        out += 'SELF-CHECK (ticked by me; the grader verifies each line)\n';
+        var total = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li), on = cb && cb.checked;
+            var pts = parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10);
+            if (on) { total += pts; }
+            out += (on ? '[x] ' : '[ ] ') + clean($('label', li).textContent) + ' · ' + pts + ' pts\n';
+        });
+        out += 'Self-check total: ' + total + ' of 100\n';
+        return out.replace(/\n+$/, '\n');
+    }
+
+    // ---------- Self-check ticks: remembered on this browser, copied with the answers ----------
+    function scTotal() {
+        var t = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li);
+            if (cb && cb.checked) { t += parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10); }
+        });
+        var el = $('#sc-total');
+        if (el) { el.textContent = t + ' of 100 points ticked'; }
+    }
+    $all('input[data-check]').forEach(function (cb) {
+        var id = cb.getAttribute('data-check');
+        cb.checked = !!state.checks[id];
+        cb.addEventListener('change', function () { state.checks[id] = cb.checked; save(); scTotal(); });
+    });
+    scTotal();
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var text = buildText();
+            summaryOut.value = text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            writeClipboard(text).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = 'Copied. Paste it into the Canvas text box. The same text is below if you need it again.';
+            }, function () {
+                copyStatus.className = 'status';
+                copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
+                summaryOut.focus();
+                summaryOut.select();
+            });
+        });
+    }
+    if (!storageOK) { showStoreNote(); }
+}());
+</script>
+<script id="a11y-pass-1-js">
+(function () {
+  // Escape closes an open glossary bubble (hover or focus); it comes back on the next hover or focus.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.gl:hover, .gl:focus-within').forEach(function (g) {
+      g.classList.add('a11y-esc');
+      function clear() { g.classList.remove('a11y-esc'); g.removeEventListener('mouseleave', clear); g.removeEventListener('focusout', clear); }
+      g.addEventListener('mouseleave', clear); g.addEventListener('focusout', clear);
+    });
+  });
+})();
+</script>
+</body>
+</html>

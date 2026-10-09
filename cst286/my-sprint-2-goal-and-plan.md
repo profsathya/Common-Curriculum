@@ -1,8 +1,8 @@
-<!-- Editable text for my-sprint-2-goal-and-plan.html (not built yet). DRAFT 3, 9 Oct 2026 (Prof. Sathya's edits of 9 Oct folded in). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
+<!-- Editable text for my-sprint-2-goal-and-plan.html (not built yet). DRAFT 4, 9 Oct 2026 (Prof. Sathya's edits of 9 Oct folded in). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
 Notes for the editor, not shown to students:
 - This is the week-8 graded item of CST286 Sprint 2 (Prof. Sathya, 9 Oct): a strict form, not prose. Six boxes in all: one for the phenomenon, three for the prediction, two for the plan, plus nothing else to write.
 - Starting point (Prof. Sathya, 9 Oct): "Build on what you learned in the previous assignment" is the first choice and is selected when the page opens; choosing it fills any empty box in Parts 1 and 2 with Example A below as a starting point the student changes. Keeping the trail's goal unchanged is not a route (his 9 Oct note): the Dojo text, the AI feedback and the self-check all ask for a goal that goes further than Example A. "Write my own" leaves the boxes as they are. Switching never erases what a student typed.
-- The AI Dojo tick is TICKED when the page opens. Ticked: the Dojo steps show under the form and the AI feedback buttons are hidden. Unticked: the Dojo steps hide and an AI feedback button appears under each box. Either way the six boxes are the submission.
+- The AI Dojo tick is TICKED when the page opens. Ticked: the Dojo steps (passcode, starter prompt, summary prompt) show right under the tick, before the form, and the AI feedback buttons are hidden (Prof. Sathya, 9 Oct: give the starter prompts first; the form responses stay the same). Unticked: the Dojo steps hide and an AI feedback button appears under each box. Either way the six boxes are the submission.
 - Example A is the goal block Prof. Sathya wrote in the learning trail (5 Oct), in his words, with one addition for the "predict" line: the condition "as long as the push is the only unbalanced force on the phone", because the self-check asks for the condition. Examples B, C and D are composites of the kinds of goals this class wrote in Sprint 1 (flight, sound, projectiles were the three largest groups); no example is any one student's goal.
 - Skip-a-step rules (Prof. Sathya, 5 Oct): nothing is labelled optional and nothing blocks moving on. Boxes can be filled in any order; the Copy button works whatever is empty.
 - Self-check points are a proposal for his edit; they total 100.
@@ -34,9 +34,28 @@ Nurture your curiosity, cultivate your self-directed learning capability, and st
 
 ○ **Write my own.** The form opens empty. Choose one thing you have wanted to understand, and use the examples beside the form as templates.
 
-☑ **I would like to use the AI Dojo to work out my goal and plan.** With this ticked, the Dojo steps appear under the form; your Dojo asks you questions until each line is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to work out my goal and plan.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each line is precise, and you copy its final version into the boxes of the form. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
+
+## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
+
+Passcode for this graded item: **GOAL-1019**
+
+**1. Start the conversation.** Paste this into your AI Dojo:
+
+> Walk me through the graded item "My Sprint 2 goal and plan". First tell me its passcode, its title and its due date as you have them. Then help me fill in the six lines of its form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.
+
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+
+**3. Work out your goal with your Dojo.** If you are building on the learning trail, say so, and let your Dojo ask you where you want to go beyond it. If you are writing your own, start with the phenomenon and let your Dojo ask until a quantity appears.
+
+**4. Ask for the form.** When all six lines feel right, paste this:
+
+> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · By Monday 26 October I will have learned · On paper, by Wednesday 28 October, I will be able to. Use only my words. If a line is not settled, write "not yet settled" on it.
+
+**5. Fill in the form.** Copy each of the six lines from your Dojo's reply into the box it belongs to, below. Then go through the Self-check and submit.
+
 
 ## The form
 
@@ -127,24 +146,6 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 ## Submit
 
 This graded item is complete when all six boxes have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
-
-## Dojo route (shown under the form while the Dojo box is ticked)
-
-Passcode for this graded item: **GOAL-1019**
-
-**1. Start the conversation.** Paste this into your AI Dojo:
-
-> Walk me through the graded item "My Sprint 2 goal and plan". First tell me its passcode, its title and its due date as you have them. Then help me fill in the six lines of its form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.
-
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
-
-**3. Work out your goal with your Dojo.** If you are building on the learning trail, say so, and let your Dojo ask you where you want to go beyond it. If you are writing your own, start with the phenomenon and let your Dojo ask until a quantity appears.
-
-**4. Ask for the form.** When all six lines feel right, paste this:
-
-> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · By Monday 26 October I will have learned · On paper, by Wednesday 28 October, I will be able to. Use only my words. If a line is not settled, write "not yet settled" on it.
-
-**5. Fill in the form.** Copy each of the six lines from your Dojo's reply into the box it belongs to, above. Then go through the Self-check and submit.
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
