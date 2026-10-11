@@ -12,6 +12,7 @@ One screen. The house system, his edits and where they came from are in `referen
 - The sequence file opens with **the one sentence a student should be able to say when they leave**, in Sathya's words, and with **the belief students walk in with**, in their words, before any slide. (The sentence first; Start from the belief in the room)
 - Every slide has one job (raise a question, show one example, name one idea, ask for one action) and the sequence file's table says which, plus the question the slide leaves open for the next one. A slide with two jobs is two slides or one is cut. (One job per slide)
 - One example is carried through the teaching part, and an idea is named only after students have seen it in that example; where a mindset is being moved, the example is a real prior student's case, told as a story and then worked back into steps. (Example before name)
+- Where the room spans several tracks (in CST349: software engineering, cyber security, data science, game development), every move in the carried example has a one-line parallel for the other tracks on the same slide, said as the story goes, not in a summary afterwards. (One example, every track)
 - A Takeaway line exists only where it moves to the next slide's question; a takeaway that restates the slide is cut. (Takeaways move)
 - Reading the headlines alone tells the sentence's story. (The headline test)
 - The last teaching slide hands students one action they do in the next ten minutes. (End in an action)

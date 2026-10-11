@@ -63,6 +63,10 @@ A slide raises a question, shows one example, names one idea, or asks for one ac
 
 Carry one example through the teaching part of the deck and name the idea after students have seen it. Depth comes from one example walked all the way down, not from three ideas covered on each slide.
 
+## One example, every track
+
+One example carries the teaching, but the room is not one track. CST349 holds software engineering, cyber security, data science and game development students, and some whose goal is communication rather than a technical area. A case told only in software-engineering terms loses half the room at its first step, and a summary slide afterwards ("the same applies to you") does not get them back. So at every move the example makes (the answer, the depth, the reach across, each dated step) the slide carries one line for each other track showing the same principle in that setting, and the speaker says it as the story goes. The parallels are the same move in a different setting, not a second case. Origin: Sathya, 11 Oct 2026, on the v4 week-8 sequence.
+
 ## Takeaways move, they do not summarize
 
 The bold takeaway line is kept only when it turns toward the next slide's question. A takeaway that restates the bullets above it doubles the load; cut it.
@@ -105,4 +109,4 @@ Not "This week". It carries what students need to be told, including the grading
 
 _Status: v1 (9 September 2026). Extracted from Sathya's direct edit of the CST286 week-3 deck (`alan/cst286-week3-deck-v4.pptx` → his Google Slides version, 9 Sep). The deck Alan built was 25 slides and correct in content; what he changed was almost entirely **shape and register**, and those changes are the content of this file._
 
-_v2 (11 October 2026). Added the teaching-sequence rules from the CST349 week-8 deck: the sentence first, start from the belief in the room, the case then the claim, one job per slide, example before name, takeaways move, the headline test, end in an action. Decided with Sathya on 9-11 Oct 2026 after v1/v2 of that deck carried information without a message; the deck was rebuilt as v3 (one example) and v4 (students' question, screening numbers, Utsab's case study)._
+_v2 (11 October 2026). Added the teaching-sequence rules from the CST349 week-8 deck: the sentence first, start from the belief in the room, the case then the claim, one job per slide, example before name, one example every track, takeaways move, the headline test, end in an action. Decided with Sathya on 9-11 Oct 2026 after v1/v2 of that deck carried information without a message; the deck was rebuilt as v3 (one example) and v4 (students' question, screening numbers, Utsab's case study)._
