@@ -1,6 +1,6 @@
 ---
 name: slides
-description: Use when building or revising a session deck for any of the fall courses. Triggers when a class session has been planned and needs its slides, and when an existing deck is being revised. Covers the house slide system (eyebrow, headline, archetypes, palette), one point per slide, where interactive tool slides go, the closing Reminders slide, and the register Sathya writes in — first-person plural, label-first bullets, no reassurance. Prose rules belong to writing-to-teach, which governs every sentence here too; assignment structure belongs to writing-assignments.
+description: Use when building or revising a session deck for any of the fall courses. Triggers when a class session has been planned and needs its slides, and when an existing deck is being revised. Covers how a teaching deck is built backward from the one sentence students should leave able to say and from the belief they walk in with, the house slide system (eyebrow, headline, archetypes, palette), one point per slide, where interactive tool slides go, the closing Reminders slide, and the register Sathya writes in — first-person plural, label-first bullets, no reassurance. Prose rules belong to writing-to-teach, which governs every sentence here too; assignment structure belongs to writing-assignments.
 ---
 
 # Session decks - the checks to run before a deck reaches Sathya
@@ -9,6 +9,12 @@ One screen. The house system, his edits and where they came from are in `referen
 
 ## Before the first slide
 
+- The sequence file opens with **the one sentence a student should be able to say when they leave**, in Sathya's words, and with **the belief students walk in with**, in their words, before any slide. (The sentence first; Start from the belief in the room)
+- Every slide has one job (raise a question, show one example, name one idea, ask for one action) and the sequence file's table says which, plus the question the slide leaves open for the next one. A slide with two jobs is two slides or one is cut. (One job per slide)
+- One example is carried through the teaching part, and an idea is named only after students have seen it in that example; where a mindset is being moved, the example is a real prior student's case, told as a story and then worked back into steps. (Example before name)
+- A Takeaway line exists only where it moves to the next slide's question; a takeaway that restates the slide is cut. (Takeaways move)
+- Reading the headlines alone tells the sentence's story. (The headline test)
+- The last teaching slide hands students one action they do in the next ten minutes. (End in an action)
 - The deck is cloned from an existing course deck, and archetypes are duplicated with `add_slide.py`, not rebuilt. (The house system)
 
 ## On every slide

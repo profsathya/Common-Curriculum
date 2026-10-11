@@ -43,6 +43,38 @@ Where the build said "Put one of them on Pear Deck", he replaced the slide with 
 - **Point forward when a skill is coming.** *"We will explore asking good questions in the upcoming weeks"* — the activity gets its place in the arc rather than standing alone.
 - **Sharpen an activity's question toward the skill being built.** His step 3 became *"What type of questions did they have? What makes some questions more useful for a conversation."* — moving the reflection off the topic and onto the questioning itself, which is the capability the course is actually after.
 
+## The sentence first
+
+Before any slide is written, the sequence file states the one sentence a student should be able to say on leaving the room. Sathya writes or approves it. Every slide earns its place by moving toward that sentence; a slide that is true and useful but does not move toward it belongs on the home page or an assignment page. Origin: 9 Oct 2026, the CST349 week-8 deck. v1 and v2 had eight teaching slides and no such sentence, and Sathya said after presenting from decks like them that he had to improvise the thread in front of students and still did not land a clear message. His diagnosis, which these rules implement: the model holds many interconnected ideas and presents them together; human cognition follows one thread at a time. The sentence for that deck became "I need to think about the unique value I can convincingly defend to others when I interview, and plan how I spend the next six months to prepare for it."
+
+## Start from the belief in the room
+
+A logical chain assumes students arrive neutral. They do not. The sequence file also states what students believe when they walk in, in their own words where there is evidence (guide notes, chats, posts), and the first teaching slide puts that belief or objection on the screen and treats it as a fair question. A mindset shift is grounded in the students' emotional state, and repeating the argument, even a correct one, does not move it; the student has to meet the limit of the old belief themselves. Origin: 11 Oct 2026, after student guides reported "most of us don't have an internship experience yet and need to get past the initial screen first"; the deck opened on that sentence instead of on the method.
+
+## The case, then the claim
+
+Where the deck has to move a belief, the example that carries the teaching is a real prior student's case (Utsab's method): the offer, the answer that student could give, then the steps worked backward and dated so the slide reads bottom to top. The idea is named after the case, not before. The case must turn on the thing the old belief misses, or it teaches the old belief: a project that got someone in the door teaches "a narrow demonstration works" unless the breakdown shows the moment the project became a story someone remembered. Outside evidence sits beside the story as one slide with two numbers, pointing back to where students already met it, so the course is seen to build on itself. The question the deck answers is framed as a hypothesis in plain words: why this is the most useful activity right now, and the claim that, if true, makes the case; conditions that let students defer ("if a screening test is in your way, do that first") are left out, because they hand the room its default behavior back.
+
+## One job per slide
+
+A slide raises a question, shows one example, names one idea, or asks for one action. The sequence file carries a table: slide, job, the question it leaves open. The failure this prevents: slides written as a summary of the words file, each complete on its own (three bullets, three ideas), so the deck has no thread and the speaker improvises it. Completeness on a slide is the opposite of teaching; the slide should need the next one.
+
+## Example before name
+
+Carry one example through the teaching part of the deck and name the idea after students have seen it. Depth comes from one example walked all the way down, not from three ideas covered on each slide.
+
+## Takeaways move, they do not summarize
+
+The bold takeaway line is kept only when it turns toward the next slide's question. A takeaway that restates the bullets above it doubles the load; cut it.
+
+## The headline test
+
+Read only the headlines, in order. If they tell the sentence's story on their own, the thread is in the deck and not in the speaker's head. A headline that is a topic label ("Working backwards") is rewritten as a step in the story ("What had to be true, six months before the offer").
+
+## End in an action
+
+The teaching part ends with one thing students do in the next ten minutes, so the idea lands in their own work the same hour.
+
 ## The closing slide is Reminders
 
 Not "This week". It carries what students need to be told, including the grading mechanics they will otherwise ask about one at a time:
@@ -54,6 +86,8 @@ Not "This week". It carries what students need to be told, including the grading
 - where to ask questions.
 
 ## Checklist (checkable by looking)
+
+- The sequence file opens with the leaving sentence and the belief in the room; every slide has one job and the table says which; one example carries the teaching part; headlines alone tell the story; the last teaching slide is an action.
 
 - One point per slide; a repeated sequence's payoff is on its own slide; a break has its own slide.
 - No slide only asserts a belief — every claim sits on the slide that motivates it, and the why precedes the activity it justifies.
@@ -70,3 +104,5 @@ Not "This week". It carries what students need to be told, including the grading
 ## History
 
 _Status: v1 (9 September 2026). Extracted from Sathya's direct edit of the CST286 week-3 deck (`alan/cst286-week3-deck-v4.pptx` → his Google Slides version, 9 Sep). The deck Alan built was 25 slides and correct in content; what he changed was almost entirely **shape and register**, and those changes are the content of this file._
+
+_v2 (11 October 2026). Added the teaching-sequence rules from the CST349 week-8 deck: the sentence first, start from the belief in the room, the case then the claim, one job per slide, example before name, takeaways move, the headline test, end in an action. Decided with Sathya on 9-11 Oct 2026 after v1/v2 of that deck carried information without a message; the deck was rebuilt as v3 (one example) and v4 (students' question, screening numbers, Utsab's case study)._
