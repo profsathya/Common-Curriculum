@@ -119,6 +119,27 @@ details.arow:not([open]) .plus::before{content:"+"}
 }
 @media print{details.sprint,details.arow{break-inside:avoid}}
 </style>
+<style id="student-view">
+/* Student view: same rows, build-record detail hidden. Toggle with the button or ?view=student. */
+.viewbar{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.viewbtn{font:inherit;font-size:12.5px;font-weight:700;color:var(--blue);background:#fff;border:1px solid var(--blue);border-radius:4px;padding:4px 10px;cursor:pointer}
+.viewbtn[aria-pressed="true"]{color:#fff;background:var(--blue)}
+.svonly{display:none}
+body.student .svonly{display:block}
+body.student .staff,
+body.student .draft,
+body.student .head .lead,
+body.student .head .derived,
+body.student .head .selfurl,
+body.student .card.course-status,
+body.student .card.build-key,
+body.student .unplaced,
+body.student .foot,
+body.student .c-status .st{display:none}
+body.student .head .eyebrow::after{content:" \00b7  Student view"}
+body.student details.arow[data-canvas-id=""] .c-status::after{content:"Not posted yet";font-size:11px;font-weight:700;color:var(--muted)}
+body.student details.arow[data-canvas-id=""] .c-title{color:var(--muted)}
+</style>
 <style id="a11y-pass-1">
 /* Accessibility pass 2026-10-06. Keep this block last in <head>. */
 p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
@@ -157,6 +178,8 @@ code { overflow-wrap: anywhere; }
     <div class="derived">Derived from the four-layer lock record in <code>cowork/fall-2026-courses/CONTEXT.md</code>
       and the dated decisions in <code>HANDOFF.md</code> (13&ndash;18 Aug 2026). Last checked 18 Aug 2026.</div>
     <div class="selfurl"><b>This page:</b> <a href="https://profsathya.github.io/Common-Curriculum/cst349/assignments.html" target="_blank" rel="noopener">https://profsathya.github.io/Common-Curriculum/cst349/assignments.html</a></div>
+    <div class="viewbar"><button type="button" class="viewbtn" id="viewbtn" aria-pressed="false">Student view</button>
+      <span class="svonly">What students see: titles, purposes, due dates, points and links. Build notes, statuses and Canvas ids are hidden.</span></div>
   </div>
 
   <div class="strip">
@@ -172,7 +195,7 @@ code { overflow-wrap: anywhere; }
       <div class="why">Graded work lands Monday so no one is finishing it on a Sunday night. Shared across all
         three courses.</div>
     </div>
-    <div class="card">
+    <div class="card course-status">
       <div class="label">Where the course stands</div>
       <div class="counts">
         <div class="count gi"><div class="n">10 / 10</div><div class="l">graded items placed</div></div>
@@ -189,7 +212,7 @@ code { overflow-wrap: anywhere; }
     <div class="groups"><div class="grp g0"><div class="gn">Own your progress guidance<span class="gw">0%</span></div><div class="gd">Carries points so students can see whether they are on track; no effect on the grade.</div></div><div class="grp g1"><div class="gn">Graded assignments<span class="gw">30%</span></div><div class="gd">The work itself &mdash; ten across the semester, 100 points each.</div></div><div class="grp g2"><div class="gn">Sprint Exams<span class="gw">20%</span></div><div class="gd">Three at 200 points, hand-written and closed book in class (weeks 6, 11, 14).</div></div><div class="grp g3"><div class="gn">Interview check-ins<span class="gw">50%</span></div><div class="gd">Two to five sittings that sample submitted work; each sprint is worth the submitted points in that sprint.</div></div></div>
   </div>
 
-  <div class="card" style="margin-bottom:18px">
+  <div class="card build-key" style="margin-bottom:18px">
     <div class="label">Build status &mdash; what each row's status means</div>
     <table aria-label="Build status key">
       <tr><td style="width:170px"><span class="st st-review">Not Yet Reviewed</span></td><td>Drafted here, not yet read through and approved.</td></tr>
@@ -851,5 +874,28 @@ code { overflow-wrap: anywhere; }
   </div>
 
 </div>
+<script>
+/* Student view toggle. Tags the build-record fields once, then a body class hides them. */
+(function(){
+  var STAFF=["ID","Status","Canvas assignment name","Canvas module","Six qualities","Canvas assignment id","Notes","Public URL"];
+  document.querySelectorAll(".dgrid .dt").forEach(function(dt){
+    var dd=dt.nextElementSibling;
+    if(STAFF.indexOf(dt.textContent.trim())>-1||(dd&&dd.querySelector(".tbd,.na"))){
+      dt.classList.add("staff"); if(dd) dd.classList.add("staff");
+    }
+  });
+  var btn=document.getElementById("viewbtn");
+  function set(on){
+    document.body.classList.toggle("student",on);
+    btn.setAttribute("aria-pressed",on?"true":"false");
+    btn.textContent=on?"Back to build view":"Student view";
+    var u=new URL(location.href);
+    if(on) u.searchParams.set("view","student"); else u.searchParams.delete("view");
+    history.replaceState(null,"",u);
+  }
+  btn.addEventListener("click",function(){set(!document.body.classList.contains("student"));});
+  set(new URLSearchParams(location.search).get("view")==="student");
+})();
+</script>
 </body>
 </html>
