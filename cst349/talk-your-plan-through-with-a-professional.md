@@ -1,11 +1,10 @@
-<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 1, 12 Oct 2026 (Alan's draft for Prof. Sathya to edit). Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his edit.
+<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 2, 12 Oct 2026: Prof. Sathya rewrote Purpose and How this works; Alan carried that through the rest (one to three mentors, a test-the-message task, no process section at the end). Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his review.
 Notes for the editor, not shown to students:
-- Decided 12 Oct: optional OYP, complete/incomplete, not part of the graded item. The student writes the message to the mentor themselves. Prof. Sathya reads it and forwards the ones he would attach his name to, with one line of his own. Two-step introduction: his note goes to the mentor first, without the student; on a yes, a second email connects the two and they schedule the 30 minutes between them. A nudge after about six days; no answer after that, the message goes to the student's second choice. Each student who opts in gets at least one response.
+- The sending process stays off the page. For the record: Prof. Sathya's note goes to the mentor first, without the student; on a yes, a second email connects the two; a nudge after about six days; no answer after that, the message goes to the student's next choice. Alan runs the sending and the nudges off the name map in Alan.
 - The mentor list is anonymous to students (role, field, what the person does); the name map lives in Alan. The list link below is a placeholder until the list exists.
 - Jeff D'Andria: 30-minute resume review. The student attaches the resume as a PDF in Canvas.
-- Cap of two mentor rows per student is a proposal. Alan flags any row with more than three requests.
-- No Dojo route on this page. One AI feedback button under the message box, criteria at the end of this file, so the student can tighten the message before Prof. Sathya reads it.
-- Timing lines under "After you submit" are placeholders for his dates. -->
+- Alan flags any row with more than three requests.
+- No Dojo route on this page. One AI feedback button under the message box, criteria at the end of this file. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 11 · Show what you learned
 
@@ -17,23 +16,21 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 ## Purpose
 
-Ask a professional in my network to spend 30 minutes with you talking through the plan you made in Sprint 2, or ask Jeff D'Andria, who ran recruiting at Microsoft and Stripe, for a 30-minute review of your resume. You can ask for one or both.
+Include the step of connecting and verifying your current plan by presenting it to professionals in the industry and incorporating their feedback into your approach.
 
 ## How this works
 
-You write the message to the mentor yourself. I read it, and if it is a message I would attach my name to, I send it on with one line from me. The mentor answers me first. When they say yes, I connect the two of you by email, and you set up the 30 minutes between you.
+You write the message to the mentor yourself - have it rigorously tested by your peers and by a frontier AI model. Then, I read it, and if it is a message I feel is supported by evidence and feel comfortable sending it out, I send it to 1-3 people you chose from my network. While I can't guarantee that we will get a response, the aim is to get a 30 min call for you with an industry mentor.
 
-The mentors are listed by role and field, not by name. You learn who they are when I connect you.
+The mentors are listed by role and field, here. You will learn who they are when I connect you.
 
 ## Tasks
 
-1. Choose who you would like to talk to. Open the mentor list and pick up to two rows, in order of preference. Choose by the work the person does, and whether it is the work your plan is heading toward.
+1. Choose who you would like to talk to. Open the mentor list and pick one to three rows, in order of preference. Choose by the work the person does, and whether it is the work your plan is heading toward.
 
    [Mentor list](#) (Page note: link to the anonymous list; placeholder until the list exists.)
 
-   **My first choice.** The row number, and the role as the list gives it.
-
-   **My second choice.** The row number, and the role as the list gives it.
+   **My choices.** The row numbers in order of preference, and the role as the list gives it for each.
 
    ☐ **I would like a 30-minute resume review with Jeff D'Andria.** Attach your resume as a PDF when you submit in Canvas. (Page note: a tick; when ticked, the copied text carries the line "Resume review requested; resume attached.")
 
@@ -48,7 +45,9 @@ The mentors are listed by role and field, not by name. You learn who they are wh
 
    **My message to the mentor.** The whole message, ready to send.
 
-3. If you ticked the resume review, write one line for Jeff.
+3. Test the message before you submit it. Give it to a classmate in your guide group and ask them to read it as the mentor would: what would they still need to ask you before they could help? Then use the AI feedback button under the message, or your AI Dojo, and revise until every claim about what you have done points to something you actually did.
+
+4. If you ticked the resume review, write one line for Jeff.
 
    **For the resume review.** The kind of role the resume is for, and the one thing you most want him to look at.
 
@@ -56,10 +55,11 @@ The mentors are listed by role and field, not by name. You learn who they are wh
 
 Tick each line your message meets. Your ticks are copied with your message.
 
-- [ ] The message is written to the mentor, not to Prof. Sathya
 - [ ] My plan is in the message: the six-month and three-month experiences, and the first step I took with what it produced
+- [ ] Every claim about what I have done is backed by something I did, not something I intend to do
 - [ ] I say what I want their view on, in one or two specific questions
 - [ ] The ask is 30 minutes, and I give two or three times I am free
+- [ ] A classmate has read it as the mentor would, and I revised it
 - [ ] I would be comfortable with my name on this message going to someone I have not met
 
 **What makes it strong.** The mentor can tell from the message what you have already done and what you are asking them to look at, without needing to ask you a first question.
@@ -68,10 +68,6 @@ Tick each line your message meets. Your ticks are copied with your message.
 
 Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box. If you asked for the resume review, attach your resume as a PDF to the same submission.
 
-## After you submit
-
-I read the messages in the week of 9 November and send the ones that are ready. If your first choice does not answer within a week, your message goes to your second choice. You hear from me either way, so there is nothing to chase.
-
 ## AI feedback (page note; criteria for the message box)
 
 - Written to the mentor, in the second person, not to Prof. Sathya.
@@ -79,6 +75,7 @@ I read the messages in the week of 9 November and send the ones that are ready. 
 - The question, and why it is hard today.
 - The answer the student wants to give, in two or three sentences.
 - The plan: six months, three months, the first step taken and what it produced.
+- Claims about what has been done point to something done, not intended.
 - One or two specific questions for the mentor.
 - The ask: 30 minutes, and two or three times.
 - Fits on one screen.
