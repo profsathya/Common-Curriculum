@@ -1,4 +1,4 @@
-<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 2, 12 Oct 2026: Prof. Sathya rewrote Purpose and How this works; Alan carried that through the rest (one to three mentors, a test-the-message task, no process section at the end). Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his review.
+<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 3, 12 Oct 2026: Prof. Sathya rewrote Purpose and How this works, then loosened task 2 so the student decides how to present the plan; Alan carried both through the self-check and the AI feedback criteria. Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his review.
 Notes for the editor, not shown to students:
 - The sending process stays off the page. For the record: Prof. Sathya's note goes to the mentor first, without the student; on a yes, a second email connects the two; a nudge after about six days; no answer after that, the message goes to the student's next choice. Alan runs the sending and the nudges off the name map in Alan.
 - The mentor list is anonymous to students (role, field, what the person does); the name map lives in Alan. The list link below is a placeholder until the list exists.
@@ -36,10 +36,8 @@ The mentors are listed by role and field, here. You will learn who they are when
 
 2. Write the message to your mentor. Write it to the person, not to me. Use these parts, each a short paragraph, so that the whole message fits on one screen:
 
-   - Who you are: your year, your track, and the kind of work you are preparing for.
-   - The behavioral interview question you chose in week 7, and why it is hard for you to answer today.
-   - The answer you want to be able to give by the end of the semester, in two or three sentences.
-   - Your plan: the experiences you will build in the next six months and three months, and the first step you took in week 10, with what it produced.
+   - Who you are: your year, your track, and the kind of work you are interested in.
+   - Use the work you did think about the behavioral interview question to present a plan that you are considering to build a portfolio to prepare yourself
    - What you want their view on: one or two specific questions about the plan.
    - The ask: 30 minutes, on Zoom or in person, and two or three times you are free in the next three weeks.
 
@@ -55,7 +53,7 @@ The mentors are listed by role and field, here. You will learn who they are when
 
 Tick each line your message meets. Your ticks are copied with your message.
 
-- [ ] My plan is in the message: the six-month and three-month experiences, and the first step I took with what it produced
+- [ ] The plan I am considering is in the message, in my own words, with what I have already done toward it
 - [ ] Every claim about what I have done is backed by something I did, not something I intend to do
 - [ ] I say what I want their view on, in one or two specific questions
 - [ ] The ask is 30 minutes, and I give two or three times I am free
@@ -72,9 +70,7 @@ Go through the Self-check, press **Copy my answers**, review the text, and paste
 
 - Written to the mentor, in the second person, not to Prof. Sathya.
 - Who the student is: year, track, the kind of work.
-- The question, and why it is hard today.
-- The answer the student wants to give, in two or three sentences.
-- The plan: six months, three months, the first step taken and what it produced.
+- A plan the student is considering, drawn from their work on the interview question, with what they have already done toward it.
 - Claims about what has been done point to something done, not intended.
 - One or two specific questions for the mentor.
 - The ask: 30 minutes, and two or three times.
