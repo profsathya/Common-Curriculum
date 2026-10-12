@@ -1,8 +1,8 @@
-<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 3, 12 Oct 2026: Prof. Sathya rewrote Purpose and How this works, then loosened task 2 so the student decides how to present the plan; Alan carried both through the self-check and the AI feedback criteria. Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his review.
+<!-- Editable text for talk-your-plan-through-with-a-professional.html (not built yet). DRAFT 4, 12 Oct 2026: Purpose reworded by Prof. Sathya ("Experience the networking step..."); resume review now asks for a commentable Google Doc link instead of a PDF. Draft 3: Prof. Sathya rewrote Purpose and How this works, then loosened task 2 so the student decides how to present the plan; Alan carried both through the self-check and the AI feedback criteria. Own-your-progress activity, week 11, Recommended Date Fri 6 Nov. Replaces the "Earn a 1-on-1 with Jeff D'Andria (Work In Progress)" placeholder on the home page. The .html is built only after his review.
 Notes for the editor, not shown to students:
 - The sending process stays off the page. For the record: Prof. Sathya's note goes to the mentor first, without the student; on a yes, a second email connects the two; a nudge after about six days; no answer after that, the message goes to the student's next choice. Alan runs the sending and the nudges off the name map in Alan.
 - The mentor list is anonymous to students (role, field, what the person does); the name map lives in Alan. The list link below is a placeholder until the list exists.
-- Jeff D'Andria: 30-minute resume review. The student attaches the resume as a PDF in Canvas.
+- Jeff D'Andria: 30-minute resume review. The student puts the resume in a Google Doc with comment access for anyone with the link and pastes the link in a box that appears when the tick is on (Prof. Sathya, 12 Oct: a PDF attachment in Canvas would not work).
 - Alan flags any row with more than three requests.
 - No Dojo route on this page. One AI feedback button under the message box, criteria at the end of this file. -->
 
@@ -16,7 +16,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 ## Purpose
 
-Include the step of connecting and verifying your current plan by presenting it to professionals in the industry and incorporating their feedback into your approach.
+Experience the networking step of connecting and verifying your current plan with a professional in the industry and incorporating their feedback into your approach.
 
 ## How this works
 
@@ -32,14 +32,16 @@ The mentors are listed by role and field, here. You will learn who they are when
 
    **My choices.** The row numbers in order of preference, and the role as the list gives it for each.
 
-   ☐ **I would like a 30-minute resume review with Jeff D'Andria.** Attach your resume as a PDF when you submit in Canvas. (Page note: a tick; when ticked, the copied text carries the line "Resume review requested; resume attached.")
+   ☐ **I would like a 30-minute resume review with Jeff D'Andria.** Put your resume in a Google Doc that anyone with the link can comment on, and paste the link below. (Page note: a tick; when ticked, a link box appears under it and the copied text carries the line "Resume review requested." followed by the link.)
+
+   **Link to my resume.** The Google Doc link, with sharing set so that anyone with the link can comment.
 
 2. Write the message to your mentor. Write it to the person, not to me. Use these parts, each a short paragraph, so that the whole message fits on one screen:
 
    - Who you are: your year, your track, and the kind of work you are interested in.
-   - Use the work you did think about the behavioral interview question to present a plan that you are considering to build a portfolio to prepare yourself
-   - What you want their view on: one or two specific questions about the plan.
-   - The ask: 30 minutes, on Zoom or in person, and two or three times you are free in the next three weeks.
+   - Explain your current plan of action to strengthen your value proposition with why you think this is a good plan for your unique situation.
+   - One or two specific questions you would like them to comment on about your plan.
+   - The ask: 30 minutes on Zoom, with 2-3 times you are free in the next three weeks. More options you provide makes it more likely that someone will talk to you.
 
    **My message to the mentor.** The whole message, ready to send.
 
@@ -53,10 +55,10 @@ The mentors are listed by role and field, here. You will learn who they are when
 
 Tick each line your message meets. Your ticks are copied with your message.
 
-- [ ] The plan I am considering is in the message, in my own words, with what I have already done toward it
+- [ ] My plan of action is in the message, with why it is a good plan for my situation and what I have already done toward it
 - [ ] Every claim about what I have done is backed by something I did, not something I intend to do
-- [ ] I say what I want their view on, in one or two specific questions
-- [ ] The ask is 30 minutes, and I give two or three times I am free
+- [ ] I ask one or two specific questions I would like them to comment on
+- [ ] The ask is 30 minutes on Zoom, and I give two or three times I am free
 - [ ] A classmate has read it as the mentor would, and I revised it
 - [ ] I would be comfortable with my name on this message going to someone I have not met
 
@@ -64,16 +66,16 @@ Tick each line your message meets. Your ticks are copied with your message.
 
 ## Submit
 
-Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box. If you asked for the resume review, attach your resume as a PDF to the same submission.
+Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 
 ## AI feedback (page note; criteria for the message box)
 
 - Written to the mentor, in the second person, not to Prof. Sathya.
 - Who the student is: year, track, the kind of work.
-- A plan the student is considering, drawn from their work on the interview question, with what they have already done toward it.
+- The current plan of action to strengthen the value proposition, with why it is a good plan for the student's situation and what they have already done toward it.
 - Claims about what has been done point to something done, not intended.
-- One or two specific questions for the mentor.
-- The ask: 30 minutes, and two or three times.
+- One or two specific questions the mentor is asked to comment on.
+- The ask: 30 minutes on Zoom, with two or three times the student is free.
 - Fits on one screen.
 
 The reply is two or three sentences: what the message already does, then the one thing that would make it ready to send. No rewriting.
