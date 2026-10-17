@@ -1,6 +1,6 @@
 <!-- Editable text for examples-of-job-search-experiences.html (not built yet). DRAFT 2, 14 Oct 2026: Prof. Sathya edited Purpose, Q1 ("recognized") and Q2; recommended date Friday 16 October confirmed; .html built from this text. Draft 1 by Alan, from Prof. Sathya's direction in chat: title "Examples of Job Search Experiences"; purpose "learn from examples of initiative and intentionality that resulted in job opportunities"; students watch the week-8 video, read Abigail Haddad's post in full, choose ONE other story closest to their own track or situation, and answer three questions; AI feedback button and AI Dojo route.
 Notes for the editor, not shown to students:
-- Own-your-progress activity, week 8. Recommended Date Friday 16 October, so that question 3 can feed the "this week" box of the graded item My Sprint 2 goal (due Monday 19 October).
+- Own-your-progress activity, week 8. Recommended Date Friday 16 October, so that question 3 can feed the "this week" box of the graded item My Sprint 2 goal (due Friday 23 October).
 - The video is cowork/alan/cst349-week8-make-things-rewind-v6.mp4, on YouTube (unlisted) at https://youtu.be/_JTF9-M-P0s.
 - Dojo tick off by default (optional activity, same as "Talk your plan through with a professional"). The passcode appears twice in this file and must be the same in both places.
 - The one-line descriptions of the stories match the video's closing cards and their sources. -->

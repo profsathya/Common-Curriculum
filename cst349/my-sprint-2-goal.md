@@ -1,7 +1,7 @@
 <!-- Editable text for my-sprint-2-goal.html. DRAFT 3, 11 Oct 2026 (draft 3 drops the 2-year box: Part 4 is now 6 months · 3 months · this week, Prof. Sathya's call after the guides' feedback that two years is too far away to reach this class; draft 2 of 9 Oct moved the Dojo steps up under the tick). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
 Notes for the editor, not shown to students:
 - This is the week-8 graded item of CST349 Sprint 2 (Prof. Sathya, 9 Oct): a strict form, not prose. Five parts, in this order: the answer I want to be able to give · what I will go deeper in · what I will reach across to · working backwards (three boxes: 6 months · 3 months · this week) · the Dojo route, ticked by default, with the AI feedback button as the other route.
-- Utsab introduces this form in the second half of Wed 14 Oct and students start it in class; due Mon 19 Oct. The student page does not name who runs the class.
+- Utsab introduces this form in the second half of Wed 14 Oct and students start it in class; due Fri 23 Oct (moved from Mon 19 Oct by Prof. Sathya on 17 Oct, since the item was published on a Saturday). The student page does not name who runs the class.
 - "Imagined" (Prof. Sathya, 4 Oct): a student who does not have the experience yet may write the answer they want to be true, as long as they mark it as imagined; the form does this with one tick under Part 1, and the working-backwards boxes are the plan that makes it real.
 - Part 3 is where "MySQL for depth, SQL Plus for breadth" has to be headed off. The three short examples beside Part 3 and the one-line test under it do that; no example on this page names the mistake.
 - The four worked examples beside the form are composites of the kinds of goals this class wrote in Sprint 1 (speaking and networking, explaining technical work, building a project, a technical skill), one per week-7 question; no example is any one student's goal.
@@ -16,7 +16,7 @@ CST349 · Fall 2026 · Sprint 2 · Week 8 · Set your goal
 
 # My Sprint 2 goal
 
-Graded item · Due Date: Monday 19 October · 100 pts
+Graded item · Due Date: Friday 23 October · 100 pts
 
 This graded item will affect your final grade, and the late penalty applies.
 
@@ -174,7 +174,7 @@ Go through the Self-check, press **Copy my answers**, review the text, and paste
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: My Sprint 2 goal. Course: CST349. Due: Monday 19 October. Passcode: BACK-1019.
+Graded item: My Sprint 2 goal. Course: CST349. Due: Friday 23 October. Passcode: BACK-1019.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
