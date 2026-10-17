@@ -7,6 +7,7 @@ Notes for the editor, not shown to students:
 - Worked examples: Pair A for the learning trail's accelerometer goal and Pair B for a thrown ball (Example D on the goal form). Each pair uses the exact box labels of the form and shows one scenario that applies and one look-alike that breaks the condition.
 - Skip-a-step rules (Prof. Sathya, 5 Oct): nothing labelled optional, nothing blocks moving on. Boxes fill in any order; Copy works whatever is empty.
 - Self-check points are a proposal for his edit; they total 100.
+- 17 Oct (his review): Pair A's check now uses the PhET crate (a 0.20 kg / 0.30 N push cannot be set in PhET), and the wooden-desk look-alike now says the phone does not move, since desk friction (about 0.8 N) is more than the 0.30 N push. The .html carries the same change.
 - "For your AI Dojo" is hidden on the page and copied into the course Google Doc by the sync script. The passcode appears twice in this file and must be the same in both places. -->
 
 CST286 · Fall 2026 · Sprint 2 · Week 9 · Apply it, and find its limits
@@ -134,7 +135,7 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 
 **Pair A · From the learning trail's accelerometer goal**
 
-- *How I learned and confirmed it:* Learned from the CST286 accelerometer learning trail and PhET Forces and Motion; confirmed by pushing a 0.20 kg object with 0.30 N on the frictionless ice setting and seeing the acceleration read 1.5 m/s².
+- *How I learned and confirmed it:* Learned from the CST286 accelerometer learning trail; confirmed in PhET Forces and Motion: Basics (Acceleration screen) by setting friction to none and pushing the 50 kg crate with 100 N: the acceleration read 2 m/s², which matches 100 N ÷ 50 kg.
 - *My relationship:* Acceleration equals push divided by mass, `a = F / m`, where `F` is the push force in newtons (N), `m` is the phone's mass in kilograms (kg), and `a` is the acceleration in meters per second squared (m/s²).
 - *My condition:* My push is the only horizontal force acting on the phone (friction is negligible).
 
@@ -147,8 +148,8 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 *Scenario 4 (Looks similar, does not apply)*
 - *The situation:* I place the same phone on a wooden desk and give it the exact same sideways push of 0.30 N.
 - *Looks like scenario 1 because:* The phone's mass (0.20 kg) and my sideways push (0.30 N) are identical.
-- *The subtle difference, and the part of my condition it breaks:* The wooden desk rubs against the phone with sliding friction, which breaks the condition that my push is the only horizontal force acting on the phone.
-- *What my relationship would get wrong here:* Using `a = F / m` with 0.30 N predicts 1.5 m/s², which is too large (or the phone may not move at all), because friction opposes the push and reduces the net force on the phone.
+- *The subtle difference, and the part of my condition it breaks:* The wooden desk grips the phone with friction, which breaks the condition that my push is the only horizontal force acting on the phone.
+- *What my relationship would get wrong here:* Using `a = F / m` with 0.30 N predicts 1.5 m/s², but the phone does not move at all (0 m/s²): a wooden desk can hold a phone back with about 0.8 N of friction, which is more than my 0.30 N push, so the net force on the phone stays zero.
 
 **Pair B · From a thrown ball (Example D on the goal form)**
 
