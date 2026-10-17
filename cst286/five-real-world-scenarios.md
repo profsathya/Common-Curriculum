@@ -19,11 +19,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-Test your Sprint 2 prediction with real numbers in three situations where it holds, and identify two look-alike situations where its physical condition breaks, so that you understand when to trust your formula and are ready to work one of your scenarios on paper in the Sprint 2 Exam.
+Test your Sprint 2 learning by applying what you learned in three real-world situations where it can be applied, and identify two similar looking situations where the quantitative relationship doesn't hold because the physical condition is different.
 
 ## How this form works
 
-In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps: first, use your learning resource or a simulation to find the mathematical formula, check it once, and state the physical condition it depends on; second, work the numbers step by step across three real situations where that condition holds; third, take a working situation and change one physical detail so that the setup looks the same on the surface, but your condition breaks. In Wednesday's class, your guide group will try to break your condition with you so you can test your examples together.
+In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps: first, use your learning resource or a simulation to understand the mathematical formula (quantitative relationship), check it once, and state the physical condition where it is applicable; second, work the numbers step by step across three real situations where that condition holds; third, take a working situation and change one physical detail so that the setup looks the same on the surface, but the formula is not applicable. In Wednesday's class, your guide group will try to break your condition with you so you can test your examples together.
 
 ☑ **I would like to use the AI Dojo to work out and test my scenarios.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions to check your formula, your condition, and each scenario, and helps guide your thinking if you get stuck. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
