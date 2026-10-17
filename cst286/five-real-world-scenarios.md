@@ -23,9 +23,9 @@ Test your Sprint 2 learning by applying what you learned in three real-world sit
 
 ## How this form works
 
-In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps: first, use your learning resource or a simulation to understand the mathematical formula (quantitative relationship), check it once, and state the physical condition where it is applicable; second, work the numbers step by step across three real situations where that condition holds; third, take a working situation and change one physical detail so that the setup looks the same on the surface, but the formula is not applicable. In Wednesday's class, your guide group will try to break your condition with you so you can test your examples together.
+In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps: first, use your learning resource or a simulation to understand the mathematical formula (quantitative relationship), check it once, and state the physical condition where it is applicable; second, work the numbers step by step across three real situations where that condition holds; third, take a working situation and change one physical detail so that the setup looks the same on the surface, but the formula is not applicable. 
 
-☑ **I would like to use the AI Dojo to work out and test my scenarios.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions to check your formula, your condition, and each scenario, and helps guide your thinking if you get stuck. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to work out and test my scenarios.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions to check your formula, your condition, and helps you develop each scenario, and helps guide your thinking if you get stuck. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
@@ -35,7 +35,7 @@ AI Dojo Passcode for this Graded Item: **LIMITS-1026**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Five real-world scenarios". First tell me its passcode, its title and its due date as you have them. Start by asking me how I learned and confirmed my relationship, then ask for the formula with its units and the physical condition it depends on. Next, work through my five scenarios with me one at a time (three where the condition holds, and two look-alikes where it breaks). Have me work the numbers myself, and challenge me on whether my condition really holds or breaks in each one. Do not write the scenarios or work the numbers for me; if I am struggling to find a scenario or to see how my condition breaks, ask me guiding questions to help me figure it out. Do not summarize until I ask you to.
+> Walk me through the graded item "Five real-world scenarios". First tell me its passcode, its title and its due date as you have them. Start by asking me how I learned and confirmed the quantitative relationship I am interested in, then ask for the formula with its units and the physical condition in which it is applicable. Next, work through my five scenarios with me one at a time (three where the condition holds, and two look-alikes where it breaks). Have me work the numbers myself, and challenge me on whether my condition really holds or breaks in each one. Do not write the scenarios or work the numbers for me; if I am struggling to find a scenario or to see how my condition breaks, ask me guiding questions to help me figure them out. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -51,7 +51,7 @@ AI Dojo Passcode for this Graded Item: **LIMITS-1026**
 
 (Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder.)
 
-### Part 1 · My relationship and its condition
+### Part 1 · The quantitative relationship (math formula) and where it is applicable
 
 Bridge from the goal you submitted in week 8 to the mathematical formula you will use in your scenarios.
 
@@ -59,19 +59,19 @@ Bridge from the goal you submitted in week 8 to the mathematical formula you wil
 
    **How I learned and confirmed it.** The resource I used, and the one check that convinced me the formula works.
 
-2. **The relationship.** State the relationship in words and write it as a formula, identifying every quantity and its unit.
+2. **The relationship.** State the quantitative relationship in words and write it as a formula, identifying every quantity and its unit.
 
    **My relationship.** In words, then as a formula, with each quantity and its unit.
 
-3. **The condition it depends on.** State in one sentence what has to be true in a physical situation for your formula to give the right answer. Write it so that you can check it against any new situation. (Page note: the text of this box is echoed at the top of each block in Part 3.)
+3. **The condition it depends on.** State in one sentence what has to be true in a physical situation for your formula to be applicable. Write it so that you can check it against any new situation. (Page note: the text of this box is echoed at the top of each block in Part 3.)
 
-   **My condition.** What must be true in the situation for my relationship to hold.
+   **My condition.** What must be true in the situation for my relationship to be applicable.
 
 ### Part 2 · Three scenarios where my prediction applies
 
 Create three distinct real-world situations where your condition from Part 1 holds, and work your prediction with realistic numbers in each one.
 
-(Page note: three identical blocks, Scenario 1, 2 and 3; the four boxes below in each.)
+(Page note: three identical blocks, Scenario 1, 2 and 3; the four boxes below in each. Note to Alan: I think we should add a AI guidance button above each of the scenario section with a well developed prompt to give them guidance on how to think about examples of scenarios)
 
 - **The situation.** Describe a specific real-world situation where this phenomenon happens and what is moving or changing.
 
@@ -91,7 +91,7 @@ Create three distinct real-world situations where your condition from Part 1 hol
 
 ### Part 3 · Two scenarios that look similar but do not apply
 
-Take one of your working scenarios from Part 2 and change one physical detail about the object or its surroundings (such as moving a phone from smooth ice to a wooden desk, or swapping a baseball for a badminton shuttlecock) so that the setup looks similar enough on the surface that a classmate might try to use your formula, but your condition from Part 1 breaks.
+Take one of your working scenarios from Part 2 and change one physical detail about the object or its surroundings (such as moving a phone from smooth ice to a wooden desk, or swapping a baseball for a badminton shuttlecock) so that the setup looks similar enough on the surface that someone might try to use your formula, but because of the change the formula is not applicable.
 
 (Page note: two identical blocks, Scenario 4 and 5. Each block opens with a read-only line "Your condition: " followed by the text of the Part 1 condition box, updated live, so the student is pointing at their own words.)
 
@@ -163,7 +163,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Scenarios 4 and 5 each identify the Part 2 scenario they resemble and the subtle physical difference · 15 pts
 - [ ] Scenarios 4 and 5 each state which part of my condition is broken and what my relationship would get wrong · 15 pts
 
-**What makes it strong.** The two scenarios that do not apply are close enough to your working scenarios that a classmate might try to use your formula on them without noticing, and your explanation of the subtle difference makes it immediately clear why the formula fails there.
+**What makes it strong.** The two scenarios that do not apply are close enough to your working scenarios that someone might try to use your formula on them without noticing, and your explanation of the subtle difference makes it immediately clear why the formula fails there.
 
 **Grading.** 100 points, in Graded items. Submitting on time earns the doing half of your grade; working one of your scenarios on paper in the Sprint 2 Exam and explaining your work in check-ins earns the other half.
 
