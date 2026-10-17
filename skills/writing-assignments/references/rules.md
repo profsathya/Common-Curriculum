@@ -66,7 +66,7 @@ that appears only in the supporting text is flagged; the author decides whether 
 to the question or remove it from the support. A student who works from the copied
 questions alone must not miss a requirement. Sub-points (a/b/c) are for distinct answer
 elements only — never a restatement of the main instruction — and genuinely separate
-requirements stay visible rather than being folded away to reduce clutter. Guidance under
+requirements stay visible rather than being folded away to reduce clutter. **When a form question asks for a list of things (such as identifying a resource and describing a confirmation check, or stating a relationship in words, as a formula, and with units), format those parts as a bulleted list rather than one long sentence (Sathya, 17 Oct 2026).** Guidance under
 the `+` gives a way to work out an answer; sentences that praise, justify or rephrase the
 question are cut. An example demonstrates the requested relationship without predicting an
 employer's reaction or telling the student which goal is best. The prose rules for all of

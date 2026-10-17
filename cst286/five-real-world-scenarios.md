@@ -23,7 +23,11 @@ Test your Sprint 2 learning by applying what you learned in three real-world sit
 
 ## How this form works
 
-In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps: first, use your learning resource or a simulation to understand the mathematical formula (quantitative relationship), check it once, and state the physical condition where it is applicable; second, work the numbers step by step across three real situations where that condition holds; third, take a working situation and change one physical detail so that the setup looks the same on the surface, but the formula is not applicable. 
+In week 8 you stated in words what you start from and what you want to predict. This week you take that goal from words to working physics in three steps:
+
+- **Step 1 (Part 1):** Use your learning resource or a simulation to understand the mathematical formula (quantitative relationship), check it once, and state the physical condition where it is applicable.
+- **Step 2 (Part 2):** Work the numbers step by step across three real situations where that condition holds.
+- **Step 3 (Part 3):** Take a working situation and change one physical detail so that the setup looks the same on the surface, but the formula is not applicable.
 
 ☑ **I would like to use the AI Dojo to work out and test my scenarios.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions to check your formula, your condition, and helps you develop each scenario, and helps guide your thinking if you get stuck. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -55,11 +59,16 @@ AI Dojo Passcode for this Graded Item: **LIMITS-1026**
 
 Bridge from the goal you submitted in week 8 to the mathematical formula you will use in your scenarios.
 
-1. **How I learned it, and how I confirmed it.** Identify the resource you learned the relationship from (by title, link, or person) and describe one check you did that confirmed the relationship works, such as a worked example from your resource, a simulation run from the Own-your-progress activity *Design an experiment and collect data for your prediction*, or a sensor measurement.
+1. **How I learned it, and how I confirmed it.**
+   - Identify the resource you learned the relationship from (by title, link, or person).
+   - Describe one check you did that confirmed the relationship works (such as a worked example from your resource, a simulation run from the Own-your-progress activity *Design an experiment and collect data for your prediction*, or a sensor measurement).
 
    **How I learned and confirmed it.** The resource I used, and the one check that convinced me the formula works.
 
-2. **The relationship.** State the quantitative relationship in words and write it as a formula, identifying every quantity and its unit.
+2. **The relationship.**
+   - State the quantitative relationship in words.
+   - Write it as a math formula.
+   - Identify every quantity in the formula and its unit.
 
    **My relationship.** In words, then as a formula, with each quantity and its unit.
 
@@ -81,7 +90,9 @@ Create three distinct real-world situations where your condition from Part 1 hol
 
    **Scenario N · Given.** The starting quantities, with their numbers and units.
 
-- **The prediction, worked.** Work the calculation step by step from the starting quantities to the predicted quantity, including the unit at every step and in the final result.
+- **The prediction, worked.**
+  - Work the calculation step by step from the starting quantities to the predicted quantity.
+  - Include the unit at every step and in the final result.
 
    **Scenario N · Worked.** Each step of the calculation with its unit, and the final result.
 
@@ -99,15 +110,21 @@ Take one of your working scenarios from Part 2 and change one physical detail ab
 
    **Scenario N · The situation.** One or two sentences describing the look-alike situation.
 
-- **Which scenario it looks like, and why.** Identify which Part 2 scenario it resembles and explain what makes the two look the same at first glance.
+- **Which scenario it looks like, and why.**
+  - Identify which Part 2 scenario (1, 2, or 3) it resembles.
+  - Explain what makes the two look the same at first glance.
 
    **Scenario N · Looks like scenario __ because ...** One sentence on what matches on the surface.
 
-- **The subtle difference.** Identify the one physical difference in this situation and state which part of your condition from Part 1 it breaks.
+- **The subtle difference.**
+  - Identify the one physical difference in this situation.
+  - State which part of your condition from Part 1 it breaks.
 
    **Scenario N · The subtle difference, and the part of my condition it breaks.** One or two sentences.
 
-- **What would go wrong.** Explain what your formula would get wrong if you used it here anyway (such as predicting a number that is too large, too small, in the wrong direction, or meaningless) and why.
+- **What would go wrong.**
+  - State what your formula would get wrong if you used it here anyway (such as predicting a number that is too large, too small, in the wrong direction, or meaningless).
+  - Explain the physical reason why.
 
    **Scenario N · What my relationship would get wrong here.** One or two sentences on the direction of the error and its physical cause.
 

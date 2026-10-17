@@ -23,7 +23,7 @@ One screen. The page shape, the pipeline, his corrections and the version histor
 ## On every task
 
 - Likely errors are prevented by a positive test, a structured field or a paired example; a common mistake is named outright only when it is consequential, likely, and cannot be prevented more directly. (Task)
-- Sub-points (a/b/c) are distinct answer elements, never a restatement of the main instruction, and separate requirements stay visible. (Task)
+- Sub-points (a/b/c) are distinct answer elements, never a restatement of the main instruction; when a form question asks for two or more things (or lists options/examples), format them as a bulleted list rather than one long compound sentence so every requirement stays visible. (Task)
 - Guidance under the `+` gives a way to work out an answer; no sentence praises, justifies or rephrases the question. (Task)
 - Examples sit in the task's click-in, not in Criteria, and none predicts an employer's reaction or tells the student which goal is best. (Task; Criteria for success - Examples live under each task)
 - Inside the click-in, the answer box comes right after the guidance and examples, and the reflection question follows with its own smaller box; the copied text carries a `Reflection:` line under each answer. (History, v6)
