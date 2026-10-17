@@ -42,6 +42,7 @@ Where the build said "Put one of them on Pear Deck", he replaced the slide with 
 - **His own stake is first person.** The Commons slide became *"I am trying to build a platform that streamlines the process for strengthening our ability to have deep conversations"* — his project, named as his, with the loop it runs on (practice it · analyze it · learn and try again) and an honest ask: *"Today I would like to trial test one of the features."*
 - **Point forward when a skill is coming.** *"We will explore asking good questions in the upcoming weeks"* — the activity gets its place in the arc rather than standing alone.
 - **Sharpen an activity's question toward the skill being built.** His step 3 became *"What type of questions did they have? What makes some questions more useful for a conversation."* — moving the reflection off the topic and onto the questioning itself, which is the capability the course is actually after.
+- **Stage guide-group discussions from pairs or trios to the full group, with one or two shared back (Sathya, 17 Oct 2026).** On a student-guide discussion slide, let students warm up in pairs or trios before the full guide-group conversation (*"Group discussion - you can pair up or 3 people group to start with - and then have an entire group conversation"*), and give the student guides a clear harvest instruction (*"Student guides: have the group select 1 or 2 goals to share with the class - either you or the individual students themselves can share"*).
 
 ## The sentence first
 
@@ -97,7 +98,7 @@ Not "This week". It carries what students need to be told, including the grading
 - No slide only asserts a belief — every claim sits on the slide that motivates it, and the why precedes the activity it justifies.
 - Every step that uses a tool is that tool's slide, not a description of it.
 - Headlines are claims, and carry nothing the slide's own furniture already says.
-- "We" where the difficulty is shared; label-first bullets for parallel facts; no reassurance; timings as ranges.
+- "We" where the difficulty is shared; label-first bullets for parallel facts; no reassurance; timings as ranges; guide-group discussions staged from pairs/trios to the full group with 1 or 2 items selected to share with the class.
 - The closing slide is Reminders and states the OYP substitution rule and the late penalty.
 - Run the whole deck against `writing-to-teach` — the no-telegrams rule catches most of what is left.
 
@@ -110,3 +111,5 @@ Not "This week". It carries what students need to be told, including the grading
 _Status: v1 (9 September 2026). Extracted from Sathya's direct edit of the CST286 week-3 deck (`alan/cst286-week3-deck-v4.pptx` → his Google Slides version, 9 Sep). The deck Alan built was 25 slides and correct in content; what he changed was almost entirely **shape and register**, and those changes are the content of this file._
 
 _v2 (11 October 2026). Added the teaching-sequence rules from the CST349 week-8 deck: the sentence first, start from the belief in the room, the case then the claim, one job per slide, example before name, one example every track, takeaways move, the headline test, end in an action. Decided with Sathya on 9-11 Oct 2026 after v1/v2 of that deck carried information without a message; the deck was rebuilt as v3 (one example) and v4 (students' question, screening numbers, Utsab's case study)._
+
+_v3 (17 October 2026). Added staging guide-group discussions from pairs/trios to the full guide group, with 1 or 2 items selected to share with the class by either the guide or the student (Sathya's direct edit to the CST286 Week 9 Wednesday slide sequence)._

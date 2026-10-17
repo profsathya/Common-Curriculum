@@ -33,6 +33,7 @@ One screen. The house system, his edits and where they came from are in `referen
 - Timings are ranges ("5-10 minutes"). (Register)
 - No bullet is a noun phrase plus an em-dash gloss (the no-telegrams rule). (Building a session deck)
 - Where a skill is coming, the slide points forward to it; an activity's question is sharpened toward the skill being built. (Register)
+- On a guide-group discussion slide, discussion starts in pairs or trios before the full group, and student guides have the group select 1 or 2 items for either the guide or the student to share with the class. (Register)
 
 ## The closing slide
 

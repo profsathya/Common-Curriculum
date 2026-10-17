@@ -15,7 +15,7 @@ One screen. The page shape, the pipeline, his corrections and the version histor
 ## On every page
 
 - The blocks are Purpose · Task · Criteria · Reflection, in that order; there is no "What you're building on" block and no "By the time you submit, you will have" list; earlier work is named inside the task, by assignment name and question number. (Purpose; What you're building on)
-- Purpose is one or two sentences, and the first carries the payoff, not the topic. (Purpose; Checklist)
+- Purpose is one or two sentences carrying the learning payoff, not the topic or exam/grading mechanics; where a "How this form works" block appears, it walks through the conceptual steps of the form without single-day class logistics. (Purpose; Checklist)
 - An own-your-progress page opens with the ownership line, verbatim, in its `.ownbar` block under the page head and above Purpose. (How own-your-progress and graded items are labelled and dated)
 - The words "not graded" appear nowhere a student reads; the section heads carry his two markers verbatim. (How own-your-progress and graded items are labelled and dated)
 - Every row shows `Recommended Date:` (OYP) or `Due Date:` (graded) from its `data-due`, in the title's `.hint` span with the date in `span.wdate`; no due date is repeated in the Canvas assignment body. (How own-your-progress and graded items are labelled and dated)

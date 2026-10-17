@@ -291,6 +291,8 @@ quantity in your explanation," never "name a quantity" or "your answer names som
 model leaves out." Caught live in his edit round on the Explore Physics Loop page; it is
 not how he uses the word, and the instruction reads clearer with the verb students expect.
 
+**Pair formal course-outcome terms with the everyday student term, and frame boundaries as "where it is applicable" (Sathya, 17 Oct 2026).** Where a course outcome uses a formal term such as "quantitative relationship" and students think of it as a "math formula", pair both in the heading and opening sentence — "mathematical formula (quantitative relationship)" or "The quantitative relationship (math formula)" — so the student bridges from the everyday word to the formal one without friction. When teaching the boundary of a formula or model, frame it as "where it is applicable" and "where it is not applicable" rather than "where it gives the right answer" or "where it breaks".
+
 ## The test
 
 Read the finished page four times, once as each mode, testing the page rather than the
@@ -319,7 +321,7 @@ you only the first sentence leave knowing the payoff?
 - Preview and outcome lists: every item a complete verb-first instruction, readable
   cold, using no term the page has not yet introduced.
 - One name per concept, on this page and its siblings; our terms carry a tooltip or
-  parenthetical at first use.
+  parenthetical at first use, formal course-outcome terms are paired with the everyday student term in parentheses, and formula boundaries are framed as where the relationship is applicable or not applicable.
 - The page ends with what the student can now do and where to ask questions.
 - Promises match the grading truth; growth framed as profession, not survival; loop
   descriptions name reflection; independence reads as fading guidance.
@@ -349,7 +351,7 @@ analysis.*
 
 ## History
 
-_Status: v5 (18 September 2026) — read `skills/writing-foundation/SKILL.md` first; it holds the prose rules that apply to all of Sathya's writing (start with the action, keep who does what, no telegrams, walk the chain, cut what does not change the reader's next action). This skill adds what teaching requires. Where the two overlap, the foundation is the current wording; overlapping passages here are due to move out in the next revision. v4 (8 September 2026) — added "no telegrams" after the CST286 week-3 deck: noun-phrase-plus-em-dash lines that label an idea instead of saying it, on slides as much as on pages. v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
+_Status: v6 (17 October 2026) — added pairing formal course-outcome terms with the everyday student term in parentheses ("quantitative relationship (math formula)") and framing formula boundaries as "where it is applicable / not applicable" (Sathya's direct edits to `cst286/five-real-world-scenarios.md` and the Week 9 Wednesday slide sequence). v5 (18 September 2026) — read `skills/writing-foundation/SKILL.md` first; it holds the prose rules that apply to all of Sathya's writing (start with the action, keep who does what, no telegrams, walk the chain, cut what does not change the reader's next action). This skill adds what teaching requires. Where the two overlap, the foundation is the current wording; overlapping passages here are due to move out in the next revision. v4 (8 September 2026) — added "no telegrams" after the CST286 week-3 deck: noun-phrase-plus-em-dash lines that label an idea instead of saying it, on slides as much as on pages. v3 (2 September 2026) — added "concise means low load, not few words" after the cryptic preview lists on the Week 2 pages; v2 (29 August 2026) — the register moves were scoped to concept teaching after they were traced to the argumentative Week 2 activity pages: "meet the feeling" no longer applies to activity-page openings and never invents an objection; "the why at every seam" became the why once, locally only when it changes a decision; the achiever example stopped being a "bar". v1 (August 2026). Born from the CST499 lock-ladder session: the named defect
 was presentation-register writing — describing the end state to readers who don't yet
 have what they need to get there. First test passed 2026-08-04, rewriting the CST499
 home page against it._

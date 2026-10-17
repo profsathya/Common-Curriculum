@@ -71,7 +71,7 @@ Bridge from the goal you submitted in week 8 to the mathematical formula you wil
 
 Create three distinct real-world situations where your condition from Part 1 holds, and work your prediction with realistic numbers in each one.
 
-(Page note: three identical blocks, Scenario 1, 2 and 3; the four boxes below in each. Note to Alan: I think we should add a AI guidance button above each of the scenario section with a well developed prompt to give them guidance on how to think about examples of scenarios)
+(Page note: three identical blocks, Scenario 1, 2 and 3; the four boxes below in each. Above each Scenario block, an "AI guidance: help me think of a scenario" button reads the student's Part 1 relationship and condition and any earlier scenarios they have written, and asks 2-3 guiding questions to help them spot an everyday situation where their condition holds, without writing a scenario for them.)
 
 - **The situation.** Describe a specific real-world situation where this phenomenon happens and what is moving or changing.
 
@@ -93,7 +93,7 @@ Create three distinct real-world situations where your condition from Part 1 hol
 
 Take one of your working scenarios from Part 2 and change one physical detail about the object or its surroundings (such as moving a phone from smooth ice to a wooden desk, or swapping a baseball for a badminton shuttlecock) so that the setup looks similar enough on the surface that someone might try to use your formula, but because of the change the formula is not applicable.
 
-(Page note: two identical blocks, Scenario 4 and 5. Each block opens with a read-only line "Your condition: " followed by the text of the Part 1 condition box, updated live, so the student is pointing at their own words.)
+(Page note: two identical blocks, Scenario 4 and 5. Each block opens with a read-only line "Your condition: " followed by the text of the Part 1 condition box, updated live, so the student is pointing at their own words, plus an "AI guidance: help me think of a look-alike scenario" button that reads Part 1 and their Part 2 scenarios and asks 2-3 guiding questions about what single physical detail in the object or surroundings could change so the condition is no longer applicable.)
 
 - **The situation.** Describe a real situation that looks similar on the surface to one of your scenarios in Part 2.
 
@@ -185,8 +185,13 @@ Then work through the five scenarios one at a time. Never write a scenario or ca
 
 Do not summarize until the student asks. When they ask, output the text in the exact order of the form's boxes using only the student's words, and write "not yet settled" on any box that is not yet settled.
 
-## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
+## AI guidance and AI feedback (page note; the criteria the buttons check)
 
+**AI guidance button above each Scenario block (Scenarios 1-3 and Scenarios 4-5):**
+- Scenarios 1–3 ("AI guidance: help me think of a scenario"): reads the student's Part 1 relationship and condition (plus any earlier scenarios already drafted) and asks 2 or 3 short Socratic questions about everyday places, objects, or activities where that physical phenomenon occurs and where their condition holds. Never invents or hands over a finished scenario or numbers.
+- Scenarios 4–5 ("AI guidance: help me think of a look-alike scenario"): reads the student's Part 1 condition and their Part 2 scenarios, and asks 2 or 3 guiding questions about what single physical detail in the object or surroundings could change in one of their working scenarios (such as surface friction, air drag, incline, or a second force) so the setup looks similar on the surface, but the condition is no longer applicable. Never writes the look-alike scenario for them.
+
+**AI feedback button under each box (shown when the Dojo box is unticked):**
 - Learned and confirmed: identifies a resource by title, link, or person, and describes one concrete check (worked problem, simulation run, or measurement).
 - Relationship: stated in words and as a formula; every quantity identified with its unit.
 - Condition: a checkable sentence stating what must be true in the physical situation; not a restatement of the formula.

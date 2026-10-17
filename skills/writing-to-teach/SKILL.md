@@ -31,7 +31,7 @@ One screen. The reader facts, the two registers, the teaching moves, his correct
 
 - Growth reads as part of the profession, never survival or exclusivity; a promised skill is unpacked into its parts where it is promised; promises match the grading truth (effort, a plan, not arrival). (Promises and frames)
 - The loop names reflection as a step; independence reads as fading guidance; conversations include peers; verbs are student-humane. (Promises and frames)
-- One name per concept across the page, its siblings, Canvas and slides; our terms carry a tooltip or parenthetical at first use. (One vocabulary; Start from the reader - Vocabulary)
+- One name per concept across the page, its siblings, Canvas and slides; our terms carry a tooltip or parenthetical at first use, formal course-outcome terms are paired with the everyday student term in parentheses (such as "quantitative relationship (math formula)"), and formula boundaries are framed as where the relationship is applicable or not applicable. (One vocabulary; Start from the reader - Vocabulary)
 - Instructions say "identify" or "include", never "name". (One vocabulary)
 
 ## On a home-page weekly block
