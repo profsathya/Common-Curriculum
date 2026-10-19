@@ -1,10 +1,13 @@
 <!-- CST499 · Graded item · editable source for in-class-activity-mid-term.html (not yet built).
-     Draft 2 of 2026-10-18, rewritten against skills/writing-foundation and skills/writing-assignments after
-     Sathya's edit of the Purpose line. Companion to mid-term.md — the second of the two Mid-term items.
+     Draft 3 of 2026-10-18, after Sathya's comments on draft 2. Companion to mid-term.md — the second of the
+     two Mid-term items. Build base: cst349/sprint-1-exam-paired.html (roster suggestions for the partner's
+     name, the Read-it-aloud button and its status lines, Copy my answers), generated the same way.
      Decisions carried in: the five questions are 2, 4, 5, 6, 7 and are published before Wednesday; they go
-     up on the screen in class, not on paper; the partner is named at the top as first name + last letter;
-     every check line is worded for the pair to run together; the capture check is about meaning, with the
-     author agreeing, not word-for-word transcription. -->
+     up on the screen in class, not on paper; partner's name only, from the roster list as "Firstname L.";
+     the question for each answer is picked from a dropdown; all three answers are typed first, then one
+     agreement checkbox; three follow-up questions in total with an "Add another question" control; the
+     check lines are agreements both students make, worded for the pair; no Copy-the-form button —
+     the page is the form, and Copy my answers at the end carries it to Canvas. -->
 
 # In-class activity (mid-term)
 
@@ -17,7 +20,7 @@ Practice summarizing our project and its value in our own words, and then hear h
 ## How it works
 
 - **Part 1 — write, on your own.** Choose three of the five questions on the screen. On paper, write the question number and your answer; one page, two sides at most; closed book.
-- **Part 2 — swap, in pairs.** Pair with someone not on your team. Type your partner's three answers from their sheet, ask two follow-up questions on each answer, and write a summary of how they see their own project. Check each part with your partner before you move to the next. Submit the typed version in Canvas before you leave.
+- **Part 2 — swap, in pairs.** Pair with someone not on your team. Type your partner's three answers from their sheet, ask three follow-up questions, and write a summary of how they see their own project. Each of you does this for the other. When you finish, press **Copy my answers** and paste the text into the Canvas box before you leave.
 - Hand in your written sheet at the end.
 
 *Tooltip on "closed book"* — **Closed book** — *What it means.* Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood.
@@ -28,66 +31,60 @@ Practice summarizing our project and its value in our own words, and then hear h
 
 - **Question 2 — The problem.** What problem your project solves, for whom, and what convinced you the need is real — the moment, conversation or evidence that settled it.
 - **Question 4 — How I used AI.** How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?
-- **Question 5 — One decision.** Pick one decision you made — design, scope or tool. Analyse what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.
+- **Question 5 — One decision.** Pick one decision you made — design, scope or tool. Analyze what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.
 - **Question 6 — One thing I can now do.** One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.
 - **Question 7 — Where my part is hard.** Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.
 
-## The paired form
-<<To Alan: I am not sure we should provide the copy the form option for this form>>
-**Button:** Copy the form — Paste this into a Google doc, fill it in with your partner, then paste the text into Canvas.
+## Tasks
 
-*Run each check line together, with the sheet between you, and change the text until both of you agree every line is true.*
+You have your partner's sheet. Complete the tasks below in order.
 
----
-<<To Alan: we don't need your name: just partner's name: and it should be a drop down>>
-**Your name:** ⏎
-**Partner:** first name and last letter of their last name, e.g. Maria G ⏎
+### Task 1
 
-### Answer 1 of 3
-<<To Alan: instead of just the number, lets have them select the questions from a drop down along with the number>>
-**Question number:** ⏎
-<<To Alan: as with we did in sprint 1 exam, lets add the mic button to transcribe the response>>
-**Partner's answer, typed from their sheet:** ⏎
+Select your partner's name.
 
-**Check together**
-- The typed answer says what the sheet says, and the author agrees.
-- Names, numbers and tool names are the ones the author used.
-<< To Alan: I don't think we should break up the process like this - let them read/type the responses all at once - checkbox they both agree that this captures the response accurately - then have them ask a total of 3 follow up questions - with option to add more questions >>
-**Follow-up 1 — your question:** ⏎
-**Their answer:** ⏎
+*Field:* Partner's name -> a text box with the course roster as suggestions ("Firstname L."). A name that is not on the list can still be typed.
 
-**Follow-up 2 — your question:** ⏎
-**Their answer:** ⏎
+### Task 2
 
-**Check together**
-- Each follow-up asks about something the typed answer does not settle.
-- Each answer is written as your partner said it, and your partner agrees it is what they meant.
+For each of the three answers on the sheet, select the question it answers and type the answer as written, or read it aloud into the box with the button beside it. If you cannot read a word, ask your partner.
 
-### Answer 2 of 3
+*Three blocks, each:*
+*Field:* Which question -> dropdown: 2 — The problem · 4 — How I used AI · 5 — One decision · 6 — One thing I can now do · 7 — Where my part is hard
+*Box label:* **Your partner's answer**
+*Beside the box (optional):* **Read it aloud** button, with the same status lines and hover note as the Sprint 1 paired page.
 
-*(same as Answer 1)*
+*After the three blocks, one checkbox:*
+- We both agree the typed answers say what the sheet says.
 
-### Answer 3 of 3
+### Task 3
 
-*(same as Answer 1)*
+Ask your partner three follow-up questions about what they wrote, and type each question and their answer. Ask about the part of an answer you would have to take on trust, because that is the part your partner has the most to gain from explaining.
 
-### Summary — how my partner sees their own project
+*Three question-and-answer pairs, then an* **Add another question** *control that adds a fourth, fifth… pair.*
+*Field labels:* **Your question** / **Their answer**
 
-**In your words:** what they think the project is for, what the partner thinks the project has achieve so far, and what should be completed for it to be considered a good project. ⏎
+*One checkbox:*
+- We both agree the answers are written as my partner said them.
 
-**Check together**
-- Your partner agrees the summary describes their project as they see it.
-- Where you see the project differently from your partner, the difference is written down in the summary.
+*Guidance (behind the +).* "How do you know?" and "What would have changed your mind?" are questions that ask for the part you would otherwise take on trust.
 
----
+### Task 4
 
-*Guidance (behind the +).* **Follow-up questions.** Ask about the part of the answer you would have to take on trust, because that is the part your partner has the most to gain from explaining. "How do you know?" and "What would have changed your mind?" are questions of that kind.
+Write a summary of how your partner sees their own project: what they think the project is for, what they think it has achieved so far, and what should be completed for it to be considered a good project. Where you see the project differently from your partner, write the difference into the summary.
+
+*Box label:* **How my partner sees their project**
+
+*One checkbox:*
+- We both agree the summary describes the project as my partner sees it.
+
+**Button:** Copy my answers — puts the partner's name, the three questions with the typed answers, the follow-ups, the summary and the three agreements on the clipboard. Paste the text into the Canvas box.
 
 ## Criteria
 
-**Done** — three answers typed from the sheet, two follow-ups with answers on each, a summary, and every check line agreed by both of you; submitted in Canvas before the end of class.
+**Done** — three answers typed from the sheet, three follow-up questions with answers, a summary, and the three agreements checked; submitted in Canvas before the end of class.
 
-**Strong** — the typed answers read as the author's own; each follow-up asks about something the typed answer does not settle; the author agrees with the summary.
+**Strong** — the typed answers read as your partner's own; each follow-up asks about something the typed answers do not settle; the summary carries the differences as well as the agreement.
 
 Graded as participation: do your best in the hour and write what you can.
 

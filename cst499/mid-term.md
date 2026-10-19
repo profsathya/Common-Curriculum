@@ -127,7 +127,7 @@ How did you use AI for this project, if you did? How did it help, and what human
 
 ### Question 5 — One decision
 
-Pick one decision you made — design, scope or tool. Analyse what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.
+Pick one decision you made — design, scope or tool. Analyze what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.
 
 *Box label:* **Your answer to question 5.** The decision, the other options, why this one, and the argument to revisit it.
 *Placeholder:* The decision — the other options — why this one — a good argument to revisit it now.
