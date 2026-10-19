@@ -41,7 +41,7 @@ You have your partner's sheet. Complete the tasks below in order.
 
 ### Task 1
 
-Select your partner's name.
+Select your partner's name - bold(not from your own team).
 
 *Field:* Partner's name -> a text box with the course roster as suggestions ("Firstname L."). A name that is not on the list can still be typed.
 
