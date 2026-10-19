@@ -12,13 +12,13 @@ Wednesday 21 October · in class · 100 points · Mid-term
 
 ## Purpose
 
-Practice summarizing our project and its value in our own words, and then hear how a partner understood what we wrote, so that we learn which parts of our explanation another person can follow and which parts we still need to work out.
+Practice summarizing our project and its value in our own words, and then hear how a partner understood what we wrote, so that we learn which parts of our explanation another person can follow and which parts we can still improve.
 
 ## How it works
 
 - **Part 1 — write, on your own.** Choose three of the five questions on the screen. On paper, write the question number and your answer; one page, two sides at most; closed book.
 - **Part 2 — swap, in pairs.** Pair with someone not on your team. Type your partner's three answers from their sheet, ask two follow-up questions on each answer, and write a summary of how they see their own project. Check each part with your partner before you move to the next. Submit the typed version in Canvas before you leave.
-- Hand in your written sheet at the end. The typed version is what is graded.
+- Hand in your written sheet at the end.
 
 *Tooltip on "closed book"* — **Closed book** — *What it means.* Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood.
 
@@ -33,26 +33,26 @@ Practice summarizing our project and its value in our own words, and then hear h
 - **Question 7 — Where my part is hard.** Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.
 
 ## The paired form
-
+<<To Alan: I am not sure we should provide the copy the form option for this form>>
 **Button:** Copy the form — Paste this into a Google doc, fill it in with your partner, then paste the text into Canvas.
 
 *Run each check line together, with the sheet between you, and change the text until both of you agree every line is true.*
 
 ---
-
+<<To Alan: we don't need your name: just partner's name: and it should be a drop down>>
 **Your name:** ⏎
 **Partner:** first name and last letter of their last name, e.g. Maria G ⏎
 
 ### Answer 1 of 3
-
+<<To Alan: instead of just the number, lets have them select the questions from a drop down along with the number>>
 **Question number:** ⏎
-
+<<To Alan: as with we did in sprint 1 exam, lets add the mic button to transcribe the response>>
 **Partner's answer, typed from their sheet:** ⏎
 
 **Check together**
 - The typed answer says what the sheet says, and the author agrees.
 - Names, numbers and tool names are the ones the author used.
-
+<< To Alan: I don't think we should break up the process like this - let them read/type the responses all at once - checkbox they both agree that this captures the response accurately - then have them ask a total of 3 follow up questions - with option to add more questions >>
 **Follow-up 1 — your question:** ⏎
 **Their answer:** ⏎
 
@@ -73,11 +73,11 @@ Practice summarizing our project and its value in our own words, and then hear h
 
 ### Summary — how my partner sees their own project
 
-**In your words:** what they think the project is for, what they think they have brought to it, and where they think it stands. ⏎
+**In your words:** what they think the project is for, what the partner thinks the project has achieve so far, and what should be completed for it to be considered a good project. ⏎
 
 **Check together**
 - Your partner agrees the summary describes their project as they see it.
-- Where you see the project differently from your partner, the difference is written down as a difference.
+- Where you see the project differently from your partner, the difference is written down in the summary.
 
 ---
 
