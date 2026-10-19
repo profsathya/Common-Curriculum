@@ -4,7 +4,7 @@
      name, the Read-it-aloud button and its status lines, Copy my answers), generated the same way.
      Decisions carried in: the five questions are 2, 4, 5, 6, 7 and are published before Wednesday; they go
      up on the screen in class, not on paper; partner's name only, from the roster list as "Firstname L.";
-     the question for each answer is picked from a dropdown; all three answers are typed first, then one
+     the question for each answer is picked from a dropdown, and a picked question is disabled in the other blocks; all three answers are typed first, then one
      agreement checkbox; three follow-up questions in total with an "Add another question" control; the
      check lines are agreements both students make, worded for the pair; no Copy-the-form button —
      the page is the form, and Copy my answers at the end carries it to Canvas. -->
@@ -51,6 +51,7 @@ For each of the three answers on the sheet, select the question it answers and t
 
 *Three blocks, each:*
 *Field:* Which question -> dropdown: 2 — The problem · 4 — How I used AI · 5 — One decision · 6 — One thing I can now do · 7 — Where my part is hard
+*A question picked in one block is disabled in the other two, so the three blocks hold three different questions.*
 *Box label:* **Your partner's answer**
 *Beside the box (optional):* **Read it aloud** button, with the same status lines and hover note as the Sprint 1 paired page.
 
