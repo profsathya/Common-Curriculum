@@ -9,11 +9,11 @@
 
 # In-class activity (mid-term)
 
-Wednesday 21 October · in class · 100 points · Mid-term · do your best in the hour
+Wednesday 21 October · in class · 100 points · Mid-term ·
 
 ## Purpose
 
-Say the lessons from your take-home in your own hand, without your notes — then hear a partner's and put their thinking into words they recognise.
+Practice summarizing our project and its value in our own words and 
 
 ## How it works
 
