@@ -1,4 +1,4 @@
-<!-- Editable text for my-sprint-2-goal.html. DRAFT 3, 11 Oct 2026 (draft 3 drops the 2-year box: Part 4 is now 6 months · 3 months · this week, Prof. Sathya's call after the guides' feedback that two years is too far away to reach this class; draft 2 of 9 Oct moved the Dojo steps up under the tick). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
+<!-- Editable text for my-sprint-2-goal.html. DRAFT 4, 19 Oct 2026 (draft 4: the form is five stops shown one at a time, with "Use this question" buttons in stop 1, the worked examples inside each stop, and AI feedback that says when a box meets the criteria; the side column is gone). DRAFT 3, 11 Oct 2026 (draft 3 drops the 2-year box: Part 4 is now 6 months · 3 months · this week, Prof. Sathya's call after the guides' feedback that two years is too far away to reach this class; draft 2 of 9 Oct moved the Dojo steps up under the tick). Edit the words here, then tell Claude you are done; the .html is built from this file and both stay aligned after that.
 Notes for the editor, not shown to students:
 - This is the week-8 graded item of CST349 Sprint 2 (Prof. Sathya, 9 Oct): a strict form, not prose. Five parts, in this order: the answer I want to be able to give · what I will go deeper in · what I will reach across to · working backwards (three boxes: 6 months · 3 months · this week) · the Dojo route, ticked by default, with the AI feedback button as the other route.
 - Utsab introduces this form in the second half of Wed 14 Oct and students start it in class; due Fri 23 Oct (moved from Mon 19 Oct by Prof. Sathya on 17 Oct, since the item was published on a Saturday). The student page does not name who runs the class.
@@ -28,7 +28,7 @@ Turn the interview question you found hardest into a goal you can act on this se
 
 ## How this form works
 
-Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and the worked examples beside the form show what each box looks like filled in.
+Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and each stop shows a worked example of what its box looks like filled in.
 
 ☑ **I would like to use the AI Dojo to work out my goal.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -54,15 +54,28 @@ AI Dojo Passcode for this Graded Item: **BACK-1019**
 
 ## The form
 
-(Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder.)
+(Page note: the form is five stops, shown one at a time. A strip of five pills above the form, labelled for screen readers "Your progress through the form", opens any stop at any time; nothing is locked, and the open stop is remembered on this browser. A pill reads "done" (checkmark, announced) when every box in that stop has text. Each stop ends with a "Next" button. With scripts off, all five stops show. Each box has a short label above it and a one-line starter inside the label, never a placeholder. The copied text still uses the four Part headings of draft 3: Part 1 · The answer I want to be able to give · Part 2 · What I will go deeper in · Part 3 · What I will reach across to · Part 4 · Working backwards.)
 
-### Part 1 · The answer I want to be able to give
+Pills: 1 Your question · 2 The answer you want to give · 3 Go deeper · 4 Reach across · 5 Work backwards
 
-1. **My question.** The question you chose in the week-7 graded item as the one that gives you the biggest opportunity for growth. Copy it here in full.
+### Stop 1 · Your question
+
+Everything in this form hangs on one question. Take the one you chose in the week-7 graded item as your biggest opportunity for growth, or another behavioral question in the same form.
+
+1. Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on. [Use this question]
+2. Tell me about a time you took on work outside your role or your area because the team needed it. [Use this question]
+3. Tell me about a time you disagreed with someone who may have had more knowledge about the subject than you did. [Use this question]
+4. Tell me about a time you noticed that the project was not going in the right direction and you had to go above and beyond to get it on the right track. [Use this question]
+
+(Page note: "Use this question" puts the question into the box below; the box stays editable.)
 
    **My question is ...** The behavioral interview question, in full.
 
-2. **The answer I want to be true by the end of this semester.** Write it the way you would say it in an interview, in STAR form: the situation, what you had to do, what you did, and what came of it. If you do not have this experience yet, write the one you want to have. That is what the rest of the form is for.
+[Next: the answer you want to give]
+
+### Stop 2 · The answer you want to give
+
+Write the answer you would be proud to give to that question by the end of this semester, the way you would say it in an interview, in STAR form. If the experience has not happened yet, write the one you want to have and tick "imagined" — the rest of the form is how you make it real.
 
    **Situation ...** Where I was and what was going on.
 
@@ -74,29 +87,39 @@ AI Dojo Passcode for this Graded Item: **BACK-1019**
 
    ☐ **This answer is imagined. The experience in it has not happened yet, and my plan below is how I will make it real.** (Page note: a tick under the four STAR boxes; when ticked, the copied text carries the line "This answer is imagined." under the answer.)
 
-### Part 2 · What I will go deeper in
+**What a good one looks like** (Page note: Example A's question and answer, shown open; Examples B, C and D's question and answer under "Three more examples", a click-to-open box.)
 
-The answer above rests on something you can do well. Name the one technical thing you will go deeper in so that the answer holds up when the interviewer asks a follow-up question. One skill, tool or topic, narrow enough that you could say how you will know you have gone deeper.
+[Next: go deeper]
+
+### Stop 3 · Go deeper
+
+Your answer rests on one technical thing you can do well. Name it, narrow enough that you could say how you will know you have gone deeper, so the answer holds up when the interviewer asks a follow-up.
 
    **I will go deeper in ...** The one technical skill, tool or topic, and what "deeper" looks like.
 
-### Part 3 · What I will reach across to
+**What a good one looks like** (Page note: Example A's "I will go deeper in" line, shown open; the other three under "Three more examples".)
 
-Every answer the interviewers like in the week-7 samples has a second part: the candidate went past their own area. They explained something to a person who did not share their background, took on a role nobody had assigned, or learned a domain so they could build for it. Name the one thing you will reach across to: a kind of person, a kind of communication, a domain or a role.
+[Next: reach across]
+
+### Stop 4 · Reach across
+
+Every answer the interviewers liked in the week-7 samples has a second part: the candidate went past their own area. Name the one thing you will reach across to — a kind of person, a kind of communication, a domain or a role.
 
    **I will reach across to ...** The people, the communication, the domain or the role, and what reaching across looks like in my answer.
 
-The test: if you could learn it from the same textbook, course or tutorial as Part 2, it belongs in Part 2. Reaching across is a different kind of thing.
+The test: if you could learn it from the same textbook, course or tutorial as stop 3, it belongs in stop 3. Reaching across is a different kind of thing.
 
-(Page note: these three short examples sit beside Part 3, in a small panel of their own.)
+**What a good one looks like** (Page note: Example A's "I will reach across to" line, shown open; the other three under "Three more examples". The three short examples below follow, shown open.)
 
 - *Deeper:* writing SQL queries that run fast on a large table. *Across:* the nurse who will use the report, so that the query answers the question she actually asks.
 - *Deeper:* building a React front end. *Across:* presenting the demo to the client and taking their questions without a teammate beside me.
 - *Deeper:* reading network traffic in Wireshark. *Across:* explaining a security risk to a manager who has to decide whether to spend money on it.
 
-### Part 4 · Working backwards
+[Next: work backwards]
 
-Start from the answer in Part 1 and work back to this week. Each box is one experience you will build, written so that someone else could tell whether it happened.
+### Stop 5 · Work backwards
+
+Start from the answer in stop 2 and work back to this week. Each box is one experience you will build, written so that someone else could tell whether it happened.
 
 1. **In the next 6 months.** By the end of spring. The experience that makes the answer real: an internship, a shipped project, a role in a team, a person you worked with.
 
@@ -110,7 +133,13 @@ Start from the answer in Part 1 and work back to this week. Each box is one expe
 
    **This week I will ...** The one step, and the day I will do it.
 
-## Worked examples (shown beside the form)
+**What a good one looks like** (Page note: Example A's three working-backwards lines, shown open; the other three under "Three more examples".)
+
+[Next: check and submit] (Page note: goes to the Self-check.)
+
+## Worked examples (shown inside the stops, in parts: see the page notes above)
+
+(Page note: since draft 4 the paragraph below is not shown on the page.)
 
 Each example is written in the form's own shape, with the parts in the order above. They are built from the kinds of goals this class wrote in Sprint 1, one for each of the four week-7 questions. Every answer in them is imagined, the way yours may be.
 
@@ -158,15 +187,15 @@ Each example is written in the form's own shape, with the parts in the order abo
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Part 1 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result · 20 pts
+- [ ] Stop 2 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result · 20 pts
 - [ ] If the experience has not happened yet, the "imagined" line is ticked, and the plan below is how it becomes real · 5 pts
-- [ ] Part 2 names one technical skill, tool or topic, and says what deeper looks like · 15 pts
-- [ ] Part 3 names a kind of person, communication, domain or role, not a second skill of the same kind as Part 2 · 20 pts
+- [ ] Stop 3 names one technical skill, tool or topic, and says what deeper looks like · 15 pts
+- [ ] Stop 4 names a kind of person, communication, domain or role, not a second skill of the same kind as stop 3 · 20 pts
 - [ ] The 6-month box names one experience someone else could tell has happened · 15 pts
 - [ ] The 3-month box includes the two Sprint 2 milestones and one thing beyond them · 10 pts
 - [ ] This week's step is one action with a day, that can be done before Wednesday 21 October · 15 pts
 
-**What makes it strong.** Someone reading the three working-backwards boxes from the bottom up can see how this week's step leads to the 3-month box, and the 3-month box to the answer in Part 1, without you explaining it. Your Part 3 could not be learned from the same place as your Part 2.
+**What makes it strong.** Someone reading the three working-backwards boxes from the bottom up can see how this week's step leads to the 3-month box, and the 3-month box to the answer in stop 2, without you explaining it. Your stop 4 could not be learned from the same place as your stop 3.
 
 **Grading.** 100 points, in Graded assignments. The grade is based on the boxes of this form.
 
@@ -200,7 +229,7 @@ Do not summarize until the student asks. When they ask, give the boxes in the fo
 - 3 months: the two Sprint 2 milestones and one thing beyond them.
 - This week: one action, with a day, that can be done before Wednesday 21 October.
 
-The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting of the student's box.
+If the box meets its criteria, the first sentence is "This box meets the criteria." followed by one question that would make it sharper, offered, not required. If it does not yet, the reply says what the box already does and the one thing that would make it precise. Never more than three sentences. Never rewrite the box.
 
 ## Hover text (a bubble on the first use of the word; not a section on the page)
 

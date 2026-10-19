@@ -158,34 +158,67 @@
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .status.ok{color:#6FCF97} }
   :root[data-theme="dark"] .status.ok{color:#6FCF97}
 
-  /* the form beside the worked examples */
-  .formgrid{display:grid; gap:24px; margin-top:4px}
-  @media (min-width:900px){ .formgrid{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:start} }
-  .formcol > h3{font-size:1.18rem; font-weight:650; margin:24px 0 8px}
-  .formcol > h3:first-child{margin-top:4px}
-  .formcol > .body{font-size:.98rem}
-  .p3grid{display:grid; gap:14px}
-  @media (min-width:600px){ .p3grid{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); align-items:start} }
+  /* the form as five stops, one shown at a time (pattern of cst286/how-i-learn-and-one-learning-trail.html) */
+  .progress{margin:4px 0 16px; max-width:900px}
+  .pills{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:8px}
+  @media (min-width:600px){ .pills{grid-template-columns:repeat(5,minmax(0,1fr))} }
+  .pills li{margin:0; min-width:0; display:flex}
+  .pill{width:100%; min-height:44px; height:100%; display:flex; align-items:center; gap:9px; text-align:left; font:inherit; font-size:.9rem; line-height:1.25; color:var(--ink); background:var(--card); border:1.5px solid var(--line); border-radius:22px; padding:5px 12px 5px 5px; cursor:pointer}
+  .pill .no{flex:0 0 32px; width:32px; height:32px; border-radius:50%; border:2px solid var(--tc); color:var(--tc); background:var(--card); font-family:"IBM Plex Mono",monospace; font-weight:600; display:flex; align-items:center; justify-content:center}
+  .pill .lab{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; align-items:flex-start}
+  .pill .nm{font-weight:700; overflow-wrap:normal}
+  .pill .mark{ font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--teal); font-weight:600}
+  .pill .mark[hidden]{display:none}
+  .pill:hover{border-color:var(--blaze)}
+  .pill:hover .no{border-color:var(--blaze); color:var(--blaze)}
+  .pill[aria-current="step"]{border-color:var(--tc); background:var(--tsoft)}
+  .pill[aria-current="step"] .no{background:var(--tc); color:var(--on-tc)}
+  .pill.done .no{border-color:var(--teal)}
+  .stops{display:grid; gap:14px; max-width:900px}
+  .stop{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--tc); border-radius:5px; padding:16px 20px 18px; scroll-margin-top:10px}
+  .stop > h3{display:flex; align-items:center; gap:12px; font-size:1.28rem; font-weight:650; margin:0 0 12px}
+  .stop > h3 .sno{flex:0 0 34px; width:34px; height:34px; border-radius:50%; border:2px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1rem; display:flex; align-items:center; justify-content:center}
+  .stop .opener{font-size:.98rem}
+  .stop .task{background:var(--paper)}
+  .stop .tasks{margin-top:4px}
+  .qpick{margin:0 0 14px; padding-left:24px; max-width:74ch}
+  .qpick li{margin:0 0 10px; padding-left:4px}
+  .qpick li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .qpick .usebtn{margin:4px 0 0; min-height:32px; padding:4px 12px; font-size:.86rem; vertical-align:baseline}
   .p3test{margin:12px 0 0; max-width:74ch; border-left:3px solid var(--tc); padding:2px 0 2px 12px; font-size:.95rem}
-  .pairs{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:5px; padding:10px 12px; font-size:.88rem; line-height:1.5}
-  .pairs ul{margin:0; padding:0; list-style:none}
-  .pairs li{margin:0 0 10px; padding-bottom:10px; border-bottom:1px dashed var(--line)}
-  .pairs li:last-child{margin-bottom:0; padding-bottom:0; border-bottom:0}
-  .examples h2.sec{margin-top:4px; font-size:1.2rem}
-  .examples > p{font-size:.93rem; color:var(--ink-soft)}
-  .excard{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--tc); border-radius:5px; padding:12px 14px 6px; margin:0 0 12px; font-size:.93rem; line-height:1.5}
-  .excard h3{font-size:1rem; font-weight:650; margin:0 0 8px}
+  .exwrap{margin:18px 0 0; max-width:74ch}
+  .exh{font-family:Fraunces,Georgia,serif; font-size:1.02rem; font-weight:650; margin:0 0 8px}
+  .excard{background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--tc); border-radius:5px; padding:10px 14px 4px; margin:0 0 10px; font-size:.93rem; line-height:1.5}
+  .excard .exname{font-weight:700; margin:0 0 6px}
   .excard dl{margin:0}
   .excard dt{font-style:italic; font-weight:700; color:var(--ink-soft); font-size:.86rem}
   .excard dd{margin:0 0 8px}
+  details.more{margin:4px 0 0}
+  details.more > summary{cursor:pointer; display:inline-flex; align-items:center; gap:8px; min-height:32px; font-weight:700; color:var(--tc); padding:2px 0; list-style:none}
+  details.more > summary::-webkit-details-marker{display:none}
+  details.more > summary::before{content:"+"; flex:0 0 24px; width:24px; height:24px; border:1.5px solid var(--tc); border-radius:4px; font-family:"IBM Plex Mono",monospace; line-height:21px; text-align:center}
+  details.more[open] > summary::before{content:"\2212"}
+  details.more[open] > summary{margin-bottom:8px}
+  .pairs{background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:5px; padding:10px 12px; font-size:.9rem; line-height:1.5}
+  .pairs ul{margin:0; padding:0; list-style:none}
+  .pairs li{margin:0 0 10px; padding-bottom:10px; border-bottom:1px dashed var(--line)}
+  .pairs li:last-child{margin-bottom:0; padding-bottom:0; border-bottom:0}
+  .nextrow{margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line-soft)}
+  .nextbtn{min-height:40px}
+  @media (max-width:520px){
+    .stop{padding:14px 14px 16px}
+    .stop > h3{font-size:1.12rem; gap:10px}
+  }
 
   @media print{
     body{background:#fff; color:#000; font-size:11.5pt}
-    .canvasbar,.crumb,.pagenav,.copybtn,.btn,.airow,.choose,.dojo-only{display:none !important}
+    .canvasbar,.crumb,.pagenav,.copybtn,.btn,.airow,.choose,.dojo-only,.progress,.nextrow{display:none !important}
+    .stop[hidden]{display:block !important}
+    details.more::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
     .hero{background:none; color:#000; border:0}
     .hero h1,.hero .intro,.hero .kicker{color:#000}
     .hero-inner{padding:0 0 12px}
-    .prompt,.excard,.task,.pairs{background:none}
+    .prompt,.excard,.task,.pairs,.stop{background:none}
     textarea.box{border:1px solid #999; background:none}
     a{color:#000}
   }
@@ -227,7 +260,7 @@ code { overflow-wrap: anywhere; }
 </details>
 
 <h2 class="sec">How this form works</h2>
-<p class="body">Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and the worked examples beside the form show what each box looks like filled in.</p>
+<p class="body">Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and each stop shows a worked example of what its box looks like filled in.</p>
 <div class="choose"><input type="checkbox" id="dojo-tick" checked aria-controls="dojo-block" aria-expanded="true"><label for="dojo-tick"><b>I would like to use the AI Dojo to work out my goal.</b> With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box.</label></div>
 <p class="dojowarn dojo-only" role="note">Before you start with the AI Dojo: this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course.</p>
 
@@ -246,107 +279,123 @@ code { overflow-wrap: anywhere; }
 </div>
 
 <h2 class="sec">The form</h2>
-<div class="formgrid">
-<div class="formcol">
+<div class="progress" id="progress" role="group" aria-labelledby="progress-lbl" hidden>
+<span class="sr" id="progress-lbl">Your progress through the form</span>
+<ol class="pills"><li><button type="button" class="pill" data-stop="1" aria-controls="stop-1"><span class="no" aria-hidden="true">1</span><span class="lab"><span class="nm">Your question</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>done</span></span></button></li><li><button type="button" class="pill" data-stop="2" aria-controls="stop-2"><span class="no" aria-hidden="true">2</span><span class="lab"><span class="nm">The answer you want to give</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>done</span></span></button></li><li><button type="button" class="pill" data-stop="3" aria-controls="stop-3"><span class="no" aria-hidden="true">3</span><span class="lab"><span class="nm">Go deeper</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>done</span></span></button></li><li><button type="button" class="pill" data-stop="4" aria-controls="stop-4"><span class="no" aria-hidden="true">4</span><span class="lab"><span class="nm">Reach across</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>done</span></span></button></li><li><button type="button" class="pill" data-stop="5" aria-controls="stop-5"><span class="no" aria-hidden="true">5</span><span class="lab"><span class="nm">Work backwards</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>done</span></span></button></li></ol>
+</div>
+<div class="stops" id="stops">
+<section class="stop" id="stop-1" data-stop="1" aria-labelledby="stop-1-h">
+<h3 id="stop-1-h"><span class="sno" aria-hidden="true">1</span><span>Stop 1 · Your question</span></h3>
+<p class="body opener" id="q-question">Everything in this form hangs on one question. Take the one you chose in the week-7 graded item as your biggest opportunity for growth, or another behavioral question in the same form.</p>
+<ol class="qpick">
+<li><span class="qtext" id="qpick-1">Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.</span> <button type="button" class="btn usebtn" data-use="1" aria-describedby="qpick-1">Use this question</button></li>
+<li><span class="qtext" id="qpick-2">Tell me about a time you took on work outside your role or your area because the team needed it.</span> <button type="button" class="btn usebtn" data-use="2" aria-describedby="qpick-2">Use this question</button></li>
+<li><span class="qtext" id="qpick-3">Tell me about a time you disagreed with someone who may have had more knowledge about the subject than you did.</span> <button type="button" class="btn usebtn" data-use="3" aria-describedby="qpick-3">Use this question</button></li>
+<li><span class="qtext" id="qpick-4">Tell me about a time you noticed that the project was not going in the right direction and you had to go above and beyond to get it on the right track.</span> <button type="button" class="btn usebtn" data-use="4" aria-describedby="qpick-4">Use this question</button></li>
+</ol>
+<div class="task"><div class="rbox"><label class="qt" for="bx-question"><b>My question is ...</b></label><p class="starter" id="st-question">The behavioral interview question, in full.</p><textarea class="box small" id="bx-question" data-key="question" data-q="q-question" aria-describedby="st-question"></textarea><div class="airow"><button type="button" class="btn" data-ai="question">AI feedback</button></div><div class="aibox" data-aibox="question" role="status" aria-live="polite"></div></div></div>
+<div class="nextrow" hidden><button type="button" class="btn nextbtn" data-next="stop-2">Next: the answer you want to give</button></div>
+</section>
 
-<h3>Part 1 · The answer I want to be able to give</h3>
-<ol class="tasks">
-<li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-question"><b>My question.</b> The question you chose in the week-7 graded item as the one that gives you the biggest opportunity for growth. Copy it here in full.</span></div>
-<div class="rbox"><label class="qt" for="bx-question"><b>My question is ...</b></label><p class="starter" id="st-question">The behavioral interview question, in full.</p><textarea class="box small" id="bx-question" data-key="question" data-q="q-question" aria-describedby="st-question"></textarea><div class="airow"><button type="button" class="btn" data-ai="question">AI feedback</button></div><div class="aibox" data-aibox="question" role="status" aria-live="polite"></div></div></li>
-<li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-answer"><b>The answer I want to be true by the end of this semester.</b> Write it the way you would say it in an interview, in <span class="gl"><button type="button" class="gt" id="star-term" aria-describedby="star-bub" aria-expanded="false">STAR</button><span class="bub" role="tooltip" id="star-bub"><span class="bt">STAR</span>Situation, Task, Action, Result: the four parts of an answer to a "tell me about a time" question. Where you were, what you had to do, what you did, and what came of it.</span></span> form: the situation, what you had to do, what you did, and what came of it. If you do not have this experience yet, write the one you want to have. That is what the rest of the form is for.</span></div>
+<section class="stop" id="stop-2" data-stop="2" aria-labelledby="stop-2-h">
+<h3 id="stop-2-h"><span class="sno" aria-hidden="true">2</span><span>Stop 2 · The answer you want to give</span></h3>
+<p class="body opener" id="q-answer">Write the answer you would be proud to give to that question by the end of this semester, the way you would say it in an interview, in <span class="gl"><button type="button" class="gt" id="star-term" aria-describedby="star-bub" aria-expanded="false">STAR</button><span class="bub" role="tooltip" id="star-bub"><span class="bt">STAR</span>Situation, Task, Action, Result: the four parts of an answer to a "tell me about a time" question. Where you were, what you had to do, what you did, and what came of it.</span></span> form. If the experience has not happened yet, write the one you want to have and tick &ldquo;imagined&rdquo; &mdash; the rest of the form is how you make it real.</p>
+<div class="task">
 <div class="rbox"><label class="qt" for="bx-situation"><b>Situation ...</b></label><p class="starter" id="st-situation">Where I was and what was going on.</p><textarea class="box small" id="bx-situation" data-key="situation" data-q="q-answer" aria-describedby="st-situation"></textarea><div class="airow"><button type="button" class="btn" data-ai="situation">AI feedback</button></div><div class="aibox" data-aibox="situation" role="status" aria-live="polite"></div></div>
 <div class="rbox"><label class="qt" for="bx-task"><b>Task ...</b></label><p class="starter" id="st-task">What I had to do, and why it mattered to someone other than me.</p><textarea class="box small" id="bx-task" data-key="task" data-q="q-answer" aria-describedby="st-task"></textarea><div class="airow"><button type="button" class="btn" data-ai="task">AI feedback</button></div><div class="aibox" data-aibox="task" role="status" aria-live="polite"></div></div>
 <div class="rbox"><label class="qt" for="bx-action"><b>Action ...</b></label><p class="starter" id="st-action">What I did, step by step.</p><textarea class="box" id="bx-action" data-key="action" data-q="q-answer" aria-describedby="st-action"></textarea><div class="airow"><button type="button" class="btn" data-ai="action">AI feedback</button></div><div class="aibox" data-aibox="action" role="status" aria-live="polite"></div></div>
 <div class="rbox"><label class="qt" for="bx-result"><b>Result ...</b></label><p class="starter" id="st-result">What came of it, and what I know now that I did not know before.</p><textarea class="box small" id="bx-result" data-key="result" data-q="q-answer" aria-describedby="st-result"></textarea><div class="airow"><button type="button" class="btn" data-ai="result">AI feedback</button></div><div class="aibox" data-aibox="result" role="status" aria-live="polite"></div></div>
 <div class="imagined"><input type="checkbox" id="imagined-tick"><label for="imagined-tick"><b>This answer is imagined. The experience in it has not happened yet, and my plan below is how I will make it real.</b></label></div>
-</li>
-</ol>
-
-<h3>Part 2 · What I will go deeper in</h3>
-<p class="body" id="q-deeper">The answer above rests on something you can do well. Name the one technical thing you will go deeper in so that the answer holds up when the interviewer asks a follow-up question. One skill, tool or topic, narrow enough that you could say how you will know you have gone deeper.</p>
-<div class="task"><div class="rbox"><label class="qt" for="bx-deeper"><b>I will go deeper in ...</b></label><p class="starter" id="st-deeper">The one technical skill, tool or topic, and what "deeper" looks like.</p><textarea class="box small" id="bx-deeper" data-key="deeper" data-q="q-deeper" aria-describedby="st-deeper"></textarea><div class="airow"><button type="button" class="btn" data-ai="deeper">AI feedback</button></div><div class="aibox" data-aibox="deeper" role="status" aria-live="polite"></div></div></div>
-
-<h3>Part 3 · What I will reach across to</h3>
-<p class="body" id="q-across">Every answer the interviewers like in the week-7 samples has a second part: the candidate went past their own area. They explained something to a person who did not share their background, took on a role nobody had assigned, or learned a domain so they could build for it. Name the one thing you will reach across to: a kind of person, a kind of communication, a domain or a role.</p>
-<div class="p3grid">
-<div>
-<div class="task"><div class="rbox"><label class="qt" for="bx-across"><b>I will reach across to ...</b></label><p class="starter" id="st-across">The people, the communication, the domain or the role, and what reaching across looks like in my answer.</p><textarea class="box small" id="bx-across" data-key="across" data-q="q-across" aria-describedby="st-across"></textarea><div class="airow"><button type="button" class="btn" data-ai="across">AI feedback</button></div><div class="aibox" data-aibox="across" role="status" aria-live="polite"></div></div></div>
-<p class="p3test">The test: if you could learn it from the same textbook, course or tutorial as Part 2, it belongs in Part 2. Reaching across is a different kind of thing.</p>
 </div>
-<aside class="pairs" aria-label="Deeper and across, three examples">
+<div class="exwrap">
+<h4 class="exh">What a good one looks like</h4>
+<div class="excard"><p class="exname">Example A · From a goal about talking to people</p><dl><dt>My question:</dt><dd>Tell me about a time you took on work outside your role or your area because the team needed it.</dd><dt>The answer I want to be true (imagined):</dt><dd>Situation: our capstone team had built a working app for a campus food pantry, and the pantry coordinator asked for a demo at a staff meeting. Task: the teammate who presented got a job interview the same morning; someone had to give the demo and take questions from eight staff who do not write code. Action: I volunteered, because I knew the app best. I asked the coordinator which two things the staff worried about, rewrote the demo around those, and practiced twice with a teammate interrupting me with questions. Result: the staff asked to start using the app the following week, and one of them asked for a change we had not thought of. I found out that presenting is preparation, not personality.</dd></dl></div>
+<details class="more"><summary>Three more examples</summary>
+<div class="excard"><p class="exname">Example B · From a goal about explaining technical work</p><dl><dt>My question:</dt><dd>Tell me about a time you disagreed with someone who may have had more knowledge about the subject than you did.</dd><dt>The answer I want to be true (imagined):</dt><dd>Situation: as an IT intern, I was asked to roll out a password policy that the senior administrator had written. Task: I noticed from the help-desk log that most lockouts came from one group of staff, and I thought the policy would make it worse. Action: before I said anything, I asked the administrator why the policy was written that way and listened. Then I pulled three months of lockout data, showed which group it came from, and proposed a change for that group only, with a way to check after a month. Result: she kept the policy for everyone else, took my change for that group, and lockouts for them dropped by half. I learned to disagree with data and a question, not an opinion.</dd></dl></div>
+<div class="excard"><p class="exname">Example C · From a goal about building a project</p><dl><dt>My question:</dt><dd>Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.</dd><dt>The answer I want to be true (imagined):</dt><dd>Situation: a student club that tutors high-school students asked our team to build a tool that answers tutors' questions from the club's own guides. Task: I took the part that finds the right passage before the AI model answers, which I had never built, and three teammates' parts depended on it being ready in three weeks. Action: I built the smallest version first, with ten of the club's real questions as my test, and wrote down the answer each one should find. When half of them found the wrong passage, I read about how documents are split and chunked, changed the split, and re-ran the ten. Result: nine of ten found the right passage, the team connected their parts on time, and the tutors used it during the fall. I learned to start from a test I can run, not from a tutorial.</dd></dl></div>
+<div class="excard"><p class="exname">Example D · From a goal about a technical skill</p><dl><dt>My question:</dt><dd>Tell me about a time you noticed that the project was not going in the right direction and you had to go above and beyond to get it on the right track.</dd><dt>The answer I want to be true (imagined):</dt><dd>Situation: in a course project, four of us were building a database-backed inventory app for a small store. Task: two weeks before the deadline, every page worked alone but the reports took a minute to load, and nobody owned the database. Action: I took it on. I learned how to read the query plan, found that two reports scanned the whole table, and added the right index for each, measuring the time before and after. Then I went to the store owner with the three reports and asked which one she opened every morning, and made that one load first. Result: the reports loaded in under a second, we delivered on time, and the owner started using the morning report. I learned that the right fix comes from asking who is waiting for it.</dd></dl></div>
+</details>
+</div>
+<div class="nextrow" hidden><button type="button" class="btn nextbtn" data-next="stop-3">Next: go deeper</button></div>
+</section>
+
+<section class="stop" id="stop-3" data-stop="3" aria-labelledby="stop-3-h">
+<h3 id="stop-3-h"><span class="sno" aria-hidden="true">3</span><span>Stop 3 · Go deeper</span></h3>
+<p class="body opener" id="q-deeper">Your answer rests on one technical thing you can do well. Name it, narrow enough that you could say how you will know you have gone deeper, so the answer holds up when the interviewer asks a follow-up.</p>
+<div class="task"><div class="rbox"><label class="qt" for="bx-deeper"><b>I will go deeper in ...</b></label><p class="starter" id="st-deeper">The one technical skill, tool or topic, and what "deeper" looks like.</p><textarea class="box small" id="bx-deeper" data-key="deeper" data-q="q-deeper" aria-describedby="st-deeper"></textarea><div class="airow"><button type="button" class="btn" data-ai="deeper">AI feedback</button></div><div class="aibox" data-aibox="deeper" role="status" aria-live="polite"></div></div></div>
+<div class="exwrap">
+<h4 class="exh">What a good one looks like</h4>
+<div class="excard"><p class="exname">Example A · From a goal about talking to people</p><dl><dt>I will go deeper in:</dt><dd>the full stack of my own capstone project, so that I can answer any question about how it works without looking.</dd></dl></div>
+<details class="more"><summary>Three more examples</summary>
+<div class="excard"><p class="exname">Example B · From a goal about explaining technical work</p><dl><dt>I will go deeper in:</dt><dd>reading and analyzing logs with Python and a spreadsheet, so that I can find a pattern and show it in one chart.</dd></dl></div>
+<div class="excard"><p class="exname">Example C · From a goal about building a project</p><dl><dt>I will go deeper in:</dt><dd>building a retrieval step in Python that finds the right passage before the model answers, tested with questions whose right answer I know.</dd></dl></div>
+<div class="excard"><p class="exname">Example D · From a goal about a technical skill</p><dl><dt>I will go deeper in:</dt><dd>SQL on a real database, far enough to read a query plan and know which index to add and why.</dd></dl></div>
+</details>
+</div>
+<div class="nextrow" hidden><button type="button" class="btn nextbtn" data-next="stop-4">Next: reach across</button></div>
+</section>
+
+<section class="stop" id="stop-4" data-stop="4" aria-labelledby="stop-4-h">
+<h3 id="stop-4-h"><span class="sno" aria-hidden="true">4</span><span>Stop 4 · Reach across</span></h3>
+<p class="body opener" id="q-across">Every answer the interviewers liked in the week-7 samples has a second part: the candidate went past their own area. Name the one thing you will reach across to &mdash; a kind of person, a kind of communication, a domain or a role.</p>
+<div class="task"><div class="rbox"><label class="qt" for="bx-across"><b>I will reach across to ...</b></label><p class="starter" id="st-across">The people, the communication, the domain or the role, and what reaching across looks like in my answer.</p><textarea class="box small" id="bx-across" data-key="across" data-q="q-across" aria-describedby="st-across"></textarea><div class="airow"><button type="button" class="btn" data-ai="across">AI feedback</button></div><div class="aibox" data-aibox="across" role="status" aria-live="polite"></div></div></div>
+<p class="p3test">The test: if you could learn it from the same textbook, course or tutorial as stop 3, it belongs in stop 3. Reaching across is a different kind of thing.</p>
+<div class="exwrap">
+<h4 class="exh">What a good one looks like</h4>
+<div class="excard"><p class="exname">Example A · From a goal about talking to people</p><dl><dt>I will reach across to:</dt><dd>non-technical users. Running a demo and a question session with people who will use what I built, not with classmates.</dd></dl></div>
+<details class="more"><summary>Three more examples</summary>
+<div class="excard"><p class="exname">Example B · From a goal about explaining technical work</p><dl><dt>I will reach across to:</dt><dd>people with authority over a decision. Asking why first, then presenting evidence to someone senior to me and proposing a test instead of a verdict.</dd></dl></div>
+<div class="excard"><p class="exname">Example C · From a goal about building a project</p><dl><dt>I will reach across to:</dt><dd>the people whose questions the tool answers. Collecting their real questions and their judgement of what a correct answer is, before I build.</dd></dl></div>
+<div class="excard"><p class="exname">Example D · From a goal about a technical skill</p><dl><dt>I will reach across to:</dt><dd>the owner of the business or process the data describes. Asking them which question matters most before I decide what to make fast.</dd></dl></div>
+</details>
+</div>
+<div class="exwrap">
+<div class="pairs" role="group" aria-label="Deeper and across, three examples">
 <ul>
 <li><i>Deeper:</i> writing SQL queries that run fast on a large table. <i>Across:</i> the nurse who will use the report, so that the query answers the question she actually asks.</li>
 <li><i>Deeper:</i> building a React front end. <i>Across:</i> presenting the demo to the client and taking their questions without a teammate beside me.</li>
 <li><i>Deeper:</i> reading network traffic in Wireshark. <i>Across:</i> explaining a security risk to a manager who has to decide whether to spend money on it.</li>
 </ul>
-</aside>
 </div>
+</div>
+<div class="nextrow" hidden><button type="button" class="btn nextbtn" data-next="stop-5">Next: work backwards</button></div>
+</section>
 
-<h3>Part 4 · Working backwards</h3>
-<p class="body">Start from the answer in Part 1 and work back to this week. Each box is one experience you will build, written so that someone else could tell whether it happened.</p>
+<section class="stop" id="stop-5" data-stop="5" aria-labelledby="stop-5-h">
+<h3 id="stop-5-h"><span class="sno" aria-hidden="true">5</span><span>Stop 5 · Work backwards</span></h3>
+<p class="body opener">Start from the answer in stop 2 and work back to this week. Each box is one experience you will build, written so that someone else could tell whether it happened.</p>
 <ol class="tasks">
 <li class="task"><div class="ttext"><span class="tn">1.</span><span class="tt" id="q-m6"><b>In the next 6 months.</b> By the end of spring. The experience that makes the answer real: an internship, a shipped project, a role in a team, a person you worked with.</span></div><div class="rbox"><label class="qt" for="bx-m6"><b>In the next 6 months I will have ...</b></label><p class="starter" id="st-m6">The experience, and where it would happen.</p><textarea class="box small" id="bx-m6" data-key="m6" data-q="q-m6" aria-describedby="st-m6"></textarea><div class="airow"><button type="button" class="btn" data-ai="m6">AI feedback</button></div><div class="aibox" data-aibox="m6" role="status" aria-live="polite"></div></div></li>
 <li class="task"><div class="ttext"><span class="tn">2.</span><span class="tt" id="q-m3"><b>In the next 3 months.</b> By the end of this semester. Two of these are already on the Sprint 2 calendar: on Wednesday 21 October you give your answer aloud to a classmate and take their questions, and by Monday 2 November you report on the first step you took. Say what you want to have done by December, beyond those two.</span></div><div class="rbox"><label class="qt" for="bx-m3"><b>By the end of this semester I will have ...</b></label><p class="starter" id="st-m3">What will be real by December, with the Sprint 2 milestones in it.</p><textarea class="box small" id="bx-m3" data-key="m3" data-q="q-m3" aria-describedby="st-m3"></textarea><div class="airow"><button type="button" class="btn" data-ai="m3">AI feedback</button></div><div class="aibox" data-aibox="m3" role="status" aria-live="polite"></div></div></li>
 <li class="task"><div class="ttext"><span class="tn">3.</span><span class="tt" id="q-week"><b>This week.</b> The first step, before Wednesday 21 October. Something you can do in the next seven days that moves the 3-month box: a message sent, a meeting booked, a repository created, a first chapter read. In the week-9 graded item you write one line about this step, taken or not, and what happened.</span></div><div class="rbox"><label class="qt" for="bx-week"><b>This week I will ...</b></label><p class="starter" id="st-week">The one step, and the day I will do it.</p><textarea class="box small" id="bx-week" data-key="week" data-q="q-week" aria-describedby="st-week"></textarea><div class="airow"><button type="button" class="btn" data-ai="week">AI feedback</button></div><div class="aibox" data-aibox="week" role="status" aria-live="polite"></div></div></li>
 </ol>
+<div class="exwrap">
+<h4 class="exh">What a good one looks like</h4>
+<div class="excard"><p class="exname">Example A · From a goal about talking to people</p><dl><dt>In the next 6 months I will have:</dt><dd>given the capstone demo to a real partner, and run one user interview on my own.</dd><dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and presented one project I already built to three people outside my major, with their questions written down.</dd><dt>This week I will:</dt><dd>ask two people outside my major, by Friday, if I can show them my CST 338 project for fifteen minutes next week.</dd></dl></div>
+<details class="more"><summary>Three more examples</summary>
+<div class="excard"><p class="exname">Example B · From a goal about explaining technical work</p><dl><dt>In the next 6 months I will have:</dt><dd>presented a finding from real data to someone who did not ask for it, at a job, a club or a lab, and proposed a change.</dd><dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and analyzed one real log or dataset from my job or a club and shown the pattern to the person who owns it.</dd><dt>This week I will:</dt><dd>ask my supervisor at the help desk, on Tuesday, whether I can look at the ticket log for the last three months.</dd></dl></div>
+<div class="excard"><p class="exname">Example C · From a goal about building a project</p><dl><dt>In the next 6 months I will have:</dt><dd>built a working version for one real group and had them judge twenty answers.</dd><dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built the smallest version with ten real questions and a score.</dd><dt>This week I will:</dt><dd>message the tutoring club's lead on Wednesday to ask for ten questions tutors actually get asked.</dd></dl></div>
+<div class="excard"><p class="exname">Example D · From a goal about a technical skill</p><dl><dt>In the next 6 months I will have:</dt><dd>improved one slow query in a project that someone else depends on, with the time before and after.</dd><dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built one database with real data from a club or a job where I can measure a query.</dd><dt>This week I will:</dt><dd>set up PostgreSQL on my laptop on Saturday and load one public dataset of at least a hundred thousand rows.</dd></dl></div>
+</details>
 </div>
-
-<aside class="examples" aria-labelledby="ex-h">
-<h2 class="sec" id="ex-h">Worked examples</h2>
-<p>Each example is written in the form's own shape, with the parts in the order above. They are built from the kinds of goals this class wrote in Sprint 1, one for each of the four week-7 questions. Every answer in them is imagined, the way yours may be.</p>
-<section class="excard" id="ex-a" aria-labelledby="ex-a-h"><h3 id="ex-a-h">Example A · From a goal about talking to people</h3><dl>
-<dt>My question:</dt><dd>Tell me about a time you took on work outside your role or your area because the team needed it.</dd>
-<dt>The answer I want to be true (imagined):</dt><dd>Situation: our capstone team had built a working app for a campus food pantry, and the pantry coordinator asked for a demo at a staff meeting. Task: the teammate who presented got a job interview the same morning; someone had to give the demo and take questions from eight staff who do not write code. Action: I volunteered, because I knew the app best. I asked the coordinator which two things the staff worried about, rewrote the demo around those, and practiced twice with a teammate interrupting me with questions. Result: the staff asked to start using the app the following week, and one of them asked for a change we had not thought of. I found out that presenting is preparation, not personality.</dd>
-<dt>I will go deeper in:</dt><dd>the full stack of my own capstone project, so that I can answer any question about how it works without looking.</dd>
-<dt>I will reach across to:</dt><dd>non-technical users. Running a demo and a question session with people who will use what I built, not with classmates.</dd>
-<dt>In the next 6 months I will have:</dt><dd>given the capstone demo to a real partner, and run one user interview on my own.</dd>
-<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and presented one project I already built to three people outside my major, with their questions written down.</dd>
-<dt>This week I will:</dt><dd>ask two people outside my major, by Friday, if I can show them my CST 338 project for fifteen minutes next week.</dd>
-</dl></section>
-<section class="excard" id="ex-b" aria-labelledby="ex-b-h"><h3 id="ex-b-h">Example B · From a goal about explaining technical work</h3><dl>
-<dt>My question:</dt><dd>Tell me about a time you disagreed with someone who may have had more knowledge about the subject than you did.</dd>
-<dt>The answer I want to be true (imagined):</dt><dd>Situation: as an IT intern, I was asked to roll out a password policy that the senior administrator had written. Task: I noticed from the help-desk log that most lockouts came from one group of staff, and I thought the policy would make it worse. Action: before I said anything, I asked the administrator why the policy was written that way and listened. Then I pulled three months of lockout data, showed which group it came from, and proposed a change for that group only, with a way to check after a month. Result: she kept the policy for everyone else, took my change for that group, and lockouts for them dropped by half. I learned to disagree with data and a question, not an opinion.</dd>
-<dt>I will go deeper in:</dt><dd>reading and analyzing logs with Python and a spreadsheet, so that I can find a pattern and show it in one chart.</dd>
-<dt>I will reach across to:</dt><dd>people with authority over a decision. Asking why first, then presenting evidence to someone senior to me and proposing a test instead of a verdict.</dd>
-<dt>In the next 6 months I will have:</dt><dd>presented a finding from real data to someone who did not ask for it, at a job, a club or a lab, and proposed a change.</dd>
-<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and analyzed one real log or dataset from my job or a club and shown the pattern to the person who owns it.</dd>
-<dt>This week I will:</dt><dd>ask my supervisor at the help desk, on Tuesday, whether I can look at the ticket log for the last three months.</dd>
-</dl></section>
-<section class="excard" id="ex-c" aria-labelledby="ex-c-h"><h3 id="ex-c-h">Example C · From a goal about building a project</h3><dl>
-<dt>My question:</dt><dd>Tell me about a time you had to learn something unfamiliar to finish work that other people were depending on.</dd>
-<dt>The answer I want to be true (imagined):</dt><dd>Situation: a student club that tutors high-school students asked our team to build a tool that answers tutors' questions from the club's own guides. Task: I took the part that finds the right passage before the AI model answers, which I had never built, and three teammates' parts depended on it being ready in three weeks. Action: I built the smallest version first, with ten of the club's real questions as my test, and wrote down the answer each one should find. When half of them found the wrong passage, I read about how documents are split and chunked, changed the split, and re-ran the ten. Result: nine of ten found the right passage, the team connected their parts on time, and the tutors used it during the fall. I learned to start from a test I can run, not from a tutorial.</dd>
-<dt>I will go deeper in:</dt><dd>building a retrieval step in Python that finds the right passage before the model answers, tested with questions whose right answer I know.</dd>
-<dt>I will reach across to:</dt><dd>the people whose questions the tool answers. Collecting their real questions and their judgement of what a correct answer is, before I build.</dd>
-<dt>In the next 6 months I will have:</dt><dd>built a working version for one real group and had them judge twenty answers.</dd>
-<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built the smallest version with ten real questions and a score.</dd>
-<dt>This week I will:</dt><dd>message the tutoring club's lead on Wednesday to ask for ten questions tutors actually get asked.</dd>
-</dl></section>
-<section class="excard" id="ex-d" aria-labelledby="ex-d-h"><h3 id="ex-d-h">Example D · From a goal about a technical skill</h3><dl>
-<dt>My question:</dt><dd>Tell me about a time you noticed that the project was not going in the right direction and you had to go above and beyond to get it on the right track.</dd>
-<dt>The answer I want to be true (imagined):</dt><dd>Situation: in a course project, four of us were building a database-backed inventory app for a small store. Task: two weeks before the deadline, every page worked alone but the reports took a minute to load, and nobody owned the database. Action: I took it on. I learned how to read the query plan, found that two reports scanned the whole table, and added the right index for each, measuring the time before and after. Then I went to the store owner with the three reports and asked which one she opened every morning, and made that one load first. Result: the reports loaded in under a second, we delivered on time, and the owner started using the morning report. I learned that the right fix comes from asking who is waiting for it.</dd>
-<dt>I will go deeper in:</dt><dd>SQL on a real database, far enough to read a query plan and know which index to add and why.</dd>
-<dt>I will reach across to:</dt><dd>the owner of the business or process the data describes. Asking them which question matters most before I decide what to make fast.</dd>
-<dt>In the next 6 months I will have:</dt><dd>improved one slow query in a project that someone else depends on, with the time before and after.</dd>
-<dt>By the end of this semester I will have:</dt><dd>given my STAR answer aloud on 21 October, taken my first step by 2 November, and built one database with real data from a club or a job where I can measure a query.</dd>
-<dt>This week I will:</dt><dd>set up PostgreSQL on my laptop on Saturday and load one public dataset of at least a hundred thousand rows.</dd>
-</dl></section>
-</aside>
+<div class="nextrow" hidden><button type="button" class="btn nextbtn" data-next="self-check">Next: check and submit</button></div>
+</section>
 </div>
 
 
-<h2 class="sec">Self-check</h2>
+<h2 class="sec" id="self-check">Self-check</h2>
 <p class="body">Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.</p>
 <ul class="selfcheck">
-<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Part 1 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Stop 2 carries my week-7 question in full, and the answer is in STAR form, with a situation, a task, an action and a result</label><span class="pts">20 pts</span></li>
 <li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">If the experience has not happened yet, the "imagined" line is ticked, and the plan below is how it becomes real</label><span class="pts">5 pts</span></li>
-<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">Part 2 names one technical skill, tool or topic, and says what deeper looks like</label><span class="pts">15 pts</span></li>
-<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Part 3 names a kind of person, communication, domain or role, not a second skill of the same kind as Part 2</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">Stop 3 names one technical skill, tool or topic, and says what deeper looks like</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Stop 4 names a kind of person, communication, domain or role, not a second skill of the same kind as stop 3</label><span class="pts">20 pts</span></li>
 <li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">The 6-month box names one experience someone else could tell has happened</label><span class="pts">15 pts</span></li>
 <li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">The 3-month box includes the two Sprint 2 milestones and one thing beyond them</label><span class="pts">10 pts</span></li>
 <li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">This week's step is one action with a day, that can be done before Wednesday 21 October</label><span class="pts">15 pts</span></li>
 </ul>
 <p class="sc-total" id="sc-total" role="status" aria-live="polite">0 of 100 points ticked</p>
-<p class="body"><b>What makes it strong.</b> Someone reading the three working-backwards boxes from the bottom up can see how this week's step leads to the 3-month box, and the 3-month box to the answer in Part 1, without you explaining it. Your Part 3 could not be learned from the same place as your Part 2.</p>
+<p class="body"><b>What makes it strong.</b> Someone reading the three working-backwards boxes from the bottom up can see how this week's step leads to the 3-month box, and the 3-month box to the answer in stop 2, without you explaining it. Your stop 4 could not be learned from the same place as your stop 3.</p>
 <p class="body"><b>Grading.</b> 100 points, in Graded assignments. The grade is based on the boxes of this form.</p>
 
 <h2 class="sec">Submit</h2>
@@ -391,7 +440,7 @@ code { overflow-wrap: anywhere; }
 <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</div>
 <footer class="page-footer">
 <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
-<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; My Sprint 2 goal &middot; Draft 3 of 2026-10-11 &middot; words: my-sprint-2-goal.md</span>
+<span>Computing Talent Initiative &middot; CSU Monterey Bay &mdash; CST349 Professional Seminar &middot; My Sprint 2 goal &middot; Draft 4 of 2026-10-19 &middot; words: my-sprint-2-goal.md</span>
 </footer>
 <div class="sr" id="live" role="status" aria-live="polite"></div>
 </div>
@@ -530,7 +579,7 @@ code { overflow-wrap: anywhere; }
     });
 
     // ---------- AI feedback on what is written in a box ----------
-    var SYS_GOAL = "You are helping a student make one box of their goal form precise. The form turns the behavioral interview question they found hardest into a goal for the semester: the STAR answer they want to be able to give (it may be imagined), the one technical thing they will go deeper in, the one thing they will reach across to (a kind of person, communication, domain or role), and three working-backwards boxes from 6 months to this week. Reply in two or three sentences, in plain words: first, what the box already does, quoting their words; then the one thing that would make it precise, asked as a question or named as what is missing. Use only the criteria for this box, listed below. Never rewrite the student's box and never hand them wording. Do not supply an experience, skill, person or step for them. If every criterion is met, say which ones are met and nothing more. Do not judge the person, their ability or their prospects, and do not use pass/fail language.";
+    var SYS_GOAL = "You are helping a student make one box of their goal form precise. The form turns the behavioral interview question they found hardest into a goal for the semester: the STAR answer they want to be able to give (it may be imagined), the one technical thing they will go deeper in, the one thing they will reach across to (a kind of person, communication, domain or role), and three working-backwards boxes from 6 months to this week. Use only the criteria for this box, listed below. If the box meets its criteria, make your first sentence exactly \"This box meets the criteria.\" and follow it with one question that would make it sharper, offered, not required. If it does not yet, say what the box already does, quoting their words, and then the one thing that would make it precise, asked as a question or named as what is missing. Never use more than three sentences, in plain words. Never rewrite the student's box and never hand them wording. Do not supply an experience, skill, person or step for them. Do not judge the person, their ability or their prospects, and do not use pass/fail language.";
     var STAR = 'Situation, Task, Action, Result: each box carries its own part; Task says why it mattered to someone other than the student; Action is what the student did, in steps; Result says what came of it and what the student knows now.';
     var META = {
         question: { coach: 'CRITERIA: one of the four week-7 questions, or a behavioral question in the same form, in full.' },
@@ -629,25 +678,110 @@ code { overflow-wrap: anywhere; }
         imaginedTick.addEventListener('change', function () { state.imagined = imaginedTick.checked; save(); });
     }
 
+    // ---------- the five stops: one shown at a time, any pill opens any stop, nothing is locked ----------
+    // With scripts off every stop shows and the pills stay hidden. The open stop is remembered on this browser.
+    (function () {
+        var STOP_KEY = KEY + ':stop';
+        var stops = $all('section.stop');
+        var pills = $all('.pill');
+        if (!stops.length) { return; }
+        var calm = false;
+        try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { calm = false; }
+        var cur = 1;
+        try { var sv = parseInt(window.localStorage.getItem(STOP_KEY), 10); if (sv >= 1 && sv <= stops.length) { cur = sv; } } catch (e) { cur = 1; }
+        function show(n) {
+            cur = n;
+            stops.forEach(function (st) { st.hidden = parseInt(st.getAttribute('data-stop'), 10) !== n; });
+            pills.forEach(function (p) {
+                if (parseInt(p.getAttribute('data-stop'), 10) === n) { p.setAttribute('aria-current', 'step'); }
+                else { p.removeAttribute('aria-current'); }
+            });
+            try { window.localStorage.setItem(STOP_KEY, String(n)); } catch (e) { /* not remembered */ }
+        }
+        function goTop(el) { try { el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); } catch (e) { el.scrollIntoView(); } }
+        function focusIn(el) {
+            var f = el.querySelector('button:not([disabled]), textarea, input, summary');
+            if (f) { try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
+        }
+        // a pill reads "done" when every box in its stop has text
+        var doneNow = {};
+        function paint(announce) {
+            stops.forEach(function (st) {
+                var n = st.getAttribute('data-stop');
+                var boxes = $all('textarea[data-key]', st);
+                var done = boxes.length > 0 && boxes.every(function (ta) { return ta.value.trim().length > 0; });
+                var pill = $('.pill[data-stop="' + n + '"]');
+                if (pill) {
+                    pill.classList.toggle('done', done);
+                    var m = $('.mark', pill);
+                    if (m) { m.hidden = !done; }
+                }
+                if (announce && done && !doneNow[n] && live && pill) {
+                    live.textContent = '';
+                    live.textContent = clean($('.nm', pill).textContent) + ': done';
+                }
+                doneNow[n] = done;
+            });
+        }
+        $('#progress').hidden = false;
+        $all('.nextrow').forEach(function (r) { r.hidden = false; });
+        show(cur);
+        paint(false);
+        pills.forEach(function (p) {
+            p.addEventListener('click', function () { show(parseInt(p.getAttribute('data-stop'), 10)); });
+        });
+        $all('.nextbtn').forEach(function (b) {
+            b.addEventListener('click', function () {
+                var t = b.getAttribute('data-next');
+                if (t === 'self-check') {
+                    var h = document.getElementById('self-check');
+                    if (h) { goTop(h); var first = $('ul.selfcheck input'); if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } } }
+                    return;
+                }
+                var n = parseInt(t.replace('stop-', ''), 10);
+                show(n);
+                goTop($('#progress'));
+                focusIn(document.getElementById(t));
+            });
+        });
+        $all('textarea[data-key]').forEach(function (ta) { ta.addEventListener('input', function () { paint(true); }); });
+    }());
+
+    // ---------- "Use this question": puts one of the four week-7 questions into the box, which stays editable ----------
+    $all('.usebtn').forEach(function (b) {
+        b.addEventListener('click', function () {
+            var ta = document.getElementById('bx-question');
+            var q = document.getElementById('qpick-' + b.getAttribute('data-use'));
+            if (!ta || !q) { return; }
+            ta.value = clean(q.textContent);
+            ta.dispatchEvent(new Event('input', { bubbles: true }));
+            ta.dispatchEvent(new Event('change', { bubbles: true }));
+            save();
+            ta.focus();
+        });
+    });
+
     // ---------- Copy my answers ----------
     function txt(key) { return (answerState(key).text || '').trim(); }
     function block(label, key) { var a = txt(key); return label + '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n\n'; }
+    var COPY_PARTS = [
+        ['Part 1 · The answer I want to be able to give', ['question', 'situation', 'task', 'action', 'result']],
+        ['Part 2 · What I will go deeper in', ['deeper']],
+        ['Part 3 · What I will reach across to', ['across']],
+        ['Part 4 · Working backwards', ['m6', 'm3', 'week']]
+    ];
     function buildText() {
         var out = PAGE.title + ' — ' + PAGE.course + ', Week ' + PAGE.week + '\n\n';
         var tick = document.getElementById('dojo-tick');
         var tickLabel = $('label[for="dojo-tick"] b');
         out += (tick && tick.checked ? '[x] ' : '[ ] ') + (tickLabel ? clean(tickLabel.textContent) : '') + '\n\n';
-        $all('.formcol > h3').forEach(function (h) {
-            out += clean(h.textContent).toUpperCase() + '\n\n';
-            var el = h.nextElementSibling;
-            while (el && el.tagName !== 'H3') {
-                $all('textarea[data-key]', el).forEach(function (ta) {
-                    var k = ta.getAttribute('data-key');
-                    out += block(boxLabel(k), k);
-                    if (k === 'result' && state.imagined) { out += 'This answer is imagined.\n\n'; }
-                });
-                el = el.nextElementSibling;
-            }
+        // The copied text keeps the four part headings of draft 3, so that text already pasted into Canvas reads the same.
+        COPY_PARTS.forEach(function (p) {
+            out += p[0].toUpperCase() + '\n\n';
+            p[1].forEach(function (k) {
+                out += block(boxLabel(k), k);
+                if (k === 'result' && state.imagined) { out += 'This answer is imagined.\n\n'; }
+            });
         });
         out += 'SELF-CHECK (ticked by me; the grader verifies each line)\n';
         var total = 0;
