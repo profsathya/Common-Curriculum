@@ -1,31 +1,30 @@
 <!-- CST499 · Graded item · editable source for in-class-activity-mid-term.html (not yet built).
-     Draft 1 of 2026-10-18. Companion to mid-term.md — this page is the second of the two Mid-term items.
-     Decisions carried in: five questions projected on screen, not handed out; the five are 2, 4, 5, 6, 7
-     (3 dropped because it answers 2 from the market side; 1 and 8 dropped as market/reference questions);
-     partner named at the top as first name + last letter; every checklist is worded for the pair to run
-     together. Publish timing: if this page goes on Canvas before Wednesday, the five question numbers
-     should stay out of it until class — publish the page with the Questions section hidden, or unhide
-     it at the start of class. -->
+     Draft 2 of 2026-10-18, rewritten against skills/writing-foundation and skills/writing-assignments after
+     Sathya's edit of the Purpose line. Companion to mid-term.md — the second of the two Mid-term items.
+     Decisions carried in: the five questions are 2, 4, 5, 6, 7 and are published before Wednesday; they go
+     up on the screen in class, not on paper; the partner is named at the top as first name + last letter;
+     every check line is worded for the pair to run together; the capture check is about meaning, with the
+     author agreeing, not word-for-word transcription. -->
 
 # In-class activity (mid-term)
 
-Wednesday 21 October · in class · 100 points · Mid-term ·
+Wednesday 21 October · in class · 100 points · Mid-term
 
 ## Purpose
 
-Practice summarizing our project and its value in our own words and 
+Practice summarizing our project and its value in our own words, and then hear how a partner understood what we wrote, so that we learn which parts of our explanation another person can follow and which parts we still need to work out.
 
 ## How it works
 
-- **Part 1 — write, on your own.** Five of the eight questions go up on the screen. Choose three. On paper, write the question number and your answer; one page, two sides at most; closed book.
-- **Part 2 — swap, in pairs.** Pair with someone not on your team. Type up your partner's three answers from their sheet, ask two follow-up questions on each, and write a summary of how they see their own project. Check each piece with them as you go. Submit the typed version in Canvas before you leave.
-- Handwritten sheets are collected at the end. The typed version is what counts.
+- **Part 1 — write, on your own.** Choose three of the five questions on the screen. On paper, write the question number and your answer; one page, two sides at most; closed book.
+- **Part 2 — swap, in pairs.** Pair with someone not on your team. Type your partner's three answers from their sheet, ask two follow-up questions on each answer, and write a summary of how they see their own project. Check each part with your partner before you move to the next. Submit the typed version in Canvas before you leave.
+- Hand in your written sheet at the end. The typed version is what is graded.
 
 *Tooltip on "closed book"* — **Closed book** — *What it means.* Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood.
 
 ## Questions
 
-*The five on the screen on Wednesday — same wording as on the mid-term page.*
+*The five that will be on the screen on Wednesday, in the same wording as on the mid-term page.*
 
 - **Question 2 — The problem.** What problem your project solves, for whom, and what convinced you the need is real — the moment, conversation or evidence that settled it.
 - **Question 4 — How I used AI.** How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?
@@ -37,7 +36,7 @@ Practice summarizing our project and its value in our own words and
 
 **Button:** Copy the form — Paste this into a Google doc, fill it in with your partner, then paste the text into Canvas.
 
-*Each check line is for the two of you to run together, with the sheet between you. Fix the text until every line is true.*
+*Run each check line together, with the sheet between you, and change the text until both of you agree every line is true.*
 
 ---
 
@@ -51,9 +50,8 @@ Practice summarizing our project and its value in our own words and
 **Partner's answer, typed from their sheet:** ⏎
 
 **Check together**
-- Every sentence on the sheet is here, in the words on the sheet.
-- Nothing has been added that is not on the sheet.
-- Names, numbers and tool names read the way the author meant them.
+- The typed answer says what the sheet says, and the author agrees.
+- Names, numbers and tool names are the ones the author used.
 
 **Follow-up 1 — your question:** ⏎
 **Their answer:** ⏎
@@ -62,8 +60,8 @@ Practice summarizing our project and its value in our own words and
 **Their answer:** ⏎
 
 **Check together**
-- Each follow-up asks about something you did not understand or did not yet believe, not something you already agreed with.
-- Each answer is written as your partner said it, and your partner has read it and says it is what they meant.
+- Each follow-up asks about something the typed answer does not settle.
+- Each answer is written as your partner said it, and your partner agrees it is what they meant.
 
 ### Answer 2 of 3
 
@@ -78,25 +76,25 @@ Practice summarizing our project and its value in our own words and
 **In your words:** what they think the project is for, what they think they have brought to it, and where they think it stands. ⏎
 
 **Check together**
-- Your partner recognises their project in it.
-- Where you see it differently from your partner, the difference is written down as a difference, not quietly changed.
+- Your partner agrees the summary describes their project as they see it.
+- Where you see the project differently from your partner, the difference is written down as a difference.
 
 ---
 
-*Guidance (behind the +).* **Follow-up questions.** Be an exploratory partner, not a confirming one: ask about the part of the answer you would have to take on trust. "How do you know?" and "what would have changed your mind?" go further than "that makes sense."
+*Guidance (behind the +).* **Follow-up questions.** Ask about the part of the answer you would have to take on trust, because that is the part your partner has the most to gain from explaining. "How do you know?" and "What would have changed your mind?" are questions of that kind.
 
 ## Criteria
 
-**Done** — three answers typed from the sheet, two follow-ups with answers on each, a summary, and every check line true for both of you; submitted in Canvas before the end of class.
+**Done** — three answers typed from the sheet, two follow-ups with answers on each, a summary, and every check line agreed by both of you; submitted in Canvas before the end of class.
 
-**Strong** — the typed answers would pass as the author's own; the follow-ups go to the part of each answer that needed asking; the summary says something about the project the author had not put into words themselves.
+**Strong** — the typed answers read as the author's own; each follow-up asks about something the typed answer does not settle; the author agrees with the summary.
 
-Graded as participation: do your best in the hour, write what you can.
+Graded as participation: do your best in the hour and write what you can.
 
 ## Submit
 
-Canvas text entry, before you leave the room. **Paste the text itself into the Canvas box; a link to a Google doc is not a submission.** Hand your written sheet in on the way out.
+Canvas text entry, before you leave the room. **Paste the text itself into the Canvas box; a link to a Google doc is not a submission.** Hand in your written sheet on the way out.
 
 ## How this page was made
 
-The two parts, the five questions and the shape of the paired form are Prof. Sathya's, settled on 4 September and 18 October 2026. The check lines, guidance and criteria were drafted by AI from that design; he reads them and edits by hand where they miss.
+The two parts, the five questions, the shape of the paired form and the purpose line are Prof. Sathya's, settled on 4 September and 18 October 2026. The check lines, guidance and criteria were drafted by AI from that design; he reads them and edits by hand where they miss.
