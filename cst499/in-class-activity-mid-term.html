@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In-class activity (mid-term) | CST499</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0A7340; --warn:#9B6A00;
+--teal:#0F766E; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box.box-sm{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox-refl{margin-top:8px;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task ol.parts{margin:4px 0 0;padding-left:26px;list-style:lower-alpha;}
+.task ol.parts li{margin:2px 0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+
+/* ================= v2 layout layer — 2026-09-17 =================
+   Adapted from Roman Friedman's Read the Market redesign: a type and spacing
+   scale, a reading measure, and a sticky task rail. Colours are unchanged
+   except --muted and --warn, darkened for contrast now that type is larger. */
+:root{
+--muted:#5C6873; --border-light:#E4E8EA; --warn:#8A5D00;
+--ground:#FBFBFC; --paper:#fff; --radius:8px;
+--fs-xs:.8125rem; --fs-sm:.9375rem; --fs-base:1.0625rem;
+--fs-lg:1.35rem; --fs-xl:1.6rem; --fs-2xl:2rem;
+--lh-body:1.65; --lh-tight:1.25; --measure:68ch;
+--sp-1:.35rem; --sp-2:.7rem; --sp-3:1.1rem; --sp-4:1.7rem; --sp-5:2.6rem;
+--rail-h:54px;
+}
+body{font-size:var(--fs-base);line-height:var(--lh-body);background:var(--ground);}
+.page{max-width:980px;padding:0 clamp(1rem,4vw,2.25rem) 4rem;background:transparent;}
+.crumb{font-size:var(--fs-xs);margin:var(--sp-4) 0 var(--sp-2);}
+.pagehead{border-bottom:0;padding-bottom:0;margin-bottom:var(--sp-4);}
+.pagehead .s{font-size:var(--fs-xs);letter-spacing:.06em;}
+.pagehead h1{font-size:var(--fs-2xl);line-height:var(--lh-tight);font-weight:900;
+letter-spacing:-.015em;max-width:24ch;margin:var(--sp-1) 0 var(--sp-2);}
+.pagehead .dt{font-size:var(--fs-sm);font-weight:600;}
+h2.sec{font-size:var(--fs-lg);font-weight:900;letter-spacing:-.01em;
+margin:var(--sp-5) 0 var(--sp-3);padding-bottom:var(--sp-1);}
+p.body,.crit p,.canvasbar,.pnote{font-size:var(--fs-base);line-height:var(--lh-body);}
+.copyline{font-size:var(--fs-sm);line-height:1.55;max-width:var(--measure);align-items:flex-start;}
+.copyline .btn{flex:0 0 auto;}
+p.body,.crit p{max-width:var(--measure);}
+.canvasbar,.pnote{max-width:var(--measure);}
+
+/* purpose — a lead line and the action goals */
+ul.goals{margin:var(--sp-2) 0 0;padding-left:1.2rem;max-width:var(--measure);}
+ul.goals li{margin:0 0 var(--sp-2);line-height:var(--lh-body);}
+
+/* ---- the sticky task rail ---- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);
+backdrop-filter:saturate(1.6) blur(6px);border-bottom:1px solid var(--border-light);}
+.rail-in{max-width:980px;margin:0 auto;padding:0 clamp(1rem,4vw,2.25rem);
+display:flex;align-items:center;gap:var(--sp-3);height:var(--rail-h);}
+.rail-label{font-size:var(--fs-xs);font-weight:900;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted);white-space:nowrap;flex:0 0 auto;}
+ol.rail-steps{display:flex;align-items:center;gap:var(--sp-1);list-style:none;
+margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+ol.rail-steps::-webkit-scrollbar{display:none;}
+.rail-steps a{display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+padding:.3rem .55rem;border-radius:999px;color:var(--muted);font-size:var(--fs-xs);font-weight:700;}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;
+width:1.3rem;height:1.3rem;border-radius:999px;border:1.5px solid var(--border);
+font-size:.75rem;font-weight:800;background:#fff;}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark);}
+.rail-steps a:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.rail-steps a.here{color:var(--blue-dark);background:var(--goal-bg);}
+.rail-steps a.here b{border-color:var(--blue);color:var(--blue-dark);}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff;}
+.rail-count{font-size:var(--fs-xs);font-weight:800;color:var(--muted);white-space:nowrap;}
+/* the page title stays beside the numbers at every width; the step words go first */
+@media (max-width:1080px){.rail-steps a span{display:none;}}
+@media (max-width:420px){.rail-label{font-size:.75rem;}}
+@media print{.rail{display:none;}}
+
+/* ---- tasks: the question, then the box, then the optional layer ---- */
+ol.tasks > li.task{margin:0 0 var(--sp-5);scroll-margin-top:calc(var(--rail-h) + 12px);}
+.task .ttext{font-size:1.1875rem;font-weight:600;line-height:1.45;
+gap:.75rem;margin:0 0 var(--sp-3);max-width:var(--measure);}
+.task .tn{flex:0 0 1.6rem;font-weight:900;color:var(--blue);}
+.task > .rbox{margin:0 0 var(--sp-2) 2.35rem;padding:var(--sp-3);border-radius:var(--radius);
+border-color:var(--border);background:var(--paper);}
+.task details.route{margin:0 0 0 2.35rem;border-radius:var(--radius);background:transparent;}
+.task .route .rt{font-size:var(--fs-sm);}
+.rbox > .qt{font-size:var(--fs-sm);line-height:1.5;margin-bottom:var(--sp-2);}
+textarea.box{font-size:var(--fs-base);line-height:1.55;min-height:132px;
+padding:var(--sp-2) var(--sp-3);border-radius:6px;}
+textarea.box.short,textarea.box.box-sm{min-height:72px;}
+textarea.box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(3,116,181,.15);}
+.btn{font-size:var(--fs-sm);padding:.5rem .9rem;border-radius:6px;}
+.aibox{font-size:var(--fs-sm);border-radius:var(--radius);}
+
+/* the criteria list, now always visible under each box */
+.selfcheck{margin:var(--sp-3) 0 0;padding-top:var(--sp-2);border-top:1px solid var(--border-light);}
+.selfcheck h4{font-size:var(--fs-xs);font-weight:800;letter-spacing:.05em;
+text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-1);}
+.selfcheck ul{margin:0;padding-left:1.1rem;font-size:var(--fs-sm);color:var(--muted);}
+.selfcheck li{margin:0 0 .25rem;line-height:1.5;}
+
+.more-body .example,.more-body .reflq{font-size:var(--fs-sm);border-radius:var(--radius);}
+.more-body p{font-size:var(--fs-sm);max-width:var(--measure);}
+ul.cklist{font-size:var(--fs-base);}
+ul.cklist li{padding-left:2rem;margin-bottom:var(--sp-2);}
+.copywrap,.rbox{border-radius:var(--radius);}
+.prov2,.instructor{border-radius:var(--radius);}
+
+/* ---- check-it-yourself lines: real checkboxes, saved with the answer (2026-09-18) ---- */
+.selfcheck ul.cks{list-style:none;padding-left:0;margin:0;}
+.selfcheck ul.cks li{display:flex;gap:.55rem;align-items:flex-start;margin:0 0 .4rem;}
+.selfcheck ul.cks input[type="checkbox"]{flex:0 0 auto;width:1rem;height:1rem;margin:.28rem 0 0;
+accent-color:var(--check);cursor:pointer;}
+.selfcheck ul.cks input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.selfcheck ul.cks label{cursor:pointer;line-height:1.5;}
+@media print{.selfcheck ul.cks input[type="checkbox"]{-webkit-appearance:checkbox;}}
+
+/* Sprint 1 Exam, paired half - the few controls this page adds to the v2 shell. */
+.pnamerow label{color:var(--text);font-weight:700;}
+.pnamerow input:focus-visible,.fuq input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+fieldset.pick{border:1px solid var(--border-light);border-radius:6px;margin:0 0 12px;padding:10px 13px;background:#FCFDFE;}
+fieldset.pick legend{font-size:13.5px;font-weight:700;padding:0 5px;}
+fieldset.pick .opt{display:flex;gap:9px;align-items:flex-start;margin:0 0 8px;}
+fieldset.pick .opt:last-child{margin-bottom:0;}
+fieldset.pick input[type="radio"]{margin-top:3px;flex:0 0 auto;width:16px;height:16px;}
+fieldset.pick input[type="radio"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+fieldset.pick label{font-size:13.5px;line-height:1.5;}
+fieldset.pick label b{display:block;}
+.qshow{border-left:3px solid var(--goal-border);background:var(--goal-bg);padding:9px 12px;margin:0 0 10px;font-size:13.5px;line-height:1.55;border-radius:0 5px 5px 0;}
+.qshow .qlab{display:block;font-weight:700;margin-bottom:3px;}
+.fuq{margin:0 0 12px;}
+.fuq .fulab{display:block;font-size:13.5px;font-weight:700;margin:0 0 5px;}
+.fuq input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;width:100%;color:var(--text);}
+.fuq textarea{margin-top:6px;}
+/* Read it aloud - dictation into the two transcription boxes (2026-09-24) */
+.dictrow{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 8px;font-size:var(--fs-xs);color:var(--muted);}
+.dictrow .btn{display:inline-flex;align-items:center;gap:.4rem;font-size:var(--fs-xs);padding:.35rem .7rem;}
+.dictrow .btn svg{width:14px;height:14px;flex:0 0 auto;}
+.dictrow .btn.on{background:#FDECEC;border-color:#B42318;color:#B42318;}
+.dictrow .btn.on svg{animation:dictpulse 1.2s ease-in-out infinite;}
+@keyframes dictpulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.dictrow .gt{cursor:help;font-weight:700;color:var(--blue);border-bottom:1px dashed var(--blue);}
+.dictrow .bub{width:360px;}
+.dict-status{flex:1;min-width:0;line-height:1.45;}
+.dict-status.warn{color:#8a3b12;}
+@media print{.dictrow{display:none !important;}}
+@media (prefers-reduced-motion:reduce){.dictrow .btn.on svg{animation:none;}}
+ol.steps{margin:0 0 12px;padding-left:22px;}
+ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
+.aibox ol{margin:8px 0 0;padding-left:22px;}
+.aibox li{font-size:13.5px;line-height:1.55;margin:0 0 5px;}
+
+/* CST499 In-class activity (mid-term) - the few controls this page adds to the paired-page shell. */
+.blk{border:1px solid var(--border-light);border-radius:6px;margin:0 0 14px;padding:10px 13px 12px;background:#FCFDFE;min-width:0;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.qpick{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 10px;}
+.qpick label{font-size:13.5px;font-weight:700;color:var(--text);}
+.qpick select{font-family:inherit;font-size:14px;min-height:32px;padding:4px 8px;border:1px solid var(--border);border-radius:5px;color:var(--text);background:#fff;max-width:100%;}
+.qpick select:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.agree{display:flex;gap:9px;align-items:flex-start;margin:6px 0 0;min-height:24px;font-size:13.5px;line-height:1.5;}
+.agree input[type="checkbox"]{width:18px;height:18px;margin-top:2px;flex:0 0 auto;}
+.agree input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+#add-fu{margin:0 0 12px;}
+ul.qlist{margin:0 0 12px;padding-left:20px;}
+ul.qlist li{font-size:13.5px;line-height:1.6;margin:0 0 7px;}
+.copyhere{margin:18px 0 6px;}
+.prov2 h2.prov-head{margin:0;}
+</style>
+<style id="a11y-pass-1">
+/* Accessibility pass 2026-10-06. Keep this block last in <head>. */
+p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
+.gl.a11y-esc > .bub { display: none !important; }
+.a11y-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.starter { margin: 4px 0 6px; font-size: 13px; line-height: 1.45; font-style: italic; color: var(--muted, #5C6873); }
+.copybtn { min-height: 24px; }
+code { overflow-wrap: anywhere; }
+@media print {
+  .bub { display: block !important; position: static !important; width: auto !important; max-width: none !important; margin: 4px 0 6px 12px !important; padding: 2px 0 2px 10px !important; border: 0 !important; border-left: 2px solid #999 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page" role="main">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst499/in-class-activity-mid-term.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST499</a> &middot; Mid-term &middot; In-class activity</div>
+<div class="pagehead">
+<div class="s">CST499 &middot; Fall 2026 &middot; Sprint 2</div>
+<h1>In-class activity (mid-term)</h1>
+<div class="dt">Wednesday 21 October &middot; in class &middot; 100 points &middot; Mid-term</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Practice summarizing our project and its value in our own words, and then hear how a partner understood what we wrote, so that we learn which parts of our explanation another person can follow and which parts we can still improve.</p>
+
+<h2 class="sec">How it works</h2>
+<ul class="goals">
+<li><b>Part 1 &mdash; write, on your own.</b> Choose three of the five questions on the screen. On paper, write the question number and your answer; one page, two sides at most; <span class="gl"><button type="button" class="gt" aria-describedby="gl-bub-1">closed book</button><span class="bub" role="tooltip" id="gl-bub-1"><b class="bt">Closed book</b><span class="br"><i>What it means.</i> Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood.</span></span></span>.</li>
+<li><b>Part 2 &mdash; swap, in pairs.</b> Pair with someone not on your team. Type your partner's three answers from their sheet, ask three follow-up questions, and write a summary of how they see their own project. Each of you does this for the other. When you finish, press <b>Copy my answers</b> and paste the text into the Canvas box before you leave.</li>
+<li>Hand in your written sheet at the end.</li>
+</ul>
+
+<h2 class="sec">Questions</h2>
+<p class="body"><i>The five that will be on the screen on Wednesday, in the same wording as on the <a href="mid-term.html" target="_blank" rel="noopener">mid-term page</a>.</i></p>
+<ul class="qlist">
+<li><b>Question 2 — The problem.</b> What problem your project solves, for whom, and what convinced you the need is real &mdash; the moment, conversation or evidence that settled it.</li>
+<li><b>Question 4 — How I used AI.</b> How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?</li>
+<li><b>Question 5 — One decision.</b> Pick one decision you made &mdash; design, scope or tool. Analyze what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.</li>
+<li><b>Question 6 — One thing I can now do.</b> One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.</li>
+<li><b>Question 7 — Where my part is hard.</b> Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.</li>
+</ul>
+
+<h2 class="sec">Tasks</h2>
+<p class="body">You have your partner's sheet. Complete the tasks below in order.</p>
+
+<ol class="tasks">
+
+<li class="task" id="task-1">
+<div class="ttext"><span class="tn">1.</span><span class="tt">Select your partner's name <b>(not from your own team)</b>.</span></div>
+<div class="rbox">
+<div class="pnamerow"><label for="f-partner">Partner's name</label><input type="text" id="f-partner" data-field="partner" list="roster" autocomplete="off"></div>
+<datalist id="roster">
+
+</datalist>
+</div>
+</li>
+
+<li class="task" id="task-2">
+<div class="ttext"><span class="tn">2.</span><span class="tt">For each of the three answers on the sheet, select the question it answers and type the answer as written, or read it aloud into the box with the button beside it. If you cannot read a word, ask your partner.</span></div>
+<div class="rbox">
+<fieldset class="blk" id="blk-1"><legend class="vh">Answer 1</legend>
+<div class="qpick"><label for="f-q1">Which question</label><select id="f-q1" data-field="pick1" data-qpick><option value="">Select</option><option value="2">2 — The problem</option><option value="4">4 — How I used AI</option><option value="5">5 — One decision</option><option value="6">6 — One thing I can now do</option><option value="7">7 — Where my part is hard</option></select></div>
+<label class="qt" for="f-a1"><b>Your partner's answer</b></label>
+<div class="dictrow" data-dictate="f-a1"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-2">?</button><span class="bub" role="tooltip" id="gl-bub-2"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a1" data-field="a1"></textarea>
+</fieldset>
+<fieldset class="blk" id="blk-2"><legend class="vh">Answer 2</legend>
+<div class="qpick"><label for="f-q2">Which question</label><select id="f-q2" data-field="pick2" data-qpick><option value="">Select</option><option value="2">2 — The problem</option><option value="4">4 — How I used AI</option><option value="5">5 — One decision</option><option value="6">6 — One thing I can now do</option><option value="7">7 — Where my part is hard</option></select></div>
+<label class="qt" for="f-a2"><b>Your partner's answer</b></label>
+<div class="dictrow" data-dictate="f-a2"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-3">?</button><span class="bub" role="tooltip" id="gl-bub-3"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a2" data-field="a2"></textarea>
+</fieldset>
+<fieldset class="blk" id="blk-3"><legend class="vh">Answer 3</legend>
+<div class="qpick"><label for="f-q3">Which question</label><select id="f-q3" data-field="pick3" data-qpick><option value="">Select</option><option value="2">2 — The problem</option><option value="4">4 — How I used AI</option><option value="5">5 — One decision</option><option value="6">6 — One thing I can now do</option><option value="7">7 — Where my part is hard</option></select></div>
+<label class="qt" for="f-a3"><b>Your partner's answer</b></label>
+<div class="dictrow" data-dictate="f-a3"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-4">?</button><span class="bub" role="tooltip" id="gl-bub-4"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a3" data-field="a3"></textarea>
+</fieldset>
+<div class="agree"><input type="checkbox" id="f-ag2" data-check="ag2"><label for="f-ag2">We both agree the typed answers say what the sheet says.</label></div>
+</div>
+</li>
+
+<li class="task" id="task-3">
+<div class="ttext"><span class="tn">3.</span><span class="tt">Ask your partner three follow-up questions about what they wrote, and type each question and their answer. Ask about the part of an answer you would have to take on trust, because that is the part your partner has the most to gain from explaining.</span></div>
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Guidance</span></span></summary>
+<div class="route-body more-body">
+<p>&ldquo;How do you know?&rdquo; and &ldquo;What would have changed your mind?&rdquo; are questions that ask for the part you would otherwise take on trust.</p>
+</div>
+</details>
+<div class="rbox">
+<div id="fu-list">
+<div class="fuq" data-fu="1"><label class="fulab" for="f-fq1">Your question 1</label><input type="text" id="f-fq1" data-field="fq1" autocomplete="off"><label class="qt" for="f-fa1" style="margin-top:7px;">Their answer 1</label><textarea class="box box-sm" id="f-fa1" data-field="fa1"></textarea></div>
+<div class="fuq" data-fu="2"><label class="fulab" for="f-fq2">Your question 2</label><input type="text" id="f-fq2" data-field="fq2" autocomplete="off"><label class="qt" for="f-fa2" style="margin-top:7px;">Their answer 2</label><textarea class="box box-sm" id="f-fa2" data-field="fa2"></textarea></div>
+<div class="fuq" data-fu="3"><label class="fulab" for="f-fq3">Your question 3</label><input type="text" id="f-fq3" data-field="fq3" autocomplete="off"><label class="qt" for="f-fa3" style="margin-top:7px;">Their answer 3</label><textarea class="box box-sm" id="f-fa3" data-field="fa3"></textarea></div>
+</div>
+<button type="button" class="btn" id="add-fu">Add another question</button>
+<div class="agree"><input type="checkbox" id="f-ag3" data-check="ag3"><label for="f-ag3">We both agree the answers are written as my partner said them.</label></div>
+</div>
+</li>
+
+<li class="task" id="task-4">
+<div class="ttext"><span class="tn">4.</span><span class="tt">Write a summary of how your partner sees their own project: what they think the project is for, what they think it has achieved so far, and what should be completed for it to be considered a good project. Where you see the project differently from your partner, write the difference into the summary.</span></div>
+<div class="rbox">
+<label class="qt" for="f-sum"><b>How my partner sees their project</b></label>
+<textarea class="box" id="f-sum" data-field="summary"></textarea>
+<div class="agree"><input type="checkbox" id="f-ag4" data-check="ag4"><label for="f-ag4">We both agree the summary describes the project as my partner sees it.</label></div>
+</div>
+</li>
+
+</ol>
+
+<div class="copywrap copyhere">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status" role="status" aria-live="polite"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<h2 class="sec">Criteria</h2>
+<div class="crit">
+<p class="body"><b>Done</b> &mdash; three answers typed from the sheet, three follow-up questions with answers, a summary, and the three agreements checked; submitted in Canvas before the end of class.</p>
+<p class="body"><b>Strong</b> &mdash; the typed answers read as your partner's own; each follow-up asks about something the typed answers do not settle; the summary carries the differences as well as the agreement.</p>
+<p class="body">Graded as participation: do your best in the hour and write what you can.</p>
+</div>
+
+<h2 class="sec">Submit</h2>
+<p class="body">Canvas text entry, before you leave the room. <b>Paste the text itself into the Canvas box; a link to a Google doc is not a submission.</b> Hand in your written sheet on the way out.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="assignments.html">Assignment registry &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<h2 class="prov-head">How this page was made</h2>
+<p class="prov-lead">The two parts, the five questions, the shape of the paired form and the purpose line are Prof. Sathya's, settled on 4 September and 18 October 2026. The check lines, guidance and criteria were drafted by AI from that design; he reads them and edits by hand where they miss.</p>
+</div>
+
+<!-- Anonymous course feedback - same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> - it is the fastest way to get it fixed.</div>
+
+</div>
+
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay - CST499 &middot; In-class activity (mid-term) &middot; v1 of 2026-10-18</span>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+    // CST499 In-class activity (mid-term) - behaviour only. Every word a student reads lives in the
+    // markup above or in the CFG strings below (copy and Read-it-aloud status lines, from the base page).
+    var CFG = {"page": "cst499-in-class-activity-mid-term", "questions": {"2": "2 — The problem", "4": "4 — How I used AI", "5": "5 — One decision", "6": "6 — One thing I can now do", "7": "7 — Where my part is hard"}, "agree": {"ag2": "We both agree the typed answers say what the sheet says.", "ag3": "We both agree the answers are written as my partner said them.", "ag4": "We both agree the summary describes the project as my partner sees it."}, "copyok": "Copied ✓ - paste it into the Canvas box. The same text is below if you need it again.", "copyfail": "Copy did not work in this browser. Select the text below and copy it by hand.", "dictOn": "Listening - read the paper aloud. Press Pause to ask your partner about a word.", "dictPaused": "Paused - fix anything in the box, then press Continue.", "dictNo": "Not available in this browser - use Chrome, Edge or Safari, or type.", "dictBlocked": "The microphone is blocked. Allow it in the address bar, or open the full page in its own tab, or type.", "dictErr": "Listening stopped. Press Continue to try again, or type."};
+    var KEY = 'cc-exam:' + CFG.page;
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in a fixed frame, so offer the way out to the full page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { fields: {}, checks: {}, nfu: 3, copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.fields) { state.fields = {}; }
+    if (!state.checks) { state.checks = {}; }
+    if (!state.nfu || state.nfu < 3) { state.nfu = 3; }
+
+    var saveTimer = null;
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
+        catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function val(k) { return (state.fields[k] || '').trim(); }
+
+    function bindField(el) {
+        var k = el.getAttribute('data-field');
+        el.value = state.fields[k] || '';
+        el.addEventListener('input', function () { state.fields[k] = el.value; saveSoon(); });
+        el.addEventListener('change', function () { state.fields[k] = el.value; save(); });
+        el.addEventListener('blur', save);
+    }
+
+    // ---------- follow-up pairs: three on the page, "Add another question" appends more ----------
+    var fuList = $('#fu-list'), addBtn = $('#add-fu');
+    function addPair(n) {
+        var tpl = fuList.querySelector('[data-fu="1"]');
+        var div = tpl.cloneNode(true);
+        div.setAttribute('data-fu', String(n));
+        var lab = div.querySelectorAll('label');
+        var inp = div.querySelector('input'), ta = div.querySelector('textarea');
+        inp.id = 'f-fq' + n; inp.setAttribute('data-field', 'fq' + n); inp.value = '';
+        ta.id = 'f-fa' + n; ta.setAttribute('data-field', 'fa' + n); ta.value = '';
+        lab[0].setAttribute('for', inp.id); lab[0].textContent = 'Your question ' + n;
+        lab[1].setAttribute('for', ta.id); lab[1].textContent = 'Their answer ' + n;
+        fuList.appendChild(div);
+        return div;
+    }
+    for (var n = 4; n <= state.nfu; n++) { addPair(n); }
+
+    $all('[data-field]').forEach(bindField);
+
+    if (addBtn) {
+        addBtn.addEventListener('click', function () {
+            state.nfu += 1;
+            var div = addPair(state.nfu);
+            $all('[data-field]', div).forEach(bindField);
+            save();
+            div.querySelector('input').focus();
+        });
+    }
+
+    // ---------- agreements ----------
+    $all('[data-check]').forEach(function (el) {
+        var k = el.getAttribute('data-check');
+        el.checked = !!state.checks[k];
+        el.addEventListener('change', function () { state.checks[k] = el.checked; save(); });
+    });
+
+    // ---------- question pickers: a question picked in one block is disabled in the other two ----------
+    var picks = $all('[data-qpick]');
+    function refreshPicks() {
+        var taken = picks.map(function (s) { return s.value; });
+        picks.forEach(function (s, i) {
+            Array.prototype.forEach.call(s.options, function (o) {
+                if (!o.value) { o.disabled = false; return; }
+                o.disabled = taken.some(function (v, j) { return j !== i && v === o.value; });
+            });
+        });
+    }
+    picks.forEach(function (s) { s.addEventListener('change', refreshPicks); });
+    refreshPicks();
+
+    // ---------- Read it aloud ----------
+    // Dictation into the transcription boxes. Final phrases are appended to the box;
+    // the box stays an ordinary textarea, so the student edits by hand afterwards.
+    // Pause stops the recogniser and keeps the text; Continue starts a fresh one.
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+    $all('.dictrow[data-dictate]').forEach(function (row) {
+        var ta = document.getElementById(row.getAttribute('data-dictate'));
+        var btn = row.querySelector('.dict-btn'), lbl = row.querySelector('.dict-label'), st = row.querySelector('.dict-status');
+        if (!ta || !btn) { return; }
+        if (!SR) { btn.disabled = true; st.textContent = CFG.dictNo; return; }
+        var rec = null, listening = false, started = false;
+        function status(text, warn) { st.textContent = text; st.className = 'dict-status' + (warn ? ' warn' : ''); }
+        function append(text) {
+            var t = String(text).replace(/\s+/g, ' ').trim();
+            if (!t) { return; }
+            var cur = ta.value;
+            var sep = cur.length && !/\s$/.test(cur) ? ' ' : '';
+            ta.value = cur + sep + t;
+            ta.scrollTop = ta.scrollHeight;
+            ta.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        function show() {
+            btn.classList.toggle('on', listening);
+            btn.setAttribute('aria-pressed', listening ? 'true' : 'false');
+            lbl.textContent = listening ? 'Pause' : (started ? 'Continue' : 'Read it aloud');
+        }
+        function stop(msg, warn) {
+            listening = false;
+            if (rec) { try { rec.stop(); } catch (e) {} }
+            show();
+            status(msg, warn);
+        }
+        function start() {
+            rec = new SR();
+            rec.lang = 'en-US';
+            rec.continuous = true;
+            rec.interimResults = true;
+            rec.onresult = function (e) {
+                var finals = '', interim = '';
+                for (var i = e.resultIndex; i < e.results.length; i++) {
+                    var r = e.results[i];
+                    if (r.isFinal) { finals += r[0].transcript + ' '; } else { interim += r[0].transcript; }
+                }
+                if (finals) { append(finals); }
+                if (listening) { status(interim ? '… ' + interim : CFG.dictOn); }
+            };
+            rec.onerror = function (e) {
+                var k = e && e.error;
+                if (k === 'no-speech' || k === 'aborted') { return; }
+                if (k === 'not-allowed' || k === 'service-not-allowed') { stop(CFG.dictBlocked, true); return; }
+                stop(CFG.dictErr, true);
+            };
+            rec.onend = function () {
+                // Browsers end a session after a silence or a network hiccup; keep going until Pause.
+                if (listening) { try { rec.start(); } catch (e) { stop(CFG.dictErr, true); } }
+            };
+            listening = true; started = true;
+            show();
+            status(CFG.dictOn);
+            try { rec.start(); } catch (e) { stop(CFG.dictErr, true); }
+        }
+        btn.addEventListener('click', function () {
+            if (listening) { stop(CFG.dictPaused); } else { start(); }
+        });
+    });
+
+    // ---------- the text that gets copied ----------
+    function tick(k) { return (state.checks[k] ? '[x] ' : '[ ] ') + CFG.agree[k]; }
+    function buildPayload() {
+        var md = 'CST499 - In-class activity (mid-term)\n\n';
+        md += "Partner's name: " + (val('partner') || '(no name)') + '\n\n';
+        md += "TASK 2 - MY PARTNER'S ANSWERS, AS WRITTEN\n\n";
+        [1, 2, 3].forEach(function (i) {
+            var q = state.fields['pick' + i];
+            md += 'Question ' + (q ? CFG.questions[q] : '(not selected)') + '\n';
+            md += (val('a' + i) || '(not answered)') + '\n\n';
+        });
+        md += tick('ag2') + '\n\n';
+        md += 'TASK 3 - FOLLOW-UP QUESTIONS\n\n';
+        for (var n = 1; n <= state.nfu; n++) {
+            var q = val('fq' + n), a = val('fa' + n);
+            if (!q && !a && n > 3) { continue; }
+            md += n + '. ' + (q || '(question not written down)') + '\n';
+            md += '   Their answer: ' + (a || '(not written down)') + '\n';
+        }
+        md += '\n' + tick('ag3') + '\n\n';
+        md += 'TASK 4 - HOW MY PARTNER SEES THEIR PROJECT\n\n';
+        md += (val('summary') || '(not answered)') + '\n\n';
+        md += tick('ag4') + '\n';
+        var html = '<pre style="white-space:pre-wrap;font-family:inherit">' +
+            md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+        return { text: md, html: html };
+    }
+
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload();
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = CFG.copyok;
+            }, function () {
+                copyStatus.className = 'status';
+                copyStatus.textContent = CFG.copyfail;
+                summaryOut.focus();
+                summaryOut.select();
+            });
+        });
+    }
+
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+<script id="a11y-pass-1-js">
+(function () {
+  // Escape closes an open glossary bubble (hover or focus); it comes back on the next hover or focus.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.gl:hover, .gl:focus-within').forEach(function (g) {
+      g.classList.add('a11y-esc');
+      function clear() { g.classList.remove('a11y-esc'); g.removeEventListener('mouseleave', clear); g.removeEventListener('focusout', clear); }
+      g.addEventListener('mouseleave', clear); g.addEventListener('focusout', clear);
+    });
+  });
+})();
+</script>
+</body>
+</html>

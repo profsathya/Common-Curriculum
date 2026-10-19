@@ -17,9 +17,9 @@ Show the depth of your thinking about your project and the market it answers —
 ## How it works
 
 - **Take-home mid-term · 100 points** — All eight answered at length, submitted in Canvas by Wednesday 14 October, references allowed. You have a week; nothing here needs more time than that.
-- **In-class activity · 100 points · first part** — On Wednesday 21 October, five of the eight questions are handed out; choose three and summarise your answers by hand, one page, two sides at most, closed book, on the specific aspect the paper names.
+- **In-class activity · 100 points · first part** — On Wednesday 21 October, five of the eight questions go up on the screen; choose three and summarize your answers by hand, one page, two sides at most, closed book.
   *Tooltip on “closed book”* — **Closed book** — *What it means.* Nothing open on the desk: no notes, no laptop, no take-home answers. You write from what you understood. *Why it matters.* A lesson you can put in your own words without looking is one you own. The take-home is where you work it out; the written part is where you show it is yours.
-- **In-class activity · second part, paired** — Swap with a partner: type up their written answers, ask two follow-up questions, write a summary of their model of their own work, and submit the typed version in Canvas. The handwritten sheets are collected; the typed versions are what count. Do your best in the hour — write what you can.
+- **In-class activity · second part, paired** — Swap with a partner: type their written answers, ask three follow-up questions, write a summary of how they see their own project, and submit the typed version in Canvas on the In-class activity page. The handwritten sheets are collected; the typed versions are what count. Do your best in the hour — write what you can.
 
 The questions are published now so you can work through them in week 7 while there is still time to change what you find.
 
@@ -244,7 +244,7 @@ Two routes, equal. Answer the questions in your own document and paste the text.
 
 **Button:** Copy my answers
 
-**In class and paired:** done on paper and in the room on Wednesday 21 October. Nothing to submit here.
+**In class and paired:** on paper and in the room on Wednesday 21 October. The paired part is typed and submitted on the In-class activity (mid-term) page.
 
 ## How this page was made
 
