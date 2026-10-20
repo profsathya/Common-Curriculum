@@ -28,7 +28,7 @@ Turn the interview question you found hardest into a goal you can act on this se
 
 ## How this form works
 
-Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week. Planning this way focuses your time and energy on the experiences that will matter, instead of taking whatever challenge comes next. You start it in class on Wednesday 14 October, and each stop shows a worked example of what its box looks like filled in.
+Start from the end. Write the answer you would be proud to give to your question, then ask what would have to be true for that answer to be real, and keep asking until you reach something you can do this week.
 
 ☑ **I would like to use the AI Dojo to work out my goal.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each box is precise, and you copy its final version into the boxes. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
