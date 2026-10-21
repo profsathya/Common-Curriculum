@@ -18,6 +18,12 @@ One screen. This folder holds a dated copy of the canonical skill in the Alan re
 - A shared difficulty is written as "we", Sathya's own experience or responsibility in first person, and a genuine question stays a question. Nothing personal is invented. (7)
 - A collaborative invitation opens with what he hopes to build ("I'm hoping we can work together to…"); no manufactured not-X/but-Y contrast, aphoristic closer or clever turn; US spelling; a spaced hyphen for an aside. In proposal prose, also no colon-led triplet or First/Second/Third cadence, and a long sentence joining two complete thoughts at "and" is split. (8)
 
+## On every student-facing draft - the 21 October tests
+
+- No sentence defines the task by exclusion ("not X") unless both readings are plausible and the wrong one costs the grade; the positive target is written and the sentence stops. (9)
+- No invented judge or comparison places the student below a bar ("someone who holds the job you want", "as a stranger would", "would a hiring manager hire you"); the bar is a general professional reader, and a Why line names the skill and says that it stays valuable. (10)
+- No structure the task did not ask for: no cross-task numbering, no deadline inside a criterion, no demanded element absent from the question; the content is precise, the shape of the answer is the student's. (11)
+
 ## On every assignment question
 
 - Every required answer element is in the question the student can copy; any extra count, resource type, time requirement or demanded result found only in guidance, checklist, examples or AI feedback instructions is flagged for the author. (Applying the foundation to assignments)
