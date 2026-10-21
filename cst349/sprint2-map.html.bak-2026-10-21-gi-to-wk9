@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprint 2 map · CST349</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+  --line:#DAD6C7; --line-soft:#E7E4D8; --blue:#0374B5; --blue-dark:#0a5a8a;
+  --blaze:#B04A18; --green:#2E7D4F; --green-soft:#E3F0E8; --blue-soft:#E2EAF3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E; --blue:#6BAEDC; --blue-dark:#9CCBEA;
+    --blaze:#E0793C; --green:#7FC79B; --green-soft:#1E2F26; --blue-soft:#22313F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+  --line:#31404C; --line-soft:#26333E; --blue:#6BAEDC; --blue-dark:#9CCBEA;
+  --blaze:#E0793C; --green:#7FC79B; --green-soft:#1E2F26; --blue-soft:#22313F;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.45}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:1.6rem;margin:0 0 4px;font-weight:900}
+.sub{color:var(--ink-soft);margin:0 0 22px;max-width:62ch}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:stretch}
+.stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;margin-right:22px;display:flex;flex-direction:column;min-height:100%}
+.stage:last-child{margin-right:0}
+.stage::after{content:"";position:absolute;right:-22px;top:50%;width:22px;height:2px;background:var(--line);transform:translateY(-50%)}
+.stage::before{content:"";position:absolute;right:-22px;top:50%;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:8px solid var(--ink-soft);transform:translate(0,-50%);z-index:1}
+.stage:last-child::after,.stage:last-child::before{display:none}
+.wk{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.title{font-weight:900;font-size:1.02rem;margin:2px 0 10px;line-height:1.25}
+.lab{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700;margin:8px 0 2px}
+.lab.do{color:var(--blue-dark)}
+.lab.out{color:var(--green)}
+.stage p{margin:0;font-size:.9rem}
+.stage .lab.do + p{margin-bottom:10px}
+.out{background:var(--green-soft);border-radius:8px;padding:8px 10px;margin-top:auto}
+.out p{font-weight:700}
+.item{font-size:.8rem;color:var(--ink-soft);margin-top:8px;border-top:1px dashed var(--line-soft);padding-top:6px}
+.item b{color:var(--ink)}
+.exam{border-color:var(--blaze)}
+.exam .title{color:var(--blaze)}
+.chain{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.chain h2{font-size:1rem;margin:0 0 8px;font-weight:900}
+.chain ol{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0;padding:0;list-style:none;counter-reset:c}
+.chain li{position:relative;background:var(--blue-soft);border-radius:8px;padding:8px 10px 8px 30px;font-size:.88rem;counter-increment:c}
+.chain li::before{content:counter(c);position:absolute;left:10px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;font-size:.7rem;font-weight:900;display:grid;place-items:center}
+.after{margin-top:18px;display:grid;grid-template-columns:1fr;gap:14px;align-items:center}
+.after .stage{margin-right:0}
+.after .stage::before,.after .stage::after{display:none}
+.gt{position:relative;display:inline;font:inherit;color:inherit;background:none;border:0;border-bottom:2px dotted var(--blue);padding:0;cursor:help;min-height:24px}
+.gt:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.gt .tip{display:none;position:absolute;left:0;top:1.5em;z-index:5;width:min(34ch,80vw);background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.84rem;font-weight:400;line-height:1.4;box-shadow:0 4px 14px rgba(0,0,0,.12);text-align:left}
+.gt:hover .tip,.gt:focus-within .tip{display:block}
+@media (prefers-reduced-motion:no-preference){.gt .tip{animation:none}}
+@media (max-width:900px){
+  .flow{grid-template-columns:1fr}
+  .stage{margin-right:0;margin-bottom:26px}
+  .stage::after{right:auto;left:50%;top:auto;bottom:-26px;width:2px;height:26px;transform:translateX(-50%)}
+  .stage::before{right:auto;left:50%;top:auto;bottom:-26px;transform:translate(-50%,0) rotate(90deg)}
+  .chain ol{grid-template-columns:1fr}
+  .after{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Sprint 2, week by week: what you do, and what you have at the end of each week</h1>
+<p class="sub">Each week builds on the one before. By the exam, you have reflected on your <button type="button" class="gt" aria-describedby="tip-1">value proposition<span class="tip" id="tip-1" role="tooltip">What you offer an employer, presented clearly: the skills and experiences you bring, the evidence for your claims and the value you bring to their team and business.</span></button> as a competitive candidate and developed a plan to build evidence to support that value proposition.</p>
+
+<section class="flow" aria-label="The five weeks of Sprint 2">
+  <article class="stage">
+    <div class="wk">Week 7 · Oct 5 – 11</div>
+    <div class="title">Find the question that will anchor your growth</div>
+    <div class="lab do">You do</div>
+    <p>Use behavioral interview questions to reflect deeply on your readiness, and select a difficult question as starting point to get the most benefit of the reflection. Explore it in detail through online chat with three classmates.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>A better understanding of the most useful areas of growth you should focus on.</p></div>
+    <div class="item"><b>Graded:</b> Plan your professional preparation intentionally · Mon Oct 12</div>
+  </article>
+
+  <article class="stage">
+    <div class="wk">Week 8 · Oct 12 – 18</div>
+    <div class="title">Set your goal</div>
+    <div class="lab do">You do</div>
+    <p>Imagine an initial answer that would position you well, using the <button type="button" class="gt" aria-describedby="tip-2">STAR method<span class="tip" id="tip-2" role="tooltip">Situation, Task, Action, Result: a way to tell the story of an experience so an interviewer can see what you did and what came of it.</span></button>, and use it to develop a plan of action.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>A personalized plan of action that will help you prepare a quality <button type="button" class="gt" aria-describedby="tip-3">value proposition<span class="tip" id="tip-3" role="tooltip">What you offer an employer, presented clearly: the skills and experiences you bring, the evidence for your claims and the value you bring to their team and business.</span></button> for someone to hire you.</p></div>
+    <div class="item"><b>Graded:</b> My Sprint 2 goal · Fri Oct 23</div>
+  </article>
+
+  <article class="stage">
+    <div class="wk">Week 9 · Oct 19 – 25</div>
+    <div class="title">Practice the answer</div>
+    <div class="lab do">You do</div>
+    <p>Mock interview practice: Presenting your answer aloud to a classmate who pushes back with the follow-up questions an interviewer would ask, so you can make your answer stronger and improve your ability to provide such answers.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>A clear understanding of the gap between the answer you want to give and the one you can give today. Use that understanding to develop a plan of action.</p></div>
+    <div class="item"><b>Graded:</b> What the mock interview showed · Wed Oct 28</div>
+  </article>
+
+  <article class="stage">
+    <div class="wk">Week 10 · Oct 26 – Nov 1</div>
+    <div class="title">Take the first step</div>
+    <div class="lab do">You do</div>
+    <p>Take at least the first real step from your plan.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>An initial piece of real evidence supporting your value proposition. (Even if it is a draft and need more improvement, that is ok).</p></div>
+    <div class="item"><b>Graded:</b> My first step, taken · Mon Nov 2</div>
+  </article>
+
+  <article class="stage exam">
+    <div class="wk">Week 11 · Nov 2 – 8</div>
+    <div class="title">Show what you learned</div>
+    <div class="lab do">You do</div>
+    <p>Look back on how you moved from a question you could not answer to a plan you are acting on, and explain it in writing and in conversation.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>A process for preparing that you can repeat to continuously refine your value proposition and build evidence to support it.</p></div>
+    <div class="item"><b>Graded:</b> Sprint 2 Exam · Wed Nov 4</div>
+  </article>
+</section>
+
+<section class="chain" aria-label="What carries forward">
+  <h2>What carries forward from week to week</h2>
+  <ol>
+    <li>The <b>question</b> that shows where you can grow most</li>
+    <li>The <b>answer</b> you are aiming for, and a <b>plan</b> that gets you there</li>
+    <li>The <b>gap</b> a mock interview practice helped you identify</li>
+    <li>The first <b>evidence</b> that puts your plan into action</li>
+    <li><b>Taking ownership</b> of your own process to adapt how you prepare to meet what the industry expects</li>
+  </ol>
+</section>
+
+<section class="after" aria-label="After the exam, optional">
+  <article class="stage">
+    <div class="wk">After the exam · optional · Fri Nov 6</div>
+    <div class="title">Talk your plan through with a professional</div>
+    <div class="lab do">You do</div>
+    <p>Test your plan by talking to someone in the industry. If you feel you are not ready for that, you can meet with Jeff D'Andria to have your resume reviewed.</p>
+    <div class="out"><div class="lab out">You have at the end</div><p>Experience networking with an industry professional and incorporating their feedback into your own process.</p></div>
+  </article>
+</section>
+</main>
+</body>
+</html>

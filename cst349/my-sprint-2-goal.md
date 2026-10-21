@@ -56,7 +56,7 @@ AI Dojo Passcode for this Graded Item: **BACK-1019**
 
 (Page note: the form is five stops, shown one at a time. A strip of five pills above the form, labelled for screen readers "Your progress through the form", opens any stop at any time; nothing is locked, and the open stop is remembered on this browser. A pill reads "done" (checkmark, announced) when every box in that stop has text. Each stop ends with a "Next" button. With scripts off, all five stops show. Each box has a short label above it and a one-line starter inside the label, never a placeholder. The copied text still uses the four Part headings of draft 3: Part 1 · The answer I want to be able to give · Part 2 · What I will go deeper in · Part 3 · What I will reach across to · Part 4 · Working backwards.)
 
-Pills: 1 Your question · 2 The answer you want to give · 3 Go deeper · 4 Reach across · 5 Work backwards
+Pills: 1 Your question · 2 The answer you want to give · 3 Go deeper · 4 Cross domains · 5 Work backwards
 
 ### Stop 1 · Your question
 
@@ -99,9 +99,9 @@ Your answer rests on one technical thing you can do well. Name it, narrow enough
 
 **What a good one looks like** (Page note: Example A's "I will go deeper in" line, shown open; the other three under "Three more examples".)
 
-[Next: reach across]
+[Next: cross domains]
 
-### Stop 4 · Reach across
+### Stop 4 · Cross domains
 
 Every answer the interviewers liked in the week-7 samples has a second part: the candidate went past their own area. Name the one thing you will reach across to — a kind of person, a kind of communication, a domain or a role.
 

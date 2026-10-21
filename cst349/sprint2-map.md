@@ -16,13 +16,12 @@ Each week builds on the one before. By the exam, you have reflected on your valu
 
 - **You do:** Imagine an initial answer that would position you well, using the [[STAR method|Situation, Task, Action, Result: a way to tell the story of an experience so an interviewer can see what you did and what came of it.]], and use it to develop a plan of action.
 - **You have at the end:** A personalized plan of action that will help you prepare a quality [[value proposition|What you offer an employer, presented clearly: the skills and experiences you bring, the evidence for your claims and the value you bring to their team and business.]] for someone to hire you.
-- **Graded:** My Sprint 2 goal · Fri Oct 23
 
 ### Week 9 · Oct 19 – 25 — Practice the answer
 
 - **You do:** Mock interview practice: Presenting your answer aloud to a classmate who pushes back with the follow-up questions an interviewer would ask, so you can make your answer stronger and improve your ability to provide such answers.
 - **You have at the end:** A clear understanding of the gap between the answer you want to give and the one you can give today. Use that understanding to deelop a plan of action.
-- **Graded:** What the practice showed · Wed Oct 28
+- **Graded:** My Sprint 2 goal · Fri Oct 23
 
 ### Week 10 · Oct 26 – Nov 1 — Take the first step
 
