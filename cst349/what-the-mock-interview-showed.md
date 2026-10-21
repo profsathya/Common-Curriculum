@@ -1,4 +1,4 @@
-<!-- Editable text for what-the-mock-interview-showed.html (not built yet). DRAFT 4, 21 Oct 2026: removed task 4 (the first step); the Week 10 graded item "My first step, taken" covers it (Prof. Sathya). DRAFT 3, 21 Oct 2026: added a box naming the mock interview and the partner (Prof. Sathya). DRAFT 2, 21 Oct 2026: changed from a Week-9 graded item (100 pts, due Wed 28 Oct) to an Own-your-progress activity, Recommended Date Mon 26 Oct, at Prof. Sathya's request. Students use the mock interview from class on Wed 21 Oct, or set one up on Zoom with a classmate. Removed: the late-penalty line, the self-check points, the grading paragraph, and the reliance on a Commons transcript. Kept: the four tasks, the Dojo tick and the AI feedback button, following the goal page. The passcode appears twice and must be the same. The .html is built only after his edit. -->
+<!-- Editable text for what-the-mock-interview-showed.html (built 21 Oct 2026 from draft 5). DRAFT 5, 21 Oct 2026: Prof. Sathya edited Purpose and tasks 2-3; Alan fixed typos and aligned the self-check and AI feedback lines for the feedback and gap boxes with his wording. DRAFT 4, 21 Oct 2026: removed task 4 (the first step); the Week 10 graded item "My first step, taken" covers it (Prof. Sathya). DRAFT 3, 21 Oct 2026: added a box naming the mock interview and the partner (Prof. Sathya). DRAFT 2, 21 Oct 2026: changed from a Week-9 graded item (100 pts, due Wed 28 Oct) to an Own-your-progress activity, Recommended Date Mon 26 Oct, at Prof. Sathya's request. Students use the mock interview from class on Wed 21 Oct, or set one up on Zoom with a classmate. Removed: the late-penalty line, the self-check points, the grading paragraph, and the reliance on a Commons transcript. Kept: the four tasks, the Dojo tick and the AI feedback button, following the goal page. The passcode appears twice and must be the same. The .html is built only after his edit. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 9 · Practice the answer
 
@@ -19,7 +19,7 @@ Use what your partner's questions brought up in a mock interview to see how your
 You need one mock interview to answer the questions below. Use either one:
 
 - **The mock interview in class on Wednesday 21 October.** Work from the notes you wrote down there.
-- **A mock interview on Zoom with a classmate.** Set up about 20 minutes with a classmate. Present your answer to them in a mock interview role plan, and ask your classmate to ask the follow-up questions an interviewer would ask. Write down their questions and your replies as you go. Then switch, and interview your classmate the same way.
+- **A mock interview on Zoom with a classmate.** Set up about 20 minutes with a classmate. Present your answer to them in a mock interview role play, and ask your classmate to ask the follow-up questions an interviewer would ask. Write down their questions and your replies as you go. Then switch, and interview your classmate the same way.
 
 **My mock interview.** In class or on Zoom, and the name of the classmate I partnered with.
 
@@ -39,11 +39,11 @@ You need one mock interview to answer the questions below. Use either one:
 
    **My partner's feedback.** Summary of their response.
 
-3. Identify the gap. Where did your answer fall short: a part of the experience you have not had yet, a detail you could not give, or a result you could not state?.
+3. Identify the gap. Where did your answer fall short: a part of the experience you have not had yet, a detail you could not give, or a result you could not state?
 
-   *With your Dojo:* tell your Dojo the questions you could not answer well, and have to interview you until you make it prcise.
+   *With your Dojo:* tell your Dojo the questions you could not answer well, and have it interview you until your answer is precise.
 
-   **The gap the mock interview exposed.** What you learned about your own preparation?.
+   **The gap the mock interview exposed.** What you learned about your own preparation.
 
 
 ## Your Dojo summary (shown after task 3, only when the box is ticked)
@@ -69,8 +69,8 @@ Tick each line your submission meets. Your ticks are copied with your answers.
 - [ ] I say which mock interview I used, in class or on Zoom, and name the classmate I partnered with
 - [ ] The answer is written as I gave it, in STAR form, and says whether it is imagined
 - [ ] My partner's follow-up questions and my replies are written out
-- [ ] My partner's feedback says what the answer showed and what it did not
-- [ ] The gap is one sentence, and I say why it is the one that matters
+- [ ] I summarize the key ideas from my partner's feedback
+- [ ] I name where my answer fell short and what that tells me about my own preparation
 
 **What makes it strong.** A reader can go from your partner's hardest question to your gap and see that the gap follows from the question.
 
@@ -95,7 +95,7 @@ Ask the student which mock interview they are working from and who their partner
 - My mock interview: says in class or on Zoom; names the partner.
 - The answer I gave: STAR parts present; written as spoken (first person, past tense); says if imagined.
 - Partner's questions and replies: at least one question with a reply.
-- Partner's feedback: what it showed and what it did not.
-- The gap: one sentence; names a missing experience, detail or result; says why it matters.
+- Partner's feedback: a summary of the key ideas the partner gave.
+- The gap: names where the answer fell short (a missing experience, detail or result) and what that says about the student's preparation.
 
 The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting.
