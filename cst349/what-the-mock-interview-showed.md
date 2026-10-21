@@ -1,6 +1,6 @@
 <!-- Editable text for what-the-mock-interview-showed.html (built 21 Oct 2026 from draft 5). DRAFT 5, 21 Oct 2026: Prof. Sathya edited Purpose and tasks 2-3; Alan fixed typos and aligned the self-check and AI feedback lines for the feedback and gap boxes with his wording. DRAFT 4, 21 Oct 2026: removed task 4 (the first step); the Week 10 graded item "My first step, taken" covers it (Prof. Sathya). DRAFT 3, 21 Oct 2026: added a box naming the mock interview and the partner (Prof. Sathya). DRAFT 2, 21 Oct 2026: changed from a Week-9 graded item (100 pts, due Wed 28 Oct) to an Own-your-progress activity, Recommended Date Mon 26 Oct, at Prof. Sathya's request. Students use the mock interview from class on Wed 21 Oct, or set one up on Zoom with a classmate. Removed: the late-penalty line, the self-check points, the grading paragraph, and the reliance on a Commons transcript. Kept: the four tasks, the Dojo tick and the AI feedback button, following the goal page. The passcode appears twice and must be the same. The .html is built only after his edit. -->
 
-CST349 · Fall 2026 · Sprint 2 · Week 9 · Practice the answer
+CST349 · Fall 2026 · Sprint 2 · Week 10 · Take the first step
 
 # What the mock interview showed
 
