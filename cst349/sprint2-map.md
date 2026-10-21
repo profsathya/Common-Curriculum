@@ -21,7 +21,7 @@ Each week builds on the one before. By the exam, you have reflected on your valu
 
 - **You do:** Mock interview practice: Presenting your answer aloud to a classmate who pushes back with the follow-up questions an interviewer would ask, so you can make your answer stronger and improve your ability to provide such answers.
 - **You have at the end:** A clear understanding of the gap between the answer you want to give and the one you can give today. Use that understanding to deelop a plan of action.
-- **Graded:** My Sprint 2 goal · Fri Oct 23
+- **Graded:** My Sprint 2 goal · Mon Oct 26
 
 ### Week 10 · Oct 26 – Nov 1 — Take the first step
 

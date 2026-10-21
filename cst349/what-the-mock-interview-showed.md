@@ -4,7 +4,7 @@ CST349 · Fall 2026 · Sprint 2 · Week 9 · Practice the answer
 
 # What the mock interview showed
 
-Own your progress · Recommended Date: Monday 26 October
+Own your progress · Recommended Date: Wednesday 28 October
 
 Take ownership of your progress — this activity is provided to help you, but the grade for this activity will not affect your final grade.
 
@@ -82,7 +82,7 @@ Go through the Self-check, press **Copy my answers**, review the text, and paste
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Own-your-progress activity: What the mock interview showed. Course: CST349. Recommended date: Monday 26 October. Passcode: GAP-1026.
+Own-your-progress activity: What the mock interview showed. Course: CST349. Recommended date: Wednesday 28 October. Passcode: GAP-1026.
 
 When a student asks to be walked through this activity, state the passcode, the title and the recommended date first, before anything else.
 
