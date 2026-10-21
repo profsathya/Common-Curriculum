@@ -1,10 +1,10 @@
-<!-- Editable text for what-the-practice-showed.html (not built yet). DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit). Week-9 graded item, due Mon 26 Oct, 100 pts. The .html is built only after his edit. Notes for the editor, not shown to students: the mock interview on Wed 21 Oct is a live conversation on The Commons with the transcript captured; this page asks for the answer as given, the partner's feedback, the gap, and one line on the first step from the goal form (taken or not). The Dojo tick and the AI feedback button follow the goal page. Self-check points are a proposal and total 100. Open for Sathya: where the pairs come from (guide groups or random) is not on this page; the page says "your partner". The passcode appears twice and must be the same. -->
+<!-- Editable text for what-the-practice-showed.html (not built yet). DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit). Week-9 graded item, due Wed 28 Oct, 100 pts. The .html is built only after his edit. Notes for the editor, not shown to students: the mock interview on Wed 21 Oct is a live conversation on The Commons with the transcript captured; this page asks for the answer as given, the partner's feedback, the gap, and one line on the first step from the goal form (taken or not). The Dojo tick and the AI feedback button follow the goal page. Self-check points are a proposal and total 100. Open for Sathya: where the pairs come from (guide groups or random) is not on this page; the page says "your partner". The passcode appears twice and must be the same. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 9 · Practice the answer
 
 # What the practice showed
 
-Graded item · Due Date: Monday 26 October · 100 pts
+Graded item · Due Date: Wednesday 28 October · 100 pts
 
 This graded item will affect your final grade, and the late penalty applies.
 
@@ -40,7 +40,7 @@ Use what your partner's questions exposed on Wednesday to see what your answer s
 
 ## Your Dojo summary (shown after task 4, only when the box is ticked)
 
-Passcode for this graded item: **GAP-1026**
+Passcode for this graded item: **GAP-1028**
 
 **Start the conversation.** Paste this into your AI Dojo:
 
@@ -74,7 +74,7 @@ Go through the Self-check, press **Copy my answers**, review the text, and paste
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: What the practice showed. Course: CST349. Due: Monday 26 October. Passcode: GAP-1026.
+Graded item: What the practice showed. Course: CST349. Due: Wednesday 28 October. Passcode: GAP-1028.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
