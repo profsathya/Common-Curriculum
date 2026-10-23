@@ -33,6 +33,8 @@ body.orig .sv{display:none} body:not(.orig) .ov{display:none}
 .sv-list{margin:4px 0 0;padding-left:18px;font-size:14px;line-height:1.5} .sv-list li{margin:3px 0}
 .sv-foot{font-size:12.5px;color:var(--muted);margin:16px 0 0;border-top:1px solid var(--border-light);padding-top:10px}
 .viewbar{display:flex;justify-content:flex-end;margin:0 0 10px} .viewsw input:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+/* View tabs (23 Oct 2026): sprint tab (default) and Overview tab replace the checkbox */
+.viewtabs{justify-content:flex-start;gap:4px;margin:0 0 16px;border-bottom:2px solid var(--border)} .viewtabs [role=tab]{appearance:none;-webkit-appearance:none;background:#F4F6F8;border:1px solid var(--border);border-bottom:0;border-radius:6px 6px 0 0;margin:0 0 -2px;padding:9px 20px 8px;min-height:24px;font:inherit;font-size:15px;font-weight:700;color:var(--muted);cursor:pointer} .viewtabs [role=tab]:hover{color:var(--blue-dark);background:#EEF4F8} .viewtabs [role=tab][aria-selected=true]{background:#fff;color:var(--blue-dark);border-top:3px solid var(--blue);border-bottom:2px solid #fff;padding-top:7px} .viewtabs [role=tab]:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
 .sv-course{border-bottom:1px solid var(--border-light);padding-bottom:12px;margin-bottom:14px} .sv-h1{font-size:23px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .sv a{color:var(--blue-dark)}
 /* Sprint 3 module (2026-10-21): agenda lists and graded-item rows as click-ins, from cst286/home.html */
@@ -53,8 +55,8 @@ code { overflow-wrap: anywhere; }
 </head>
     <body>
         <div class="page" role="main">
-            <!-- View switch (21 Oct 2026, as in cst286/home.html): the simple view of the current sprint is the default; the checkbox shows the whole original page. Words for the simple view live in cowork/fall-2026-courses/sprint3-home-preview-cst499.md; built by mk_cst499_sprint3_home.py. -->
-            <div class="viewbar"><label class="viewsw"><input type="checkbox" id="origview" aria-controls="orig-view"> Show the original view</label></div>
+            <!-- View tabs (23 Oct 2026): the sprint tab (simple view of the current sprint) is the default; the Overview tab shows the whole original page. The tab label names the sprint the simple view shows - change it when the simple view moves to the next sprint. Words for the simple view live in cowork/fall-2026-courses/sprint3-home-preview-cst499.md. -->
+            <div class="viewbar viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sv-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-overview" aria-controls="orig-view" aria-selected="false">Overview</button></div>
 <div class="sv">
 <div class="sv-course"><div class="sv-eyebrow">CST499 &middot; Computer Science Capstone &middot; Fall 2026 &middot; 4 units</div><h1 class="sv-h1">Build Your Professional Portfolio</h1></div>
 <div class="sv-top"><div class="sv-eyebrow">CST499 &middot; Weeks 9&ndash;12 &middot; Oct 19 &ndash; Nov 15</div><h2 class="sv-title">Sprint 3 &middot; Finish a piece that shows you can cross domains</h2></div>
@@ -1156,15 +1158,20 @@ code { overflow-wrap: anywhere; }
             </details>
 </div><!-- /.ov -->
 <script>
-/* Simple view / original view (4 Oct 2026). Simple is the default; the choice is remembered on this browser.
-   A #hash that points into the original view (a week, a sprint) shows the original view for that visit. */
+/* View tabs (23 Oct 2026; was a checkbox from 4 Oct). The sprint tab (simple view) is the default; the chosen tab is remembered on this browser,
+   so a student who picked Overview (or the original view before) opens on Overview. A #hash that points into the Overview shows it for that visit. */
 (function () {
   var KEY = 'cc-home-view:cst499';
-  var sw = document.getElementById('origview');
-  if (!sw) { return; }
+  var tabS = document.getElementById('tab-sprint'), tabO = document.getElementById('tab-overview');
+  var sv = document.querySelector('.sv'), ov = document.getElementById('orig-view');
+  if (!tabS || !tabO || !sv || !ov) { return; }
+  sv.id = 'sv-view';
+  sv.setAttribute('role', 'tabpanel'); sv.setAttribute('aria-labelledby', 'tab-sprint');
+  ov.setAttribute('role', 'tabpanel'); ov.setAttribute('aria-labelledby', 'tab-overview');
   function set(orig, save) {
     document.body.classList.toggle('orig', orig);
-    sw.checked = orig;
+    tabS.setAttribute('aria-selected', orig ? 'false' : 'true');
+    tabO.setAttribute('aria-selected', orig ? 'true' : 'false');
     if (save) { try { window.localStorage.setItem(KEY, orig ? 'orig' : 'simple'); } catch (e) { /* not remembered */ } }
   }
   function hashTarget() {
@@ -1175,7 +1182,15 @@ code { overflow-wrap: anywhere; }
   var v = null;
   try { v = window.localStorage.getItem(KEY); } catch (e) { v = null; }
   set(v === 'orig' || !!hashTarget(), false);
-  sw.addEventListener('change', function () { set(sw.checked, true); });
+  tabS.addEventListener('click', function () { set(false, true); });
+  tabO.addEventListener('click', function () { set(true, true); });
+  function arrows(e) {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') { return; }
+    e.preventDefault();
+    var toOrig = (e.key === 'End') || (e.key !== 'Home' && e.target === tabS);
+    set(toOrig, true); (toOrig ? tabO : tabS).focus();
+  }
+  tabS.addEventListener('keydown', arrows); tabO.addEventListener('keydown', arrows);
   window.addEventListener('hashchange', function () {
     var t = hashTarget();
     if (t && !document.body.classList.contains('orig')) { set(true, false); t.scrollIntoView(); }
