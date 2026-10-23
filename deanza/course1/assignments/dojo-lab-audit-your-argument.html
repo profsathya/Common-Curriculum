@@ -325,20 +325,159 @@ html.native-canvas-context .back-link { display: none !important; }
 .guided-workspace .teaching-table { overflow-x: auto; max-width: 100%; }
 .guided-workspace .teaching-table th, .guided-workspace .teaching-table td { min-width: 140px; }
 @media (max-width: 600px) { .guided-workspace .response-task { padding: 14px; } }
+
+/* Opt-in reading layouts. Existing standard and compact pages retain their styles. */
+.guided-reading { max-width: 68ch; margin: 24px auto; }
+.activity.reading-page { max-width: 76ch; }
+:is(.guided-reading, .reading-page) section { background: none; border: 0; border-radius: 0; padding: 0; margin: 0 0 28px; }
+:is(.guided-reading, .reading-page) h2 { font-size: 1.25rem; line-height: 1.35; margin: 28px 0 12px; }
+:is(.guided-reading, .reading-page) h3 { font-size: 1.05rem; line-height: 1.5; margin: 18px 0 8px; }
+:is(.guided-reading, .reading-page) p { margin: 10px 0; }
+:is(.guided-reading, .reading-page) blockquote { margin: 20px 0; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #f0f5fa; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) blockquote > p:first-child { margin-top: 0; color: #344e68; font-size: .9rem; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p:first-child { color: var(--text); font: inherit; }
+.reading-page section:has(> h2[id="2-add-the-method-and-course-context"]) blockquote > p { color: var(--text); font: inherit; }
+.reading-page .copy-source { margin: 10px 0 4px; }
+.reading-page .copy-source pre { margin: 0 0 8px; }
+.reading-page .copy-source button { font: inherit; padding: 8px 12px; color: #fff; background: #204b76; border: 0; border-radius: 6px; cursor: pointer; }
+.reading-page .copy-source [role="status"] { margin: 6px 0 0; font-size: .875rem; color: #455568; }
+:is(.guided-reading, .reading-page) blockquote ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 0; list-style-position: inside; }
+:is(.guided-reading, .reading-page) blockquote li { margin: 0; padding: 12px; border: 1px solid #c3d2df; border-top: 3px solid #477b9b; border-radius: 8px; background: #fff; }
+:is(.guided-reading, .reading-page) blockquote li::marker { color: #315d7b; font-weight: 700; }
+:is(.guided-reading, .reading-page) blockquote li > p { margin: 8px 0 0; }
+:is(.guided-reading, .reading-page) table { width: 100%; border-collapse: collapse; font-size: .94em; }
+:is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { text-align: left; padding: 12px; vertical-align: top; border: 1px solid #cbd8e4; overflow-wrap: anywhere; }
+:is(.guided-reading, .reading-page) th { background: #eaf1f7; }
+.guided-reading .response-task { margin: 18px 0 32px; padding: 20px; border: 1px solid #cbd8e4; border-radius: 12px; background: #fff; }
+.guided-reading .response-task label { font-weight: 650; }
+.guided-reading .choice-task h3 { margin-top: 0; }
+.guided-reading .choice-task fieldset { border: 0; padding: 0; margin: 14px 0 8px; min-width: 0; }
+.guided-reading .choice { padding: 10px 12px; border: 1px solid #d7e1e9; border-radius: 8px; cursor: pointer; }
+.guided-reading .choice:has(input:checked) { background: #eaf1f7; border-color: #477b9b; }
+.guided-reading .choice span { font-weight: 400; }
+.guided-reading .question-number { color: #315d7b; }
+.guided-reading details { border: 0; border-top: 1px solid #ccd5df; border-radius: 0; padding: 12px 0; margin-bottom: 0; }
+.guided-reading button.secondary, .guided-reading #more-options button { background: transparent; color: #204b76; border: 1px solid #8294a7; }
+.guided-reading #save-status { font-size: .875rem; color: #455568; }
+.guided-reading [data-result]:not(:empty) { border-left: 3px solid #367663; padding: 10px 14px; background: #f0f7f4; }
+.guided-reading .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.reading-page :focus-visible { outline: 3px solid #bf6b00; outline-offset: 3px; }
+@media (max-width: 640px) {
+  :is(.guided-reading, .reading-page) blockquote { padding: 16px; }
+  :is(.guided-reading, .reading-page) blockquote ol { grid-template-columns: 1fr; }
+  .guided-reading .response-task { padding: 16px; }
+  :is(.guided-reading, .reading-page) th, :is(.guided-reading, .reading-page) td { padding: 8px; }
+}
+/* Labels stay intact in the short informational comparison table. */
+.reading-page th:first-child, .reading-page td:first-child { width: 30%; overflow-wrap: normal; }
+.guided-reading .task-teaching h3 { color: #315d7b; border-left: 3px solid #477b9b; padding-left: 12px; }
+
+.reading-page section > ul { padding: 16px 20px 16px 36px; border-left: 3px solid #477b9b; background: #f0f5fa; border-radius: 0 8px 8px 0; }
+/* Native discussions keep their Canvas action in the same blue reading palette. */
+.reading-page .submit { border: 1px solid #cbd8e4; border-left: 3px solid #477b9b; background: #f0f5fa; }
+.reading-page .submit h2 { margin: 0 0 8px; font-size: .8rem; line-height: 1.4; color: #315d7b; }
+/* Course illustrations preserve their full composition and scale with the text column. */
+.reading-page section img, .guided-reading section img { display: block; max-width: 100%; height: auto; border-radius: 10px; }
+.reading-page p:has(> img) + p, .guided-reading p:has(> img) + p { color: #455568; font-size: .875rem; }
 </style>
-<div class="guided-workspace" id="guided-workspace">
-<h2>Purpose</h2><p>Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.</p><h2>What you are building on</h2><p>Bring your Integrated Problem Document Word file.</p><p>Answer the tasks in your own document, or use the optional response boxes here. Download your answers, then use them in the Canvas assignment. Saving or copying here does not submit work to Canvas.</p><details class="full-instructions"><summary>Read the full instructions and examples</summary><section>
-<p>This page is a placeholder in the Sprint 5 shell. Its content is being written; see course1/design/sprint-5-outline-v0.3.md for what it will ask. It is not published to learners.</p>
-</section></details><h2>Your tasks</h2><p>Own your progress · 0 points. Submit to complete this module requirement.</p><p id="save-status" role="status">Responses save in this browser on this device. Keep your own copy before leaving.</p>
-<section class="response-task" data-task="dojo-transcript"><h3>1. Paste the complete Dojo transcript, in order.</h3><details><summary>Guidance and self-check</summary><ul><li>The required header and every turn, in order.</li></ul></details><label for="answer-dojo-transcript">Your response</label><textarea id="answer-dojo-transcript" data-answer="dojo-transcript" maxlength="20000" rows="6"></textarea></section>
+<div class="guided-workspace guided-reading dojo-transcript" id="guided-workspace">
+<p class="dojo-privacy">Before you begin, replace names and remove confidential workplace, client, education, patient, financial, or personal details. Use role labels and approximate details when the exact detail is not needed. Do this before you send anything to the AI. Do not edit the transcript later; it must preserve the exact words and order of the conversation.</p>
+<section>
+<h2 id="what-you-need-for-this-dojo-lab">What you need for this Dojo Lab</h2>
+<ul>
+<li>Your <strong>Integrated Problem Document Word file</strong>, from the walkthrough.</li>
+<li>Your <strong>Problem Frame document</strong>, in case a question sends you back to it.</li>
+</ul>
+</section>
 
-<p id="completion-status" role="status"></p>
+<section>
+<h2 id="the-three-parts-to-this-activity">The three parts to this activity</h2>
+<ol>
+<li>Your Dojo conversation.</li>
+<li>Requesting a transcript from the Dojo and submitting it back into Canvas.</li>
+<li>Updating your Integrated Problem Document based on your conversation.</li>
+</ol>
+</section>
+
+<section>
+<h2 id="part-1-your-dojo-conversation">Part 1: Your Dojo conversation</h2>
+<p>Open your Dojo and say: &ldquo;Walk me through Dojo Lab: Test Your Argument.&rdquo; Then paste your Integrated Problem Document. Your Dojo knows what this activity is for and will take it from there: it listens to you explain your problem, reads your document the way someone new would, asks the questions that person might ask, and helps you name what you feel confident about.</p>
+<p>This lab is a rehearsal. For four sprints you built your problem, tested it, and heard from a real person. Now you practice explaining it to someone new. Each question shows you whether your document already has the answer. Where it doesn&rsquo;t, you fix it, so you go into your Readiness Report with a document you can stand behind.</p>
+<p>One rule holds for the whole conversation. Your document and your answers are yours, not the AI&rsquo;s. AI can spot a confusing sentence in seconds, but it cannot know, for example, what Dana actually told you, or which manager would push back first. You can. Push back, tell it when you disagree, or ask it to explain its reasoning. If you find yourself pasting its sentences into your document, stop and write the sentence yourself.</p>
+<p><strong>The 3Cs in this conversation.</strong> You learned these in Sprint 2. Here is what each one looks like when you are presenting your problem.</p>
+<ul>
+<li><strong>Context.</strong> Tell your Dojo who you are picturing as your reader and what they already know. A question from someone who knows your workplace is different from one from someone who doesn&rsquo;t.</li>
+<li><strong>Choices.</strong> When the Dojo says it got lost, you have options: fix the sentence, add what&rsquo;s missing, or keep it and say why. Decide which fits.</li>
+<li><strong>Confirmation.</strong> When you answer a question, point to something real: what you saw, who told you, or what you read. If you can&rsquo;t, that&rsquo;s a place to mark inferred.</li>
+</ul>
+<p><strong><em>What your Dojo is working from.</em></strong> <strong>You do not need to paste this.</strong> It is the brief your Dojo already has for this lab, shown so you can see what it has been asked to do. This lab runs in your Dojo: if yours is not set up yet, go to Set up your AI Dojo in Sprint 0 first. If it still will not load, contact your instructor.</p>
+<blockquote>
+<p>Before we start, here is how to work with me. Be my coach, not my editor. Ask one question at a time and wait for my answer. Keep each reply under 120 words. Ask what I think before you offer your own read. Never rewrite my work; point at a line and make me change it myself. When you push on something weak, say you are pushing and why. When I have defended a line, ease off and say so. If I lean on you two turns running, say so and make me put it in my own words. Do not invent anything about my workplace; ask. End with a recap I can save.</p>
+<p>== Sprint 5: Dojo Lab: Test Your Argument ==</p>
+<p>Purpose: Help the learner present their Integrated Problem Document to someone new, check that it makes sense, and leave confident about what they are carrying forward. The learner makes every change themselves. Use the Sprint 5 page with this title in the Course tab.</p>
+<p>What the learner brings: Their Integrated Problem Document. If they bring only notes or a summary, ask for the document before reading it.</p>
+<p>The rounds:</p>
+<ol>
+<li>
+<p>Say it out loud (Sensei). Before reading the document, ask the learner to explain their problem in three or four sentences, as if to someone who could help along the way (a supervisor, team lead, community member, or whoever fits their problem). Say back what you heard.</p>
+</li>
+<li>
+<p>Read as a stranger (Auditor). Read the document. Name at most three places a newcomer would get lost: a jump with no link, a course term, a claim with nothing behind it, or &ldquo;confirmed&rdquo; where it is really inferred. Quote the learner&rsquo;s words. Take one at a time. The learner decides each fix.</p>
+</li>
+<li>
+<p>Their questions (Challenger). Ask two or three questions that person might ask, such as &ldquo;How do you know?&rdquo;, &ldquo;Who might push back on this?&rdquo; or &ldquo;What happens if we do nothing?&rdquo; One question at a time. The learner answers in their own words and notes any answer that belongs in the document.</p>
+</li>
+<li>
+<p>Close (Reflector). Ask the learner to state, in their own words, what they will change, where a reader can see a call they made, what they feel most confident about carrying forward, and what they are still unsure of. Recap only the decisions they actually made.</p>
+</li>
+</ol>
+<p>Do not rewrite the document, add evidence, or comment on tone or polish; comment only on whether the argument holds. Do not ask &ldquo;so what should we do?&rdquo; or suggest solutions, and steer back to the problem if the learner starts proposing fixes. Do not tell the learner they are ready; the readiness call is theirs, in the Readiness Report.</p>
+</blockquote>
+</section>
+
+<section class="dojo-transcript-submit">
+<h2 id="part-2-requesting-and-submitting-the-transcript">Part 2: Requesting and submitting the transcript</h2>
+<p>The complete transcript is the only evidence you submit for this Dojo Lab.</p>
+<ol>
+<li>Before requesting the transcript, make sure you have gone through every round of this Dojo, through the last round.</li>
+<li>Paste the transcript request below into the same conversation exactly as written.</li>
+</ol>
+<label for="transcript-request-text">Transcript request</label>
+<textarea id="transcript-request-text" readonly rows="18">Reproduce our entire conversation as one message I can copy and paste.
+
+Rules:
+— Include every turn, in order, from my very first message to this one.
+— Put “Me:” or “Dojo:” on its own line before each turn, with a blank line between turns.
+— Use my exact words and your exact words. Do not summarise, shorten, fix, or reorder anything, and do not add commentary before or after.
+— Keep lists and code blocks formatted the way they appeared.
+— If it will not fit in one message, stop at a turn boundary and end with the single word CONTINUED. I will reply “continue” and you pick up from exactly where you stopped.
+
+Start with one header line: CIS501 — Dojo transcript — [today’s date].
+</textarea>
+<button type="button" id="copy-transcript-request">Copy transcript request</button>
+<ol start="3">
+<li>If the reply ends with CONTINUED, type "continue". Repeat until a reply does not end with CONTINUED.</li>
+<li>Paste every chunk into the box below, in order. Keep any CONTINUED markers. Do not submit a summary, link, separate answer, or edited excerpt.</li>
+<li>Check that the transcript begins with the header line "CIS501 — Dojo transcript — [date]" and includes every turn from your first message through the transcript request. Then paste it into the Canvas assignment and submit it there. <strong>Then continue to Part 3 below.</strong></li>
+</ol>
+<div class="response-task" data-task="dojo-transcript">
+<label for="answer-dojo-transcript">Paste the complete Dojo transcript, including every CONTINUED chunk, in order.</label>
+<textarea id="answer-dojo-transcript" data-answer="dojo-transcript" rows="20" aria-describedby="save-status"></textarea>
+<details><summary>Self-check</summary><ul><li>The header line and every turn, in order.</li><li>Every CONTINUED marker and continuation chunk kept.</li><li>The conversation reaches the method&#x27;s last round, where you say what changed and what you chose.</li></ul></details>
+</div>
+<p id="save-status" role="status">Drafts save in this browser. Keep your own copy.</p>
+<p>Own your progress · 0 points. Submit to complete this module requirement.</p>
 <button type="button" id="download-answers">Download my answers</button>
-<button type="button" id="clear-draft">Clear this browser draft</button>
-<div id="clear-confirmation" hidden><p>Clear only this assignment's saved draft in this browser? Save any work you want to keep first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
+<p>Paste the complete transcript into Canvas to submit. Copying or saving here does not submit your work. </p>
 <p id="copy-status" role="status"></p>
+<details id="more-options"><summary>More options</summary>
+<button type="button" id="clear-draft">Clear this browser draft</button>
+<div id="clear-confirmation" hidden><p>Clear this saved draft? Keep a copy first.</p><button type="button" id="confirm-clear">Clear saved responses</button><button type="button" id="cancel-clear">Keep my responses</button></div>
 
-<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-dojo-lab-audit-your-argument", "title": "Dojo Lab: audit your argument for gaps", "module": "Sprint 5: Synthesize And Show Readiness (V2)", "practiceOnly": false, "version": "1.0", "purpose": "Have the Dojo read your integrated document as a stranger and say where it cannot follow, then fix those holes before you judge readiness.", "builds_on": "Bring your Integrated Problem Document Word file.", "standing_instruction": "Own your progress · 0 points. Submit to complete this module requirement.", "tasks": [{"id": "dojo-transcript", "kind": "response", "prompt": "Paste the complete Dojo transcript, in order.", "criteria": ["The required header and every turn, in order."]}]}</script>
+<p id="completion-status"></p>
+</details>
+</section>
+<script type="application/json" id="guided-config">{"artifactId": "course1-sprints-sprint-9-dojo-lab-audit-your-argument", "title": "Dojo Lab: audit your argument for gaps", "module": "Sprint 5: Synthesize And Show Readiness (V2)", "version": "2.0", "purpose": "Present your Integrated Problem Document to someone new, check that it makes sense, and leave confident about what you are carrying forward.", "builds_on": "Bring your Integrated Problem Document Word file and your Problem Frame document.", "standing_instruction": "Own your progress · 0 points. Submit to complete this module requirement.", "tasks": [{"id": "dojo-transcript", "kind": "response", "prompt": "Paste the complete Dojo transcript, including every CONTINUED chunk, in order.", "criteria": ["The header line and every turn, in order.", "Every CONTINUED marker and continuation chunk kept.", "The conversation reaches the method's last round, where you say what changed and what you chose."]}], "dojoSubmission": {"mode": "transcript", "prompt_version": "v1", "submit_in_part_2": true}, "transcriptRequest": "Reproduce our entire conversation as one message I can copy and paste.\n\nRules:\n— Include every turn, in order, from my very first message to this one.\n— Put “Me:” or “Dojo:” on its own line before each turn, with a blank line between turns.\n— Use my exact words and your exact words. Do not summarise, shorten, fix, or reorder anything, and do not add commentary before or after.\n— Keep lists and code blocks formatted the way they appeared.\n— If it will not fit in one message, stop at a turn boundary and end with the single word CONTINUED. I will reply “continue” and you pick up from exactly where you stopped.\n\nStart with one header line: CIS501 — Dojo transcript — [today’s date].\n"}</script>
 <script>(function () {
   'use strict';
   const config = JSON.parse(document.getElementById('guided-config').textContent);
@@ -493,8 +632,21 @@ html.native-canvas-context .back-link { display: none !important; }
 }());
 </script>
 </div>
+<div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p></p></div>
+<style>.guided-reading.dojo-next-step { background: var(--accent-light); border: 1px solid #a3bffa; border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 14px 18px; }
+.dojo-next-label { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.guided-reading.dojo-next-step h2 { margin-top: 8px; }
+.guided-reading.dojo-next-step section:last-child { margin-bottom: 0; }</style>
+<div class="guided-reading dojo-transcript dojo-next-step">
+<p class="dojo-next-label">Before you leave this page</p>
+<section>
+<h2 id="part-3-updating-your-integrated-problem-document">Part 3: Updating your Integrated Problem Document</h2>
+<p>After you submit the transcript, open your Integrated Problem Document Word file and make the changes you decided on in the conversation: a sentence rewritten so someone new can follow it, an answer you added, a claim you re-marked as inferred. Change what you decided to change and leave the rest. Keep your transcript; its recap is a good list to work from.</p>
+<p>At the top of the same file, add one line: &ldquo;Updated after the Dojo Lab:&rdquo; and what you changed. Then upload it again to the Integrated Problem Document assignment as a new attempt. You will use it in your Readiness Report.</p>
+</section>
+</div>
 
-    <div class="submit"><h2>Submit to Canvas</h2><p>Paste your final response text into the Canvas assignment. A document link or a saved browser draft is not a submission.</p><p></p></div>
+    
 
 <footer aria-label="Course partners"><div class="brand-row" aria-label="Course partners"><img class="brand-logo cti-logo" src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative" onerror="this.style.display='none'"><span class="brand-divider" aria-hidden="true"></span><img class="brand-logo deanza-logo" src="https://upload.wikimedia.org/wikipedia/commons/b/be/De_Anza_College_logo.svg" alt="De Anza College" onerror="this.style.display='none'"></div></footer>
   </div>
