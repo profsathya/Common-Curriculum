@@ -61,6 +61,8 @@ figure.q figcaption b{color:var(--ink);font-weight:600}
 /* Video tab */
 .player{max-width:960px}
 .screen{min-width:0}
+.ytwrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.ytwrap iframe,.ytwrap #vid{position:absolute;inset:0;width:100%;height:100%;border:0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .nowrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
 .nowrow .now{margin:0}
@@ -189,10 +191,7 @@ footer b{color:var(--navy)}
     <ol class="strip" id="cliplist"></ol>
     <p class="clipdesc" id="clipdesc"></p>
     <div class="screen">
-      <video id="vid" controls playsinline preload="metadata">
-        <source id="vsrc" src="clips/01-welcome-and-where-we-stand.mp4" type="video/mp4">
-        <track id="vtrack" kind="captions" src="clips/01-welcome-and-where-we-stand.vtt" srclang="en" label="English" default>
-      </video>
+      <div class="ytwrap"><div id="vid"></div></div>
       <div class="nowrow">
         <p class="now" aria-live="polite">Now playing: <b id="nowtitle">1. Welcome, and where we each stand</b></p>
         <label class="speed">Speed
@@ -534,14 +533,27 @@ footer b{color:var(--navy)}
     wholist.appendChild(p);
   });
 
-  /* playback speed (default 1.15x) */
+  /* YouTube player (unlisted videos), default speed 1.15x */
+  var YT_IDS = ['R6LN1PpviTw','byblNHLBZec','4msTMhZNCLM','RZY28CL4fiY','iRkvmZy5p_s','XHoW-eJzqCk','g-9h2N_UBnM','jQT9oqsbeBQ','0Yf1Nps2VRM','fjzwafSjJGs'];
   var speedSel = document.getElementById('speed');
   var rate = parseFloat(speedSel.value);
-  function applyRate(){ vid.defaultPlaybackRate = rate; vid.playbackRate = rate; }
+  var player = null, ready = false, pending = null;
+  function applyRate(){ if (ready && player && player.setPlaybackRate) player.setPlaybackRate(rate); }
   speedSel.addEventListener('change', function(){ rate = parseFloat(speedSel.value); applyRate(); });
-  vid.addEventListener('loadedmetadata', applyRate);
-  vid.addEventListener('play', function(){ if (vid.playbackRate !== rate) vid.playbackRate = rate; });
-  applyRate();
+  window.onYouTubeIframeAPIReady = function(){
+    player = new YT.Player('vid', {
+      videoId: YT_IDS[0],
+      playerVars: { cc_load_policy: 1, cc_lang_pref: 'en', hl: 'en', rel: 0, playsinline: 1 },
+      events: {
+        onReady: function(){ ready = true; applyRate(); if (pending){ var f = pending; pending = null; f(); } },
+        onStateChange: function(e){
+          if (e.data === YT.PlayerState.PLAYING && Math.abs(player.getPlaybackRate() - rate) > 0.01) player.setPlaybackRate(rate);
+          if (e.data === YT.PlayerState.ENDED && current < CLIPS.length) load(current + 1, 0, true);
+        }
+      }
+    });
+  };
+  (function(){ var s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); })();
 
   var desc = document.getElementById('clipdesc');
   var count = document.getElementById('count');
@@ -557,27 +569,15 @@ footer b{color:var(--navy)}
     var li = b.parentNode, L = li.offsetLeft - list.offsetLeft, R = L + li.offsetWidth;
     if (L < list.scrollLeft || R > list.scrollLeft + list.clientWidth) list.scrollTo({left: Math.max(0, L - 2), behavior:'smooth'});
   }
-  /* when a section ends, go on to the next one */
-  vid.addEventListener('ended', function(){ if (current < CLIPS.length) load(current + 1, 0, true); });
-
   function load(n, t, play){
     var c = CLIPS[n-1];
+    current = n;
     var go = function(){
-      try { vid.currentTime = t || 0; } catch(e){}
-      if (play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); }
+      var opts = { videoId: YT_IDS[n-1], startSeconds: t || 0 };
+      if (play) player.loadVideoById(opts); else player.cueVideoById(opts);
+      applyRate();
     };
-    if (n !== current){
-      current = n;
-      vid.pause();
-      var old = document.getElementById('vtrack'); if (old) old.remove();
-      document.getElementById('vsrc').src = 'clips/' + c[0] + '.mp4';
-      var tr = document.createElement('track');
-      tr.id = 'vtrack'; tr.kind = 'captions'; tr.srclang = 'en'; tr.label = 'English'; tr.default = true;
-      tr.src = 'clips/' + c[0] + '.vtt';
-      vid.appendChild(tr);
-      vid.load();
-      vid.addEventListener('loadedmetadata', function h(){ vid.removeEventListener('loadedmetadata', h); applyRate(); if (vid.textTracks[0]) vid.textTracks[0].mode = 'showing'; go(); });
-    } else { go(); }
+    if (ready) go(); else pending = go;
     nowTitle.textContent = n + '. ' + c[1];
     whobox.hidden = (n !== 2);
     desc.textContent = c[3];
