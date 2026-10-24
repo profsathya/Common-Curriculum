@@ -1,4 +1,4 @@
-<!-- Editable text for my-sprint-2-experience-and-sprint-3-path.html (not built; the .html is built only after Prof. Sathya has edited this file). DRAFT 2, 24 Oct 2026, after his first edit pass (his edited draft 1 is kept as .bak-his-edit-2026-10-24).
+<!-- Editable text for my-sprint-2-experience-and-sprint-3-path.html (.html built 24 Oct from this version). DRAFT 3, 24 Oct 2026, after his second edit pass; the .html is built from this version. Draft 3 adds the two hover-text bubbles he asked for (GlowScript, Nand2Tetris), a starter line in the Why box, and a self-check line that matches his new Why wording.
 Notes for the editor, not shown to students:
 - Draft 2 changes from his pass: the three steps ARE the activity now (narrative · relationship from memory · choice), so the separate fact boxes (finish dates, hours, longest scenario) are gone; Part 1 is one narrative box with a grey sample inside and two more samples in a drop-down under it; paths reordered A trail · B own goal · C project; the "What it gives you" and "A student who picks this noticed" lines are removed, each path is one plain description; the AI-helper block appears once, at the end, pending his decision below; page is about half the length of draft 1.
 - Decided 23 Oct: one graded item due Fri 30 Oct, two days after the Sprint 2 Exam. It absorbs the WIP OYP "My self-directed learning process in Sprint 2". Friday is a deliberate exception to the Monday rule.
@@ -85,15 +85,15 @@ All three paths end in the same place by Dec 9: a relationship you can state, th
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 
-**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for Physics or Nand2Tetris for computing circuits <<To Alan: we should make these hover text and point to Glowscript and Nand2Tetris tools>> (or another tool from the list on the page) and find the physics relationship inside what you built.
+**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for physics or Nand2Tetris for computing circuits (or another tool from the list on the page) and find the physics relationship inside what you built.
 
 - **The path I choose.** Select A, B or C.
 
    **The path I choose.** A · B · C
 
-- **Why this path.** Write one or two sentences connecting your choice to what you wrote in Steps 1 and 2.
+- **Why this path.** Explain why you chose this particular path and how you expect it to help you become a better learner.
 
-   **Why this path.** What in my story and my Step 2 answer points me here.
+   **Why this path.** Why I chose it, and how I expect it to help me become a better learner.
 
 ## Self-check
 
@@ -102,7 +102,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Step 1 tells my Sprint 2 story around at least three of the questions, with specifics (dates, hours, resources, people) · 40 pts
 - [ ] Step 2 is written from memory, and says which parts did not come back and why · 25 pts
 - [ ] Step 3 selects one path · 10 pts
-- [ ] Step 3's reason points to something specific in my Step 1 story or my Step 2 answer · 25 pts
+- [ ] Step 3 explains why I chose this path and how I expect it to help me become a better learner, drawing on my Step 1 story or my Step 2 answer · 25 pts
 
 **Grading.** 100 points, in Graded items. Submitting on time earns the doing half of your grade; explaining your choice in your first Sprint 3 check-in earns the other half.
 
@@ -132,13 +132,21 @@ Do not summarize until the student asks. When they ask, output the text in the e
 
 - My Sprint 2 story: addresses at least three of the six questions and carries specifics (a day, a number of hours, a named resource or person); the feedback asks for a specific where one is missing, and never rewrites the story.
 - My relationship from memory: contains words, formula with units and condition, or says which parts did not come back and why; the feedback never supplies a missing part.
-- Why this path: refers to something specific in the student's story or Step 2 answer; the feedback never comments on whether the path chosen is the right one.
+- Why this path: gives a reason for the choice and says how the student expects the path to help them learn better, drawing on their story or Step 2 answer; the feedback never comments on whether the path chosen is the right one.
 
 The reply is two or three sentences: what the box already does well, then the one thing that would make it complete. No rewriting of the student's text, and no opinion on the choice.
 
 ## Hover text (a bubble on the first use of each word; not a section on the page)
 
-None yet.
+**GlowScript** (first use in Path C)
+- *What it is.* A free website (glowscript.org) where you write short Python programs that make 3D objects move on screen according to the physics you give them.
+- *Why it fits this path.* You decide the forces and the starting conditions, so when the motion on screen matches or fails to match what you expected, the relationship you are after is sitting in your own code.
+- *Where to start.* glowscript.org, Sign in, then the first example on the Help page runs a bouncing ball you can change.
+
+**Nand2Tetris** (first use in Path C)
+- *What it is.* A free course and simulator (nand2tetris.org) in which you build a working computer from a single kind of logic gate upward, one layer at a time.
+- *Why it fits this path.* Each layer works only because the one below it obeys an exact rule, so the quantitative relationships of computing circuits (timing, voltage levels, gate counts) show up as you test what you built.
+- *Where to start.* nand2tetris.org, Project 1, which needs only the free simulator download.
 
 ## Where this page comes from
 
