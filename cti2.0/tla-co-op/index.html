@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Value in the Age of AI · TLA/CTI Co-op · Oct 23, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#153857; --blue:#2A6FAD; --green:#2D875E;
+  --blue-tint:#E9F0F7; --green-tint:#E9F3EE;
+  --ink:#1F2933; --muted:#52606D; --line:#D9E2EC; --bg:#F7F9FB; --card:#FFFFFF;
+  --font:"Jost","Futura","Century Gothic",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:2px}
+a:hover{color:var(--navy)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header.top{background:linear-gradient(135deg,#153857 0%,#2A6FAD 100%);color:#fff;padding:26px 0 0}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.brand img{height:40px;width:auto;background:#fff;border-radius:6px;padding:4px 8px}
+.brand span{font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+header.top h1{font-size:clamp(28px,4.4vw,42px);line-height:1.15;margin:0 0 6px;font-weight:600}
+header.top .when{font-size:17px;opacity:.92;margin:0 0 4px}
+header.top .lede{font-size:16px;opacity:.88;margin:0 0 20px;max-width:720px}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs [role=tab]{font:inherit;font-size:16px;font-weight:500;color:#fff;background:rgba(255,255,255,.12);border:0;border-radius:10px 10px 0 0;padding:12px 18px;cursor:pointer;white-space:nowrap;min-height:44px}
+.tabs [role=tab]:hover{background:rgba(255,255,255,.22)}
+.tabs [role=tab][aria-selected=true]{background:var(--bg);color:var(--navy);font-weight:600}
+.tabs [role=tab]:focus-visible{outline:3px solid #FFD166;outline-offset:-3px}
+
+main{padding:28px 0 56px}
+[role=tabpanel]{outline:none}
+[role=tabpanel][hidden]{display:none}
+h2{font-size:26px;color:var(--navy);margin:0 0 6px;font-weight:600}
+.intro{color:var(--muted);margin:0 0 22px;max-width:760px}
+h3.theme{font-size:19px;color:var(--navy);margin:30px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line);font-weight:600}
+
+/* Quotes */
+.quotes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+figure.q{margin:0;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:16px 18px 14px;display:flex;flex-direction:column}
+figure.q.green{border-left-color:var(--green)}
+figure.q blockquote{margin:0 0 10px;font-size:17px;line-height:1.5}
+figure.q blockquote::before{content:"\201C";color:var(--blue);font-size:28px;line-height:0;vertical-align:-10px;margin-right:2px}
+figure.q figcaption{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;color:var(--muted)}
+figure.q figcaption b{color:var(--ink);font-weight:600}
+.play{font:inherit;font-size:14px;font-weight:500;color:var(--blue);background:var(--blue-tint);border:0;border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap;min-height:32px}
+.play:hover{background:#D6E4F2;color:var(--navy)}
+.play:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.note{background:var(--green-tint);border-radius:10px;padding:14px 18px;margin:26px 0 0;font-size:16px}
+
+/* Video tab */
+.player{max-width:960px}
+.screen{min-width:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.nowrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.nowrow .now{margin:0}
+.speed{font-size:15px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.speed select{font:inherit;font-size:15px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;min-height:32px}
+#whobox{margin-top:16px}
+.whohead{font-size:16px;color:var(--navy);margin:0 0 8px;font-weight:600}
+.screen video{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;display:block}
+.now{margin:10px 0 0;font-size:16px}
+.now b{color:var(--navy)}
+.small{font-size:15px;color:var(--muted)}
+.striphead{display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}
+.striphead .whohead{margin:0}
+.stripnav{display:flex;align-items:center;gap:8px}
+.count{font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums;margin-right:4px}
+.arrow{font:inherit;font-size:18px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer}
+.arrow:hover{border-color:var(--blue)}
+.arrow:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.arrow:disabled{opacity:.35;cursor:default}
+ol.strip{list-style:none;margin:0;padding:2px 2px 10px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin}
+ol.strip li{flex:0 0 calc((100% - 30px)/4);scroll-snap-align:start;display:flex}
+.clipdesc{margin:6px 0 14px;font-size:16px;color:var(--ink);min-height:1.5em}
+.clip{width:100%;text-align:left;font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.clip .top{display:flex;justify-content:space-between;align-items:baseline}
+.clip:hover{border-color:var(--blue)}
+.clip:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.clip[aria-current=true]{border-color:var(--blue);background:var(--blue-tint);box-shadow:inset 0 -4px 0 var(--blue)}
+.clip .n{font-weight:600;color:var(--blue);font-variant-numeric:tabular-nums}
+.clip .t{font-weight:600;color:var(--navy);display:block;font-size:15px;line-height:1.35}
+.clip .d{font-size:15px;color:var(--muted);display:block;margin-top:2px}
+.clip .len{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+ul.who{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+ul.who li{font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px}
+ul.who li b{color:var(--navy)}
+ul.who li .role{color:var(--muted)}
+ul.who li q{display:block;margin-top:3px}
+ul.who .play{margin-top:6px}
+
+/* References */
+.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 20px}
+.subtabs [role=tab]{font:inherit;font-size:16px;font-weight:500;color:var(--navy);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 18px;cursor:pointer;min-height:40px}
+.subtabs [role=tab][aria-selected=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.subtabs [role=tab]:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.ref{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.ref h4{margin:0 0 2px;font-size:17px;line-height:1.35}
+.ref h4 a{color:var(--navy);text-decoration:none}
+.ref h4 a:hover{text-decoration:underline}
+.ref .by{font-size:15px;color:var(--muted);margin:0 0 8px}
+.ref p{margin:0;font-size:15px}
+.tag{display:inline-block;font-size:13px;font-weight:600;color:var(--green);background:var(--green-tint);border-radius:999px;padding:2px 10px;margin-bottom:8px}
+
+/* CTI work */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column}
+.card h4{margin:0 0 6px;font-size:18px;color:var(--navy)}
+.card p{margin:0 0 12px;font-size:15px;color:var(--ink)}
+.card .go{margin-top:auto;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:32px}
+.card .go:hover{text-decoration:underline}
+.card blockquote{margin:0 0 12px;padding-left:12px;border-left:3px solid var(--green);font-size:15px}
+
+.summary video{width:100%;max-width:880px;aspect-ratio:16/9;background:#000;border-radius:12px;display:block}
+
+
+/* How I built this page */
+.chat{display:flex;flex-direction:column;gap:14px;max-width:860px}
+.msg{border-radius:14px;padding:14px 18px;font-size:16px;border:1px solid var(--line)}
+.msg .who{display:block;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.msg.me{background:var(--blue-tint);border-color:#C9DAEC;margin-left:48px}
+.msg.me .who{color:var(--blue)}
+.msg.ai{background:#fff;margin-right:48px}
+.msg.ai .who{color:var(--green)}
+.msg p{margin:0 0 10px}
+.msg p:last-child,.msg ul:last-child,.msg ol:last-child{margin-bottom:0}
+.msg ul,.msg ol{margin:0 0 10px;padding-left:22px}
+.msg li{margin-bottom:4px}
+.msg code{font-size:14px;background:#F1F4F8;border-radius:4px;padding:1px 5px}
+.msg .redact{color:var(--muted);font-style:italic}
+@media (max-width:820px){.msg.me{margin-left:16px}.msg.ai{margin-right:16px}}
+footer{border-top:1px solid var(--line);background:#fff;padding:22px 0;font-size:15px;color:var(--muted)}
+footer b{color:var(--navy)}
+
+@media (max-width:820px){
+  ol.strip li{flex-basis:calc((100% - 10px)/2)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="Computing Talent Initiative"><span>Teaching, Learning &amp; Assessment · CTI</span></div>
+    <h1>Human Value in the Age of AI</h1>
+    <p class="when">TLA/CTI Co-op · Friday, October 23, 2026</p>
+    <p class="lede">The recording in short parts, what we said, and the books and articles that came up.</p>
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="t-recording" aria-controls="p-recording" aria-selected="true">Recording</button>
+      <button role="tab" id="t-references" aria-controls="p-references" aria-selected="false" tabindex="-1">References</button>
+      <button role="tab" id="t-cti" aria-controls="p-cti" aria-selected="false" tabindex="-1">CTI's work</button>
+      <button role="tab" id="t-summary" aria-controls="p-summary" aria-selected="false" tabindex="-1">AI-generated video</button>
+      <button role="tab" id="t-howbuilt" aria-controls="p-howbuilt" aria-selected="false" tabindex="-1">How I built this page</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ RECORDING (videos + key takeaways) ============ -->
+<section role="tabpanel" id="p-recording" aria-labelledby="t-recording" tabindex="0">
+  <h2 class="sr">Recording</h2>
+  <div class="subtabs" id="rec-subtabs" role="tablist" aria-label="Recording">
+    <button role="tab" id="st-videos" aria-controls="sp-videos" aria-selected="true">Videos</button>
+    <button role="tab" id="st-takeaways" aria-controls="sp-takeaways" aria-selected="false" tabindex="-1">Key takeaways</button>
+  </div>
+<div role="tabpanel" id="sp-videos" aria-labelledby="st-videos" tabindex="0">
+  <p class="intro">The main-room conversation in ten parts (about 71 minutes in all). Captions are Zoom's automatic transcript, so expect some transcription errors. The breakout-room conversations were not recorded.</p>
+  <div class="player">
+    <div class="striphead">
+      <h3 class="whohead">Sections</h3>
+      <div class="stripnav">
+        <span class="count" id="count">1 of 10</span>
+        <button type="button" class="arrow" id="prev" aria-label="Show earlier sections">&larr;</button>
+        <button type="button" class="arrow" id="next" aria-label="Show later sections">&rarr;</button>
+      </div>
+    </div>
+    <ol class="strip" id="cliplist"></ol>
+    <p class="clipdesc" id="clipdesc"></p>
+    <div class="screen">
+      <video id="vid" controls playsinline preload="metadata">
+        <source id="vsrc" src="clips/01-welcome-and-where-we-stand.mp4" type="video/mp4">
+        <track id="vtrack" kind="captions" src="clips/01-welcome-and-where-we-stand.vtt" srclang="en" label="English" default>
+      </video>
+      <div class="nowrow">
+        <p class="now" aria-live="polite">Now playing: <b id="nowtitle">1. Welcome, and where we each stand</b></p>
+        <label class="speed">Speed
+          <select id="speed"><option value="1">1×</option><option value="1.15" selected>1.15×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select>
+        </label>
+      </div>
+    </div>
+    <div id="whobox" hidden>
+      <h3 class="whohead">Introductions, in order</h3>
+      <ul class="who" id="wholist"></ul>
+    </div>
+  </div>
+</div>
+<div role="tabpanel" id="sp-takeaways" aria-labelledby="st-takeaways" tabindex="0" hidden>
+  <p class="intro">In the words of the people who said them. Filler words are removed; “…” marks where a sentence is shortened. Select <em>Watch</em> to hear the moment in the recording.</p>
+
+  <h3 class="theme">Why we are talking</h3>
+  <div class="quotes">
+    <figure class="q"><blockquote>Everyone is somewhat right, and everyone is somewhat wrong, so the idea of using conversations to figure out the elephant that none of us really see … is the motivation behind what we are trying to do here.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="1" data-t="129">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>This is why we have these co-ops. We can talk to one another and think, how can we see other perspectives?</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="10" data-t="178">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>I think that perspective always, always needs to be in the room. It's really important, because there's truth in everything you said.</blockquote><figcaption><b>Dan Shapiro</b><button class="play" data-clip="5" data-t="164">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <h3 class="theme">Concerns we raised</h3>
+  <div class="quotes">
+    <figure class="q"><blockquote>While AI can be a tool that enhances creativity and critical thinking, it also is a really handy tool to bypass those, and I think that students are using it vastly more as a substitute for critical thinking and creativity than they are to augment those.</blockquote><figcaption><b>Dante Di Gregorio</b><button class="play" data-clip="2" data-t="417">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>I'm still wanting to learn about how to stop students from cognitively offloading.</blockquote><figcaption><b>Jim Raines</b><button class="play" data-clip="2" data-t="530">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>I want my nurses to be critical thinkers. … They need to be quick on their feet. They need to know how to be a human for another human.</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="2" data-t="636">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>How can a society that is so not equal, not supportive, not just create technology that can support that?</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="4" data-t="67">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>The emotional connection should be with human beings and not with AI bots.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="5" data-t="290">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <h3 class="theme">Hopes we raised</h3>
+  <div class="quotes">
+    <figure class="q green"><blockquote>I do remain hopeful and curious about it … I do see that it can be an efficient tool when used properly.</blockquote><figcaption><b>Christine Fernandez</b><button class="play" data-clip="2" data-t="278">▶ Watch</button></figcaption></figure>
+    <figure class="q green"><blockquote>I'm hopeful that we can use AI technologies in a positive way, and help us in an era where we have less and less support and are asked to do way more.</blockquote><figcaption><b>Angel González</b><button class="play" data-clip="2" data-t="755">▶ Watch</button></figcaption></figure>
+    <figure class="q green"><blockquote>I just feel like there is the potential for incredible harm. And that potential is real, but I also think there's potential for good.</blockquote><figcaption><b>Dan Shapiro</b><button class="play" data-clip="5" data-t="199">▶ Watch</button></figcaption></figure>
+    <figure class="q green"><blockquote>The future is not preordained. Let's play a role in getting human value, everybody thriving in there.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="4" data-t="407">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <h3 class="theme">Teaching with it, or without it</h3>
+  <div class="quotes">
+    <figure class="q"><blockquote>If you don't ever let them use the sharp knives, they become afraid of them. And then they don't want to use them, and then actually they could become more dangerous. … Do we have a responsibility to at least make sure our students know how to use it safely, or at least make their own decisions about whether or not they want to use it?</blockquote><figcaption><b>Dan Shapiro</b><button class="play" data-clip="7" data-t="201">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>There's how to use it, but there may also be questions when to use it. Maybe there are times when it should not be used in college.</blockquote><figcaption><b>Dan Shapiro</b><button class="play" data-clip="9" data-t="283">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>There's no requirement to use it, there's no requirement not to use it. It's just be aware of it.</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="5" data-t="345">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>I don't require my students to use AI, I encourage them to, and I give them guardrails, I give them structure.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="5" data-t="244">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>There are papers coming out on both sides, and it seems to me how you use it.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="9" data-t="178">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <h3 class="theme">Is it either/or?</h3>
+  <div class="quotes">
+    <figure class="q"><blockquote>Is this co-op, we have accepted AI is here to stay, so how do we work with that? Versus … let's step back a minute and say, we can still fight this, let's talk about philosophy and humanity.</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="7" data-t="1">▶ Watch</button></figcaption></figure>
+    <figure class="q"><blockquote>I'm not sure that's a completely either-or … philosophy and humanity and history are the most important subjects now.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="7" data-t="58">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <h3 class="theme">Before next time</h3>
+  <div class="quotes">
+    <figure class="q green"><blockquote>Maybe that's our homework assignment, is we all try and find an article that speaks to us about this issue … when is it okay, or when is it not okay?</blockquote><figcaption><b>Satu Larson</b><button class="play" data-clip="9" data-t="299">▶ Watch</button></figcaption></figure>
+    <figure class="q green"><blockquote>You could do maybe a summary saying, I found this helpful this way, here is an article if you're curious to read.</blockquote><figcaption><b>Sathya Narayanan</b><button class="play" data-clip="10" data-t="244">▶ Watch</button></figcaption></figure>
+  </div>
+
+  <p class="note"><b>Next session:</b> Friday, October 30, same time. Reply-all to the co-op email with an article you found helpful and a line on why.</p>
+</div>
+</section>
+
+
+<!-- ============ REFERENCES ============ -->
+<section role="tabpanel" id="p-references" aria-labelledby="t-references" tabindex="0" hidden>
+  <h2>References</h2>
+  <p class="intro">Books and articles named in the conversation are marked. The rest come from a reading list Sathya keeps, chosen to cover different views.</p>
+  <div class="subtabs" role="tablist" aria-label="Reference types">
+    <button role="tab" id="st-books" aria-controls="sp-books" aria-selected="true">Books</button>
+    <button role="tab" id="st-articles" aria-controls="sp-articles" aria-selected="false" tabindex="-1">Articles &amp; research</button>
+    <button role="tab" id="st-podcasts" aria-controls="sp-podcasts" aria-selected="false" tabindex="-1">Podcasts</button>
+  </div>
+
+  <div role="tabpanel" id="sp-books" aria-labelledby="st-books" tabindex="0">
+    <div class="refs">
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/">Co-Intelligence: Living and Working with AI</a></h4><p class="by">Ethan Mollick</p><p>Working with AI as a collaborator in teaching, creativity and work.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.penguin.co.uk/books/477828/co-existence-by-mollick-ethan/9780753562376">Co-Existence</a></h4><p class="by">Ethan Mollick · 2026</p><p>Mollick's follow-up to Co-Intelligence.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.penguinrandomhouse.com/books/743569/empire-of-ai-by-karen-hao/">Empire of AI: Dreams and Nightmares in Sam Altman's OpenAI</a></h4><p class="by">Karen Hao</p><p>A reporter's account of OpenAI and the costs of AI for workers and the environment.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.press.jhu.edu/books/title/54122/teaching-ai">Teaching with AI: A Practical Guide to a New Era of Human Learning</a></h4><p class="by">José Antonio Bowen &amp; C. Edward Watson</p><p>Strategies for teaching and assignment design when students have AI.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://press.princeton.edu/books/hardcover/9780691249131/ai-snake-oil">AI Snake Oil</a></h4><p class="by">Arvind Narayanan &amp; Sayash Kapoor</p><p>How to tell what AI can and can't do, with a focus on predictive AI.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://academic.oup.com/book/59718">How to Think About AI: A Guide for the Perplexed</a></h4><p class="by">Richard Susskind</p><p>AI's effect on professional work and judgment, for non-technical readers.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.ynharari.com/book/nexus/">Nexus: A Brief History of Information Networks from the Stone Age to AI</a></h4><p class="by">Yuval Noah Harari</p><p>Information networks through history, and what changes when AI creates information.</p></article>
+      <article class="ref"><h4><a href="https://www.ynharari.com/book/21-lessons-book/">21 Lessons for the 21st Century</a></h4><p class="by">Yuval Noah Harari</p><p>Present-day questions on technology, work and education.</p></article>
+      <article class="ref"><h4><a href="https://www.the-coming-wave.com/">The Coming Wave</a></h4><p class="by">Mustafa Suleyman</p><p>An insider's case that AI is hard to contain, and what governance it needs.</p></article>
+      <article class="ref"><h4><a href="https://www.penguinrandomhouse.com/books/740806/brave-new-words-by-salman-khan/">Brave New Words</a></h4><p class="by">Sal Khan</p><p>The founder of Khan Academy on AI tutors that guide students rather than give answers.</p></article>
+      <article class="ref"><h4><a href="https://www.penguinrandomhouse.com/books/313732/reclaiming-conversation-by-sherry-turkle/">Reclaiming Conversation: The Power of Talk in a Digital Age</a></h4><p class="by">Sherry Turkle</p><p>Why face-to-face conversation matters for empathy, learning and work, and what screens take from it.</p></article>
+      <article class="ref"><h4><a href="https://www.penguinrandomhouse.com/books/552885/thinking-in-bets-by-annie-duke/">Thinking in Bets: Making Smarter Decisions When You Don't Have All the Facts</a></h4><p class="by">Annie Duke</p><p>How to make decisions under uncertainty, and how to judge a decision apart from how it turned out.</p></article>
+      <article class="ref"><h4><a href="https://anilananthaswamy.com/why-machines-learn">Why Machines Learn: The Elegant Math Behind Modern AI</a></h4><p class="by">Anil Ananthaswamy</p><p>How machine learning works, for readers without an advanced math background.</p></article>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="sp-articles" aria-labelledby="st-articles" tabindex="0" hidden>
+    <div class="refs">
+      <article class="ref"><span class="tag">Shared in our conversation</span><h4><a href="https://abiawomosu.substack.com/p/your-imagination-was-always-empires">Your Imagination Was Always Empire's Last Frontier</a></h4><p class="by">Abi Awomosu · April 2026</p><p>“The Empires of AI are not after your job, your reasoning, or your thinking. They are after the part of you that dreams.”</p></article>
+      <article class="ref"><span class="tag">Shared in our conversation</span><h4><a href="https://aiassessmentscale.com/">The AI Assessment Scale</a></h4><p class="by">Mike Perkins, Jasper Roe, Leon Furze &amp; Jason MacVaugh</p><p>A five-level framework for deciding what role AI should play in an assessment task.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://www.pnas.org/doi/10.1073/pnas.2422633122">Generative AI without guardrails can harm learning: Evidence from high school mathematics</a></h4><p class="by">Hamsa Bastani et al. · PNAS, 2025</p><p>Students with unrestricted AI did better on practice problems and worse on the exam; a version designed as a tutor largely avoided the drop.</p></article>
+      <article class="ref"><span class="tag">Mentioned in our conversation</span><h4><a href="https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee/full">From Chalkboards to Chatbots: Evaluating the Impact of Generative AI on Learning Outcomes in Nigeria</a></h4><p class="by">World Bank, 2025</p><p>A six-week after-school program, with an AI tutor and teacher guidance, raised students' English scores.</p></article>
+      <article class="ref"><h4><a href="https://www.media.mit.edu/projects/your-brain-on-chatgpt/overview/">Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing</a></h4><p class="by">Nataliya Kosmyna et al. · MIT Media Lab, 2025 (preprint)</p><p>Brain activity while writing with and without an AI assistant. The authors ask readers not to describe it as AI “making you dumber”; see their <a href="https://www.brainonllm.com/faq">FAQ</a>.</p></article>
+      <article class="ref"><h4><a href="https://www.nature.com/articles/s41598-025-97652-6">AI tutoring outperforms in-class active learning</a></h4><p class="by">Greg Kestin et al. · Scientific Reports, 2025</p><p>A randomized trial of an AI tutor built on research-based teaching principles.</p></article>
+      <article class="ref"><h4><a href="https://www.nature.com/articles/d41586-025-03340-w">Universities are embracing AI: will students get smarter or stop thinking?</a></h4><p class="by">Nature, 2025</p><p>Student use is high, and students say they want guidance on academic use.</p></article>
+      <article class="ref"><h4><a href="https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1614105/full">Biases in AI: acknowledging and addressing the inevitable ethical issues</a></h4><p class="by">Frontiers in Digital Health, 2025</p><p>Types of bias in AI systems and why mitigation remains incomplete.</p></article>
+      <article class="ref"><h4><a href="https://andymasley.substack.com/p/a-short-summary-of-my-argument-that">A short summary of my argument that using ChatGPT isn't bad for the environment</a></h4><p class="by">Andy Masley</p><p>A counterpoint to concerns about AI's energy and water use.</p></article>
+      <article class="ref"><h4><a href="https://asteriskmag.substack.com/p/common-ground-between-ai-2027-and">Common ground between AI 2027 and AI as Normal Technology</a></h4><p class="by">Asterisk</p><p>Authors of two opposing views of AI's future on where they agree.</p></article>
+      <article class="ref"><h4><a href="https://digitaleconomy.stanford.edu/news/ai-and-labor-markets-what-we-know-and-dont-know/">AI and labor markets: what we know and don't know</a></h4><p class="by">Stanford Digital Economy Lab, 2025</p><p>Employment declines concentrated among AI-exposed 22–25 year olds.</p></article>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="sp-podcasts" aria-labelledby="st-podcasts" tabindex="0" hidden>
+    <div class="refs">
+      <article class="ref"><h4><a href="https://www.youtube.com/playlist?list=PLH92J2PwyK2fmjIK6mXRLtWnDuB_glGCq">The Last Invention</a></h4><p class="by">Series</p><p>Conversations on AI safety and whether AI could be humanity's last invention.</p></article>
+      <article class="ref"><h4><a href="https://www.youtube.com/watch?v=UhfpHwcrx6c">The AI Economist: The Skill You Need to Stay Employed in the Age of AI</a></h4><p class="by">Ajay Agrawal on the I've Got Questions podcast, 2025</p><p>AI as cheap prediction, and judgment as the human part of the work.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTI'S WORK ============ -->
+<section role="tabpanel" id="p-cti" aria-labelledby="t-cti" tabindex="0" hidden>
+  <h2>CTI's work</h2>
+  <p class="intro">What the Computing Talent Initiative is building and testing, for anyone who wants to look further. Sathya is glad to help adapt any of it for a course.</p>
+  <div class="cards">
+    <div class="card"><h4>Human Value Framework (report)</h4><p>Our INSPIRE 2026 poster, “Human Value that Grows with AI Capability,” as a short report, one page per idea.</p><a class="go" href="human-value-framework-report.pdf">Open the report (PDF) →</a></div>
+    <div class="card"><h4>The framework on CTI's website</h4><p>The Human Value Framework on the Computing Talent Initiative website.</p><a class="go" href="https://computingtalentinitiative.org/framework/">Open the framework page →</a></div>
+    <div class="card"><h4>Symbiotic Thinking</h4><blockquote>“Symbiotic is two entities thinking together, with critical thinking, communication, and collaboration coming together.” — Sathya</blockquote><p>CTI's site on learning to think with AI.</p><a class="go" href="https://symbioticthinking.ai/">Open symbioticthinking.ai →</a></div>
+    <div class="card"><h4>The CTI Dojo from INSPIRE 2026</h4><blockquote>“We build guardrails on how the tool doesn't give you answers, it asks you questions, it guides your thinking.” — Sathya</blockquote><p>A conversation about the ideas on our poster.</p><a class="go" href="https://dojo.symbioticthinking.ai/cti">Open the CTI Dojo →</a></div>
+    <div class="card"><h4>A practice dojo students use: Know Yourself</h4><p>Develop a hypothesis about what you bring and draft a Value Statement. 30–45 minutes. Try it the way a student would, to see what a practice dojo on a course topic feels like.</p><a class="go" href="https://dojo.symbioticthinking.ai/?topic=know-yourself#key=68e1990d-28e5-44f6-9142-c635e71f8604">Open the Know Yourself dojo →</a></div>
+  </div>
+</section>
+
+<!-- ============ AI-GENERATED VIDEO ============ -->
+<section role="tabpanel" id="p-summary" aria-labelledby="t-summary" tabindex="0" hidden class="summary">
+  <h2>AI-generated video</h2>
+  <p class="intro">A two-and-a-half-minute visual summary that Claude (an AI model) made from the session transcript. The quotes on screen are participants' own words.</p>
+  <video controls playsinline preload="none" src="summary/tla-coop-summary.mp4"></video>
+</section>
+
+<!-- ============ HOW I BUILT THIS PAGE ============ -->
+<section role="tabpanel" id="p-howbuilt" aria-labelledby="t-howbuilt" tabindex="0" hidden>
+  <h2>How I built this page</h2>
+  <p class="intro">My prompts to Claude and its replies, in order, starting from when I gave it the downloaded Zoom recording. Private details about other meetings are removed.</p>
+  <div class="chat">
+
+    <div class="msg me"><span class="who">Sathya</span>
+      <p>I just moved the files they start with GMT in their name - video, audio and vtt and chat files.</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>The co-op video is ready in your Alan folder. It's one 71-minute video and contains only the co-op part. <span class="redact">[Private details removed: what else the day's recording held.]</span> I also cut the 14 minutes when everyone was in breakout rooms.</p>
+      <p>To upload to YouTube:</p>
+      <ol>
+        <li><b>TLA-Coop-2026-10-23.mp4</b> is the video. Set it to <b>Unlisted</b>. Everyone's face is on screen, since it's gallery view.</li>
+        <li><b>TLA-Coop-2026-10-23-youtube-description.txt</b> has a suggested description and 22 chapter times. Paste it into the description box, and YouTube will make the chapters clickable. I checked several of the times against the captions and they match.</li>
+        <li><b>TLA-Coop-2026-10-23.vtt</b> is the caption file. Add it under Subtitles as "Upload file, with timing." The captions are Zoom's automatic transcript re-timed to the shorter video, so expect some transcription slips. Each line starts with the speaker's name.</li>
+      </ol>
+      <p>I made one video with chapters rather than several short ones. If you'd rather have separate clips, I can split this one quickly. When you send me the YouTube link, I'll build the page and draft the email to the group.</p>
+    </div>
+
+    <div class="msg me"><span class="who">Sathya</span>
+      <p>Lets actually break them up a bit more and create an organized webpage for the co-op - within a folder in cti2.0 in common-curriculum, we can create a TLA Co-Op folder in there.</p>
+      <p>I would like this to be a well design page that is useful. Be careful about being on point, using language and text from the conversations - don't over explain or add your own flavor.</p>
+      <p>Lets organize the page into tabs - with Key takeways (use word for word things said by people without ums and fillers that are takeaway material - you can also attribute it to them) - video tab with the 1.5 hours split and organized (you can leave out the section with James Cook and I chatting - while everyone else is in bfreakout rooms) - Introductions could be one video - with one sentence from exactly waht they said about AI underneath organized as bullets, the conversation in the main room organized into subjects as much as possible<br>
+      Lets add a references tab, which has sub tabs for books, articles and podcasts. Use the books, articles that were mentioned in the conversation - use the page I put together a while back with books, papers, blog posts, podcasts as a source to take. a subset of them to provide balanced perspective.<br>
+      Add a tab call CTI's work: and link to the Human Value Framework report, framework page on the CTI's website, the CTI dojo we created for Inspire, link to symbioticthinking ai website - and may be a know-yourself practice dojo with key setup (use the key 68e1990d-28e5-44f6-9142-c635e71f8604 - give me the common on how to add more tokens to the key)<br>
+      And a last tab - AI Generated Video - create a video that visually makes a summary of the conversation.</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>I'll start by looking at the cti2.0 folder, your earlier reading-list page, how the dojo keys work, and how we made the earlier course videos. Then I'll cut the clips and build the page.</p>
+      <p>The page draft is ready to look at: <b>Alan › tla-co-op-draft › index.html</b>. Double-click it on your Mac and it opens in your browser with all ten clips playing. The summary video is still rendering, so the last tab will be empty until it's done.</p>
+      <p>I'm keeping it in your private Alan folder for now. Common-Curriculum is public and syncs to GitHub on its own, and this page puts colleagues' names, faces and quotes on a public link. Once you've read it, tell me to go ahead and I'll move it into <code>cti2.0/tla-co-op/</code>.</p>
+      <p>The summary video is still rendering. When it's done I'll check it and add it to the page's last tab.</p>
+    </div>
+
+    <div class="msg me"><span class="who">Sathya</span>
+      <p>Can you make the video play at a slightly higer speed, may 1.15 or so.</p>
+      <p>Also, we probably show start with the video recording tab - and make the key takeways a sub tab within it.</p>
+      <p>I also like the way the video tab is organized - I think the sub boxes under introduction is getting in the way is it possible to show them under the video, only when 2 is selected.</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>I made all three changes. Refresh the page in your browser to see them.</p>
+      <ul>
+        <li><b>Speed:</b> the clips now start at 1.15×. There's a small speed menu under the video (1×, 1.15×, 1.25×, 1.5×), and it stays where you set it when you switch clips.</li>
+        <li><b>Layout:</b> the page now opens on a <b>Recording</b> tab with two sub-tabs, <b>Videos</b> (shown first) and <b>Key takeaways</b>. The other tabs are unchanged. The <b>Watch</b> buttons on a takeaway still jump straight to that moment in the right clip.</li>
+        <li><b>Introductions:</b> the cards no longer sit in the clip list. They show under the video only while clip 2 is playing, in a two-column grid, and each card still has its jump-to-time button.</li>
+      </ul>
+      <p>I tested it in a browser at laptop and phone widths: the tabs switch, jumping to a moment works, and the speed carries across clips.</p>
+      <p>The AI summary video is still being built, so that tab is still empty. I'll check it and add it when it's ready. Moving the page into Common-Curriculum still waits on your go-ahead.</p>
+    </div>
+
+    <div class="msg me"><span class="who">Sathya</span>
+      <p>I am wondering if the menu of sections in the video page should be a carousel going left to right and it should move evern 1 or 2 sections with the video above it?</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>I think it's a good idea, with one change. Put the video full width with the strip of sections under it, but make each card in the strip short: just the number, title and length. Show the longer description for the selected section under the strip, the same way the introductions box works now.</p>
+      <p><b>What gets better:</b></p>
+      <ul>
+        <li>The video gets about 40% wider on a laptop, and for a recording of faces in a gallery that matters more than anything else on the page.</li>
+        <li>The strip can slide along by itself as one clip ends and the next begins, so people see where they are in the session.</li>
+        <li>On a phone, swiping through the sections feels natural.</li>
+      </ul>
+      <p><b>What it costs:</b></p>
+      <ul>
+        <li>Nobody sees the whole session at a glance anymore. A carousel shows maybe four sections at a time, and the current side list works as an agenda. For a colleague deciding whether to watch at all, seeing all ten titles at once helps.</li>
+        <li>That's why I'd keep the cards to titles only. Long descriptions inside carousel cards make the cards tall and uneven, and then the strip looks cluttered.</li>
+      </ul>
+      <p>To soften the first cost, the left and right arrows can move two sections at a time, and a small "1 of 10" counter shows where you are.</p>
+      <p>Want me to build it that way?</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>The AI-generated summary video is finished and already on the page's last tab. Refresh and it plays.</p>
+      <p>It runs 2:09, uses the CTI colors, and has soft background music with no narration. It moves through the elephant, the two-axes chart where everyone placed themselves, the eight introductions as cards, then human value, Satu's question about building technology in an unequal society, Dan's two points, and what to do before next time. I checked frames from it, and every quote on screen matches what people said, word for word.</p>
+      <p>The carousel change is ready to go whenever you say yes.</p>
+    </div>
+
+    <div class="msg me"><span class="who">Sathya</span>
+      <p>Actually, lets put the carousel on the top - and is it supposed to scroll automatically by itself every 5 seconds?</p>
+    </div>
+
+    <div class="msg ai"><span class="who">Claude</span>
+      <p>The carousel is now at the top of the Videos tab. Below it comes the selected section's description, then the video. Refresh to see it.</p>
+      <p>It doesn't move on a timer. The strip slides along only when a section finishes and the next one starts, or when someone presses an arrow. I'd keep it that way. Someone scanning the titles to decide what to watch would lose their place if the strip moved every 5 seconds. Accessibility rules also require a pause button on anything that moves by itself for more than 5 seconds. If you still want it timed, I can add it with a pause button.</p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><b>TLA/CTI Co-op: Human Value in the Age of AI.</b> With CSUMB Teaching, Learning &amp; Assessment. Questions: Sathya Narayanan, <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a>.</div>
+</footer>
+
+<script>
+(function(){
+  /* ---- tabs (main + sub) ---- */
+  function setupTabs(list, onChange){
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role=tab]'));
+    function select(tab, focus){
+      tabs.forEach(function(t){
+        var on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tab.focus();
+      if (onChange) onChange(tab);
+    }
+    tabs.forEach(function(t, i){
+      t.addEventListener('click', function(){ select(t); });
+      t.addEventListener('keydown', function(e){
+        var k = e.key, n = null;
+        if (k === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+        else if (k === 'ArrowLeft') n = tabs[(i-1+tabs.length) % tabs.length];
+        else if (k === 'Home') n = tabs[0];
+        else if (k === 'End') n = tabs[tabs.length-1];
+        if (n){ e.preventDefault(); select(n, true); }
+      });
+    });
+    return select;
+  }
+  var mainList = document.querySelector('.tabs');
+  var selectMain = setupTabs(mainList, function(tab){
+    var id = tab.id.replace('t-','');
+    try { history.replaceState(null, '', '#' + id); } catch(e){}
+    setTimeout(function(){ if (list) arrows(); }, 0);
+  });
+  var selectRec = setupTabs(document.getElementById('rec-subtabs'), function(){ setTimeout(function(){ if (list) arrows(); }, 0); });
+  Array.prototype.forEach.call(document.querySelectorAll('.subtabs'), function(l){ if (l.id !== 'rec-subtabs') setupTabs(l); });
+  var start = (location.hash || '').replace('#','');
+  if (start === 'videos' || start === 'takeaways'){ selectRec(document.getElementById('st-' + start)); start = 'recording'; }
+  var startTab = document.getElementById('t-' + start);
+  if (startTab) selectMain(startTab);
+
+  /* ---- clips ---- */
+  var CLIPS = [
+    ['01-welcome-and-where-we-stand','Welcome, and where we each stand','8:15','The elephant and the six blind people; where each of us placed ourselves between “mostly hype” and “AGI is coming,” and between “ends badly” and “ends well”; AI news from the past month; the prompt for the breakout rooms.'],
+    ['02-introductions','Introductions: how each of us uses AI, or why not','15:18','Each of us says which program we teach in and how we use AI, or why not. Select a time below to jump to that person.'],
+    ['03-human-value-in-the-age-of-ai','What we mean by human value in the age of AI','5:17','Individual agency, superagency, and people thriving as individuals based on what they want.'],
+    ['04-technology-built-in-an-unequal-society','Technology built in an unequal society','7:22','Satu asks how a society that is not equal can create technology that supports everyone. Sathya responds.'],
+    ['05-holding-different-views-in-one-room','Holding different views in one room','6:46','Why the CTI framework is not the focus of the co-op; Dan on keeping the skeptical voice in the room; Jim’s article on AI companions; students’ relationships with AI; Satu on her course AI statement.'],
+    ['06-reading-together-and-the-dojo','Reading together, and the Dojo','6:12','Symbiotic Thinking and the Dojo; Satu shares an essay on imagination; Empire of AI and Co-Intelligence.'],
+    ['07-accept-it-is-here-or-step-back','Accept that AI is here, or step back?','5:05','Which conversation is this co-op? Philosophy, humanity and history; Dan’s sharp knives in preschool.'],
+    ['08-ethics-and-cost-benefit','Ethics and cost-benefit','5:10','Water use, AlphaFold and cancer research, prevention, and whether these are mutually exclusive.'],
+    ['09-books-and-research-on-critical-thinking','Books, and research on critical thinking','5:30','More books; Dan asks for balanced research on cognitive harm; when to use AI, not only how; the article each of us will look for.'],
+    ['10-trying-a-dojo-and-wrap-up','Trying a Dojo with students, and wrap-up','6:00','An offer to build a practice dojo for a course; How to Think About AI; next steps.']
+  ];
+  var WHO = [
+    ['Sathya Narayanan','Computer Science',37,'I started wanting to understand what this means so that I can help my students, and then slowly, over the last two, two and a half years, I’ve done a lot of experiments with my classes and my own use of AI.'],
+    ['James Cook','Analyst for Teaching, Learning, and Assessment',204,'I’m learning more and more to tell myself it’s okay to use it.'],
+    ['Christine Fernandez','World Languages and Cultures, Spanish',264,'I have used it on the assessment side, though, as faculty regarding spreadsheets, so I do see that it can be an efficient tool when used properly.'],
+    ['Dan Shapiro','Applied Environmental Science, First-Year Seminar',308,'I’ve really been struggling with seeing ways that can be really helpful for students, but also seeing ways that can be incredibly detrimental.'],
+    ['Dante Di Gregorio','College of Business',376,'I am a somewhat active user, and I try to stay on top of the latest developments, and I’m also hugely concerned and skeptical and scared that this is being driven by people who are not being responsible here.'],
+    ['Jim Raines','Health, Human Services, and Public Policy',453,'I use ChatGPT mostly myself as a graduate research assistant.'],
+    ['Satu Larson','Nursing',547,'I am totally opposed to AI, which is why I come to these sessions, because I’m trying to find how in my mind I can be more open to the topic.'],
+    ['Angel González','Hospitality Management, College of Business',741,'I just see it as a calculator when that came out, the computer, Microsoft with Excel, Word, and things like that.'],
+    ['Danielle Burchett','Psychology (in the chat)',null,'I teach career prep classes so have an interest in teaching students basic AI skills for career readiness.']
+  ];
+  var list = document.getElementById('cliplist');
+  var vid = document.getElementById('vid');
+  var nowTitle = document.getElementById('nowtitle');
+  var current = 1;
+
+  CLIPS.forEach(function(c, i){
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.className = 'clip'; b.type = 'button'; b.dataset.clip = i+1;
+    b.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+    b.innerHTML = '<span class="top"><span class="n">' + (i+1) + '</span><span class="len">' + c[2] + '</span></span><span class="t"></span>';
+    b.querySelector('.t').textContent = c[1];
+    b.setAttribute('aria-label', (i+1) + '. ' + c[1] + ', ' + c[2]);
+    b.addEventListener('click', function(){ load(i+1, 0, true); });
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+
+  var wholist = document.getElementById('wholist');
+  var whobox = document.getElementById('whobox');
+  WHO.forEach(function(w){
+    var p = document.createElement('li');
+    var head = document.createElement('div');
+    head.innerHTML = '<b></b> <span class="role"></span>';
+    head.querySelector('b').textContent = w[0];
+    head.querySelector('.role').textContent = '· ' + w[1];
+    var q = document.createElement('q'); q.textContent = w[3];
+    p.appendChild(head); p.appendChild(q);
+    if (w[2] !== null){
+      var pb = document.createElement('button');
+      pb.className = 'play'; pb.type = 'button';
+      pb.textContent = '▶ ' + Math.floor(w[2]/60) + ':' + ('0' + (w[2]%60)).slice(-2);
+      pb.setAttribute('aria-label', 'Play ' + w[0] + '\u2019s introduction');
+      pb.addEventListener('click', function(){ load(2, w[2], true); });
+      p.appendChild(pb);
+    }
+    wholist.appendChild(p);
+  });
+
+  /* playback speed (default 1.15x) */
+  var speedSel = document.getElementById('speed');
+  var rate = parseFloat(speedSel.value);
+  function applyRate(){ vid.defaultPlaybackRate = rate; vid.playbackRate = rate; }
+  speedSel.addEventListener('change', function(){ rate = parseFloat(speedSel.value); applyRate(); });
+  vid.addEventListener('loadedmetadata', applyRate);
+  vid.addEventListener('play', function(){ if (vid.playbackRate !== rate) vid.playbackRate = rate; });
+  applyRate();
+
+  var desc = document.getElementById('clipdesc');
+  var count = document.getElementById('count');
+  var prevB = document.getElementById('prev'), nextB = document.getElementById('next');
+  function step(){ var li = list.querySelector('li'); return li ? (li.getBoundingClientRect().width + 10) * 2 : 300; }
+  prevB.addEventListener('click', function(){ list.scrollBy({left:-step(), behavior:'smooth'}); });
+  nextB.addEventListener('click', function(){ list.scrollBy({left:step(), behavior:'smooth'}); });
+  function arrows(){ prevB.disabled = list.scrollLeft <= 2; nextB.disabled = list.scrollLeft + list.clientWidth >= list.scrollWidth - 2; }
+  list.addEventListener('scroll', arrows); window.addEventListener('resize', arrows);
+  function showCurrent(n){
+    var b = list.querySelector('.clip[data-clip="' + n + '"]');
+    if (!b) return;
+    var li = b.parentNode, L = li.offsetLeft - list.offsetLeft, R = L + li.offsetWidth;
+    if (L < list.scrollLeft || R > list.scrollLeft + list.clientWidth) list.scrollTo({left: Math.max(0, L - 2), behavior:'smooth'});
+  }
+  /* when a section ends, go on to the next one */
+  vid.addEventListener('ended', function(){ if (current < CLIPS.length) load(current + 1, 0, true); });
+
+  function load(n, t, play){
+    var c = CLIPS[n-1];
+    var go = function(){
+      try { vid.currentTime = t || 0; } catch(e){}
+      if (play) { var p = vid.play(); if (p && p.catch) p.catch(function(){}); }
+    };
+    if (n !== current){
+      current = n;
+      vid.pause();
+      var old = document.getElementById('vtrack'); if (old) old.remove();
+      document.getElementById('vsrc').src = 'clips/' + c[0] + '.mp4';
+      var tr = document.createElement('track');
+      tr.id = 'vtrack'; tr.kind = 'captions'; tr.srclang = 'en'; tr.label = 'English'; tr.default = true;
+      tr.src = 'clips/' + c[0] + '.vtt';
+      vid.appendChild(tr);
+      vid.load();
+      vid.addEventListener('loadedmetadata', function h(){ vid.removeEventListener('loadedmetadata', h); applyRate(); if (vid.textTracks[0]) vid.textTracks[0].mode = 'showing'; go(); });
+    } else { go(); }
+    nowTitle.textContent = n + '. ' + c[1];
+    whobox.hidden = (n !== 2);
+    desc.textContent = c[3];
+    count.textContent = n + ' of ' + CLIPS.length;
+    showCurrent(n);
+    Array.prototype.forEach.call(list.querySelectorAll('.clip'), function(b){ b.setAttribute('aria-current', String(+b.dataset.clip === n)); });
+  }
+
+  desc.textContent = CLIPS[0][3]; arrows();
+
+  /* Watch buttons on the takeaways tab */
+  Array.prototype.forEach.call(document.querySelectorAll('#sp-takeaways .play'), function(b){
+    var who = b.parentNode.querySelector('b').textContent;
+    b.setAttribute('aria-label', 'Watch ' + who + ' say this in the recording');
+    b.addEventListener('click', function(){
+      selectRec(document.getElementById('st-videos'));
+      load(+b.dataset.clip, +b.dataset.t, true);
+      document.getElementById('p-recording').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+})();
+</script>
+</body>
+</html>

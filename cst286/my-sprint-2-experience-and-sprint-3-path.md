@@ -71,7 +71,7 @@ Describe your learning journey in Sprint 2 as a story. Choose three or four of t
 
 ### Step 2 · Your relationship, from memory
 
-Can you describe your Sprint 2 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If not, write what does come back and consider why the rest did not.
+Can you describe your Sprint 2 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If not, write what does come back and consider why what you learned hasn't stayed with you.
 
    **My relationship from memory.** The relationship as far as I can write it without looking, and if parts are missing, why I think that is.
 
@@ -85,7 +85,7 @@ All three paths end in the same place by Dec 9: a relationship you can state, th
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 
-**Path C · A project in a tool.** You build something in GlowScript or Nand2Tetris (or another tool from the list on the page) and find the physics relationship inside what you built.
+**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for Physics or Nand2Tetris for computing circuits <<To Alan: we should make these hover text and point to Glowscript and Nand2Tetris tools>> (or another tool from the list on the page) and find the physics relationship inside what you built.
 
 - **The path I choose.** Select A, B or C.
 
