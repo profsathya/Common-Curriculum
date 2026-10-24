@@ -53,7 +53,7 @@ AI Dojo Passcode for this Graded Item: **PATH-1030**
 
 ## The form
 
-(Page note: the form takes the left two thirds of the page; the three path cards sit beside Step 3 on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder, except the Step 1 box, which carries the grey sample text.)
+(Page note: the form takes the left two thirds of the page; Each box has a short label above it and a one-line starter inside the label, never a placeholder, except the Step 1 box, which carries the grey sample text.)
 
 ### Step 1 · Tell the story of your learning in Sprint 2
 
@@ -69,7 +69,7 @@ Describe your learning journey in Sprint 2 as a story. Choose three or four of t
 
    > I wanted to understand why a thrown ball lands where it does, because I pitch. I spent most of my time on the goal form, about four hours, going back and forth on what exactly I was predicting; the scenarios then took one evening. I did not use AI for the physics, only to check my units. Nobody helped, and looking back I think asking someone earlier would have saved me the time on the goal form.
 
-### Step 2 · Your relationship, from memory
+### Step 2 · What do you remember about your quantitative relationship
 
 Can you describe your Sprint 2 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If not, write what does come back and consider why what you learned hasn't stayed with you.
 
@@ -77,11 +77,11 @@ Can you describe your Sprint 2 quantitative relationship now, without looking at
 
 ### Step 3 · Choose your path for Sprint 3
 
-All three paths end in the same place by Dec 9: a relationship you can state, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one. They differ in how much of the path is laid out for you. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
+All three paths end in the same place by Dec 9: a relationship you can state, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one. They differ in how much of the path I lay out for you. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
 
-(Page note: three cards beside the form, each with its title and one description, and a radio button under the cards.)
+(Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · One guided learning trail.** You follow a trail we lay out, step by step, to one relationship, as in the week-7 trail activity, and then apply that relationship to your own scenarios. There is one trail, and everyone on this path works the same one.
+**Path A · One guided learning trail.** You follow a trail I lay out, step by step, to one relationship, as in the week-7 trail activity, and then apply that relationship to your own scenarios. There is one trail, and everyone on this path works the same one.
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 
