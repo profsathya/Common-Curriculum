@@ -25,10 +25,10 @@ Reflect on how your learning experience went during Sprint 2 — when you finish
 
 ## How this form works
 
-Sprint 3 asks you to do what you did in Sprint 2 once more, on a new phenomenon: find a quantitative relationship, work it in three real situations, and find two look-alike situations where it stops applying. What changes is how much of the path we lay out for you, and you choose that. This form takes you there in three steps:
+We will do another iteration of deliberately practicing our Self-Directed learning in Sprint 3: identify a new phenomenon that you want to learn about, find a relevant quantitative relationship that helps us make predictions in that phenomenon, apply it in three real situations, and find two similar looking situations where it can't be applied. You choose how much structure is appropriate for you. << To Alan: lets not keep this as one paragraph - make the identify, find, apply and find as each bullet and the last line a separate line with a bolder color>>
 
-- **Step 1 (Part 1):** Write down what happened in Sprint 2 — the facts, as you can check them against your own Canvas submissions.
-- **Step 2 (Part 2):** Write your Sprint 2 relationship once more, from memory.
+- **Step 1 (Part 1):** Describe your learning journey in Sprint 2 in a narrative form - tell the story of your learning. Possible questions to consider - answer 3-4 of them - you don't have to answer all. What motivated you to learn the particular topic? How did you go about doing it? Did you use AI? When did you work on them, how much time? What was surprising? Who or what helped? <<To Alan: Lets write a sample example as grey text in the box and have a drop down underneath with a couple of more example>>
+- **Step 2 (Part 2):** Can you describe the sprint 2 quantitative relationship now without referring to it? If yes, please do so. If not, consider why.
 - **Step 3 (Part 3):** Read the three Sprint 3 paths, choose one, and say in one sentence what in Part 1 and Part 2 points you there.
 
 ☑ **I would like to use the AI Dojo to think through my Sprint 2 and my choice.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you about what happened in Sprint 2 and presses you on the reasons for your choice. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
@@ -85,12 +85,12 @@ All three paths lead to the same place by Dec 9: a relationship you can state, t
 
 (Page note: the three paths show as three cards beside the form, each with the same three lines in the same order, and a radio button under the cards.)
 
-**Path A · A project in a tool.** You build something in GlowScript or Nand2Tetris (or another tool from the list on the page) and find the physics relationship inside what you built. *What it gives you:* the phenomenon and a working model of it, so your effort goes into finding the relationship and its limits. *A student who picks this noticed:* they could state and work a relationship in Sprint 2 once they had something concrete in front of them, and finding a phenomenon to start from was the slow part.
+**Path A · A project in a tool.** You build something in GlowScript or Nand2Tetris (or another tool from the list on the page) and find the physics relationship inside what you built. *What it gives you:* the phenomenon and a working model of it, so your effort goes into finding the relationship and its limits. << To Alan: I am not sure this type of guidance is helpful, it makes it sound too cookie cutter, lets leave it to students*A student who picks this noticed:* they could state and work a relationship in Sprint 2 once they had something concrete in front of them, and finding a phenomenon to start from was the slow part. >>
 
 **Path B · One guided learning trail.** You follow one trail we lay out, step by step, toward one relationship, as in the week-7 trail activity. There is one trail; everyone on this path works the same one. *What it gives you:* the phenomenon, the steps and the checks along the way, so your effort goes into understanding each step and then applying the relationship to your own scenarios. *A student who picks this noticed:* in Sprint 2 the hours went into working out what to do next rather than into the physics, or the relationship did not come back in Part 2.
 
 **Path C · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2. *What it gives you:* a free choice of topic and the full run of the process with less help. *A student who picks this noticed:* in Sprint 2 they finished the pieces by their due dates, could write the relationship from memory, and want to find out whether the process holds up on ground they chose.
-
+<< Lets make Path B to be Path A, Path C to be Path B and Path A to be Path C>>
 - **The path I choose.** Select A, B or C.
 
    **The path I choose.** A · B · C
