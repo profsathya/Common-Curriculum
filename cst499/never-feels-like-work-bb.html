@@ -41,11 +41,19 @@ ol.rail-steps::-webkit-scrollbar{display:none}
 .pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
 .due-line{font-size:14px;color:var(--muted);font-weight:600}
 
-/* Thread connection bar */
-.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
-.thread-bar .trow{margin:0 0 5px}
-.thread-bar .trow:last-child{margin-bottom:0}
-.thread-bar b{color:var(--blue-dark)}
+/* Three-box arrow chain (Builds on -> This task -> Feeds into) */
+.thread-flow{display:grid;grid-template-columns:1fr auto 1.15fr auto 1fr;align-items:stretch;gap:10px;margin-bottom:22px}
+.tbox{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;justify-content:flex-start;font-size:14px;line-height:1.45;color:var(--text)}
+.tbox .tlbl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tbox.now{background:var(--goal-bg);border:2px solid var(--blue);box-shadow:0 2px 8px rgba(3,116,181,.08)}
+.tbox.now .tlbl{color:var(--blue-dark)}
+.tbox a{font-weight:700}
+.tarrow{display:flex;align-items:center;justify-content:center;color:var(--blue);padding:0 2px}
+.tarrow svg{width:28px;height:28px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:740px){
+  .thread-flow{grid-template-columns:1fr;gap:6px}
+  .tarrow svg{transform:rotate(90deg);width:22px;height:22px}
+}
 
 /* Top utility bar */
 .util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
@@ -122,10 +130,25 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
     <div class="due-line">Due Tuesday 8 Sep, 11:59 pm · 100 points · Own your progress guidance (0%)</div>
   </header>
 
-  <section class="thread-bar" aria-label="How this connects">
-    <div class="trow"><b>Builds on:</b> Your niche and employer expectations from Read the Market.</div>
-    <div class="trow"><b>This step:</b> Identify specific moments when work held your attention, find the pattern running through them, and compare that pattern against your market read.</div>
-    <div class="trow"><b>Feeds into:</b> Find Your Gap (Week 2) and choosing a capstone project you will sustain for 15 weeks.</div>
+  <section class="thread-flow" aria-label="How this assignment connects">
+    <div class="tbox past">
+      <div class="tlbl">Builds on</div>
+      <div><a href="read-the-market-bb.html">Read the Market</a> (your target niche and employer expectations).</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox now">
+      <div class="tlbl">This task</div>
+      <div>Find the pattern across 5 moments that held your attention and compare it with your niche.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox next">
+      <div class="tlbl">Feeds into</div>
+      <div><a href="find-your-gap-bb.html">Find Your Gap</a> and picking a capstone project you will sustain.</div>
+    </div>
   </section>
 
   <div class="util-bar">
@@ -225,7 +248,7 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
 (function () {
   'use strict';
   var TASKS = [{"n": 1, "key": "b1", "head": "Task 1 - Moments that held attention", "text": "Describe up to five specific occasions when work held your attention (in or out of school). For each one, say what you were doing, who it was for, and what kept you engaged.", "parts": [], "checks": ["Names specific occasions (a particular day, project, or task) rather than general topics.", "For each occasion, says what you were doing, who it was for, and what kept you engaged."]}, {"n": 2, "key": "b2", "head": "Task 2 - The pattern", "text": "Name the pattern shared by more than one of those moments, then test that pattern against a counter-example (a time that looked similar on paper but drained you) and state one actionable strength and one weakness.", "parts": ["The thread that runs through at least two of your moments in Task 1.", "How you refined or qualified that thread after checking a time that drained you.", "One strength and one weakness stated specifically enough to act on when picking a project."], "checks": ["Points to a pattern shared by at least two moments from Task 1.", "Refines the pattern using a contrasting moment that did not hold your attention.", "Names one concrete strength and one concrete weakness."]}, {"n": 3, "key": "b3", "head": "Task 3 - Fit with the market", "text": "Put your pattern from Task 2 next to your Read the Market findings: where do they line up, where do they pull apart, and what does that tell you about the capstone project you should pick?", "parts": [], "checks": ["Compares your personal work pattern directly against the niche and asks from Read the Market.", "Names both where they align and where they tension.", "Draws a concrete conclusion for what kind of capstone work to choose."]}];
-  var CFG = {"page": "cst499-never-feels-like-work", "course": "CST499", "pageTitle": "Know What Makes Me Tick", "weekLabel": "Week 2", "destination": "Your niche and employer expectations from Read the Market. Identify specific moments when work held your attention, find the pattern running through them, and compare that pattern against your market read. Find Your Gap (Week 2) and choosing a capstone project you will sustain for 15 weeks.", "feeds": "Identify specific moments when work held your attention, find the pattern running through them, and compare that pattern against your market read.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"b1": "REQUESTED ELEMENTS: up to five specific occasions when work held the student's attention; for each, what they were doing, who it was for, and what kept them engaged. OBSERVABLE CRITERIA: each item is a particular occasion rather than a general interest; all three parts (what, for whom, what kept them going) are visible. COMMON OMISSIONS: listing broad subjects ('coding', 'gaming') instead of specific occasions; leaving out who the work was for.", "b2": "REQUESTED ELEMENTS: a pattern shared by more than one moment from box 1; a second pass refining or qualifying that pattern; one specific strength and one specific weakness. OBSERVABLE CRITERIA: the pattern connects to specific moments in box 1; both a strength and a weakness are stated concretely enough to guide project selection.", "b3": "REQUESTED ELEMENTS: where the student's pattern from box 2 lines up with their Read the Market niche/asks, where they pull apart, and what that means for their capstone choice. OBSERVABLE CRITERIA: references both the student's pattern and their market read; names an alignment or tension and a consequence for their project."}, "label": {"b1": "Moments that held attention", "b2": "The pattern", "b3": "Fit with the market"}, "order": ["b1", "b2", "b3"]};
+  var CFG = {"page": "cst499-never-feels-like-work", "course": "CST499", "pageTitle": "Know What Makes Me Tick", "weekLabel": "Week 2", "destination": "Read the Market (your target niche and employer expectations). Find the pattern across 5 moments that held your attention and compare it with your niche. Find Your Gap and picking a capstone project you will sustain.", "feeds": "Find the pattern across 5 moments that held your attention and compare it with your niche.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"b1": "REQUESTED ELEMENTS: up to five specific occasions when work held the student's attention; for each, what they were doing, who it was for, and what kept them engaged. OBSERVABLE CRITERIA: each item is a particular occasion rather than a general interest; all three parts (what, for whom, what kept them going) are visible. COMMON OMISSIONS: listing broad subjects ('coding', 'gaming') instead of specific occasions; leaving out who the work was for.", "b2": "REQUESTED ELEMENTS: a pattern shared by more than one moment from box 1; a second pass refining or qualifying that pattern; one specific strength and one specific weakness. OBSERVABLE CRITERIA: the pattern connects to specific moments in box 1; both a strength and a weakness are stated concretely enough to guide project selection.", "b3": "REQUESTED ELEMENTS: where the student's pattern from box 2 lines up with their Read the Market niche/asks, where they pull apart, and what that means for their capstone choice. OBSERVABLE CRITERIA: references both the student's pattern and their market read; names an alignment or tension and a consequence for their project."}, "label": {"b1": "Moments that held attention", "b2": "The pattern", "b3": "Fit with the market"}, "order": ["b1", "b2", "b3"]};
   var KEY = "cc-w2:cst499-never-feels-like-work";
   var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
 

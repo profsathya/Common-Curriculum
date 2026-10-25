@@ -41,11 +41,19 @@ ol.rail-steps::-webkit-scrollbar{display:none}
 .pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
 .due-line{font-size:14px;color:var(--muted);font-weight:600}
 
-/* Thread connection bar */
-.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
-.thread-bar .trow{margin:0 0 5px}
-.thread-bar .trow:last-child{margin-bottom:0}
-.thread-bar b{color:var(--blue-dark)}
+/* Three-box arrow chain (Builds on -> This task -> Feeds into) */
+.thread-flow{display:grid;grid-template-columns:1fr auto 1.15fr auto 1fr;align-items:stretch;gap:10px;margin-bottom:22px}
+.tbox{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;justify-content:flex-start;font-size:14px;line-height:1.45;color:var(--text)}
+.tbox .tlbl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tbox.now{background:var(--goal-bg);border:2px solid var(--blue);box-shadow:0 2px 8px rgba(3,116,181,.08)}
+.tbox.now .tlbl{color:var(--blue-dark)}
+.tbox a{font-weight:700}
+.tarrow{display:flex;align-items:center;justify-content:center;color:var(--blue);padding:0 2px}
+.tarrow svg{width:28px;height:28px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:740px){
+  .thread-flow{grid-template-columns:1fr;gap:6px}
+  .tarrow svg{transform:rotate(90deg);width:22px;height:22px}
+}
 
 /* Top utility bar */
 .util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
@@ -122,10 +130,25 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
     <div class="due-line">Due Friday 11 Sep, 11:59 pm · 100 points · Own your progress guidance (0%)</div>
   </header>
 
-  <section class="thread-bar" aria-label="How this connects">
-    <div class="trow"><b>Builds on:</b> Read the Market (what employers ask for) and Know What Makes Me Tick (how you work best).</div>
-    <div class="trow"><b>This step:</b> Audit what you can prove today against your target postings, name the #1 gap in one sentence, write the warm-referral email you want to earn, and choose a first problem space to explore.</div>
-    <div class="trow"><b>Feeds into:</b> Week 3 problem-space exploration and your Week 4 Project Proposal.</div>
+  <section class="thread-flow" aria-label="How this assignment connects">
+    <div class="tbox past">
+      <div class="tlbl">Builds on</div>
+      <div><a href="read-the-market-bb.html">Read the Market</a> and <a href="never-feels-like-work-bb.html">Know What Makes Me Tick</a>.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox now">
+      <div class="tlbl">This task</div>
+      <div>Audit your current proof, name your #1 gap, and write the referral email you want to earn.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox next">
+      <div class="tlbl">Feeds into</div>
+      <div><a href="problem-spaces-bb.html">Problem Spaces</a> exploration and your <a href="project-proposal-bb.html">Project Proposal</a>.</div>
+    </div>
   </section>
 
   <div class="util-bar">
@@ -225,7 +248,7 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
 (function () {
   'use strict';
   var TASKS = [{"n": 1, "key": "b1", "head": "Task 1 - Evidence audit & gap", "text": "Set what you can prove today next to each employer ask from Read the Market (blanks included), then write your #1 gap in one sentence.", "parts": ["For each employer ask from Read the Market, list the strongest evidence you could show an engineer today (or write 'no proof yet').", "Write one sentence naming the single most important gap between what those roles ask for and what you can prove today."], "checks": ["Lists your current proof (or 'none yet') against each ask from Read the Market.", "States one specific gap in a single sentence."]}, {"n": 2, "key": "b2", "head": "Task 2 - Warm-referral email", "text": "Write the complete warm-referral email you want a mentor, partner, or professor to be able to send on your behalf in December once that gap is closed.", "parts": [], "checks": ["Written as a complete email from a recommender to a hiring manager in your niche.", "Points to a concrete piece of work you built and what it proved, rather than general praise."]}, {"n": 3, "key": "b3", "head": "Task 3 - Routine & first problem space", "text": "Set your standing market-check routine and name the first problem space you will look at next week.", "parts": ["Fill in your standing routine: which niche/postings you will re-check every two weeks, which signal from Read the Market you are watching, and which gap you are tracking.", "Pick one problem space from the Problem Spaces page to inspect first and explain in two sentences how work in that space could close your gap."], "checks": ["Specifies your recurring routine (niche, signal, and gap).", "Names a specific problem space from the Problem Spaces list and why it fits your gap."]}];
-  var CFG = {"page": "cst499-find-your-gap", "course": "CST499", "pageTitle": "Find Your Gap", "weekLabel": "Week 2", "destination": "Read the Market (what employers ask for) and Know What Makes Me Tick (how you work best). Audit what you can prove today against your target postings, name the #1 gap in one sentence, write the warm-referral email you want to earn, and choose a first problem space to explore. Week 3 problem-space exploration and your Week 4 Project Proposal.", "feeds": "Audit what you can prove today against your target postings, name the #1 gap in one sentence, write the warm-referral email you want to earn, and choose a first problem space to explore.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"b1": "REQUESTED ELEMENTS: an audit of what the student can prove today against each employer ask from Read the Market (including blanks); one specific gap written in a sentence. OBSERVABLE CRITERIA: each market ask is paired with current evidence or an explicit blank; the gap sentence names one concrete thing the student cannot yet prove.", "b2": "REQUESTED ELEMENTS: a complete warm-referral email written from the perspective of someone recommending the student in December. OBSERVABLE CRITERIA: written as a whole email (not a fragment); names specific work done and evidence produced that closes the gap from box 1.", "b3": "REQUESTED ELEMENTS: a standing routine filled in with the student's niche, signal, and gap; the first problem space they will look at and why it fits their gap. OBSERVABLE CRITERIA: both the routine details and a named problem space with a reason are present."}, "label": {"b1": "Evidence audit & gap", "b2": "Warm-referral email", "b3": "Routine & first problem space"}, "order": ["b1", "b2", "b3"]};
+  var CFG = {"page": "cst499-find-your-gap", "course": "CST499", "pageTitle": "Find Your Gap", "weekLabel": "Week 2", "destination": "Read the Market and Know What Makes Me Tick. Audit your current proof, name your #1 gap, and write the referral email you want to earn. Problem Spaces exploration and your Week 4 Project Proposal.", "feeds": "Audit your current proof, name your #1 gap, and write the referral email you want to earn.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"b1": "REQUESTED ELEMENTS: an audit of what the student can prove today against each employer ask from Read the Market (including blanks); one specific gap written in a sentence. OBSERVABLE CRITERIA: each market ask is paired with current evidence or an explicit blank; the gap sentence names one concrete thing the student cannot yet prove.", "b2": "REQUESTED ELEMENTS: a complete warm-referral email written from the perspective of someone recommending the student in December. OBSERVABLE CRITERIA: written as a whole email (not a fragment); names specific work done and evidence produced that closes the gap from box 1.", "b3": "REQUESTED ELEMENTS: a standing routine filled in with the student's niche, signal, and gap; the first problem space they will look at and why it fits their gap. OBSERVABLE CRITERIA: both the routine details and a named problem space with a reason are present."}, "label": {"b1": "Evidence audit & gap", "b2": "Warm-referral email", "b3": "Routine & first problem space"}, "order": ["b1", "b2", "b3"]};
   var KEY = "cc-w2:cst499-find-your-gap";
   var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
 

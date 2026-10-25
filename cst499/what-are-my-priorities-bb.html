@@ -41,11 +41,19 @@ ol.rail-steps::-webkit-scrollbar{display:none}
 .pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
 .due-line{font-size:14px;color:var(--muted);font-weight:600}
 
-/* Thread connection bar */
-.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
-.thread-bar .trow{margin:0 0 5px}
-.thread-bar .trow:last-child{margin-bottom:0}
-.thread-bar b{color:var(--blue-dark)}
+/* Three-box arrow chain (Builds on -> This task -> Feeds into) */
+.thread-flow{display:grid;grid-template-columns:1fr auto 1.15fr auto 1fr;align-items:stretch;gap:10px;margin-bottom:22px}
+.tbox{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;justify-content:flex-start;font-size:14px;line-height:1.45;color:var(--text)}
+.tbox .tlbl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tbox.now{background:var(--goal-bg);border:2px solid var(--blue);box-shadow:0 2px 8px rgba(3,116,181,.08)}
+.tbox.now .tlbl{color:var(--blue-dark)}
+.tbox a{font-weight:700}
+.tarrow{display:flex;align-items:center;justify-content:center;color:var(--blue);padding:0 2px}
+.tarrow svg{width:28px;height:28px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:740px){
+  .thread-flow{grid-template-columns:1fr;gap:6px}
+  .tarrow svg{transform:rotate(90deg);width:22px;height:22px}
+}
 
 /* Top utility bar */
 .util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
@@ -123,10 +131,25 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
     <div class="due-line">Due Monday 31 Aug, 11:59 pm · 100 points · Graded items (40% of course grade)</div>
   </header>
 
-  <section class="thread-bar" aria-label="How this connects">
-    <div class="trow"><b>Builds on:</b> Your CST499 course orientation and your current weekly schedule.</div>
-    <div class="trow"><b>This step:</b> Build a whole-day time budget across six categories, examine your mental inputs, test one change for a day, and record what happened.</div>
-    <div class="trow"><b>Feeds into:</b> Your Sprint 1 market research and Sprint 2 weekly build rhythm, so you know what hours you actually have.</div>
+  <section class="thread-flow" aria-label="How this assignment connects">
+    <div class="tbox past">
+      <div class="tlbl">Builds on</div>
+      <div><a href="setup-your-ai-dojo-bb.html">CST499 AI Dojo Setup</a> and your current weekly schedule.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox now">
+      <div class="tlbl">This task</div>
+      <div>Map your 6-category time budget, audit mental inputs, and test one change for a day.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox next">
+      <div class="tlbl">Feeds into</div>
+      <div><a href="read-the-market-bb.html">Read the Market</a> (Week 2) and your weekly capstone build hours.</div>
+    </div>
   </section>
 
   <div class="util-bar">
@@ -245,7 +268,7 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
 (function () {
   'use strict';
   var TASKS = [{"n": 1, "key": "t1", "head": "Task 1 - Time budget", "text": "Build your whole-day time budget across all six categories so the percentages add up to 100% of a typical week.", "parts": ["For each of the six categories - (1) Sleep & rest, (2) Movement & physical health, (3) Work, family & life obligations, (4) Coursework & capstone, (5) Relationships & community, (6) Nutrition for the mind (what you read, watch, listen to, and scroll) - state the percentage of your week it takes and rate its current quality (low / medium / high) with a one-sentence reason.", "Make sure the six percentages total 100%."], "checks": ["All six categories are listed with a percentage and a quality rating.", "The six percentages add up to 100%.", "Each quality rating has a concrete one-sentence reason."]}, {"n": 2, "key": "t2", "head": "Task 2 - Nutrition for the mind", "text": "Take a closer look at category 6 (Nutrition for the mind).", "parts": ["List what actually went into your attention over the last 48 hours (apps, feeds, videos, articles, conversations).", "Say which of those left you sharper or more focused afterwards, and which left you scattered or drained."], "checks": ["Names specific inputs from the last 48 hours rather than general habits.", "Distinguishes which inputs helped focus and which drained it."]}, {"n": 3, "key": "t3", "head": "Task 3 - One-day test", "text": "Pick one small change to test for one day before Monday, run it, and report what happened.", "parts": ["What specific change you tried for one day.", "What actually happened when you tried it, and what surprised you."], "checks": ["Describes a concrete one-day change that was actually tried (not a future wish).", "Reports what happened and what surprised you."]}, {"n": 4, "key": "t4", "head": "Task 4 - Route record", "text": "Include the record from the route you took (your Practice Dojo conversation or your own working notes).", "parts": [], "checks": ["Includes the Practice Dojo transcript/link or the working notes used to build the budget."]}];
-  var CFG = {"page": "cst499-what-are-my-priorities", "course": "CST499", "pageTitle": "What Are My Priorities", "weekLabel": "Week 1", "destination": "Your CST499 course orientation and your current weekly schedule. Build a whole-day time budget across six categories, examine your mental inputs, test one change for a day, and record what happened. Your Sprint 1 market research and Sprint 2 weekly build rhythm, so you know what hours you actually have.", "feeds": "Build a whole-day time budget across six categories, examine your mental inputs, test one change for a day, and record what happened.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: all six categories (Sleep & rest, Movement & physical health, Work/family/life obligations, Coursework & capstone, Relationships & community, Nutrition for the mind), each with a percentage of the week, a quality rating, and a reason; percentages summing to 100%. OBSERVABLE CRITERIA: all six categories are present and percentages add to 100%.", "t2": "REQUESTED ELEMENTS: specific mental inputs from the last 48 hours; which ones left the student sharper/focused and which left them scattered/drained. OBSERVABLE CRITERIA: specific apps, feeds, readings, or conversations are named.", "t3": "REQUESTED ELEMENTS: one specific change tested for one day; what actually happened; what surprised the student. OBSERVABLE CRITERIA: the change is reported in the past tense as something tried, with a specific observation.", "t4": "REQUESTED ELEMENTS: the record from the route taken (Practice Dojo conversation or working notes). OBSERVABLE CRITERIA: notes or transcript are included."}, "label": {"t1": "Time budget", "t2": "Nutrition for the mind", "t3": "One-day test", "t4": "Route record"}, "order": ["t1", "t2", "t3", "t4"]};
+  var CFG = {"page": "cst499-what-are-my-priorities", "course": "CST499", "pageTitle": "What Are My Priorities", "weekLabel": "Week 1", "destination": "CST499 AI Dojo Setup and your current weekly schedule. Map your 6-category time budget, audit mental inputs, and test one change for a day. Read the Market (Week 2) and your weekly capstone build hours.", "feeds": "Map your 6-category time budget, audit mental inputs, and test one change for a day.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: all six categories (Sleep & rest, Movement & physical health, Work/family/life obligations, Coursework & capstone, Relationships & community, Nutrition for the mind), each with a percentage of the week, a quality rating, and a reason; percentages summing to 100%. OBSERVABLE CRITERIA: all six categories are present and percentages add to 100%.", "t2": "REQUESTED ELEMENTS: specific mental inputs from the last 48 hours; which ones left the student sharper/focused and which left them scattered/drained. OBSERVABLE CRITERIA: specific apps, feeds, readings, or conversations are named.", "t3": "REQUESTED ELEMENTS: one specific change tested for one day; what actually happened; what surprised the student. OBSERVABLE CRITERIA: the change is reported in the past tense as something tried, with a specific observation.", "t4": "REQUESTED ELEMENTS: the record from the route taken (Practice Dojo conversation or working notes). OBSERVABLE CRITERIA: notes or transcript are included."}, "label": {"t1": "Time budget", "t2": "Nutrition for the mind", "t3": "One-day test", "t4": "Route record"}, "order": ["t1", "t2", "t3", "t4"]};
   var KEY = "cc-bb:cst499-what-are-my-priorities";
   var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
 

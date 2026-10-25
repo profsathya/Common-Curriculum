@@ -41,11 +41,19 @@ ol.rail-steps::-webkit-scrollbar{display:none}
 .pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
 .due-line{font-size:14px;color:var(--muted);font-weight:600}
 
-/* Thread connection bar */
-.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
-.thread-bar .trow{margin:0 0 5px}
-.thread-bar .trow:last-child{margin-bottom:0}
-.thread-bar b{color:var(--blue-dark)}
+/* Three-box arrow chain (Builds on -> This task -> Feeds into) */
+.thread-flow{display:grid;grid-template-columns:1fr auto 1.15fr auto 1fr;align-items:stretch;gap:10px;margin-bottom:22px}
+.tbox{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;justify-content:flex-start;font-size:14px;line-height:1.45;color:var(--text)}
+.tbox .tlbl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tbox.now{background:var(--goal-bg);border:2px solid var(--blue);box-shadow:0 2px 8px rgba(3,116,181,.08)}
+.tbox.now .tlbl{color:var(--blue-dark)}
+.tbox a{font-weight:700}
+.tarrow{display:flex;align-items:center;justify-content:center;color:var(--blue);padding:0 2px}
+.tarrow svg{width:28px;height:28px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:740px){
+  .thread-flow{grid-template-columns:1fr;gap:6px}
+  .tarrow svg{transform:rotate(90deg);width:22px;height:22px}
+}
 
 /* Top utility bar */
 .util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
@@ -121,10 +129,25 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
     <div class="due-line">Due Friday 2 Oct, 11:59 pm · 100 points · Own your progress guidance (0%)</div>
   </header>
 
-  <section class="thread-bar" aria-label="How this connects">
-    <div class="trow"><b>Builds on:</b> Your approved Week 4 Project Proposal and your Week 8 / Week 12 scope milestones.</div>
-    <div class="trow"><b>This step:</b> Write the 3 to 5 resume bullets your capstone will let you add in December, along with the verifiable artifact that will back each line.</div>
-    <div class="trow"><b>Feeds into:</b> Your Week 6 Learning Plan and your Sprint 4 resume review and job outreach.</div>
+  <section class="thread-flow" aria-label="How this assignment connects">
+    <div class="tbox past">
+      <div class="tlbl">Builds on</div>
+      <div>Approved <a href="project-proposal-bb.html">Project Proposal</a> and your Week 8 / 12 milestones.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox now">
+      <div class="tlbl">This task</div>
+      <div>Draft the 3-5 resume bullets your capstone will earn in December and what proves each line.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox next">
+      <div class="tlbl">Feeds into</div>
+      <div><a href="learning-plan-bb.html">Learning Plan</a> (Week 6) and Sprint 4 resume outreach.</div>
+    </div>
   </section>
 
   <div class="util-bar">
@@ -205,7 +228,7 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
 (function () {
   'use strict';
   var TASKS = [{"n": 1, "key": "t1", "head": "Task 1 - 3-5 December resume bullets", "text": "Write the project header (project title, role, stack, and link placeholder) and 3 to 5 resume bullets in the 'Accomplished [X] as measured by [Y], by doing [Z]' format.", "parts": ["Each bullet must point to a real deliverable in your approved Project Proposal.", "Under each bullet, write one backing sentence naming the exact link, commit, test run, or person that will verify that bullet in December."], "checks": ["Includes the project header and 3 to 5 bullets.", "Every bullet states what was accomplished (X), how it is measured (Y), and how it was built (Z).", "Every bullet has a one-sentence backing naming the verifiable evidence."]}, {"n": 2, "key": "t2", "head": "Task 2 - Hardest line & plan adjustment", "text": "In 2 or 3 sentences, name which bullet was hardest to write a concrete measure (Y) for, and state what you are adding to your build or Learning Plan so that measure is real by December.", "parts": [], "checks": ["Identifies which specific bullet was hardest to measure.", "States a concrete adjustment to your build or Learning Plan so you can prove that measure."]}];
-  var CFG = {"page": "cst499-december-resume", "course": "CST499", "pageTitle": "Write Your December Resume Section", "weekLabel": "Week 6", "destination": "Your approved Week 4 Project Proposal and your Week 8 / Week 12 scope milestones. Write the 3 to 5 resume bullets your capstone will let you add in December, along with the verifiable artifact that will back each line. Your Week 6 Learning Plan and your Sprint 4 resume review and job outreach.", "feeds": "Write the 3 to 5 resume bullets your capstone will let you add in December, along with the verifiable artifact that will back each line.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: project header; 3 to 5 resume lines in the 'Accomplished [X] as measured by [Y], by doing [Z]' form; one backing sentence under each line naming what verifiable artifact proves it. OBSERVABLE CRITERIA: 3 to 5 bullets are present; each has an action, a checkable measure, a method, and a backing sentence.", "t2": "REQUESTED ELEMENTS: which resume line was hardest to write; what changed in the student's build or learning plan as a result. OBSERVABLE CRITERIA: names a specific bullet from box 1 and a concrete action added to the plan."}, "label": {"t1": "3-5 December resume bullets", "t2": "Hardest line & plan adjustment"}, "order": ["t1", "t2"]};
+  var CFG = {"page": "cst499-december-resume", "course": "CST499", "pageTitle": "Write Your December Resume Section", "weekLabel": "Week 6", "destination": "Approved Project Proposal and your Week 8 / Week 12 milestones. Draft the 3-5 resume bullets your capstone will earn in December and what proves each line. Learning Plan (Week 6) and your Sprint 4 resume review and outreach.", "feeds": "Draft the 3-5 resume bullets your capstone will earn in December and what proves each line.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: project header; 3 to 5 resume lines in the 'Accomplished [X] as measured by [Y], by doing [Z]' form; one backing sentence under each line naming what verifiable artifact proves it. OBSERVABLE CRITERIA: 3 to 5 bullets are present; each has an action, a checkable measure, a method, and a backing sentence.", "t2": "REQUESTED ELEMENTS: which resume line was hardest to write; what changed in the student's build or learning plan as a result. OBSERVABLE CRITERIA: names a specific bullet from box 1 and a concrete action added to the plan."}, "label": {"t1": "3-5 December resume bullets", "t2": "Hardest line & plan adjustment"}, "order": ["t1", "t2"]};
   var KEY = "cc-bb:cst499-december-resume";
   var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
 

@@ -41,11 +41,19 @@ ol.rail-steps::-webkit-scrollbar{display:none}
 .pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
 .due-line{font-size:14px;color:var(--muted);font-weight:600}
 
-/* Thread connection bar */
-.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
-.thread-bar .trow{margin:0 0 5px}
-.thread-bar .trow:last-child{margin-bottom:0}
-.thread-bar b{color:var(--blue-dark)}
+/* Three-box arrow chain (Builds on -> This task -> Feeds into) */
+.thread-flow{display:grid;grid-template-columns:1fr auto 1.15fr auto 1fr;align-items:stretch;gap:10px;margin-bottom:22px}
+.tbox{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;justify-content:flex-start;font-size:14px;line-height:1.45;color:var(--text)}
+.tbox .tlbl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tbox.now{background:var(--goal-bg);border:2px solid var(--blue);box-shadow:0 2px 8px rgba(3,116,181,.08)}
+.tbox.now .tlbl{color:var(--blue-dark)}
+.tbox a{font-weight:700}
+.tarrow{display:flex;align-items:center;justify-content:center;color:var(--blue);padding:0 2px}
+.tarrow svg{width:28px;height:28px;stroke:currentColor;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:740px){
+  .thread-flow{grid-template-columns:1fr;gap:6px}
+  .tarrow svg{transform:rotate(90deg);width:22px;height:22px}
+}
 
 /* Top utility bar */
 .util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
@@ -121,10 +129,25 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
     <div class="due-line">Due Wednesday 26 Aug, 11:59 pm · 100 points · Own your progress guidance (0%)</div>
   </header>
 
-  <section class="thread-bar" aria-label="How this connects">
-    <div class="trow"><b>Builds on:</b> Your starting questions about how CST499 is organized and graded.</div>
-    <div class="trow"><b>This step:</b> Explain in your own words how this course works, using either an AI coach you set up or the course design pages.</div>
-    <div class="trow"><b>Feeds into:</b> Every assignment and sprint interview this semester, so you know what counts and where to find things.</div>
+  <section class="thread-flow" aria-label="How this assignment connects">
+    <div class="tbox past">
+      <div class="tlbl">Builds on</div>
+      <div><a href="week1-wed-recording-bb.html">Week 1 Walkthrough</a> and <a href="understand-the-course-design-bb.html">How This Course Works</a>.</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox now">
+      <div class="tlbl">This task</div>
+      <div>Explain how CST499 works in your own words (with your AI Dojo coach or from the pages).</div>
+    </div>
+    <div class="tarrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="tbox next">
+      <div class="tlbl">Feeds into</div>
+      <div><a href="what-are-my-priorities-bb.html">What Are My Priorities</a> and every sprint interview.</div>
+    </div>
   </section>
 
   <div class="util-bar">
@@ -205,7 +228,7 @@ textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monos
 (function () {
   'use strict';
   var TASKS = [{"n": 1, "key": "t1", "head": "Task 1 - How the course works", "text": "Explain how CST499 works in your own words.", "parts": ["How the semester is organized across the sprints and weekly sessions.", "What is expected of you each week (Own Your Progress items, Graded Items, and Sprint Interviews).", "How grading works (weights for Graded Items, Mid-Term, Interviews, and Own Your Progress).", "Where to find course pages, due dates, and help when you are stuck."], "checks": ["Covers the four-sprint structure and the Wednesday/Friday class rhythm.", "Explains the difference between Own Your Progress (0% tracking) and Graded Items (40%) + Mid-Term (10%) + Interviews (50%).", "Written in your own words rather than pasted from the course page."]}, {"n": 2, "key": "t2", "head": "Task 2 - Route record", "text": "Show the route you took to figure this out.", "parts": ["If you set up an AI Dojo coach: paste your conversation link or transcript showing the questions you asked and how you verified its answers against the course pages.", "If you worked directly from the course pages: list which pages you read and one specific takeaway you got from each page."], "checks": ["Includes either the AI conversation record or the list of course pages read with specific takeaways.", "Notes any place where your initial assumption about the course changed."]}];
-  var CFG = {"page": "cst499-setup-your-ai-dojo", "course": "CST499", "pageTitle": "CST499 AI Dojo Setup", "weekLabel": "Week 1", "destination": "Your starting questions about how CST499 is organized and graded. Explain in your own words how this course works, using either an AI coach you set up or the course design pages. Every assignment and sprint interview this semester, so you know what counts and where to find things.", "feeds": "Explain in your own words how this course works, using either an AI coach you set up or the course design pages.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: how the course is structured across sprints and weekly sessions; what is expected each week; how grading works (0% OYP, 40% Graded Items, 10% Mid-term, 50% Interviews); where to find things. OBSERVABLE CRITERIA: all four sub-parts are addressed in the student's own words. COMMON OMISSIONS: leaving out the 50% interview weight or how OYP (0%) differs from Graded Items (40%).", "t2": "REQUESTED ELEMENTS: either the AI Dojo conversation transcript/link showing questions asked and verification against course pages, OR the list of course pages read and what each gave the student. OBSERVABLE CRITERIA: concrete questions or takeaways are shown."}, "label": {"t1": "How the course works", "t2": "Route record"}, "order": ["t1", "t2"]};
+  var CFG = {"page": "cst499-setup-your-ai-dojo", "course": "CST499", "pageTitle": "CST499 AI Dojo Setup", "weekLabel": "Week 1", "destination": "Week 1 Wednesday walkthrough and course pages. Explain how CST499 works in your own words (with your AI Dojo coach or from the pages). What Are My Priorities and every sprint interview.", "feeds": "Explain how CST499 works in your own words (with your AI Dojo coach or from the pages).", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: how the course is structured across sprints and weekly sessions; what is expected each week; how grading works (0% OYP, 40% Graded Items, 10% Mid-term, 50% Interviews); where to find things. OBSERVABLE CRITERIA: all four sub-parts are addressed in the student's own words. COMMON OMISSIONS: leaving out the 50% interview weight or how OYP (0%) differs from Graded Items (40%).", "t2": "REQUESTED ELEMENTS: either the AI Dojo conversation transcript/link showing questions asked and verification against course pages, OR the list of course pages read and what each gave the student. OBSERVABLE CRITERIA: concrete questions or takeaways are shown."}, "label": {"t1": "How the course works", "t2": "Route record"}, "order": ["t1", "t2"]};
   var KEY = "cc-bb:cst499-setup-your-ai-dojo";
   var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
 
