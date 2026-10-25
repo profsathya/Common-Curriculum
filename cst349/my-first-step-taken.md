@@ -1,4 +1,4 @@
-<!-- Editable text for my-first-step-taken.html (not built yet). DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit). Week-10 graded item, due Mon 2 Nov, 100 pts. The .html is built only after his edit. Notes for the editor, not shown to students: three boxes (what I did · what it produced · the next step now) plus one line that connects the step to the answer in the goal form. Dojo tick and AI feedback as on the goal page. Self-check points are a proposal and total 100. The passcode appears twice and must be the same. -->
+<!-- Editable text for my-first-step-taken.html (not built yet). DRAFT 2, 24 Oct 2026 (draft 2: Prof. Sathya confirmed the item on 24 Oct as the focus of the Sprint 2 Exam on Wed 4 Nov; the exam's written reflection draws on what the student reports here, so the page says so once, in Purpose and under Grading. Draft 1 was 9 Oct, Alan's draft). Week-10 graded item, due Mon 2 Nov, 100 pts. The .html is built only after his edit. Notes for the editor, not shown to students: three boxes (what I did · what it produced · the next step now) plus one line that connects the step to the answer in the goal form. Dojo tick and AI feedback as on the goal page. Self-check points are a proposal and total 100. The passcode appears twice and must be the same. 
 
 CST349 · Fall 2026 · Sprint 2 · Week 10 · Take the first step
 
@@ -10,7 +10,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-Turn your plan into the first experience you can talk about, so that the answer you wrote in week 8 starts becoming real rather than staying a plan.
+Turn your plan into the first experience you can talk about, so that the answer you wrote in week 8 starts becoming real rather than staying a plan. The Sprint 2 Exam on Wednesday 4 November asks you to reflect on how you identified your question, developed your answer and strengthened it; the step you report here is the part of that story that happened.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; remembered on this browser.)
 
@@ -63,7 +63,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **What makes it strong.** The thing the step produced is specific enough that a classmate could ask to see it, and the next step follows from it rather than from the plan alone.
 
-**Grading.** 100 points, in Graded assignments. The grade is based on what you write here; a step that produced less than planned, written plainly, earns the same points as one that went to plan.
+**Grading.** 100 points, in Graded assignments. The grade is based on what you write here; a step that produced less than planned, written plainly, earns the same points as one that went to plan. Bring what you write here with you in your head on Wednesday 4 November: the exam is closed book, and this step is what you will be reflecting on.
 
 ## Submit
 
