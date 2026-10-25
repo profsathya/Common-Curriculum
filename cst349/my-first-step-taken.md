@@ -16,7 +16,7 @@ Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose
 
-Take the first step you planned in your Sprint 2 goal, and write down what you did, what came of it, and what you will do next. The answer you wrote in week 8 stays a plan until you act on it, so this is the week the plan starts to become an experience you can talk about in an interview. The Sprint 2 Exam on Wednesday 4 November asks you to reflect on how you identified your question, developed your answer and strengthened it, and the step you report here is the part of that story that actually happened. Taking a small, concrete step and reporting plainly on what it produced is a habit that will serve you in every job, because that is how work moves forward.
+Take the first step you planned, and write down what you did, what came of it, and what you will do next. A goal stays a plan until you act on it, and the moment you act you have something real to talk about in an interview. Taking a small, concrete step and reporting plainly on what it produced is a skill that will be noticed throughout your career.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
