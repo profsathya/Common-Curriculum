@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1 Wednesday Recording | CST499 (Bare-Bones)</title>
+<style>
+:root{
+  --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+  --border:#C7CDD1; --border-light:#E4E8EA; --ground:#FBFBFC; --paper:#fff;
+  --goal-bg:#F3F8FB; --teal:#0F766E;
+  --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--ground);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline;color:var(--blue-dark)}
+.page{max-width:860px;margin:0 auto;padding:24px 20px 60px}
+.crumb{font-size:13px;font-weight:700;margin-bottom:14px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+h1{font-size:26px;font-weight:900;margin:4px 0 6px}
+.lead{font-size:14.5px;color:var(--muted);margin:0 0 18px}
+.card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:16px}
+video{width:100%;max-height:480px;background:#000;border-radius:6px}
+.jumps{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.jbtn{font-family:inherit;font-size:13px;font-weight:700;padding:6px 11px;border-radius:6px;border:1px solid var(--blue);background:#fff;color:var(--blue);cursor:pointer}
+.jbtn:hover{background:var(--goal-bg)}
+.pagenav{display:flex;justify-content:space-between;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:14px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="crumb"><a href="home-bb.html">&larr; Course home</a></div>
+  <header>
+    <div class="eyebrow">Sprint 0 · Week 1 · Class Recording</div>
+    <h1>Week 1 Wednesday Session Recording</h1>
+    <p class="lead">26 August 2026 · Course walkthrough, why CST499 is structured around sprints, and how to complete Week 1.</p>
+  </header>
+
+  <section class="card">
+    <video id="vid" controls preload="metadata" src="https://profsathya.github.io/Common-Curriculum/cst499/videos/week1-wed.mp4"></video>
+    <div class="jumps" aria-label="Jump to section">
+      <button type="button" class="jbtn" data-t="0">00:00 · Welcome &amp; premise</button>
+      <button type="button" class="jbtn" data-t="98">01:38 · Why the job market changed</button>
+      <button type="button" class="jbtn" data-t="512">08:32 · The 4 sprints &amp; grading</button>
+      <button type="button" class="jbtn" data-t="985">16:25 · Week 1 tasks (AI Dojo &amp; Priorities)</button>
+    </div>
+  </section>
+
+  <div class="pagenav">
+    <span><a href="home-bb.html">&larr; Course home</a></span>
+    <span><a href="setup-your-ai-dojo-bb.html">CST499 AI Dojo Setup &rarr;</a></span>
+  </div>
+</div>
+<script>
+(function(){
+  var v = document.getElementById('vid');
+  Array.prototype.slice.call(document.querySelectorAll('.jbtn')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = parseInt(b.getAttribute('data-t'), 10) || 0;
+      if(v){ v.currentTime = t; v.play(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

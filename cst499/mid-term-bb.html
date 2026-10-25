@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Take-Home Mid-Term | CST499 (Bare-Bones)</title>
+<style>
+:root{
+  --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+  --border:#C7CDD1; --border-light:#E4E8EA; --ground:#FBFBFC; --paper:#fff;
+  --goal-bg:#F3F8FB; --goal-border:#0374B5;
+  --check:#0A7340; --check-bg:#F2FAF5;
+  --teal:#0F766E;
+  --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --rail-h:52px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--ground);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;color:var(--blue-dark)}
+
+/* Sticky task rail */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.5) blur(6px);border-bottom:1px solid var(--border-light)}
+.rail-in{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px;height:var(--rail-h)}
+.rail-home{font-size:13px;font-weight:700;color:var(--blue);white-space:nowrap}
+ol.rail-steps{display:flex;align-items:center;gap:6px;list-style:none;margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+ol.rail-steps::-webkit-scrollbar{display:none}
+.rail-steps a{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:4px 9px;border-radius:999px;color:var(--muted);font-size:12.5px;font-weight:700}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;border:1.5px solid var(--border);font-size:11.5px;font-weight:800;background:#fff}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark)}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff}
+.rail-count{font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}
+@media (max-width:860px){.rail-steps a span{display:none}}
+
+.page{max-width:900px;margin:0 auto;padding:24px 20px 64px}
+
+/* Header */
+.pagehead{margin-bottom:18px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
+.due-line{font-size:14px;color:var(--muted);font-weight:600}
+
+/* Thread connection bar */
+.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
+.thread-bar .trow{margin:0 0 5px}
+.thread-bar .trow:last-child{margin-bottom:0}
+.thread-bar b{color:var(--blue-dark)}
+
+/* Top utility bar */
+.util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
+.btn{font-family:inherit;font-size:13.5px;font-weight:700;padding:8px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;transition:background .12s}
+.btn:hover{background:var(--goal-bg)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-dark)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* Task cards */
+ol.tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+li.task-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:18px 20px;scroll-margin-top:calc(var(--rail-h) + 14px)}
+.task-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.tn{flex:0 0 28px;height:28px;border-radius:999px;background:var(--goal-bg);border:1.5px solid var(--blue);color:var(--blue-dark);font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.tt{flex:1;min-width:0}
+.tprompt{font-size:16.5px;font-weight:700;line-height:1.45;color:var(--text)}
+ol.parts{margin:8px 0 0;padding-left:22px;font-size:15px;line-height:1.5;color:var(--text)}
+ol.parts li{margin:4px 0}
+
+.work-area{margin-left:40px}
+@media (max-width:640px){.work-area{margin-left:0}}
+textarea.box{width:100%;min-height:130px;font-family:inherit;font-size:15px;line-height:1.55;padding:11px 13px;border:1px solid var(--border);border-radius:6px;resize:vertical;color:var(--text);background:#FCFDFE}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;background:#fff}
+
+/* Self-check list */
+.checks-wrap{margin:10px 0 12px;padding:10px 13px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px}
+.checks-title{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+ul.cklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+label.ck-row{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;line-height:1.45;color:var(--text);cursor:pointer}
+label.ck-row input{margin-top:3px;accent-color:var(--check);width:15px;height:15px;flex:0 0 15px}
+
+.action-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-hint{font-size:12.5px;color:var(--muted)}
+.aibox{display:none;margin-top:10px;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:14px;line-height:1.55;white-space:pre-wrap}
+.aibox .lbl{display:block;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--blue-dark);font-weight:800;margin-bottom:4px}
+.aibox .err{color:#8a3b12}
+
+/* Submit section */
+.submit-card{margin-top:26px;background:var(--paper);border:2px solid var(--blue);border-radius:8px;padding:18px 20px;scroll-margin-top:calc(var(--rail-h) + 14px)}
+.submit-card h2{font-size:18px;font-weight:800;margin:0 0 6px}
+.submit-card p{font-size:14.5px;margin:0 0 12px;color:var(--text)}
+.status{font-size:13px;color:var(--muted);margin:8px 0 0}
+.status.ok{color:var(--check);font-weight:700}
+textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.45;padding:10px 12px;border:1px solid var(--border);border-radius:6px;background:#FAFBFC;color:var(--text)}
+.storenote{font-size:13px;color:#8a3b12;margin-top:8px;display:none}
+
+/* Footer nav */
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:14px;font-weight:600}
+.feedback-note{margin-top:20px;font-size:12.5px;color:var(--muted);text-align:center}
+.page-footer{margin-top:16px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.page-footer img{height:20px;opacity:.55}
+</style>
+</head>
+<body>
+
+<nav class="rail" aria-label="Tasks on this page">
+  <div class="rail-in">
+    <a class="rail-home" href="home-bb.html">&larr; Course home</a>
+    <ol class="rail-steps">
+      <li><a href="#task-1" data-rail="q1"><b>1</b><span>The market</span></a></li>
+      <li><a href="#task-2" data-rail="q2"><b>2</b><span>The problem</span></a></li>
+      <li><a href="#task-3" data-rail="q3"><b>3</b><span>The gap it closes</span></a></li>
+      <li><a href="#task-4" data-rail="q4"><b>4</b><span>How I used AI</span></a></li>
+      <li><a href="#task-5" data-rail="q5"><b>5</b><span>One decision</span></a></li>
+      <li><a href="#task-6" data-rail="q6"><b>6</b><span>One thing I can now do</span></a></li>
+      <li><a href="#task-7" data-rail="q7"><b>7</b><span>Where my part is hard</span></a></li>
+      <li><a href="#task-8" data-rail="q8"><b>8</b><span>The bar</span></a></li>
+      <li><a href="#submit" data-rail="submit"><b>&rarr;</b><span>Submit</span></a></li>
+    </ol>
+    <span class="rail-count" id="rail-count">0 / 8</span>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header class="pagehead">
+    <div class="eyebrow">Sprint 2 · Week 8 · Mid-Term Part 1 of 2 (10% of course grade)</div>
+    <h1>Take-Home Mid-Term</h1>
+    <div class="due-line">Due Wednesday 14 Oct, 11:59 pm · 100 points · Mid-term group (no class session Wednesday 14 Oct)</div>
+  </header>
+
+  <section class="thread-bar" aria-label="How this connects">
+    <div class="trow"><b>Builds on:</b> Your Sprint 1 market read, Project Proposal, Learning Plan, and your build work through Week 8.</div>
+    <div class="trow"><b>This step:</b> Answer all eight published questions at length about your project, your own part in it, and the evidence behind your decisions.</div>
+    <div class="trow"><b>Feeds into:</b> The Week 9 In-Class Mid-Term Activity (where you will summarize 3 of 5 handed-out questions by hand, closed book, and interview a partner) and your Week 9 Quality Review.</div>
+  </section>
+
+  <div class="util-bar">
+    <span>Your answers save automatically in this browser as you type.</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button type="button" class="btn" id="copy-questions-btn">Copy the questions</button>
+      <span id="copy-questions-status" style="font-size:12.5px"></span>
+    </div>
+  </div>
+
+  <ol class="tasks">
+
+    <li class="task-card" id="task-1">
+      <div class="task-head">
+        <span class="tn">1</span>
+        <div class="tt">
+          <div class="tprompt">What you learned about the market you are aiming at: what employers expect now that they did not a few years ago, and what you expect to change next  -  and why you think so.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q1">
+        <textarea class="box" id="box-q1" aria-label="Task 1 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q1" data-idx="0"><span>It says what employers expect now that they did not a few years ago.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q1" data-idx="1"><span>It says what you expect to change next, and why you think so.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q1" data-idx="2"><span>The lesson is in your own words; a reference, if you use one, supports it rather than replaces it.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q1">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q1" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-2">
+      <div class="task-head">
+        <span class="tn">2</span>
+        <div class="tt">
+          <div class="tprompt">What problem your project solves, for whom, and what convinced you the need is real  -  the moment, conversation or evidence that settled it.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q2">
+        <textarea class="box" id="box-q2" aria-label="Task 2 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q2" data-idx="0"><span>It says what problem the project solves and for whom.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q2" data-idx="1"><span>It names the moment, conversation or evidence that convinced you  -  one you were there for or found yourself.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q2" data-idx="2"><span>Someone who was there would recognise the moment from your description.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q2">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q2" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-3">
+      <div class="task-head">
+        <span class="tn">3</span>
+        <div class="tt">
+          <div class="tprompt">How your work answers what the market asks for: which expectations it speaks to, and which it does not.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q3">
+        <textarea class="box" id="box-q3" aria-label="Task 3 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q3" data-idx="0"><span>It names expectations your work speaks to, and they are ones you named in question 1.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q3" data-idx="1"><span>It names expectations your work does not speak to.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q3" data-idx="2"><span>Each expectation is tied to something in your work, not to the project in general.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q3">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q3" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-4">
+      <div class="task-head">
+        <span class="tn">4</span>
+        <div class="tt">
+          <div class="tprompt">How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q4">
+        <textarea class="box" id="box-q4" aria-label="Task 4 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q4" data-idx="0"><span>It says whether you used AI, and if so how, with something specific you gave it or got from it.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q4" data-idx="1"><span>It says how it helped.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q4" data-idx="2"><span>It says what you brought, specific to this project  -  something a classmate could not paste into their own answer unchanged.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q4">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q4" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-5">
+      <div class="task-head">
+        <span class="tn">5</span>
+        <div class="tt">
+          <div class="tprompt">Pick one decision you made  -  design, scope or tool. Analyze what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q5">
+        <textarea class="box" id="box-q5" aria-label="Task 5 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q5" data-idx="0"><span>It is one decision, and it is a design, scope or tool decision.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q5" data-idx="1"><span>It names at least one other option you could have taken.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q5" data-idx="2"><span>It says why you chose this one, and gives an argument to revisit it that you would take seriously.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q5">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q5" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-6">
+      <div class="task-head">
+        <span class="tn">6</span>
+        <div class="tt">
+          <div class="tprompt">One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q6">
+        <textarea class="box" id="box-q6" aria-label="Task 6 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q6" data-idx="0"><span>It is one thing, and it is something you set out to learn.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q6" data-idx="1"><span>It says how you know you can do it  -  something you did, not something you feel.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q6" data-idx="2"><span>The demonstration is something a hiring manager could look at or watch.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q6">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q6" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-7">
+      <div class="task-head">
+        <span class="tn">7</span>
+        <div class="tt">
+          <div class="tprompt">Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q7">
+        <textarea class="box" id="box-q7" aria-label="Task 7 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q7" data-idx="0"><span>It names something in your part of the work that is not working right now.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q7" data-idx="1"><span>It says what surprised you.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q7" data-idx="2"><span>The next move is something you could do this week, with a day or a person attached.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q7">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q7" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-8">
+      <div class="task-head">
+        <span class="tn">8</span>
+        <div class="tt">
+          <div class="tprompt">What you now understand about the bar for the roles you want, from looking at real work by people who hold them  -  and where yours stands against it today.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="q8">
+        <textarea class="box" id="box-q8" aria-label="Task 8 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="q8" data-idx="0"><span>It says what the bar is, from real work you looked at by people who hold the roles.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q8" data-idx="1"><span>It says where your work stands against it today.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="q8" data-idx="2"><span>The two are compared on the same feature  -  what theirs has and yours does or does not.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="q8">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-q8" aria-live="polite"></div>
+      </div>
+    </li>
+  </ol>
+
+  <section class="submit-card" id="submit">
+    <h2>Submit on Canvas</h2>
+    <p>Click Copy my answers, then paste the text directly into the Canvas text-entry box for Take-home mid-term.</p>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+      <span class="status" id="copy-status" aria-live="polite">Copies every question, your answers, and your checked items.</span>
+    </div>
+    <textarea class="sumout" id="summary-out" readonly aria-label="Preview of your submission"></textarea>
+    <p class="storenote" id="store-note">This browser blocked local storage, so your work cannot be saved between visits. Copy your answers before closing this tab.</p>
+  </section>
+
+  <div class="pagenav">
+    <span><a href="learning-plan-bb.html">&larr; Learning Plan</a></span>
+    <span><a href="in-class-activity-mid-term-bb.html">In-Class Activity (Mid-Term) &rarr;</a></span>
+  </div>
+
+  <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> - it is the fastest way to get it fixed.</div>
+
+  <footer class="page-footer">
+    <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+    <span>Computing Talent Initiative · CSU Monterey Bay - CST499 Computer Science Capstone · Take-Home Mid-Term (Bare-bones)</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var TASKS = [{"n": 1, "key": "q1", "head": "Task 1 - The market", "text": "What you learned about the market you are aiming at: what employers expect now that they did not a few years ago, and what you expect to change next  -  and why you think so.", "parts": [], "checks": ["It says what employers expect now that they did not a few years ago.", "It says what you expect to change next, and why you think so.", "The lesson is in your own words; a reference, if you use one, supports it rather than replaces it."]}, {"n": 2, "key": "q2", "head": "Task 2 - The problem", "text": "What problem your project solves, for whom, and what convinced you the need is real  -  the moment, conversation or evidence that settled it.", "parts": [], "checks": ["It says what problem the project solves and for whom.", "It names the moment, conversation or evidence that convinced you  -  one you were there for or found yourself.", "Someone who was there would recognise the moment from your description."]}, {"n": 3, "key": "q3", "head": "Task 3 - The gap it closes", "text": "How your work answers what the market asks for: which expectations it speaks to, and which it does not.", "parts": [], "checks": ["It names expectations your work speaks to, and they are ones you named in question 1.", "It names expectations your work does not speak to.", "Each expectation is tied to something in your work, not to the project in general."]}, {"n": 4, "key": "q4", "head": "Task 4 - How I used AI", "text": "How did you use AI for this project, if you did? How did it help, and what human value did you bring in that process?", "parts": [], "checks": ["It says whether you used AI, and if so how, with something specific you gave it or got from it.", "It says how it helped.", "It says what you brought, specific to this project  -  something a classmate could not paste into their own answer unchanged."]}, {"n": 5, "key": "q5", "head": "Task 5 - One decision", "text": "Pick one decision you made  -  design, scope or tool. Analyze what other options were available, why you made this particular choice, and what would be a good argument to revisit that decision now.", "parts": [], "checks": ["It is one decision, and it is a design, scope or tool decision.", "It names at least one other option you could have taken.", "It says why you chose this one, and gives an argument to revisit it that you would take seriously."]}, {"n": 6, "key": "q6", "head": "Task 6 - One thing I can now do", "text": "One thing you set out to learn and can now do: how you know you can, and how you can demonstrate to a hiring manager that you have learned it.", "parts": [], "checks": ["It is one thing, and it is something you set out to learn.", "It says how you know you can do it  -  something you did, not something you feel.", "The demonstration is something a hiring manager could look at or watch."]}, {"n": 7, "key": "q7", "head": "Task 7 - Where my part is hard", "text": "Where your part of the work is hard right now: what is not working, what surprised you, and what you will do next.", "parts": [], "checks": ["It names something in your part of the work that is not working right now.", "It says what surprised you.", "The next move is something you could do this week, with a day or a person attached."]}, {"n": 8, "key": "q8", "head": "Task 8 - The bar", "text": "What you now understand about the bar for the roles you want, from looking at real work by people who hold them  -  and where yours stands against it today.", "parts": [], "checks": ["It says what the bar is, from real work you looked at by people who hold the roles.", "It says where your work stands against it today.", "The two are compared on the same feature  -  what theirs has and yours does or does not."]}];
+  var CFG = {"page": "cst499-mid-term", "course": "CST499", "pageTitle": "Take-Home Mid-Term", "weekLabel": "Week 8", "destination": "Your Sprint 1 market read, Project Proposal, Learning Plan, and your build work through Week 8. Answer all eight published questions at length about your project, your own part in it, and the evidence behind your decisions. The Week 9 In-Class Mid-Term Activity (where you will summarize 3 of 5 handed-out questions by hand, closed book, and interview a partner) and your Week 9 Quality Review.", "feeds": "Answer all eight published questions at length about your project, your own part in it, and the evidence behind your decisions.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"q1": "REQUESTED ELEMENTS: what employers in the student's market expect now that they did not a few years ago; what the student expects to change next; why they think so. OBSERVABLE CRITERIA: at least one expectation is named as a change - something expected now that was not before; at least one expected next change is named; the why is the student's own reasoning from what they read or heard; the answer is about what they understood rather than a list of what they collected. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q2": "REQUESTED ELEMENTS: the problem the project solves; for whom; what convinced the student the need is real - the moment, conversation or evidence that settled it. OBSERVABLE CRITERIA: the problem is stated; the who is a particular person, team or kind of user; the convincing thing is a specific moment, conversation or item of evidence the student was there for or found themselves, described so someone who was there would recognise it. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q3": "REQUESTED ELEMENTS: which market expectations the student's work speaks to; which it does not. OBSERVABLE CRITERIA: both halves are present; each expectation named is one the student can tie to their own work, not to the project in general; the does-not half names at least one real expectation rather than saying there is none. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q4": "REQUESTED ELEMENTS: how the student used AI for the project, if they did; how it helped; what human value the student brought in that process. OBSERVABLE CRITERIA: the answer says whether AI was used and, if so, how - with something specific given to it or got from it; it says how it helped; it says what the student brought, specific to this project and its user. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q5": "REQUESTED ELEMENTS: one decision - design, scope or tool; the other options that were available; why the student made this choice; a good argument to revisit the decision now. OBSERVABLE CRITERIA: it is one decision and it is a design, scope or tool decision; at least one other option is named; the reason for the choice is stated; the argument to revisit is a real argument the student could act on. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q6": "REQUESTED ELEMENTS: one thing the student set out to learn and can now do; how they know they can; how they would demonstrate it to a hiring manager. OBSERVABLE CRITERIA: it is one thing and it is something they set out to learn; the how-they-know is something they did rather than something they feel; the demonstration is something a hiring manager could look at or watch. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q7": "REQUESTED ELEMENTS: where the student's part of the work is hard right now; what is not working; what surprised them; what they will do next. OBSERVABLE CRITERIA: something not working is named, in the student's own part of the work; a surprise is named; the next move is something they could do this week, with a day or a person attached where possible. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood.", "q8": "REQUESTED ELEMENTS: what the student now understands about the bar for the roles they want, from looking at real work by people who hold those roles; where the student's own work stands against it today. OBSERVABLE CRITERIA: the bar is described from real work looked at, as a feature that work has; where the student's work stands is stated for today rather than as a hope; the two are compared on the same feature. NOTE: every question tests a lesson, not recall. A lesson stated in the student's own words satisfies the criterion; a missing reference, name, number or citation is never an omission and is never asked for. Never state what a tool, a market or an employer does or does not do; only ask about what the student observed and understood."}, "label": {"q1": "The market", "q2": "The problem", "q3": "The gap it closes", "q4": "How I used AI", "q5": "One decision", "q6": "One thing I can now do", "q7": "Where my part is hard", "q8": "The bar"}, "order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"]};
+  var KEY = "cc-gi:cst499-mid-term";
+  var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function letter(i) { return String.fromCharCode(97 + i); }
+
+  var storageOK = true;
+  var state = { answers: {}, checks: {}, copiedAt: null };
+  try {
+    var raw = window.localStorage.getItem(KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        state.answers = parsed.answers || parsed.boxes || {};
+        state.checks = parsed.checks || {};
+      }
+    }
+  } catch (e) { storageOK = false; }
+
+  var saveTimer = null;
+  function save() {
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+      storageOK = true;
+    } catch (e) {
+      storageOK = false;
+      var n = document.getElementById('store-note');
+      if (n) n.style.display = 'block';
+    }
+  }
+  function saveSoon() {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, 400);
+  }
+
+  function answerState(key) {
+    if (!state.answers[key]) state.answers[key] = { text: '', ai: [] };
+    if (!state.answers[key].ai) state.answers[key].ai = [];
+    return state.answers[key];
+  }
+  function checkState(key) {
+    if (!state.checks[key]) state.checks[key] = [];
+    return state.checks[key];
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function indentLines(s, pad) {
+    return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n');
+  }
+  function answerHtml(s) {
+    var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
+    return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
+  }
+
+  function buildPayload(withAnswers) {
+    var md = '', html = '';
+    if (withAnswers) {
+      md += CFG.pageTitle + ' - ' + CFG.course + ', ' + CFG.weekLabel + '\n\n';
+      html += '<p><b>' + esc(CFG.pageTitle) + '</b> - ' + esc(CFG.course) + ', ' + esc(CFG.weekLabel) + '</p>';
+    }
+    TASKS.forEach(function (t, idx) {
+      var key = t.key;
+      md += t.head + '\n' + t.text + '\n';
+      html += '<p><b>' + esc(t.head) + '</b><br>' + esc(t.text) + '</p>';
+      if (t.parts && t.parts.length) {
+        html += '<ol type="a" style="list-style-type:lower-alpha">';
+        t.parts.forEach(function (p, i) {
+          md += '   ' + letter(i) + '. ' + p + '\n';
+          html += '<li>' + esc(p) + '</li>';
+        });
+        html += '</ol>';
+      }
+      if (withAnswers) {
+        var a = (answerState(key).text || '').trim();
+        md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
+        html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
+      }
+      if (t.checks && t.checks.length) {
+        var ticks = withAnswers ? checkState(key) : [];
+        md += '\n   Check your answer:\n';
+        html += '<p><b>Check your answer:</b></p><ul style="list-style:none;padding-left:0">';
+        t.checks.forEach(function (c, i) {
+          var on = !!ticks[i];
+          md += '   ' + (on ? '[x]' : '[ ]') + ' ' + c + '\n';
+          html += '<li>' + (on ? '[x]' : '[ ]') + ' ' + esc(c) + '</li>';
+        });
+        html += '</ul>';
+      }
+      if (idx < TASKS.length - 1) md += '\n';
+    });
+    return { text: md, html: html };
+  }
+
+  function writeClipboard(payload) {
+    var nc = navigator.clipboard;
+    if (!nc) return Promise.reject(new Error('no clipboard'));
+    if (nc.write && window.ClipboardItem) {
+      try {
+        var item = new ClipboardItem({
+          'text/html': new Blob([payload.html], { type: 'text/html' }),
+          'text/plain': new Blob([payload.text], { type: 'text/plain' })
+        });
+        return nc.write([item]).catch(function () { return nc.writeText(payload.text); });
+      } catch (e) {
+        return nc.writeText(payload.text);
+      }
+    }
+    if (nc.writeText) return nc.writeText(payload.text);
+    return Promise.reject(new Error('no clipboard'));
+  }
+
+  function showAi(el, text, n) {
+    el.style.display = 'block';
+    el.innerHTML = '';
+    var lbl = document.createElement('span');
+    lbl.className = 'lbl';
+    lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+    el.appendChild(lbl);
+    el.appendChild(document.createTextNode(text));
+  }
+
+  function updateRail() {
+    var done = 0;
+    TASKS.forEach(function (t) {
+      var has = !!(answerState(t.key).text || '').trim();
+      if (has) done++;
+      var link = $('[data-rail="' + t.key + '"]');
+      if (link) link.classList.toggle('done', has);
+    });
+    var cnt = $('#rail-count');
+    if (cnt) cnt.textContent = done + ' / ' + TASKS.length;
+    var out = $('#summary-out');
+    if (out) out.value = buildPayload(true).text;
+  }
+
+  // Wire textareas
+  TASKS.forEach(function (t) {
+    var key = t.key;
+    var ta = $('#box-' + key);
+    var aiEl = $('#ai-' + key);
+    var st = answerState(key);
+    if (ta) {
+      ta.value = st.text || '';
+      ta.addEventListener('input', function () {
+        st.text = ta.value;
+        saveSoon();
+        updateRail();
+      });
+    }
+    if (aiEl && st.ai && st.ai.length) {
+      showAi(aiEl, st.ai[st.ai.length - 1].r, st.ai.length);
+    }
+  });
+
+  // Wire checkboxes
+  $all('input[data-check]').forEach(function (cb) {
+    var key = cb.getAttribute('data-check');
+    var idx = parseInt(cb.getAttribute('data-idx'), 10);
+    var arr = checkState(key);
+    cb.checked = !!arr[idx];
+    cb.addEventListener('change', function () {
+      arr[idx] = cb.checked;
+      saveSoon();
+      updateRail();
+    });
+  });
+
+  // Wire AI feedback buttons
+  $all('button[data-ai]').forEach(function (btn) {
+    var key = btn.getAttribute('data-ai');
+    var ta = $('#box-' + key);
+    var aiEl = $('#ai-' + key);
+    var taskObj = TASKS.filter(function (t) { return t.key === key; })[0];
+    btn.addEventListener('click', function () {
+      var text = (ta ? ta.value : '').trim();
+      if (!text) {
+        aiEl.style.display = 'block';
+        aiEl.innerHTML = '<span class="lbl">AI feedback</span>Write a draft answer in the box above first, then click Get AI feedback.';
+        return;
+      }
+      btn.disabled = true;
+      var orig = btn.textContent;
+      btn.textContent = 'Thinking...';
+      var qPlain = taskObj.text + (taskObj.parts && taskObj.parts.length ? ' ' + taskObj.parts.map(function(p, i){ return letter(i) + '. ' + p; }).join(' ') : '');
+      var userMsg = 'COURSE: ' + CFG.course + ' (' + CFG.pageTitle + ')\n' +
+                    'WHERE THIS FITS: ' + CFG.destination + '\n' +
+                    'BOX: ' + (CFG.label[key] || key) + '\n' +
+                    'TASK THE STUDENT IS ANSWERING: ' + qPlain + '\n' +
+                    'CRITERIA FOR THIS BOX: ' + (CFG.coach[key] || '') + '\n\n' +
+                    'STUDENT DRAFT:\n' + text;
+      fetch(AI_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system: CFG.system,
+          messages: [{ role: 'user', content: userMsg }]
+        })
+      })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (data) {
+        var reply = (data && (data.reply || data.content || data.text)) || '';
+        if (Array.isArray(reply)) {
+          reply = reply.map(function (b) { return b.text || ''; }).join('');
+        }
+        reply = String(reply).trim();
+        if (!reply) throw new Error('empty');
+        var st = answerState(key);
+        st.ai.push({ t: new Date().toISOString(), r: reply });
+        save();
+        showAi(aiEl, reply, st.ai.length);
+      })
+      .catch(function () {
+        aiEl.style.display = 'block';
+        aiEl.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not reach the feedback service right now. Use the checklist above to review your answer, and try again in a moment.</span>';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = orig;
+      });
+    });
+  });
+
+  // Copy questions button
+  var cqBtn = $('#copy-questions-btn'), cqSt = $('#copy-questions-status');
+  if (cqBtn) {
+    cqBtn.addEventListener('click', function () {
+      var payload = buildPayload(false);
+      writeClipboard(payload).then(function () {
+        cqSt.textContent = 'Copied questions to clipboard.';
+      }, function () {
+        cqSt.textContent = 'Could not copy automatically.';
+      });
+    });
+  }
+
+  // Copy answers button
+  var cBtn = $('#copy-btn'), cSt = $('#copy-status'), sumOut = $('#summary-out');
+  if (cBtn) {
+    cBtn.addEventListener('click', function () {
+      var payload = buildPayload(true);
+      sumOut.value = payload.text;
+      state.copiedAt = new Date().toISOString();
+      save();
+      writeClipboard(payload).then(function () {
+        cSt.className = 'status ok';
+        cSt.textContent = 'Copied! Paste into the Canvas text-entry box and submit.';
+      }, function () {
+        cSt.className = 'status';
+        cSt.textContent = 'Select all in the preview box below and copy manually (Cmd+C / Ctrl+C).';
+        sumOut.focus();
+        sumOut.select();
+      });
+    });
+  }
+
+  updateRail();
+})();
+</script>
+</body>
+</html>

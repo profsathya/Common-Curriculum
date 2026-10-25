@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Proposal | CST499 (Bare-Bones)</title>
+<style>
+:root{
+  --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+  --border:#C7CDD1; --border-light:#E4E8EA; --ground:#FBFBFC; --paper:#fff;
+  --goal-bg:#F3F8FB; --goal-border:#0374B5;
+  --check:#0A7340; --check-bg:#F2FAF5;
+  --teal:#0F766E;
+  --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --rail-h:52px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--ground);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;color:var(--blue-dark)}
+
+/* Sticky task rail */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.5) blur(6px);border-bottom:1px solid var(--border-light)}
+.rail-in{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px;height:var(--rail-h)}
+.rail-home{font-size:13px;font-weight:700;color:var(--blue);white-space:nowrap}
+ol.rail-steps{display:flex;align-items:center;gap:6px;list-style:none;margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+ol.rail-steps::-webkit-scrollbar{display:none}
+.rail-steps a{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:4px 9px;border-radius:999px;color:var(--muted);font-size:12.5px;font-weight:700}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;border:1.5px solid var(--border);font-size:11.5px;font-weight:800;background:#fff}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark)}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff}
+.rail-count{font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}
+@media (max-width:860px){.rail-steps a span{display:none}}
+
+.page{max-width:900px;margin:0 auto;padding:24px 20px 64px}
+
+/* Header */
+.pagehead{margin-bottom:18px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.pagehead h1{font-size:28px;font-weight:900;margin:4px 0 6px;letter-spacing:-.015em;line-height:1.2}
+.due-line{font-size:14px;color:var(--muted);font-weight:600}
+
+/* Thread connection bar */
+.thread-bar{background:var(--goal-bg);border:1px solid #B8D9EE;border-left:4px solid var(--goal-border);border-radius:8px;padding:13px 16px;margin-bottom:22px;font-size:14.5px;line-height:1.5}
+.thread-bar .trow{margin:0 0 5px}
+.thread-bar .trow:last-child{margin-bottom:0}
+.thread-bar b{color:var(--blue-dark)}
+
+/* Top utility bar */
+.util-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-light);border-radius:7px;font-size:13.5px;color:var(--muted)}
+.btn{font-family:inherit;font-size:13.5px;font-weight:700;padding:8px 14px;border-radius:6px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;transition:background .12s}
+.btn:hover{background:var(--goal-bg)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-dark)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* Task cards */
+ol.tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+li.task-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:18px 20px;scroll-margin-top:calc(var(--rail-h) + 14px)}
+.task-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.tn{flex:0 0 28px;height:28px;border-radius:999px;background:var(--goal-bg);border:1.5px solid var(--blue);color:var(--blue-dark);font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.tt{flex:1;min-width:0}
+.tprompt{font-size:16.5px;font-weight:700;line-height:1.45;color:var(--text)}
+ol.parts{margin:8px 0 0;padding-left:22px;font-size:15px;line-height:1.5;color:var(--text)}
+ol.parts li{margin:4px 0}
+
+.work-area{margin-left:40px}
+@media (max-width:640px){.work-area{margin-left:0}}
+textarea.box{width:100%;min-height:130px;font-family:inherit;font-size:15px;line-height:1.55;padding:11px 13px;border:1px solid var(--border);border-radius:6px;resize:vertical;color:var(--text);background:#FCFDFE}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;background:#fff}
+
+/* Self-check list */
+.checks-wrap{margin:10px 0 12px;padding:10px 13px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px}
+.checks-title{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+ul.cklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+label.ck-row{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;line-height:1.45;color:var(--text);cursor:pointer}
+label.ck-row input{margin-top:3px;accent-color:var(--check);width:15px;height:15px;flex:0 0 15px}
+
+.action-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-hint{font-size:12.5px;color:var(--muted)}
+.aibox{display:none;margin-top:10px;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:14px;line-height:1.55;white-space:pre-wrap}
+.aibox .lbl{display:block;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--blue-dark);font-weight:800;margin-bottom:4px}
+.aibox .err{color:#8a3b12}
+
+/* Submit section */
+.submit-card{margin-top:26px;background:var(--paper);border:2px solid var(--blue);border-radius:8px;padding:18px 20px;scroll-margin-top:calc(var(--rail-h) + 14px)}
+.submit-card h2{font-size:18px;font-weight:800;margin:0 0 6px}
+.submit-card p{font-size:14.5px;margin:0 0 12px;color:var(--text)}
+.status{font-size:13px;color:var(--muted);margin:8px 0 0}
+.status.ok{color:var(--check);font-weight:700}
+textarea.sumout{width:100%;min-height:160px;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.45;padding:10px 12px;border:1px solid var(--border);border-radius:6px;background:#FAFBFC;color:var(--text)}
+.storenote{font-size:13px;color:#8a3b12;margin-top:8px;display:none}
+
+/* Footer nav */
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:14px;font-weight:600}
+.feedback-note{margin-top:20px;font-size:12.5px;color:var(--muted);text-align:center}
+.page-footer{margin-top:16px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.page-footer img{height:20px;opacity:.55}
+</style>
+</head>
+<body>
+
+<nav class="rail" aria-label="Tasks on this page">
+  <div class="rail-in">
+    <a class="rail-home" href="home-bb.html">&larr; Course home</a>
+    <ol class="rail-steps">
+      <li><a href="#task-1" data-rail="t1"><b>1</b><span>Roles and postings</span></a></li>
+      <li><a href="#task-2" data-rail="t2"><b>2</b><span>The gap</span></a></li>
+      <li><a href="#task-3" data-rail="t3"><b>3</b><span>From the gap to the project</span></a></li>
+      <li><a href="#task-4" data-rail="t4"><b>4</b><span>The project</span></a></li>
+      <li><a href="#task-5" data-rail="t5"><b>5</b><span>What AI can build of this today</span></a></li>
+      <li><a href="#task-6" data-rail="t6"><b>6</b><span>What I will bring</span></a></li>
+      <li><a href="#task-7" data-rail="t7"><b>7</b><span>Scope</span></a></li>
+      <li><a href="#task-8" data-rail="t8"><b>8</b><span>The evidence</span></a></li>
+      <li><a href="#task-9" data-rail="t9"><b>9</b><span>My rubric</span></a></li>
+      <li><a href="#submit" data-rail="submit"><b>&rarr;</b><span>Submit</span></a></li>
+    </ol>
+    <span class="rail-count" id="rail-count">0 / 9</span>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header class="pagehead">
+    <div class="eyebrow">Sprint 1 · Week 4 · Graded Item (Prerequisite Gate)</div>
+    <h1>Project Proposal</h1>
+    <div class="due-line">Due Monday 21 Sep, 11:59 pm · 100 points · Graded items (40% of course grade)</div>
+  </header>
+
+  <section class="thread-bar" aria-label="How this connects">
+    <div class="trow"><b>Builds on:</b> Your Week 2 market read, evidence audit, and Week 3 problem-space exploration.</div>
+    <div class="trow"><b>This step:</b> Define the capstone project that closes your gap, prove the need is real, test what AI can already build today, set your Week 8 and Week 12 scope, and propose your grading rubric.</div>
+    <div class="trow"><b>Feeds into:</b> Every graded assignment in Sprints 2, 3, and 4 (this proposal is the prerequisite gate for the rest of the course).</div>
+  </section>
+
+  <div class="util-bar">
+    <span>Your answers save automatically in this browser as you type.</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button type="button" class="btn" id="copy-questions-btn">Copy the questions</button>
+      <span id="copy-questions-status" style="font-size:12.5px"></span>
+    </div>
+  </div>
+
+  <ol class="tasks">
+
+    <li class="task-card" id="task-1">
+      <div class="task-head">
+        <span class="tn">1</span>
+        <div class="tt">
+          <div class="tprompt">Identify one or more roles you are aiming for. For each, link two or three postings you are using as the bar.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="t1">
+        <textarea class="box" id="box-t1" aria-label="Task 1 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t1" data-idx="0"><span>Names one or more specific role titles (rather than a broad field).</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t1" data-idx="1"><span>Links 2 or 3 real job postings for each role.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t1">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t1" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-2">
+      <div class="task-head">
+        <span class="tn">2</span>
+        <div class="tt">
+          <div class="tprompt">State the gap in your preparation briefly: what those postings ask for that you cannot show yet.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="t2">
+        <textarea class="box" id="box-t2" aria-label="Task 2 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t2" data-idx="0"><span>States what those postings ask for in words close to the postings' own.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t2" data-idx="1"><span>Names the specific thing you cannot show yet.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t2">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t2" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-3">
+      <div class="task-head">
+        <span class="tn">3</span>
+        <div class="tt">
+          <div class="tprompt">Explain how you got from the gap to this project.</div>
+          <ol class="parts" type="a"><li>What you considered  -  problem spaces, partner projects, ideas of your own.</li><li>What you ruled out, and why.</li><li>What makes the one you chose the right fit for the gap.</li></ol>
+        </div>
+      </div>
+      <div class="work-area" data-box="t3">
+        <textarea class="box" id="box-t3" aria-label="Task 3 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t3" data-idx="0"><span>Lists more than one option you considered (problem spaces, partner projects, or your own ideas).</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t3" data-idx="1"><span>Names what you ruled out and gives a concrete reason.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t3" data-idx="2"><span>Connects the project you chose directly to closing the gap in Task 2.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t3">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t3" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-4">
+      <div class="task-head">
+        <span class="tn">4</span>
+        <div class="tt">
+          <div class="tprompt">Describe the project.</div>
+          <ol class="parts" type="a"><li>What you will build or make.</li><li>Who it is for  -  a named person, team or kind of user.</li><li>The evidence that this is a real need for that person, team or user: what you observed, who you asked and what they said, or the data you found  -  each with its source.</li><li>What they will do with it that they cannot do now.</li></ol>
+        </div>
+      </div>
+      <div class="work-area" data-box="t4">
+        <textarea class="box" id="box-t4" aria-label="Task 4 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t4" data-idx="0"><span>States what you will build and names a specific person, team, or kind of user it is for.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t4" data-idx="1"><span>Includes concrete evidence of need (what you observed, who you asked, or data you found) with its source.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t4" data-idx="2"><span>Says what the user will be able to do with it that they cannot do now.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t4">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t4" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-5">
+      <div class="task-head">
+        <span class="tn">5</span>
+        <div class="tt">
+          <div class="tprompt">Test what AI can build of this today.</div>
+          <ol class="parts" type="a"><li>What you tried, and with what (ai.studio or another tool).</li><li>What came out.</li><li>What it could not do, or got wrong.</li></ol>
+        </div>
+      </div>
+      <div class="work-area" data-box="t5">
+        <textarea class="box" id="box-t5" aria-label="Task 5 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t5" data-idx="0"><span>Names the AI tool you tested and what you gave it.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t5" data-idx="1"><span>Describes what came out and at least one specific thing it got wrong or could not do.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t5">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t5" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-6">
+      <div class="task-head">
+        <span class="tn">6</span>
+        <div class="tt">
+          <div class="tprompt">Identify what you will bring that the tool does not  -  judgment, domain knowledge, testing with real users, the part that needs a person. This is a goal you aim at and can adjust; the mid-term and the final report ask what you brought.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="t6">
+        <textarea class="box" id="box-t6" aria-label="Task 6 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t6" data-idx="0"><span>Names what you will bring (judgment, domain knowledge, real-user testing) specific to this project and connected to Task 5c.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t6">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t6" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-7">
+      <div class="task-head">
+        <span class="tn">7</span>
+        <div class="tt">
+          <div class="tprompt">Set the scope.</div>
+          <ol class="parts" type="a"><li>What will exist by the mid-term (week 8).</li><li>What will exist by week 12.</li><li>What is out.</li></ol>
+        </div>
+      </div>
+      <div class="work-area" data-box="t7">
+        <textarea class="box" id="box-t7" aria-label="Task 7 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t7" data-idx="0"><span>States what will exist and be showable by Week 8 (mid-term).</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t7" data-idx="1"><span>States what will exist by Week 12, going beyond Week 8.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t7" data-idx="2"><span>Names at least one thing deliberately left out of scope.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t7">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t7" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-8">
+      <div class="task-head">
+        <span class="tn">8</span>
+        <div class="tt">
+          <div class="tprompt">Name the evidence.</div>
+          <ol class="parts" type="a"><li>What a hiring manager will be able to see at the end  -  repo, write-up, demo, data.</li><li>What external verifications you are considering to demonstrate quality, impact and your human value  -  a user who tried it, someone in the field who reviewed it, data from real use.</li></ol>
+        </div>
+      </div>
+      <div class="work-area" data-box="t8">
+        <textarea class="box" id="box-t8" aria-label="Task 8 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t8" data-idx="0"><span>Lists what a hiring manager will be able to open and inspect (repo, write-up, demo, data).</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t8" data-idx="1"><span>Names the specific external verification you are planning (a particular user, reviewer, or real-use measurement).</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t8">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t8" aria-live="polite"></div>
+      </div>
+    </li>
+
+    <li class="task-card" id="task-9">
+      <div class="task-head">
+        <span class="tn">9</span>
+        <div class="tt">
+          <div class="tprompt">Write your rubric: three to five categories, each with A, B and C descriptors, detailed enough for someone else to grade you with. Team project: say what you are accountable for.</div>
+          
+        </div>
+      </div>
+      <div class="work-area" data-box="t9">
+        <textarea class="box" id="box-t9" aria-label="Task 9 answer" placeholder="Write your answer here..."></textarea>
+        <div class="checks-wrap"><div class="checks-title">Check your answer:</div><ul class="cklist"><li><label class="ck-row"><input type="checkbox" data-check="t9" data-idx="0"><span>Includes 3 to 5 grading categories, each with observable A, B, and C descriptors.</span></label></li><li><label class="ck-row"><input type="checkbox" data-check="t9" data-idx="1"><span>If this is a team project, states explicitly what you are individually accountable for.</span></label></li></ul></div>
+        <div class="action-row">
+          <button type="button" class="btn" data-ai="t9">Get AI feedback</button>
+          <span class="ai-hint">Quotes your words, names what is missing from the checklist above, and asks one question.</span>
+        </div>
+        <div class="aibox" id="ai-t9" aria-live="polite"></div>
+      </div>
+    </li>
+  </ol>
+
+  <section class="submit-card" id="submit">
+    <h2>Submit on Canvas</h2>
+    <p>Click Copy my answers, then paste the text directly into the Canvas text-entry box for Project Proposal (a link to an external doc is not a submission).</p>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+      <span class="status" id="copy-status" aria-live="polite">Copies every question, your answers, and your checked items.</span>
+    </div>
+    <textarea class="sumout" id="summary-out" readonly aria-label="Preview of your submission"></textarea>
+    <p class="storenote" id="store-note">This browser blocked local storage, so your work cannot be saved between visits. Copy your answers before closing this tab.</p>
+  </section>
+
+  <div class="pagenav">
+    <span><a href="problem-spaces-bb.html">&larr; Problem Spaces</a></span>
+    <span><a href="six-questions-people-who-hire-bb.html">Industry Thought Leaders &rarr;</a></span>
+  </div>
+
+  <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> - it is the fastest way to get it fixed.</div>
+
+  <footer class="page-footer">
+    <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+    <span>Computing Talent Initiative · CSU Monterey Bay - CST499 Computer Science Capstone · Project Proposal (Bare-bones)</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var TASKS = [{"n": 1, "key": "t1", "head": "Task 1 - Roles and postings", "text": "Identify one or more roles you are aiming for. For each, link two or three postings you are using as the bar.", "parts": [], "checks": ["Names one or more specific role titles (rather than a broad field).", "Links 2 or 3 real job postings for each role."]}, {"n": 2, "key": "t2", "head": "Task 2 - The gap", "text": "State the gap in your preparation briefly: what those postings ask for that you cannot show yet.", "parts": [], "checks": ["States what those postings ask for in words close to the postings' own.", "Names the specific thing you cannot show yet."]}, {"n": 3, "key": "t3", "head": "Task 3 - From the gap to the project", "text": "Explain how you got from the gap to this project.", "parts": ["What you considered  -  problem spaces, partner projects, ideas of your own.", "What you ruled out, and why.", "What makes the one you chose the right fit for the gap."], "checks": ["Lists more than one option you considered (problem spaces, partner projects, or your own ideas).", "Names what you ruled out and gives a concrete reason.", "Connects the project you chose directly to closing the gap in Task 2."]}, {"n": 4, "key": "t4", "head": "Task 4 - The project", "text": "Describe the project.", "parts": ["What you will build or make.", "Who it is for  -  a named person, team or kind of user.", "The evidence that this is a real need for that person, team or user: what you observed, who you asked and what they said, or the data you found  -  each with its source.", "What they will do with it that they cannot do now."], "checks": ["States what you will build and names a specific person, team, or kind of user it is for.", "Includes concrete evidence of need (what you observed, who you asked, or data you found) with its source.", "Says what the user will be able to do with it that they cannot do now."]}, {"n": 5, "key": "t5", "head": "Task 5 - What AI can build of this today", "text": "Test what AI can build of this today.", "parts": ["What you tried, and with what (ai.studio or another tool).", "What came out.", "What it could not do, or got wrong."], "checks": ["Names the AI tool you tested and what you gave it.", "Describes what came out and at least one specific thing it got wrong or could not do."]}, {"n": 6, "key": "t6", "head": "Task 6 - What I will bring", "text": "Identify what you will bring that the tool does not  -  judgment, domain knowledge, testing with real users, the part that needs a person. This is a goal you aim at and can adjust; the mid-term and the final report ask what you brought.", "parts": [], "checks": ["Names what you will bring (judgment, domain knowledge, real-user testing) specific to this project and connected to Task 5c."]}, {"n": 7, "key": "t7", "head": "Task 7 - Scope", "text": "Set the scope.", "parts": ["What will exist by the mid-term (week 8).", "What will exist by week 12.", "What is out."], "checks": ["States what will exist and be showable by Week 8 (mid-term).", "States what will exist by Week 12, going beyond Week 8.", "Names at least one thing deliberately left out of scope."]}, {"n": 8, "key": "t8", "head": "Task 8 - The evidence", "text": "Name the evidence.", "parts": ["What a hiring manager will be able to see at the end  -  repo, write-up, demo, data.", "What external verifications you are considering to demonstrate quality, impact and your human value  -  a user who tried it, someone in the field who reviewed it, data from real use."], "checks": ["Lists what a hiring manager will be able to open and inspect (repo, write-up, demo, data).", "Names the specific external verification you are planning (a particular user, reviewer, or real-use measurement)."]}, {"n": 9, "key": "t9", "head": "Task 9 - My rubric", "text": "Write your rubric: three to five categories, each with A, B and C descriptors, detailed enough for someone else to grade you with. Team project: say what you are accountable for.", "parts": [], "checks": ["Includes 3 to 5 grading categories, each with observable A, B, and C descriptors.", "If this is a team project, states explicitly what you are individually accountable for."]}];
+  var CFG = {"page": "cst499-project-proposal", "course": "CST499", "pageTitle": "Project Proposal", "weekLabel": "Week 4", "destination": "Your Week 2 market read, evidence audit, and Week 3 problem-space exploration. Define the capstone project that closes your gap, prove the need is real, test what AI can already build today, set your Week 8 and Week 12 scope, and propose your grading rubric. Every graded assignment in Sprints 2, 3, and 4 (this proposal is the prerequisite gate for the rest of the course).", "feeds": "Define the capstone project that closes your gap, prove the need is real, test what AI can already build today, set your Week 8 and Week 12 scope, and propose your grading rubric.", "system": "You are helping a student improve one answer they wrote in one box on a course page. Reply in 3 or 4 short sentences, in plain words. First, name one specific thing that is already there, quoting their words. Second, name one thing the task asks for that is not yet visible in what they wrote. Third, ask one concrete question that would help them revise it. Use only the observable criteria for this box, listed below. Do not judge the person, their readiness, their employability or their prospects. Do not say whether anyone would be impressed, would act, would respond, or would be persuaded. Do not use pass/fail language and do not say work is or is not good enough. Never rewrite their answer or hand them wording - if a requested element is missing, name it and ask for it. If everything the task asks for is present, say which criteria are met and ask one question that would take it further.", "coach": {"t1": "REQUESTED ELEMENTS: one or more roles the student is aiming for; for each role, two or three postings, each as a link. OBSERVABLE CRITERIA: each role is a role title rather than a field; each posting is a link or URL someone could open; each role has two or three of them. COMMON OMISSIONS: a role with one posting or none; a posting described rather than linked; a field or industry given where a role was asked for. ", "t2": "REQUESTED ELEMENTS: the gap, briefly: what the postings ask for that the student cannot show yet. OBSERVABLE CRITERIA: it says what the postings ask for, in words close to the postings' own; it names one specific thing the student cannot show yet rather than a general level of experience; it is brief. COMMON OMISSIONS: the posting side is missing, so the gap cannot be traced to task 1; a general level of experience is given where a specific thing was asked for. ", "t3": "FINDING A PROJECT (guidance the page gives, usable when the student has no project yet): look at the course problem-spaces page as a starting point; which spaces are interesting to them; within those, which would give them the opportunity to build the skill that addresses their gap; who they need to talk to, or what they need to investigate, to define a project goal that is meaningful for them. REQUESTED ELEMENTS: 3a what was considered  -  problem spaces, partner projects, ideas of the student's own; 3b what was ruled out, and why; 3c what makes the one chosen the right fit for the gap stated in task 2. OBSERVABLE CRITERIA: 3a lists more than one thing considered; 3b names at least one thing ruled out and gives a reason for it; 3c connects the choice to the gap in task 2  -  what evidence for that gap the work would produce  -  rather than to interest or convenience alone. COMMON OMISSIONS: 3a lists only the project chosen; 3b is empty or names what was ruled out with no reason; 3c says the project is interesting or feasible without connecting it to the gap. NOTE: never supply a project, a reason, or wording for this box. If a part is missing, say which one and ask the student for it. ", "t4": "REQUESTED ELEMENTS: 4a what will be built or made; 4b who it is for  -  a named person, team or kind of user; 4c the evidence that this is a real need  -  something observed, someone asked and what they said, or data found  -  each with its source; 4d what they will do with it that they cannot do now. OBSERVABLE CRITERIA: all four parts are present; 4b names a person, a team or a kind of user; each item in 4c is one of the three kinds (observed, asked, data) and carries its source  -  who, where, when or what; 4d describes something the user cannot do now. COMMON OMISSIONS: 4c states that the need exists without an item of evidence; an item in 4c has no source; 4b is 'users' or 'people' with no particular person, team or kind; 4d restates 4a instead of what the user will do. NOTE: never supply wording, a rewrite, an example of evidence, or a sentence for this box. If a part or a source is missing, say which one and ask the student for it. ", "t5": "REQUESTED ELEMENTS: 5a what was tried and with what tool; 5b what came out; 5c what it could not do or got wrong. OBSERVABLE CRITERIA: the tool is named; what was given to it is described; what came out is described as what it was rather than rated; 5c names at least one specific thing it could not do or got wrong. COMMON OMISSIONS: the test is described as an intention rather than as something done; the output is rated rather than described; 5c is empty or general. NOTE: the finding is the student's own. Never state what a tool can or cannot build; only ask about what they observed. ", "t6": "REQUESTED ELEMENTS: what the student will bring that the tool does not  -  judgment, domain knowledge, testing with real users, the part that needs a person  -  specific to this project. OBSERVABLE CRITERIA: each item is specific to this project and its user; at least one connects to what the tool could not do or got wrong in 5c. COMMON OMISSIONS: the list is the generic four with nothing project-specific; nothing connects to the test in task 5. NOTE: this is a goal the student can adjust; never treat it as a commitment and never judge whether they can deliver it. ", "t7": "REQUESTED ELEMENTS: 7a what will exist by the mid-term (week 8); 7b what will exist by week 12; 7c what is out. OBSERVABLE CRITERIA: 7a is something that could be shown in class on 14 October; 7b includes 7a and goes further; 7c names at least one thing deliberately left out. COMMON OMISSIONS: 7c is empty or says nothing is out; 7a and 7b are the same; 7a is an aim rather than something showable. ", "t8": "REQUESTED ELEMENTS: 8a what a hiring manager will be able to see  -  repo, write-up, demo, data; 8b the external verifications being considered  -  a user who tried it, someone in the field who reviewed it, data from real use. OBSERVABLE CRITERIA: each item in 8a is something that could be opened; each item in 8b names who or what  -  a particular user, reviewer or measurement. COMMON OMISSIONS: 8b says 'users' or 'feedback' with no who or what; 8a lists the project itself rather than what can be seen of it. ", "t9": "REQUESTED ELEMENTS: three to five categories; each with an A, a B and a C descriptor; for a team project, what the student is accountable for. OBSERVABLE CRITERIA: the number of categories is three to five; every category has all three descriptors; each descriptor describes something a classmate could check by looking, so they would not have to guess; the three descriptors of a category differ in what is observed, not only in adjectives. COMMON OMISSIONS: a category with a descriptor missing; descriptors that differ only by words like good, adequate, poor; a team project with no statement of what the student is accountable for. NOTE: never supply a category, a descriptor, or wording for this box. If a category or descriptor is missing or could not be checked by looking, say which one and ask the student for it. "}, "label": {"t1": "Roles and postings", "t2": "The gap", "t3": "From the gap to the project", "t4": "The project", "t5": "What AI can build of this today", "t6": "What I will bring", "t7": "Scope", "t8": "The evidence", "t9": "My rubric"}, "order": ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9"]};
+  var KEY = "cc-gi:cst499-project-proposal";
+  var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function letter(i) { return String.fromCharCode(97 + i); }
+
+  var storageOK = true;
+  var state = { answers: {}, checks: {}, copiedAt: null };
+  try {
+    var raw = window.localStorage.getItem(KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        state.answers = parsed.answers || parsed.boxes || {};
+        state.checks = parsed.checks || {};
+      }
+    }
+  } catch (e) { storageOK = false; }
+
+  var saveTimer = null;
+  function save() {
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+      storageOK = true;
+    } catch (e) {
+      storageOK = false;
+      var n = document.getElementById('store-note');
+      if (n) n.style.display = 'block';
+    }
+  }
+  function saveSoon() {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, 400);
+  }
+
+  function answerState(key) {
+    if (!state.answers[key]) state.answers[key] = { text: '', ai: [] };
+    if (!state.answers[key].ai) state.answers[key].ai = [];
+    return state.answers[key];
+  }
+  function checkState(key) {
+    if (!state.checks[key]) state.checks[key] = [];
+    return state.checks[key];
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function indentLines(s, pad) {
+    return s.replace(/\r/g, '').split('\n').map(function (l) { return l.trim() ? pad + l : ''; }).join('\n');
+  }
+  function answerHtml(s) {
+    var paras = s.replace(/\r/g, '').split(/\n\s*\n/).filter(function (p) { return p.trim(); });
+    return paras.map(function (p) { return '<p>' + esc(p).split('\n').join('<br>') + '</p>'; }).join('');
+  }
+
+  function buildPayload(withAnswers) {
+    var md = '', html = '';
+    if (withAnswers) {
+      md += CFG.pageTitle + ' - ' + CFG.course + ', ' + CFG.weekLabel + '\n\n';
+      html += '<p><b>' + esc(CFG.pageTitle) + '</b> - ' + esc(CFG.course) + ', ' + esc(CFG.weekLabel) + '</p>';
+    }
+    TASKS.forEach(function (t, idx) {
+      var key = t.key;
+      md += t.head + '\n' + t.text + '\n';
+      html += '<p><b>' + esc(t.head) + '</b><br>' + esc(t.text) + '</p>';
+      if (t.parts && t.parts.length) {
+        html += '<ol type="a" style="list-style-type:lower-alpha">';
+        t.parts.forEach(function (p, i) {
+          md += '   ' + letter(i) + '. ' + p + '\n';
+          html += '<li>' + esc(p) + '</li>';
+        });
+        html += '</ol>';
+      }
+      if (withAnswers) {
+        var a = (answerState(key).text || '').trim();
+        md += '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n';
+        html += a ? answerHtml(a) : '<p>(no answer yet)</p>';
+      }
+      if (t.checks && t.checks.length) {
+        var ticks = withAnswers ? checkState(key) : [];
+        md += '\n   Check your answer:\n';
+        html += '<p><b>Check your answer:</b></p><ul style="list-style:none;padding-left:0">';
+        t.checks.forEach(function (c, i) {
+          var on = !!ticks[i];
+          md += '   ' + (on ? '[x]' : '[ ]') + ' ' + c + '\n';
+          html += '<li>' + (on ? '[x]' : '[ ]') + ' ' + esc(c) + '</li>';
+        });
+        html += '</ul>';
+      }
+      if (idx < TASKS.length - 1) md += '\n';
+    });
+    return { text: md, html: html };
+  }
+
+  function writeClipboard(payload) {
+    var nc = navigator.clipboard;
+    if (!nc) return Promise.reject(new Error('no clipboard'));
+    if (nc.write && window.ClipboardItem) {
+      try {
+        var item = new ClipboardItem({
+          'text/html': new Blob([payload.html], { type: 'text/html' }),
+          'text/plain': new Blob([payload.text], { type: 'text/plain' })
+        });
+        return nc.write([item]).catch(function () { return nc.writeText(payload.text); });
+      } catch (e) {
+        return nc.writeText(payload.text);
+      }
+    }
+    if (nc.writeText) return nc.writeText(payload.text);
+    return Promise.reject(new Error('no clipboard'));
+  }
+
+  function showAi(el, text, n) {
+    el.style.display = 'block';
+    el.innerHTML = '';
+    var lbl = document.createElement('span');
+    lbl.className = 'lbl';
+    lbl.textContent = n > 1 ? ('AI feedback · round ' + n) : 'AI feedback';
+    el.appendChild(lbl);
+    el.appendChild(document.createTextNode(text));
+  }
+
+  function updateRail() {
+    var done = 0;
+    TASKS.forEach(function (t) {
+      var has = !!(answerState(t.key).text || '').trim();
+      if (has) done++;
+      var link = $('[data-rail="' + t.key + '"]');
+      if (link) link.classList.toggle('done', has);
+    });
+    var cnt = $('#rail-count');
+    if (cnt) cnt.textContent = done + ' / ' + TASKS.length;
+    var out = $('#summary-out');
+    if (out) out.value = buildPayload(true).text;
+  }
+
+  // Wire textareas
+  TASKS.forEach(function (t) {
+    var key = t.key;
+    var ta = $('#box-' + key);
+    var aiEl = $('#ai-' + key);
+    var st = answerState(key);
+    if (ta) {
+      ta.value = st.text || '';
+      ta.addEventListener('input', function () {
+        st.text = ta.value;
+        saveSoon();
+        updateRail();
+      });
+    }
+    if (aiEl && st.ai && st.ai.length) {
+      showAi(aiEl, st.ai[st.ai.length - 1].r, st.ai.length);
+    }
+  });
+
+  // Wire checkboxes
+  $all('input[data-check]').forEach(function (cb) {
+    var key = cb.getAttribute('data-check');
+    var idx = parseInt(cb.getAttribute('data-idx'), 10);
+    var arr = checkState(key);
+    cb.checked = !!arr[idx];
+    cb.addEventListener('change', function () {
+      arr[idx] = cb.checked;
+      saveSoon();
+      updateRail();
+    });
+  });
+
+  // Wire AI feedback buttons
+  $all('button[data-ai]').forEach(function (btn) {
+    var key = btn.getAttribute('data-ai');
+    var ta = $('#box-' + key);
+    var aiEl = $('#ai-' + key);
+    var taskObj = TASKS.filter(function (t) { return t.key === key; })[0];
+    btn.addEventListener('click', function () {
+      var text = (ta ? ta.value : '').trim();
+      if (!text) {
+        aiEl.style.display = 'block';
+        aiEl.innerHTML = '<span class="lbl">AI feedback</span>Write a draft answer in the box above first, then click Get AI feedback.';
+        return;
+      }
+      btn.disabled = true;
+      var orig = btn.textContent;
+      btn.textContent = 'Thinking...';
+      var qPlain = taskObj.text + (taskObj.parts && taskObj.parts.length ? ' ' + taskObj.parts.map(function(p, i){ return letter(i) + '. ' + p; }).join(' ') : '');
+      var userMsg = 'COURSE: ' + CFG.course + ' (' + CFG.pageTitle + ')\n' +
+                    'WHERE THIS FITS: ' + CFG.destination + '\n' +
+                    'BOX: ' + (CFG.label[key] || key) + '\n' +
+                    'TASK THE STUDENT IS ANSWERING: ' + qPlain + '\n' +
+                    'CRITERIA FOR THIS BOX: ' + (CFG.coach[key] || '') + '\n\n' +
+                    'STUDENT DRAFT:\n' + text;
+      fetch(AI_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system: CFG.system,
+          messages: [{ role: 'user', content: userMsg }]
+        })
+      })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (data) {
+        var reply = (data && (data.reply || data.content || data.text)) || '';
+        if (Array.isArray(reply)) {
+          reply = reply.map(function (b) { return b.text || ''; }).join('');
+        }
+        reply = String(reply).trim();
+        if (!reply) throw new Error('empty');
+        var st = answerState(key);
+        st.ai.push({ t: new Date().toISOString(), r: reply });
+        save();
+        showAi(aiEl, reply, st.ai.length);
+      })
+      .catch(function () {
+        aiEl.style.display = 'block';
+        aiEl.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not reach the feedback service right now. Use the checklist above to review your answer, and try again in a moment.</span>';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = orig;
+      });
+    });
+  });
+
+  // Copy questions button
+  var cqBtn = $('#copy-questions-btn'), cqSt = $('#copy-questions-status');
+  if (cqBtn) {
+    cqBtn.addEventListener('click', function () {
+      var payload = buildPayload(false);
+      writeClipboard(payload).then(function () {
+        cqSt.textContent = 'Copied questions to clipboard.';
+      }, function () {
+        cqSt.textContent = 'Could not copy automatically.';
+      });
+    });
+  }
+
+  // Copy answers button
+  var cBtn = $('#copy-btn'), cSt = $('#copy-status'), sumOut = $('#summary-out');
+  if (cBtn) {
+    cBtn.addEventListener('click', function () {
+      var payload = buildPayload(true);
+      sumOut.value = payload.text;
+      state.copiedAt = new Date().toISOString();
+      save();
+      writeClipboard(payload).then(function () {
+        cSt.className = 'status ok';
+        cSt.textContent = 'Copied! Paste into the Canvas text-entry box and submit.';
+      }, function () {
+        cSt.className = 'status';
+        cSt.textContent = 'Select all in the preview box below and copy manually (Cmd+C / Ctrl+C).';
+        sumOut.focus();
+        sumOut.select();
+      });
+    });
+  }
+
+  updateRail();
+})();
+</script>
+</body>
+</html>
