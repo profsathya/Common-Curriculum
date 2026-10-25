@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST499 · Course Home (Bare-Bones Prototype)</title>
+<style>
+:root{
+  --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+  --border:#C7CDD1; --border-light:#E8EAEC; --ground:#FBFBFC; --paper:#fff;
+  --goal-bg:#F3F8FB; --goal-border:#0374B5;
+  --check:#0B874B; --check-bg:#F2FAF5;
+  --violet:#6D3FA9; --violet-bg:#F7F4FB;
+  --amber:#B45309; --amber-bg:#FEF3C7;
+  --teal:#0F766E; --teal-bg:#F0FDFA;
+  --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--ground);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;color:var(--blue-dark)}
+.page{max-width:960px;margin:0 auto;padding:24px 20px 64px}
+
+/* Top header */
+.pagehead{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.pagehead h1{font-size:24px;font-weight:900;margin:4px 0 6px;letter-spacing:-.01em}
+.goal-line{font-size:15px;color:var(--text);margin:0 0 12px}
+.quicklinks{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:10px;border-top:1px solid var(--border-light);font-size:13px}
+.quicklinks a.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--text);font-weight:600}
+.quicklinks a.pill:hover{border-color:var(--blue);color:var(--blue-dark);background:var(--goal-bg);text-decoration:none}
+.quicklinks a.pill.here{background:var(--blue);border-color:var(--blue);color:#fff}
+.quicklinks a.pill.here:hover{background:var(--blue-dark)}
+
+/* 5-Sprint Chain */
+.chain-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:18px}
+.chain-title{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.chain-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media (max-width:820px){.chain-grid{grid-template-columns:1fr}}
+.chain-step{display:block;border:1px solid var(--border-light);border-left:3px solid var(--border);border-radius:6px;padding:8px 10px;background:#FAFBFC;color:var(--text);font-size:12.5px;line-height:1.4}
+.chain-step:hover{border-color:var(--blue);background:var(--goal-bg);text-decoration:none}
+.chain-step.current{border-color:var(--blue);border-left-width:4px;background:var(--goal-bg)}
+.chain-step .sn{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);display:block}
+.chain-step.current .sn{color:var(--blue-dark)}
+.chain-step .st{font-weight:700;color:var(--text);display:block;margin:2px 0}
+.chain-step .sd{color:var(--muted);font-size:12px}
+
+/* Toolbar */
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;color:var(--muted)}
+.btn-sm{font-family:inherit;font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:5px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer}
+.btn-sm:hover{border-color:var(--blue);color:var(--blue-dark)}
+
+/* Sprint blocks */
+details.sprint{background:var(--paper);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+details.sprint > summary{list-style:none;cursor:pointer;padding:13px 18px;background:#F5F7F9;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+details.sprint > summary::-webkit-details-marker{display:none}
+details.sprint > summary:hover{background:#EDF2F6}
+details.sprint[open] > summary{border-bottom:1px solid var(--border)}
+.sp-chev{font-size:12px;color:var(--muted);transition:transform .15s}
+details.sprint[open] > summary .sp-chev{transform:rotate(90deg)}
+.sp-title{font-size:16px;font-weight:800;flex:1;min-width:200px}
+.sp-title span{font-weight:400;color:var(--muted);font-size:14px}
+.sp-meta{font-size:12.5px;color:var(--muted);font-weight:600}
+.sp-badge{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;background:var(--blue);color:#fff}
+.sp-chain{padding:10px 18px;background:var(--goal-bg);border-bottom:1px solid var(--border-light);font-size:13.5px;color:var(--text)}
+.sp-chain b{color:var(--blue-dark)}
+
+/* Week cards */
+.weeks{padding:14px 18px;display:flex;flex-direction:column;gap:14px}
+.week-card{border:1px solid var(--border);border-radius:7px;background:#fff;overflow:hidden}
+.week-card.here{border:2px solid var(--blue);box-shadow:0 2px 10px rgba(3,116,181,.08)}
+.wk-head{padding:10px 14px;background:#FAFBFC;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.week-card.here .wk-head{background:var(--goal-bg)}
+.wk-num{font-size:15px;font-weight:800;color:var(--text)}
+.wk-dates{font-size:12.5px;color:var(--muted);font-weight:600;margin-left:6px}
+.here-pill{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;background:var(--blue);color:#fff;padding:2px 8px;border-radius:999px}
+
+.wk-thread{padding:8px 14px;background:#FCFDFE;border-bottom:1px solid var(--border-light);font-size:13px;color:var(--muted)}
+.wk-thread b{color:var(--text)}
+
+.wk-body{padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.session-line{font-size:13px;color:var(--muted);padding-bottom:6px;border-bottom:1px dashed var(--border-light)}
+.session-line b{color:var(--text)}
+
+/* Task rows */
+.task-list{display:flex;flex-direction:column;gap:8px}
+.task-row{display:flex;flex-direction:column;gap:4px;padding:8px 10px;border:1px solid var(--border-light);border-radius:6px;background:#fff}
+.task-row.gi{border-left:4px solid var(--violet);background:#FDFCFE}
+.task-row.oyp{border-left:4px solid var(--check);background:#FCFDFD}
+.task-row.exam{border-left:4px solid var(--amber);background:#FFFDF9}
+.task-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.badge{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;color:#fff;flex:0 0 auto}
+.badge.oyp{background:var(--check)}
+.badge.gi{background:var(--violet)}
+.badge.exam{background:var(--amber)}
+.task-title{font-size:14.5px;font-weight:700;flex:1;min-width:180px}
+.task-due{font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.task-desc{font-size:13.5px;color:var(--text);margin:0}
+.task-steps{margin:4px 0 0;padding-left:20px;font-size:13px;color:var(--muted)}
+.task-steps li{margin:2px 0}
+
+.instructor{margin-top:24px;background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:13px}
+.feedback-note{margin-top:16px;font-size:12.5px;color:var(--muted);text-align:center}
+.page-footer{margin-top:16px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.page-footer img{height:20px;opacity:.55}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="pagehead">
+    <div class="eyebrow">CST499 · Computer Science Capstone · Fall 2026</div>
+    <h1>Course Home</h1>
+    <p class="goal-line"><b>Course goal:</b> Deliver a substantial piece of software or technical work that solves a real problem, meets professional quality standards, and proves you are ready for the roles you want.</p>
+    <nav class="quicklinks" aria-label="Course links">
+      <a class="pill here" href="#week-9">Jump to Week 9 (Current)</a>
+      <a class="pill" href="understand-the-course-design-bb.html">How this course works</a>
+      <a class="pill" href="why-this-course-bb.html">Why this course works this way</a>
+      <a class="pill" href="problem-spaces-bb.html">Problem spaces</a>
+      <a class="pill" href="six-questions-people-who-hire-bb.html">Industry clips</a>
+    </nav>
+  </header>
+
+  <section class="chain-card" aria-label="Semester arc">
+    <div class="chain-title">How the 5 sprints connect across the semester</div>
+    <div class="chain-grid">
+      <a class="chain-step" href="#sprint-0">
+        <span class="sn">Sprint 0 · Wk 1</span>
+        <span class="st">1. Orient &amp; Priorities</span>
+        <span class="sd">Set up your AI Dojo and map your daily time budget.</span>
+      </a>
+      <a class="chain-step" href="#sprint-1">
+        <span class="sn">Sprint 1 · Wks 2-4</span>
+        <span class="st">2. Niche, Gap &amp; Proposal</span>
+        <span class="sd">Read your target job market, find your evidence gap, and propose your project.</span>
+      </a>
+      <a class="chain-step" href="#sprint-2">
+        <span class="sn">Sprint 2 · Wks 5-8</span>
+        <span class="st">3. Learn &amp; Build</span>
+        <span class="sd">Write your learning plan, build version 1, and defend your choices in the mid-term.</span>
+      </a>
+      <a class="chain-step current" href="#sprint-3">
+        <span class="sn">Sprint 3 · Wks 9-12 · Now</span>
+        <span class="st">4. Quality &amp; 2nd Domain</span>
+        <span class="sd">Benchmark against pro work, integrate a second domain, and test with an outside user.</span>
+      </a>
+      <a class="chain-step" href="#sprint-4">
+        <span class="sn">Sprint 4 · Wks 13-16</span>
+        <span class="st">5. Job Search &amp; Festival</span>
+        <span class="sd">Package your evidence, run a 14-day outreach plan, and demo at the Festival.</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <span>Click any sprint to open or close its weeks. Graded items (40%), Mid-term (10%), Interviews (50%), Own your progress (0% tracking).</span>
+    <button type="button" class="btn-sm" id="toggle-all">Expand all sprints</button>
+  </div>
+
+  <!-- SPRINT 0 -->
+  <details class="sprint" id="sprint-0">
+    <summary>
+      <span class="sp-chev">&#9656;</span>
+      <span class="sp-title">Sprint 0 · Orient <span>- Understand the course and map your time</span></span>
+      <span class="sp-meta">Week 1 · 24 Aug - 30 Aug · 1 OYP, 1 Graded</span>
+    </summary>
+    <div class="sp-chain"><b>Sprint thread:</b> You set up your AI coaching workflow and audit your 24-hour time budget before committing to a capstone project in Sprint 1.</div>
+    <div class="weeks">
+      <div class="week-card" id="week-1">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 1</span><span class="wk-dates">24 Aug - 30 Aug</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Starts from how you currently manage your week -&gt; feeds into the time and focus you have available for Sprint 1 market research.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 26 Aug:</b> Course walkthrough (<a href="https://docs.google.com/presentation/d/1fG-0vfaD4s8C5u0Zc5B6vT7A2yF_k9cM/edit" target="_blank" rel="noopener">slides</a> · <a href="week1-wed-recording-bb.html">recording</a>) &nbsp;|&nbsp;
+            <b>Fri 28 Aug:</b> Check-in on AI Dojo setup and priorities
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="setup-your-ai-dojo-bb.html">CST499 AI Dojo Setup</a>
+                <span class="task-due">Due Wed 26 Aug · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Explain how CST499 works in your own words using either your AI Dojo coach or the course design pages (<a href="understand-the-course-design-bb.html">How this course works</a> and <a href="why-this-course-bb.html">Why this course works this way</a>).</p>
+            </div>
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <a class="task-title" href="what-are-my-priorities-bb.html">What Are My Priorities</a>
+                <span class="task-due">Due Mon 31 Aug · 100 pts</span>
+              </div>
+              <p class="task-desc">Build a 6-category whole-day time budget, examine your mental inputs, test one change for a day, and record what surprised you.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SPRINT 1 -->
+  <details class="sprint" id="sprint-1">
+    <summary>
+      <span class="sp-chev">&#9656;</span>
+      <span class="sp-title">Sprint 1 · Niche, Gap &amp; Proposal <span>- Read the market and propose your project</span></span>
+      <span class="sp-meta">Weeks 2-4 · 31 Aug - 20 Sep · 6 OYP, 1 Graded</span>
+    </summary>
+    <div class="sp-chain"><b>Sprint thread:</b> Builds on your Week 1 priorities -&gt; connects what employers ask for to what you can currently prove -&gt; produces your approved Project Proposal and grading rubric.</div>
+    <div class="weeks">
+      <div class="week-card" id="week-2">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 2</span><span class="wk-dates">31 Aug - 6 Sep</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Week 1 priorities -&gt; compares real job postings with what holds your attention -&gt; names the gap your capstone will close.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 2 Sep:</b> Paired market-reading session &nbsp;|&nbsp;
+            <b>Fri 4 Sep:</b> Connecting your market read to your own work patterns
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="read-the-market-bb.html">Read the Market</a>
+                <span class="task-due">Due Fri 4 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Name a specific niche, quote two things employers ask for across 5 to 8 postings with counts, and name one change you expect with its driver and signal.</p>
+            </div>
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="never-feels-like-work-bb.html">Know What Makes Me Tick</a>
+                <span class="task-due">Due Tue 8 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Describe up to five moments when work held your attention, identify the pattern running through them, and compare it against your market read.</p>
+            </div>
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="find-your-gap-bb.html">Find Your Gap</a>
+                <span class="task-due">Due Fri 11 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Audit what you can prove today against what employers ask for, write the warm-referral email you want to earn, and pick a first <a href="problem-spaces-bb.html">problem space</a> to explore.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-3">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 3</span><span class="wk-dates">7 Sep - 13 Sep</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Week 2 market read and gap -&gt; tests which <a href="problem-spaces-bb.html">problem space</a> gives you the strongest project for your Week 4 Proposal.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 9 Sep:</b> Evidence audit and problem-space exploration &nbsp;|&nbsp;
+            <b>Fri 11 Sep:</b> Narrowing to a concrete project scope
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Inventory the evidence you already have</span>
+                <span class="task-due">Due Fri 11 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">List every piece of work you could show an employer today and mark which ones hold up under questioning.</p>
+              <ul class="task-steps">
+                <li>List every project, class assignment, or contribution you could put in front of an employer today.</li>
+                <li>Next to each item, write what it proves you can do and who or what verifies it (repo, live link, person).</li>
+                <li>Mark the items you could walk an engineer through line by line right now.</li>
+              </ul>
+            </div>
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Name the gap my capstone needs to close</span>
+                <span class="task-due">Due Mon 14 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Match your evidence audit against your target niche and select the <a href="problem-spaces-bb.html">problem space</a> that closes the gap.</p>
+              <ul class="task-steps">
+                <li>State your target niche (kind of work, kind of company, kind of problem).</li>
+                <li>Set your evidence list against those postings and mark what is missing.</li>
+                <li>Write the gap in one sentence and name the problem space you will use to close it.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-4">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 4</span><span class="wk-dates">14 Sep - 20 Sep</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Turns your Week 2-3 market read, gap, and problem space into your formal Project Proposal and self-designed grading rubric.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 16 Sep:</b> What makes a proposal credible + rubric workshop &nbsp;|&nbsp;
+            <b>Fri 18 Sep:</b> Proposal peer and instructor check-ins
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">What makes a proposal credible</span>
+                <span class="task-due">Due Fri 18 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Check real examples of shipped work in your problem space before finalizing your proposal.</p>
+              <ul class="task-steps">
+                <li>Restate the Project Proposal criteria in your own words.</li>
+                <li>Find two real examples of credible work in your problem space (a merged PR, shipped feature, or resolved issue).</li>
+                <li>Draft the one sentence a reviewer will judge: what you will deliver and how it closes your gap.</li>
+              </ul>
+            </div>
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <a class="task-title" href="project-proposal-bb.html">Project Proposal</a>
+                <span class="task-due">Due Mon 21 Sep · 100 pts</span>
+              </div>
+              <p class="task-desc">Submit the 8-part proposal: target roles with postings, gap, options ruled out, project + evidence of need, AI baseline test, Week 8/12 scope, external verifications, and your 3-5 category grading rubric.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SPRINT 2 -->
+  <details class="sprint" id="sprint-2">
+    <summary>
+      <span class="sp-chev">&#9656;</span>
+      <span class="sp-title">Sprint 2 · Learn &amp; Build <span>- Execute your learning plan and pass the mid-term</span></span>
+      <span class="sp-meta">Weeks 5-8 · 21 Sep - 18 Oct · 4 OYP, 1 Graded, 1 Mid-term</span>
+    </summary>
+    <div class="sp-chain"><b>Sprint thread:</b> Builds on your approved Proposal -&gt; turns what you don't know yet into a concrete Learning Plan -&gt; tests your depth of understanding in the Week 8 Mid-term.</div>
+    <div class="weeks">
+      <div class="week-card" id="week-5">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 5</span><span class="wk-dates">21 Sep - 27 Sep</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Week 4 Proposal -&gt; sets your weekly build rhythm and checks your project direction against hiring leaders.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 23 Sep:</b> Moving from proposal to first build slice &nbsp;|&nbsp;
+            <b>Fri 25 Sep:</b> Sprint 1 interviews &amp; weekly rhythm check
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="six-questions-people-who-hire-bb.html">Learn from industry thought leaders (Optional)</a>
+                <span class="task-due">Due Wed 23 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Watch 2 or 3 short clips from founders and hiring managers sorted by the question you are asking this week, and write down one concrete move.</p>
+            </div>
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Plan your weekly work rhythm</span>
+                <span class="task-due">Due Fri 25 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Lock in the recurring blocks on your calendar when you will build and the Friday check that proves you moved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-6">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 6</span><span class="wk-dates">28 Sep - 4 Oct</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your first week of building -&gt; identifies the exact technical gaps you hit and turns them into your graded Learning Plan.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 30 Sep:</b> Designing a verifiable Learning Plan &nbsp;|&nbsp;
+            <b>Fri 2 Oct:</b> Writing the December resume section your project will earn
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Name what you still need to learn</span>
+                <span class="task-due">Due Wed 30 Sep · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">List the real technical unknowns you ran into once you started building, so your Learning Plan targets actual blockers.</p>
+            </div>
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="write-your-december-resume-section-bb.html">Write Your December Resume Section</a>
+                <span class="task-due">Due Fri 2 Oct · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Write the 3 to 5 resume bullets your capstone will let you claim in December ("Accomplished X as measured by Y, by doing Z") and what artifact backs each line.</p>
+            </div>
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <a class="task-title" href="learning-plan-bb.html">Learning Plan</a>
+                <span class="task-due">Due Mon 5 Oct · 100 pts</span>
+              </div>
+              <p class="task-desc">For each item you must learn for your project: state why the build needs it, your specific resources, dated action steps, and how you will verify you learned it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-7">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 7</span><span class="wk-dates">5 Oct - 11 Oct</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Learning Plan and Week 8 milestone scope -&gt; uses the 8 published mid-term questions to find weak spots while you still have a week to fix them.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 7 Oct:</b> Mid-term question walkthrough and build check &nbsp;|&nbsp;
+            <b>Fri 9 Oct:</b> Working session on your Week 8 milestone
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <a class="task-title" href="mid-term-bb.html">Work through the mid-term questions</a>
+                <span class="task-due">Due Fri 9 Oct · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Draft your answers to the 8 mid-term questions early so you can spot any decision, test, or benchmark you still need to run before Wednesday.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-8">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 8</span><span class="wk-dates">12 Oct - 18 Oct</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Pulls together your Sprint 1 market read, Proposal, Learning Plan, and build decisions into the 8-question Take-Home Mid-Term.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 14 Oct:</b> No class session - Take-home mid-term due at 11:59 pm &nbsp;|&nbsp;
+            <b>Fri 16 Oct:</b> Build check-in before Sprint 3
+          </div>
+          <div class="task-list">
+            <div class="task-row exam">
+              <div class="task-top">
+                <span class="badge exam">Mid-term (1/2)</span>
+                <a class="task-title" href="mid-term-bb.html">Take-home mid-term</a>
+                <span class="task-due">Due Wed 14 Oct · 100 pts (Mid-term 10%)</span>
+              </div>
+              <p class="task-desc">Answer all 8 published questions at length about your project, market, AI use, key design decision, learning proof, current blocker, and quality bar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SPRINT 3 (OPEN BY DEFAULT) -->
+  <details class="sprint" id="sprint-3" open>
+    <summary>
+      <span class="sp-chev">&#9656;</span>
+      <span class="sp-title">Sprint 3 · Raise Quality &amp; Cross Domains <span>- Benchmark, expand to a 2nd domain, and user-test</span></span>
+      <span class="sp-badge">Current Sprint</span>
+      <span class="sp-meta">Weeks 9-12 · 19 Oct - 15 Nov · 1 Mid-term, 1 OYP, 3 Graded</span>
+    </summary>
+    <div class="sp-chain"><b>Sprint thread:</b> Builds on your Week 8 milestone and Mid-term -&gt; measures your project against professional work (Week 9), brings in a second domain to raise quality (Weeks 10-11), and tests the revised piece with a real outside person (Week 12).</div>
+    <div class="weeks">
+      <div class="week-card here" id="week-9">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 9</span><span class="wk-dates">19 Oct - 25 Oct</span></div>
+          <span class="here-pill">Current Week</span>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Take-Home Mid-Term (especially Q8 on the professional bar) -&gt; sets the concrete quality gap you will close in Weeks 10-12.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 21 Oct:</b> In-class mid-term activity (3 questions by hand, closed book + paired interview) &nbsp;|&nbsp;
+            <b>Fri 23 Oct:</b> Quality Review workshop
+          </div>
+          <div class="task-list">
+            <div class="task-row exam">
+              <div class="task-top">
+                <span class="badge exam">Mid-term (2/2)</span>
+                <a class="task-title" href="in-class-activity-mid-term-bb.html">In-class activity (mid-term)</a>
+                <span class="task-due">Due Wed 21 Oct · 100 pts (Mid-term 10%)</span>
+              </div>
+              <p class="task-desc">Write 3 of 5 handed-out questions by hand in class (closed book), then pair up to transcribe your partner's answers, ask 3 follow-up questions, and summarize how they see their project.</p>
+            </div>
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <a class="task-title" href="quality-review-bb.html">Quality Review</a>
+                <span class="task-due">Due Mon 26 Oct · 100 pts</span>
+              </div>
+              <p class="task-desc">Put your project next to 2 real pieces of professional work, compare them on 3 dimensions, test where your project breaks, and commit to the one improvement that will raise its quality most by Week 12.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-10">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 10</span><span class="wk-dates">26 Oct - 1 Nov</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on the #1 improvement from your Week 9 Quality Review -&gt; identifies a second domain outside your main stack that you need to learn and apply in Week 11.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 28 Oct:</b> Finding the second domain your quality upgrade needs &nbsp;|&nbsp;
+            <b>Fri 30 Oct:</b> Scoping the cross-domain change
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Identify the second domain your project needs</span>
+                <span class="task-due">Due Fri 30 Oct · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Name the adjacent technical or subject-matter domain your project needs so your Week 9 quality upgrade actually holds up.</p>
+              <ul class="task-steps">
+                <li>Name the second domain (e.g., accessibility, security threat modeling, domain-specific policy/workflow, data validation, or UX latency) and why your quality improvement requires it.</li>
+                <li>Find one real reference or standard practitioners in that domain use.</li>
+                <li>State the specific change you will build into your project next week using that domain.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-11">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 11</span><span class="wk-dates">2 Nov - 8 Nov</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Week 10 second-domain choice -&gt; integrates that domain into your project and prepares the build for an outside user test in Week 12.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 4 Nov:</b> Cross-domain integration check-in &nbsp;|&nbsp;
+            <b>Fri 6 Nov:</b> Preparing your Week 12 outside evaluation
+          </div>
+          <div class="task-list">
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <span class="task-title">Second-Domain Integration</span>
+                <span class="task-due">Due Mon 9 Nov · 100 pts</span>
+              </div>
+              <p class="task-desc">Show the working change where you brought a second domain into your project, what you had to learn to build it, and the before/after proof that it works.</p>
+              <ul class="task-steps">
+                <li>Name the second domain and the specific gap from your Week 9 Quality Review it addresses.</li>
+                <li>Link or show the working change in your project (commits, PR, live view, or test run).</li>
+                <li>Compare before and after on the concrete measure you named in Week 9.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-12">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 12</span><span class="wk-dates">9 Nov - 15 Nov</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Puts your upgraded Sprint 3 build in front of someone outside your team -&gt; produces the verified evidence you will package for employers in Sprint 4.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 11 Nov:</b> Running an unscripted outside user/reviewer test &nbsp;|&nbsp;
+            <b>Fri 13 Nov:</b> Sprint 3 interviews &amp; triage of findings
+          </div>
+          <div class="task-list">
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <span class="task-title">Iteration Two &amp; Outside Evaluation</span>
+                <span class="task-due">Due Mon 16 Nov · 100 pts</span>
+              </div>
+              <p class="task-desc">Put your Week 12 build in front of a real user, mentor, or maintainer, record what broke or confused them without rescuing them, and ship the high-priority fix.</p>
+              <ul class="task-steps">
+                <li>Show where your project stands against your Proposal's Week 12 milestone and your rubric.</li>
+                <li>Record the outside evaluation: who used or reviewed it, what task they tried, and what happened in their own words.</li>
+                <li>Show the fix you shipped in response (or the exact final-week plan if structural).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SPRINT 4 -->
+  <details class="sprint" id="sprint-4">
+    <summary>
+      <span class="sp-chev">&#9656;</span>
+      <span class="sp-title">Sprint 4 · Job Search &amp; Capstone Festival <span>- Turn your project into outreach and demo it live</span></span>
+      <span class="sp-meta">Weeks 13-16 · 16 Nov - 13 Dec · 3 OYP, 2 Graded</span>
+    </summary>
+    <div class="sp-chain"><b>Sprint thread:</b> Turns your finished Sprint 3 build and outside evaluation into a public proof piece, a 14-day outreach campaign to real people in your niche, and your live Capstone Festival presentation.</div>
+    <div class="weeks">
+      <div class="week-card" id="week-13">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 13</span><span class="wk-dates">16 Nov - 22 Nov</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Builds on your Week 6 December resume draft and Week 12 verified project -&gt; packages your work so an engineer or hiring manager can verify it in 2 minutes.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 18 Nov:</b> Packaging your project for a 2-minute technical read &nbsp;|&nbsp;
+            <b>Fri 20 Nov:</b> Updating your December resume lines with real numbers
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Update your December resume section with real evidence</span>
+                <span class="task-due">Due Fri 20 Nov · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Replace the projected numbers in your Week 6 resume bullets with the actual measurements and links from your finished build.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-14">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 14</span><span class="wk-dates">23 Nov - 29 Nov (Fall Break Thu-Fri)</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Turns your packaged project and warm-referral email from Week 2 into a concrete 14-day outreach plan.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 25 Nov:</b> Outreach clinic &nbsp;|&nbsp;
+            <b>Fri 27 Nov:</b> Fall Break (no class)
+          </div>
+          <div class="task-list">
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <span class="task-title">14-Day Outreach &amp; Job-Search Plan</span>
+                <span class="task-due">Due Mon 30 Nov · 100 pts</span>
+              </div>
+              <p class="task-desc">Name 10 specific people or teams in your target niche, write the tailored note linking your capstone artifact to their work, and schedule your daily outreach actions for the next 14 days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-15">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 15</span><span class="wk-dates">30 Nov - 6 Dec</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Combines your finished artifact, self-designed rubric from Week 4, and outside evaluation into your final Capstone Portfolio &amp; Festival demo.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 2 Dec:</b> Festival dry-run demos &nbsp;|&nbsp;
+            <b>Fri 4 Dec:</b> Final rubric self-evaluation check
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Rehearse your 3-minute Festival demo</span>
+                <span class="task-due">Due Fri 4 Dec · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Run your live demo start-to-finish in 3 minutes: the problem, the working software, the hardest technical decision, and what you proved.</p>
+            </div>
+            <div class="task-row gi">
+              <div class="task-top">
+                <span class="badge gi">Graded</span>
+                <span class="task-title">Final Capstone Artifact &amp; Rubric Self-Assessment</span>
+                <span class="task-due">Due Mon 7 Dec · 100 pts</span>
+              </div>
+              <p class="task-desc">Submit your final project artifact, public write-up/video, and evidence-backed self-evaluation against the A/B/C rubric you proposed in Week 4.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-card" id="week-16">
+        <div class="wk-head">
+          <div><span class="wk-num">Week 16</span><span class="wk-dates">7 Dec - 13 Dec</span></div>
+        </div>
+        <div class="wk-thread"><b>Thread:</b> Final Sprint 4 interviews and live showcase at the Capstone Festival.</div>
+        <div class="wk-body">
+          <div class="session-line">
+            <b>Wed 9 Dec:</b> Final interviews &nbsp;|&nbsp;
+            <b>Fri 11 Dec:</b> Capstone Festival showcase
+          </div>
+          <div class="task-list">
+            <div class="task-row oyp">
+              <div class="task-top">
+                <span class="badge oyp">OYP</span>
+                <span class="task-title">Log your first 7 days of outreach results</span>
+                <span class="task-due">Due Fri 11 Dec · 100 pts (0% weight)</span>
+              </div>
+              <p class="task-desc">Record which messages you sent from your Week 14 plan, what replies or referrals came back, and your next move after graduation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <div class="instructor">
+    <div><b>Prof. Sathya Narayanan · Paige Weisskirch</b></div>
+    <div><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> · <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> · @profsathya on Slack</div>
+  </div>
+
+  <div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> - it is the fastest way to get it fixed.</div>
+
+  <footer class="page-footer">
+    <img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+    <span>Computing Talent Initiative · CSU Monterey Bay - CST499 Computer Science Capstone · Bare-bones prototype</span>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var btn = document.getElementById('toggle-all');
+  var sprints = Array.prototype.slice.call(document.querySelectorAll('details.sprint'));
+  function updateBtn(){
+    var allOpen = sprints.every(function(d){ return d.open; });
+    btn.textContent = allOpen ? 'Collapse other sprints' : 'Expand all sprints';
+  }
+  btn.addEventListener('click', function(){
+    var allOpen = sprints.every(function(d){ return d.open; });
+    sprints.forEach(function(d){
+      d.open = allOpen ? (d.id === 'sprint-3') : true;
+    });
+    updateBtn();
+  });
+  sprints.forEach(function(d){ d.addEventListener('toggle', updateBtn); });
+  updateBtn();
+
+  // Open parent sprint if navigating to an anchor inside it
+  function openForHash(){
+    if(!location.hash) return;
+    var el = document.querySelector(location.hash);
+    if(!el) return;
+    var sp = el.closest ? el.closest('details.sprint') : null;
+    if(sp) sp.open = true;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  window.addEventListener('hashchange', openForHash);
+})();
+</script>
+</body>
+</html>
