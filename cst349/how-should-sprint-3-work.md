@@ -1,4 +1,5 @@
-<!-- Editable text for how-should-sprint-3-work.html (not built yet). DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit). Own-your-progress activity, week 10, Recommended Date Fri 30 Oct. The .html is built only after his edit. Notes for the editor, not shown to students: his 9 Oct decision — three options plus "something else", and no other question in this OYP. One pick, one reason. No Dojo route on this page. -->
+<!-- WITHDRAWN 25 Oct 2026 (Prof. Sathya): never built or put on Canvas; removed from home.html. The Sprint 3 shape was settled on 24 Oct and no longer needs this choice. Kept for the record.
+     Editable text for how-should-sprint-3-work.html (not built yet). DRAFT 1, 9 Oct 2026 (Alan's draft for Prof. Sathya to edit). Own-your-progress activity, week 10, Recommended Date Fri 30 Oct. The .html is built only after his edit. Notes for the editor, not shown to students: his 9 Oct decision — three options plus "something else", and no other question in this OYP. One pick, one reason. No Dojo route on this page. -->
 
 CST349 · Fall 2026 · Sprint 2 · Week 10 · Take the first step
 
