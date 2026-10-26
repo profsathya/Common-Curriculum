@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Festival Poster Samples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#E9EDF1;
+  --paper:#FFFFFF;
+  --ink:#14283C;
+  --muted:#5A6878;
+  --rule:#D5DCE3;
+  --route:#1E7C8A;
+  --route-soft:#E3F1F3;
+  --detour:#C98A00;
+  --detour-soft:#FBF1D9;
+  --sans:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif:"Source Serif 4", Georgia, serif;
+}
+.poster.b{ --route:#5B4A9A; --route-soft:#ECE8F6; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5}
+.intro{max-width:1520px;margin:0 auto;padding:28px 16px 8px}
+.intro h1{font-family:var(--sans);font-stretch:110%;font-weight:700;font-size:22px;margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);max-width:72ch;font-size:15px}
+.wall{max-width:1520px;margin:0 auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,680px),1fr));gap:28px;align-items:start}
+
+.poster{background:var(--paper);border-radius:4px;box-shadow:0 1px 2px rgba(20,40,60,.08),0 8px 28px rgba(20,40,60,.08);overflow:hidden}
+.claim{background:var(--route);color:#fff;padding:36px 36px 30px}
+.claim p.big{font-family:var(--sans);font-stretch:118%;font-weight:750;font-size:clamp(26px,3.3vw,38px);line-height:1.12;margin:0 0 16px;letter-spacing:-.005em}
+.claim p.who{font-family:var(--sans);font-size:14px;opacity:.85;margin:0}
+
+.gap{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:24px 36px;border-bottom:1px solid var(--rule)}
+.gap h2,.ai h2,.end h2{font-family:var(--sans);font-weight:700;font-size:15px;margin:0 0 4px;color:var(--route)}
+.gap p{margin:0;max-width:52ch}
+.tally{font-family:var(--sans);font-size:12px;color:var(--muted);text-align:center;width:150px}
+.tally .dots{display:grid;grid-template-columns:repeat(6,14px);gap:6px;justify-content:center;margin-bottom:6px}
+.tally .dots i{width:14px;height:14px;border-radius:50%;background:var(--rule)}
+.tally .dots i.on{background:var(--route)}
+.tally strong{display:block;font-size:20px;color:var(--ink);font-weight:700}
+
+/* the route */
+.route{list-style:none;margin:0;padding:22px 36px 6px 36px}
+.stop{position:relative;padding:0 0 26px 40px}
+.stop::before{content:"";position:absolute;left:10px;top:8px;bottom:-8px;border-left:4px solid var(--route)}
+.stop:last-child::before{bottom:20px}
+.stop.detour::before{border-left:4px dashed var(--detour)}
+.node{position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:4px solid var(--route)}
+.detour .node{border-color:var(--detour);border-radius:3px;transform:rotate(45deg) scale(.9)}
+.stop h3{font-family:var(--sans);font-stretch:105%;font-weight:700;font-size:19px;line-height:1.25;margin:0 0 10px}
+.stop h3 .tag{display:inline-block;font-family:var(--sans);font-weight:600;font-stretch:100%;font-size:12px;background:var(--detour-soft);color:#7A5300;border-radius:3px;padding:2px 7px;margin-left:8px;vertical-align:3px}
+.beats{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin:0}
+.beats div{margin:0}
+.beats dt{font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--muted);margin:0 0 1px}
+.beats dd{margin:0;font-size:15px;line-height:1.42}
+.beats .says dd{font-style:italic}
+.ev{margin:12px 0 0;background:var(--route-soft);border-radius:4px;padding:12px 14px;font-family:var(--sans);font-size:13px;color:var(--ink)}
+.detour .ev{background:var(--detour-soft)}
+.ev .cap{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+
+/* evidence: test runs */
+.runs{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.runs .bar{height:14px;border-radius:2px;display:flex}
+.runs .bar span{display:block;height:100%}
+.fail{background:#C2453A}.pass{background:#2E8B57}
+/* evidence: quote */
+.quote{font-family:var(--serif);font-size:15px;font-style:italic;margin:0}
+/* evidence: posting bars */
+.hbars{display:grid;grid-template-columns:110px 1fr 40px;gap:6px 10px;align-items:center}
+.hbars .track{height:12px;background:#fff;border-radius:2px}
+.hbars .fill{height:100%;background:var(--route);border-radius:2px}
+/* evidence: lab */
+.lab{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border:2px dashed var(--route);border-radius:6px;padding:10px}
+.lab span{background:#fff;border:1px solid var(--rule);border-radius:4px;padding:6px 10px;font-weight:600}
+.lab em{font-style:normal;color:var(--muted);margin-left:auto;font-size:12px}
+.chart svg{width:100%;height:auto;display:block}
+
+/* AI */
+.ai{margin:4px 36px 0;padding:22px 0;border-top:1px solid var(--rule)}
+.ai ol{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:10px}
+.ai li{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ai .got,.ai .me{border-radius:6px;padding:9px 12px;font-size:14.5px;line-height:1.4}
+.ai .got{background:#F2F4F6;color:var(--muted)}
+.ai .me{background:var(--route-soft);color:var(--ink)}
+.ai .who{display:block;font-family:var(--sans);font-size:11.5px;font-weight:600;margin-bottom:2px;color:var(--muted)}
+.ai .me .who{color:var(--route)}
+.ai p.sum{margin:0;font-weight:600;max-width:60ch}
+
+.end{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:22px 36px 30px;background:#F6F8FA;border-top:1px solid var(--rule)}
+.end p{margin:0;font-size:15px}
+
+.legend{max-width:1520px;margin:0 auto;padding:0 16px 32px;font-family:var(--sans);font-size:13px;color:var(--muted);display:flex;gap:22px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:26px;border-top:4px solid #1E7C8A}
+.legend i.d{border-top:4px dashed #C98A00}
+
+@media (max-width:620px){
+  .claim,.gap,.route,.end{padding-left:18px;padding-right:18px}
+  .ai{margin-left:18px;margin-right:18px}
+  .gap{grid-template-columns:1fr}
+  .tally{width:auto}
+  .beats,.ai li,.end{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .intro,.legend{display:none}
+  .wall{display:block;padding:0}
+  .poster{box-shadow:none;break-after:page;margin:0}
+  .claim,.ev,.ai .me,.ai .got,.end{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <h1>Capstone Festival: two sample posters</h1>
+  <p>The student on these posters is a composite, not a real person. Kolibri and CompTIA Security+ are real, and the decisions are ones CST499 students made this semester. Numbers, dates and quotes are illustrative.</p>
+</header>
+
+<main class="wall">
+
+<!-- ============ SAMPLE A ============ -->
+<article class="poster a" aria-label="Sample poster: open-source contribution">
+  <section class="claim">
+    <p class="big">I can work in code I didn't write, find what is really wrong, and get my change accepted by the people who own it.</p>
+    <p class="who">Sample Student, CST499 software track, contributing to Kolibri</p>
+  </section>
+
+  <section class="gap">
+    <div>
+      <h2>The gap I chose</h2>
+      <p>Postings for new-grad roles ask for code shipped through review, and mine had only been reviewed by my own team. I chose Kolibri, an offline learning platform for schools with little internet, where a bug that fails quietly hurts the most.</p>
+    </div>
+    <div class="tally" aria-label="9 of 12 postings asked for code review">
+      <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+      <strong>9 of 12</strong>postings asked for code review
+    </div>
+  </section>
+
+  <ol class="route">
+    <li class="stop">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Contribute to a real project instead of building my own app</h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>Build my own app, join a partner project, or fix bugs in open source.</dd></div>
+        <div><dt>How I knew</dt><dd>The postings asked for outside review. My own app would only be reviewed by me.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>Open source. I gave up owning something from start to finish.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>I choose the evidence I need over what looks impressive.</dd></div>
+      </dl>
+    </li>
+
+    <li class="stop detour">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Get a clean baseline before writing any fix <span class="tag">The obstacle</span></h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>11 tests failed on my laptop before I had changed anything.</dd></div>
+        <div><dt>How I knew</dt><dd>I could not tell my mistakes apart from my setup's.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>I moved to Linux through WSL and gave up a week.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>I want to prove my change did what I say it did.</dd></div>
+      </dl>
+      <div class="ev">
+        <div class="runs">
+          <span>Windows</span><div class="bar"><span class="fail" style="width:11%"></span><span class="pass" style="width:89%"></span></div>
+          <span>WSL</span><div class="bar"><span class="pass" style="width:100%"></span></div>
+        </div>
+        <span class="cap">The same test run: 11 failures on Windows, 0 under WSL</span>
+      </div>
+    </li>
+
+    <li class="stop">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Ask the maintainers before widening the fix</h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>The bug I was fixing also existed in two other places.</dd></div>
+        <div><dt>How I knew</dt><dd>I reproduced all three and wrote down the steps.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>I asked first, and they wanted one small pull request per place. I gave up a bigger change.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>The people who own the code decide what done means.</dd></div>
+      </dl>
+      <div class="ev">
+        <p class="quote">"One PR per import path, please. That is easier for us to review."</p>
+        <span class="cap">A maintainer's reply on the issue thread</span>
+      </div>
+    </li>
+  </ol>
+
+  <section class="ai">
+    <h2>How I directed AI</h2>
+    <ol>
+      <li><div class="got"><span class="who">Claude Code gave me</span>A fix for the one case in the bug report.</div><div class="me"><span class="who">I redirected it</span>"Find every place with the same pattern." It found two more.</div></li>
+      <li><div class="got"><span class="who">Claude Code gave me</span>A test that used a fake file copy.</div><div class="me"><span class="who">I redirected it</span>"Test against a real copy that fails halfway."</div></li>
+      <li><div class="got"><span class="who">Claude Code gave me</span>A three-paragraph pull request description.</div><div class="me"><span class="who">I redirected it</span>"Match the recently merged ones: short, one change." It became five lines.</div></li>
+    </ol>
+    <p class="sum">The AI did most of the typing. I decided what the work needed, and I ran everything myself before trusting it.</p>
+  </section>
+
+  <section class="end">
+    <div><h2>Where it stands</h2><p>My first pull request is open, and I have answered one round of review. It is not merged yet.</p></div>
+    <div><h2>What's next</h2><p>Get both pull requests merged, then keep contributing until the maintainers know my name.</p></div>
+  </section>
+</article>
+
+<!-- ============ SAMPLE B ============ -->
+<article class="poster b" aria-label="Sample poster: CompTIA Security+ certificate">
+  <section class="claim">
+    <p class="big">When I don't understand something, I set up a situation where I can watch it happen.</p>
+    <p class="who">Sample Student, CST499 certificate track, CompTIA Security+</p>
+  </section>
+
+  <section class="gap">
+    <div>
+      <h2>The gap I chose</h2>
+      <p>Entry-level analyst postings ask for a baseline certificate and hands-on experience with security tools. I knew the concepts from class, but I had never investigated anything myself.</p>
+    </div>
+    <div class="tally" aria-label="Security+ named in 10 of 12 postings">
+      <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+      <strong>10 of 12</strong>postings named Security+
+    </div>
+  </section>
+
+  <ol class="route">
+    <li class="stop">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Security+ instead of another certificate</h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>Security+, AWS Cloud Practitioner, or a cyber-defense certificate.</dd></div>
+        <div><dt>How I knew</dt><dd>I counted which ones the postings named.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>Security+. I gave up cloud, which some postings also wanted.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>I let the evidence make the choice, not my guess.</dd></div>
+      </dl>
+      <div class="ev">
+        <div class="hbars">
+          <span>Security+</span><div class="track"><div class="fill" style="width:83%"></div></div><span>10</span>
+          <span>AWS</span><div class="track"><div class="fill" style="width:25%"></div></div><span>3</span>
+        </div>
+        <span class="cap">Postings that named each certificate, out of 12</span>
+      </div>
+    </li>
+
+    <li class="stop">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Add a home lab instead of studying for the exam alone</h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>A certificate alone looks like everyone else's.</dd></div>
+        <div><dt>How I knew</dt><dd>Working analysts document their investigations step by step.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>A free virtual lab instead of used equipment or online labs only. I gave up some study time.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>I want something I can show, not only a score.</dd></div>
+      </dl>
+      <div class="ev">
+        <div class="lab"><span>Kali</span><span>Ubuntu</span><span>Windows</span><em>Isolated network</em></div>
+        <span class="cap">My lab: three virtual machines that cannot reach the internet</span>
+      </div>
+    </li>
+
+    <li class="stop detour">
+      <span class="node" aria-hidden="true"></span>
+      <h3>Pause Security+ to learn networking first <span class="tag">The obstacle</span></h3>
+      <dl class="beats">
+        <div><dt>What I was facing</dt><dd>My practice scores stayed between 60% and 65% for three weeks.</dd></div>
+        <div><dt>How I knew</dt><dd>I sorted my missed questions. Most were look-alike terms that need networking.</dd></div>
+        <div><dt>What I chose and gave up</dt><dd>Two weeks on ports, protocols and subnets. I gave up two weeks on my exam date.</dd></div>
+        <div class="says"><dt>What it says about me</dt><dd>When I am stuck, I look for the reason in my own mistakes.</dd></div>
+      </dl>
+      <div class="ev chart">
+        <svg viewBox="0 0 520 150" role="img" aria-label="Practice exam scores by week: 61, 63, 62, then a two-week networking pause, then 78 and 81">
+          <rect x="250" y="10" width="110" height="110" fill="#F3DFAE"/>
+          <text x="305" y="30" text-anchor="middle" font-family="Archivo, Arial" font-size="12" fill="#7A5300">Networking</text>
+          <line x1="30" y1="120" x2="510" y2="120" stroke="#C9B98F"/>
+          <line x1="30" y1="38" x2="510" y2="38" stroke="#C9B98F" stroke-dasharray="3 4"/>
+          <text x="32" y="33" text-anchor="start" font-family="Archivo, Arial" font-size="11" fill="#7A5300">75%</text>
+          <polyline fill="none" stroke="#C98A00" stroke-width="3" points="60,97 140,92 220,94"/>
+          <polyline fill="none" stroke="#C98A00" stroke-width="3" stroke-dasharray="5 5" points="220,94 400,47"/>
+          <polyline fill="none" stroke="#C98A00" stroke-width="3" points="400,47 480,39"/>
+          <g fill="#fff" stroke="#C98A00" stroke-width="3"><circle cx="60" cy="97" r="5"/><circle cx="140" cy="92" r="5"/><circle cx="220" cy="94" r="5"/><circle cx="400" cy="47" r="5"/><circle cx="480" cy="39" r="5"/></g>
+          <g font-family="Archivo, Arial" font-size="12" fill="#14283C" text-anchor="middle"><text x="60" y="84">61%</text><text x="140" y="79">63%</text><text x="220" y="81">62%</text><text x="400" y="66">78%</text><text x="480" y="58">81%</text></g>
+          <g font-family="Archivo, Arial" font-size="11" fill="#5A6878" text-anchor="middle"><text x="60" y="138">Wk 1</text><text x="140" y="138">Wk 2</text><text x="220" y="138">Wk 3</text><text x="400" y="138">Wk 6</text><text x="480" y="138">Wk 7</text></g>
+        </svg>
+        <span class="cap">Practice exam scores by week</span>
+      </div>
+    </li>
+  </ol>
+
+  <section class="ai">
+    <h2>How I directed AI</h2>
+    <ol>
+      <li><div class="got"><span class="who">ChatGPT gave me</span>A study plan that would fit anyone.</div><div class="me"><span class="who">I redirected it</span>"Here are the 40 questions I missed. What do they have in common?" I checked its groups against the exam objectives.</div></li>
+      <li><div class="got"><span class="who">ChatGPT gave me</span>Textbook definitions of the terms.</div><div class="me"><span class="who">I redirected it</span>"Quiz me only on the pairs I confuse, and use my lab as the example."</div></li>
+      <li><div class="got"><span class="who">ChatGPT gave me</span>An exercise that scanned a public website.</div><div class="me"><span class="who">I redirected it</span>"Keep everything inside my isolated lab." We built an exercise I could run safely.</div></li>
+    </ol>
+    <p class="sum">The AI made my practice faster. I decided what to practice, and I checked it against the exam objectives and my own results.</p>
+  </section>
+
+  <section class="end">
+    <div><h2>Where it stands</h2><p>The exam is on December 12. Two lab write-ups are done, and my latest practice score is 81%.</p></div>
+    <div><h2>What's next</h2><p>Pass the exam, add one lab investigation a month, and aim for an analyst internship.</p></div>
+  </section>
+</article>
+
+</main>
+
+<p class="legend"><span><i></i>A decision on the way</span><span><i class="d"></i>The obstacle</span></p>
+
+</body>
+</html>

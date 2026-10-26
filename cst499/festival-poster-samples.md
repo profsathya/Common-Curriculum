@@ -1,115 +1,84 @@
-# Capstone Festival — two sample posters
+# Capstone Festival: two sample posters
 
-These two posters belong to a sample student. The student is not a real person. The project (Kolibri) and the certificate (CompTIA Security+) are real, and the decisions and obstacles are ones CST499 students have run into this semester. The numbers, dates and conversation excerpts are illustrative.
-
-Each poster reads top to bottom. The first line is the claim. Everything below it is the evidence for that claim.
+The student on these posters is a composite, not a real person. Kolibri and CompTIA Security+ are real, and the decisions are ones CST499 students made this semester. Numbers, dates and quotes are illustrative.
 
 ---
 
-## Sample A — An open-source contribution (Kolibri)
+## Sample A — open-source contribution (Kolibri)
 
-### The one thing I want you to remember
+**Claim:** I can work in code I didn't write, find what is really wrong, and get my change accepted by the people who own it.
+Sample Student, CST499 software track, contributing to Kolibri
 
-I can work in code I did not write, find out what is really wrong, and get my change accepted by the people who own that code.
+**The gap I chose:** Postings for new-grad roles ask for code shipped through review, and mine had only been reviewed by my own team. I chose Kolibri, an offline learning platform for schools with little internet, where a bug that fails quietly hurts the most.
+Evidence: 9 of 12 postings asked for code review.
 
-*Sample Student · B.S. Computer Science · CST499 software track*
+### Contribute to a real project instead of building my own app
+- What I was facing: Build my own app, join a partner project, or fix bugs in open source.
+- How I knew: The postings asked for outside review. My own app would only be reviewed by me.
+- What I chose and gave up: Open source. I gave up owning something from start to finish.
+- What it says about me: I choose the evidence I need over what looks impressive.
 
-### The gap I chose, and why
+### Get a clean baseline before writing any fix (the obstacle)
+- What I was facing: 11 tests failed on my laptop before I had changed anything.
+- How I knew: I could not tell my mistakes apart from my setup's.
+- What I chose and gave up: I moved to Linux through WSL and gave up a week.
+- What it says about me: I want to prove my change did what I say it did.
+- Evidence: The same test run: 11 failures on Windows, 0 under WSL.
 
-I enjoy finding out why something breaks, and I am patient with code that other people wrote. When I read twelve postings for new-grad software roles, nine of them asked for experience working in an existing codebase and shipping changes through code review. Every line of code I had written had only been reviewed by my own team. So the gap I chose to close this semester was getting my code reviewed and accepted by engineers outside my team.
-
-I chose Kolibri because it is an open-source learning platform used in schools that have little or no internet. The people who depend on it cannot easily report a problem, so a bug that fails quietly matters more there.
-
-### Decision 1 — Contribute to an existing project instead of building my own app
-
-- **What I was facing.** I had three options: build my own app, join a partner project, or contribute fixes to an open-source project.
-- **How I knew.** The postings asked for review by other engineers. My own app would only be reviewed by me.
-- **What I chose and what I gave up.** I chose open source. I gave up owning something from start to finish, which a classmate chose for exactly that reason. I accepted that my evidence would be smaller pieces of work that someone else approved.
-- **What it says about how I work.** I chose the option that gave me the evidence I needed, even though it was not the one that felt most impressive.
-
-### Decision 2 — Get a clean baseline before writing any fix (the obstacle)
-
-- **What I was facing.** When I ran Kolibri's tests on my Windows laptop, 11 of them failed before I had changed a single line.
-- **How I knew.** I could not tell whether a failure after my fix was caused by me or by my setup. Screenshot: the test run with 11 failures on Windows.
-- **What I chose and what I gave up.** I moved my setup to Linux through WSL and spent most of a week on it. I gave up that week of progress on the bug itself.
-- **What it says about how I work.** I want to be able to prove that my change did what I said it did. Screenshot: the same test run with 0 failures under WSL.
-
-### Decision 3 — Ask the maintainers before widening the fix
-
-- **What I was facing.** The bug report said that importing content from a USB drive showed "complete" even when some files failed to copy. While reading the code, I found the same pattern in two other import paths.
-- **How I knew.** I reproduced the problem on all three paths and wrote down the steps for each one.
-- **What I chose and what I gave up.** I could have fixed all three in one pull request. Instead, I posted my findings on the issue and asked the maintainers which they wanted first. They asked for one small pull request per path. I gave up the bigger, more impressive change.
-- **What it says about how I work.** The people who own the code decide what "done" means. Link: my comment on the issue and the maintainer's reply.
+### Ask the maintainers before widening the fix
+- What I was facing: The bug I was fixing also existed in two other places.
+- How I knew: I reproduced all three and wrote down the steps.
+- What I chose and gave up: I asked first, and they wanted one small pull request per place. I gave up a bigger change.
+- What it says about me: The people who own the code decide what done means.
+- Evidence: A maintainer's reply on the issue thread: "One PR per import path, please. That is easier for us to review."
 
 ### How I directed AI
+- Claude Code gave me a fix for the one case in the bug report. I redirected it: "Find every place with the same pattern." It found two more.
+- Claude Code gave me a test that used a fake file copy. I redirected it: "Test against a real copy that fails halfway."
+- Claude Code gave me a three-paragraph pull request description. I redirected it: "Match the recently merged ones: short, one change." It became five lines.
 
-I used Claude Code throughout. Below are four turns from the conversation, and why I redirected it each time.
+The AI did most of the typing. I decided what the work needed, and I ran everything myself before trusting it.
 
-1. I asked it to find the root cause. It found it quickly and suggested a fix for the one case in the bug report.
-2. I asked it to look for every place that used the same pattern, because a fix for one case would leave the others failing quietly. It found the two other import paths.
-3. It had written the test against a mock of the file copy. I asked it to write the test against a real copy that fails halfway, because the mock could not fail the way a real USB drive does.
-4. I asked it to draft the pull request description in the style of recently merged Kolibri pull requests, which are short and name one change. Its first draft was three paragraphs long, and we cut it to five lines.
-
-The AI did most of the typing. I decided what the work needed to be, and I ran everything myself before I trusted it.
-
-### Where it stands
-
-My first pull request is open, and I have answered one round of review comments. It is not merged yet. The maintainer team is small, so the timing depends on people I do not control. While I wait, I am preparing the second pull request.
-
-### What's next
-
-Get the first pull request merged, then the second. After that, I want to keep contributing to one project long enough that the maintainers recognize my name.
+**Where it stands:** My first pull request is open, and I have answered one round of review. It is not merged yet.
+**What's next:** Get both pull requests merged, then keep contributing until the maintainers know my name.
 
 ---
 
-## Sample B — A certificate (CompTIA Security+)
+## Sample B — certificate (CompTIA Security+)
 
-### The one thing I want you to remember
+**Claim:** When I don't understand something, I set up a situation where I can watch it happen.
+Sample Student, CST499 certificate track, CompTIA Security+
 
-When I do not understand something, I set up a situation where I can watch it happen.
+**The gap I chose:** Entry-level analyst postings ask for a baseline certificate and hands-on experience with security tools. I knew the concepts from class, but I had never investigated anything myself.
+Evidence: 10 of 12 postings named Security+.
 
-*Sample Student · B.S. Computer Science · CST499 certificate track*
+### Security+ instead of another certificate
+- What I was facing: Security+, AWS Cloud Practitioner, or a cyber-defense certificate.
+- How I knew: I counted which ones the postings named.
+- What I chose and gave up: Security+. I gave up cloud, which some postings also wanted.
+- What it says about me: I let the evidence make the choice, not my guess.
+- Evidence: Postings that named each certificate, out of 12: Security+ 10, AWS 3.
 
-### The gap I chose, and why
+### Add a home lab instead of studying for the exam alone
+- What I was facing: A certificate alone looks like everyone else's.
+- How I knew: Working analysts document their investigations step by step.
+- What I chose and gave up: A free virtual lab instead of used equipment or online labs only. I gave up some study time.
+- What it says about me: I want something I can show, not only a score.
+- Evidence: My lab: three virtual machines (Kali, Ubuntu, Windows) on an isolated network that cannot reach the internet.
 
-Capture-the-flag competitions never feel like work to me, and I notice small details that other people skip. When I read postings for entry-level security analyst roles, they asked for two things. They asked for a baseline certificate, and they asked for hands-on experience with security tools. I knew the concepts from my classes, but I had never investigated anything myself. That was the gap I chose to close.
-
-### Decision 1 — Security+ instead of another certificate
-
-- **What I was facing.** I was choosing between Security+, AWS Cloud Practitioner and a cyber-defense certificate.
-- **How I knew.** Security+ was named in 10 of the 12 postings I saved. AWS was named in 3. Screenshot: my posting tally.
-- **What I chose and what I gave up.** I chose Security+. I gave up cloud, which some postings also asked for.
-- **What it says about how I work.** I let the postings make the choice instead of my guess about what sounded best.
-
-### Decision 2 — Add a home lab instead of studying for the exam alone
-
-- **What I was facing.** A certificate shows what I know, but every candidate who has one looks the same on paper.
-- **How I knew.** The postings asked for hands-on tools, and the analysts whose work I looked at document their investigations step by step.
-- **What I chose and what I gave up.** I built a virtual lab on my laptop: three virtual machines on an isolated network. I considered buying used network equipment, or using only online labs. The virtual lab cost nothing and I control all of it. I gave up some study time, and I had to learn how to keep the lab isolated.
-- **What it says about how I work.** I want something I can show, not only a score.
-
-### Decision 3 — Stop studying for Security+ to learn networking first (the obstacle)
-
-- **What I was facing.** My practice exam scores stayed between 60% and 65% for three weeks.
-- **How I knew.** I sorted every question I had missed. Most were about terms that look alike, and most of those depended on networking knowledge I did not have. Chart: practice scores by week, with the missed questions grouped by topic.
-- **What I chose and what I gave up.** I paused Security+ for two weeks and studied ports, protocols and subnets. I gave up two weeks on my exam timeline. My next practice exam score was 78%.
-- **What it says about how I work.** When I am stuck, I look for the reason in my own mistakes before I try harder at the same thing.
+### Pause Security+ to learn networking first (the obstacle)
+- What I was facing: My practice scores stayed between 60% and 65% for three weeks.
+- How I knew: I sorted my missed questions. Most were look-alike terms that need networking.
+- What I chose and gave up: Two weeks on ports, protocols and subnets. I gave up two weeks on my exam date.
+- What it says about me: When I am stuck, I look for the reason in my own mistakes.
+- Evidence: Practice exam scores by week: 61%, 63%, 62%, two weeks of networking, then 78% and 81%.
 
 ### How I directed AI
-
-I used ChatGPT. Below are four turns from the conversation, and why I redirected it each time.
-
-1. I asked for a study plan. It gave me a plan that would fit anyone studying for Security+.
-2. I pasted in the 40 practice questions I had missed and asked what they had in common. It grouped them, and I checked the groups against the official exam objectives.
-3. I asked it to quiz me only on the pairs of terms I kept confusing, and to explain each wrong answer using my lab instead of a textbook example.
-4. I asked it to design a lab exercise where I could see one of those differences in real traffic. Its first suggestion pointed a scanning tool at a public website, so I told it to keep everything inside my isolated lab network. Write-up: the exercise we ended up with.
+- ChatGPT gave me a study plan that would fit anyone. I redirected it: "Here are the 40 questions I missed. What do they have in common?" I checked its groups against the exam objectives.
+- ChatGPT gave me textbook definitions of the terms. I redirected it: "Quiz me only on the pairs I confuse, and use my lab as the example."
+- ChatGPT gave me an exercise that scanned a public website. I redirected it: "Keep everything inside my isolated lab." We built an exercise I could run safely.
 
 The AI made my practice faster. I decided what to practice, and I checked it against the exam objectives and my own results.
 
-### Where it stands
-
-The exam is scheduled for December 12. I have two lab write-ups finished and a third in progress. My latest practice exam score is 81%.
-
-### What's next
-
-Pass the exam, then keep the lab running and add one investigation a month. After that, I am aiming for an analyst internship or the CySA+ certificate.
+**Where it stands:** The exam is on December 12. Two lab write-ups are done, and my latest practice score is 81%.
+**What's next:** Pass the exam, add one lab investigation a month, and aim for an analyst internship.
