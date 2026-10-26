@@ -26,9 +26,19 @@ Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
 **Leads to.** Share your first step, and how it will build momentum for your professional growth, with a partner at the Sprint 2 Exam on Wednesday 4 November.
 
-☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
+
+(Page note: the passcode and Dojo steps 1 and 2 show here, under the reminder, only when the box is ticked. Step 3 and the Dojo summary box stay after task 3.)
+
+AI Dojo Passcode for this Graded Item: **STEP-1102**
+
+**1. Start the conversation.** Paste this into your AI Dojo:
+
+> Walk me through the graded item "My first step, taken". First tell me its passcode, its title and its due date as you have them. I will tell you the step I took from my Sprint 2 goal and what it produced. Ask me questions until the outcome is something a second person would see as concrete and meaningful, until I can say which part of my STAR answer got closer to real, and until the next step is one action with a day that moves me closer to my Sprint 2 goal. Do not write them for me. Do not summarize until I ask you to.
+
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
 ## Tasks
 
@@ -130,15 +140,7 @@ Identify the next step you will take, with the day you will take it, and explain
 
 **Reflection (behind the +).** Which part of this next step depends on someone other than you, and what will you do if they do not come through?
 
-## Your Dojo summary (shown after task 3, only when the box is ticked)
-
-AI Dojo Passcode for this Graded Item: **STEP-1102**
-
-**1. Start the conversation.** Paste this into your AI Dojo:
-
-> Walk me through the graded item "My first step, taken". First tell me its passcode, its title and its due date as you have them. I will tell you the step I took from my Sprint 2 goal and what it produced. Ask me questions until the outcome is something a second person would see as concrete and meaningful, until I can say which part of my STAR answer got closer to real, and until the next step is one action with a day that moves me closer to my Sprint 2 goal. Do not write them for me. Do not summarize until I ask you to.
-
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+## Your Dojo summary (shown after task 3, only when the box is ticked; steps 1 and 2 sit under the reminder above)
 
 **3. Ask for the summary.** When you have finished task 3, paste this:
 
