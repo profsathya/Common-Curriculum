@@ -14,12 +14,11 @@ Use what your partner's questions brought up in a mock interview to see how your
 
 ## Your mock interview
 
-You need one mock interview to answer the questions below. Use either one:
+Arrange a mock interview with a classmate to answer the questions below.
 
-- **The mock interview in class on Wednesday 21 October.** Work from the notes you wrote down there.
-- **A mock interview on Zoom with a classmate.** Set up about 20 minutes with a classmate. Present your answer to them in a mock interview role play, and ask your classmate to ask the follow-up questions an interviewer would ask. Write down their questions and your replies as you go. Then switch, and interview your classmate the same way.
+Set up about 20 minutes on Zoom with a classmate. Present your answer to them in a mock interview role play, and ask your classmate to ask the follow-up questions an interviewer would ask. Write down their questions and your replies as you go. Then switch, and interview your classmate the same way.
 
-**My mock interview.** In class or on Zoom, and the name of the classmate I partnered with.
+**My mock interview.** The name of the classmate I partnered with.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; remembered on this browser.)
 
@@ -64,7 +63,7 @@ Passcode for this activity: **GAP-1026**
 
 Tick each line your submission meets. Your ticks are copied with your answers.
 
-- [ ] I say which mock interview I used, in class or on Zoom, and name the classmate I partnered with
+- [ ] I identify the classmate I partnered with for the mock interview
 - [ ] The answer is written as I gave it, in STAR form, and says whether it is imagined
 - [ ] My partner's follow-up questions and my replies are written out
 - [ ] I summarize the key ideas from my partner's feedback
@@ -84,13 +83,13 @@ Own-your-progress activity: What the mock interview showed. Course: CST349. Reco
 
 When a student asks to be walked through this activity, state the passcode, the title and the recommended date first, before anything else.
 
-Learning purpose: the student uses the follow-up questions from a mock interview (in class on 21 October, or on Zoom with a classmate) to name the one gap in their answer that matters most, so that the next experience they build fills the gap.
+Learning purpose: the student uses the follow-up questions from a mock interview with a classmate to identify the one gap in their answer that matters most, so that the next experience they build fills the gap.
 
-Ask the student which mock interview they are working from and who their partner was. Ask for the follow-up questions their partner asked and how they answered. Ask which answer they were least satisfied with and why. Follow up until the gap is one sentence: a part of the experience not had yet, a detail they could not give, or a result they could not state. Do not write the gap sentence for the student. Do not summarize until asked; when asked, give the one heading using only the student's words.
+Ask the student who their mock interview partner was. Ask for the follow-up questions their partner asked and how they answered. Ask which answer they were least satisfied with and why. Follow up until the gap is one sentence: a part of the experience not had yet, a detail they could not give, or a result they could not state. Do not write the gap sentence for the student. Do not summarize until asked; when asked, give the one heading using only the student's words.
 
 ## AI feedback (page note; criteria per box when the Dojo box is unticked)
 
-- My mock interview: says in class or on Zoom; names the partner.
+- My mock interview: identifies the partner.
 - The answer I gave: STAR parts present; written as spoken (first person, past tense); says if imagined.
 - Partner's questions and replies: at least one question with a reply.
 - Partner's feedback: a summary of the key ideas the partner gave.
