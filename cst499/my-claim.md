@@ -4,23 +4,27 @@
      evidence by Monday 7 December and what that evidence will be (no evidence needed yet); check whether the claim
      shows depth and breadth, and if not, why not and how to move that way, with the Linux Foundation 2026 and
      PwC 2026 reports as the reading on why crossing domains matters. Replaces the Fri 30 Oct festival OYP.
+     Draft 2 of 2026-10-27 — Prof. Sathya's edits (title, Purpose, task 1 wording and the technical-reader check) kept;
+     "I can …" is now a suggested start, task 1 adds the test that the skill is true in a job unrelated to the project,
+     the main and Security+ claims are rewritten as underlying skills, "prove" → "demonstrate" in the Dojo text.
+     His edit is kept as my-claim.md.bak-2026-10-27-sathya-edit.
      Layout follows cst349/my-first-step-taken.md: Purpose as a three-box arrow chain, each task's guidance in italics
      in parentheses, one example plus "More examples" under each +, Dojo route, Self-check with points.
      The passcode appears twice and must be the same in both places.
      ⏎ marks a line break inside a placeholder. The rail and the copied text use the task labels
      after the dash in each ### heading. -->
 
-# My claim: one skill I will prove by 7 December, the evidence, and its depth and breadth
+# My claim: one skill, deep and broad, I will prove by 7 December with evidence
 
 Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: a three-box arrow chain, Builds on → This goal → Leads to; the middle box is the highlighted one)
 
-**Builds on.** In the [Quality review](quality-review.html) you chose the two or three changes that step up your work, and the domains they bring together.
+**Builds on.** In the [Quality review](quality-review.html) you chose the two or three changes that step up your work, and the breadth of domains that strengthens its impact.
 
-**This goal.** Learn to state one skill your work will prove, and plan the evidence that will prove it. Stating clearly what you can do, and backing it with evidence, is a skill that stays valuable throughout your career.
+**This goal.** Learn to state one skill your work will demonstrate with evidence.
 
-**Leads to.** The Integrative Solving report builds the evidence for the breadth in your claim, and your claim becomes the headline of your Interactive Poster.
+**Leads to.** The Integrative Solving report brings together the evidence for the breadth in your claim.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -32,13 +36,11 @@ AI Dojo Passcode for this Graded Item: **CLAIM-1102**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My claim". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my work to prove by Monday 7 December. Ask me questions until my claim is one skill a visitor could see proven on my Interactive Poster, until I can say what the evidence will be, what part of it exists today and what still has to happen, and until I can say which part of my claim shows depth and which part reaches into a second domain, or why it stays in one domain and how it could move toward a second. Do not write them for me. Do not summarize until I ask you to.
+> Walk me through the graded item "My claim". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Ask me questions until my claim is one skill that would still be true and valuable in a job that has nothing to do with this project, written so that a visitor at the capstone festival could understand it and recognize its value, until I can say what the evidence will be, what part of it exists today and what still has to happen, and until I can say which part of my claim shows depth and which part reaches into a second domain, or why it stays in one domain and how it could move toward a second. Do not write them for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
 ## Tasks
-
-"Your work" refers to your project or your certificate work, as you described it in the Quality review.
 
 **Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
 
@@ -46,26 +48,28 @@ Each **+** opens an example, more examples if you want them, and a reflection qu
 
 ### Task 1 — My claim
 
-Write one claim about a skill that your work will prove by Monday 7 December, starting with "I can …". *(Write it as a skill that a visitor at the capstone festival could see proven on your Interactive Poster. Start from the changes you chose in the Quality review.)*
+Write one claim about a skill that your capstone will demonstrate by Monday 7 December. You can start with "I can …", "I know how to …" or "When [situation], I can …". *(Write it as a skill that would still be true and valuable in a job that has nothing to do with this project, and that a visitor at the capstone festival could understand and recognize the value of.)*
 
-*Box label:* **Your answer to task 1.** One claim, starting with "I can …".
+*Box label:* **Your answer to task 1.** One claim about a skill.
 *Placeholder:* I can …
 
 **Check it yourself — the same criteria, without the AI**
 
-- There is one claim, and it starts with "I can".
-- The claim is a skill your work will show by Monday 7 December.
+- There is one claim, and it states a skill.
+- The skill would still be true and valuable in a job that has nothing to do with this project.
+- The claim is a skill your capstone will show by Monday 7 December.
+- Someone with a technical background can easily understand and appreciate it.
 
 *The + reads:* An example, more examples, and a question
 
 **An example, to shape your thinking — not a model to copy**
 
-- **My claim** — I can build a search tool that keeps campus office hours current by pulling them from each office's own page, and show that students find the office they need faster.
+- **My claim** — I can find out where people lose time in a task they do every week, and build software that removes that step without changing how they already work.
 
 **More examples** (page note: a click-to-open inside the +, closed by default)
 
 - **My claim** — I can understand a large, complex codebase and its system design, and develop fixes to open issues that the project's maintainers accept.
-- **My claim** — I can secure a small office network and explain my choices to an owner who does not work in technology.
+- **My claim** — I can protect a small organization's network by choosing, setting up and testing the controls it needs.
 
 **Reflection (behind the +).** Which word in your claim would a visitor ask you to show first?
 
@@ -92,9 +96,9 @@ Describe the evidence that will support your claim on Monday 7 December:
 
 **An example, to shape your thinking — not a model to copy**
 
-- **The evidence, and where it will be** — the live site, linked from my Interactive Poster, with a short page on how the hours stay current; and the times from five students who looked for tutoring hours on the old campus page and on my site.
+- **The evidence, and where it will be** — my notes from asking students and two office staff where they lose time looking for office hours; the live site, linked from my Interactive Poster, with a short page on how the hours stay current; and the times from five students who looked for tutoring hours on the old campus page and on my site.
 - **What exists today** — the search works on a list of twelve offices that I typed by hand.
-- **What still has to happen** — pull the hours from each office's page, write the page on how they stay current, and run the timing with five students.
+- **What still has to happen** — write up the notes from the students and staff, pull the hours from each office's page, write the page on how they stay current, and run the timing with five students.
 
 **More examples** (page note: a click-to-open inside the +, closed by default)
 
@@ -160,14 +164,14 @@ Read the two reports below, then look at your claim and identify:
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Task 1 is one claim about a skill, starting with "I can" · 15 pts
-- [ ] Task 1's claim is a skill my work will show by Monday 7 December · 15 pts
+- [ ] Task 1 is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project · 15 pts
+- [ ] Task 1's claim is a skill my capstone will show by Monday 7 December, written so that someone with a technical background can easily understand and appreciate it · 15 pts
 - [ ] Task 2 says what the evidence will be and where a visitor will see or try it · 20 pts
 - [ ] Task 2 says what part of the evidence exists today and what still has to happen · 20 pts
 - [ ] Task 3 identifies the part of my claim that shows depth, and its domain · 10 pts
 - [ ] Task 3 identifies the part that reaches into a second domain; or says why the claim stays in one domain and identifies one way to move toward a second · 20 pts
 
-**What makes it strong.** The evidence in task 2 proves the words of the claim in task 1; the steps that still have to happen are ones you can finish by 7 December; the second domain in task 3 shows up in the evidence, not only in the claim.
+**What makes it strong.** The evidence in task 2 shows the skill in task 1 at work; the steps that still have to happen are ones you can finish by 7 December; the second domain in task 3 shows up in the evidence, not only in the claim.
 
 **Grading.** 100 points, in Graded items. The grade is based on what you write here; your reviewer verifies each line you ticked.
 
@@ -187,13 +191,13 @@ Graded item: My claim. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student learns to state one skill their work will prove by Monday 7 December and to plan the evidence that will prove it, and checks whether the claim shows depth in one domain and reaches into a second. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving report builds the evidence for its breadth.
+Learning purpose: the student learns to state one skill their capstone will demonstrate by Monday 7 December and to plan the evidence that will demonstrate it, and checks whether the claim shows depth in one domain and reaches into a second. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving report builds the evidence for its breadth.
 
-Ask what skill the student wants their work to prove, until it is one claim starting with "I can" that a visitor could see proven on the Interactive Poster by 7 December. Ask what the evidence will be and where a visitor will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If the claim stays in one domain, ask why, and ask what one way the work could move toward a second domain; accept a reasoned choice to stay in one domain for now. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
+Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project, and that a visitor at the capstone festival could understand and recognize the value of. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a visitor will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If the claim stays in one domain, ask why, and ask what one way the work could move toward a second domain; accept a reasoned choice to stay in one domain for now. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Task 1: one claim, starting with "I can", about a skill the work will show by 7 December.
+- Task 1: one claim about a skill that would still be true and valuable in a job unrelated to this project, that the capstone will show by 7 December, written so someone with a technical background can understand and appreciate it.
 - Task 2: what the evidence will be and where a visitor will see or try it; what exists today; what still has to happen.
 - Task 3: the part showing depth and its domain; the part reaching into a second domain, or why the claim stays in one domain and one way to move toward a second.
 
