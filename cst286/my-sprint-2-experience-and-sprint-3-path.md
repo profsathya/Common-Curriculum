@@ -1,10 +1,10 @@
-<!-- Editable text for my-sprint-2-experience-and-sprint-3-path.html (.html built 24 Oct from this version). DRAFT 3, 24 Oct 2026, after his second edit pass; the .html is built from this version. Draft 3 adds the two hover-text bubbles he asked for (GlowScript, Nand2Tetris), a starter line in the Why box, and a self-check line that matches his new Why wording.
+<!-- Editable text for my-sprint-2-experience-and-sprint-3-path.html (.html built 24 Oct from this version). DRAFT 3, 24 Oct 2026, after his second edit pass; the .html is built from this version. Draft 3 adds the hover-text bubbles he asked for (GlowScript; 27 Oct: PhET and Tinkercad Circuits replace Nand2Tetris), a starter line in the Why box, and a self-check line that matches his new Why wording.
 Notes for the editor, not shown to students:
 - Draft 2 changes from his pass: the three steps ARE the activity now (narrative · relationship from memory · choice), so the separate fact boxes (finish dates, hours, longest scenario) are gone; Part 1 is one narrative box with a grey sample inside and two more samples in a drop-down under it; paths reordered A trail · B own goal · C project; the "What it gives you" and "A student who picks this noticed" lines are removed, each path is one plain description; the AI-helper block appears once, at the end, pending his decision below; page is about half the length of draft 1.
 - Decided 23 Oct: one graded item due Fri 30 Oct, two days after the Sprint 2 Exam. It absorbs the WIP OYP "My self-directed learning process in Sprint 2". Friday is a deliberate exception to the Monday rule.
 - The form does NOT conclude a path for the student (Prof. Sathya, 23 Oct). The student chooses and writes one sentence on why; that sentence anchors the first Sprint 3 check-in.
 - All three paths share one Sprint 3 output: the quantitative relationship · three scenarios where it applies · two look-alikes that break the condition · the exam walks one through.
-- Open for his decision: AI-helper block only at the end on every page (his question on draft 1); the Path C tool list beyond GlowScript and Nand2Tetris.
+- Open for his decision: AI-helper block only at the end on every page (his question on draft 1); (Path C tool list settled 27 Oct: GlowScript, PhET, Tinkercad Circuits; Nand2Tetris and the "another tool from the list" line removed by Prof. Sathya).
 - Self-check points are a proposal; they total 100.
 - "For your AI Dojo" is hidden on the page and copied into the course Google Doc by the sync script. The passcode appears twice in this file and must be the same in both places. -->
 
@@ -85,7 +85,7 @@ All three paths end in the same place by Dec 9: a relationship you can state, th
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 
-**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for physics or Nand2Tetris for computing circuits (or another tool from the list on the page) and find the physics relationship inside what you built.
+**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for motion, PhET for a simulated experiment or Tinkercad Circuits for electronics with an Arduino board, and find the physics relationship inside what you built.
 
 - **The path I choose.** Select A, B or C.
 
@@ -122,7 +122,7 @@ Learning purpose: the student tells the story of their Sprint 2 learning with sp
 
 Order: help the student tell their Sprint 2 story by asking three or four of these, one at a time, and following up for specifics (which day, how many hours, which resource, which person): what motivated them to learn their topic, how they went about it, whether and how they used AI, when they worked and for how long, what surprised them, who or what helped. Then ask for the relationship from memory, in words, as a formula with units, and its condition; if parts do not come back, ask why they think that is, and do not supply the missing parts.
 
-Then describe the three paths exactly as the course page gives them: Path A, one guided learning trail that supplies the phenomenon and the steps; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a project in GlowScript, Nand2Tetris or another listed tool, where the student finds the relationship inside what they built. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one.
+Then describe the three paths exactly as the course page gives them: Path A, one guided learning trail that supplies the phenomenon and the steps; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a project in GlowScript, PhET or Tinkercad Circuits, where the student finds the relationship inside what they built. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one.
 
 Never choose a path for the student and never say which path fits them. Ask which they choose and what in their story points there. If the reason does not refer to anything in their story or their Step 2 answer, ask what they noticed in Sprint 2 that leads to this choice; the decision stays theirs.
 
@@ -143,10 +143,15 @@ The reply is two or three sentences: what the box already does well, then the on
 - *Why it fits this path.* You decide the forces and the starting conditions, so when the motion on screen matches or fails to match what you expected, the relationship you are after is sitting in your own code.
 - *Where to start.* glowscript.org, Sign in, then the first example on the Help page runs a bouncing ball you can change.
 
-**Nand2Tetris** (first use in Path C)
-- *What it is.* A free course and simulator (nand2tetris.org) in which you build a working computer from a single kind of logic gate upward, one layer at a time.
-- *Why it fits this path.* Each layer works only because the one below it obeys an exact rule, so the quantitative relationships of computing circuits (timing, voltage levels, gate counts) show up as you test what you built.
-- *Where to start.* nand2tetris.org, Project 1, which needs only the free simulator download.
+**PhET** (first use in Path C)
+- *What it is.* A free website (phet.colorado.edu) from the University of Colorado with physics simulations that run in your browser.
+- *Why it fits this path.* In simulations such as Circuit Construction Kit you put the setup together yourself and measure it, so when you change one part and a reading changes, the relationship you are after is in the setup you built.
+- *Where to start.* phet.colorado.edu, Simulations, Physics, then open Circuit Construction Kit: DC and build a circuit with one battery and one bulb.
+
+**Tinkercad Circuits** (first use in Path C)
+- *What it is.* A free website (tinkercad.com) from Autodesk where you wire a breadboard, an Arduino board and parts such as LEDs, resistors and sensors, then run the circuit and its Arduino code in a simulator.
+- *Why it fits this path.* The simulated multimeter measures voltage and current in the circuit you wired, so when you change a part, the relationship you are after shows up in your own readings.
+- *Where to start.* tinkercad.com, sign in, Create, Circuit, then drag an Arduino starter onto the workspace and press Start Simulation.
 
 ## Where this page comes from
 
