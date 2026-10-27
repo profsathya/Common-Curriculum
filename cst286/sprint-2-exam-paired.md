@@ -93,7 +93,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] No follow-up question is a generic one I could ask anyone · 5 pts
 - [ ] What I learned from my partner's response is written down for each question · 15 pts
 - [ ] The summary says what my partner could explain and what they were less sure about · 15 pts
-- [ ] The summary names at least one thing I learned that was not on the paper · 5 pts
+- [ ] The summary identifies at least one thing I learned that was not on the written response · 5 pts
 
 **What makes it strong.** Your two questions explore the part of the paper that is interesting or relevant - the step in 1b where the number comes out, or the condition in 1c that the look-alike scenario breaks - and your summary is traceable to what your partner said when you asked, rather than repeating the paper back.
 

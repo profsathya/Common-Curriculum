@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprint 2 Exam - the paired half | CST286</title>
+<style>
+:root{
+--blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+--border:#C7CDD1; --border-light:#E8EAEC;
+--modhead:#F5F5F5; --goal-bg:#F3F8FB; --goal-border:#0374B5;
+--check-bg:#F2FAF5; --check-border:#0B874B; --check:#0A7340; --warn:#9B6A00;
+--teal:#0F766E; --teal-light:#f0fdfa;
+--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;color:var(--blue-dark);}
+
+.page{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+
+/* Canvas-page content */
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.pagehead{border-bottom:1px solid var(--border-light);padding-bottom:14px;margin-bottom:18px;}
+.pagehead .s{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal);}
+.pagehead h1{font-size:22px;font-weight:700;margin:3px 0 5px;}
+.pagehead .dt{font-size:13px;color:var(--muted);font-weight:600;}
+h2.sec{font-size:16px;font-weight:700;margin:24px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.pnote{display:flex;gap:9px;align-items:flex-start;border:1px solid #A8CBE0;background:var(--goal-bg);border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;}
+.pnote .hand{font-size:17px;line-height:1.2;flex:0 0 auto;}
+.pnote p{margin:0;}
+.pnote a{text-decoration:underline;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+p.body{font-size:13.5px;margin:0 0 10px;}
+
+.pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid var(--border-light);font-size:13px;}
+
+.instructor{margin-top:26px;background:#FAFBFC;border:1px solid var(--border-light);border-radius:6px;padding:14px 16px;text-align:center;}
+.instructor .nm{font-weight:700;color:var(--text);margin-bottom:3px;}
+.instructor .links{font-size:12.5px;color:var(--muted);}
+
+/* Glossary bubbles — CSS-only: hover, keyboard focus, and tap all work with no script */
+.gl{display:inline;}
+/* the bubble anchors to the surrounding block, not the word, so it can never run off
+   the page edge — which keeps it correct with no script, i.e. after a Canvas paste */
+p.body,.pagehead .dt,.more-body p,.more-body li,.crit p,.crit li,.rbox > .qt,.refl li,.copyline,.pnamerow{position:relative;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;
+border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;top:100%;left:0;margin-top:7px;
+width:340px;max-width:100%;background:#fff;border:1px solid var(--border);
+border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;
+font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;
+font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);
+padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;margin-bottom:6px;color:var(--text);}
+.bub .br:last-child{margin-bottom:0;}
+.bub .br i{font-style:normal;font-weight:700;color:var(--muted);}
+@media print{.bub{display:none !important;}}
+
+.page-footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--border-light);display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex-wrap:wrap;}
+.feedback-note{margin:22px 0 0;padding-top:14px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted);text-align:center;}
+.feedback-note a{color:var(--blue-dark);}
+.page-footer img{height:20px;opacity:.55;}
+
+/* Route expanders — the house + control; reused here for the second layer under each task */
+details.route{border:1px solid var(--border);border-radius:6px;margin:0 0 10px;background:#fff;}
+details.route > summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;border-radius:5px;}
+details.route > summary::-webkit-details-marker{display:none;}
+details.route > summary:hover{background:#F5F9FB;}
+details.route > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.route[open] > summary{border-bottom:1px solid var(--border-light);border-radius:5px 5px 0 0;}
+.route .plus{flex:0 0 18px;width:18px;height:18px;margin-top:1px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.route:not([open]) > summary .plus::after{content:"+";}
+details.route[open] > summary .plus::after{content:"\2212";}
+.route .rtx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.route .rt{font-size:14.5px;font-weight:700;color:var(--text);}
+.route .rd{font-size:13px;color:var(--muted);}
+.route-body{padding:13px 14px 3px;}
+@media print{details.route > summary .plus{display:none;}}
+
+/* work boxes */
+textarea.box{width:100%;min-height:120px;font-family:inherit;font-size:13.5px;line-height:1.5;padding:9px 10px;border:1px solid var(--border);border-radius:5px;resize:vertical;color:var(--text);background:#fff;}
+textarea.box.short{min-height:64px;}
+textarea.box.box-sm{min-height:64px;}
+textarea.box:focus{outline:2px solid var(--blue);outline-offset:1px;}
+.btn{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:5px;cursor:pointer;border:1px solid var(--blue);color:var(--blue);background:#fff;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+.aibox{display:none;margin:9px 0 0;padding:12px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:6px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;}
+.aibox .lbl{display:block;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue-dark);font-weight:700;margin-bottom:4px;}
+.aibox .err{color:#8a3b12;}
+details.refl{margin:9px 0 0;border-top:1px solid var(--border-light);padding-top:8px;}
+details.refl > summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:8px;}
+details.refl > summary::-webkit-details-marker{display:none;}
+details.refl > summary .plus{flex:0 0 17px;width:17px;height:17px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:12px;font-weight:700;line-height:15px;text-align:center;}
+details.refl:not([open]) > summary .plus::after{content:"+";}
+details.refl[open] > summary .plus::after{content:"\2212";}
+details.refl > summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.refl ul{margin:8px 0 0 20px;padding:0;font-size:13px;}
+.refl li{margin:0 0 6px;line-height:1.5;}
+.rbox{border:1px solid var(--border-light);border-radius:6px;background:#FCFDFE;padding:11px 13px;margin:0 0 12px;position:relative;}
+.rbox-refl{margin-top:8px;}
+.rbox > .qt{display:block;font-size:13.5px;font-weight:400;line-height:1.55;margin:0 0 7px;}
+.pnamerow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+.pnamerow input{font-family:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;min-width:220px;color:var(--text);}
+.storenote{font-size:12.5px;color:#8a3b12;margin:6px 0 0;display:none;}
+
+/* summary + copy */
+.copywrap{position:relative;border:1px solid var(--border);border-radius:6px;padding:13px 15px;background:#FCFDFE;margin:0 0 10px;}
+.status{font-size:12.5px;color:var(--muted);margin:7px 0 0;}
+.status.ok{color:#1a7f4b;}
+textarea.sumout{width:100%;min-height:150px;margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.45;padding:9px 10px;border:1px solid var(--border);border-radius:5px;background:#fff;}
+@media print{.aibox,.btn,textarea.sumout{display:none !important;}}
+
+.canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--goal-border);border-left:4px solid var(--goal-border);background:var(--goal-bg);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:13px;}
+.canvasbar[hidden]{display:none;}
+.canvasbar a{color:var(--blue-dark);}
+@media print{.rbox{break-inside:avoid;}.canvasbar{display:none !important;}}
+
+/* Provenance — the house two-layer block (trust line visible, evidence behind the +) */
+.prov2{margin-top:22px;border:1px solid var(--border);border-radius:6px;background:#fff;padding:0;font-size:13px;color:var(--text);}
+.prov2 .prov-head{padding:11px 15px 0;font-size:14px;font-weight:700;}
+.prov2 .prov-lead{padding:5px 15px 13px;margin:0;font-size:13px;line-height:1.55;color:var(--text);}
+details.prov-more{border-top:1px solid var(--border-light);}
+details.prov-more > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 15px;background:#FCFDFE;border-radius:0 0 5px 5px;}
+details.prov-more > summary::-webkit-details-marker{display:none;}
+details.prov-more > summary:hover{background:#F5F9FB;}
+details.prov-more > summary:focus-visible{outline:2px solid rgba(3,116,181,.45);outline-offset:-2px;}
+details.prov-more > summary .plus{flex:0 0 18px;width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:13px;font-weight:700;line-height:16px;text-align:center;}
+details.prov-more[open] > summary .plus::after{content:"\2212";}
+details.prov-more:not([open]) > summary .plus::after{content:"+";}
+details.prov-more > summary .pm-t{font-size:12.5px;font-weight:600;color:var(--blue-dark);}
+details.prov-more[open] > summary{border-bottom:1px solid var(--border-light);border-radius:0;}
+.prov-body{padding:13px 15px 15px;}
+.prov-body h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.prov-body h4:first-child{margin-top:0;}
+.prov-body ul{margin:0;padding-left:18px;}
+.prov-body li{margin:0 0 7px;font-size:12.8px;line-height:1.5;}
+.prov-body li b{font-weight:700;color:var(--text);}
+@media print{details.prov-more{display:none;}}
+
+/* --- Graded-item task list and its second layer (from cst499/project-proposal.html, 2026-09-03) --- */
+.tnote{display:block;margin-top:6px;font-size:13px;color:var(--muted);}
+.copyline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;font-size:13.5px;}
+ol.tasks{margin:0;padding:0;list-style:none;counter-reset:tk;}
+ol.tasks > li.task{margin:0 0 14px;padding:0;}
+.task .ttext{display:flex;gap:10px;font-size:14px;line-height:1.55;margin:0 0 6px;}
+.task .tn{flex:0 0 22px;font-weight:700;color:var(--blue-dark);}
+.task .tt{flex:1;min-width:0;}
+.task ol.parts{margin:4px 0 0;padding-left:26px;list-style:lower-alpha;}
+.task ol.parts li{margin:2px 0;}
+.task details.route{margin:0 0 0 32px;}
+.task .route .rt{font-size:13.5px;font-weight:600;color:var(--blue-dark);}
+.more-body h4{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.more-body p{font-size:13.5px;margin:0 0 12px;line-height:1.55;}
+.more-body .example{background:#FBF6EC;border:1px solid #E0C88A;border-radius:6px;padding:10px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;}
+.more-body .example .exl{display:block;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#5e4a18;margin-bottom:4px;}
+.more-body .example p{margin:0 0 6px;}
+.more-body .example p:last-child{margin:0;}
+.more-body .reflq{margin:0 0 12px;padding:9px 12px 8px;background:var(--goal-bg);border-left:3px solid var(--goal-border);border-radius:0 4px 4px 0;font-size:13.5px;}
+.more-body .reflq h4{color:var(--blue-dark);}
+.more-body .reflq p{margin:0;}
+.crit{margin:0 0 12px;}
+/* "Check it before you submit" — the checklist layer, 2026-09-08. Lines are neutral
+   statements, so the same list works for self-check and for a reviewer. */
+details.route.ck{margin:0 0 12px;}
+ul.cklist{margin:0;padding:0;list-style:none;font-size:13.5px;}
+ul.cklist li{position:relative;margin:0 0 9px;padding-left:29px;line-height:1.5;}
+ul.cklist li:last-child{margin-bottom:0;}
+ul.cklist li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border:1.5px solid var(--blue);border-radius:3px;background:#fff;}
+.crit p{font-size:13.5px;margin:0 0 8px;line-height:1.55;}
+.crit ol{margin:4px 0 0 22px;padding:0;font-size:13.5px;}
+.crit ol li{margin:0 0 4px;line-height:1.5;}
+@media (max-width:620px){.task details.route{margin-left:0;}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+.pnote-body{flex:1;}
+.pnote-body p{margin:0;}
+.pnote-sub{margin:4px 0 0;padding-left:20px;font-size:13px;}
+.pnote-sub li{margin:2px 0;}
+
+/* ================= v2 layout layer — 2026-09-17 =================
+   Adapted from Roman Friedman's Read the Market redesign: a type and spacing
+   scale, a reading measure, and a sticky task rail. Colours are unchanged
+   except --muted and --warn, darkened for contrast now that type is larger. */
+:root{
+--muted:#5C6873; --border-light:#E4E8EA; --warn:#8A5D00;
+--ground:#FBFBFC; --paper:#fff; --radius:8px;
+--fs-xs:.8125rem; --fs-sm:.9375rem; --fs-base:1.0625rem;
+--fs-lg:1.35rem; --fs-xl:1.6rem; --fs-2xl:2rem;
+--lh-body:1.65; --lh-tight:1.25; --measure:68ch;
+--sp-1:.35rem; --sp-2:.7rem; --sp-3:1.1rem; --sp-4:1.7rem; --sp-5:2.6rem;
+--rail-h:54px;
+}
+body{font-size:var(--fs-base);line-height:var(--lh-body);background:var(--ground);}
+.page{max-width:980px;padding:0 clamp(1rem,4vw,2.25rem) 4rem;background:transparent;}
+.crumb{font-size:var(--fs-xs);margin:var(--sp-4) 0 var(--sp-2);}
+.pagehead{border-bottom:0;padding-bottom:0;margin-bottom:var(--sp-4);}
+.pagehead .s{font-size:var(--fs-xs);letter-spacing:.06em;}
+.pagehead h1{font-size:var(--fs-2xl);line-height:var(--lh-tight);font-weight:900;
+letter-spacing:-.015em;max-width:24ch;margin:var(--sp-1) 0 var(--sp-2);}
+.pagehead .dt{font-size:var(--fs-sm);font-weight:600;}
+h2.sec{font-size:var(--fs-lg);font-weight:900;letter-spacing:-.01em;
+margin:var(--sp-5) 0 var(--sp-3);padding-bottom:var(--sp-1);}
+p.body,.crit p,.canvasbar,.pnote{font-size:var(--fs-base);line-height:var(--lh-body);}
+.copyline{font-size:var(--fs-sm);line-height:1.55;max-width:var(--measure);align-items:flex-start;}
+.copyline .btn{flex:0 0 auto;}
+p.body,.crit p{max-width:var(--measure);}
+.canvasbar,.pnote{max-width:var(--measure);}
+
+/* purpose — a lead line and the action goals */
+ul.goals{margin:var(--sp-2) 0 0;padding-left:1.2rem;max-width:var(--measure);}
+ul.goals li{margin:0 0 var(--sp-2);line-height:var(--lh-body);}
+
+/* ---- the sticky task rail ---- */
+.rail{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);
+backdrop-filter:saturate(1.6) blur(6px);border-bottom:1px solid var(--border-light);}
+.rail-in{max-width:980px;margin:0 auto;padding:0 clamp(1rem,4vw,2.25rem);
+display:flex;align-items:center;gap:var(--sp-3);height:var(--rail-h);}
+.rail-label{font-size:var(--fs-xs);font-weight:900;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted);white-space:nowrap;flex:0 0 auto;}
+ol.rail-steps{display:flex;align-items:center;gap:var(--sp-1);list-style:none;
+margin:0;padding:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;}
+ol.rail-steps::-webkit-scrollbar{display:none;}
+.rail-steps a{display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+padding:.3rem .55rem;border-radius:999px;color:var(--muted);font-size:var(--fs-xs);font-weight:700;}
+.rail-steps a b{display:inline-flex;align-items:center;justify-content:center;
+width:1.3rem;height:1.3rem;border-radius:999px;border:1.5px solid var(--border);
+font-size:.75rem;font-weight:800;background:#fff;}
+.rail-steps a:hover{background:#F0F6FA;text-decoration:none;color:var(--blue-dark);}
+.rail-steps a:focus-visible{outline:2px solid var(--blue);outline-offset:1px;}
+.rail-steps a.here{color:var(--blue-dark);background:var(--goal-bg);}
+.rail-steps a.here b{border-color:var(--blue);color:var(--blue-dark);}
+.rail-steps a.done b{background:var(--check);border-color:var(--check);color:#fff;}
+.rail-count{font-size:var(--fs-xs);font-weight:800;color:var(--muted);white-space:nowrap;}
+/* the page title stays beside the numbers at every width; the step words go first */
+@media (max-width:1080px){.rail-steps a span{display:none;}}
+@media (max-width:420px){.rail-label{font-size:.75rem;}}
+@media print{.rail{display:none;}}
+
+/* ---- tasks: the question, then the box, then the optional layer ---- */
+ol.tasks > li.task{margin:0 0 var(--sp-5);scroll-margin-top:calc(var(--rail-h) + 12px);}
+.task .ttext{font-size:1.1875rem;font-weight:600;line-height:1.45;
+gap:.75rem;margin:0 0 var(--sp-3);max-width:var(--measure);}
+.task .tn{flex:0 0 1.6rem;font-weight:900;color:var(--blue);}
+.task > .rbox{margin:0 0 var(--sp-2) 2.35rem;padding:var(--sp-3);border-radius:var(--radius);
+border-color:var(--border);background:var(--paper);}
+.task details.route{margin:0 0 0 2.35rem;border-radius:var(--radius);background:transparent;}
+.task .route .rt{font-size:var(--fs-sm);}
+.rbox > .qt{font-size:var(--fs-sm);line-height:1.5;margin-bottom:var(--sp-2);}
+textarea.box{font-size:var(--fs-base);line-height:1.55;min-height:132px;
+padding:var(--sp-2) var(--sp-3);border-radius:6px;}
+textarea.box.short,textarea.box.box-sm{min-height:72px;}
+textarea.box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(3,116,181,.15);}
+.btn{font-size:var(--fs-sm);padding:.5rem .9rem;border-radius:6px;}
+.aibox{font-size:var(--fs-sm);border-radius:var(--radius);}
+
+/* the criteria list, now always visible under each box */
+.selfcheck{margin:var(--sp-3) 0 0;padding-top:var(--sp-2);border-top:1px solid var(--border-light);}
+.selfcheck h4{font-size:var(--fs-xs);font-weight:800;letter-spacing:.05em;
+text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-1);}
+.selfcheck ul{margin:0;padding-left:1.1rem;font-size:var(--fs-sm);color:var(--muted);}
+.selfcheck li{margin:0 0 .25rem;line-height:1.5;}
+
+.more-body .example,.more-body .reflq{font-size:var(--fs-sm);border-radius:var(--radius);}
+.more-body p{font-size:var(--fs-sm);max-width:var(--measure);}
+ul.cklist{font-size:var(--fs-base);}
+ul.cklist li{padding-left:2rem;margin-bottom:var(--sp-2);}
+.copywrap,.rbox{border-radius:var(--radius);}
+.prov2,.instructor{border-radius:var(--radius);}
+
+/* ---- check-it-yourself lines: real checkboxes, saved with the answer (2026-09-18) ---- */
+.selfcheck ul.cks{list-style:none;padding-left:0;margin:0;}
+.selfcheck ul.cks li{display:flex;gap:.55rem;align-items:flex-start;margin:0 0 .4rem;}
+.selfcheck ul.cks input[type="checkbox"]{flex:0 0 auto;width:1rem;height:1rem;margin:.28rem 0 0;
+accent-color:var(--check);cursor:pointer;}
+.selfcheck ul.cks input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.selfcheck ul.cks label{cursor:pointer;line-height:1.5;}
+@media print{.selfcheck ul.cks input[type="checkbox"]{-webkit-appearance:checkbox;}}
+
+/* Sprint 2 Exam, paired half - the few controls this page adds to the v2 shell. */
+.pnamerow label{color:var(--text);font-weight:700;}
+.pnamerow input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;width:100%;max-width:320px;color:var(--text);margin-top:5px;}
+.pnamerow input:focus-visible,.fuq input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.qshow{border-left:3px solid var(--goal-border);background:var(--goal-bg);padding:9px 12px;margin:0 0 10px;font-size:13.5px;line-height:1.55;border-radius:0 5px 5px 0;}
+.qshow .qlab{display:block;font-weight:700;margin-bottom:3px;}
+.abox{margin:0 0 16px;}
+.abox:last-child{margin-bottom:0;}
+.abox > .qt b{font-weight:700;}
+.wcheck{display:flex;gap:9px;align-items:flex-start;margin:10px 0 0;padding-top:10px;border-top:1px solid var(--border-light);font-size:13.5px;}
+.wcheck input[type="checkbox"]{flex:0 0 16px;width:16px;height:16px;margin:3px 0 0;accent-color:var(--check);cursor:pointer;}
+.wcheck input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.wcheck label{flex:1;min-width:0;cursor:pointer;line-height:1.5;}
+.wline{margin:5px 0 0 25px;font-size:13px;line-height:1.5;color:var(--muted);}
+ul.wpair{margin:0 0 12px;padding-left:20px;font-size:13.5px;}
+ul.wpair li{margin:0 0 5px;line-height:1.55;}
+.fuq{margin:0 0 12px;}
+.fuq .fulab{display:block;font-size:13.5px;font-weight:700;margin:0 0 5px;}
+.fuq input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--border);border-radius:5px;width:100%;color:var(--text);}
+.fuq textarea{margin-top:6px;}
+.airow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 6px;}
+.aiwait{flex:1;min-width:0;font-size:13px;line-height:1.45;color:var(--muted);}
+.aiwait:empty{display:none;}
+/* Read it aloud - dictation into the four transcription boxes (2026-09-24) */
+.dictrow{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 8px;font-size:var(--fs-xs);color:var(--muted);}
+.dictrow .btn{display:inline-flex;align-items:center;gap:.4rem;font-size:var(--fs-xs);padding:.35rem .7rem;}
+.dictrow .btn svg{width:14px;height:14px;flex:0 0 auto;}
+.dictrow .btn.on{background:#FDECEC;border-color:#B42318;color:#B42318;}
+.dictrow .btn.on svg{animation:dictpulse 1.2s ease-in-out infinite;}
+@keyframes dictpulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.dictrow .gt{cursor:help;font-weight:700;color:var(--blue);border-bottom:1px dashed var(--blue);}
+.dictrow .bub{width:360px;}
+.dict-status{flex:1;min-width:0;line-height:1.45;}
+.dict-status.warn{color:#8a3b12;}
+@media print{.dictrow{display:none !important;}}
+@media (prefers-reduced-motion:reduce){.dictrow .btn.on svg{animation:none;}}
+ol.steps{margin:0 0 12px;padding-left:22px;}
+ol.steps li{font-size:13.5px;line-height:1.6;margin:0 0 6px;}
+.aibox ol{margin:8px 0 0;padding-left:22px;}
+.aibox li{font-size:13.5px;line-height:1.55;margin:0 0 5px;}
+/* Self-check, on the five-real-world-scenarios.html pattern */
+ul.selfcheck{list-style:none;margin:0 0 4px;padding:0;border-top:0;font-size:14px;}
+ul.selfcheck li{display:flex;gap:9px;align-items:flex-start;margin:0 0 9px;line-height:1.5;max-width:74ch;color:var(--text);}
+ul.selfcheck input{flex:0 0 16px;width:16px;height:16px;margin:3px 0 0;accent-color:var(--blue);cursor:pointer;}
+ul.selfcheck input:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;}
+ul.selfcheck label{flex:1;min-width:0;cursor:pointer;}
+ul.selfcheck .pts{flex:0 0 auto;white-space:nowrap;font-weight:700;color:var(--blue-dark);padding-left:6px;}
+.sc-total{font-weight:700;margin:6px 0 14px;font-size:13.5px;}
+@media print{ul.selfcheck input{-webkit-appearance:checkbox;}}
+</style>
+<style id="a11y-pass-1">
+/* Accessibility pass 2026-10-06. Keep this block last in <head>. */
+p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
+.gl.a11y-esc > .bub { display: none !important; }
+.a11y-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.starter { margin: 4px 0 6px; font-size: 13px; line-height: 1.45; font-style: italic; color: var(--muted, #5C6873); }
+.copybtn { min-height: 24px; }
+code { overflow-wrap: anywhere; }
+@media print {
+  .bub { display: block !important; position: static !important; width: auto !important; max-width: none !important; margin: 4px 0 6px 12px !important; padding: 2px 0 2px 10px !important; border: 0 !important; border-left: 2px solid #999 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page" role="main">
+<div class="canvasbar" id="canvas-bar" hidden>
+<span>This activity is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/sprint-2-exam-paired.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a> and come back to Canvas to submit what you copied. Open it before you start writing, so everything you type is saved in one place.</span>
+</div>
+<div class="crumb"><a href="home.html">CST286</a> &middot; Sprint 2 Exam &middot; the paired half</div>
+<div class="pagehead">
+<div class="s">CST286 &middot; Fall 2026 &middot; Sprint 2</div>
+<h1>Sprint 2 Exam - the paired half</h1>
+<div class="dt">Week 10 &middot; Wednesday 28 October, in class &middot; 100 points &middot; Sprint 2 Exam</div>
+</div>
+
+<h2 class="sec">Purpose</h2>
+<p class="body">Learn how to ask questions to understand another person's work and help them deepen their understanding, and write down what you learned.</p>
+
+<h2 class="sec">Tasks</h2>
+<p class="body">You have your partner's paper. Complete the tasks below in order. When you finish, press <b>Copy my answers</b> and paste the text into the Canvas box.</p>
+
+<ol class="tasks">
+
+<li class="task" id="task-1">
+<div class="ttext"><span class="tn">1.</span><span class="tt">Select your partner's name.</span></div>
+<div class="rbox">
+<div class="pnamerow"><label for="f-partner">Your partner's name</label><input type="text" id="f-partner" data-field="partner" list="roster" autocomplete="off"></div>
+<datalist id="roster">
+<option value="Adam S."></option>
+<option value="Alex T."></option>
+<option value="Annuar G."></option>
+<option value="Anthony M."></option>
+<option value="Arianna L."></option>
+<option value="Barcelona B."></option>
+<option value="Cherish Dela V."></option>
+<option value="Corey Amador L."></option>
+<option value="Deric M."></option>
+<option value="Douglas O."></option>
+<option value="Dylan B."></option>
+<option value="Edward J."></option>
+<option value="Elayne T."></option>
+<option value="Elijah H."></option>
+<option value="Emilio G."></option>
+<option value="Gabriel G."></option>
+<option value="Geothshana Jaishankararam V."></option>
+<option value="Giselle P."></option>
+<option value="Hayden Y."></option>
+<option value="Isabella M."></option>
+<option value="Ivory A."></option>
+<option value="Jackson R."></option>
+<option value="Jackson W."></option>
+<option value="Jacob S."></option>
+<option value="Jade R."></option>
+<option value="Jasmine Hernandez R."></option>
+<option value="Jayden B."></option>
+<option value="Jesse R."></option>
+<option value="Jessica M."></option>
+<option value="Jorge R."></option>
+<option value="Juan S."></option>
+<option value="Kenneth D."></option>
+<option value="Lani S."></option>
+<option value="Leslie Moreno F."></option>
+<option value="Liam M."></option>
+<option value="Luis Valencia C."></option>
+<option value="Mario S."></option>
+<option value="Michael O."></option>
+<option value="Michael S."></option>
+<option value="Nayan C."></option>
+<option value="Noah L."></option>
+<option value="Philip R."></option>
+<option value="Raunel T."></option>
+<option value="Ray M."></option>
+<option value="Rosio Martinez L."></option>
+<option value="Samuel B."></option>
+<option value="Shane B."></option>
+<option value="Tong X."></option>
+<option value="Uriel L."></option>
+</datalist>
+</div>
+</li>
+
+<li class="task" id="task-2">
+<div class="ttext"><span class="tn">2.</span><span class="tt">Type your partner's four handwritten answers into the four boxes below, exactly as they wrote them. If you cannot read something, ask them. When all four are typed, read them back to your partner and have them tick <b>Checked by the writer</b> under the fourth box.</span></div>
+<p class="body">Each box shows the question from the paper above it.</p>
+<div class="rbox">
+<div class="abox">
+<label class="qt" for="f-a1a"><b>1a. Explain the quantitative relationship you learned, and how it is helpful to know it.</b></label>
+<div class="dictrow" data-dictate="f-a1a"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-1">?</button><span class="bub" role="tooltip" id="gl-bub-1"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a1a" data-field="a1a"></textarea>
+</div>
+<div class="abox">
+<label class="qt" for="f-a1b"><b>1b. Apply it to one scenario to make a prediction, and explain each step.</b></label>
+<div class="dictrow" data-dictate="f-a1b"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-2">?</button><span class="bub" role="tooltip" id="gl-bub-2"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a1b" data-field="a1b"></textarea>
+</div>
+<div class="abox">
+<label class="qt" for="f-a1c"><b>1c. Present two scenarios that look similar but where the relationship does not apply, and explain why in each case.</b></label>
+<div class="dictrow" data-dictate="f-a1c"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-3">?</button><span class="bub" role="tooltip" id="gl-bub-3"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a1c" data-field="a1c"></textarea>
+</div>
+<div class="abox">
+<label class="qt" for="f-a2"><b>2. What did you learn about your own learning practice, and how will you put it into practice in another course?</b></label>
+<div class="dictrow" data-dictate="f-a2"><button type="button" class="btn dict-btn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v4"></path><path d="M8 21h8"></path></svg><span class="dict-label">Read it aloud</span></button><span class="gl"><button type="button" class="gt" aria-label="About Read it aloud" aria-describedby="gl-bub-4">?</button><span class="bub" role="tooltip" id="gl-bub-4"><span class="bt">Read it aloud</span><span class="br">Press it, read the paper aloud, and the words land in the box. Press <i>Pause</i> to ask your partner about a word, <i>Continue</i> to keep reading. Edit the text in the box afterwards.</span><span class="br"><i>Browsers</i> Works in Chrome, Edge and Safari. It does not work in Firefox - type instead.</span><span class="br"><i>Privacy</i> Your browser sends the audio to its own speech service (Google, Microsoft or Apple, depending on the browser) to turn it into text. This page keeps only the text in the box.</span><span class="br"><i>Inside Canvas</i> the microphone is blocked. Open the full page in its own tab first - the link is at the top of the page.</span><span class="br"><i>Check it</i> against the paper before you move on. Names, numbers and symbols come out wrong most often.</span></span></span><span class="dict-status" role="status" aria-live="polite"></span></div>
+<textarea class="box" id="f-a2" data-field="a2"></textarea>
+</div>
+<div class="wcheck"><input type="checkbox" id="writer-tick" data-check="writer"><label for="writer-tick"><b>Checked by the writer</b></label></div>
+<p class="wline" id="writer-line">My partner has read all four boxes against their paper and confirms they say what they wrote.</p>
+</div>
+</li>
+
+<li class="task" id="task-3">
+<div class="ttext"><span class="tn">3.</span><span class="tt">Ask your partner at least two follow-up questions about what they wrote. Write down each question you asked and what your partner said.</span></div>
+<p class="body">A follow-up question that teaches you something points at one specific thing in their answer - a number, a step in the working, the condition they named, a scenario they chose, a word they used. A general question could be asked of any paper in the room, so the answer tells you nothing about this paper.</p>
+<ul class="wpair">
+<li><b>General:</b> "Was your topic hard to learn?"</li>
+<li><b>Specific:</b> "In 1b you divided by the mass at the third step. What would your prediction have been if the mass were twice as large?"</li>
+</ul>
+<p class="body">Come up with your questions in either of these two ways, or both.</p>
+
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Write your own questions</span></span></summary>
+<div class="route-body">
+<ol class="steps">
+<li>Read your partner's four answers again.</li>
+<li>Write down every question that comes to you. Do not stop to judge or answer them. If you write a statement, change it into a question. Truly care about the questions.</li>
+<li>For each question you wrote, find the exact words or phrases in their answer that it points at. Cross out any question you cannot point at.</li>
+<li>Pick the two questions you are most curious about. Ask those two.</li>
+</ol>
+<div class="rbox">
+<label class="qt" for="f-own"><b>The questions I wrote down</b></label>
+<textarea class="box" id="f-own" data-field="own"></textarea>
+</div>
+</div>
+</details>
+
+<details class="route">
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Use the AI Question Suggestions button</span></span></summary>
+<div class="route-body">
+<p class="body">Press the button. It reads the four answers you typed and suggests five questions, each one naming the part of the answer it comes from. Pick two and adapt to ask your partner - again your curiosity is your guide. Change the wording to make it your own.</p>
+<div class="airow">
+<button type="button" class="btn" id="ai-btn" aria-describedby="ai-wait" disabled>AI Question Suggestions</button>
+<span class="aiwait" id="ai-wait" role="status" aria-live="polite">Type all four answers and have your partner tick <b>Checked by the writer</b>, then the suggestions open.</span>
+</div>
+<div class="aibox" id="ai-box" role="status" aria-live="polite"></div>
+</div>
+</details>
+
+<div class="rbox">
+<div class="fuq"><label class="fulab" for="f-q1">Follow-up question 1</label><input type="text" id="f-q1" data-field="q1" autocomplete="off"><label class="qt" for="f-r1" style="margin-top:7px;">What I learned from my partner's response</label><textarea class="box box-sm" id="f-r1" data-field="r1"></textarea></div>
+<div class="fuq"><label class="fulab" for="f-q2">Follow-up question 2</label><input type="text" id="f-q2" data-field="q2" autocomplete="off"><label class="qt" for="f-r2" style="margin-top:7px;">What I learned from my partner's response</label><textarea class="box box-sm" id="f-r2" data-field="r2"></textarea></div>
+<div class="fuq"><label class="fulab" for="f-q3">Follow-up question 3 (if you asked one)</label><input type="text" id="f-q3" data-field="q3" autocomplete="off"><label class="qt" for="f-r3" style="margin-top:7px;">What I learned from my partner's response</label><textarea class="box box-sm" id="f-r3" data-field="r3"></textarea></div>
+</div>
+</li>
+
+<li class="task" id="task-4">
+<div class="ttext"><span class="tn">4.</span><span class="tt">Write a summary of what you understand about their work. Include what they could explain when you asked and what they were less sure about. Identify at least one thing you learned from talking to them that was not on the written response.</span></div>
+<div class="rbox">
+<label class="qt" for="f-sum"><b>Your summary</b></label>
+<textarea class="box" id="f-sum" data-field="summary"></textarea>
+</div>
+</li>
+
+</ol>
+
+<h2 class="sec">Self-check</h2>
+<p class="body">Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.</p>
+<ul class="selfcheck">
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">My partner's name is selected</label><span class="pts">5 pts</span></li>
+<li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">All four answers are typed as my partner wrote them, not summarised</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">My partner has ticked <b>Checked by the writer</b> under the four answers</label><span class="pts">5 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">I asked at least two follow-up questions, and each one is written down</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-5" data-check="sc-5"><label for="sc-5">Each follow-up question points at a specific part of one of the four answers, and my question says which part</label><span class="pts">20 pts</span></li>
+<li><input type="checkbox" id="sc-6" data-check="sc-6"><label for="sc-6">No follow-up question is a generic one I could ask anyone</label><span class="pts">5 pts</span></li>
+<li><input type="checkbox" id="sc-7" data-check="sc-7"><label for="sc-7">What I learned from my partner's response is written down for each question</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-8" data-check="sc-8"><label for="sc-8">The summary says what my partner could explain and what they were less sure about</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-9" data-check="sc-9"><label for="sc-9">The summary names at least one thing I learned that was not on the paper</label><span class="pts">5 pts</span></li>
+</ul>
+<p class="sc-total" id="sc-total" role="status" aria-live="polite">0 of 100 points ticked</p>
+<p class="body"><b>What makes it strong.</b> Your two questions explore the part of the paper that is interesting or relevant - the step in 1b where the number comes out, or the condition in 1c that the look-alike scenario breaks - and your summary is traceable to what your partner said when you asked, rather than repeating the paper back.</p>
+<p class="body"><b>Grading.</b> 100 points, the paired half of the Sprint 2 Exam. You will be asked to explain this to a peer, the TA and/or the instructor, so make sure you are comfortable with what you have written here.</p>
+
+<h2 class="sec">Submit</h2>
+<p class="body">Canvas text entry. Press <b>Copy my answers</b> and paste the text into the Canvas box. <b>Submit the text itself; a link is not a submission.</b> If the copy button does not work in your browser, the same text is in the box below it - select it and copy it by hand.</p>
+<div class="copywrap">
+<button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
+<div class="status" id="copy-status" role="status" aria-live="polite"></div>
+<label class="qt" for="summary-out" style="margin-top:10px;font-size:12.5px;display:block;">The text that gets copied</label>
+<textarea class="sumout" id="summary-out" readonly></textarea>
+</div>
+<p class="storenote" id="store-note">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+
+<div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span><a href="assignments.html">Assignment registry &rarr;</a></span></div>
+<div class="instructor">
+<div class="nm">Prof. Sathya Narayanan</div>
+<div class="links"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; @profsathya on Slack</div>
+</div>
+
+<div class="provenance prov2">
+<div class="prov-head">How this page was made</div>
+<p class="prov-lead">The exam shape - the four questions on every paper, papers swapped and typed, the writer checking what was typed, at least two follow-up questions asked out of curiosity, and a written summary - was set by Prof. Sathya on 24 October 2026, and the two ways of coming up with your questions are his. The questions on this page are the exam paper's questions, unchanged. The checklist, the worked question pair and the AI Question Suggestions instructions were drafted by AI; he reads them and edits by hand where they miss.</p>
+</div>
+
+<!-- Anonymous course feedback - same form on every student-facing page, all three courses. -->
+<div class="feedback-note">Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> - it is the fastest way to get it fixed.</div>
+
+</div>
+
+<footer class="page-footer">
+<img src="https://computingtalentinitiative.org/wp-content/uploads/2026/06/New._CTI_Logo_RGB-1.png" alt="" onerror="this.style.display='none'">
+<span>Computing Talent Initiative &middot; CSU Monterey Bay - CST286 Physics of Computing (with AI) &middot; Sprint 2 Exam, the paired half &middot; Draft 2 of 2026-10-24</span>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+    // Sprint 2 Exam, paired half - behaviour only. Every word a student reads lives in the
+    // markup above or in the CFG strings below (the AI lines and the copy status lines).
+    var CFG = {"page": "cst286-sprint-2-exam-paired", "course": "CST286", "aicontext": "CST286 Physics of Computing (with AI), the Sprint 2 Exam. Every paper carries the same four questions, printed below with what this author wrote for each one by hand.", "questions": [["a1a", "1a. Explain the quantitative relationship you learned, and how it is helpful to know it."], ["a1b", "1b. Apply it to one scenario to make a prediction, and explain each step."], ["a1c", "1c. Present two scenarios that look similar but where the relationship does not apply, and explain why in each case."], ["a2", "2. What did you learn about your own learning practice, and how will you put it into practice in another course?"]], "system": "You are helping a student who has just typed out, word for word, the four handwritten answers a classmate wrote in an exam. The student is about to interview that classmate about them, face to face, in class. Read the four typed answers and give exactly five follow-up questions the student could ask. Each question must quote the words in the answer it comes from and ask about that, naming which of the four answers it comes from, and must be answerable out loud in a minute or two. Reply with the five questions and nothing else, one per line, no numbering, no preamble. Do not ask about the topic in general. Do not ask how hard the work was, how long it took, or how the classmate felt about it. Do not ask about anything that is not in the four answers. Do not judge the classmate, their work, their ability or their prospects. Do not say whether an answer is right, good, complete or convincing. Do not supply physics, evidence, sources or answers of your own. An answer that reports uncertainty, a check that came back against the author, or a step that did not work is a normal answer, never a fault to question.", "errline": "AI Question Suggestions is not available right now. Use \"Write your own questions\" above.", "aiwait": "Type all four answers and have your partner tick Checked by the writer, then the suggestions open.", "copyok": "Copied \u2713 - paste it into the Canvas box. The same text is below if you need it again.", "copyfail": "Copy did not work in this browser. Select the text below and copy it by hand.", "dictOn": "Listening - read the paper aloud. Press Pause to ask your partner about a word.", "dictPaused": "Paused - fix anything in the box, then press Continue.", "dictNo": "Not available in this browser - use Chrome, Edge or Safari, or type.", "dictBlocked": "The microphone is blocked. Allow it in the address bar, or open the full page in its own tab, or type.", "dictErr": "Listening stopped. Press Continue to try again, or type."};
+    var KEY = 'cc-exam:' + CFG.page;
+    var AI_ENDPOINT = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy';
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    // Embedded in Canvas the page runs in a fixed frame, so offer the way out to the full page.
+    (function () {
+        var bar = document.getElementById('canvas-bar');
+        if (!bar) { return; }
+        var framed = true;
+        try { framed = window.top !== window.self; } catch (e) { framed = true; }
+        if (framed || /(^|[?&])context=canvas(&|$)/.test(location.search)) { bar.hidden = false; }
+    }());
+
+    // ---------- storage ----------
+    var storageOK = true;
+    var state = { fields: {}, checks: {}, ai: [], copiedAt: null };
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { state = parsed; } }
+    } catch (e) { storageOK = false; }
+    if (!state.fields) { state.fields = {}; }
+    if (!state.checks) { state.checks = {}; }
+    if (!state.ai) { state.ai = []; }
+
+    var saveTimer = null;
+    function save() {
+        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
+        catch (e) {
+            storageOK = false;
+            var n = document.getElementById('store-note');
+            if (n) { n.style.display = 'block'; }
+        }
+    }
+    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function val(k) { return (state.fields[k] || '').trim(); }
+
+    // ---------- the fields ----------
+    $all('[data-field]').forEach(function (el) {
+        var k = el.getAttribute('data-field');
+        el.value = state.fields[k] || '';
+        el.addEventListener('input', function () { state.fields[k] = el.value; refreshAiBtn(); saveSoon(); });
+        el.addEventListener('change', function () { state.fields[k] = el.value; refreshAiBtn(); save(); });
+        el.addEventListener('blur', save);
+    });
+
+    // ---------- the ticks: Checked by the writer, and the Self-check lines ----------
+    function scTotal() {
+        var t = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li);
+            if (cb && cb.checked) { t += parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10); }
+        });
+        var el = $('#sc-total');
+        if (el) { el.textContent = t + ' of 100 points ticked'; }
+    }
+    $all('input[data-check]').forEach(function (cb) {
+        var id = cb.getAttribute('data-check');
+        cb.checked = !!state.checks[id];
+        cb.addEventListener('change', function () {
+            state.checks[id] = cb.checked;
+            save();
+            scTotal();
+            refreshAiBtn();
+        });
+    });
+    scTotal();
+
+    // ---------- the AI Question Suggestions button ----------
+    // One call per press. The button is off until all four answers are typed and the writer
+    // has ticked, and off again until one of the answers changes, so a student cannot spend
+    // a second call on the same text.
+    function answers() { return CFG.questions.map(function (q) { return val(q[0]); }); }
+    function aiInput() { return answers().join('\u0000'); }
+    function gateOpen() {
+        return answers().every(function (a) { return a.length > 0; }) && !!state.checks.writer;
+    }
+    var aiBtn = $('#ai-btn'), aiBox = $('#ai-box'), aiWait = $('#ai-wait');
+    function refreshAiBtn() {
+        if (!aiBtn) { return; }
+        var open = gateOpen();
+        var last = state.ai.length ? state.ai[state.ai.length - 1].onInput : null;
+        aiBtn.disabled = !open || aiInput() === last;
+        if (aiWait) {
+            var line = open ? '' : CFG.aiwait;
+            if (aiWait.textContent !== line) { aiWait.textContent = line; }
+        }
+    }
+    function showQuestions(list, n) {
+        aiBox.style.display = 'block';
+        aiBox.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = n > 1 ? ('Five questions · round ' + n) : 'Five questions';
+        aiBox.appendChild(lbl);
+        var ol = document.createElement('ol');
+        list.forEach(function (q) { var li = document.createElement('li'); li.textContent = q; ol.appendChild(li); });
+        aiBox.appendChild(ol);
+    }
+    function aiError() {
+        aiBox.style.display = 'block';
+        aiBox.innerHTML = '';
+        var lbl = document.createElement('span');
+        lbl.className = 'lbl';
+        lbl.textContent = 'Five questions';
+        var err = document.createElement('span');
+        err.className = 'err';
+        err.textContent = CFG.errline;
+        aiBox.appendChild(lbl);
+        aiBox.appendChild(err);
+    }
+    function parseQuestions(reply) {
+        var out = [];
+        String(reply).split('\n').forEach(function (line) {
+            var s = line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, '').trim();
+            if (s.length > 8 && s.indexOf('?') > -1) { out.push(s); }
+        });
+        return out.slice(0, 5);
+    }
+    if (aiBtn) {
+        aiBtn.addEventListener('click', function () {
+            var input = aiInput();
+            var label = aiBtn.textContent;
+            aiBtn.disabled = true;
+            aiBtn.textContent = 'Reading what you typed...';
+            aiBox.style.display = 'block';
+            aiBox.textContent = 'Reading what you typed...';
+            var content = 'COURSE AND EXAM: ' + CFG.aicontext + '\n';
+            CFG.questions.forEach(function (q) {
+                content += '\nQUESTION ' + q[1] + '\nWHAT THE AUTHOR WROTE FOR IT:\n[[[' + val(q[0]) + ']]]\n';
+            });
+            fetch(AI_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ system: CFG.system, messages: [{ role: 'user', content: content }], max_tokens: 350 })
+            }).then(function (r) {
+                if (!r.ok) { throw new Error('status ' + r.status); }
+                return r.json();
+            }).then(function (data) {
+                var list = parseQuestions((data.content || data.text || '').trim());
+                if (!list.length) { throw new Error('empty'); }
+                state.ai.push({ at: new Date().toISOString(), onInput: input, questions: list });
+                save();
+                showQuestions(list, state.ai.length);
+            }).catch(function () {
+                aiError();
+            }).then(function () {
+                aiBtn.textContent = label;
+                refreshAiBtn();
+            });
+        });
+    }
+    if (state.ai.length) { showQuestions(state.ai[state.ai.length - 1].questions, state.ai.length); }
+
+    // ---------- Read it aloud ----------
+    // Dictation into the four transcription boxes. Final phrases are appended to the box;
+    // the box stays an ordinary textarea, so the student edits by hand afterwards.
+    // Pause stops the recogniser and keeps the text; Continue starts a fresh one.
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+    $all('.dictrow[data-dictate]').forEach(function (row) {
+        var ta = document.getElementById(row.getAttribute('data-dictate'));
+        var btn = row.querySelector('.dict-btn'), lbl = row.querySelector('.dict-label'), st = row.querySelector('.dict-status');
+        if (!ta || !btn) { return; }
+        if (!SR) { btn.disabled = true; st.textContent = CFG.dictNo; return; }
+        var rec = null, listening = false, started = false;
+        function status(text, warn) { st.textContent = text; st.className = 'dict-status' + (warn ? ' warn' : ''); }
+        function append(text) {
+            var t = String(text).replace(/\s+/g, ' ').trim();
+            if (!t) { return; }
+            var cur = ta.value;
+            var sep = cur.length && !/\s$/.test(cur) ? ' ' : '';
+            ta.value = cur + sep + t;
+            ta.scrollTop = ta.scrollHeight;
+            ta.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        function show() {
+            btn.classList.toggle('on', listening);
+            btn.setAttribute('aria-pressed', listening ? 'true' : 'false');
+            lbl.textContent = listening ? 'Pause' : (started ? 'Continue' : 'Read it aloud');
+        }
+        function stop(msg, warn) {
+            listening = false;
+            if (rec) { try { rec.stop(); } catch (e) {} }
+            show();
+            status(msg, warn);
+        }
+        function start() {
+            rec = new SR();
+            rec.lang = 'en-US';
+            rec.continuous = true;
+            rec.interimResults = true;
+            rec.onresult = function (e) {
+                var finals = '', interim = '';
+                for (var i = e.resultIndex; i < e.results.length; i++) {
+                    var r = e.results[i];
+                    if (r.isFinal) { finals += r[0].transcript + ' '; } else { interim += r[0].transcript; }
+                }
+                if (finals) { append(finals); }
+                if (listening) { status(interim ? '… ' + interim : CFG.dictOn); }
+            };
+            rec.onerror = function (e) {
+                var k = e && e.error;
+                if (k === 'no-speech' || k === 'aborted') { return; }
+                if (k === 'not-allowed' || k === 'service-not-allowed') { stop(CFG.dictBlocked, true); return; }
+                stop(CFG.dictErr, true);
+            };
+            rec.onend = function () {
+                // Browsers end a session after a silence or a network hiccup; keep going until Pause.
+                if (listening) { try { rec.start(); } catch (e) { stop(CFG.dictErr, true); } }
+            };
+            listening = true; started = true;
+            show();
+            status(CFG.dictOn);
+            try { rec.start(); } catch (e) { stop(CFG.dictErr, true); }
+        }
+        btn.addEventListener('click', function () {
+            if (listening) { stop(CFG.dictPaused); } else { start(); }
+        });
+    });
+
+    // ---------- the text that gets copied ----------
+    function clean(s) { return String(s).replace(/\s+/g, ' ').trim(); }
+    function block(title, body) { return title + '\n' + (body ? body : '(not answered)') + '\n\n'; }
+    function buildPayload() {
+        var md = CFG.course + ' - Sprint 2 Exam, the paired half\n\n';
+        md += 'Partner who wrote the paper: ' + (val('partner') || '(no name)') + '\n\n';
+        CFG.questions.forEach(function (q) {
+            md += block('QUESTION ' + q[1] + '\nTheir answer, as they wrote it:', val(q[0]));
+        });
+        md += (state.checks.writer ? '[x] ' : '[ ] ') + 'Checked by the writer\n\n';
+        if (val('own')) { md += 'THE QUESTIONS I WROTE DOWN\n' + val('own') + '\n\n'; }
+        md += 'FOLLOW-UP QUESTIONS AND WHAT I LEARNED\n';
+        var any = false;
+        [['q1', 'r1'], ['q2', 'r2'], ['q3', 'r3']].forEach(function (pair, i) {
+            var q = val(pair[0]), r = val(pair[1]);
+            if (!q && !r) { return; }
+            any = true;
+            md += (i + 1) + '. ' + (q || '(question not written down)') + '\n';
+            md += '   What I learned: ' + (r || '(not written down)') + '\n';
+        });
+        if (!any) { md += '(none written down)\n'; }
+        md += '\n';
+        md += block('MY SUMMARY', val('summary'));
+        md += 'SELF-CHECK (ticked by me; the grader verifies each line)\n';
+        var total = 0;
+        $all('ul.selfcheck li').forEach(function (li) {
+            var cb = $('input[data-check]', li), on = cb && cb.checked;
+            var pts = parseInt(($('.pts', li).textContent.match(/\d+/) || ['0'])[0], 10);
+            if (on) { total += pts; }
+            md += (on ? '[x] ' : '[ ] ') + clean($('label', li).textContent) + ' · ' + pts + ' pts\n';
+        });
+        md += 'Self-check total: ' + total + ' of 100\n';
+        var html = '<pre style="white-space:pre-wrap;font-family:inherit">' +
+            md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+        return { text: md.replace(/\n+$/, '\n'), html: html };
+    }
+
+    function writeClipboard(payload) {
+        var nc = navigator.clipboard;
+        if (!nc) { return Promise.reject(new Error('no clipboard')); }
+        if (nc.write && window.ClipboardItem) {
+            var p;
+            try {
+                var item = new ClipboardItem({
+                    'text/html': new Blob([payload.html], { type: 'text/html' }),
+                    'text/plain': new Blob([payload.text], { type: 'text/plain' })
+                });
+                p = nc.write([item]);
+            } catch (e) { p = Promise.reject(e); }
+            return p.catch(function () { return nc.writeText(payload.text); });
+        }
+        if (nc.writeText) { return nc.writeText(payload.text); }
+        return Promise.reject(new Error('no clipboard'));
+    }
+
+    var copyBtn = $('#copy-btn'), copyStatus = $('#copy-status'), summaryOut = $('#summary-out');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            var payload = buildPayload();
+            summaryOut.value = payload.text;
+            state.copiedAt = new Date().toISOString();
+            save();
+            writeClipboard(payload).then(function () {
+                copyStatus.className = 'status ok';
+                copyStatus.textContent = CFG.copyok;
+            }, function () {
+                copyStatus.className = 'status';
+                copyStatus.textContent = CFG.copyfail;
+                summaryOut.focus();
+                summaryOut.select();
+            });
+        });
+    }
+
+    refreshAiBtn();
+    if (!storageOK) {
+        var sn = document.getElementById('store-note');
+        if (sn) { sn.style.display = 'block'; }
+    }
+}());
+</script>
+<script id="a11y-pass-1-js">
+(function () {
+  // Escape closes an open glossary bubble (hover or focus); it comes back on the next hover or focus.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.gl:hover, .gl:focus-within').forEach(function (g) {
+      g.classList.add('a11y-esc');
+      function clear() { g.classList.remove('a11y-esc'); g.removeEventListener('mouseleave', clear); g.removeEventListener('focusout', clear); }
+      g.addEventListener('mouseleave', clear); g.addEventListener('focusout', clear);
+    });
+  });
+})();
+</script>
+</body>
+</html>
