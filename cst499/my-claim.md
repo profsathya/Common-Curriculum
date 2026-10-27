@@ -140,7 +140,7 @@ Read the two reports below, then look at your claim and identify:
 **An example, to shape your thinking — not a model to copy**
 
 - **Depth** — web development: the search, and pulling and reading each office's page so the hours are always the ones the office posted.
-- **Breadth** — how campus offices actually publish and update their hours, which I am learning from the staff who do it; it decides which pages I pull and how often.
+- **Breadth** — <<To ALan: Understanding user requirements, how customer service is evaluated root cause analysis, do these have a role here. Should we include communication - I am not sure just thinking through>> how campus offices actually publish and update their hours, which I am learning from the staff who do it; it decides which pages I pull and how often.
 
 **More examples** (page note: a click-to-open inside the +, closed by default)
 
