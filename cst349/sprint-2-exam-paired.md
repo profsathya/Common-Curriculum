@@ -72,7 +72,7 @@ Press the button. It reads the four answers you typed and suggests five question
 
 ### Task 4
 
-Write a summary of what you understand about step they took. Include what you understood about their goal and how the first step will help them in reaching it. Identify at least one thing you learned from talking to them that was not on the written response.
+Write a summary of what you understand about the step they took. Include what you understood about their goal and how the first step will help them in reaching it. Identify at least one thing you learned from talking to them that was not on the written response.
 
 *Box label:* **Your summary**
 
@@ -87,7 +87,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Each follow-up question points at a specific part of one of the four answers, and my question says which part · 20 pts
 - [ ] No follow-up question is a generic one I could ask anyone · 5 pts
 - [ ] What I learned from my partner's response is written down for each question · 15 pts
-- [ ] The summary says what my partner could explain and what they were less sure about · 15 pts
+- [ ] The summary says what I understood about my partner's goal and how their first step will help them reach it · 15 pts
 - [ ] The summary names at least one thing I learned that was not on the paper · 5 pts
 
 **What makes it strong.** Your two questions explore the part of the paper that is interesting or relevant - what the step produced in 1b, or how it made the STAR answer in 2 more real - and your summary is traceable to what your partner said when you asked, rather than repeating the paper back.
