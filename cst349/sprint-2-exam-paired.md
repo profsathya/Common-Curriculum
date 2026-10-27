@@ -72,7 +72,7 @@ Press the button. It reads the four answers you typed and suggests five question
 
 ### Task 4
 
-Write a summary of what you understand about their work. Include what they could explain when you asked, what they were less sure about, and identify at least one thing you learned from their answers that was not on the paper.
+Write a summary of what you understand about step they took. Include what you understood about their goal and how the first step will help them in reaching it. Identify at least one thing you learned from talking to them that was not on the written response.
 
 *Box label:* **Your summary**
 
