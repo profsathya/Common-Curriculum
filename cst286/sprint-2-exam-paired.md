@@ -27,6 +27,10 @@ Select your partner's name.
 
 *Field:* Your partner's name -> a text box with the course roster as suggestions ("Firstname L."). A name that is not on the list can still be typed.
 
+*Beside the name field, highlighted:* **Partner with someone new today: your partner must be someone different from your Sprint 1 Exam partner.**
+
+*Under the name field:* a tick box labelled **I partnered with someone new**, not my Sprint 1 Exam partner, with the line *If you work with the same partner as in the Sprint 1 Exam, you will not receive credit for this activity.* The tick is copied with the answers. (Added 28 Oct 2026, Prof. Sathya.)
+
 ### Task 2
 
 Type your partner's four handwritten answers into the four boxes below, exactly as they wrote them. If you cannot read something, ask them. When all four are typed, read them back to your partner and have them tick **Checked by the writer** under the fourth box.

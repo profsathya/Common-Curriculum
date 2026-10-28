@@ -298,6 +298,7 @@ accent-color:var(--check);cursor:pointer;}
 .wcheck input[type="checkbox"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
 .wcheck label{flex:1;min-width:0;cursor:pointer;line-height:1.5;}
 .wline{margin:5px 0 0 25px;font-size:13px;line-height:1.5;color:var(--muted);}
+.pnote{margin:6px 0 2px;padding:8px 11px;background:#FBF6EC;border-left:4px solid #B04A18;border-radius:4px;color:#5e4a18;font-size:13.5px;line-height:1.5;font-weight:700;max-width:560px;}
 ul.wpair{margin:0 0 12px;padding-left:20px;font-size:13.5px;}
 ul.wpair li{margin:0 0 5px;line-height:1.55;}
 .fuq{margin:0 0 12px;}
@@ -370,7 +371,9 @@ code { overflow-wrap: anywhere; }
 <li class="task" id="task-1">
 <div class="ttext"><span class="tn">1.</span><span class="tt">Select your partner's name.</span></div>
 <div class="rbox">
-<div class="pnamerow"><label for="f-partner">Your partner's name</label><input type="text" id="f-partner" data-field="partner" list="roster" autocomplete="off"></div>
+<div class="pnamerow"><label for="f-partner">Your partner's name</label><p class="pnote" id="pnote">Partner with someone new today: your partner must be someone different from your Sprint 1 Exam partner.</p><input type="text" id="f-partner" data-field="partner" list="roster" autocomplete="off" aria-describedby="pnote"></div>
+<div class="wcheck"><input type="checkbox" id="new-partner-tick" data-check="newpartner" aria-describedby="newpartner-line"><label for="new-partner-tick"><b>I partnered with someone new</b>, not my Sprint 1 Exam partner.</label></div>
+<p class="wline" id="newpartner-line">If you work with the same partner as in the Sprint 1 Exam, you will not receive credit for this activity.</p>
 <datalist id="roster">
 <option value="Adam S."></option>
 <option value="Alex T."></option>
@@ -789,6 +792,7 @@ code { overflow-wrap: anywhere; }
     function buildPayload() {
         var md = CFG.course + ' - Sprint 2 Exam, the paired half\n\n';
         md += 'Partner who wrote the paper: ' + (val('partner') || '(no name)') + '\n\n';
+        md += (state.checks.newpartner ? '[x] ' : '[ ] ') + 'I partnered with someone new, not my Sprint 1 Exam partner\n\n';
         CFG.questions.forEach(function (q) {
             md += block('QUESTION ' + q[1] + '\nTheir answer, as they wrote it:', val(q[0]));
         });
