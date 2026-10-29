@@ -2,7 +2,7 @@
 Notes for the editor, not shown to students:
 - Sprint 3 item 1 of the sequence in cowork/fall-2026-courses/cst286-sprint3-sequence.md. Graded item, due Mon 9 Nov, 100 pts. Must be published by Mon 2 Nov.
 - New on every Sprint 3 page (his request, 29 Oct): the three-box chain at the top (Builds on → This goal → Leads to); the path block; a look back at the start; a look forward at the end; an AI Dojo prompt.
-- The path block: if this browser holds the student's 30 Oct answers (localStorage "cc-gi:my-sprint-2-experience-and-sprint-3-path"), the path is shown pre-selected and can be changed; if not, the rest of the page stays hidden until the student chooses. The choice is saved as "cst286.s3.path" for the later Sprint 3 pages.
+- The path block: if this browser holds the student's 30 Oct answers (localStorage "cc-gi:cst286-my-sprint-2-experience-and-sprint-3-path"), the path is shown pre-selected and can be changed; if not, the rest of the page stays hidden until the student chooses. The choice is saved as "cst286.s3.path" for the later Sprint 3 pages.
 - The look back opens from the student's own 30 Oct "Why this path" sentence when this browser has it; otherwise it names the 30 Oct item and asks the student to bring the reason from their Canvas submission.
 - The look forward's sentence is saved as "cst286.s3.1.leave"; the home page shows it under item 1 in place of the grey "You leave with" line, and item 2's look back opens from it.
 - Look back and look forward carry no separate self-check points (agreed 28 Oct with Astra and Argon); they are part of "complete".

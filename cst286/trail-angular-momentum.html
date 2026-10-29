@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 &mdash; How fast will you spin?</title>
+<!-- trail-angular-momentum.md in this folder is the editable companion to this page: the words are edited there and carried into this file. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --blue:#0374B5; --blue-dark:#0a5a8a; --text:#2D3B45; --muted:#5C6873;
+    --border:#C7CDD1; --border-light:#E8EAEC; --teal:#0F766E;
+    --font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#B04A18; --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --warn:#6F5612; --vista:#B08018;
+    --t-phone:#2F6BA8; --t-phone-soft:#E2EAF3;
+    --tc:var(--t-phone); --tsoft:var(--t-phone-soft);
+    --on-tc:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+      --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+    --line:#31404C; --line-soft:#26333E;
+    --blaze:#E0793C; --blue:#6BAEDC; --blue-dark:#9CCBEA; --teal:#5FC9BE; --warn:#D6B04A; --vista:#D9AE3E;
+    --t-phone:#7FA9D6; --t-phone-soft:#22313F; --on-tc:#131F2B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Atkinson Hyperlegible",var(--font); color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word}
+  .page{max-width:920px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  a{color:var(--blaze)}
+  p{margin:0 0 12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible,iframe:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:3px}
+  .mono,.num,code{font-family:"IBM Plex Mono",monospace}
+
+  .canvasbar{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:baseline;border:1px solid var(--line);border-left:4px solid var(--tc);background:var(--tsoft);color:var(--ink);border-radius:5px;padding:9px 13px;margin:0 0 14px;font-size:14px}
+  .canvasbar[hidden]{display:none}
+  .canvasbar a{color:var(--blue-dark)}
+
+  .crumb{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.06em; margin-bottom:12px}
+  .crumb a{color:var(--ink-soft); text-decoration:none}
+  .crumb a::before{content:"\2190\00a0"}
+  .crumb a:hover{color:var(--blaze); text-decoration:underline}
+
+  /* hero */
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; position:relative; overflow:hidden}
+  .hero-inner{padding:38px 34px 34px; position:relative; z-index:1}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.16em; text-transform:uppercase; color:#9FB2C4; margin:0 0 14px}
+  .hero h1{font-size:clamp(2rem,5.4vw,3.2rem); font-weight:900; line-height:1.05; letter-spacing:-.01em; color:var(--hero-cream)}
+  .hero .intro{font-size:1.08rem; color:#DCE3E8; margin:18px 0 0; max-width:62ch; border-left:3px solid var(--blaze); padding:4px 0 4px 16px}
+  .contours{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.55}
+
+  /* goal */
+  .goalcard{margin:26px 0 14px; border:1.5px solid var(--tc); border-radius:6px; background:var(--card); padding:18px 22px 18px}
+  .goalcard h2{font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--tc); margin:0 0 10px}
+  .goalcard blockquote{margin:0 0 14px; padding:0}
+  .goalcard blockquote p{font-family:Fraunces,Georgia,serif; font-size:1.14rem; line-height:1.5; margin:0 0 6px; color:var(--ink)}
+  .goalcard blockquote p strong{font-weight:650; color:var(--tc)}
+  .goalcard.small{margin:8px 0 12px; padding:14px 18px; border-width:1px; border-left:5px solid var(--tc)}
+  .goalcard.small blockquote p{font-size:1.04rem}
+  .lede{max-width:74ch}
+
+  /* buttons */
+  button{font:inherit}
+  .copybtn,.stepbtn,.simbtn{font-family:"Atkinson Hyperlegible",var(--font); font-size:.9rem; font-weight:700; padding:8px 14px; min-height:40px; border-radius:5px; cursor:pointer; border:1.5px solid var(--tc); color:var(--on-tc); background:var(--tc)}
+  .copybtn::before{content:"\29C9\00a0\00a0"}
+  .copybtn.done::before{content:"\2713\00a0\00a0"}
+  .stepbtn.alt,.prompt .copybtn{background:transparent; color:var(--tc)}
+  .copybtn:hover,.stepbtn:hover,.simbtn:hover{filter:brightness(1.1)}
+  .stepbtn[aria-disabled="true"]{opacity:.5; cursor:default; border-style:dashed}
+  .simbtn::before{content:"\25B8\00a0\00a0"}
+  .simbtn[aria-expanded="true"]::before{content:"\25BE\00a0\00a0"}
+
+  /* trail map */
+  .trailmap{margin:26px 0 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:8px 10px 4px}
+  .mapwrap{position:relative; max-width:860px; margin:0 auto}
+  .trailsvg{display:block; width:100%; height:auto}
+  .stoplist{list-style:none; margin:0; padding:0}
+  .stoplist li{position:absolute; left:var(--x); top:var(--y); width:0; height:0}
+  .stopbtn{position:absolute; left:-80px; top:-20px; width:160px; display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; text-decoration:none; color:var(--ink); border-radius:6px; padding:0 2px 3px}
+  .stopbtn .no{flex:0 0 40px; width:40px; height:40px; border-radius:50%; background:var(--card); border:3px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1.05rem; display:flex; align-items:center; justify-content:center}
+  .stopbtn .lab{display:flex; flex-direction:column; align-items:center; background:var(--card); border-radius:4px; padding:0 5px}
+  .stopbtn .nm{font-size:.9rem; font-weight:700; line-height:1.25; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px}
+  .stopbtn:hover .nm{color:var(--blaze); text-decoration-color:var(--blaze)}
+  .stopbtn:hover .no{border-color:var(--blaze); color:var(--blaze)}
+  .stopbtn .mark{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-soft)}
+  .stopbtn .mark[hidden]{display:none}
+  .stopbtn.opened .no{background:var(--tc); color:var(--on-tc)}
+  @media (max-width:640px){
+    .trailsvg{display:none}
+    .trailmap{padding:6px 10px}
+    .stoplist li{position:static; width:auto; height:auto; border-top:1px dashed var(--line)}
+    .stoplist li:first-child{border-top:0}
+    .stopbtn{position:static; width:auto; flex-direction:row; align-items:center; text-align:left; gap:12px; padding:8px 4px}
+    .stopbtn .no{flex-basis:36px; width:36px; height:36px}
+    .stopbtn .lab{align-items:flex-start; padding:0}
+  }
+
+  /* stops */
+  .stops{margin-top:22px; display:grid; gap:12px}
+  details.stop{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--tc); border-radius:5px; scroll-margin-top:10px}
+  details.stop > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:14px; padding:14px 18px}
+  details.stop > summary::-webkit-details-marker{display:none}
+  details.stop > summary h2{font-size:1.28rem; font-weight:650; flex:1 1 auto; color:var(--ink)}
+  details.stop > summary .sno{flex:0 0 34px; width:34px; height:34px; border-radius:50%; border:2px solid var(--tc); color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; display:flex; align-items:center; justify-content:center}
+  details.stop > summary::after{content:"+"; flex:0 0 26px; width:26px; height:26px; border:1.5px solid var(--tc); border-radius:4px; color:var(--tc); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:23px; text-align:center}
+  details.stop[open] > summary::after{content:"\2212"}
+  details.stop[open] > summary{border-bottom:1px solid var(--line-soft)}
+  details.stop > summary:hover h2{color:var(--blaze)}
+  .stopbody{padding:6px 20px 18px}
+  .stopbody > p{max-width:74ch; margin-top:14px}
+  .part{margin-top:20px}
+  .part p,.part li{max-width:74ch}
+  .k{font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--tc); margin:0 0 6px}
+  .part-after p{font-family:Fraunces,Georgia,serif; font-size:1.08rem}
+
+  /* more practice: a quiet shelf, off the trail */
+  details.shelf{margin-top:18px; border:1px dashed var(--line); border-radius:5px; background:transparent}
+  details.shelf > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:11px 18px}
+  details.shelf > summary::-webkit-details-marker{display:none}
+  details.shelf > summary h2{font-size:1.05rem; font-weight:650; flex:1 1 auto; color:var(--ink-soft)}
+  details.shelf > summary::after{content:"+"; flex:0 0 24px; width:24px; height:24px; border:1.5px solid var(--ink-soft); border-radius:4px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:21px; text-align:center}
+  details.shelf[open] > summary::after{content:"\2212"}
+  details.shelf[open] > summary{border-bottom:1px dashed var(--line)}
+  details.shelf > summary:hover h2{color:var(--blaze)}
+  .shelfbody{padding:6px 20px 16px}
+  .shelfbody > p{max-width:74ch; margin-top:14px; color:var(--ink-soft)}
+  .shelfbody .k{color:var(--ink-soft)}
+
+  /* watch */
+  .vid{margin:0 0 10px}
+  .vidbtn{display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; width:100%; max-width:640px; text-align:left; cursor:pointer; background:var(--hero-ink); color:var(--hero-cream); border:1px solid var(--hero-ink); border-radius:6px; padding:12px 16px 12px 14px; min-height:56px; white-space:pre-wrap}
+  .vidbtn::before{content:"\25B6"; flex:0 0 34px; width:34px; height:34px; margin-right:12px; border-radius:50%; background:var(--blaze); color:#fff; font-size:.8rem; display:flex; align-items:center; justify-content:center; padding-left:2px}
+  .vidbtn .vt{font-weight:700}
+  .vidbtn .vm{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:#B9C6D1}
+  .vidbtn:hover{border-color:var(--blaze)}
+  .vidbtn[hidden]{display:none}
+  .player{position:relative; width:100%; max-width:640px; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden}
+  .player iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .vlinks{display:block; font-size:.9rem; margin-top:4px; white-space:pre-wrap}
+  .vid .vlinks .dot:first-child{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)}
+  p.vlinks.plain{margin:10px 0 0}
+  .newvideo{margin:18px 0 0; max-width:640px; border:1.5px dashed var(--line); border-radius:6px; padding:14px 16px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; font-size:.84rem; background:var(--paper)}
+
+  /* worked example */
+  .part-worked .question{font-weight:700}
+  .predictline{border-left:3px solid var(--blaze); padding:2px 0 2px 12px}
+  .steps{margin:6px 0 12px; padding-left:26px}
+  .steps li{margin:0 0 8px; padding-left:4px}
+  .steps li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .stepctl{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px}
+  .stepctl[hidden]{display:none}
+
+  /* units check */
+  .part-units{background:var(--tsoft); border:1px solid var(--line); border-left:5px solid var(--warn); border-radius:5px; padding:14px 18px 6px}
+  .part-units .k{color:var(--warn)}
+  .part-units .num{font-weight:600; white-space:nowrap; font-size:.94em}
+
+  /* try it + sims */
+  .trylist{margin:0; padding-left:20px}
+  .trylist li{margin:0 0 12px}
+  .simblock{margin:4px 0 10px}
+  .simrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:.92rem}
+  .sim{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:#fff; margin:10px 0 8px}
+  .sim[hidden]{display:none}
+  .sim iframe{width:100%; height:640px; border:0; display:block}
+
+  /* dojo prompts */
+  .prompt{display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 14px; background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:5px; padding:12px 14px; margin:0 0 10px; max-width:820px}
+  .prompt .ptext{flex:1 1 320px; margin:0; font-family:"IBM Plex Mono",monospace; font-size:.86rem; line-height:1.55; max-width:none}
+  .prompt .copybtn{flex:0 0 auto}
+  .mine{margin-top:22px; padding-top:16px; border-top:1px dashed var(--line)}
+  .mine .k{font-family:Fraunces,Georgia,serif; font-size:1.12rem; font-weight:650; letter-spacing:0; text-transform:none; color:var(--ink)}
+  .dojolbl{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; letter-spacing:.08em; color:var(--ink-soft); margin:10px 0 4px}
+
+  /* provenance (house two-layer block; this page has the trust layer only) */
+  .prov2{margin-top:30px; border:1px solid var(--line); border-radius:6px; background:var(--card); padding:0; font-size:.88rem; color:var(--ink)}
+  .prov2 .prov-head{padding:12px 16px 0; font-family:"Atkinson Hyperlegible",var(--font); font-size:.95rem; font-weight:700}
+  .prov2 .prov-lead{padding:5px 16px 14px; margin:0; line-height:1.55; max-width:none}
+  .pagenav{margin-top:20px; padding-top:14px; border-top:1px solid var(--line); font-size:.9rem}
+  .pagenav a{color:var(--blue-dark)}
+  .pagenav a::before{content:"\2190\00a0"}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+
+  /* trail map: the long stop 6 name gets a wider label and room below the map */
+  @media (min-width:641px){
+    .stoplist li.wide .stopbtn{width:300px; left:-150px}
+    .mapwrap{margin-bottom:26px}
+  }
+
+  /* practice problems: each answer waits behind a click */
+  .practice{margin:6px 0 4px; padding-left:26px}
+  .practice > li{margin:0 0 16px; padding-left:4px; max-width:74ch}
+  .practice > li::marker{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--tc)}
+  .practice > li > p{margin:0 0 6px}
+  details.answer{margin:2px 0 0}
+  details.answer > summary{list-style:none; cursor:pointer; display:inline-flex; align-items:center; flex-wrap:wrap; gap:4px 8px; font-size:.9rem; font-weight:700; color:var(--tc); border:1.5px dashed var(--tc); border-radius:5px; padding:5px 12px; min-height:36px}
+  details.answer > summary::-webkit-details-marker{display:none}
+  details.answer > summary::before{content:"+"; font-family:"IBM Plex Mono",monospace; font-weight:600}
+  details.answer[open] > summary::before{content:"\2212"}
+  details.answer > summary .hint{font-weight:400; color:var(--ink-soft)}
+  details.answer[open] > summary{border-style:solid}
+  details.answer[open] > summary .hint{display:none}
+  details.answer > summary:hover{border-color:var(--blaze); color:var(--blaze)}
+  details.answer .ans{margin:8px 0 0; padding:8px 12px; background:var(--tsoft); border-left:3px solid var(--tc); border-radius:4px; max-width:74ch}
+
+  /* detour: off the main path, closed until a student wants it */
+  details.detour{margin-top:20px; border:1.5px dashed var(--vista); border-radius:6px; background:var(--paper)}
+  details.detour > summary{list-style:none; cursor:pointer; display:flex; align-items:flex-start; gap:12px; padding:12px 16px}
+  details.detour > summary::-webkit-details-marker{display:none}
+  details.detour > summary .dhead{flex:1 1 auto}
+  details.detour > summary .dt{display:block; font-family:Fraunces,Georgia,serif; font-size:1.1rem; font-weight:650; color:var(--ink)}
+  details.detour > summary .dsub{display:block; font-size:.94rem; color:var(--ink-soft); margin-top:2px; max-width:70ch}
+  details.detour > summary::after{content:"+"; flex:0 0 26px; width:26px; height:26px; border:1.5px solid var(--vista); border-radius:4px; color:var(--vista); font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:23px; text-align:center}
+  details.detour[open] > summary::after{content:"\2212"}
+  details.detour[open] > summary{border-bottom:1px dashed var(--line)}
+  details.detour > summary:hover .dt{color:var(--blaze)}
+  .detourbody{padding:4px 18px 16px}
+  .dlist{list-style:none; margin:0; padding:0}
+  .dlist > li{margin:16px 0 0; max-width:74ch}
+  .dlist > li > p{margin:0 0 8px}
+  .dlab{font-weight:700; font-style:italic}
+  .dlist .practice{margin-top:8px}
+  .dlist .vid{margin:8px 0 6px}
+  @media (max-width:520px){
+    .detourbody{padding:4px 12px 14px}
+    details.detour > summary{padding:12px 12px}
+  }
+
+  @media (max-width:520px){
+    .page{padding:14px 16px 40px}
+    .hero-inner{padding:26px 20px 24px}
+    .goalcard{padding:16px 16px}
+    .stopbody,.shelfbody{padding:4px 14px 16px}
+    details.stop > summary{padding:12px 14px; gap:10px}
+    details.stop > summary h2{font-size:1.12rem}
+    .sim iframe{height:520px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none !important; transition:none !important}
+  }
+  @media print{
+    body{background:#fff; color:#000; font-size:11.5pt}
+    .canvasbar,.trailmap,.crumb,.pagenav,.copybtn,.stepctl,.simbtn,.sim,.player,iframe,.contours{display:none !important}
+    .hero{background:none; color:#000; border:0}
+    .hero h1,.hero .intro,.hero .kicker{color:#000}
+    .hero-inner{padding:0 0 12px}
+    details.stop{break-inside:auto; border-color:#999}
+    details.stop > summary::after,details.shelf > summary::after,details.detour > summary::after{display:none}
+    details.stop::details-content,details.shelf::details-content,details.detour::details-content{content-visibility:visible !important; display:block !important; height:auto !important}
+    .steps li[hidden]{display:list-item !important}
+    .vidbtn,.vidbtn[hidden]{display:block !important; background:none; color:#000; border:0; padding:0; min-height:0}
+    .vidbtn::before{display:none}
+    .vidbtn .vm{color:#000}
+    .part-units,.prompt,.goalcard,.newvideo{background:none}
+    a{color:#000}
+  }
+</style>
+<style id="a11y-pass-1">
+/* Accessibility pass 2026-10-06. Keep this block last in <head>. */
+p a:not([class]), li a:not([class]), dd a:not([class]), td a:not([class]), .links a, .feedback-note a, .skipnote a, .crumb a, .honesty a, .derived a, .vlinks a { text-decoration: underline; text-underline-offset: 2px; }
+.gl.a11y-esc > .bub { display: none !important; }
+.a11y-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.starter { margin: 4px 0 6px; font-size: 13px; line-height: 1.45; font-style: italic; color: var(--muted, #5C6873); }
+.copybtn { min-height: 24px; }
+code { overflow-wrap: anywhere; }
+@media print {
+  .bub { display: block !important; position: static !important; width: auto !important; max-width: none !important; margin: 4px 0 6px 12px !important; padding: 2px 0 2px 10px !important; border: 0 !important; border-left: 2px solid #999 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="canvasbar" id="canvas-bar" hidden><span>This page is running inside Canvas. If you would prefer, you can <a href="https://profsathya.github.io/Common-Curriculum/cst286/trail-angular-momentum.html" target="_blank" rel="noopener"><b>open the full page in its own tab &nearr;</b></a>.</span></div>
+<div class="crumb"><a href="trailheads.html">All trailheads</a></div>
+
+<main>
+<header class="hero">
+<svg class="contours" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+<g fill="none" stroke="#2A3B4C" stroke-width="1.1">
+<path d="M-40,340 C160,290 260,380 470,330 S820,250 1240,320"/>
+<path d="M-40,300 C170,250 300,330 500,285 S840,205 1240,275"/>
+<path d="M-40,255 C190,210 330,285 540,240 S860,165 1240,230"/>
+<path d="M-40,205 C220,170 360,235 580,195 S880,120 1240,180"/>
+<path d="M-40,155 C240,125 400,185 620,150 S900,80 1240,130"/>
+</g>
+</svg>
+<div class="hero-inner">
+<p class="kicker">CST286 · Fall 2026 · Sprint 3 · Path A · A trail you can take as your Sprint 3 goal</p>
+<h1>How fast will you spin?</h1>
+<p class="intro">Sit on a spinning chair, hold your arms out, and push off. Now pull your arms in. You speed up, and nobody pushed you. Figure skaters, divers and satellites use the same physics to control their spin, and the phone in your pocket can measure it. On this trail you learn the relationship, predict your own spin, and use your phone to check whether you were right.</p>
+</div>
+</header>
+
+<section class="goalcard" aria-labelledby="goal-h">
+<h2 id="goal-h">A goal you can take as written</h2>
+<p><strong>Goal:</strong> Understand how spinning objects behave differently from objects moving in a straight line, and use that to predict how a spin changes.</p>
+<p>A quantitative relationship I will be able to use:</p>
+<blockquote id="goal-text">
+<p><strong>Given</strong> how fast something is spinning, and how its mass is arranged around the axis before and after the arrangement changes, in the right units,</p>
+<p><strong>I can predict</strong> how fast it will spin afterwards, in the right units.</p>
+<p><strong>This is useful because</strong> the same relationship explains how skaters, divers and satellites control their spin, and it is the first step toward understanding why a spinning top or a bicycle wheel stays upright.</p>
+</blockquote>
+<button type="button" class="copybtn" data-copy="Given how fast something is spinning, and how its mass is arranged around the axis before and after the arrangement changes, in the right units, I can predict how fast it will spin afterwards, in the right units. This is useful because the same relationship explains how skaters, divers and satellites control their spin, and it is the first step toward understanding why a spinning top or a bicycle wheel stays upright.">Copy this goal</button>
+</section>
+<p class="lede"><strong>Copy this goal</strong> - paste it into your Sprint 3 goal as it is, or change it at stop 6.</p>
+<p class="lede">The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate. Stops 3 and 4 are the two ideas the prediction depends on. At stop 5 you predict your own spin and test it, and stop 6 shows where the relationship stops working. Every stop ends with practice problems; try each one before you open its answer.</p>
+<p class="lede"><strong>What you need:</strong> a chair that spins freely, two equal weights you can hold in each hand (full 1.5-liter water bottles work well), a tape measure, a phone, and a friend to spot you. Install the free app <strong>phyphox</strong> (iPhone and Android). If your phone has no gyroscope, phyphox will say so; pair up with someone whose phone does.</p>
+
+<nav class="trailmap" aria-label="Trail map">
+<div class="mapwrap">
+<svg class="trailsvg" viewBox="0 0 700 360" role="img" aria-label="Trail map: a winding trail with six numbered stops" preserveAspectRatio="xMidYMid meet">
+<g fill="none" stroke="var(--line)" stroke-width="1">
+<path d="M-10,128 C120,96 250,150 380,118 S600,96 710,132"/>
+<path d="M-10,236 C130,206 270,262 410,228 S610,206 710,244"/>
+<path d="M-10,338 C140,312 280,356 420,330 S620,312 710,342"/>
+</g>
+<path d="M 14,84 Q 56,62 98,62 C 170,62 250,36 322,62 S 480,88 560,62 C 664,34 690,150 584,170 C 540,178 502,160 462,172 C 380,194 292,150 210,172 C 96,200 34,262 140,282 C 232,298 330,258 420,282 S 590,304 664,268" fill="none" stroke="var(--tc)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 9"/>
+<g stroke="var(--tc)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M 664,268 V 236"/><path d="M 664,236 L 684,243 L 664,250" fill="var(--tc)"/></g>
+</svg>
+<ol class="stoplist">
+<li style="--x:14.00%;--y:17.22%"><a class="stopbtn" href="#stop-1" data-stop="1"><span class="no" aria-hidden="true">1</span><span class="lab"><span class="nm">Stop 1 · Spin rate</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:46.00%;--y:17.22%"><a class="stopbtn" href="#stop-2" data-stop="2"><span class="no" aria-hidden="true">2</span><span class="lab"><span class="nm">Stop 2 · Record your own spin</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:80.00%;--y:17.22%"><a class="stopbtn" href="#stop-3" data-stop="3"><span class="no" aria-hidden="true">3</span><span class="lab"><span class="nm">Stop 3 · Moment of inertia</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:66.00%;--y:47.78%"><a class="stopbtn" href="#stop-4" data-stop="4"><span class="no" aria-hidden="true">4</span><span class="lab"><span class="nm">Stop 4 · Angular momentum stays the same</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li style="--x:30.00%;--y:47.78%"><a class="stopbtn" href="#stop-5" data-stop="5"><span class="no" aria-hidden="true">5</span><span class="lab"><span class="nm">Stop 5 · Predict your own spin, then test it</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+<li class="wide" style="--x:60.00%;--y:78.33%"><a class="stopbtn" href="#stop-6" data-stop="6"><span class="no" aria-hidden="true">6</span><span class="lab"><span class="nm">Stop 6 · Where it stops working, and how your phone senses a turn</span><span class="mark" hidden><span aria-hidden="true">&#10003; </span>opened</span></span></a></li>
+</ol>
+</div>
+</nav>
+
+<div class="stops">
+<details class="stop" id="stop-1" data-stop="1">
+<summary><span class="sno" aria-hidden="true">1</span><h2>Stop 1 · Spin rate</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>Your phone does not report "fast" or "slow". It reports a number in radians per second. Before you can use that number, you need to know what a radian is and how to turn radians per second into turns per second or turns per minute.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>convert a spin rate between radians per second, revolutions per second and revolutions per minute, and say what the sign of a gyroscope reading means.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="dbOR0ccwQFs" data-start="194" data-end="420" data-title="Prof. Sathya works the switched-off fan problem"><span class="vt">Prof. Sathya works the switched-off fan problem</span><span class="vsep"> - </span><span class="vm">4 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/dbOR0ccwQFs?t=194" target="_blank" rel="noopener">youtu.be/dbOR0ccwQFs</a></span></div>
+<p>When the clip says the fan slows by 1 rad/s, it means 1 rad/s every second, which is written rad/s².</p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">A ceiling fan turns at 120 revolutions per minute. What is its spin rate in radians per second?</p>
+<p class="predictline"><em>Predict first:</em> is the answer closer to 2, 12 or 120?</p>
+<ol class="steps">
+<li>One full turn is 2π radians, which is about 6.28 radians.</li>
+<li>Write where you start and where you want to end: 120 rev/min → rad/s.</li>
+<li>Line up the conversion factors so the units you do not want cancel: 120 rev/min × 2π rad/1 rev × 1 min/60 s.</li>
+<li>Revolutions cancel, then minutes, and radians per second are left.</li>
+<li>120 × 6.28 ÷ 60 = <strong>12.6 rad/s</strong>, which is 2 turns every second.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>A radian is not a degree. One turn is <span class="num">360</span> degrees and also <span class="num">2π</span> radians, so a reading of <span class="num">6.28</span> means one turn per second only if the unit is radians per second. If an app reports degrees per second, the same spin shows as <span class="num">360</span>.</p>
+</section>
+
+<details class="detour" id="radian-detour">
+<summary><span class="dhead"><span class="dt">Detour · What is a radian?</span><span class="dsub">Take this detour if "radian" is new to you, or if the worked example above felt like following steps you could not explain.</span></span></summary>
+<div class="detourbody">
+<ul class="dlist">
+<li><p><span class="dlab">Try it with a jar and a string (10 minutes).</span> Cut a piece of string as long as the radius of a round jar or plate, from the center to the edge. Lay the string along the edge and mark where it ends. The angle between the two ends, seen from the center, is one radian. Keep stepping the string around the edge: a little more than six lengths fit, about 6.28, which is 2π. A bigger jar needs a longer string, but the same 6.28 lengths fit, so one full turn is 2π radians for any circle.</p></li>
+<li><p><span class="dlab">Why physics uses radians.</span> A radian ties an angle to a distance: the distance along the edge equals the radius times the angle in radians. So a point 0.5 m from the axis, turning at 2 rad/s, travels 1 m every second. Degrees do not give you that shortcut.</p></li>
+<li><p><span class="dlab">Watch.</span></p>
+<div class="vid"><button type="button" class="vidbtn" data-yt="2-032DBce-o" data-title="Ladybug on a turntable"><span class="vt">Ladybug on a turntable</span><span class="vsep"> - </span><span class="vm">Prof. Sathya</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/2-032DBce-o" target="_blank" rel="noopener">youtu.be/2-032DBce-o</a></span></div>
+<p>Two ladybugs turn at the same rate in radians per second, and the one farther out moves faster.</p></li>
+<li><p><span class="dlab">Practice.</span></p>
+<ol class="practice">
+<li><p>How many radians is a quarter turn?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">2π ÷ 4 = 1.57 rad.</p></details></li>
+<li><p>How many degrees is one radian?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">360 ÷ 6.28 = 57.3 degrees.</p></details></li>
+<li><p>The tip of a ceiling fan blade is 0.6 m from the center, and the fan turns at 12.6 rad/s. How fast does the tip move?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">0.6 × 12.6 = 7.6 m/s.</p></details></li>
+<li><p>Two ladybugs sit on a record turning at 3.49 rad/s, one 0.10 m from the center and one 0.15 m out. How fast does each move?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">0.35 m/s and 0.52 m/s; same spin rate, different speeds.</p></details></li>
+</ol></li>
+<li><p><span class="dlab">Ask your Dojo.</span></p>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I will tell you what I think a radian is. Ask me to show it with a string and a jar, and stop me where my explanation would not work for a bigger jar.</span>&quot;</p><button type="button" class="copybtn" data-copy="I will tell you what I think a radian is. Ask me to show it with a string and a jar, and stop me where my explanation would not work for a bigger jar.">Copy prompt</button></div></li>
+<li><p><span class="dlab">If lining up conversion factors is the hard part,</span> work through <a href="trail-accelerometer.html#stop-1">stop 1 (Units) of the accelerometer trail</a> first, then come back.</p></li>
+</ul>
+</div>
+</details>
+
+<section class="part part-sign">
+<h3 class="k">Reading the sign</h3>
+<p>Lay your phone flat, screen up. The gyroscope's z reading is the spin about the line straight up out of the screen. A positive z means the phone turns counterclockwise as you look down at the screen; a negative z means clockwise.</p>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<p>Open phyphox and choose "Gyroscope (rotation rate)". Lay the phone flat on a table and leave it still for 20 seconds. Write down the largest number you see on z. Your phone is not turning, so this number is noise: a spin smaller than this is lost in it.</p>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice</h3>
+<ol class="practice">
+<li><p>A record player turns at 33⅓ revolutions per minute. What is that in radians per second?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">33.33 × 2π ÷ 60 = 3.49 rad/s.</p></details></li>
+<li><p>On the spin cycle a washing machine drum turns at 1,200 revolutions per minute. How many turns does it make each second, and what is its spin rate in radians per second?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">20 turns per second; 1,200 × 2π ÷ 60 = 126 rad/s.</p></details></li>
+<li><p>You spin on a chair with your phone flat against your chest, screen up, and phyphox shows z = −6.3 rad/s. How many turns per second are you making, and which way?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">6.3 ÷ 6.28 ≈ 1 turn per second, clockwise as seen from above, because the reading is negative.</p></details></li>
+<li><p>The Earth turns once in about 86,164 seconds. What is its spin rate in radians per second? Compare it with the number you wrote down in "Try it". Could your phone feel the Earth turning?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">2π ÷ 86,164 = 0.0000729 rad/s. Compare it with your own still-phone reading; if your reading is larger, the Earth's turn is lost in it.</p></details></li>
+</ol>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me a spin rate in revolutions per minute from everyday life. Do not solve it. Ask me to set up the conversion to radians per second, and tell me only whether my units cancel.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me a spin rate in revolutions per minute from everyday life. Do not solve it. Ask me to set up the conversion to radians per second, and tell me only whether my units cancel.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me why one turn is 2π radians, and keep asking until I explain it using the distance around a circle.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me why one turn is 2π radians, and keep asking until I explain it using the distance around a circle.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-2" data-stop="2">
+<summary><span class="sno" aria-hidden="true">2</span><h2>Stop 2 · Record your own spin</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>The rest of the trail predicts a number you will measure here, so measure it first and keep the graph. Seeing your own spin speed up is what makes the prediction worth checking.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>record your spin rate with arms out and arms in, and read both numbers from a phyphox graph.</p>
+</section>
+<section class="part part-setup">
+<h3 class="k">Set up</h3>
+<p>Measure the distance from the chair's axis (the post under the seat) to the center of each bottle when your arms are straight out, and again when you hold the bottles against your chest. Write both distances in meters.</p>
+</section>
+<section class="part part-record">
+<h3 class="k">Record</h3>
+<ol class="steps">
+<li>Sit on the chair, feet off the floor. Hold the phone flat against your chest, screen up, and press record in phyphox ("Gyroscope (rotation rate)"). In phyphox you can also turn on "Remote access" and watch the graph live in a laptop browser.</li>
+<li>Hold the bottles straight out. Your friend gives the chair a gentle turn and steps back.</li>
+<li>After two full turns, pull the bottles in to your chest and hold them there for two more turns.</li>
+<li>Put a foot down, stop, and stop the recording.</li>
+</ol>
+<p class="predictline"><em>Predict first:</em> before you record, write down how many times faster you expect to spin with the bottles in.</p>
+</section>
+<section class="part part-graph">
+<h3 class="k">Read the graph</h3>
+<p>The z line has a lower flat part (arms out) and a higher flat part (arms in). Write down the z value in the middle of each flat part. These are your ω₁ and ω₂ (ω, the Greek letter omega, is the usual symbol for spin rate).</p>
+</section>
+<section class="part part-units">
+<h3 class="k">Safety</h3>
+<p>Keep the spin gentle, keep your feet ready, and stop if you feel dizzy. Your friend spots you.</p>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice</h3>
+<ol class="practice">
+<li><p>A student records z = 2.8 rad/s with arms out and z = 4.6 rad/s with arms in. How many times faster did she spin with her arms in?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">4.6 ÷ 2.8 = 1.6 times faster.</p></details></li>
+<li><p>In the same recording, the arms-out part of the graph slopes slowly down instead of staying flat. Name one thing that could be slowing the chair.</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">friction in the chair's bearing, air on the outstretched arms, or a foot brushing the floor. Each one twists against the spin from outside.</p></details></li>
+</ol>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I will describe my phyphox graph. Ask me questions until we agree on which parts are arms out, arms in, and the moments in between.</span>&quot;</p><button type="button" class="copybtn" data-copy="I will describe my phyphox graph. Ask me questions until we agree on which parts are arms out, arms in, and the moments in between.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-3" data-stop="3">
+<summary><span class="sno" aria-hidden="true">3</span><h2>Stop 3 · Moment of inertia</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>Pulling the bottles in did not change their mass, so something else about them changed. What changed is how far the mass sits from the axis, and the moment of inertia is the quantity that measures that.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>calculate the moment of inertia of masses held at a distance from an axis, and explain why distance matters more than mass.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="mVFrEitAnRs" data-start="154" data-end="550" data-title="Linear vs angular motion"><span class="vt">Linear vs angular motion</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 7 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/mVFrEitAnRs?t=154" target="_blank" rel="noopener">youtu.be/mVFrEitAnRs</a></span></div>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">You hold two 1.5 kg water bottles 0.75 m from the chair's axis, then pull them in to 0.20 m. By how much does the bottles' moment of inertia change?</p>
+<p class="predictline"><em>Predict first:</em> the distance shrinks to about a quarter. Does the moment of inertia shrink to a quarter, less than a quarter, or more?</p>
+<ol class="steps">
+<li>For a small mass at a distance r from the axis, the moment of inertia is I = m r².</li>
+<li>With two bottles, add them: I = 2 × m × r².</li>
+<li>Arms out: I = 2 × 1.5 kg × (0.75 m)² = <strong>1.69 kg·m²</strong>.</li>
+<li>Arms in: I = 2 × 1.5 kg × (0.20 m)² = <strong>0.12 kg·m²</strong>.</li>
+<li>The distance shrank to about a quarter, but because it is squared, the moment of inertia shrank to about one fourteenth.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>Put the distances in centimeters and the arms-out answer becomes <span class="num">2 × 1.5 × 75² = 16,875</span>. The number looks dramatic, but its unit is kg·cm², and every later step expects kg·m². Convert distances to meters first.</p>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice</h3>
+<ol class="practice">
+<li><p>Which is harder to start spinning: 1 kg held 2 m from the axis, or 4 kg held 1 m from the axis?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">neither. 1 × 2² = 4 kg·m² and 4 × 1² = 4 kg·m². Doubling the distance counts as much as four times the mass.</p></details></li>
+<li><p>Two 25 kg children sit on the edge of a playground merry-go-round, 1.5 m from the center. What do they add to its moment of inertia?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">2 × 25 × 1.5² = 112.5 kg·m².</p></details></li>
+<li><p>A figure skater's two arms are about 3.5 kg each. Treat each arm as a mass at its middle: 0.35 m from the axis when the arms are out, 0.10 m when they are folded in. What do the arms contribute in each position?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">out: 2 × 3.5 × 0.35² = 0.86 kg·m²; in: 2 × 3.5 × 0.10² = 0.07 kg·m².</p></details></li>
+</ol>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me why a door is harder to open when I push near the hinge, and then ask me how that connects to holding weights far from the axis.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me why a door is harder to open when I push near the hinge, and then ask me how that connects to holding weights far from the axis.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me two objects with different masses and distances. Ask me to predict which has the larger moment of inertia before I calculate.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me two objects with different masses and distances. Ask me to predict which has the larger moment of inertia before I calculate.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-4" data-stop="4">
+<summary><span class="sno" aria-hidden="true">4</span><h2>Stop 4 · Angular momentum stays the same</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>This is the relationship in the goal. Spin rate and moment of inertia trade against each other, and the trade is exact as long as nothing outside the spinning system twists it.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>use I₁ω₁ = I₂ω₂ to predict a new spin rate, and say what condition must hold for the prediction to work.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="orAtL67eKc8" data-start="119" data-end="458" data-title="Prof. Sathya works a conservation of angular momentum problem"><span class="vt">Prof. Sathya works a conservation of angular momentum problem</span><span class="vsep"> - </span><span class="vm">6 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/orAtL67eKc8?t=119" target="_blank" rel="noopener">youtu.be/orAtL67eKc8</a></span></div>
+<p>A mass pulled in to half its distance from the axis spins four times as fast: that is I₁ω₁ = I₂ω₂ with I₂ a quarter of I₁.</p>
+</section>
+<section class="part part-idea">
+<h3 class="k">The idea</h3>
+<p>Angular momentum is the moment of inertia times the spin rate: L = Iω. When nothing outside the system twists it (no outside torque), L stays the same. So if I gets smaller, ω has to get larger by the same factor: I₁ω₁ = I₂ω₂, and ω₂ = ω₁ × I₁ ÷ I₂.</p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example</h3>
+<p class="question">A playground merry-go-round has a moment of inertia of 150 kg·m² on its own. It spins at 1.2 rad/s with one 25 kg child sitting at the edge, 1.5 m from the center. The child walks in to 0.3 m from the center. How fast does it spin now?</p>
+<p class="predictline"><em>Predict first:</em> faster or slower, and by a little or by a lot?</p>
+<ol class="steps">
+<li>Before: I₁ = 150 + 25 × 1.5² = 206.25 kg·m².</li>
+<li>After: I₂ = 150 + 25 × 0.3² = 152.25 kg·m².</li>
+<li>Nobody pushes the merry-go-round and we ignore the friction in its bearing, so angular momentum stays the same: ω₂ = ω₁ × I₁ ÷ I₂.</li>
+<li>ω₂ = 1.2 rad/s × 206.25 ÷ 152.25 = <strong>1.63 rad/s</strong>.</li>
+<li>The child is only a small part of the total moment of inertia, so the speed-up is modest, about a third.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-units">
+<h3 class="k">Units check</h3>
+<p>I₁ ÷ I₂ has no unit, because kg·m² divided by kg·m² cancels. So ω₂ comes out in whatever unit ω₁ was in. Put ω₁ in revolutions per second and ω₂ is in revolutions per second; you only have to be consistent.</p>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<div class="simblock" data-sim="spin-two-masses"><div class="simrow"><button type="button" class="simbtn" aria-expanded="false">Open the starter code</button> <a href="glowscript/sim.html?sim=spin-two-masses" target="_blank" rel="noopener">open it in its own tab</a></div><div class="sim" hidden><iframe title="Web VPython simulation: a spinning chair with two weights pulled in" data-src="glowscript/sim.html?sim=spin-two-masses" allowfullscreen></iframe></div></div><p>The starter code spins a chair with two weights held out, then slides the weights in after two seconds. Before you run it, use I₁ω₁ = I₂ω₂ to predict the spin rate after the pull, and write it down. Run the code and compare. Then move r_end all the way to 0, predict again, and run it. Watch the L graph each time: the line stays flat because nothing outside twists the chair.</p>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice</h3>
+<ol class="practice">
+<li><p>A figure skater spins at 2.0 revolutions per second with her arms out, when her moment of inertia is 2.8 kg·m². She pulls in to 1.0 kg·m². How fast does she spin?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">2.0 × 2.8 ÷ 1.0 = 5.6 revolutions per second.</p></details></li>
+<li><p>A diver leaves the board turning at 1.5 rad/s with a moment of inertia of 12 kg·m² in the straight position, then tucks to 3.5 kg·m². How fast does he turn in the tuck, and about how many somersaults does he complete in 1.2 s of tuck?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">1.5 × 12 ÷ 3.5 = 5.1 rad/s; 5.1 × 1.2 ÷ 6.28 ≈ 1 somersault.</p></details></li>
+<li><p>A satellite in space turns slowly at 0.02 rad/s with its solar panels folded. It unfolds them, and its moment of inertia triples. What happens to its spin?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">it slows to a third, 0.0067 rad/s. In space nothing outside twists it, so the trade is exact.</p></details></li>
+</ol>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to explain why a skater speeds up using L = Iω, and keep asking 'what twists her?' until I say nothing outside does.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to explain why a skater speeds up using L = Iω, and keep asking 'what twists her?' until I say nothing outside does.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me a spinning situation and ask me whether angular momentum stays the same. Make me name the outside twist if there is one.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me a spinning situation and ask me whether angular momentum stays the same. Make me name the outside twist if there is one.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-5" data-stop="5">
+<summary><span class="sno" aria-hidden="true">5</span><h2>Stop 5 · Predict your own spin, then test it</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>Now you put the pieces together for yourself. To predict your spin you need your whole moment of inertia, and the bottles are only part of it: your body and the chair count too. You cannot weigh your body's moment of inertia directly, so this stop shows you how to estimate it from your own data and then test a new prediction.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>predict your spin rate after pulling the weights in, measure it, and use the difference to improve the next prediction.</p>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example, part 1 - predict</h3>
+<p class="question">A seated person and the chair together have a moment of inertia of about 2.0 kg·m² (a rough estimate). Add the bottles from stop 3. The person spins at 3.0 rad/s with the bottles out. Predict the spin rate with the bottles in.</p>
+<ol class="steps">
+<li>Arms out: I₁ = 2.0 + 1.69 = 3.69 kg·m².</li>
+<li>Arms in: I₂ = 2.0 + 0.12 = 2.12 kg·m².</li>
+<li>ω₂ = 3.0 × 3.69 ÷ 2.12 = <strong>5.2 rad/s</strong>.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-worked">
+<h3 class="k">Worked example, part 2 - learn from the measurement</h3>
+<p class="question">Suppose the phone reads 5.0 rad/s, not 5.2. Treat your body's moment of inertia, B, as the unknown and let the data tell you what it is.</p>
+<ol class="steps">
+<li>Angular momentum stays the same: (B + 1.69) × 3.0 = (B + 0.12) × 5.0.</li>
+<li>Multiply out: 3.0B + 5.06 = 5.0B + 0.60.</li>
+<li>Solve: 2.0B = 4.46, so B = <strong>2.23 kg·m²</strong>.</li>
+<li>Use it to predict something new. Hold the bottles at 0.45 m instead of pulling them all the way in: I = 2 × 1.5 × 0.45² = 0.61 kg·m², so ω = 3.0 × (2.23 + 1.69) ÷ (2.23 + 0.61) = <strong>4.1 rad/s</strong>.</li>
+<li>Record that third spin and compare. If the prediction from your own B is closer than the one from the rough 2.0, the measurement taught your model something.</li>
+</ol>
+<div class="stepctl" hidden><button type="button" class="stepbtn" data-act="next">Show the next step</button> <button type="button" class="stepbtn alt" data-act="all">Show all steps</button></div>
+</section>
+<section class="part part-turn">
+<h3 class="k">Your turn</h3>
+<ol class="steps">
+<li>Measure your two distances (stop 2) and calculate the bottles' moment of inertia in each position (stop 3).</li>
+<li>Start with B = 2.0 kg·m² and predict ω₂ from your measured ω₁.</li>
+<li>Compare with your measured ω₂. Then solve for your own B, as in part 2.</li>
+<li>Predict a third position with your B, record it, and compare.</li>
+</ol>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice</h3>
+<ol class="practice">
+<li><p>A student with arms out spins at 2.5 rad/s and, with arms in, at 4.0 rad/s. Her bottles contribute 1.69 kg·m² out and 0.12 kg·m² in. What is B for her and the chair?</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">(B + 1.69) × 2.5 = (B + 0.12) × 4.0 → 2.5B + 4.23 = 4.0B + 0.48 → B = 2.5 kg·m².</p></details></li>
+<li><p>If the chair's bearing has noticeable friction, will the B you calculate come out too large or too small? Explain using what friction does to ω₂.</p><details class="answer"><summary>Answer <span class="hint">try it first, then open</span></summary><p class="ans">friction lowers the measured ω₂, and a lower ω₂ makes the equation return a larger B. So B comes out too large; it then includes the chair's friction, which is not part of your body.</p></details></li>
+</ol>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">I will give you my measured ω₁, ω₂ and my two distances. Do not calculate for me. Ask me to set up the equation for B and check only whether each step keeps the units consistent.</span>&quot;</p><button type="button" class="copybtn" data-copy="I will give you my measured ω₁, ω₂ and my two distances. Do not calculate for me. Ask me to set up the equation for B and check only whether each step keeps the units consistent.">Copy prompt</button></div>
+</section>
+</div></details>
+
+<details class="stop" id="stop-6" data-stop="6">
+<summary><span class="sno" aria-hidden="true">6</span><h2>Stop 6 · Where it stops working, and how your phone senses a turn</h2></summary>
+<div class="stopbody">
+<section class="part part-why">
+<h3 class="k">Why this stop</h3>
+<p>The relationship ω₂ = ω₁ × I₁ ÷ I₂ holds only while nothing outside the system twists it. Some situations look the same and break that condition, and one looks like it should work and gives the wrong answer for a different reason.</p>
+</section>
+<section class="part part-after">
+<h3 class="k">After this stop you can</h3>
+<p>tell apart situations where I₁ω₁ = I₂ω₂ predicts correctly from ones that only look similar, and say why.</p>
+</section>
+<section class="part part-practice">
+<h3 class="k">Practice - does the relationship apply?</h3>
+<p>Decide before you open each answer.</p>
+<ol class="practice">
+<li><p>While spinning with the bottles in, you let one foot drag on the floor.</p><details class="answer"><summary>Answer <span class="hint">decide first, then open</span></summary><p class="ans">no. The floor twists you from outside, so angular momentum falls and you slow down; I₁ω₁ = I₂ω₂ cannot predict how much.</p></details></li>
+<li><p>While spinning with your arms out, you let go of both bottles. Do you speed up?</p><details class="answer"><summary>Answer <span class="hint">decide first, then open</span></summary><p class="ans">no, and this is the trap. The bottles fly off carrying their own share of the angular momentum. Your own moment of inertia and spin rate stay the same at the moment you let go. The relationship still holds for the whole system, but you cannot apply it to yourself alone.</p></details></li>
+<li><p>A friend pushes the chair's back while you spin.</p><details class="answer"><summary>Answer <span class="hint">decide first, then open</span></summary><p class="ans">no. The push is an outside twist.</p></details></li>
+<li><p>If ice sheets melt and the water spreads toward the equator, does the length of a day change?</p><details class="answer"><summary>Answer <span class="hint">decide first, then open</span></summary><p class="ans">yes, slightly longer. Mass moves farther from Earth's axis, so I grows and ω falls. Nothing outside twists the Earth enough to matter here, so the relationship applies.</p></details></li>
+</ol>
+</section>
+<section class="part part-try">
+<h3 class="k">Try it</h3>
+<div class="simblock" data-sim="spin-where-it-breaks"><div class="simrow"><button type="button" class="simbtn" aria-expanded="false">Open the starter code</button> <a href="glowscript/sim.html?sim=spin-where-it-breaks" target="_blank" rel="noopener">open it in its own tab</a></div><div class="sim" hidden><iframe title="Web VPython simulation: the spinning chair with friction and let-go switches" data-src="glowscript/sim.html?sim=spin-where-it-breaks" allowfullscreen></iframe></div></div><p>This is the chair from stop 4 with two switches. First set friction_torque to 0.5 and predict whether the L line will stay flat; run it and compare. Then set friction_torque back to 0 and let_go to True: the weights are released instead of pulled in. Predict the chair's spin rate after the release before you run it. The second line on the L graph shows the chair's own share of the angular momentum, so you can see where the rest went.</p>
+</section>
+<section class="part part-sensor">
+<h3 class="k">How your phone senses the turn</h3>
+<p>Your phone measured all of this, but it does not do it with angular momentum. Inside the chip a tiny mass vibrates back and forth very fast. When the phone turns, the turning pushes the vibrating mass slightly sideways (this is called the Coriolis effect), and the chip measures that sideways push. The faster the turn, the larger the push. Older gyroscopes, like the spinning wheels in aircraft instruments, do use angular momentum: a fast-spinning wheel keeps pointing the same way while the aircraft turns around it.</p>
+</section>
+<section class="part part-watch">
+<h3 class="k">Watch</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="kbg7UE3qwqs" data-start="140" data-end="430" data-title="Principles of gyroscopes"><span class="vt">Principles of gyroscopes</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 5 min clip</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/kbg7UE3qwqs?t=140" target="_blank" rel="noopener">youtu.be/kbg7UE3qwqs</a></span></div>
+<p>Where the clip says "no external force", read it as no outside twist (no outside torque).</p>
+</section>
+<section class="part part-dojo">
+<h3 class="k">Ask your Dojo</h3>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Give me three spinning situations one at a time. For each, ask me whether something outside twists the system, and only then ask whether I₁ω₁ = I₂ω₂ applies.</span>&quot;</p><button type="button" class="copybtn" data-copy="Give me three spinning situations one at a time. For each, ask me whether something outside twists the system, and only then ask whether I₁ω₁ = I₂ω₂ applies.">Copy prompt</button></div>
+<div class="prompt"><p class="ptext">&quot;<span class="ct">Ask me to explain the difference between how my phone's gyroscope senses a turn and how a spinning-wheel gyroscope works.</span>&quot;</p><button type="button" class="copybtn" data-copy="Ask me to explain the difference between how my phone's gyroscope senses a turn and how a spinning-wheel gyroscope works.">Copy prompt</button></div>
+</section>
+</div></details>
+</div>
+
+<details class="shelf" id="more-practice">
+<summary><h2>More practice</h2></summary>
+<div class="shelfbody">
+<p>These are the full videos from the earlier CST286 track on gyroscopes. Open one when you want more worked problems on a topic, or when your Dojo suggests one.</p>
+<section class="part">
+<h3 class="k">Spin rate and moment of inertia</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="mVFrEitAnRs" data-title="Linear vs angular motion"><span class="vt">Linear vs angular motion</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 12 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/mVFrEitAnRs" target="_blank" rel="noopener">youtu.be/mVFrEitAnRs</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="dbOR0ccwQFs" data-title="Switched-off fan"><span class="vt">Switched-off fan</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 7 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/dbOR0ccwQFs" target="_blank" rel="noopener">youtu.be/dbOR0ccwQFs</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="2-032DBce-o" data-title="Ladybug on a turntable"><span class="vt">Ladybug on a turntable</span><span class="vsep"> - </span><span class="vm">Prof. Sathya</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/2-032DBce-o" target="_blank" rel="noopener">youtu.be/2-032DBce-o</a></span></div>
+</section>
+<section class="part">
+<h3 class="k">Twisting (torque)</h3>
+<p>Torque is the outside twist that stop 6 is about.</p>
+<div class="vid"><button type="button" class="vidbtn" data-yt="oyDBYfRkzxg" data-title="Stuck door"><span class="vt">Stuck door</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 5 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/oyDBYfRkzxg" target="_blank" rel="noopener">youtu.be/oyDBYfRkzxg</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="X1JR6UvIOu0" data-title="Teeter-totter"><span class="vt">Teeter-totter</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 5 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/X1JR6UvIOu0" target="_blank" rel="noopener">youtu.be/X1JR6UvIOu0</a></span></div>
+</section>
+<section class="part">
+<h3 class="k">Angular momentum and gyroscopes</h3>
+<div class="vid"><button type="button" class="vidbtn" data-yt="AdINXUM-OT8" data-title="Conservation of angular momentum"><span class="vt">Conservation of angular momentum</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 6 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/AdINXUM-OT8" target="_blank" rel="noopener">youtu.be/AdINXUM-OT8</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="orAtL67eKc8" data-title="Conservation of angular momentum, a worked problem"><span class="vt">Conservation of angular momentum, a worked problem</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 8 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/orAtL67eKc8" target="_blank" rel="noopener">youtu.be/orAtL67eKc8</a></span></div>
+<div class="vid"><button type="button" class="vidbtn" data-yt="kbg7UE3qwqs" data-title="Principles of gyroscopes"><span class="vt">Principles of gyroscopes</span><span class="vsep"> - </span><span class="vm">Prof. Sathya, 7 min</span></button><span class="vlinks"><span class="dot"> · </span><a href="https://youtu.be/kbg7UE3qwqs" target="_blank" rel="noopener">youtu.be/kbg7UE3qwqs</a></span></div>
+</section>
+</div></details>
+
+<div class="provenance prov2">
+<div class="prov-head">Where this page comes from</div>
+<p class="prov-lead">The videos and clips by Prof. Sathya come from earlier offerings of CST286. phyphox is a free app from RWTH Aachen University. The trail layout, the worked examples, the practice problems, the units checks and the two simulations were drafted with AI and reviewed by Prof. Sathya.</p>
+</div>
+</main>
+
+<div class="pagenav"><a href="trailheads.html">All trailheads</a></div>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
+
+(function () {
+    'use strict';
+    function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    var calm = false;
+    try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { calm = false; }
+    var live = document.getElementById('live');
+
+    // ---------- opened stops: remembered in this browser when storage allows ----------
+    var KEY = 'cst286.trail-angular-momentum.opened';
+    var opened = {};
+    try {
+        var raw = window.localStorage.getItem(KEY);
+        var saved = raw ? JSON.parse(raw) : null;
+        if (saved && typeof saved === 'object') { opened = saved; }
+    } catch (e) { opened = {}; }
+    function save() { try { window.localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) { /* page works without it */ } }
+    function paint() {
+        all('.stopbtn').forEach(function (b) {
+            var on = !!opened[b.getAttribute('data-stop')];
+            b.classList.toggle('opened', on);
+            var m = b.querySelector('.mark');
+            if (m) { m.hidden = !on; }
+        });
+    }
+    function markOpened(n) { if (!opened[n]) { opened[n] = true; save(); } paint(); }
+    paint();
+
+    all('details.stop').forEach(function (d) {
+        d.addEventListener('toggle', function () { if (d.open) { markOpened(d.getAttribute('data-stop')); } });
+    });
+
+    // ---------- trail map: open the stop, then go to it ----------
+    function goTo(n, viaHash) {
+        var d = document.getElementById('stop-' + n);
+        if (!d) { return; }
+        d.open = true;
+        markOpened(String(n));
+        var s = d.querySelector('summary');
+        try { d.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); } catch (e) { d.scrollIntoView(); }
+        if (s && !viaHash) { try { s.focus({ preventScroll: true }); } catch (e) { s.focus(); } }
+    }
+    all('.stopbtn').forEach(function (b) {
+        b.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            var n = b.getAttribute('data-stop');
+            goTo(n, false);
+            try { history.replaceState(null, '', '#stop-' + n); } catch (e) { /* fine */ }
+        });
+    });
+    var hm = /^#stop-([1-9])$/.exec(location.hash || '');
+    if (hm) { goTo(hm[1], true); }
+
+    // ---------- worked examples: steps one at a time (all visible without this script) ----------
+    all('ol.steps').forEach(function (ol) {
+        var ctl = ol.nextElementSibling;
+        if (!ctl || !ctl.classList.contains('stepctl')) { return; }
+        var items = all('li', ol);
+        var btns = all('button', ctl);
+        items.forEach(function (li) { li.hidden = true; });
+        ol.setAttribute('aria-live', 'polite');
+        ctl.hidden = false;
+        function sync() {
+            var left = items.filter(function (li) { return li.hidden; }).length;
+            btns.forEach(function (b) { if (left === 0) { b.setAttribute('aria-disabled', 'true'); } else { b.removeAttribute('aria-disabled'); } });
+        }
+        btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+                var hiddenOnes = items.filter(function (li) { return li.hidden; });
+                if (!hiddenOnes.length) { return; }
+                if (b.getAttribute('data-act') === 'all') { hiddenOnes.forEach(function (li) { li.hidden = false; }); }
+                else { hiddenOnes[0].hidden = false; }
+                sync();
+            });
+        });
+        sync();
+    });
+
+    // ---------- copy buttons ----------
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        ta.style.top = (window.pageYOffset || 0) + 'px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok ? Promise.resolve() : Promise.reject(new Error('no clipboard'));
+    }
+    function writeClipboard(text) {
+        var nc = null;
+        try { nc = navigator.clipboard; } catch (e) { nc = null; }
+        if (nc && nc.writeText) {
+            try { return nc.writeText(text).catch(function () { return fallbackCopy(text); }); }
+            catch (e) { return fallbackCopy(text); }
+        }
+        return fallbackCopy(text);
+    }
+    function selectNear(btn) {
+        // Copy was refused: select the text so it can be copied by hand.
+        var box = btn.parentNode ? btn.parentNode.querySelector('.ct, blockquote') : null;
+        if (!box || !window.getSelection) { return; }
+        try { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* nothing more to try */ }
+    }
+    all('.copybtn').forEach(function (btn) {
+        var label = btn.textContent;
+        var timer = null;
+        btn.addEventListener('click', function () {
+            writeClipboard(btn.getAttribute('data-copy') || '').then(function () {
+                btn.textContent = 'Copied';
+                btn.classList.add('done');
+                if (live) { live.textContent = ''; live.textContent = 'Copied'; }
+                if (timer) { clearTimeout(timer); }
+                timer = setTimeout(function () {
+                    btn.textContent = label;
+                    btn.classList.remove('done');
+                    if (live) { live.textContent = ''; }
+                }, 2000);
+            }, function () { selectNear(btn); });
+        });
+    });
+
+    // Each video starts at 1.25x. The speed is set once, when the player first reports in,
+    // so a speed the student picks afterwards in the player is kept.
+    function startAtSpeed(frame, rate) {
+        var done = false, tries = 0;
+        function send(obj) {
+            try { frame.contentWindow.postMessage(JSON.stringify(obj), '*'); } catch (e) { /* fine */ }
+        }
+        function onMessage(ev) {
+            if (done || ev.source !== frame.contentWindow) { return; }
+            if (!/^https:\/\/www\.youtube(-nocookie)?\.com$/.test(ev.origin)) { return; }
+            var data;
+            try { data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; } catch (e) { return; }
+            var state = data && data.info && data.info.playerState;
+            if (state !== undefined && state !== null) {
+                send({ event: 'command', func: 'setPlaybackRate', args: [rate] });
+                done = true;
+                window.removeEventListener('message', onMessage);
+            }
+        }
+        window.addEventListener('message', onMessage);
+        frame.addEventListener('load', function () {
+            var timer = setInterval(function () {
+                tries += 1;
+                if (done || tries > 20) { clearInterval(timer); return; }
+                send({ event: 'listening', id: 1, channel: 'widget' });
+            }, 500);
+        });
+    }
+
+    // ---------- videos: the player loads only when asked for ----------
+    all('.vidbtn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var id = btn.getAttribute('data-yt');
+            if (!id) { return; }
+            var box = document.createElement('div');
+            box.className = 'player';
+            var f = document.createElement('iframe');
+            var origin = '';
+            try { if (/^https?:/.test(location.protocol)) { origin = '&origin=' + encodeURIComponent(location.origin); } } catch (e) { origin = ''; }
+            // A clip carries its start and end, in seconds; a full video carries neither.
+            var clip = '';
+            var t0 = btn.getAttribute('data-start'), t1 = btn.getAttribute('data-end');
+            if (t0 !== null && t1 !== null) { clip = '&start=' + encodeURIComponent(t0) + '&end=' + encodeURIComponent(t1); }
+            f.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&enablejsapi=1&cc_load_policy=1' + clip + origin);
+            startAtSpeed(f, 1.25);
+            f.setAttribute('title', btn.getAttribute('data-title') || '');
+            f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            f.setAttribute('allowfullscreen', '');
+            f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            box.appendChild(f);
+            btn.parentNode.insertBefore(box, btn);
+            btn.hidden = true;
+            try { f.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+        });
+    });
+
+    // ---------- starter code: the runner is mounted once, on demand ----------
+    all('.simblock').forEach(function (blk) {
+        var btn = blk.querySelector('.simbtn');
+        var host = blk.querySelector('.sim');
+        var frame = blk.querySelector('iframe[data-src]');
+        if (!btn || !host || !frame) { return; }
+        btn.addEventListener('click', function () {
+            var src = frame.getAttribute('data-src');
+            // Set once. Re-setting src reloads the runner and throws away edited code.
+            if (frame.getAttribute('src') !== src) { frame.setAttribute('src', src); }
+            host.hidden = false;
+            btn.setAttribute('aria-expanded', 'true');
+        });
+    });
+
+    // ---------- print: every stop and every step on paper ----------
+    var reopen = [];
+    window.addEventListener('beforeprint', function () {
+        reopen = all('details.stop, details.shelf, details.detour').filter(function (d) { return !d.open; });
+        reopen.forEach(function (d) { d.open = true; });
+    });
+    window.addEventListener('afterprint', function () {
+        reopen.forEach(function (d) { d.open = false; });
+        reopen = [];
+    });
+}());
+</script>
+</body>
+</html>
