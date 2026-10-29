@@ -14,7 +14,9 @@
      ⏎ marks a line break inside a placeholder. The rail and the copied text use the task labels
      after the dash in each ### heading. -->
 
-# My claim: one skill, deep and broad, I will prove by 7 December with evidence
+# My claim: one skill, deep and broad
+
+*Subtitle (page note: smaller text under the title):* I will prove by 7 December with evidence
 
 Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
