@@ -6,6 +6,7 @@ Notes for the editor, not shown to students:
 - [SIM spin-two-masses] and [SIM spin-where-it-breaks] are cst286/sims/*.py, run by glowscript/sim.html?sim=<name> like the accelerometer trail's sims (built 29 Oct by an Opus agent from Alan's spec).
 - Clip times come from content-tracks/cst286/angular-momentum-digest.md (captions, approximate; check each by watching): fan 3:14-7:00 · linear vs angular 2:34-9:10 (stops before 9:16, where the video says r is the distance to where the force is applied) · conservation problem 1:59-7:38 · gyroscopes 2:20-7:10. Two spoken slips are corrected on the page: the fan's slowing rate said as rad/s (it is rad/s²), and "no external force" in the gyroscope video (it means no outside torque).
 - Left out of More practice: Rusty nut (it says rust increases the nut's moment of inertia; rust adds friction) and the Khan momentum video (linear only, and calls the unit of impulse the joule).
+- 29 Oct, Prof. Sathya's edit: goal broadened so Path A students have room to explore other scenarios later (his note); "in the right units"; useful line adds the spinning top / wheel. Alan's wording keeps the top as "the first step toward" understanding it, because staying upright is precession under gravity's torque, which this trail's relationship does not predict. Radian detour added at stop 1 (his request): jar-and-string, why radians, [VIDEO D] placeholder (a short explainer still to be made or chosen), his Ladybug video, practice. Pre-edit copy: trail-angular-momentum.md.bak-his-edit-2026-10-29.
 - For Item 3 (Five real-world scenarios): the skater, diver, merry-go-round, satellite and Earth examples here are practice; Path A students should bring scenarios of their own to Item 3. Decide whether to say so on Item 3's page. -->
 
 CST286 · Fall 2026 · Sprint 3 · Path A · A trail you can take as your Sprint 3 goal
@@ -15,11 +16,12 @@ CST286 · Fall 2026 · Sprint 3 · Path A · A trail you can take as your Sprint
 Sit on a spinning chair, hold your arms out, and push off. Now pull your arms in. You speed up, and nobody pushed you. Figure skaters, divers and satellites use the same physics to control their spin, and the phone in your pocket can measure it. On this trail you learn the relationship, predict your own spin, and use your phone to check whether you were right.
 
 ## A goal you can take as written
-Goal: Understand why a spinning person speeds up when they pull their arms in, and predict by how much.
+Goal: Understand how spinning objects behave differently from objects moving in a straight line, and use that to predict how a spin changes.
+
 A quantitative relationship I will be able to use:
-> **Given** how fast I am spinning, and how far from the axis I hold two weights before and after I pull them in, in the right units,
-> **I can predict** how fast I will spin after I pull them in, in radians per second.
-> **This is useful because** the same relationship explains how skaters, divers and satellites control their spin, and my phone's gyroscope lets me check the prediction.
+> **Given** how fast something is spinning, and how its mass is arranged around the axis before and after the arrangement changes, in the right units,
+> **I can predict** how fast it will spin afterwards, in the right units.
+> **This is useful because** the same relationship explains how skaters, divers and satellites control their spin, and it is the first step toward understanding why a spinning top or a bicycle wheel stays upright.
 
 **Copy this goal** - paste it into your Sprint 3 goal as it is, or change it at stop 6.
 
@@ -48,6 +50,18 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
 5. 120 × 6.28 ÷ 60 = **12.6 rad/s**, which is 2 turns every second.
 
 **Units check.** A radian is not a degree. One turn is 360 degrees and also 2π radians, so a reading of 6.28 means one turn per second only if the unit is radians per second. If an app reports degrees per second, the same spin shows as 360.
+
+**Detour · What is a radian?** (click to open) Take this detour if "radian" is new to you, or if the worked example above felt like following steps you could not explain.
+- *Try it with a jar and a string (10 minutes).* Cut a piece of string as long as the radius of a round jar or plate, from the center to the edge. Lay the string along the edge and mark where it ends. The angle between the two ends, seen from the center, is one radian. Keep stepping the string around the edge: a little more than six lengths fit, about 6.28, which is 2π. A bigger jar needs a longer string, but the same 6.28 lengths fit, so one full turn is 2π radians for any circle.
+- *Why physics uses radians.* A radian ties an angle to a distance: the distance along the edge equals the radius times the angle in radians. So a point 0.5 m from the axis, turning at 2 rad/s, travels 1 m every second. Degrees do not give you that shortcut.
+- *Watch.* [VIDEO D - What is a radian?] · Ladybug on a turntable - Prof. Sathya · [youtu.be/2-032DBce-o](https://youtu.be/2-032DBce-o): two ladybugs turn at the same rate in radians per second, and the one farther out moves faster.
+- *Practice.*
+  1. How many radians is a quarter turn? *Answer:* 2π ÷ 4 = 1.57 rad.
+  2. How many degrees is one radian? *Answer:* 360 ÷ 6.28 = 57.3 degrees.
+  3. The tip of a ceiling fan blade is 0.6 m from the center, and the fan turns at 12.6 rad/s. How fast does the tip move? *Answer:* 0.6 × 12.6 = 7.6 m/s.
+  4. Two ladybugs sit on a record turning at 3.49 rad/s, one 0.10 m from the center and one 0.15 m out. How fast does each move? *Answer:* 0.35 m/s and 0.52 m/s; same spin rate, different speeds.
+- *Ask your Dojo.* "I will tell you what I think a radian is. Ask me to show it with a string and a jar, and stop me where my explanation would not work for a bigger jar."
+- *If lining up conversion factors is the hard part,* work through stop 1 (Units) of the accelerometer trail first, then come back.
 
 **Reading the sign.** Lay your phone flat, screen up. The gyroscope's z reading is the spin about the line straight up out of the screen. A positive z means the phone turns counterclockwise as you look down at the screen; a negative z means clockwise.
 
