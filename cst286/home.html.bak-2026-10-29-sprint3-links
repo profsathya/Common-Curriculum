@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 &mdash; Get Good at Something You Care About</title>
+<!-- Bare-bones home page, 29 Oct 2026. Words live in cowork/fall-2026-courses/cst286-home-mockup-text.md (Sathya edits that; Claude carries edits here).
+     Two tabs: the current sprint (default) and Semester. Each item is a title, one line under it, and when it is due.
+     The line under a Sprint 3 item is a prompt; when this browser holds the sentence the student wrote at the close of that chapter, it replaces the line. -->
+<style>
+:root{--blue:#0374B5;--blue-dark:#0a5a8a;--text:#2D3B45;--muted:#5C6873;--border:#C7CDD1;--border-light:#E8EAEC;--teal:#0F766E;--font:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:#fff;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline;color:var(--blue-dark)}
+.page{max-width:760px;margin:0 auto;padding:22px 22px 56px}
+
+/* View tabs: current sprint (default) and Semester. The chosen tab is remembered in this browser. */
+.viewtabs{display:flex;justify-content:flex-start;gap:4px;margin:0 0 20px;border-bottom:2px solid var(--border)}
+.viewtabs [role=tab]{appearance:none;-webkit-appearance:none;background:#F4F6F8;border:1px solid var(--border);border-bottom:0;border-radius:6px 6px 0 0;margin:0 0 -2px;padding:9px 20px 8px;min-height:24px;font:inherit;font-size:15px;font-weight:700;color:var(--muted);cursor:pointer}
+.viewtabs [role=tab]:hover{color:var(--blue-dark);background:#EEF4F8}
+.viewtabs [role=tab][aria-selected=true]{background:#fff;color:var(--blue-dark);border-top:3px solid var(--blue);border-bottom:2px solid #fff;padding-top:7px}
+.viewtabs [role=tab]:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+[role=tabpanel][hidden]{display:none}
+
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal)}
+h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
+
+/* The chain: chapters inside a sprint, and sprints inside the semester */
+.seq{list-style:none;margin:26px 0 0;padding:0;position:relative}
+.seq::before{content:"";position:absolute;left:19px;top:14px;bottom:14px;width:2px;background:var(--border)}
+.ch{position:relative;display:grid;grid-template-columns:40px 1fr auto;column-gap:12px;align-items:center;padding:10px 0}
+.num{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid var(--border);color:var(--muted);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;cursor:pointer;user-select:none}
+.num:hover{border-color:var(--blue)} .num:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+.ch.done .num{border-color:var(--teal);color:var(--teal);background:#f0fdfa}
+.ch.now .num{border-color:var(--blue);background:var(--blue);color:#fff}
+.ch.now .title{color:var(--blue-dark)}
+.title{font-size:16px;font-weight:700;line-height:1.3}
+.title.wip{color:#8A949C} .title.wip .wiptag{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#8A949C;border:1px solid var(--border);border-radius:3px;padding:0 5px;margin-left:8px;vertical-align:middle}
+.carry{font-size:12.5px;color:var(--muted);margin-top:2px}
+.carry.mine{color:var(--text);font-style:italic} .carry.mine::before{content:"\201C";color:var(--muted);margin-right:2px}
+.when{font-size:13px;color:var(--muted);white-space:nowrap;text-align:right} .when b{color:var(--text)}
+.exam .num{border-radius:8px}
+.nowtag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--blue);border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:middle}
+.sep{position:relative;padding:8px 0 8px 52px;font-size:12.5px;color:var(--muted)}
+@media (max-width:560px){.ch{grid-template-columns:40px 1fr}.when{grid-column:2;text-align:left}}
+
+/* Semester view: each sprint opens into its own chain */
+.sprint{position:relative;padding:10px 0}
+.sprint > summary{list-style:none;display:grid;grid-template-columns:40px 1fr auto 20px;column-gap:12px;align-items:center;cursor:pointer}
+.sprint > summary::-webkit-details-marker{display:none}
+.sprint > summary:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;border-radius:4px}
+.sprint > summary .num{cursor:pointer}
+.sprint[open] > summary .title{color:var(--blue-dark)}
+.plus{width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:14px;font-weight:700;line-height:16px;text-align:center;justify-self:end} .plus::before{content:"+"} .sprint[open] > summary .plus::before{content:"\2212"}
+.sprint .inner{margin:4px 0 6px 52px;padding:4px 0 2px 0;border-left:2px solid var(--border-light)}
+.sprint .inner .seq{margin:0;padding-left:14px} .sprint .inner .seq::before{display:none}
+.sprint .inner .ch{grid-template-columns:28px 1fr auto;padding:7px 0}
+.sprint .inner .num{width:28px;height:28px;font-size:12px}
+.sprint .inner .title{font-size:14.5px}
+.sprint .inner .when{font-size:12.5px}
+.sprint .inner .sep{padding-left:40px}
+.sprint.past > summary .num{border-color:var(--teal);color:var(--teal);background:#f0fdfa}
+.sprint.current > summary .num{border-color:var(--blue);background:var(--blue);color:#fff}
+.hint{font-size:12.5px;color:var(--muted)}
+
+.foot{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.ch{grid-template-rows:auto auto} .ch .when{align-self:start}
+.notes-l{grid-column:3;grid-row:2;justify-self:end;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--blue);background:none;border:0;padding:2px 0 0;cursor:pointer;font-family:inherit} .notes-l:hover{text-decoration:underline} .notes-l.has::after{content:" \2022";color:var(--teal)}
+.notes{grid-column:2 / 4;grid-row:3;margin:6px 0 2px} .notes[hidden]{display:none} .notes textarea{width:100%;min-height:64px;font:inherit;font-size:13.5px;line-height:1.45;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical} .notes textarea:focus{outline:2px solid var(--blue);outline-offset:1px} .notes .saved{font-size:11.5px;color:var(--muted);margin:3px 0 0}
+@media (max-width:560px){.notes-l{grid-column:2;justify-self:start}.notes{grid-column:2 / 3}}
+.mailbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:-8px 0 14px} .mailbar[hidden]{display:none} .mailbtn{font:inherit;font-size:12.5px;font-weight:700;color:var(--blue-dark);background:#fff;border:1px solid var(--blue);border-radius:6px;padding:5px 11px;cursor:pointer} .mailbtn:hover{background:#EEF4F8} .nudge{font-size:12.5px;color:var(--teal);font-weight:700} .nudge:empty{display:none}
+.meet{margin:34px 0 0;border-top:1px solid var(--border-light);padding-top:14px}
+.meet h2{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:0 0 6px}
+.meet ul{list-style:none;margin:0;padding:0} .meet li{font-size:13.5px;padding:4px 0;color:var(--muted)} .meet li b{color:var(--text)}
+
+.page-footer{margin:40px 0 0;padding-top:12px;border-top:1px solid var(--border-light);font-size:12.5px;color:var(--muted)}
+.page-footer a{color:var(--blue-dark)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sprint-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-semester" aria-controls="semester-view" aria-selected="false">Semester</button></div>
+
+<div class="mailbar" id="mailbar" hidden><span class="nudge" id="mailnudge"></span><button type="button" class="mailbtn" id="mailbtn">Email my notes to me</button></div>
+
+<!-- ============ SPRINT 3 ============ -->
+<div id="sprint-view" role="tabpanel" aria-labelledby="tab-sprint">
+
+<div class="eyebrow">CST286 &middot; Weeks 11&ndash;15 &middot; Nov 4 &ndash; Dec 7</div>
+<h1>Sprint 3 &middot; Strengthen your learning skills</h1>
+<p class="foot">Click a number to check an item off. Click <b>Notes</b> to keep notes on an item. Both stay on this computer.</p>
+
+<ol class="seq">
+
+<li class="ch" data-key="cst286.s3.0.leave" data-due="2026-10-30"><div class="num">0</div>
+<div><div class="title"><a href="my-sprint-2-experience-and-sprint-3-path.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/656553" target="_blank" rel="noopener">My Sprint 2 experience, and the path I choose</a></div>
+<div class="carry">You leave with: your choice of a path for Sprint 3, and the reasons you gave for it</div></div>
+<div class="when"><b>Fri Oct 30</b> &middot; 100 pts</div></li>
+
+<li class="ch" data-key="cst286.s3.1.leave" data-due="2026-11-09"><div class="num">1</div>
+<div><div class="title wip">My Sprint 3 goal and plan<span class="wiptag">coming</span></div>
+<div class="carry">You leave with: a goal that says which physical quantity you will be able to predict, and from what</div></div>
+<div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
+
+<li class="ch" data-key="cst286.s3.2.leave" data-due="2026-11-16"><div class="num">2</div>
+<div><div class="title wip">Find and confirm my relationship<span class="wiptag">coming</span></div>
+<div class="carry">You leave with: the quantitative relationship you found, its units, the conditions it holds under, and how you confirmed it</div></div>
+<div class="when"><b>Mon Nov 16</b> &middot; 100 pts</div></li>
+
+<li class="sep">Nov 23 &ndash; 27 &middot; fall break, nothing due</li>
+
+<li class="ch" data-key="cst286.s3.3.leave" data-due="2026-11-30"><div class="num">3</div>
+<div><div class="title wip">Five real-world scenarios<span class="wiptag">coming</span></div>
+<div class="carry">You leave with: three real situations where your relationship predicts correctly, and two similar looking scenarios but where it does not, with the difference identified</div></div>
+<div class="when"><b>Mon Nov 30</b> &middot; 100 pts</div></li>
+
+<li class="ch exam" data-key="cst286.s3.4.leave" data-due="2026-12-02"><div class="num">4</div>
+<div><div class="title wip">Sprint 3 Exam<span class="wiptag">coming</span></div>
+<div class="carry">In class, closed-book written exam and partner conversation</div></div>
+<div class="when"><b>Wed Dec 2</b> &middot; 200 pts</div></li>
+
+<li class="ch" data-key="cst286.s3.5.leave" data-due="2026-12-07"><div class="num">5</div>
+<div><div class="title wip">My Sprint 3 experience<span class="wiptag">coming</span></div>
+<div class="carry">The story of how you learned in Sprint 3, and what you learned</div></div>
+<div class="when"><b>Mon Dec 7</b> &middot; 100 pts</div></li>
+
+</ol>
+
+<section class="meet"><h2>When we meet</h2>
+<ul>
+<li><b>Every Monday</b> on Zoom &middot; small-group check-ins by path</li>
+<li><b>Wed Nov 4</b> in class &middot; Sprint 3 kickoff</li>
+<li><b>Wed Nov 11</b> no class &middot; campus closed</li>
+<li><b>Wed Nov 18</b> on Zoom</li>
+<li><b>Nov 23 &ndash; 27</b> fall break</li>
+<li><b>Mon Nov 30</b> on Zoom &middot; progress check-ins</li>
+<li><b>Wed Dec 2</b> in class &middot; Sprint 3 Exam</li>
+<li><b>Dec 7 &ndash; 18</b> catching up &middot; 1-on-1 and small-group help</li>
+</ul></section>
+
+</div>
+
+<!-- ============ SEMESTER ============ -->
+<div id="semester-view" role="tabpanel" aria-labelledby="tab-semester" hidden>
+
+<div class="eyebrow">CST286 &middot; Physics of Computing (with AI) &middot; Fall 2026</div>
+<h1>Get Good at Something You Care About</h1>
+<p class="foot">Click a sprint to open it. Click a number to check an item off.</p>
+
+<ol class="seq">
+
+<li><details class="sprint past"><summary><div class="num">0</div>
+<div><div class="title">Sprint 0 &middot; How this course works</div></div>
+<div class="when"><b>Aug 24 &ndash; Sep 4</b></div><span class="plus" aria-hidden="true"></span></summary>
+<div class="inner"><ol class="seq">
+<li class="ch" data-key="cst286.s0.1.leave"><div class="num">1</div><div><div class="title"><a href="what-are-my-priorities.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/621751" target="_blank" rel="noopener">What are my priorities</a></div><div class="carry">You left with: a written account of your priorities, checked against where your time goes</div></div><div class="when"><b>Mon Aug 31</b></div></li>
+<li class="ch" data-key="cst286.s0.2.leave"><div class="num">2</div><div><div class="title"><a href="explore-physics-loop.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/647097" target="_blank" rel="noopener">Explore Physics Loop</a></div><div class="carry">You left with: a simulation of a physical system that you changed yourself, and what happened when you did</div></div><div class="when"><b>Week 2</b></div></li>
+</ol></div></details></li>
+
+<li><details class="sprint past"><summary><div class="num">1</div>
+<div><div class="title">Sprint 1 &middot; Learn one thing in physics, and show it</div></div>
+<div class="when"><b>Sep 7 &ndash; Oct 2</b></div><span class="plus" aria-hidden="true"></span></summary>
+<div class="inner"><ol class="seq">
+<li class="ch" data-key="cst286.s1.1.leave"><div class="num">1</div><div><div class="title"><a href="physics-learning-goal.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/648159" target="_blank" rel="noopener">Physics learning goal, and how you would demonstrate it</a></div><div class="carry">You left with: a physics learning goal, and the way you would check for yourself that you had reached it</div></div><div class="when"><b>Mon Sep 14</b></div></li>
+<li class="ch" data-key="cst286.s1.2.leave"><div class="num">2</div><div><div class="title"><a href="find-and-judge-your-sources.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/650004" target="_blank" rel="noopener">Find and judge your sources</a></div><div class="carry">You left with: the sources you chose for your goal, and the reasons you trust each one</div></div><div class="when"><b>Fri Sep 25</b></div></li>
+<li class="ch" data-key="cst286.s1.3.leave"><div class="num">3</div><div><div class="title"><a href="one-new-thing-i-learned.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/648160" target="_blank" rel="noopener">One new thing I learned, and how I demonstrated it to myself</a></div><div class="carry">You left with: one quantitative prediction explained step by step, and the check you ran on your own understanding</div></div><div class="when"><b>Mon Sep 28</b></div></li>
+<li class="ch exam" data-key="cst286.s1.4.leave"><div class="num">4</div><div><div class="title"><a href="sprint-1-exam-paired.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/652657" target="_blank" rel="noopener">Sprint 1 Exam</a></div><div class="carry">In class, closed-book written exam and partner conversation</div></div><div class="when"><b>Wed Sep 30</b></div></li>
+<li class="ch" data-key="cst286.s1.5.leave"><div class="num">5</div><div><div class="title"><a href="how-well-did-i-learn-in-sprint-1.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/653059" target="_blank" rel="noopener">How well did I learn in Sprint 1</a></div><div class="carry">You left with: your account of how you learned in Sprint 1, and the one habit you decided to change for Sprint 2</div></div><div class="when"><b>Week 6</b></div></li>
+</ol></div></details></li>
+
+<li><details class="sprint past"><summary><div class="num">2</div>
+<div><div class="title">Sprint 2 &middot; Become a precise and effective learner</div></div>
+<div class="when"><b>Oct 5 &ndash; Oct 30</b></div><span class="plus" aria-hidden="true"></span></summary>
+<div class="inner"><ol class="seq">
+<li class="ch" data-key="cst286.s2.1.leave"><div class="num">1</div><div><div class="title"><a href="how-i-learn-and-one-learning-trail.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/653983" target="_blank" rel="noopener">How I learn, and one learning trail to explore</a></div><div class="carry">You left with: one physics topic followed to the end of a guided trail, and what you noticed about how you learn along the way</div></div><div class="when"><b>Mon Oct 12</b> &middot; 100 pts</div></li>
+<li class="ch" data-key="cst286.s2.2.leave"><div class="num">2</div><div><div class="title"><a href="my-sprint-2-goal-and-plan.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/654770" target="_blank" rel="noopener">My Sprint 2 goal and plan</a></div><div class="carry">You left with: a goal that says what you will be able to predict, and a plan for when you would work on it and who would hear you explain it</div></div><div class="when"><b>Mon Oct 19</b> &middot; 100 pts</div></li>
+<li class="ch" data-key="cst286.s2.3.leave"><div class="num">3</div><div><div class="title"><a href="five-real-world-scenarios.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/655610" target="_blank" rel="noopener">Five real-world scenarios</a></div><div class="carry">You left with: three real situations where your relationship predicts correctly, and two that look alike but where it does not</div></div><div class="when"><b>Mon Oct 26</b> &middot; 100 pts</div></li>
+<li class="ch exam" data-key="cst286.s2.4.leave"><div class="num">4</div><div><div class="title"><a href="sprint-2-exam-paired.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/656539" target="_blank" rel="noopener">Sprint 2 Exam</a></div><div class="carry">In class, closed-book written exam and partner conversation</div></div><div class="when"><b>Wed Oct 28</b> &middot; 200 pts</div></li>
+<li class="ch" data-key="cst286.s2.5.leave"><div class="num">5</div><div><div class="title"><a href="my-sprint-2-experience-and-sprint-3-path.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/656553" target="_blank" rel="noopener">My Sprint 2 experience, and the path I choose</a></div><div class="carry">You left with: the story of how you learned in Sprint 2, and your choice of a path for Sprint 3 with the reasons</div></div><div class="when"><b>Fri Oct 30</b> &middot; 100 pts</div></li>
+</ol></div></details></li>
+
+<li><details class="sprint current" open><summary><div class="num">3</div>
+<div><div class="title">Sprint 3 &middot; Strengthen your learning skills</div></div>
+<div class="when"><b>Nov 4 &ndash; Dec 7</b></div><span class="plus" aria-hidden="true"></span></summary>
+<div class="inner"><ol class="seq">
+<li class="ch"><div class="num">1</div><div><div class="title wip">My Sprint 3 goal and plan</div></div><div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
+<li class="ch"><div class="num">2</div><div><div class="title wip">Find and confirm my relationship</div></div><div class="when"><b>Mon Nov 16</b> &middot; 100 pts</div></li>
+<li class="ch"><div class="num">3</div><div><div class="title wip">Five real-world scenarios</div></div><div class="when"><b>Mon Nov 30</b> &middot; 100 pts</div></li>
+<li class="ch exam"><div class="num">4</div><div><div class="title wip">Sprint 3 Exam</div></div><div class="when"><b>Wed Dec 2</b> &middot; 200 pts</div></li>
+<li class="ch"><div class="num">5</div><div><div class="title wip">My Sprint 3 experience</div></div><div class="when"><b>Mon Dec 7</b> &middot; 100 pts</div></li>
+</ol>
+<p class="hint">Dates and the schedule are on the Sprint 3 tab.</p></div></details></li>
+
+<li class="sep">Dec 7 &ndash; 18 &middot; catching up, 1-on-1 and small-group help</li>
+
+</ol>
+
+</div>
+
+<p class="page-footer">Questions: <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> what is working and what is not.</p>
+
+</div>
+<script>
+/* Inside Canvas (iframe, or ?context=canvas) every item links to its Canvas assignment; on the open web it links to its page. Same mechanism as before. */
+(function(){
+  var p = new URLSearchParams(location.search);
+  var ctx = p.get('context') || (window.self !== window.top ? 'canvas' : 'web');
+  if (ctx === 'canvas') {
+    document.querySelectorAll('[data-canvas-href]').forEach(function(a){
+      a.setAttribute('href', a.getAttribute('data-canvas-href'));
+      a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+    });
+  }
+})();
+
+/* Tabs: current sprint (default) and Semester. The chosen tab is remembered in this browser. */
+(function(){
+  var tS=document.getElementById('tab-sprint'), tM=document.getElementById('tab-semester');
+  var pS=document.getElementById('sprint-view'), pM=document.getElementById('semester-view');
+  if(!tS||!tM||!pS||!pM) return;
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function set(sem,save){
+    tS.setAttribute('aria-selected',sem?'false':'true'); tM.setAttribute('aria-selected',sem?'true':'false');
+    pS.hidden=!!sem; pM.hidden=!sem;
+    if(save){ try{ localStorage.setItem('cst286.home.tab',sem?'semester':'sprint'); }catch(e){} }
+  }
+  tS.addEventListener('click',function(){set(false,true)}); tM.addEventListener('click',function(){set(true,true)});
+  function arrows(e){ if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='Home'&&e.key!=='End') return; e.preventDefault();
+    var toSem=(e.key==='End')||(e.key!=='Home'&&e.target===tS); set(toSem,true); (toSem?tM:tS).focus(); }
+  tS.addEventListener('keydown',arrows); tM.addEventListener('keydown',arrows);
+  set(get('cst286.home.tab')==='semester',false);
+})();
+
+/* Two things this browser may hold for each item, both written on this computer only:
+   <key>        the sentence the student wrote at the close of the chapter (saved by the chapter page)
+   <key>.done   a check the student set by tapping the number here (tap again to clear)
+   A check shows when either exists. When the sentence exists it replaces the grey line, unlabelled, in the student's words.
+   Nothing stored, for any reason, means the plain number and the grey line stay. */
+(function(){
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} }
+  var items=document.querySelectorAll('.ch[data-key]');
+  for(var i=0;i<items.length;i++){ (function(li){
+    var key=li.getAttribute('data-key'), num=li.querySelector('.num'), carry=li.querySelector('.carry'), n=num.textContent;
+    function paint(){
+      var s=get(key), d=get(key+'.done');
+      var done=(s&&s.trim())||d;
+      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Done, tap to clear':'Mark done');
+      if(carry){ if(s&&s.trim()){ carry.textContent=s.trim(); carry.classList.add('mine'); } else { carry.textContent=carry.getAttribute('data-prompt'); carry.classList.remove('mine'); } }
+    }
+    if(carry) carry.setAttribute('data-prompt',carry.textContent);
+    /* Notes: a small label at the right of the item; click opens a box; what is typed is saved here as it is typed */
+    var nk=key+'.notes', lab=document.createElement('button'), box=document.createElement('div'), ta=document.createElement('textarea'), sv=document.createElement('div');
+    lab.type='button'; lab.className='notes-l'; lab.textContent='Notes'; lab.setAttribute('aria-expanded','false');
+    box.className='notes'; box.hidden=true; ta.placeholder='Anything you want to remember about this one'; ta.setAttribute('aria-label','Notes'); sv.className='saved'; box.appendChild(ta); box.appendChild(sv); li.appendChild(lab); li.appendChild(box);
+    function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
+    ta.value=get(nk)||''; paintNotes();
+    lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
+    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
+    function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
+    num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });
+    num.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.stopPropagation(); toggle(e); } });
+    paint();
+  })(items[i]); }
+})();
+
+/* "Now" marks the first Sprint 3 item whose due date is today or later; the tag reads "this week" when it is within seven days. */
+(function(){
+  var t=new Date(); t=new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  var items=document.querySelectorAll('#sprint-view .ch[data-due]');
+  for(var i=0;i<items.length;i++){
+    var d=items[i].getAttribute('data-due').split('-'), due=new Date(+d[0],+d[1]-1,+d[2]);
+    if(due>=t){ items[i].classList.add('now'); var days=(due-t)/864e5; var ti=items[i].querySelector('.title');
+      if(ti&&days<=7){ var sp=document.createElement('span'); sp.className='nowtag'; sp.textContent=days<1?'due today':(days<2?'due tomorrow':'due in '+Math.round(days)+' days'); ti.appendChild(sp); }
+      break; }
+  }
+})();
+
+/* Email my notes: one button under the tabs, shown only when there are notes. It opens the student's mail app with every note in a draft,
+   each under its item's title. The nudge shows when notes have changed since the last time the draft was opened. Nothing is sent by the page. */
+(function(){
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  var bar=document.getElementById('mailbar'), btn=document.getElementById('mailbtn'), nudge=document.getElementById('mailnudge');
+  if(!bar||!btn) return;
+  function collect(){
+    var out=[], items=document.querySelectorAll('.ch[data-key]');
+    for(var i=0;i<items.length;i++){
+      var li=items[i], v=get(li.getAttribute('data-key')+'.notes'); if(!v||!v.trim()) continue;
+      var sp=li.closest('details.sprint'), tab=li.closest('[role=tabpanel]');
+      var where=sp?sp.querySelector('summary .title').textContent.trim():(tab&&tab.id==='sprint-view'?document.querySelector('#sprint-view h1').textContent.trim():'');
+      var t=li.querySelector('.title').textContent.replace(/\s*(coming|due today|due tomorrow|due in \d+ days)\s*$/,'').trim();
+      var w=li.querySelector('.when'); w=w?w.textContent.trim():'';
+      out.push({where:where,title:t,when:w,text:v.trim()});
+    }
+    return out;
+  }
+  function snapshot(n){ return n.map(function(x){return x.title+'\u0001'+x.text;}).join('\u0002'); }
+  function paint(){
+    var n=collect(); bar.hidden=n.length===0; if(!n.length){ nudge.textContent=''; return; }
+    var changed=snapshot(n)!==(get('cst286.notes.emailed')||'');
+    nudge.textContent=changed?(n.length+(n.length===1?' note':' notes')+' not yet emailed'):'';
+  }
+  btn.addEventListener('click',function(){
+    var n=collect(); if(!n.length) return;
+    var lines=['My CST286 notes, saved on '+new Date().toLocaleDateString(),''];
+    var last='';
+    n.forEach(function(x){ if(x.where&&x.where!==last){ lines.push('== '+x.where+' =='); last=x.where; } lines.push(x.title+(x.when?' ('+x.when+')':'')); lines.push(x.text); lines.push(''); });
+    var body=lines.join('\n');
+    set('cst286.notes.emailed',snapshot(n)); paint();
+    location.href='mailto:?subject='+encodeURIComponent('My CST286 notes')+'&body='+encodeURIComponent(body);
+  });
+  document.addEventListener('input',function(e){ if(e.target&&e.target.closest&&e.target.closest('.notes')) setTimeout(paint,400); });
+  paint();
+})();
+</script>
+</body>
+</html>
