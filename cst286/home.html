@@ -46,11 +46,12 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 /* Semester view: each sprint opens into its own chain */
 .sprint{position:relative;padding:10px 0}
-.sprint > summary{list-style:none;display:grid;grid-template-columns:40px 1fr auto;column-gap:12px;align-items:center;cursor:pointer}
+.sprint > summary{list-style:none;display:grid;grid-template-columns:40px 1fr auto 20px;column-gap:12px;align-items:center;cursor:pointer}
 .sprint > summary::-webkit-details-marker{display:none}
 .sprint > summary:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px;border-radius:4px}
 .sprint > summary .num{cursor:pointer}
 .sprint[open] > summary .title{color:var(--blue-dark)}
+.plus{width:18px;height:18px;border:1px solid var(--blue);border-radius:3px;color:var(--blue);font-size:14px;font-weight:700;line-height:16px;text-align:center;justify-self:end} .plus::before{content:"+"} .sprint[open] > summary .plus::before{content:"\2212"}
 .sprint .inner{margin:4px 0 6px 52px;padding:4px 0 2px 0;border-left:2px solid var(--border-light)}
 .sprint .inner .seq{margin:0;padding-left:14px} .sprint .inner .seq::before{display:none}
 .sprint .inner .ch{grid-template-columns:28px 1fr auto;padding:7px 0}
@@ -62,6 +63,11 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .sprint.current > summary .num{border-color:var(--blue);background:var(--blue);color:#fff}
 .hint{font-size:12.5px;color:var(--muted)}
 
+.foot{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.ch{grid-template-rows:auto auto} .ch .when{align-self:start}
+.notes-l{grid-column:3;grid-row:2;justify-self:end;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--blue);background:none;border:0;padding:2px 0 0;cursor:pointer;font-family:inherit} .notes-l:hover{text-decoration:underline} .notes-l.has::after{content:" \2022";color:var(--teal)}
+.notes{grid-column:2 / 4;grid-row:3;margin:6px 0 2px} .notes[hidden]{display:none} .notes textarea{width:100%;min-height:64px;font:inherit;font-size:13.5px;line-height:1.45;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical} .notes textarea:focus{outline:2px solid var(--blue);outline-offset:1px} .notes .saved{font-size:11.5px;color:var(--muted);margin:3px 0 0}
+@media (max-width:560px){.notes-l{grid-column:2;justify-self:start}.notes{grid-column:2 / 3}}
 .meet{margin:34px 0 0;border-top:1px solid var(--border-light);padding-top:14px}
 .meet h2{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:0 0 6px}
 .meet ul{list-style:none;margin:0;padding:0} .meet li{font-size:13.5px;padding:4px 0;color:var(--muted)} .meet li b{color:var(--text)}
@@ -79,38 +85,39 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 <div id="sprint-view" role="tabpanel" aria-labelledby="tab-sprint">
 
 <div class="eyebrow">CST286 &middot; Weeks 11&ndash;15 &middot; Nov 4 &ndash; Dec 7</div>
-<h1>Sprint 3 &middot; Learn one thing on your own, precisely</h1>
+<h1>Sprint 3 &middot; Strengthen your learning skills</h1>
+<p class="foot">Click a number to check an item off. Click <b>Notes</b> to keep notes on an item. Both stay on this computer.</p>
 
 <ol class="seq">
 
-<li class="ch" data-key="cst286.s3.0.leave"><div class="num">0</div>
+<li class="ch" data-key="cst286.s3.0.leave" data-due="2026-10-30"><div class="num">0</div>
 <div><div class="title"><a href="my-sprint-2-experience-and-sprint-3-path.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/656553" target="_blank" rel="noopener">My Sprint 2 experience, and the path I choose</a></div>
 <div class="carry">You leave with: your choice of a path for Sprint 3, and the reasons you gave for it</div></div>
 <div class="when"><b>Fri Oct 30</b> &middot; 100 pts</div></li>
 
-<li class="ch now" data-key="cst286.s3.1.leave"><div class="num">1</div>
+<li class="ch" data-key="cst286.s3.1.leave" data-due="2026-11-09"><div class="num">1</div>
 <div><div class="title wip">My Sprint 3 goal and plan<span class="wiptag">coming</span></div>
 <div class="carry">You leave with: a goal that says which physical quantity you will be able to predict, and from what</div></div>
 <div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
 
-<li class="ch" data-key="cst286.s3.2.leave"><div class="num">2</div>
+<li class="ch" data-key="cst286.s3.2.leave" data-due="2026-11-16"><div class="num">2</div>
 <div><div class="title wip">Find and confirm my relationship<span class="wiptag">coming</span></div>
 <div class="carry">You leave with: the quantitative relationship you found, its units, the conditions it holds under, and how you confirmed it</div></div>
 <div class="when"><b>Mon Nov 16</b> &middot; 100 pts</div></li>
 
 <li class="sep">Nov 23 &ndash; 27 &middot; fall break, nothing due</li>
 
-<li class="ch" data-key="cst286.s3.3.leave"><div class="num">3</div>
+<li class="ch" data-key="cst286.s3.3.leave" data-due="2026-11-30"><div class="num">3</div>
 <div><div class="title wip">Five real-world scenarios<span class="wiptag">coming</span></div>
 <div class="carry">You leave with: three real situations where your relationship predicts correctly, and two similar looking scenarios but where it does not, with the difference identified</div></div>
 <div class="when"><b>Mon Nov 30</b> &middot; 100 pts</div></li>
 
-<li class="ch exam" data-key="cst286.s3.4.leave"><div class="num">4</div>
+<li class="ch exam" data-key="cst286.s3.4.leave" data-due="2026-12-02"><div class="num">4</div>
 <div><div class="title wip">Sprint 3 Exam<span class="wiptag">coming</span></div>
 <div class="carry">In class, closed-book written exam and partner conversation</div></div>
 <div class="when"><b>Wed Dec 2</b> &middot; 200 pts</div></li>
 
-<li class="ch" data-key="cst286.s3.5.leave"><div class="num">5</div>
+<li class="ch" data-key="cst286.s3.5.leave" data-due="2026-12-07"><div class="num">5</div>
 <div><div class="title wip">My Sprint 3 experience<span class="wiptag">coming</span></div>
 <div class="carry">The story of how you learned in Sprint 3, and what you learned</div></div>
 <div class="when"><b>Mon Dec 7</b> &middot; 100 pts</div></li>
@@ -136,12 +143,13 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <div class="eyebrow">CST286 &middot; Physics of Computing (with AI) &middot; Fall 2026</div>
 <h1>Get Good at Something You Care About</h1>
+<p class="foot">Click a sprint to open it. Click a number to check an item off.</p>
 
 <ol class="seq">
 
 <li><details class="sprint past"><summary><div class="num">0</div>
 <div><div class="title">Sprint 0 &middot; How this course works</div></div>
-<div class="when"><b>Aug 24 &ndash; Sep 4</b></div></summary>
+<div class="when"><b>Aug 24 &ndash; Sep 4</b></div><span class="plus" aria-hidden="true"></span></summary>
 <div class="inner"><ol class="seq">
 <li class="ch" data-key="cst286.s0.1.leave"><div class="num">1</div><div><div class="title"><a href="what-are-my-priorities.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/621751" target="_blank" rel="noopener">What are my priorities</a></div><div class="carry">You left with: a written account of your priorities, checked against where your time goes</div></div><div class="when"><b>Mon Aug 31</b></div></li>
 <li class="ch" data-key="cst286.s0.2.leave"><div class="num">2</div><div><div class="title"><a href="explore-physics-loop.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/647097" target="_blank" rel="noopener">Explore Physics Loop</a></div><div class="carry">You left with: a simulation of a physical system that you changed yourself, and what happened when you did</div></div><div class="when"><b>Week 2</b></div></li>
@@ -149,7 +157,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <li><details class="sprint past"><summary><div class="num">1</div>
 <div><div class="title">Sprint 1 &middot; Learn one thing in physics, and show it</div></div>
-<div class="when"><b>Sep 7 &ndash; Oct 2</b></div></summary>
+<div class="when"><b>Sep 7 &ndash; Oct 2</b></div><span class="plus" aria-hidden="true"></span></summary>
 <div class="inner"><ol class="seq">
 <li class="ch" data-key="cst286.s1.1.leave"><div class="num">1</div><div><div class="title"><a href="physics-learning-goal.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/648159" target="_blank" rel="noopener">Physics learning goal, and how you would demonstrate it</a></div><div class="carry">You left with: a physics learning goal, and the way you would check for yourself that you had reached it</div></div><div class="when"><b>Mon Sep 14</b></div></li>
 <li class="ch" data-key="cst286.s1.2.leave"><div class="num">2</div><div><div class="title"><a href="find-and-judge-your-sources.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/650004" target="_blank" rel="noopener">Find and judge your sources</a></div><div class="carry">You left with: the sources you chose for your goal, and the reasons you trust each one</div></div><div class="when"><b>Fri Sep 25</b></div></li>
@@ -160,7 +168,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <li><details class="sprint past"><summary><div class="num">2</div>
 <div><div class="title">Sprint 2 &middot; Become a precise and effective learner</div></div>
-<div class="when"><b>Oct 5 &ndash; Oct 30</b></div></summary>
+<div class="when"><b>Oct 5 &ndash; Oct 30</b></div><span class="plus" aria-hidden="true"></span></summary>
 <div class="inner"><ol class="seq">
 <li class="ch" data-key="cst286.s2.1.leave"><div class="num">1</div><div><div class="title"><a href="how-i-learn-and-one-learning-trail.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/653983" target="_blank" rel="noopener">How I learn, and one learning trail to explore</a></div><div class="carry">You left with: one physics topic followed to the end of a guided trail, and what you noticed about how you learn along the way</div></div><div class="when"><b>Mon Oct 12</b> &middot; 100 pts</div></li>
 <li class="ch" data-key="cst286.s2.2.leave"><div class="num">2</div><div><div class="title"><a href="my-sprint-2-goal-and-plan.html" data-canvas-href="https://csumb.instructure.com/courses/33930/assignments/654770" target="_blank" rel="noopener">My Sprint 2 goal and plan</a></div><div class="carry">You left with: a goal that says what you will be able to predict, and a plan for when you would work on it and who would hear you explain it</div></div><div class="when"><b>Mon Oct 19</b> &middot; 100 pts</div></li>
@@ -170,10 +178,10 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 </ol></div></details></li>
 
 <li><details class="sprint current" open><summary><div class="num">3</div>
-<div><div class="title">Sprint 3 &middot; Learn one thing on your own, precisely</div></div>
-<div class="when"><b>Nov 4 &ndash; Dec 7</b></div></summary>
+<div><div class="title">Sprint 3 &middot; Strengthen your learning skills</div></div>
+<div class="when"><b>Nov 4 &ndash; Dec 7</b></div><span class="plus" aria-hidden="true"></span></summary>
 <div class="inner"><ol class="seq">
-<li class="ch now"><div class="num">1</div><div><div class="title wip">My Sprint 3 goal and plan</div></div><div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
+<li class="ch"><div class="num">1</div><div><div class="title wip">My Sprint 3 goal and plan</div></div><div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
 <li class="ch"><div class="num">2</div><div><div class="title wip">Find and confirm my relationship</div></div><div class="when"><b>Mon Nov 16</b> &middot; 100 pts</div></li>
 <li class="ch"><div class="num">3</div><div><div class="title wip">Five real-world scenarios</div></div><div class="when"><b>Mon Nov 30</b> &middot; 100 pts</div></li>
 <li class="ch exam"><div class="num">4</div><div><div class="title wip">Sprint 3 Exam</div></div><div class="when"><b>Wed Dec 2</b> &middot; 200 pts</div></li>
@@ -235,16 +243,36 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
     function paint(){
       var s=get(key), d=get(key+'.done');
       var done=(s&&s.trim())||d;
-      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n;
+      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Done, tap to clear':'Mark done');
       if(carry){ if(s&&s.trim()){ carry.textContent=s.trim(); carry.classList.add('mine'); } else { carry.textContent=carry.getAttribute('data-prompt'); carry.classList.remove('mine'); } }
     }
     if(carry) carry.setAttribute('data-prompt',carry.textContent);
-    num.setAttribute('role','button'); num.setAttribute('tabindex','0'); num.setAttribute('aria-label','Mark done'); num.title='Tap to mark this one done';
+    /* Notes: a small label at the right of the item; click opens a box; what is typed is saved here as it is typed */
+    var nk=key+'.notes', lab=document.createElement('button'), box=document.createElement('div'), ta=document.createElement('textarea'), sv=document.createElement('div');
+    lab.type='button'; lab.className='notes-l'; lab.textContent='Notes'; lab.setAttribute('aria-expanded','false');
+    box.className='notes'; box.hidden=true; ta.placeholder='Anything you want to remember about this one'; ta.setAttribute('aria-label','Notes'); sv.className='saved'; box.appendChild(ta); box.appendChild(sv); li.appendChild(lab); li.appendChild(box);
+    function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
+    ta.value=get(nk)||''; paintNotes();
+    lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
+    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
     function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
     num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });
     num.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.stopPropagation(); toggle(e); } });
     paint();
   })(items[i]); }
+})();
+
+/* "Now" marks the first Sprint 3 item whose due date is today or later; the tag reads "this week" when it is within seven days. */
+(function(){
+  var t=new Date(); t=new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  var items=document.querySelectorAll('#sprint-view .ch[data-due]');
+  for(var i=0;i<items.length;i++){
+    var d=items[i].getAttribute('data-due').split('-'), due=new Date(+d[0],+d[1]-1,+d[2]);
+    if(due>=t){ items[i].classList.add('now'); var days=(due-t)/864e5; var ti=items[i].querySelector('.title');
+      if(ti&&days<=7){ var sp=document.createElement('span'); sp.className='nowtag'; sp.textContent=days<=1?(days<1?'due today':'due tomorrow'):'this week'; ti.appendChild(sp); }
+      break; }
+  }
 })();
 </script>
 </body>
