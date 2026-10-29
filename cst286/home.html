@@ -68,6 +68,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .notes-l{grid-column:3;grid-row:2;justify-self:end;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--blue);background:none;border:0;padding:2px 0 0;cursor:pointer;font-family:inherit} .notes-l:hover{text-decoration:underline} .notes-l.has::after{content:" \2022";color:var(--teal)}
 .notes{grid-column:2 / 4;grid-row:3;margin:6px 0 2px} .notes[hidden]{display:none} .notes textarea{width:100%;min-height:64px;font:inherit;font-size:13.5px;line-height:1.45;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical} .notes textarea:focus{outline:2px solid var(--blue);outline-offset:1px} .notes .saved{font-size:11.5px;color:var(--muted);margin:3px 0 0}
 @media (max-width:560px){.notes-l{grid-column:2;justify-self:start}.notes{grid-column:2 / 3}}
+.mailbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:-8px 0 14px} .mailbar[hidden]{display:none} .mailbtn{font:inherit;font-size:12.5px;font-weight:700;color:var(--blue-dark);background:#fff;border:1px solid var(--blue);border-radius:6px;padding:5px 11px;cursor:pointer} .mailbtn:hover{background:#EEF4F8} .nudge{font-size:12.5px;color:var(--teal);font-weight:700} .nudge:empty{display:none}
 .meet{margin:34px 0 0;border-top:1px solid var(--border-light);padding-top:14px}
 .meet h2{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:0 0 6px}
 .meet ul{list-style:none;margin:0;padding:0} .meet li{font-size:13.5px;padding:4px 0;color:var(--muted)} .meet li b{color:var(--text)}
@@ -80,6 +81,8 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 <div class="page">
 
 <div class="viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sprint-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-semester" aria-controls="semester-view" aria-selected="false">Semester</button></div>
+
+<div class="mailbar" id="mailbar" hidden><span class="nudge" id="mailnudge"></span><button type="button" class="mailbtn" id="mailbtn">Email my notes to me</button></div>
 
 <!-- ============ SPRINT 3 ============ -->
 <div id="sprint-view" role="tabpanel" aria-labelledby="tab-sprint">
@@ -270,9 +273,47 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
   for(var i=0;i<items.length;i++){
     var d=items[i].getAttribute('data-due').split('-'), due=new Date(+d[0],+d[1]-1,+d[2]);
     if(due>=t){ items[i].classList.add('now'); var days=(due-t)/864e5; var ti=items[i].querySelector('.title');
-      if(ti&&days<=7){ var sp=document.createElement('span'); sp.className='nowtag'; sp.textContent=days<=1?(days<1?'due today':'due tomorrow'):'this week'; ti.appendChild(sp); }
+      if(ti&&days<=7){ var sp=document.createElement('span'); sp.className='nowtag'; sp.textContent=days<1?'due today':(days<2?'due tomorrow':'due in '+Math.round(days)+' days'); ti.appendChild(sp); }
       break; }
   }
+})();
+
+/* Email my notes: one button under the tabs, shown only when there are notes. It opens the student's mail app with every note in a draft,
+   each under its item's title. The nudge shows when notes have changed since the last time the draft was opened. Nothing is sent by the page. */
+(function(){
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  var bar=document.getElementById('mailbar'), btn=document.getElementById('mailbtn'), nudge=document.getElementById('mailnudge');
+  if(!bar||!btn) return;
+  function collect(){
+    var out=[], items=document.querySelectorAll('.ch[data-key]');
+    for(var i=0;i<items.length;i++){
+      var li=items[i], v=get(li.getAttribute('data-key')+'.notes'); if(!v||!v.trim()) continue;
+      var sp=li.closest('details.sprint'), tab=li.closest('[role=tabpanel]');
+      var where=sp?sp.querySelector('summary .title').textContent.trim():(tab&&tab.id==='sprint-view'?document.querySelector('#sprint-view h1').textContent.trim():'');
+      var t=li.querySelector('.title').textContent.replace(/\s*(coming|due today|due tomorrow|due in \d+ days)\s*$/,'').trim();
+      var w=li.querySelector('.when'); w=w?w.textContent.trim():'';
+      out.push({where:where,title:t,when:w,text:v.trim()});
+    }
+    return out;
+  }
+  function snapshot(n){ return n.map(function(x){return x.title+'\u0001'+x.text;}).join('\u0002'); }
+  function paint(){
+    var n=collect(); bar.hidden=n.length===0; if(!n.length){ nudge.textContent=''; return; }
+    var changed=snapshot(n)!==(get('cst286.notes.emailed')||'');
+    nudge.textContent=changed?(n.length+(n.length===1?' note':' notes')+' not yet emailed'):'';
+  }
+  btn.addEventListener('click',function(){
+    var n=collect(); if(!n.length) return;
+    var lines=['My CST286 notes, saved on '+new Date().toLocaleDateString(),''];
+    var last='';
+    n.forEach(function(x){ if(x.where&&x.where!==last){ lines.push('== '+x.where+' =='); last=x.where; } lines.push(x.title+(x.when?' ('+x.when+')':'')); lines.push(x.text); lines.push(''); });
+    var body=lines.join('\n');
+    set('cst286.notes.emailed',snapshot(n)); paint();
+    location.href='mailto:?subject='+encodeURIComponent('My CST286 notes')+'&body='+encodeURIComponent(body);
+  });
+  document.addEventListener('input',function(e){ if(e.target&&e.target.closest&&e.target.closest('.notes')) setTimeout(paint,400); });
+  paint();
 })();
 </script>
 </body>
