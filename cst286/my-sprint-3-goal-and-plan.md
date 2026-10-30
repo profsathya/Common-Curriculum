@@ -19,11 +19,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain, Builds on → This goal → Leads to; the middle box is highlighted)
 
-**Builds on.** The path you chose, and the reason you gave for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
+**Builds on.** The learning path you chose, and your reasoning for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
 
-**This goal.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what condition. Then plan when you will work on it and who will hear you explain it.
+**This experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it and who will you partner to test your understanding. <<To Alan: is it correct that the assignment asks them to name their partners?>>
 
-**Leads to.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you find the relationship that turns your "Given" into your prediction.
+**Leads to.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you understand the quantitative relationship that turns your "Given" into your prediction.
 
 ## Your path for Sprint 3
 
@@ -31,20 +31,20 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ○ **Path A · One guided learning trail.** You take the goal from the trail [How fast will you spin?](trail-angular-momentum.html) and work through it step by step.
 ○ **Path B · My own precise learning goal.** You pick a new phenomenon and set the goal yourself, as you did in Sprint 2.
-○ **Path C · A project in a tool.** You build something in GlowScript, PhET or Tinkercad Circuits and find the physics relationship inside what you built.
+○ **Path C · A project in a tool.** You build something in GlowScript, PhET or Tinkercad Circuits to demonstrate and test the quantitative relationship inside what you built.
 
 ## Look back
 
 (Page note: when this browser holds the student's 30 Oct "Why this path" answer, it is shown here in quotation marks under "On 30 October you wrote:". When it does not, the line reads "Open your 30 October submission on Canvas and find the reason you gave for your path.")
 
 On 30 October you chose your path and wrote why. Which part of that reason is shaping the goal you are about to set? Choose the one closest to yours.
-
+<<To ALan: I don't understand the options here - not sure I understand the question either>>
 ○ What I want to understand
 ○ How I want to find the relationship
 ○ When and how I want to work
 ○ I can't see the connection yet
 
-**How it shows up.** Write one or two sentences on how that reason shows up in the goal you set below. If you can't see the connection yet, write what you would need to know to see it.
+**How it shows up.** Write one or two sentences on how that reason shows up in the goal you set below<<To Alan: How can we ask them 'which reason shows up in the goal you set below - before they have set the goal>>. If you can't see the connection yet, write what you would need to know to see it.
 
 ## Choose the AI Dojo route, or work on your own
 
