@@ -125,7 +125,7 @@ Do not summarize until the student asks. When they ask, output the four boxes in
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
 - Story: built around at least three of the listed questions, with specifics (dates, hours, resources, people). The feedback names which listed questions the story answers and asks for a specific where one is missing; it does not suggest a theme.
-- Relationship from memory: in words or as a formula, with units and the condition, or which parts did not come back and why.
+- Relationship from memory: in words and as a formula with units, as far as it came back, and the condition, and which parts did not come back and why.
 - Looking back at the exam: a part of the Sprint 3 work and a moment in the exam.
 - What I take forward: a part of how the student learned and where they expect to use it.
 

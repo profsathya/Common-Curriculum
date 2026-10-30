@@ -224,6 +224,7 @@ Do not summarize until the student asks. When they ask, output the text in the e
 The AI guidance buttons above the Scenario blocks and the AI feedback criteria are the Sprint 2 page's, unchanged, with two additions:
 - Look back: says whether the condition changed, and what was noticed that kept it or changed it.
 - Look forward: names one of Scenarios 1 to 3 and a step to practice.
+- What would go wrong (4-5): "cannot be determined from the information in the situation" is accepted alongside too large, too small, wrong direction or meaningless.
 
 The reply is two or three sentences: what the box already does well, then the one thing that would make it complete and precise. No rewriting of the student's text, and no scenarios suggested.
 

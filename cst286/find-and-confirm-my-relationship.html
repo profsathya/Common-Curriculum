@@ -93,6 +93,8 @@
   h2.sec{font-size:1.5rem; font-weight:650; margin:38px 0 12px; padding-bottom:7px; border-bottom:2px solid var(--line)}
   h2.sec.minor{font-size:1.2rem; margin-top:30px}
   .body{max-width:74ch}
+  .pathhow{max-width:74ch}
+  .pathhow p{margin:0 0 8px}
   .choose{display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-left:5px solid var(--teal); border-radius:5px; padding:14px 16px; margin-top:16px; max-width:900px}
   .choose input{flex:0 0 24px; width:24px; height:24px; margin:2px 0 0; accent-color:var(--tc); cursor:pointer}
   .choose label{cursor:pointer}
@@ -275,6 +277,7 @@ code { overflow-wrap: anywhere; }
   .lookecho{margin:0 0 12px; max-width:900px; padding:10px 14px; background:var(--tsoft); border:1px solid var(--line); border-left:4px solid var(--tc); border-radius:5px; font-size:.95rem; line-height:1.55}
   .lookecho b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--tc); margin-bottom:2px}
   .lookecho q{font-style:italic}
+  .lookecho > div + div{margin-top:8px}
   .lookecho.none{border-left-color:var(--blaze)}
   .looktask{max-width:900px}
   .looktask > .body{margin-bottom:10px}
@@ -339,7 +342,7 @@ code { overflow-wrap: anywhere; }
 
 <h2 class="sec" data-cp="head">Look back</h2>
 <div class="looktask">
-<div class="lookecho" id="look-found" hidden><b>At the end of your goal and plan you wrote:</b> <q id="look-text"></q></div>
+<div class="lookecho" id="look-found" hidden><div id="look-predict" hidden><b>In your goal and plan you wrote:</b> <q id="look-text"></q></div><div id="look-leave" hidden><b>and you said you would start by:</b> <q id="look-leave-text"></q></div></div>
 <p class="lookecho none" id="look-none" hidden>Open your goal and plan submission on Canvas and find your Predict line.</p>
 <div class="task">
 <p class="body" id="q-lookback">Since you set your goal, has your "I will be able to predict" line held? Choose the one closest to yours.</p>
@@ -364,14 +367,18 @@ code { overflow-wrap: anywhere; }
 <li><p><b>Start the conversation.</b> Paste this into your AI Dojo:</p>
 <div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item &quot;Find and confirm my relationship&quot;. First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first for my Predict line from my goal and whether it has changed. Then ask where I am finding the relationship, and have me state it in words and as a formula with every quantity and its unit. Press me on the condition until I can state it as a sentence I could check against a new situation. Then help me plan one check I will run myself: ask me to predict the result with a number before I run it. Do not give me the formula or run the check for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;Find and confirm my relationship&quot;. First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first for my Predict line from my goal and whether it has changed. Then ask where I am finding the relationship, and have me state it in words and as a formula with every quantity and its unit. Press me on the condition until I can state it as a sentence I could check against a new situation. Then help me plan one check I will run myself: ask me to predict the result with a number before I run it. Do not give me the formula or run the check for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
 <li><p><b>Check the passcode.</b> Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.</p></li>
-<li><p><b>Find the relationship and plan your check with your Dojo.</b></p>
+<li><p><b>Find the relationship and plan your check with your Dojo.</b> Follow the directions for your path, just above the form, and talk each step through with your Dojo.</p></li>
+<li><p><b>Ask for the form.</b> When every box holds up, paste this:</p>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-2">Write my work in the form&#x27;s order, using only my words: My Predict line now · Where I found it · My relationship · My condition · My check: Before · My check: What I did · My check: What I got · My check: What I make of it. If a box is not settled, write &quot;not yet settled&quot; in it.</span></p><button type="button" class="copybtn" data-copy="Write my work in the form&#x27;s order, using only my words: My Predict line now · Where I found it · My relationship · My condition · My check: Before · My check: What I did · My check: What I got · My check: What I make of it. If a box is not settled, write &quot;not yet settled&quot; in it.">Copy prompt</button></div></li>
+<li><p><b>Fill in the form.</b> Copy your Predict line into the look back box above, and each other line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.</p></li>
+</ol>
+</div>
+
+<h2 class="sec" id="pathhow-h">How your path does this</h2>
+<div class="pathhow">
 <p data-path="A"><i>Path A:</i> Work through stops 1 to 5 of the trail <a href="trail-angular-momentum.html" target="_blank" rel="noopener">How fast will you spin?</a>. Your check is the phyphox test at stop 5: your predicted spin rate against the one your phone measured.</p>
 <p data-path="B"><i>Path B:</i> Find the relationship in a source you trust (a textbook section such as OpenStax, a simulation's documentation, a lecture video), and check it with a worked example, a PhET simulation run, or a measurement of your own.</p>
-<p data-path="C"><i>Path C:</i> Find the relationship inside what you built. Your check: change one input in your build, predict the new output with your formula, then run the build and compare.</p></li>
-<li><p><b>Ask for the form.</b> When all four boxes hold up, paste this:</p>
-<div class="prompt"><p class="ptext"><span class="ct" id="prompt-2">Write my work in the form&#x27;s order, using only my words: Where I found it · My relationship · My condition · My check. If a box is not settled, write &quot;not yet settled&quot; in it.</span></p><button type="button" class="copybtn" data-copy="Write my work in the form&#x27;s order, using only my words: Where I found it · My relationship · My condition · My check. If a box is not settled, write &quot;not yet settled&quot; in it.">Copy prompt</button></div></li>
-<li><p><b>Fill in the form.</b> Copy each line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.</p></li>
-</ol>
+<p data-path="C"><i>Path C:</i> Find the relationship inside what you built. Your check: change one input in your build, predict the new output with your formula, then run the build and compare.</p>
 </div>
 
 <h2 class="sec">The form</h2>
@@ -405,13 +412,13 @@ code { overflow-wrap: anywhere; }
 <dt>My condition:</dt>
 <dd>Nothing outside the spinning system twists it while the mass moves in or out.</dd>
 <dt>My check · Before:</dt>
-<dd>On the chair, with two 1.5 kg bottles at 0.75 m and then 0.20 m, a body estimate of 2.0 kg&middot;m&sup2;, and 3.0 rad/s arms out, I predict 5.2 rad/s arms in.</dd>
+<dd>With two 1.5 kg bottles moved from 0.75 m to halfway in, 0.45 m, and 2.0 kg&middot;m&sup2; for my body and the chair, I&#8321; = 3.69 kg&middot;m&sup2; and I&#8322; = 2.61 kg&middot;m&sup2;, so I predict I will spin 1.41 times as fast. My fresh run started at 3.0 rad/s, so I predict 4.2 rad/s.</dd>
 <dt>My check · What I did:</dt>
-<dd>Recorded my spin with phyphox, phone flat against my chest, two turns arms out and two turns arms in.</dd>
+<dd>Recorded the run with phyphox, phone flat on my lap, two turns with the bottles out and two turns with them halfway in.</dd>
 <dt>My check · What I got:</dt>
-<dd>5.0 rad/s.</dd>
+<dd>4.0 rad/s.</dd>
 <dt>My check · What I make of it:</dt>
-<dd>about 4% below my prediction. The chair's bearing twists against the spin a little, which breaks my condition slightly, and my body estimate was rough; solving for my own body's moment of inertia gives 2.23 kg&middot;m&sup2;.</dd>
+<dd>about 6% below my prediction. The chair's bearing twists against the spin a little, which breaks my condition slightly, and my body's moment of inertia may be larger than the rough 2.0 kg&middot;m&sup2;, which would make the true ratio smaller.</dd>
 </dl>
 </section>
 <section class="excard" id="ex-b" aria-labelledby="ex-b-h">
@@ -431,6 +438,25 @@ code { overflow-wrap: anywhere; }
 <dd>20.3 s for ten swings, so 2.03 s per swing.</dd>
 <dt>My check · What I make of it:</dt>
 <dd>about 1% above the prediction. The length to the middle of the phone was hard to measure, and about 2 cm more length would account for the difference.</dd>
+</dl>
+</section>
+<section class="excard" id="ex-c" aria-labelledby="ex-c-h">
+<h3 id="ex-c-h">Example C · Path C, a circuit in Tinkercad Circuits</h3>
+<dl>
+<dt>Where I found it:</dt>
+<dd>My Tinkercad Circuits build: a 9 V battery, a resistor and a red LED in one loop. The relationship is Ohm's law applied to the resistor, from OpenStax College Physics, section 20.2, Ohm's Law.</dd>
+<dt>My relationship:</dt>
+<dd>The current is the battery's voltage minus the LED's voltage, divided by the resistance: <code>I = (V_battery &minus; V_LED) &divide; R</code>, where <code>I</code> is the current in amperes (A, shown in milliamperes, mA), <code>V_battery</code> and <code>V_LED</code> are in volts (V) and <code>R</code> is in ohms (&Omega;). This predicts the current; the LED gets brighter as the current rises, but brightness is not what the formula gives.</dd>
+<dt>My condition:</dt>
+<dd>The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.</dd>
+<dt>My check · Before:</dt>
+<dd>With the 470 &Omega; resistor swapped for 1,000 &Omega;, I predict (9 V &minus; 2 V) &divide; 1,000 &Omega; = 0.0070 A = 7.0 mA.</dd>
+<dt>My check · What I did:</dt>
+<dd>Changed the resistor in Tinkercad, added a multimeter in the loop set to current, and started the simulation.</dd>
+<dt>My check · What I got:</dt>
+<dd>6.9 mA.</dd>
+<dt>My check · What I make of it:</dt>
+<dd>about 1% below my prediction. My check compares my hand calculation with the simulator's own model of the LED, whose voltage is a little more than the 2 V I assumed, which leaves slightly less voltage across the resistor.</dd>
 </dl>
 </section>
 </aside>
@@ -528,6 +554,7 @@ code { overflow-wrap: anywhere; }
     "week": "12",
     "title": "Find and confirm my relationship",
     "lookSource": "cst286.s3.1.leave",
+    "lookItem1": "cc-gi:cst286-my-sprint-3-goal-and-plan",
     "fillA": false,
     "sys": "You are helping a student check one box of their 'Find and confirm my relationship' form in CST286. Reply in two or three sentences, in plain words: first, what the box already does well, quoting their words; then the one thing that would make it complete and precise, asked as a question or named as what is missing. Use only the criteria for this box, listed below. Never rewrite the student's text, and never supply a formula or numbers. If every criterion is met, say which ones are met and nothing more. Do not use pass/fail language.",
     "meta": {
@@ -670,18 +697,24 @@ code { overflow-wrap: anywhere; }
         var foundEl = document.getElementById('look-found');
         var noneEl = document.getElementById('look-none');
         if (!foundEl || !noneEl || !CFG.lookSource) { return; }
-        var prev = '';
-        if (CFG.lookSource === 'oct30why') { prev = oct30.why; }
-        else { prev = lsGet(CFG.lookSource) || ''; }
-        prev = prev.trim();
-        if (prev) {
-            document.getElementById('look-text').textContent = prev;
-            foundEl.hidden = false;
-            noneEl.hidden = true;
-        } else {
-            foundEl.hidden = true;
-            noneEl.hidden = false;
-        }
+        // Item 1 (my-sprint-3-goal-and-plan.html) saves its boxes under 'cc-gi:cst286-my-sprint-3-goal-and-plan';
+        // its "I will be able to predict" box is answers.predict. Its look forward sentence is cst286.s3.1.leave.
+        var predict = '';
+        try {
+            var r1 = lsGet(CFG.lookItem1);
+            var p1 = r1 ? JSON.parse(r1) : null;
+            if (p1 && p1.answers && p1.answers.predict) { predict = String(p1.answers.predict.text || ''); }
+        } catch (e) { predict = ''; }
+        predict = predict.trim();
+        var leave = (lsGet(CFG.lookSource) || '').trim();
+        var pWrap = document.getElementById('look-predict');
+        var lWrap = document.getElementById('look-leave');
+        if (predict) { document.getElementById('look-text').textContent = predict; }
+        if (leave) { document.getElementById('look-leave-text').textContent = leave; }
+        if (pWrap) { pWrap.hidden = !predict; }
+        if (lWrap) { lWrap.hidden = !leave; }
+        foundEl.hidden = !(predict || leave);
+        noneEl.hidden = !!(predict || leave);
     }());
 
     // ---------- the Dojo tick ----------
@@ -747,6 +780,28 @@ code { overflow-wrap: anywhere; }
             }, function () { selectNear(btn); });
         });
     });
+
+    // ---------- the starter prompt names the chosen path: "[A, B or C]" becomes the letter, in the text and in what Copy copies ----------
+    (function () {
+        var MARK = '[A, B or C]';
+        var targets = [];
+        $all('.prompt').forEach(function (pr) {
+            var ct = pr.querySelector('.ct');
+            var btn = pr.querySelector('.copybtn');
+            if (!ct || ct.textContent.indexOf(MARK) < 0) { return; }
+            targets.push({ ct: ct, btn: btn, text: ct.textContent, copy: btn ? btn.getAttribute('data-copy') : null });
+        });
+        if (!targets.length) { return; }
+        function put(p) {
+            var letter = (p === 'A' || p === 'B' || p === 'C') ? p : MARK;
+            targets.forEach(function (t) {
+                t.ct.textContent = t.text.split(MARK).join(letter);
+                if (t.btn && t.copy !== null) { t.btn.setAttribute('data-copy', t.copy.split(MARK).join(letter)); }
+            });
+        }
+        pathListeners.push(put);
+        put(currentPath());
+    }());
 
     // ---------- choice radios (look back, look forward, exam steps): remembered on this browser ----------
     function choiceValue(name) {
