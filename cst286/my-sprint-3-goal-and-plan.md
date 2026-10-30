@@ -7,7 +7,8 @@ Notes for the editor, not shown to students:
 - The look forward's sentence is saved as "cst286.s3.1.leave"; the home page shows it under item 1 in place of the grey "You leave with" line, and item 2's look back opens from it.
 - Look back and look forward carry no separate self-check points (agreed 28 Oct with Astra and Argon); they are part of "complete".
 - 30 Oct, after the Astra and Argon reviews: Example A's Given names its units (it auto-fills for Path A and must pass the self-check); a plan example under Part 3 (as on the Sprint 2 page); "name" → "identify".
-- Path guidance differs; Parts 1-3, the self-check and the points are the same for all three paths. -->
+- Path guidance differs; Parts 1-3, the self-check and the points are the same for all three paths.
+- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: look back rewritten so it can be answered before the goal is set (restate the 30 Oct reason and how it will influence the goal); Part 3's second line is now two classmates chosen from the class roster drop-down (as in the Sprint 2 Exam partner box) who will test the student's understanding; middle box named "This experience" on every Sprint 3 page; "understand" and "test" in place of "find" and "confirm"; Path A's goal made word for word the same as the trail's. Pre-change copy: my-sprint-3-goal-and-plan.md.bak-2026-10-30-tenchanges. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 11 · Set your goal
 
@@ -21,7 +22,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** The learning path you chose, and your reasoning for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
 
-**This experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it and who will you partner to test your understanding. <<To Alan: is it correct that the assignment asks them to name their partners?>>
+**This experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it, and choose the two classmates you will partner with to test your understanding.
 
 **Leads to.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you understand the quantitative relationship that turns your "Given" into your prediction.
 
@@ -37,14 +38,14 @@ This graded item will affect your final grade, and the late penalty applies.
 
 (Page note: when this browser holds the student's 30 Oct "Why this path" answer, it is shown here in quotation marks under "On 30 October you wrote:". When it does not, the line reads "Open your 30 October submission on Canvas and find the reason you gave for your path.")
 
-On 30 October you chose your path and wrote why. Which part of that reason is shaping the goal you are about to set? Choose the one closest to yours.
-<<To ALan: I don't understand the options here - not sure I understand the question either>>
-○ What I want to understand
-○ How I want to find the relationship
-○ When and how I want to work
-○ I can't see the connection yet
+On 30 October you chose your path and wrote down why you chose it. Read that reason again, and tell us whether it is still your reason today.
 
-**How it shows up.** Write one or two sentences on how that reason shows up in the goal you set below<<To Alan: How can we ask them 'which reason shows up in the goal you set below - before they have set the goal>>. If you can't see the connection yet, write what you would need to know to see it.
+○ Yes, as I wrote it
+○ Mostly, with one change
+○ No, it has changed
+○ I can't find what I wrote
+
+**My reason now.** Restate your reason and how it will influence the goal you're about to set.
 
 ## Choose the AI Dojo route, or work on your own
 
@@ -58,7 +59,7 @@ AI Dojo Passcode for this Graded Item: **GOAL3-1109**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My Sprint 3 goal and plan". First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first about the reason I gave on 30 October for choosing my path, and how it shapes the goal I want to set. Then help me fill in the six lines of the form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.
+> Walk me through the graded item "My Sprint 3 goal and plan". First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first to restate the reason I gave on 30 October for choosing my path, and how it will influence the goal I am about to set. Then help me fill in the six lines of the form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -69,7 +70,7 @@ AI Dojo Passcode for this Graded Item: **GOAL3-1109**
 
 **4. Ask for the form.** When all six lines feel right, paste this:
 
-> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · I will work on this on · I will explain what I learned to. Use only my words. If a line is not settled, write "not yet settled" on it.
+> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · I will work on this on · How my partners will test me. Use only my words. If a line is not settled, write "not yet settled" on it.
 
 **5. Fill in the form.** Copy each of the six lines from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
 
@@ -105,21 +106,23 @@ Inside the phenomenon you chose sits a relationship between quantities. Write it
 
 ### Part 3 · My plan
 
-Two lines that make the goal happen: when you will work on it outside class, and who will hear you explain what you learned.
+Your plan has two parts: when you will work on your goal outside class, and the two classmates who will test your understanding before the exam.
 
 1. **When I will work on it.** Identify the days and times outside class you will give to this goal between now and the exam on Wednesday 2 December, and block them in your calendar now. Find and confirm my relationship is due Monday 16 November and Five real-world scenarios Monday 30 November, and nothing is due in fall break, 23 to 27 November. (Page note, Path A only: "Include time for the trail's experiment on a spinning chair, which needs a friend and about 30 minutes.")
 
    **I will work on this on ...** The days and times, blocked in my calendar, between now and the exam.
 
-2. **Who I will explain it to.** Identify the person, or people, who will hear you explain what you learned and tell you whether it was understandable: a classmate on your path, a friend, or someone at home. Say when you will do it, so that there is time to fix what they did not follow before the exam.
+2. **Who will test my understanding.** Choose two classmates from the drop-down, and say when you will meet them. Meet early enough that there is still time before the exam to work on whatever you could not explain. A partner tests you best by listening to you explain your relationship and then giving you a new case to predict, so ask each of them to bring one case of their own. (Page note: two name boxes, Partner 1 and Partner 2, each with the class roster drop-down used for the Sprint 2 Exam partner box, and below them one text box.)
 
-   **I will explain what I learned to ...** The person, when, and how I will know whether they understood me.
+   **Partner 1 · Partner 2** (chosen from the drop-down)
 
-A plan written for Example A would read: *I will work on this on Tuesday and Thursday evenings, 7 to 8:30, from 10 to 19 November, and on Sunday 29 November, blocked in my calendar.* And: *I will explain what I learned to my roommate on Sunday 22 November, and I will know she understood me if she can tell me why I spin faster with the bottles pulled in.*
+   **How my partners will test me ...** When we will meet, and what each of them will ask me to do.
+
+A plan written for Example A would read: *I will work on this on Tuesday and Thursday evenings, 7 to 8:30, from 10 to 19 November, and on Sunday 29 November, blocked in my calendar.* And, with two classmates chosen from the drop-down: *We will meet on Zoom on Sunday 22 November at 7 pm. I will explain how my spin rate depends on how my mass is arranged, and then each of them will give me a new arm position so that I can predict how fast I will spin.*
 
 ## Look forward
 
-Next, in [Find and confirm my relationship](find-and-confirm-my-relationship.html), due Monday 16 November, you find the relationship that turns your "Given" into your prediction, and you check it once yourself. Which part of your goal do you expect to be hardest to pin down? Choose the one closest to yours.
+Next, in [Find and confirm my relationship](find-and-confirm-my-relationship.html), due Monday 16 November, you come to understand the quantitative relationship that turns your "Given" into your prediction, and you test it once yourself. Which part of your goal do you expect to be hardest to pin down? Choose the one closest to yours.
 
 ○ Which quantities belong in "Given"
 ○ The relationship itself
@@ -160,7 +163,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] "Predict" states the condition the relationship depends on · 15 pts
 - [ ] "Useful" names a real situation where being able to predict this helps · 10 pts
 - [ ] My plan names the days and times I will work on this outside class, and they are in my calendar · 15 pts
-- [ ] My plan names who will hear me explain what I learned, and when · 15 pts
+- [ ] My plan names two classmates who will test my understanding, and when we will meet · 15 pts
 
 **What makes it strong.** Someone who reads your "given" and "predict" lines could set up the calculation without asking you anything, and your condition is the first thing you would check before trusting the prediction in a new situation.
 
@@ -178,21 +181,21 @@ Graded item: My Sprint 3 goal and plan. Course: CST286. Due: Monday 9 November. 
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student sets a precise Sprint 3 goal on the path they chose on 30 October (A: the angular momentum trail How fast will you spin?; B: a new phenomenon of their own; C: a build in GlowScript, PhET or Tinkercad Circuits), and a plan for when they will work on it and who will hear them explain it.
+Learning purpose: the student sets a precise Sprint 3 goal on the path they chose on 30 October (A: the angular momentum trail How fast will you spin?; B: a new phenomenon of their own; C: a build in GlowScript, PhET or Tinkercad Circuits), and a plan for when they will work on it and which two classmates will test their understanding.
 
-Order: first ask the student which path they are on and what reason they gave on 30 October for choosing it, and how that reason shapes the goal they want to set. Then work through the six lines one at a time: what I want to understand, Given, I will be able to predict (with the condition), Predicting it is useful because, I will work on this on, I will explain what I learned to. Ask until each line is precise. Never write a line for the student. On Path A, ask whether they will keep the trail's goal or narrow it to one spinning situation they care about. On Path B, check that the phenomenon is different from their Sprint 2 one. On Path C, ask what they will build and which quantity their build will let them predict.
+Order: first ask the student which path they are on, and ask them to restate the reason they gave on 30 October for choosing it and how that reason will influence the goal they are about to set. Then work through the six lines one at a time: what I want to understand, Given, I will be able to predict (with the condition), Predicting it is useful because, I will work on this on, How my partners will test me (the two classmates are chosen from a drop-down on the page). Ask until each line is precise. Never write a line for the student. On Path A, ask whether they will keep the trail's goal or narrow it to one spinning situation they care about. On Path B, check that the phenomenon is different from their Sprint 2 one. On Path C, ask what they will build and which quantity their build will let them predict.
 
 Do not summarize until the student asks. When they ask, output the six lines in the form's order using only the student's words, and write "not yet settled" on any line that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Look back: points to a specific part of the 30 Oct reason and says how it shows up in the goal, or says what the student would need to know to see the connection.
+- Look back: restates the 30 Oct reason and says how it will influence the goal the student is about to set.
 - What I want to understand: one phenomenon, not a field.
 - Given: each starting quantity with its unit.
 - Predict: one quantity, its unit, and a condition.
 - Useful: a real situation, and how predicting helps there.
 - When: days and times outside class, before Wed 2 Dec, in the calendar.
-- Who: a person, a time, and how the student will know they were understood.
+- How my partners will test me: a time to meet, and what each partner will ask the student to do.
 - Look forward: names the goal in the student's words and a first step.
 
 The reply is two or three sentences: what the box already does well, then the one thing that would make it complete and precise. No rewriting of the student's text, no goal suggested, and no judgment of which goal is better.

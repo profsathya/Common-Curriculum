@@ -8,7 +8,8 @@ Notes for the editor, not shown to students:
 - Clip times come from content-tracks/cst286/angular-momentum-digest.md (captions, approximate; check each by watching): fan 3:14-7:00 · linear vs angular 2:34-9:10 (stops before 9:16, where the video says r is the distance to where the force is applied) · conservation problem 1:59-7:38 · gyroscopes 2:20-7:10. Two spoken slips are corrected on the page: the fan's slowing rate said as rad/s (it is rad/s²), and "no external force" in the gyroscope video (it means no outside torque).
 - Left out of More practice: Rusty nut (it says rust increases the nut's moment of inertia; rust adds friction) and the Khan momentum video (linear only, and calls the unit of impulse the joule).
 - 29 Oct, Prof. Sathya's edit: goal broadened so Path A students have room to explore other scenarios later (his note); "in the right units"; useful line adds the spinning top / wheel. Alan's wording keeps the top as "the first step toward" understanding it, because staying upright is precession under gravity's torque, which this trail's relationship does not predict. Radian detour added at stop 1 (his request): jar-and-string, why radians, his Ladybug video (no new video: Prof. Sathya, 29 Oct, "lets not rely on me producing anything yet"), practice. Pre-edit copy: trail-angular-momentum.md.bak-his-edit-2026-10-29.
-- For Item 3 (Five real-world scenarios): the skater, diver, merry-go-round, satellite and Earth examples here are practice; Path A students should bring scenarios of their own to Item 3. Decide whether to say so on Item 3's page. -->
+- For Item 3 (Five real-world scenarios): the skater, diver, merry-go-round, satellite and Earth examples here are practice; Path A students should bring scenarios of their own to Item 3. Decide whether to say so on Item 3's page.
+- 30 Oct afternoon, approved by Prof. Sathya: the goal and the useful line now match item 1's Example A word for word, because Path A students get Example A filled in on item 1 and the two must read the same. This drops the spinning top and bicycle wheel from the useful line (his 29 Oct addition), since why a top stays upright is precession, which this relationship does not predict. Pre-change copy: trail-angular-momentum.md.bak-2026-10-30-tenchanges. -->
 
 CST286 · Fall 2026 · Sprint 3 · Path A · A trail you can take as your Sprint 3 goal
 
@@ -17,12 +18,12 @@ CST286 · Fall 2026 · Sprint 3 · Path A · A trail you can take as your Sprint
 Sit on a spinning chair, hold your arms out, and push off. Now pull your arms in. You speed up, and nobody pushed you. Figure skaters, divers and satellites use the same physics to control their spin, and the phone in your pocket can measure it. On this trail you learn the relationship, predict your own spin, and use your phone to check whether you were right.
 
 ## A goal you can take as written
-Goal: Understand how spinning objects behave differently from objects moving in a straight line, and use that to predict how a spin changes.
+Goal: Understand how spinning objects behave differently from objects moving in a straight line, and how a spin changes when the mass is rearranged.
 
 A quantitative relationship I will be able to use:
 > **Given** how fast something is spinning, in radians per second, and how its mass is arranged around the axis before and after the arrangement changes, as a moment of inertia in kilogram square meters,
 > **I can predict** how fast it will spin afterwards, in radians per second, as long as nothing outside twists it while the mass moves.
-> **This is useful because** the same relationship explains how skaters, divers and satellites control their spin, and it is the first step toward understanding why a spinning top or a bicycle wheel stays upright.
+> **This is useful because** the same relationship explains how skaters, divers and satellites control their spin, and my phone's gyroscope lets me check the prediction on a spinning chair.
 
 **Copy this goal** - paste it into your Sprint 3 goal as it is, or narrow it to one spinning situation you care about.
 

@@ -5,7 +5,8 @@ Notes for the editor, not shown to students:
 - Part 1 shrinks to the relationship and condition carried from item 2, so the student starts from work already confirmed. The Sprint 2 "How I learned and confirmed it" box moved to item 2.
 - Path A students have practice problems in the trail (skater, diver, merry-go-round, satellite, Earth); the page asks them to choose situations of their own. Pair A below uses a skater only to show the form.
 - 30 Oct, after the Astra and Argon reviews: path lines moved out of the Dojo block into Part 2 (they were hidden when the Dojo was unticked); Path A may use the trail's kinds of activity with situations and numbers of their own; "cannot be determined" added as an allowed answer; Pair C (LED tail light) added; look back included in the Dojo summary. Pre-review copy: five-real-world-scenarios-sprint-3.md.bak-2026-10-30-review.
-- Pair B numbers: T = 2π√(2.5/9.8) = 3.17 s; at 60 degrees the large-angle series gives about 3.4 s. -->
+- Pair B numbers: T = 2π√(2.5/9.8) = 3.17 s; at 60 degrees the large-angle series gives about 3.4 s.
+- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: look back rewritten so it can be answered before the goal is set (restate the 30 Oct reason and how it will influence the goal); Part 3's second line is now two classmates chosen from the class roster drop-down (as in the Sprint 2 Exam partner box) who will test the student's understanding; middle box named "This experience" on every Sprint 3 page; "understand" and "test" in place of "find" and "confirm"; Path A's goal made word for word the same as the trail's. Exam wording softened to "use your relationship and condition on paper" until the exam is designed. Pre-change copy: five-real-world-scenarios-sprint-3.md.bak-2026-10-30-tenchanges. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 13 · Apply it, and find its limits
 
@@ -17,11 +18,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** The relationship and condition you found and checked in [Find and confirm my relationship](find-and-confirm-my-relationship.html).
+**Builds on.** The quantitative relationship and condition you came to understand and tested in [Find and confirm my relationship](find-and-confirm-my-relationship.html).
 
-**This goal.** Apply your relationship in three real situations where its condition holds, and identify two similar-looking situations where it does not, because one physical detail is different.
+**This experience.** Apply your relationship in three real situations where its condition holds, and identify two similar-looking situations where it does not, because one physical detail is different.
 
-**Leads to.** The Sprint 3 Exam on Wednesday 2 December, where you work one of your scenarios on paper.
+**Leads to.** The Sprint 3 Exam on Wednesday 2 December, where you use your relationship and condition on paper.
 
 ## Your path for Sprint 3
 
@@ -33,7 +34,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 (Page note: when this browser holds the sentence the student wrote at the end of item 2, it is shown here in quotation marks under "At the end of Find and confirm my relationship you wrote:". When it does not, the line reads "Open your Find and confirm my relationship submission on Canvas and copy your relationship and condition.")
 
-Since you checked your relationship, has your condition stayed the same? Choose the one closest to yours.
+Since you tested your relationship, has your condition stayed the same? Choose the one closest to yours.
 
 ○ It is the same
 ○ I made it sharper
@@ -54,7 +55,7 @@ AI Dojo Passcode for this Graded Item: **LIMITS3-1130**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Five real-world scenarios" for Sprint 3. First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Start by asking me for the relationship and the condition I confirmed in Find and confirm my relationship. Next, work through my five scenarios with me one at a time (three where the condition holds, and two look-alikes where it breaks). Have me work the numbers myself, and challenge me on whether my condition really holds or breaks in each one. Do not write the scenarios or work the numbers for me; if I am struggling to find a scenario or to see how my condition breaks, ask me guiding questions to help me figure them out. Do not summarize until I ask you to.
+> Walk me through the graded item "Five real-world scenarios" for Sprint 3. First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Start by asking me for the relationship and the condition I tested in Find and confirm my relationship. Next, work through my five scenarios with me one at a time (three where the condition holds, and two look-alikes where it breaks). Have me work the numbers myself, and challenge me on whether my condition really holds or breaks in each one. Do not write the scenarios or work the numbers for me; if I am struggling to find a scenario or to see how my condition breaks, ask me guiding questions to help me figure them out. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -70,7 +71,7 @@ AI Dojo Passcode for this Graded Item: **LIMITS3-1130**
 
 (Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder.)
 
-### Part 1 · My relationship and condition
+### Part 1 · My quantitative relationship and condition
 
 Bring these two boxes from Find and confirm my relationship, with any change you made since.
 
@@ -127,7 +128,7 @@ Take one of your working scenarios from Part 2 and change one physical detail ab
 
 ## Look forward
 
-Next is the Sprint 3 Exam on Wednesday 2 December, in class and on paper, where you work one of your scenarios through. Which of your three working scenarios would you choose to work on paper? Choose one.
+Next is the Sprint 3 Exam on Wednesday 2 December, in class and on paper, where you use your relationship and condition without your notes. Which of your three working scenarios do you understand well enough to work through on paper without your notes? Choose one.
 
 ○ Scenario 1 ○ Scenario 2 ○ Scenario 3
 
@@ -199,7 +200,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **What makes it strong.** The two scenarios that do not apply are close enough to your working scenarios that someone might try to use your formula on them without noticing, and your explanation of the subtle difference makes it immediately clear why the formula fails there.
 
-**Grading.** 100 points, in Graded items. Submitting on time earns the doing half of your grade; working one of your scenarios on paper in the Sprint 3 Exam and explaining your work in check-ins earns the other half.
+**Grading.** 100 points, in Graded items. Submitting on time earns the doing half of your grade; using your relationship and condition on paper in the Sprint 3 Exam and explaining your work in check-ins earns the other half.
 
 ## Submit
 
@@ -213,9 +214,9 @@ Graded item: Five real-world scenarios (Sprint 3). Course: CST286. Due: Monday 3
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student applies the relationship they confirmed in Find and confirm my relationship in three real situations where its physical condition holds, and constructs two look-alike situations where one physical detail changes so the condition breaks.
+Learning purpose: the student applies the relationship they tested in Find and confirm my relationship in three real situations where its physical condition holds, and constructs two look-alike situations where one physical detail changes so the condition breaks.
 
-Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they confirmed. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, the student may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), but the situation, the numbers and the look-alikes must be the student's own, not the trail's practice problems relabeled. On Path C, one scenario may be the student's build. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
+Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they tested. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, the student may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), but the situation, the numbers and the look-alikes must be the student's own, not the trail's practice problems relabeled. On Path C, one scenario may be the student's build. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
 
 Do not summarize until the student asks. When they ask, output the text in the exact order of the form's boxes using only the student's words, and write "not yet settled" on any box that is not settled.
 

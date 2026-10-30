@@ -5,7 +5,8 @@ Notes for the editor, not shown to students:
 - The look back opens from "cst286.s3.1.leave" (the sentence the student wrote at the end of item 1) when this browser has it; otherwise it names item 1 and asks the student to bring their Predict line from their Canvas submission.
 - The look forward's sentence is saved as "cst286.s3.2.leave".
 - 30 Oct, after the Astra and Argon reviews: path directions moved out of the Dojo block into "How your path does this" (they were hidden when the Dojo was unticked); look back now quotes the item 1 Predict line; the Dojo summary lists all eight boxes; Example A follows the new stop 5 test (halfway position, 3.0 → predicted 4.2, got 4.0); Example C (Path C, LED circuit) added. Pre-review copy: find-and-confirm-my-relationship.md.bak-2026-10-30-review.
-- Sprint 2 has no item exactly like this one: Part 1 of Five real-world scenarios held these three boxes, and the week-9 OYP "Design an experiment and collect data for your prediction" held the check. This item gives them a week of their own, so that item 3 can start from a relationship already confirmed. -->
+- Sprint 2 has no item exactly like this one: Part 1 of Five real-world scenarios held these three boxes, and the week-9 OYP "Design an experiment and collect data for your prediction" held the check. This item gives them a week of their own, so that item 3 can start from a relationship already confirmed.
+- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: look back rewritten so it can be answered before the goal is set (restate the 30 Oct reason and how it will influence the goal); Part 3's second line is now two classmates chosen from the class roster drop-down (as in the Sprint 2 Exam partner box) who will test the student's understanding; middle box named "This experience" on every Sprint 3 page; "understand" and "test" in place of "find" and "confirm"; Path A's goal made word for word the same as the trail's. Pre-change copy: find-and-confirm-my-relationship.md.bak-2026-10-30-tenchanges. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 12 · Find it, and check it
 
@@ -19,7 +20,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** The goal you set in [My Sprint 3 goal and plan](my-sprint-3-goal-and-plan.html): the quantities in "Given" and the one you will predict.
 
-**This goal.** Find the quantitative relationship that turns your "Given" into your prediction, state the condition it depends on, and confirm it with one check you run yourself.
+**This experience.** Understand the quantitative relationship that turns your "Given" into your prediction, state the condition it depends on, and test it with one check you run yourself.
 
 **Leads to.** [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), where you use this relationship in three real situations and find two look-alikes where it breaks.
 
@@ -44,7 +45,7 @@ Since you set your goal, has your "I will be able to predict" line held? Choose 
 
 ## Choose the AI Dojo route, or work on your own
 
-☑ **I would like to use the AI Dojo to find and check my relationship.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you how you found the relationship, presses you on the condition, and helps you plan the check without running it for you. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to understand and test my relationship.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you how you found the relationship, presses you on the condition, and helps you plan the check without running it for you. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
@@ -54,11 +55,11 @@ AI Dojo Passcode for this Graded Item: **REL3-1116**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Find and confirm my relationship". First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first for my Predict line from my goal and whether it has changed. Then ask where I am finding the relationship, and have me state it in words and as a formula with every quantity and its unit. Press me on the condition until I can state it as a sentence I could check against a new situation. Then help me plan one check I will run myself: ask me to predict the result with a number before I run it. Do not give me the formula or run the check for me. Do not summarize until I ask you to.
+> Walk me through the graded item "Find and confirm my relationship". First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first for my Predict line from my goal and whether it has changed. Then ask where I am learning the relationship, and have me state it in words and as a formula with every quantity and its unit. Press me on the condition until I can state it as a sentence I could check against a new situation. Then help me plan one check I will run myself: ask me to predict the result with a number before I run it. Do not give me the formula or run the check for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
-**3. Find the relationship and plan your check with your Dojo.** Follow the directions for your path, just above the form, and talk each step through with your Dojo.
+**3. Understand the relationship and plan your check with your Dojo.** Follow the directions for your path, just above the form, and talk each step through with your Dojo.
 
 **4. Ask for the form.** When every box holds up, paste this:
 
@@ -71,8 +72,8 @@ AI Dojo Passcode for this Graded Item: **REL3-1116**
 (Page note: shown whatever the Dojo tick says; only the paragraph for the student's path shows.)
 
 - *Path A:* Work through stops 1 to 5 of the trail [How fast will you spin?](trail-angular-momentum.html). Your check is the phyphox test at stop 5: your predicted spin rate against the one your phone measured.
-- *Path B:* Find the relationship in a source you trust (a textbook section such as OpenStax, a simulation's documentation, a lecture video), and check it with a worked example, a PhET simulation run, or a measurement of your own.
-- *Path C:* Find the relationship inside what you built. Your check: change one input in your build, predict the new output with your formula, then run the build and compare.
+- *Path B:* Learn the relationship from a source you trust (a textbook section such as OpenStax, a simulation's documentation, a lecture video), and test it with a worked example, a PhET simulation run, or a measurement of your own.
+- *Path C:* Your build lets you demonstrate the quantitative relationship, and your check tests it. Change one input in your build, use your formula to predict the new output, and then run the build to see how close your prediction came.
 
 ## The form
 
@@ -80,12 +81,12 @@ AI Dojo Passcode for this Graded Item: **REL3-1116**
 
 ### Task 1 · Where I found it
 
-- Identify the source you learned the relationship from, by title, link or person. On Path A, this is the trail. On Path C, describe what you built and in which tool.
+- Identify the source you learned the relationship from, by title, link or person. On Path A, this is the trail. On Path C, describe what you built, in which tool, and where the relationship shows up in it.
 - Identify the part of the source that gave you the relationship (a section, a stop, a part of your build).
 
    **Where I found it.** The source, and the part of it that gave me the relationship.
 
-### Task 2 · My relationship
+### Task 2 · My quantitative relationship
 
 - State the quantitative relationship in words.
 - Write it as a math formula.
@@ -115,14 +116,14 @@ Run one check yourself, and report it in four parts.
 
 ## Look forward
 
-Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), due Monday 30 November, you use this relationship in three real situations and find two look-alikes where your condition breaks. Where do you expect to find your first real situation? Choose the one closest to yours.
+Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), due Monday 30 November, you use this relationship in three real situations and find two look-alikes where your condition breaks. Which part of your condition do you expect will be easiest to break in a look-alike? Choose the one closest to yours.
 
-○ In something I use every day
-○ In a sport or a game
-○ In a machine or a device
+○ Something outside acts on it, such as a push, a drag or a twist
+○ A quantity goes past a limit, such as too large an angle or too low a voltage
+○ Something in the setup changes while it runs
 ○ I am not sure yet
 
-**What I take into the next item.** Write one sentence: the relationship and condition you are taking into Five real-world scenarios, and the first situation you want to try it on. (Page note: saved as cst286.s3.2.leave; the home page shows it under item 2, and the next item opens from it.)
+**What I take into the next item.** Write one or two sentences naming the relationship and the condition you are taking into Five real-world scenarios, and the one detail you would change first to see whether your condition breaks. (Page note: saved as cst286.s3.2.leave; the home page shows it under item 2, and the next item opens from it.)
 
 ## Worked examples (shown beside the form)
 
@@ -183,7 +184,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student turns the Sprint 3 goal they set into a quantitative relationship, states the condition it depends on, and runs one check of their own, predicting the result before running it.
 
-Order: first ask for the student's path and their Predict line from their goal, and whether it has changed. Then ask where they are finding the relationship (Path A: the trail How fast will you spin?, stops 1 to 5; Path B: a source they trust; Path C: inside their build). Ask for the relationship in words and as a formula, with every quantity and its unit. Press on the condition until it is a sentence that could be checked against a new situation; a restatement of the formula is not a condition. Then help the student plan one check: ask them to write the predicted number with its unit before they run it, then what they ran, what they got, and what could account for any difference. Never state the formula, supply numbers, or run the check for the student. On Path A, the check is the phyphox test at stop 5 of the trail. On Path C, the check is changing one input in the build and comparing.
+Order: first ask for the student's path and their Predict line from their goal, and whether it has changed. Then ask where they are learning the relationship (Path A: the trail How fast will you spin?, stops 1 to 5; Path B: a source they trust; Path C: inside their build). Ask for the relationship in words and as a formula, with every quantity and its unit. Press on the condition until it is a sentence that could be checked against a new situation; a restatement of the formula is not a condition. Then help the student plan one check: ask them to write the predicted number with its unit before they run it, then what they ran, what they got, and what could account for any difference. Never state the formula, supply numbers, or run the check for the student. On Path A, the check is the phyphox test at stop 5 of the trail. On Path C, the check is changing one input in the build and comparing.
 
 Do not summarize until the student asks. When they ask, output the text in the form's order using only the student's words, and write "not yet settled" on any box that is not settled.
 
@@ -196,7 +197,7 @@ Do not summarize until the student asks. When they ask, output the text in the f
 - Before: the setup and a predicted number with its unit, written before the check.
 - What I did / What I got: what was run or measured, and the result with its unit.
 - What I make of it: the two numbers compared, and a possible cause of any difference tied to the condition or a measurement.
-- Look forward: the relationship and condition, and a first situation to try.
+- Look forward: the relationship and condition, and one detail the student would change first to see whether the condition breaks.
 
 The reply is two or three sentences: what the box already does well, then the one thing that would make it complete and precise. No rewriting of the student's text, and no formula or numbers supplied.
 

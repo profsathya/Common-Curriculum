@@ -5,7 +5,8 @@ Notes for the editor, not shown to students:
 - One deliberate change from his instruction ("a look back question at the beginning"): on this page the story comes first and the look back second. A look back asking how one piece of work fed another, placed just before the story, would prompt exactly the kind of sentence the experiment counts, so the Sprint 3 stories would not be comparable with the Sprint 2 ones. The look back here is about the exam and sits after Step 2. Move it to the top if he prefers; the experiment then needs a dated note in HYPOTHESIS.md.
 - The Dojo prompt mirrors the 30 Oct one (the same story questions, nothing about connections between assignments), for the same reason.
 - The look forward's sentence is saved as "cst286.s3.5.leave".
-- 30 Oct, after the Astra and Argon reviews: self-check for Step 2 aligned with its question (words, formula with units, condition); a line saying Steps 3 and 4 carry no points; the hidden Dojo section now forbids giving or hinting at the relationship before the student's own attempt. Open with Prof. Sathya: whether the Sprint 3 story should be written without AI (the 30 Oct story offered the Dojo too). It does not mention Sprint 4, whose design is deferred until after Sprint 3. -->
+- 30 Oct, after the Astra and Argon reviews: self-check for Step 2 aligned with its question (words, formula with units, condition); a line saying Steps 3 and 4 carry no points; the hidden Dojo section now forbids giving or hinting at the relationship before the student's own attempt. Open with Prof. Sathya: whether the Sprint 3 story should be written without AI (the 30 Oct story offered the Dojo too). It does not mention Sprint 4, whose design is deferred until after Sprint 3.
+- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: Step 1 is untouched. On this page only the purpose box ("This experience", "the quantitative relationship you tested") and two Step 4 options ("Testing a relationship…", "…who tests my understanding") changed, to match items 1 to 3. Pre-change copy: my-sprint-3-experience.md.bak-2026-10-30-tenchanges. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 15 · Look back on Sprint 3
 
@@ -17,9 +18,9 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** Your Sprint 3 work: your goal, the relationship you confirmed, your five scenarios, and the Sprint 3 Exam.
+**Builds on.** Your Sprint 3 work: your goal, the quantitative relationship you tested, your five scenarios, and the Sprint 3 Exam.
 
-**This goal.** Reflect on how your learning went in Sprint 3 - when you worked on each piece, where your hours went, what you had to look up - and what you can still do with what you learned.
+**This experience.** Reflect on how your learning went in Sprint 3 - when you worked on each piece, where your hours went, what you had to look up - and what you can still do with what you learned.
 
 **Leads to.** Your next piece of self-directed learning, in this course or beyond it.
 
@@ -85,9 +86,9 @@ In the Sprint 3 Exam on Wednesday you worked one of your scenarios on paper. Whi
 Which part of how you learned in Sprint 3 will you use the next time you set out to learn something on your own? Choose the one closest to yours.
 
 ○ Setting a precise goal before I start
-○ Checking a relationship myself before I trust it
+○ Testing a relationship myself before I trust it
 ○ Looking for where a rule stops working
-○ Planning when I work and who I explain it to
+○ Planning when I work and who tests my understanding
 
    **What I take forward.** Write one sentence: the part you will use, and where you expect to use it next. (Page note: saved as cst286.s3.5.leave; the home page shows it under item 5.)
 
