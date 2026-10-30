@@ -4,6 +4,7 @@ Notes for the editor, not shown to students:
 - Same frame as every Sprint 3 page: three-box chain, path block (reads "cst286.s3.path"; if missing, the 30 Oct answers; if both missing, the student chooses before the rest opens), look back, tasks, look forward, AI Dojo prompt.
 - The look back opens from "cst286.s3.1.leave" (the sentence the student wrote at the end of item 1) when this browser has it; otherwise it names item 1 and asks the student to bring their Predict line from their Canvas submission.
 - The look forward's sentence is saved as "cst286.s3.2.leave".
+- 30 Oct, after the Astra and Argon reviews: path directions moved out of the Dojo block into "How your path does this" (they were hidden when the Dojo was unticked); look back now quotes the item 1 Predict line; the Dojo summary lists all eight boxes; Example A follows the new stop 5 test (halfway position, 3.0 → predicted 4.2, got 4.0); Example C (Path C, LED circuit) added. Pre-review copy: find-and-confirm-my-relationship.md.bak-2026-10-30-review.
 - Sprint 2 has no item exactly like this one: Part 1 of Five real-world scenarios held these three boxes, and the week-9 OYP "Design an experiment and collect data for your prediction" held the check. This item gives them a week of their own, so that item 3 can start from a relationship already confirmed. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 12 · Find it, and check it
@@ -30,7 +31,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Look back
 
-(Page note: when this browser holds the sentence the student wrote at the end of item 1, it is shown here in quotation marks under "At the end of your goal and plan you wrote:". When it does not, the line reads "Open your goal and plan submission on Canvas and find your Predict line.")
+(Page note: when this browser holds the student's item 1 answers (state "cc-gi:cst286-my-sprint-3-goal-and-plan"), their "I will be able to predict" line is shown here in quotation marks under "In your goal and plan you wrote:", followed by the sentence they wrote at the end of item 1 (cst286.s3.1.leave) under "and you said you would start by:". When neither is stored, the line reads "Open your goal and plan submission on Canvas and find your Predict line.")
 
 Since you set your goal, has your "I will be able to predict" line held? Choose the one closest to yours.
 
@@ -57,16 +58,21 @@ AI Dojo Passcode for this Graded Item: **REL3-1116**
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
-**3. Find the relationship and plan your check with your Dojo.** (Page note: the paragraph for the student's path shows.)
+**3. Find the relationship and plan your check with your Dojo.** Follow the directions for your path, just above the form, and talk each step through with your Dojo.
+
+**4. Ask for the form.** When every box holds up, paste this:
+
+> Write my work in the form's order, using only my words: My Predict line now · Where I found it · My relationship · My condition · My check: Before · My check: What I did · My check: What I got · My check: What I make of it. If a box is not settled, write "not yet settled" in it.
+
+**5. Fill in the form.** Copy your Predict line into the look back box above, and each other line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
+
+## How your path does this
+
+(Page note: shown whatever the Dojo tick says; only the paragraph for the student's path shows.)
+
 - *Path A:* Work through stops 1 to 5 of the trail [How fast will you spin?](trail-angular-momentum.html). Your check is the phyphox test at stop 5: your predicted spin rate against the one your phone measured.
 - *Path B:* Find the relationship in a source you trust (a textbook section such as OpenStax, a simulation's documentation, a lecture video), and check it with a worked example, a PhET simulation run, or a measurement of your own.
 - *Path C:* Find the relationship inside what you built. Your check: change one input in your build, predict the new output with your formula, then run the build and compare.
-
-**4. Ask for the form.** When all four boxes hold up, paste this:
-
-> Write my work in the form's order, using only my words: Where I found it · My relationship · My condition · My check. If a box is not settled, write "not yet settled" in it.
-
-**5. Fill in the form.** Copy each line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
 
 ## The form
 
@@ -124,10 +130,10 @@ Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), d
 - *Where I found it:* The CST286 trail How fast will you spin?, stops 3 and 4.
 - *My relationship:* When nothing outside twists a spinning system, moment of inertia times spin rate stays the same, so the new spin rate is the old one times the old moment of inertia divided by the new one: `ω₂ = ω₁ × I₁ ÷ I₂`, where `ω` is the spin rate in radians per second (rad/s) and `I` is the moment of inertia in kilogram square meters (kg·m²).
 - *My condition:* Nothing outside the spinning system twists it while the mass moves in or out.
-- *My check · Before:* On the chair, with two 1.5 kg bottles at 0.75 m and then 0.20 m, a body estimate of 2.0 kg·m², and 3.0 rad/s arms out, I predict 5.2 rad/s arms in.
-- *My check · What I did:* Recorded my spin with phyphox, phone flat against my chest, two turns arms out and two turns arms in.
-- *My check · What I got:* 5.0 rad/s.
-- *My check · What I make of it:* about 4% below my prediction. The chair's bearing twists against the spin a little, which breaks my condition slightly, and my body estimate was rough; solving for my own body's moment of inertia gives 2.23 kg·m².
+- *My check · Before:* With two 1.5 kg bottles moved from 0.75 m to halfway in, 0.45 m, and 2.0 kg·m² for my body and the chair, I₁ = 3.69 kg·m² and I₂ = 2.61 kg·m², so I predict I will spin 1.41 times as fast. My fresh run started at 3.0 rad/s, so I predict 4.2 rad/s.
+- *My check · What I did:* Recorded the run with phyphox, phone flat on my lap, two turns with the bottles out and two turns with them halfway in.
+- *My check · What I got:* 4.0 rad/s.
+- *My check · What I make of it:* about 6% below my prediction. The chair's bearing twists against the spin a little, which breaks my condition slightly, and my body's moment of inertia may be larger than the rough 2.0 kg·m², which would make the true ratio smaller.
 
 **Example B · Path B, the playground swing**
 - *Where I found it:* OpenStax College Physics, section 16.4, The Simple Pendulum.
@@ -137,6 +143,15 @@ Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), d
 - *My check · What I did:* Timed ten swings with a stopwatch, starting about 10 degrees out.
 - *My check · What I got:* 20.3 s for ten swings, so 2.03 s per swing.
 - *My check · What I make of it:* about 1% above the prediction. The length to the middle of the phone was hard to measure, and about 2 cm more length would account for the difference.
+
+**Example C · Path C, a circuit in Tinkercad Circuits**
+- *Where I found it:* My Tinkercad Circuits build: a 9 V battery, a resistor and a red LED in one loop. The relationship is Ohm's law applied to the resistor, from OpenStax College Physics, section 20.2, Ohm's Law.
+- *My relationship:* The current is the battery's voltage minus the LED's voltage, divided by the resistance: `I = (V_battery − V_LED) ÷ R`, where `I` is the current in amperes (A, shown in milliamperes, mA), `V_battery` and `V_LED` are in volts (V) and `R` is in ohms (Ω). This predicts the current; the LED gets brighter as the current rises, but brightness is not what the formula gives.
+- *My condition:* The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.
+- *My check · Before:* With the 470 Ω resistor swapped for 1,000 Ω, I predict (9 V − 2 V) ÷ 1,000 Ω = 0.0070 A = 7.0 mA.
+- *My check · What I did:* Changed the resistor in Tinkercad, added a multimeter in the loop set to current, and started the simulation.
+- *My check · What I got:* 6.9 mA.
+- *My check · What I make of it:* about 1% below my prediction. My check compares my hand calculation with the simulator's own model of the LED, whose voltage is a little more than the 2 V I assumed, which leaves slightly less voltage across the resistor.
 
 ## Self-check
 

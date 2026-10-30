@@ -4,6 +4,7 @@ Notes for the editor, not shown to students:
 - Physics note behind stop 6: a phone's gyroscope chip senses rotation through the Coriolis effect on a tiny vibrating mass, not through conservation of angular momentum. The trail says so plainly and points to spinning-wheel gyroscopes (his "Principles of Gyroscopes" video) as the place where angular momentum does the work.
 - All numbers were computed, not estimated: record 3.49 rad/s · washer 125.7 rad/s · bottles 1.69 and 0.12 kg·m² · chair 3.0 → 5.2 rad/s with a 2.0 kg·m² body · merry-go-round 1.2 → 1.63 rad/s · skater 2.0 → 5.6 rev/s · diver 1.5 → 5.1 rad/s, about one somersault in 1.2 s · body estimate from data 2.23 kg·m², third test 4.1 rad/s · Earth 0.0000729 rad/s. The 2.0 kg·m² for a seated person plus chair is a rough estimate; stop 5 teaches students to measure their own.
 - [SIM spin-two-masses] and [SIM spin-where-it-breaks] are cst286/sims/*.py, run by glowscript/sim.html?sim=<name> like the accelerometer trail's sims (built 29 Oct by an Opus agent from Alan's spec).
+- 30 Oct, after the Astra and Argon reviews: goal names its units and condition; phone lies flat on the lap (not against the chest); readings compared by size; stop 5 now predicts a NEW arm position before measuring it (the item 2 check), with solving for B moved to an extension; system and axis named before stop 4; door-hinge prompt replaced (it was about torque). Numbers: halfway 0.61 kg·m², ratio 3.69/2.61 = 1.41, 3.0 → 4.2 rad/s. Pre-review copy: trail-angular-momentum.md.bak-2026-10-30-review.
 - Clip times come from content-tracks/cst286/angular-momentum-digest.md (captions, approximate; check each by watching): fan 3:14-7:00 · linear vs angular 2:34-9:10 (stops before 9:16, where the video says r is the distance to where the force is applied) · conservation problem 1:59-7:38 · gyroscopes 2:20-7:10. Two spoken slips are corrected on the page: the fan's slowing rate said as rad/s (it is rad/s²), and "no external force" in the gyroscope video (it means no outside torque).
 - Left out of More practice: Rusty nut (it says rust increases the nut's moment of inertia; rust adds friction) and the Khan momentum video (linear only, and calls the unit of impulse the joule).
 - 29 Oct, Prof. Sathya's edit: goal broadened so Path A students have room to explore other scenarios later (his note); "in the right units"; useful line adds the spinning top / wheel. Alan's wording keeps the top as "the first step toward" understanding it, because staying upright is precession under gravity's torque, which this trail's relationship does not predict. Radian detour added at stop 1 (his request): jar-and-string, why radians, his Ladybug video (no new video: Prof. Sathya, 29 Oct, "lets not rely on me producing anything yet"), practice. Pre-edit copy: trail-angular-momentum.md.bak-his-edit-2026-10-29.
@@ -19,11 +20,11 @@ Sit on a spinning chair, hold your arms out, and push off. Now pull your arms in
 Goal: Understand how spinning objects behave differently from objects moving in a straight line, and use that to predict how a spin changes.
 
 A quantitative relationship I will be able to use:
-> **Given** how fast something is spinning, and how its mass is arranged around the axis before and after the arrangement changes, in the right units,
-> **I can predict** how fast it will spin afterwards, in the right units.
+> **Given** how fast something is spinning, in radians per second, and how its mass is arranged around the axis before and after the arrangement changes, as a moment of inertia in kilogram square meters,
+> **I can predict** how fast it will spin afterwards, in radians per second, as long as nothing outside twists it while the mass moves.
 > **This is useful because** the same relationship explains how skaters, divers and satellites control their spin, and it is the first step toward understanding why a spinning top or a bicycle wheel stays upright.
 
-**Copy this goal** - paste it into your Sprint 3 goal as it is, or change it at stop 6.
+**Copy this goal** - paste it into your Sprint 3 goal as it is, or narrow it to one spinning situation you care about.
 
 The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate. Stops 3 and 4 are the two ideas the prediction depends on. At stop 5 you predict your own spin and test it, and stop 6 shows where the relationship stops working. Every stop ends with practice problems; try each one before you open its answer.
 
@@ -65,7 +66,7 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
 
 **Reading the sign.** Lay your phone flat, screen up. The gyroscope's z reading is the spin about the line straight up out of the screen. A positive z means the phone turns counterclockwise as you look down at the screen; a negative z means clockwise.
 
-**Try it.** Open phyphox and choose "Gyroscope (rotation rate)". Lay the phone flat on a table and leave it still for 20 seconds. Write down the largest number you see on z. Your phone is not turning, so this number is noise: a spin smaller than this is lost in it.
+**Try it.** Open phyphox and choose "Gyroscope (rotation rate)". Lay the phone flat on a table and leave it still for 20 seconds. Write down the largest size of the z reading you see, ignoring its sign. Your phone is not turning, so this number is roughly the size of the noise: a spin much smaller than this is hard to tell apart from no spin.
 
 **Practice.**
 1. A record player turns at 33⅓ revolutions per minute. What is that in radians per second?
@@ -85,28 +86,29 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
 
 ## Stop 2 · Record your own spin
 
-**Why this stop.** The rest of the trail predicts a number you will measure here, so measure it first and keep the graph. Seeing your own spin speed up is what makes the prediction worth checking.
+**Why this stop.** Stops 3 and 4 explain the change you record here, and at stop 5 you use them to predict a new spin before you measure it. Seeing your own spin speed up first is what makes that prediction worth checking.
 
 **After this stop you can** record your spin rate with arms out and arms in, and read both numbers from a phyphox graph.
 
 **Set up.** Measure the distance from the chair's axis (the post under the seat) to the center of each bottle when your arms are straight out, and again when you hold the bottles against your chest. Write both distances in meters.
 
 **Record.**
-1. Sit on the chair, feet off the floor. Hold the phone flat against your chest, screen up, and press record in phyphox ("Gyroscope (rotation rate)"). In phyphox you can also turn on "Remote access" and watch the graph live in a laptop browser.
+1. Sit on the chair, feet off the floor. Lay the phone flat on your lap, screen up (or tape it flat to the seat between your knees), so it turns with you and both hands stay free. Press record in phyphox ("Gyroscope (rotation rate)"). In phyphox you can also turn on "Remote access" and watch the graph live in a laptop browser.
+   Before your first real run, turn the chair slowly by hand once and check that the z line moves; if another line moves instead, your phone is tilted, so lay it flatter.
 2. Hold the bottles straight out. Your friend gives the chair a gentle turn and steps back.
 3. After two full turns, pull the bottles in to your chest and hold them there for two more turns.
 4. Put a foot down, stop, and stop the recording.
 
 *Predict first:* before you record, write down how many times faster you expect to spin with the bottles in.
 
-**Read the graph.** The z line has a lower flat part (arms out) and a higher flat part (arms in). Write down the z value in the middle of each flat part. These are your ω₁ and ω₂ (ω, the Greek letter omega, is the usual symbol for spin rate).
+**Read the graph.** The z line has two steady parts: one with arms out and one, farther from zero, with arms in. If you spin clockwise both are negative, so use the size of each reading and ignore the sign. Write down the size of z in the middle of each steady part. These are your ω₁ and ω₂ (ω, the Greek letter omega, is the usual symbol for spin rate).
 
 **Safety.** Keep the spin gentle, keep your feet ready, and stop if you feel dizzy. Your friend spots you.
 
 **Practice.**
 1. A student records z = 2.8 rad/s with arms out and z = 4.6 rad/s with arms in. How many times faster did she spin with her arms in?
    *Answer:* 4.6 ÷ 2.8 = 1.6 times faster.
-2. In the same recording, the arms-out part of the graph slopes slowly down instead of staying flat. Name one thing that could be slowing the chair.
+2. In the same recording, the arms-out part of the graph slopes slowly down instead of staying flat. Identify one thing that could be slowing the chair.
    *Answer:* friction in the chair's bearing, air on the outstretched arms, or a foot brushing the floor. Each one twists against the spin from outside.
 
 **Ask your Dojo.**
@@ -143,7 +145,7 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
    *Answer:* out: 2 × 3.5 × 0.35² = 0.86 kg·m²; in: 2 × 3.5 × 0.10² = 0.07 kg·m².
 
 **Ask your Dojo.**
-- "Ask me why a door is harder to open when I push near the hinge, and then ask me how that connects to holding weights far from the axis."
+- "Ask me why a skater with her arms held out is harder to start spinning than with her arms pulled in, and keep asking until I explain it with mass and distance from the axis."
 - "Give me two objects with different masses and distances. Ask me to predict which has the larger moment of inertia before I calculate."
 
 ---
@@ -155,6 +157,8 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
 **After this stop you can** use I₁ω₁ = I₂ω₂ to predict a new spin rate, and say what condition must hold for the prediction to work.
 
 **Watch.** Prof. Sathya works a conservation of angular momentum problem - 6 min clip [CLIP orAtL67eKc8 119 458]. A mass pulled in to half its distance from the axis spins four times as fast: that is I₁ω₁ = I₂ω₂ with I₂ a quarter of I₁.
+
+**The system and the axis.** Before you use the relationship, identify what is spinning together and what it spins around. On the chair, the system is you, the chair and both bottles, and the axis is the chair's post, straight up and down.
 
 **The idea.** Angular momentum is the moment of inertia times the spin rate: L = Iω. When nothing outside the system twists it (no outside torque), L stays the same. So if I gets smaller, ω has to get larger by the same factor: I₁ω₁ = I₂ω₂, and ω₂ = ω₁ × I₁ ÷ I₂.
 
@@ -182,50 +186,53 @@ The trail has six stops. Stops 1 and 2 teach you to read and record a spin rate.
 
 **Ask your Dojo.**
 - "Ask me to explain why a skater speeds up using L = Iω, and keep asking 'what twists her?' until I say nothing outside does."
-- "Give me a spinning situation and ask me whether angular momentum stays the same. Make me name the outside twist if there is one."
+- "Give me a spinning situation and ask me whether angular momentum stays the same. Make me identify the outside twist if there is one."
 
 ---
 
 ## Stop 5 · Predict your own spin, then test it
 
-**Why this stop.** Now you put the pieces together for yourself. To predict your spin you need your whole moment of inertia, and the bottles are only part of it: your body and the chair count too. You cannot weigh your body's moment of inertia directly, so this stop shows you how to estimate it from your own data and then test a new prediction.
+**Why this stop.** A relationship earns your trust when it predicts something you have not measured yet. So at this stop you predict how much faster you will spin for a new arm position, write the prediction down, and only then record the spin. To predict, you need your whole moment of inertia, and the bottles are only part of it: your body and the chair count too. You cannot measure your body's moment of inertia with a scale and a tape measure, so you start from a rough estimate.
 
-**After this stop you can** predict your spin rate after pulling the weights in, measure it, and use the difference to improve the next prediction.
+**After this stop you can** predict your spin rate for a new arm position before you measure it, measure it, and explain the difference.
 
-**Worked example, part 1 - predict.** A seated person and the chair together have a moment of inertia of about 2.0 kg·m² (a rough estimate). Add the bottles from stop 3. The person spins at 3.0 rad/s with the bottles out. Predict the spin rate with the bottles in.
+**Worked example - predict a new position.** A seated person and the chair together have a moment of inertia of about 2.0 kg·m². This estimate treats your body and arms as one fixed amount; your arms also move in when you pull the bottles in, so it is an approximation. This time the person pulls the bottles only halfway in, from 0.75 m to 0.45 m.
 
-1. Arms out: I₁ = 2.0 + 1.69 = 3.69 kg·m².
-2. Arms in: I₂ = 2.0 + 0.12 = 2.12 kg·m².
-3. ω₂ = 3.0 × 3.69 ÷ 2.12 = **5.2 rad/s**.
-
-**Worked example, part 2 - learn from the measurement.** Suppose the phone reads 5.0 rad/s, not 5.2. Treat your body's moment of inertia, B, as the unknown and let the data tell you what it is.
-
-1. Angular momentum stays the same: (B + 1.69) × 3.0 = (B + 0.12) × 5.0.
-2. Multiply out: 3.0B + 5.06 = 5.0B + 0.60.
-3. Solve: 2.0B = 4.46, so B = **2.23 kg·m²**.
-4. Use it to predict something new. Hold the bottles at 0.45 m instead of pulling them all the way in: I = 2 × 1.5 × 0.45² = 0.61 kg·m², so ω = 3.0 × (2.23 + 1.69) ÷ (2.23 + 0.61) = **4.1 rad/s**.
-5. Record that third spin and compare. If the prediction from your own B is closer than the one from the rough 2.0, the measurement taught your model something.
+1. Bottles out: I₁ = 2.0 + 1.69 = 3.69 kg·m².
+2. Bottles halfway: the bottles give 2 × 1.5 kg × (0.45 m)² = 0.61 kg·m², so I₂ = 2.0 + 0.61 = 2.61 kg·m².
+3. Before spinning, write the prediction as a ratio: ω₂ ÷ ω₁ = I₁ ÷ I₂ = 3.69 ÷ 2.61 = **1.41**. You will spin about 1.41 times as fast after the pull.
+4. Start a fresh run. The phone reads ω₁ = 3.0 rad/s with the bottles out, so the prediction for this run is 3.0 × 1.41 = **4.2 rad/s**.
+5. Pull the bottles halfway in, read ω₂, and compare it with 4.2 rad/s.
 
 **Your turn.**
-1. Measure your two distances (stop 2) and calculate the bottles' moment of inertia in each position (stop 3).
-2. Start with B = 2.0 kg·m² and predict ω₂ from your measured ω₁.
-3. Compare with your measured ω₂. Then solve for your own B, as in part 2.
-4. Predict a third position with your B, record it, and compare.
+1. Choose a new position for the bottles, different from stop 2 (halfway works well), and measure its distance from the axis.
+2. Calculate I₁ and I₂ with 2.0 kg·m² for your body and the chair, and write down the predicted ratio ω₂ ÷ ω₁ before you spin.
+3. Start a fresh run, read ω₁ from it, and multiply by your ratio to get your predicted ω₂.
+4. Move the bottles to the new position, read ω₂, and compare. Then identify what could account for any difference.
+
+This prediction and test is the check you report in Find and confirm my relationship.
 
 **Practice.**
-1. A student with arms out spins at 2.5 rad/s and, with arms in, at 4.0 rad/s. Her bottles contribute 1.69 kg·m² out and 0.12 kg·m² in. What is B for her and the chair?
-   *Answer:* (B + 1.69) × 2.5 = (B + 0.12) × 4.0 → 2.5B + 4.23 = 4.0B + 0.48 → B = 2.5 kg·m².
-2. If the chair's bearing has noticeable friction, will the B you calculate come out too large or too small? Explain using what friction does to ω₂.
-   *Answer:* friction lowers the measured ω₂, and a lower ω₂ makes the equation return a larger B. So B comes out too large; it then includes the chair's friction, which is not part of your body.
+1. A student predicts a ratio of 1.41 and measures 3.0 rad/s, then 4.0 rad/s. How close was the prediction, and what could account for the difference?
+   *Answer:* the predicted ω₂ was 4.2 rad/s, so the measurement is about 6% lower. Friction in the chair's bearing twists against the spin, and if her body's moment of inertia is larger than 2.0 kg·m², the true ratio is smaller than 1.41.
+2. Why would the arms themselves moving in make the measured ω₂ come out a little higher than a prediction that leaves the arms out of the calculation?
+   *Answer:* the arms carry mass inward too, so the real I₂ is a little smaller than the calculation assumed, and a smaller I₂ means a faster spin.
+
+**Extension · Estimate your own body's moment of inertia.** (click to open) If you want to go further, use your stop 2 recording to replace the rough 2.0 kg·m² with an estimate from your own data, then use it to predict your new position again.
+- *The idea.* In stop 2 your bottles started with 1.69 × ω₁ of angular momentum and ended with 0.12 × ω₂. The difference went to your body and the chair, whose spin rose from ω₁ to ω₂. Call their moment of inertia B.
+- *Worked example.* Suppose stop 2 read 3.0 rad/s and then 5.0 rad/s. The bottles went from 1.69 × 3.0 = 5.07 to 0.12 × 5.0 = 0.60 kg·m²/s, handing 4.47 kg·m²/s to your body and the chair, whose spin rose by 5.0 − 3.0 = 2.0 rad/s. So B = 4.47 ÷ 2.0 = **2.23 kg·m²**. This is the same as solving (B + 1.69) × 3.0 = (B + 0.12) × 5.0.
+- *What B is.* B is an effective estimate inside this model: it also absorbs friction, your arms moving and any error in your readings, so it is not a pure measurement of your body.
+- *Practice.* A student's stop 2 run read 2.5 rad/s and then 4.0 rad/s. What is her B? *Answer:* the bottles went from 1.69 × 2.5 = 4.23 to 0.12 × 4.0 = 0.48, handing 3.75 kg·m²/s to her body and the chair, whose spin rose by 1.5 rad/s, so B = 3.75 ÷ 1.5 = 2.5 kg·m².
+- *Practice.* If the chair's bearing has noticeable friction, will B come out too large or too small? *Answer:* friction lowers the measured ω₂, and a lower ω₂ makes the calculation return a larger B, so B comes out too large.
 
 **Ask your Dojo.**
-- "I will give you my measured ω₁, ω₂ and my two distances. Do not calculate for me. Ask me to set up the equation for B and check only whether each step keeps the units consistent."
+- "I will give you my two distances and my predicted ratio. Do not calculate for me. Ask me to set up I₁ and I₂ and check only whether each step keeps the units consistent. After I measure, ask me what could account for the difference."
 
 ---
 
 ## Stop 6 · Where it stops working, and how your phone senses a turn
 
-**Why this stop.** The relationship ω₂ = ω₁ × I₁ ÷ I₂ holds only while nothing outside the system twists it. Some situations look the same and break that condition, and one looks like it should work and gives the wrong answer for a different reason.
+**Why this stop.** The relationship ω₂ = ω₁ × I₁ ÷ I₂ holds only while nothing outside the system twists it. Some situations look the same and break that condition, and in one the whole system keeps its angular momentum while your own share of it changes.
 
 **After this stop you can** tell apart situations where I₁ω₁ = I₂ω₂ predicts correctly from ones that only look similar, and say why.
 

@@ -77,11 +77,11 @@ Can you describe your Sprint 2 quantitative relationship now, without looking at
 
 ### Step 3 · Choose your path for Sprint 3
 
-All three paths end in the same place by Dec 9: a relationship you can state, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one. They differ in how much of the path I lay out for you. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
+All three paths end in the same place by Dec 2: a relationship you can state, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one. They differ in how much of the path I lay out for you. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · One guided learning trail.** You follow a trail I lay out, step by step, to one relationship, as in the week-7 trail activity, and then apply that relationship to your own scenarios. There is one trail, and everyone on this path works the same one.
+**Path A · One guided learning trail.** You follow a trail I lay out, step by step, to one relationship, as in the week-7 trail activity, and then apply that relationship to your own scenarios. There is one trail, and everyone on this path works the same one. You can look at the trail now: [How fast will you spin?](trail-angular-momentum.html).
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 

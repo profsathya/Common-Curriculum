@@ -4,7 +4,8 @@ Notes for the editor, not shown to students:
 - THIS PAGE CARRIES THE MEASURE for the Sprint 3 experiment (cowork/fall-2026-courses/lookback-forward-review/HYPOTHESIS.md). Step 1 repeats the 30 Oct Step 1 question word for word, with "Sprint 3" in place of "Sprint 2", and keeps the same three grey samples, so the two sets of stories are written under the same conditions. Please change Step 1 only if the 30 Oct wording changes with it.
 - One deliberate change from his instruction ("a look back question at the beginning"): on this page the story comes first and the look back second. A look back asking how one piece of work fed another, placed just before the story, would prompt exactly the kind of sentence the experiment counts, so the Sprint 3 stories would not be comparable with the Sprint 2 ones. The look back here is about the exam and sits after Step 2. Move it to the top if he prefers; the experiment then needs a dated note in HYPOTHESIS.md.
 - The Dojo prompt mirrors the 30 Oct one (the same story questions, nothing about connections between assignments), for the same reason.
-- The look forward's sentence is saved as "cst286.s3.5.leave". It does not mention Sprint 4, whose design is deferred until after Sprint 3. -->
+- The look forward's sentence is saved as "cst286.s3.5.leave".
+- 30 Oct, after the Astra and Argon reviews: self-check for Step 2 aligned with its question (words, formula with units, condition); a line saying Steps 3 and 4 carry no points; the hidden Dojo section now forbids giving or hinting at the relationship before the student's own attempt. Open with Prof. Sathya: whether the Sprint 3 story should be written without AI (the 30 Oct story offered the Dojo too). It does not mention Sprint 4, whose design is deferred until after Sprint 3. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 15 · Look back on Sprint 3
 
@@ -96,8 +97,10 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 - [ ] Step 1 tells my Sprint 3 story around at least three of the questions · 30 pts
 - [ ] Step 1 includes specifics: dates, hours, resources or people · 30 pts
-- [ ] Step 2 is written from memory, with the relationship in words or as a formula · 20 pts
-- [ ] Step 2 includes the condition, or says which parts did not come back and why · 20 pts
+- [ ] Step 2 is written from memory, with the relationship in words and as a formula with units, as far as it came back · 20 pts
+- [ ] Step 2 states the condition, and says which parts did not come back and why · 20 pts
+
+Steps 3 and 4 carry no points; the item is complete when they have text.
 
 **Grading.** 100 points, in Graded items.
 
@@ -115,7 +118,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student tells the story of how they learned in Sprint 3, writes their relationship from memory, looks back at the Sprint 3 Exam, and names one part of how they learned that they will use again.
 
-Order: first help the student tell the story of their Sprint 3 learning by asking a few of these, one at a time: what motivated them to learn their topic, how they went about it, whether they used AI and how, when they worked on it and for how long, what surprised them, and who or what helped. Do not suggest themes or connections for the story; ask only these questions and follow-ups on the student's own answers. Then ask the student to write their Sprint 3 relationship without looking it up, and if they cannot, ask why they think that is. Then ask which part of their Sprint 3 work they used most in the exam, and which part of how they learned they will use next time. Never write the student's answers.
+Order: first help the student tell the story of their Sprint 3 learning by asking a few of these, one at a time: what motivated them to learn their topic, how they went about it, whether they used AI and how, when they worked on it and for how long, what surprised them, and who or what helped. Do not suggest themes or connections for the story; ask only these questions and follow-ups on the student's own answers. Then ask the student to write their Sprint 3 relationship, its units and its condition without looking them up. Do not give the relationship or any part of it, and do not hint at it, before the student has written their attempt; if parts are missing, keep them missing and ask why the student thinks that is. Then ask which part of their Sprint 3 work they used most in the exam, and which part of how they learned they will use next time. Never write the student's answers.
 
 Do not summarize until the student asks. When they ask, output the four boxes in the form's order using only the student's words, and write "not yet settled" on any box that is not settled.
 

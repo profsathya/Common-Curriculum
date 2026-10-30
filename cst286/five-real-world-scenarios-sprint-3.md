@@ -4,6 +4,7 @@ Notes for the editor, not shown to students:
 - Same frame as every Sprint 3 page: three-box chain, path block, look back (opens from "cst286.s3.2.leave"), tasks, look forward (saved as "cst286.s3.3.leave"), AI Dojo prompt.
 - Part 1 shrinks to the relationship and condition carried from item 2, so the student starts from work already confirmed. The Sprint 2 "How I learned and confirmed it" box moved to item 2.
 - Path A students have practice problems in the trail (skater, diver, merry-go-round, satellite, Earth); the page asks them to choose situations of their own. Pair A below uses a skater only to show the form.
+- 30 Oct, after the Astra and Argon reviews: path lines moved out of the Dojo block into Part 2 (they were hidden when the Dojo was unticked); Path A may use the trail's kinds of activity with situations and numbers of their own; "cannot be determined" added as an allowed answer; Pair C (LED tail light) added; look back included in the Dojo summary. Pre-review copy: five-real-world-scenarios-sprint-3.md.bak-2026-10-30-review.
 - Pair B numbers: T = 2π√(2.5/9.8) = 3.17 s; at 60 degrees the large-angle series gives about 3.4 s. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 13 · Apply it, and find its limits
@@ -57,13 +58,13 @@ AI Dojo Passcode for this Graded Item: **LIMITS3-1130**
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
-**3. Work through your scenarios with your Dojo.** For the three scenarios that apply, work the calculation step by step with units. For the two that do not apply, pick situations that look like your working ones on the surface, and let your Dojo press you until you can point to the exact part of your condition that breaks and what the formula would get wrong. (Page note: one extra line shows for the student's path. Path A: "The trail's practice problems are practice; choose situations of your own." Path C: "One of your three scenarios can be your build, with numbers you change in it.")
+**3. Work through your scenarios with your Dojo.** For the three scenarios that apply, work the calculation step by step with units. For the two that do not apply, pick situations that look like your working ones on the surface, and let your Dojo press you until you can point to the exact part of your condition that breaks and what the formula would get wrong. The directions for your path are under Part 2 of the form.
 
 **4. Ask for the form.** When Part 1 and all five scenarios hold up, paste this:
 
-> Write my work in the form's order, using only my words: My relationship · My condition; then for Scenarios 1, 2 and 3: The situation · Given · Worked · Why the condition holds; then for Scenarios 4 and 5: The situation · Looks like scenario __ because · The subtle difference, and the part of my condition it breaks · What my relationship would get wrong here. If a box is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: What changed, if anything · My relationship · My condition; then for Scenarios 1, 2 and 3: The situation · Given · Worked · Why the condition holds; then for Scenarios 4 and 5: The situation · Looks like scenario __ because · The subtle difference, and the part of my condition it breaks · What my relationship would get wrong here. If a box is not settled, write "not yet settled" in it.
 
-**5. Fill in the form.** Copy each line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
+**5. Fill in the form.** Copy the first line into the look back box above, and each other line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
 
 ## The form
 
@@ -82,6 +83,11 @@ Bring these two boxes from Find and confirm my relationship, with any change you
    **My condition.** What must be true in the situation for my relationship to apply.
 
 ### Part 2 · Three scenarios where my prediction applies
+
+(Page note: shown whatever the Dojo tick says; only the line for the student's path shows.)
+- *Path A:* You may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), as long as the situation, its numbers and its look-alikes are your own and not the trail's practice problems with new labels.
+- *Path B:* Choose situations from the world around your own phenomenon.
+- *Path C:* One of your three scenarios can be your build, with numbers you change in it.
 
 Create three distinct real-world situations where your condition from Part 1 holds, and work your prediction with realistic numbers in each one.
 
@@ -115,7 +121,7 @@ Take one of your working scenarios from Part 2 and change one physical detail ab
   - State which part of your condition from Part 1 it breaks.
    **Scenario N · The subtle difference, and the part of my condition it breaks.** One or two sentences.
 - **What would go wrong.**
-  - State what your formula would get wrong if you used it here anyway (such as predicting a number that is too large, too small, in the wrong direction, or meaningless).
+  - State what your formula would get wrong if you used it here anyway (such as predicting a number that is too large, too small, in the wrong direction, or meaningless, or that cannot be determined from the information in the situation).
   - Explain the physical reason why.
    **Scenario N · What my relationship would get wrong here.** One or two sentences on the direction of the error and its physical cause.
 
@@ -163,6 +169,22 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 - *The subtle difference, and the part of my condition it breaks:* At 60 degrees the swing is far outside the small-angle range, which breaks the first part of my condition.
 - *What my relationship would get wrong here:* It predicts 3.17 s, which is too small; at large angles the swing spends longer near the top of each arc, and a full swing takes about 3.4 s.
 
+**Pair C · Path C, an LED circuit**
+- *My relationship:* The current is the battery's voltage minus the LED's voltage, divided by the resistance: `I = (V_battery − V_LED) ÷ R`, with `I` in amperes (A), the voltages in volts (V) and `R` in ohms (Ω).
+- *My condition:* The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.
+
+*Scenario 1 (Applies)*
+- *The situation:* A bike tail light runs a red LED from two fresh AA batteries through a 100 Ω resistor.
+- *Given:* `V_battery = 3.0 V`, `V_LED = 2.0 V`, `R = 100 Ω`.
+- *Worked:* `I = (3.0 V − 2.0 V) ÷ 100 Ω = 1.0 V ÷ 100 Ω = 0.010 A = 10 mA`.
+- *Why the condition holds:* Fresh batteries hold close to 3.0 V, which is above the LED's 2 V, so the LED is lit.
+
+*Scenario 4 (Looks similar, does not apply)*
+- *The situation:* The same tail light after a winter in the garage, with worn batteries that now give 1.8 V together.
+- *Looks like scenario 1 because:* Same light, same LED, same resistor.
+- *The subtle difference, and the part of my condition it breaks:* 1.8 V is less than the LED's 2 V, which breaks the condition that the battery's voltage is larger than the LED's.
+- *What my relationship would get wrong here:* It gives (1.8 V − 2.0 V) ÷ 100 Ω = −2 mA, a meaningless negative current; in fact almost no current flows and the LED stays dark, because the battery cannot push past the LED's voltage.
+
 ## Self-check
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
@@ -193,7 +215,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student applies the relationship they confirmed in Find and confirm my relationship in three real situations where its physical condition holds, and constructs two look-alike situations where one physical detail changes so the condition breaks.
 
-Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they confirmed. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, the trail's practice problems are not scenarios; ask for situations of the student's own. On Path C, one scenario may be the student's build. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
+Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they confirmed. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, the student may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), but the situation, the numbers and the look-alikes must be the student's own, not the trail's practice problems relabeled. On Path C, one scenario may be the student's build. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
 
 Do not summarize until the student asks. When they ask, output the text in the exact order of the form's boxes using only the student's words, and write "not yet settled" on any box that is not settled.
 

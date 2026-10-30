@@ -6,6 +6,7 @@ Notes for the editor, not shown to students:
 - The look back opens from the student's own 30 Oct "Why this path" sentence when this browser has it; otherwise it names the 30 Oct item and asks the student to bring the reason from their Canvas submission.
 - The look forward's sentence is saved as "cst286.s3.1.leave"; the home page shows it under item 1 in place of the grey "You leave with" line, and item 2's look back opens from it.
 - Look back and look forward carry no separate self-check points (agreed 28 Oct with Astra and Argon); they are part of "complete".
+- 30 Oct, after the Astra and Argon reviews: Example A's Given names its units (it auto-fills for Path A and must pass the self-check); a plan example under Part 3 (as on the Sprint 2 page); "name" → "identify".
 - Path guidance differs; Parts 1-3, the self-check and the points are the same for all three paths. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 11 · Set your goal
@@ -64,7 +65,7 @@ AI Dojo Passcode for this Graded Item: **GOAL3-1109**
 **3. Work out your goal with your Dojo.** (Page note: the paragraph for the student's path shows; the other two are hidden.)
 - *Path A:* Tell your Dojo you are taking the goal from the trail How fast will you spin?, and let it ask you whether you will take the goal as written or narrow it to one situation you care about.
 - *Path B:* Start with the phenomenon, and let your Dojo ask until a quantity appears. Choose a phenomenon different from your Sprint 2 one.
-- *Path C:* Start with what you want to build and which tool you will use, and let your Dojo ask until you can name the quantity your build will let you predict.
+- *Path C:* Start with what you want to build and which tool you will use, and let your Dojo ask until you can identify the quantity your build will let you predict.
 
 **4. Ask for the form.** When all six lines feel right, paste this:
 
@@ -114,6 +115,8 @@ Two lines that make the goal happen: when you will work on it outside class, and
 
    **I will explain what I learned to ...** The person, when, and how I will know whether they understood me.
 
+A plan written for Example A would read: *I will work on this on Tuesday and Thursday evenings, 7 to 8:30, from 10 to 19 November, and on Sunday 29 November, blocked in my calendar.* And: *I will explain what I learned to my roommate on Sunday 22 November, and I will know she understood me if she can tell me why I spin faster with the bottles pulled in.*
+
 ## Look forward
 
 Next, in [Find and confirm my relationship](find-and-confirm-my-relationship.html), due Monday 16 November, you find the relationship that turns your "Given" into your prediction, and you check it once yourself. Which part of your goal do you expect to be hardest to pin down? Choose the one closest to yours.
@@ -131,7 +134,7 @@ Each example is written in the form's own shape. Example A is the trail's goal. 
 
 **Example A · Path A, from the trail How fast will you spin?** (Page note: this is the text Path A fills in.)
 - *What I want to understand:* how spinning objects behave differently from objects moving in a straight line, and how a spin changes when the mass is rearranged.
-- *Given* how fast something is spinning, and how its mass is arranged around the axis before and after the arrangement changes, in the right units,
+- *Given* how fast something is spinning, in radians per second, and how its mass is arranged around the axis before and after the arrangement changes, as a moment of inertia in kilogram square meters,
 - *I will be able to predict* how fast it will spin afterwards, in radians per second, as long as nothing outside twists it while the mass moves.
 - *Predicting it is useful because* the same relationship explains how skaters, divers and satellites control their spin, and my phone's gyroscope lets me check the prediction on a spinning chair.
 
