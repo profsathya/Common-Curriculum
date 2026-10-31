@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CST499 &mdash; Build Your Professional Portfolio</title>
-<!-- Bare-bones home page, 30 Oct 2026, in the structure of cst286/home.html (29 Oct). Words live in cowork/fall-2026-courses/cst499-home-text.md (Sathya edits that; Claude carries edits here). Previous page kept as home.html.bak-2026-10-30-before-bare-bones.
+<!-- Bare-bones home page, 30 Oct 2026, identical in design to cst286/home.html (29 Oct). Words live in cowork/fall-2026-courses/cst499-home-text.md (Sathya edits that; Claude carries edits here). Previous page kept as home.html.bak-2026-10-30-before-bare-bones.
      Two tabs: Sprint 3 (default) and Semester. Each item is a title, one line under it, and when it is due.
      The line under a Sprint 3 item is replaced by the sentence the student wrote at the close of that item when this browser holds it (keys cst499.s3.<item>.leave, written by the item pages). -->
 <style>
@@ -64,7 +64,11 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .hint{font-size:12.5px;color:var(--muted)}
 
 .foot{font-size:12.5px;color:var(--muted);margin:6px 0 0}
-.ch .when{align-self:start}
+.ch{grid-template-rows:auto auto} .ch .when{align-self:start}
+.notes-l{grid-column:3;grid-row:2;justify-self:end;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--blue);background:none;border:0;padding:2px 0 0;cursor:pointer;font-family:inherit} .notes-l:hover{text-decoration:underline} .notes-l.has::after{content:" \2022";color:var(--teal)}
+.notes{grid-column:2 / 4;grid-row:3;margin:6px 0 2px} .notes[hidden]{display:none} .notes textarea{width:100%;min-height:64px;font:inherit;font-size:13.5px;line-height:1.45;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical} .notes textarea:focus{outline:2px solid var(--blue);outline-offset:1px} .notes .saved{font-size:11.5px;color:var(--muted);margin:3px 0 0}
+@media (max-width:560px){.notes-l{grid-column:2;justify-self:start}.notes{grid-column:2 / 3}}
+.mailbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:-8px 0 14px} .mailbar[hidden]{display:none} .mailbtn{font:inherit;font-size:12.5px;font-weight:700;color:var(--blue-dark);background:#fff;border:1px solid var(--blue);border-radius:6px;padding:5px 11px;cursor:pointer} .mailbtn:hover{background:#EEF4F8} .nudge{font-size:12.5px;color:var(--teal);font-weight:700} .nudge:empty{display:none}
 .meet{margin:34px 0 0;border-top:1px solid var(--border-light);padding-top:14px}
 .meet h2{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:0 0 6px}
 .meet ul{list-style:none;margin:0;padding:0} .meet li{font-size:13.5px;padding:4px 0;color:var(--muted)} .meet li b{color:var(--text)}
@@ -78,12 +82,14 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <div class="viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sprint-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-semester" aria-controls="semester-view" aria-selected="false">Semester</button></div>
 
+<div class="mailbar" id="mailbar" hidden><span class="nudge" id="mailnudge"></span><button type="button" class="mailbtn" id="mailbtn">Email my notes to me</button></div>
 
 <!-- ============ SPRINT 3 ============ -->
 <div id="sprint-view" role="tabpanel" aria-labelledby="tab-sprint">
 
 <div class="eyebrow">CST499 · Weeks 9–16 · Oct 19 – Dec 18</div>
 <h1>Sprint 3 · Finish a piece that shows you can cross domains</h1>
+<p class="foot">Click a number to check an item off. Click <b>Notes</b> to keep notes on an item. Both stay on this computer.</p>
 
 <ol class="seq">
 
@@ -165,6 +171,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <div class="eyebrow">CST499 · Computer Science Capstone · Fall 2026</div>
 <h1>Build Your Professional Portfolio</h1>
+<p class="foot">Click a sprint to open it. Click a number to check an item off.</p>
 
 <ol class="seq">
 
@@ -217,7 +224,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 </div>
 
-<p class="page-footer"><a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a><br>Anything here confusing, broken, or missing? <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> &mdash; it is the fastest way to get it fixed.</p>
+<p class="page-footer">Questions: <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a> &middot; <a href="https://bit.ly/profsathya" target="_blank" rel="noopener">Schedule office hours</a> &middot; <a href="https://forms.gle/ssHfShC6QECbW7WQ6" target="_blank" rel="noopener">Tell me anonymously</a> what is working and what is not.</p>
 
 </div>
 <script>
@@ -252,7 +259,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 })();
 
 /* Two things this browser may hold for each item, both written on this computer only:
-   <key>        the sentence the student wrote at the close of the item (saved by the item page, keys cst499.s3.*.leave)
+   <key>        the sentence the student wrote at the close of the chapter (saved by the chapter page)
    <key>.done   a check the student set by tapping the number here (tap again to clear)
    A check shows when either exists. When the sentence exists it replaces the grey line, unlabelled, in the student's words.
    Nothing stored, for any reason, means the plain number and the grey line stay. */
@@ -269,6 +276,14 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
       if(carry){ if(s&&s.trim()){ carry.textContent=s.trim(); carry.classList.add('mine'); } else { carry.textContent=carry.getAttribute('data-prompt'); carry.classList.remove('mine'); } }
     }
     if(carry) carry.setAttribute('data-prompt',carry.textContent);
+    /* Notes: a small label at the right of the item; click opens a box; what is typed is saved here as it is typed */
+    var nk=key+'.notes', lab=document.createElement('button'), box=document.createElement('div'), ta=document.createElement('textarea'), sv=document.createElement('div');
+    lab.type='button'; lab.className='notes-l'; lab.textContent='Notes'; lab.setAttribute('aria-expanded','false');
+    box.className='notes'; box.hidden=true; ta.placeholder='Anything you want to remember about this one'; ta.setAttribute('aria-label','Notes'); sv.className='saved'; box.appendChild(ta); box.appendChild(sv); li.appendChild(lab); li.appendChild(box);
+    function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
+    ta.value=get(nk)||''; paintNotes();
+    lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
     num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
     function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
     num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });
@@ -289,6 +304,43 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
   }
 })();
 
+/* Email my notes: one button under the tabs, shown only when there are notes. It opens the student's mail app with every note in a draft,
+   each under its item's title. The nudge shows when notes have changed since the last time the draft was opened. Nothing is sent by the page. */
+(function(){
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  var bar=document.getElementById('mailbar'), btn=document.getElementById('mailbtn'), nudge=document.getElementById('mailnudge');
+  if(!bar||!btn) return;
+  function collect(){
+    var out=[], items=document.querySelectorAll('.ch[data-key]');
+    for(var i=0;i<items.length;i++){
+      var li=items[i], v=get(li.getAttribute('data-key')+'.notes'); if(!v||!v.trim()) continue;
+      var sp=li.closest('details.sprint'), tab=li.closest('[role=tabpanel]');
+      var where=sp?sp.querySelector('summary .title').textContent.trim():(tab&&tab.id==='sprint-view'?document.querySelector('#sprint-view h1').textContent.trim():'');
+      var t=li.querySelector('.title').textContent.replace(/\s*(coming|due today|due tomorrow|due in \d+ days)\s*$/,'').trim();
+      var w=li.querySelector('.when'); w=w?w.textContent.trim():'';
+      out.push({where:where,title:t,when:w,text:v.trim()});
+    }
+    return out;
+  }
+  function snapshot(n){ return n.map(function(x){return x.title+'\u0001'+x.text;}).join('\u0002'); }
+  function paint(){
+    var n=collect(); bar.hidden=n.length===0; if(!n.length){ nudge.textContent=''; return; }
+    var changed=snapshot(n)!==(get('cst499.notes.emailed')||'');
+    nudge.textContent=changed?(n.length+(n.length===1?' note':' notes')+' not yet emailed'):'';
+  }
+  btn.addEventListener('click',function(){
+    var n=collect(); if(!n.length) return;
+    var lines=['My CST499 notes, saved on '+new Date().toLocaleDateString(),''];
+    var last='';
+    n.forEach(function(x){ if(x.where&&x.where!==last){ lines.push('== '+x.where+' =='); last=x.where; } lines.push(x.title+(x.when?' ('+x.when+')':'')); lines.push(x.text); lines.push(''); });
+    var body=lines.join('\n');
+    set('cst499.notes.emailed',snapshot(n)); paint();
+    location.href='mailto:?subject='+encodeURIComponent('My CST499 notes')+'&body='+encodeURIComponent(body);
+  });
+  document.addEventListener('input',function(e){ if(e.target&&e.target.closest&&e.target.closest('.notes')) setTimeout(paint,400); });
+  paint();
+})();
 </script>
 </body>
 </html>
