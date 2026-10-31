@@ -12,7 +12,7 @@
 
 Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This goal → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
 
 **Builds on.** You took a first step toward your Sprint 2 goal and reflected on how it improved your ability to answer a behavioral interview question ([My first step, taken](my-first-step-taken.html)).
 

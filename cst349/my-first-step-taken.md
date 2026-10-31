@@ -1,7 +1,7 @@
 <!-- CST349 · Graded item · editable source for my-first-step-taken.html.
      Edit this file; Claude carries the changes into the HTML.
      Draft 4 of 2026-10-25 (evening) — Prof. Sathya's edits of draft 3 carried through the whole page:
-     · Purpose is a three-box arrow chain (Builds on → This goal → Leads to), the pattern of the cst499 *-bb.html pages.
+     · Purpose is a three-box arrow chain (Builds on → This activity → Leads to), the pattern of the cst499 *-bb.html pages.
      · Each task is the question followed by its guidance in italics, in parentheses; the "Guidance (behind the +)"
        paragraphs are gone.
      · Each + holds one example, a "More examples" click-to-open with two more, and the reflection question.
@@ -18,11 +18,11 @@
 
 Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: a three-box arrow chain, Builds on → This goal → Leads to, as on the cst499 *-bb.html pages; the middle box is the highlighted one)
+## Purpose (page note: a three-box arrow chain, Builds on → This activity → Leads to, as on the cst499 *-bb.html pages; the middle box is the highlighted one)
 
 **Builds on.** You developed a Sprint 2 goal grounded in what you want to be able to say in a behavioral interview ([My Sprint 2 goal](my-sprint-2-goal.html)).
 
-**This goal.** Learn how to identify and take the first critical step toward the goal you set. Every journey begins with a first step.
+**This activity.** Learn how to identify and take the first critical step toward the goal you set. Every journey begins with a first step.
 
 **Leads to.** Share your first step, and how it will build momentum for your professional growth, with a partner at the Sprint 2 Exam on Wednesday 4 November.
 

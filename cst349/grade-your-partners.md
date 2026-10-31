@@ -11,11 +11,11 @@
 
 Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This goal → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
 
 **Builds on.** Two or more classmates chose you as a grader in [My two graders](my-two-graders.html), and they sent you their [Sprint 3 report](my-sprint-3-report.html) and their grading terms.
 
-**This goal.** Learn how to grade someone's work against the terms they set for themselves: fairly, from the evidence, and in a way they can learn from.
+**This activity.** Learn how to grade someone's work against the terms they set for themselves: fairly, from the evidence, and in a way they can learn from.
 
 **Leads to.** Your grades become their task-1 grade for the Sprint 3 report, after Prof. Sathya reviews them.
 

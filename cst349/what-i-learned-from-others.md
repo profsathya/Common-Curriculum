@@ -11,11 +11,11 @@
 
 Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This goal → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
 
 **Builds on.** You met alumni at the virtual visit on Wednesday 18 November, or you heard about it from classmates who did, and The Commons matched you with three classmates to talk to.
 
-**This goal.** Learn how to turn a conversation with people in the field into something you will do, by talking it through with others before the moment passes.
+**This activity.** Learn how to turn a conversation with people in the field into something you will do, by talking it through with others before the moment passes.
 
 **Leads to.** The Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint with a partner, and the look forward in your [Sprint 3 report](my-sprint-3-report.html).
 

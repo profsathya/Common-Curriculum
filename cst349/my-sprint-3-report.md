@@ -11,11 +11,11 @@
 
 Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This goal → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
 
 **Builds on.** You set a Sprint 3 goal, your grading terms, and two graders ([My Sprint 3 plan](my-sprint-3-plan.html), [My two graders](my-two-graders.html)), and you met alumni at the virtual visit on 18 November.
 
-**This goal.** Learn how to report on your own work against the terms you set yourself, plainly, with evidence a reader can check.
+**This activity.** Learn how to report on your own work against the terms you set yourself, plainly, with evidence a reader can check.
 
 **Leads to.** Your two graders grade this report against your terms; the Sprint 3 Exam on Wednesday 2 December is your reflection on this sprint, in writing and in conversation with a partner.
 

@@ -12,11 +12,11 @@
 
 Week 12 · due Monday 16 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This goal → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
 
 **Builds on.** You wrote the terms you want to be graded on in [My Sprint 3 plan](my-sprint-3-plan.html).
 
-**This goal.** Choose the two classmates who will grade your Sprint 3 report against your terms, and agree it with them first.
+**This activity.** Choose the two classmates who will grade your Sprint 3 report against your terms, and agree it with them first.
 
 **Leads to.** Your graders read [My Sprint 3 report](my-sprint-3-report.html) and enter your grade in [Grade your partners](grade-your-partners.html) by Monday 7 December.
 
