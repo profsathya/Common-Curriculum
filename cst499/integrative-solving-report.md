@@ -150,4 +150,4 @@ The reply is two or three sentences: what the box already does, then the one thi
 
 ## How this page was made
 
-The three task questions are Prof. Sathya's, from his Sprint 3 planning of 30 October 2026. The look back, look forward, examples, reflection prompts and self-check were drafted by AI from that design; he reads them and edits by hand where they miss.
+The three task questions are Prof. Sathya's, from his Sprint 3 planning of 30 October 2026. The look back, look forward, examples and self-check were drafted by AI from that design; he reads them and edits by hand where they miss.
