@@ -18,6 +18,7 @@ const root=path.resolve(__dirname,'..');
  assert.equal(await page.locator('[data-save]').evaluateAll(es=>es.every(e=>e.type==='checkbox'?!e.checked:!e.value)),true);
  const ids=await page.locator('[id]').evaluateAll(es=>es.map(e=>e.id));assert.equal(new Set(ids).size,ids.length);
  await page.click('#copy-reviews');assert.match(await page.locator('#summary-out').inputValue(),/DRAFT/);assert.match(await page.locator('#summary-out').inputValue(),/not scored/);
+ await page.fill('#cal-formula','15');await page.fill('#cal-assumptions','0');await page.fill('#cal-reason','Correct formula; heavy mass does not justify a small angle.');await page.click('#cal-compare');await page.fill('#cal-reflection','I retain both scores based on the stated assumptions.');
  for(const n of [1]){
   await page.fill(`#p${n}-name`,`Partner ${n}`);await page.selectOption(`#p${n}-path`,'C');
   await page.fill(`#p${n}-work`,`Partner ${n} submitted relationship and scenarios version 1`);

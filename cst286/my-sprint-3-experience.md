@@ -28,7 +28,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Think it through with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **STORY3-1207-R2**
+AI Dojo Passcode for this Graded Item: **STORY3-1207-R3**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
@@ -46,7 +46,13 @@ AI Dojo Passcode for this Graded Item: **STORY3-1207-R2**
 
 ### Step 1 · Tell the story of your learning in Sprint 3
 
-Describe your learning journey in Sprint 3 as a story. Choose three or four of these questions to build it around; you do not have to answer all of them. What motivated you to learn this particular topic? How did you go about it? Did you use AI, and how? When did you work on it, and for how much time? What surprised you? Who or what helped?
+Describe your learning journey in Sprint 3 as a story. Choose three or four of these questions to build it around; you do not have to answer all of them.
+
+What motivated you to learn this particular topic? How did you go about it? Did you use AI, and how? When did you work on it, and for how much time? What surprised you? Who or what helped?
+
+Include specifics such as dates, time spent, resources or people. Trace one learning decision to its effect on your understanding, using evidence from your work, and say what that suggests for your next learning decision.
+
+Include how you used one piece of feedback from your pre-exam meeting: a revision, a reasoned decision to retain your answer, or an unresolved question and proposed check.
 
    **My Sprint 3 story.** Start with a blank response.
 
@@ -56,7 +62,7 @@ Describe your learning journey in Sprint 3 as a story. Choose three or four of t
 
 ### Step 2 · What do you remember about your quantitative relationship
 
-Can you describe your Sprint 3 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If parts are uncertain, record what you remember and what might help you recall the rest.
+Can you describe your Sprint 3 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. Whether your recall is complete or partial, explain what helped you remember. If parts are uncertain, record what you remember and what might help you recall the rest.
 
    **My relationship from memory.** The relationship as far as I can write it without looking, and if parts are missing, why I think that is.
 
@@ -86,8 +92,8 @@ Which part of how you learned in Sprint 3 will you use the next time you set out
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Step 1 tells my Sprint 3 story around at least three of the questions · 30 pts
-- [ ] Step 1 includes specifics: dates, hours, resources or people · 30 pts
+- [ ] Step 1 uses at least three of the questions to connect a learning decision, its effect on my understanding, and a future decision · 30 pts
+- [ ] Step 1 supports that account with specifics from my work: dates, hours, resources or people · 30 pts
 - [ ] Step 2 is written from memory, with the relationship in words and as a formula with units, as far as it came back · 20 pts
 - [ ] Step 2 records the condition as far as it came back and reflects on any uncertain parts, or what helped recall it · 20 pts
 
@@ -105,19 +111,19 @@ This graded item is complete when your path is chosen and all four steps have te
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: My Sprint 3 experience. Course: CST286. Due: Monday 7 December. Passcode: STORY3-1207-R2.
+Graded item: My Sprint 3 experience. Course: CST286. Due: Monday 7 December. Passcode: STORY3-1207-R3.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
 Learning purpose: the student tells the story of how they learned in Sprint 3, writes their relationship from memory, looks back at the Sprint 3 Exam, and names one part of how they learned that they will use again.
 
-Conversation guidance: after the passcode, title and due date, establish the student's path and invite a moment from the sprint that stands out. Follow their account with one open question at a time. On Path A, invite reflection on their own observations, predictions, video summaries and checks in the embedded book, including either spin-speed or axis-direction work. On Path B, follow how they chose sources and tested their independent investigation. On Path C, follow what they built, what they predicted and observed, and how they checked the model's assumptions. These are invitations, not extra required questions. Use the form as checkpoints as their story develops. Never invent experiences, themes, progress or difficulties. Ask for the relationship, units and condition from memory before providing any hints or corrections; preserve that attempt. If recall is partial, invite reflection on what helped and what needs practice. An accurate memory attempt needs no invented gap. Ask about the actual exam experience without assuming which question appeared; accept an honest account if the student has not taken it. Help them choose what to take forward. The student writes the final responses.
+Conversation guidance: after the passcode, title and due date, establish the student's path and invite a moment from the sprint that stands out. Follow their account with one open question at a time. On Path A, invite reflection on their own observations, predictions, video summaries and checks in the embedded book, including either spin-speed or axis-direction work. On Path B, follow how they chose sources and tested their independent investigation. On Path C, follow what they built, what they predicted and observed, and how they checked the model's assumptions. These are invitations, not extra required questions. Use the form as checkpoints as their story develops. Never invent experiences, themes, progress or difficulties. Ask for the relationship, units and condition from memory before providing any hints or corrections; preserve that attempt. For complete or partial recall, invite reflection on what helped and what needs practice. An accurate memory attempt needs no invented gap. Ask about the actual exam experience without assuming which question appeared; accept an honest account if the student has not taken it. Help them choose what to take forward. The student writes the final responses.
 
 When asked for a review, quote only the student's reasoning and identify unresolved questions. Leave final response writing to the student.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Story: built around at least three of the listed questions, with specifics (dates, hours, resources, people). The feedback names which listed questions the story answers and asks for a specific where one is missing; it does not suggest a theme.
+- Story: built around at least three of the listed questions, with specifics (dates, hours, resources, people). The story connects a learning decision to evidence of its effect and a future decision. The feedback names which listed questions the story answers and asks for a specific where one is missing; it does not suggest a theme.
 - Relationship from memory: in words and as a formula with units, as far as it came back, and the condition as far as it came back, with reflection on uncertain parts or what helped recall it.
 - Looking back at the exam: a part of the Sprint 3 work and a moment in the exam, or an honest statement that the exam has not been taken and a practice focus.
 - What I take forward: a part of how the student learned and where they expect to use it.

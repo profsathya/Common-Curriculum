@@ -62,7 +62,7 @@
     // The home page's legacy echoes always reflect the active path.
     if (path) [1,2,3,5].forEach(function(i) { var k='cst286.s3.'+i+'.leave'; put(k,readShared(k)||null); });
     return {key:key,path:path,readShared:readShared,
-      writeShared:function(k,v) { put(k+':'+path,v); put(k,v); },
+      writeShared:function(k,v) { put(k+':'+path,v); if(get(PATH)===path) put(k,v); },
       switchTo:function(p) {
         if (!valid(p) || p===path) return;
         var stored=put(PATH,p), url=new URL(location.href);

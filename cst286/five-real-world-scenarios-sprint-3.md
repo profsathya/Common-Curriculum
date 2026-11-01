@@ -43,13 +43,13 @@ Since you tested your relationship, has your condition stayed the same? Choose t
 
 ## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **LIMITS3-1130-R2**
+AI Dojo Passcode for this Graded Item: **LIMITS3-1130-R3**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
 > Help me explore where the relationship I investigated in Sprint 3 might be useful, and where it might mislead me. First tell me the passcode, title and due date for "Five real-world scenarios". I am on Path [A, B or C]. Begin with one open question about something I have noticed or want to predict in the world around me. Follow my curiosity, then help me connect it to the relationship and condition I tested. Help me develop three situations where it applies and two similar-looking ones where a physical difference matters. Ask one question at a time, and have me choose the setups, work the numbers and explain the results. On Path C, help me test a new input in my build and connect it to situations beyond the build. Treat the form as checkpoints along the way. Do not write my scenarios or final responses for me.
 
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, the Dojo may be using missing or older course context. Relink the course Google Doc before relying on its assignment-specific guidance. You can keep reading this page, recording observations and planning your investigation while you fix the link.
 
 **3. Work through your scenarios with your Dojo.** For the three scenarios that apply, work the calculation step by step with units. For the two that do not apply, pick situations that look like your working ones on the surface, and let your Dojo press you until you can point to the exact part of your condition that breaks and what the formula would get wrong. The directions for your path are under Part 2 of the form.
 
@@ -61,6 +61,8 @@ AI Dojo Passcode for this Graded Item: **LIMITS3-1130-R2**
 
 ## The form
 
+Work in four stages: establish the relationship and assumptions; develop three applications; develop two look-alikes; review the reasoning across the set. Each scenario is a collapsible section that keeps its response scaffolds together.
+
 (Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder.)
 
 ### Part 1 · My quantitative relationship and condition
@@ -71,7 +73,7 @@ Bring these two boxes from Find and confirm my relationship, with any change you
 
    **My relationship.** In words, then as a formula, with each quantity and its unit.
 
-2. **The condition it depends on.** One sentence on what has to be true in a physical situation for your formula to apply, written so that you can check it against any new situation. (Page note: the text of this box is echoed at the top of each block in Part 3.)
+2. **The condition it depends on.** State the assumptions that justify applying your relationship. Use a short list if needed, and make each assumption checkable against a new situation. (Page note: the text of this box is echoed at the top of each block in Part 3.)
 
    **My condition.** What must be true in the situation for my relationship to apply.
 
@@ -94,8 +96,8 @@ Create three distinct real-world situations where your condition from Part 1 hol
   - Work the calculation step by step from the starting quantities to the predicted quantity.
   - Include the unit at every step and in the final result.
    **Scenario N · Worked.** Each step of the calculation with its unit, and the final result.
-- **Why my condition holds here.** Explain in one sentence why the condition you stated in Part 1 is met in this situation.
-   **Scenario N · Why the condition holds.** One sentence pointing to my condition in Part 1.
+- **Why my condition holds here.** Explain why the relevant assumptions you stated in Part 1 hold in this situation, using its physical details.
+   **Scenario N · Why the condition holds.** Point to the physical details that support my assumptions in Part 1.
 
 **Path C · Scenario 1 · My build test.**
 - Identify the tool and share a working link or enough settings to reproduce your build.
@@ -122,11 +124,17 @@ Take one of your working scenarios from Part 2 and change one physical detail ab
 - **What would go wrong.**
   - State what your formula would get wrong if you used it here anyway (such as predicting a number that is too large, too small, in the wrong direction, or meaningless, or that cannot be determined from the information in the situation).
   - Explain the physical reason why.
-   **Scenario N · What my relationship would get wrong here.** One or two sentences on the direction of the error and its physical cause.
+   **Scenario N · What my relationship would get wrong here.** Explain the error and its physical cause, or what cannot be determined without more information.
+
+For the model boundary, compare [Vishay TLDR5400 current–voltage data](https://www.vishay.com/docs/83003/tldr5400.pdf) with [TI’s explanation of LED current and forward voltage](https://www.ti.com/lit/an/slyt084/slyt084.pdf).
+
+## Review the reasoning across the set
+
+Check that the three applications use the same relationship consistently and that each look-alike breaks a relevant assumption. Before the December 2 exam, meet your agreed grader to discuss your relationship, assumptions and one scenario, and try a new case they bring. The formal grading review remains due December 9. How I used feedback. Record the date and one piece of feedback from your meeting. Describe a revision you made, a reasoned decision to keep your answer, or an unresolved question and the check you propose. If the meeting is still ahead when you submit on November 30, record your plan here; preserve your response in your reflection after the meeting.
 
 ## Look forward
 
-Prepare for the Sprint 3 Exam on Wednesday 2 December by practicing your reasoning. Which of your three working scenarios do you understand well enough to work through on paper without your notes? Choose one.
+Prepare for the [Sprint 3 Exam on Wednesday 2 December](sprint-3-exam.html) by practicing your reasoning. Which of your three working scenarios do you understand well enough to work through on paper without your notes? Choose one.
 
 ○ Scenario 1 ○ Scenario 2 ○ Scenario 3
 
@@ -154,31 +162,31 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 
 **Example · An LED circuit**
 - *My relationship:* The current is the battery's voltage minus the LED's voltage, divided by the resistance: `I = (V_battery − V_LED) ÷ R`, with `I` in amperes (A), the voltages in volts (V) and `R` in ohms (Ω).
-- *My condition:* The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.
+- *My condition:* The supply stays steady, and a constant 2.0 V forward drop is a reasonable approximation for this particular LED near the intended operating current. The resistor is in series with the LED; 2.0 V is an assumed operating value, not a universal turn-on threshold.
 
 *Scenario 1 (Applies)*
 - *The situation:* A bike tail light runs a red LED from two fresh AA batteries through a 100 Ω resistor.
 - *Given:* `V_battery = 3.0 V`, `V_LED = 2.0 V`, `R = 100 Ω`.
 - *Worked:* `I = (3.0 V − 2.0 V) ÷ 100 Ω = 1.0 V ÷ 100 Ω = 0.010 A = 10 mA`.
-- *Why the condition holds:* Fresh batteries hold close to 3.0 V, which is above the LED's 2 V, so the LED is lit.
+- *Why the condition holds:* The series circuit has a steady 3.0 V supply, and we are assuming a 2.0 V LED drop near this operating point. Check that assumption against the particular LED’s data or a measurement.
 
 *Scenario 4 (Looks similar, does not apply)*
 - *The situation:* The same tail light after a winter in the garage, with worn batteries that now give 1.8 V together.
 - *Looks like scenario 1 because:* Same light, same LED, same resistor.
-- *The subtle difference, and the part of my condition it breaks:* 1.8 V is less than the LED's 2 V, which breaks the condition that the battery's voltage is larger than the LED's.
-- *What my relationship would get wrong here:* It gives (1.8 V − 2.0 V) ÷ 100 Ω = −2 mA, a meaningless negative current; in fact almost no current flows and the LED stays dark, because the battery cannot push past the LED's voltage.
+- *The subtle difference, and the part of my condition it breaks:* A 1.8 V supply cannot support the assumed 2.0 V forward drop in this passive series circuit. The constant-drop model is inconsistent at this operating point.
+- *What my relationship would get wrong here:* It gives (1.8 V − 2.0 V) ÷ 100 Ω = −2 mA. This signals failure of the assumed conducting model; it does not establish the actual current or whether the LED is visible. Use this device’s current–voltage curve or a measurement to determine the operating point.
 
 ## Self-check
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Part 1 states the relationship in words and as a formula, with every quantity and its unit · 10 pts
-- [ ] Part 1 states the condition as a sentence that can be checked against a new situation · 10 pts
+- [ ] Part 1 gives a scientifically defensible relationship, consistent in words and formula, with defined quantities and units · 10 pts
+- [ ] Part 1 gives physically justified assumptions that can each be checked against a new situation · 10 pts
 - [ ] Scenarios 1 to 3 are real situations of my own, with realistic numbers; on Path C, Scenario 1 includes a reproducible build test, predicted and observed values, and an evidence-based comparison · 15 pts
-- [ ] Scenarios 1 to 3 are each worked step by step, with the unit at every step · 20 pts
-- [ ] Scenarios 1 to 3 each state why my condition from Part 1 holds there · 10 pts
+- [ ] Scenarios 1 to 3 use the relationship correctly, step by step, with consistent units · 20 pts
+- [ ] Scenarios 1 to 3 justify why the relevant assumptions from Part 1 hold · 10 pts
 - [ ] Scenarios 4 and 5 each identify the Part 2 scenario they resemble and the subtle physical difference · 15 pts
-- [ ] Scenarios 4 and 5 each state which part of my condition is broken and what my relationship would get wrong · 20 pts
+- [ ] Scenarios 4 and 5 show which relevant assumption is broken and give a physically defensible account of what the relationship would get wrong or cannot determine · 20 pts
 
 **What makes it strong.** The two scenarios that do not apply are close enough to your working scenarios that someone might try to use your formula on them without noticing, and your explanation of the subtle difference makes it immediately clear why the formula fails there.
 
@@ -194,7 +202,7 @@ This graded item is complete when your path is chosen, and the look back, Part 1
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Five real-world scenarios (Sprint 3). Course: CST286. Due: Monday 30 November. Passcode: LIMITS3-1130-R2.
+Graded item: Five real-world scenarios (Sprint 3). Course: CST286. Due: Monday 30 November. Passcode: LIMITS3-1130-R3.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 

@@ -37,7 +37,7 @@
       history.push({raw:raw,source:source,at:new Date().toISOString()});history=history.slice(-8);render();
       try{localStorage.setItem(key+':recovery',stringify(history));return true;}catch(_){return false;}
     }
-    try{observed=read(key);history=JSON.parse(read(key+':recovery'))||[];render();report(observed?'Saved draft loaded on this browser. This is not a Canvas submission.':'Your draft will be saved on this browser. Submit copied answers in Canvas.');}
+    try{observed=read(key);history=JSON.parse(read(key+':recovery'))||[];if(!Array.isArray(history))history=[];render();report(observed?'Saved draft loaded on this browser. This is not a Canvas submission.':'Your draft will be saved on this browser. Submit copied answers in Canvas.');}
     catch(_){report('Saving is unavailable. Copy your work before leaving this page.');}
     function save(force) {
       var current=stringify(getValue());

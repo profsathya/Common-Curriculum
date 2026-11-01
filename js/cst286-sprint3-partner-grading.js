@@ -20,6 +20,7 @@
     if (!draftGuard.save()) warning.hidden = false;
   }
   function update() {
+    document.getElementById('cal-compare').disabled = !['cal-formula','cal-assumptions','cal-reason'].every(function(id){var el=document.getElementById(id);return el.value.trim() && el.checkValidity();});
     [1].forEach(function (n) {
       var path = value('p' + n + '-path');
       document.querySelectorAll('[data-peer-path][data-review="' + n + '"]').forEach(function (el) { el.hidden = el.dataset.peerPath !== path; });
@@ -63,6 +64,8 @@
     var text = "CST286 · Grade a classmate's Sprint 3 work\nDue: Wednesday 9 December 2026\n";
     if (issue) text += 'DRAFT: ' + issue + '\n';
     function answer(label, content) { text += '\n' + label + '\n' + (content || '(not yet answered)') + '\n'; }
+    answer('Calibration · original scores and evidence', saved.calibrationAttempt || '(not yet compared)');
+    answer('Calibration · what I would keep or change', value('cal-reflection'));
     answer('My agreed grader', value('grader-name'));
     ['eligible-nonreciprocal', 'eligible-new-partner'].forEach(function (id) {
       var el = document.getElementById(id);
@@ -97,6 +100,15 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { status.textContent = (issue ? issue + ' ' : '') + 'Copied. Review the text and paste it into Canvas.'; }, fallback);
     else fallback();
   });
-  update();
+  document.getElementById('cal-compare').addEventListener('click',function(){
+    if(!saved.calibrationAttempt) saved.calibrationAttempt='Formula: '+value('cal-formula')+'/15; assumptions: '+value('cal-assumptions')+'/20. Evidence: '+value('cal-reason');
+    saved.calibrationCompared=true;save();showCalibration();
+  });
+  function showCalibration(){
+    var open=!!saved.calibrationCompared;document.getElementById('cal-interpretation').hidden=!open;
+    document.getElementById('cal-compare').setAttribute('aria-expanded',String(open));
+    document.getElementById('cal-status').textContent=open?'Your first attempt is kept in the copied review. Compare the interpretation and explain your judgment below.':'Enter both scores and your reasons before comparing.';
+  }
+  showCalibration();update();
   draftGuard.ready();
 }());

@@ -42,13 +42,13 @@ Since you set your goal, does what you wrote for "I will be able to predict" sti
 
 ## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **REL3-1116-R2**
+AI Dojo Passcode for this Graded Item: **REL3-1116-R3**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
 > Help me investigate my goal for "Find and confirm my relationship" in CST286. First give its passcode, title and due date from the course context. I am on Path [A, B or C]. Ask what I have noticed or tried since setting my goal, what I expect and what puzzles me. Follow my response one question at a time. On A, use the embedded spinning-objects book: discuss my current step and my prediction before revealing an explanation; help me understand the videos and choose the speed or direction exploration that fits my goal. On B, help me choose and evaluate a source and design my own investigation. On C, ask what I have built, what I can change and measure, and help me test my model. Teach when I need support, then ask me to explain or try the idea. Help me plan a numerical prediction before running my check and interpret what I observe. The final form is a synthesis of my investigation. Leave my written responses and calculations for me to produce.
 
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, the Dojo may be using missing or older course context. Relink the course Google Doc before relying on its assignment-specific guidance. You can keep reading this page, recording observations and planning your investigation while you fix the link.
 
 **3. Understand the relationship and plan your check with your Dojo.** Follow the directions for your path, just above the form, and talk each step through with your Dojo.
 
@@ -178,11 +178,13 @@ The approximation assumes spin dominates the motion and precession stays slow an
 
 **What I now understand and want to test** Return to your starting question. Explain what the activities helped you understand, which observation supports that understanding, and what remains uncertain. Identify the relationship and test you will carry into Tasks 1–4 below.
 
+Your exploration record preserves what you tried and how your ideas developed. Your final synthesis should bring that evidence together: explain the relationship coherently, justify its assumptions and interpret your own check. Refer to useful observations from the book rather than copying every earlier response.
+
 Use Tasks 1–4 below for your final synthesis and your own check. Choose a new case, record a numerical prediction before running it, then compare. The interactive models above calculate the same relationships you are learning: agreement checks your calculation within that model, and is not independent evidence that the model describes a real object. Explain this limit if you use a model run as your check.
 
 For a chair measurement, use a stable freely turning chair, equal bottles, tape measure, phyphox and a friend. Keep turns gentle and stop if dizzy. Secure the phone flat on the seat or lap. Include person and chair in total moment of inertia; predict a ratio before measuring. Use a simulation if equipment is unavailable.
 
-## The form
+## The final synthesis
 
 (Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right. Each box has a short label above it and a one-line starter inside the label, never a placeholder.)
 
@@ -203,18 +205,18 @@ For a chair measurement, use a stable freely turning chair, equal bottles, tape 
 
 ### Task 3 · My condition
 
-State in one sentence what has to be true in a physical situation for your formula to apply. Write it so that you can check it against any new situation; in the next item you will use it to find situations where it fails.
+State what has to be true in a physical situation for your formula to apply. Use a short list if there are several assumptions, and explain why they justify this relationship. Write it so that you can check it against any new situation; in the next item you will use it to find situations where it fails.
 
    **My condition.** What must be true in the situation for my relationship to apply.
 
 ### Task 4 · My check
 
-Run one check yourself, and report it in four parts.
+Run one check yourself, and report it in four parts. Explain what kind of evidence it provides; agreement with a calculation that uses the same formula does not independently validate the physical relationship.
 
 - **Before.** Write the setup and the number your formula predicts, with its unit, before you run anything.
 - **What I did.** Describe what you ran or measured.
 - **What I got.** The number you got, with its unit.
-- **What I make of it.** Compare the two numbers and explain what the agreement or difference tells you. Identify limits of your check; if the numbers differ, consider your condition and measurements.
+- **What I make of it.** Compare the two numbers and explain what the agreement or difference tells you. Say whether your check tests a calculation, a model implementation, or a physical prediction against independent observations. If you measured something, estimate the smallest difference your method could detect. Identify limits; if the numbers differ, consider your assumptions and measurements.
 
    **My check · Before.** The setup, and my predicted number with its unit.
    **My check · What I did.** What I ran or measured.
@@ -246,7 +248,7 @@ Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), d
 **Example C · Path C, a circuit in Tinkercad Circuits**
 - *Where I found it:* My Tinkercad Circuits build: a 9 V battery, a resistor and a red LED in one loop. The relationship is Ohm's law applied to the resistor, from OpenStax College Physics, section 20.2, Ohm's Law.
 - *My relationship:* The current is the battery's voltage minus the LED's voltage, divided by the resistance: `I = (V_battery − V_LED) ÷ R`, where `I` is the current in amperes (A, shown in milliamperes, mA), `V_battery` and `V_LED` are in volts (V) and `R` is in ohms (Ω). This predicts the current; the LED gets brighter as the current rises, but brightness is not what the formula gives.
-- *My condition:* The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.
+- *My condition:* The supply stays steady, and a constant 2.0 V forward drop is a reasonable approximation for this particular LED near the intended operating current. The resistor is in series with the LED; 2.0 V is an assumed operating value, not a universal turn-on threshold.
 - *My check · Before:* With the 470 Ω resistor swapped for 1,000 Ω, I predict (9 V − 2 V) ÷ 1,000 Ω = 0.0070 A = 7.0 mA.
 - *My check · What I did:* Changed the resistor in Tinkercad, added a multimeter in the loop set to current, and started the simulation.
 - *My check · What I got:* 6.9 mA.
@@ -257,14 +259,14 @@ Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), d
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
 - [ ] Task 1 identifies the source and relevant section; Path A records learning from the videos and reading; Path C supplies the build’s tool and reproducible configuration · 10 pts
-- [ ] Task 2 explains the relationship in my own words; Path A draws on the book’s predictions and reflections · 10 pts
-- [ ] Task 2 writes it as a formula, with every quantity and its unit · 15 pts
-- [ ] Task 3 states the condition as a sentence that can be checked against a new situation · 20 pts
+- [ ] Task 2 explains a scientifically defensible relationship in my own words, consistent with my formula; Path A draws on the book’s predictions and reflections · 10 pts
+- [ ] Task 2 gives the correct formula with consistently defined quantities and units · 15 pts
+- [ ] Task 3 gives physically justified assumptions that can each be checked against a new situation · 20 pts
 - [ ] Task 4 writes the predicted number, with its unit, before the check · 15 pts
 - [ ] Task 4 describes what I ran or measured, and the result with its unit · 15 pts
-- [ ] Task 4 compares prediction and result, explains agreement or differences, and identifies limits of the check; Path A includes the model comparison and final reflection · 15 pts
+- [ ] Task 4 compares prediction and result, explains agreement or differences, and keeps its conclusion within the evidence and limits of the check; Path A includes the model comparison and final reflection · 15 pts
 
-**What makes it strong.** Someone who reads your condition could check it against a new situation without asking you, and your check would have shown a clear difference if your relationship were wrong.
+**What makes it strong.** Someone who reads your condition could check it against a new situation without asking you, and your conclusion explains what your check could detect and what it cannot establish.
 
 **Grading.** 100 points, in Graded items. Path A’s learning record contributes to the source, explanation and comparison criteria above; it adds no extra points. Submitting on time earns the doing half of your grade; explaining your relationship and your check in your Monday check-in earns the other half.
 
@@ -276,7 +278,7 @@ This graded item is complete when your path is chosen, and the look back, all fo
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Find and confirm my relationship. Course: CST286. Due: Monday 16 November. Passcode: REL3-1116-R2.
+Graded item: Find and confirm my relationship. Course: CST286. Due: Monday 16 November. Passcode: REL3-1116-R3.
 
 Give the passcode, title and due date first. The purpose is to develop an explanation of a quantitative relationship, identify where it applies and test a prediction. Begin with what the student has observed or tried and what puzzles them, referring to their earlier goal when useful. Follow their thinking one question at a time rather than interviewing them through the form. Teaching, resources and small examples are welcome when followed by student reasoning or action. Do not write their submission or perform their calculation or experiment.
 
@@ -284,14 +286,14 @@ Path A: guide the embedded interactive book on this page. Its shared area includ
 
 Path B: the student selects a credible source, learns a relationship for their own phenomenon, and designs a check. Path C: the student builds a model in GlowScript, PhET or Tinkercad Circuits and documents the tool and reproducible configuration. Help them connect an adjustable input to a measurable output, predict before running, and distinguish behavior imposed by the model from independent evidence about the physical world.
 
-Use the final requirements as checkpoints after exploration: source and relevant section; relationship in words and as a formula with all quantities and units; checkable applicability condition; setup and numerical prediction recorded before the check; action, measured or simulated result, comparison and limits. On A, preserve the complete learning record from the selected book exploration. Never invent observations or infer that a revealed answer proves understanding. A result may confirm an expectation, challenge it or remain uncertain. If asked to review, identify unresolved ideas and evidence; the student writes the final responses.
+Use the final requirements as checkpoints after exploration: source and relevant section; relationship in words and as a formula with all quantities and units; physically justified, checkable assumptions; setup and numerical prediction recorded before the check; action, measured or simulated result, comparison and limits. On A, preserve the complete learning record from the selected book exploration. Never invent observations or infer that a revealed answer proves understanding. A result may confirm an expectation, challenge it or remain uncertain. If asked to review, identify unresolved ideas and evidence; the student writes the final responses.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
 - Look back: the Predict line as it stands now, and what changed it if it changed.
 - Where I found it: a source by title, link or person, and the part that gave the relationship.
-- My relationship: in words and as a formula; every quantity with its unit.
-- My condition: a checkable sentence about the physical situation; not a restatement of the formula.
+- My relationship: a scientifically defensible relationship, consistent in words and formula; quantities are consistently defined and their units support the calculation.
+- My condition: physically justified, checkable assumptions about the situation; a short list is welcome.
 - Before: the setup and a predicted number with its unit, written before the check.
 - What I did / What I got: what was run or measured, and the result with its unit.
 - What I make of it: the two numbers compared, agreement or differences explained, and limits of the check identified; a possible cause of differences is tied to the condition or a measurement.

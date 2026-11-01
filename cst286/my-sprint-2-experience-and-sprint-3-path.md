@@ -77,7 +77,19 @@ Can you describe your Sprint 2 quantitative relationship now, without looking at
 
 ### Step 3 · Choose your path for Sprint 3
 
-All three paths end in the same place by Dec 2: a relationship you can state, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one. They differ in how much of the path I lay out for you. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
+Choose the learning experience that fits what you want to investigate and the work you want to organize.
+
+**A · Guided spinning exploration.** Choose a question about a skater, wheel, top or gyroscope. Use the supplied interactive book, videos and models, with optional Dojo coaching. Record predictions before explanations, video learning and model runs; choose and carry out your check.
+
+**B · My own learning goal.** Choose a physical phenomenon you want to understand. Choose credible sources, organize your investigation and design a check. Record a prediction, result and interpretation. Dojo coaching is available.
+
+**C · Build and test a model.** Choose a phenomenon and a model to build or configure. Learn or use GlowScript, PhET or Tinkercad Circuits. Record reproducible settings, adjustable inputs, predicted and observed outputs, and what the build can establish. Dojo coaching is available.
+
+You can reconsider your choice. Each path keeps its own draft on this browser; switching opens that path’s saved draft, or an empty one on first use. Before switching, copy work you want to keep or move. If you already submitted a goal, explain the change in your next assignment.
+
+
+
+All three paths develop a relationship you can explain, three scenarios where it applies, and two look-alikes where it breaks. The December 2 exam asks you to use the relationship, reason about an unfamiliar variation, and explain what your investigation establishes. The paths differ in topic choice, tools, supplied support and the work you organize yourself. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
@@ -122,7 +134,7 @@ Learning purpose: the student tells the story of their Sprint 2 learning with sp
 
 Order: help the student tell their Sprint 2 story by asking three or four of these, one at a time, and following up for specifics (which day, how many hours, which resource, which person): what motivated them to learn their topic, how they went about it, whether and how they used AI, when they worked and for how long, what surprised them, who or what helped. Then ask for the relationship from memory, in words, as a formula with units, and its condition; if parts do not come back, ask why they think that is, and do not supply the missing parts.
 
-Then describe the three paths exactly as the course page gives them: Path A, guided exploration of surprising spinning behavior through the Dojo and embedded interactive book; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a build in GlowScript, PhET or Tinkercad Circuits whose adjustable input and measurable output let the student investigate and test a relationship. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one.
+Then describe the three paths exactly as the course page gives them: Path A, guided exploration of surprising spinning behavior through the Dojo and embedded interactive book; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a build in GlowScript, PhET or Tinkercad Circuits whose adjustable input and measurable output let the student investigate and test a relationship. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam involving explanation, an unfamiliar variation and interpretation of evidence.
 
 Never choose a path for the student and never say which path fits them. Ask which they choose and what in their story points there. If the reason does not refer to anything in their story or their Step 2 answer, ask what they noticed in Sprint 2 that leads to this choice; the decision stays theirs.
 

@@ -4,6 +4,7 @@
   var book=document.getElementById('path-a-book');
   if (!book) return;
   var path=document.querySelector('input[name="s3path"]:checked');
+  if (!path || path.value !== 'A') return;
   var key='cc-book:cst286-relationship:path:'+(path ? path.value : 'unselected');
   var evidence={reveals:{},runs:[]};
   try { var old=JSON.parse(localStorage.getItem(key)); if(old && old.reveals && Array.isArray(old.runs)) evidence=old; } catch (_) {}
@@ -27,7 +28,7 @@
     var k=btn.dataset.reveal, field=document.getElementById('bx-'+k), note=document.getElementById('gate-note-'+k);
     function refresh() {
       btn.disabled=!field.value.trim() && !evidence.reveals[k];
-      if(evidence.reveals[k]) note.textContent='Your original response is saved in your learning record. You can revise the response above as your thinking develops.';
+      if(evidence.reveals[k]) note.textContent='Your original response is recorded in this tab; check the exploration save status above. You can revise the response above as your thinking develops.';
       progress();
     }
     field.addEventListener('input',refresh);
@@ -78,10 +79,10 @@
       if(!Number.isFinite(output)) {status.textContent='These values exceed the model’s numerical range. Choose finite physical inputs.'; return;}
       if(kind==='direction' && output/p.omega>0.1) {status.textContent='These inputs do not give spin much faster than precession (this model uses a 10:1 screening ratio). Reconsider the inputs and your approximation before running; this screen does not establish validity for a real top.'; return;}
       var run={kind:kind,at:new Date().toISOString(),inputs:p,prediction:prediction,output:output};
-      evidence.runs.push(run); save();
+      evidence.runs.push(run); var stored=save();
       var runs=evidence.runs.filter(function(r){return r.kind===kind;});
       write('bk_'+kind+'_trials',runs.map(function(r,i){return 'Run '+(i+1)+' · '+r.at+'\nInputs ('+(r.kind==='speed' ? 'b: kg·m²; mass: kg per mass; r1 and r2: m; omega: rad/s' : 'mass: kg; distance: m; inertia: kg·m²; omega: rad/s')+'): '+JSON.stringify(r.inputs)+'\nPrediction before run: '+r.prediction+'\nModel output: '+r.output.toPrecision(5)+' rad/s';}).join('\n\n'));
-      status.textContent='Model output: '+output.toPrecision(5)+' rad/s. Your prediction and inputs are saved. The animation is schematic and capped in speed for readability.';
+      status.textContent='Model output: '+output.toPrecision(5)+' rad/s. '+(stored?'Your prediction and inputs are saved. ':'Your prediction and inputs are recorded in this tab; resolve the save status above. ')+'The animation is schematic and capped in speed for readability.';
       animate(kind,output,p); progress();
     });
   });
