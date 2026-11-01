@@ -18,9 +18,9 @@ The revised pages preserve the investigation sequence, open-ended Dojo coaching,
 - **Draft reliability:** core forms, book evidence and peer review detect a newer saved draft before replacing it; preserve recoverable conflicting versions; and avoid saving untouched stale tabs on exit. This is optimistic browser-local conflict detection, not a cloud backup or a transactional cross-device service. Save failures are visible near the top. Incomplete exports are marked as drafts.
 - **Status and AI handoff:** saved reflection text no longer marks a home-page item submitted. The manual submission mark can be cleared. Failed note saves report failure. Prompt copying uses displayed text, including the selected path. Hidden path instructions are filtered from per-box feedback. HTML and Markdown use the same R3 Dojo codes. A context mismatch permits continued reading and planning while the link is repaired.
 
-## Pending policy decision
+## Grading decision deferred by Sathya
 
-The existing registry says graded assignments 30%, exams 20%, check-ins 50%, while student pages describe timely submission as earning the “doing half.” The asynchronous question to Sathya asks whether to use 30/20/50 with assignment quality scored by published criteria, or retain completion-based credit and discuss weights. No answer has arrived yet. This conflict has not been silently resolved, and actual Canvas grade settings have not been verified. Late penalties, retakes and attendance policies were not otherwise changed.
+On 1 November, Sathya directed that grading remain as it is while he considers any changes in the context of the grading plan. Leave the current weights and grading-policy wording unchanged; do not treat the earlier 30/20/50 proposal as approved or as an unanswered question. The inconsistency between the registry weights and the “doing half” wording remains documented for that later consideration. Actual Canvas grade settings have not been verified. Late penalties, retakes and attendance policies were not otherwise changed.
 
 ## Validation
 
