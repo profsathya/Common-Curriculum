@@ -18,7 +18,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** The [first version of your Interactive Poster](interactive-poster-first-version.html), your [decision card](decisions-behind-my-work.html), and what your listener told you at the [rehearsal](rehearsal-in-class.html).
 
-**This experience.** Finish your Interactive Poster, so that a visitor at the festival can see your claim proven on the screen in a few minutes and open more when they want to.
+**This Learning Experience.** Finish your Interactive Poster, so that a visitor at the festival can see your claim proven on the screen in a few minutes and open more when they want to.
 
 **Leads to.** The Capstone Festival, where you present your poster and visit your classmates', and your final interview.
 

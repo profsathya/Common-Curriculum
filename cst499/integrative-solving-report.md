@@ -21,7 +21,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** In [My claim](my-claim.html) you identified the part of your claim that reaches into a second domain, or how your work could move toward one.
 
-**This experience.** Show, with evidence, how bringing a second domain into your work made it better.
+**This Learning Experience.** Show, with evidence, how bringing a second domain into your work made it better.
 
 **Leads to.** The first version of your Interactive Poster, where this evidence shows the breadth in your claim.
 

@@ -11,11 +11,11 @@
 
 Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This Learning Experience → Leads to)
 
 **Builds on.** Two or more classmates asked you to evaluate (grade) their Sprint 3 work and you agreed ([My two graders](my-two-graders.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their grading terms.
 
-**This activity.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
+**This Learning Experience.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
 
 **Leads to.** Enter your scores here so that they become your classmate's grade for task 1 of their report, after Prof. Sathya reviews them.
 

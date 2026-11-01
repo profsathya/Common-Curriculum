@@ -8,11 +8,11 @@ Graded item · Due Date: Monday 9 November · 100 pts
 
 This graded item will affect your final grade, and the late penalty applies.
 
-## Purpose (page note: the three-box arrow chain, Builds on → This goal → Leads to; the middle box is highlighted)
+## Purpose (page note: the three-box arrow chain, Builds on → This Learning Experience → Leads to; the middle box is highlighted)
 
 **Builds on.** The learning path you chose, and your reasoning for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
 
-**This experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it, and choose the two classmates you will partner with to test your understanding.
+**This Learning Experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it, and choose the two classmates you will partner with to test your understanding.
 
 **Leads to.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you understand the quantitative relationship that turns your "Given" into your prediction.
 

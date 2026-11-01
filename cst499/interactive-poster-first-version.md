@@ -19,7 +19,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** Your claim from [My claim](my-claim.html), and the evidence from your [Integrative Solving report](integrative-solving-report.html).
 
-**This experience.** Build the first version of the Interactive Poster you will present at the Capstone Festival, so that a visitor can see what your work demonstrates about you.
+**This Learning Experience.** Build the first version of the Interactive Poster you will present at the Capstone Festival, so that a visitor can see what your work demonstrates about you.
 
 **Leads to.** [The decisions behind my work](decisions-behind-my-work.html), which adds the decision card to your poster.
 

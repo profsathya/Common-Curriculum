@@ -12,7 +12,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** The quantitative relationship and condition you came to understand and tested in [Find and confirm my relationship](find-and-confirm-my-relationship.html).
 
-**This experience.** Apply your relationship in three real situations where its condition holds, and identify two similar-looking situations where it does not, because one physical detail is different.
+**This Learning Experience.** Apply your relationship in three real situations where its condition holds, and identify two similar-looking situations where it does not, because one physical detail is different.
 
 **Leads to.** The Sprint 3 Exam on Wednesday 2 December, where you use your relationship and condition on paper.
 
@@ -43,21 +43,21 @@ Since you tested your relationship, has your condition stayed the same? Choose t
 
 ## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **LIMITS3-1130**
+AI Dojo Passcode for this Graded Item: **LIMITS3-1130-R2**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Five real-world scenarios" for Sprint 3. First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Start by asking me for the relationship and the condition I tested in Find and confirm my relationship. Next, work through my five scenarios with me one at a time (three where the condition holds, and two look-alikes where it breaks). Have me work the numbers myself, and challenge me on whether my condition really holds or breaks in each one. Do not write the scenarios or work the numbers for me; if I am struggling to find a scenario or to see how my condition breaks, ask me guiding questions to help me figure them out. Do not summarize until I ask you to.
+> Help me explore where the relationship I investigated in Sprint 3 might be useful, and where it might mislead me. First tell me the passcode, title and due date for "Five real-world scenarios". I am on Path [A, B or C]. Begin with one open question about something I have noticed or want to predict in the world around me. Follow my curiosity, then help me connect it to the relationship and condition I tested. Help me develop three situations where it applies and two similar-looking ones where a physical difference matters. Ask one question at a time, and have me choose the setups, work the numbers and explain the results. On Path C, help me test a new input in my build and connect it to situations beyond the build. Treat the form as checkpoints along the way. Do not write my scenarios or final responses for me.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
 **3. Work through your scenarios with your Dojo.** For the three scenarios that apply, work the calculation step by step with units. For the two that do not apply, pick situations that look like your working ones on the surface, and let your Dojo press you until you can point to the exact part of your condition that breaks and what the formula would get wrong. The directions for your path are under Part 2 of the form.
 
-**4. Ask for the form.** When Part 1 and all five scenarios hold up, paste this:
+**4. Review your reasoning.** When Part 1 and all five scenarios hold up, paste this:
 
-> Write my work in the form's order, using only my words: What changed, if anything · My relationship · My condition; then for Scenarios 1, 2 and 3: The situation · Given · Worked · Why the condition holds; then for Scenarios 4 and 5: The situation · Looks like scenario __ because · The subtle difference, and the part of my condition it breaks · What my relationship would get wrong here. If a box is not settled, write "not yet settled" in it.
+> Help me review my reasoning against the form. Quote only what I have said, identify questions I have not settled, and let me write the final responses in my own words.
 
-**5. Fill in the form.** Copy the first line into the look back box above, and each other line from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
+**5. Fill in the form.** Write your responses in your own words, using the conversation to check your reasoning. Then write your look forward, go through the Self-check and submit.
 
 ## The form
 
@@ -80,7 +80,7 @@ Bring these two boxes from Find and confirm my relationship, with any change you
 (Page note: shown whatever the Dojo tick says; only the line for the student's path shows.)
 - *Path A:* Develop your own spinning situations using the relationship you investigated in the embedded book. Choose cases that fit your spin-speed or axis-direction goal, with your own setups, numbers and explanations.
 - *Path B:* Choose situations from the world around your own phenomenon.
-- *Path C:* Use your build as one of the three scenarios if it helps you test a new input. Develop the other situations beyond the build, and explain where its assumptions apply.
+- *Path C:* Use Scenario 1 to predict and test a new input in your build. Develop Scenarios 2 and 3 beyond the build, and explain where its assumptions apply.
 
 Create three distinct real-world situations where your condition from Part 1 holds, and work your prediction with realistic numbers in each one.
 
@@ -96,6 +96,12 @@ Create three distinct real-world situations where your condition from Part 1 hol
    **Scenario N · Worked.** Each step of the calculation with its unit, and the final result.
 - **Why my condition holds here.** Explain in one sentence why the condition you stated in Part 1 is met in this situation.
    **Scenario N · Why the condition holds.** One sentence pointing to my condition in Part 1.
+
+**Path C · Scenario 1 · My build test.**
+- Identify the tool and share a working link or enough settings to reproduce your build.
+- Record the new input and your prediction before running it, with units.
+- Record the output you observed, with units, and compare it with your prediction.
+- Explain what this comparison tells you, including any uncertainty. If the build uses the same formula, explain what independent evidence supports the physical relationship.
 
 ### Part 3 · Two scenarios that look similar but do not apply
 
@@ -120,33 +126,17 @@ Take one of your working scenarios from Part 2 and change one physical detail ab
 
 ## Look forward
 
-Next is the Sprint 3 Exam on Wednesday 2 December, in class and on paper, where you use your relationship and condition without your notes. Which of your three working scenarios do you understand well enough to work through on paper without your notes? Choose one.
+Prepare for the Sprint 3 Exam on Wednesday 2 December by practicing your reasoning. Which of your three working scenarios do you understand well enough to work through on paper without your notes? Choose one.
 
 ○ Scenario 1 ○ Scenario 2 ○ Scenario 3
 
 **What I take into the exam.** Write one sentence: the scenario you would work on paper, and the step in it you want to practice before Wednesday. (Page note: saved as cst286.s3.3.leave; the home page shows it under item 3.)
 
-## Worked examples (shown beside the form)
+## Worked examples (collapsed beside the form)
 
 Each pair shows Part 1, one scenario where the prediction applies, and one look-alike scenario where the condition breaks, using the exact labels of the form.
 
-**Pair A · Path A, angular momentum**
-- *My relationship:* With nothing outside twisting it, moment of inertia times spin rate stays the same: `ω₂ = ω₁ × I₁ ÷ I₂`, where `ω` is the spin rate (rev/s or rad/s, the same unit on both sides) and `I` the moment of inertia in kilogram square meters (kg·m²).
-- *My condition:* Nothing outside the spinning system twists it while the mass moves in or out.
-
-*Scenario 1 (Applies)*
-- *The situation:* A figure skater spinning on smooth indoor ice pulls her arms and one leg in tight.
-- *Given:* `ω₁ = 2.5 rev/s`, `I₁ = 3.0 kg·m²` with arms and leg out, `I₂ = 1.2 kg·m²` pulled in.
-- *Worked:* `ω₂ = 2.5 rev/s × 3.0 kg·m² ÷ 1.2 kg·m² = 2.5 rev/s × 2.5 = 6.25 rev/s`.
-- *Why the condition holds:* Her blade turns on a tiny point of smooth ice, so the ice gives almost no twist while she pulls in.
-
-*Scenario 4 (Looks similar, does not apply)*
-- *The situation:* The same skater pulls in the same way on a rough, slushy outdoor rink, and her blade scrapes as she turns.
-- *Looks like scenario 1 because:* Same skater, same spin rate at the start, same arms and leg pulled in.
-- *The subtle difference, and the part of my condition it breaks:* The scraping blade drags on the rough ice, which breaks the condition that nothing outside twists the system.
-- *What my relationship would get wrong here:* It predicts 6.25 rev/s, which is too large; the drag of the ice takes angular momentum away, so she ends up spinning slower than that and keeps slowing down.
-
-**Pair B · Path B, the playground swing**
+**Example · The playground swing**
 - *My relationship:* The time for one full swing grows with the square root of the chain length: `T = 2π √(L ÷ g)`, where `T` is the period in seconds (s), `L` the length in meters (m) and `g = 9.8 m/s²`.
 - *My condition:* The swing moves through a small angle, less than about 15 degrees from straight down, and air drag is small.
 
@@ -162,7 +152,7 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 - *The subtle difference, and the part of my condition it breaks:* At 60 degrees the swing is far outside the small-angle range, which breaks the first part of my condition.
 - *What my relationship would get wrong here:* It predicts 3.17 s, which is too small; at large angles the swing spends longer near the top of each arc, and a full swing takes about 3.4 s.
 
-**Pair C · Path C, an LED circuit**
+**Example · An LED circuit**
 - *My relationship:* The current is the battery's voltage minus the LED's voltage, divided by the resistance: `I = (V_battery − V_LED) ÷ R`, with `I` in amperes (A), the voltages in volts (V) and `R` in ohms (Ω).
 - *My condition:* The battery's voltage stays steady and is larger than the LED's voltage (about 2 V for a red LED), so the LED is lit.
 
@@ -184,7 +174,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 - [ ] Part 1 states the relationship in words and as a formula, with every quantity and its unit · 10 pts
 - [ ] Part 1 states the condition as a sentence that can be checked against a new situation · 10 pts
-- [ ] Scenarios 1 to 3 are real situations of my own, with realistic numbers · 15 pts
+- [ ] Scenarios 1 to 3 are real situations of my own, with realistic numbers; on Path C, Scenario 1 includes a reproducible build test, predicted and observed values, and an evidence-based comparison · 15 pts
 - [ ] Scenarios 1 to 3 are each worked step by step, with the unit at every step · 20 pts
 - [ ] Scenarios 1 to 3 each state why my condition from Part 1 holds there · 10 pts
 - [ ] Scenarios 4 and 5 each identify the Part 2 scenario they resemble and the subtle physical difference · 15 pts
@@ -202,15 +192,15 @@ This graded item is complete when your path is chosen, and the look back, Part 1
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Five real-world scenarios (Sprint 3). Course: CST286. Due: Monday 30 November. Passcode: LIMITS3-1130.
+Graded item: Five real-world scenarios (Sprint 3). Course: CST286. Due: Monday 30 November. Passcode: LIMITS3-1130-R2.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
 Learning purpose: the student applies the relationship they tested in Find and confirm my relationship in three real situations where its physical condition holds, and constructs two look-alike situations where one physical detail changes so the condition breaks.
 
-Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they tested. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, use the relationship the student investigated in the embedded book, whether spin speed or axis direction. Help them develop their own setups, numbers and explanations within that area. On Path C, one scenario may test a new input in the student's build; help them transfer the relationship beyond that build and inspect its assumptions. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
+Conversation guidance: after the passcode, title and due date, establish the student's path and invite one observation or question about where their learning might be useful. On Path A, invite everyday spinning observations and follow the student's chosen spin-speed or axis-direction exploration. On Path B, follow the phenomenon the student chose. On Path C, begin with a behavior they want their build to predict, then help them test a new input and transfer their thinking beyond the build. Ask one question at a time and respond to what the student notices. Bring in the relationship and its condition when they help explain the situation. Use the form as checkpoints after ideas emerge, rather than a fixed interview. Help the student develop three applicable situations and two look-alikes, with their own numbers and reasoning. For Path C, capture the build tool, reproducible settings or link, prediction before the run, observed output with units, and comparison. Explain that agreement with a model implementing the same formula tests implementation, while independent evidence is needed to check the physical relationship. Help them reason about assumptions, including what cannot be determined, without providing finished scenarios or calculations. The student writes the final responses; a requested review may quote their reasoning and identify unresolved questions.
 
-Do not summarize until the student asks. When they ask, output the text in the exact order of the form's boxes using only the student's words, and write "not yet settled" on any box that is not settled.
+When asked for a review, quote only the student's reasoning and identify unresolved questions. Leave final response writing to the student.
 
 ## AI guidance and AI feedback (page note; the criteria the buttons check)
 
@@ -223,4 +213,4 @@ The reply is two or three sentences: what the box already does well, then the on
 
 ## Where this page comes from
 
-The five-scenario design and the "looks similar but does not apply" requirement are by Prof. Sathya. The form layout, the worked example pairs, the self-check and the Dojo prompts were drafted with AI and reviewed by Prof. Sathya.
+The five-scenario design and the "looks similar but does not apply" requirement are by Prof. Sathya. The form layout, the worked example pairs, the self-check and the Dojo prompts were drafted with AI from Prof. Sathya's directions. This revision is ready for his review.

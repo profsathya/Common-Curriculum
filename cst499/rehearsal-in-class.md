@@ -19,7 +19,7 @@ In-class activity · Wednesday 2 December, in class · 100 pts
 
 **Builds on.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [The decisions behind my work](decisions-behind-my-work.html).
 
-**This experience.** Tell the story of your work to a classmate, listen to theirs, and hear which part of your story they believed while there is still time to change it.
+**This Learning Experience.** Tell the story of your work to a classmate, listen to theirs, and hear which part of your story they believed while there is still time to change it.
 
 **Leads to.** The [final version of your Interactive Poster](interactive-poster-final.html), due Monday 7 December.
 

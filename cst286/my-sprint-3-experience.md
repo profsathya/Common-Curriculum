@@ -12,7 +12,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** Your Sprint 3 work: your goal, the quantitative relationship you tested, your five scenarios, and the Sprint 3 Exam.
 
-**This experience.** Reflect on how your learning went in Sprint 3 - when you worked on each piece, where your hours went, what you had to look up - and what you can still do with what you learned.
+**This Learning Experience.** Reflect on how your learning went in Sprint 3 - when you worked on each piece, where your hours went, what you had to look up - and what you can still do with what you learned.
 
 **Leads to.** Your next piece of self-directed learning, in this course or beyond it.
 
@@ -28,19 +28,19 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Think it through with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **STORY3-1207**
+AI Dojo Passcode for this Graded Item: **STORY3-1207-R2**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My Sprint 3 experience". First tell me its passcode, its title and its due date as you have them. Then help me tell the story of my learning in Sprint 3 by asking me a few of these, one at a time: what motivated me to learn my topic, how I went about it, whether I used AI, when I worked on it and for how long, what surprised me, and who or what helped. Then ask me to write my Sprint 3 quantitative relationship without looking it up, and if I cannot, ask me why I think that is. Then ask me about the exam and what I will do next. Do not write my answers for me. Do not summarize until I ask you to.
+> Help me reflect on my learning in Sprint 3. First tell me the passcode, title and due date for "My Sprint 3 experience". I am on Path [A, B or C]. Begin by inviting me to recall a moment from the sprint that stands out. Follow what I remember with one question at a time, helping me explore how I learned and what evidence I have. On Path A, draw on my spinning exploration and book responses; on Path B, my independent investigation; on Path C, my build, predictions and test runs. Use the form as checkpoints as my story develops. Let me attempt my relationship, units and condition from memory before giving any feedback, and preserve that attempt. Help me reflect on the exam and what I take forward. I will write my final responses myself.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop and link the course Google Doc in your AI Dojo project again.
 
-**3. Ask for the form.** When you are done, paste this:
+**3. Review your reasoning.** When you are done, paste this:
 
-> Write my answers in the form's order, using only my words: My Sprint 3 story · My relationship from memory · Looking back at the exam · What I take forward. If a box is not settled, write "not yet settled" in it.
+> Help me review my reasoning against the form. Quote only what I have said, identify questions I have not settled, and let me write the final responses in my own words.
 
-**4. Fill in the form.** Copy each line from your Dojo's reply into the box it belongs to, below. Then go through the Self-check and submit.
+**4. Fill in the form.** Write your responses in your own words, using the conversation to reflect on your experience. Then go through the Self-check and submit.
 
 ## The form
 
@@ -48,30 +48,28 @@ AI Dojo Passcode for this Graded Item: **STORY3-1207**
 
 Describe your learning journey in Sprint 3 as a story. Choose three or four of these questions to build it around; you do not have to answer all of them. What motivated you to learn this particular topic? How did you go about it? Did you use AI, and how? When did you work on it, and for how much time? What surprised you? Who or what helped?
 
-   **My Sprint 3 story.** (Page note: the box opens with the same grey sample as the 30 Oct page, which disappears when the student starts typing; the same drop-down "Two more examples" holds the same two samples.)
+   **My Sprint 3 story.** Start with a blank response.
 
-   > I chose how a bike stays upright because I ride every day and had never thought about it. I started on the Tuesday after the goal form was due, mostly late evenings, maybe six hours in all. I asked my Dojo for a place to start and it pointed me at angular momentum; the OpenStax chapter got me the formula. What surprised me was that the relationship was simple but choosing realistic numbers for the scenarios took longer than the physics. My guide group helped by asking why a stationary bike falls over, which became my first look-alike scenario.
-
-   > My topic was why a phone's screen rotates. I worked on it in two sittings, both the night before each due date, about three hours each. I used the learning trail for the first part and PhET to check the formula. The surprise was how long Scenario 4 took: I kept picking situations that were just different, not similar-looking. My Dojo helped by asking what single detail I could change in Scenario 1.
-
-   > I wanted to understand why a thrown ball lands where it does, because I pitch. I spent most of my time on the goal form, about four hours, going back and forth on what exactly I was predicting; the scenarios then took one evening. I did not use AI for the physics, only to check my units. Nobody helped, and looking back I think asking someone earlier would have saved me the time on the goal form.
+*Path A:* You might revisit an observation, an early prediction, a video summary or a comparison from your embedded spinning exploration. What did working through it help you notice?
+*Path B:* You might revisit how you chose a source or designed your own check. What helped you judge the explanation?
+*Path C:* You might revisit a build decision, a predicted output and a test run. What did the comparison help you understand about the model?
 
 ### Step 2 · What do you remember about your quantitative relationship
 
-Can you describe your Sprint 3 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If not, write what does come back and consider why what you learned hasn't stayed with you.
+Can you describe your Sprint 3 quantitative relationship now, without looking at your scenarios form? If yes, write it in words, as a formula with units, and with the condition it depends on. If parts are uncertain, record what you remember and what might help you recall the rest.
 
    **My relationship from memory.** The relationship as far as I can write it without looking, and if parts are missing, why I think that is.
 
 ### Step 3 · Look back at the exam
 
-In the Sprint 3 Exam on Wednesday you worked one of your scenarios on paper. Which part of your Sprint 3 work did you use most while you wrote? Choose the one closest to yours.
+Looking back at the Sprint 3 Exam, which part of your learning did you draw on most? Choose the one closest to yours. If you have not taken the exam, say so in your response and identify what you want to practice.
 
 ○ My relationship and its units
 ○ My condition
 ○ A scenario I had already worked
 ○ A look-alike I had found
 
-   **Looking back at the exam.** One or two sentences: the part you used, and the moment in the exam where you used it.
+   **Looking back at the exam.** One or two sentences: the part you used and a moment in the exam, or what you want to practice if you have not taken it.
 
 ### Step 4 · Look forward
 
@@ -91,7 +89,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Step 1 tells my Sprint 3 story around at least three of the questions · 30 pts
 - [ ] Step 1 includes specifics: dates, hours, resources or people · 30 pts
 - [ ] Step 2 is written from memory, with the relationship in words and as a formula with units, as far as it came back · 20 pts
-- [ ] Step 2 states the condition, and says which parts did not come back and why · 20 pts
+- [ ] Step 2 records the condition as far as it came back and reflects on any uncertain parts, or what helped recall it · 20 pts
 
 Steps 3 and 4 carry no points; the item is complete when they have text.
 
@@ -105,20 +103,20 @@ This graded item is complete when your path is chosen and all four steps have te
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: My Sprint 3 experience. Course: CST286. Due: Monday 7 December. Passcode: STORY3-1207.
+Graded item: My Sprint 3 experience. Course: CST286. Due: Monday 7 December. Passcode: STORY3-1207-R2.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
 Learning purpose: the student tells the story of how they learned in Sprint 3, writes their relationship from memory, looks back at the Sprint 3 Exam, and names one part of how they learned that they will use again.
 
-Order: first help the student tell the story of their Sprint 3 learning by asking a few of these, one at a time: what motivated them to learn their topic, how they went about it, whether they used AI and how, when they worked on it and for how long, what surprised them, and who or what helped. Do not suggest themes or connections for the story; ask only these questions and follow-ups on the student's own answers. Then ask the student to write their Sprint 3 relationship, its units and its condition without looking them up. Do not give the relationship or any part of it, and do not hint at it, before the student has written their attempt; if parts are missing, keep them missing and ask why the student thinks that is. Then ask which part of their Sprint 3 work they used most in the exam, and which part of how they learned they will use next time. Never write the student's answers.
+Conversation guidance: after the passcode, title and due date, establish the student's path and invite a moment from the sprint that stands out. Follow their account with one open question at a time. On Path A, invite reflection on their own observations, predictions, video summaries and checks in the embedded book, including either spin-speed or axis-direction work. On Path B, follow how they chose sources and tested their independent investigation. On Path C, follow what they built, what they predicted and observed, and how they checked the model's assumptions. These are invitations, not extra required questions. Use the form as checkpoints as their story develops. Never invent experiences, themes, progress or difficulties. Ask for the relationship, units and condition from memory before providing any hints or corrections; preserve that attempt. If recall is partial, invite reflection on what helped and what needs practice. An accurate memory attempt needs no invented gap. Ask about the actual exam experience without assuming which question appeared; accept an honest account if the student has not taken it. Help them choose what to take forward. The student writes the final responses.
 
-Do not summarize until the student asks. When they ask, output the four boxes in the form's order using only the student's words, and write "not yet settled" on any box that is not settled.
+When asked for a review, quote only the student's reasoning and identify unresolved questions. Leave final response writing to the student.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
 - Story: built around at least three of the listed questions, with specifics (dates, hours, resources, people). The feedback names which listed questions the story answers and asks for a specific where one is missing; it does not suggest a theme.
-- Relationship from memory: in words and as a formula with units, as far as it came back, and the condition, and which parts did not come back and why.
+- Relationship from memory: in words and as a formula with units, as far as it came back, and the condition as far as it came back, with reflection on uncertain parts or what helped recall it.
 - Looking back at the exam: a part of the Sprint 3 work and a moment in the exam.
 - What I take forward: a part of how the student learned and where they expect to use it.
 
@@ -126,4 +124,4 @@ The reply is two or three sentences: what the box already does well, then the on
 
 ## Where this page comes from
 
-The story and the relationship from memory repeat the 30 October graded item by Prof. Sathya. The look back and look forward, the self-check and the Dojo prompts were drafted with AI and reviewed by Prof. Sathya.
+The story and the relationship from memory repeat the 30 October graded item by Prof. Sathya. The look back and look forward, the self-check and the Dojo prompts were drafted with AI from Prof. Sathya's directions. This revision is ready for his review.

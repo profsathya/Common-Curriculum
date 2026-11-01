@@ -11,11 +11,11 @@
 
 Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This activity → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on → This Learning Experience → Leads to)
 
 **Builds on.** You set a Sprint 3 goal with the terms you want your work evaluated (graded) on, and two classmates agreed to hold you to them ([My Sprint 3 plan](my-sprint-3-plan.html), [My two graders](my-two-graders.html)).
 
-**This activity.** Learn to report on your own work against terms you set yourself, with evidence a reader can check and a plain statement of what you did not reach.
+**This Learning Experience.** Learn to report on your own work against terms you set yourself, with evidence a reader can check and a plain statement of what you did not reach.
 
 **Leads to.** Send this report to your two graders the day you submit it, so they can evaluate (grade) it by 7 December, and bring it to the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint in writing and with a partner.
 

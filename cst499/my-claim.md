@@ -20,7 +20,7 @@
 
 Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: a three-box arrow chain, Builds on → This goal → Leads to; the middle box is the highlighted one)
+## Purpose (page note: a three-box arrow chain, Builds on → This Learning Experience → Leads to; the middle box is the highlighted one)
 
 **Builds on.** In the [Quality review](quality-review.html) you chose the two or three changes that step up your work, and the breadth of domains that strengthens its impact.
 

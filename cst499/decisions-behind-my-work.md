@@ -21,7 +21,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on.** The [Project Proposal](project-proposal.html), where you named the gap your capstone closes, and the first version of your [Interactive Poster](interactive-poster-first-version.html).
 
-**This experience.** Think through two important decisions in your work: the other directions you could have taken, why you chose this one, and what it is likely to mean for you.
+**This Learning Experience.** Think through two important decisions in your work: the other directions you could have taken, why you chose this one, and what it is likely to mean for you.
 
 **Leads to.** The rehearsal in class on Wednesday 2 December, where a classmate hears your story, and your final interview, where we talk through these decisions with you.
 
