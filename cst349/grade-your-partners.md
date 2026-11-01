@@ -1,10 +1,10 @@
 <!-- CST349 · Graded item · editable source for grade-your-partners.html (not built yet).
      Edit this file; Claude carries the changes into the HTML.
      Draft 1 of 2026-10-30 (Alan, for Prof. Sathya's edit). The grader's page: for each classmate the student agreed to
-     grade (two or more), the student reads that classmate's Sprint 3 report, scores task 1 against the classmate's own
+     grade (one or more; one grader per student since 31 Oct), the student reads that classmate's Sprint 3 report, scores task 1 against the classmate's own
      grading lines, then answers the meta-rubric about the grading itself. One block per classmate, repeatable ("Add
      another classmate"). The copied text goes into the grader's own Canvas submission; Sathya/Codex map the grades to
-     the graded students afterwards (no student data reaches Claude). Roster datalist as on my-two-graders. No Dojo
+     the graded students afterwards (no student data reaches Claude). Roster datalist as on my-grader. No Dojo
      route. Due Mon 7 Dec; 100 pts for the grader, for grading well. -->
 
 # Grade your partners
@@ -13,7 +13,7 @@ Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** Two or more classmates asked you to evaluate (grade) their Sprint 3 work and you agreed ([My two graders](my-two-graders.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their grading terms.
+**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My grader](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their grading terms.
 
 **This Learning Experience.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
 

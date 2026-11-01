@@ -1,6 +1,6 @@
 CST286 · Fall 2026 · Sprint 3 · Week 16
 
-# Grade my two partners' Sprint 3 work
+# Grade a classmate's Sprint 3 work
 
 Graded item · Due Date: Wednesday 9 December · 100 pts
 
@@ -8,25 +8,40 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose
 
-**Builds on your earlier learning.** The relationship and five scenarios each partner developed in Sprint 3, and the conversations in which you tested one another's understanding.
+**Builds on your earlier learning.** The relationship and five scenarios your classmate developed in Sprint 3, and your conversation about their reasoning.
 
 **This Learning Experience.** Learn to judge a physics explanation from its evidence and assumptions, and explain your judgment so another learner can use it.
 
-**Prepare you for.** Use two partners' perspectives to decide which parts of your own reasoning hold up and what you want to check next.
+**Prepare you for.** Use what you notice in a classmate's reasoning to decide what you want to check in your own work.
 
-## Task · Review your two partners
+## Task · Review one classmate
 
-Exchange your submitted [Find and confirm my relationship](find-and-confirm-my-relationship.html) and [Five real-world scenarios](five-real-world-scenarios-sprint-3.html) work with the two classmates identified in [My Sprint 3 goal and plan](my-sprint-3-goal-and-plan.html). Confirm that each will review your work and that you will review theirs, so everyone receives two independent reviews. If a partner is unavailable, contact Prof. Sathya or the TA to arrange another reviewer.
+Ask one classmate to grade your submitted [Find and confirm my relationship](find-and-confirm-my-relationship.html) and [Five real-world scenarios](five-real-world-scenarios-sprint-3.html) work, and record their agreement in [My Sprint 3 goal and plan](my-sprint-3-goal-and-plan.html). Agree to grade one other classmate, so each student receives one review.
 
-Read each partner's work and record your own judgment before comparing reviews. Fill in one review below for each of two different partners. Use the criteria printed on the original assignments; each assignment has its own recommended score out of 100.
+Follow both conditions when arranging grading:
 
-### Partner 1 (repeat the same fields for Partner 2)
+- **No reciprocal grading:** the person you grade must be different from the person grading you.
+- **A new grading partner:** neither your grader nor the classmate you grade may be someone you partnered with in the Sprint 1 or Sprint 2 exam.
 
-- **Partner's name.** Identify the classmate whose work you are reviewing.
+Send your submitted work to your grader, and ask the classmate you are grading to send you theirs. If you cannot arrange an eligible grader or classmate to review, contact Prof. Sathya or the TA.
+
+Read the classmate's work and record your own judgment. Use the criteria printed on the original assignments; each assignment has its own recommended score out of 100.
+
+### My grading arrangement
+
+**My grader's name.** Identify the classmate who agreed to grade your work.
+
+- [ ] My grader agreed, and the classmate I am grading is a different person.
+- [ ] Neither my grader nor the classmate I am grading was my partner in the Sprint 1 or Sprint 2 exam.
+
+### The classmate I am grading
+
+- **Classmate's name.** Identify the classmate whose work you are reviewing.
 - **Their path.** Choose A, B or C from their submission.
 - **Work reviewed.** Include links or clearly identify the submitted versions of both assignments. Include the embedded learning record for Path A and the build evidence for Path C.
 
 Use the work appropriate to their path:
+
 - **Path A:** Follow their spinning question, whether about spin speed or axis direction. Use their recorded predictions, video summaries, comparisons and reflection to understand how they reached their explanation.
 - **Path B:** Follow their chosen phenomenon, sources and independent check.
 - **Path C:** Inspect their build tool and reproducible settings, input, predicted and observed outputs, and comparison. Distinguish a model implementing the formula from independent evidence for the physical relationship.
@@ -70,27 +85,27 @@ Use the work appropriate to their path:
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Two different partners are identified, with their paths and both submitted assignments · 10 pts
-- [ ] Every criterion in both assignments has a score within its range, for both partners · 20 pts
-- [ ] Every score points to supporting evidence or identifies what is missing, including the evidence appropriate to each partner's path · 35 pts
-- [ ] Each review records a question about the partner's reasoning, their response or pending status, and what that means for the review · 20 pts
-- [ ] Each partner receives a specific strength and a useful next question or check · 15 pts
+- [ ] The grader and the classmate being graded are identified, both eligibility conditions are confirmed, and the reviewed path and both submissions are identified · 10 pts
+- [ ] Every criterion in both assignments has a score within its range · 20 pts
+- [ ] Every score points to supporting evidence or identifies what is missing, including the evidence appropriate to the classmate's path · 35 pts
+- [ ] The review records a question about the classmate's reasoning, their response or pending status, and what that means for the review · 20 pts
+- [ ] The classmate receives a specific strength and a useful next question or check · 15 pts
 
 **What makes it strong.** A partner can follow each score back to their work and understand what to keep doing or investigate next.
 
-**Grading.** 100 points in Graded assignments (30%), based on the quality of your two reviews. Your recommended scores for the partners' assignments are recorded separately for Prof. Sathya's review before any grade changes.
+**Grading.** 100 points in Graded assignments (30%), based on the quality of your review. Your recommended scores for the classmate's assignments are recorded separately for Prof. Sathya's review before any grade changes.
 
 ## Reflection
 
-**What reviewing taught me.** Identify one thing these reviews helped you notice about your own reasoning, and one check you want to make next. This response is required for completion and carries no additional points.
+**What reviewing taught me.** Identify one thing this review helped you notice about your own reasoning, and one check you want to make next. This response is required for completion and carries no additional points.
 
 ## Submit
 
-Press **Copy my reviews**, review the text, and paste it into your own Canvas submission for this GI. Share each partner's review with that partner so they can use the feedback. The copied text includes both reviews, their separate assignment totals, your reflection, and your Self-check selections.
+Press **Copy my review**, review the text, and paste it into your own Canvas submission for this GI. Share your review with the classmate you graded so they can use the feedback. The copied text includes your grading arrangement and eligibility confirmations, your review and its two assignment totals, your reflection, and your Self-check selections.
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Grade my two partners' Sprint 3 work. Course: CST286. Due: Wednesday 9 December. The learner reviews two different classmates' Find and confirm my relationship and Five real-world scenarios submissions, using the published criteria and evidence appropriate to A, B or C. Each reviewed assignment receives a separate recommended score out of 100. The reviewer earns 100 points for review quality. Prof. Sathya reviews recommendations before grade changes. If asked for help, ask what evidence the reviewer sees and how it supports their judgment. Leave scores and final comments to the reviewer. Never infer missing work, invent a partner response, or write the review for them. Do not send classmates' submissions to an AI service through this page.
+Graded item: Grade a classmate's Sprint 3 work. Course: CST286. Due: Wednesday 9 December. The learner reviews one classmate's Find and confirm my relationship and Five real-world scenarios submissions, using the published criteria and evidence appropriate to A, B or C. Each reviewed assignment receives a separate recommended score out of 100. The reviewer earns 100 points for review quality. Each student has one grader and grades one other classmate. Grading is not reciprocal, and neither grading partner may be a partner from the Sprint 1 or Sprint 2 exam. Confirm agreement and eligibility; never infer them from a saved name. Each student has one grader and grades one other classmate. Grading is not reciprocal, and neither grading partner may be a partner from the Sprint 1 or Sprint 2 exam. Confirm agreement and eligibility; never infer them from a saved name. Prof. Sathya reviews recommendations before grade changes. If asked for help, ask what evidence the reviewer sees and how it supports their judgment. Leave scores and final comments to the reviewer. Never infer missing work, invent a partner response, or write the review for them. Do not send classmates' submissions to an AI service through this page.
 
 ## Where this page comes from
 

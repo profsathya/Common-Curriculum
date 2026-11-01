@@ -1,4 +1,4 @@
-/* Two independent partner reviews. Drafts stay in this browser; copy is the submission route. */
+/* One nonreciprocal classmate review. Drafts stay in this browser; copy is the submission route. */
 (function () {
   'use strict';
   var bar = document.getElementById('canvas-bar');
@@ -13,12 +13,13 @@
   try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) { warning.hidden = false; }
   function value(id) { return document.getElementById(id).value.trim(); }
   function save() {
-    var draft = {};
+    var draft = Object.assign({}, saved);
     fields.forEach(function (el) { draft[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
+    saved = draft;
     try { localStorage.setItem(KEY, JSON.stringify(draft)); } catch (_) { warning.hidden = false; }
   }
   function update() {
-    [1, 2].forEach(function (n) {
+    [1].forEach(function (n) {
       var path = value('p' + n + '-path');
       document.querySelectorAll('[data-peer-path][data-review="' + n + '"]').forEach(function (el) { el.hidden = el.dataset.peerPath !== path; });
       document.querySelectorAll('[data-criterion][data-review="' + n + '"]').forEach(function (el) {
@@ -46,11 +47,11 @@
     el.addEventListener('change', function () { save(); update(); });
   });
   function missing() {
-    var empty = fields.filter(function (el) { return el.required && !el.value.trim(); });
+    var empty = fields.filter(function (el) { return el.required && (el.type === 'checkbox' ? !el.checked : !el.value.trim()); });
     if (empty.length) return empty.length + ' required fields are still empty. The copied text is marked as a draft.';
     var one = value('p1-name').toLowerCase().replace(/\s+/g, ' ');
-    var two = value('p2-name').toLowerCase().replace(/\s+/g, ' ');
-    if (one === two) return 'Choose two different partners. The copied text is marked as a draft.';
+    var two = value('grader-name').toLowerCase().replace(/\s+/g, ' ');
+    if (one === two) return 'Your grader must be different from the classmate you grade. Reciprocal grading is not allowed. The copied text is marked as a draft.';
     return '';
   }
   document.getElementById('copy-reviews').addEventListener('click', function () {
@@ -58,11 +59,16 @@
     var invalid = fields.find(function (el) { return el.type === 'number' && el.value !== '' && !el.checkValidity(); });
     if (invalid) { status.textContent = 'Correct the highlighted score before copying.'; invalid.reportValidity(); invalid.focus(); return; }
     var issue = missing();
-    var text = "CST286 · Grade my two partners' Sprint 3 work\nDue: Wednesday 9 December 2026\n";
+    var text = "CST286 · Grade a classmate's Sprint 3 work\nDue: Wednesday 9 December 2026\n";
     if (issue) text += 'DRAFT: ' + issue + '\n';
     function answer(label, content) { text += '\n' + label + '\n' + (content || '(not yet answered)') + '\n'; }
-    [1, 2].forEach(function (n) {
-      text += '\nPARTNER ' + n + '\n';
+    answer('My agreed grader', value('grader-name'));
+    ['eligible-nonreciprocal', 'eligible-new-partner'].forEach(function (id) {
+      var el = document.getElementById(id);
+      text += (el.checked ? '[x] ' : '[ ] ') + el.closest('label').textContent.trim() + '\n';
+    });
+    [1].forEach(function (n) {
+      text += '\nCLASSMATE I AM GRADING\n';
       answer('Name', value('p' + n + '-name'));
       var path = value('p' + n + '-path');
       answer('Path', path);

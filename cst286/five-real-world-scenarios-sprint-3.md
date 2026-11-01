@@ -186,7 +186,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 ## Submit
 
-Share your submitted relationship and five scenarios with your two partners, then complete [Grade my two partners' Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
+Share your submitted relationship and five scenarios with your agreed grader, then review one other eligible classmate in [Grade a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
 
 This graded item is complete when your path is chosen, and the look back, Part 1, all five scenarios and the look forward have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 

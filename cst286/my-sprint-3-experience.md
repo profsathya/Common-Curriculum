@@ -97,7 +97,7 @@ Steps 3 and 4 carry no points; the item is complete when they have text.
 
 ## Submit
 
-Share your submitted relationship and five scenarios with your two partners, then complete [Grade my two partners' Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
+Share your submitted relationship and five scenarios with your agreed grader, then review one other eligible classmate in [Grade a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
 
 This graded item is complete when your path is chosen and all four steps have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 
