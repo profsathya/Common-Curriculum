@@ -19,11 +19,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** In [My claim](my-claim.html) you identified the part of your claim that reaches into a second domain, or how your work could move toward one.
+**Builds on your earlier learning.** In [My claim](my-claim.html) you identified the part of your claim that reaches into a second domain, or how your work could move toward one.
 
 **This Learning Experience.** Show, with evidence, how bringing a second domain into your work made it better.
 
-**Leads to.** The first version of your Interactive Poster, where this evidence shows the breadth in your claim.
+**Prepare you for.** The first version of your Interactive Poster, where this evidence shows the breadth in your claim.
 
 ## Look back
 

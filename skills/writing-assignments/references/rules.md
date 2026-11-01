@@ -12,6 +12,8 @@ uniform.
 
 ## Purpose — why this exists
 
+**Purpose-chain labels (Sathya, 31 October 2026).** On assignment pages that use the three-box purpose structure in CST286, CST349, and CST499, use “Builds on your earlier learning” for the first box and “Prepare you for” for the last box. Keep these labels aligned in HTML and the Markdown companion. The middle title for Sprint 3 is “This Learning Experience.”
+
 **Current rule (Sathya, 19 Sep 2026; refined 17 Oct 2026): a crisp Purpose is sufficient — one or two sentences carrying the learning payoff. Do not add a “By the time you submit, you will have” list or skills/knowledge bullets to the page, and do not put exam mechanics or grading rules in Purpose (those belong in Grading). Where a form page includes a short “How this form works” bridge, keep it to the conceptual steps of the form and leave out single-day class logistics.** The rest of this section is kept as background for the design conversation, not as page content.
 
 First sentence carries the payoff, in the student's terms. Then, plainly:

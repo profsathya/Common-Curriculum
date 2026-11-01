@@ -11,13 +11,13 @@
 
 Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This Learning Experience → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on.** You met alumni at the virtual visit on Wednesday 18 November, or you heard about it from classmates who did, and you have three classmates to talk with about it on The Commons.
+**Builds on your earlier learning.** You met alumni at the virtual visit on Wednesday 18 November, or you heard about it from classmates who did, and you have three classmates to talk with about it on The Commons.
 
 **This Learning Experience.** Learn to turn what you heard from people in the field into one thing you will do, by talking it through with classmates while it is still fresh.
 
-**Leads to.** Bring what you decided to do into the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint with a partner, and into the look forward in your [Sprint 3 report](my-sprint-3-report.html).
+**Prepare you for.** Bring what you decided to do into the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint with a partner, and into the look forward in your [Sprint 3 report](my-sprint-3-report.html).
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the task and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under the box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 

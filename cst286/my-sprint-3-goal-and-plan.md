@@ -8,13 +8,13 @@ Graded item · Due Date: Monday 9 November · 100 pts
 
 This graded item will affect your final grade, and the late penalty applies.
 
-## Purpose (page note: the three-box arrow chain, Builds on → This Learning Experience → Leads to; the middle box is highlighted)
+## Purpose (page note: the three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for; the middle box is highlighted)
 
-**Builds on.** The learning path you chose, and your reasoning for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
+**Builds on your earlier learning.** The learning path you chose, and your reasoning for it, in [My Sprint 2 experience, and the path I choose](my-sprint-2-experience-and-sprint-3-path.html).
 
 **This Learning Experience.** Set a precise goal for Sprint 3: what you will be able to predict, from which quantities, and under what conditions. Then plan when you will work on it, and choose the two classmates you will partner with to test your understanding.
 
-**Leads to.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you understand the quantitative relationship that turns your "Given" into your prediction.
+**Prepare you for.** [Find and confirm my relationship](find-and-confirm-my-relationship.html), where you understand the quantitative relationship that turns your "Given" into your prediction.
 
 ## Your path for Sprint 3
 
@@ -115,6 +115,8 @@ Your plan has two parts: when you will work on your goal outside class, and the 
 2. **Who will test my understanding.** Choose two classmates from the drop-down, and say when you will meet them. Meet early enough that there is still time before the exam to work on whatever you could not explain. A partner tests you best by listening to you explain your relationship and then giving you a new case to predict, so ask each of them to bring one case of their own. (Page note: two name boxes, Partner 1 and Partner 2, each with the class roster drop-down used for the Sprint 2 Exam partner box, and below them one text box.)
 
    **Partner 1 · Partner 2** (chosen from the drop-down)
+
+Ask both partners to exchange reviews of your submitted relationship and scenarios in [Grade my two partners' Sprint 3 work](grade-my-two-partners-sprint-3.html), due Wednesday 9 December. Confirm that each will review your work and that you will review theirs.
 
    **How my partners will test me ...** When we will meet, and what each of them will ask me to do.
 

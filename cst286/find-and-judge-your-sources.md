@@ -3,8 +3,8 @@
      Draft v2 of 2026-10-28 — moved to the current page design; words unchanged. Draft 1 of 2026-09-18: the four tasks
      were settled with Sathya in conversation that day; everything else was a first draft for his edit.
      What changed (design only):
-     · Purpose is a three-box arrow chain: Builds on (the Physics Learning Goal submission that task 1 names) → This goal
-       (the old Purpose sentence) → Leads to (the first clause of the old Grading line: explaining this to a peer, the TA
+     · Purpose is a three-box arrow chain: Builds on your earlier learning (the Physics Learning Goal submission that task 1 names) → This goal
+       (the old Purpose sentence) → Prepare you for (the first clause of the old Grading line: explaining this to a peer, the TA
        and/or the instructor; the Grading line itself is unchanged below).
      · The Dojo tick, the reminder, passcode SRCS-0925 (twice, must match), Dojo steps 1–3 and the Dojo summary box are new
        on this page, as on every page in the current design.
@@ -32,13 +32,13 @@ CST286 · Fall 2026 · Sprint 1
 
 Week 4 · due Friday 25 September, 11:59 p.m. · 100 points · Graded assignments
 
-## Purpose (page note: a three-box arrow chain, Builds on → This goal → Leads to; the middle box is the highlighted one)
+## Purpose (page note: a three-box arrow chain, Builds on your earlier learning → This goal → Prepare you for; the middle box is the highlighted one)
 
-**Builds on.** Your Physics Learning Goal submission: the prediction you wrote for question 4a and the three resources you listed for question 5.
+**Builds on your earlier learning.** Your Physics Learning Goal submission: the prediction you wrote for question 4a and the three resources you listed for question 5.
 
 **This goal.** Judge the sources behind your physics prediction so you can decide which to learn from and explain why you trust them.
 
-**Leads to.** You will be asked to explain this to a peer, the TA and/or the instructor.
+**Prepare you for.** You will be asked to explain this to a peer, the TA and/or the instructor.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 

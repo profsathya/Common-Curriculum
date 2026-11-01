@@ -16,11 +16,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** The [first version of your Interactive Poster](interactive-poster-first-version.html), your [decision card](decisions-behind-my-work.html), and what your listener told you at the [rehearsal](rehearsal-in-class.html).
+**Builds on your earlier learning.** The [first version of your Interactive Poster](interactive-poster-first-version.html), your [decision card](decisions-behind-my-work.html), and what your listener told you at the [rehearsal](rehearsal-in-class.html).
 
 **This Learning Experience.** Finish your Interactive Poster, so that a visitor at the festival can see your claim proven on the screen in a few minutes and open more when they want to.
 
-**Leads to.** The Capstone Festival, where you present your poster and visit your classmates', and your final interview.
+**Prepare you for.** The Capstone Festival, where you present your poster and visit your classmates', and your final interview.
 
 ## Look back
 

@@ -14,6 +14,8 @@ One screen. The page shape, the pipeline, his corrections and the version histor
 
 ## On every page
 
+- Existing three-box purpose chains in CST286, CST349, and CST499 use “Builds on your earlier learning” and “Prepare you for” as their outer labels, in HTML and Markdown; Sprint 3 uses “This Learning Experience” in the middle. (Purpose-chain labels, 31 October 2026)
+
 - The blocks are Purpose · Task · Criteria · Reflection, in that order; there is no "What you're building on" block and no "By the time you submit, you will have" list; earlier work is named inside the task, by assignment name and question number. (Purpose; What you're building on)
 - Purpose is one or two sentences carrying the learning payoff, not the topic or exam/grading mechanics; where a "How this form works" block appears, it walks through the conceptual steps of the form without single-day class logistics. (Purpose; Checklist)
 - An own-your-progress page opens with the ownership line, verbatim, in its `.ownbar` block under the page head and above Purpose. (How own-your-progress and graded items are labelled and dated)

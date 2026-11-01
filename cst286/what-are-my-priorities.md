@@ -3,8 +3,8 @@
      Draft v5 of 2026-10-28 — moved to the current page design; words unchanged. This page never had a .md before;
      this file is new and mirrors the HTML in page order.
      What changed (design only):
-     · Purpose is a three-box arrow chain: Builds on (the CST286 AI Dojo from the setup page, the old back link) →
-       This goal (the old first Purpose paragraph) → Leads to (the old second Purpose paragraph). The third Purpose
+     · Purpose is a three-box arrow chain: Builds on your earlier learning (the CST286 AI Dojo from the setup page, the old back link) →
+       This goal (the old first Purpose paragraph) → Prepare you for (the old second Purpose paragraph). The third Purpose
        paragraph sits under the chain.
      · The two old routes (the practice Dojo behind one +, "In writing" behind another) became the standard Dojo tick.
        The four practice-Dojo tips now sit under the Dojo reminder, shown only while the box is ticked.
@@ -31,7 +31,7 @@
      · "This runs in a practice Dojo, which is a different thing from the CST286 AI Dojo you set up on the Set Up Your
        CST286 AI Dojo page. There is nothing to configure. You click a link, and a conversation prepared for this one
        question starts asking you things." — describes the replaced practice Dojo (its link and words now fill the
-       Builds on box).
+       Builds on your earlier learning box).
      · "It has more guardrails and has prompts implemented across the conversation to keep it on track." — practice Dojo only.
      · "It has a download / copy-to-clipboard option built in — use that, then paste it straight into the Canvas box."
        (Submit item 5) — practice Dojo only; on the new route step 3 asks the Dojo for the whole chat underneath its summary.
@@ -50,13 +50,13 @@ CST286 · Fall 2026 · Week 1 · Graded item · 100 points
 
 Due Monday 31 August, 11:59 p.m. · about 30–40 minutes
 
-## Purpose (page note: a three-box arrow chain, Builds on → This goal → Leads to; the middle box is the highlighted one)
+## Purpose (page note: a three-box arrow chain, Builds on your earlier learning → This goal → Prepare you for; the middle box is the highlighted one)
 
-**Builds on.** The CST286 AI Dojo you set up on the [Set Up Your CST286 AI Dojo](setup-ai-dojo.html) page.
+**Builds on your earlier learning.** The CST286 AI Dojo you set up on the [Set Up Your CST286 AI Dojo](setup-ai-dojo.html) page.
 
 **This goal.** Explore our priorities in detail, based on what we spend our time on and how much we find them useful. Understanding our priorities is the best place to start before we do anything else when there are more options to explore.
 
-**Leads to.** You come out of this with a picture of one whole day across six categories — sleeping, nutrition for the body, work, learning, nutrition for the mind (what you read, watch, listen to and scroll), and entertainment/fun — with a percentage and a quality rating on each. Then a closer look at one of them, nutrition for the mind. Then one small thing you want to try.
+**Prepare you for.** You come out of this with a picture of one whole day across six categories — sleeping, nutrition for the body, work, learning, nutrition for the mind (what you read, watch, listen to and scroll), and entertainment/fun — with a percentage and a quality rating on each. Then a closer look at one of them, nutrition for the mind. Then one small thing you want to try.
 
 This works when the numbers are close to your real day. The more real you are, the more you get out of it. If four hours went to scrolling, say four hours — the points come from working through it carefully, and the numbers themselves are yours.
 

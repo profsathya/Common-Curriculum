@@ -10,11 +10,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** The quantitative relationship and condition you came to understand and tested in [Find and confirm my relationship](find-and-confirm-my-relationship.html).
+**Builds on your earlier learning.** The quantitative relationship and condition you came to understand and tested in [Find and confirm my relationship](find-and-confirm-my-relationship.html).
 
 **This Learning Experience.** Apply your relationship in three real situations where its condition holds, and identify two similar-looking situations where it does not, because one physical detail is different.
 
-**Leads to.** The Sprint 3 Exam on Wednesday 2 December, where you use your relationship and condition on paper.
+**Prepare you for.** The Sprint 3 Exam on Wednesday 2 December, where you use your relationship and condition on paper.
 
 ## Your path for Sprint 3
 
@@ -185,6 +185,8 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 **Grading.** 100 points, in Graded items. Submitting on time earns the doing half of your grade; using your relationship and condition on paper in the Sprint 3 Exam and explaining your work in check-ins earns the other half.
 
 ## Submit
+
+Share your submitted relationship and five scenarios with your two partners, then complete [Grade my two partners' Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
 
 This graded item is complete when your path is chosen, and the look back, Part 1, all five scenarios and the look forward have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 

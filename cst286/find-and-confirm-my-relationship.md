@@ -10,11 +10,11 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** The goal you set in [My Sprint 3 goal and plan](my-sprint-3-goal-and-plan.html): the quantities in "Given" and the one you will predict.
+**Builds on your earlier learning.** The goal you set in [My Sprint 3 goal and plan](my-sprint-3-goal-and-plan.html): the quantities in "Given" and the one you will predict.
 
 **This Learning Experience.** Understand the quantitative relationship that turns your "Given" into your prediction, state the condition it depends on, and test it with one check you run yourself.
 
-**Leads to.** [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), where you use this relationship in three real situations and find two look-alikes where it breaks.
+**Prepare you for.** [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), where you use this relationship in three real situations and find two look-alikes where it breaks.
 
 ## Your path for Sprint 3
 

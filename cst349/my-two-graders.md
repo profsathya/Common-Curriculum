@@ -12,13 +12,13 @@
 
 Week 12 · due Monday 16 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: three-box arrow chain, Builds on → This Learning Experience → Leads to)
+## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on.** You wrote the terms you want your Sprint 3 work evaluated (graded) on, in [My Sprint 3 plan](my-sprint-3-plan.html).
+**Builds on your earlier learning.** You wrote the terms you want your Sprint 3 work evaluated (graded) on, in [My Sprint 3 plan](my-sprint-3-plan.html).
 
 **This Learning Experience.** Learn to ask two people to hold you accountable to terms you set yourself: choose two classmates, ask them, and record the agreement.
 
-**Leads to.** Send your two graders your [Sprint 3 report](my-sprint-3-report.html) on 30 November, and make sure they enter your evaluation in [Grade your partners](grade-your-partners.html) by Monday 7 December.
+**Prepare you for.** Send your two graders your [Sprint 3 report](my-sprint-3-report.html) on 30 November, and make sure they enter your evaluation in [Grade your partners](grade-your-partners.html) by Monday 7 December.
 
 ## How this works
 

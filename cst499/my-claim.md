@@ -20,13 +20,13 @@
 
 Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
-## Purpose (page note: a three-box arrow chain, Builds on → This Learning Experience → Leads to; the middle box is the highlighted one)
+## Purpose (page note: a three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for; the middle box is the highlighted one)
 
-**Builds on.** In the [Quality review](quality-review.html) you chose the two or three changes that step up your work, and the breadth of domains that strengthens its impact.
+**Builds on your earlier learning.** In the [Quality review](quality-review.html) you chose the two or three changes that step up your work, and the breadth of domains that strengthens its impact.
 
-**This goal.** Learn to state one skill your work will demonstrate with evidence.
+**This Learning Experience.** Learn to state one skill your work will demonstrate with evidence.
 
-**Leads to.** The Integrative Solving report brings together the evidence for the breadth in your claim.
+**Prepare you for.** The Integrative Solving report brings together the evidence for the breadth in your claim.
 
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 

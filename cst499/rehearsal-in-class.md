@@ -17,11 +17,11 @@ In-class activity · Wednesday 2 December, in class · 100 pts
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [The decisions behind my work](decisions-behind-my-work.html).
+**Builds on your earlier learning.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [The decisions behind my work](decisions-behind-my-work.html).
 
 **This Learning Experience.** Tell the story of your work to a classmate, listen to theirs, and hear which part of your story they believed while there is still time to change it.
 
-**Leads to.** The [final version of your Interactive Poster](interactive-poster-final.html), due Monday 7 December.
+**Prepare you for.** The [final version of your Interactive Poster](interactive-poster-final.html), due Monday 7 December.
 
 ## Before class
 
