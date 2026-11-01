@@ -1,12 +1,4 @@
-<!-- Editable text for five-real-world-scenarios-sprint-3.html. DRAFT 1, 29 Oct 2026, for Prof. Sathya's review on 30 Oct. Built from five-real-world-scenarios.md (Sprint 2); Parts 2 and 3 keep the Sprint 2 words, with the dates and links changed.
-Notes for the editor, not shown to students:
-- Sprint 3 item 3 (cowork/fall-2026-courses/cst286-sprint3-sequence.md). Graded item, due Mon 30 Nov (first day after fall break), 100 pts. The Sprint 3 Exam is Wed 2 Dec.
-- Same frame as every Sprint 3 page: three-box chain, path block, look back (opens from "cst286.s3.2.leave"), tasks, look forward (saved as "cst286.s3.3.leave"), AI Dojo prompt.
-- Part 1 shrinks to the relationship and condition carried from item 2, so the student starts from work already confirmed. The Sprint 2 "How I learned and confirmed it" box moved to item 2.
-- Path A students have practice problems in the trail (skater, diver, merry-go-round, satellite, Earth); the page asks them to choose situations of their own. Pair A below uses a skater only to show the form.
-- 30 Oct, after the Astra and Argon reviews: path lines moved out of the Dojo block into Part 2 (they were hidden when the Dojo was unticked); Path A may use the trail's kinds of activity with situations and numbers of their own; "cannot be determined" added as an allowed answer; Pair C (LED tail light) added; look back included in the Dojo summary. Pre-review copy: five-real-world-scenarios-sprint-3.md.bak-2026-10-30-review.
-- Pair B numbers: T = 2π√(2.5/9.8) = 3.17 s; at 60 degrees the large-angle series gives about 3.4 s.
-- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: look back rewritten so it can be answered before the goal is set (restate the 30 Oct reason and how it will influence the goal); Part 3's second line is now two classmates chosen from the class roster drop-down (as in the Sprint 2 Exam partner box) who will test the student's understanding; middle box named "This experience" on every Sprint 3 page; "understand" and "test" in place of "find" and "confirm"; Path A's goal made word for word the same as the trail's. Exam wording softened to "use your relationship and condition on paper" until the exam is designed. Pre-change copy: five-real-world-scenarios-sprint-3.md.bak-2026-10-30-tenchanges. -->
+<!-- Revised 31 October 2026: approved distinct A/B/C paths, empty initial drafts, curiosity-led coaching and an embedded Path A learning record. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 13 · Apply it, and find its limits
 
@@ -28,7 +20,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 (Page note: the same path block as items 1 and 2.)
 
-○ **Path A · One guided learning trail** · ○ **Path B · My own precise learning goal** · ○ **Path C · A project in a tool**
+○ **Path A · Guided exploration of spinning objects** · ○ **Path B · My own precise learning goal** · ○ **Path C · Build and test a model**
 
 ## Look back
 
@@ -86,9 +78,9 @@ Bring these two boxes from Find and confirm my relationship, with any change you
 ### Part 2 · Three scenarios where my prediction applies
 
 (Page note: shown whatever the Dojo tick says; only the line for the student's path shows.)
-- *Path A:* You may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), as long as the situation, its numbers and its look-alikes are your own and not the trail's practice problems with new labels.
+- *Path A:* Develop your own spinning situations using the relationship you investigated in the embedded book. Choose cases that fit your spin-speed or axis-direction goal, with your own setups, numbers and explanations.
 - *Path B:* Choose situations from the world around your own phenomenon.
-- *Path C:* One of your three scenarios can be your build, with numbers you change in it.
+- *Path C:* Use your build as one of the three scenarios if it helps you test a new input. Develop the other situations beyond the build, and explain where its assumptions apply.
 
 Create three distinct real-world situations where your condition from Part 1 holds, and work your prediction with realistic numbers in each one.
 
@@ -216,7 +208,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student applies the relationship they tested in Find and confirm my relationship in three real situations where its physical condition holds, and constructs two look-alike situations where one physical detail changes so the condition breaks.
 
-Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they tested. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, the student may use the same kinds of spinning activity as the trail (skating, diving, a spinning chair, a playground ride, a satellite), but the situation, the numbers and the look-alikes must be the student's own, not the trail's practice problems relabeled. On Path C, one scenario may be the student's build. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
+Order: first ask the student's path, and for the relationship (in words and as a formula, with every quantity and its unit) and the condition they tested. If the condition is missing or vague, ask what has to be true in the real world for the formula to give the right answer until it is a checkable sentence. Then work through the five scenarios one at a time. Never write a scenario or calculate the numbers for the student. If the student is stuck, ask guiding questions about everyday places where their phenomenon happens. On Path A, use the relationship the student investigated in the embedded book, whether spin speed or axis direction. Help them develop their own setups, numbers and explanations within that area. On Path C, one scenario may test a new input in the student's build; help them transfer the relationship beyond that build and inspect its assumptions. For Scenarios 1 to 3, ask for realistic numbers with units, a step-by-step calculation with units, and why the condition holds. For Scenarios 4 and 5, ask the student to take one of their working scenarios and change one physical detail so it looks similar but breaks their condition; ask which part of the condition breaks and whether the formula's prediction would be too large, too small, in the wrong direction, or meaningless, and why.
 
 Do not summarize until the student asks. When they ask, output the text in the exact order of the form's boxes using only the student's words, and write "not yet settled" on any box that is not settled.
 

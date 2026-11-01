@@ -1,12 +1,4 @@
-<!-- Editable text for my-sprint-3-experience.html. DRAFT 1, 29 Oct 2026, for Prof. Sathya's review on 30 Oct. Built from Steps 1 and 2 of my-sprint-2-experience-and-sprint-3-path.md.
-Notes for the editor, not shown to students:
-- Sprint 3 item 5 (cowork/fall-2026-courses/cst286-sprint3-sequence.md). Graded item, due Mon 7 Dec, 100 pts, after the Sprint 3 Exam on Wed 2 Dec and before the catch-up weeks (Sprint 4).
-- THIS PAGE CARRIES THE MEASURE for the Sprint 3 experiment (cowork/fall-2026-courses/lookback-forward-review/HYPOTHESIS.md). Step 1 repeats the 30 Oct Step 1 question word for word, with "Sprint 3" in place of "Sprint 2", and keeps the same three grey samples, so the two sets of stories are written under the same conditions. Please change Step 1 only if the 30 Oct wording changes with it.
-- One deliberate change from his instruction ("a look back question at the beginning"): on this page the story comes first and the look back second. A look back asking how one piece of work fed another, placed just before the story, would prompt exactly the kind of sentence the experiment counts, so the Sprint 3 stories would not be comparable with the Sprint 2 ones. The look back here is about the exam and sits after Step 2. Move it to the top if he prefers; the experiment then needs a dated note in HYPOTHESIS.md.
-- The Dojo prompt mirrors the 30 Oct one (the same story questions, nothing about connections between assignments), for the same reason.
-- The look forward's sentence is saved as "cst286.s3.5.leave".
-- 30 Oct, after the Astra and Argon reviews: self-check for Step 2 aligned with its question (words, formula with units, condition); a line saying Steps 3 and 4 carry no points; the hidden Dojo section now forbids giving or hinting at the relationship before the student's own attempt. Open with Prof. Sathya: whether the Sprint 3 story should be written without AI (the 30 Oct story offered the Dojo too). It does not mention Sprint 4, whose design is deferred until after Sprint 3.
-- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: Step 1 is untouched. On this page only the purpose box ("This experience", "the quantitative relationship you tested") and two Step 4 options ("Testing a relationship…", "…who tests my understanding") changed, to match items 1 to 3. Pre-change copy: my-sprint-3-experience.md.bak-2026-10-30-tenchanges. -->
+<!-- Revised 31 October 2026: approved distinct A/B/C paths, empty initial drafts, curiosity-led coaching and an embedded Path A learning record. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 15 · Look back on Sprint 3
 
@@ -28,7 +20,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 (Page note: the same path block as the other Sprint 3 pages.)
 
-○ **Path A · One guided learning trail** · ○ **Path B · My own precise learning goal** · ○ **Path C · A project in a tool**
+○ **Path A · Guided exploration of spinning objects** · ○ **Path B · My own precise learning goal** · ○ **Path C · Build and test a model**
 
 ☑ **I would like to use the AI Dojo to think through my Sprint 3.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you about your Sprint 3. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 

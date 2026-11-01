@@ -81,7 +81,7 @@ All three paths end in the same place by Dec 2: a relationship you can state, th
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · One guided learning trail.** You follow a trail I lay out, step by step, to one relationship, as in the week-7 trail activity, and then apply that relationship to your own scenarios. There is one trail, and everyone on this path works the same one. You can look at the trail now: [How fast will you spin?](trail-angular-momentum.html).
+**Path A · One guided learning trail.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, you develop your own question and apply the relationship you investigate to your own scenarios. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 

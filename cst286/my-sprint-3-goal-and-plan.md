@@ -1,14 +1,4 @@
-<!-- Editable text for my-sprint-3-goal-and-plan.html. DRAFT 1, 29 Oct 2026, for Prof. Sathya's review on 30 Oct. Built from my-sprint-2-goal-and-plan.md.
-Notes for the editor, not shown to students:
-- Sprint 3 item 1 of the sequence in cowork/fall-2026-courses/cst286-sprint3-sequence.md. Graded item, due Mon 9 Nov, 100 pts. Must be published by Mon 2 Nov.
-- New on every Sprint 3 page (his request, 29 Oct): the three-box chain at the top (Builds on → This goal → Leads to); the path block; a look back at the start; a look forward at the end; an AI Dojo prompt.
-- The path block: if this browser holds the student's 30 Oct answers (localStorage "cc-gi:cst286-my-sprint-2-experience-and-sprint-3-path"), the path is shown pre-selected and can be changed; if not, the rest of the page stays hidden until the student chooses. The choice is saved as "cst286.s3.path" for the later Sprint 3 pages.
-- The look back opens from the student's own 30 Oct "Why this path" sentence when this browser has it; otherwise it names the 30 Oct item and asks the student to bring the reason from their Canvas submission.
-- The look forward's sentence is saved as "cst286.s3.1.leave"; the home page shows it under item 1 in place of the grey "You leave with" line, and item 2's look back opens from it.
-- Look back and look forward carry no separate self-check points (agreed 28 Oct with Astra and Argon); they are part of "complete".
-- 30 Oct, after the Astra and Argon reviews: Example A's Given names its units (it auto-fills for Path A and must pass the self-check); a plan example under Part 3 (as on the Sprint 2 page); "name" → "identify".
-- Path guidance differs; Parts 1-3, the self-check and the points are the same for all three paths.
-- 30 Oct afternoon, after Prof. Sathya's edit of item 1 and his approval of ten follow-up changes: look back rewritten so it can be answered before the goal is set (restate the 30 Oct reason and how it will influence the goal); Part 3's second line is now two classmates chosen from the class roster drop-down (as in the Sprint 2 Exam partner box) who will test the student's understanding; middle box named "This experience" on every Sprint 3 page; "understand" and "test" in place of "find" and "confirm"; Path A's goal made word for word the same as the trail's. Pre-change copy: my-sprint-3-goal-and-plan.md.bak-2026-10-30-tenchanges. -->
+<!-- Revised 31 October 2026: approved distinct A/B/C paths, empty initial drafts, curiosity-led coaching and an embedded Path A learning record. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 11 · Set your goal
 
@@ -28,11 +18,21 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Your path for Sprint 3
 
-(Page note: three radio buttons. Pre-selected from this browser's 30 Oct answers when they are found, with the line "You chose this on 30 October. You can change it here." When nothing is found, the line reads "Choose the path you picked on 30 October. The rest of the page opens once you choose." and everything below stays hidden until a path is chosen.)
+(Page note: three radio buttons. Pre-selected from this browser's 30 Oct answers when they are found, with the line "Your saved path is selected. Each path keeps its own draft on this browser." When nothing is found, the line reads "Choose your path. Each path starts with empty responses and saves its own draft on this browser." and everything below stays hidden until a path is chosen.)
 
-○ **Path A · One guided learning trail.** You take the goal from the trail [How fast will you spin?](trail-angular-momentum.html) and work through it step by step.
+○ **Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided support from your AI Dojo.
 ○ **Path B · My own precise learning goal.** You pick a new phenomenon and set the goal yourself, as you did in Sprint 2.
-○ **Path C · A project in a tool.** You build something in GlowScript, PhET or Tinkercad Circuits to demonstrate and test the quantitative relationship inside what you built.
+○ **Path C · Build and test a model.** You build something in GlowScript, PhET or Tinkercad Circuits to demonstrate and test the quantitative relationship inside what you built.
+
+### Path A · Your area of exploration
+
+Explore why spinning objects can behave in ways we might not expect: a rotating wheel or top staying upright, a spinning gyroscope maintaining its direction, or a skater spinning faster when they bring their arms in.
+
+Within this area, your AI Dojo will help you explore what interests you, work through your initial ideas, and develop a specific goal for what you want to understand and predict.
+
+### Path C · Start with a build
+
+Choose something you want to build in GlowScript, PhET or Tinkercad Circuits. Explore how it should behave, which input you could change, and which output you could measure. Use these choices to develop your learning goal.
 
 ## Look back
 
@@ -49,42 +49,42 @@ On 30 October you chose your path and wrote down why you chose it. Read that rea
 
 ## Choose the AI Dojo route, or work on your own
 
-☑ **I would like to use the AI Dojo to work out my goal and plan.** With this ticked, the Dojo steps appear below with a starter prompt; your Dojo asks you questions until each line is precise, and you copy its final version into the boxes of the form. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to work out my goal and plan.** Start with a conversation about what interests you, then write your own goal and plan below. Path A uses the Dojo for guided exploration. On Paths B and C, untick this to work independently with feedback on your draft. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
 ## Work it out with your AI Dojo first (shown right under the Dojo tick, before the form, while the box is ticked)
 
-AI Dojo Passcode for this Graded Item: **GOAL3-1109**
+AI Dojo Passcode for this Graded Item: **GOAL3-1109-R2**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My Sprint 3 goal and plan". First tell me its passcode, its title and its due date as you have them. I am on Path [A, B or C]. Ask me first to restate the reason I gave on 30 October for choosing my path, and how it will influence the goal I am about to set. Then help me fill in the six lines of the form, one line at a time, starting from what I want to understand. Ask me questions until each line is precise, and do not write the lines for me. Do not summarize until I ask you to.
+> Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me discover a new physical phenomenon I want to investigate. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, conditions, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
 **3. Work out your goal with your Dojo.** (Page note: the paragraph for the student's path shows; the other two are hidden.)
-- *Path A:* Tell your Dojo you are taking the goal from the trail How fast will you spin?, and let it ask you whether you will take the goal as written or narrow it to one situation you care about.
+- *Path A:* Explore a spinning situation that catches your interest. Let your Dojo follow your observations and questions before helping you choose what to predict.
 - *Path B:* Start with the phenomenon, and let your Dojo ask until a quantity appears. Choose a phenomenon different from your Sprint 2 one.
-- *Path C:* Start with what you want to build and which tool you will use, and let your Dojo ask until you can identify the quantity your build will let you predict.
+- *Path C:* Talk about what you want to build and what it should do. Explore which input you can change, what you can measure, and how the build will test your prediction.
 
-**4. Ask for the form.** When all six lines feel right, paste this:
+**4. Review your thinking.** When all six lines feel right, paste this:
 
-> Write my goal and plan as the six lines of the form, in this order: What I want to understand · Given · I will be able to predict · Predicting it is useful because · I will work on this on · How my partners will test me. Use only my words. If a line is not settled, write "not yet settled" on it.
+> Help me review the ideas and decisions I have expressed. Point out anything I still need to think through before I write my goal and plan. Ask me to explain uncertain points in my own words; leave the form responses for me to write.
 
-**5. Fill in the form.** Copy each of the six lines from your Dojo's reply into the box it belongs to, below. Then write your look forward, go through the Self-check and submit.
+**5. Fill in the form.** Use the conversation to write your own responses below. Include what you decided and the reasons you can explain. Then write your look forward, go through the Self-check and submit.
 
 ## The form
 
-(Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder. For Path A, Parts 1 and 2 open filled in with the trail's goal, Example A, which the student can keep or change.)
+(Page note: the form takes the left two thirds of the page; the worked examples sit beside it on the right and move below it on a narrow screen. Each box has a short label above it and a one-line starter inside the label, never a placeholder. Every path opens empty on first use and keeps its own draft.)
 
 ### Part 1 · What I want to understand
 
 One thing that happens in the physical world, in your own words. One sentence is enough. "How a spinning skater speeds up" and "how a guitar string sets its note" are precise; "rotational motion" is a field, so narrow it down to one behavior you can watch happen.
 
-- *Path A:* the trail's goal is filled in. Keep it, or narrow it to the one spinning situation you most want to understand.
+- *Path A:* Develop your own question about spinning objects through the Dojo conversation. Write what you want to understand in your own words.
 - *Path B:* a new phenomenon, different from your Sprint 2 one.
-- *Path C:* the phenomenon your build will show: what moves, swings, spins, lights up or changes in it.
+- *Path C:* describe what you want to build, the tool, and the behavior you want to understand through it.
 
    **What I want to understand.** I want to understand how ...
 
@@ -94,21 +94,21 @@ Inside the phenomenon you chose sits a relationship between quantities. Write it
 
 1. **Given what I know or can measure.** The quantities you will start from, each with its unit.
 
-   **Given ...** The quantities I start from, with their units.
+   **Given ...** The quantities I start from, with their units. Path C: include the input I can change in my build.
 
 2. **I will be able to predict.** The one quantity you will work out, with its unit, and the condition under which the relationship holds. The condition matters: in Five real-world scenarios you will show where your prediction works and where it stops working.
 
-   **I will be able to predict ...** One quantity, its unit, and the condition it depends on.
+   **I will be able to predict ...** One quantity, its unit, and the condition it depends on. Path C: identify the output I can measure in my build.
 
 3. **Predicting it is useful because.** One real situation where being able to predict this will be useful.
 
-   **Predicting it is useful because ...** The situation, and how it helps.
+   **Predicting it is useful because ...** The situation, and how it helps. Path C: explain how this prediction helps me make or test my build.
 
 ### Part 3 · My plan
 
 Your plan has two parts: when you will work on your goal outside class, and the two classmates who will test your understanding before the exam.
 
-1. **When I will work on it.** Identify the days and times outside class you will give to this goal between now and the exam on Wednesday 2 December, and block them in your calendar now. Find and confirm my relationship is due Monday 16 November and Five real-world scenarios Monday 30 November, and nothing is due in fall break, 23 to 27 November. (Page note, Path A only: "Include time for the trail's experiment on a spinning chair, which needs a friend and about 30 minutes.")
+1. **When I will work on it.** Identify the days and times outside class you will give to this goal between now and the exam on Wednesday 2 December, and block them in your calendar now. Find and confirm my relationship is due Monday 16 November and Five real-world scenarios Monday 30 November, and nothing is due in fall break, 23 to 27 November. (Page note, Path A only: "Include time for the videos, interactive activities and a test that fits your chosen spinning phenomenon.")
 
    **I will work on this on ...** The days and times, blocked in my calendar, between now and the exam.
 
@@ -117,8 +117,6 @@ Your plan has two parts: when you will work on your goal outside class, and the 
    **Partner 1 · Partner 2** (chosen from the drop-down)
 
    **How my partners will test me ...** When we will meet, and what each of them will ask me to do.
-
-A plan written for Example A would read: *I will work on this on Tuesday and Thursday evenings, 7 to 8:30, from 10 to 19 November, and on Sunday 29 November, blocked in my calendar.* And, with two classmates chosen from the drop-down: *We will meet on Zoom on Sunday 22 November at 7 pm. I will explain how my spin rate depends on how my mass is arranged, and then each of them will give me a new arm position so that I can predict how fast I will spin.*
 
 ## Look forward
 
@@ -133,13 +131,7 @@ Next, in [Find and confirm my relationship](find-and-confirm-my-relationship.htm
 
 ## Worked examples (shown beside the form)
 
-Each example is written in the form's own shape. Example A is the trail's goal. Examples B and C show a Path B and a Path C goal.
-
-**Example A · Path A, from the trail How fast will you spin?** (Page note: this is the text Path A fills in.)
-- *What I want to understand:* how spinning objects behave differently from objects moving in a straight line, and how a spin changes when the mass is rearranged.
-- *Given* how fast something is spinning, in radians per second, and how its mass is arranged around the axis before and after the arrangement changes, as a moment of inertia in kilogram square meters,
-- *I will be able to predict* how fast it will spin afterwards, in radians per second, as long as nothing outside twists it while the mass moves.
-- *Predicting it is useful because* the same relationship explains how skaters, divers and satellites control their spin, and my phone's gyroscope lets me check the prediction on a spinning chair.
+Each example is written in the form's own shape. Examples B and C show a Path B and a Path C goal.
 
 **Example B · Path B, from "why a swing feels the same however high you go"**
 - *What I want to understand:* what sets how long one swing of a playground swing takes.
@@ -157,7 +149,7 @@ Each example is written in the form's own shape. Example A is the trail's goal. 
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Part 1 names one phenomenon, not a field (Path A: kept or narrowed the trail's goal; Path B: a new phenomenon; Path C: one my build will show) · 15 pts
+- [ ] Part 1 names one phenomenon, not a field (Path A: a question about spinning objects; Path B: a new phenomenon; Path C: one my build will show) · 15 pts
 - [ ] "Given" names the quantities I start from, each with its unit · 15 pts
 - [ ] "Predict" names one quantity with its unit · 15 pts
 - [ ] "Predict" states the condition the relationship depends on · 15 pts
@@ -177,15 +169,15 @@ This graded item is complete when your path is chosen, the look back, all six bo
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: My Sprint 3 goal and plan. Course: CST286. Due: Monday 9 November. Passcode: GOAL3-1109.
+Graded item: My Sprint 3 goal and plan. Course: CST286. Due: Monday 9 November. Passcode: GOAL3-1109-R2.
 
-When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
+Give the passcode, title and due date from this brief first. The learning purpose is for the student to develop and own a goal they can explain: a physical behavior, a measurable prediction and a practical plan. They are setting a learning goal; they do not need to master the whole relationship in this activity.
 
-Learning purpose: the student sets a precise Sprint 3 goal on the path they chose on 30 October (A: the angular momentum trail How fast will you spin?; B: a new phenomenon of their own; C: a build in GlowScript, PhET or Tinkercad Circuits), and a plan for when they will work on it and which two classmates will test their understanding.
+Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me discover a new physical phenomenon I want to investigate. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, conditions, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
 
-Order: first ask the student which path they are on, and ask them to restate the reason they gave on 30 October for choosing it and how that reason will influence the goal they are about to set. Then work through the six lines one at a time: what I want to understand, Given, I will be able to predict (with the condition), Predicting it is useful because, I will work on this on, How my partners will test me (the two classmates are chosen from a drop-down on the page). Ask until each line is precise. Never write a line for the student. On Path A, ask whether they will keep the trail's goal or narrow it to one spinning situation they care about. On Path B, check that the phenomenon is different from their Sprint 2 one. On Path C, ask what they will build and which quantity their build will let them predict.
+Path A is guided exploration within this area: Explore why spinning objects can behave in ways we might not expect: a rotating wheel or top staying upright, a spinning gyroscope maintaining its direction, or a skater spinning faster when they bring their arms in. Keep the broad area shared while letting the student develop a specific question. The embedded book in Find and confirm my relationship supports spin speed and the direction of a spinning axis. Path B students select their own new phenomenon and plan how to learn about it. Path C students select a build and tool, consider what they can adjust and observe, and make the build the means of testing the relationship. If a proposed tool cannot expose the input and output, help the student investigate that before settling the goal.
 
-Do not summarize until the student asks. When they ask, output the six lines in the form's order using only the student's words, and write "not yet settled" on any line that is not settled.
+Use the form requirements as checkpoints after ideas emerge, not as an opening interview script. A useful conversation can move back and forth. Explain a concept, offer a small comparison or point to a resource when a student needs support, then ask them to reason with it. Never invent their interests, prior experience, predictions, time commitments, partners or answers. Do not provide a polished submission or a ready-made goal. A review may quote the student’s decisions and identify unresolved questions; the student writes the final responses.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
