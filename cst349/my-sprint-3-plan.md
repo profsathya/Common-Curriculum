@@ -34,15 +34,15 @@ Each **+** opens an example, more examples if you want them, and a reflection qu
 
 ### Task 1 — My Sprint 3 goal
 
-Write the goal you will work toward between now and Monday 30 November. *(Start from your Sprint 2 goal and the step you took. A good Sprint 3 goal is the next thing that makes your interview answer more real, and it is small enough to finish in three weeks with Thanksgiving in the middle.)*
+Write the goal you will work toward between now and Monday 30 November. *(Suggested starting point is your Sprint 2 goal. You can pivot to a new goal as well, but make sure that it has both breadth and depth, moving you outside of your immediate interest or comfort zone.)*
 
-*Box label:* **Your answer to task 1.** The goal, and how it follows from your Sprint 2 goal.
-*Placeholder:* My Sprint 3 goal — … ⏎ How it follows from Sprint 2 — …
+*Box label:* **Your answer to task 1.** The goal, and how it follows from your Sprint 2 goal or why you are pivoting.
+*Placeholder:* My Sprint 3 goal — … ⏎ How it follows from Sprint 2, or why I am pivoting — …
 
 **Check it yourself — the same criteria, without the AI**
 
-- The goal is something you can finish by Monday 30 November.
-- You say how it follows from your Sprint 2 goal or your first step.
+- The goal is something you can take a meaningful step forward towards by Monday 30 November.
+- This pushes you past your immediate interest or comfort zone.
 
 *The + reads:* An example, more examples, and a question
 
@@ -138,7 +138,7 @@ AI Dojo Passcode for this Graded Item: **PLAN-1109**
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Task 1 states a goal I can finish by 30 November, and says how it follows from Sprint 2 · 20 pts
+- [ ] Task 1 states a goal I can take a meaningful step towards by 30 November, and that pushes me past my immediate interest or comfort zone · 20 pts
 - [ ] Task 2 is one step with a day on or before 20 November, and says what it will produce · 25 pts
 - [ ] Task 3 has three or four lines that add to 100, each checkable by a classmate from my report · 40 pts
 - [ ] At least one grading line in task 3 is about what the work produced · 15 pts
@@ -165,13 +165,13 @@ Graded item: My Sprint 3 plan. Course: CST349. Due: Monday 9 November. Passcode:
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student learns to set a goal they can keep moving on their own, by writing a Sprint 3 goal that follows from their Sprint 2 goal and first step, naming one step with a day before Friday 20 November, and writing three or four grading lines adding to 100 points that a classmate can check from the Sprint 3 report. A classmate grades the student against those lines.
+Learning purpose: the student learns to set a goal they can keep moving on their own, by writing a Sprint 3 goal that follows from their Sprint 2 goal or pivots to a new one with both breadth and depth, past their immediate interest or comfort zone, naming one step with a day before Friday 20 November, and writing three or four grading lines adding to 100 points that a classmate can check from the Sprint 3 report. A classmate grades the student against those lines.
 
-Ask what the Sprint 2 goal was and what the first step produced, then what the next thing is that makes the interview answer more real and can be finished by 30 November. Ask for one step with a day before 20 November and what it will produce. For the grading lines, ask of each line "could a classmate say yes or no to this from the report alone?" and keep asking until each one passes; check the points add to 100. Do not write the goal, the sources, the step or the lines for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
+Ask what the Sprint 2 goal was and what the first step produced, then what the Sprint 3 goal is, whether it follows from Sprint 2 or is a pivot, whether it pushes the student past their immediate interest or comfort zone, and what meaningful step toward it is possible by 30 November. Ask for one step with a day before 20 November and what it will produce. For the grading lines, ask of each line "could a classmate say yes or no to this from the report alone?" and keep asking until each one passes; check the points add to 100. Do not write the goal, the sources, the step or the lines for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Task 1: a goal finishable by 30 November, and how it follows from Sprint 2.
+- Task 1: a goal the student can take a meaningful step toward by 30 November, that pushes past their immediate interest or comfort zone, with how it follows from Sprint 2 or why it is a pivot.
 - Task 2: one step, a day on or before 20 November, what it produces.
 - Task 3: three or four lines, points adding to 100, each checkable yes/no by a classmate from the report; at least one about what the work produced.
 
