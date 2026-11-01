@@ -23,16 +23,16 @@ Week 12 · due Monday 16 November, 11:59 p.m. · 100 points · Graded items
 
 ## How this works
 
-Choose one classmate to evaluate (grade) your Sprint 3 report against the terms you wrote. Ask them before you write their name here, because the agreement is yours to make; the form has a tick that says you asked and they said yes. Choose someone you can reach, because you are the one who makes sure the evaluation is entered by Monday 7 December.
+Choose one classmate to evaluate (grade) your Sprint 3 report against your terms. Ask them before recording their name, agree on how to share the report and feedback, and follow up before Monday 7 December. If they become unavailable, send Prof. Sathya or the TA your agreement and follow-up messages for help arranging the review.
 
 Two conditions on who you can choose:
 
 1. **Not each other.** The two of you cannot grade each other. If a classmate has already picked you, or plans to, pick someone else.
 2. **Not your exam partner.** Your grader cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation.
 
-Agreeing to grade more than one classmate is fine; one is the minimum.
+Agreeing to grade more than one classmate is fine; one is the minimum. Confirm that you can return each review by 7 December. If you have no grader, no report to review, or more reviews than you can complete, contact Prof. Sathya or the TA before the agreement is due.
 
-After the due date Prof. Sathya checks the picks. If two students have picked each other, or a pick is an exam partner, both students hear from him and one of them changes their grader.
+After the due date Prof. Sathya checks eligibility, whether everyone has a grader and a report to review, and whether volunteers have taken on too many reports. If a match needs to change, he or the TA will help arrange it.
 
 ## The form
 
@@ -52,7 +52,7 @@ After the due date Prof. Sathya checks the picks. If two students have picked ea
 
    ☐ They were not my partner in the Sprint 1 Exam or the Sprint 2 Exam conversation.
 
-3. **Your grading terms.** Paste the three or four lines from task 3 of My Sprint 3 plan, with their points, so that your grader has them in one place.
+3. **Your grading terms.** Paste the three or four lines from task 3 of My Sprint 3 plan, with their points, so that your grader has them in one place. You can ask your grader what evidence each line calls for, whether the work stretches your current capability, and what depends on someone else. Bring unresolved questions about the terms to Prof. Sathya or the TA.
 
    **My grading terms** (page note: a text box; the copied text includes it under the heading "My grading terms")
 
@@ -60,7 +60,7 @@ After the due date Prof. Sathya checks the picks. If two students have picked ea
 
    **I am grading** (page note: a text box, one name per line)
 
-(Page note: the page checks, before copying, that the grader name differs from the student's own name, that all three ticks are ticked, and that no name in box 4 equals the grader in box 2; a plain message under the button says what to fix. Nothing else is blocked.)
+(Page note: Check my submission checks roster names, required fields, consent ticks, self-selection, reciprocal names, and exam partners saved in this browser. It cannot verify class-wide matching or unseen exam history. Copy my answers always copies the current draft.)
 
 ## Self-check
 
@@ -75,9 +75,9 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 ## Submit
 
-Press **Copy my answers** and paste the text into the Canvas text box.
+Use **Check my submission** to find missing fields or agreement conflicts. **Copy my answers** copies your draft at any stage. Review it before pasting the final text into Canvas.
 
-**Button:** Copy my answers
+**Buttons:** Check my submission · Copy my answers
 
 After you submit, send your grading terms to your grader yourself, by whatever channel you reached them on. With that done you have one person who knows what you set out to do and has agreed to check it, which is what the rest of the sprint runs on. Questions about the pick go to Prof. Sathya or the TA.
 

@@ -305,11 +305,11 @@ code { overflow-wrap: anywhere; }
 </section>
 
 <h2 class="sec">How this works</h2>
-<p class="body">Choose one classmate to evaluate (grade) your Sprint 3 report against the terms you wrote. Ask them before you write their name here, because the agreement is yours to make; the form has a tick that says you asked and they said yes. Choose someone you can reach, because you are the one who makes sure the evaluation is entered by Monday 7 December.</p>
+<p class="body">Choose one classmate to evaluate (grade) your Sprint 3 report against your terms. Ask them before recording their name, agree on how to share the report and feedback, and follow up before Monday 7 December. If they become unavailable, send Prof. Sathya or the TA your agreement and follow-up messages for help arranging the review.</p>
 <p class="body">Two conditions on who you can choose:</p>
 <ol class="conds"><li><b>Not each other.</b> The two of you cannot grade each other. If a classmate has already picked you, or plans to, pick someone else.</li><li><b>Not your exam partner.</b> Your grader cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation.</li></ol>
-<p class="body">Agreeing to grade more than one classmate is fine; one is the minimum.</p>
-<p class="body">After the due date Prof. Sathya checks the picks. If two students have picked each other, or a pick is an exam partner, both students hear from him and one of them changes their grader.</p>
+<p class="body">Agreeing to grade more than one classmate is fine; one is the minimum. Confirm that you can return each review by 7 December. If you have no grader, no report to review, or more reviews than you can complete, contact Prof. Sathya or the TA before the agreement is due.</p>
+<p class="body">After the due date Prof. Sathya checks eligibility, whether everyone has a grader and a report to review, and whether volunteers have taken on too many reports. If a match needs to change, he or the TA will help arrange it.</p>
 
 <h2 class="sec">The form</h2>
 <ol class="tasks">
@@ -332,7 +332,7 @@ code { overflow-wrap: anywhere; }
 </li>
 
 <li class="task" id="task-3">
-<div class="ttext"><span class="tn">3.</span><span class="tt"><b>Your grading terms.</b> Paste the three or four lines from task 3 of My Sprint 3 plan, with their points, so that your grader has them in one place.</span></div>
+<div class="ttext"><span class="tn">3.</span><span class="tt"><b>Your grading terms.</b> Paste the three or four lines from task 3 of My Sprint 3 plan, with their points, so that your grader has them in one place. You can ask your grader what evidence each line calls for, whether the work stretches your current capability, and what depends on someone else. Bring unresolved questions about the terms to Prof. Sathya or the TA.</span></div>
 <div class="rbox">
 <label class="qt" for="f-terms"><b>My grading terms</b></label>
 <textarea class="box" id="f-terms" data-field="terms"></textarea>
@@ -443,8 +443,9 @@ code { overflow-wrap: anywhere; }
 <p class="body"><b>Grading.</b> 100 points, in Graded assignments. The points are for having the agreement in place by Monday 16 November. If the check after the due date finds a pick that breaks one of the two conditions, both students keep their points once one of them has changed their grader.</p>
 
 <h2 class="sec">Submit</h2>
-<p class="body">Press <b>Copy my answers</b> and paste the text into the Canvas text box.</p>
+<p class="body">Use <b>Check my submission</b> to find missing fields or agreement conflicts. <b>Copy my answers</b> copies your draft at any stage. Review it before pasting the final text into Canvas.</p>
 <div class="copywrap">
+<button type="button" class="btn" id="check-btn">Check my submission</button>
 <button type="button" class="btn primary" id="copy-btn">Copy my answers</button>
 <div class="fixmsg" id="fix-msg" role="alert" hidden></div>
 <div class="status" id="copy-status" role="status" aria-live="polite"></div>
@@ -489,7 +490,7 @@ code { overflow-wrap: anywhere; }
     var AGREE = ["I asked this person and they agreed to grade my Sprint 3 report against my terms.", "They are not grading me because I am grading them.", "They were not my partner in the Sprint 1 Exam or the Sprint 2 Exam conversation."];
     // What the page says when Copy my answers finds something to fix. Nothing else is blocked.
     var MSG = {
-        lead: 'Not copied yet. Fix this first:',
+        lead: 'Before submitting, check these items:',
         gmissing: 'Pick My grader from the list.',
         self: 'My grader has the same name as Your name. Pick a classmate, not yourself.',
         tick: 'Tick all three boxes under My grader.',
@@ -605,7 +606,7 @@ code { overflow-wrap: anywhere; }
         save();
         writeClipboard(text).then(function () {
             copyStatus.className = 'status ok';
-            copyStatus.textContent = 'Copied. Paste it into the Canvas text box. The same text is below if you need it again.';
+            copyStatus.textContent = 'Draft copied. Review it and use Check my submission before pasting the final text into Canvas. The same text is below.';
         }, function () {
             copyStatus.className = 'status';
             copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
@@ -652,11 +653,20 @@ code { overflow-wrap: anywhere; }
     function val(k) { return String(state.fields[k] || '').trim(); }
     function allTicked() { return AGREE.every(function (t, i) { return !!state.fields['agree' + (i + 1)]; }); }
 
-    // ---------- the checks before copying ----------
+    // ---------- check existing requirements; copying a draft stays available ----------
     function problems() {
         var out = [];
         var you = norm(val('you')), g = norm(val('g'));
-        if (!g) { out.push(MSG.gmissing); }
+        if (!you || !ROSTER[you]) { out.push('Pick Your name from the class roster.'); }
+        if (!g || !ROSTER[g]) { out.push(MSG.gmissing); }
+        if (!val('terms')) { out.push('Paste your grading terms with their points.'); }
+        if (!val('grading')) { out.push('List at least one classmate you agreed to review.'); }
+        val('grading').split('\n').forEach(function (line) {
+            var n = norm(line);
+            if (n && !ROSTER[n]) { out.push('Choose each name in I am grading from the class roster, one per line.'); }
+            if (n && n === you) { out.push('I am grading includes your own name. List the classmate you agreed to review.'); }
+        });
+        if (PARTNERS.some(function (p) { return p.name === g; })) { out.push('Your grader matches an exam partner saved in this browser. Choose another classmate.'); }
         if (you && g && g === you) { out.push(MSG.self); }
         if (!allTicked()) { out.push(MSG.tick); }
         var clash = val('grading').split('\n').some(function (l) { var n = norm(l); return n && g && n === g; });
@@ -677,17 +687,18 @@ code { overflow-wrap: anywhere; }
     if (copyBtn) {
         copyBtn.addEventListener('click', function () {
             $all('[data-field]').forEach(function (el) { state.fields[el.getAttribute('data-field')] = el.value; });
-            var p = problems();
-            showFix(p);
-            if (p.length) {
-                copyStatus.className = 'status';
-                copyStatus.textContent = '';
-                announce(MSG.lead + ' ' + p.join(' '));
-                return;
-            }
             doCopy(buildText());
         });
     }
+    var checkBtn = $('#check-btn');
+    if (checkBtn) { checkBtn.addEventListener('click', function () {
+        $all('[data-field]').forEach(function (el) { state.fields[el.getAttribute('data-field')] = el.value; });
+        var p = problems();
+        showFix(p);
+        copyStatus.className = 'status';
+        copyStatus.textContent = p.length ? 'Your draft can still be copied.' : 'The form checks found no missing fields. Confirm the terms, consent, and eligibility with your classmate; this page cannot verify class-wide matching or exam partners not saved here.';
+        announce(p.length ? MSG.lead + ' ' + p.join(' ') : copyStatus.textContent);
+    }); }
     if (!storageOK) { showStoreNote(); }
 }());
 </script>

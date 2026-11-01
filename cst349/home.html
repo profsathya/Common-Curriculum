@@ -117,7 +117,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <li class="ch" data-key="cst349.s3.1.leave" data-due="2026-11-09"><div class="num">1</div>
 <div><div class="title"><a href="my-sprint-3-plan.html" data-canvas-href="https://csumb.instructure.com/courses/34789/assignments/657505" target="_blank" rel="noopener">My Sprint 3 plan</a></div>
-<div class="carry">You leave with: a Sprint 3 goal that follows from your first step, the step you will take before 20 November, and the three or four lines, adding to 100 points, that you have asked to be graded on</div></div>
+<div class="carry">You leave with: a Sprint 3 goal that builds on your first step or takes a new direction, the step you will take before 20 November, and the three or four lines, adding to 100 points, that you have asked to be graded on</div></div>
 <div class="when"><b>Mon Nov 9</b> &middot; 100 pts</div></li>
 
 <li class="ch" data-key="cst349.s3.oyp1.leave" data-due="2026-11-13"><div class="num">&#9675;</div>
@@ -285,7 +285,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
    Nothing stored, for any reason, means the plain number and the grey line stay. */
 (function(){
   function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} }
+  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); return true; }catch(e){ return false; } }
   var items=document.querySelectorAll('.ch[data-key]');
   for(var i=0;i<items.length;i++){ (function(li){
     var key=li.getAttribute('data-key'), num=li.querySelector('.num'), carry=li.querySelector('.carry'), n=num.textContent;
@@ -299,11 +299,11 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
     /* Notes: a small label at the right of the item; click opens a box; what is typed is saved here as it is typed */
     var nk=key+'.notes', lab=document.createElement('button'), box=document.createElement('div'), ta=document.createElement('textarea'), sv=document.createElement('div');
     lab.type='button'; lab.className='notes-l'; lab.textContent='Notes'; lab.setAttribute('aria-expanded','false');
-    box.className='notes'; box.hidden=true; ta.placeholder='Anything you want to remember about this one'; ta.setAttribute('aria-label','Notes'); sv.className='saved'; box.appendChild(ta); box.appendChild(sv); li.appendChild(lab); li.appendChild(box);
+    box.className='notes'; box.hidden=true; ta.placeholder='Anything you want to remember about this one'; ta.setAttribute('aria-label','Notes'); sv.className='saved'; sv.setAttribute('role','status'); box.appendChild(ta); box.appendChild(sv); li.appendChild(lab); li.appendChild(box);
     function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
     ta.value=get(nk)||''; paintNotes();
     lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
-    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; var saved=set(nk, v.trim()?v:null); paintNotes(); sv.textContent=saved?(v.trim()?'Saved on this computer':'Note cleared'):'Could not save on this computer. Copy your note before leaving this page.'; },300); });
     num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
     function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
     num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });

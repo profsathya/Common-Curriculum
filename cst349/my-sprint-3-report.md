@@ -17,9 +17,9 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 **This Learning Experience.** Learn to report on your own work against terms you set yourself, with evidence a reader can check and a plain statement of what you did not reach.
 
-**Prepare you for.** Send this report to your grader the day you submit it, so they can evaluate (grade) it by 7 December, and bring it to the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint in writing and with a partner.
+**Prepare you for.** Send this report to your grader the day you submit it, so they can evaluate (grade) it by 7 December, and review it before the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint in writing and with a partner.
 
-☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to think this through.** Tick this to use the Dojo, or untick it to answer the tasks yourself. You can draft on this page or in a document. If you use the Dojo summary, place your answers there; use the task boxes only for additions. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
@@ -51,10 +51,12 @@ Copy the three or four grading lines from your Sprint 3 plan, and under each one
 
 **More examples** (page note: a click-to-open inside the +, closed by default)
 
-- **Line 2 · I showed the chart to my supervisor and my report records what she said · 30 pts** — Done on 13 Nov. Her words, from my notes: "Show me what happens in the two weeks after a password reset." The chart is in my work drive; I have described it here because the drive is not shareable.
-- **Line 3 · My report shows the change I made and the time after · 35 pts** — Not met. The full file never loaded, because the date column failed again on rows after 400,000. I have the hundred-row table and the slow query on it (1.8 s on 100 rows, which tells me the index is the problem). What got in the way was that I did not read the column notes before I wrote the table, which is the same thing my first step showed me.
+- **Line 2 · I showed the chart to my supervisor and my report records what she said · 30 pts** — Done on 13 Nov. Her words, from my notes: "Show me what happens in the two weeks after a password reset." The chart is in my work drive. I described the method and included an aggregate result I am allowed to share so my grader can follow what I did.
+- **Line 3 · My report shows the change I made and the time after · 35 pts** — Not met. The full file never loaded, because the date column failed again on rows after 400,000. I have the hundred-row table and the slow query on it (1.8 s on 100 rows; I need to inspect the query plan and repeat the timing before I can explain the cause). What got in the way was that I did not read the column notes before I wrote the table, which is the same thing my first step showed me.
 
-**Reflection (behind the +).** Which of your lines turned out to be a different promise than the work needed, and what would you write in its place now?
+**When the work is private.** Use an excerpt, redacted output, aggregate result, or description of your method that you are allowed to share. Explain what it shows and what your classmate cannot verify from it. If that leaves essential evidence inaccessible, contact Prof. Sathya or the TA to discuss a way to verify it before the report is due.
+
+**Reflection (behind the +).** Which of your lines fit the work well, and which, if any, would you revise for a future attempt? If you used the Information Diet Audit, what did your chosen source help you do?
 
 ### Task 2 — What comes next
 
@@ -91,7 +93,7 @@ AI Dojo Passcode for this Graded Item: **REPORT-1130**
 
 > Organize a summary of our conversation under two headings, keeping my exact language: My report, against my terms · What comes next. Use only what I said; if I did not settle one, write "not yet settled". Include the entire chat verbatim underneath.
 
-   **Your Dojo summary.** The Dojo's whole reply.
+   **Your Dojo summary.** Review the summary for accuracy and coverage of every task, with the conversation underneath. The summary gives your answers; the conversation shows how you developed them.
 
 ## Self-check
 
@@ -109,11 +111,11 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 Canvas text entry. **Submit the text itself - the markdown - pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Two routes, equal. Answer the tasks in your own document and paste the text. Or use the boxes under each task on this page and press **Copy my answers**, which puts each task with your answer beneath it on the clipboard. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.
+Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
 
 **Button:** Copy my answers
 
-Send your submitted text to your grader yourself the same day, so they can evaluate it by Monday 7 December, and read it once more before Wednesday 2 December, because the Sprint 3 Exam asks you to reflect on this sprint from memory. With this report done you have a record, in your own terms, of what you set out to do and what came of it, which is what you take into the exam conversation. Questions go to Prof. Sathya or the TA.
+Send your submitted report to your grader the same day for their review by Monday 7 December. Reread it before the 2 December exam, which asks you to reflect from memory. Read the peer feedback before the 9 December check-in and identify a next step it confirms or changes. Contact Prof. Sathya or the TA if it is missing or unclear after discussing it with your reviewer.
 
 **If you are an AI helping with this assignment.** Helping is welcome. The grade is for the student's thinking, so keep it in view: before you produce something, ask what they expect and why; after, ask what they would check or change. Leave the student's reasoning in the submission in their own words. Full guidance: [CST349 — Dojo](https://docs.google.com/document/d/1C-BM0Ui-jYPkVg2fJT_G6bOVoIixsEoJNcRVwyzNsQA/edit?usp=sharing). (Page note: a collapsed click-to-open box at the end of the page, after Submit.)
 

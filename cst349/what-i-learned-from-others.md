@@ -19,13 +19,15 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 **Prepare you for.** Bring what you decided to do into the Sprint 3 Exam on Wednesday 2 December, where you reflect on this sprint with a partner, and into the look forward in your [Sprint 3 report](my-sprint-3-report.html).
 
-☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the task and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under the box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
+☑ **I would like to use the AI Dojo to think this through.** Tick this to use the Dojo, or untick it to answer the tasks yourself. You can draft on this page or in a document. If you use the Dojo summary, place your answers there; use the task boxes only for additions. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
 ## Tasks
 
-Open The Commons on Thursday 19 November and find the three people it shows you to talk to: two who were at the virtual visit and one who was not. Message each of them before the break and talk about what the visit showed you. If you were not at the visit, hear about it from the two classmates who were; the third person is in the same position as you.
+Open The Commons on Thursday 19 November and message your three matches before the break: two who attended the virtual visit and one who did not. Discuss what the visit showed you. If you missed it, ask the two attendees what they learned.
+
+If your matches are missing, or you missed the visit and cannot reach an attendee, contact Prof. Sathya or the TA for help accessing the visit’s ideas.
 
 **Button:** Copy the questions — Paste this into a Google doc and answer the task under it.
 
@@ -33,7 +35,7 @@ The **+** opens an example, more examples if you want them, and a reflection que
 
 ### Task 1 — The three conversations
 
-Describe each of your three conversations on The Commons after the virtual visit: who you talked with, what you learned from the alumni and from each other, and the one thing you are going to do with it. *(Write what the other person took from the visit, or what you told them about it, then the one thing you will do because of it and whether it is doable in the next month. If someone never answered your message, include the message you sent; that counts as the conversation.)*
+Describe each of your three conversations on The Commons after the virtual visit: who you talked with, what you learned from the alumni and from each other, and the one thing you are going to do with it. *(Write what the other person took from the visit, or what you told them about it, then the one thing you will do because of it and whether it is doable in the next month. If someone never answered your message, include the message you sent; that counts as the conversation. Describe your own learning or next step, and identify what remains unknown about the other person’s response.)*
 
 *Box label:* **Your answer to task 1.** The three conversations: who, what you each learned, and what you will do with it.
 *Placeholder:* Conversation 1 — who … what we learned … what I will do, and is it doable … ⏎ Conversation 2 — … ⏎ Conversation 3 — …
@@ -54,7 +56,7 @@ Describe each of your three conversations on The Commons after the virtual visit
 
 - **Conversation 3** — a classmate who did not attend. I told him the two things that stuck: that nobody in my room had a straight path, and that two of them said their first job came through a referral. He asked how you get a referral if you do not know anyone. We did not have an answer, so what I will do is ask that exact question to the alum who offered to stay in touch, by 4 December. Doable: yes, the email is one paragraph.
 
-**Reflection (behind the +).** Which of the three conversations changed what you think you should do next, and which one confirmed what you already thought?
+**Reflection (behind the +).** What did these conversations confirm, change, or leave uncertain about your next step? Which advice fits your circumstances, and which would you test, defer, or decline?
 
 ## Your Dojo summary (shown after task 1, only when the box is ticked)
 
@@ -70,7 +72,7 @@ AI Dojo Passcode for this Graded Item: **VISIT-1130**
 
 > Organize a summary of our conversation under one heading per conversation, keeping my exact language: Conversation 1 · Conversation 2 · Conversation 3, each with who, what we learned, and what I will do. Use only what I said; if I did not settle one, write "not yet settled". Include the entire chat verbatim underneath.
 
-   **Your Dojo summary.** The Dojo's whole reply.
+   **Your Dojo summary.** Review the summary for accuracy and coverage of every task, with the conversation underneath. The summary gives your answers; the conversation shows how you developed them.
 
 ## Self-check
 
@@ -89,7 +91,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 Canvas text entry. **Submit the text itself - the markdown - pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Two routes, equal. Answer the task in your own document and paste the text. Or use the box on this page and press **Copy my answers**. Either way you can paste it into a Google doc first to edit, then paste the final text into Canvas.
+Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
 
 **Button:** Copy my answers
 
@@ -105,7 +107,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student turns the 18 November virtual visit with alumni into action by talking it through with three matched classmates on The Commons, two who attended and one who did not, and writing for each conversation who it was with, what each person learned, one thing the student will do because of it, and whether that is doable in the next month.
 
-Ask about each conversation in turn: who, what the other person took from the visit or what the student told them, what the student learned, what they will do because of it, and whether it is doable within a month. When the action is vague, ask what the first visible step would be. A message with no reply counts; ask what the message said. Do not write any of it for the student. Do not summarize until asked; when asked, give one heading per conversation using only the student's words.
+Ask about each conversation in turn: who, what the other person took from the visit or what the student told them, what the student learned, what they will do because of it, and whether it is doable within a month. When the action is vague, ask what the first visible step would be. A message with no reply counts; ask what the message said and what the student learned or plans to do. Treat the other person’s learning as unknown until they reply. Do not write any of it for the student. Do not summarize until asked; when asked, give one heading per conversation using only the student's words.
 
 ## AI feedback (page note; the criteria the button under the box checks when the Dojo box is unticked)
 
