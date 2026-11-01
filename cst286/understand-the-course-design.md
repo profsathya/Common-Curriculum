@@ -1,46 +1,75 @@
-CST286 · Understand the Course Design
-CST286 · Fall 2026
 # Understand the Course Design
-Read this before week 1
-On this page
-- How this course is different
-- The weekly rhythm
-- How the grade works
-- What counts as going deeper
-- What happens in the interview check-ins
-- What happens in a Sprint Exam
-- When attendance is required
-You are encouraged to use AI as a partner. Use it openly, in every part of the work — exploring your interest, digging into how things work, building models, checking your own understanding. The key is continue to make sure that you are a partner, creating ideas, questions, directions, choices and confirmation throughout the conversation without falling into consuming mode where AI is creating all of those items.
-If you have reservations about using AI, bring them to your check-in. Some of you may have reservations about using AI. If that is the case: first of all, know that we respect your reservation and understand there are good reasons for that. Hope you can also understand that we need to design a course that serves all of the students. If you have reservations, please bring them in the 1-on-1 check-in and we can try to find a way forward to serve you in this course.
-This course pays more attention to your process than your output. Before AI, output was the evidence: if you solved the problem, wrote the working code, finished the report, that showed you knew how. In the age of AI, a good output no longer shows that by itself. So the work here focuses on your process — testing it, challenging it, and exercising the motivation, metacognition, and mindset behind it. One way that becomes concrete: you will be asked to submit the transcripts of your AI conversations — a transcript shows your process, what you asked, what you challenged, what you decided, in a way the finished output cannot.
-Another way you will see this: less weight on the grade. Every week on the course home page carries 🌱 Own your progress guidance — activities provided to help you, but the grades for these activities will not affect your final grade. They are there for exactly what the name says: progress you own, whether or not anyone is scoring it.
-Canvas here encourages you to look at your learning and growth comprehensively, not transactionally. You practice independence by deciding what you need to understand, choosing evidence and checking your reasoning. The course home and assignment pages should make the next task, current instructions, dates and submission route easy to find. If they do not, tell us so we can fix the obstacle.
-The content is organized so you practice reading and writing at every turn — supported by listening to and talking with your peers and instructors. All of it exercises critical thinking, communication, and collaboration: the capacities, put together we call Symbiotic Thinking, is the core of the durable capabilities you will develop.
+
+## How this course is different
+
+**You are encouraged to use AI as a partner.** Use it openly, in every part of the work — exploring your interest, digging into how things work, building models, checking your own understanding. The key is continue to make sure that you are a partner, creating ideas, questions, directions, choices and confirmation throughout the conversation without falling into consuming mode where AI is creating all of those items.
+
+**If you have reservations about using AI, bring them to your check-in.** Some of you may have reservations about using AI. If that is the case: first of all, know that we respect your reservation and understand there are good reasons for that. Hope you can also understand that we need to design a course that serves all of the students. If you have reservations, please bring them in the 1-on-1 check-in and we can try to find a way forward to serve you in this course.
+
+**This course pays more attention to your process than your output.** Before AI, output was the evidence: if you solved the problem, wrote the working code, finished the report, that showed you knew how. In the age of AI, a good output no longer shows that by itself. So the work here focuses on your process — testing it, challenging it, and exercising the motivation, metacognition, and mindset behind it. One way that becomes concrete: you will be asked to submit the transcripts of your AI conversations — a transcript shows your process, what you asked, what you challenged, what you decided, in a way the finished output cannot.
+
+**Another way you will see this: less weight on the grade.** Every week on the [course home page](home.html) carries 🌱 **Own your progress** guidance — activities provided to help you, but the grades for these activities will not affect your final grade. They are there for exactly what the name says: progress you own, whether or not anyone is scoring it.
+
+**Canvas here encourages you to look at your learning and growth comprehensively, not transactionally.** You practice independence by deciding what you need to understand, choosing evidence and checking your reasoning. The course home and assignment pages should make the next task, current instructions, dates and submission route easy to find. If they do not, tell us so we can fix the obstacle.
+
+**The content is organized so you practice reading and writing at every turn** — supported by listening to and talking with your peers and instructors. All of it exercises critical thinking, communication, and collaboration: the capacities, put together we call Symbiotic Thinking, is the core of the durable capabilities you will develop.
+
 The rest of this page shows what that focus looks like in practice: a weekly rhythm of guidance you own and usually one graded item, check-ins where you explain your work in your own words, and depth measured from your own starting line.
-Each week gives you one to three 🌱 Own your progress guidance activities, and usually at most one 🎯 graded item. Across a sprint the graded items build one evolving piece of work rather than a pile of separate tasks.
-Own your progress guidance is how the week moves. These activities are provided to help you, but the grades for these activities will not affect your final grade — they are there so your progress stays yours to own, and so you can tell you are on track while there is still time to adjust.
-The reflection is the inside half of your evidence. A few honest lines on how the work went and how you feel about it. Why ask for it? With the help of AI, you could produce the work without much learning happening. And you could be superficial with the reflection, writing a few lines just to be done with it. But bringing the two together — and talking about them in your check-ins — holds us accountable to our learning together. Some weeks the reflection sits in your Own your progress guidance; some weeks it is the graded item.
-Most weeks have one graded item or none. In the final week, My Sprint 3 experience is due Monday 7 December and the classmate review is due Wednesday 9 December. It is the work your check-ins and Sprint Exams sample. Late graded items lose 10% a day. That means you cannot drift far behind before the credit is gone, which is deliberate.
+
+## The weekly rhythm
+
+Each week gives you **one to three 🌱 Own your progress guidance activities, and usually at most one 🎯 graded item**. Across a sprint the graded items build one evolving piece of work rather than a pile of separate tasks.
+
+**Own your progress guidance is how the week moves.** These activities are provided to help you, but the grades for these activities will not affect your final grade — they are there so your progress stays yours to own, and so you can tell you are on track while there is still time to adjust.
+
+**The reflection is the inside half of your evidence.** A few honest lines on how the work went and how you feel about it. Why ask for it? With the help of AI, you could produce the work without much learning happening. And you could be superficial with the reflection, writing a few lines just to be done with it. But bringing the two together — and talking about them in your check-ins — holds us accountable to our learning together. Some weeks the reflection sits in your Own your progress guidance; some weeks it is the graded item.
+
+**Most weeks have one graded item or none. In the final week, My Sprint 3 experience is due Monday 7 December and the classmate review is due Wednesday 9 December.** It is the work your check-ins and Sprint Exams sample. **Late graded items lose 10% a day.** That means you cannot drift far behind before the credit is gone, which is deliberate.
+
+## How the grade works
+
 Half your grade comes from getting the work done — submitting each graded item on time. The other half comes from your ability to explain what you did and why, in check-ins and Sprint Exams that sample work you already submitted.
-Because the check-ins draw on anything you have handed in, nothing here is submitted and forgotten. A piece from week 4 can come up in week 13. That is what makes preparing all of it the sensible strategy.
-There are no mid-course retakes. A rough check-in is recovered by showing up better prepared at the next one. If the semester gets away from you, there is a catch-up option at the end of the course — talk to us before then, not after.
-One piece of flexibility if you fall behind. If you were late submitting graded items, you can swap in up to two own-your-progress activities to stand in for two of them. Own-your-progress work stays optional, and its grades do not affect your final grade — this swap is the one exception, and the one place where having done it changes your grade.
+
+Because the check-ins draw on anything you have handed in, **nothing here is submitted and forgotten.** A piece from week 4 can come up in week 13. That is what makes preparing all of it the sensible strategy.
+
+**There are no mid-course retakes.** A rough check-in is recovered by showing up better prepared at the next one. If the semester gets away from you, there is a catch-up option at the end of the course — talk to us before then, not after.
+
+**One piece of flexibility if you fall behind.** If you were late submitting graded items, you can swap in up to **two own-your-progress activities** to stand in for two of them. Own-your-progress work stays optional, and its grades do not affect your final grade — this swap is the one exception, and the one place where having done it changes your grade.
+
+## What counts as going deeper
+
 Every piece of work gets asked the same three questions, so you always know what you are being asked for.
-Can you show how it really works? Not a summary you read somewhere — the actual mechanism, in your own words, still standing when someone asks “why?” and “what would happen if…?” A clear explanation in ordinary language meets this bar. Building a model with maths in it that predicts what happens is how we know we can apply what we have learned— and you may use AI to help you build one — as long as you can explain and defend it yourself.
-Are you better at it because you understand it? Something you now do, make, or choose differently, with the line drawn between the understanding and the change.
-Could you run this again? Your own account of how you got there — the questions you asked, the dead ends, what finally cracked it. Sprint 3 is where you find out, because you run it again on a new topic or phenomena.
+
+**Can you show how it really works?** Not a summary you read somewhere — the actual mechanism, in your own words, still standing when someone asks “why?” and “what would happen if…?” A clear explanation in ordinary language meets this bar. Building a model with maths in it that predicts what happens is how we know we can apply what we have learned— and you may use AI to help you build one — as long as you can explain and defend it yourself.
+
+**Are you better at it because you understand it?** Something you now do, make, or choose differently, with the line drawn between the understanding and the change.
+
+**Could you run this again?** Your own account of how you got there — the questions you asked, the dead ends, what finally cracked it. Sprint 3 is where you find out, because you run it again on a new topic or phenomena.
+
+## What happens in the interview check-ins
+
 A check-in is a short conversation where we pick something you submitted and ask you to walk us through it: what you were chasing, how you got underneath it, what changed as a result. You will not know in advance which piece we pick, so prepare all of it. Every check-in is a live session — in person, or on Zoom with your camera on.
-These check-ins are recorded. When we meet in person, we record the voice in the room — we are still testing the tools for this, so how we do it may change during the semester. When we meet on Zoom, the session is recorded to video.
-What the transcripts are for, plainly: understanding what you need, and helping you grow. A conversation carries things a submission cannot — where you got stuck, what you had already tried, what you were unsure of, what you got interested in along the way. Having your actual words means we can come back to what you said rather than what we remembered, follow up on it, and put help in front of you that fits your situation. And when the same difficulty shows up across many of you, that is the course failing you rather than you failing it — the transcripts are how we find that, and fix it while you are still here rather than for next year’s students.
-A sprint's check-in becomes bookable once the work it draws on is in. That is why the weekly rhythm matters — falling behind on submissions delays the conversation that earns the other half of those points.
-Your check-in times are posted on The Commons and sent by email. Each scheduled check-in is required. If a conflict is coming, tell us before the check-in, not after. And if you showed up and we ran out of time, you keep full credit — we will finish in office hours.
-The last Wednesday of Sprints 1–3 — weeks 6, 10 and 14 — class opens with a Sprint Exam. One page, written by hand. The preparation expectations are available ahead of time. The Sprint 3 blueprint includes an unfamiliar variation so you can practice deciding when a relationship applies.
+
+**These check-ins are recorded.** When we meet in person, we record the voice in the room — we are still testing the tools for this, so how we do it may change during the semester. When we meet on Zoom, the session is recorded to video.
+
+**What the transcripts are for, plainly: understanding what you need, and helping you grow.** A conversation carries things a submission cannot — where you got stuck, what you had already tried, what you were unsure of, what you got interested in along the way. Having your actual words means we can come back to what you said rather than what we remembered, follow up on it, and put help in front of you that fits your situation. And when the same difficulty shows up across many of you, that is the course failing you rather than you failing it — the transcripts are how we find that, and fix it while you are still here rather than for next year’s students.
+
+**A sprint's check-in becomes bookable once the work it draws on is in.** That is why the weekly rhythm matters — falling behind on submissions delays the conversation that earns the other half of those points.
+
+**Your check-in times are posted on The Commons and sent by email.** Each scheduled check-in is required. If a conflict is coming, tell us before the check-in, not after. And if you showed up and we ran out of time, you keep full credit — we will finish in office hours.
+
+## What happens in a Sprint Exam
+
+The last Wednesday of Sprints 1–3 — weeks 6, 10 and 14 — class opens with a Sprint Exam. One page, written by hand. The preparation expectations are available ahead of time. The [Sprint 3 blueprint](sprint-3-exam.html) includes an unfamiliar variation so you can practice deciding when a relationship applies.
+
 Then you trade with a partner, type their answers into a short AI form, talk their thinking through with them, and submit your evaluation of their work. Why by hand? Typing invites a quick paste from an AI window; writing by hand slows you to what you actually hold in your head. And why a partner? Within minutes you get feedback from someone who just faced the same questions — and reading their page teaches you to read your own the same honest way. The rest of the session runs check-ins.
-Wednesdays normally meet in person, and attendance is required. On November 18, we meet on Zoom; use the current course-home schedule for the meeting link. The sessions that open each sprint — weeks 1, 3, 7 and 11 — and the three Sprint Exam days, weeks 6, 10 and 14, are guided for the whole class. The other Wednesdays run as peer conversations and group work time, and they count the same.
-Mondays are online, and they belong to check-ins — small groups or one-on-one, rolling through the roster all semester. When you have a check-in scheduled, that Monday is required. On the other Mondays you are encouraged to come: the Zoom session is open for getting help and getting work done on your course activities and goals.
+
+## When attendance is required
+
+**Wednesdays normally meet in person, and attendance is required. On November 18, we meet on Zoom; use the current course-home schedule for the meeting link.** The sessions that open each sprint — **weeks 1, 3, 7 and 11** — and the three **Sprint Exam days**, weeks 6, 10 and 14, are guided for the whole class. The other Wednesdays run as peer conversations and group work time, and they count the same.
+
+**Mondays are online, and they belong to check-ins** — small groups or one-on-one, rolling through the roster all semester. **When you have a check-in scheduled, that Monday is required.** On the other Mondays you are encouraged to come: the Zoom session is open for getting help and getting work done on your course activities and goals.
+
 Missing a scheduled check-in loses its points, and those points cannot be recovered — so if something comes up, move the booking rather than skipping it.
+
 Treat that list as the plan rather than a finished schedule. If it turns out we need one or two more required sessions, we will add them — and you will get at least a week’s notice before any new date becomes required. Nothing gets added the week it happens.
-← Course home
-Prof. Sathya Narayanan
-snarayanan@csumb.edu · Schedule office hours · @profsathya on Slack
-Anything here confusing, broken, or missing? Tell me anonymously — it is the fastest way to get it fixed.

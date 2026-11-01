@@ -20,7 +20,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 Choose the learning experience that fits what you want to investigate and the work you want to organize.
 
-**A · Guided spinning exploration.** Choose a question about a skater, wheel, top or gyroscope. Use the supplied interactive book, videos and models, with optional Dojo coaching. Record predictions before explanations, video learning and model runs; choose and carry out your check.
+**A · Guided spinning exploration.** Choose a question about a skater, wheel, top or gyroscope. Use the supplied interactive book, videos and models, with guided Dojo conversations. Record predictions before explanations, video learning and model runs; choose and carry out your check.
 
 **B · My own learning goal.** Choose a physical phenomenon you want to understand. Choose credible sources, organize your investigation and design a check. Record a prediction, result and interpretation. Dojo coaching is available.
 

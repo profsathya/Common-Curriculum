@@ -17,7 +17,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on your earlier learning.** Your claim from [My claim](my-claim.html), and the evidence from your [Integrative Solving report](integrative-solving-report.html).
+**Builds on your earlier learning.** Your claim from [One claim about a T-Shaped Skill](my-claim.html), and the evidence from your [Integrative Solving report](integrative-solving-report.html).
 
 **This Learning Experience.** Build the first version of the Interactive Poster you will present at the Capstone Festival, so that a visitor can see what your work demonstrates about you.
 
@@ -68,7 +68,7 @@ AI Dojo Passcode for this Graded Item: **POSTER-1116**
 
 ### Task 1 · My claim
 
-What is the claim at the top of your poster, and what line sits under it to name your project or certificate? *(Start from your claim in My claim. Change it if your work has moved since then. Claim only what a visitor can see proven on your screen.)*
+What is the claim at the top of your poster, and what line sits under it to name your project or certificate? *(Start from your claim in One claim about a T-Shaped Skill. Change it if your work has moved since then. Claim only what a visitor can see proven on your screen.)*
 
    **Your answer to task 1.** The claim, and the line under it.
 

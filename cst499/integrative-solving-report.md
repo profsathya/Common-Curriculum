@@ -19,7 +19,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on your earlier learning.** In [My claim](my-claim.html) you identified the part of your claim that reaches into a second domain, or how your work could move toward one.
+**Builds on your earlier learning.** In [One claim about a T-Shaped Skill](my-claim.html) you identified the part of your claim that reaches into a second domain, or how your work could move toward one.
 
 **This Learning Experience.** Show, with evidence, how bringing a second domain into your work made it better.
 
@@ -27,7 +27,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Look back
 
-(Page note: when this browser holds the student's My claim answers, their task 3 answer is shown here in quotation marks under "In My claim you wrote:". When it is not stored, the line reads "Open your My claim submission on Canvas and find your answer to task 3.")
+(Page note: when this browser holds the student's My claim answers, their task 3 answer is shown here in quotation marks under "In One claim about a T-Shaped Skill you wrote:". When it is not stored, the line reads "Open your One claim about a T-Shaped Skill submission on Canvas and find your answer to task 3.")
 
 Since you wrote your claim, how has your second domain held up in your work? Choose the one closest to yours.
 
@@ -36,7 +36,7 @@ Since you wrote your claim, how has your second domain held up in your work? Cho
 ○ I am still moving my work toward a second domain
 ○ I am not sure yet
 
-**My second domain now.** Write the second domain you are working in today. If it changed since My claim, write what changed it.
+**My second domain now.** Write the second domain you are working in today. If it changed since One claim about a T-Shaped Skill, write what changed it.
 
 ## Choose the AI Dojo route, or work on your own
 
@@ -48,7 +48,7 @@ AI Dojo Passcode for this Graded Item: **INTEG-1109**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Integrative Solving report". First tell me its passcode, its title and its due date as you have them. Ask me first which second domain I wrote about in My claim, and whether it has changed. Then ask me where that domain met my main project, and keep asking until I can point to the place in my work where it happened. Ask me what I changed because of it, and what I did before. Then ask what evidence I have that the change made my work better, and keep asking until it is something a reviewer outside the course could check without me in the room. Do not write my answers for me. Do not summarize until I ask you to.
+> Walk me through the graded item "Integrative Solving report". First tell me its passcode, its title and its due date as you have them. Ask me first which second domain I wrote about in One claim about a T-Shaped Skill, and whether it has changed. Then ask me where that domain met my main project, and keep asking until I can point to the place in my work where it happened. Ask me what I changed because of it, and what I did before. Then ask what evidence I have that the change made my work better, and keep asking until it is something a reviewer outside the course could check without me in the room. Do not write my answers for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -136,7 +136,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student shows, with evidence, how bringing a second domain into their work made it better. The evidence becomes the breadth in the claim on the student's Interactive Poster.
 
-Ask first which second domain the student wrote about in My claim, and whether it has changed. Ask where that domain met the main project, until the student can point to a decision, a part they built, or a step in their process. Ask what the student did before and what they changed because of the second domain; if the change could have happened without the second domain, ask what the second domain added. Ask what evidence shows the change made the work better, until it is something an external reviewer could verify without the student present, and ask where the reviewer can find it. Do not write the domain, the change or the evidence for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Ask first which second domain the student wrote about in One claim about a T-Shaped Skill, and whether it has changed. Ask where that domain met the main project, until the student can point to a decision, a part they built, or a step in their process. Ask what the student did before and what they changed because of the second domain; if the change could have happened without the second domain, ask what the second domain added. Ask what evidence shows the change made the work better, until it is something an external reviewer could verify without the student present, and ask where the reviewer can find it. Do not write the domain, the change or the evidence for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 

@@ -47,6 +47,19 @@ try{
  await a.goto(url('grade-my-two-partners-sprint-3'));
  assert.equal(await a.isDisabled('#cal-compare'),true);await a.fill('#cal-formula','15');await a.fill('#cal-assumptions','10');await a.fill('#cal-reason','Initial interpretation');await a.click('#cal-compare');await a.fill('#cal-assumptions','0');await a.fill('#cal-reflection','I changed my score because mass does not justify the small-angle assumption.');await a.click('#copy-reviews');assert.match(await a.inputValue('#summary-out'),/assumptions: 10\/20/);await a.reload();assert.equal(await a.isVisible('#cal-interpretation'),true);assert.match(await a.inputValue('#cal-reflection'),/changed my score/);
  console.log('PASS: calibration gate, preserved first scores, reflection and export.');
+ // Independent protection for the exploration evidence and peer-review draft.
+ await a.goto(url('find-and-confirm-my-relationship').replace('s3path=B','s3path=A'));await b.goto(url('find-and-confirm-my-relationship').replace('s3path=B','s3path=A'));
+ await a.fill('#bx-bk_notice','First observation');await a.click('[data-reveal=bk_notice]');
+ await b.fill('#bx-bk_notice','Second observation from stale tab');await b.click('[data-reveal=bk_notice]');
+ assert.match(await b.locator('.draft-safety').filter({hasText:'Exploration record:'}).textContent(),/Another tab saved newer work/);
+ const evidenceKey='cc-book:cst286-relationship:path:A';assert.match(await a.evaluate(k=>localStorage.getItem(k),evidenceKey),/First observation/);
+ const versions=await a.evaluate(k=>JSON.parse(localStorage.getItem(k+':recovery')),evidenceKey);assert.ok(versions.some(x=>x.raw.includes('Second observation')));
+ await a.goto(url('grade-my-two-partners-sprint-3'));await b.goto(url('grade-my-two-partners-sprint-3'));
+ await a.fill('#grader-name','Recent grader');await b.fill('#grader-name','Other grader');
+ assert.match(await b.locator('.draft-safety').textContent(),/Another tab saved newer work/);
+ assert.match(await a.evaluate(()=>localStorage.getItem('cc-gi:cst286-grade-my-two-partners-sprint-3')),/Recent grader/);
+ console.log('PASS: exploration evidence and peer-review drafts also preserve conflicting edits.');
+
  // Browser-wide write failure is reported, without claiming a successful save.
  await a.goto(url('home'));await a.evaluate(()=>{Storage.prototype.setItem=function(){throw Error('quota');};});
  const note=a.locator('#sprint-view .notes-l').first();await note.click();await a.locator('#sprint-view .notes textarea').first().fill('Keep this note');await a.waitForTimeout(400);assert.match(await a.locator('#sprint-view .notes .saved').first().textContent(),/Could not save/);

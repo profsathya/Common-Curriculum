@@ -77,27 +77,17 @@ Can you describe your Sprint 2 quantitative relationship now, without looking at
 
 ### Step 3 · Choose your path for Sprint 3
 
-Choose the learning experience that fits what you want to investigate and the work you want to organize.
-
-**A · Guided spinning exploration.** Choose a question about a skater, wheel, top or gyroscope. Use the supplied interactive book, videos and models, with optional Dojo coaching. Record predictions before explanations, video learning and model runs; choose and carry out your check.
-
-**B · My own learning goal.** Choose a physical phenomenon you want to understand. Choose credible sources, organize your investigation and design a check. Record a prediction, result and interpretation. Dojo coaching is available.
-
-**C · Build and test a model.** Choose a phenomenon and a model to build or configure. Learn or use GlowScript, PhET or Tinkercad Circuits. Record reproducible settings, adjustable inputs, predicted and observed outputs, and what the build can establish. Dojo coaching is available.
-
-You can reconsider your choice. Each path keeps its own draft on this browser; switching opens that path’s saved draft, or an empty one on first use. Before switching, copy work you want to keep or move. If you already submitted a goal, explain the change in your next assignment.
-
-
-
 All three paths develop a relationship you can explain, three scenarios where it applies, and two look-alikes where it breaks. The December 2 exam asks you to use the relationship, reason about an unfamiliar variation, and explain what your investigation establishes. The paths differ in topic choice, tools, supplied support and the work you organize yourself. Read all three, then choose. The choice is yours; use what you wrote in Steps 1 and 2 to make it.
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, you develop your own question and apply the relationship you investigate to your own scenarios. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
+**Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, develop your question, record predictions before explanations, video learning and model runs, and carry out your own check. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
 
-**Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
+**Path B · My own precise learning goal.** You choose a new physical phenomenon, credible sources and a relationship to investigate. Organize your investigation, design a check and record its prediction, result and interpretation. Dojo coaching remains available.
 
-**Path C · Build and test a model.** You pick a new phenomenon, you build something in GlowScript for motion, PhET for a simulated experiment or Tinkercad Circuits for electronics with an Arduino board, and find the physics relationship inside what you built.
+**Path C · Build and test a model.** You pick a new phenomenon, you build something in GlowScript for motion, PhET for a simulated experiment or Tinkercad Circuits for electronics with an Arduino board, and find the physics relationship inside what you built. Allow time to learn the tool. Record reproducible settings, adjustable inputs, predictions and observed outputs, and explain what your build can establish.
+
+You can reconsider your choice. Each path keeps its own draft on this browser. Copy any work you want to move to another path; if you already submitted a goal, explain the change in your next assignment.
 
 - **The path I choose.** Select A, B or C.
 

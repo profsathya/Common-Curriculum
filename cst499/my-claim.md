@@ -14,7 +14,7 @@
      ⏎ marks a line break inside a placeholder. The rail and the copied text use the task labels
      after the dash in each ### heading. -->
 
-# My claim: one skill, deep and broad
+# One claim about a T-Shaped Skill
 
 *Subtitle (page note: smaller text under the title):* I will prove by 7 December with evidence
 
@@ -38,7 +38,7 @@ AI Dojo Passcode for this Graded Item: **CLAIM-1102**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My claim". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Ask me questions until my claim is one skill that would still be true and valuable in a job that has nothing to do with this project, written so that a visitor at the capstone festival could understand it and recognize its value, until I can say what the evidence will be, what part of it exists today and what still has to happen, and until I can say which part of my claim shows depth and which part reaches into a second domain, or why it stays in one domain and how it could move toward a second. Do not write them for me. Do not summarize until I ask you to.
+> Walk me through the graded item "One claim about a T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Ask me questions until my claim is one skill that would still be true and valuable in a job that has nothing to do with this project, written so that a visitor at the capstone festival could understand it and recognize its value, until I can say what the evidence will be, what part of it exists today and what still has to happen, and until I can say which part of my claim shows depth and which part reaches into a second domain, or why it stays in one domain and how it could move toward a second. Do not write them for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -189,7 +189,7 @@ Two routes, equal. Answer the tasks in your own document and paste the text. Or 
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: My claim. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1102.
+Graded item: One claim about a T-Shaped Skill. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1102.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
