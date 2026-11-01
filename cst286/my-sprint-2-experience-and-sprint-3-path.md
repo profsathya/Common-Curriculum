@@ -81,11 +81,11 @@ All three paths end in the same place by Dec 2: a relationship you can state, th
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · One guided learning trail.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, you develop your own question and apply the relationship you investigate to your own scenarios. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
+**Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, you develop your own question and apply the relationship you investigate to your own scenarios. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
 
 **Path B · My own precise learning goal.** You pick a new phenomenon, set the prediction goal and find the relationship yourself, as you did in Sprint 2.
 
-**Path C · A project in a tool.** You pick a new phenomenon, you build something in GlowScript for motion, PhET for a simulated experiment or Tinkercad Circuits for electronics with an Arduino board, and find the physics relationship inside what you built.
+**Path C · Build and test a model.** You pick a new phenomenon, you build something in GlowScript for motion, PhET for a simulated experiment or Tinkercad Circuits for electronics with an Arduino board, and find the physics relationship inside what you built.
 
 - **The path I choose.** Select A, B or C.
 
@@ -122,7 +122,7 @@ Learning purpose: the student tells the story of their Sprint 2 learning with sp
 
 Order: help the student tell their Sprint 2 story by asking three or four of these, one at a time, and following up for specifics (which day, how many hours, which resource, which person): what motivated them to learn their topic, how they went about it, whether and how they used AI, when they worked and for how long, what surprised them, who or what helped. Then ask for the relationship from memory, in words, as a formula with units, and its condition; if parts do not come back, ask why they think that is, and do not supply the missing parts.
 
-Then describe the three paths exactly as the course page gives them: Path A, one guided learning trail that supplies the phenomenon and the steps; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a project in GlowScript, PhET or Tinkercad Circuits, where the student finds the relationship inside what they built. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one.
+Then describe the three paths exactly as the course page gives them: Path A, guided exploration of surprising spinning behavior through the Dojo and embedded interactive book; Path B, the student's own precise learning goal on a new phenomenon, as in Sprint 2; Path C, a build in GlowScript, PhET or Tinkercad Circuits whose adjustable input and measurable output let the student investigate and test a relationship. All three end in the same Sprint 3 deliverable: a relationship, three scenarios where it applies, two look-alikes where it breaks, and an exam that walks through one.
 
 Never choose a path for the student and never say which path fits them. Ask which they choose and what in their story points there. If the reason does not refer to anything in their story or their Step 2 answer, ask what they noticed in Sprint 2 that leads to this choice; the decision stays theirs.
 

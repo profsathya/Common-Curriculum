@@ -49,10 +49,10 @@
     function readShared(k) {
       var value=get(k+':'+path);
       if (value!==null) return value;
-      var names=['my-sprint-3-goal-and-plan','find-and-confirm-my-relationship','five-real-world-scenarios-sprint-3','my-sprint-3-experience'];
+      var names={1:'my-sprint-3-goal-and-plan',2:'find-and-confirm-my-relationship',3:'five-real-world-scenarios-sprint-3',5:'my-sprint-3-experience'};
       var m=k.match(/s3\.(\d)\.leave$/);
-      if (m) {
-        var owner='cc-gi:cst286-'+names[Number(m[1])-1];
+      if (m && names[Number(m[1])]) {
+        var owner='cc-gi:cst286-'+names[Number(m[1])];
         var s=parse(get(owner+':path:'+path));
         if (!s) { var old=parse(get(owner)); if(chosen(old)===path) s=old; }
         return s && s.answers && s.answers.leave ? s.answers.leave.text : '';
@@ -60,7 +60,7 @@
       return '';
     }
     // The home page's legacy echoes always reflect the active path.
-    if (path) for(var i=1;i<=4;i++) { var k='cst286.s3.'+i+'.leave'; put(k,readShared(k)||null); }
+    if (path) [1,2,3,5].forEach(function(i) { var k='cst286.s3.'+i+'.leave'; put(k,readShared(k)||null); });
     return {key:key,path:path,readShared:readShared,
       writeShared:function(k,v) { put(k+':'+path,v); put(k,v); },
       switchTo:function(p) {

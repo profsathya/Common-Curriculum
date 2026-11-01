@@ -24,14 +24,13 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Look back
 
-(Page note: when this browser holds the student's item 1 answers (state "cc-gi:cst286-my-sprint-3-goal-and-plan"), their "I will be able to predict" line is shown here in quotation marks under "In your goal and plan you wrote:", followed by the sentence they wrote at the end of item 1 (cst286.s3.1.leave) under "and you said you would start by:". When neither is stored, the line reads "Open your goal and plan submission on Canvas and find your Predict line.")
+(Page note: when this browser holds the student's item 1 answers for the selected path (state "cc-gi:cst286-my-sprint-3-goal-and-plan:path:A", ":B" or ":C"), their "I will be able to predict" line is shown here in quotation marks under "In your goal and plan you wrote:", followed by the sentence they wrote at the end of item 1 (cst286.s3.1.leave) under "and you said you would start by:". When neither is stored, the line reads "Open your goal and plan submission on Canvas and find your Predict line.")
 
-Since you set your goal, has your "I will be able to predict" line held? Choose the one closest to yours.
+Since you set your goal, does what you wrote for "I will be able to predict" still feel right to you? It is OK to reflect on that and change it if necessary.
 
-○ It held as I wrote it
-○ I changed a quantity or the condition
-○ I narrowed it
-○ I am not sure yet
+○ I think it still feels right.
+○ I would like to change it a little.
+○ I would like to rewrite it.
 
 **My Predict line now.** Write your Predict line as it stands today. If it changed, write what changed it.
 
@@ -53,7 +52,7 @@ AI Dojo Passcode for this Graded Item: **REL3-1116-R2**
 
 **3. Understand the relationship and plan your check with your Dojo.** Follow the directions for your path, just above the form, and talk each step through with your Dojo.
 
-**4. Review your investigation.** When every box holds up, paste this:
+**4. Review your investigation.** After you have explored and tested your idea, paste this:
 
 > Help me review my investigation before I write the final synthesis. Identify ideas or evidence I still need to clarify, including the relationship, its conditions and what my check establishes. On Path A, include my learning from the book. On Path C, include my build’s input, output and assumptions. Ask about any unresolved point; let me write my final responses.
 
@@ -115,7 +114,7 @@ Moment of inertia describes how mass is distributed around a chosen axis. For a 
 
 ### 4 · Choose a relationship to investigate
 
-Choose the exploration closest to your goal. You can return and try the other one; each keeps its responses. Your submission includes the selected exploration.
+Choose the exploration closest to your goal. You can return and try the other one; each keeps its responses. Your submission includes the selected exploration and any responses you recorded while trying the other one.
 
 Choose: how spin speed changes when mass moves, or how a spinning axis changes direction.
 
@@ -302,4 +301,4 @@ The reply is two or three sentences: what the box already does well, then the on
 
 ## Where this page comes from
 
-The find-and-check step and the three paths are by Prof. Sathya. The wording, the examples, the self-check and the Dojo prompts were drafted with AI from the Sprint 2 pages and reviewed by Prof. Sathya.
+The find-and-check step and the three paths are by Prof. Sathya. This revision was drafted with AI from Prof. Sathya’s directions.

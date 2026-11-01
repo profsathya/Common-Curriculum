@@ -89,9 +89,17 @@
   });
   window.Sprint3Book={evidenceText:function() {
     if(!path || path.value!=='A') return '';
-    var out='PATH A · ORIGINAL RESPONSES BEFORE EXPLANATIONS\n';
+    var out='';
+    book.querySelectorAll('[data-book-branch]').forEach(function(branch) {
+      if(Sprint3Paths.relevant(branch)) return;
+      var entries=Array.from(branch.querySelectorAll('textarea[data-key]')).filter(function(el){return el.value.trim();});
+      if(!entries.length) return;
+      out+='PATH A · ADDITIONAL EXPLORATION: '+(branch.dataset.bookBranch==='speed' ? 'SPIN SPEED' : 'AXIS DIRECTION')+'\n';
+      entries.forEach(function(el){out+=label(el.dataset.key)+'\n   '+el.value.trim().replace(/\n/g,'\n   ')+'\n\n';});
+    });
+    out+='PATH A · ORIGINAL RESPONSES BEFORE EXPLANATIONS\n';
     Object.keys(evidence.reveals).forEach(function(k) {
-      var field=document.getElementById('bx-'+k); if(!field || !Sprint3Paths.relevant(field)) return;
+      var field=document.getElementById('bx-'+k); if(!field) return;
       var record=evidence.reveals[k]; out+=label(k)+' · saved '+record.at+'\n   '+record.text.replace(/\n/g,'\n   ')+'\n\n';
     });
     return out+'The current responses and saved model runs are included in the learning record above.\n\n';

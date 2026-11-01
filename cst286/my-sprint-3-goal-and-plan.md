@@ -68,7 +68,7 @@ AI Dojo Passcode for this Graded Item: **GOAL3-1109-R2**
 - *Path B:* Start with the phenomenon, and let your Dojo ask until a quantity appears. Choose a phenomenon different from your Sprint 2 one.
 - *Path C:* Talk about what you want to build and what it should do. Explore which input you can change, what you can measure, and how the build will test your prediction.
 
-**4. Review your thinking.** When all six lines feel right, paste this:
+**4. Review your thinking.** When you have developed an idea you can explain, paste this:
 
 > Help me review the ideas and decisions I have expressed. Point out anything I still need to think through before I write my goal and plan. Ask me to explain uncertain points in my own words; leave the form responses for me to write.
 
@@ -182,9 +182,9 @@ Use the form requirements as checkpoints after ideas emerge, not as an opening i
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
 - Look back: restates the 30 Oct reason and says how it will influence the goal the student is about to set.
-- What I want to understand: one phenomenon, not a field.
-- Given: each starting quantity with its unit.
-- Predict: one quantity, its unit, and a condition.
+- What I want to understand: one physical behavior; Path A within spinning objects, Path B a new phenomenon, Path C the planned build, tool and behavior to understand.
+- Given: each starting quantity with its unit; Path C includes an adjustable input in the build.
+- Predict: one quantity, its unit and a condition; Path C includes a measurable output in the build.
 - Useful: a real situation, and how predicting helps there.
 - When: days and times outside class, before Wed 2 Dec, in the calendar.
 - How my partners will test me: a time to meet, and what each partner will ask the student to do.
@@ -194,4 +194,4 @@ The reply is two or three sentences: what the box already does well, then the on
 
 ## Where this page comes from
 
-The goal-and-plan form, the three paths and the look back and look forward are by Prof. Sathya. The wording, the examples, the self-check and the Dojo prompts were drafted with AI from the Sprint 2 page and reviewed by Prof. Sathya.
+The goal-and-plan form, the three paths and the look back and look forward are by Prof. Sathya. This revision was drafted with AI from Prof. Sathya’s directions.

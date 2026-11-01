@@ -77,7 +77,7 @@ const names=['my-sprint-3-goal-and-plan','find-and-confirm-my-relationship','fiv
  await page.click('#copy-btn');
  let text=await page.locator('#summary-out').inputValue();
  assert.match(text,/My original guess and reason/);assert.match(text,/My later revised explanation/);
- assert.match(text,/3\.1195 rad\/s/);assert.doesNotMatch(text,/Speed reflection marker|4\.2454 rad\/s/);
+ assert.match(text,/3\.1195 rad\/s/);assert.match(text,/ADDITIONAL EXPLORATION: SPIN SPEED/);assert.match(text,/Speed reflection marker|4\.2454 rad\/s/);
  await page.reload();assert.equal(await page.locator('input[name=book_focus]:checked').inputValue(),'direction');
  await page.check('input[name=book_focus][value=speed]');assert.equal(await page.locator('#bx-bk_speed_compare').inputValue(),'Speed reflection marker');
  await switchTo('B');await page.click('#copy-btn');text=await page.locator('#summary-out').inputValue();
