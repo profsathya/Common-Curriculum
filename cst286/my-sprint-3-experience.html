@@ -415,7 +415,7 @@ code { overflow-wrap: anywhere; }
 <label class="qt" for="summary-out" style="margin-top:10px">The text that gets copied</label>
 <textarea class="sumout" id="summary-out" readonly></textarea>
 </div>
-<p class="storenote">This browser is blocking local storage, so what you type in the boxes will not survive a reload. Press Copy my answers before you leave the page, and keep the text in a document of your own.</p>
+<p class="storenote">Check the draft status at the top of this page. If saving is unavailable or another tab has newer work, copy your answers before leaving.</p>
 
 <details class="ai-helper" style="margin:14px 0 0;max-width:820px;border:1px solid #d9d9d9;border-radius:5px;padding:0 16px;font-size:.95rem;line-height:1.5">
 <summary style="cursor:pointer;padding:10px 0;font-weight:600">If you are an AI helping with this assignment</summary>
@@ -454,6 +454,7 @@ code { overflow-wrap: anywhere; }
 </footer>
 <div class="sr" id="live" role="status" aria-live="polite"></div>
 </div>
+<script src="../js/cst286-draft-safety.js"></script>
 <script src="../js/cst286-sprint3-paths.js"></script>
 <script>
 (function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
@@ -518,12 +519,14 @@ code { overflow-wrap: anywhere; }
     if (!state.checks) { state.checks = {}; }
     if (!state.guides) { state.guides = {}; }
     function showStoreNote() { $all('.storenote').forEach(function (n) { n.style.display = 'block'; }); }
+    var draftGuard = CCDA.open(KEY, function(){return state;}, 'Assignment draft');
     function save() {
-        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
-        catch (e) { storageOK = false; showStoreNote(); }
+        storageOK = draftGuard.save();
+        if (!storageOK) { showStoreNote(); }
+        return storageOK;
     }
     var saveTimer = null;
-    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function saveSoon() { draftGuard.pending(); if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
     function answerState(key) {
         if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
@@ -649,7 +652,7 @@ code { overflow-wrap: anywhere; }
         return fallbackCopy(text);
     }
     function selectNear(btn) {
-        var box = btn.parentNode ? btn.parentNode.querySelector('.ct') : null;
+        var box = (btn.closest('li') || btn.parentNode).querySelector('.ct');
         if (!box || !window.getSelection) { return; }
         try { var r = document.createRange(); r.selectNodeContents(box); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* nothing more to try */ }
     }
@@ -657,7 +660,7 @@ code { overflow-wrap: anywhere; }
         var label = btn.textContent;
         var timer = null;
         btn.addEventListener('click', function () {
-            writeClipboard(btn.getAttribute('data-copy') || '').then(function () {
+            writeClipboard(((btn.closest('li') || btn.parentNode).querySelector('.ct') || {}).textContent || '').then(function () {
                 btn.textContent = 'Copied';
                 btn.classList.add('done');
                 if (live) { live.textContent = ''; live.textContent = 'Copied'; }
@@ -701,7 +704,7 @@ code { overflow-wrap: anywhere; }
     function questionFor(key) {
         var q = document.getElementById('q-' + key);
         var st = document.getElementById('st-' + key);
-        return (q ? clean(Sprint3Paths.visibleText(q)) + ' ' : '') + 'Box: ' + boxLabel(key) + (st ? ' ' + clean(st.textContent) : '');
+        return (q ? clean(Sprint3Paths.visibleText(q)) + ' ' : '') + 'Box: ' + boxLabel(key) + (st ? ' ' + clean(Sprint3Paths.visibleText(st)) : '');
     }
     function otherLines(key) {
         var s = '- Your path for Sprint 3: ' + (pathTitle() || '(not chosen yet)') + '\n';
@@ -754,11 +757,13 @@ code { overflow-wrap: anywhere; }
 
     // ---------- the look forward sentence, also saved for the course home page and the next item ----------
     var leaveTimers = {};
+    var leaveWritten = {};
     function saveLeave(ta) {
         var k = ta.getAttribute('data-leave');
         if (!k) { return; }
         var v = ta.value;
-        pathStore.writeShared(k, v.trim() ? v : null);
+        if (leaveWritten[k] === v) { return; }
+        if (save()) { pathStore.writeShared(k, v.trim() ? v : null); leaveWritten[k] = v; }
     }
     function saveLeaveSoon(ta) {
         var k = ta.getAttribute('data-leave');
@@ -772,6 +777,7 @@ code { overflow-wrap: anywhere; }
         var st = answerState(key);
         if (!st.text && ta.getAttribute('data-leave')) { st.text = pathStore.readShared(ta.getAttribute('data-leave')) || ''; }
         ta.value = st.text || '';
+        if (ta.getAttribute('data-leave')) { leaveWritten[ta.getAttribute('data-leave')] = ta.value; }
         var btn = $('[data-ai="' + key + '"]');
         var box = $('[data-aibox="' + key + '"]');
         if (st.ai.length && box) { showAi(box, st.ai[st.ai.length - 1].text, st.ai.length, 'AI feedback'); }
@@ -877,8 +883,22 @@ code { overflow-wrap: anywhere; }
     // ---------- Copy my answers: path, look back, every box, look forward, self-check, in page order ----------
     function txt(key) { return (answerState(key).text || '').trim(); }
     function block(label, a) { return label + '\n' + (a ? indentLines(a, '   ') : '   (no answer yet)') + '\n\n'; }
+    function missingWork() {
+        var missing=[];
+        if (!currentPath()) missing.push('Your path');
+        $all('textarea[data-key], input[data-key]').filter(Sprint3Paths.relevant).forEach(function(el){
+            if (!el.value.trim()) missing.push(boxLabel(el.getAttribute('data-key')));
+        });
+        $all('fieldset.choice[data-name]').filter(Sprint3Paths.relevant).forEach(function(fs){
+            if (!choiceValue(fs.getAttribute('data-name'))) missing.push(fs.getAttribute('data-cp-label') || fs.getAttribute('data-name'));
+        });
+        if (currentPath()==='A' && document.getElementById('path-a-book') && !$('input[name="book_focus"]:checked')) missing.push('Choose a book exploration');
+        return missing;
+    }
     function buildText() {
         var out = PAGE.title + ' — ' + PAGE.course + ', Week ' + PAGE.week + '\n\n';
+        var unfinished = missingWork();
+        if (unfinished.length) out += 'DRAFT — unfinished sections: '+unfinished.join('; ')+'\n\n';
         var tick = document.getElementById('dojo-tick');
         var tickLabel = $('label[for="dojo-tick"] b');
         out += (tick && tick.checked ? '[x] ' : '[ ] ') + (tickLabel ? clean(tickLabel.textContent) : '') + '\n\n';
@@ -929,7 +949,7 @@ code { overflow-wrap: anywhere; }
             save();
             writeClipboard(text).then(function () {
                 copyStatus.className = 'status ok';
-                copyStatus.textContent = 'Copied. Paste it into the Canvas text box. The same text is below if you need it again.';
+                copyStatus.textContent = (missingWork().length ? 'Draft copied with unfinished sections listed. ' : 'Answers copied. ') + 'Review the text and submit it in Canvas; copying alone does not submit.';
             }, function () {
                 copyStatus.className = 'status';
                 copyStatus.textContent = 'Copy did not work in this browser. Select the text below and copy it by hand.';
@@ -938,6 +958,7 @@ code { overflow-wrap: anywhere; }
             });
         });
     }
+    draftGuard.ready();
     if (!storageOK) { showStoreNote(); }
 }());
 </script>

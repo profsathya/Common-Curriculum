@@ -11,12 +11,13 @@
   var warning = document.getElementById('storage-warning');
   var saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) { warning.hidden = false; }
+  var draftGuard=CCDA.open(KEY,function(){return saved;},'Review draft');
   function value(id) { return document.getElementById(id).value.trim(); }
   function save() {
     var draft = Object.assign({}, saved);
     fields.forEach(function (el) { draft[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
     saved = draft;
-    try { localStorage.setItem(KEY, JSON.stringify(draft)); } catch (_) { warning.hidden = false; }
+    if (!draftGuard.save()) warning.hidden = false;
   }
   function update() {
     [1].forEach(function (n) {
@@ -97,6 +98,5 @@
     else fallback();
   });
   update();
-  // Probe storage so a fresh draft also reports blocked persistence.
-  save();
+  draftGuard.ready();
 }());

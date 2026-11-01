@@ -91,6 +91,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 <h1>Sprint 3 &middot; Strengthen your learning skills</h1>
 <p class="foot">Click a number to check an item off. Click <b>Notes</b> to keep notes on an item. Both stay on this computer.</p>
 
+<p class="hint">Your notes and reflections are drafts saved on this browser. After submitting an item in Canvas, select its number to mark it submitted here; select it again to clear the mark.</p>
 <ol class="seq">
 
 <li class="ch" data-key="cst286.s3.0.leave" data-due="2026-10-30"><div class="num">0</div>
@@ -243,18 +244,18 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 /* Two things this browser may hold for each item, both written on this computer only:
    <key>        the sentence the student wrote at the close of the chapter (saved by the chapter page)
    <key>.done   a check the student set by tapping the number here (tap again to clear)
-   A check shows when either exists. When the sentence exists it replaces the grey line, unlabelled, in the student's words.
+   A check shows only when the student explicitly confirms Canvas submission. When the sentence exists it replaces the grey line, unlabelled, in the student's words.
    Nothing stored, for any reason, means the plain number and the grey line stay. */
 (function(){
   function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} }
+  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); return true; }catch(e){return false;} }
   var items=document.querySelectorAll('.ch[data-key]');
   for(var i=0;i<items.length;i++){ (function(li){
     var key=li.getAttribute('data-key'), num=li.querySelector('.num'), carry=li.querySelector('.carry'), n=num.textContent;
     function paint(){
       var s=get(key), d=get(key+'.done');
-      var done=(s&&s.trim())||d;
-      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Done, tap to clear':'Mark done');
+      var done=d==='1';
+      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Marked submitted in Canvas, tap to clear':'Mark submitted in Canvas');
       if(carry){ if(s&&s.trim()){ carry.textContent=s.trim(); carry.classList.add('mine'); } else { carry.textContent=carry.getAttribute('data-prompt'); carry.classList.remove('mine'); } }
     }
     if(carry) carry.setAttribute('data-prompt',carry.textContent);
@@ -265,11 +266,12 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
     function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
     ta.value=get(nk)||''; paintNotes();
     lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
-    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
-    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
-    function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; var ok=set(nk, v.trim()?v:null); paintNotes(); sv.textContent=ok?(v.trim()?'Saved on this computer':'Note cleared'):'Could not save. Copy this note before leaving.'; },300); });
+    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap after submitting in Canvas; tap again to clear';
+    function toggle(e){ if(e) e.preventDefault(); var ok=set(key+'.done', get(key+'.done')?null:'1'); paint(); if(!ok) {box.hidden=false;sv.textContent='Could not save the submission mark on this computer.';} }
     num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });
     num.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.stopPropagation(); toggle(e); } });
+    window.addEventListener('storage',function(e){if(e.key===key||e.key===key+'.done')paint();});
     paint();
   })(items[i]); }
 })();

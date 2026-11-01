@@ -7,10 +7,8 @@
   var key='cc-book:cst286-relationship:path:'+(path ? path.value : 'unselected');
   var evidence={reveals:{},runs:[]};
   try { var old=JSON.parse(localStorage.getItem(key)); if(old && old.reveals && Array.isArray(old.runs)) evidence=old; } catch (_) {}
-  function save() {
-    try { localStorage.setItem(key,JSON.stringify(evidence)); }
-    catch (_) { document.querySelectorAll('.storenote').forEach(function(n){n.style.display='block';}); }
-  }
+  var bookGuard=CCDA.open(key,function(){return evidence;},'Exploration record');bookGuard.ready();
+  function save() { return bookGuard.save(); }
   function value(k) { var el=document.getElementById('bx-'+k); return el ? el.value.trim() : ''; }
   function write(k,text) { var el=document.getElementById('bx-'+k); if(el) {el.value=text; el.dispatchEvent(new Event('input',{bubbles:true}));} }
   function label(k) { var el=document.querySelector('label[for="bx-'+k+'"]'); return el ? el.textContent.trim() : k; }
