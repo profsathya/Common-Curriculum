@@ -26,7 +26,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on your earlier learning.** In [One claim about my T-Shaped Skill](my-claim.html) you identified the part of your claim that reaches into a second domain, or one way your work could expand into another domain.
 
-**This Learning Experience.** Look at your work and identify how two domains come together in it, or what your project may be missing because it stays in one. [for Sathya's read]
+**This Learning Experience.** Reflect on the value and possibility of bringing in another domain knowledge into your project.
 
 **Prepare you for.** The first version of your Interactive Poster, where this reflection shows the breadth in your claim.
 

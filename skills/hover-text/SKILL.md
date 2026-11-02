@@ -20,6 +20,7 @@ One screen. The rules, the incidents they came from and the version history are 
 - A bold title, then two or three labeled rows, each label italic and from the established set, one to three sentences a row. (Format)
 - One bubble per block, at the moment of action; in a week block, prefer the session row over the 🎯 row below it. (Placement)
 - No bubble button sits inside an `<a>`; on a linked title the bubble goes on a nearby plain-text mention. (Placement)
+- No hover text uses the `title` attribute (or any browser-native tooltip); every hover note is a `.gl` bubble. (Never a title attribute)
 - The markup matches the copy-exact pattern: `span.gl` > `button.gt` + `span.bub[role=tooltip]` holding `b.bt` and `span.br` rows. (Markup and CSS)
 - The term's container is in the page's `position:relative` list; focused in a browser, the bubble opens next to the term, not at the page's top-left corner. (Markup and CSS, 1. Anchoring)
 - Inside a colored section head, the page carries `.wsec-head .gt{border-bottom-color:currentColor;}`. (Markup and CSS, 2. Colored heads)

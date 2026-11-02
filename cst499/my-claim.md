@@ -43,7 +43,7 @@ AI Dojo Passcode for this Graded Item: **CLAIM-1102**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "One claim about my T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job that has nothing to do with this project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.
+> Walk me through the graded item "One claim about my T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job beyond this one particular project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -61,7 +61,7 @@ Write one claim about a skill that your capstone will demonstrate by Monday 7 De
 - "I know how to …"
 - "When [situation], I can …"
 
-*(Write it as a skill you would still use in a job that has nothing to do with this project. Ask yourself whether a hiring manager for the job you want would see it as valuable.)*
+*(Write it as a skill you would still use in a job beyond this one particular project. Ask yourself whether a hiring manager for the job you want would see it as valuable.)*
 
 *Box label:* **Your answer to task 1.** One claim about a skill.
 *Placeholder:* I can …
@@ -69,11 +69,11 @@ Write one claim about a skill that your capstone will demonstrate by Monday 7 De
 **Check it yourself — the same criteria, without the AI**
 
 - There is one claim, and it states a skill.
-- The skill would still be true and valuable in a job that has nothing to do with this project.
+- The skill would still be true and valuable in a job beyond this one particular project.
 - The claim is a skill your capstone will show by Monday 7 December.
 - Someone with a technical background can easily understand and appreciate it.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **From a first draft to a stronger claim**
 
@@ -110,7 +110,7 @@ Describe the evidence that will support your claim on Monday 7 December:
 - You say what part of it exists today.
 - You say what still has to happen to finish it.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **From a first draft to stronger evidence**
 
@@ -160,7 +160,7 @@ Read the two reports below, then look at your claim and identify:
 - You identify the part of your claim that shows depth, and the domain it is in.
 - You identify the part that reaches into a second domain; or, if there is no second domain yet, you identify one way your work could expand into another domain.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **From a first draft to a stronger answer**
 
@@ -194,7 +194,7 @@ Read the two reports below, then look at your claim and identify:
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Task 1 is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project · 15 pts
+- [ ] Task 1 is one claim about a skill that would still be true and valuable in a job beyond this one particular project · 15 pts
 - [ ] Task 1's claim is a skill my capstone will show by Monday 7 December, written so that someone with a technical background can easily understand and appreciate it · 15 pts
 - [ ] Task 2 says what the evidence will be and where a reader will see or try it · 20 pts
 - [ ] Task 2 says what part of the evidence exists today and what still has to happen · 20 pts
@@ -229,11 +229,11 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student learns to articulate one competitive skill their capstone will demonstrate by Monday 7 December (a skill that could set them apart from others with a similar skill set) and to plan the evidence that will demonstrate it. The student also sees depth plus a second domain as where their uniqueness starts. Uniqueness is introduced as an idea; the claim does not have to be unique yet. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving Reflection builds the evidence for its breadth.
 
-Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project, and ask whether a hiring manager for the job they want would see it as valuable and whether it could set them apart from others with a similar skill set; these are questions to consider, not requirements. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a reader will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If there is no second domain yet, ask the student to explore and identify one way the work could expand into another domain. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
+Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job beyond this one particular project, and ask whether a hiring manager for the job they want would see it as valuable and whether it could set them apart from others with a similar skill set; these are questions to consider, not requirements. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a reader will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If there is no second domain yet, ask the student to explore and identify one way the work could expand into another domain. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Task 1: one claim about a skill that would still be true and valuable in a job unrelated to this project, that the capstone will show by 7 December, written so someone with a technical background can understand and appreciate it.
+- Task 1: one claim about a skill that would still be true and valuable in a job beyond this one particular project, that the capstone will show by 7 December, written so someone with a technical background can understand and appreciate it.
 - Task 2: what the evidence will be and where a reader will see or try it; what exists today; what still has to happen.
 - Task 3: the part showing depth and its domain; the part reaching into a second domain, or, if there is no second domain yet, one way the work could expand into another domain.
 

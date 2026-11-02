@@ -57,7 +57,7 @@ Copy the three or four grading lines from your Sprint 3 plan, and under each one
 - Under each line there is evidence a reader could check, not only a statement that you did it.
 - Any line not met says so, and says what got in the way.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 
@@ -85,7 +85,7 @@ Identify the one thing from this sprint you will keep doing after the semester e
 - One thing, named, that continues after the semester.
 - One first step with a day.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 

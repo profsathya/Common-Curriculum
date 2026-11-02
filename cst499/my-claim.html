@@ -337,7 +337,17 @@ body.dojo-on .airow{display:none !important;}
 /* tasks: bulleted parts, guidance in italics, and the reading block above task 3's box */
 .task .tt ul.tparts{margin:var(--sp-1) 0 var(--sp-2);padding-left:1.3rem;}
 .task .tt ul.tparts li{margin:0 0 .2rem;}
-.tipword{border-bottom:1px dotted currentColor;cursor:help;}
+/* Glossary bubbles (house pattern, skills/hover-text) - CSS-only: hover, keyboard focus and tap work, inside the Canvas iframe too */
+.tbox{position:relative;}
+.gl{display:inline;}
+.gt{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;border-bottom:1px dashed var(--blue);border-radius:0;}
+.gt:hover,.gt:focus{color:var(--blue);border-bottom-style:solid;}
+.gt:focus{outline:2px solid rgba(3,116,181,.35);outline-offset:2px;}
+.bub{display:none;position:absolute;z-index:60;left:8px;right:8px;margin-top:7px;background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 8px 24px rgba(45,59,69,.18);padding:11px 13px;font-size:12.5px;line-height:1.5;color:var(--text);text-align:left;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;white-space:normal;}
+.gl:hover > .bub,.gl:focus-within > .bub{display:block;}
+.bub .bt{display:block;font-size:13px;font-weight:700;color:var(--blue-dark);padding-bottom:5px;margin-bottom:6px;border-bottom:1px solid var(--border-light);}
+.bub .br{display:block;color:var(--text);}
+@media print{.bub{display:none !important;}}
 .task .tt em.guide{font-style:italic;font-weight:400;font-size:var(--fs-base);color:var(--muted);}
 .task > .whynow{margin:0 0 var(--sp-3) 2.35rem;padding:var(--sp-2) var(--sp-3);background:var(--goal-bg);border-left:4px solid var(--teal);border-radius:0 var(--radius) var(--radius) 0;max-width:var(--measure);}
 .whynow h4{font-size:var(--fs-sm);font-weight:800;color:var(--text);margin:0 0 var(--sp-1);}
@@ -414,7 +424,7 @@ code { overflow-wrap: anywhere; }
 </div>
 <div class="tbox now">
 <div class="tlbl">This Learning Experience</div>
-<p>Learn to articulate one <span class="tipword" tabindex="0" title="A skill that sets you apart from others with a similar skill set, for the jobs or roles you are applying for.">competitive</span> skill your work will demonstrate.</p>
+<p>Learn to articulate one <span class="gl"><button type="button" class="gt">competitive</button><span class="bub" role="tooltip"><b class="bt">Competitive skill</b><span class="br">A skill that sets you apart from others with a similar skill set, for the jobs or roles you are applying for.</span></span></span> skill your work will demonstrate.</p>
 </div>
 <div class="tarrow" aria-hidden="true">
 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
@@ -432,7 +442,7 @@ code { overflow-wrap: anywhere; }
 <p class="passcode">AI Dojo Passcode for this Graded Item: <b>CLAIM-1102</b></p>
 <ol class="dsteps">
 <li><p><b>Start the conversation.</b> Paste this into your AI Dojo:</p>
-<div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item "One claim about my T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job that has nothing to do with this project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;One claim about my T-Shaped Skill&quot;. First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job that has nothing to do with this project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item "One claim about my T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job beyond this one particular project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;One claim about my T-Shaped Skill&quot;. First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job beyond this one particular project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
 <li><p><b>Check the passcode.</b> Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.</p></li>
 </ol>
 </div>
@@ -449,7 +459,7 @@ code { overflow-wrap: anywhere; }
 <li>"I know how to …"</li>
 <li>"When [situation], I can …"</li>
 </ul>
-<em class="guide">(Write it as a skill you would still use in a job that has nothing to do with this project. Ask yourself whether a hiring manager for the job you want would see it as valuable.)</em></div></div>
+<em class="guide">(Write it as a skill you would still use in a job beyond this one particular project. Ask yourself whether a hiring manager for the job you want would see it as valuable.)</em></div></div>
 <div class="rbox">
 <label class="qt" for="bx-t1"><b>Your answer to task 1.</b> One claim about a skill.</label>
 <textarea class="box short" id="bx-t1" data-key="t1" data-q="q-t1" placeholder="I can …"></textarea>
@@ -458,13 +468,13 @@ code { overflow-wrap: anywhere; }
 <div class="selfcheck"><h4 aria-level="3" id="ckh-t1">Check it yourself — the same criteria, without the AI</h4>
 <ul class="cks" aria-labelledby="ckh-t1">
 <li><input type="checkbox" id="ck-t1-1" data-check="ck-t1-1"><label for="ck-t1-1">There is one claim, and it states a skill.</label></li>
-<li><input type="checkbox" id="ck-t1-2" data-check="ck-t1-2"><label for="ck-t1-2">The skill would still be true and valuable in a job that has nothing to do with this project.</label></li>
+<li><input type="checkbox" id="ck-t1-2" data-check="ck-t1-2"><label for="ck-t1-2">The skill would still be true and valuable in a job beyond this one particular project.</label></li>
 <li><input type="checkbox" id="ck-t1-3" data-check="ck-t1-3"><label for="ck-t1-3">The claim is a skill your capstone will show by Monday 7 December.</label></li>
 <li><input type="checkbox" id="ck-t1-4" data-check="ck-t1-4"><label for="ck-t1-4">Someone with a technical background can easily understand and appreciate it.</label></li>
 </ul></div>
 </div>
 <details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">An example, more examples, and a question</span></span></summary>
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Examples and Reflection</span></span></summary>
 <div class="route-body more-body">
 <div class="example"><span class="exl">From a first draft to a stronger claim</span>
 <p><b>First draft</b> — I can build a web app that shows office hours.</p>
@@ -504,7 +514,7 @@ code { overflow-wrap: anywhere; }
 </ul></div>
 </div>
 <details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">An example, more examples, and a question</span></span></summary>
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Examples and Reflection</span></span></summary>
 <div class="route-body more-body">
 <div class="example"><span class="exl">From a first draft to stronger evidence</span>
 <p><b>First draft</b> — My working site.</p>
@@ -557,7 +567,7 @@ Read the two reports below, then look at your claim and identify:
 </ul></div>
 </div>
 <details class="route">
-<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">An example, more examples, and a question</span></span></summary>
+<summary><span class="plus" aria-hidden="true"></span><span class="rtx"><span class="rt">Examples and Reflection</span></span></summary>
 <div class="route-body more-body">
 <div class="example"><span class="exl">From a first draft to a stronger answer</span>
 <p><b>First draft</b> — Depth: web development. Breadth: communication.</p>
@@ -594,7 +604,7 @@ Read the two reports below, then look at your claim and identify:
 <h2 class="sec" id="self-check">Self-check</h2>
 <p class="body">Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.</p>
 <ul class="scpoints">
-<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Task 1 is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Task 1 is one claim about a skill that would still be true and valuable in a job beyond this one particular project</label><span class="pts">15 pts</span></li>
 <li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">Task 1's claim is a skill my capstone will show by Monday 7 December, written so that someone with a technical background can easily understand and appreciate it</label><span class="pts">15 pts</span></li>
 <li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">Task 2 says what the evidence will be and where a reader will see or try it</label><span class="pts">20 pts</span></li>
 <li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Task 2 says what part of the evidence exists today and what still has to happen</label><span class="pts">20 pts</span></li>
@@ -634,7 +644,7 @@ Read the two reports below, then look at your claim and identify:
 <p>Graded item: One claim about my T-Shaped Skill. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1102.</p>
 <p>When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.</p>
 <p>Learning purpose: the student learns to articulate one competitive skill their capstone will demonstrate by Monday 7 December (a skill that could set them apart from others with a similar skill set) and to plan the evidence that will demonstrate it. The student also sees depth plus a second domain as where their uniqueness starts. Uniqueness is introduced as an idea; the claim does not have to be unique yet. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving Reflection builds the evidence for its breadth.</p>
-<p>Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project, and ask whether a hiring manager for the job they want would see it as valuable and whether it could set them apart from others with a similar skill set; these are questions to consider, not requirements. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a reader will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If there is no second domain yet, ask the student to explore and identify one way the work could expand into another domain. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.</p>
+<p>Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job beyond this one particular project, and ask whether a hiring manager for the job they want would see it as valuable and whether it could set them apart from others with a similar skill set; these are questions to consider, not requirements. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a reader will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If there is no second domain yet, ask the student to explore and identify one way the work could expand into another domain. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.</p>
 </section>
 
 <div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span></span></div>
@@ -793,7 +803,7 @@ Read the two reports below, then look at your claim and identify:
     // ---------- AI feedback on what is written in a box ----------
     var SYS_STEP = "You are helping a student make one box of a graded item precise. In this graded item the student writes one claim about a skill their capstone will demonstrate by Monday 7 December, describes the evidence that will support it and where a reader will see it, and identifies which part of the claim shows depth in one domain and which part reaches into a second. Use only the criteria for this box, listed below. Reply in two or three sentences, in plain words: first what the box already does, quoting their words, then the one thing that would make it precise, asked as a question or named as what is missing. If the box meets its criteria, make your first sentence exactly \"This box meets the criteria.\" and follow it with one question that would make it sharper, offered, not required. Never rewrite the student's box and never hand them wording. Do not supply a claim, evidence or a domain for them. If there is no second domain yet, identifying one way the work could expand into another domain meets the criteria for task 3. Do not judge the person, their ability or their prospects, and do not use pass/fail language.";
     var META = {
-        t1: { coach: 'CRITERIA: one claim about a skill that would still be true and valuable in a job unrelated to this project, that the capstone will show by 7 December, written so someone with a technical background can understand and appreciate it.' },
+        t1: { coach: 'CRITERIA: one claim about a skill that would still be true and valuable in a job beyond this one particular project, that the capstone will show by 7 December, written so someone with a technical background can understand and appreciate it.' },
         t2: { coach: 'CRITERIA: what the evidence will be and where a reader will see or try it; what exists today; what still has to happen.' },
         t3: { coach: 'CRITERIA: the part showing depth and its domain; the part reaching into a second domain, or, if there is no second domain yet, one way the work could expand into another domain.' }
     };

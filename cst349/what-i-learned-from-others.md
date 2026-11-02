@@ -61,7 +61,7 @@ Describe each of your three conversations on The Commons after the virtual visit
 - Each conversation ends in one thing you will do, and whether it is doable in the next month.
 - At least one thing you learned came from the alumni, not only from the classmates.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 

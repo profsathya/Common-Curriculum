@@ -62,7 +62,7 @@ Describe the step you took: what you did, on which day, who or what it involved,
 - If the step produced less than you expected, you say what you learned and how you are going to improve.
 - If your step was not the one you planned in week 8, you say what changed.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 
@@ -91,7 +91,7 @@ Look back at the STAR answer you wrote in week 8. Notice which part, if any - th
 - You name one part of your STAR answer: situation, task, action or result; or you say that none moved yet, and why.
 - You explain how this step moved that part, in a way a reader could follow from your task 1 answer.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 
@@ -120,7 +120,7 @@ Identify the next step you will take, with the day you will take it, and explain
 - There is one step, and it has a day.
 - You say how that step moves you closer to your Sprint 2 goal.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 

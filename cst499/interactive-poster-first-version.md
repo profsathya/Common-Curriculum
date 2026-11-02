@@ -19,7 +19,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **Builds on your earlier learning.** Your claim from [One claim about my T-Shaped Skill](my-claim.html), and the evidence from your [Integrative Solving Reflection](integrative-solving-report.html).
 
-**This Learning Experience.** Build the first version of the Interactive Poster you will present at the Capstone Festival, so that a visitor can see what your work demonstrates about you.
+**This Learning Experience.** Practice articulating the story of your project to demonstrate your unique value proposition. (Page note: "unique value proposition" carries a hover note — **Unique value proposition** — *What it is.* What you bring that an employer would find hard to get elsewhere: your depth, the domains you can cross, and the results you can show. *Why it matters here.* The Interactive Poster is where you make it visible to a person who has five minutes.)
 
 **Prepare you for.** [The decisions behind my work](decisions-behind-my-work.html), which adds the decision card to your poster.
 

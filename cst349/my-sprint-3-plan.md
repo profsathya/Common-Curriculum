@@ -59,7 +59,7 @@ Write the goal you will work toward between now and Monday 30 November. *(Sugges
 - The goal is something you can take a meaningful step forward towards by Monday 30 November.
 - This pushes you past your immediate interest or comfort zone.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 
@@ -91,7 +91,7 @@ Identify the first step you will take toward your Sprint 3 goal, with the day yo
 - There is one step with a day on or before Friday 20 November.
 - You say what it will produce that someone else could see.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 
@@ -119,7 +119,7 @@ Write the terms you want to be graded on for Sprint 3: three or four lines that 
 - Each line is something a classmate could check from your report, yes or no, without having to trust you.
 - At least one line is about what the work produced, not only that you did it.
 
-*The + reads:* An example, more examples, and a question
+*The + reads:* Examples and Reflection
 
 **An example, to shape your thinking — not a model to copy**
 

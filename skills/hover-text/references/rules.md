@@ -57,6 +57,16 @@ session row over repeating the same term on the 🎯 row below it. Never nest th
 button inside a link (`<a>`) — registry-linked assignment titles are links; put the bubble on
 a nearby plain-text mention instead, rephrasing minimally if none exists.
 
+## Never a title attribute
+
+Every hover note on a student-facing page is a `.gl` bubble, never a `title` attribute or other
+browser-native tooltip. Native tooltips are drawn by the browser: they often do not appear inside
+the Canvas iframe, never appear on touch screens, and no page or embed setting can turn them on.
+Found live on 2 November 2026, when a `title` hover note on "competitive" (CST499 My claim, Purpose
+box) did not show inside Canvas; Sathya asked that all future hover text use the reliable fix. The
+bubble was tested inside an iframe the size of the Canvas embed: it opens on hover and on keyboard
+focus. If the page does not yet carry the `.gl` CSS, copy the block from cst499/my-claim.html.
+
 ## Markup and CSS — copy exactly
 
 ```html
