@@ -124,7 +124,7 @@ Read the two reports below, then look at your claim and identify:
 - the part that reaches into a second domain, if there is one
 - if your claim stays in one domain, why, and one way your work could move toward a second domain
 
-*(T-shaped skills combine depth in one area with the ability to connect that knowledge to another area. A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review. Use the reports to consider a connection worth investigating in your project; broad labor-market findings do not establish that a second domain will improve this particular project.)*
+*(T-shaped skills combine depth in one area with the ability to connect that knowledge to another area. A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review.)*
 
 **Why crossing domains matters now** (page note: shown above the answer box, outside the +)
 
