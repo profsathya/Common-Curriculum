@@ -152,8 +152,8 @@ Read the two reports below, then look at your claim and identify:
 - The Linux Foundation surveyed 400 organizations in February 2026. Its report finds that "the skills gap is in the full stack, not just AI": 35% of the organizations name business or domain expertise as a capability gap, and 26% say that missing business or domain knowledge keeps them from getting value from AI. [2026 State of Tech Talent Report](https://www.linuxfoundation.org/hubfs/Research%20Reports/LFTraining_Tech_Talent_Report_Global_2026_web.pdf)
 - PwC analyzed 2.4 million US entry-level job postings. Entry-level roles that are exposed to AI are seven times more likely to ask for skills once expected of senior people, such as leadership and creativity, and openings for these roles grew 35% since 2019, while other entry-level roles shrank 10%. [PwC 2026 Global AI Jobs Barometer](https://pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-ai-jobs-barometer.html)
 
-*Box label:* **Your answer to task 3.** The depth in your claim; the breadth, or why it stays in one domain and how it could move toward a second.
-*Placeholder:* Depth — … ⏎ Breadth — … (or) Why it stays in one domain, and one way to move toward a second — …
+*Box label:* **Your answer to task 3.** The depth in your claim; the breadth, or one way your work could expand into another domain.
+*Placeholder:* Depth — … ⏎ Breadth — … (or) One way my work could expand into another domain — …
 
 **Check it yourself — the same criteria, without the AI**
 
@@ -178,7 +178,7 @@ Read the two reports below, then look at your claim and identify:
 - **Breadth** — Kolibri is used in classrooms without reliable internet. The second issue I pick will come from how teachers use it offline, which means learning how those classrooms work as well as how the code works.
 
 - **Depth** — network security: firewall rules on a real network, and the exam that tests them.
-- **Why it stays in one domain, and one way to move toward a second** — my claim stays in security for now, because the exam is the evidence I need first for the jobs I am applying to. One way to move toward a second domain: write a one-page summary of my firewall choices for the owner of a small business I know, and ask whether it answers the questions they would have about cost and risk.
+- **One way my work could expand into another domain** — my claim stays in security for now, because the exam is the evidence I need first for the jobs I am applying to. One way to move toward a second domain: write a one-page summary of my firewall choices for the owner of a small business I know, and ask whether it answers the questions they would have about cost and risk.
 
 **Reflection (behind the +).** Think of a role model, someone you would like to learn from. What do they bring besides their technical skill?
 
