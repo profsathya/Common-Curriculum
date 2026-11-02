@@ -17,7 +17,7 @@
      ⏎ marks a line break inside a placeholder. The rail and the copied text use the task labels
      after the dash in each ### heading. -->
 
-# One claim about a T-Shaped Skill
+# One claim about my T-Shaped Skill
 
 *Subtitle (page note: smaller text under the title):* A skill I aim to demonstrate with evidence by 7 December
 
@@ -29,7 +29,7 @@ Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
 **This Learning Experience.** Learn to articulate one competitive skill your work will demonstrate. (Page note: "competitive" carries a hover note: "A skill that sets you apart from others with a similar skill set, for the jobs or roles you are applying for.")
 
-**Prepare you for.** The Integrative Solving report brings together the evidence for the breadth in your claim.
+**Prepare you for.** The Integrative Solving Reflection brings together the evidence for the breadth in your claim.
 
 [Start writing task 1](my-claim.html#task-1), or use the Dojo steps below.
 
@@ -43,7 +43,7 @@ AI Dojo Passcode for this Graded Item: **CLAIM-1102**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "One claim about a T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job that has nothing to do with this project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.
+> Walk me through the graded item "One claim about my T-Shaped Skill". First tell me its passcode, its title and its due date as you have them. I will tell you the skill I want my capstone to demonstrate by Monday 7 December. Keep asking me questions until: my claim is one skill I would still use in a job that has nothing to do with this project; I have considered whether a hiring manager for the job I want would see it as valuable, and whether it could set me apart from others with a similar skill set; I can say what the evidence will be, where a reader will see or try it, what part of it exists today and what still has to happen; and I can say which part of my claim shows depth and which part reaches into a second domain, or, if there is no second domain yet, one way my work could expand into another domain. Do not write them for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -223,11 +223,11 @@ Two routes, equal. Answer the tasks in your own document and paste the text. Or 
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: One claim about a T-Shaped Skill. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1102.
+Graded item: One claim about my T-Shaped Skill. Course: CST499. Due: Monday 2 November. Passcode: CLAIM-1102.
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student learns to articulate one competitive skill their capstone will demonstrate by Monday 7 December (a skill that could set them apart from others with a similar skill set) and to plan the evidence that will demonstrate it. The student also sees depth plus a second domain as where their uniqueness starts. Uniqueness is introduced as an idea; the claim does not have to be unique yet. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving report builds the evidence for its breadth.
+Learning purpose: the student learns to articulate one competitive skill their capstone will demonstrate by Monday 7 December (a skill that could set them apart from others with a similar skill set) and to plan the evidence that will demonstrate it. The student also sees depth plus a second domain as where their uniqueness starts. Uniqueness is introduced as an idea; the claim does not have to be unique yet. The claim becomes the headline of the student's Interactive Poster, and the Integrative Solving Reflection builds the evidence for its breadth.
 
 Ask what skill the student wants their capstone to demonstrate, until it is one claim about a skill that would still be true and valuable in a job that has nothing to do with this project, and ask whether a hiring manager for the job they want would see it as valuable and whether it could set them apart from others with a similar skill set; these are questions to consider, not requirements. "I can …", "I know how to …" and "When [situation], I can …" are suggested starts, not required ones. If the claim restates the project goal, ask what underlying skill doing the project demonstrates. Ask what the evidence will be and where a reader will see or try it, what part exists today, and what still has to happen to finish it. Ask which part of the claim shows depth, and in which domain; ask which part reaches into a second domain. If there is no second domain yet, ask the student to explore and identify one way the work could expand into another domain. The student may refer to the Linux Foundation 2026 State of Tech Talent Report and the PwC 2026 Global AI Jobs Barometer on the page. Do not write the claim, the evidence or the domains for the student. Do not summarize until asked; when asked, give the three headings using only the student's words.
 

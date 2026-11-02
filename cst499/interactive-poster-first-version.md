@@ -3,7 +3,7 @@ Notes for the editor, not shown to students:
 - CST499 Sprint 3, graded item, due Mon 16 Nov, 100 pts. Replaces the portfolio piece (decided 27 Oct): the full first version of the Interactive Poster except the decision card, plus the exact milestones that remain by 7 Dec.
 - Card structure follows the mockup agreed 26 Oct after Astra's review (cowork/fall-2026-courses/festival-artifact-mockup.md): the claim says only what a visitor can see proven on the screen; three cards — The work, a Decision, an Obstacle (or open question, which may stay unresolved). The decision card waits for The decisions behind my work (30 Nov).
 - The samples link points to interactive-poster-samples.html, a copy of the 26 Oct mockup (composite students) placed in cst499/.
-- Look back opens from "cst499.s3.report.leave" (the Integrative Solving report's closing sentence); look forward saved as "cst499.s3.poster1.leave". -->
+- Look back opens from "cst499.s3.report.leave" (the Integrative Solving Reflection's closing sentence); look forward saved as "cst499.s3.poster1.leave". -->
 
 CST499 · Fall 2026 · Sprint 3 · Week 12
 
@@ -17,7 +17,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on your earlier learning.** Your claim from [One claim about a T-Shaped Skill](my-claim.html), and the evidence from your [Integrative Solving report](integrative-solving-report.html).
+**Builds on your earlier learning.** Your claim from [One claim about my T-Shaped Skill](my-claim.html), and the evidence from your [Integrative Solving Reflection](integrative-solving-report.html).
 
 **This Learning Experience.** Build the first version of the Interactive Poster you will present at the Capstone Festival, so that a visitor can see what your work demonstrates about you.
 
@@ -25,7 +25,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Look back
 
-(Page note: when this browser holds the sentence the student wrote at the end of the Integrative Solving report (cst499.s3.report.leave), it is shown here in quotation marks under "At the end of your report you wrote:". When it is not stored, the line reads "Open your Integrative Solving report on Canvas and find the evidence you said you would put on your poster.")
+(Page note: when this browser holds the sentence the student wrote at the end of the Integrative Solving Reflection (cst499.s3.report.leave), it is shown here in quotation marks under "At the end of your report you wrote:". When it is not stored, the line reads "Open your Integrative Solving Reflection on Canvas and find the evidence you said you would put on your poster.")
 
 Is the evidence you named at the end of your report still the strongest piece you have for your claim? Choose the one closest to yours.
 
@@ -72,7 +72,7 @@ Write the first screen for a visitor who is unfamiliar with your specialty. Use 
 
 ### Task 1 · My claim
 
-What is the claim at the top of your poster, and what line sits under it to name your project or certificate? *(Start from your claim in One claim about a T-Shaped Skill. Change it if your work has moved since then. Claim only what a visitor can see proven on your screen.)*
+What is the claim at the top of your poster, and what line sits under it to name your project or certificate? *(Start from your claim in One claim about my T-Shaped Skill. Change it if your work has moved since then. Claim only what a visitor can see proven on your screen.)*
 
    **Your answer to task 1.** The claim, and the line under it.
 
@@ -85,7 +85,7 @@ What problem did you work on, and what does a visitor see when they open this ca
 - one honest sentence on what you are still not sure about
 - how you directed the AI you used: what it first gave you, what you asked next and why, and how you checked the result
 
-*(This is the card where the evidence from your Integrative Solving report usually belongs, because it shows the second domain at work.)*
+*(This is the card where the evidence from your Integrative Solving Reflection usually belongs, because it shows the second domain at work.)*
 
    **Your answer to task 2.** The problem and why it matters; the evidence; what you are still not sure about; how you directed the AI.
 

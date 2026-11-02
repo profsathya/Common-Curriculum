@@ -91,7 +91,7 @@ Does your project work already cover more than one domain? If not, are there dom
 
 *The + reads:* Guidance, an example, a question, and a place to write
 
-**Guidance (behind the +).** A domain is an area of knowledge or skill that stands on its own — a programming area, the field the project serves, a way of working with people, a way of handling data. Start by listing the domains your project draws on today. If there is only one, think about which other domain would help the project objective, and what it would add. If there are already several, describe where in the work they meet and how that meeting point could be stronger. The Integrative Solving report in week 11 will build on what you write here.
+**Guidance (behind the +).** A domain is an area of knowledge or skill that stands on its own — a programming area, the field the project serves, a way of working with people, a way of handling data. Start by listing the domains your project draws on today. If there is only one, think about which other domain would help the project objective, and what it would add. If there are already several, describe where in the work they meet and how that meeting point could be stronger. The Integrative Solving Reflection in week 11 will build on what you write here.
 
 *Tooltip on “domains”* — **Domains** — *What it is.* Areas of knowledge or skill that stand on their own: a technical area, the field your project serves, a way of working with people, a way of handling data. *Why it matters here.* Bringing more than one domain together on a real problem is the evidence of a T-shaped professional, and the week-11 report asks for that evidence.
 
