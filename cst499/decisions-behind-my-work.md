@@ -27,9 +27,9 @@ This graded item will affect your final grade, and the late penalty applies.
 
 ## Look back
 
-(Page note: when this browser holds the sentence the student wrote at the end of the Interactive Poster, first version (cst499.s3.poster1.leave), it is shown here in quotation marks under "At the end of your poster's first version you wrote:". When it is not stored, the line reads "Open your Interactive Poster, first version, on Canvas and find the choice you said you would write about.")
+(Page note: when this browser holds the sentence the student wrote at the end of the Interactive Poster, first version (cst499.s3.poster1.leave), it is shown here in quotation marks under "At the end of your poster's first version you wrote:". When it is not stored, the line reads "Open your Interactive Poster, first version, on Canvas and find where you said you see your judgment showing.")
 
-Is the choice you named at the end of your poster's first version still the one you want to write about? Choose the one closest to yours.
+At the end of your poster's first version you wrote where you see your judgment showing. Is that still the choice you want to write about? Choose the one closest to yours.
 
 ○ Yes, it is the same choice
 ○ I picked a different choice
@@ -96,7 +96,7 @@ Which of your two decisions goes on your Interactive Poster, and what does the c
 - one thing a visitor can look at that supports the reason
 - one sentence on what this choice cost you
 
-*(Add the card to your poster before the rehearsal on Wednesday 2 December, so a classmate can see it.)*
+*(Your poster already has a first draft of this card. Rework it with what you have thought through here, before the rehearsal on Wednesday 2 December, so a classmate can see it.)*
 
    **Your answer to task 3.** The title; the "Because" line; what a visitor can look at; what it cost you.
 
