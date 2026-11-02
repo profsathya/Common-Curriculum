@@ -495,8 +495,10 @@ ul.goals.plain{list-style:disc;}
 <div class="prompt"><p class="ptext"><span class="ct" id="prompt-1">Walk me through the graded item "Interactive Poster, final version". First tell me its passcode, its title and its due date as you have them. Ask me what my listener at the rehearsal remembered and what they said would make my case stronger, and what I changed. Then go through my claim and my three cards one at a time, and tell me which words in my claim my cards do not prove. Ask me which milestones from my first version are done and which are not. Do not write my poster for me. Do not summarize until I ask you to.</span></p><button type="button" class="copybtn" data-copy="Walk me through the graded item &quot;Interactive Poster, final version&quot;. First tell me its passcode, its title and its due date as you have them. Ask me what my listener at the rehearsal remembered and what they said would make my case stronger, and what I changed. Then go through my claim and my three cards one at a time, and tell me which words in my claim my cards do not prove. Ask me which milestones from my first version are done and which are not. Do not write my poster for me. Do not summarize until I ask you to.">Copy prompt</button></div></li>
 <li><p><b>Check the passcode.</b> Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.</p></li>
 <li><p><b>Ask for the form.</b> When every answer holds up, paste this:</p>
-<div class="prompt"><p class="ptext"><span class="ct" id="prompt-3">Write my work in the form's order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster. If an answer is not settled, write "not yet settled" in it.</span></p><button type="button" class="copybtn" data-copy="Write my work in the form&#x27;s order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster. If an answer is not settled, write &quot;not yet settled&quot; in it.">Copy prompt</button></div></li>
+<div class="prompt"><p class="ptext"><span class="ct" id="prompt-3">Write my work in the form's order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster · What I take into the festival. If an answer is not settled, write "not yet settled" in it.</span></p><button type="button" class="copybtn" data-copy="Write my work in the form&#x27;s order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster · What I take into the festival. If an answer is not settled, write &quot;not yet settled&quot; in it.">Copy prompt</button></div></li>
 </ol>
+<p class="body">Write the first screen for a visitor who is unfamiliar with your specialty. Use the cards to let an interested reviewer inspect the technical details and evidence.</p>
+<p class="body">Review the Dojo output, paste each section into its matching answer box, and select the look-back and look-forward choices yourself. Complete any unsettled answers before using the Self-check and Copy my answers.</p>
 </div>
 <h2 class="sec">The form</h2>
 <div class="formgrid">
@@ -574,7 +576,7 @@ ul.goals.plain{list-style:disc;}
 <p>Graded item: Interactive Poster, final version. Course: CST499. Due: Monday 7 December. Passcode: POSTER-1207.</p>
 <p>When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.</p>
 <p>Learning purpose: the student finishes the Interactive Poster they present at the Capstone Festival — a claim a visitor can see proven in a few minutes, three cards (the work, a decision, an obstacle or open question), and where the work stands — using what their listener said at the rehearsal.</p>
-<p>Ask what the listener at the rehearsal remembered, what they said would make the case stronger, and what the student changed. Go through the claim and the three cards one at a time; when a part of the claim is not proven by a card, say which words are not yet proven and ask whether the claim or the cards should change. Ask which milestones from the first version are done; for any that are not, ask what happened and what a visitor will see instead. Do not write the claim, the cards or the changes for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.</p>
+<p>Ask what the listener at the rehearsal remembered, what they said would make the case stronger, and what the student changed. Go through the claim and the three cards one at a time; when a part of the claim is not proven by a card, say which words are not yet proven and ask whether the claim or the cards should change. Ask which milestones from the first version are done; for any that are not, ask what happened and what a visitor will see instead. Do not write the claim, the cards or the changes for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.</p>
 </section>
 
 <div class="pagenav"><span><a href="home.html">&larr; Course home</a></span><span></span></div>
@@ -597,6 +599,7 @@ ul.goals.plain{list-style:disc;}
 <div class="sr" id="live" role="status" aria-live="polite"></div>
 
 </div>
+<script src="../js/cst286-draft-safety.js"></script>
 <script>
 (function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
 
@@ -664,12 +667,18 @@ ul.goals.plain{list-style:disc;}
     if (!state.answers) { state.answers = {}; }
     if (!state.checks) { state.checks = {}; }
     function showStoreNote() { $all('.storenote').forEach(function (n) { n.style.display = 'block'; }); }
+    var draftGuard = CCDA.open(KEY, function () { return state; }, 'Assignment draft', function () {
+        $all('textarea[data-leave]').forEach(function (ta) {
+            var value = ta.value;
+            if (!lsSet(ta.getAttribute('data-leave'), value.trim() ? value : null)) { showStoreNote(); }
+        });
+    });
     function save() {
-        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
-        catch (e) { storageOK = false; showStoreNote(); }
+        storageOK = draftGuard.save();
+        return storageOK;
     }
     var saveTimer = null;
-    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function saveSoon() { draftGuard.pending(); if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
     function answerState(key) {
         if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
@@ -869,26 +878,13 @@ ul.goals.plain{list-style:disc;}
             showAi(box, reply, st.ai.length);
         }).catch(function () {
             box.style.display = 'block';
-            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer is saved; try the button again later.</span>';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer remains in this tab; check the save status above and try the button again later.</span>';
         }).then(function () { btn.textContent = label; refresh(); });
     }
 
     function txt(key) { return (answerState(key).text || '').trim(); }
 
     // ---------- the look forward sentence, also saved for the course home page and the next item ----------
-    var leaveTimers = {};
-    function saveLeave(ta) {
-        var k = ta.getAttribute('data-leave');
-        if (!k) { return; }
-        var v = ta.value;
-        lsSet(k, v.trim() ? v : null);
-    }
-    function saveLeaveSoon(ta) {
-        var k = ta.getAttribute('data-leave');
-        if (leaveTimers[k]) { clearTimeout(leaveTimers[k]); }
-        leaveTimers[k] = setTimeout(function () { saveLeave(ta); }, 400);
-    }
-
     $all('textarea[data-key], input[data-key]').forEach(function (ta) {
         var key = ta.getAttribute('data-key');
         var st = answerState(key);
@@ -905,17 +901,15 @@ ul.goals.plain{list-style:disc;}
         }
         ta.addEventListener('input', function () {
             st.text = ta.value;
-            if (ta.getAttribute('data-leave')) { saveLeaveSoon(ta); }
             refresh();
             saveSoon();
         });
-        ta.addEventListener('blur', function () { save(); if (ta.getAttribute('data-leave')) { saveLeave(ta); } });
+        ta.addEventListener('blur', save);
         if (btn && box) { btn.addEventListener('click', function () { askAi(key, ta, btn, box, refresh); }); }
         refresh();
     });
     window.addEventListener('pagehide', function () {
         save();
-        $all('textarea[data-leave]').forEach(saveLeave);
     });
 
     // ---------- a button that opens one more block (the second listener card on the rehearsal page) ----------
@@ -1001,6 +995,7 @@ ul.goals.plain{list-style:disc;}
         });
     }
     if (!storageOK) { showStoreNote(); }
+    draftGuard.ready();
 }());
 </script>
 <script>

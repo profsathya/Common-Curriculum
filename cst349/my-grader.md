@@ -21,6 +21,18 @@ Week 12 · due Monday 16 November, 11:59 p.m. · 100 points · Graded items
 
 **Prepare you for.** Send your grader your [Sprint 3 report](my-sprint-3-report.html) on 30 November, and make sure they enter your evaluation in [Grade your partners](grade-your-partners.html) by Monday 7 December.
 
+## Look back
+
+(Page note: previous item is My Sprint 3 plan. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:". Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the grading line you most wanted checked first.")
+
+At the end of your plan you named the line you most wanted your grader to check first. That is the line your grader needs to be able to judge from evidence.
+
+○ I have asked this classmate and they said yes
+○ I know who I will ask, and have not asked yet
+○ I do not have anyone yet
+
+**Why this person.** What makes this classmate someone who will say yes or no to that line from the evidence in your report, rather than from knowing you.
+
 ## How this works
 
 Choose one classmate to evaluate (grade) your Sprint 3 report against your terms. Ask them before recording their name, agree on how to share the report and feedback, and follow up before Monday 7 December. If they become unavailable, send Prof. Sathya or the TA your agreement and follow-up messages for help arranging the review.
@@ -73,9 +85,20 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **Grading.** 100 points, in Graded assignments. The points are for having the agreement in place by Monday 16 November. If the check after the due date finds a pick that breaks one of the two conditions, both students keep their points once one of them has changed their grader.
 
+## Look forward
+
+Next, after the virtual visit on Wednesday 18 November, you talk with three classmates on The Commons and write it up in [What I learned from others](what-i-learned-from-others.html), due Monday 30 November. What do you most want to hear from the alumni?
+
+○ How they got their first job
+○ What their work is like day to day
+○ What they would do differently as a student
+○ Something about my own Sprint 3 goal
+
+**What I take into the next item.** One question you will ask an alum on 18 November, tied to your Sprint 3 goal. (Page note: saved as cst349.s3.2.leave; the home page shows it under item 2, and the next item opens from it.)
+
 ## Submit
 
-Use **Check my submission** to find missing fields or agreement conflicts. **Copy my answers** copies your draft at any stage. Review it before pasting the final text into Canvas.
+This graded item is complete when the look back, the form and the look forward have text. Use **Check my submission** to find missing fields or agreement conflicts. **Copy my answers** copies your draft at any stage. Review it before pasting the final text into Canvas.
 
 **Buttons:** Check my submission · Copy my answers
 

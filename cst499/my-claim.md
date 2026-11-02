@@ -28,6 +28,8 @@ Week 10 · due Monday 2 November, 11:59 p.m. · 100 points · Graded items
 
 **Prepare you for.** The Integrative Solving report brings together the evidence for the breadth in your claim.
 
+[Start writing task 1](my-claim.html#task-1), or use the Dojo steps below.
+
 ☑ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
@@ -122,7 +124,7 @@ Read the two reports below, then look at your claim and identify:
 - the part that reaches into a second domain, if there is one
 - if your claim stays in one domain, why, and one way your work could move toward a second domain
 
-*(A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review.)*
+*(T-shaped skills combine depth in one area with the ability to connect that knowledge to another area. A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review. Use the reports to consider a connection worth investigating in your project; broad labor-market findings do not establish that a second domain will improve this particular project.)*
 
 **Why crossing domains matters now** (page note: shown above the answer box, outside the +)
 

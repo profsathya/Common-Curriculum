@@ -24,6 +24,21 @@ Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
+## Look back
+
+(Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
+
+(Page note: previous item is My first step, taken. When this browser holds that page's answer to its last task — the next step the student named — show it under "In My first step, taken you wrote that your next step would be:". Otherwise: "Open your My first step, taken submission on Canvas and find the next step you named.")
+
+In My first step, taken you named the next step you would take. Read it again before you set a Sprint 3 goal.
+
+○ I took that step
+○ I have not taken it yet, and I still will
+○ I am replacing it with something else
+○ I can't find what I wrote
+
+**Where that step stands.** What happened to the step you named, and what that tells you about the goal you are about to set.
+
 ## Tasks
 
 Sprint 3 has no exam questions handed to you and no form that tells you what to do each week. You set the goal, you take the step, and you write the terms you will be graded on. A classmate then grades you against those terms.
@@ -150,11 +165,22 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **Grading.** 100 points, in Graded assignments. The grade is based on what you write here. Your grading lines in task 3 are copied to the classmate you choose in the week-12 item, and they grade your Sprint 3 report against them.
 
+## Look forward
+
+Next, in [My grader](my-grader.html), due Monday 16 November, you ask one classmate to evaluate (grade) your Sprint 3 report against the lines you just wrote in task 3. Which of your lines will be hardest for a classmate to say yes or no to from your report alone?
+
+○ The line about what the work produced
+○ The line about who I talked to or showed it to
+○ The line about what I changed because of it
+○ None of them; each one is checkable as written
+
+**What I take into the next item.** One or two sentences: the line from task 3 you would most want your grader to check first, and why that one. (Page note: saved as cst349.s3.1.leave; the home page shows it under item 1, and the next item opens from it.)
+
 ## Submit
 
 Canvas text entry. **Submit the text itself - the markdown - pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
+This graded item is complete when the look back, the tasks and the look forward have text. Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
 
 **Button:** Copy my answers
 
@@ -176,9 +202,11 @@ Ask what the Sprint 2 goal was and what the first step produced, then what the S
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
+- Look back: what happened to the step the student named in My first step, taken, and what that tells them about the goal they are about to set.
 - Task 1: a goal the student can take a meaningful step toward by 30 November, that pushes past their immediate interest or comfort zone, with how it follows from Sprint 2 or why it is a pivot.
 - Task 2: one step, a day on or before 20 November, what it produces.
 - Task 3: three or four lines, points adding to 100, each checkable yes/no by a classmate from the report; at least one about what the work produced.
+- Look forward: the line from task 3 the student would most want their grader to check first, and why that one.
 
 The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting.
 

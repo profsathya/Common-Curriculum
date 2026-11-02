@@ -51,7 +51,11 @@ AI Dojo Passcode for this Graded Item: **POSTER-1207**
 
 **3. Ask for the form.** When every answer holds up, paste this:
 
-> Write my work in the form's order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster. If an answer is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: What I changed after the rehearsal · My claim and three cards · The milestones from my first version · My final poster · What I take into the festival. If an answer is not settled, write "not yet settled" in it.
+
+Review the Dojo output, paste each section into its matching answer box, and select the look-back and look-forward choices yourself. Complete any unsettled answers before using the Self-check and Copy my answers.
+
+Write the first screen for a visitor who is unfamiliar with your specialty. Use the cards to let an interested reviewer inspect the technical details and evidence.
 
 ## The form
 
@@ -121,7 +125,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student finishes the Interactive Poster they present at the Capstone Festival — a claim a visitor can see proven in a few minutes, three cards (the work, a decision, an obstacle or open question), and where the work stands — using what their listener said at the rehearsal.
 
-Ask what the listener at the rehearsal remembered, what they said would make the case stronger, and what the student changed. Go through the claim and the three cards one at a time; when a part of the claim is not proven by a card, say which words are not yet proven and ask whether the claim or the cards should change. Ask which milestones from the first version are done; for any that are not, ask what happened and what a visitor will see instead. Do not write the claim, the cards or the changes for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Ask what the listener at the rehearsal remembered, what they said would make the case stronger, and what the student changed. Go through the claim and the three cards one at a time; when a part of the claim is not proven by a card, say which words are not yet proven and ask whether the claim or the cards should change. Ask which milestones from the first version are done; for any that are not, ask what happened and what a visitor will see instead. Do not write the claim, the cards or the changes for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 

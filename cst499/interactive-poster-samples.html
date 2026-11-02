@@ -134,6 +134,8 @@ body{background:var(--page);color:var(--ink);font-family:var(--serif);line-heigh
     <button type="button" data-s="a" aria-pressed="true">Open source</button>
     <button type="button" data-s="b" aria-pressed="false">Security+</button>
     <button type="button" data-s="t" aria-pressed="false">Blank template</button>
+    <a href="interactive-poster-starter.html" target="_blank" rel="noopener">Open editable starter</a>
+    <a href="interactive-poster-starter.html" download>Download starter</a>
   </div>
 </header>
 
@@ -202,7 +204,7 @@ var S = {
        unsure:"I ran the scan myself, so I knew the answer before I looked. I have not yet shown I can spot a scan in traffic I didn't create.",
        ai:[["ChatGPT gave me","The Wireshark filter that finds the scan."],["I redirected it","“Don't give me the answer. Ask me what I expect to see first, then let me look.”"],["How I checked","A classmate gave me a capture I had never seen. Without AI, I explained two of its three events correctly."]]},
       {kind:"decision", line:"Security+ and a home lab instead of studying for the exam alone", sub:["Because","10 of the 12 postings I saved named Security+, and analyst roles ask for hands-on investigation."],
-       ev:'<div class="lab"><span>Kali</span><span>Ubuntu</span><span>Windows</span></div><span class="cap">Three virtual machines on a network that cannot reach the internet</span>',
+       ev:'<div class="lab"><span>Kali</span><span>Ubuntu</span><span>Windows</span></div><span class="cap">Three virtual machines on a network that cannot reach the internet</span><p>Illustrative posting analysis: 10 of 12 saved postings requested Security+. In your own card, link the postings and identify the hands-on investigation requirements that informed your choice. Use the investigation record to show the practical work.</p>',
        gave:"Less time for exam study, and I had to learn how to keep the lab safely cut off from the internet."},
       {kind:"obstacle", line:"My practice scores were stuck around 62% for three weeks", sub:["What I did","paused to learn networking basics, and my score rose to 81%."],
        ev:chart(),
@@ -249,13 +251,25 @@ function openP(i,btn){
   if(c.gave){h+='<div><dt>The trade-off</dt><dd>'+c.gave+'</dd></div>';}
   if(c.ai){h+='<div><dt>How I steered AI here</dt><dd class="turns">'+c.ai.map(function(t,k){return '<div class="'+(k?'me':'got')+(k===2?' chk':'')+'"><span>'+t[0]+'</span>'+t[1]+'</div>';}).join("")+'</dd></div>';}
   h+='</dl>';
-  $("pbody").innerHTML=h; $("panel").classList.add("on"); $("close").focus();
+  $("pbody").innerHTML=h; $("panel").classList.add("on"); background(true); $("close").focus();
 }
-function closeP(){ $("panel").classList.remove("on"); if(lastCard){lastCard.focus({preventScroll:true}); lastCard=null;} }
+function background(on){
+  document.querySelectorAll("body > header, body > section, #screen > :not(#panel)").forEach(function(el){el.inert=on;});
+}
+function closeP(){ background(false); $("panel").classList.remove("on"); if(lastCard){lastCard.focus({preventScroll:true}); lastCard=null;} }
 $("cards").addEventListener("click",function(e){var b=e.target.closest(".card"); if(b) openP(+b.dataset.i,b);});
 $("close").addEventListener("click",closeP);
 $("panel").addEventListener("click",function(e){ if(e.target===this) closeP(); });
-document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeP(); });
+document.addEventListener("keydown",function(e){
+  if(!$("panel").classList.contains("on")) return;
+  if(e.key==="Escape") {e.preventDefault(); closeP();}
+  if(e.key==="Tab") {
+    var focusable=Array.from($("panel").querySelectorAll('button, a[href], input, textarea, select, [tabindex="0"]'));
+    var first=focusable[0], last=focusable[focusable.length-1];
+    if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
 document.querySelectorAll(".switch button").forEach(function(b){
   b.addEventListener("click",function(){
     cur=b.dataset.s; lastCard=null;

@@ -423,6 +423,7 @@ code { overflow-wrap: anywhere; }
 </div>
 </section>
 
+<p class="body"><a href="#task-1">Start writing task 1</a>, or use the Dojo steps below.</p>
 <div class="choose"><input type="checkbox" id="dojo-tick" checked aria-controls="dojo-start dojo-block" aria-expanded="true"><label for="dojo-tick"><b>I would like to use the AI Dojo to think this through.</b> With this ticked, the Dojo steps appear just below and you paste your Dojo summary at the end. Untick it to work on your own with the AI feedback button under each box.</label></div>
 <p class="dojowarn dojo-only" role="note"><b>Before you start with the AI Dojo:</b> this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course.</p>
 <div id="dojo-start" class="dojo-only">
@@ -520,7 +521,7 @@ code { overflow-wrap: anywhere; }
 <li>the part that reaches into a second domain, if there is one</li>
 <li>if your claim stays in one domain, why, and one way your work could move toward a second domain</li>
 </ul>
-<em class="guide">(A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review.)</em></div></div>
+<em class="guide">(T-shaped skills combine depth in one area with the ability to connect that knowledge to another area. A domain is an area of knowledge or skill that stands on its own: a technical area, the field your work serves, a way of working with people, a way of handling data. Use the domains you listed in task 3 of the Quality review. Use the reports to consider a connection worth investigating in your project; broad labor-market findings do not establish that a second domain will improve this particular project.)</em></div></div>
 <div class="whynow" id="why-t3">
 <h4 aria-level="3">Why crossing domains matters now</h4>
 <ul>
@@ -632,6 +633,7 @@ code { overflow-wrap: anywhere; }
 <div class="sr" id="live" role="status" aria-live="polite"></div>
 
 </div>
+<script src="../js/cst286-draft-safety.js"></script>
 <script>
 (function(){var bar=document.getElementById('canvas-bar');if(!bar){return;}var framed=true;try{framed=window.top!==window.self;}catch(e){framed=true;}if(framed||/(^|[?&])context=canvas(&|$)/.test(location.search)){bar.hidden=false;}}());
 
@@ -660,6 +662,7 @@ code { overflow-wrap: anywhere; }
     var live = document.getElementById('live');
     function announce(t) { if (live) { live.textContent = ''; live.textContent = t; } }
 
+    window.addEventListener('pagehide', function () { save(); });
     // ---------- storage ----------
     var storageOK = true;
     var state = { answers: {}, checks: {}, copiedAt: null };
@@ -670,12 +673,14 @@ code { overflow-wrap: anywhere; }
     if (!state.answers) { state.answers = {}; }
     if (!state.checks) { state.checks = {}; }
     function showStoreNote() { $all('.storenote').forEach(function (n) { n.style.display = 'block'; }); }
+    var draftGuard = CCDA.open(KEY, function () { return state; }, 'Assignment draft');
+    document.querySelector('.pagehead').insertAdjacentElement('afterend', document.querySelector('.draft-safety'));
     function save() {
-        try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOK = true; }
-        catch (e) { storageOK = false; showStoreNote(); }
+        storageOK = draftGuard.save();
+        return storageOK;
     }
     var saveTimer = null;
-    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function saveSoon() { draftGuard.pending(); if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
     function answerState(key) {
         if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
         if (!state.answers[key].ai) { state.answers[key].ai = []; }
@@ -828,7 +833,7 @@ code { overflow-wrap: anywhere; }
             showAi(box, reply, st.ai.length);
         }).catch(function () {
             box.style.display = 'block';
-            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer is saved; try the button again later.</span>';
+            box.innerHTML = '<span class="lbl">AI feedback</span><span class="err">Could not get feedback right now. Your answer remains in this tab; check the save status above and try the button again later.</span>';
         }).then(function () { btn.textContent = label; refresh(); });
     }
     $all('textarea[data-key]').forEach(function (ta) {
@@ -1016,6 +1021,7 @@ code { overflow-wrap: anywhere; }
         });
     }
     if (!storageOK) { showStoreNote(); }
+    draftGuard.ready();
 }());
 </script>
 <script>

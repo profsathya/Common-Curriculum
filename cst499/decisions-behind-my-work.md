@@ -53,7 +53,9 @@ AI Dojo Passcode for this Graded Item: **DECIDE-1130**
 
 **3. Ask for the form.** When every answer holds up, paste this:
 
-> Write my work in the form's order, using only my words: The choice I am writing about · Why this project · A choice inside my work · My decision card. If an answer is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: The choice I am writing about · Why this project · A choice inside my work · My decision card · What I take into the next item. If an answer is not settled, write "not yet settled" in it.
+
+Review the Dojo output, paste each section into its matching answer box, and select the look-back and look-forward choices yourself. Complete any unsettled answers before using the Self-check and Copy my answers.
 
 ## The form
 
@@ -68,7 +70,7 @@ In your Project Proposal you named a gap your capstone would close. Think throug
 - What would have made you choose one of the others?
 - What is this choice likely to mean for you, both the good and the bad?
 
-*(The other ways should be real options: a different project, a certificate, a job or internship, a course, or a different kind of work on the same problem. Your reasons are strongest when they come from outside you, such as a job posting, a person in the field, a user, or a result you saw.)*
+*(The other ways should be real options: a different project, a certificate, a job or internship, a course, or a different kind of work on the same problem. Connect your reasons to your goals, evidence and constraints. A posting, a user response or a test result can inform the choice, as can your time, access, experience and motivation. You can distinguish options you considered at the time from options you recognize now, and use a dated note, commit or test to separate what you knew then from what you learned later.)*
 
    **Your answer to task 1.** The gap; at least two other ways to close it; why this project; what would have changed your choice; the likely good and bad.
 
@@ -112,9 +114,9 @@ Next, at the rehearsal in class on Wednesday 2 December, you tell the story of y
 ## Worked example (shown beside the form)
 
 **Example · A Security+ certificate with a home lab** (the second sample poster, written as answers)
-- *Why this project:* The gap I named was that I could not show hands-on security work, only coursework. Two other ways to close it were to study for the Security+ exam on my own, or to build a small software tool that checks a network for open ports. I chose the certificate with a home lab because 10 of the 12 analyst postings I saved named Security+, and most of them asked for hands-on investigation, which the lab gives me and studying alone does not. If most of the postings had asked for development experience first, I would have built the tool. The good: by December I will have the exam and a written investigation a visitor can look at. The bad: I will not have an app that is my own, and if I do not pass on December 12 the claim is weaker.
+- *Why this project:* The gap I named was that I could not show hands-on security work, only coursework. I considered studying for the Security+ exam alone because it matched the credential in the postings, but rejected it because it would not produce hands-on evidence. Another option was to build a small software tool that checks a network for open ports. I chose the certificate with a home lab because 10 of the 12 analyst postings I saved named Security+, and most of them asked for hands-on investigation, which the lab gives me and studying alone does not. If most of the postings had asked for development experience first, I would have built the tool. The good: I can show a written investigation while preparing for the exam scheduled for December 12. The trade-off: I will not have an app that is my own. Until I pass the exam, I describe the certificate as a goal and make my current claim about the lab work.
 - *A choice inside my work:* My practice scores were stuck around 62% for three weeks, and I chose to pause exam prep for two weeks to learn networking basics. Two other directions were to keep taking practice exams until the score moved, or to drill flashcards on only the questions I missed. I chose the pause because when I sorted my wrong answers, most of them were networking questions, so more practice tests would have repeated the same gap. If my wrong answers had been spread across every topic, I would have kept taking practice exams. The good: my score rose to 81%. The bad: my exam date moved back two weeks.
-- *My decision card:* Security+ and a home lab instead of studying for the exam alone. Because: 10 of the 12 postings I saved named Security+, and analyst roles ask for hands-on investigation. A visitor can look at the diagram of my three lab machines on a network that cannot reach the internet. It cost me time I could have spent on exam study, and I had to learn how to keep the lab safely cut off.
+- *My decision card:* Security+ and a home lab instead of studying for the exam alone. Because: 10 of the 12 postings I saved named Security+, and analyst roles ask for hands-on investigation. A visitor can inspect my table of the 12 postings, with links and the requirements I identified, and my investigation record. The lab diagram shows the setup; the postings support the reason for choosing it. It cost me time I could have spent on exam study, and I had to learn how to keep the lab safely cut off.
 
 ## Self-check
 
@@ -147,7 +149,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student thinks through two important decisions — the choice of project against the gap they named in their Project Proposal, and one choice from inside the work — by naming at least two other directions for each, why they chose this one, what would have made them choose another, and the likely positive and negative consequences. One decision becomes the decision card on the student's Interactive Poster, and the final interview starts from this work.
 
-Start with the gap the student named in the Project Proposal. Ask for at least two other ways that gap could have been closed; when an option is not one someone could really take, ask again. Ask why the student chose this project, what would have made them choose another, and the likely good and bad for them. Then ask for one choice inside the work that changed what they did next, and ask the same four questions. For the decision card, ask for "[choice] instead of [option]", a "Because" line, one thing a visitor can look at, and the cost. Do not suggest the other directions, and do not judge which choice was right. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Start with the gap the student named in the Project Proposal. Ask for at least two other ways that gap could have been closed; when an option is not one someone could really take, ask again. Ask why the student chose this project, what would have made them choose another, and the likely good and bad for them. Then ask for one choice inside the work that changed what they did next, and ask the same four questions. For the decision card, ask for "[choice] instead of [option]", a "Because" line, one thing a visitor can look at, and the cost. Do not suggest the other directions, and do not judge which choice was right. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 

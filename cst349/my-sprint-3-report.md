@@ -23,6 +23,21 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
+## Look back
+
+(Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
+
+(Page note: previous items are My grader and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the line the student most wanted checked first. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the grading line you most wanted checked first.")
+
+Start with the line you most wanted your grader to check first.
+
+○ I met that line, and the evidence is in hand
+○ I met it partly
+○ I did not meet it
+○ The line itself changed since I wrote it
+
+**That line now.** The evidence for that line as it stands today, in one or two sentences, before you write the rest of the report.
+
 ## Tasks
 
 **Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
@@ -107,11 +122,22 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **Grading.** 100 points, in Graded assignments. Your grader evaluates task 1 against your own lines, using the page [Grade your partners](grade-your-partners.html), by Monday 7 December; Prof. Sathya reviews the scores and grades task 2.
 
+## Look forward
+
+Next, on Wednesday 2 December, the Sprint 3 Exam asks you to reflect on this sprint from memory, in writing and then with a partner; on Monday 7 December your grader scores this report in [Grade your partners](grade-your-partners.html). Which part of this report would you most want a partner to ask you about?
+
+○ A line I met, and how I know
+○ A line I did not meet, and what got in the way
+○ What I carry past the semester
+○ The terms I set in the first place
+
+**What I take into the next item.** One sentence to yourself: what setting your own terms and reporting against them showed you about how you work. (Page note: saved as cst349.s3.4.leave; the home page shows it under item 4, and the next item opens from it.)
+
 ## Submit
 
 Canvas text entry. **Submit the text itself - the markdown - pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
+This graded item is complete when the look back, the tasks and the look forward have text. Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
 
 **Button:** Copy my answers
 
@@ -131,8 +157,10 @@ Ask for the grading lines first, then for each line what the student did and wha
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
+- Look back: the evidence, as it stands today, for the line the student most wanted their grader to check first.
 - Task 1: every grading line with points; evidence a reader could check under each; unmet lines stated with what got in the way.
 - Task 2: one thing carried past the semester, one first step with a day.
+- Look forward: one sentence on what setting their own terms and reporting against them showed the student about how they work.
 
 The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting.
 

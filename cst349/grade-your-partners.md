@@ -19,6 +19,18 @@ Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
 **Prepare you for.** Enter your scores here so that they become your classmate's grade for task 1 of their report, after Prof. Sathya reviews them.
 
+## Look back
+
+(Page note: previous item is My Sprint 3 report. When this browser holds cst349.s3.4.leave, show it under "At the end of your report you wrote:". Otherwise: "Open your My Sprint 3 report submission on Canvas and read your last sentence again.")
+
+You are about to do for a classmate what your grader is doing for you. Read what you wrote at the end of your own report first.
+
+○ I have sent my report to my grader
+○ I have not sent it yet
+○ My grader has already scored me
+
+**The standard I am holding.** One sentence: what you would want your grader to do with a line of yours that has thin evidence, because that is what you will do with your classmate's.
+
 ## How this works
 
 Read each classmate's report, then fill in one block below for that classmate. Score their task 1 against their own lines, line by line, from the evidence in the report. Then answer four questions about how you graded, so that Prof. Sathya can see your reasoning and your classmate can see what you saw.
@@ -64,9 +76,20 @@ Tick each line your submission meets. Your ticks are copied with your answers; P
 
 **Grading.** 100 points, in Graded assignments, for how you evaluated, not for the scores you gave. Prof. Sathya reviews every block before a score reaches a classmate's grade and may adjust a score; your points for this item stay the same when he does.
 
+## Look forward
+
+This is the last item of Sprint 3. After Monday 7 December, Prof. Sathya reviews every block before a score reaches a classmate's grade, and the semester closes with one-on-one check-ins on Wednesday 9 December.
+
+○ I would set my terms the same way again
+○ I would write fewer, sharper lines
+○ I would pick a goal further from my comfort zone
+○ I would choose my grader differently
+
+**What I take into the next item.** One sentence for your own record: what being graded on your own terms changed about how you worked this sprint. (Page note: saved as cst349.s3.6.leave; the home page shows it under item 6.)
+
 ## Submit
 
-Press **Copy my answers** and paste the text into the Canvas text box.
+This graded item is complete when the look back, the form and the look forward have text. Press **Copy my answers** and paste the text into the Canvas text box.
 
 **Button:** Copy my answers
 

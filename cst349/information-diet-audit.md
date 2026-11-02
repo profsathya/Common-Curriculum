@@ -22,6 +22,20 @@ Learn to see what you actually pay attention to each week, so that you can choos
 
 ☐ **I would like to use the AI Dojo to think this through.** With this ticked, the Dojo steps appear under the tasks. (Page note: unticked when the page opens, as on the other optional activities; remembered on this browser.)
 
+## Look back
+
+(Page note: on the page the look back sits right after the Purpose paragraph, before the Dojo tick.)
+
+(Page note: previous item is My Sprint 3 plan. When this browser holds its task 1 answer, show it under "In My Sprint 3 plan you wrote your goal as:". Otherwise: "Open your My Sprint 3 plan submission on Canvas and find your Sprint 3 goal.")
+
+Your one change in Part 2 serves the Sprint 3 goal you set this week. Read the goal again first.
+
+○ It is still my goal, as I wrote it
+○ It has changed since Monday
+○ I have not written my goal yet
+
+**The goal my one change serves.** Your Sprint 3 goal in one line, as it stands today.
+
 ## Part 1 · The audit
 
 Document what you actually consumed over the past week, not what you wish you had consumed. Be specific.
@@ -65,9 +79,20 @@ AI Dojo Passcode for this activity: **DIET-1113**
 
 Put each answer in its matching box. Include the conversation once, after your answer in My one change.
 
+## Look forward
+
+Next, in [My grader](my-grader.html), due Monday 16 November, you name the classmate who will evaluate (grade) your report. Between now and then you use the source you chose above for the first time.
+
+○ I will read or watch it
+○ I will ask a person something
+○ I will join or sign up for it
+○ I have not chosen yet
+
+**What I take into the next item.** One sentence: the source you chose, and what you will have read, watched or asked from it by Monday 16 November. (Page note: saved as cst349.s3.oyp1.leave; the home page shows it under item ○.)
+
 ## Submit
 
-Press **Copy my answers** and paste the text into the Canvas text box. The audit is complete when the list is honest; a short honest list is a finished audit.
+This activity is complete when the look back, Parts 1 and 2 and the look forward have text. Press **Copy my answers** and paste the text into the Canvas text box. The audit is complete when the list is honest; a short honest list is a finished audit.
 
 **Button:** Copy my answers
 

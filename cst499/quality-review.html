@@ -483,6 +483,7 @@ Not there yet — …"></textarea>
 
 </div>
 
+<script src="../js/cst286-draft-safety.js"></script>
 <script>
 (function () {
     'use strict';
@@ -602,6 +603,7 @@ Not there yet — …"></textarea>
         return Promise.reject(new Error('no clipboard'));
     }
 
+    window.addEventListener('pagehide', function () { save(); });
     // ---------- storage ----------
     var storageOK = true;
     var state = { name: '', answers: {}, copiedAt: null };
@@ -612,17 +614,13 @@ Not there yet — …"></textarea>
     if (!state.answers) { state.answers = {}; }
 
     var saveTimer = null;
+    var draftGuard = CCDA.open(KEY, function () { return state; }, 'Assignment draft');
+    document.querySelector('.pagehead').insertAdjacentElement('afterend', document.querySelector('.draft-safety'));
     function save() {
-        try {
-            window.localStorage.setItem(KEY, JSON.stringify(state));
-            storageOK = true;
-        } catch (e) {
-            storageOK = false;
-            var n = document.getElementById('store-note');
-            if (n) { n.style.display = 'block'; }
-        }
+        storageOK = draftGuard.save();
+        return storageOK;
     }
-    function saveSoon() { if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
+    function saveSoon() { draftGuard.pending(); if (saveTimer) { clearTimeout(saveTimer); } saveTimer = setTimeout(save, 500); }
 
     function answerState(key) {
         if (!state.answers[key]) { state.answers[key] = { text: '', ai: [] }; }
@@ -787,6 +785,7 @@ Not there yet — …"></textarea>
         var sn = document.getElementById('store-note');
         if (sn) { sn.style.display = 'block'; }
     }
+    draftGuard.ready();
 }());
 </script>
 

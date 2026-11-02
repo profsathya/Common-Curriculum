@@ -23,6 +23,21 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked, so that your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
+## Look back
+
+(Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
+
+(Page note: previous item is My grader. When this browser holds cst349.s3.2.leave, show it under "Before the visit you said you would ask:". Otherwise: "Open your My grader submission on Canvas and find the question you said you would ask an alum.")
+
+Before the visit you wrote the question you would ask an alum.
+
+○ I asked it, and got an answer
+○ I asked something else instead
+○ I did not get to ask
+○ I was not at the visit
+
+**What I got.** The answer you got, or what you heard about it from the classmates who were there.
+
 ## Tasks
 
 Open The Commons on Thursday 19 November and message your three matches before the break: two who attended the virtual visit and one who did not. Discuss what the visit showed you. If you missed it, ask the two attendees what they learned.
@@ -87,11 +102,22 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **Grading.** 100 points, in Graded assignments. The grade is based on what you write here. A conversation where the other person never answered counts when you include the message you sent.
 
+## Look forward
+
+Next, in [My Sprint 3 report](my-sprint-3-report.html), also due Monday 30 November, you report against your own grading lines and name the one thing you keep doing after the semester. Which of the three things you will do from these conversations belongs in that report?
+
+○ One of them changes how I meet a grading line
+○ One of them is the thing I carry past the semester
+○ They sit beside my goal, not inside it
+○ I am not sure yet
+
+**What I take into the next item.** One sentence: the one thing from these conversations that changes a line in your report or goes into what comes next, and which of the two it is. (Page note: saved as cst349.s3.3.leave; the home page shows it under item 3, and the next item opens from it.)
+
 ## Submit
 
 Canvas text entry. **Submit the text itself - the markdown - pasted into the Canvas box; a link to a Google doc is not a submission.**
 
-Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
+This graded item is complete when the look back, the tasks and the look forward have text. Submit one set of answers covering every task, followed by your self-check. You can write in a document, use the task boxes, or paste your reviewed Dojo summary with its conversation underneath. If you use a Dojo summary, you can leave the task boxes blank. Any additions you write in them will be included. If you draft on this page, use **Copy my answers**. Review your final text and paste it into Canvas.
 
 **Button:** Copy my answers
 
@@ -111,7 +137,9 @@ Ask about each conversation in turn: who, what the other person took from the vi
 
 ## AI feedback (page note; the criteria the button under the box checks when the Dojo box is unticked)
 
+- Look back: the answer the student got to the question they would ask an alum, or what they heard about it from classmates who were there.
 - Three conversations, each with who, what was learned, one action and whether it is doable; a sent message counts where there was no reply; at least one thing from the alumni.
+- Look forward: the one thing from these conversations that changes a line in the report or goes into what comes next, and which of the two it is.
 
 The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting.
 

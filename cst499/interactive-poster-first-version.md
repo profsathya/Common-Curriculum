@@ -42,7 +42,7 @@ At the festival you sit at your laptop and visitors sit beside you. Your Interac
 
 Look at the [two sample posters](interactive-poster-samples.html) before you start. They come from two composite students, one contributing to an open-source project and one earning a Security+ certificate with a home lab.
 
-Build your poster in any tool that runs in a browser on your laptop: a Google Slides deck with links between slides, a Google Site, a web page, or an app you build in Google AI Studio. The tool is your choice. What matters is that a visitor can see your claim proven on the screen.
+Build your poster in any tool that runs in a browser on your laptop: a Google Slides deck with links between slides, a Google Site, a web page, or an app you build in Google AI Studio. You can also [open the editable starter](interactive-poster-starter.html), replace its text, and download your edited copy. The tool is your choice. What matters is that a visitor can see your claim proven on the screen.
 
 ## Choose the AI Dojo route, or work on your own
 
@@ -60,7 +60,11 @@ AI Dojo Passcode for this Graded Item: **POSTER-1116**
 
 **3. Ask for the form.** When every answer holds up, paste this:
 
-> Write my work in the form's order, using only my words: The evidence I am leading with · My claim · The work card · The obstacle card · Where it stands and what remains · My poster so far. If an answer is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: The evidence I am leading with · My claim · The work card · The obstacle card · Where it stands and what remains · My poster so far · What I take into the next item. If an answer is not settled, write "not yet settled" in it.
+
+Review the Dojo output, paste each section into its matching answer box, and select the look-back and look-forward choices yourself. Complete any unsettled answers before using the Self-check and Copy my answers.
+
+Write the first screen for a visitor who is unfamiliar with your specialty. Use the cards to let an interested reviewer inspect the technical details and evidence.
 
 ## The form
 
@@ -162,7 +166,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student builds the first version of the Interactive Poster they will present at the Capstone Festival: a claim a visitor can see proven on the screen, a work card and an obstacle card, where the work stands, and the exact milestones that remain by Monday 7 December. The decision card is added after The decisions behind my work.
 
-Ask for the claim and the evidence the student is leading with. For each card, ask what a visitor would see when it opens; when a part of the claim is not proven by any card, say which words are not yet proven and ask whether the claim or the cards should change. On the work card, ask for the work itself as evidence, one thing the student is still not sure about, and how they directed the AI they used: what it first gave them, what they asked next and why, and how they checked the result. On the obstacle card, accept an obstacle that is not solved yet. Ask what still has to happen before 7 December until each milestone has a date. Do not write the claim, the cards or the milestones for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Ask for the claim and the evidence the student is leading with. For each card, ask what a visitor would see when it opens; when a part of the claim is not proven by any card, say which words are not yet proven and ask whether the claim or the cards should change. On the work card, ask for the work itself as evidence, one thing the student is still not sure about, and how they directed the AI they used: what it first gave them, what they asked next and why, and how they checked the result. On the obstacle card, accept an obstacle that is not solved yet. Ask what still has to happen before 7 December until each milestone has a date. Do not write the claim, the cards or the milestones for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 

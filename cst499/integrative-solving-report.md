@@ -54,7 +54,9 @@ AI Dojo Passcode for this Graded Item: **INTEG-1109**
 
 **3. Ask for the form.** When every answer holds up, paste this:
 
-> Write my work in the form's order, using only my words: My second domain now · The second domain and how it is integrated · The key change · The evidence. If an answer is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: My second domain now · The second domain and how it is integrated · The key change · The evidence · What I take into the next item. If an answer is not settled, write "not yet settled" in it.
+
+Review the Dojo output, paste each section into its matching answer box, and select the look-back and look-forward choices yourself. Complete any unsettled answers before using the Self-check and Copy my answers.
 
 ## The form
 
@@ -74,7 +76,7 @@ What is the key change you made because of integrating this additional domain? *
 
 ### Task 3 · The evidence
 
-What evidence do you have to show that this integration made your work better? *(Choose something an external reviewer can easily verify: a measurement before and after, a test, a review comment, a user's written response, or a record of what happened. Say where the reviewer can find it.)*
+What evidence do you have to show that this integration made your work better? *(Choose something an external reviewer can easily verify: a measurement before and after, a test, a review comment, a user's written response, or a record of what happened. Say where the reviewer can find it. To judge what your evidence supports, separate what you observed from what you infer. A passing test supports the case tested; a small user trial suggests how those users experienced the work. Consider what remains uncertain and what another check could clarify.)*
 
    **Your answer to task 3.** The evidence, and where a reviewer can find it.
 
@@ -136,7 +138,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student shows, with evidence, how bringing a second domain into their work made it better. The evidence becomes the breadth in the claim on the student's Interactive Poster.
 
-Ask first which second domain the student wrote about in One claim about a T-Shaped Skill, and whether it has changed. Ask where that domain met the main project, until the student can point to a decision, a part they built, or a step in their process. Ask what the student did before and what they changed because of the second domain; if the change could have happened without the second domain, ask what the second domain added. Ask what evidence shows the change made the work better, until it is something an external reviewer could verify without the student present, and ask where the reviewer can find it. Do not write the domain, the change or the evidence for the student. Do not summarize until asked; when asked, output the text in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Ask first which second domain the student wrote about in One claim about a T-Shaped Skill, and whether it has changed. Ask where that domain met the main project, until the student can point to a decision, a part they built, or a step in their process. Ask what the student did before and what they changed because of the second domain; if the change could have happened without the second domain, ask what the second domain added. Ask what evidence shows the change made the work better, until it is something an external reviewer could verify without the student present, and ask where the reviewer can find it. Do not write the domain, the change or the evidence for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 

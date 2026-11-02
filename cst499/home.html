@@ -286,21 +286,23 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 /* Two things this browser may hold for each item, both written on this computer only:
    <key>        the sentence the student wrote at the close of the chapter (saved by the chapter page)
    <key>.done   a check the student set by tapping the number here (tap again to clear)
-   A check shows when either exists. When the sentence exists it replaces the grey line, unlabelled, in the student's words.
-   Nothing stored, for any reason, means the plain number and the grey line stay. */
+   Only the manual flag shows a check. Saved reflections appear separately as drafts; the description stays visible.
+   The page cannot verify Canvas submission. */
 (function(){
   function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} }
+  function set(k,v){ try{ v===null ? localStorage.removeItem(k) : localStorage.setItem(k,v); return true; }catch(e){return false;} }
   var items=document.querySelectorAll('.ch[data-key]');
   for(var i=0;i<items.length;i++){ (function(li){
     var key=li.getAttribute('data-key'), num=li.querySelector('.num'), carry=li.querySelector('.carry'), n=num.textContent;
     function paint(){
       var s=get(key), d=get(key+'.done');
-      var done=(s&&s.trim())||d;
-      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Done, tap to clear':'Mark done');
-      if(carry){ if(s&&s.trim()){ carry.textContent=s.trim(); carry.classList.add('mine'); } else { carry.textContent=carry.getAttribute('data-prompt'); carry.classList.remove('mine'); } }
+      var done=!!d;
+      li.classList.toggle('done',!!done); num.innerHTML=done?'&#10003;':n; num.setAttribute('aria-label',done?'Marked complete by you; activate to clear':'Mark complete yourself; Canvas submission is not checked');
+      reflection.hidden=!(s&&s.trim()); reflection.textContent=s&&s.trim()?'Saved reflection (draft): '+s.trim():'';
     }
-    if(carry) carry.setAttribute('data-prompt',carry.textContent);
+    var reflection=document.createElement('p'); reflection.className='carry mine'; reflection.hidden=true;
+    if(carry) carry.insertAdjacentElement('afterend',reflection); else li.appendChild(reflection);
+    window.addEventListener('storage',function(e){if(e.key===key||e.key===key+'.done') paint();});
     /* Notes: a small label at the right of the item; click opens a box; what is typed is saved here as it is typed */
     var nk=key+'.notes', lab=document.createElement('button'), box=document.createElement('div'), ta=document.createElement('textarea'), sv=document.createElement('div');
     lab.type='button'; lab.className='notes-l'; lab.textContent='Notes'; lab.setAttribute('aria-expanded','false');
@@ -308,8 +310,8 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
     function paintNotes(){ var v=get(nk); lab.classList.toggle('has',!!(v&&v.trim())); }
     ta.value=get(nk)||''; paintNotes();
     lab.addEventListener('click',function(e){ e.stopPropagation(); box.hidden=!box.hidden; lab.setAttribute('aria-expanded',box.hidden?'false':'true'); if(!box.hidden) ta.focus(); });
-    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; set(nk, v.trim()?v:null); paintNotes(); sv.textContent=v.trim()?'Saved on this computer':''; },300); });
-    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Tap to mark this one done';
+    var t=null; ta.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(function(){ var v=ta.value; var saved=set(nk, v.trim()?v:null); paintNotes(); sv.textContent=saved?(v.trim()?'Saved on this computer':''):'Could not save. Copy this note before leaving.'; },300); });
+    num.setAttribute('role','button'); num.setAttribute('tabindex','0');  num.title='Your completion mark; Canvas submission is not checked';
     function toggle(e){ if(e) e.preventDefault(); set(key+'.done', get(key+'.done')?null:'1'); paint(); }
     num.addEventListener('click',function(e){ e.stopPropagation(); toggle(e); });
     num.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.stopPropagation(); toggle(e); } });

@@ -14,7 +14,7 @@
       walk(data,'');return lines.join('\n\n');
     } catch (_) { return raw || '(empty draft)'; }
   }
-  window.CCDA = {open:function(key,getValue,label) {
+  window.CCDA = {open:function(key,getValue,label,onSaved) {
     var observed=null, baseline='', ready=false, conflict=false, history=[];
     var panel=document.createElement('section'), message=document.createElement('p'), details=document.createElement('details');
     panel.className='draft-safety';panel.style.cssText='border:1px solid #aaa;border-radius:5px;padding:8px 12px;margin:12px 0;overflow-wrap:anywhere';
@@ -58,6 +58,7 @@
         // Preserve the displaced version before the user's explicit conflict resolution.
         if(force && latest!==observed && !recover(latest,'Other saved draft before replacement')) {report('Copy the saved versions before replacing them; recovery storage is unavailable.');return false;}
         localStorage.setItem(key,current);observed=current;baseline=current;conflict=false;
+        if(onSaved) onSaved();
         report('Saved on this browser. Copying answers does not submit them to Canvas.');return true;
       } catch(_){report('Could not save. Keep this page open and copy your work before leaving.');return false;}
     }
