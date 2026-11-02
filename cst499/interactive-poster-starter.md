@@ -2,7 +2,7 @@
 
 Editable companion to `interactive-poster-starter.html`. This starter supports the existing poster assignments; it adds no submission or grading requirements.
 
-Edit the text on the poster and inside each card. Download your edited copy before closing; reopen that file to continue. To submit, share a hosted copy or use screenshots as the assignment allows. The first version uses the work and obstacle cards; add the decision card when you reach that assignment.
+Edit the text on the poster and inside each card. Download your edited copy before closing; reopen that file to continue. To submit, share a hosted copy or use screenshots as the assignment allows. Fill in all three cards in your first version; you rework the decision card in The decisions behind my work.
 
 Controls: **Download my edited poster** and **Preview presentation** (then **Continue editing**).
 
@@ -26,7 +26,7 @@ Changes stay in this tab until you download.
 
 **What this supports and what remains uncertain:** Explain what a visitor can conclude and what needs another check.
 
-The work card also includes **How I worked with AI:** what AI first gave me, what I asked next and why, and how I checked the result, following the assignment.
+The work card also includes an optional **How I worked with AI:** what AI first gave me, what I asked next and why, and how I checked the result, if it helps make the case.
 
 The decision and obstacle cards also include **What the choice or response cost:** time, scope, or another trade-off.
 
