@@ -5,7 +5,8 @@
      grading lines, then answers the meta-rubric about the grading itself. One block per classmate, repeatable ("Add
      another classmate"). The copied text goes into the grader's own Canvas submission; Sathya/Codex map the grades to
      the graded students afterwards (no student data reaches Claude). Roster datalist as on my-grader. No Dojo
-     route. Due Mon 7 Dec; 100 pts for the grader, for grading well. -->
+     route. Due Mon 7 Dec; 100 pts for the grader, for grading well.
+     3 Nov: wording follows My Sprint 3 plan draft 3 (grading terms are now the quality assurance plan, task 2 of the plan). -->
 
 # Grade your partners
 
@@ -13,7 +14,7 @@ Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My grader](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their grading terms.
+**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My grader](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their quality assurance plan.
 
 **This Learning Experience.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
 
@@ -45,7 +46,7 @@ Score from what is in the report. If the evidence for a line is not there, score
 
 **Classmate's name** (page note: input with the roster datalist)
 
-**Their grading lines and my scores.** Copy each of their lines with its points, give the points you award from the evidence in their report, and add one sentence that points at the evidence, or at where it should have been.
+**The lines of their plan and my scores.** Copy each of their lines with its points, give the points you award from the evidence in their report, and add one sentence that points at the evidence, or at where it should have been.
 
    *Placeholder:* Line 1 — their words · their points → my points · why ⏎ Line 2 — … ⏎ Line 3 — … ⏎ Line 4 — …
 
@@ -67,7 +68,7 @@ Score from what is in the report. If the evidence for a line is not there, score
 
 Tick each line your submission meets. Your ticks are copied with your answers; Prof. Sathya verifies each one.
 
-- [ ] Every classmate who chose me has a block, with every one of their grading lines scored · 30 pts
+- [ ] Every classmate who chose me has a block, with every line of their plan scored · 30 pts
 - [ ] Each score has a sentence that points at evidence in the report, or at its absence · 30 pts
 - [ ] The four questions are answered for each classmate · 25 pts
 - [ ] My comment to each classmate includes one thing to keep and one thing to change · 15 pts

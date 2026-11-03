@@ -5,7 +5,8 @@
      18 Nov virtual visit moved out to their own graded item, what-i-learned-from-others.md, also due Mon 30 Nov
      (Prof. Sathya: two items due the same Monday is fine). Written over the fall break (23–27 Nov, nothing due), due Mon 30 Nov; the Sprint 3
      Exam on Wed 2 Dec draws on it; the grader grades it against the task-1 terms by Mon 7 Dec (one grader since 31 Oct).
-     Same page design as my-first-step-taken; Dojo passcode REPORT-1130 (twice, must match). -->
+     Same page design as my-first-step-taken; Dojo passcode REPORT-1130 (twice, must match).
+     3 Nov: wording follows the plan's draft 3 (the grading lines are now the quality assurance plan, task 2 of the plan; the look back opens from the part of the plan the student thought hard to evaluate). -->
 
 # My Sprint 3 report: what I did against my own terms, and what comes next
 
@@ -13,7 +14,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** You set a Sprint 3 goal with the terms you want your work evaluated (graded) on, and a classmate agreed to hold you to them ([My Sprint 3 plan](my-sprint-3-plan.html), [My grader](my-grader.html)).
+**Builds on your earlier learning.** You set a Sprint 3 goal and a quality assurance plan for your work toward it, and a classmate agreed to hold you to it ([My Sprint 3 plan](my-sprint-3-plan.html), [My grader](my-grader.html)).
 
 **This Learning Experience.** Learn to report on your own work against terms you set yourself, with evidence a reader can check and a plain statement of what you did not reach.
 
@@ -27,16 +28,16 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
 
-(Page note: previous items are My grader and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the line the student most wanted checked first. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the grading line you most wanted checked first.")
+(Page note: previous items are My grader and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the part of the plan the student thought could be difficult for their partner to evaluate. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the part of your plan you thought could be difficult for your partner to evaluate.")
 
-Start with the line you most wanted your grader to check first.
+Start with the part of your plan you thought could be difficult for your partner to evaluate.
 
-○ I met that line, and the evidence is in hand
-○ I met it partly
-○ I did not meet it
-○ The line itself changed since I wrote it
+○ I have evidence for it that my partner can check
+○ I have some of the evidence
+○ I do not have evidence for it
+○ That part of my plan changed since I wrote it
 
-**That line now.** The evidence for that line as it stands today, in one or two sentences, before you write the rest of the report.
+**That part now.** The evidence for that part as it stands today, in one or two sentences, before you write the rest of the report.
 
 ## Tasks
 
@@ -46,14 +47,14 @@ Each **+** opens an example, more examples if you want them, and a reflection qu
 
 ### Task 1 — My report, against my terms
 
-Copy the three or four grading lines from your Sprint 3 plan, and under each one write what you did and include the evidence a reader can check. *(Your grader goes line by line, so give each line something checkable: a date, a name, a link, a number, a screenshot described in words. Where you did not meet a line, write that you did not meet it and what got in the way; that is a complete answer, and the self-check gives it points.)*
+Copy the three or four lines of your quality assurance plan from task 2 of My Sprint 3 plan, and under each one write what you did and include the evidence a reader can check. *(Your grader goes line by line, so give each line something checkable: a date, a name, a link, a number, a screenshot described in words. Where you did not meet a line, write that you did not meet it and what got in the way; that is a complete answer, and the self-check gives it points.)*
 
-*Box label:* **Your answer to task 1.** Each grading line, then what you did and the evidence for it.
+*Box label:* **Your answer to task 1.** Each line of your plan, then what you did and the evidence for it.
 *Placeholder:* Line 1 — … ⏎ What I did and the evidence — … ⏎ Line 2 — … ⏎ …
 
 **Check it yourself — the same criteria, without the AI**
 
-- Every grading line from your plan appears, with its points.
+- Every line from your plan appears, with its points.
 - Under each line there is evidence a reader could check, not only a statement that you did it.
 - Any line not met says so, and says what got in the way.
 
@@ -100,7 +101,7 @@ AI Dojo Passcode for this Graded Item: **REPORT-1130**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "My Sprint 3 report". First tell me its passcode, its title and its due date as you have them. I will give you my grading lines from my Sprint 3 plan; ask me, line by line, what I did and what evidence a classmate could check, and do not let me dress up a line I did not meet. Then ask what I carry past the semester and the first step with a day. Do not write any of it for me. Do not summarize until I ask you to.
+> Walk me through the graded item "My Sprint 3 report". First tell me its passcode, its title and its due date as you have them. I will give you the lines of my quality assurance plan from my Sprint 3 plan; ask me, line by line, what I did and what evidence a classmate could check, and do not let me dress up a line I did not meet. Then ask what I carry past the semester and the first step with a day. Do not write any of it for me. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
@@ -114,7 +115,7 @@ AI Dojo Passcode for this Graded Item: **REPORT-1130**
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] Task 1 carries every grading line from my plan with its points, and evidence a reader could check under each · 50 pts
+- [ ] Task 1 carries every line of my quality assurance plan with its points, and evidence a reader could check under each · 50 pts
 - [ ] Task 1 says where a line was not met, and what got in the way · 25 pts
 - [ ] Task 2 identifies one thing I keep doing after the semester and a first step with a day · 25 pts
 
@@ -151,14 +152,14 @@ Graded item: My Sprint 3 report. Course: CST349. Due: Monday 30 November. Passco
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student reports on their Sprint 3 work against the three or four grading lines they wrote themselves, with evidence a classmate can check and a plain statement of what was not met, and identifies one thing they carry past the semester with a first step. A classmate grades task 1 against the student's own lines; the Sprint 3 Exam on 2 December is a reflection on this sprint.
+Learning purpose: the student reports on their Sprint 3 work against the three or four lines of the quality assurance plan they wrote themselves, with evidence a classmate can check and a plain statement of what was not met, and identifies one thing they carry past the semester with a first step. A classmate grades task 1 against the student's own lines; the Sprint 3 Exam on 2 December is a reflection on this sprint.
 
-Ask for the grading lines first, then for each line what the student did and what a classmate could check; when the evidence is "I did it", ask what a reader would see. When a line was not met, ask what got in the way and move on; a line reported as not met is a complete answer. For what comes next, ask for one thing and a day. Do not write any of it for the student. Do not summarize until asked; when asked, give the two headings using only the student's words.
+Ask for the lines of the plan first, then for each line what the student did and what a classmate could check; when the evidence is "I did it", ask what a reader would see. When a line was not met, ask what got in the way and move on; a line reported as not met is a complete answer. For what comes next, ask for one thing and a day. Do not write any of it for the student. Do not summarize until asked; when asked, give the two headings using only the student's words.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Look back: the evidence, as it stands today, for the line the student most wanted their grader to check first.
-- Task 1: every grading line with points; evidence a reader could check under each; unmet lines stated with what got in the way.
+- Look back: the evidence, as it stands today, for the part of the plan the student thought could be difficult for their partner to evaluate.
+- Task 1: every line of the plan with points; evidence a reader could check under each; unmet lines stated with what got in the way.
 - Task 2: one thing carried past the semester, one first step with a day.
 - Look forward: one sentence on what setting their own terms and reporting against them showed the student about how they work.
 
