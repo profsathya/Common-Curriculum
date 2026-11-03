@@ -16,7 +16,7 @@ Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
 **Builds on your earlier learning.** You took a first step toward your Sprint 2 goal and reflected on how it improved your ability to answer a behavioral interview question ([My first step, taken](my-first-step-taken.html)).
 
-**This Learning Experience.** Learn to set a follow on goal or pivot to a new one: set a goal, identify the first step, and how you think your work can be evaluated (graded).
+**This Learning Experience.** Practice setting a goal along with an evaluation (grading) plan.
 
 **Prepare you for.** Select a classmate who will evaluate (grade) and hold you accountable using the plan you write here ([My grader](my-grader.html), [My Sprint 3 report](my-sprint-3-report.html)).
 
