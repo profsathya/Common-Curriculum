@@ -2,15 +2,15 @@
      Edit this file; Claude carries the changes into the HTML.
      Draft 1 of 2026-10-30 (Alan, for Prof. Sathya's edit) — the Sprint 3 opening item, from his 23 Oct handwritten plan
      and the 30 Oct decisions. Draft 2, 31 Oct: "how I stay informed" dropped (it becomes the OYP information-diet-audit.md,
-     Fri 13 Nov); one grader since 31 Oct, chosen in the week-12 item "My grader".
+     Fri 13 Nov); one grader since 31 Oct, chosen in the week-12 item "My quality assurance partner".
      Draft 3, 3 Nov, from Prof. Sathya's voice review: retitled "My Sprint 3 goal and quality assurance plan"; the separate
      first-step task is dropped and task 1 now asks for the goal and a meaningful step by 30 Nov; the grading-terms task
      becomes task 2, the quality assurance plan, with three levels (what I will do · what it will produce · what it
      changes for someone, including me) and at least one line required at the third level; a box between task 1 and task 2
      points to HBR "The Power of Small Wins" with a slot for a video; two full example plans sit under the task 2
-     question; the partner is called the quality assurance partner on this page (the My grader item keeps its name for now).
+     question; the partner is called the quality assurance partner on this page (the week-12 item was renamed My quality assurance partner on 3 Nov).
      Same page design as my-first-step-taken: three-box chain, question with italic guidance, answer box, then the +
-     with more examples and a reflection; Dojo tick with passcode PLAN-1109 (twice, must match); self-check with points;
+     with more examples and a reflection; the look back (3 Nov, later) asks what the Sprint 2 goal taught the student, with three checkboxes; Dojo tick with passcode PLAN-1109 (twice, must match); self-check with points;
      hidden "For your AI Dojo" section. ⏎ marks a line break inside a placeholder. The rail and the copied text use the
      task labels after the dash; the rail label stays "My Sprint 3 plan" (the full title overflows a phone screen). -->
 
@@ -24,7 +24,7 @@ Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
 **This Learning Experience.** Practice setting a goal along with a quality assurance plan.
 
-**Prepare you for.** Select a quality assurance partner who will hold you accountable to the plan you write here ([My grader](my-grader.html), [My Sprint 3 report](my-sprint-3-report.html)).
+**Prepare you for.** Select a quality assurance partner who will hold you accountable to the plan you write here ([My quality assurance partner](my-grader.html), [My Sprint 3 report](my-sprint-3-report.html)).
 
 ☑ **I would like to use the AI Dojo to think this through.** Tick this to use the Dojo, or untick it to answer the tasks yourself. You can draft on this page or in a document. If you use the Dojo summary, place your answers there; use the task boxes only for additions. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -34,16 +34,15 @@ Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
 
-(Page note: previous item is My first step, taken. When this browser holds that page's answer to its last task — the next step the student named — show it under "In My first step, taken you wrote that your next step would be:". Otherwise: "Open your My first step, taken submission on Canvas and find the next step you named.")
+(Page note: checkboxes, so a student can tick more than one. No earlier answer is shown on this look back.)
 
-In My first step, taken you named the next step you would take. Read it again before you set a Sprint 3 goal.
+Think about your Sprint 2 goal: what it was, and how you went about it. What did that teach you that will help you set your next goal? You can reread your My Sprint 2 goal and My first step, taken submissions on Canvas.
 
-○ I took that step
-○ I have not taken it yet, and I still will
-○ I am replacing it with something else
-○ I can't find what I wrote
+☐ I would make the goal more specific
+☐ I would start acting on it sooner
+☐ I would break it into steps I could actually take
 
-**Where that step stands.** What happened to the step you named, and what that tells you about the goal you are about to set.
+**What I learned.** What you learned from your Sprint 2 goal, and how it will shape your Sprint 3 goal.
 
 ## Tasks
 
@@ -168,7 +167,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 ## Look forward
 
-Next, in [My grader](my-grader.html), due Monday 16 November, you select a quality assurance partner who will hold you accountable to your quality assurance plan. What in your plan could be difficult for your partner to evaluate?
+Next, in [My quality assurance partner](my-grader.html), due Monday 16 November, you select a quality assurance partner who will hold you accountable to your quality assurance plan. What in your plan could be difficult for your partner to evaluate?
 
 ○ The line about what the work changes
 ○ A line whose evidence I cannot fully share
@@ -199,11 +198,11 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student practices setting a goal along with a quality assurance plan. They write a Sprint 3 goal that follows from their Sprint 2 goal or pivots to a new one with both breadth and depth, past their immediate interest or comfort zone, and the meaningful step they will take toward it by Monday 30 November. Then they write three or four lines, adding to 100 points, that describe quality work toward the goal and that a classmate can check from the Sprint 3 report. Each line can be about what the student will do, what it will produce, or what it changes for someone, including the student; at least one line must show what it changes. A classmate, the quality assurance partner, later evaluates the student's Sprint 3 report against these lines.
 
-Ask what the Sprint 2 goal was and what the first step produced, then what the Sprint 3 goal is, whether it follows from Sprint 2 or is a pivot, and whether it pushes the student past their immediate interest or comfort zone. Ask what meaningful step toward it they will take by 30 November, and how someone else could see that they took it. For the plan, ask of each line what the student will do, what it will produce, and what it changes for someone, and ask "could a classmate say yes or no to this from the report alone?" until each line passes. When a line about a change for the student is a feeling, such as "I feel more confident", ask what a classmate could see instead. Check that the points add to 100 and that at least one line shows what the work changes. Do not write the goal, the step or the lines for the student. Do not summarize until asked; when asked, give the two headings using only the student's words.
+Ask what the Sprint 2 goal was, how the student went about it, and what that taught them about setting a goal, then what the Sprint 3 goal is, whether it follows from Sprint 2 or is a pivot, and whether it pushes the student past their immediate interest or comfort zone. Ask what meaningful step toward it they will take by 30 November, and how someone else could see that they took it. For the plan, ask of each line what the student will do, what it will produce, and what it changes for someone, and ask "could a classmate say yes or no to this from the report alone?" until each line passes. When a line about a change for the student is a feeling, such as "I feel more confident", ask what a classmate could see instead. Check that the points add to 100 and that at least one line shows what the work changes. Do not write the goal, the step or the lines for the student. Do not summarize until asked; when asked, give the two headings using only the student's words.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
-- Look back: what happened to the step the student named in My first step, taken, and what that tells them about the goal they are about to set.
+- Look back: what the student's Sprint 2 goal, and the way they went about it, taught them, and how that will shape their Sprint 3 goal.
 - Task 1: a goal that pushes past the student's immediate interest or comfort zone, with how it follows from Sprint 2 or why it is a pivot, and a meaningful step the student will take by 30 November that someone else could see.
 - Task 2: three or four lines, points adding to 100, each checkable yes/no by a classmate from the report; at least one line shows what the work changes for someone, possibly the student, in a form a classmate can see.
 - Look forward: the part of the plan that could be difficult for the partner to evaluate, and why.

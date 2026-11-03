@@ -14,23 +14,23 @@ Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My grader](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their quality assurance plan.
+**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My quality assurance partner](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their quality assurance plan.
 
 **This Learning Experience.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
 
-**Prepare you for.** Enter your scores here so that they become your classmate's grade for task 1 of their report, after Prof. Sathya reviews them.
+**Prepare you for.** Enter your scores here so that they become your classmate's report grade, after Prof. Sathya reviews them.
 
 ## Look back
 
 (Page note: previous item is My Sprint 3 report. When this browser holds cst349.s3.4.leave, show it under "At the end of your report you wrote:". Otherwise: "Open your My Sprint 3 report submission on Canvas and read your last sentence again.")
 
-You are about to do for a classmate what your grader is doing for you. Read what you wrote at the end of your own report first.
+You are about to do for a classmate what your quality assurance partner is doing for you. Read what you wrote at the end of your own report first.
 
-○ I have sent my report to my grader
+○ I have sent my report to my quality assurance partner
 ○ I have not sent it yet
-○ My grader has already scored me
+○ My quality assurance partner has already scored me
 
-**The standard I am holding.** One sentence: what you would want your grader to do with a line of yours that has thin evidence, because that is what you will do with your classmate's.
+**The standard I am holding.** One sentence: what you would want your quality assurance partner to do with a line of yours that has thin evidence, because that is what you will do with your classmate's.
 
 ## How this works
 
@@ -84,7 +84,7 @@ This is the last item of Sprint 3. After Monday 7 December, Prof. Sathya reviews
 ○ I would set my terms the same way again
 ○ I would write fewer, sharper lines
 ○ I would pick a goal further from my comfort zone
-○ I would choose my grader differently
+○ I would choose my quality assurance partner differently
 
 **What I take into the next item.** One sentence for your own record: what being graded on your own terms changed about how you worked this sprint. (Page note: saved as cst349.s3.6.leave; the home page shows it under item 6.)
 
