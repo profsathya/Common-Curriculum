@@ -1,4 +1,4 @@
-<!-- Revised 2 November 2026 after Prof. Sathya's voice review: purpose simplified, condition removed, one description per path, two Dojo steps, Path B may keep its Sprint 2 phenomenon, grader named only, grading for the work alone; look back moved above the path choice; Path A can untick the Dojo; a short note for each path. -->
+<!-- Revised 2 November 2026 after Prof. Sathya's voice review: purpose simplified, condition removed, one description per path, two Dojo steps, Path B may keep its Sprint 2 phenomenon, grader named only, grading for the work alone; look back moved above the path choice; Path A can untick the Dojo; a short note for each path. 3 November: Path C describes and plans the build here and builds it in Find and confirm my relationship. -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 11 · Set your goal
 
@@ -35,7 +35,7 @@ On 30 October you chose your path and wrote down why you chose it. Read that rea
 
 ○ **Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects, guided by an interactive trail.
 ○ **Path B · My own precise learning goal.** You pick the phenomenon and set the goal yourself, as you did in Sprint 2.
-○ **Path C · Build and test a model.** You build something in GlowScript, PhET or Tinkercad Circuits to demonstrate and test the quantitative relationship inside what you built.
+○ **Path C · Build and test a model.** You plan a build in GlowScript, PhET or Tinkercad Circuits now, and build it later to test the quantitative relationship inside it.
 
 You can change your path later. Copy anything you want to keep before you switch.
 
@@ -49,7 +49,7 @@ Choose a phenomenon you want to understand. It can be your Sprint 2 phenomenon, 
 
 ### Path C · Start with a build
 
-Choose something to build in GlowScript, PhET or Tinkercad Circuits. Find an input you can change and an output you can measure, and develop them into a goal.
+Choose something you will build in GlowScript, PhET or Tinkercad Circuits, and find an input you will change and an output you will measure. In this assignment you describe the build and plan your work. You build it later, in Find and confirm my relationship.
 
 ## Choose the AI Dojo route, or work on your own
 
@@ -63,7 +63,7 @@ AI Dojo Passcode for this Graded Item: **GOAL3-1109-R3**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me choose a physical phenomenon to investigate: my Sprint 2 phenomenon explored more deeply, or a new one. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
+> Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me choose a physical phenomenon to investigate: my Sprint 2 phenomenon explored more deeply, or a new one. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. I am planning the build now and will build it in the next assignment. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my planned build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, the Dojo may be using missing or older course context. Relink the course Google Doc before relying on its assignment-specific guidance. You can keep reading this page, recording observations and planning your investigation while you fix the link.
 
@@ -79,7 +79,7 @@ One thing that happens in the physical world, in your own words. One sentence is
 
 - *Path A:* Pick one spinning situation you can picture or watch, such as a skater pulling in their arms, a top slowing down, or a bicycle wheel held by its axle. Say what happens in it that you want to understand.
 - *Path B:* your Sprint 2 phenomenon or a new one. If it is the same one, go deeper or look at a different part of it.
-- *Path C:* describe what you want to build, the tool, and the behavior you want to understand through it.
+- *Path C:* describe what you plan to build, the tool, and the behavior you want to understand through it. You don't need to build it yet.
 
    **What I want to understand.** I want to understand how ...
 
@@ -89,15 +89,15 @@ Inside the phenomenon you chose sits a relationship between quantities. Write it
 
 1. **Given what I know or can measure.** The quantities you will start from, each with its unit. (Path A only: "Think about how fast the object spins (for example, in revolutions per second) and how its mass is spread around the axis. Say how you could measure or look up each one.")
 
-   **Given ...** The quantities I start from, with their units. Path C: include the input I can change in my build.
+   **Given ...** The quantities I start from, with their units. Path C: include the input I will change in my planned build.
 
 2. **I will be able to predict.** The one quantity you will work out, with its unit. (Path A only: "Choose one thing about the spin you could work out, such as how fast it spins after something changes, or how fast its axis turns.")
 
-   **I will be able to predict ...** One quantity and its unit. Path C: identify the output I can measure in my build.
+   **I will be able to predict ...** One quantity and its unit. Path C: identify the output I will measure in my planned build.
 
 3. **Predicting it is useful because.** One real situation where being able to predict this will be useful. (Path A only: "Think of a place where people rely on starting, stopping or steadying a spin, such as a sport, a vehicle or the sensors in your phone.")
 
-   **Predicting it is useful because ...** The situation, and how it helps. Path C: explain how this prediction helps me make or test my build.
+   **Predicting it is useful because ...** The situation, and how it helps. Path C: explain how this prediction will help me make or test my build.
 
 ### Part 3 · My plan
 
@@ -140,7 +140,7 @@ Each example is written in the form's own shape. Examples B and C show a Path B 
 - *Predicting it is useful because* it explains why a pendulum clock keeps time, and why pushing a child higher does not make each swing take much longer.
 
 **Example C · Path C, a project in Tinkercad Circuits**
-- *What I want to understand:* how the resistor I choose sets the brightness of an LED in a circuit I build.
+- *What I want to understand:* how the resistor I choose sets the brightness of an LED in a circuit I will build.
 - *Given* the battery voltage in volts, the LED's forward voltage in volts, and the resistor's value in ohms,
 - *I will be able to predict* the current through the LED in milliamperes.
 - *Predicting it is useful because* it tells me which resistor keeps an LED from burning out, which is the first thing anyone wiring an Arduino project needs to know.
@@ -174,9 +174,9 @@ Graded item: My Sprint 3 goal and plan. Course: CST286. Due: Monday 9 November. 
 
 Give the passcode, title and due date from this brief first. The learning purpose is for the student to develop and own a goal they can explain: a physical behavior, a measurable prediction and a practical plan. They are setting a learning goal; they do not need to master the whole relationship in this activity.
 
-Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me choose a physical phenomenon to investigate: my Sprint 2 phenomenon explored more deeply, or a new one. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
+Help me explore a learning goal for "My Sprint 3 goal and plan" in CST286. First give the passcode, title and due date from the course context. I am on Path [A, B or C]. Begin with one open invitation about my experiences, interests or something I have noticed, and follow my response. For A, explore surprising spinning behavior: you might ask whether I skate, have watched Olympic skating, or have seen a spinning top, gyroscope or wheel in a video or simulation. These are possible starting points, not a list to quiz me on. For B, help me choose a physical phenomenon to investigate: my Sprint 2 phenomenon explored more deeply, or a new one. For C, start with something I want to build in GlowScript, PhET or Tinkercad Circuits and how I want it to behave. I am planning the build now and will build it in the next assignment. Ask one question at a time; teach or suggest a resource when I need it, then invite me to explain or try something. Bring in my reason for choosing the path when it helps. As my ideas develop, help me identify a measurable prediction, starting quantities, usefulness and a workable plan. For C, connect these to an adjustable input and measurable output in my planned build. Let me write my own goal and plan; do not begin by walking through the form fields or supply submission answers.
 
-Path A is guided exploration within this area: Explore why spinning objects can behave in ways we might not expect: a rotating wheel or top staying upright, a spinning gyroscope maintaining its direction, or a skater spinning faster when they bring their arms in. Keep the broad area shared while letting the student develop a specific question. The embedded book in Find and confirm my relationship supports spin speed and the direction of a spinning axis. Path B students choose their own phenomenon, either their Sprint 2 phenomenon explored more deeply or a new one, and plan how to learn about it. Path C students select a build and tool, consider what they can adjust and observe, and make the build the means of testing the relationship. If a proposed tool cannot expose the input and output, help the student investigate that before settling the goal.
+Path A is guided exploration within this area: Explore why spinning objects can behave in ways we might not expect: a rotating wheel or top staying upright, a spinning gyroscope maintaining its direction, or a skater spinning faster when they bring their arms in. Keep the broad area shared while letting the student develop a specific question. The embedded book in Find and confirm my relationship supports spin speed and the direction of a spinning axis. Path B students choose their own phenomenon, either their Sprint 2 phenomenon explored more deeply or a new one, and plan how to learn about it. Path C students select a build and tool, consider what they can adjust and observe, and make the build the means of testing the relationship. In this assignment they describe the build and plan their work; they build it in Find and confirm my relationship, so do not ask for a finished build here. If a proposed tool cannot expose the input and output, help the student investigate that before settling the goal.
 
 Use the form requirements as checkpoints after ideas emerge, not as an opening interview script. A useful conversation can move back and forth. Explain a concept, offer a small comparison or point to a resource when a student needs support, then ask them to reason with it. Never invent their interests, prior experience, predictions, time commitments, partners or answers. Do not provide a polished submission or a ready-made goal. A review may quote the student’s decisions and identify unresolved questions; the student writes the final responses.
 
@@ -184,8 +184,8 @@ Use the form requirements as checkpoints after ideas emerge, not as an opening i
 
 - Look back: restates the 30 Oct reason and says how it will influence the goal the student is about to set.
 - What I want to understand: one physical behavior; Path A within spinning objects, Path B the Sprint 2 phenomenon explored more deeply, or a new one, Path C the planned build, tool and behavior to understand.
-- Given: each starting quantity with its unit; Path C includes an adjustable input in the build.
-- Predict: one quantity and its unit; Path C includes a measurable output in the build.
+- Given: each starting quantity with its unit; Path C includes an input the student will change in the planned build (the build does not need to exist yet).
+- Predict: one quantity and its unit; Path C includes an output the student will measure in the planned build (the build does not need to exist yet).
 - Useful: a real situation, and how predicting helps there.
 - When: days and times outside class, before Wed 2 Dec, in the calendar.
 - Look forward: names the goal in the student's words and a first step.
