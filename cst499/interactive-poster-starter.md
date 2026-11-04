@@ -28,7 +28,7 @@ Buttons: **Download my edited poster** and **Preview presentation** (then **Cont
 
 **Evidence link:** a link that opens the evidence.
 
-**What I'm still not sure about** (all three cards): [One sentence on what is still open. It's fine if something isn't settled yet.]
+**What I'm still not sure about** (work card only, as in the samples): [One sentence on what is still open. It's fine if something isn't settled yet.]
 
 **How I worked with AI** (work card): [Optional: explain what AI first gave you, what you asked next and why, and how you checked its response.]
 
