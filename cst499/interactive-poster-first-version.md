@@ -2,7 +2,7 @@
 Notes for the editor, not shown to students:
 - CST499 Sprint 3, graded item, due Mon 16 Nov, 100 pts. Replaces the portfolio piece (decided 27 Oct).
 - What it is for (Sathya, 2 Nov): the students' first attempt at telling the story of their work clearly, with evidence and conviction, as a reflection on their unique value rather than marketing, in a way they feel comfortable and confident with.
-- Decided 2 Nov: version one builds on the 2 Nov claim (evidence the student can have by 7 Dec), not on project progress; the old milestones task is gone. The first screen has the same shape in version one and the final version: the claim, then three cards (the work, one decision, one obstacle). Version one has a first draft of the decision card; The decisions behind my work (30 Nov) reworks it. Behind each card the student chooses the form of the evidence. The thinking is visible on the poster (a last page with the review and plan). Only Sathya and Paige see version one; classmates first see a poster at the rehearsal.
+- Decided 2 Nov: version one builds on the 2 Nov claim (evidence the student can have by 7 Dec), not on project progress; the old milestones task is gone. The first screen has the same shape in version one and the final version: the claim, then three cards (the work, one decision, one obstacle). Version one has a first draft of the decision card; The decisions behind my work (30 Nov) reworks it. Behind each card the student chooses the form of the evidence. The thinking is visible on the poster (a last page with the review and plan). Only Sathya and Paige see version one; classmates first see a poster at the rehearsal. (4 Nov: changed — an optional, strongly encouraged classmate walk-through before submitting, with two optional boxes, no points.)
 - Dropped 2 Nov: the required "how I directed the AI" lines and the rule "claim only what a visitor can see proven". Both the proof question and the AI question are guidance to consider, not conditions; no self-check line checks them.
 - Answers are stored under "cc-gi:cst499-interactive-poster-first-version-v2" (renamed 2 Nov so drafts typed into the old five-task form do not load into the new boxes).
 - The template is interactive-poster-starter.html; its structure is also in the hidden Dojo text so the Dojo can help build from it.
@@ -41,7 +41,7 @@ Do you still feel comfortable with this claim? Choose the one closest to yours.
 
 At the Capstone Festival you sit at your laptop and visitors sit beside you. Your Interactive Poster is what they see on your screen. The first screen has the same shape for everyone: your claim at the top, and three cards under it for the work, one decision and one obstacle. When a visitor asks about a card, you open it and show the evidence behind it. What sits behind each card is yours to design.
 
-This first version is a working poster. Only Prof. Sathya and Paige see it; your classmates first see your poster at the rehearsal on Wednesday 2 December. So keep your thinking visible on it: what a visitor can see now, what you will add by 7 December, and where the story does not yet sound like you. [for Sathya's read]
+This first version is a working poster. Prof. Sathya and Paige grade this version, and your class sees your poster at the rehearsal on Wednesday 2 December. So keep your thinking visible on it: what a visitor can see now, what you will add by 7 December, and where the story does not yet sound like you. [for Sathya's read]
 
 Start from the [template](interactive-poster-starter.html): open it, replace its text, and download your edited copy. The [two sample posters](interactive-poster-samples.html) show finished posters from two composite students, one contributing to an open-source project and one earning a Security+ certificate with a home lab.
 
@@ -109,6 +109,16 @@ Where can a reviewer open the first version of your poster? *(Share a link that 
 
    **Your answer to task 4.** The link, or a note that screenshots are attached.
 
+### Optional · My quality assurance partner
+
+Strongly encouraged: before you submit, ask a classmate to walk through your poster and tell you what they understand from it. Check whether their explanation matches what you had in mind.
+
+*(This part is optional and carries no points.)*
+
+   **My quality assurance partner.** The classmate who walked through your poster.
+
+   **What I learned through this process.** Where their explanation matched what you had in mind, and where it did not.
+
 ## Look forward
 
 Judgment, meaning how you make decisions and choices, is the quality employers keep identifying as most important. Next, in [The decisions behind my work](decisions-behind-my-work.html), due Monday 30 November, you look closely at the decisions behind your work. Looking at what you've built so far, where do you see your judgment showing?
@@ -118,10 +128,10 @@ Judgment, meaning how you make decisions and choices, is the quality employers k
 ## Worked example (shown beside the form) [for Sathya's read: the whole example]
 
 **Example · A contribution to Kolibri, an open-source learning platform** (the first sample poster, as a first version)
-- *My claim now:* Mostly, with some changes. On 2 November I claimed I can understand a large codebase and fix open issues. I narrowed it to finding the cause of a bug in code I didn't write, because that is what I can show a visitor now.
-- *My first screen:* I can find the cause of a bug in a large codebase I didn't write, and prove my fix with a test. Under it: Capstone: contributing to Kolibri, an open-source learning platform. The work: content imports said "complete" even when files were missing. Decision: checking every place that copies files the same way, instead of fixing only the one in the bug report. Obstacle: 11 tests failed on my laptop before I had changed anything.
+- *My claim now:* Mostly, with some changes. On 2 November I claimed I can understand a large codebase and fix open issues. I kept that, and added seeing my changes through the maintainers' review, because getting my code accepted by engineers outside my own team is the gap I chose to close.
+- *My first screen:* I can understand the design and implementation of a large codebase and make changes to improve or fix issues and see it through its maintainers' review. Under it: Capstone: contributing to Kolibri, an open-source learning platform. The work: Kolibri said copying the lessons was "complete" even when files were missing. Decision: checking every place that copies files the same way, instead of fixing only the one in the bug report. Obstacle: 11 tests failed on my laptop before I had changed anything.
 - *The evidence behind each card:* The work: a short screen recording of my test, which copies 40 files and makes 3 of them fail. Before my fix the import still says "complete"; after it, the import names the 3 missing files. Decision: the two other places Claude Code found, and my notes from trying the bug in each: one really had it, and the other was already handled. Obstacle: the same test run, with 11 failures on Windows and none on Linux.
-- *My review and plan:* A visitor can see one fix proven now, but "a large codebase" rests on one bug. By Monday 30 November I will fix a second issue in a different part of Kolibri, from the maintainers' list of starter issues, working on it Tuesday and Thursday evenings. When I said my poster out loud, the work card sounded like me, but the claim sounded like a resume. I will rewrite it in the words I used when I explained the bug to my roommate.
+- *My review and plan:* A visitor can see one fix and the test that proves it. Two parts of my claim are not proven yet. My pull request is open and I have answered one round of review, but it isn't merged, so "see it through its maintainers' review" still needs that. And "understand the design" rests on one part of Kolibri. By Monday 30 November I will answer the next review and fix the second place I found with the same problem, working on it Tuesday and Thursday evenings. When I said my poster out loud, the work card sounded like me, but "design and implementation" sounded like a resume. I will explain it the way I explained the import code to my roommate.
 - *My poster so far:* a link to my poster on GitHub Pages, which opens without asking for access.
 
 ## Self-check
@@ -152,7 +162,7 @@ Graded item: Interactive Poster, first version. Course: CST499. Due: Monday 16 N
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student practices articulating the story of their project to demonstrate their unique value proposition: a first, working version of the Interactive Poster they will present at the Capstone Festival, built on the claim from One claim about my T-Shaped Skill (a claim they can support with evidence by Monday 7 December). Only the instructors see this version.
+Learning purpose: the student practices articulating the story of their project to demonstrate their unique value proposition: a first, working version of the Interactive Poster they will present at the Capstone Festival, built on the claim from One claim about my T-Shaped Skill (a claim they can support with evidence by Monday 7 December). The instructors grade this version. Before submitting, the student is strongly encouraged to ask one classmate to walk through the poster and say what they understand from it, then record the classmate's name and what they learned; this part is optional and carries no points. If the student mentions it, ask what the classmate's explanation showed them.
 
 The template (interactive-poster-starter.html) has a first screen with the student's name and concentration; "My claim: I can …"; a line naming the project or certificate; three cards — The work, Decision ("what I chose instead of another option. Because: …"), and Obstacle or open question; and a line on where the work stands. Inside each card: Evidence (the work, an observation, test, review or result), an evidence link, and what this supports and what remains uncertain. Students may build in other tools; the first screen keeps the same shape.
 
