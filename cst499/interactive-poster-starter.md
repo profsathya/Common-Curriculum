@@ -1,33 +1,37 @@
-# My editable poster
+# Build your Interactive Poster
 
-Editable companion to `interactive-poster-starter.html`. This starter supports the existing poster assignments; it adds no submission or grading requirements.
+Editable companion to `interactive-poster-starter.html`. Edit this file and Alan carries the change into the HTML.
 
-Edit the text on the poster and inside each card. Download your edited copy before closing; reopen that file to continue. To submit, share a hosted copy or use screenshots as the assignment allows. Fill in all three cards in your first version; you rework the decision card in The decisions behind my work.
+Click your name, concentration, claim, or card text to change it, and open each card to fill in what's inside. Your changes are kept only in this browser tab, so download your poster before you close it. To keep working later, open the file you downloaded. Fill in all three cards for your first version. You'll come back to the decision card in "The decisions behind my work". To submit, upload the HTML file you downloaded. That file is your Interactive Poster.
 
-Controls: **Download my edited poster** and **Preview presentation** (then **Continue editing**).
-
-Changes stay in this tab until you download.
+Buttons: **Download my edited poster** and **Preview presentation** (then **Continue editing**). The status line under the buttons stays empty until the student edits, downloads or reopens.
 
 ## First screen
 
 - Your name and concentration.
-- **My claim:** I can… [write the claim your evidence supports].
-- **My project:** Capstone: [your project or certificate].
-- **The work:** The problem I worked on. Why it matters: who it affects, and how.
-- **Decision:** What I chose instead of another option. Because: the reason for my choice.
-- **Obstacle or open question:** An obstacle or question in my work. What I did or will try: my response and where it stands.
-- **Where it stands:** What is finished, what remains, and any milestones with dates.
+- **Claim:** [Write one sentence about a skill your work shows. You might start with "I can…".]
+- **Project:** Capstone: [your project or certificate]
+- **The work:** [The problem I worked on, in plain words] / Why it matters: [who it affects, and how]
+- **Decision:** [A choice I made] instead of [another option I considered] / Because: [the reason for my choice]
+- **Obstacle or open question:** [What went wrong, or an open question I'm still working on] / What I did or will try: [what I changed, or what I'm trying next]
+- **Where it stands:** [what is finished, and what isn't yet]
+- Card buttons: Open the work card · Open the decision card · Open the obstacle or open question card
 
 ## Inside each card
 
-**Evidence:** Show the work or describe an observation, test, review or result. Include enough detail to connect it to the claim or reason.
+**Evidence**
+- Work: [Show the work itself, such as the bug and the test that proves your fix, the investigation and what you observed, or the screen you built. Point out the part that matters most, and explain what it shows.]
+- Decision: [Something a visitor can look at that backs up your reason, such as the postings you read, feedback you got, or a test result. Explain what it shows.]
+- Obstacle or open question: [Show the problem or open question, and what changed if anything did. If it isn't solved yet, say so.]
 
-**Evidence link:** An HTTP or HTTPS link that opens the evidence.
+**Evidence link:** a link that opens the evidence.
 
-**What this supports and what remains uncertain:** Explain what a visitor can conclude and what needs another check.
+**What I'm still not sure about** (all three cards): [One sentence on what is still open. It's fine if something isn't settled yet.]
 
-The work card also includes an optional **How I worked with AI:** what AI first gave me, what I asked next and why, and how I checked the result, if it helps make the case.
+**How I worked with AI** (work card): [Optional: explain what AI first gave you, what you asked next and why, and how you checked its response.]
 
-The decision and obstacle cards also include **What the choice or response cost:** time, scope, or another trade-off.
+**What it cost me**
+- Decision: [One sentence on what this cost you, such as time, or something you didn't get to do.]
+- Obstacle or open question: [One sentence on what this cost you, if it cost you anything.]
 
-Each card has a **Close** control. Escape also closes it and returns focus to its opener.
+Each card has a **Close** button. Escape also closes it.
