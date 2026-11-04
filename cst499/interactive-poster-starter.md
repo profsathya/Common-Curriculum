@@ -4,6 +4,8 @@ Editable companion to `interactive-poster-starter.html`. Edit this file and Alan
 
 Click your name, concentration, claim, or card text to change it, and open each card to fill in what's inside. Your changes are kept only in this browser tab, so download your poster before you close it. To keep working later, open the file you downloaded. Fill in all three cards for your first version. You'll come back to the decision card in "The decisions behind my work". To submit, upload the HTML file you downloaded. That file is your Interactive Poster.
 
+**Feedback note (under the intro):** This is the first semester we are using Interactive Posters, so these samples and this template are a first version for us too. If something is confusing, or you have an idea that would make the poster work better for you, please email either of us: Prof. Sathya (snarayanan@csumb.edu) or Prof. Paige (pweisskirch@csumb.edu). We will keep improving it with your suggestions.
+
 Buttons: **Download my edited poster** and **Preview presentation** (then **Continue editing**). The status line under the buttons stays empty until the student edits, downloads or reopens.
 
 ## First screen
