@@ -256,7 +256,7 @@ Next, in [Five real-world scenarios](five-real-world-scenarios-sprint-3.html), d
 
 ## Self-check
 
-Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
+Tick each line your submission meets. Your ticks are copied with your answers; Prof. Sathya verifies each one.
 
 - [ ] Task 1 identifies the source and relevant section; Path A records learning from the videos and reading; Path C supplies the build’s tool and reproducible configuration · 10 pts
 - [ ] Task 2 explains a scientifically defensible relationship in my own words, consistent with my formula; Path A draws on the book’s predictions and reflections · 10 pts

@@ -15,7 +15,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** You set a Sprint 3 goal and a quality assurance plan for your work toward it, and a classmate agreed to hold you to it ([My Sprint 3 plan](my-sprint-3-plan.html), [My quality assurance partner](my-grader.html)).
+**Builds on your earlier learning.** You set a Sprint 3 goal and a quality assurance plan for your work toward it, and a classmate agreed to hold you to it ([My Sprint 3 goal and quality assurance plan](my-sprint-3-plan.html)).
 
 **This Learning Experience.** Learn to report on your own work against terms you set yourself, with evidence a reader can check and a plain statement of what you did not reach.
 
@@ -29,7 +29,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
 
-(Page note: previous items are My quality assurance partner and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the part of the plan the student thought could be difficult for their partner to evaluate. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the part of your plan you thought could be difficult for your partner to evaluate.")
+(Page note: previous items are My Sprint 3 goal and quality assurance plan and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the part of the plan the student thought could be difficult for their partner to evaluate. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the part of your plan you thought could be difficult for your partner to evaluate.")
 
 Start with the part of your plan you thought could be difficult for your partner to evaluate.
 

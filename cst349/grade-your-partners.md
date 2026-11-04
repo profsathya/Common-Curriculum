@@ -14,7 +14,7 @@ Week 15 · due Monday 7 December, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My quality assurance partner](my-grader.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their quality assurance plan.
+**Builds on your earlier learning.** A classmate, or more than one, asked you to evaluate (grade) their Sprint 3 work and you agreed ([My Sprint 3 goal and quality assurance plan](my-sprint-3-plan.html)); they have sent you their [Sprint 3 report](my-sprint-3-report.html) and their quality assurance plan.
 
 **This Learning Experience.** Learn to evaluate (grade) someone's work against terms they set for themselves, from the evidence in front of you, in a way they can learn from.
 

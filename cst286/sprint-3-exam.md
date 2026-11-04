@@ -8,7 +8,7 @@ This blueprint explains the reasoning to prepare. The exact exam questions and a
 
 ## Purpose
 
-**Builds on your earlier learning.** Your relationship, the check you ran, three applications and two look-alikes, and the feedback you discussed with your grader.
+**Builds on your earlier learning.** Your relationship, the check you ran, three applications and two look-alikes, and the feedback you discussed with your reviewer.
 
 **This Learning Experience.** Show that you can explain and use a physical relationship, judge when it applies, and interpret the evidence from your investigation independently.
 
@@ -24,13 +24,13 @@ The type of reasoning is known ahead of time; the variation may be new. Practice
 
 ## How to prepare
 
-Practice without your notes. Ask your agreed grader to discuss your relationship, assumptions and one scenario, then bring a new case for you to predict before the exam. Record how you used one piece of feedback: a revision, a reasoned decision to retain an answer, or an unresolved question and proposed check. If your meeting happens after submitting your scenarios, include that response in My Sprint 3 experience.
+Practice without your notes. Ask your agreed reviewer to discuss your relationship, assumptions and one scenario, then bring a new case for you to predict before the exam. Record how you used one piece of feedback: a revision, a reasoned decision to retain an answer, or an unresolved question and proposed check. If your meeting happens after submitting your scenarios, include that response in My Sprint 3 experience.
 
 Use the same quality standards as the relationship and scenario assignments: words and formula agree; calculations and units are consistent; physical assumptions justify the model; and conclusions stay within the evidence. These standards apply to all three paths. Path A can draw on its spinning exploration, Path B on its independent investigation, and Path C on its reproducible build and tests.
 
 ## After the exam
 
-Keep the exam’s question-and-explanation discussion separate from the formal review of the two assignments. Submit My Sprint 3 experience on Monday 7 December. Grade one eligible classmate’s relationship and scenarios in Grade a classmate’s Sprint 3 work by Wednesday 9 December; your grader must be a different person, and neither grading partner may be a Sprint 1 or Sprint 2 exam partner. Prof. Sathya reviews recommended scores before any grade changes.
+Keep the exam’s question-and-explanation discussion separate from the formal review of the two assignments. Submit My Sprint 3 experience on Monday 7 December. Review one eligible classmate’s relationship and scenarios in Review a classmate’s Sprint 3 work by Wednesday 9 December; your reviewer must be a different person, and neither review partner may be a Sprint 1 or Sprint 2 exam partner. Prof. Sathya reviews recommended scores before any grade changes.
 
 ## For your AI Dojo
 

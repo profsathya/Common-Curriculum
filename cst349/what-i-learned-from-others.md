@@ -27,7 +27,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
 
-(Page note: previous item is My quality assurance partner. When this browser holds cst349.s3.2.leave, show it under "Before the visit you said you would ask:". Otherwise: "Open your My quality assurance partner submission on Canvas and find the question you said you would ask an alum.")
+(Page note: previous item is Information Diet Audit. When this browser holds cst349.s3.2.leave, show it under "Before the visit you said you would ask:". Otherwise: "Open your Information Diet Audit submission on Canvas and find the question you said you would ask an alum.")
 
 Before the visit you wrote the question you would ask an alum.
 

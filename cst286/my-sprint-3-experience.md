@@ -90,7 +90,7 @@ Which part of how you learned in Sprint 3 will you use the next time you set out
 
 ## Self-check
 
-Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
+Tick each line your submission meets. Your ticks are copied with your answers; Prof. Sathya verifies each one.
 
 - [ ] Step 1 uses at least three of the questions to connect a learning decision, its effect on my understanding, and a future decision · 30 pts
 - [ ] Step 1 supports that account with specifics from my work: dates, hours, resources or people · 30 pts
@@ -103,7 +103,7 @@ Steps 3 and 4 carry no points; the item is complete when they have text.
 
 ## Submit
 
-Share your submitted relationship and five scenarios with your agreed grader, then review one other eligible classmate in [Grade a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
+Share your submitted relationship and five scenarios with your agreed reviewer, then review one other eligible classmate in [Review a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
 
 This graded item is complete when your path is chosen and all four steps have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 

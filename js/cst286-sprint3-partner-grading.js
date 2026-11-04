@@ -53,7 +53,7 @@
     if (empty.length) return empty.length + ' required fields are still empty. The copied text is marked as a draft.';
     var one = value('p1-name').toLowerCase().replace(/\s+/g, ' ');
     var two = value('grader-name').toLowerCase().replace(/\s+/g, ' ');
-    if (one === two) return 'Your grader must be different from the classmate you grade. Reciprocal grading is not allowed. The copied text is marked as a draft.';
+    if (one === two) return 'Your reviewer must be different from the classmate you review. Reciprocal grading is not allowed. The copied text is marked as a draft.';
     return '';
   }
   document.getElementById('copy-reviews').addEventListener('click', function () {
@@ -61,7 +61,7 @@
     var invalid = fields.find(function (el) { return el.type === 'number' && el.value !== '' && !el.checkValidity(); });
     if (invalid) { status.textContent = 'Correct the highlighted score before copying.'; invalid.reportValidity(); invalid.focus(); return; }
     var issue = missing();
-    var text = "CST286 · Grade a classmate's Sprint 3 work\nDue: Wednesday 9 December 2026\n";
+    var text = "CST286 · Review a classmate's Sprint 3 work\nDue: Wednesday 9 December 2026\n";
     if (issue) text += 'DRAFT: ' + issue + '\n';
     function answer(label, content) { text += '\n' + label + '\n' + (content || '(not yet answered)') + '\n'; }
     answer('Calibration · original scores and evidence', saved.calibrationAttempt || '(not yet compared)');

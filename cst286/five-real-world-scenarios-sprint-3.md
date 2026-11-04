@@ -130,7 +130,7 @@ For the model boundary, compare [Vishay TLDR5400 current–voltage data](https:/
 
 ## Review the reasoning across the set
 
-Check that the three applications use the same relationship consistently and that each look-alike breaks a relevant assumption. Before the December 2 exam, meet your agreed grader to discuss your relationship, assumptions and one scenario, and try a new case they bring. The formal grading review remains due December 9. How I used feedback. Record the date and one piece of feedback from your meeting. Describe a revision you made, a reasoned decision to keep your answer, or an unresolved question and the check you propose. If the meeting is still ahead when you submit on November 30, record your plan here; preserve your response in your reflection after the meeting.
+Check that the three applications use the same relationship consistently and that each look-alike breaks a relevant assumption. Before the December 2 exam, meet your agreed reviewer to discuss your relationship, assumptions and one scenario, and try a new case they bring. The formal review remains due December 9. How I used feedback. Record the date and one piece of feedback from your meeting. Describe a revision you made, a reasoned decision to keep your answer, or an unresolved question and the check you propose. If the meeting is still ahead when you submit on November 30, record your plan here; preserve your response in your reflection after the meeting.
 
 ## Look forward
 
@@ -178,7 +178,7 @@ Each pair shows Part 1, one scenario where the prediction applies, and one look-
 
 ## Self-check
 
-Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
+Tick each line your submission meets. Your ticks are copied with your answers; Prof. Sathya verifies each one.
 
 - [ ] Part 1 gives a scientifically defensible relationship, consistent in words and formula, with defined quantities and units · 10 pts
 - [ ] Part 1 gives physically justified assumptions that can each be checked against a new situation · 10 pts
@@ -194,7 +194,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 ## Submit
 
-Share your submitted relationship and five scenarios with your agreed grader, then review one other eligible classmate in [Grade a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
+Share your submitted relationship and five scenarios with your agreed reviewer, then review one other eligible classmate in [Review a classmate's Sprint 3 work](grade-my-two-partners-sprint-3.html) by Wednesday 9 December.
 
 This graded item is complete when your path is chosen, and the look back, Part 1, all five scenarios, the feedback response or meeting plan, and the look forward have text. Go through the Self-check, press **Copy my answers**, review the text, and paste it into the Canvas text box.
 
