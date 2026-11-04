@@ -47,7 +47,7 @@ Write the thing out as a sentence a student reads once. A clipped noun phrase ("
 
 Write out the course's concepts in full, self-contained terms (`a physical system and its quantitative relationship`, `the conditions it holds under`, `a physics learning goal`). Do not use shorthand lifted from inside the form (`from what` on its own, `the condition it needs`, `written as a prediction`) that a student can only decode after opening the assignment page.
 
-- *Find and confirm my relationship*
+- *Find and confirm the relevant quantitative relationship*
   - Claude's first draft: "You leave with: the relationship, its units, and the condition it needs"
   - Sathya's edit: "You leave with: the quantitative relationship, its units, and the physical conditions in which it is applicable"
   - Redraft: "You leave with: the quantitative relationship you found, its units, the conditions it holds under, and how you confirmed it"

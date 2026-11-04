@@ -81,7 +81,7 @@ All three paths develop a relationship you can explain, three scenarios where it
 
 (Page note: the three paths as three cards one after another in the form column, each with its title and one description, then the radio buttons under them; changed from side cards on 24 Oct at his request.)
 
-**Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm my relationship. Within this shared area, develop your question, record predictions before explanations, video learning and model runs, and carry out your own check. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
+**Path A · Guided exploration of spinning objects.** You explore the surprising behavior of spinning objects with guided Dojo conversations and an interactive book embedded in Find and confirm the relevant quantitative relationship. Within this shared area, develop your question, record predictions before explanations, video learning and model runs, and carry out your own check. Preview the interactive book: [Explore spinning objects](find-and-confirm-my-relationship.html?s3path=A#path-a-book).
 
 **Path B · My own precise learning goal.** You choose a new physical phenomenon, credible sources and a relationship to investigate. Organize your investigation, design a check and record its prediction, result and interpretation. Dojo coaching remains available.
 

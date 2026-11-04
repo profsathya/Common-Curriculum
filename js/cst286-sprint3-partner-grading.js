@@ -78,7 +78,7 @@
       answer('Path', path);
       answer('Work reviewed', value('p' + n + '-work'));
       Object.keys(criteria).forEach(function (key) {
-        text += '\n' + (key === 'relationship' ? 'Find and confirm my relationship' : 'Five real-world scenarios') + '\n';
+        text += '\n' + (key === 'relationship' ? 'Find and confirm the relevant quantitative relationship' : 'Five real-world scenarios') + '\n';
         criteria[key].forEach(function (row, i) {
           var prefix = 'p' + n + '-' + key + '-' + i;
           answer(row.labels[path || 'B'], 'Recommended points: ' + (value(prefix + '-score') || '(not scored)') + ' / ' + row.max + '\nEvidence: ' + (value(prefix + '-evidence') || '(not yet recorded)'));

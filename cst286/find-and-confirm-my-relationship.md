@@ -2,7 +2,7 @@
 
 CST286 · Fall 2026 · Sprint 3 · Week 12 · Find it, and check it
 
-# Find and confirm my relationship
+# Find and confirm the relevant quantitative relationship
 
 Graded item · Due Date: Monday 16 November · 100 pts
 
@@ -46,7 +46,7 @@ AI Dojo Passcode for this Graded Item: **REL3-1116-R3**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Help me investigate my goal for "Find and confirm my relationship" in CST286. First give its passcode, title and due date from the course context. I am on Path [A, B or C]. Ask what I have noticed or tried since setting my goal, what I expect and what puzzles me. Follow my response one question at a time. On A, use the embedded spinning-objects book: discuss my current step and my prediction before revealing an explanation; help me understand the videos and choose the speed or direction exploration that fits my goal. On B, help me choose and evaluate a source and design my own investigation. On C, ask what I have built, what I can change and measure, and help me test my model. Teach when I need support, then ask me to explain or try the idea. Help me plan a numerical prediction before running my check and interpret what I observe. The final form is a synthesis of my investigation. Leave my written responses and calculations for me to produce.
+> Help me investigate my goal for "Find and confirm the relevant quantitative relationship" in CST286. First give its passcode, title and due date from the course context. I am on Path [A, B or C]. Ask what I have noticed or tried since setting my goal, what I expect and what puzzles me. Follow my response one question at a time. On A, use the embedded spinning-objects book: discuss my current step and my prediction before revealing an explanation; help me understand the videos and choose the speed or direction exploration that fits my goal. On B, help me choose and evaluate a source and design my own investigation. On C, ask what I have built, what I can change and measure, and help me test my model. Teach when I need support, then ask me to explain or try the idea. Help me plan a numerical prediction before running my check and interpret what I observe. The final form is a synthesis of my investigation. Leave my written responses and calculations for me to produce.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, the Dojo may be using missing or older course context. Relink the course Google Doc before relying on its assignment-specific guidance. You can keep reading this page, recording observations and planning your investigation while you fix the link.
 
@@ -278,7 +278,7 @@ This graded item is complete when your path is chosen, and the look back, all fo
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Find and confirm my relationship. Course: CST286. Due: Monday 16 November. Passcode: REL3-1116-R3.
+Graded item: Find and confirm the relevant quantitative relationship. Course: CST286. Due: Monday 16 November. Passcode: REL3-1116-R3.
 
 Give the passcode, title and due date first. The purpose is to develop an explanation of a quantitative relationship, identify where it applies and test a prediction. Begin with what the student has observed or tried and what puzzles them, referring to their earlier goal when useful. Follow their thinking one question at a time rather than interviewing them through the form. Teaching, resources and small examples are welcome when followed by student reasoning or action. Do not write their submission or perform their calculation or experiment.
 
