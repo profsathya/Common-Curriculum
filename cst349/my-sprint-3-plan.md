@@ -141,9 +141,11 @@ Write three or four lines that describe quality work toward your goal, each with
 
 ### Task 3 — My quality assurance partner
 
-Choose one classmate who will hold you accountable to your quality assurance plan and evaluate your Sprint 3 report against it by Monday 7 December. Ask them first, and record their name only after they say yes. *(Two conditions: the two of you cannot evaluate each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to evaluate more than one classmate is fine. If you cannot find a partner by Monday 9 November, contact Prof. Sathya or the TA.)*
+Choose one classmate who will hold you accountable to your quality assurance plan and evaluate your Sprint 3 report against it by Monday 7 December. Ask them first, and record their name only after they say yes. *(Two conditions: the two of you cannot evaluate each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to evaluate more than one classmate is fine. If you cannot find a partner, tick "I need help finding a partner" and submit; Prof. Sathya or the TA will help you find one.)*
 
 **My quality assurance partner** (page note: a text input with the class roster as a datalist, copied from the earlier My quality assurance partner page; a name not on the roster shows a warning, and a name that matches a Sprint 1 or Sprint 2 exam partner saved on this browser shows a warning; neither blocks)
+
+☐ I need help finding a partner. (Page note: directly under the name field; when ticked, the three boxes below grey out and the copied text says the student needs help.)
 
 ☐ I asked this person and they agreed to evaluate my Sprint 3 report against my quality assurance plan.
 ☐ They are not someone I am evaluating.
@@ -174,7 +176,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] Task 1 states a goal that pushes me past my immediate interest or comfort zone, and a meaningful step I can take by 30 November · 25 pts
 - [ ] Task 2 has three or four lines that add to 100, each checkable by my partner from my report · 35 pts
 - [ ] At least one line in task 2 shows what the work changes for someone, possibly me · 25 pts
-- [ ] Task 3 names a quality assurance partner from the class roster, with all three boxes ticked · 15 pts
+- [ ] Task 3 names a quality assurance partner from the class roster with all three boxes ticked, or asks for help finding one · 15 pts
 
 **What makes it strong.** A partner who reads only task 2 can tell what your Sprint 3 goal is, and the step in task 1 is the first thing your lines would ask about.
 

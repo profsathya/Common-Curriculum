@@ -275,6 +275,8 @@
   .pnamerow input:focus-visible{outline:3px solid var(--blaze);outline-offset:1px}
   .namewarn{font-size:.9rem;color:var(--blaze);font-weight:700;margin:0 0 8px}
   ul.cks.agree{margin-top:8px}
+  ul.cks.qahelp{margin:4px 0 0}
+  ul.cks.agree.off{opacity:.45}
 </style>
 <style id="a11y-pass-1">
 /* Accessibility pass 2026-10-06. Keep this block last in <head>. */
@@ -458,12 +460,15 @@ code { overflow-wrap: anywhere; }
 </li>
 
 <li class="task" id="task-3">
-<div class="ttext"><span class="tn">3.</span><span class="tt" id="q-t3">Choose one classmate who will hold you accountable to your quality assurance plan and evaluate your Sprint 3 report against it by Monday 7 December. Ask them first, and record their name only after they say yes. <em class="guide">(Two conditions: the two of you cannot evaluate each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to evaluate more than one classmate is fine. If you cannot find a partner by Monday 9 November, contact Prof. Sathya or the TA.)</em></span></div>
+<div class="ttext"><span class="tn">3.</span><span class="tt" id="q-t3">Choose one classmate who will hold you accountable to your quality assurance plan and evaluate your Sprint 3 report against it by Monday 7 December. Ask them first, and record their name only after they say yes. <em class="guide">(Two conditions: the two of you cannot evaluate each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to evaluate more than one classmate is fine. If you cannot find a partner, tick &quot;I need help finding a partner&quot; and submit; Prof. Sathya or the TA will help you find one.)</em></span></div>
 <div class="rbox">
 <div class="pnamerow"><label for="bx-t3">My quality assurance partner</label><input type="text" id="bx-t3" list="roster" autocomplete="off" aria-describedby="w-t3 pw-t3"></div>
 <p class="namewarn" id="w-t3" hidden>This name is not on the class roster. Pick it from the list.</p>
 <p class="namewarn" id="pw-t3" role="status" aria-live="polite" hidden></p>
-<ul class="cks agree">
+<ul class="cks qahelp">
+<li><input type="checkbox" id="qa-help" data-check="qa-help" aria-controls="qa-agree"><label for="qa-help">I need help finding a partner.</label></li>
+</ul>
+<ul class="cks agree" id="qa-agree">
 <li><input type="checkbox" id="qa-1" data-check="qa-1"><label for="qa-1">I asked this person and they agreed to evaluate my Sprint 3 report against my quality assurance plan.</label></li>
 <li><input type="checkbox" id="qa-2" data-check="qa-2"><label for="qa-2">They are not someone I am evaluating.</label></li>
 <li><input type="checkbox" id="qa-3" data-check="qa-3"><label for="qa-3">They were not my partner in the Sprint 1 Exam or the Sprint 2 Exam conversation.</label></li>
@@ -576,7 +581,7 @@ code { overflow-wrap: anywhere; }
 <li><input type="checkbox" id="sc-1" data-check="sc-1"><label for="sc-1">Task 1 states a goal that pushes me past my immediate interest or comfort zone, and a meaningful step I can take by 30 November</label><span class="pts">25 pts</span></li>
 <li><input type="checkbox" id="sc-2" data-check="sc-2"><label for="sc-2">Task 2 has three or four lines that add to 100, each checkable by my partner from my report</label><span class="pts">35 pts</span></li>
 <li><input type="checkbox" id="sc-3" data-check="sc-3"><label for="sc-3">At least one line in task 2 shows what the work changes for someone, possibly me</label><span class="pts">25 pts</span></li>
-<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Task 3 names a quality assurance partner from the class roster, with all three boxes ticked</label><span class="pts">15 pts</span></li>
+<li><input type="checkbox" id="sc-4" data-check="sc-4"><label for="sc-4">Task 3 names a quality assurance partner from the class roster with all three boxes ticked, or asks for help finding one</label><span class="pts">15 pts</span></li>
 </ul>
 <p class="sc-total" id="sc-total" role="status" aria-live="polite">0 of 100 points ticked</p>
 <p class="body"><b>What makes it strong.</b> A partner who reads only task 2 can tell what your Sprint 3 goal is, and the step in task 1 is the first thing your lines would ask about.</p>
@@ -1019,10 +1024,18 @@ code { overflow-wrap: anywhere; }
         QA.addEventListener('input', function () { answerState('t3').text = QA.value; qaWarn(); saveSoon(); });
         QA.addEventListener('change', function () { answerState('t3').text = QA.value; qaWarn(); save(); });
     }
+    var QH = document.getElementById('qa-help'), QAG = document.getElementById('qa-agree');
+    function qaHelp() {
+        if (!QH || !QAG) { return; }
+        QAG.classList.toggle('off', QH.checked);
+        $all('input', QAG).forEach(function (cb) { cb.disabled = QH.checked; });
+    }
+    if (QH) { QH.addEventListener('change', qaHelp); setTimeout(qaHelp, 0); }
     function partnerQuestion() { var q = document.getElementById('q-t3'); return q ? clean(q.textContent) : ''; }
     function partnerBlock() {
         var name = (answerState('t3').text || '').trim();
         var out = 'Task 3 · My quality assurance partner\n' + partnerQuestion() + '\n\n';
+        if (QH && QH.checked) { return out + 'My quality assurance partner\n   [x] I need help finding a partner.' + (name ? ' (Name entered: ' + name + ')' : '') + '\n\n'; }
         out += 'My quality assurance partner\n   ' + (name || '(not chosen yet)') + '\n';
         $all('#task-3 ul.agree li').forEach(function (li) { var cb = $('input', li); out += '   [' + (cb && cb.checked ? 'x' : ' ') + '] ' + clean($('label', li).textContent) + '\n'; });
         return out + '\n';
