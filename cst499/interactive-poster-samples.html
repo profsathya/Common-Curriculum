@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interactive Poster Mockup</title>
+<title>Two sample Interactive Posters</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
@@ -127,14 +127,14 @@ body{background:var(--page);color:var(--ink);font-family:var(--serif);line-heigh
 
 <header class="top">
   <div>
-    <h1>Interactive poster: a mockup on a laptop screen</h1>
-    <p>What a visitor sees when they sit down. The student opens with the claim and one sentence per card, then the visitor picks a card to open. The student is a composite; the details are illustrative.</p>
+    <h1>Two sample Interactive Posters</h1>
+    <p>These are two sample Interactive Posters, the way a visitor would see them on your laptop at the festival. The students are made up and the details are examples. When a visitor sits down, start by saying your claim and one sentence about each card. Then let the visitor choose which card to open, and talk them through what is inside.</p>
   </div>
   <div class="switch" role="group" aria-label="Choose a sample">
-    <button type="button" data-s="a" aria-pressed="true">Open source</button>
-    <button type="button" data-s="b" aria-pressed="false">Security+</button>
+    <button type="button" data-s="a" aria-pressed="true">Open-source sample</button>
+    <button type="button" data-s="b" aria-pressed="false">Security+ sample</button>
     <button type="button" data-s="t" aria-pressed="false">Blank template</button>
-    <a href="interactive-poster-starter.html" target="_blank" rel="noopener">Open editable starter</a>
+    <a href="interactive-poster-starter.html" target="_blank" rel="noopener">Open the template to build your poster</a>
   </div>
 </header>
 
@@ -155,7 +155,7 @@ body{background:var(--page);color:var(--ink);font-family:var(--serif);line-heigh
         <p class="big" id="claim"></p>
         <p class="who" id="who"></p>
       </section>
-      <section class="cards" id="cards" aria-label="Three decisions"></section>
+      <section class="cards" id="cards" aria-label="Poster cards"></section>
       <p class="now" id="now"></p>
       <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="ptitle">
         <div class="sheet" id="sheet">
@@ -170,59 +170,61 @@ body{background:var(--page);color:var(--ink);font-family:var(--serif);line-heigh
 </div>
 
 <section class="notes">
-  <div><h3>The first screen</h3><p>A claim, three cards in one line each, and one line on where things stand. It fits one laptop screen with no scrolling. The claim says only what the cards prove.</p></div>
-  <div><h3>The work card</h3><p>The heavy-bordered card shows the work itself: the bug and its test, or the investigation and what was observed, plus what the student is still unsure about. The AI back-and-forth, including how the student checked it, sits here.</p></div>
-  <div><h3>Decision and obstacle</h3><p>One choice with its reason and trade-off, and one obstacle with the dashed border. In the template the obstacle can stay unresolved.</p></div>
+  <div><h3>The first screen</h3><p>The first screen has your claim, three cards with one line each, and one line on where things stand. Keep it short enough to fit on your laptop screen without scrolling. Your claim should say only what a visitor can see proven when they open the cards.</p></div>
+  <div><h3>The work card</h3><p>The work card shows the work itself, such as a bug and the test that proves the fix, or an investigation and what you observed. It also says what you are still not sure about. If AI helped, this is a good place to show how you worked with it and how you checked what it gave you.</p></div>
+  <div><h3>The decision and obstacle cards</h3><p>The decision card shows one choice you made, why you made it, and what it cost you. The third card shows something that went wrong, or an open question you are still working on. It is fine if it isn't solved yet.</p></div>
 </section>
 
 <script>
 var S = {
   a:{
-    claim:"I can find the cause of a bug in a large codebase I didn't write, and prove my fix with a test.",
+    claim:"I can understand the design and implementation of a large codebase and make changes to improve or fix issues and see it through its maintainers’ review.",
     who:"Capstone: contributing to Kolibri, an open-source learning platform",
-    now:"<b>Where it stands:</b> my pull request is open. A maintainer asked for one change, which I made. It is not merged yet.",
+    now:"<b>Where it stands:</b> My pull request was merged after two rounds of review. I'm now working on the second place I found with the same problem.",
     cards:[
-      {kind:"work", line:"Content imports said “complete” even when files were missing", sub:["Why it matters","a teacher with no internet would find lessons missing in front of the class."],
-       ev:'<pre class="term"><span class="c">$ pytest test_import.py</span>\n<span class="c">before fix</span>  <b class="f">FAILED</b>  "complete", 3 files missing\n<span class="c">after fix</span>   <b class="p">PASSED</b>  "partial", 3 files named</pre><span class="cap">The test I wrote copies 40 files and makes 3 of them fail. Before my fix the import still reported “complete”.</span>',
-       unsure:"Whether teachers should see the warning or only the person who runs the device. I asked on the issue thread.",
-       ai:[["Claude Code gave me","A fix for the one case in the bug report."],["I redirected it","“Find every place that copies files the same way.” It named two more."],["How I checked","I tried to reproduce the bug in both places. One really had it. The other was already handled, so I left it alone."]]},
-      {kind:"decision", line:"Fix bugs in a real open-source project instead of building my own app", sub:["Because","employers want code that other engineers have reviewed."],
-       ev:'<div class="tally" aria-label="9 of 12">'+dots(9,12)+'</div><span class="cap">9 of the 12 postings I saved asked for code shipped through review</span>',
+      {kind:"work", line:"Kolibri said copying the lessons was “complete” even when files were missing", sub:["Why it matters","a teacher without internet could find out in the middle of class that part of a lesson is missing."],
+       ev:'<pre class="term"><span class="c">$ pytest test_import.py</span>\n<span class="c">before fix</span>  <b class="f">FAILED</b>  "complete", 3 files missing\n<span class="c">after fix</span>   <b class="p">PASSED</b>  "partial", 3 files listed</pre><span class="cap">My test copies 40 files and makes 3 of them fail on purpose. Before my fix, Kolibri still said “complete”. After my fix, it says “partial” and lists the 3 missing files.</span>',
+       unsure:"I'm not sure yet whether teachers should see this warning, or only the person who manages the device. I asked the maintainers about it on the issue page.",
+       ai:[["Claude Code gave me","A fix for the one case in the bug report."],["What I asked next","“Find every place that copies files the same way.” It found two more."],["How I checked","I tried to reproduce the bug in both places. One really had it. The other was already handled, so I left that one alone."]]},
+      {kind:"decision", line:"Fix bugs in a real open-source project instead of building my own app", sub:["Because","most of the job postings I saved asked for experience having code reviewed by other engineers."],
+       ev:'<div class="tally" aria-label="9 of 12">'+dots(9,12)+'</div><span class="cap">9 of the 12 job postings I saved asked for experience having code reviewed by other engineers.</span>',
        gave:"I won't have an app that is entirely my own."},
-      {kind:"obstacle", line:"11 tests failed on my laptop before I had changed anything", sub:["What I did","moved to Linux so I could trust my test results."],
+      {kind:"obstacle", line:"11 tests failed on my laptop before I had changed anything", sub:["What I did","I set up Linux and ran the tests there. They all passed, so I could tell whether my own changes broke anything."],
        ev:'<div class="runs"><span>Windows</span><div class="bar"><span class="fail" style="width:11%"></span><span class="pass" style="width:89%"></span></div><span>Linux</span><div class="bar"><span class="pass" style="width:100%"></span></div></div><span class="cap">The same test run: 11 failures on Windows before I changed anything, 0 on Linux</span>',
-       gave:"I lost a week of progress on the bug itself."}
+       gave:"The setup took me a week, and I didn't work on the bug during that time."}
     ]},
   b:{
-    claim:"I can investigate a question about network traffic in a safe lab, and explain what the evidence shows.",
+    claim:"I can investigate network activity, recognize signs of an attack, and suggest ways to mitigate similar attacks with an action plan.",
     who:"Capstone: CompTIA Security+ certificate and home lab",
-    now:"<b>Where it stands:</b> the exam is on December 12. One investigation is written up, and a second, on traffic I did not create myself, is in progress.",
+    now:"<b>Where it stands:</b> My exam is on December 12. I have written up one investigation, and I'm working on a second one using traffic I didn't create myself.",
     cards:[
-      {kind:"work", line:"Was the Windows machine in my lab being scanned?", sub:["What I found","yes. One machine tried 1,000 ports in 20 seconds, which is a scan, not normal use."],
-       ev:'<table class="pk"><thead><tr><th>Seconds</th><th>From</th><th>To port</th><th>Packet</th></tr></thead><tbody><tr><td>0.000</td><td>10.0.0.5</td><td>21</td><td>SYN</td></tr><tr><td>0.021</td><td>10.0.0.5</td><td>22</td><td>SYN</td></tr><tr class="hl"><td>0.039</td><td>10.0.0.5</td><td>80</td><td>SYN</td></tr><tr><td>0.061</td><td>10.0.0.5</td><td>443</td><td>SYN</td></tr></tbody></table><p class="note">My note: same sender, a new port every two hundredths of a second, and no real conversation on any of them. A person using the machine would talk to a few ports, not hundreds.</p>',
-       unsure:"I ran the scan myself, so I knew the answer before I looked. I have not yet shown I can spot a scan in traffic I didn't create.",
-       ai:[["ChatGPT gave me","The Wireshark filter that finds the scan."],["I redirected it","“Don't give me the answer. Ask me what I expect to see first, then let me look.”"],["How I checked","A classmate gave me a capture I had never seen. Without AI, I explained two of its three events correctly."]]},
-      {kind:"decision", line:"Security+ and a home lab instead of studying for the exam alone", sub:["Because","10 of the 12 postings I saved named Security+, and analyst roles ask for hands-on investigation."],
-       ev:'<div class="lab"><span>Kali</span><span>Ubuntu</span><span>Windows</span></div><span class="cap">Three virtual machines on a network that cannot reach the internet</span><p>Illustrative posting analysis: 10 of 12 saved postings requested Security+. In your own card, link the postings and identify the hands-on investigation requirements that informed your choice. Use the investigation record to show the practical work.</p>',
-       gave:"Less time for exam study, and I had to learn how to keep the lab safely cut off from the internet."},
-      {kind:"obstacle", line:"My practice scores were stuck around 62% for three weeks", sub:["What I did","paused to learn networking basics, and my score rose to 81%."],
+      {kind:"work", line:"Was the Windows machine in my lab being scanned?", sub:["What I found","Yes. Another machine in the lab tried to connect to 1,000 ports in 20 seconds, which is what a scan looks like."],
+       ev:'<table class="pk"><thead><tr><th>Seconds</th><th>From</th><th>To port</th><th>Packet</th></tr></thead><tbody><tr><td>0.000</td><td>10.0.0.5</td><td>21</td><td>SYN</td></tr><tr><td>0.021</td><td>10.0.0.5</td><td>22</td><td>SYN</td></tr><tr class="hl"><td>0.039</td><td>10.0.0.5</td><td>80</td><td>SYN</td></tr><tr><td>0.061</td><td>10.0.0.5</td><td>443</td><td>SYN</td></tr></tbody></table><p class="note">My note: These requests came from the same machine, about two hundredths of a second apart, and each tried a different port.</p>',
+       plan:"First, I would close the ports the Windows machine doesn't need, such as port 21 for file transfer. Then I would add a firewall rule that blocks any machine that tries more than 20 new ports in a minute. Finally, I would set up an alert so the next scan like this shows up on its own, and nobody has to find it by reading a capture.",
+       unsure:"I ran the scan myself, so I already knew the answer before I looked. I haven't yet shown that I can spot a scan in traffic I didn't create.",
+       ai:[["ChatGPT gave me","The Wireshark filter that finds the scan."],["What I asked next","“Don't give me the answer. Ask me what I expect to see first, then let me look.”"],["How I checked","A classmate gave me a capture I had never seen. Without AI, I explained two of its three events correctly."]]},
+      {kind:"decision", line:"Security+ and a home lab instead of studying for the exam alone", sub:["Because","10 of the 12 job postings I saved asked for Security+, and the analyst postings also asked for experience investigating real network traffic."],
+       ev:'<p class="note">I found Security+ in 10 of the 12 job postings I saved.</p><div class="lab"><span>Kali</span><span>Ubuntu</span><span>Windows</span></div><span class="cap">My lab: three virtual machines on a network that can\'t reach the internet.</span>',
+       gave:"I had less time to study for the exam, and I had to learn how to keep the lab cut off from the internet."},
+      {kind:"obstacle", line:"My practice scores were stuck around 62% for three weeks", sub:["What I did","I took two weeks off from practice exams to learn networking basics. After that, my practice score went up to 81%."],
        ev:chart(),
        gave:"My exam date moved back two weeks."}
     ]},
   t:{
-    claim:"Your claim: one sentence that starts with “I can…”. Claim only what a visitor can see proven on this screen.",
-    who:"Capstone: one line naming your project or certificate",
-    now:"<b>Where it stands:</b> one honest sentence on what is finished and what is not finished yet.",
+    claim:"Your claim: one sentence about a skill your work shows, which a visitor can see proven when they open your cards. You might start with “I can…”.",
+    who:"Capstone: one line that says what your project or certificate is",
+    now:"<b>Where it stands:</b> one sentence on what is finished and what isn't yet.",
     cards:[
       {kind:"work", line:"[The problem you worked on, in plain words]", sub:["Why it matters","who it affects, and how."],
-       ev:'<p class="hint">Show the work itself, not a description of it: the bug and the test that proves the fix, the investigation and what you observed, or the screen you built. Point to the part that matters.</p>',
-       unsure:"One honest sentence on what is still open or uncertain. It is fine for something to be unresolved.",
-       ai:[["AI gave me","What you first got back from the AI."],["I redirected it","What you asked next, and why."],["How I checked","What you did to confirm the result was right."]]},
-      {kind:"decision", line:"[A choice you made] instead of [another option you considered]", sub:["Because","the reason, ideally from outside you: a job posting, a person, a user or a test result."],
-       ev:'<p class="hint">One thing a visitor can look at that supports the reason.</p>',
+       ev:'<p class="hint">Show the work itself, such as the bug and the test that proves your fix, the investigation and what you observed, or the screen you built. Point out the part that matters most.</p>',
+       unsure:"One sentence on what is still open. It's fine if something isn't settled yet.",
+       aiIntro:"You can use this section to show how you worked with AI.",
+       ai:[["AI gave me","What you first got back from the AI."],["What I asked next","What you asked next, and why."],["How I checked","How you checked what the AI gave you, and what you found."]]},
+      {kind:"decision", line:"[A choice you made] instead of [another option you considered]", sub:["Because","the reason for your choice. If you can, use something from outside yourself, such as a job posting, a conversation, a user or a test result."],
+       ev:'<p class="hint">Something a visitor can look at that backs up your reason, such as the postings you read.</p>',
        gave:"One sentence on what this choice cost you."},
-      {kind:"open", line:"[What went wrong, or what is still not working]", sub:["What I did","what you changed, or what you are trying next."],
-       ev:'<p class="hint">Show the problem, and what changed if anything did. If it is not solved yet, say so.</p>',
+      {kind:"open", line:"[What went wrong, or an open question you're still working on]", sub:["What I did or will try","what you changed, or what you're trying next."],
+       ev:'<p class="hint">Show the problem or open question, and what changed if anything did. If it isn\'t solved yet, say so.</p>',
        gave:"One sentence on what this cost you, if it cost you anything."}
     ]}
 };
@@ -246,9 +248,10 @@ function openP(i,btn){
   var c=S[cur].cards[i]; lastCard=btn;
   $("ptitle").textContent=c.line;
   var h='<div class="ev'+(c.kind==='obstacle'||c.kind==='open'?' d':'')+'">'+c.ev+'</div><dl class="facts">';
-  if(c.unsure){h+='<div><dt>What I am still not sure about</dt><dd>'+c.unsure+'</dd></div>';}
-  if(c.gave){h+='<div><dt>The trade-off</dt><dd>'+c.gave+'</dd></div>';}
-  if(c.ai){h+='<div><dt>How I steered AI here</dt><dd class="turns">'+c.ai.map(function(t,k){return '<div class="'+(k?'me':'got')+(k===2?' chk':'')+'"><span>'+t[0]+'</span>'+t[1]+'</div>';}).join("")+'</dd></div>';}
+  if(c.plan){h+='<div><dt>What I would do about it</dt><dd>'+c.plan+'</dd></div>';}
+  if(c.unsure){h+='<div><dt>What I\'m still not sure about</dt><dd>'+c.unsure+'</dd></div>';}
+  if(c.gave){h+='<div><dt>What it cost me</dt><dd>'+c.gave+'</dd></div>';}
+  if(c.ai){h+='<div><dt>How I worked with AI</dt><dd class="turns">'+(c.aiIntro?'<p class="hint">'+c.aiIntro+'</p>':'')+c.ai.map(function(t,k){return '<div class="'+(k?'me':'got')+(k===2?' chk':'')+'"><span>'+t[0]+'</span>'+t[1]+'</div>';}).join("")+'</dd></div>';}
   h+='</dl>';
   $("pbody").innerHTML=h; $("panel").classList.add("on"); background(true); $("close").focus();
 }
