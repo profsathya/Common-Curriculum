@@ -2,6 +2,7 @@
      Edit this file; Claude carries the changes into the HTML.
      Draft 1 of 2026-11-05, from Prof. Sathya's planning of 5 November for the first job search group session (Fri 6 Nov, 12-1, Zoom).
      Notes: cowork/fall-2026-courses/cst499-job-search-group-2026-11-06.md
+     Status form for the same session: CST499 Job Search Group — Where I am now (Google Form in Prof. Sathya's Drive).
      The passcode appears in two places (route 1 and the hidden Dojo section) and must be the same in both.
      The prompt in route 2 and the hidden Dojo section describe the same session; a change to one goes into the other. -->
 
