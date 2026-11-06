@@ -29,7 +29,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick.)
 
-(Page note: previous items are My Sprint 3 goal and quality assurance plan and What I learned from others. When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the part of the plan the student thought could be difficult for their partner to evaluate. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the part of your plan you thought could be difficult for your partner to evaluate.")
+(Page note: previous items are My Sprint 3 goal and quality assurance plan and Exploring an idea together (renamed from What I learned from others on 6 Nov). When this browser holds cst349.s3.1.leave, show it under "At the end of your plan you wrote:" — the part of the plan the student thought could be difficult for their partner to evaluate. Otherwise: "Open your My Sprint 3 plan submission on Canvas and find the part of your plan you thought could be difficult for your partner to evaluate.")
 
 Start with the part of your plan you thought could be difficult for your partner to evaluate.
 

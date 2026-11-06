@@ -97,14 +97,14 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 ## Look forward
 
-Next, on Wednesday 18 November, you hear from alumni and industry professionals at the virtual visit, and afterwards you write up what you learned in [What I learned from others](what-i-learned-from-others.html), due Monday 30 November. The alumni are a source of information too. What do you most want to hear from them?
+Next, on Wednesday 18 November, you hear from alumni and industry professionals at the virtual visit, and afterwards you explore one idea from it with two classmates in [Exploring an idea together: conversations after the virtual visit](what-i-learned-from-others.html), due Monday 30 November. The alumni are a source of information too. What do you most want to hear from them?
 
 ○ How they got their first job
 ○ What their work is like day to day
 ○ What they would do differently as a student
 ○ Something about my own Sprint 3 goal
 
-**What I take into the next item.** One question you will ask an alum on 18 November, tied to your Sprint 3 goal. (Page note: saved as cst349.s3.2.leave; the home page shows it under item 2, and What I learned from others opens from it.)
+**What I take into the next item.** One question you will ask an alum on 18 November, tied to your Sprint 3 goal. (Page note: saved as cst349.s3.2.leave; the home page shows it under item 2.)
 
 ## Submit
 
