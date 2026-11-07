@@ -38,7 +38,7 @@ On Thursday 19 November, open [The Commons](https://the-commons.symbioticthinkin
 
 Graded item: Exploring an idea together: conversations after the virtual visit. Course: CST349. Due: Monday 23 November. No passcode; this item has no Dojo route.
 
-Learning purpose: the student learns to critically explore an idea through conversation. After the 18 November virtual visit, each student is matched on The Commons with two classmates and explores one idea from the visit with each until they reach an action item with a date that came out of talking it through, not one they had already planned. The conversations and the closing reflection all happen on The Commons; nothing is submitted on Canvas.
+Learning purpose: the student learns to critically explore ideas they heard through deep conversation. After the 18 November virtual visit, each student is matched on The Commons with two classmates and explores one idea from the visit with each until they reach an action item with a date that came out of talking it through, not one they had already planned. The conversations and the closing reflection all happen on The Commons; nothing is submitted on Canvas.
 
 If a student asks for help, help them pick one idea from the visit worth exploring and think about the questions that would take a conversation past the first answer. Do not write their posts, their action items or their reflection.
 

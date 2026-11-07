@@ -41,11 +41,11 @@ Think about the Sprint 3 goal you just set, what source of information influence
 ○ A class or assignment
 ○ I'm not sure
 
-**Where it came from.** We make important decisions about our lives based on what we learn from different information sources, think and reflect on what information source made you chose the particular goal.
+**Where it came from.** We make important decisions about our lives based on what we learn from different information sources, think and reflect on what information source made you choose the particular goal.
 
 ## Part 1 · The audit
 
-Document what information sources you actually consumed over the past week, not what you wish you had consumed. Do you read, books, articles? Do listen to podcast? Is it social media, which ones? What do you know about the algorithms used by social media? Be specific.
+Document what information sources you actually consumed over the past week, not what you wish you had consumed. Do you read books or articles? Do you listen to podcasts? Is it social media, which ones? What do you know about the algorithms used by social media? Be specific.
 
 **For each source or platform you regularly get information from:**
 

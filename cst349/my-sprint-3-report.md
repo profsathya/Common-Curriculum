@@ -21,11 +21,11 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 [for Sathya's read: the three boxes below are from his words in the review; he wants to read them here before approving]
 
-**Builds on your earlier learning.** Your attempt at setting a goal, and at learning from several sources how you need to adapt it.
+**Builds on your earlier learning.** Setting a learning goal, and applying lessons from diverse information sources to revise and strengthen it.
 
-**This Learning Experience.** Take that learning and use it to adapt and update your plan for professional growth.
+**This Learning Experience.** Build on that experience to adapt and update your plan for professional growth.
 
-**Prepare you for.** Taking charge of your own professional growth, without waiting for a course to set the next step.
+**Prepare you for.** Becoming a self-directed learner, taking charge of your own professional growth.
 
 ☑ **I would like to use the AI Dojo to think this through.** Tick this to use the Dojo, or untick it to answer the tasks yourself. You can draft on this page or in a document. If you use the Dojo summary, place your answers there; use the task boxes only for additions. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -35,7 +35,7 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 (Page note: on the page the look back sits right after the three-box chain, before the Dojo tick. When this browser holds cst349.s3.2.leave, show it under "Before the visit, you planned to ask an alum:". Otherwise show nothing above the question.)
 
-What did you hear at the virtual visit, or in your conversations on The Commons, that changed or confirmed how you see your goal?
+What did you hear at the virtual visit, or in your conversations on The Commons, that helped you strengthen your goal?
 
 [for Sathya's read: the four options and "or confirmed" were added after the review, so the question does not assume the student's view changed]
 
@@ -48,13 +48,13 @@ What did you hear at the virtual visit, or in your conversations on The Commons,
 
 ## Tasks
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
+**Button:** Copy the questions — Paste this into a Google doc and answer each task under it. <<To Alan: I think we need to remove this section from all assignments, I don't think this copy the questions button is that useful and is being used by students - lets just remove them in all three courses all files please>>
 
-Each **+** opens an example, more examples if you want them, and a reflection question. Nothing under a **+** is required.
+<<To Alan: remove this line>> Each **+** opens an example, more examples if you want them, and a reflection question. Nothing under a **+** is required.
 
 ### Task 1 — The step I took
 
-Describe the step you took toward your Sprint 3 goal, or how you changed it, and what it showed you about the goal. Include evidence a classmate could check, such as a date, a name or a link. *(If you took part of the step, or changed it along the way, describe what you did and what led you to change it.)*
+Describe the step you took toward your Sprint 3 goal, or how you changed it, and if you learned anything through this process. Include evidence a classmate could check, such as a date, a name or a link. *(If you took part of the step, or changed it along the way, describe what you did and what led you to change it.)*
 
 *Box label:* **Your answer to task 1.** The step you took or how you changed it, what it showed you, and the evidence.
 *Placeholder:* The step I took — … ⏎ What it showed me about my goal — … ⏎ Evidence — …
