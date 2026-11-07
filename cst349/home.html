@@ -92,6 +92,17 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .ec p{font-size:14.5px;line-height:1.55;margin:14px 0 0}
 .ec ul{margin:10px 0 0;padding-left:20px} .ec li{font-size:14.5px;line-height:1.55;padding:3px 0}
 .ec .ec-h{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:22px 0 0}
+
+/* Sprint 3 kickoff video (YouTube, plays in place) */
+.kvid{margin:14px 0 18px;max-width:640px}
+.kvid .vidbtn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;background:#10334A;color:#fff;border:1px solid #10334A;border-radius:8px;padding:12px 16px 12px 12px;font:inherit}
+.kvid .vidbtn::before{content:"\25B6";flex:0 0 36px;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;padding-left:2px}
+.kvid .vidbtn:hover{border-color:var(--teal)} .kvid .vidbtn:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
+.kvid .vt{display:block;font-weight:700;font-size:15px} .kvid .vm{display:block;font-size:12.5px;color:#CADCFC;margin-top:2px}
+.kvid .vidbtn[hidden]{display:none}
+.kvid .player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden}
+.kvid .player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kvid .vlink{font-size:12.5px;color:var(--muted);margin:5px 0 0}
 </style>
 </head>
 <body>
@@ -106,6 +117,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 
 <div class="eyebrow">CST349 &middot; Weeks 11&ndash;15 &middot; Nov 4 &ndash; Dec 7</div>
 <h1>Sprint 3 &middot; Set your own goal, and the terms you are graded on</h1>
+<div class="kvid"><button type="button" class="vidbtn" data-yt="WPHI1zDQtnM" data-title="Missed the Nov 4 class? Watch the Sprint 3 kickoff"><span><span class="vt">Missed the Nov 4 class? Watch the Sprint 3 kickoff</span><span class="vm">Prof. Sathya &middot; 6 min &middot; captions with CC</span></span></button><p class="vlink">Or open it on YouTube: <a href="https://youtu.be/WPHI1zDQtnM" target="_blank" rel="noopener">youtu.be/WPHI1zDQtnM</a></p></div>
 <p class="foot">Click a number to check an item off. Click <b>Notes</b> to keep notes on an item. Both stay on this computer.</p>
 
 <ol class="seq">
@@ -385,6 +397,17 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
   document.addEventListener('input',function(e){ if(e.target&&e.target.closest&&e.target.closest('.notes')) setTimeout(paint,400); });
   paint();
 })();
+
+/* Sprint 3 kickoff video: the YouTube player loads only when the button is pressed. Captions stay off until the viewer turns on CC. */
+(function(){document.querySelectorAll('.kvid .vidbtn').forEach(function(btn){btn.addEventListener('click',function(){
+  var id=btn.getAttribute('data-yt');if(!id){return;}
+  var box=document.createElement('div');box.className='player';
+  var f=document.createElement('iframe');
+  f.setAttribute('src','https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1');
+  f.setAttribute('title',btn.getAttribute('data-title')||'');
+  f.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  f.setAttribute('allowfullscreen','');f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+  box.appendChild(f);btn.parentNode.insertBefore(box,btn);btn.hidden=true;});});})();
 </script>
 </body>
 </html>
