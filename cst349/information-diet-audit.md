@@ -34,24 +34,24 @@ Reflect on the quality of your information diet.
 
 (Page note: previous item is My Sprint 3 plan. When this browser holds its task 1 answer, show it under "In My Sprint 3 plan you wrote your goal as:". Otherwise: "Open your My Sprint 3 plan submission on Canvas and find your Sprint 3 goal.")
 
-Think about the Sprint 3 goal you just set. What information shaped it?
+Think about the Sprint 3 goal you just set, what source of information influenced you to pick that goal?
 
 ○ A person I talked to
 ○ Something I read or watched
 ○ A class or assignment
 ○ I'm not sure
 
-**Where it came from.** The source, and how it shaped your goal.
+**Where it came from.** We make important decisions about our lives based on what we learn from different information sources, think and reflect on what information source made you chose the particular goal.
 
 ## Part 1 · The audit
 
-Document what you actually consumed over the past week, not what you wish you had consumed. Be specific.
+Document what information sources you actually consumed over the past week, not what you wish you had consumed. Do you read, books, articles? Do listen to podcast? Is it social media, which ones? What do you know about the algorithms used by social media? Be specific.
 
 **For each source or platform you regularly get information from:**
 
 - What is it, and how often do you check it?
 - How did you come across it?
-- How much do you think you can rely on the information you get from it, and why?
+- How much do you think you can rely on the information you get from it, why and why not?
 
    **My sources.** One source per line, with the three answers.
 
@@ -65,7 +65,7 @@ Document what you actually consumed over the past week, not what you wish you ha
 
 ## Part 2 · One change
 
-Choose one change that would make you better informed: add, replace, reduce, or use a source differently. A source can be a person, program, publication, community, or feed. Say what you will change and why.
+Choose one change that would make you better informed, get a broader and more balanced perspective so that your decisions about your own life will be better informed: add, replace, reduce, or use a source differently. A source can be a person, program, publication, community, or feed. Say what you will change and why.
 
    **My one change.** The change, and why.
 

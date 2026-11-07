@@ -16,17 +16,17 @@ Week 14 · due Monday 23 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
-**Builds on your earlier learning.** In the [Information Diet Audit](information-diet-audit.html), you learned to critically evaluate your information.
+**Builds on your earlier learning.** In the [Information Diet Audit](information-diet-audit.html), you learned to critically evaluate your information sources.
 
-**This Learning Experience.** Learn to critically explore an idea through conversation.
+**This Learning Experience.** Learn to critically explore ideas you heard through deep conversation.
 
-**Prepare you for.** Bring your action items into your Sprint 3 report, where you pull together your Sprint 3 work into a plan for your professional growth.
+**Prepare you for.** Applying what you learn from your source to develop a plan for your professional growth.
 
 (Page note: NEEDS REVIEW. This third box is a placeholder agreed on 6 Nov until My Sprint 3 report is redesigned; revisit it when that review is done. Not shown to students.)
 
 ## Task
 
-On Thursday 19 November, open [The Commons](https://the-commons.symbioticthinking.ai), start a conversation with each of your two matches, and explore one idea from the virtual visit together until you each reach an action item with a date.
+On Thursday 19 November, open [The Commons](https://the-commons.symbioticthinking.ai), start a conversation with each of your two matches, and explore one idea from the virtual visit together until you each reach an action item with a date. Relevant instructions and guidance for the conversation are built into The Commons tool.
 
 **Button:** Go to The Commons
 
