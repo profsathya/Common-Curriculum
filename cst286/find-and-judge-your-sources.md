@@ -56,8 +56,6 @@ AI Dojo Passcode for this Graded Item: **SRCS-0925**
 
 ## Tasks
 
-**Button:** Copy the questions — We recommend working on this page so you can use the guidance as you answer. To work in your own document, copy the questions and write your answer under each one.
-
 Answer each task in the box under it. The **+** under each box opens examples and a reflection question. Use these to develop and check your answer. (Page note: the answer box sits outside the +, under the task. The text in parentheses after each question is set in italics as guidance, on the page and in the copied questions.)
 
 ### Task 1 — Search

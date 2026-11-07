@@ -49,8 +49,6 @@ AI Dojo Passcode for this Graded Item: **CLAIM-1102**
 
 ## Tasks
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 Each **+** opens an example, more examples if you want them, and a reflection question. Nothing under a **+** is required. (Page note: the answer box sits outside the +, under the task. The text in parentheses after each question is set in italics as guidance, on the page and in the copied questions.)
 
 ### Task 1 — My claim

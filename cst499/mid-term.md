@@ -27,8 +27,6 @@ The questions are published now so you can work through them in week 7 while the
 
 *Every question is answerable from what you understood about your own work, not from what you can recall — the written part is closed book, so nothing here needs a reference you would have to look up. “You” means you personally, also in a team project: your decisions, your contribution, your learning.*
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each question under it.
-
 Each **+** opens guidance, one example, a reflection question and a box to write in. Nothing under a **+** is required.
 
 ### Question 1 — The market

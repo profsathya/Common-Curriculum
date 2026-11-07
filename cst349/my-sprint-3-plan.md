@@ -50,8 +50,6 @@ Think about your Sprint 2 goal: what it was, and how you went about it. What did
 
 Sprint 3 has no exam questions handed to you and no form that tells you what to do each week. You set the goal, write a quality assurance plan for your work toward it, and choose the classmate who will check your Sprint 3 report against that plan.
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 Each **+** opens more examples and a reflection question. Nothing under a **+** is required.
 
 ### Task 1 — My Sprint 3 goal

@@ -89,8 +89,6 @@ AI Dojo Passcode for this Graded Item: **PRIO-0831**
 
 Work through four tasks in this order, writing your answers as you go — what you write is what you hand in.
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 The **+** under task 4 opens an example. (Page note: the answer box sits outside the +, under the task. The text in parentheses after each question is set in italics as guidance, on the page and in the copied questions. Tasks 1–3 have no + because the old page has no example or reflection question for them.)
 
 ### Task 1 — Your first numbers

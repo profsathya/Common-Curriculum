@@ -12,8 +12,6 @@ Practice choosing what you need to improve and deciding how you will check your 
 
 Answer the six questions in your own words. Each **+** opens guidance and examples to help you work through the question, along with a box for your answer and a reflection question.
 
-Beside the **Copy the questions** button: If you would like to work on the assignment in a Google doc without the guidance from this assignment, you can paste this into a Google doc and answer each task under it. The guidance structure provided in this page is the recommended approach to ensure you are being guided and challenged along the way.
-
 ### 1. What will you do differently in Sprint 1 because of something you learned in Sprint 0?
 
 Identify the activity where you learned it: *What Are My Priorities*, *Read the Market*, *Know What Makes Me Tick*, or *Find Your Gap*. Explain what happened in that activity and the change you will make.

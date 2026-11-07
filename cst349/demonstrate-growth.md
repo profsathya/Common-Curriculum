@@ -12,8 +12,6 @@ Use evidence to show what you learned toward your Sprint 1 goal. Practice explai
 
 ## Tasks
 
-**Copy the questionsWe recommend working on this page so you can use the guidance as you answer. To work in your own document, copy the questions and write your answer under each one.
-
 Write your answer to each task in the box under it. Each +** opens guidance, examples and an optional reflection to help you develop and check your answer.
 
 - 

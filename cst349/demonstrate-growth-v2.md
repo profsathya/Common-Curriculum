@@ -18,8 +18,6 @@ Being able to verify your own growth yourself is what lets you steer it, instead
 
 ## Tasks
 
-**Button:** Copy the questions — If you would like to work on the assignment in a Google doc without the guidance from this assignment, you can paste this into a Google doc and answer each task under it. The guidance structure provided in this page is the recommended approach to ensure you are being guided and challenged along the way.
-
 Answer each task in the box under it. The **+** under each box opens guidance, examples and a reflection question, for when you want them.
 
 ### Task 1 — Goal

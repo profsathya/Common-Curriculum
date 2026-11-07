@@ -26,8 +26,6 @@ Review the current quality of your project's outcomes, choose the two or three c
 
 “Your work” refers to what is already done and have results — what runs, what is written, what you showed in the mid-term.
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 Each **+** opens guidance, one example and a reflection question. Nothing under a **+** is required. (Page note: the answer box sits outside the +, under the task, as on the other Sprint 2 and 3 pages.)
 
 ### Task 1 — Current status of my project

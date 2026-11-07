@@ -10,16 +10,14 @@
      a reason, and each carry a follow-up question asking for feedback. The partner evaluates it after the Sprint 3 Exam.
      The look back moved to what the student heard at the visit or on The Commons (the step update would have repeated task 1).
      OPEN: how the report's author is graded (Prof. Sathya is deciding); partners get credit for completing the evaluation.
-     The live .html is still draft 2 and changes only when Prof. Sathya says so. Dojo passcode REPORT-1130 (twice, must match).
-     Lines marked [for Sathya's read] were drafted after the review and he has not heard them. -->
+     7 Nov, later: Prof. Sathya edited this file; the .html was rebuilt as draft 3 and published on Canvas the same day.
+     The Copy the questions button and the + explainer line are removed at his ask. Dojo passcode REPORT-1130 (twice, must match). -->
 
-# My Sprint 3 report and winter break plan [for Sathya's read: title not discussed; a change is carried to home, assignments list, Canvas and the Dojo text]
+# My Sprint 3 report and winter break plan
 
 Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
-
-[for Sathya's read: the three boxes below are from his words in the review; he wants to read them here before approving]
 
 **Builds on your earlier learning.** Setting a learning goal, and applying lessons from diverse information sources to revise and strengthen it.
 
@@ -37,8 +35,6 @@ Week 14 · due Monday 30 November, 11:59 p.m. · 100 points · Graded items
 
 What did you hear at the virtual visit, or in your conversations on The Commons, that helped you strengthen your goal?
 
-[for Sathya's read: the four options and "or confirmed" were added after the review, so the question does not assume the student's view changed]
-
 ○ Something an alum or industry professional said
 ○ Something a classmate said in our conversation on The Commons
 ○ An action item from one of my conversations
@@ -47,10 +43,6 @@ What did you hear at the virtual visit, or in your conversations on The Commons,
 **What I heard.** What you heard, and how it changed or confirmed how you see your goal.
 
 ## Tasks
-
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it. <<To Alan: I think we need to remove this section from all assignments, I don't think this copy the questions button is that useful and is being used by students - lets just remove them in all three courses all files please>>
-
-<<To Alan: remove this line>> Each **+** opens an example, more examples if you want them, and a reflection question. Nothing under a **+** is required.
 
 ### Task 1 — The step I took
 
@@ -89,11 +81,9 @@ Describe the step you took toward your Sprint 3 goal, or how you changed it, and
 
 ### Task 2 — My winter break plan
 
-[for Sathya's read: he approved 2a–2c; the opening verbs "Identify" and "Explain" were added afterwards so each line starts with the student's action]
+**2a.** Do you feel the learning experiences in this class motivates you to set a goal for you to work towards during winter break? It could build on your Sprint 3 goal or change it.
 
-**2a.** Identify the goal you will work toward over winter break. It can continue your Sprint 3 goal or change it.
-
-**2b.** Explain how your step, your Information Diet Audit, or your conversations shaped that goal.
+**2b.** Explain how your step, your Information Diet Audit, or your conversations shaped that goal. Write NA if you don't feel you are going to set a goal for your winter break.
 
 **2c.** Identify one step you will take toward it before the semester ends on 18 December. *(Choose a step small enough to take before 18 December and meaningful enough to move your goal forward.)*
 
@@ -124,14 +114,14 @@ Describe the step you took toward your Sprint 3 goal, or how you changed it, and
 
 ### Task 3 — My updated quality assurance plan
 
-Write three or four lines that ask your quality assurance partner for the feedback you want on your report: the step you took, your winter break plan or your first step. Each line has two parts:
+Write three or four lines that ask your quality assurance partner for the feedback you want on your report: the step you took, your winter break plan or your first step, if you developed them. Each line has two parts:
 
 - a question that starts with "Do you think", with its points; the points add up to 100
 - a follow-up question that asks for the feedback you want
 
 *(Choose the parts of your report where good critical feedback would help you most. You decide which parts your lines cover and how far each one goes.)*
 
-Your partner answers each "Do you think" question with yes, partly or not yet, and gives the reason for their answer. [for Sathya's read: scoring proposed in the review and not confirmed, since grading is open — yes earns the line's full points, partly earns half, and not yet earns none]
+Your partner answers each "Do you think" question with yes, partly or not yet, and gives the reason for their answer. (Page note, not shown to students while grading is open: scoring proposed in the review — yes earns the line's full points, partly earns half, not yet earns none.)
 
 **An example line, to shape your thinking — not a model to copy** (page note: shown under the question, outside the +)
 
@@ -175,7 +165,7 @@ AI Dojo Passcode for this Graded Item: **REPORT-1130**
 
 ## Self-check
 
-[for Sathya's read: points left off while grading is open]
+(Page note: points left off while grading is open.)
 
 Tick each line your submission meets. Your ticks are copied with your answers.
 
@@ -183,13 +173,13 @@ Tick each line your submission meets. Your ticks are copied with your answers.
 - [ ] Task 2 identifies a winter break goal, what from this sprint shaped it, and one step before 18 December
 - [ ] Task 3 has three or four "Do you think" lines adding to 100, each with a follow-up question
 
-**What makes it strong.** [for Sathya's read] Your partner can answer every "Do you think" question from what your report shows, and each follow-up question asks for feedback you would act on.
+**What makes it strong.** The entire activity is useful to you, you revised it to meet your situation and you feel inspired to continually improve your professional readiness.
 
-**Grading.** [OPEN — Prof. Sathya is deciding how this report is graded. Known so far: after the Sprint 3 Exam, the quality assurance partner evaluates the report against the task 3 lines in Grade your partners, and gets credit for completing that evaluation. Nothing on this line is shown to students until he decides.]
+(Page note, not on the page: **Grading.** OPEN — Prof. Sathya is deciding how this report is graded. Known so far: after the Sprint 3 Exam, the quality assurance partner evaluates the report against the task 3 lines in Grade your partners, and gets credit for completing that evaluation. Nothing on this line is shown to students until he decides.)
 
 ## Look forward
 
-Next, on Wednesday 2 December, the Sprint 3 Exam asks you to reflect on this sprint, in writing and with a partner. After the exam, your quality assurance partner gives you feedback on your report using your updated quality assurance plan, in [Grade your partners](grade-your-partners.html). How do you think these two steps will help you?
+Next, on Wednesday 2 December, the Sprint 3 Exam asks you to reflect on this sprint, in writing and with a partner. After the exam, your quality assurance partner gives you feedback on your report using your updated quality assurance plan, in [Grade your partners](grade-your-partners.html). Do you think these two steps are valuable to you? If yes, how - if not, why not?
 
 (Page note: no options on this look forward.)
 

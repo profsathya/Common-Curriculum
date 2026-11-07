@@ -44,8 +44,6 @@ AI Dojo Passcode for this Graded Item: **STEP-1102**
 
 "Your step" refers to the one you wrote in the "This week I will ..." box of your Sprint 2 goal. If you took a different step instead, that is fine; say so in task 1.
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 Each **+** opens an example, more examples if you want them, and a reflection question. Nothing under a **+** is required. (Page note: the answer box sits outside the +, under the task, as on the other Sprint 2 pages. The text in parentheses after each question is set in italics as guidance, on the page and in the copied questions.)
 
 ### Task 1 — The step I took, and what it produced

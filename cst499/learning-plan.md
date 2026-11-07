@@ -20,8 +20,6 @@ Identify what you individually must learn to complete your project, and plan how
 
 “You” means you personally, also in a team project: what you must learn, not what the team must.
 
-**Button:** Copy the questions — Paste this into a Google doc and answer each task under it.
-
 Each **+** opens guidance, one example, a reflection question and a box to write in. Nothing under a **+** is required.
 
 ### Task 1 — What I must learn
