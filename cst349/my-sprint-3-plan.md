@@ -26,7 +26,7 @@ Week 11 · due Monday 9 November, 11:59 p.m. · 100 points · Graded items
 
 **This Learning Experience.** Practice setting a goal along with a quality assurance plan.
 
-**Prepare you for.** Report on your Sprint 3 work against the plan you write here, evaluated by the quality assurance partner you choose ([My Sprint 3 report](my-sprint-3-report.html)).
+**Prepare you for.** Your quality assurance partner will review your work for Sprint 3 ([My Sprint 3 report](my-sprint-3-report.html)).
 
 ☑ **I would like to use the AI Dojo to think this through.** Tick this to use the Dojo, or untick it to answer the tasks yourself. You can draft on this page or in a document. If you use the Dojo summary, place your answers there; use the task boxes only for additions. (Page note: ticked when the page opens; the tick is remembered on this browser.)
 
@@ -48,7 +48,7 @@ Think about your Sprint 2 goal: what it was, and how you went about it. What did
 
 ## Tasks
 
-Sprint 3 has no exam questions handed to you and no form that tells you what to do each week. You set the goal, write a quality assurance plan for your work toward it, and choose the classmate who will check your Sprint 3 report against that plan.
+Sprint 3 has no exam questions handed to you and no form that tells you what to do each week. You set the goal, write a quality assurance plan for your work toward it, and choose the classmate who will review your work for Sprint 3.
 
 Each **+** opens more examples and a reflection question. Nothing under a **+** is required.
 
@@ -139,14 +139,14 @@ Write three or four lines that describe quality work toward your goal, each with
 
 ### Task 3 — My quality assurance partner
 
-Choose one classmate who will hold you accountable to your quality assurance plan and evaluate your Sprint 3 report against it by Monday 7 December. Ask them first, and record their name only after they say yes. *(Two conditions: the two of you cannot evaluate each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to evaluate more than one classmate is fine. If you cannot find a partner, tick "I need help finding a partner" and submit; Prof. Sathya or the TA will help you find one.)*
+Choose one classmate who will hold you accountable to your quality assurance plan and review your work for Sprint 3. Ask them first, and record their name only after they say yes. *(Two conditions: the two of you cannot review each other, and your partner cannot be the classmate you talked with in the Sprint 1 Exam or the Sprint 2 Exam conversation. Agreeing to review more than one classmate is fine. If you cannot find a partner, tick "I need help finding a partner" and submit; Prof. Sathya or the TA will help you find one.)*
 
 **My quality assurance partner** (page note: a text input with the class roster as a datalist, copied from the earlier My quality assurance partner page; a name not on the roster shows a warning, and a name that matches a Sprint 1 or Sprint 2 exam partner saved on this browser shows a warning; neither blocks)
 
 ☐ I need help finding a partner. (Page note: directly under the name field; when ticked, the three boxes below grey out and the copied text says the student needs help.)
 
-☐ I asked this person and they agreed to evaluate my Sprint 3 report against my quality assurance plan.
-☐ They are not someone I am evaluating.
+☐ I asked this person and they agreed to review my work for Sprint 3.
+☐ They are not someone whose work I am reviewing.
 ☐ They were not my partner in the Sprint 1 Exam or the Sprint 2 Exam conversation.
 
 (Page note: task 3 is not part of the Dojo conversation or the AI feedback; the copied text carries the name and the three ticks.)
@@ -178,11 +178,11 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 
 **What makes it strong.** A partner who reads only task 2 can tell what your Sprint 3 goal is, and the step in task 1 is the first thing your lines would ask about.
 
-**Grading.** 100 points, in Graded assignments. Prof. Sathya grades this plan. Later, your quality assurance partner evaluates your Sprint 3 report against it, and that evaluation becomes your report grade.
+**Grading.** 100 points, in Graded assignments. Prof. Sathya grades this plan. Your quality assurance partner will review your work for Sprint 3.
 
 ## Look forward
 
-Next, you send your quality assurance plan to your partner. They hold you accountable to it and evaluate your Sprint 3 report against it. What in your plan could be difficult for your partner to evaluate?
+Next, you send your quality assurance plan to your partner. They hold you accountable to it and will review your work for Sprint 3. What in your plan could be difficult for your partner to evaluate?
 
 ○ The line about what the work changes
 ○ A line whose evidence I cannot fully share
@@ -199,7 +199,7 @@ This graded item is complete when the look back, the tasks and the look forward 
 
 **Button:** Copy my answers
 
-Send your quality assurance plan to your partner the day you submit, and keep it where you can find it. You will report against it on Monday 30 November.
+Send your quality assurance plan to your partner the day you submit, and keep it where you can find it. You will use it again in your Sprint 3 report, due Monday 30 November.
 
 **Suggested sequence.** Share your plan with your partner the day you submit. Save evidence as you take your step, and contact your Commons matches before the break. Draft the report alongside that work so the two 30 November submissions draw on notes you already have.
 
@@ -211,7 +211,7 @@ Graded item: My Sprint 3 goal and quality assurance plan. Course: CST349. Due: M
 
 When a student asks to be walked through this graded item, state the passcode, the title and the due date first, before anything else.
 
-Learning purpose: the student practices setting a goal along with a quality assurance plan. They write a Sprint 3 goal that follows from their Sprint 2 goal or pivots to a new one with both breadth and depth, past their immediate interest or comfort zone, and the meaningful step they will take toward it by Monday 30 November. Then they write three or four lines, adding to 100 points, that describe quality work toward the goal and that a classmate can check from the Sprint 3 report. Each line can be about what the student will do, what it will produce, or what it changes for someone, including the student; at least one line must show what it changes. A classmate, the quality assurance partner, later evaluates the student's Sprint 3 report against these lines.
+Learning purpose: the student practices setting a goal along with a quality assurance plan. They write a Sprint 3 goal that follows from their Sprint 2 goal or pivots to a new one with both breadth and depth, past their immediate interest or comfort zone, and the meaningful step they will take toward it by Monday 30 November. Then they write three or four lines, adding to 100 points, that describe quality work toward the goal and that a classmate can check from the Sprint 3 report. Each line can be about what the student will do, what it will produce, or what it changes for someone, including the student; at least one line must show what it changes. A classmate, the quality assurance partner, later reviews the student's work for Sprint 3.
 
 Ask what the Sprint 2 goal was, how the student went about it, and what that taught them about setting a goal, then what the Sprint 3 goal is, whether it follows from Sprint 2 or is a pivot, and whether it pushes the student past their immediate interest or comfort zone. Ask what meaningful step toward it they will take by 30 November, and how someone else could see that they took it. For the plan, ask of each line what the student will do, what it will produce, and what it changes for someone, and ask "could a classmate say yes or no to this from the report alone?" until each line passes. When a line about a change for the student is a feeling, such as "I feel more confident", ask what a classmate could see instead. Check that the points add to 100 and that at least one line shows what the work changes. Task 3, naming the quality assurance partner, is a form on the page and not part of this conversation. Do not write the goal, the step or the lines for the student. Do not summarize until asked; when asked, give the two headings using only the student's words.
 
