@@ -17,7 +17,7 @@ In-class activity · Wednesday 2 December, in class · 100 pts
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on your earlier learning.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [The decisions behind my work](decisions-behind-my-work.html).
+**Builds on your earlier learning.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [Reflection on my decisions](decisions-behind-my-work.html).
 
 **This Learning Experience.** Tell the story of your work to a classmate, listen to theirs, and hear which part of your story they believed while there is still time to change it.
 
@@ -39,7 +39,7 @@ When every turn is done, fill in what you heard about your own story and what yo
 
 ## Look back
 
-(Page note: when this browser holds the sentence the student wrote at the end of The decisions behind my work (cst499.s3.decisions.leave), it is shown here in quotation marks under "Before class you expected a listener to question:". When it is not stored, the line reads "Look at the end of your decisions submission on Canvas for the part you expected a listener to question.")
+(Page note: when this browser holds the sentence the student wrote at the end of Reflection on my decisions (cst499.s3.decisions.leave), it is shown here in quotation marks under "Before class you expected a listener to question:". When it is not stored, the line reads "Look at the end of your decisions submission on Canvas for the part you expected a listener to question.")
 
 Did your listener question the part of your story you expected? Choose the one closest to yours.
 

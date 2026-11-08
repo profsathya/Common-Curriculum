@@ -2,7 +2,7 @@
 Notes for the editor, not shown to students:
 - CST499 Sprint 3, graded item, due Mon 16 Nov, 100 pts. Replaces the portfolio piece (decided 27 Oct).
 - What it is for (Sathya, 2 Nov): the students' first attempt at telling the story of their work clearly, with evidence and conviction, as a reflection on their unique value rather than marketing, in a way they feel comfortable and confident with.
-- Decided 2 Nov: version one builds on the 2 Nov claim (evidence the student can have by 7 Dec), not on project progress; the old milestones task is gone. The first screen has the same shape in version one and the final version: the claim, then three cards (the work, one decision, one obstacle). Version one has a first draft of the decision card; The decisions behind my work (30 Nov) reworks it. Behind each card the student chooses the form of the evidence. The thinking is visible on the poster (a last page with the review and plan). Only Sathya and Paige see version one; classmates first see a poster at the rehearsal. (4 Nov: changed — an optional, strongly encouraged classmate walk-through before submitting, with two optional boxes, no points.)
+- Decided 2 Nov: version one builds on the 2 Nov claim (evidence the student can have by 7 Dec), not on project progress; the old milestones task is gone. The first screen has the same shape in version one and the final version: the claim, then three cards (the work, one decision, one obstacle). Version one has a first draft of the decision card; Reflection on my decisions (30 Nov) reworks it. Behind each card the student chooses the form of the evidence. The thinking is visible on the poster (a last page with the review and plan). Only Sathya and Paige see version one; classmates first see a poster at the rehearsal. (4 Nov: changed — an optional, strongly encouraged classmate walk-through before submitting, with two optional boxes, no points.)
 - Dropped 2 Nov: the required "how I directed the AI" lines and the rule "claim only what a visitor can see proven". Both the proof question and the AI question are guidance to consider, not conditions; no self-check line checks them.
 - Answers are stored under "cc-gi:cst499-interactive-poster-first-version-v2" (renamed 2 Nov so drafts typed into the old five-task form do not load into the new boxes).
 - The template is interactive-poster-starter.html; its structure is also in the hidden Dojo text so the Dojo can help build from it.
@@ -23,7 +23,7 @@ This graded item will affect your final grade, and the late penalty applies.
 
 **This Learning Experience.** Practice articulating the story of your project to demonstrate your unique value proposition. (Page note: "unique value proposition" carries a hover note — **Unique value proposition** — *What it is.* What you bring that an employer would find hard to get elsewhere: your depth, the domains you can cross, and the results you can show. *Why it matters here.* The Interactive Poster is where you make it visible to a person who has five minutes.)
 
-**Prepare you for.** [The decisions behind my work](decisions-behind-my-work.html), and the [rehearsal in class](rehearsal-in-class.html) on Wednesday 2 December.
+**Prepare you for.** [Reflection on my decisions](decisions-behind-my-work.html), and the [rehearsal in class](rehearsal-in-class.html) on Wednesday 2 December.
 
 ## Look back
 
@@ -79,7 +79,7 @@ Working with the AI Dojo, build the first screen of your poster from the templat
 - one decision
 - one obstacle
 
-*(If you'd like to build your Interactive Poster with other tools, that's fine. Before you settle your claim, consider two questions: could a visitor see each part of it proven, and does your evidence show something you did that AI alone could not have done? Your decision card is a first draft; you rework it in The decisions behind my work.)*
+*(If you'd like to build your Interactive Poster with other tools, that's fine. Before you settle your claim, consider two questions: could a visitor see each part of it proven, and does your evidence show something you did that AI alone could not have done? Your decision card is a first draft; you rework it in Reflection on my decisions.)*
 
    **Your answer to task 1.** Your claim, and the line on each of the three cards.
 
@@ -121,9 +121,9 @@ Strongly encouraged: before you submit, ask a classmate to walk through your pos
 
 ## Look forward
 
-Judgment, meaning how you make decisions and choices, is the quality employers keep identifying as most important. Next, in [The decisions behind my work](decisions-behind-my-work.html), due Monday 30 November, you look closely at the decisions behind your work. Looking at what you've built so far, where do you see your judgment showing?
+Judgment, meaning how you make decisions and choices, is the quality employers keep identifying as most important. Next, in [Reflection on my decisions](decisions-behind-my-work.html), due Monday 30 November, you look closely at the decisions behind your work. Looking at what you've built so far, where do you see your judgment showing?
 
-**What I take into the next item.** Write one or two sentences identifying where you see your judgment showing in your work so far. (Page note: saved as cst499.s3.poster1.leave; the home page shows it under this item, and The decisions behind my work opens from it.)
+**What I take into the next item.** Write one or two sentences identifying where you see your judgment showing in your work so far. (Page note: saved as cst499.s3.poster1.leave; the home page shows it under this item, and Reflection on my decisions opens from it.)
 
 ## Worked example (shown beside the form) [for Sathya's read: the whole example]
 
@@ -166,7 +166,7 @@ Learning purpose: the student practices articulating the story of their project 
 
 The template (interactive-poster-starter.html) has a first screen with the student's name and concentration; "My claim: I can …"; a line naming the project or certificate; three cards — The work, Decision ("what I chose instead of another option. Because: …"), and Obstacle or open question; and a line on where the work stands. Inside each card: Evidence and an evidence link. The work card also has "What I'm still not sure about" and an optional "How I worked with AI"; the decision and obstacle cards have "What it cost me". Students may build in other tools; the first screen keeps the same shape.
 
-Ask for the claim and whether the student still feels comfortable with it. Help them build the first screen from the template: a claim starting with "I can" and the three cards. The decision card is a first draft; The decisions behind my work reworks it. For each card, ask what evidence would convince someone who has never met them and what form would show it best (a video of software running, a visual pathway through a certificate, a lab they built); the form is the student's choice. Offer two questions to consider, not conditions: could a visitor see each part of the claim proven, and does the evidence show something the student did that AI alone could not have done. Then help the student review the poster and plan before 7 December: what a visitor can see proven now, what they will add and how, and where the poster sounds like them when they say it out loud. Ask until the plan names something specific to change, why, when, and what they will use. Do not write the claim, the cards or the plan for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Ask for the claim and whether the student still feels comfortable with it. Help them build the first screen from the template: a claim starting with "I can" and the three cards. The decision card is a first draft; Reflection on my decisions reworks it. For each card, ask what evidence would convince someone who has never met them and what form would show it best (a video of software running, a visual pathway through a certificate, a lab they built); the form is the student's choice. Offer two questions to consider, not conditions: could a visitor see each part of the claim proven, and does the evidence show something the student did that AI alone could not have done. Then help the student review the poster and plan before 7 December: what a visitor can see proven now, what they will add and how, and where the poster sounds like them when they say it out loud. Ask until the plan names something specific to change, why, when, and what they will use. Do not write the claim, the cards or the plan for the student. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the opening response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
