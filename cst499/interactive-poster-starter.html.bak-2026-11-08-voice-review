@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build your Interactive Poster</title>
+<style>
+:root{
+  --page:#E9EDF1; --paper:#FFFFFF; --ink:#14283C; --muted:#5A6878; --rule:#D5DCE3;
+  --route:#1E7C8A; --route-soft:#E3F1F3; --detour:#C98A00; --detour-soft:#FBF1D9;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif; --serif:"Source Serif 4",Georgia,serif;
+}
+body.b{ --route:#5B4A9A; --route-soft:#ECE8F6; }
+body.t{ --route:#4A5866; --route-soft:#EEF1F4; }
+.hint{font-style:italic;color:var(--muted);margin:0;font-family:var(--serif);font-size:15px}
+body.t .claim .big{font-weight:600;font-style:italic;font-stretch:105%}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font-family:var(--serif);line-height:1.45}
+.top{max-width:1180px;margin:0 auto;padding:24px 16px 4px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+.top h1{font-family:var(--sans);font-stretch:110%;font-size:21px;margin:0 0 4px}
+.top p{margin:0;color:var(--muted);font-size:14.5px;max-width:68ch}
+.switch{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#fff}
+.switch button{font-family:var(--sans);font-size:14px;border:0;background:#fff;color:var(--ink);padding:9px 14px;cursor:pointer}
+.switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.switch button:focus-visible,.card:focus-visible,.close:focus-visible{outline:3px solid #F2B705;outline-offset:2px}
+
+/* laptop */
+.laptop{max-width:1180px;margin:14px auto 0;padding:0 16px}
+.bezel{background:#1D2733;border-radius:16px 16px 6px 6px;padding:14px}
+.screen{position:relative;aspect-ratio:16/10;background:var(--paper);border-radius:4px;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr auto}
+.title{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:1.4% 4%;border-bottom:1px solid var(--rule);font-family:var(--sans)}
+.inst{display:flex;align-items:center;gap:14px;min-width:0}
+.logo{height:clamp(40px,4.6vw,58px);width:auto;display:block}
+.logo-slot{height:clamp(30px,3.6vw,46px);aspect-ratio:2.6;border:1.5px dashed var(--rule);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.inst p{margin:0;line-height:1.25}
+.inst .school{font-weight:700;font-size:clamp(12px,1.25vw,15px)}
+.inst .degree{color:var(--muted);font-size:clamp(11px,1.1vw,14px)}
+.person{text-align:right}
+.slot{display:block;min-width:13em;border-bottom:1.5px dashed var(--muted);color:var(--muted);padding:1px 0 2px}
+.slot.name{font-weight:700;font-size:clamp(13px,1.4vw,17px);color:var(--ink)}
+.slot.conc{font-size:clamp(11px,1.1vw,14px);margin-top:4px}
+.base{height:14px;margin:0 -2%;background:#C3CBD4;border-radius:0 0 14px 14px}
+
+/* app */
+.claim{background:var(--route);color:#fff;padding:3.2% 4% 2.6%}
+.claim p{margin:0}
+.claim .big{font-family:var(--sans);font-stretch:118%;font-weight:750;font-size:clamp(20px,2.9vw,34px);line-height:1.14;max-width:30ch}
+.claim .who{font-family:var(--sans);font-size:clamp(11px,1.1vw,14px);opacity:.85;margin-top:10px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2%;padding:2.6% 4%;align-content:center;position:relative}
+.cards::before{content:"";position:absolute;left:4%;right:4%;top:50%;border-top:4px solid var(--route);opacity:.25}
+.card{position:relative;text-align:left;font:inherit;color:inherit;background:#fff;border:2px solid var(--rule);border-radius:8px;padding:6% 7% 7%;cursor:pointer;display:flex;flex-direction:column;gap:10px;min-height:100%}
+.card:hover{border-color:var(--route)}
+.card .step{font-family:var(--sans);font-size:clamp(11px,1vw,13px);font-weight:600;color:var(--route)}
+.card.work{border-color:var(--route);border-width:3px}
+.card.work .step{color:var(--route)}
+.term{margin:0;background:#14283C;color:#E8EEF3;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.6;overflow-x:auto;white-space:pre}
+.term .c{color:#9FB2C3}.term .f{color:#FF8A80}.term .p{color:#8FE3A7}
+.pk{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+.pk th,.pk td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--rule)}
+.pk th{color:var(--muted);font-weight:600}
+.pk tr.hl td{background:#FFF3C4}
+.note{margin:10px 0 0;font-family:var(--serif);font-size:15px}
+.turns .chk{border-left:4px solid var(--route)}
+.card.obstacle{border-style:dashed;border-color:var(--detour)}
+.card.obstacle .step{color:#8A5E00}
+.card .line{font-family:var(--sans);font-stretch:105%;font-weight:700;font-size:clamp(14px,1.5vw,19px);line-height:1.22;margin:0}
+.card .sub{margin:0;font-size:clamp(13px,1.25vw,15.5px);line-height:1.35;color:var(--ink)}
+.card .sub b{font-family:var(--sans);font-weight:600;color:var(--muted)}
+.card .open{margin-top:auto;font-family:var(--sans);font-size:clamp(11px,1vw,13px);color:var(--muted)}
+.now{border-top:1px solid var(--rule);background:#F6F8FA;padding:1.6% 4%;font-family:var(--sans);font-size:clamp(12px,1.15vw,15px)}
+.now b{color:var(--route)}
+
+/* evidence panel */
+.panel{position:absolute;inset:0;background:rgba(20,40,60,.35);display:none;align-items:stretch;justify-content:flex-end}
+.panel.on{display:flex}
+.sheet{width:min(58%,640px);background:#fff;height:100%;overflow:auto;padding:3.4% 4% 4%;box-shadow:-8px 0 24px rgba(20,40,60,.18);animation:in .22s ease-out}
+@keyframes in{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet h2{font-family:var(--sans);font-stretch:105%;font-size:clamp(17px,1.8vw,22px);line-height:1.2;margin:0 0 14px;padding-right:40px}
+.close{position:absolute;top:14px;right:16px;font-family:var(--sans);font-size:14px;border:1px solid var(--rule);background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer}
+.ev{background:var(--route-soft);border-radius:6px;padding:14px 16px;font-family:var(--sans);font-size:14px}
+.ev.d{background:var(--detour-soft)}
+.cap{display:block;color:var(--muted);font-size:12.5px;margin-top:8px}
+.facts{margin:16px 0 0;display:grid;gap:12px}
+.facts dt{font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--muted)}
+.facts dd{margin:2px 0 0;font-size:15.5px}
+.turns{display:grid;gap:8px;margin-top:4px}
+.turns div{border-radius:6px;padding:8px 11px;font-size:14.5px}
+.turns .got{background:#F2F4F6;color:var(--muted)}
+.turns .me{background:var(--route-soft)}
+.turns span{display:block;font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--muted)}
+
+/* evidence widgets */
+.tally{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;max-width:300px}
+.tally i{aspect-ratio:1;border-radius:50%;background:#fff;border:1px solid var(--rule)}
+.tally i.on{background:var(--route);border-color:var(--route)}
+.runs{display:grid;grid-template-columns:70px 1fr;gap:8px 10px;align-items:center}
+.bar{height:16px;border-radius:2px;display:flex;overflow:hidden}
+.fail{background:#C2453A}.pass{background:#2E8B57}
+.quote{font-family:var(--serif);font-style:italic;font-size:16px;margin:0}
+.hbars{display:grid;grid-template-columns:80px 1fr 28px;gap:8px 10px;align-items:center}
+.track{height:14px;background:#fff;border-radius:2px}.fill{height:100%;background:var(--route);border-radius:2px}
+.lab{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border:2px dashed var(--route);border-radius:6px;padding:10px}
+.lab span{background:#fff;border:1px solid var(--rule);border-radius:4px;padding:6px 10px;font-weight:600}
+.ev svg{width:100%;height:auto;display:block}
+
+.notes{max-width:1180px;margin:22px auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.notes div{background:#fff;border-radius:6px;padding:14px 16px;font-size:14.5px}
+.notes h3{font-family:var(--sans);font-size:14px;margin:0 0 4px}
+.notes p{margin:0;color:var(--muted)}
+
+@media (max-width:760px){
+  .bezel{padding:6px;border-radius:10px}
+  .base{display:none}
+  .screen{aspect-ratio:auto}
+  .cards{grid-template-columns:1fr;gap:10px}
+  .cards::before{display:none}
+  .sheet{width:100%}
+}
+
+[contenteditable]:focus{outline:2px solid #15647a;outline-offset:3px}
+dialog.panel{position:fixed;inset:0;width:min(900px,95vw);height:85vh;max-width:95vw;border:0;padding:0;background:transparent}
+dialog.panel[open]{display:block}dialog::backdrop{background:#0008}
+dialog .sheet{width:100%;max-width:none;height:100%;overflow:auto}
+.editor{max-width:1180px;margin:16px auto;padding:0 16px}.editor button,.editor a{margin-right:12px}
+.evidence-link{width:100%;font:inherit} [contenteditable]{overflow-wrap:anywhere}
+@media print{.editor{display:none}}
+.feedback-note{margin:10px 0 0;padding:10px 14px;border-left:4px solid #C98A00;background:#FBF1D9;color:#14283C;font-size:14.5px;line-height:1.45;max-width:72ch}
+.feedback-note a{color:#14283C;margin:0;padding:0;display:inline;min-width:0}
+.feedback-note a::after{content:none}
+.editor .feedback-note{margin:12px 0 14px}
+</style></head><body>
+<header class="editor"><h1>Build your Interactive Poster</h1><p>Click your name, concentration, claim, or card text to change it, and open each card to fill in what’s inside. Your changes are kept only in this browser tab, so download your poster before you close it. To keep working later, open the file you downloaded. Fill in all three cards for your first version. You’ll come back to the decision card in “The decisions behind my work”. To submit, upload the HTML file you downloaded. That file is your Interactive Poster.</p><p class="feedback-note">This is the first semester we are using Interactive Posters, so these samples and this template are a first version for us too. If something is confusing, or you have an idea that would make the poster work better for you, please email either of us. We will keep improving it with your suggestions.</p><button id="download" type="button">Download my edited poster</button><button id="present" type="button">Preview presentation</button><span id="status" role="status"></span></header>
+<div class="laptop"><div class="bezel"><main class="screen" id="screen"><header class="title"><div class="inst"><div><p class="school">CST499 · Capstone</p><p class="degree">Interactive Poster</p></div></div><div class="person"><span class="slot name" contenteditable="plaintext-only" aria-label="Student name">Your name</span><span class="slot conc" contenteditable="plaintext-only" aria-label="Concentration">Your concentration</span></div></header>
+<section class="claim"><p class="big" contenteditable="plaintext-only" aria-label="My claim">[Write one sentence about a skill your work shows. You might start with “I can…”.]</p><p class="who" contenteditable="plaintext-only" aria-label="My project">Capstone: [your project or certificate]</p></section><section class="cards" aria-label="My poster cards">
+<div class="card work"><span class="step">The work</span><p class="line" contenteditable="plaintext-only" aria-label="The work title">[The problem I worked on, in plain words]</p><p class="sub"><b>Why it matters:</b> <span contenteditable="plaintext-only" aria-label="The work summary">[who it affects, and how]</span></p><button type="button" data-open="work" class="open">Open the work card</button></div>
+<div class="card decision"><span class="step">Decision</span><p class="line" contenteditable="plaintext-only" aria-label="Decision title">[A choice I made] instead of [another option I considered]</p><p class="sub"><b>Because:</b> <span contenteditable="plaintext-only" aria-label="Decision summary">[the reason for my choice]</span></p><button type="button" data-open="decision" class="open">Open the decision card</button></div>
+<div class="card obstacle"><span class="step">Obstacle or open question</span><p class="line" contenteditable="plaintext-only" aria-label="Obstacle or open question title">[What went wrong, or an open question I’m still working on]</p><p class="sub"><b>What I did or will try:</b> <span contenteditable="plaintext-only" aria-label="Obstacle or open question summary">[what I changed, or what I’m trying next]</span></p><button type="button" data-open="obstacle" class="open">Open the obstacle or open question card</button></div>
+</section><p class="now" contenteditable="plaintext-only" aria-label="Current status">Where it stands: [what is finished, and what isn’t yet]</p></main></div></div>
+<dialog class="panel" id="work" aria-labelledby="work-heading"><div class="sheet"><button type="button" class="close">Close</button><h2 id="work-heading">The work</h2><div class="ev"><h3>Evidence</h3><p contenteditable="plaintext-only" aria-label="The work evidence">[Show the work itself, such as the bug and the test that proves your fix, the investigation and what you observed, or the screen you built. Point out the part that matters most, and explain what it shows.]</p><label>Evidence link <input class="evidence-link" type="url" placeholder="https://…" aria-label="The work evidence link"></label><p><a class="evidence-target" target="_blank" rel="noopener" hidden>Open evidence</a></p></div><h3>What I’m still not sure about</h3><p contenteditable="plaintext-only" aria-label="The work interpretation">[One sentence on what is still open. It’s fine if something isn’t settled yet.]</p><h3>How I worked with AI</h3><p contenteditable="plaintext-only" aria-label="AI process">[Optional: explain what AI first gave you, what you asked next and why, and how you checked its response.]</p></div></dialog>
+<dialog class="panel" id="decision" aria-labelledby="decision-heading"><div class="sheet"><button type="button" class="close">Close</button><h2 id="decision-heading">Decision</h2><div class="ev"><h3>Evidence</h3><p contenteditable="plaintext-only" aria-label="Decision evidence">[Something a visitor can look at that backs up your reason, such as the postings you read, feedback you got, or a test result. Explain what it shows.]</p><label>Evidence link <input class="evidence-link" type="url" placeholder="https://…" aria-label="Decision evidence link"></label><p><a class="evidence-target" target="_blank" rel="noopener" hidden>Open evidence</a></p></div><h3>What it cost me</h3><p contenteditable="plaintext-only" aria-label="Trade-off">[One sentence on what this cost you, such as time, or something you didn’t get to do.]</p></div></dialog>
+<dialog class="panel" id="obstacle" aria-labelledby="obstacle-heading"><div class="sheet"><button type="button" class="close">Close</button><h2 id="obstacle-heading">Obstacle or open question</h2><div class="ev"><h3>Evidence</h3><p contenteditable="plaintext-only" aria-label="Obstacle or open question evidence">[Show the problem or open question, and what changed if anything did. If it isn’t solved yet, say so.]</p><label>Evidence link <input class="evidence-link" type="url" placeholder="https://…" aria-label="Obstacle or open question evidence link"></label><p><a class="evidence-target" target="_blank" rel="noopener" hidden>Open evidence</a></p></div><h3>What it cost me</h3><p contenteditable="plaintext-only" aria-label="Trade-off">[One sentence on what this cost you, if it cost you anything.]</p></div></dialog>
+<script>
+(function(){
+var status=document.getElementById('status'),dirty=false;
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){document.getElementById(b.dataset.open).showModal();});});
+document.querySelectorAll('dialog .close').forEach(function(b){b.addEventListener('click',function(){b.closest('dialog').close();});});
+function updateLink(input){var a=input.closest('.ev').querySelector('.evidence-target');try{var u=new URL(input.value);if(!/^https?:$/.test(u.protocol))throw Error();a.href=u.href;a.hidden=false;}catch(_){a.removeAttribute('href');a.hidden=true;}}
+document.querySelectorAll('.evidence-link').forEach(function(i){updateLink(i);i.addEventListener('input',function(){updateLink(i);});});
+document.addEventListener('input',function(){dirty=true;status.textContent='Changes stay in this tab until you download.';});
+document.getElementById('present').addEventListener('click',function(){var preview=this.textContent==='Preview presentation';document.querySelectorAll('[contenteditable]').forEach(function(el){el.contentEditable=preview?'false':'plaintext-only';});document.querySelectorAll('.evidence-link').forEach(function(el){el.readOnly=preview;});this.textContent=preview?'Continue editing':'Preview presentation';});
+document.getElementById('download').addEventListener('click',function(){
+var copy=document.documentElement.cloneNode(true);copy.querySelectorAll('dialog').forEach(function(d){d.removeAttribute('open');});
+copy.querySelectorAll('.evidence-link').forEach(function(el,i){el.setAttribute('value',document.querySelectorAll('.evidence-link')[i].value);el.removeAttribute('readonly');});
+copy.querySelectorAll('[contenteditable]').forEach(function(el){el.setAttribute('contenteditable','plaintext-only');});
+copy.querySelector('#present').textContent='Preview presentation';copy.querySelector('#status').textContent='Opened downloaded copy. Download again after editing.';
+var url=URL.createObjectURL(new Blob(['<!doctype html>\n'+copy.outerHTML],{type:'text/html'})),a=document.createElement('a');a.href=url;a.download='my-interactive-poster.html';a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);dirty=false;status.textContent='Download requested. Keep the downloaded file to continue editing.';
+});
+window.addEventListener('beforeunload',function(e){if(dirty){e.preventDefault();e.returnValue='';}});
+})();
+</script></body></html>

@@ -51,11 +51,13 @@ Answer this after your own turn. Did seeing your work from your audience's point
 
 ## Listening (tab 1)
 
+Fill in a section for each classmate who presents. Press **Add another presenter** when the next turn starts; your earlier sections stay. [for Sathya's read]
+
 (Page note: one section per presenter. The "Add another presenter" button at the bottom starts a new section and keeps the earlier ones. The "Add another question" button repeats questions 2 to 4 inside the same section.)
 
 **The presenter's name.** First name and the first letter of the last name.
 
-**Conversation notes.** (Page note: the "Read it aloud" mic button sits on this box. Pass the laptop around to capture parts of the conversation, and press Pause between speakers.) [for Sathya's read: the label and where the mic sits]
+**Conversation notes.** Optional: record parts of the conversation here. (Page note: a "Record" mic button, the house dictation pattern from the mid-term activity, sits on this box; its ? bubble says to pass the laptop to whoever is speaking and press Pause between speakers.) [for Sathya's read: the label, the button name and where the mic sits]
 
 **1. What did you learn from the presentation?**
 
@@ -68,6 +70,8 @@ Answer this after your own turn. Did seeing your work from your audience's point
 *(Ask the presenter before you write your answer to 4.)* [for Sathya's read]
 
 **Summary, in your own words.** Without the microphone, write what you learned from this conversation and how it helped the presenter. (Page note: no mic button on this box.)
+
+(Page note: at the end of the Listening tab, a button reads "When every turn is done, go to My turn →". Up to four presenter sections, each with up to three questions.)
 
 ## My turn (tab 2; this is also the look forward)
 
