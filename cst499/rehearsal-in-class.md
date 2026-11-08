@@ -5,6 +5,7 @@ Notes for the editor, not shown to students:
 - Listener card as he set it on 26 Oct: what will you remember about this person; which decision did you believe and what made you believe it; "What would a hiring manager want to see that would make their case stronger?" (third person, because students have never been hiring managers).
 - Partner names as on the mid-term activity: first name and the first letter of the last name.
 - No AI Dojo route: the work happens in the room. The "If you are an AI" box stays at the end.
+- DECIDED 8 Nov (voice review, paused; body below not yet redrafted, record: cowork/fall-2026-courses/rehearsal-in-class-review-2026-11-08.md): groups of four or five set by Prof. Sathya (no two teammates together, mixed projects); each student walks the group through their Interactive Poster while the others ask questions; a Listening tab with one section per presenter (what did you learn from the presentation; what question did you ask; what did you learn from asking it; how did the presenter benefit; more questions can be added) and "Add another presenter"; a My turn tab (questions I was asked, what I learned, what I will change); a mic button to record parts of the conversation plus a typed summary box; one Canvas submission via Copy my answers. Purpose middle box, draft to revisit: "Learn to think critically about work and engage in deep conversation to strengthen it."
 - Look back opens from "cst499.s3.decisions.leave"; look forward saved as "cst499.s3.rehearsal.leave". -->
 
 CST499 · Fall 2026 · Sprint 3 · Week 14 · In class
