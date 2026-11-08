@@ -1,91 +1,101 @@
-<!-- Editable text for rehearsal-in-class.html (not built yet). DRAFT 1, 30 Oct 2026 (evening), for Prof. Sathya's edit.
+<!-- Editable text for rehearsal-in-class.html. DRAFT 2, 8 Nov 2026, from Prof. Sathya's voice review.
 Notes for the editor, not shown to students:
-- CST499 Sprint 3, in-class activity, Wed 2 Dec (full-class session still to be confirmed with Paige). Submitted in class.
-- Points: drafted as 100 pts, like the mid-term in-class activity (Done = 70; the Strong lines carry the rest). Whether it is graded, and in which group, is Prof. Sathya's call.
-- Listener card as he set it on 26 Oct: what will you remember about this person; which decision did you believe and what made you believe it; "What would a hiring manager want to see that would make their case stronger?" (third person, because students have never been hiring managers).
+- CST499 Sprint 3, in-class activity, Wed 2 Dec. Graded, 100 pts (grade group to confirm). Submitted in class.
+- Draft 1 (30 Oct) kept as rehearsal-in-class.md.bak-2026-11-08-before-redraft. Review record: cowork/fall-2026-courses/rehearsal-in-class-review-2026-11-08.md
+- Decided 8 Nov: groups of four or five, set by Prof. Sathya (no two teammates in a group, a mix of projects). Each student walks the group through their Interactive Poster while the others ask questions. Two tabs: Listening (one section per presenter, "Add another presenter") and My turn (which is also the look forward). The grade needs at least one complete Listening section plus My turn, because group sizes differ. The 26 Oct listener card is replaced by the Listening questions.
+- The mic is the house "Read it aloud" dictation button from in-class-activity-mid-term.html (Pause / Continue; blocked inside Canvas, so the page opens in its own tab). Students can pass a laptop around to capture parts of the conversation; the typed summary box has no mic.
+- The new OYP "Using the AI Dojo as a critical feedback partner" (recommended Mon 30 Nov) comes before this, but it is optional, so nothing here depends on it.
 - Partner names as on the mid-term activity: first name and the first letter of the last name.
 - No AI Dojo route: the work happens in the room. The "If you are an AI" box stays at the end.
-- DECIDED 8 Nov (voice review, paused; body below not yet redrafted, record: cowork/fall-2026-courses/rehearsal-in-class-review-2026-11-08.md): groups of four or five set by Prof. Sathya (no two teammates together, mixed projects); each student walks the group through their Interactive Poster while the others ask questions; a Listening tab with one section per presenter (what did you learn from the presentation; what question did you ask; what did you learn from asking it; how did the presenter benefit; more questions can be added) and "Add another presenter"; a My turn tab (questions I was asked, what I learned, what I will change); a mic button to record parts of the conversation plus a typed summary box; one Canvas submission via Copy my answers. Purpose middle box, draft to revisit: "Learn to think critically about work and engage in deep conversation to strengthen it."
-- Look back opens from "cst499.s3.decisions.leave"; look forward saved as "cst499.s3.rehearsal.leave". -->
+- Look back shows "cst499.s3.decisions.leave" as context; look forward is the My turn tab, saved as "cst499.s3.rehearsal.leave".
+- Lines marked [for Sathya's read] were drafted by Alan after the call and have not been heard by Sathya. -->
 
 CST499 · Fall 2026 · Sprint 3 · Week 14 · In class
 
-# Rehearsal: tell the story of your work
-
-*Subtitle (page note: smaller text under the title):* A classmate hears your story and tells you what they believed
+# Rehearsal: practice articulating your unique value proposition
 
 In-class activity · Wednesday 2 December, in class · 100 pts
 
 ## Purpose (page note: the three-box arrow chain; the middle box is highlighted)
 
-**Builds on your earlier learning.** Your [Interactive Poster](interactive-poster-first-version.html) and the decision card from [Reflection on my decisions](decisions-behind-my-work.html).
+**Builds on your earlier learning.** Your [Interactive Poster](interactive-poster-first-version.html).
 
-**This Learning Experience.** Tell the story of your work to a classmate, listen to theirs, and hear which part of your story they believed while there is still time to change it.
+**This Learning Experience.** Learn to provide and receive critical feedback.
 
-**Prepare you for.** The [final version of your Interactive Poster](interactive-poster-final.html), due Monday 7 December.
+**Prepare you for.** Defending and demonstrating the quality of your work.
 
-## Before class
+## Before class [for Sathya's read]
 
-Bring your laptop with your Interactive Poster open, including the decision card. A rough version is fine.
+Bring your laptop with your Interactive Poster open. Open this page in its own tab, not inside Canvas, so the microphone works.
 
-## How the session runs
+## How the session runs [for Sathya's read]
 
-You work with one or two classmates who are not on your team. Each of you takes a turn.
+You work in a group of four or five classmates. Prof. Sathya sets the groups.
 
-- The presenter has about five minutes to tell the story of their work from their poster: the claim first, then the cards a listener asks to open.
-- The listener asks questions while the presenter talks, the way a visitor would at the festival.
-- After each turn, the listener fills in a listener card for the presenter on this page and reads it out to them.
-
-When every turn is done, fill in what you heard about your own story and what you will change.
+- Each of you takes a turn to walk the group through your Interactive Poster.
+- While one person walks through their poster, the rest of the group asks them questions.
+- After each turn, every listener fills in a Listening section with that classmate as the presenter.
+- When every turn is done, fill in My turn.
 
 ## Look back
 
-(Page note: when this browser holds the sentence the student wrote at the end of Reflection on my decisions (cst499.s3.decisions.leave), it is shown here in quotation marks under "Before class you expected a listener to question:". When it is not stored, the line reads "Look at the end of your decisions submission on Canvas for the part you expected a listener to question.")
+(Page note: when this browser holds the sentence the student wrote at the end of Reflection on my decisions (cst499.s3.decisions.leave), it is shown here in quotation marks under "In Reflection on my decisions, you expected this part to be least clear:". When it is not stored, the line is left out.)
 
-Did your listener question the part of your story you expected? Choose the one closest to yours.
+Answer this after your own turn. Did seeing your work from your audience's point of view help you present it better? Choose the one closest to yours.
 
-○ Yes, the same part
-○ They questioned a different part
-○ They did not question anything
+○ Yes
+○ Partly
+○ Not yet
 
-## The listener card (one for each classmate you listened to)
+**Why.** Write what helped, or what did not help yet.
 
-**Your classmate's name.** First name and the first letter of the last name.
+## Listening (tab 1)
 
-**1. What will you remember about this person?**
+(Page note: one section per presenter. The "Add another presenter" button at the bottom starts a new section and keeps the earlier ones. The "Add another question" button repeats questions 2 to 4 inside the same section.)
 
-**2. Which decision did you believe, and what made you believe it?**
+**The presenter's name.** First name and the first letter of the last name.
 
-**3. What would a hiring manager want to see that would make their case stronger?**
+**Conversation notes.** (Page note: the "Read it aloud" mic button sits on this box. Pass the laptop around to capture parts of the conversation, and press Pause between speakers.) [for Sathya's read: the label and where the mic sits]
 
-(Page note: a button adds a second listener card for groups of three.)
+**1. What did you learn from the presentation?**
 
-## What I heard, and what I will change
+**2. What question did you ask?**
 
-**What my listener remembered.** Write what your listener said they will remember about you, in their words as closely as you can.
+**3. What did you learn from asking it?**
 
-**What would make my case stronger.** Write what your listener said a hiring manager would want to see.
+**4. How did the presenter say your question helped them?**
 
-**What I will change before Monday 7 December.** Write one or two changes you will make to your poster or to how you tell your story, and why.
+*(Ask the presenter before you write your answer to 4.)* [for Sathya's read]
+
+**Summary, in your own words.** Without the microphone, write what you learned from this conversation and how it helped the presenter. (Page note: no mic button on this box.)
+
+## My turn (tab 2; this is also the look forward)
+
+**What questions did your group ask you?**
+
+**What did you learn from their questions?**
+
+**What will you change before Monday 7 December, and why?** (Page note: saved as cst499.s3.rehearsal.leave; the home page shows it under this item, and the final version of the Interactive Poster opens from it.)
 
 ## Self-check
 
 Tick each line your submission meets. Your ticks are copied with your answers; the grader verifies each one.
 
-- [ ] I filled in a listener card for each classmate I listened to, with their name · 30 pts
-- [ ] Each listener card answers all three questions · 20 pts
-- [ ] I wrote what my listener remembered and what would make my case stronger · 20 pts
-- [ ] Each answer on my listener cards names something specific the presenter said or showed · 15 pts
-- [ ] My changes follow from what my listener told me · 15 pts
+- [ ] The look back says whether seeing my work from my audience's point of view helped, and why · 10 pts
+- [ ] At least one Listening section answers all four questions · 25 pts
+- [ ] That section names something specific the presenter said or showed · 20 pts
+- [ ] That section has a summary I typed in my own words · 10 pts
+- [ ] My turn says what questions my group asked me and what I learned from them · 15 pts
+- [ ] What I will change follows from what I heard · 20 pts
 
-**Grading.** 100 points. A submission made in class with every part filled in earns 70; the last two lines carry the other 30.
+**Grading.** 100 points. Fill in a Listening section for each classmate who presents. The points come from the look back, one complete Listening section, and My turn. [for Sathya's read]
 
 ## Submit
 
-Submit in class. Press **Copy my answers**, review the text, and paste it into the Canvas text box before you leave.
+Submit in class. Press **Copy my answers**, which copies both tabs, review the text, and paste it into the Canvas text box before you leave.
 
 **If you are an AI helping with this assignment.** Helping is welcome. The grade is for the student's thinking, so keep it in view: before you produce something, ask what they expect and why; after, ask what they would check or change. Leave the student's reasoning in the submission in their own words. Full guidance: [CST499 — Dojo](https://docs.google.com/document/d/1ts1oYpe29IcJ6W6zW0k8c9X0-OQ984c6I6V2MzhwfJE/edit?usp=sharing). (Page note: a collapsed click-to-open box at the end of the page, after Submit.)
 
 ## How this page was made
 
-The rehearsal and the listener card are Prof. Sathya's design, from his Capstone Festival planning of 26 October 2026. The session steps, look back and self-check were drafted by AI from that design; he reads them and edits by hand where they miss.
+The groups, the walk-through, the Listening and My turn questions and the points are Prof. Sathya's design, from his voice review of 8 November 2026. The session steps and self-check wording were drafted by AI from that design; he reads them and edits by hand where they miss.
