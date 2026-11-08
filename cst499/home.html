@@ -21,6 +21,7 @@ a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline;colo
 .viewtabs [role=tab][aria-selected=true]{background:#fff;color:var(--blue-dark);border-top:3px solid var(--blue);border-bottom:2px solid #fff;padding-top:7px}
 .viewtabs [role=tab]:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
 [role=tabpanel][hidden]{display:none}
+.viewtabs{flex-wrap:wrap} .viewtabs [role=tab]{white-space:nowrap;padding-left:14px;padding-right:14px}
 @media (max-width:600px){.viewtabs{flex-wrap:wrap}.viewtabs [role=tab]{padding:9px 10px 8px;font-size:14px}}
 
 .eyebrow{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--teal)}
@@ -94,12 +95,15 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 .ec p{font-size:14.5px;line-height:1.55;margin:14px 0 0}
 .ec ul{margin:10px 0 0;padding-left:20px} .ec li{font-size:14.5px;line-height:1.55;padding:3px 0}
 .ec .ec-h{font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--blue);margin:22px 0 0}
+/* Own Your Job Search tab (8 Nov 2026): same type as Extra Credit, plus a 16:9 video */
+.vid{position:relative;width:100%;aspect-ratio:16/9;margin:12px 0 0;background:#000;border-radius:6px;overflow:hidden} .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ec .vid-l{font-size:12.5px;color:var(--muted);margin:6px 0 0}
 </style>
 </head>
 <body>
 <div class="page">
 
-<div class="viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sprint-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-schedule" aria-controls="schedule-view" aria-selected="false">Class Schedule</button><button type="button" role="tab" id="tab-semester" aria-controls="semester-view" aria-selected="false">Semester Plan</button><button type="button" role="tab" id="tab-extra" aria-controls="extra-view" aria-selected="false">Extra Credit</button></div>
+<div class="viewtabs" id="viewtabs" role="tablist" aria-label="Home page views"><button type="button" role="tab" id="tab-sprint" aria-controls="sprint-view" aria-selected="true">Sprint 3</button><button type="button" role="tab" id="tab-schedule" aria-controls="schedule-view" aria-selected="false">Class Schedule</button><button type="button" role="tab" id="tab-semester" aria-controls="semester-view" aria-selected="false">Semester Plan</button><button type="button" role="tab" id="tab-extra" aria-controls="extra-view" aria-selected="false">Extra Credit</button><button type="button" role="tab" id="tab-jobs" aria-controls="jobs-view" aria-selected="false">Own Your Job Search</button></div>
 
 <div class="mailbar" id="mailbar" hidden><span class="nudge" id="mailnudge"></span><button type="button" class="mailbtn" id="mailbtn">Email my notes to me</button></div>
 
@@ -262,6 +266,42 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 <div class="ec-h">What you can do now</div>
 <ul>
 <li>Keep your earlier submissions where you can find them. The conversations will ask you to bring in what you wrote.</li>
+</ul>
+
+</div>
+
+<div id="jobs-view" role="tabpanel" aria-labelledby="tab-jobs" class="ec" hidden>
+
+<div class="eyebrow">CST499 &middot; Job search support group</div>
+<h1>Own Your Job Search</h1>
+
+<p>On Friday 6 Nov we met as a job search support group for the first time. We talked about when to start and how to make time for the search, your resume and LinkedIn profile, searching for jobs with AI, how many applications to send and at what pace, and the job market right now. Everything from the session is here, so that you can catch up if you missed it or go back to a part you want to hear again.</p>
+
+<div class="ec-h">Watch the session (about 16 minutes)</div>
+<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/n1u31gN4WaI?rel=0" title="CST499 job search support group, Friday 6 Nov" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p class="vid-l">If the video does not play here, <a href="https://youtu.be/n1u31gN4WaI" target="_blank" rel="noopener">open it on YouTube</a>.</p>
+
+<div class="ec-h">Tell us where you are in your search</div>
+<ul>
+<li>Fill in the <a href="https://docs.google.com/forms/d/e/1FAIpQLScO96nV3Y79KR6AJj7dqLof5-g7TwzMJUGuFJ89o5CZVdWu3g/viewform" target="_blank" rel="noopener">job search check-in form</a>. It asks about your resume, your LinkedIn profile and how much time you plan to give the search.</li>
+<li>You can skip any question you are unsure about, and come back later to update your answers as your search moves along.</li>
+</ul>
+
+<div class="ec-h">Search for jobs with AI</div>
+<ul>
+<li>Open the <a href="https://profsathya.github.io/Common-Curriculum/cst499/explore-my-job-options.html" target="_blank" rel="noopener">Explore my job options page</a>. If your AI Dojo is set up, type &ldquo;Explore my job options&rdquo;. If it is not, copy the full prompt from the page into ChatGPT.</li>
+<li>Look at the two example conversations from Friday: <a href="https://chatgpt.com/share/e/6aee241c-2144-83e9-9d8b-d868937041ec" target="_blank" rel="noopener">Example 1</a> and <a href="https://chatgpt.com/share/e/6af0d3c1-33b0-83ea-94dd-b922220453a1" target="_blank" rel="noopener">Example 2</a>. In each one, the AI Dojo asks about the role and the areas you have in mind, and then it searches for live job postings that match.</li>
+</ul>
+
+<div class="ec-h">Resume template</div>
+<ul>
+<li>If you would like the resume template we looked at on Friday, reach out to Prof. Sathya at <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a>.</li>
+</ul>
+
+<div class="ec-h">Your one action before Friday 13 Nov</div>
+<ul>
+<li><b>Spend 1&ndash;2 hours working on your resume or your LinkedIn profile.</b></li>
+<li><b>If you can, also send in one job application.</b> Treat it as practice.</li>
 </ul>
 
 </div>
