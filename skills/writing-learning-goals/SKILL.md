@@ -3,6 +3,9 @@ name: writing-learning-goals
 description: Use whenever writing or reviewing a learning goal for a student-facing activity, assignment, module, slide, or self-check — any line labeled "Learning goal" or its equivalent. Triggers when drafting new activity guidance, refining existing pages, or reviewing a week's content before it goes live, and whenever a goal reads as vague, multi-clause, jargon-laden, or framed around what the activity does rather than what the student gets. Covers leading with the student's payoff, naming the recognizable skill behind a goal when one fits, and keeping the stated payoff credible rather than inflated, framing it as inspiration rather than fear, and naming the outcome rather than the inventory of parts. Developed for Career Intelligence; general across programs.
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Learning goals - the checks to run before a goal reaches Sathya
 
 One screen. The rules, the example and the corrections they came from are in `references/rules.md` in this folder - read that once, then run this list on every line labeled "Learning goal" or its equivalent. Every line traces to a section there, named in parentheses. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

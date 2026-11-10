@@ -3,6 +3,9 @@ name: writing-to-teach
 description: Use whenever writing or revising text that students will read to learn — a course or sprint home page, a concept introduction, the framing at the top of an activity, or any page standing in for a lecture. Triggers when drafting a new student-facing page, when converting lecture or video material into text, and whenever a draft reads like a summary for colleagues instead of teaching — short sentences that describe the end state without walking the reader there. Covers starting from what the reader knows, has, and has attention for; the four engagement modes a page must reach; the two registers (teaching text vs task text) and which rules govern each; the teaching moves; and a backbone-plus-expandables page structure; also the fall home-page weekly block (session plan / own-your-progress guidance / graded item). Does not cover goal lines (writing-learning-goals), assignment structure (writing-assignments), or the final trim pass (reviewing-course-text).
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Writing to teach - the checks to run before a page reaches Sathya
 
 One screen. The reader facts, the two registers, the teaching moves, his corrections and the version history are in `references/rules.md` in this folder - read that once at the start, then run this list on the page. Every line traces to a section there, named in parentheses; the tests picked are the ones his corrections show were missed. Read `writing-foundation` first; where the two overlap, its wording is current. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

@@ -3,6 +3,9 @@ name: reviewing-course-text
 description: Run as the final step whenever student-facing course text is created or substantively edited — activity pages, Canvas assignment/quiz descriptions, self-check JSON blocks (infoBlock, description, prompts), home-page rows and notes, slide body copy, and emails to students. Triggers at the end of any course-development writing task, before the text is saved to a live surface, and whenever a reviewer says content feels long, repetitive, or preachy. Covers mapping the message of each sentence, cutting redundancy within a page and across stacked surfaces, removing sentences with no job, flipping unnecessary negatives, and placing each instruction at the point of action. Developed for Career Intelligence; general across programs.
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Reviewing course text - the checks to run before text goes live
 
 One screen. The rules, the defects they came from and the version history are in `references/rules.md` in this folder - read that once, then run this list as the last step before student-facing text is saved to a live surface. Every line traces to a section there, named in parentheses. `scripts/review_student_page.py` in this folder produces the countable items; it reports and never rewrites. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

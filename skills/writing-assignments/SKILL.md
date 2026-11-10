@@ -3,6 +3,9 @@ name: writing-assignments
 description: Use when writing or revising any assignment or activity page students will act on, whatever the course calls that kind of work. Triggers when a design conversation has decided an assignment and it needs its student-facing page, and when an existing assignment page is revised. Covers the Purpose–Task–Criteria–Reflection shape (adapted from the Transparent Assignment Template) with its builds-on/prerequisite block, the internal qualities line, and the pipeline the page lands in (assignments.html → HTML page → Canvas iframe → reconcile). Prose register belongs to writing-to-teach, goal lines to writing-learning-goals, the final trim to reviewing-course-text — this skill sits a level above those three and calls them.
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Assignment pages - the checks to run before a page reaches Sathya
 
 One screen. The page shape, the pipeline, his corrections and the version history are in `references/rules.md` in this folder - read that once at the start, then run this list on the page. Every line traces to a section there, named in parentheses; the tests picked are the ones his corrections show were missed. Prose rules come from `writing-foundation` and `writing-to-teach`, the goal line from `writing-learning-goals`, the final trim from `reviewing-course-text`. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

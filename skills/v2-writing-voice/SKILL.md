@@ -3,6 +3,9 @@ name: v2-writing-voice
 description: Read before drafting or revising anything in Sathya's voice (parallel v2 replacement for writing-foundation). A single-page guide to how Sathya thinks and talks to readers, anchored in his own sentences rather than checklists of past AI mistakes.
 ---
 
+> **Superseded 9 November 2026** by `writing-for-the-reader` (same `skills/` folder). Kept for history. Do not read this for drafting.
+
+
 # Writing in Sathya's voice (v2)
 
 This skill replaces the rule-heavy `writing-foundation` checklist during our phased rebuild. Read this single page to tune your ear before drafting or revising in Sathya's voice. There is no separate `references/rules.md` file to load.

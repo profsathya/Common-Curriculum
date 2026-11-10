@@ -3,6 +3,9 @@ name: home-page-one-liners
 description: Use whenever writing or revising the one-line descriptions under assignment, activity, or exam entries on a course home page (such as "You leave with: ..." or "You left with: ..." in home.html). Triggers when drafting or editing home-page item sublines, sprint chains, or semester-view summaries, and whenever a one-liner reads like a clipped noun phrase, an abstract outcome, a form-box inventory, a title echo, or form shorthand.
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Home-page one-liners - the checks to run before `home.html` reaches Sathya
 
 One screen. The rules, the before/after edits they came from and the version history are in `references/rules.md` in this folder - read that once at the start, then run this list on every entry's one-liner. Every line traces to a section there, named in parentheses. Read `writing-foundation` first. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

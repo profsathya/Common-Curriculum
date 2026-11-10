@@ -3,6 +3,9 @@ name: writing-foundation
 description: Read before drafting or revising anything in Sathya's voice — a student page, an assignment question, a proposal paragraph, a slide, an email, a protocol someone will follow. The rules that apply to all of it, each with the correction it came from. Purpose-specific skills (writing-to-teach, writing-assignments, slides) add what their purpose needs and do not restate these.
 ---
 
+> **Superseded 9 November 2026** by `writing-for-the-reader` (same `skills/` folder). Kept for history. Do not read this for drafting.
+
+
 # Writing foundation - the checks to run before a draft reaches Sathya
 
 One screen. This folder holds a dated copy of the canonical skill in the Alan repo (`executive-assistant/skills/writing-foundation/`); refresh it from there rather than editing it here. The rules, the corrections they came from and the version history are in `references/rules.md` - read that once, then run this list on every draft in his voice. There is one test per numbered rule, each checked by looking at the sentence, and every line names its rule in parentheses. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

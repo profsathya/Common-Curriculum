@@ -3,6 +3,9 @@ name: slides
 description: Use when building or revising a session deck for any of the fall courses. Triggers when a class session has been planned and needs its slides, and when an existing deck is being revised. Covers how a teaching deck is built backward from the one sentence students should leave able to say and from the belief they walk in with, the house slide system (eyebrow, headline, archetypes, palette), one point per slide, where interactive tool slides go, the closing Reminders slide, and the register Sathya writes in — first-person plural, label-first bullets, no reassurance. Prose rules belong to writing-to-teach, which governs every sentence here too; assignment structure belongs to writing-assignments.
 ---
 
+> **Prose moved, 9 November 2026.** How sentences are written now lives in `skills/writing-for-the-reader/SKILL.md`. Use this skill for page shape and mechanics. Where a prose check below differs from that page, that page wins.
+
+
 # Session decks - the checks to run before a deck reaches Sathya
 
 One screen. The house system, his edits and where they came from are in `references/rules.md` in this folder - read that once at the start of a deck, then run this list on every slide. Every line traces to a section there, named in parentheses. `writing-to-teach` governs every sentence on the deck as well. When a rule changes in `references/rules.md`, its test changes here in the same edit (and the other way round).

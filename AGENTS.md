@@ -1,10 +1,8 @@
 # Course writing
 
-Before any writing in Sathya's voice, read `skills/writing-foundation/SKILL.md` (a dated copy; the canonical file is in the Alan repo at `executive-assistant/skills/writing-foundation/SKILL.md` — use that one when the Alan folder is mounted).
-For student-facing writing or review, then read `skills/writing-to-teach/SKILL.md`.
-For assignment or activity pages, also read `skills/writing-assignments/SKILL.md`.
-Use `skills/reviewing-course-text/SKILL.md` for the final pass, including copied
-questions and AI feedback instructions. Use `skills/README.md` to find other skills
+Before any writing in Sathya's voice, read `skills/writing-for-the-reader/SKILL.md`. It is the one page for how sentences are written (a dated copy; the canonical file is in the Alan repo at `executive-assistant/skills/writing-for-the-reader/SKILL.md` - use that one when the Alan folder is mounted).
+The format skills give page shape and mechanics only: `skills/writing-assignments/` for assignment and activity pages, `skills/writing-to-teach/` for the home-page weekly block and teaching-page structure, `skills/slides/` for decks, `skills/home-page-one-liners/` for home-page lines. Where a prose check in one of them differs from the one page, the one page wins.
+`skills/reviewing-course-text/scripts/review_student_page.py` still gives the page measurements. Use `skills/README.md` to find other skills
 only when the task needs them.
 
 The user's current instructions and approved revisions take precedence over older
