@@ -83,6 +83,7 @@ Return the draft without the plan or a checklist attached.
 - **One page, one file.** This skill is the agreed exception to the checklist-plus-rules split used by the other skills, because the split was built to hold long rule sets and this page is meant to stay short.
 - **When he rewrites a draft,** compare the draft with his edit. If this page already covers the reason, the page was not followed and nothing is added. If it does not, change one line or swap in one before-and-after pair. When the page passes about a screen and a half, remove the weakest pair before adding another.
 - **Test before keeping a change.** The test set is in the cowork repo at `writing-skill-test-2026-11-09/`: three briefs with his own versions as the answer key. Redraft those pieces with the changed page and confirm the drafts are no further from his versions.
+- **The record of how he revises** (decks, course pages, team pieces, with the before and after) is `revision-lessons.md` in the Alan repo's `executive-assistant/`. Consult it when a kind of piece is new to you; it is a record, not a second rule set.
 - **What this replaced.** `writing-foundation` and `v2-writing-voice` are kept for history and are no longer read for drafting. `WritingStyle.md` in the Alan repo still holds the channel observations (email, Slack) and the record of his corrections.
 
 _Canonical copy: Alan repo, `executive-assistant/skills/writing-for-the-reader/SKILL.md`. Common-Curriculum carries a dated copy (9 November 2026) for sessions that mount only that repo._
