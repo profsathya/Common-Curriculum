@@ -1,14 +1,14 @@
 # From one gate to a machine that adds
 
-Editable companion to trail-nand-to-adder.html. Edit the words here and tell Alan; Alan carries each edit into the .html. The simulator, the tests and the feedback messages it generates live only in the .html.
+Editable companion to trail-nand-to-adder.html. Edit the words here and tell Alan; Alan carries each edit into the .html. The simulator, the live circuit drawing, the tests and the feedback messages they generate live only in the .html.
 
 CST286 - Learning trail
 
-Every computer you have used is built from millions of copies of one tiny part. On this learning trail you start with that part, a Nand gate, and build your way up to a chip that adds numbers. A simulator on this page tests each chip you build and tells you what to look at next.
+Every computer you have used is built from millions of copies of one tiny part. You start with that part, a Nand gate, and build your way up to a chip that adds numbers. Each chip you write is drawn as a live circuit, so you can watch the signals move through your own design.
 
 **Where you end up:** you can explain how a machine adds numbers using nothing but one kind of gate, because you built every layer yourself.
 
-Each stop: **Predict** (say what the chip should do before you build it) - **Build** (wire it from the chips you already made, and run the tests) - **Probe** (flip the inputs and read every wire inside your own chip).
+Each stop: **Predict** (say what the chip should do before you build it) - **Build** (write it in HDL from the chips you already made, and watch it appear as a circuit) - **Probe** (flip the inputs on the drawing and follow the signal through your own chip).
 
 ---
 
@@ -22,9 +22,9 @@ Each stop: **Predict** (say what the chip should do before you build it) - **Bui
 
 Every chip on this learning trail is made of Nand gates, so the first step is to know exactly what one Nand gate does. A gate takes bits in and gives a bit out, and a bit is either 0 or 1.
 
-Flip the two switches and watch the output. When you have tried all four combinations, record what you saw in the truth table and check it.
+Flip the two inputs and watch the signal travel through the gate. When you have tried all four combinations, record what you saw in the truth table and check it.
 
-**Shown when the predicted truth table has a wrong value:** Try each combination with the switches again and copy what the output shows.
+**Shown when the predicted truth table has a wrong value:** Try each combination on the drawing again and copy what the output shows.
 
 **What you just showed (appears when the stop is complete):** In one sentence: a Nand gate gives 0 only when both inputs are 1. The name is short for Not-And.
 
@@ -226,7 +226,7 @@ The simulator tests all 256 combinations of a and b. A carry out of the last col
 2. Column 0 has no carry coming in, so a HalfAdder is enough there. Give each carry wire its own name, such as c1, c2, c3.
 3. Four parts. The first: HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1); The second: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern, and the last carry pin can be left out.
 
-**What you just showed (appears when the stop is complete):** You built a machine that adds, and the only thing inside it is Nand gates. Try the row a = 1111, b = 0001 in the probe and watch the carry travel through every column.
+**What you just showed (appears when the stop is complete):** You built a machine that adds, and the only thing inside it is Nand gates. Set a = 1111 and b = 0001 with the switches and watch the carry travel through every column of your drawing.
 
 ## Stop 13 - Add 1: Inc4
 
@@ -243,7 +243,7 @@ You can feed a fixed value into a pin by writing `true` (for 1) or `false` (for 
 2. Use Add4 with a connected to in, and build the number 1 on b one bit at a time: b[0]=true, and false for the other three bits.
 3. One part: Add4(a=in, b[0]=true, b[1]=false, b[2]=false, b[3]=false, out=out); A smaller design chains four HalfAdders, with true as the second input of the first one.
 
-**What you just showed (appears when the stop is complete):** Try in = 1111 in the probe. Adding 1 to the largest 4-bit number wraps around to 0000, which is the overflow you met in the add-by-hand stop.
+**What you just showed (appears when the stop is complete):** Set in to 1111 on the drawing. Adding 1 to the largest 4-bit number wraps around to 0000, which is the overflow you met in the add-by-hand stop.
 
 ## Stop 14 - Negative numbers
 
@@ -255,7 +255,7 @@ Computers store negative numbers by changing what the leftmost bit is worth: in 
 
 The reason for this choice is that the adder you built works on these numbers with no changes. Subtraction needs no new chip, because x - y is the same as x + (-y). To get the negative of a number, flip every bit and then add 1.
 
-**What you just showed (appears when the stop is complete):** Your Add4 already subtracts. Go back to its probe and add 0101 (5) and 1101 (-3): the result is 0010 (2).
+**What you just showed (appears when the stop is complete):** Your Add4 already subtracts. Go back to that stop and add 0101 (5) and 1101 (-3): the result is 0010 (2).
 
 ## Stop 15 - One chip, many operations: the ALU
 
