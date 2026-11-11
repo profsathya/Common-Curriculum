@@ -13,7 +13,6 @@ All students and projects are made up (the same fifteen as the earlier sample).
 - Prototype first, built here; Sergio gets the fine-tuning and the engineering parts.
 
 ## Front door
-- Banner: Prototype. The students and projects on this page are made up.
 - Eyebrow: December 2026 · date and rooms to be confirmed
 - Title: Capstone Festival
 - Intro: Tell us who you are. We will suggest which tables to visit and what to ask when you get there.
@@ -48,11 +47,15 @@ Each student in this capstone built an Interactive Poster. It opens with one cla
 Students present at their own laptops. The route below takes you to one table in each area of work.
 
 ## Student card
-- Area of work, name, Room and Table in large type
+- Space for the student's photo (initials until a photo is added), area of work, name, Room and Table in large type
 - Family version: "What [first name] did" in plain words · "What this shows about [first name]" (the claim) · "Questions you can ask [first name]": two specific questions and one that is the same on every card: "What was the hardest decision you made, and what did you give up by making it?"
 - Everyone else: Project title and description · "[First name]'s claim" · "A question to ask [first name]" (faculty get the question for their lens)
+- Links: "[First name]'s Interactive Poster" · "[First name] on LinkedIn" (sample links in the prototype)
 - Button: "I visited [first name]" (stored on the phone; the route shows a check)
 - Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
+
+## Foot of the page
+- Prototype. The students and projects on this page are made up, and the links on each card are samples.
 
 ## My visit
 - "This is kept on your phone only. Nothing is shared unless you press the button below."
