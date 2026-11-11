@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CST286 - From one gate to a machine that adds</title>
+<!-- trail-nand-to-adder.md in this folder is the editable companion to this page: the words are edited there and carried into this file. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#F4F3EC; --card:#FCFBF6; --ink:#22303C; --ink-soft:#5C6B74;
+    --line:#DAD6C7; --line-soft:#E7E4D8;
+    --blaze:#B04A18; --hero-ink:#131F2B; --hero-cream:#EFE9D6;
+    --tc:#2F6BA8; --tsoft:#E2EAF3; --on-tc:#FFFFFF;
+    --ok:#1E6B4A; --ok-soft:#DFF0E6; --bad:#A3271E; --bad-soft:#F7E1DD; --warn:#6F5612; --warn-soft:#F5EBC8;
+    --lamp:#E8A317; --lamp-ink:#2A1E00; --code:#F0EEE3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141C24; --card:#1B242E; --ink:#E8E4D6; --ink-soft:#9FABB2;
+      --line:#31404C; --line-soft:#26333E;
+      --blaze:#E0793C; --tc:#7FA9D6; --tsoft:#22313F; --on-tc:#131F2B;
+      --ok:#6FCF9C; --ok-soft:#183328; --bad:#F08A80; --bad-soft:#3A1F1C; --warn:#D6B04A; --warn-soft:#33290F;
+      --lamp:#F2B632; --code:#222D38;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Atkinson Hyperlegible","Lato","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word}
+  .page{max-width:940px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif; text-wrap:balance; margin:0}
+  a{color:var(--blaze)}
+  p{margin:0 0 12px}
+  code,.editor,.tt,.sw,.lamp,.chipbtn,.trace,.bigval,.dec{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+  code{background:var(--code); padding:1px 5px; border-radius:4px; font-size:.92em}
+  a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:4px}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+  .crumb{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.06em; margin-bottom:12px}
+  .crumb a{color:var(--ink-soft); text-decoration:none}
+  .crumb a:hover{color:var(--blaze); text-decoration:underline}
+
+  .hero{background:var(--hero-ink); color:var(--hero-cream); border-radius:8px; padding:34px 34px 28px; display:grid; grid-template-columns:1fr auto; gap:22px; align-items:center}
+  .hero .eyebrow{color:#E0A070}
+  .hero h1{font-size:clamp(1.7rem,4.4vw,2.5rem); line-height:1.12; font-weight:650; margin:6px 0 12px}
+  .hero p{max-width:60ch; margin:0 0 10px; color:#D9D3C0}
+  .hero .dest{color:var(--hero-cream); border-left:3px solid #E0793C; padding-left:12px; margin-top:14px}
+  .hero svg{width:150px; height:auto}
+  @media (max-width:640px){ .hero{grid-template-columns:1fr; padding:26px 22px} .hero svg{display:none} }
+  .eyebrow,.lbl,.map-lbl{font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft)}
+  .how{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:16px 0 4px; padding:0; list-style:none}
+  .how li{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font-size:.93rem}
+  .how b{display:block; font-family:Fraunces,Georgia,serif; font-size:1.02rem}
+  @media (max-width:640px){ .how{grid-template-columns:1fr} }
+
+  .map{margin:18px 0 20px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px}
+  .map-part + .map-part{margin-top:8px}
+  .map-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+  .dot{display:flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:4px 11px 4px 5px; font:inherit; font-size:.86rem; cursor:pointer}
+  .dot-n{display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:var(--line-soft); font-family:"IBM Plex Mono",monospace; font-size:.74rem}
+  .dot:hover{border-color:var(--tc)}
+  .dot.done .dot-n{background:var(--ok); color:var(--card)}
+  .dot.cur{border-color:var(--tc); background:var(--tsoft); font-weight:700}
+  .dot.cur .dot-n{background:var(--tc); color:var(--on-tc)}
+  .dot.cur.done .dot-n{background:var(--ok); color:var(--card)}
+  .map-prog{margin-top:9px; font-size:.86rem; color:var(--ink-soft)}
+
+  #stop{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:26px 28px 22px; scroll-margin-top:12px}
+  @media (max-width:640px){ #stop{padding:20px 16px} }
+  #stop h2{font-size:clamp(1.4rem,3.4vw,1.9rem); margin:4px 0 14px}
+  .objs{border-left:4px solid var(--tc); background:var(--tsoft); border-radius:0 6px 6px 0; padding:10px 14px; margin:0 0 16px}
+  .objs ul{margin:4px 0 0; padding-left:20px}
+  .idea ul{margin:0 0 12px; padding-left:22px}
+  .step{border-top:1px solid var(--line); margin-top:20px; padding-top:16px}
+  .step h3{font-size:1.15rem; margin-bottom:10px; display:flex; align-items:center; gap:9px}
+  .stepn{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--hero-ink); color:var(--hero-cream); font-family:"IBM Plex Mono",monospace; font-size:.82rem}
+  .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0}
+  .btn{font:inherit; font-weight:700; border:1px solid var(--tc); background:var(--tc); color:var(--on-tc); border-radius:6px; padding:8px 15px; cursor:pointer}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line); font-weight:400}
+  .btn:hover{filter:brightness(1.08)} .btn.ghost:hover{border-color:var(--tc)}
+  .muted{color:var(--ink-soft); font-size:.93rem}
+  .msg{border-radius:6px; padding:9px 13px; margin:10px 0}
+  .msg:empty{display:none}
+  .msg.ok{background:var(--ok-soft); border-left:4px solid var(--ok)}
+  .msg.bad{background:var(--bad-soft); border-left:4px solid var(--bad)}
+  .msg.warn{background:var(--warn-soft); border-left:4px solid var(--warn)}
+  .msg.info{background:var(--tsoft); border-left:4px solid var(--tc)}
+  .hint{background:var(--warn-soft); border-radius:6px; padding:9px 13px; margin:8px 0}
+  .diag{margin:8px 0; padding-left:22px}
+  .after{border:1px dashed var(--ok); border-radius:6px; padding:10px 14px; margin:14px 0 0}
+  .after p{margin:4px 0 0}
+
+  .tablewrap{overflow-x:auto}
+  .tt{border-collapse:collapse; margin:6px 0; font-size:.95rem}
+  .tt th,.tt td{border:1px solid var(--line); padding:5px 14px; text-align:center}
+  .tt th{background:var(--line-soft); font-weight:600}
+  .tt .o{border-left:2px solid var(--ink-soft)}
+  .tt.res tr.fail td{background:var(--bad-soft)}
+  .tt.res td.diff{font-weight:700; color:var(--bad)}
+  .tt.res .mark{font-family:"Atkinson Hyperlegible",sans-serif; font-size:.86rem; white-space:nowrap}
+  .tt.res tr.pass .mark{color:var(--ok)} .tt.res tr.fail .mark{color:var(--bad); font-weight:700}
+  .tt.pipe td,.tt.pipe th{text-align:left; padding:5px 10px}
+  .cell{font:inherit; font-family:"IBM Plex Mono",monospace; width:42px; height:32px; border:1px solid var(--ink-soft); background:var(--paper); color:var(--ink); border-radius:5px; cursor:pointer; font-weight:600}
+  .cell.ok{background:var(--ok-soft); border-color:var(--ok)}
+  .cell.bad{background:var(--bad-soft); border-color:var(--bad)}
+
+  .sw,.lamp{display:inline-grid; place-items:center; min-width:34px; height:34px; border-radius:6px; font-size:1rem; font-weight:600; margin-right:4px}
+  .sw{border:2px solid var(--ink-soft); background:var(--paper); color:var(--ink); cursor:pointer}
+  .sw.on{background:var(--tc); border-color:var(--tc); color:var(--on-tc)}
+  .lamp{border:2px solid var(--line); background:var(--line-soft); color:var(--ink-soft); border-radius:50%}
+  .lamp.on{background:var(--lamp); border-color:var(--lamp); color:var(--lamp-ink); box-shadow:0 0 0 4px color-mix(in srgb, var(--lamp) 30%, transparent)}
+  .sw.big,.lamp.big{min-width:44px; height:44px; font-size:1.15rem; margin:0}
+  .pr-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px 16px}
+  @media (max-width:560px){ .pr-grid{grid-template-columns:1fr} }
+  .pr-pin{display:flex; align-items:center; flex-wrap:wrap; gap:4px; margin-top:8px}
+  .pin{font-family:"IBM Plex Mono",monospace; min-width:54px; font-weight:600}
+  .dec{color:var(--ink-soft); margin-left:6px}
+  .should{color:var(--bad); font-weight:700; font-size:.9rem; margin-left:8px}
+  .trace{margin:6px 0 0; padding-left:30px; font-size:.92rem}
+  .trace li{padding:3px 0}
+  .trace .arrow{font-family:"Atkinson Hyperlegible",sans-serif; color:var(--ink-soft)}
+  .trace .to{color:var(--ink-soft)}
+  .trace .tout{font-weight:600}
+
+  .palette{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px}
+  .chipbtn{font-size:.82rem; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:5px; padding:4px 9px; cursor:pointer}
+  .chipbtn:hover{border-color:var(--tc); background:var(--tsoft)}
+  .editor{width:100%; font-size:.95rem; line-height:1.5; padding:12px 14px; border:1px solid var(--ink-soft); border-radius:6px; background:var(--hero-ink); color:#EFE9D6; resize:vertical; tab-size:4}
+
+  .bits,.ctl{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0}
+  .bitcol{display:flex; flex-direction:column; align-items:center; gap:4px}
+  .ctl .bitcol{flex-direction:column; max-width:92px; text-align:center}
+  .wt{font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink-soft); line-height:1.25}
+  .bigval{font-size:1.05rem; margin-top:8px}
+  .ask{font-size:1.05rem; margin-top:10px}
+  .tally{display:inline-block; border:1px solid var(--line); border-radius:999px; padding:2px 11px; font-size:.86rem; margin-right:6px}
+  .tally.full{background:var(--ok-soft); border-color:var(--ok)}
+  .num-in{font:inherit; width:90px; padding:7px 9px; border:1px solid var(--ink-soft); border-radius:6px; background:var(--paper); color:var(--ink)}
+  .addt{border-collapse:separate; border-spacing:8px 6px}
+  .addt th{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:500; color:var(--ink-soft); text-align:center}
+  .addt tbody th{text-align:right; padding-right:6px}
+  .addt td{text-align:center}
+  .addt .plus{font-size:1.3rem; text-align:right}
+  .addt .sumrow td,.addt .sumrow th{border-top:2px solid var(--ink); padding-top:8px}
+  .alu-grid{display:flex; gap:34px; flex-wrap:wrap}
+  .targets{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 12px}
+  .tgt{font-family:"IBM Plex Mono",monospace; font-size:.9rem; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:6px; padding:5px 11px; cursor:pointer}
+  .tgt.done{background:var(--ok-soft); border-color:var(--ok)}
+  .tgt.cur{outline:2px solid var(--tc); outline-offset:1px; font-weight:700}
+  .navb{display:flex; justify-content:space-between; gap:10px; margin-top:24px; border-top:1px solid var(--line); padding-top:16px}
+  footer{margin-top:22px; font-size:.86rem; color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="crumb"><a href="home.html">&larr; CST286 home</a></div>
+  <header class="hero">
+    <div>
+      <div class="eyebrow">CST286 &middot; Learning trail</div>
+      <h1>From one gate to a machine that adds</h1>
+      <p>Every computer you have used is built from millions of copies of one tiny part. On this learning trail you start with that part, a Nand gate, and build your way up to a chip that adds numbers. A simulator on this page tests each chip you build and tells you what to look at next.</p>
+      <p class="dest">Where you end up: you can explain how a machine adds numbers using nothing but one kind of gate, because you built every layer yourself.</p>
+    </div>
+    <svg viewBox="0 0 150 90" role="img" aria-label="Symbol of a Nand gate">
+      <g fill="none" stroke="#EFE9D6" stroke-width="3" stroke-linecap="round">
+        <path d="M8 28H44M8 62H44"/><path d="M44 14H74a31 31 0 0 1 0 62H44Z" fill="#1E2E3E"/><circle cx="113" cy="45" r="7" fill="#E0793C" stroke="#E0793C"/><path d="M121 45H144"/>
+      </g>
+    </svg>
+  </header>
+  <ol class="how">
+    <li><b>Predict</b>Say what the chip should do before you build it.</li>
+    <li><b>Build</b>Wire it from the chips you already made, and run the tests.</li>
+    <li><b>Probe</b>Flip the inputs and read every wire inside your own chip.</li>
+  </ol>
+  <nav class="map" id="map" aria-label="Stops on this trail"></nav>
+  <main id="stop"></main>
+  <footer>
+    <p>The chips and the HDL on this page follow projects 1 and 2 of <a href="https://www.nand2tetris.org/" target="_blank" rel="noopener">Nand to Tetris</a>, a free course by Noam Nisan and Shimon Schocken. The HDL you write here uses the same rules as that course's Hardware Simulator. The adder, the incrementer and the ALU on this page are 4 bits wide so that every case can be tested and shown; the course builds 16-bit versions of the same designs.</p>
+  </footer>
+</div>
+<script>
+/* ===== Chip engine: HDL parser, checker, simulator, tester (no DOM) ===== */
+const B = {};
+function defChip(name, ins, outs, fn, par, typical){ B[name] = {name, ins, outs, fn, par, typical}; }
+defChip('Nand', [['a',1],['b',1]], [['out',1]], p => ({out:(p.a&p.b)^1}), 1);
+defChip('Not',  [['in',1]], [['out',1]], p => ({out:p.in^1}), 1);
+defChip('And',  [['a',1],['b',1]], [['out',1]], p => ({out:p.a&p.b}), 2);
+defChip('Or',   [['a',1],['b',1]], [['out',1]], p => ({out:p.a|p.b}), 3);
+defChip('Xor',  [['a',1],['b',1]], [['out',1]], p => ({out:p.a^p.b}), 4);
+defChip('Mux',  [['a',1],['b',1],['sel',1]], [['out',1]], p => ({out:p.sel?p.b:p.a}), 4);
+defChip('DMux', [['in',1],['sel',1]], [['a',1],['b',1]], p => ({a:p.sel?0:p.in, b:p.sel?p.in:0}), 5);
+defChip('HalfAdder', [['a',1],['b',1]], [['sum',1],['carry',1]], p => ({sum:p.a^p.b, carry:p.a&p.b}), 5);
+defChip('FullAdder', [['a',1],['b',1],['c',1]], [['sum',1],['carry',1]], p => { const t=p.a+p.b+p.c; return {sum:t&1, carry:t>>1}; }, 9);
+defChip('Add4', [['a',4],['b',4]], [['out',4]], p => ({out:(p.a+p.b)&15}), null, 32);
+defChip('Inc4', [['in',4]], [['out',4]], p => ({out:(p.in+1)&15}), null, 20);
+const ORDER = ['Nand','Not','And','Or','Xor','Mux','DMux','HalfAdder','FullAdder','Add4','Inc4'];
+
+function E(line, msg){ const e = new Error(msg); e.hdl = true; e.line = line; return e; }
+
+function tokenize(src){
+  const toks = []; let line = 1, i = 0;
+  while (i < src.length){
+    const c = src[i];
+    if (c === '\n'){ line++; i++; continue; }
+    if (/\s/.test(c)){ i++; continue; }
+    if (src.startsWith('//', i)){ while (i < src.length && src[i] !== '\n') i++; continue; }
+    if (src.startsWith('/*', i)){
+      const e = src.indexOf('*/', i+2);
+      if (e < 0) throw E(line, 'A comment that starts with /* is never closed with */.');
+      for (let k = i; k < e; k++) if (src[k] === '\n') line++;
+      i = e + 2; continue;
+    }
+    const rest = src.slice(i); let m;
+    if ((m = /^[A-Za-z_][A-Za-z0-9_]*/.exec(rest))){ toks.push({t:'id', v:m[0], line}); i += m[0].length; continue; }
+    if ((m = /^\d+/.exec(rest))){ toks.push({t:'num', v:+m[0], line}); i += m[0].length; continue; }
+    if (rest.startsWith('..')){ toks.push({t:'..', v:'..', line}); i += 2; continue; }
+    if ('{}()[],;:='.includes(c)){ toks.push({t:c, v:c, line}); i++; continue; }
+    throw E(line, 'The simulator does not understand the character "' + c + '" here.');
+  }
+  return toks;
+}
+
+function parse(src){
+  const T = tokenize(src); let p = 0;
+  const peek = () => T[p];
+  const prevLine = () => (T[p-1] || T[0] || {line:1}).line;
+  function expect(t, what){
+    const k = T[p];
+    if (!k || k.t !== t){
+      if (t === ';') throw E(prevLine(), 'This line needs a ; at the end.');
+      throw E(k ? k.line : prevLine(), 'The simulator expected ' + what + (k ? ' but found "' + k.v + '".' : ' but the text ended.'));
+    }
+    p++; return k;
+  }
+  function word(w){
+    const k = T[p];
+    if (!k || k.t !== 'id' || k.v !== w) throw E(k ? k.line : prevLine(), 'The simulator expected the word ' + w + (k ? ' but found "' + k.v + '".' : ' but the text ended.') + ' Keep the lines around PARTS: the way they were given.');
+    p++; return k;
+  }
+  function pinDecls(){
+    const list = [];
+    for(;;){
+      const n = expect('id', 'a pin name'); let w = 1;
+      if (peek() && peek().t === '['){ p++; w = expect('num', 'a width').v; expect(']', '"]"'); }
+      list.push([n.v, w]);
+      if (peek() && peek().t === ','){ p++; continue; }
+      break;
+    }
+    expect(';', '";"');
+    return list;
+  }
+  function ref(){
+    const n = expect('id', 'a pin or wire name'); let lo = null, hi = null;
+    if (peek() && peek().t === '['){
+      p++; lo = expect('num', 'a bit number').v; hi = lo;
+      if (peek() && peek().t === '..'){ p++; hi = expect('num', 'a bit number').v; }
+      expect(']', '"]"');
+    }
+    return {name:n.v, lo, hi, line:n.line};
+  }
+  const first = word('CHIP'); const name = expect('id', 'the chip name').v; expect('{', '"{"');
+  word('IN'); const ins = pinDecls();
+  word('OUT'); const outs = pinDecls();
+  word('PARTS'); expect(':', '":" after PARTS');
+  const parts = [];
+  while (peek() && peek().t !== '}'){
+    const c = expect('id', 'the name of a part');
+    if (!peek() || peek().t !== '(') throw E(c.line, 'After the part name "' + c.v + '" the simulator expected "(". A part looks like this: Nand(a=x, b=y, out=w);');
+    p++;
+    const conns = [];
+    for(;;){
+      const l = ref();
+      if (!peek() || peek().t !== '=') throw E(l.line, 'Each connection needs the form pin=wire. After "' + l.name + '" there is no "=".');
+      p++;
+      const r = ref(); conns.push({l, r});
+      if (peek() && peek().t === ','){ p++; continue; }
+      break;
+    }
+    if (!peek() || peek().t !== ')') throw E(prevLine(), 'This part is missing its closing ")". Connections inside a part are separated by commas.');
+    p++;
+    expect(';', '";"');
+    parts.push({chip:c.v, line:c.line, conns});
+  }
+  expect('}', 'the closing "}" of the chip');
+  if (peek()) throw E(peek().line, 'There is extra text after the closing "}" of the chip.');
+  return {name, line:first.line, ins, outs, parts};
+}
+
+function sameDecl(a, b){ return a.length === b.length && a.every((x, i) => x[0] === b[i][0] && x[1] === b[i][1]); }
+function declText(d){ return d.map(([n, w]) => w > 1 ? n + '[' + w + ']' : n).join(', '); }
+function pinList(c){ return c.ins.map(x => x[0]).concat(c.outs.map(x => x[0])).join(', '); }
+
+/* build: parse + check + order. counts = Nand counts of the student's own chips (optional). */
+function build(src, chipName, counts){
+  const spec = B[chipName]; const ast = parse(src);
+  if (ast.name !== chipName) throw E(ast.line, 'Keep the first line as: CHIP ' + chipName + ' {');
+  if (!sameDecl(ast.ins, spec.ins) || !sameDecl(ast.outs, spec.outs))
+    throw E(ast.line, 'Keep the IN and OUT lines the way they were given: IN ' + declText(spec.ins) + ';  OUT ' + declText(spec.outs) + ';');
+  if (!ast.parts.length) throw E(null, 'There are no parts yet. Add at least one part under PARTS:');
+  const allowed = ORDER.slice(0, ORDER.indexOf(chipName));
+  const sig = {};
+  for (const [n, w] of spec.ins) sig[n] = {w, kind:'in', read:false};
+  for (const [n, w] of spec.outs) sig[n] = {w, kind:'out', drv:new Array(w).fill(false)};
+  const warnings = [];
+  const range = (r, w, what) => {
+    const lo = r.lo === null ? 0 : r.lo, hi = r.hi === null ? w-1 : r.hi;
+    if (lo > hi || hi >= w) throw E(r.line, what + ' "' + r.name + '" is ' + (w === 1 ? 'a single bit, so it has no [' + (r.hi === r.lo ? r.lo : r.lo + '..' + r.hi) + '].' : w + ' bits wide, so its bits are numbered 0 to ' + (w-1) + '.'));
+    return {lo, w:hi-lo+1};
+  };
+  const isConst = n => n === 'true' || n === 'false';
+  // pass 1: resolve parts and pins; register the wires that parts produce
+  const parts = ast.parts.map((pt, idx) => {
+    const c = B[pt.chip];
+    if (!c){
+      const near = ORDER.find(n => n.toLowerCase() === pt.chip.toLowerCase());
+      throw E(pt.line, near ? 'Chip names are case-sensitive: write ' + near + ', not ' + pt.chip + '.' : 'There is no chip named "' + pt.chip + '". At this stop you can use: ' + allowed.join(', ') + '.');
+    }
+    if (pt.chip === chipName) throw E(pt.line, 'A chip cannot use itself as a part. At this stop you can use: ' + allowed.join(', ') + '.');
+    if (!allowed.includes(pt.chip)) throw E(pt.line, pt.chip + ' comes later on the trail. At this stop you can use: ' + allowed.join(', ') + '.');
+    const P = {chip:c, n:idx+1, line:pt.line, src:{}, outs:[], ins:[]};
+    for (const [n, w] of c.ins) P.src[n] = new Array(w).fill(null);
+    for (const cn of pt.conns){
+      const L = cn.l, R = cn.r;
+      const pin = c.ins.find(x => x[0] === L.name), pout = c.outs.find(x => x[0] === L.name);
+      if (!pin && !pout){
+        const flip = c.ins.concat(c.outs).find(x => x[0] === R.name);
+        throw E(L.line, pt.chip + ' has no pin named "' + L.name + '". Its pins are: ' + pinList(c) + '.' + (flip ? ' The pin of the part goes on the left of the = sign, and your wire goes on the right.' : ''));
+      }
+      const lr = range(L, (pin || pout)[1], 'The pin');
+      if (pout){
+        if (isConst(R.name)) throw E(R.line, 'The output of a part cannot be connected to ' + R.name + '. Give the wire a name.');
+        const s = sig[R.name];
+        if (s && s.kind === 'in') throw E(R.line, '"' + R.name + '" is an input of your chip, so a part cannot send its output there. Use a new wire name.');
+        if (s && s.kind === 'out'){
+          const rr = range(R, s.w, 'The output');
+          if (rr.w !== lr.w) throw E(R.line, 'Width mismatch: ' + pt.chip + '\'s ' + L.name + ' carries ' + lr.w + ' bit(s) here, but it is connected to ' + rr.w + ' bit(s) of ' + R.name + '.' + (s.w > 1 && R.lo === null ? ' Pick one bit, for example ' + R.name + '[0].' : ''));
+          for (let k = 0; k < rr.w; k++){
+            if (s.drv[rr.lo+k]) throw E(R.line, 'Two parts both send a value to ' + R.name + (s.w > 1 ? '[' + (rr.lo+k) + ']' : '') + '. Each wire gets its value from exactly one place.');
+            s.drv[rr.lo+k] = true;
+          }
+          P.outs.push({pin:L.name, lo:lr.lo, w:lr.w, to:R.name, tolo:rr.lo});
+        } else {
+          if (R.lo !== null) throw E(R.line, 'A wire you create inside the chip cannot use [ ]. Give each bit its own wire name, such as c1, c2.');
+          if (s) throw E(R.line, 'Two parts both send their output to the wire "' + R.name + '". Each wire gets its value from exactly one place, so use a different name for one of them.');
+          sig[R.name] = {w:lr.w, kind:'wire', read:false, line:R.line};
+          P.outs.push({pin:L.name, lo:lr.lo, w:lr.w, to:R.name, tolo:0});
+        }
+      } else {
+        P.ins.push({L, R, lr});
+      }
+    }
+    return P;
+  });
+  // pass 2: connect the inputs of every part
+  for (const P of parts){
+    for (const {L, R, lr} of P.ins){
+      let srcBits;
+      if (isConst(R.name)){
+        if (R.lo !== null) throw E(R.line, R.name + ' cannot take [ ].');
+        srcBits = new Array(lr.w).fill({c: R.name === 'true' ? 1 : 0});
+      } else {
+        const s = sig[R.name];
+        if (!s){
+          const names = Object.keys(sig).filter(n => sig[n].kind !== 'out');
+          throw E(R.line, 'Part ' + P.n + ' (' + P.chip.name + ') reads a wire named "' + R.name + '", but nothing gives that wire a value. Check the spelling. The wires that have values here are: ' + names.join(', ') + '.');
+        }
+        if (s.kind === 'out') throw E(R.line, '"' + R.name + '" is an output of your chip, and a part cannot read from an output. Send that signal to a wire of your own as well (a part\'s output can go to two places, for example out=w, out=' + R.name + ') and read the wire.');
+        if (s.kind === 'wire' && R.lo !== null) throw E(R.line, 'A wire you create inside the chip cannot use [ ].');
+        const rr = range(R, s.w, s.kind === 'in' ? 'The input' : 'The wire');
+        if (rr.w !== lr.w) throw E(R.line, 'Width mismatch: ' + P.chip.name + '\'s pin ' + L.name + ' takes ' + lr.w + ' bit(s) here, but ' + R.name + ' gives ' + rr.w + '.' + (s.w > 1 && R.lo === null ? ' Pick one bit, for example ' + R.name + '[0].' : ''));
+        s.read = true;
+        srcBits = []; for (let k = 0; k < rr.w; k++) srcBits.push({n:R.name, b:rr.lo+k});
+      }
+      for (let k = 0; k < lr.w; k++){
+        if (P.src[L.name][lr.lo+k]) throw E(L.line, 'In part ' + P.n + ' (' + P.chip.name + '), the pin ' + L.name + ' is connected twice.');
+        P.src[L.name][lr.lo+k] = srcBits[k];
+      }
+    }
+    for (const [n, w] of P.chip.ins) for (let k = 0; k < w; k++)
+      if (!P.src[n][k]) throw E(P.line, 'In part ' + P.n + ' (' + P.chip.name + '), the input ' + n + (w > 1 ? '[' + k + ']' : '') + ' is not connected. Every input of a part needs a value.');
+    delete P.ins;
+  }
+  for (const [n, w] of spec.outs) for (let k = 0; k < w; k++)
+    if (!sig[n].drv[k]) throw E(null, 'Nothing sends a value to your chip\'s output ' + n + (w > 1 ? '[' + k + ']' : '') + '. One part needs a connection that ends in =' + n + (w > 1 ? '[' + k + ']' : '') + '.');
+  for (const n in sig){
+    if (sig[n].kind === 'wire' && !sig[n].read) warnings.push('The wire "' + n + '" gets a value, but no part uses it.');
+    if (sig[n].kind === 'in' && !sig[n].read) warnings.push('Your chip never uses its input "' + n + '".');
+  }
+  // order the parts so each one runs after the parts it depends on
+  const known = new Set(); for (const [n, w] of spec.ins) for (let k = 0; k < w; k++) known.add(n + ':' + k);
+  const order = []; let left = parts.slice();
+  while (left.length){
+    const ready = left.filter(P => Object.values(P.src).every(bits => bits.every(s => s.c !== undefined || known.has(s.n + ':' + s.b))));
+    if (!ready.length) throw E(left[0].line, 'These parts wait on each other in a circle: ' + left.map(P => 'part ' + P.n + ' (' + P.chip.name + ')').join(', ') + '. On this trail a signal has to flow one way, from the inputs to the outputs.');
+    for (const P of ready){ order.push(P); for (const o of P.outs) for (let k = 0; k < o.w; k++) known.add(o.to + ':' + (o.tolo+k)); }
+    left = left.filter(P => !ready.includes(P));
+  }
+  let nands = 0;
+  for (const P of parts){ const c = P.chip; nands += (counts && counts[c.name]) || c.par || c.typical; }
+  return {name:chipName, spec, parts, order, sig, warnings, nands, wires:Object.keys(sig).filter(n => sig[n].kind === 'wire')};
+}
+
+function run(c, inputs){
+  const v = {};
+  for (const n in c.sig) v[n] = new Array(c.sig[n].w).fill(0);
+  for (const [n, w] of c.spec.ins) for (let k = 0; k < w; k++) v[n][k] = (inputs[n] >> k) & 1;
+  const trace = [];
+  for (const P of c.order){
+    const p = {};
+    for (const [pin, w] of P.chip.ins){
+      let x = 0;
+      for (let k = 0; k < w; k++){ const s = P.src[pin][k]; x |= (s.c !== undefined ? s.c : v[s.n][s.b]) << k; }
+      p[pin] = x;
+    }
+    const r = P.chip.fn(p);
+    for (const o of P.outs) for (let k = 0; k < o.w; k++) v[o.to][o.tolo+k] = (r[o.pin] >> (o.lo+k)) & 1;
+    trace.push({P, p, r});
+  }
+  const num = n => v[n].reduce((a, b, k) => a | (b << k), 0);
+  const outs = {}, wires = {};
+  for (const [n] of c.spec.outs) outs[n] = num(n);
+  for (const n of c.wires) wires[n] = num(n);
+  return {outs, wires, trace};
+}
+
+function combos(spec){
+  const bits = spec.ins.reduce((a, x) => a + x[1], 0), rows = [];
+  for (let i = 0; i < (1 << bits); i++){
+    const o = {}; let sh = bits;
+    for (const [n, w] of spec.ins){ sh -= w; o[n] = (i >> sh) & ((1 << w) - 1); }
+    rows.push(o);
+  }
+  return rows;
+}
+
+function testChip(c){
+  const spec = c.spec;
+  return combos(spec).map(ins => {
+    const exp = spec.fn(ins), got = run(c, ins).outs;
+    return {ins, exp, got, ok:spec.outs.every(([o]) => exp[o] === got[o])};
+  });
+}
+
+function fmtVal(v, w){ return w === 1 ? String(v) : v.toString(2).padStart(w, '0') + ' (' + v + ')'; }
+function fmtIns(spec, ins){ return spec.ins.map(([n, w]) => n + ' = ' + fmtVal(ins[n], w)).join(', '); }
+
+const TWO_IN_NAMES = {'0001':'And', '0111':'Or', '1110':'Nand', '1000':'the opposite of Or', '0110':'Xor', '1001':'the opposite of Xor', '0011':'a plain copy of a', '0101':'a plain copy of b', '1100':'Not a', '1010':'Not b'};
+
+/* turn failing rows into something a student can act on */
+function diagnose(rows, spec){
+  const outs = spec.outs, ins = spec.ins, msgs = [];
+  const mask = w => (1 << w) - 1;
+  const bad = rows.filter(r => !r.ok);
+  if (!bad.length) return msgs;
+  if (rows.every(r => outs.every(([o, w]) => r.got[o] === (~r.exp[o] & mask(w))))){
+    msgs.push('Every output is the exact opposite of what it should be. Your wiring has the right shape, and one flip is missing or extra: look for a Nand where you meant And, or a missing Not.');
+    return msgs;
+  }
+  for (let i = 0; i < outs.length; i++) for (let j = i+1; j < outs.length; j++){
+    const a = outs[i][0], b = outs[j][0];
+    if (outs[i][1] === outs[j][1] && rows.every(r => r.got[a] === r.exp[b] && r.got[b] === r.exp[a])){
+      msgs.push('Your two outputs have traded places: what arrives at ' + a + ' belongs at ' + b + ', and the other way around.');
+      return msgs;
+    }
+  }
+  for (let i = 0; i < ins.length; i++) for (let j = i+1; j < ins.length; j++){
+    const a = ins[i][0], b = ins[j][0];
+    if (ins[i][1] !== ins[j][1]) continue;
+    if (rows.every(r => { const q = Object.assign({}, r.ins); q[a] = r.ins[b]; q[b] = r.ins[a]; const e = spec.fn(q); return outs.every(([o]) => e[o] === r.got[o]); })){
+      msgs.push('Your chip does the right job with ' + a + ' and ' + b + ' trading places: it treats ' + a + ' the way it should treat ' + b + '. Check which of them each part receives.');
+      return msgs;
+    }
+  }
+  if (outs.length > 1){
+    const right = outs.filter(([o]) => rows.every(r => r.got[o] === r.exp[o])).map(x => x[0]);
+    const wrong = outs.filter(([o]) => !right.includes(o)).map(x => x[0]);
+    if (right.length) msgs.push('The output ' + right.join(' and ') + ' is correct in every row, so you only need to look at the parts that lead to ' + wrong.join(' and ') + '.');
+  }
+  if (ins.length === 2 && ins.every(x => x[1] === 1) && outs.length === 1 && outs[0][1] === 1){
+    const key = rows.map(r => r.got[outs[0][0]]).join('');
+    if (TWO_IN_NAMES[key]) msgs.push('Right now your chip behaves like ' + TWO_IN_NAMES[key] + '.');
+  }
+  for (const [o, w] of outs){
+    const g = new Set(rows.map(r => r.got[o])), e = new Set(rows.map(r => r.exp[o]));
+    if (g.size === 1 && e.size > 1) msgs.push('The output ' + o + ' is always ' + fmtVal(rows[0].got[o], w) + ', whatever the inputs are. Something on the way to ' + o + ' no longer depends on the inputs.');
+  }
+  const f = bad[0], o = outs.find(([n]) => f.got[n] !== f.exp[n]);
+  msgs.push('Start with this row: ' + fmtIns(spec, f.ins) + '. There ' + o[0] + ' should be ' + fmtVal(f.exp[o[0]], o[1]) + ', and your chip gives ' + fmtVal(f.got[o[0]], o[1]) + '. Put that row in the probe below and follow the values wire by wire.');
+  return msgs;
+}
+
+function stub(chipName, desc){
+  const s = B[chipName];
+  return '// ' + chipName + ': ' + desc + '\nCHIP ' + chipName + ' {\n    IN ' + declText(s.ins) + ';\n    OUT ' + declText(s.outs) + ';\n\n    PARTS:\n    \n}\n';
+}
+
+/* ALU (4-bit version of the Nand to Tetris ALU) */
+function alu(x, y, c){
+  const x1 = c.zx ? 0 : x, x2 = c.nx ? (~x1 & 15) : x1;
+  const y1 = c.zy ? 0 : y, y2 = c.ny ? (~y1 & 15) : y1;
+  const o1 = c.f ? ((x2 + y2) & 15) : (x2 & y2), out = c.no ? (~o1 & 15) : o1;
+  return {x1, x2, y1, y2, o1, out, zr: out === 0 ? 1 : 0, ng: out >> 3};
+}
+const ALU_TARGETS = [
+  ['0', () => 0], ['1', () => 1], ['-1', () => 15], ['x', x => x], ['y', (x, y) => y],
+  ['!x', x => ~x & 15], ['!y', (x, y) => ~y & 15], ['-x', x => -x & 15], ['-y', (x, y) => -y & 15],
+  ['x+1', x => (x+1) & 15], ['y+1', (x, y) => (y+1) & 15], ['x-1', x => (x-1) & 15], ['y-1', (x, y) => (y-1) & 15],
+  ['x+y', (x, y) => (x+y) & 15], ['x-y', (x, y) => (x-y) & 15], ['y-x', (x, y) => (y-x) & 15],
+  ['x&y', (x, y) => x & y], ['x|y', (x, y) => x | y]
+];
+function aluCheck(c, ti, px, py){
+  const f = ALU_TARGETS[ti][1]; let miss = null;
+  const tryAt = (x, y) => { if (!miss && alu(x, y, c).out !== f(x, y)) miss = {x, y}; };
+  tryAt(px, py);
+  const near = [0, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
+  for (const x of near) for (const y of near) tryAt(x, y);
+  let same = null;
+  if (miss) ALU_TARGETS.forEach(([n, g]) => { if (same) return; let all = true; for (let x = 0; x < 16 && all; x++) for (let y = 0; y < 16; y++) if (alu(x, y, c).out !== g(x, y)){ all = false; break; } if (all) same = n; });
+  return {ok: !miss, miss, same};
+}
+
+if (typeof module !== 'undefined' && module.exports) module.exports = {B, ORDER, parse, build, run, testChip, diagnose, combos, stub, alu, ALU_TARGETS, aluCheck, fmtVal, fmtIns};
+
+/* ===== The words on the page. trail-nand-to-adder.md is the editable companion. ===== */
+const STOPS = [
+  {id:'nand', kind:'play', chip:'Nand', part:1, short:'Nand', title:'Meet the Nand gate',
+   objs:['Read a truth table, which has one row for every combination of inputs.', 'State in one sentence what a Nand gate does.'],
+   idea:'<p>Every chip on this learning trail is made of Nand gates, so the first step is to know exactly what one Nand gate does. A gate takes bits in and gives a bit out, and a bit is either 0 or 1.</p><p>Flip the two switches and watch the output. When you have tried all four combinations, record what you saw in the truth table and check it.</p>',
+   rule:'Try each combination with the switches again and copy what the output shows.',
+   after:'In one sentence: a Nand gate gives 0 only when both inputs are 1. The name is short for Not-And.'},
+
+  {id:'not', kind:'build', chip:'Not', part:1, short:'Not', title:'Build Not from one Nand',
+   desc:'out is the opposite of in',
+   objs:['Write a part in HDL and connect its pins to wires.', 'Explain why a Nand gate with both inputs tied together flips its input.'],
+   idea:'<p>A Not gate flips a bit: 0 becomes 1, and 1 becomes 0. You build it here from a single Nand.</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. Each line under <code>PARTS:</code> is one part. Inside the parentheses, the name on the left of <code>=</code> is a pin of the part, and the name on the right is a wire in your chip. So <code>Nand(a=x, b=y, out=w);</code> means: connect the Nand\'s <code>a</code> pin to wire <code>x</code>, its <code>b</code> pin to wire <code>y</code>, and call its output <code>w</code>.</p><p>The wires in your chip are its inputs (here <code>in</code>), its outputs (here <code>out</code>), and any new names you make up for wires between parts.</p>',
+   rule:'Not gives the opposite of its input.',
+   hints:['Look at the two rows of the Nand truth table where a and b are equal.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Read the output in those two rows.', 'One part is enough: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
+   after:'You described hardware in text and a simulator confirmed it. A Nand with both inputs tied together can only be in the rows 0,0 and 1,1, and in those rows its output is the opposite of its input.'},
+
+  {id:'and', kind:'build', chip:'And', part:1, short:'And', title:'Build And',
+   desc:'out is 1 only when a and b are both 1',
+   objs:['Connect two parts with a wire that you name yourself.', 'Use a chip you built as a part inside a new chip.'],
+   idea:'<p>And gives 1 only when both inputs are 1. From this stop on, every chip you finish becomes a part you can use, so here you have Nand and Not.</p><p>To send the output of one part into the next part, give the wire between them a name of your own, such as <code>w</code>. One part writes to it with <code>out=w</code>, and the next part reads it.</p>',
+   rule:'And gives 1 in one row only: when a and b are both 1.',
+   hints:['Nand is short for Not-And. What do you get when you take the opposite of the opposite?', 'Send a and b through a Nand and name its output, for example out=w.', 'Two parts: a Nand from a and b to a wire w, then a Not from w to out.'],
+   after:'You chained two parts with a wire you named. That is the pattern for everything that follows: small chips become the parts of larger chips.'},
+
+  {id:'or', kind:'build', chip:'Or', part:1, short:'Or', title:'Build Or',
+   desc:'out is 1 when a or b (or both) is 1',
+   objs:['Build Or from the chips you have so far.', 'Use the fact that "a or b" means the same as "not (not a and not b)".'],
+   idea:'<p>Or gives 1 when at least one input is 1. None of your parts does that directly, so this stop takes a piece of reasoning before any wiring.</p><p>Fill in the truth table first and count the rows where Or gives 0. Then compare with the Nand table: it also gives 0 in exactly one row, so the question becomes how to make that row the right one.</p>',
+   rule:'Or gives 0 in one row only: when a and b are both 0.',
+   hints:['Or is 0 in exactly one row, and Nand is 0 in exactly one row. Compare which row it is in each table.', 'Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
+   after:'You used a law of logic (De Morgan\'s law) to build a gate you did not have from gates you did have.'},
+
+  {id:'xor', kind:'build', chip:'Xor', part:1, short:'Xor', title:'Build Xor',
+   desc:'out is 1 when exactly one of a, b is 1',
+   objs:['Turn a sentence that uses "and", "or" and "not" into a circuit.', 'Count the Nand gates in your design and look for a smaller one.'],
+   idea:'<p>Xor (exclusive or) gives 1 when the two inputs are different. It matters later on this trail because adding two bits gives exactly the Xor of those bits.</p><p>A method that works for any truth table: write a sentence for each row where the output is 1, then join the sentences with "or". Each "and", "or" and "not" in your sentence becomes one part.</p>',
+   rule:'Xor gives 1 when a and b are different, and 0 when they are the same.',
+   hints:['Say it in words: out is 1 when (a is 1 and b is 0) or (a is 0 and b is 1).', 'Each "and", "or" and "not" in that sentence is one part. You need two Nots, two Ands and one Or.', 'Five parts: Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out. When it passes, look at the Nand count below the tests: there is a design with only four Nands.'],
+   after:'You have a method that turns any truth table into a circuit: one And for each row that gives 1, joined by Or.'},
+
+  {id:'mux', kind:'build', chip:'Mux', part:1, short:'Mux', title:'Choose between two signals: Mux',
+   desc:'out is a when sel is 0, and b when sel is 1',
+   objs:['Build a chip where one input (sel) decides which of the other inputs reaches the output.', 'Explain why only one of the two And gates inside a Mux can pass a signal at a time.'],
+   idea:'<p>A multiplexer (Mux) is a selector switch made of logic. When <code>sel</code> is 0 the output copies <code>a</code>, and when <code>sel</code> is 1 it copies <code>b</code>.</p><p>This is how a computer chooses between two results. At the last stop of this trail, a Mux is what lets one chip either add two numbers or And them, depending on a control bit.</p>',
+   rule:'Read sel first: when sel is 0 copy a, and when sel is 1 copy b.',
+   hints:['In words: out is (a and not sel) or (b and sel).', 'Make one And that lets a through only when sel is 0, and another And that lets b through only when sel is 1. Only one of them can pass its signal at a time.', 'Four parts: Not sel to ns, And of a and ns to w1, And of b and sel to w2, Or of w1 and w2 to out.'],
+   after:'An And gate works as a door: one input is the signal, and the other input opens or closes the door. A Mux is two doors where exactly one is open.'},
+
+  {id:'dmux', kind:'build', chip:'DMux', part:1, short:'DMux', title:'Route one signal to two places: DMux',
+   desc:'in goes to a when sel is 0, and to b when sel is 1; the other output is 0',
+   objs:['Build a chip that has two outputs.', 'Describe DMux as a Mux run in reverse.'],
+   idea:'<p>A demultiplexer (DMux) takes one input and routes it. When <code>sel</code> is 0 the input goes to output <code>a</code>, and when <code>sel</code> is 1 it goes to output <code>b</code>. The output that is not chosen stays 0.</p><p>A chip with two outputs needs both of them connected: one part ends in <code>=a</code> and another ends in <code>=b</code>.</p>',
+   rule:'The chosen output copies in, and the other output is 0.',
+   hints:['Each output says: "I copy in, but only when sel points at me."', 'a is (in and not sel). b is (in and sel).', 'Three parts: Not sel to ns, And of in and ns to a, And of in and sel to b.'],
+   after:'That completes the logic gates on this trail. With Not, And, Or, Xor, Mux and DMux you can build the chips that do arithmetic.'},
+
+  {id:'binary', kind:'bin', part:2, short:'Binary', title:'Count in binary',
+   objs:['Convert a number between decimal and 4-bit binary using the place values 8, 4, 2 and 1.'],
+   idea:'<p>The same wires that carry 0 and 1 can carry numbers. Four wires together carry a 4-bit number: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 1010 is 8 + 2 = 10.</p><p>Play with the four bits first. Then work through the challenges below, where the page stops showing the value and you work it out.</p>',
+   after:'Four bits give you the 16 numbers from 0 to 15. Each extra bit doubles how many numbers you can write.'},
+
+  {id:'addhand', kind:'addhand', part:2, short:'Add by hand', title:'Add in binary by hand',
+   objs:['Add two binary numbers column by column, carrying a 1 when a column adds up to 2 or 3.', 'Recognize overflow, which is a sum that needs more bits than you have.'],
+   idea:'<p>Binary addition works like the addition you learned in school, with one change: a column can hold only 0 or 1. When a column adds up to 2 (binary 10), you write 0 and carry 1. When it adds up to 3 (binary 11), you write 1 and carry 1.</p><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column.</p>',
+   after:'Notice what every column did: it took in up to three bits (a bit of a, a bit of b, and a carry) and gave out two bits (a sum bit and a carry). The next two stops build that column as a chip.'},
+
+  {id:'halfadder', kind:'build', chip:'HalfAdder', part:2, short:'HalfAdder', title:'Add two bits: HalfAdder',
+   desc:'sum is the right bit of a + b, carry is the left bit',
+   objs:['Build the chip that adds two bits.', 'Match the sum column and the carry column of a truth table to gates you already know.'],
+   idea:'<p>The rightmost column of an addition has two bits to add. The result needs two outputs: <code>sum</code> is the bit you write down in that column, and <code>carry</code> is the bit you carry to the next column. So 1 + 1 gives sum 0 and carry 1, which is binary 10.</p><p>Fill in the truth table, then look at each output column on its own. You have seen both columns before.</p>',
+   rule:'Add a and b as numbers. The result is 0, 1 or 2, and 2 is written as carry 1, sum 0.',
+   hints:['Fill in the truth table, then compare the sum column and the carry column with the truth tables of the gates you built.', 'sum is 1 when exactly one input is 1. carry is 1 only when both inputs are 1.', 'Two parts: an Xor of a and b going to sum, and an And of a and b going to carry.'],
+   after:'Arithmetic turned out to be logic: the sum bit is an Xor and the carry bit is an And.'},
+
+  {id:'fulladder', kind:'build', chip:'FullAdder', part:2, short:'FullAdder', title:'Add three bits: FullAdder',
+   desc:'sum and carry of a + b + c',
+   objs:['Build the chip that adds three bits: two bits plus the carry from the column before.', 'Combine two HalfAdders into a FullAdder and explain what the extra gate is for.'],
+   idea:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code> and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3, so two output bits are still enough.</p><p>You add three numbers by hand in two steps: first two of them, then the third. The chip can work the same way.</p>',
+   rule:'Count how many of the three inputs are 1. Write that count in binary: carry is the left bit and sum is the right bit.',
+   hints:['Add in two steps: first a + b, then add c to that result.', 'Each step is a HalfAdder. Each step can produce a carry, and the chip\'s carry is 1 when either step produced one.', 'Three parts: HalfAdder of a and b giving s1 and c1, HalfAdder of s1 and c giving sum and c2, and an Or of c1 and c2 going to carry.'],
+   after:'A question worth explaining to someone: the two HalfAdders inside your FullAdder can never both produce a carry for the same inputs. The truth table shows why.'},
+
+  {id:'add4', kind:'build', chip:'Add4', part:2, short:'Add4', title:'Add two 4-bit numbers: Add4',
+   desc:'out = a + b (4 bits, a carry out of the last column is dropped)',
+   objs:['Chain adders so that the carry of each column feeds the next column.', 'Use bus pins: a[0] is the rightmost bit of the 4-bit input a.'],
+   idea:'<p>Here you turn the add-by-hand stop into wires: one adder for each column, with the carry of each column feeding the next.</p><p>The inputs <code>a</code> and <code>b</code> are 4 bits wide. A group of wires like this is called a bus, and <code>a[0]</code>, <code>a[1]</code>, <code>a[2]</code>, <code>a[3]</code> pick out its single bits, with <code>a[0]</code> as the 1s place. A connection looks like <code>a=a[0]</code> or <code>sum=out[0]</code>.</p><p>The simulator tests all 256 combinations of a and b. A carry out of the last column is dropped, so you can leave that pin out of the part. The Nand to Tetris course builds Add16, which is the same design with 16 columns.</p>',
+   hints:['One adder for each column, as in the add-by-hand stop. The carry that leaves one column is the carry that enters the next.', 'Column 0 has no carry coming in, so a HalfAdder is enough there. Give each carry wire its own name, such as c1, c2, c3.', 'Four parts. The first: HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1); The second: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern, and the last carry pin can be left out.'],
+   after:'You built a machine that adds, and the only thing inside it is Nand gates. Try the row a = 1111, b = 0001 in the probe and watch the carry travel through every column.'},
+
+  {id:'inc4', kind:'build', chip:'Inc4', part:2, short:'Inc4', title:'Add 1: Inc4',
+   desc:'out = in + 1 (4 bits)',
+   objs:['Build a chip that adds 1 to a number.', 'Feed a fixed 1 or 0 into a pin with true and false.'],
+   idea:'<p>Counting up by one is so common inside a computer (for example, to move on to the next instruction of a program) that it gets its own chip.</p><p>You can feed a fixed value into a pin by writing <code>true</code> (for 1) or <code>false</code> (for 0) on the right of the <code>=</code> sign. For a bus pin you can set single bits, for example <code>b[0]=true</code>.</p>',
+   hints:['You already have a chip that adds two numbers. What number do you want to add?', 'Use Add4 with a connected to in, and build the number 1 on b one bit at a time: b[0]=true, and false for the other three bits.', 'One part: Add4(a=in, b[0]=true, b[1]=false, b[2]=false, b[3]=false, out=out); A smaller design chains four HalfAdders, with true as the second input of the first one.'],
+   after:'Try in = 1111 in the probe. Adding 1 to the largest 4-bit number wraps around to 0000, which is the overflow you met in the add-by-hand stop.'},
+
+  {id:'twos', kind:'twos', part:2, short:'Negatives', title:'Negative numbers',
+   objs:['Read and write 4-bit numbers in two\'s complement, where the leftmost bit is worth -8.', 'Negate a number by flipping every bit and adding 1.'],
+   idea:'<p>Computers store negative numbers by changing what the leftmost bit is worth: in a 4-bit number it counts as -8, where before it counted as 8. So 1111 is -8 + 4 + 2 + 1 = -1, and four bits now cover the numbers from -8 to 7. This way of writing numbers is called two\'s complement.</p><p>The reason for this choice is that the adder you built works on these numbers with no changes. Subtraction needs no new chip, because x - y is the same as x + (-y). To get the negative of a number, flip every bit and then add 1.</p>',
+   after:'Your Add4 already subtracts. Go back to its probe and add 0101 (5) and 1101 (-3): the result is 0010 (2).'},
+
+  {id:'alu', kind:'alu', part:2, short:'ALU', title:'One chip, many operations: the ALU',
+   objs:['Predict what the ALU computes from its six control bits.', 'Find control bits that make the ALU compute a function you choose, such as x - y.'],
+   idea:'<p>The ALU (arithmetic logic unit) is the chip that does the computing in the Nand to Tetris computer. It takes two numbers, <code>x</code> and <code>y</code>, and six control bits. Each control bit does one small job, in this order:</p><ul><li><code>zx</code> sets x to zero, then <code>nx</code> flips every bit of x.</li><li><code>zy</code> sets y to zero, then <code>ny</code> flips every bit of y.</li><li><code>f</code> chooses what to do with the two results: add them (1) or And them (0).</li><li><code>no</code> flips every bit of the output.</li></ul><p>Every piece is something you have built or could now build: a Mux to choose, a Not to flip, an adder to add. The surprise is how many operations come out of these six switches. Pick a target, set the switches, and check. The page tests your settings on all 256 pairs of x and y. A result that does not fit in 4 bits wraps around, as in the overflow you met earlier. (This ALU is 4 bits wide; the one in the course is 16 bits wide and works the same way.)</p>',
+   hints:['To get a result that ignores an input, zero that input first. Remember that x + 0 = x, and that And with 1111 also leaves x unchanged.', 'Flipping every bit of a number n gives -n - 1. So zero followed by a flip gives 1111, which is -1. That -1 is your tool for x - 1, and a flip at the end can turn a "minus" into a "plus".', 'For x - y: flip x, add y, then flip the result. For x | y: flip both inputs, And them, then flip the result (the same law of logic you used to build Or).'],
+   after:'Six control bits and a few chips you know how to build give a whole menu of arithmetic and logic. A processor picks from that menu on every instruction it runs.'},
+
+  {id:'look', kind:'look', part:2, short:'Look back', title:'Look back at what you built',
+   objs:['Explain in your own words how a chip that adds numbers is made from Nand gates.'],
+   idea:'<p>This table shows every chip on the trail and how many Nand gates your version uses, counting the Nands inside the chips you used as parts.</p>'}
+];
+
+const LOOK_QUESTIONS = [
+  'Why does a Nand gate with both inputs tied together act as a Not gate?',
+  'Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?',
+  'Why does flipping every bit of a number and adding 1 give its negative?'
+];
+
+if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LOOK_QUESTIONS};
+
+/* ===== Page behavior ===== */
+(function(){
+  if (typeof document === 'undefined') return;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
+  const KEY = 'cst286-nand-trail-v1';
+  let S = {code:{}, pass:{}, nands:{}, done:{}, pred:{}, games:{}, alu:{}, stop:0};
+  try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); if (j && typeof j === 'object') S = Object.assign(S, j); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const main = $('#stop'), mapEl = $('#map');
+  const CIRC = {}, LAST = {}, PRB = {}, P = {}, H = {}, G = {};
+  const rnd = n => Math.floor(Math.random() * n);
+  const bin4 = v => v.toString(2).padStart(4, '0');
+  const sg = v => v > 7 ? v - 16 : v;
+  const isDone = s => s.kind === 'build' ? !!S.pass[s.chip] : !!S.done[s.id];
+  const TRAIL = STOPS.filter(s => s.kind !== 'look');
+
+  /* ---------- map ---------- */
+  function renderMap(){
+    let h = '';
+    [1, 2].forEach(part => {
+      h += '<div class="map-part"><div class="map-lbl">Part ' + part + ' &middot; ' + (part === 1 ? 'Boolean logic' : 'Boolean arithmetic') + '</div><div class="map-row">';
+      STOPS.forEach((s, i) => {
+        if (s.part !== part) return;
+        const cls = 'dot' + (i === S.stop ? ' cur' : '') + (isDone(s) ? ' done' : '');
+        h += '<button type="button" class="' + cls + '" data-i="' + i + '"' + (i === S.stop ? ' aria-current="step"' : '') + '><span class="dot-n">' + (isDone(s) ? '&#10003;' : (s.kind === 'look' ? '&#9873;' : i + 1)) + '</span><span class="dot-t">' + esc(s.short) + '</span></button>';
+      });
+      h += '</div></div>';
+    });
+    const n = TRAIL.filter(isDone).length;
+    h += '<div class="map-prog" role="status">' + n + ' of ' + TRAIL.length + ' stops complete. Your work is saved in this browser.</div>';
+    mapEl.innerHTML = h;
+    $$('.dot', mapEl).forEach(b => b.onclick = () => go(+b.dataset.i, true));
+  }
+  function go(i, scroll){
+    S.stop = Math.max(0, Math.min(STOPS.length - 1, i)); save();
+    try { history.replaceState(null, '', '#' + STOPS[S.stop].id); } catch (e) {}
+    render();
+    if (scroll && main.scrollIntoView) main.scrollIntoView({block:'start'});
+  }
+  function head(s){
+    const i = STOPS.indexOf(s);
+    return '<div class="eyebrow">' + (s.kind === 'look' ? 'End of the trail' : 'Stop ' + (i + 1) + ' of ' + TRAIL.length) + ' &middot; Part ' + s.part + ': ' + (s.part === 1 ? 'Boolean logic' : 'Boolean arithmetic') + '</div>' +
+      '<h2>' + esc(s.title) + '</h2>' +
+      '<div class="objs"><div class="lbl">After this stop you can</div><ul>' + s.objs.map(o => '<li>' + esc(o) + '</li>').join('') + '</ul></div>' +
+      '<div class="idea">' + s.idea + '</div>';
+  }
+  function foot(s){
+    const i = STOPS.indexOf(s);
+    return '<div class="navb">' + (i > 0 ? '<button type="button" class="btn ghost" id="prev">&larr; ' + esc(STOPS[i-1].short) + '</button>' : '<span></span>') +
+      (i < STOPS.length - 1 ? '<button type="button" class="btn' + (isDone(s) ? '' : ' ghost') + '" id="next">Next: ' + esc(STOPS[i+1].short) + ' &rarr;</button>' : '') + '</div>';
+  }
+  function bindFoot(s){
+    const i = STOPS.indexOf(s);
+    if ($('#prev')) $('#prev').onclick = () => go(i - 1, true);
+    if ($('#next')) $('#next').onclick = () => go(i + 1, true);
+  }
+  const afterHTML = s => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(s.after) + '</p></div>';
+  function render(){
+    renderMap();
+    const s = STOPS[S.stop];
+    VIEW[s.kind](s);
+  }
+
+  /* ---------- predict a truth table ---------- */
+  function predictHTML(chip, lead){
+    const spec = B[chip], rows = combos(spec);
+    if (!P[chip]) P[chip] = rows.map(r => spec.outs.map(([o]) => S.pred[chip] ? spec.fn(r)[o] : null));
+    let h = '<p>' + lead + '</p><div class="tablewrap"><table class="tt" id="pt"><thead><tr>' + spec.ins.map(x => '<th>' + x[0] + '</th>').join('') + spec.outs.map(x => '<th class="o">' + x[0] + '</th>').join('') + '</tr></thead><tbody>';
+    rows.forEach((r, ri) => {
+      h += '<tr>' + spec.ins.map(x => '<td>' + r[x[0]] + '</td>').join('');
+      spec.outs.forEach((x, oi) => { const v = P[chip][ri][oi]; h += '<td class="o"><button type="button" class="cell" data-r="' + ri + '" data-o="' + oi + '" aria-label="' + x[0] + ' for row ' + (ri + 1) + '">' + (v === null ? '?' : v) + '</button></td>'; });
+      h += '</tr>';
+    });
+    return h + '</tbody></table></div><div class="row"><button type="button" class="btn" id="pcheck">Check my table</button></div><div id="pmsg" class="msg" role="status"></div>';
+  }
+  function bindPredict(s, onOK){
+    const chip = s.chip, spec = B[chip], rows = combos(spec);
+    $$('#pt .cell').forEach(b => b.onclick = () => {
+      const r = +b.dataset.r, o = +b.dataset.o, v = P[chip][r][o];
+      P[chip][r][o] = v === null ? 0 : 1 - v; b.textContent = P[chip][r][o]; b.classList.remove('ok', 'bad');
+    });
+    $('#pcheck').onclick = () => {
+      const m = $('#pmsg');
+      if (P[chip].some(r => r.some(v => v === null))){ m.className = 'msg warn'; m.textContent = 'Fill in every row first. Click a ? to set it to 0, and click again for 1.'; return; }
+      let wrong = 0;
+      $$('#pt .cell').forEach(b => { const r = +b.dataset.r, o = +b.dataset.o; const ok = P[chip][r][o] === spec.fn(rows[r])[spec.outs[o][0]]; b.classList.toggle('ok', ok); b.classList.toggle('bad', !ok); if (!ok) wrong++; });
+      if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + s.rule; }
+      else { m.className = 'msg ok'; m.textContent = 'Every row matches.'; S.pred[chip] = true; save(); if (onOK) onOK(); }
+    };
+  }
+
+  /* ---------- probe: switches, outputs, and the value on every wire ---------- */
+  function drawProbe(chip, builtin){
+    const el = $('#probe'); if (!el) return;
+    const spec = B[chip], c = CIRC[chip];
+    if (!builtin && !c){ el.innerHTML = '<p class="muted">Your chip appears here as soon as it has no errors. Press Run tests first.</p>'; return; }
+    if (!PRB[chip]){ PRB[chip] = {}; spec.ins.forEach(([n]) => PRB[chip][n] = 0); }
+    const inp = PRB[chip], exp = spec.fn(inp), res = builtin ? {outs:exp, trace:[]} : run(c, inp);
+    let h = '<div class="pr-grid"><div class="pr-col"><div class="lbl">Inputs (click to flip)</div>';
+    spec.ins.forEach(([n, w]) => {
+      h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
+      for (let k = w - 1; k >= 0; k--){ const v = (inp[n] >> k) & 1; h += '<button type="button" class="sw' + (v ? ' on' : '') + '" data-n="' + n + '" data-b="' + k + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + n + (w > 1 ? ' bit ' + k : '') + '">' + v + '</button>'; }
+      if (w > 1) h += '<span class="dec">= ' + inp[n] + '</span>';
+      h += '</div>';
+    });
+    h += '</div><div class="pr-col"><div class="lbl">Outputs</div>';
+    spec.outs.forEach(([n, w]) => {
+      const v = res.outs[n], ok = v === exp[n];
+      h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
+      for (let k = w - 1; k >= 0; k--){ const b = (v >> k) & 1; h += '<span class="lamp' + (b ? ' on' : '') + '">' + b + '</span>'; }
+      if (w > 1) h += '<span class="dec">= ' + v + '</span>';
+      if (!ok) h += '<span class="should">should be ' + fmtVal(exp[n], w) + '</span>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+    if (!builtin){
+      h += '<div class="lbl" style="margin-top:14px">Inside your chip, part by part</div><ol class="trace">';
+      res.trace.slice().sort((a, b) => a.P.n - b.P.n).forEach(t => {
+        const ins = t.P.chip.ins.map(([n, w]) => n + '=' + fmtVal(t.p[n], w)).join(', ');
+        const outs = t.P.chip.outs.map(([n, w]) => { const to = t.P.outs.filter(o => o.pin === n).map(o => o.to + (c.sig[o.to].w > 1 && c.sig[o.to].kind === 'out' ? '[' + o.tolo + (o.w > 1 ? '..' + (o.tolo + o.w - 1) : '') + ']' : '')); return n + '=' + fmtVal(t.r[n], w) + (to.length ? ' <span class="to">&rarr; ' + to.join(', ') + '</span>' : ' <span class="to">(not connected)</span>'); }).join(', ');
+        h += '<li value="' + t.P.n + '"><code>' + t.P.chip.name + '</code> <span class="tin">' + ins + '</span> <span class="arrow">gives</span> <span class="tout">' + outs + '</span></li>';
+      });
+      h += '</ol>';
+    }
+    el.innerHTML = h;
+    $$('.sw', el).forEach(b => b.onclick = () => { inp[b.dataset.n] ^= (1 << +b.dataset.b); drawProbe(chip, builtin); const f = $('.sw[data-n="' + b.dataset.n + '"][data-b="' + b.dataset.b + '"]', el); if (f) f.focus(); });
+  }
+
+  /* ---------- views ---------- */
+  const VIEW = {};
+
+  VIEW.play = function(s){
+    main.innerHTML = head(s) +
+      '<section class="step"><h3><span class="stepn">1</span> Play</h3><div id="probe"></div></section>' +
+      '<section class="step"><h3><span class="stepn">2</span> Record what you saw</h3>' + predictHTML(s.chip, 'Click a ? to set it to 0, and click again for 1.') + '<div id="after">' + (isDone(s) ? afterHTML(s) : '') + '</div></section>' + foot(s);
+    drawProbe(s.chip, true);
+    bindPredict(s, () => { S.done[s.id] = true; save(); $('#after').innerHTML = afterHTML(s); renderMap(); const n = $('#next'); if (n) n.classList.remove('ghost'); });
+    bindFoot(s);
+  };
+
+  function allowed(chip){ return ORDER.slice(0, ORDER.indexOf(chip)); }
+  function template(name){ const c = B[name]; return name + '(' + c.ins.concat(c.outs).map(x => x[0] + '=').join(', ') + ');'; }
+
+  VIEW.build = function(s){
+    const chip = s.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1);
+    let n = 1;
+    let h = head(s);
+    if (hasPred) h += '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Predict</h3>' + predictHTML(chip, 'Before you build ' + chip + ', fill in what it should do. This table is what the simulator will test your chip against.') + '</section>';
+    h += '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Build</h3>' +
+      '<p>Write your parts under <code>PARTS:</code> and run the tests as often as you like. Parts you can use at this stop (click one to insert it at the cursor):</p>' +
+      '<div class="palette">' + allowed(chip).map(a => '<button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button>').join('') + '</div>' +
+      '<label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 14 : 12) + '"></textarea>' +
+      '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
+      '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div></section>' +
+      '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Probe your chip</h3><p>Set the inputs and read the value on every wire inside your own chip. When a test row fails, this is where you find the part that gives the wrong value.</p><div id="probe"></div></section>' + foot(s);
+    main.innerHTML = h;
+    const ed = $('#ed');
+    ed.value = S.code[chip] || stub(chip, s.desc);
+    if (hasPred) bindPredict(s);
+    ed.addEventListener('keydown', e => {
+      if (e.key === 'Tab' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); insert('    '); }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); runTests(); }
+    });
+    ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); });
+    function insert(txt){ const a = ed.selectionStart, b = ed.selectionEnd; ed.value = ed.value.slice(0, a) + txt + ed.value.slice(b); ed.selectionStart = ed.selectionEnd = a + txt.length; S.code[chip] = ed.value; save(); ed.focus(); }
+    $$('.chipbtn').forEach(b => b.onclick = () => {
+      const v = ed.value, pi = v.indexOf('PARTS:'), end = v.lastIndexOf('}'), pos = ed.selectionStart;
+      const line = '    ' + template(b.dataset.c); let at;
+      if (pi < 0 || end < 0 || pos <= pi + 6 || pos > end){
+        const top = v.slice(0, end < 0 ? v.length : end).replace(/\s*$/, '');
+        ed.value = top + '\n' + line + '\n' + (end < 0 ? '' : v.slice(end)); at = top.length + 1;
+      } else {
+        const ls = v.lastIndexOf('\n', pos - 1) + 1; let le = v.indexOf('\n', pos); if (le < 0) le = v.length;
+        if (v.slice(ls, le).trim() === ''){ ed.value = v.slice(0, ls) + line + v.slice(le); at = ls; }
+        else { ed.value = v.slice(0, le) + '\n' + line + v.slice(le); at = le + 1; }
+      }
+      S.code[chip] = ed.value; save(); ed.focus();
+      const caret = at + line.indexOf('=') + 1; try { ed.setSelectionRange(caret, caret); } catch (e) {}
+    });
+    $('#reset').onclick = () => { ed.value = stub(chip, s.desc); S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; CIRC[chip] = null; drawProbe(chip); ed.focus(); };
+    $('#hint').onclick = () => {
+      H[chip] = Math.min((H[chip] || 0) + 1, s.hints.length);
+      $('#hints').innerHTML = s.hints.slice(0, H[chip]).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + s.hints.length + '.</b> ' + esc(t) + '</div>').join('');
+      if (H[chip] >= s.hints.length) $('#hint').textContent = 'No more hints';
+    };
+    if (H[chip]){ H[chip]--; $('#hint').onclick(); }
+    $('#ai').onclick = () => {
+      const L = LAST[chip];
+      const said = !L ? 'I have not run the tests yet.' : L.error ? 'Error: ' + L.error : L.pass ? 'All ' + L.rows.length + ' test rows pass.' : L.rows.filter(r => r.ok).length + ' of ' + L.rows.length + ' test rows pass. ' + L.msgs.join(' ');
+      const txt = 'I am working through a learning trail based on the Nand to Tetris course, where I build chips from Nand gates in HDL. I am on the ' + chip + ' chip (' + s.desc + '). The parts I may use are: ' + allowed(chip).join(', ') + '.\n\nMy HDL:\n' + ed.value + '\nWhat the simulator says:\n' + said + '\n\nPlease do not write the HDL for me. Ask me one question at a time that helps me find the next step myself. When my chip works, keep asking me questions until you are sure I can explain why the design works.';
+      copyOut(txt, $('#aibox'));
+    };
+    $('#run').onclick = runTests;
+    function runTests(){
+      const res = $('#res'); S.code[chip] = ed.value; save();
+      let c;
+      try { c = build(ed.value, chip, S.nands); }
+      catch (e){
+        if (!e.hdl) throw e;
+        CIRC[chip] = null; LAST[chip] = {error:(e.line ? 'Line ' + e.line + ': ' : '') + e.message};
+        res.innerHTML = '<div class="msg bad"><b>' + (e.line ? 'Line ' + e.line + '. ' : '') + '</b>' + esc(e.message) + '</div>';
+        if (e.line) selectLine(e.line);
+        drawProbe(chip); return;
+      }
+      CIRC[chip] = c;
+      const rows = testChip(c), pass = rows.every(r => r.ok), msgs = diagnose(rows, spec);
+      LAST[chip] = {rows, pass, msgs};
+      let h = '';
+      if (pass){
+        S.pass[chip] = true; S.nands[chip] = c.nands; save();
+        h += '<div class="msg ok"><b>All ' + rows.length + ' rows pass.</b> Your ' + chip + ' works.</div>';
+        h += '<div class="msg info">Your ' + chip + ' uses <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b> in total, counting the Nands inside the chips you used as parts. ' +
+          (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') + '</div>';
+      } else {
+        const okn = rows.filter(r => r.ok).length;
+        h += '<div class="msg bad"><b>' + okn + ' of ' + rows.length + ' rows pass.</b> ' + (okn ? 'Your chip compiles and already gets some rows right.' : 'Your chip compiles, so the wiring is valid HDL. Now the behavior needs work.') + '</div>';
+        h += '<ul class="diag">' + msgs.map(m => '<li>' + esc(m) + '</li>').join('') + '</ul>';
+        h += '<div class="row"><button type="button" class="btn ghost" id="toprobe">Put the first failing row in the probe</button></div>';
+      }
+      c.warnings.forEach(w => h += '<div class="msg warn">' + esc(w) + '</div>');
+      h += resultTable(rows, spec, pass);
+      if (pass) h += afterHTML(s);
+      res.innerHTML = h;
+      if ($('#toprobe')) $('#toprobe').onclick = () => { PRB[chip] = Object.assign({}, rows.find(r => !r.ok).ins); drawProbe(chip); $('#probe').scrollIntoView && $('#probe').scrollIntoView({block:'center'}); };
+      drawProbe(chip); renderMap();
+      if (pass){ const nx = $('#next'); if (nx) nx.classList.remove('ghost'); }
+    }
+    function selectLine(n){ const lines = ed.value.split('\n'); let a = 0; for (let i = 0; i < n - 1 && i < lines.length; i++) a += lines[i].length + 1; try { ed.focus(); ed.setSelectionRange(a, a + (lines[n-1] || '').length); } catch (e) {} }
+    // show the saved chip in the probe right away when it compiles
+    try { CIRC[chip] = build(ed.value, chip, S.nands); } catch (e) { CIRC[chip] = null; }
+    drawProbe(chip);
+    bindFoot(s);
+  };
+
+  function resultTable(rows, spec, pass){
+    let show = rows, note = '';
+    if (rows.length > 16){
+      if (pass){ show = rows.filter((r, i) => i % Math.floor(rows.length / 6) === 3).slice(0, 6); note = 'All ' + rows.length + ' rows pass. Here are a few of them.'; }
+      else { const bad = rows.filter(r => !r.ok); show = bad.slice(0, 8); note = bad.length + ' rows fail. ' + (bad.length > 8 ? 'Here are the first 8.' : 'Here they are.'); }
+    }
+    let h = (note ? '<p class="muted">' + note + '</p>' : '') + '<div class="tablewrap"><table class="tt res"><thead><tr>' + spec.ins.map(x => '<th>' + x[0] + '</th>').join('') + spec.outs.map(x => '<th class="o">' + x[0] + ' should be</th><th class="o">your ' + x[0] + '</th>').join('') + '<th></th></tr></thead><tbody>';
+    show.forEach(r => {
+      h += '<tr class="' + (r.ok ? 'pass' : 'fail') + '">' + spec.ins.map(x => '<td>' + fmtVal(r.ins[x[0]], x[1]) + '</td>').join('') +
+        spec.outs.map(x => '<td class="o">' + fmtVal(r.exp[x[0]], x[1]) + '</td><td class="o' + (r.exp[x[0]] === r.got[x[0]] ? '' : ' diff') + '">' + fmtVal(r.got[x[0]], x[1]) + '</td>').join('') + '<td class="mark">' + (r.ok ? '&#10003; pass' : '&#10007; fail') + '</td></tr>';
+    });
+    return h + '</tbody></table></div>';
+  }
+
+  function copyOut(txt, box){
+    const show = ok => { box.innerHTML = '<div class="msg info">' + (ok ? 'Copied. Paste it into your AI Dojo or another AI chat.' : 'Select the text below, copy it, and paste it into your AI Dojo or another AI chat.') + '</div>' + (ok ? '' : '<textarea class="editor" rows="8" readonly>' + esc(txt) + '</textarea>'); };
+    try { navigator.clipboard.writeText(txt).then(() => show(true), () => show(false)); } catch (e) { show(false); }
+  }
+
+  /* ---------- small games ---------- */
+  function bitsRow(group, v, weights, live){
+    let h = '<div class="bits">';
+    for (let k = 3; k >= 0; k--){ const b = (v >> k) & 1; h += '<div class="bitcol"><span class="wt">' + weights[3-k] + '</span>' + (live ? '<button type="button" class="sw big' + (b ? ' on' : '') + '" data-g="' + group + '" data-b="' + k + '" aria-pressed="' + (b ? 'true' : 'false') + '" aria-label="bit worth ' + weights[3-k] + '">' + b + '</button>' : '<span class="lamp big' + (b ? ' on' : '') + '">' + b + '</span>') + '</div>'; }
+    return h + '</div>';
+  }
+  function terms(v, weights){ const t = []; for (let k = 3; k >= 0; k--) if ((v >> k) & 1) t.push(weights[3-k]); return t.length ? t.join(' + ').replace(/\+ -/g, '- ') : '0'; }
+  const W = [8, 4, 2, 1], WS = [-8, 4, 2, 1];
+  function tally(label, n, need){ return '<span class="tally' + (n >= need ? ' full' : '') + '">' + label + ': ' + Math.min(n, need) + ' of ' + need + '</span>'; }
+  function bindBits(g, redraw){ $$('.sw[data-g]').forEach(b => b.onclick = () => { const k = b.dataset.g; g[k] ^= (1 << +b.dataset.b); if (k !== 'explore'){ g.msg = ''; } redraw(); const f = $('.sw[data-g="' + k + '"][data-b="' + b.dataset.b + '"]'); if (f) f.focus(); }); }
+  function finish(s){ if (!S.done[s.id]){ S.done[s.id] = true; save(); renderMap(); } }
+
+  VIEW.bin = function(s){
+    const st = S.games.bin || (S.games.bin = {make:0, read:0});
+    const g = G.bin || (G.bin = {explore:5, mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
+    const draw = () => {
+      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play</h3><p>Click the bits. The number is the sum of the place values that are switched to 1.</p>' + bitsRow('explore', g.explore, W, true) + '<p class="bigval">' + bin4(g.explore) + ' is ' + terms(g.explore, W) + ' = <b>' + g.explore + '</b></p></section>';
+      h += '<section class="step"><h3><span class="stepn">2</span> Challenges</h3><p class="tallies">' + tally('Make a number', st.make, 3) + tally('Read a number', st.read, 3) + '</p>';
+      if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, W, !g.solved);
+      else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, W, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Next challenge</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
+      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
+      if ($('#ans')) $('#ans').addEventListener('keydown', e => { if (e.key === 'Enter') $('#check').click(); });
+      if ($('#check')) $('#check').onclick = () => {
+        if (g.mode === 'make'){
+          if (g.bits === g.target){ st.make++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + terms(g.bits, W) + ' = ' + g.target + '.'; }
+          else { const d = g.bits - g.target; g.cls = 'bad'; g.msg = 'Your bits are worth ' + terms(g.bits, W) + ' = ' + g.bits + '. You need ' + g.target + ', so you are ' + Math.abs(d) + ' too ' + (d > 0 ? 'high' : 'low') + '.'; }
+        } else {
+          const v = $('#ans').value.trim();
+          if (v === ''){ g.cls = 'warn'; g.msg = 'Type the decimal value first.'; }
+          else if (+v === g.target){ st.read++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + bin4(g.target) + ' is ' + terms(g.target, W) + ' = ' + g.target + '.'; }
+          else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
+          else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target, W) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
+        }
+        save(); if (st.make >= 3 && st.read >= 3) finish(s); draw();
+      };
+      if ($('#nextc')) $('#nextc').onclick = () => { g.mode = (g.mode === 'make') ? 'read' : 'make'; if (st.make >= 3 && st.read < 3) g.mode = 'read'; if (st.read >= 3 && st.make < 3) g.mode = 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
+    };
+    draw();
+  };
+
+  VIEW.addhand = function(s){
+    const st = S.games.add || (S.games.add = {n:0});
+    const fresh = () => ({a:1 + rnd(15), b:1 + rnd(15), s:0, c:0, msg:'', cls:'', solved:false});
+    const g = G.add || (G.add = fresh());
+    const draw = () => {
+      const cell = (grp, k, v) => g.solved ? '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>' : '<button type="button" class="sw big' + (v ? ' on' : '') + '" data-g="' + grp + '" data-b="' + k + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + (grp === 'c' ? 'carry into column ' + k : 'sum bit ' + k) + '">' + v + '</button>';
+      const fixed = v => '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>';
+      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Add these two numbers</h3><p class="tallies">' + tally('Correct additions', st.n, 3) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
+      h += '<tr><th>carry</th><td>' + cell('c', 4, (g.c >> 4) & 1) + '</td>' + [3, 2, 1].map(k => '<td>' + cell('c', k, (g.c >> k) & 1) + '</td>').join('') + '<td></td><td></td></tr>';
+      h += '<tr><th>a</th><td></td>' + [3, 2, 1, 0].map(k => '<td>' + fixed((g.a >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.a : '') + '</td></tr>';
+      h += '<tr><th>b</th><td class="plus">+</td>' + [3, 2, 1, 0].map(k => '<td>' + fixed((g.b >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.b : '') + '</td></tr>';
+      h += '<tr class="sumrow"><th>sum</th><td></td>' + [3, 2, 1, 0].map(k => '<td>' + cell('s', k, (g.s >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.s : '') + '</td></tr></tbody></table></div>';
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Another one</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
+      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
+      if ($('#check')) $('#check').onclick = () => {
+        let cin = 0, bad = false;
+        for (let i = 0; i < 4 && !bad; i++){
+          const ai = (g.a >> i) & 1, bi = (g.b >> i) & 1, t = ai + bi + cin;
+          if (((g.s >> i) & 1) !== (t & 1) || ((g.c >> (i + 1)) & 1) !== (t >> 1)){
+            bad = true; g.cls = 'bad';
+            g.msg = 'Look at the ' + W[3-i] + 's column' + (i ? '. The columns to its right are correct' : '') + '. There you add ' + ai + ' + ' + bi + (i ? ' plus a carry of ' + cin : '') + ', which makes ' + t + '. In binary ' + t + ' is written ' + (t >> 1) + '' + (t & 1) + ', so the sum bit is ' + (t & 1) + ' and the carry into the next column is ' + (t >> 1) + '.';
+          }
+          cin = t >> 1;
+        }
+        if (!bad){
+          st.n++; g.solved = true; g.cls = 'ok'; const tot = g.a + g.b;
+          g.msg = 'Correct: ' + g.a + ' + ' + g.b + ' = ' + tot + '.' + (tot > 15 ? ' The answer ' + tot + ' does not fit in 4 bits, so there is a carry out of the last column. This is called overflow: a 4-bit adder drops that carry and shows ' + (tot & 15) + '.' : '');
+          save(); if (st.n >= 3) finish(s);
+        }
+        draw();
+      };
+      if ($('#nextc')) $('#nextc').onclick = () => { G.add = fresh(); VIEW.addhand(s); };
+    };
+    draw();
+  };
+
+  VIEW.twos = function(s){
+    const st = S.games.twos || (S.games.twos = {make:0, neg:0});
+    const pick = mode => mode === 'make' ? {mode, target:(rnd(3) ? 8 + rnd(8) : 1 + rnd(7))} : {mode, target:(-[1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6, -7][rnd(14)]) & 15};
+    const g = G.twos || (G.twos = Object.assign({explore:13, bits:0, msg:'', cls:'', solved:false}, pick('make')));
+    const draw = () => {
+      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play</h3><p>The leftmost bit is now worth -8. Click the bits and watch what happens when it switches on.</p>' + bitsRow('explore', g.explore, WS, true) + '<p class="bigval">' + bin4(g.explore) + ' is ' + terms(g.explore, WS) + ' = <b>' + sg(g.explore) + '</b></p></section>';
+      h += '<section class="step"><h3><span class="stepn">2</span> Challenges</h3><p class="tallies">' + tally('Make a number', st.make, 3) + tally('Negate a number', st.neg, 3) + '</p>';
+      const x = (-g.target) & 15;
+      if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + sg(g.target) + '</b>.</p>';
+      else h += '<p class="ask">This is <b>' + sg(x) + '</b>:</p>' + bitsRow('x', x, WS, false) + '<p class="ask">Set the bits below to make its negative, <b>' + sg(g.target) + '</b>. Flip every bit, then add 1.</p>';
+      h += bitsRow('bits', g.bits, WS, !g.solved);
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Next challenge</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
+      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
+      if ($('#check')) $('#check').onclick = () => {
+        if (g.bits === g.target){
+          st[g.mode]++; g.solved = true; g.cls = 'ok';
+          g.msg = g.mode === 'make' ? 'Yes: ' + terms(g.bits, WS) + ' = ' + sg(g.target) + '.' : 'Yes. Flipping ' + bin4(x) + ' gives ' + bin4(~x & 15) + ', and adding 1 gives ' + bin4(g.target) + ', which is ' + sg(g.target) + '.';
+          save(); if (st.make >= 3 && st.neg >= 3) finish(s);
+        } else {
+          g.cls = 'bad';
+          g.msg = 'Your bits are worth ' + terms(g.bits, WS) + ' = ' + sg(g.bits) + ', and you need ' + sg(g.target) + '.' + (g.mode === 'neg' ? ' Take it in two steps: flipping every bit of ' + bin4(x) + ' gives ' + bin4(~x & 15) + '. Now add 1 to that.' : (g.target > 7 ? ' Start by switching on the -8, then add back what you need to reach ' + sg(g.target) + '.' : ''));
+        }
+        draw();
+      };
+      if ($('#nextc')) $('#nextc').onclick = () => { let m = g.mode === 'make' ? 'neg' : 'make'; if (st.make >= 3 && st.neg < 3) m = 'neg'; if (st.neg >= 3 && st.make < 3) m = 'make'; Object.assign(g, pick(m), {bits:0, msg:'', cls:'', solved:false}); draw(); };
+    };
+    draw();
+  };
+
+  const CB = [['zx', 'zero x'], ['nx', 'flip x'], ['zy', 'zero y'], ['ny', 'flip y'], ['f', 'add (1) or And (0)'], ['no', 'flip output']];
+  VIEW.alu = function(s){
+    const g = G.alu || (G.alu = {x:3, y:2, c:{zx:0, nx:0, zy:0, ny:0, f:0, no:0}, t:13, msg:'', cls:''});
+    const sv = v => bin4(v) + ' (' + sg(v) + ')';
+    const draw = () => {
+      const r = alu(g.x, g.y, g.c), solved = Object.keys(S.alu).length;
+      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play with the switches</h3><div class="alu-grid"><div><div class="lbl">x = ' + sg(g.x) + '</div>' + bitsRow('x', g.x, WS, true) + '</div><div><div class="lbl">y = ' + sg(g.y) + '</div>' + bitsRow('y', g.y, WS, true) + '</div></div>';
+      h += '<div class="lbl" style="margin-top:12px">Control bits</div><div class="ctl">' + CB.map(([k, d]) => '<div class="bitcol"><button type="button" class="sw big' + (g.c[k] ? ' on' : '') + '" data-k="' + k + '" aria-pressed="' + (g.c[k] ? 'true' : 'false') + '" aria-label="' + k + ', ' + d + '">' + g.c[k] + '</button><span class="wt"><b>' + k + '</b><br>' + d + '</span></div>').join('') + '</div>';
+      h += '<div class="tablewrap"><table class="tt pipe"><tbody>' +
+        '<tr><th>x</th><td>' + sv(g.x) + '</td><td>' + (g.c.zx ? 'zx: set to zero' : 'zx off: unchanged') + '</td><td>' + sv(r.x1) + '</td><td>' + (g.c.nx ? 'nx: flip' : 'nx off: unchanged') + '</td><td class="o">' + sv(r.x2) + '</td></tr>' +
+        '<tr><th>y</th><td>' + sv(g.y) + '</td><td>' + (g.c.zy ? 'zy: set to zero' : 'zy off: unchanged') + '</td><td>' + sv(r.y1) + '</td><td>' + (g.c.ny ? 'ny: flip' : 'ny off: unchanged') + '</td><td class="o">' + sv(r.y2) + '</td></tr>' +
+        '<tr><th>f</th><td colspan="4">' + (g.c.f ? 'f is 1: add the two results' : 'f is 0: And the two results, bit by bit') + ' (' + bin4(r.x2) + (g.c.f ? ' + ' : ' & ') + bin4(r.y2) + ')</td><td class="o">' + sv(r.o1) + '</td></tr>' +
+        '<tr><th>out</th><td colspan="4">' + (g.c.no ? 'no: flip every bit' : 'no off: unchanged') + '</td><td class="o"><b>' + sv(r.out) + '</b></td></tr></tbody></table></div>' +
+        '<p class="muted">The ALU also reports two facts about its output: zr = ' + r.zr + ' (1 when the output is zero) and ng = ' + r.ng + ' (1 when the output is negative).</p></section>';
+      h += '<section class="step"><h3><span class="stepn">2</span> Hit a target</h3><p>Choose a function, find control bits that compute it for every x and y, and check. Solve any 6 to complete this stop. <span class="tallies">' + tally('Targets solved', solved, 6) + '</span></p><div class="targets">' +
+        ALU_TARGETS.map(([n], i) => '<button type="button" class="tgt' + (i === g.t ? ' cur' : '') + (S.alu[n] ? ' done' : '') + '" data-t="' + i + '" aria-pressed="' + (i === g.t ? 'true' : 'false') + '">' + (S.alu[n] ? '&#10003; ' : '') + esc(n) + '</button>').join('') + '</div>' +
+        '<p class="ask">Target: out = <b>' + esc(ALU_TARGETS[g.t][0]) + '</b></p><div class="row"><button type="button" class="btn" id="check">Check my control bits</button><button type="button" class="btn ghost" id="hint">Give me a hint</button></div><div id="hints"></div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
+      main.innerHTML = h; bindFoot(s);
+      $$('.sw[data-g]').forEach(b => b.onclick = () => { g[b.dataset.g] ^= (1 << +b.dataset.b); draw(); const f = $('.sw[data-g="' + b.dataset.g + '"][data-b="' + b.dataset.b + '"]'); if (f) f.focus(); });
+      $$('.sw[data-k]').forEach(b => b.onclick = () => { g.c[b.dataset.k] ^= 1; g.msg = ''; g.cls = ''; draw(); const f = $('.sw[data-k="' + b.dataset.k + '"]'); if (f) f.focus(); });
+      $$('.tgt').forEach(b => b.onclick = () => { g.t = +b.dataset.t; g.msg = ''; g.cls = ''; draw(); });
+      const showHints = () => { $('#hints').innerHTML = s.hints.slice(0, H.alu || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + s.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H.alu || 0) >= s.hints.length) $('#hint').textContent = 'No more hints'; };
+      showHints();
+      $('#hint').onclick = () => { H.alu = Math.min((H.alu || 0) + 1, s.hints.length); showHints(); };
+      $('#check').onclick = () => {
+        const name = ALU_TARGETS[g.t][0], res = aluCheck(g.c, g.t, g.x, g.y);
+        if (res.ok){ S.alu[name] = true; g.cls = 'ok'; g.msg = 'Yes. These control bits give ' + name + ' for all 256 pairs of x and y.'; save(); if (Object.keys(S.alu).length >= 6) finish(s); }
+        else {
+          g.x = res.miss.x; g.y = res.miss.y; const want = ALU_TARGETS[g.t][1](g.x, g.y), got = alu(g.x, g.y, g.c).out;
+          g.cls = 'bad'; g.msg = 'Not yet. With x = ' + sg(g.x) + ' and y = ' + sg(g.y) + ', ' + name + ' should be ' + sg(want) + ', and your settings give ' + sg(got) + '. The table above now shows this case step by step.' + (res.same ? ' Right now your settings compute ' + res.same + '.' : '');
+        }
+        draw();
+      };
+    };
+    draw();
+  };
+
+  VIEW.look = function(s){
+    let h = head(s) + '<div class="tablewrap"><table class="tt res"><thead><tr><th>Chip</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
+    ORDER.slice(1).forEach(n => { h += '<tr class="' + (S.pass[n] ? 'pass' : '') + '"><td><code>' + n + '</code></td><td>' + (S.pass[n] ? '&#10003; built and tested' : 'not built yet') + '</td><td>' + (S.pass[n] ? S.nands[n] : '') + '</td><td>' + (B[n].par || '') + '</td></tr>'; });
+    h += '</tbody></table></div>';
+    if (S.pass.Add4) h += '<div class="msg ok">Your Add4 adds two 4-bit numbers with <b>' + S.nands.Add4 + ' Nand gates</b> and nothing else.</div>';
+    const open = TRAIL.filter(x => !isDone(x));
+    h += open.length ? '<p>Stops still open: ' + open.map(x => '<a href="#' + x.id + '" class="jump" data-i="' + STOPS.indexOf(x) + '">' + esc(x.short) + '</a>').join(', ') + '.</p>' : '<p>You completed every stop on the trail.</p>';
+    h += '<section class="step"><h3>Explain it</h3><p>Building a chip and explaining it are different skills. Try these three questions with a partner or with your AI:</p><ol>' + LOOK_QUESTIONS.map(q => '<li>' + esc(q) + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="ai">Copy these questions for my AI</button></div><div id="aibox"></div></section>';
+    h += '<section class="step"><h3>Start again</h3><p>This erases your saved chips and progress in this browser.</p><div class="row"><button type="button" class="btn ghost" id="wipe">Erase my progress</button></div></section>' + foot(s);
+    main.innerHTML = h; bindFoot(s);
+    $$('.jump').forEach(a => a.onclick = e => { e.preventDefault(); go(+a.dataset.i, true); });
+    $('#ai').onclick = () => copyOut('I just finished a learning trail based on the Nand to Tetris course, where I built logic gates and a 4-bit adder from Nand gates. Ask me the questions below one at a time. Let me try each one before you explain anything, and keep asking follow-up questions until you are sure I understand.\n\n' + LOOK_QUESTIONS.map((q, i) => (i + 1) + '. ' + q).join('\n'), $('#aibox'));
+    let armed = false;
+    $('#wipe').onclick = () => { if (!armed){ armed = true; $('#wipe').textContent = 'Click again to erase everything'; return; } try { localStorage.removeItem(KEY); } catch (e) {} location.hash = ''; location.reload(); };
+  };
+
+  /* ---------- start ---------- */
+  const fromHash = () => { const id = (location.hash || '').slice(1); const i = STOPS.findIndex(s => s.id === id); return i; };
+  const hi = fromHash(); if (hi >= 0) S.stop = hi;
+  if (!(S.stop >= 0 && S.stop < STOPS.length)) S.stop = 0;
+  window.addEventListener('hashchange', () => { const i = fromHash(); if (i >= 0 && i !== S.stop) go(i, true); });
+  render();
+})();
+
+</script>
+</body>
+</html>
