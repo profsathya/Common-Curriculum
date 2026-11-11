@@ -94,6 +94,10 @@ a{color:var(--accent-ink)}
 .claim{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.25}
 .asks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
 .asks li{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:19px}
+.who{display:flex;gap:14px;align-items:center}
+.photo{width:84px;height:84px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:30px;flex:none}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+a.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .made{font-size:14px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px}
 .btn{background:var(--accent);color:var(--surface);border:0;border-radius:12px;padding:14px 18px;min-height:52px;font-weight:700;cursor:pointer;font-size:18px}
 .btn.ghost{background:var(--surface);color:var(--accent-ink);border:1.5px solid var(--accent)}
@@ -107,12 +111,12 @@ pre.out{white-space:pre-wrap;background:var(--accent-soft);border-radius:12px;pa
 </style>
 </head>
 <body>
-<div class="sample">Prototype. The students and projects on this page are made up.</div>
 <header class="bar">
   <button class="mark" id="home" type="button">Capstone Festival<small>B.S. Computer Science · CSU Monterey Bay</small></button>
   <button class="link" id="visitBtn" type="button">My visit</button>
 </header>
 <div class="wrap"><main id="view"></main></div>
+<footer class="sample">Prototype. The students and projects on this page are made up, and the links on each card are samples.</footer>
 
 <script>
 const CATS={software:"Open source and software",security:"Security and certificates",data:"Data and AI",web:"Web and mobile apps",games:"Games and interactive"};
@@ -327,11 +331,12 @@ function card(s){
   const done=st.visited.includes(s.id);
   return `<button class="link back" type="button" data-go="route">← Back to my route</button>
   <article class="card">
-    <div><p class="eyebrow">${esc(CATS[s.cat])}</p><h2>${esc(s.name)}</h2></div>
+    <div class="who"><span class="photo" role="img" aria-label="Space for ${esc(s.first)}'s photo">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><div><p class="eyebrow">${esc(CATS[s.cat])}</p><h2>${esc(s.name)}</h2></div></div>
     <div class="find" aria-label="Where to find ${esc(s.first)}"><div><small>Room</small><b>${s.room}</b></div><div><small>Table</small><b>${s.table}</b></div></div>
     <section class="block"><h3>${fam?"What "+esc(s.first)+" did":"Project"}</h3>${fam?"":`<p><b>${esc(s.project)}</b></p>`}<p>${esc(fam?s.plain:s.desc)}</p></section>
     <section class="block"><h3>${fam?"What this shows about "+esc(s.first):esc(s.first)+"'s claim"}</h3><p class="claim">${esc(s.claim)}</p></section>
     <section class="block"><h3>${q.length>1?"Questions you can ask "+esc(s.first):"A question to ask "+esc(s.first)}</h3><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></section>
+    <div class="links"><a class="btn ghost" href="interactive-poster-samples.html" target="_blank" rel="noopener">${esc(s.first)}'s Interactive Poster</a><a class="btn ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">${esc(s.first)} on LinkedIn</a></div>
     <button class="btn ${done?"ghost":""}" type="button" data-visit="${s.id}">${done?"Visited. Tap to undo":"I visited "+esc(s.first)}</button>
     <p class="made">Drafted by AI from ${esc(s.first)}'s Interactive Poster. Read and approved by ${esc(s.first)} before it was published.</p>
   </article>`;
