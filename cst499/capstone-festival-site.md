@@ -14,8 +14,7 @@ All students and projects are made up (the same fifteen as the earlier sample).
 
 ## Top bar and My visit
 - There is no top bar. The front door carries the title.
-- "My visit" is a link at the bottom of each inside screen.
-- The student card has neither; on a phone it takes the whole screen, with "Back to my route" above the card.
+- "My visit" is a link at the bottom of each inside screen. On the student card it sits under "Visit next".
 
 ## Front door (meant to fit one phone screen without scrolling)
 - Eyebrow: CSU Monterey Bay · B.S. Computer Science
@@ -39,17 +38,21 @@ All students and projects are made up (the same fifteen as the earlier sample).
 - Administrator: no question.
 - Student: "What are you curious about?" The five areas, or "Show me a mix".
 
-## Routes
-- Family: their student first ("Your student"), then two more tables: one in the same room, one in another room.
-  Heading: "You are here for [Name]. Start at [first name]'s table. Then visit two more tables to see what other students did."
-- Employer: three students in the chosen area and one from another area (or one from each area).
-- Faculty: four students whose posters show the chosen lens, spread across rooms.
-- Administrator: "The program in 5 tables", one table per area, under a short program story (draft words below).
-- Student: four tables in the chosen area, or five across areas. Line: "Ask the question on each card. Then ask how they chose their project."
+## One card at a time (replaced the route list on 11 Nov)
+- After the second question the visitor lands on one student card. There is no list of tables.
+- Under the card: "Visit next" with two students (name, project, Room and Table). Tapping one opens that card, which offers the next two.
+- Who comes first:
+  - Family: their own student, with the eyebrow "You are here for". Then one student in the same room and one in another room.
+  - Hiring manager and Student: students in the chosen area first, then one from another area.
+  - Faculty: students whose posters show the chosen lens, spread across rooms.
+  - University administrator: one table per area, with a short program story above the first card (draft wording below).
+- When the planned students run out, the next two are the nearest tables the visitor has not opened.
+- Under "Visit next": My visit · All students · Start over.
+- On a laptop the card is on the left and "Visit next" on the right.
 
 ## Administrator story (draft wording)
 Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.
-Students present at their own laptops. The route below takes you to one table in each area of work.
+Students present at their own laptops. Each table below shows a different area of work.
 
 ## Student card
 - Space for the student's photo (initials until a photo is added), area of work, name, Room and Table in large type

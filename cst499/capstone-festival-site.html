@@ -80,6 +80,9 @@ a{color:var(--accent-ink)}
   .split.open .list-pane,.split:not(.open) .detail-pane{display:flex}
   .back{display:none}
 }
+.stage{display:grid;gap:20px;max-width:620px;margin:0 auto}
+@media (min-width:900px){.stage{max-width:1040px;grid-template-columns:1fr 340px;align-items:start}}
+.h-next{font-size:22px;font-weight:800}
 .rows{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin:0}
 .row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--rule);border-radius:14px;padding:14px;cursor:pointer;min-height:72px}
 .row[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft)}
@@ -252,7 +255,7 @@ const order=ids=>ids.slice().sort((a,b)=>{const x=byId(a),y=byId(b);return x.roo
 
 /* The visitor's answers stay in this browser. Nothing is sent anywhere. */
 const KEY="capstone-festival-guide-v1";
-let st={role:null,sub:null,route:[],visited:[],seed:Math.floor(Math.random()*7)};
+let st={role:null,sub:null,route:[],visited:[],seen:[],cur:null,seed:Math.floor(Math.random()*7)};
 try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&typeof j==="object")st=Object.assign(st,j);}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
 const view=document.getElementById("view");
@@ -272,7 +275,7 @@ function buildRoute(){
   if(r==="faculty") list=onePerRoom(S.filter(s=>s.lens[sub]),4);
   else if(r==="admin") list=onePerRoom(S,5);
   else if(sub==="any") list=onePerRoom(S,r==="student"?5:4);
-  else { const inCat=S.filter(s=>s.cat===sub); list=inCat.slice(0,3).concat(pick(S.filter(s=>s.cat!==sub),1)); }
+  else { const inCat=S.filter(s=>s.cat===sub); st.route=inCat.slice(0,3).concat(pick(S.filter(s=>s.cat!==sub),1)).map(s=>s.id); save(); return; }
   st.route=order(list.map(s=>s.id)); save();
 }
 
@@ -282,9 +285,9 @@ function render(){
   if(h==="ask") return ask();
   if(h==="all") return all();
   if(h==="visit") return visit();
-  if(h.startsWith("student-")&&byId(h)){ if(!st.route.includes(h)){st.route.push(h);save();} return route(h); }
+  if(h.startsWith("student-")&&byId(h)) return show(h);
   if(!st.route.length) return ask();
-  return route(null);
+  return go(st.cur||st.route[0]);
 }
 
 function start(){
@@ -305,7 +308,7 @@ function ask(){
     <ul class="rows" id="names"></ul>`;
   else if(r==="faculty") body=`<h1 class="h-q">What would you like to see today?</h1>
     <ul class="choices">${Object.entries(LENS).map(([k,v])=>`<li><button class="choice" type="button" data-sub="${k}"><b>${esc(v.label)}</b><span>${esc(v.line)}</span></button></li>`).join("")}</ul>`;
-  else if(r==="admin"){ buildRoute(); return go("route"); }
+  else if(r==="admin"){ buildRoute(); st.seen=[]; return go(st.route[0]); }
   else body=`<h1 class="h-q">${r==="employer"?"What kind of work do you hire for?":"What are you curious about?"}</h1>
     <div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="chip" type="button" data-sub="${k}">${esc(v)}</button>`).join("")}
     <button class="chip" type="button" data-sub="any">${r==="employer"?"Any of these":"Show me a mix"}</button></div>`;
@@ -316,26 +319,13 @@ function ask(){
     inp.addEventListener("input",draw); draw(); }
 }
 
-function routeHead(){
-  const r=st.role, n=st.route.length;
-  if(r==="family"){ const me=byId(st.route[0]); return `<p class="eyebrow">You are here for</p><h1 class="h-q">${esc(me.name)}</h1><p class="muted">Start at ${esc(me.first)}'s table. Then visit two more tables to see what other students did.</p>`; }
-  if(r==="faculty") return `<p class="eyebrow">Faculty route</p><h1 class="h-q">${n} tables to visit</h1><p class="muted">${esc(LENS[st.sub].label)}. Each table comes with a question to ask.</p>`;
-  if(r==="admin") return `<p class="eyebrow">Administrator route</p><h1 class="h-q">The program in ${n} tables</h1>
-    <div class="story"><span class="draft">Draft wording</span>
-    <p>Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.</p>
-    <p>Students present at their own laptops. The route below takes you to one table in each area of work.</p></div>`;
-  if(r==="employer") return `<p class="eyebrow">Employer route</p><h1 class="h-q">${n} tables to visit</h1><p class="muted">${st.sub==="any"?"One student from each area of work.":"Three students in "+esc(CATS[st.sub])+", and one from another area."}</p>`;
-  if(r==="student") return `<p class="eyebrow">Student route</p><h1 class="h-q">${n} tables to visit</h1><p class="muted">Ask the question on each card. Then ask how they chose their project.</p>`;
-  return `<h1 class="h-q">Tables you opened</h1>`;
-}
-
 function card(s){
   const fam=st.role==="family";
   const q=fam?s.fam.concat([UNIVERSAL]):[st.role==="faculty"&&s.lens[st.sub]?s.lens[st.sub]:s.pro];
   const done=st.visited.includes(s.id);
-  return `<button class="link back" type="button" data-go="route">← Back to my route</button>
-  <article class="card">
-    <div class="who"><span class="photo" role="img" aria-label="Space for ${esc(s.first)}'s photo">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><div><p class="eyebrow">${esc(CATS[s.cat])}</p><h2>${esc(s.name)}</h2></div></div>
+  const mine=fam&&s.id===st.sub;
+  return `<article class="card">
+    <div class="who"><span class="photo" role="img" aria-label="Space for ${esc(s.first)}'s photo">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><div><p class="eyebrow">${mine?"You are here for":esc(CATS[s.cat])}</p><h2>${esc(s.name)}</h2></div></div>
     <div class="find" aria-label="Where to find ${esc(s.first)}"><div><small>Room</small><b>${s.room}</b></div><div><small>Table</small><b>${s.table}</b></div></div>
     <section class="block"><h3>${fam?"What "+esc(s.first)+" did":"Project"}</h3>${fam?"":`<p><b>${esc(s.project)}</b></p>`}<p>${esc(fam?s.plain:s.desc)}</p></section>
     <section class="block"><h3>${fam?"What this shows about "+esc(s.first):esc(s.first)+"'s claim"}</h3><p class="claim">${esc(s.claim)}</p></section>
@@ -346,19 +336,30 @@ function card(s){
   </article>`;
 }
 
-function route(cur){
-  const open=cur||(wide.matches?st.route[0]:null);
-  const rows=st.route.map((id,i)=>{ const s=byId(id), done=st.visited.includes(id);
-    const tag=st.role==="family"?(i===0?"Your student":i===1?"Also visit":""):"";
-    return `<li><button class="row ${done?"done":""}" type="button" data-go="${id}" aria-current="${id===open}">
-      <span class="num">${done?"✓":i+1}</span>
-      <span>${tag?`<span class="tag">${tag}</span><br>`:""}<span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span>
-      <span class="where"><b>Room ${s.room}</b>Table ${s.table}</span></button></li>`; }).join("");
-  view.innerHTML=`<div class="split ${cur?"open":""}">
-    <div class="pane list-pane">${routeHead()}<ul class="rows">${rows}</ul>
-      <p><button class="link" type="button" data-go="ask">Change my answer</button> <button class="link" type="button" data-go="all">See all students</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>
-    <div class="pane detail-pane">${open?card(byId(open)):""}</div></div>`;
-  if(cur) window.scrollTo(0,0);
+function nextTwo(cur){
+  const me=byId(cur), seen=new Set(st.seen.concat([cur]));
+  const fits=s=>st.role==="faculty"?!!s.lens[st.sub]:(st.role==="employer"||st.role==="student")&&st.sub!=="any"?s.cat===st.sub:false;
+  const planned=st.route.filter(id=>!seen.has(id)).map(byId);
+  const others=S.filter(s=>!seen.has(s.id)&&!st.route.includes(s.id))
+    .sort((x,y)=>(fits(y)-fits(x))||(Math.abs(x.room-me.room)-Math.abs(y.room-me.room))||(x.table-y.table));
+  return planned.concat(others).slice(0,2);
+}
+
+function show(id){
+  const s=byId(id); st.cur=id; if(!st.seen.includes(id)) st.seen.push(id); save();
+  const story=st.role==="admin"&&id===st.route[0]?`<div class="story"><span class="draft">Draft wording</span>
+    <p>Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.</p>
+    <p>Students present at their own laptops. Each table below shows a different area of work.</p></div>`:"";
+  const nx=nextTwo(id);
+  const rows=nx.map(n=>`<li><button class="row" type="button" data-go="${n.id}">
+      <span class="num" aria-hidden="true">›</span>
+      <span><span class="nm">${esc(n.name)}</span><br><span class="pj">${esc(n.project)}</span></span>
+      <span class="where"><b>Room ${n.room}</b>Table ${n.table}</span></button></li>`).join("");
+  view.innerHTML=`<div class="stage">
+    <div class="pane">${story}${card(s)}</div>
+    <aside class="pane">${nx.length?`<h2 class="h-next">Visit next</h2><ul class="rows">${rows}</ul>`:`<p class="muted">You have opened every table.</p>`}
+      <p><button class="link" type="button" data-go="visit">My visit</button> <button class="link" type="button" data-go="all">All students</button> <button class="link" type="button" data-go="start">Start over</button></p></aside></div>`;
+  window.scrollTo(0,0);
 }
 
 function all(){
@@ -392,17 +393,17 @@ function visit(){
     if($("c-name").checked&&$("v-name").value.trim()) L.push("Name: "+$("v-name").value.trim());
     if($("v-note").value.trim()) L.push("Comment: "+$("v-note").value.trim());
     $("out").textContent=(L.length?L.join("\n"):"Nothing selected.")+"\n\nPrototype: nothing was sent. On the real site this goes to the festival spreadsheet."; $("out").hidden=false; });
-  $("reset").addEventListener("click",()=>{ st={role:null,sub:null,route:[],visited:[],seed:Math.floor(Math.random()*7)}; save(); go("start"); });
+  $("reset").addEventListener("click",()=>{ st={role:null,sub:null,route:[],visited:[],seen:[],cur:null,seed:Math.floor(Math.random()*7)}; save(); go("start"); });
 }
 
 document.addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
   if(b.id==="home") return go(st.route.length?"route":"start");
   if(b.id==="visitBtn") return go("visit");
-  if(b.dataset.role){ st.role=b.dataset.role; st.sub=null; st.route=[]; save(); return go("ask"); }
-  if(b.dataset.sub){ st.sub=b.dataset.sub; buildRoute(); return go("route"); }
+  if(b.dataset.role){ st.role=b.dataset.role; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); return go("ask"); }
+  if(b.dataset.sub){ st.sub=b.dataset.sub; buildRoute(); st.seen=[]; return go(st.route[0]); }
   if(b.dataset.visit){ const id=b.dataset.visit, i=st.visited.indexOf(id); if(i<0) st.visited.push(id); else st.visited.splice(i,1); save(); return render(); }
-  if(b.dataset.go){ if(b.dataset.go==="start"){ st.role=null; st.sub=null; st.route=[]; save(); } return go(b.dataset.go); }
+  if(b.dataset.go){ if(b.dataset.go==="start"){ st.role=null; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); } return go(b.dataset.go); }
 });
 window.addEventListener("hashchange",render);
 wide.addEventListener("change",render);
