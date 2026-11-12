@@ -70,6 +70,13 @@ Students present at their own laptops. Each table below shows a different area o
 - Share my visit with the organizers: [x] What I did: who I am here as, and which tables I visited · [ ] My name · One thing you will remember from today (optional)
 - In the prototype the button only shows what would be shared.
 
+## Three looks to compare (12 Nov, prototype only)
+- A small "Design A B C" control sits at the bottom right. It changes the look only; the words and the structure are the same in all three. The choice is remembered on the device.
+- A: the first look. Light grey and green, rounded cards.
+- B: festival night. Dark navy and gold, capital headings, room and table drawn like a ticket.
+- C: editorial. Serif headings, no boxes, thin rules, one color for each area of work.
+- The control comes out once a look is chosen.
+
 ## Finding the room (decided 11 Nov, not built yet)
 - A "Directions to the BIT building" button that opens Google Maps on the visitor's phone.
 - On each student card: a floor plan of the building with that student's room highlighted and a line from the entrance.
