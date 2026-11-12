@@ -128,6 +128,7 @@
   .palette{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px}
   .chipbtn{font-size:.82rem; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:5px; padding:4px 9px; cursor:pointer}
   .chipbtn:hover{border-color:var(--tc); background:var(--tsoft)}
+  .editor.small{min-height:0; height:auto}
   .editor{width:100%; height:100%; min-height:300px; font-size:.95rem; line-height:1.55; padding:14px 16px; border:1px solid var(--line); border-radius:10px; background:var(--stage); color:#DCE7F3; resize:vertical; tab-size:4; caret-color:var(--lamp)}
 
   .bits,.ctl{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0}
@@ -199,6 +200,41 @@
   .pill{display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--line); border-radius:999px; padding:1px 9px; margin-right:6px}
   .pill.livep{border-color:var(--ok); color:var(--ok); box-shadow:0 0 10px rgba(95,211,154,.35)}
   @media (prefers-reduced-motion: reduce){ .flow,.heroart .f,.heroart .lampc{animation:none} .wire,.gate .body,.outnode rect{transition:none} }
+
+  /* top-down trail */
+  .map-arrow{color:var(--ink-soft); align-self:center}
+  .dot.locked{opacity:.5; cursor:not-allowed}
+  .dot.locked:hover{border-color:var(--line)}
+  .zoompath{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:0 0 12px; font-family:"IBM Plex Mono",monospace; font-size:.84rem; color:var(--ink-soft)}
+  .zoompath .up{font:inherit; background:none; border:1px solid var(--line); color:var(--tc); border-radius:999px; padding:1px 10px; cursor:pointer}
+  .zoompath .up:hover{border-color:var(--tc)}
+  .zoompath .here{border:1px solid var(--blaze); color:var(--blaze); border-radius:999px; padding:1px 10px}
+  h4.sub{font-family:Fraunces,Georgia,serif; font-size:1.02rem; margin:18px 0 8px}
+  .game{border:1px solid var(--line); border-radius:10px; padding:4px 16px 10px; margin:12px 0; background:var(--stage)}
+  .parts{border-collapse:collapse; margin:0 0 12px; font-size:.92rem}
+  .parts td{padding:3px 12px 3px 0; vertical-align:middle; color:var(--ink-soft)}
+  details.help{margin:0 0 12px; border:1px solid var(--line); border-radius:8px; padding:8px 14px}
+  details.help summary{cursor:pointer; color:var(--tc)}
+  details.help p{margin:10px 0 4px}
+  .video{position:relative; aspect-ratio:16/9; max-width:720px; margin:6px 0 4px; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+  .video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .stage{overflow:hidden}
+  .stage.scrolly{overflow-x:auto; display:block}
+  .stage.scrolly{place-items:normal}
+  .stage.scrolly svg{margin:0; justify-self:start}
+  .gate.zoomable{cursor:zoom-in}
+  .gate.zoomable:focus{outline:none}
+  .gate.zoomable:focus .body{stroke:#FFFFFF}
+  .stage.canzoom .gate.zoomable .body{stroke-dasharray:6 4; animation:march 1.2s linear infinite}
+  .stage.canzoom .gate.zoomable:hover .body{stroke:#FFFFFF; stroke-width:3}
+  @keyframes march{to{stroke-dashoffset:-20}}
+  .openbtn{box-shadow:0 0 18px rgba(91,184,245,.3)}
+  #stop.arrive{animation:arrive .45s ease-out}
+  @keyframes arrive{from{opacity:0; transform:scale(.94)} to{opacity:1; transform:none}}
+  .btn:disabled{opacity:.45; cursor:not-allowed}
+  .how{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:900px){ .how{grid-template-columns:1fr 1fr} }
+  @media (prefers-reduced-motion: reduce){ .stage.canzoom .gate.zoomable .body{animation:none} #stop.arrive{animation:none} }
 </style>
 </head>
 <body>
@@ -208,10 +244,10 @@
     <div>
       <div class="eyebrow">CST286 &middot; Learning trail &middot; Nand to Tetris</div>
       <h1>From one gate to a <em>machine that adds</em></h1>
-      <p>Every computer you have used could be built from millions of copies of one tiny part. You start with that part, a Nand gate, and build your way up to a chip that adds numbers. Each chip you write is drawn as a live circuit, so you can watch the signals move through your own design.</p>
-      <p class="dest">Where you end up: you can explain how a machine adds numbers using nothing but one kind of gate, because you built every layer yourself.</p>
+      <p>Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part.</p>
+      <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate, because you opened every box and rebuilt it yourself.</p>
       <button type="button" class="btn" id="startbtn">Start the trail</button>
-      <div class="meta">15 stops &middot; Boolean logic, then Boolean arithmetic &middot; best on a laptop screen</div>
+      <div class="meta">8 levels, from a 4-bit adder down to the Nand gate &middot; best on a laptop screen</div>
     </div>
     <svg class="heroart" viewBox="0 0 420 260" role="img" aria-label="Signals flowing through Nand gates into a lit output">
       <path class="w" d="M20 50H110M20 100H110M20 160H110M20 210H110M196 75C240 75 240 110 280 110M196 185C240 185 240 150 280 150M366 130H392"/>
@@ -223,14 +259,16 @@
     </svg>
   </header>
   <ol class="how">
-    <li><b>Predict</b>Say what the chip should do before you build it.</li>
-    <li><b>Build</b>Write it in HDL from the chips you already made, and watch it appear as a circuit.</li>
-    <li><b>Probe</b>Flip the inputs on the drawing and follow the signal through your own chip.</li>
+    <li><b>See it run</b>Flip the inputs of a working box and watch what it does.</li>
+    <li><b>Learn it</b>Read what the box is for.</li>
+    <li><b>Practice</b>Check that you can predict it.</li>
+    <li><b>Build it</b>Rebuild the box in HDL from the boxes one level down.</li>
+    <li><b>Open the box</b>Double-click a box you used and go inside it.</li>
   </ol>
-  <nav class="map" id="map" aria-label="Stops on this trail"></nav>
+  <nav class="map" id="map" aria-label="Levels on this trail"></nav>
   <main id="stop"></main>
   <footer>
-    <p>The chips and the HDL on this page follow projects 1 and 2 of <a href="https://www.nand2tetris.org/" target="_blank" rel="noopener">Nand to Tetris</a>, a free course by Noam Nisan and Shimon Schocken. The HDL you write here uses the same rules as that course's Hardware Simulator. The adder, the incrementer and the ALU on this page are 4 bits wide so that every case can be tested and shown; the course builds 16-bit versions of the same designs.</p>
+    <p>The chips and the HDL on this page follow projects 1 and 2 of <a href="https://www.nand2tetris.org/" target="_blank" rel="noopener">Nand to Tetris</a>, a free course by Noam Nisan and Shimon Schocken. That course builds upward from the Nand gate; this trail visits the same chips from the top down. The HDL you write here uses the same rules as that course's Hardware Simulator. The adder on this page is 4 bits wide so that every case can be tested and shown; the course builds a 16-bit adder with the same design.</p>
   </footer>
 </div>
 <script>
@@ -248,7 +286,7 @@ defChip('HalfAdder', [['a',1],['b',1]], [['sum',1],['carry',1]], p => ({sum:p.a^
 defChip('FullAdder', [['a',1],['b',1],['c',1]], [['sum',1],['carry',1]], p => { const t=p.a+p.b+p.c; return {sum:t&1, carry:t>>1}; }, 9);
 defChip('Add4', [['a',4],['b',4]], [['out',4]], p => ({out:(p.a+p.b)&15}), null, 32);
 defChip('Inc4', [['in',4]], [['out',4]], p => ({out:(p.in+1)&15}), null, 20);
-const ORDER = ['Nand','Not','And','Or','Xor','Mux','DMux','HalfAdder','FullAdder','Add4','Inc4'];
+const ORDER = ['Nand','Not','And','Or','Xor','HalfAdder','FullAdder','Add4'];
 
 function E(line, msg){ const e = new Error(msg); e.hdl = true; e.line = line; return e; }
 
@@ -368,10 +406,10 @@ function build(src, chipName, counts){
     const c = B[pt.chip];
     if (!c){
       const near = ORDER.find(n => n.toLowerCase() === pt.chip.toLowerCase());
-      throw E(pt.line, near ? 'Chip names are case-sensitive: write ' + near + ', not ' + pt.chip + '.' : 'There is no chip named "' + pt.chip + '". At this stop you can use: ' + allowed.join(', ') + '.');
+      throw E(pt.line, near ? 'Chip names are case-sensitive: write ' + near + ', not ' + pt.chip + '.' : 'There is no chip named "' + pt.chip + '". At this level you can use: ' + allowed.join(', ') + '.');
     }
-    if (pt.chip === chipName) throw E(pt.line, 'A chip cannot use itself as a part. At this stop you can use: ' + allowed.join(', ') + '.');
-    if (!allowed.includes(pt.chip)) throw E(pt.line, pt.chip + ' comes later on the trail. At this stop you can use: ' + allowed.join(', ') + '.');
+    if (pt.chip === chipName) throw E(pt.line, 'A chip cannot use itself as a part. At this level you can use: ' + allowed.join(', ') + '.');
+    if (!allowed.includes(pt.chip)) throw E(pt.line, pt.chip + ' is a box above this level, so it cannot go inside this one. At this level you can use: ' + allowed.join(', ') + '.');
     const P = {chip:c, n:idx+1, line:pt.line, src:{}, outs:[], ins:[]};
     for (const [n, w] of c.ins) P.src[n] = new Array(w).fill(null);
     for (const cn of pt.conns){
@@ -587,6 +625,43 @@ function sketch(src, chipName, allowSelf){
   return {chip:chipName, parts, edges, ins:pick(inNodes, specIn, spec.ins), outs:pick(outNodes, specOut, spec.outs)};
 }
 
+
+/* flatten: open every box inside a chip, using the student's own designs, until only Nand gates are left. Returns HDL. */
+function flatten(top, getSrc){
+  const asts = {}, ast = n => asts[n] || (asts[n] = parse(getSrc(n)));
+  const lines = []; let uid = 0;
+  const txt = r => r.name + (r.lo === null ? '' : '[' + r.lo + (r.hi !== r.lo ? '..' + r.hi : '') + ']');
+  function expand(name, inMap, outMap, prefix, depth){
+    if (depth > 10) throw E(null, 'These chips contain each other in a circle.');
+    const a = ast(name), spec = B[name];
+    const isIn = n => spec.ins.some(x => x[0] === n), isOut = n => spec.outs.some(x => x[0] === n);
+    const src = r => (r.name === 'true' || r.name === 'false') ? r.name : isIn(r.name) ? (inMap ? inMap[r.name] : txt(r)) : prefix + r.name;
+    const sinks = r => isOut(r.name) ? (outMap ? (outMap[r.name] || []) : [txt(r)]) : [prefix + r.name];
+    for (const pt of a.parts){
+      const c = B[pt.chip];
+      if (pt.chip === 'Nand'){
+        const cs = [];
+        for (const cn of pt.conns){
+          if (cn.l.name === 'out'){ let t = sinks(cn.r); if (!t.length) t = [prefix + 'nc' + (++uid)]; t.forEach(x => cs.push('out=' + x)); }
+          else cs.push(cn.l.name + '=' + src(cn.r));
+        }
+        if (!cs.some(x => x.startsWith('out='))) cs.push('out=' + prefix + 'nc' + (++uid));
+        lines.push('    Nand(' + cs.join(', ') + ');');
+      } else {
+        const im = {}, om = {};
+        for (const cn of pt.conns){
+          if (c.ins.some(x => x[0] === cn.l.name)) im[cn.l.name] = src(cn.r);
+          else (om[cn.l.name] = om[cn.l.name] || []).push(...sinks(cn.r));
+        }
+        expand(pt.chip, im, om, prefix + 'u' + (++uid) + '_', depth + 1);
+      }
+    }
+  }
+  expand(top, null, null, '', 0);
+  const s = B[top];
+  return 'CHIP ' + top + ' {\n    IN ' + declText(s.ins) + ';\n    OUT ' + declText(s.outs) + ';\n\n    PARTS:\n' + lines.join('\n') + '\n}\n';
+}
+
 function stub(chipName, desc){
   const s = B[chipName];
   return '// ' + chipName + ': ' + desc + '\nCHIP ' + chipName + ' {\n    IN ' + declText(s.ins) + ';\n    OUT ' + declText(s.outs) + ';\n\n    PARTS:\n    \n}\n';
@@ -617,192 +692,181 @@ function aluCheck(c, ti, px, py){
   return {ok: !miss, miss, same};
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = {sketch, B, ORDER, parse, build, run, testChip, diagnose, combos, stub, alu, ALU_TARGETS, aluCheck, fmtVal, fmtIns};
+if (typeof module !== 'undefined' && module.exports) module.exports = {flatten, sketch, B, ORDER, parse, build, run, testChip, diagnose, combos, stub, alu, ALU_TARGETS, aluCheck, fmtVal, fmtIns};
 
 /* ===== The words on the page. trail-nand-to-adder.md is the editable companion. ===== */
-const STOPS = [
-  {id:'nand', kind:'play', chip:'Nand', part:1, short:'Nand', title:'Meet the Nand gate',
-   objs:['Read a truth table, which has one row for every combination of inputs.', 'State in one sentence what a Nand gate does.'],
-   idea:'<p>Every chip on this learning trail is made of Nand gates, so the first step is to know exactly what one Nand gate does. A gate takes bits in and gives a bit out, and a bit is either 0 or 1.</p><p>Flip the two inputs and watch the signal travel through the gate. When you have tried all four combinations, record what you saw in the truth table and check it.</p>',
-   rule:'Try each combination on the drawing again and copy what the output shows.',
-   after:'In one sentence: a Nand gate gives 0 only when both inputs are 1. The name is short for Not-And.'},
+const HDL_HELP = '<p>You describe a chip in HDL (hardware description language), which tells the simulator which boxes to use and how to wire them. Each line under <code>PARTS:</code> is one box. Inside the parentheses, the name on the left of <code>=</code> is a pin of that box, and the name on the right is a wire in your chip. So <code>HalfAdder(a=x, b=y, sum=s, carry=c);</code> means: connect the HalfAdder\'s <code>a</code> pin to wire <code>x</code> and its <code>b</code> pin to wire <code>y</code>, and call its two outputs <code>s</code> and <code>c</code>.</p><p>The wires in your chip are its inputs, its outputs, and any new names you make up for wires between boxes. To send the output of one box into another box, give the wire between them a name of your own. One box writes to it, for example with <code>carry=c1</code>, and the other box reads it.</p>';
 
-  {id:'not', kind:'build', chip:'Not', part:1, short:'Not', title:'Build Not from one Nand',
-   desc:'out is the opposite of in',
-   objs:['Write a part in HDL and connect its pins to wires.', 'Explain why a Nand gate with both inputs tied together flips its input.'],
-   idea:'<p>A Not gate flips a bit: 0 becomes 1, and 1 becomes 0. You build it here from a single Nand.</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. Each line under <code>PARTS:</code> is one part. Inside the parentheses, the name on the left of <code>=</code> is a pin of the part, and the name on the right is a wire in your chip. So <code>Nand(a=x, b=y, out=w);</code> means: connect the Nand\'s <code>a</code> pin to wire <code>x</code>, its <code>b</code> pin to wire <code>y</code>, and call its output <code>w</code>.</p><p>The wires in your chip are its inputs (here <code>in</code>), its outputs (here <code>out</code>), and any new names you make up for wires between parts.</p>',
-   rule:'Not gives the opposite of its input.',
-   hints:['Look at the two rows of the Nand truth table where a and b are equal.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Read the output in those two rows.', 'One part is enough: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
-   after:'You described hardware in text and a simulator confirmed it. A Nand with both inputs tied together can only be in the rows 0,0 and 1,1, and in those rows its output is the opposite of its input.'},
+const CHIP_SAYS = {
+  Nand:'out is 0 only when a and b are both 1',
+  Not:'out is the opposite of in',
+  And:'out is 1 only when a and b are both 1',
+  Or:'out is 1 when a or b (or both) is 1',
+  Xor:'out is 1 when a and b are different',
+  HalfAdder:'adds two bits: sum is the bit you write down, carry is the bit you carry',
+  FullAdder:'adds three bits (a, b and a carry c): sum is the bit you write down, carry is the bit you carry',
+  Add4:'out = a + b (4 bits, a carry out of the last column is dropped)'
+};
 
-  {id:'and', kind:'build', chip:'And', part:1, short:'And', title:'Build And',
-   desc:'out is 1 only when a and b are both 1',
-   objs:['Connect two parts with a wire that you name yourself.', 'Use a chip you built as a part inside a new chip.'],
-   idea:'<p>And gives 1 only when both inputs are 1. From this stop on, every chip you finish becomes a part you can use, so here you have Nand and Not.</p><p>To send the output of one part into the next part, give the wire between them a name of your own, such as <code>w</code>. One part writes to it with <code>out=w</code>, and the next part reads it.</p>',
+const LEVELS = [
+  {id:'add4', kind:'build', chip:'Add4', short:'Add4', title:'A machine that adds',
+   objs:['Read and write 4-bit binary numbers, and add two of them by hand with carries.', 'Build a 4-bit adder by chaining one small adder for each column.'],
+   see:'This box adds two 4-bit numbers. Set <code>a</code> and <code>b</code> with the switches under the drawing and read <code>out</code>. Try 7 + 1. Then try 15 + 1, and notice what the machine shows when the answer needs a fifth bit.',
+   learn:'<p>The same wires that carry 0 and 1 can carry numbers. Four wires together carry a 4-bit number: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5.</p><p>The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.</p><p>When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow, and it is why 15 + 1 shows 0.</p>',
+   practice:'Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.',
+   build:'<p>Now rebuild the machine to see how it works. Inside the box there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made boxes to use: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>The inputs <code>a</code> and <code>b</code> are 4 bits wide. A group of wires like this is called a bus, and <code>a[0]</code>, <code>a[1]</code>, <code>a[2]</code>, <code>a[3]</code> pick out its single bits, with <code>a[0]</code> as the 1s place. The first column is written for you. Add the other three columns.</p>' + HDL_HELP,
+   stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    \n}\n',
+   hints:['One adder for each column, as in the add-by-hand practice. The carry that leaves one column is the carry that enters the next column.', 'Columns 1, 2 and 3 each have three bits to add: a bit of a, a bit of b, and the carry from the column before. That is a FullAdder. Give each carry wire its own name, such as c2 and c3.', 'Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. The carry out of column 3 has nowhere to go, so you can leave that pin out.'],
+   after:'You rebuilt a machine that adds from four column adders. You used HalfAdder and FullAdder as boxes without knowing what is inside them, which is how engineers design large chips. Now open one of them.'},
+
+  {id:'fulladder', kind:'build', chip:'FullAdder', short:'FullAdder', title:'Inside a column: the FullAdder',
+   objs:['Explain what a FullAdder does with its three input bits.', 'Build a FullAdder from two HalfAdders and one more gate.'],
+   see:'This is the box that sat in three of your four columns. Click <code>a</code>, <code>b</code> and <code>c</code> on the drawing and watch <code>sum</code> and <code>carry</code>. Each time, count how many of the three inputs are 1.',
+   learn:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code>, and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3, so two output bits are enough to write the answer: <code>carry</code> is the left bit and <code>sum</code> is the right bit.</p><p>When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, and the box that adds two bits is the HalfAdder you used in column 0.</p>',
+   rule:'Count how many of the three inputs are 1. Write that count in binary: carry is the left bit and sum is the right bit.',
+   build:'<p>Build the FullAdder from the boxes below it. You have HalfAdder, and you also have the logic gates And, Or and Xor: And gives 1 only when both inputs are 1, Or gives 1 when at least one input is 1, and Xor gives 1 when the two inputs are different.</p>',
+   hints:['Add in two steps: first a + b, then add c to that result.', 'Each step is a HalfAdder. Each step can produce a carry, and the chip\'s carry is 1 when either step produced one.', 'Three parts: a HalfAdder of a and b giving s1 and c1, a HalfAdder of s1 and c giving sum and c2, and an Or of c1 and c2 going to carry.'],
+   after:'A question worth explaining to someone: the two HalfAdders inside your FullAdder can never both produce a carry for the same inputs. The truth table shows why.'},
+
+  {id:'halfadder', kind:'build', chip:'HalfAdder', short:'HalfAdder', title:'Adding two bits: the HalfAdder',
+   objs:['Match the sum column and the carry column of a truth table to logic gates.', 'Build a HalfAdder from two gates.'],
+   see:'Click <code>a</code> and <code>b</code>. <code>sum</code> is the bit you write down in a column, and <code>carry</code> is the bit you carry to the next column. So 1 + 1 gives sum 0 and carry 1, which is binary 10.',
+   learn:'<p>Every box so far has been about numbers. At this level the numbers turn into logic.</p><p>A logic gate answers a yes-or-no question about its inputs. And asks "are both inputs 1?". Or asks "is at least one input 1?". Xor (exclusive or) asks "are the two inputs different?".</p><p>Fill in the truth table for sum and carry. Then look at each output column on its own and ask which of those three questions it answers.</p>',
+   rule:'Add a and b as numbers. The result is 0, 1 or 2, and 2 is written as carry 1, sum 0.',
+   build:'<p>Build the HalfAdder from logic gates. Each output needs one gate.</p>',
+   hints:['Compare the sum column and the carry column of your truth table with what And, Or and Xor do.', 'sum is 1 when exactly one input is 1. carry is 1 only when both inputs are 1.', 'Two parts: an Xor of a and b going to sum, and an And of a and b going to carry.'],
+   after:'Arithmetic turned out to be logic: the sum bit is an Xor and the carry bit is an And.'},
+
+  {id:'xor', kind:'build', chip:'Xor', short:'Xor', title:'Are they different? Xor',
+   objs:['Turn a sentence that uses "and", "or" and "not" into a circuit.', 'Count the Nand gates in your design and look for a smaller one.'],
+   see:'This is the gate that produced your sum bit. Click <code>a</code> and <code>b</code>: the output is 1 when they are different.',
+   learn:'<p>Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.</p><p>Here is a method that works for any truth table. Write a sentence for each row where the output is 1, then join the sentences with "or". Each "and", "or" and "not" in your sentence becomes one box.</p>',
+   rule:'Xor gives 1 when a and b are different, and 0 when they are the same.',
+   build:'<p>Write the sentence for Xor first, then turn each word into a box.</p>',
+   hints:['Say it in words: out is 1 when (a is 1 and b is 0) or (a is 0 and b is 1).', 'Each "and", "or" and "not" in that sentence is one box. You need two Nots, two Ands and one Or.', 'Five parts: Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out. When it passes, look at the Nand count under the tests: there is a design with only four Nands.'],
+   after:'You have a method that turns any truth table into a circuit: one And for each row that gives 1, joined by Or.'},
+
+  {id:'and', kind:'build', chip:'And', short:'And', title:'Both at once: And',
+   objs:['Build And from a Nand and a Not.', 'Explain And as the opposite of Nand.'],
+   see:'Click <code>a</code> and <code>b</code>: the output is 1 only when both are 1.',
+   learn:'<p>You are now close to the bottom. There is one gate you have not met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And, so it gives 0 only when both inputs are 1.</p><p>That means And can be built from the two boxes below it: a Nand, and a Not that flips the result back.</p>',
    rule:'And gives 1 in one row only: when a and b are both 1.',
+   build:'<p>Connect the two boxes with a wire that you name yourself.</p>',
    hints:['Nand is short for Not-And. What do you get when you take the opposite of the opposite?', 'Send a and b through a Nand and name its output, for example out=w.', 'Two parts: a Nand from a and b to a wire w, then a Not from w to out.'],
-   after:'You chained two parts with a wire you named. That is the pattern for everything that follows: small chips become the parts of larger chips.'},
+   after:'And is a Nand followed by a Not. You chained two boxes with a wire you named.'},
 
-  {id:'or', kind:'build', chip:'Or', part:1, short:'Or', title:'Build Or',
-   desc:'out is 1 when a or b (or both) is 1',
-   objs:['Build Or from the chips you have so far.', 'Use the fact that "a or b" means the same as "not (not a and not b)".'],
-   idea:'<p>Or gives 1 when at least one input is 1. None of your parts does that directly, so this stop takes a piece of reasoning before any wiring.</p><p>Fill in the truth table first and count the rows where Or gives 0. Then compare with the Nand table: it also gives 0 in exactly one row, so the question becomes how to make that row the right one.</p>',
+  {id:'or', kind:'build', chip:'Or', short:'Or', title:'At least one: Or',
+   objs:['Build Or from Not and Nand.', 'Use the fact that "a or b" means the same as "not (not a and not b)".'],
+   see:'Click <code>a</code> and <code>b</code>: the output is 0 only when both are 0.',
+   learn:'<p>Or gives 1 when at least one input is 1. Neither of the boxes below it does that directly, so this level takes a piece of reasoning before any wiring.</p><p>Fill in the truth table and count the rows where Or gives 0. A Nand gate also gives 0 in exactly one row, the row where both of its inputs are 1. So the question becomes how to make that one row the right one.</p>',
    rule:'Or gives 0 in one row only: when a and b are both 0.',
+   build:'<p>Decide what should happen to a and to b before they reach the Nand.</p>',
    hints:['Or is 0 in exactly one row, and Nand is 0 in exactly one row. Compare which row it is in each table.', 'Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
    after:'You used a law of logic (De Morgan\'s law) to build a gate you did not have from gates you did have.'},
 
-  {id:'xor', kind:'build', chip:'Xor', part:1, short:'Xor', title:'Build Xor',
-   desc:'out is 1 when exactly one of a, b is 1',
-   objs:['Turn a sentence that uses "and", "or" and "not" into a circuit.', 'Count the Nand gates in your design and look for a smaller one.'],
-   idea:'<p>Xor (exclusive or) gives 1 when the two inputs are different. It matters later on this trail because adding two bits gives exactly the Xor of those bits.</p><p>A method that works for any truth table: write a sentence for each row where the output is 1, then join the sentences with "or". Each "and", "or" and "not" in your sentence becomes one part.</p>',
-   rule:'Xor gives 1 when a and b are different, and 0 when they are the same.',
-   hints:['Say it in words: out is 1 when (a is 1 and b is 0) or (a is 0 and b is 1).', 'Each "and", "or" and "not" in that sentence is one part. You need two Nots, two Ands and one Or.', 'Five parts: Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out. When it passes, look at the Nand count below the tests: there is a design with only four Nands.'],
-   after:'You have a method that turns any truth table into a circuit: one And for each row that gives 1, joined by Or.'},
+  {id:'not', kind:'build', chip:'Not', short:'Not', title:'Flip a bit: Not',
+   objs:['Build Not from a single Nand.', 'Explain why a Nand gate with both inputs tied together flips its input.'],
+   see:'Click <code>in</code> and watch <code>out</code> do the opposite.',
+   learn:'<p>Not is the last box before the bottom. It has one input, and it flips it.</p><p>You build it from a single Nand gate. A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input. Remember what Nand does: it gives 0 only when both of its inputs are 1.</p>',
+   rule:'Not gives the opposite of its input.',
+   build:'<p>One box is enough.</p>',
+   hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. In those rows the output is the opposite of the input.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
+   after:'A Nand with both inputs tied together can only be in the rows 0,0 and 1,1, and in those rows its output is the opposite of its input.'},
 
-  {id:'mux', kind:'build', chip:'Mux', part:1, short:'Mux', title:'Choose between two signals: Mux',
-   desc:'out is a when sel is 0, and b when sel is 1',
-   objs:['Build a chip where one input (sel) decides which of the other inputs reaches the output.', 'Explain why only one of the two And gates inside a Mux can pass a signal at a time.'],
-   idea:'<p>A multiplexer (Mux) is a selector switch made of logic. When <code>sel</code> is 0 the output copies <code>a</code>, and when <code>sel</code> is 1 it copies <code>b</code>.</p><p>This is how a computer chooses between two results. At the last stop of this trail, a Mux is what lets one chip either add two numbers or And them, depending on a control bit.</p>',
-   rule:'Read sel first: when sel is 0 copy a, and when sel is 1 copy b.',
-   hints:['In words: out is (a and not sel) or (b and sel).', 'Make one And that lets a through only when sel is 0, and another And that lets b through only when sel is 1. Only one of them can pass its signal at a time.', 'Four parts: Not sel to ns, And of a and ns to w1, And of b and sel to w2, Or of w1 and w2 to out.'],
-   after:'An And gate works as a door: one input is the signal, and the other input opens or closes the door. A Mux is two doors where exactly one is open.'},
+  {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The bottom: the Nand gate',
+   objs:['State in one sentence what a Nand gate does.', 'Explain why every box above it could be built from this one gate.'],
+   see:'This is the one part that everything above it is made of. Click <code>a</code> and <code>b</code> and try all four combinations.',
+   learn:'<p>You have reached the bottom of the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.</p><p>In a real chip, a Nand gate is made of a few transistors, which are tiny electrical switches. That is the place where logic meets physics.</p>',
+   practice:'Record what you saw in the truth table. Click a ? to set it to 0, and click again for 1.',
+   rule:'Try each combination on the drawing again and copy what the output shows.',
+   after:'In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.'},
 
-  {id:'dmux', kind:'build', chip:'DMux', part:1, short:'DMux', title:'Route one signal to two places: DMux',
-   desc:'in goes to a when sel is 0, and to b when sel is 1; the other output is 0',
-   objs:['Build a chip that has two outputs.', 'Describe DMux as a Mux run in reverse.'],
-   idea:'<p>A demultiplexer (DMux) takes one input and routes it. When <code>sel</code> is 0 the input goes to output <code>a</code>, and when <code>sel</code> is 1 it goes to output <code>b</code>. The output that is not chosen stays 0.</p><p>A chip with two outputs needs both of them connected: one part ends in <code>=a</code> and another ends in <code>=b</code>.</p>',
-   rule:'The chosen output copies in, and the other output is 0.',
-   hints:['Each output says: "I copy in, but only when sel points at me."', 'a is (in and not sel). b is (in and sel).', 'Three parts: Not sel to ns, And of in and ns to a, And of in and sel to b.'],
-   after:'That completes the logic gates on this trail. With Not, And, Or, Xor, Mux and DMux you can build the chips that do arithmetic.'},
-
-  {id:'binary', kind:'bin', part:2, short:'Binary', title:'Count in binary',
-   objs:['Convert a number between decimal and 4-bit binary using the place values 8, 4, 2 and 1.'],
-   idea:'<p>The same wires that carry 0 and 1 can carry numbers. Four wires together carry a 4-bit number: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 1010 is 8 + 2 = 10.</p><p>Play with the four bits first. Then work through the challenges below, where the page stops showing the value and you work it out.</p>',
-   after:'Four bits give you the 16 numbers from 0 to 15. Each extra bit doubles how many numbers you can write.'},
-
-  {id:'addhand', kind:'addhand', part:2, short:'Add by hand', title:'Add in binary by hand',
-   objs:['Add two binary numbers column by column, carrying a 1 when a column adds up to 2 or 3.', 'Recognize overflow, which is a sum that needs more bits than you have.'],
-   idea:'<p>Binary addition works like the addition you learned in school, with one change: a column can hold only 0 or 1. When a column adds up to 2 (binary 10), you write 0 and carry 1. When it adds up to 3 (binary 11), you write 1 and carry 1.</p><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column.</p>',
-   after:'Notice what every column did: it took in up to three bits (a bit of a, a bit of b, and a carry) and gave out two bits (a sum bit and a carry). The next two stops build that column as a chip.'},
-
-  {id:'halfadder', kind:'build', chip:'HalfAdder', part:2, short:'HalfAdder', title:'Add two bits: HalfAdder',
-   desc:'sum is the right bit of a + b, carry is the left bit',
-   objs:['Build the chip that adds two bits.', 'Match the sum column and the carry column of a truth table to gates you already know.'],
-   idea:'<p>The rightmost column of an addition has two bits to add. The result needs two outputs: <code>sum</code> is the bit you write down in that column, and <code>carry</code> is the bit you carry to the next column. So 1 + 1 gives sum 0 and carry 1, which is binary 10.</p><p>Fill in the truth table, then look at each output column on its own. You have seen both columns before.</p>',
-   rule:'Add a and b as numbers. The result is 0, 1 or 2, and 2 is written as carry 1, sum 0.',
-   hints:['Fill in the truth table, then compare the sum column and the carry column with the truth tables of the gates you built.', 'sum is 1 when exactly one input is 1. carry is 1 only when both inputs are 1.', 'Two parts: an Xor of a and b going to sum, and an And of a and b going to carry.'],
-   after:'Arithmetic turned out to be logic: the sum bit is an Xor and the carry bit is an And.'},
-
-  {id:'fulladder', kind:'build', chip:'FullAdder', part:2, short:'FullAdder', title:'Add three bits: FullAdder',
-   desc:'sum and carry of a + b + c',
-   objs:['Build the chip that adds three bits: two bits plus the carry from the column before.', 'Combine two HalfAdders into a FullAdder and explain what the extra gate is for.'],
-   idea:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code> and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3, so two output bits are still enough.</p><p>You add three numbers by hand in two steps: first two of them, then the third. The chip can work the same way.</p>',
-   rule:'Count how many of the three inputs are 1. Write that count in binary: carry is the left bit and sum is the right bit.',
-   hints:['Add in two steps: first a + b, then add c to that result.', 'Each step is a HalfAdder. Each step can produce a carry, and the chip\'s carry is 1 when either step produced one.', 'Three parts: HalfAdder of a and b giving s1 and c1, HalfAdder of s1 and c giving sum and c2, and an Or of c1 and c2 going to carry.'],
-   after:'A question worth explaining to someone: the two HalfAdders inside your FullAdder can never both produce a carry for the same inputs. The truth table shows why.'},
-
-  {id:'add4', kind:'build', chip:'Add4', part:2, short:'Add4', title:'Add two 4-bit numbers: Add4',
-   desc:'out = a + b (4 bits, a carry out of the last column is dropped)',
-   objs:['Chain adders so that the carry of each column feeds the next column.', 'Use bus pins: a[0] is the rightmost bit of the 4-bit input a.'],
-   idea:'<p>Here you turn the add-by-hand stop into wires: one adder for each column, with the carry of each column feeding the next.</p><p>The inputs <code>a</code> and <code>b</code> are 4 bits wide. A group of wires like this is called a bus, and <code>a[0]</code>, <code>a[1]</code>, <code>a[2]</code>, <code>a[3]</code> pick out its single bits, with <code>a[0]</code> as the 1s place. A connection looks like <code>a=a[0]</code> or <code>sum=out[0]</code>.</p><p>The simulator tests all 256 combinations of a and b. A carry out of the last column is dropped, so you can leave that pin out of the part. The Nand to Tetris course builds Add16, which is the same design with 16 columns.</p>',
-   hints:['One adder for each column, as in the add-by-hand stop. The carry that leaves one column is the carry that enters the next.', 'Column 0 has no carry coming in, so a HalfAdder is enough there. Give each carry wire its own name, such as c1, c2, c3.', 'Four parts. The first: HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1); The second: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern, and the last carry pin can be left out.'],
-   after:'You built a machine that adds, and the only thing inside it is Nand gates. Set a = 1111 and b = 0001 with the switches and watch the carry travel through every column of your drawing.'},
-
-  {id:'inc4', kind:'build', chip:'Inc4', part:2, short:'Inc4', title:'Add 1: Inc4',
-   desc:'out = in + 1 (4 bits)',
-   objs:['Build a chip that adds 1 to a number.', 'Feed a fixed 1 or 0 into a pin with true and false.'],
-   idea:'<p>Counting up by one is so common inside a computer (for example, to move on to the next instruction of a program) that it gets its own chip.</p><p>You can feed a fixed value into a pin by writing <code>true</code> (for 1) or <code>false</code> (for 0) on the right of the <code>=</code> sign. For a bus pin you can set single bits, for example <code>b[0]=true</code>.</p>',
-   hints:['You already have a chip that adds two numbers. What number do you want to add?', 'Use Add4 with a connected to in, and build the number 1 on b one bit at a time: b[0]=true, and false for the other three bits.', 'One part: Add4(a=in, b[0]=true, b[1]=false, b[2]=false, b[3]=false, out=out); A smaller design chains four HalfAdders, with true as the second input of the first one.'],
-   after:'Set in to 1111 on the drawing. Adding 1 to the largest 4-bit number wraps around to 0000, which is the overflow you met in the add-by-hand stop.'},
-
-  {id:'twos', kind:'twos', part:2, short:'Negatives', title:'Negative numbers',
-   objs:['Read and write 4-bit numbers in two\'s complement, where the leftmost bit is worth -8.', 'Negate a number by flipping every bit and adding 1.'],
-   idea:'<p>Computers store negative numbers by changing what the leftmost bit is worth: in a 4-bit number it counts as -8, where before it counted as 8. So 1111 is -8 + 4 + 2 + 1 = -1, and four bits now cover the numbers from -8 to 7. This way of writing numbers is called two\'s complement.</p><p>The reason for this choice is that the adder you built works on these numbers with no changes. Subtraction needs no new chip, because x - y is the same as x + (-y). To get the negative of a number, flip every bit and then add 1.</p>',
-   after:'Your Add4 already subtracts. Go back to that stop and add 0101 (5) and 1101 (-3): the result is 0010 (2).'},
-
-  {id:'alu', kind:'alu', part:2, short:'ALU', title:'One chip, many operations: the ALU',
-   objs:['Predict what the ALU computes from its six control bits.', 'Find control bits that make the ALU compute a function you choose, such as x - y.'],
-   idea:'<p>The ALU (arithmetic logic unit) is the chip that does the computing in the Nand to Tetris computer. It takes two numbers, <code>x</code> and <code>y</code>, and six control bits. Each control bit does one small job, in this order:</p><ul><li><code>zx</code> sets x to zero, then <code>nx</code> flips every bit of x.</li><li><code>zy</code> sets y to zero, then <code>ny</code> flips every bit of y.</li><li><code>f</code> chooses what to do with the two results: add them (1) or And them (0).</li><li><code>no</code> flips every bit of the output.</li></ul><p>Every piece is something you have built or could now build: a Mux to choose, a Not to flip, an adder to add. The surprise is how many operations come out of these six switches. Pick a target, set the switches, and check. The page tests your settings on all 256 pairs of x and y. A result that does not fit in 4 bits wraps around, as in the overflow you met earlier. (This ALU is 4 bits wide; the one in the course is 16 bits wide and works the same way.)</p>',
-   hints:['To get a result that ignores an input, zero that input first. Remember that x + 0 = x, and that And with 1111 also leaves x unchanged.', 'Flipping every bit of a number n gives -n - 1. So zero followed by a flip gives 1111, which is -1. That -1 is your tool for x - 1, and a flip at the end can turn a "minus" into a "plus".', 'For x - y: flip x, add y, then flip the result. For x | y: flip both inputs, And them, then flip the result (the same law of logic you used to build Or).'],
-   after:'Six control bits and a few chips you know how to build give a whole menu of arithmetic and logic. A processor picks from that menu on every instruction it runs.'},
-
-  {id:'look', kind:'look', part:2, short:'Look back', title:'Look back at what you built',
-   objs:['Explain in your own words how a chip that adds numbers is made from Nand gates.'],
-   idea:'<p>This table shows every chip on the trail and how many Nand gates your version uses, counting the Nands inside the chips you used as parts.</p>'}
+  {id:'out', kind:'out', short:'Zoom out', title:'Zoom all the way out',
+   objs:['Explain in your own words how a machine that adds numbers could be built from Nand gates alone.'],
+   learn:'<p>This is your own 4-bit adder with every box opened, all the way down. Set <code>a</code> and <code>b</code> with the switches and watch the signals travel through the Nand gates.</p>'}
 ];
 
 const LOOK_QUESTIONS = [
   'Why does a Nand gate with both inputs tied together act as a Not gate?',
   'Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?',
-  'Why does flipping every bit of a number and adding 1 give its negative?'
+  'When your adder shows 0 for 15 + 1, which wire carried the missing 1, and where did it go?'
 ];
 
-if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LOOK_QUESTIONS};
+if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, LOOK_QUESTIONS, CHIP_SAYS, HDL_HELP};
 
-/* ===== Page behavior ===== */
+/* ===== Page behavior: a top-down trail. Each level is one box; building it opens the boxes inside. ===== */
 (function(){
   if (typeof document === 'undefined') return;
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
-  const KEY = 'cst286-nand-trail-v1';
-  let S = {code:{}, pass:{}, nands:{}, done:{}, pred:{}, games:{}, alu:{}, stop:0};
+  const KEY = 'cst286-nand-trail-v2';
+  let S = {code:{}, pass:{}, nands:{}, pred:{}, games:{}, level:0, path:[]};
   try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); if (j && typeof j === 'object') S = Object.assign(S, j); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const UNLOCK_ALL = /[?&]unlock=1/.test(location.search);
   const main = $('#stop'), mapEl = $('#map');
-  const CIRC = {}, LAST = {}, PRB = {}, P = {}, H = {}, G = {};
+  const K = {}, PRB = {}, STG = {}, LAST = {}, P = {}, H = {}, G = {};
   const rnd = n => Math.floor(Math.random() * n);
   const bin4 = v => v.toString(2).padStart(4, '0');
-  const sg = v => v > 7 ? v - 16 : v;
-  const isDone = s => s.kind === 'build' ? !!S.pass[s.chip] : !!S.done[s.id];
-  const TRAIL = STOPS.filter(s => s.kind !== 'look');
+  const BUILDS = LEVELS.filter(l => l.kind === 'build');
+  const levelOf = chip => LEVELS.findIndex(l => l.chip === chip);
+  const PARENTS = {FullAdder:['Add4'], HalfAdder:['Add4', 'FullAdder'], Xor:['HalfAdder', 'FullAdder'], And:['HalfAdder', 'FullAdder', 'Xor'], Or:['FullAdder', 'Xor'], Not:['Xor', 'And', 'Or'], Nand:['Xor', 'And', 'Or', 'Not']};
+  const CANON = {FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
+  const isDone = l => l.kind === 'build' ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : false;
+  const allDone = () => LEVELS.filter(l => l.kind !== 'out').every(isDone);
+  const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
+  const canon = chip => { const p = [chip]; while (CANON[p[0]]) p.unshift(CANON[p[0]]); return p; };
+  const reduced = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return true; } };
 
   /* ---------- map ---------- */
   function renderMap(){
-    let h = '';
-    [1, 2].forEach(part => {
-      h += '<div class="map-part"><div class="map-lbl">Part ' + part + ' &middot; ' + (part === 1 ? 'Boolean logic' : 'Boolean arithmetic') + '</div><div class="map-row">';
-      STOPS.forEach((s, i) => {
-        if (s.part !== part) return;
-        const cls = 'dot' + (i === S.stop ? ' cur' : '') + (isDone(s) ? ' done' : '');
-        h += '<button type="button" class="' + cls + '" data-i="' + i + '"' + (i === S.stop ? ' aria-current="step"' : '') + '><span class="dot-n">' + (isDone(s) ? '&#10003;' : (s.kind === 'look' ? '&#9873;' : i + 1)) + '</span><span class="dot-t">' + esc(s.short) + '</span></button>';
-      });
-      h += '</div></div>';
+    let h = '<div class="map-lbl">From the whole machine down to one gate</div><div class="map-row">';
+    LEVELS.forEach((l, i) => {
+      const open = unlocked(l), cls = 'dot' + (i === S.level ? ' cur' : '') + (isDone(l) ? ' done' : '') + (open ? '' : ' locked');
+      h += (i ? '<span class="map-arrow" aria-hidden="true">&rsaquo;</span>' : '') + '<button type="button" class="' + cls + '" data-i="' + i + '"' + (open ? '' : ' disabled title="This box opens when you build the level above it"') + (i === S.level ? ' aria-current="step"' : '') + '><span class="dot-n">' + (isDone(l) ? '&#10003;' : !open ? '&#128274;' : l.kind === 'out' ? '&#8689;' : i + 1) + '</span><span class="dot-t">' + esc(l.short) + '</span></button>';
     });
-    const n = TRAIL.filter(isDone).length;
-    h += '<div class="map-prog" role="status">' + n + ' of ' + TRAIL.length + ' stops complete. Your work is saved in this browser.</div>';
+    const n = LEVELS.filter(isDone).length;
+    h += '</div><div class="map-prog" role="status">' + n + ' of ' + (LEVELS.length - 1) + ' levels complete. Your work is saved in this browser.</div>';
     mapEl.innerHTML = h;
-    $$('.dot', mapEl).forEach(b => b.onclick = () => go(+b.dataset.i, true));
+    $$('.dot', mapEl).forEach(b => b.onclick = () => go(+b.dataset.i));
   }
-  function go(i, scroll){
-    S.stop = Math.max(0, Math.min(STOPS.length - 1, i)); save();
-    try { history.replaceState(null, '', '#' + STOPS[S.stop].id); } catch (e) {}
+  function go(i, viaZoom){
+    const l = LEVELS[Math.max(0, Math.min(LEVELS.length - 1, i))];
+    if (!unlocked(l)) return;
+    if (l.chip){ const at = S.path.indexOf(l.chip); if (viaZoom && S.path.length && S.path[S.path.length - 1] === viaZoom) S.path.push(l.chip); else if (at >= 0) S.path = S.path.slice(0, at + 1); else S.path = canon(l.chip); }
+    S.level = LEVELS.indexOf(l); save();
+    try { history.replaceState(null, '', location.pathname + location.search + '#' + l.id); } catch (e) {}
     render();
-    if (scroll && main.scrollIntoView) main.scrollIntoView({block:'start'});
+    if (viaZoom && !reduced()){ main.classList.remove('arrive'); void main.offsetWidth; main.classList.add('arrive'); }
+    if (main.scrollIntoView) main.scrollIntoView({block:'start'});
   }
-  function head(s){
-    const i = STOPS.indexOf(s);
-    return '<div class="eyebrow">' + (s.kind === 'look' ? 'End of the trail' : 'Stop ' + (i + 1) + ' of ' + TRAIL.length) + ' &middot; Part ' + s.part + ': ' + (s.part === 1 ? 'Boolean logic' : 'Boolean arithmetic') + '</div>' +
-      '<h2>' + esc(s.title) + '</h2>' +
-      '<div class="objs"><div class="lbl">After this stop you can</div><ul>' + s.objs.map(o => '<li>' + esc(o) + '</li>').join('') + '</ul></div>' +
-      '<div class="idea">' + s.idea + '</div>';
+  function render(){ renderMap(); const l = LEVELS[S.level]; VIEW[l.kind](l); }
+
+  function head(l){
+    const i = LEVELS.indexOf(l); let crumb = '';
+    if (l.chip){
+      const path = (S.path.length && S.path[S.path.length - 1] === l.chip) ? S.path : canon(l.chip);
+      crumb = '<nav class="zoompath" aria-label="Where you are inside the machine">' + path.map((c, k) => k === path.length - 1 ? '<span class="here">' + c + '</span>' : '<button type="button" class="up" data-c="' + c + '">' + c + '</button><span aria-hidden="true">&rsaquo;</span>').join('') + '</nav>';
+    }
+    return crumb + '<div class="eyebrow">' + (l.kind === 'out' ? 'End of the trail' : 'Level ' + (i + 1) + ' of ' + (LEVELS.length - 1)) + '</div><h2>' + esc(l.title) + '</h2>' +
+      '<div class="objs"><div class="lbl">After this level you can</div><ul>' + l.objs.map(o => '<li>' + esc(o) + '</li>').join('') + '</ul></div>';
   }
-  function foot(s){
-    const i = STOPS.indexOf(s);
-    return '<div class="navb">' + (i > 0 ? '<button type="button" class="btn ghost" id="prev">&larr; ' + esc(STOPS[i-1].short) + '</button>' : '<span></span>') +
-      (i < STOPS.length - 1 ? '<button type="button" class="btn' + (isDone(s) ? '' : ' ghost') + '" id="next">Next: ' + esc(STOPS[i+1].short) + ' &rarr;</button>' : '') + '</div>';
+  function foot(l){
+    const i = LEVELS.indexOf(l), nx = LEVELS[i + 1];
+    return '<div class="navb">' + (i > 0 ? '<button type="button" class="btn ghost" id="prev">&larr; Back up to ' + esc(LEVELS[i-1].short) + '</button>' : '<span></span>') +
+      (nx ? '<button type="button" class="btn' + (unlocked(nx) ? '' : ' ghost') + '" id="next"' + (unlocked(nx) ? '' : ' disabled') + '>' + (nx.kind === 'out' ? 'Zoom all the way out' : 'Go down to ' + esc(nx.short)) + ' &rarr;</button>' : '') + '</div>';
   }
-  function bindFoot(s){
-    const i = STOPS.indexOf(s);
-    if ($('#prev')) $('#prev').onclick = () => go(i - 1, true);
-    if ($('#next')) $('#next').onclick = () => go(i + 1, true);
+  function bindCommon(l){
+    const i = LEVELS.indexOf(l);
+    if ($('#prev')) $('#prev').onclick = () => go(i - 1);
+    if ($('#next')) $('#next').onclick = () => go(i + 1);
+    $$('.zoompath .up').forEach(b => b.onclick = () => go(levelOf(b.dataset.c)));
   }
-  const afterHTML = s => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(s.after) + '</p></div>';
-  function render(){
-    renderMap();
-    const s = STOPS[S.stop];
-    VIEW[s.kind](s);
-  }
+  function refreshNext(l){ const nx = LEVELS[LEVELS.indexOf(l) + 1], b = $('#next'); if (b && nx && unlocked(nx)){ b.disabled = false; b.classList.remove('ghost'); } }
+  const afterHTML = l => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(l.after) + '</p></div>';
+  const stepHTML = (n, title, body) => '<section class="step"><h3><span class="stepn">' + n + '</span> ' + title + '</h3>' + body + '</section>';
+  const videoHTML = l => l.video ? '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(l.video) + '" title="' + esc(l.title) + '" allow="fullscreen" loading="lazy"></iframe></div>' : '';
 
   /* ---------- predict a truth table ---------- */
   function predictHTML(chip, lead){
@@ -816,34 +880,30 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
     });
     return h + '</tbody></table></div><div class="row"><button type="button" class="btn" id="pcheck">Check my table</button></div><div id="pmsg" class="msg" role="status"></div>';
   }
-  function bindPredict(s, onOK){
-    const chip = s.chip, spec = B[chip], rows = combos(spec);
-    $$('#pt .cell').forEach(b => b.onclick = () => {
-      const r = +b.dataset.r, o = +b.dataset.o, v = P[chip][r][o];
-      P[chip][r][o] = v === null ? 0 : 1 - v; b.textContent = P[chip][r][o]; b.classList.remove('ok', 'bad');
-    });
+  function bindPredict(l, onOK){
+    const chip = l.chip, spec = B[chip], rows = combos(spec);
+    $$('#pt .cell').forEach(b => b.onclick = () => { const r = +b.dataset.r, o = +b.dataset.o, v = P[chip][r][o]; P[chip][r][o] = v === null ? 0 : 1 - v; b.textContent = P[chip][r][o]; b.classList.remove('ok', 'bad'); });
     $('#pcheck').onclick = () => {
       const m = $('#pmsg');
       if (P[chip].some(r => r.some(v => v === null))){ m.className = 'msg warn'; m.textContent = 'Fill in every row first. Click a ? to set it to 0, and click again for 1.'; return; }
       let wrong = 0;
       $$('#pt .cell').forEach(b => { const r = +b.dataset.r, o = +b.dataset.o; const ok = P[chip][r][o] === spec.fn(rows[r])[spec.outs[o][0]]; b.classList.toggle('ok', ok); b.classList.toggle('bad', !ok); if (!ok) wrong++; });
-      if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + s.rule; }
+      if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + l.rule; }
       else { m.className = 'msg ok'; m.textContent = 'Every row matches.'; S.pred[chip] = true; save(); if (onOK) onOK(); }
     };
   }
 
-  /* ---------- probe: switches, outputs, and the value on every wire ---------- */
-  function drawProbe(chip, builtin){
-    const el = $('#probe'); if (!el){ applyStage(chip, builtin); return; }
-    const spec = B[chip], c = CIRC[chip];
-    if (!PRB[chip]){ PRB[chip] = {}; spec.ins.forEach(([n]) => PRB[chip][n] = 0); }
-    if (!builtin && !c){ el.innerHTML = '<p class="muted">The switches and the wire-by-wire list appear here as soon as your chip has no errors.</p>'; applyStage(chip, builtin); return; }
-    if (!PRB[chip]){ PRB[chip] = {}; spec.ins.forEach(([n]) => PRB[chip][n] = 0); }
-    const inp = PRB[chip], exp = spec.fn(inp), res = builtin ? {outs:exp, trace:[]} : run(c, inp);
+  /* ---------- a bench = one drawing (stage) plus optional switches (probe), for a built-in box or the student's chip ---------- */
+  function bench(key, o){ K[key] = o; const spec = B[o.chip]; if (!PRB[key]){ PRB[key] = {}; spec.ins.forEach(([n]) => PRB[key][n] = 0); } }
+  function drawProbe(key){
+    const k = K[key], el = k.probe && $(k.probe); if (!el){ applyStage(key); return; }
+    const spec = B[k.chip], c = k.circ, inp = PRB[key];
+    if (!k.builtin && !c){ el.innerHTML = '<p class="muted">The switches and the part-by-part list appear here as soon as your chip has no errors.</p>'; applyStage(key); return; }
+    const exp = spec.fn(inp), res = k.builtin ? {outs:exp, trace:[]} : run(c, inp);
     let h = '<div class="pr-grid"><div class="pr-col"><div class="lbl">Inputs (click to flip)</div>';
     spec.ins.forEach(([n, w]) => {
       h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
-      for (let k = w - 1; k >= 0; k--){ const v = (inp[n] >> k) & 1; h += '<button type="button" class="sw' + (v ? ' on' : '') + '" data-n="' + n + '" data-b="' + k + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + n + (w > 1 ? ' bit ' + k : '') + '">' + v + '</button>'; }
+      for (let b = w - 1; b >= 0; b--){ const v = (inp[n] >> b) & 1; h += '<button type="button" class="sw' + (v ? ' on' : '') + '" data-n="' + n + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + n + (w > 1 ? ' bit ' + b : '') + '">' + v + '</button>'; }
       if (w > 1) h += '<span class="dec">= ' + inp[n] + '</span>';
       h += '</div>';
     });
@@ -851,13 +911,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
     spec.outs.forEach(([n, w]) => {
       const v = res.outs[n], ok = v === exp[n];
       h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
-      for (let k = w - 1; k >= 0; k--){ const b = (v >> k) & 1; h += '<span class="lamp' + (b ? ' on' : '') + '">' + b + '</span>'; }
+      for (let b = w - 1; b >= 0; b--){ const x = (v >> b) & 1; h += '<span class="lamp' + (x ? ' on' : '') + '">' + x + '</span>'; }
       if (w > 1) h += '<span class="dec">= ' + v + '</span>';
       if (!ok) h += '<span class="should">should be ' + fmtVal(exp[n], w) + '</span>';
       h += '</div>';
     });
     h += '</div></div>';
-    if (!builtin){
+    if (k.trace){
       h += '<div class="lbl" style="margin-top:14px">Inside your chip, part by part</div><ol class="trace">';
       res.trace.slice().sort((a, b) => a.P.n - b.P.n).forEach(t => {
         const ins = t.P.chip.ins.map(([n, w]) => n + '=' + fmtVal(t.p[n], w)).join(', ');
@@ -867,27 +927,25 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
       h += '</ol>';
     }
     el.innerHTML = h;
-    applyStage(chip, builtin);
-    $$('.sw', el).forEach(b => b.onclick = () => { inp[b.dataset.n] ^= (1 << +b.dataset.b); drawProbe(chip, builtin); const f = $('.sw[data-n="' + b.dataset.n + '"][data-b="' + b.dataset.b + '"]', el); if (f) f.focus(); });
+    applyStage(key);
+    $$('.sw', el).forEach(b => b.onclick = () => { inp[b.dataset.n] ^= (1 << +b.dataset.b); drawProbe(key); const f = $('.sw[data-n="' + b.dataset.n + '"][data-b="' + b.dataset.b + '"]', el); if (f) f.focus(); });
   }
 
-  /* ---------- stage: the chip drawn as a live circuit ---------- */
-  const STG = {};
   const GLYPH = {Nand:1, Not:1, And:1, Or:1, Xor:1};
   function layoutGraph(g){
-    const np = g.parts.length, lvl = new Array(np).fill(1);
+    const np = g.parts.length, lvl = new Array(np).fill(1), dense = np > 24, step = dense ? 104 : 170;
     for (let pass = 0; pass < np + 1; pass++) g.edges.forEach(e => { if (e.s.t === 'part' && e.d.t === 'part' && e.s.p !== e.d.p && lvl[e.d.p] < lvl[e.s.p] + 1 && lvl[e.s.p] < np + 1) lvl[e.d.p] = lvl[e.s.p] + 1; });
     const maxL = np ? Math.max.apply(null, lvl) : 0;
-    const P = g.parts.map((p, i) => { const c = B[p.chip], gl = !!GLYPH[p.chip]; const w = gl ? 58 : 118, h = gl ? 46 : Math.max(54, 26 * Math.max(c.ins.length, c.outs.length) + 14); return {i, c, gl, w, h, level:lvl[i], bub:(p.chip === 'Nand' || p.chip === 'Not') ? 10 : 0, x:150 + (lvl[i] - 1) * 170 + (gl ? 23 : 0), y:0}; });
-    const nw = n => Math.max(66, 8 * n.key.length + 26 + 10 * n.w), iw = Math.max(66, ...g.ins.map(nw)), ow = Math.max(66, ...g.outs.map(nw)), X0 = 18 + iw + 66;
-    P.forEach(p => { p.x += X0 - 150; });
-    const I = g.ins.map(n => ({n, w:iw, h:32, x:18, y:0})), O = g.outs.map(n => ({n, w:ow, h:32, x:X0 + maxL * 170, y:0}));
+    const nw = n => Math.max(66, 8 * n.key.length + 26 + 10 * n.w), iw = Math.max(66, ...g.ins.map(nw)), ow = Math.max(66, ...g.outs.map(nw)), X0 = 18 + iw + (dense ? 44 : 66);
+    const P = g.parts.map((p, i) => { const c = B[p.chip], gl = !!GLYPH[p.chip]; const w = gl ? 58 : 118, h = gl ? 46 : Math.max(54, 26 * Math.max(c.ins.length, c.outs.length) + 14); return {i, c, gl, w, h, level:lvl[i], bub:(p.chip === 'Nand' || p.chip === 'Not') ? 10 : 0, x:X0 + (lvl[i] - 1) * step + (gl && !dense ? 23 : 0), y:0}; });
+    const I = g.ins.map(n => ({n, w:iw, h:32, x:18, y:0})), O = g.outs.map(n => ({n, w:ow, h:32, x:X0 + maxL * step, y:0}));
     const cols = []; for (let L = 1; L <= maxL; L++) cols.push(P.filter(p => p.level === L));
+    const pg = dense ? 12 : 26;
     const colH = (a, gap) => a.reduce((s, n) => s + n.h, 0) + gap * Math.max(0, a.length - 1);
     // a chain of single parts (an adder, column after column) is drawn as a staircase so the wires do not cross
     const stair = maxL >= 3 && cols.every(c => c.length === 1);
     const stairH = stair ? cols.reduce((t, c) => t + c[0].h + 16, 0) + 28 : 0;
-    const H = Math.max(120, stairH, colH(I, 16) + 44, colH(O, 16) + 44, ...cols.map(c => colH(c, 26) + 44));
+    const H = Math.max(120, stairH, colH(I, 16) + 44, colH(O, 16) + 44, ...cols.map(c => colH(c, pg) + 44));
     const place = (a, gap) => {
       if (stair && a.length === 1 && P.includes(a[0])){ let y = (H - stairH) / 2 + 14; for (const c of cols){ if (c[0] === a[0]) break; y += c[0].h + 16; } a[0].y = y; return; }
       let y = (H - colH(a, gap)) / 2; a.forEach(n => { n.y = y; y += n.h + gap; });
@@ -896,16 +954,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
     const srcNode = e => e.s.t === 'in' ? I.find(n => n.n.key === e.s.node) : P[e.s.p];
     const dstNode = e => e.d.t === 'out' ? O.find(n => n.n.key === e.d.node) : P[e.d.p];
     const bary = (a, pick, other) => { a.forEach((n, k) => { const ys = g.edges.filter(e => pick(e) === n).map(e => cy(other(e))); n.b = ys.length ? ys.reduce((s, v) => s + v, 0) / ys.length : cy(n); n.k = k; }); a.sort((p, q) => p.b - q.b || p.k - q.k); };
-    place(I, 16); cols.forEach(c => place(c, 26)); place(O, 16);
-    for (let r = 0; r < 2; r++){
-      cols.forEach(c => { bary(c, dstNode, srcNode); place(c, 26); });
-      bary(I, srcNode, dstNode); place(I, 16);
-    }
-    cols.forEach(c => { bary(c, dstNode, srcNode); place(c, 26); });
+    place(I, 16); cols.forEach(c => place(c, pg)); place(O, 16);
+    for (let r = 0; r < 2; r++){ cols.forEach(c => { bary(c, dstNode, srcNode); place(c, pg); }); bary(I, srcNode, dstNode); place(I, 16); }
+    cols.forEach(c => { bary(c, dstNode, srcNode); place(c, pg); });
     bary(O, dstNode, srcNode); place(O, 16);
     const inPort = (p, j) => ({x:p.x + (p.gl && (g.parts[p.i].chip === 'Or' || g.parts[p.i].chip === 'Xor') ? 7 : 0), y:p.y + p.h * (j + 1) / (p.c.ins.length + 1)});
     const outPort = (p, j) => ({x:p.x + p.w + p.bub, y:p.y + p.h * (j + 1) / (p.c.outs.length + 1)});
-    return {P, I, O, H, W:X0 + maxL * 170 + ow + 18, inPort, outPort, srcNode, dstNode, maxL};
+    return {P, I, O, H, W:X0 + maxL * step + ow + 18, inPort, outPort, srcNode, dstNode, maxL, dense};
   }
   function glyph(name, x, y, w, h){
     if (name === 'And' || name === 'Nand') return '<path class="body" d="M' + x + ' ' + y + 'h' + w / 2 + 'a' + w / 2 + ' ' + h / 2 + ' 0 0 1 0 ' + h + 'h' + (-w / 2) + 'z"/>' + (name === 'Nand' ? '<circle class="bub" cx="' + (x + w + 5) + '" cy="' + (y + h / 2) + '" r="4.5"/>' : '');
@@ -913,27 +968,27 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
     const or = '<path class="body" d="M' + x + ' ' + y + 'Q' + (x + w * .62) + ' ' + y + ' ' + (x + w) + ' ' + (y + h / 2) + 'Q' + (x + w * .62) + ' ' + (y + h) + ' ' + x + ' ' + (y + h) + 'Q' + (x + w * .28) + ' ' + (y + h / 2) + ' ' + x + ' ' + y + 'z"/>';
     return or + (name === 'Xor' ? '<path class="xarc" d="M' + (x - 7) + ' ' + y + 'Q' + (x + w * .28 - 7) + ' ' + (y + h / 2) + ' ' + (x - 7) + ' ' + (y + h) + '"/>' : '');
   }
-  function drawStage(chip, g){
-    const el = $('#stage'); if (!el) return;
+  function drawStage(key, g){
+    const k = K[key], el = $(k.stage); if (!el) return;
     const sig = JSON.stringify(g);
-    if (STG[chip] && STG[chip].sig === sig && $('svg', el)) return;
-    const L = layoutGraph(g), r = v => Math.round(v * 10) / 10;
+    if (STG[key] && STG[key].sig === sig && $('svg', el)) return;
+    const L = layoutGraph(g), r = v => Math.round(v * 10) / 10, dl = n => L.dense ? 30 : 110, chip = k.chip;
     let wires = '', tops = '';
-    g.edges.forEach((e, k) => {
+    g.edges.forEach((e, i) => {
       const s = L.srcNode(e), d = L.dstNode(e);
       const a = e.s.t === 'in' ? {x:s.x + s.w, y:s.y + s.h / 2} : L.outPort(s, e.s.port);
       const b = e.d.t === 'out' ? {x:d.x, y:d.y + d.h / 2} : L.inPort(d, e.d.port);
-      const dx = Math.max(36, Math.abs(b.x - a.x) / 2), path = 'M' + r(a.x) + ' ' + r(a.y) + 'C' + r(a.x + dx) + ' ' + r(a.y) + ' ' + r(b.x - dx) + ' ' + r(b.y) + ' ' + r(b.x) + ' ' + r(b.y);
-      const delay = 'style="transition-delay:' + ((e.s.t === 'in' ? 0 : s.level) * 110) + 'ms"';
-      wires += '<path class="wire' + (e.w > 1 ? ' bus' : '') + '" data-e="' + k + '" d="' + path + '" ' + delay + '/><path class="flow" data-e="' + k + '" d="' + path + '" ' + delay + '/>';
-      if (e.w > 1) tops += '<text class="busv" data-ev="' + k + '" x="' + r((a.x + b.x) / 2) + '" y="' + r((a.y + b.y) / 2 - 6) + '" text-anchor="middle"></text>';
+      const dx = Math.max(30, Math.abs(b.x - a.x) / 2), path = 'M' + r(a.x) + ' ' + r(a.y) + 'C' + r(a.x + dx) + ' ' + r(a.y) + ' ' + r(b.x - dx) + ' ' + r(b.y) + ' ' + r(b.x) + ' ' + r(b.y);
+      const delay = 'style="transition-delay:' + ((e.s.t === 'in' ? 0 : s.level) * dl()) + 'ms"';
+      wires += '<path class="wire' + (e.w > 1 ? ' bus' : '') + '" data-e="' + i + '" d="' + path + '" ' + delay + '/>' + (L.dense ? '' : '<path class="flow" data-e="' + i + '" d="' + path + '" ' + delay + '/>');
+      if (e.w > 1) tops += '<text class="busv" data-ev="' + i + '" x="' + r((a.x + b.x) / 2) + '" y="' + r((a.y + b.y) / 2 - 6) + '" text-anchor="middle"></text>';
     });
     let nodes = '';
     L.I.forEach(n => { nodes += '<g class="innode" data-in="' + esc(n.n.key) + '" tabindex="0" role="button" aria-label="input ' + esc(n.n.key) + ', click to change"><rect x="' + n.x + '" y="' + r(n.y) + '" width="' + n.w + '" height="' + n.h + '" rx="16"/><text class="nm" x="' + (n.x + 12) + '" y="' + r(n.y + n.h / 2 + 4) + '">' + esc(n.n.key) + '</text><text class="val" x="' + (n.x + n.w - 11) + '" y="' + r(n.y + n.h / 2 + 5) + '" text-anchor="end"></text></g>'; });
-    L.O.forEach(n => { nodes += '<g class="outnode" data-out="' + esc(n.n.key) + '" style="transition-delay:' + ((L.maxL + 1) * 110) + 'ms"><rect x="' + n.x + '" y="' + r(n.y) + '" width="' + n.w + '" height="' + n.h + '" rx="16"/><text class="val" x="' + (n.x + 11) + '" y="' + r(n.y + n.h / 2 + 5) + '"></text><text class="nm" x="' + (n.x + n.w - 10) + '" y="' + r(n.y + n.h / 2 + 4) + '" text-anchor="end">' + esc(n.n.key) + '</text></g>'; });
+    L.O.forEach(n => { nodes += '<g class="outnode" data-out="' + esc(n.n.key) + '" style="transition-delay:' + ((L.maxL + 1) * dl()) + 'ms"><rect x="' + n.x + '" y="' + r(n.y) + '" width="' + n.w + '" height="' + n.h + '" rx="16"/><text class="val" x="' + (n.x + 11) + '" y="' + r(n.y + n.h / 2 + 5) + '"></text><text class="nm" x="' + (n.x + n.w - 10) + '" y="' + r(n.y + n.h / 2 + 4) + '" text-anchor="end">' + esc(n.n.key) + '</text></g>'; });
     L.P.forEach(p => {
-      const part = g.parts[p.i], name = part.chip;
-      let h = '<g class="gate' + (p.gl ? ' gl' : ' box') + '" data-p="' + p.i + '" style="transition-delay:' + (p.level * 110) + 'ms">';
+      const part = g.parts[p.i], name = part.chip, can = k.zoom && levelOf(name) >= 0 && name !== chip;
+      let h = '<g class="gate' + (p.gl ? ' gl' : ' box') + (can ? ' zoomable' : '') + '" data-p="' + p.i + '" data-chip="' + name + '"' + (can ? ' tabindex="0" role="button" aria-label="' + name + ' box. Double-click or press Enter to open it."' : '') + ' style="transition-delay:' + (p.level * dl()) + 'ms">';
       h += p.gl ? glyph(name, p.x, r(p.y), p.w, p.h) : '<rect class="body" x="' + p.x + '" y="' + r(p.y) + '" width="' + p.w + '" height="' + p.h + '" rx="9"/>';
       h += '<text class="gn" x="' + r(p.x + (p.gl ? (name === 'Not' ? p.w * .36 : p.w * .47) : p.w / 2)) + '" y="' + r(p.y + p.h / 2 + 4) + '" text-anchor="middle">' + name + '</text>';
       if (!p.gl){
@@ -941,86 +996,102 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
         p.c.outs.forEach((x, j) => { const q = L.outPort(p, j); h += '<text class="pn" x="' + (q.x - 6) + '" y="' + r(q.y + 3.5) + '" text-anchor="end">' + x[0] + '</text>'; });
       }
       h += '</g>';
-      Object.keys(part.labels).forEach(pin => { const j = p.c.outs.findIndex(x => x[0] === pin), q = L.outPort(p, j); tops += '<text class="wn" x="' + r(q.x + 5) + '" y="' + r(q.y - 6) + '">' + esc(part.labels[pin].join(', ')) + '</text>'; });
-      part.consts.forEach(k => { const q = L.inPort(p, k.port); tops += '<text class="cst" x="' + r(q.x - 6) + '" y="' + r(q.y + 4 + (k.bit === null ? 0 : (k.bit - 1.5) * -9)) + '" text-anchor="end">' + k.v + '</text>'; });
-      part.dangling.forEach(k => { const q = L.inPort(p, k.port); tops += '<path class="dang" d="M' + r(q.x - 30) + ' ' + r(q.y) + 'H' + r(q.x) + '"/><text class="dangt" x="' + r(q.x - 34) + '" y="' + r(q.y + 4) + '" text-anchor="end">' + esc(k.name) + '?</text>'; });
+      if (!L.dense) Object.keys(part.labels).forEach(pin => { const j = p.c.outs.findIndex(x => x[0] === pin), q = L.outPort(p, j); tops += '<text class="wn" x="' + r(q.x + 5) + '" y="' + r(q.y - 6) + '">' + esc(part.labels[pin].join(', ')) + '</text>'; });
+      part.consts.forEach(c => { const q = L.inPort(p, c.port); tops += '<text class="cst" x="' + r(q.x - 6) + '" y="' + r(q.y + 4 + (c.bit === null ? 0 : (c.bit - 1.5) * -9)) + '" text-anchor="end">' + c.v + '</text>'; });
+      part.dangling.forEach(c => { const q = L.inPort(p, c.port); tops += '<path class="dang" d="M' + r(q.x - 30) + ' ' + r(q.y) + 'H' + r(q.x) + '"/><text class="dangt" x="' + r(q.x - 34) + '" y="' + r(q.y + 4) + '" text-anchor="end">' + esc(c.name) + '?</text>'; });
       nodes += h;
     });
-    el.innerHTML = '<svg viewBox="0 0 ' + L.W + ' ' + r(L.H) + '" style="max-height:' + Math.max(220, Math.min(620, L.H * 1.3)) + 'px" role="group" aria-label="Drawing of your ' + chip + ' chip"><g class="wires">' + wires + '</g>' + nodes + tops + '</svg>';
-    const bench = el.closest ? el.closest('.bench') : null; if (bench) bench.classList.toggle('wide', L.W > 760);
-    STG[chip] = {sig, g};
+    el.classList.toggle('scrolly', L.dense);
+    el.innerHTML = '<svg viewBox="0 0 ' + L.W + ' ' + r(L.H) + '" style="' + (L.dense ? 'width:' + Math.round(L.W * .62) + 'px;height:' + Math.round(L.H * .62) + 'px;max-width:none' : 'max-height:' + Math.max(220, Math.min(620, L.H * 1.3)) + 'px') + '" role="group" aria-label="Drawing of ' + (k.builtin ? 'the ' : 'your ') + chip + ' chip"><g class="wires">' + wires + '</g>' + nodes + tops + '</svg>';
+    const bn = el.closest ? el.closest('.bench') : null; if (bn) bn.classList.toggle('wide', L.W > 760);
+    STG[key] = {sig, g};
     $$('.innode', el).forEach(n => {
-      const flip = () => { const nd = g.ins.find(x => x.key === n.dataset.in), inp = PRB[chip]; if (nd.w === 1) inp[nd.name] ^= (1 << nd.lo); else inp[nd.name] = (inp[nd.name] + 1) & ((1 << B[chip].ins.find(x => x[0] === nd.name)[1]) - 1); drawProbe(chip, STG[chip].builtin); const f = $('.innode[data-in="' + n.dataset.in + '"]', el); if (f && f.focus) f.focus(); };
+      const flip = () => { const nd = g.ins.find(x => x.key === n.dataset.in), inp = PRB[key]; if (nd.w === 1) inp[nd.name] ^= (1 << nd.lo); else inp[nd.name] = (inp[nd.name] + 1) & ((1 << B[chip].ins.find(x => x[0] === nd.name)[1]) - 1); drawProbe(key); const f = $('.innode[data-in="' + n.dataset.in + '"]', el); if (f && f.focus) f.focus(); };
       n.addEventListener('click', flip); n.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); } });
     });
+    if (k.zoom) $$('.gate.zoomable', el).forEach(n => {
+      n.addEventListener('dblclick', () => k.zoom(n.dataset.chip, n));
+      n.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); k.zoom(n.dataset.chip, n); } });
+    });
   }
-  function applyStage(chip, builtin){
-    const el = $('#stage'), st = STG[chip]; if (!el || !st || !$('svg', el)) return;
-    st.builtin = builtin;
-    const g = st.g, spec = B[chip], inp = PRB[chip], c = builtin ? null : CIRC[chip];
+  function applyStage(key){
+    const k = K[key], el = $(k.stage), st = STG[key]; if (!el || !st || !$('svg', el)) return;
+    const g = st.g, spec = B[k.chip], inp = PRB[key], c = k.circ;
     let outs = null, wires = {}, pouts = null;
-    // values are shown only when the drawing matches the chip that compiled
-    if (builtin){ outs = spec.fn(inp); pouts = [outs]; }
+    // values are shown only when the drawing matches a chip that compiled
+    if (k.builtin){ outs = spec.fn(inp); pouts = [outs]; }
     else if (c && c.parts.length === g.parts.length){ const res = run(c, inp); outs = res.outs; wires = res.wires; pouts = res.trace.slice().sort((a, b) => a.P.n - b.P.n).map(t => t.r); }
     const live = !!outs, mk = w => (1 << w) - 1;
     el.classList.toggle('live', live);
+    el.classList.toggle('canzoom', !!k.zoomReady && k.zoomReady());
     const ev = e => !live ? null : e.d.t === 'out' ? (outs[e.d.name] >> e.d.lo) & mk(e.w) : e.s.t === 'in' ? (inp[e.s.name] >> e.s.lo) & mk(e.w) : wires[e.s.wire];
-    g.edges.forEach((e, k) => { const v = ev(e); $$('[data-e="' + k + '"]', el).forEach(p => { p.classList.toggle('on', !!v); p.classList.toggle('unk', v === null || v === undefined); }); const t = $('[data-ev="' + k + '"]', el); if (t) t.textContent = v === null || v === undefined ? '' : v.toString(2).padStart(e.w, '0'); });
+    g.edges.forEach((e, i) => { const v = ev(e); $$('[data-e="' + i + '"]', el).forEach(p => { p.classList.toggle('on', !!v); p.classList.toggle('unk', v === null || v === undefined); }); const t = $('[data-ev="' + i + '"]', el); if (t) t.textContent = v === null || v === undefined ? '' : v.toString(2).padStart(e.w, '0'); });
     g.ins.forEach(n => { const nd = $('.innode[data-in="' + n.key + '"]', el), v = (inp[n.name] >> n.lo) & mk(n.w); nd.classList.toggle('on', !!v); $('.val', nd).textContent = n.w > 1 ? v.toString(2).padStart(n.w, '0') : v; });
     const exp = spec.fn(inp);
     g.outs.forEach(n => { const nd = $('.outnode[data-out="' + n.key + '"]', el), v = live ? (outs[n.name] >> n.lo) & mk(n.w) : null; nd.classList.toggle('on', !!v); nd.classList.toggle('unk', v === null); nd.classList.toggle('wrong', v !== null && v !== ((exp[n.name] >> n.lo) & mk(n.w))); $('.val', nd).textContent = v === null ? '?' : n.w > 1 ? v.toString(2).padStart(n.w, '0') : v; });
     g.parts.forEach((p, i) => { const nd = $('.gate[data-p="' + i + '"]', el), o = B[p.chip].outs; nd.classList.toggle('on', live && !!pouts[i] && o.length === 1 && o[0][1] === 1 && !!pouts[i][o[0][0]]); });
   }
+  const boxSketch = chip => { const c = B[chip]; return sketch('PARTS: ' + chip + '(' + c.ins.concat(c.outs).map(x => x[0] + '=' + x[0]).join(', ') + ');', chip, true); };
+
+  /* ---------- zoom into a box ---------- */
+  function zoomInto(from, name, gateEl){
+    const i = levelOf(name); if (i < 0) return;
+    const l = LEVELS[i];
+    if (!unlocked(l)){ const st = $('#stagestat'); if (st) st.innerHTML = '<span class="pill">Closed</span> The ' + name + ' box opens when your ' + from + ' passes its tests.'; return; }
+    const svg = gateEl && gateEl.ownerSVGElement;
+    if (!svg || reduced() || !svg.getBoundingClientRect){ go(i, from); return; }
+    const a = svg.getBoundingClientRect(), b = gateEl.getBoundingClientRect();
+    if (!a.width){ go(i, from); return; }
+    svg.style.transformOrigin = ((b.left + b.width / 2 - a.left) / a.width * 100) + '% ' + ((b.top + b.height / 2 - a.top) / a.height * 100) + '%';
+    svg.style.transition = 'transform .5s cubic-bezier(.6,0,.9,.5), opacity .5s ease-in';
+    svg.style.transform = 'scale(9)'; svg.style.opacity = '0';
+    setTimeout(() => go(i, from), 470);
+  }
 
   /* ---------- views ---------- */
   const VIEW = {};
-
-  VIEW.play = function(s){
-    main.innerHTML = head(s) +
-      '<section class="step"><h3><span class="stepn">1</span> Play</h3><p>Click <code>a</code> or <code>b</code> on the drawing to flip it.</p><div id="stage" class="stage"></div></section>' +
-      '<section class="step"><h3><span class="stepn">2</span> Record what you saw</h3>' + predictHTML(s.chip, 'Click a ? to set it to 0, and click again for 1.') + '<div id="after">' + (isDone(s) ? afterHTML(s) : '') + '</div></section>' + foot(s);
-    PRB[s.chip] = PRB[s.chip] || {a:0, b:0};
-    drawStage(s.chip, sketch('PARTS: Nand(a=a, b=b, out=out);', 'Nand', true));
-    drawProbe(s.chip, true);
-    bindPredict(s, () => { S.done[s.id] = true; save(); $('#after').innerHTML = afterHTML(s); renderMap(); const n = $('#next'); if (n) n.classList.remove('ghost'); });
-    bindFoot(s);
-  };
-
-  function allowed(chip){ return ORDER.slice(0, ORDER.indexOf(chip)); }
+  const below = chip => ORDER.slice(0, ORDER.indexOf(chip)).reverse();
   function template(name){ const c = B[name]; return name + '(' + c.ins.concat(c.outs).map(x => x[0] + '=').join(', ') + ');'; }
+  const pins = name => { const c = B[name]; return c.ins.map(x => x[0]).join(', ') + ' &rarr; ' + c.outs.map(x => x[0]).join(', '); };
 
-  VIEW.build = function(s){
-    const chip = s.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1);
-    let n = 1;
-    let h = head(s);
-    if (hasPred) h += '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Predict</h3>' + predictHTML(chip, 'Before you build ' + chip + ', fill in what it should do. This table is what the simulator will test your chip against.') + '</section>';
-    h += '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Build</h3>' +
-      '<p>Write your parts under <code>PARTS:</code>. Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors: click an input on the drawing to flip it. Parts you can use at this stop (click one to insert it):</p>' +
-      '<div class="palette">' + allowed(chip).map(a => '<button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button>').join('') + '</div>' +
+  VIEW.build = function(l){
+    const chip = l.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1), seeKey = chip + ':see';
+    let h = head(l);
+    h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
+    h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
+    h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, 'Fill in what ' + chip + ' does. This table is also what the simulator will test your chip against. Click a ? to set it to 0, and click again for 1.') : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
+    h += stepHTML(4, 'Build it',
+      '<div class="idea">' + l.build + '</div>' + (l.build.indexOf('hardware description language') < 0 ? '<details class="help"><summary>How to write a part in HDL</summary>' + HDL_HELP + '</details>' : '') +
+      '<p>Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the boxes below this level. Click one to insert it:</p>' +
+      '<div class="tablewrap"><table class="parts"><tbody>' + below(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td></tr>').join('') + '</tbody></table></div>' +
       '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
-      '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div></section>' +
-      '<section class="step"><h3><span class="stepn">' + (n++) + '</span> Probe your chip</h3><p>These switches are the same inputs as on the drawing. The list below them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.</p><div id="probe"></div></section>' + foot(s);
+      '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
+      '<h4 class="sub">Look inside your chip</h4><p>These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.</p><div id="probe"></div>');
+    h += stepHTML(5, 'Open the box', '<div id="open"></div>') + foot(l);
     main.innerHTML = h;
-    const ed = $('#ed');
-    ed.value = S.code[chip] || stub(chip, s.desc);
-    if (hasPred) bindPredict(s);
-    ed.addEventListener('keydown', e => {
-      if (e.key === 'Tab' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); insert('    '); }
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); runTests(); }
-    });
+
+    bench(seeKey, {chip, builtin:true, stage:'#stage-see', probe:hasPred ? null : '#probe-see'});
+    drawStage(seeKey, boxSketch(chip)); drawProbe(seeKey);
+    if (hasPred) bindPredict(l); else { gameBin($('#g-bin')); gameAdd($('#g-add')); }
+
+    bench(chip, {chip, builtin:false, circ:null, stage:'#stage', probe:'#probe', trace:true, zoom:(name, el) => zoomInto(chip, name, el), zoomReady:() => !!S.pass[chip] || UNLOCK_ALL});
+    const ed = $('#ed'), stub0 = l.stub || stub(chip, CHIP_SAYS[chip]);
+    ed.value = S.code[chip] || stub0;
     let timer = null;
     function live(){
-      if (!PRB[chip]){ PRB[chip] = {}; spec.ins.forEach(([n]) => PRB[chip][n] = 0); }
       const g = sketch(ed.value, chip); drawStage(chip, g);
       let why = '';
-      try { CIRC[chip] = build(ed.value, chip, S.nands); } catch (e) { if (!e.hdl) throw e; CIRC[chip] = null; why = e.message; }
+      try { K[chip].circ = build(ed.value, chip, S.nands); } catch (e) { if (!e.hdl) throw e; K[chip].circ = null; why = e.message; }
       const stat = $('#stagestat');
-      if (stat) stat.innerHTML = CIRC[chip] ? '<span class="pill livep">Live</span> Click an input on the drawing to flip it, and watch the signal travel.' : !g.parts.length ? '<span class="pill">Empty</span> Each part you type under PARTS: appears here.' : '<span class="pill">Not running yet</span> ' + esc(why);
+      if (stat) stat.innerHTML = K[chip].circ ? '<span class="pill livep">Live</span> Click an input on the drawing to flip it, and watch the signal travel.' + (S.pass[chip] ? ' Double-click a box to open it.' : '') : !g.parts.length ? '<span class="pill">Empty</span> Each part you type under PARTS: appears here.' : '<span class="pill">Not running yet</span> ' + esc(why);
       drawProbe(chip);
     }
+    ed.addEventListener('keydown', e => {
+      if (e.key === 'Tab' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); const a = ed.selectionStart; ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(ed.selectionEnd); ed.selectionStart = ed.selectionEnd = a + 4; S.code[chip] = ed.value; save(); }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); runTests(); }
+    });
     ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); clearTimeout(timer); timer = setTimeout(live, 220); });
-    function insert(txt){ const a = ed.selectionStart, b = ed.selectionEnd; ed.value = ed.value.slice(0, a) + txt + ed.value.slice(b); ed.selectionStart = ed.selectionEnd = a + txt.length; S.code[chip] = ed.value; save(); ed.focus(); }
     $$('.chipbtn').forEach(b => b.onclick = () => {
       const v = ed.value, pi = v.indexOf('PARTS:'), end = v.lastIndexOf('}'), pos = ed.selectionStart;
       const line = '    ' + template(b.dataset.c); let at;
@@ -1035,58 +1106,58 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
       S.code[chip] = ed.value; save(); ed.focus(); live();
       const caret = at + line.indexOf('=') + 1; try { ed.setSelectionRange(caret, caret); } catch (e) {}
     });
-    $('#reset').onclick = () => { ed.value = stub(chip, s.desc); S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; live(); ed.focus(); };
-    $('#hint').onclick = () => {
-      H[chip] = Math.min((H[chip] || 0) + 1, s.hints.length);
-      $('#hints').innerHTML = s.hints.slice(0, H[chip]).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + s.hints.length + '.</b> ' + esc(t) + '</div>').join('');
-      if (H[chip] >= s.hints.length) $('#hint').textContent = 'No more hints';
-    };
-    if (H[chip]){ H[chip]--; $('#hint').onclick(); }
+    $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; live(); ed.focus(); };
+    const showHints = () => { $('#hints').innerHTML = l.hints.slice(0, H[chip] || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H[chip] || 0) >= l.hints.length) $('#hint').textContent = 'No more hints'; };
+    $('#hint').onclick = () => { H[chip] = Math.min((H[chip] || 0) + 1, l.hints.length); showHints(); };
+    showHints();
     $('#ai').onclick = () => {
       const L = LAST[chip];
       const said = !L ? 'I have not run the tests yet.' : L.error ? 'Error: ' + L.error : L.pass ? 'All ' + L.rows.length + ' test rows pass.' : L.rows.filter(r => r.ok).length + ' of ' + L.rows.length + ' test rows pass. ' + L.msgs.join(' ');
-      const txt = 'I am working through a learning trail based on the Nand to Tetris course, where I build chips from Nand gates in HDL. I am on the ' + chip + ' chip (' + s.desc + '). The parts I may use are: ' + allowed(chip).join(', ') + '.\n\nMy HDL:\n' + ed.value + '\nWhat the simulator says:\n' + said + '\n\nPlease do not write the HDL for me. Ask me one question at a time that helps me find the next step myself. When my chip works, keep asking me questions until you are sure I can explain why the design works.';
-      copyOut(txt, $('#aibox'));
+      copyOut('I am working through a learning trail based on the Nand to Tetris course. It starts from a 4-bit adder and goes down level by level to the Nand gate, and at each level I build the chip in HDL from the boxes below it. I am on the ' + chip + ' chip (' + CHIP_SAYS[chip] + '). The parts I may use are: ' + below(chip).join(', ') + '.\n\nMy HDL:\n' + ed.value + '\nWhat the simulator says:\n' + said + '\n\nPlease do not write the HDL for me. Ask me one question at a time that helps me find the next step myself. When my chip works, keep asking me questions until you are sure I can explain why the design works.', $('#aibox'));
     };
     $('#run').onclick = runTests;
+    function openHTML(){
+      if (!S.pass[chip] && !UNLOCK_ALL) return '<p class="muted">This step opens when your ' + chip + ' passes its tests. Then you can go inside the boxes you used.</p>';
+      const used = K[chip].circ ? Array.from(new Set(K[chip].circ.parts.map(p => p.chip.name))) : [];
+      const list = (used.length ? used : below(chip).slice(0, 2)).filter(n => levelOf(n) >= 0).sort((a, b) => levelOf(a) - levelOf(b));
+      return '<p>Your ' + chip + ' works, and you built it from boxes you have not looked inside yet. Double-click a box on your drawing to go inside it, or use a button:</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn" data-c="' + n + '">Open ' + n + ' &#10530;</button>').join('') + '</div>';
+    }
+    function drawOpen(){ $('#open').innerHTML = openHTML(); $$('.openbtn').forEach(b => b.onclick = () => zoomInto(chip, b.dataset.c, $('#stage .gate[data-chip="' + b.dataset.c + '"]'))); }
     function runTests(){
       const res = $('#res'); S.code[chip] = ed.value; save(); clearTimeout(timer); live();
       let c;
       try { c = build(ed.value, chip, S.nands); }
       catch (e){
         if (!e.hdl) throw e;
-        CIRC[chip] = null; LAST[chip] = {error:(e.line ? 'Line ' + e.line + ': ' : '') + e.message};
+        LAST[chip] = {error:(e.line ? 'Line ' + e.line + ': ' : '') + e.message};
         res.innerHTML = '<div class="msg bad"><b>' + (e.line ? 'Line ' + e.line + '. ' : '') + '</b>' + esc(e.message) + '</div>';
         if (e.line) selectLine(e.line);
         return;
       }
-      CIRC[chip] = c;
+      K[chip].circ = c;
       const rows = testChip(c), pass = rows.every(r => r.ok), msgs = diagnose(rows, spec);
       LAST[chip] = {rows, pass, msgs};
-      let h = '';
+      let o = '';
       if (pass){
         S.pass[chip] = true; S.nands[chip] = c.nands; save();
-        h += '<div class="msg ok"><b>All ' + rows.length + ' rows pass.</b> Your ' + chip + ' works.</div>';
-        h += '<div class="msg info">Your ' + chip + ' uses <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b> in total, counting the Nands inside the chips you used as parts. ' +
-          (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') + '</div>';
+        o += '<div class="msg ok"><b>All ' + rows.length + ' rows pass.</b> Your ' + chip + ' works.</div>';
+        const known = c.parts.every(p => p.chip.name === 'Nand' || S.pass[p.chip.name]);
+        o += '<div class="msg info">' + (known ? 'Counting the Nand gates inside the boxes you used, your ' + chip + ' is made of <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b>. ' + (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') : 'Your ' + chip + ' is built from <b>' + c.parts.length + ' boxes</b>. You will see how many Nand gates that comes to when you have opened every box and zoom all the way out.') + '</div>';
       } else {
         const okn = rows.filter(r => r.ok).length;
-        h += '<div class="msg bad"><b>' + okn + ' of ' + rows.length + ' rows pass.</b> ' + (okn ? 'Your chip compiles and already gets some rows right.' : 'Your chip compiles, so the wiring is valid HDL. Now the behavior needs work.') + '</div>';
-        h += '<ul class="diag">' + msgs.map(m => '<li>' + esc(m) + '</li>').join('') + '</ul>';
-        h += '<div class="row"><button type="button" class="btn ghost" id="toprobe">Show the first failing row on the drawing</button></div>';
+        o += '<div class="msg bad"><b>' + okn + ' of ' + rows.length + ' rows pass.</b> ' + (okn ? 'Your chip compiles and already gets some rows right.' : 'Your chip compiles, so the wiring is valid HDL. Now the behavior needs work.') + '</div>';
+        o += '<ul class="diag">' + msgs.map(m => '<li>' + esc(m) + '</li>').join('') + '</ul>';
+        o += '<div class="row"><button type="button" class="btn ghost" id="toprobe">Show the first failing row on the drawing</button></div>';
       }
-      c.warnings.forEach(w => h += '<div class="msg warn">' + esc(w) + '</div>');
-      h += resultTable(rows, spec, pass);
-      if (pass) h += afterHTML(s);
-      res.innerHTML = h;
+      c.warnings.forEach(w => o += '<div class="msg warn">' + esc(w) + '</div>');
+      o += resultTable(rows, spec, pass);
+      if (pass) o += afterHTML(l);
+      res.innerHTML = o;
       if ($('#toprobe')) $('#toprobe').onclick = () => { PRB[chip] = Object.assign({}, rows.find(r => !r.ok).ins); drawProbe(chip); $('#stage').scrollIntoView && $('#stage').scrollIntoView({block:'center'}); };
-      drawProbe(chip); renderMap();
-      if (pass){ const nx = $('#next'); if (nx) nx.classList.remove('ghost'); }
+      live(); renderMap(); drawOpen(); refreshNext(l);
     }
     function selectLine(n){ const lines = ed.value.split('\n'); let a = 0; for (let i = 0; i < n - 1 && i < lines.length; i++) a += lines[i].length + 1; try { ed.focus(); ed.setSelectionRange(a, a + (lines[n-1] || '').length); } catch (e) {} }
-    // show the saved chip in the probe right away when it compiles
-    live();
-    bindFoot(s);
+    live(); drawOpen(); bindCommon(l);
   };
 
   function resultTable(rows, spec, pass){
@@ -1102,68 +1173,100 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
     });
     return h + '</tbody></table></div>';
   }
-
   function copyOut(txt, box){
-    const show = ok => { box.innerHTML = '<div class="msg info">' + (ok ? 'Copied. Paste it into your AI Dojo or another AI chat.' : 'Select the text below, copy it, and paste it into your AI Dojo or another AI chat.') + '</div>' + (ok ? '' : '<textarea class="editor" rows="8" readonly>' + esc(txt) + '</textarea>'); };
+    const show = ok => { box.innerHTML = '<div class="msg info">' + (ok ? 'Copied. Paste it into your AI Dojo or another AI chat.' : 'Select the text below, copy it, and paste it into your AI Dojo or another AI chat.') + '</div>' + (ok ? '' : '<textarea class="editor small" rows="8" readonly>' + esc(txt) + '</textarea>'); };
     try { navigator.clipboard.writeText(txt).then(() => show(true), () => show(false)); } catch (e) { show(false); }
   }
 
-  /* ---------- small games ---------- */
-  function bitsRow(group, v, weights, live){
-    let h = '<div class="bits">';
-    for (let k = 3; k >= 0; k--){ const b = (v >> k) & 1; h += '<div class="bitcol"><span class="wt">' + weights[3-k] + '</span>' + (live ? '<button type="button" class="sw big' + (b ? ' on' : '') + '" data-g="' + group + '" data-b="' + k + '" aria-pressed="' + (b ? 'true' : 'false') + '" aria-label="bit worth ' + weights[3-k] + '">' + b + '</button>' : '<span class="lamp big' + (b ? ' on' : '') + '">' + b + '</span>') + '</div>'; }
-    return h + '</div>';
-  }
-  function terms(v, weights){ const t = []; for (let k = 3; k >= 0; k--) if ((v >> k) & 1) t.push(weights[3-k]); return t.length ? t.join(' + ').replace(/\+ -/g, '- ') : '0'; }
-  const W = [8, 4, 2, 1], WS = [-8, 4, 2, 1];
-  function tally(label, n, need){ return '<span class="tally' + (n >= need ? ' full' : '') + '">' + label + ': ' + Math.min(n, need) + ' of ' + need + '</span>'; }
-  function bindBits(g, redraw){ $$('.sw[data-g]').forEach(b => b.onclick = () => { const k = b.dataset.g; g[k] ^= (1 << +b.dataset.b); if (k !== 'explore'){ g.msg = ''; } redraw(); const f = $('.sw[data-g="' + k + '"][data-b="' + b.dataset.b + '"]'); if (f) f.focus(); }); }
-  function finish(s){ if (!S.done[s.id]){ S.done[s.id] = true; save(); renderMap(); } }
-
-  VIEW.bin = function(s){
-    const st = S.games.bin || (S.games.bin = {make:0, read:0});
-    const g = G.bin || (G.bin = {explore:5, mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
-    const draw = () => {
-      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play</h3><p>Click the bits. The number is the sum of the place values that are switched to 1.</p>' + bitsRow('explore', g.explore, W, true) + '<p class="bigval">' + bin4(g.explore) + ' is ' + terms(g.explore, W) + ' = <b>' + g.explore + '</b></p></section>';
-      h += '<section class="step"><h3><span class="stepn">2</span> Challenges</h3><p class="tallies">' + tally('Make a number', st.make, 3) + tally('Read a number', st.read, 3) + '</p>';
-      if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, W, !g.solved);
-      else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, W, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
-      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Next challenge</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
-      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
-      if ($('#ans')) $('#ans').addEventListener('keydown', e => { if (e.key === 'Enter') $('#check').click(); });
-      if ($('#check')) $('#check').onclick = () => {
-        if (g.mode === 'make'){
-          if (g.bits === g.target){ st.make++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + terms(g.bits, W) + ' = ' + g.target + '.'; }
-          else { const d = g.bits - g.target; g.cls = 'bad'; g.msg = 'Your bits are worth ' + terms(g.bits, W) + ' = ' + g.bits + '. You need ' + g.target + ', so you are ' + Math.abs(d) + ' too ' + (d > 0 ? 'high' : 'low') + '.'; }
-        } else {
-          const v = $('#ans').value.trim();
-          if (v === ''){ g.cls = 'warn'; g.msg = 'Type the decimal value first.'; }
-          else if (+v === g.target){ st.read++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + bin4(g.target) + ' is ' + terms(g.target, W) + ' = ' + g.target + '.'; }
-          else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
-          else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target, W) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
-        }
-        save(); if (st.make >= 3 && st.read >= 3) finish(s); draw();
-      };
-      if ($('#nextc')) $('#nextc').onclick = () => { g.mode = (g.mode === 'make') ? 'read' : 'make'; if (st.make >= 3 && st.read < 3) g.mode = 'read'; if (st.read >= 3 && st.make < 3) g.mode = 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
-    };
-    draw();
+  VIEW.bottom = function(l){
+    const key = 'Nand:see';
+    main.innerHTML = head(l) + stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>') +
+      stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
+      stepHTML(3, 'Practice', predictHTML('Nand', l.practice) + '<div id="after">' + (isDone(l) ? afterHTML(l) : '') + '</div>') + foot(l);
+    bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null});
+    drawStage(key, boxSketch('Nand')); drawProbe(key);
+    bindPredict(l, () => { $('#after').innerHTML = afterHTML(l); renderMap(); refreshNext(l); });
+    bindCommon(l);
   };
 
-  VIEW.addhand = function(s){
+  VIEW.out = function(l){
+    let h = head(l), flat = null, c = null;
+    if (BUILDS.every(b => S.pass[b.chip] && S.code[b.chip])){
+      try { flat = flatten('Add4', n => S.code[n]); c = build(flat, 'Add4'); } catch (e) { flat = null; }
+    }
+    if (c){
+      h += '<div class="idea">' + l.learn + '</div><div class="msg ok">Your adder is made of <b>' + c.parts.length + ' Nand gates</b> and nothing else.</div><div id="probe-flat"></div><div id="stage-flat" class="stage" style="margin-top:10px"></div><p class="muted">Scroll sideways to follow the carry from the first column to the last.</p>';
+    } else h += '<p>This view opens when every level is built. Levels still open: ' + LEVELS.filter(x => x.kind !== 'out' && !isDone(x)).map(x => esc(x.short)).join(', ') + '.</p>';
+    h += '<div class="tablewrap"><table class="tt res"><thead><tr><th>Box</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
+    const counts = {}; ORDER.slice(1).forEach(n => { if (S.pass[n] && S.code[n]){ try { counts[n] = build(S.code[n], n, counts).nands; } catch (e) {} } });
+    const full = n => !!counts[n] && (function ok(x){ try { return build(S.code[x], x).parts.every(p => p.chip.name === 'Nand' || (counts[p.chip.name] && ok(p.chip.name))); } catch (e) { return false; } })(n);
+    BUILDS.forEach(b => { const n = b.chip; h += '<tr class="' + (S.pass[n] ? 'pass' : '') + '"><td><code>' + n + '</code></td><td>' + (S.pass[n] ? '&#10003; built and tested' : 'not built yet') + '</td><td>' + (full(n) ? counts[n] : '') + '</td><td>' + (B[n].par || '') + '</td></tr>'; });
+    h += '</tbody></table></div>';
+    h += '<section class="step"><h3>Explain it</h3><p>Building a chip and explaining it are different skills. Try these three questions with a partner or with your AI:</p><ol>' + LOOK_QUESTIONS.map(q => '<li>' + esc(q) + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="ai">Copy these questions for my AI</button></div><div id="aibox"></div></section>';
+    h += '<section class="step"><h3>Start again</h3><p>This erases your saved chips and progress in this browser.</p><div class="row"><button type="button" class="btn ghost" id="wipe">Erase my progress</button></div></section>' + foot(l);
+    main.innerHTML = h;
+    if (c){ bench('flat', {chip:'Add4', builtin:false, circ:c, stage:'#stage-flat', probe:'#probe-flat'}); K.flat.circ = c; drawStage('flat', sketch(flat, 'Add4')); drawProbe('flat'); }
+    $('#ai').onclick = () => copyOut('I just finished a learning trail based on the Nand to Tetris course. I started from a 4-bit adder and opened it level by level down to the Nand gate, building each level in HDL. Ask me the questions below one at a time. Let me try each one before you explain anything, and keep asking follow-up questions until you are sure I understand.\n\n' + LOOK_QUESTIONS.map((q, i) => (i + 1) + '. ' + q).join('\n'), $('#aibox'));
+    let armed = false;
+    $('#wipe').onclick = () => { if (!armed){ armed = true; $('#wipe').textContent = 'Click again to erase everything'; return; } try { localStorage.removeItem(KEY); } catch (e) {} try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); };
+    bindCommon(l);
+  };
+
+  /* ---------- practice games for the top level ---------- */
+  const W = [8, 4, 2, 1];
+  function bitsRow(group, v, live){
+    let h = '<div class="bits">';
+    for (let b = 3; b >= 0; b--){ const x = (v >> b) & 1; h += '<div class="bitcol"><span class="wt">' + W[3-b] + '</span>' + (live ? '<button type="button" class="sw big' + (x ? ' on' : '') + '" data-g="' + group + '" data-b="' + b + '" aria-pressed="' + (x ? 'true' : 'false') + '" aria-label="bit worth ' + W[3-b] + '">' + x + '</button>' : '<span class="lamp big' + (x ? ' on' : '') + '">' + x + '</span>') + '</div>'; }
+    return h + '</div>';
+  }
+  function terms(v){ const t = []; for (let b = 3; b >= 0; b--) if ((v >> b) & 1) t.push(W[3-b]); return t.length ? t.join(' + ') : '0'; }
+  function tally(label, n, need){ return '<span class="tally' + (n >= need ? ' full' : '') + '">' + label + ': ' + Math.min(n, need) + ' of ' + need + '</span>'; }
+  function bindBits(box, g, redraw){ $$('.sw[data-g]', box).forEach(b => b.onclick = () => { g[b.dataset.g] ^= (1 << +b.dataset.b); g.msg = ''; g.cls = ''; redraw(); const f = $('.sw[data-g="' + b.dataset.g + '"][data-b="' + b.dataset.b + '"]', box); if (f) f.focus(); }); }
+
+  function gameBin(box){
+    const st = S.games.bin || (S.games.bin = {make:0, read:0});
+    const g = G.bin || (G.bin = {mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
+    const draw = () => {
+      let h = '<h4 class="sub">Read and write binary</h4><p class="tallies">' + tally('Make a number', st.make, 2) + tally('Read a number', st.read, 2) + '</p>';
+      if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, !g.solved);
+      else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
+      box.innerHTML = h; bindBits(box, g, draw);
+      const ans = $('#ans', box); if (ans) ans.addEventListener('keydown', e => { if (e.key === 'Enter') $('[data-a=check]', box).click(); });
+      const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
+      if (ck) ck.onclick = () => {
+        if (g.mode === 'make'){
+          if (g.bits === g.target){ st.make++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + terms(g.bits) + ' = ' + g.target + '.'; }
+          else { const d = g.bits - g.target; g.cls = 'bad'; g.msg = 'Your bits are worth ' + terms(g.bits) + ' = ' + g.bits + '. You need ' + g.target + ', so you are ' + Math.abs(d) + ' too ' + (d > 0 ? 'high' : 'low') + '.'; }
+        } else {
+          const v = ans.value.trim();
+          if (v === ''){ g.cls = 'warn'; g.msg = 'Type the decimal value first.'; }
+          else if (+v === g.target){ st.read++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '.'; }
+          else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
+          else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
+        }
+        save(); draw();
+      };
+      if (nx) nx.onclick = () => { g.mode = g.mode === 'make' ? 'read' : 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
+    };
+    draw();
+  }
+  function gameAdd(box){
     const st = S.games.add || (S.games.add = {n:0});
     const fresh = () => ({a:1 + rnd(15), b:1 + rnd(15), s:0, c:0, msg:'', cls:'', solved:false});
-    const g = G.add || (G.add = fresh());
+    let g = G.add || (G.add = fresh());
     const draw = () => {
-      const cell = (grp, k, v) => g.solved ? '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>' : '<button type="button" class="sw big' + (v ? ' on' : '') + '" data-g="' + grp + '" data-b="' + k + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + (grp === 'c' ? 'carry into column ' + k : 'sum bit ' + k) + '">' + v + '</button>';
+      const cell = (grp, b, v) => g.solved ? '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>' : '<button type="button" class="sw big' + (v ? ' on' : '') + '" data-g="' + grp + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + (grp === 'c' ? 'carry into column ' + b : 'sum bit ' + b) + '">' + v + '</button>';
       const fixed = v => '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>';
-      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Add these two numbers</h3><p class="tallies">' + tally('Correct additions', st.n, 3) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
-      h += '<tr><th>carry</th><td>' + cell('c', 4, (g.c >> 4) & 1) + '</td>' + [3, 2, 1].map(k => '<td>' + cell('c', k, (g.c >> k) & 1) + '</td>').join('') + '<td></td><td></td></tr>';
-      h += '<tr><th>a</th><td></td>' + [3, 2, 1, 0].map(k => '<td>' + fixed((g.a >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.a : '') + '</td></tr>';
-      h += '<tr><th>b</th><td class="plus">+</td>' + [3, 2, 1, 0].map(k => '<td>' + fixed((g.b >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.b : '') + '</td></tr>';
-      h += '<tr class="sumrow"><th>sum</th><td></td>' + [3, 2, 1, 0].map(k => '<td>' + cell('s', k, (g.s >> k) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.s : '') + '</td></tr></tbody></table></div>';
-      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Another one</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
-      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
-      if ($('#check')) $('#check').onclick = () => {
+      let h = '<h4 class="sub">Add by hand</h4><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column.</p><p class="tallies">' + tally('Correct additions', st.n, 2) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
+      h += '<tr><th>carry</th><td>' + cell('c', 4, (g.c >> 4) & 1) + '</td>' + [3, 2, 1].map(b => '<td>' + cell('c', b, (g.c >> b) & 1) + '</td>').join('') + '<td></td><td></td></tr>';
+      h += '<tr><th>a</th><td></td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.a >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.a : '') + '</td></tr>';
+      h += '<tr><th>b</th><td class="plus">+</td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.b >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.b : '') + '</td></tr>';
+      h += '<tr class="sumrow"><th>sum</th><td></td>' + [3, 2, 1, 0].map(b => '<td>' + cell('s', b, (g.s >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.s : '') + '</td></tr></tbody></table></div>';
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Another one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
+      box.innerHTML = h; bindBits(box, g, draw);
+      const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
+      if (ck) ck.onclick = () => {
         let cin = 0, bad = false;
         for (let i = 0; i < 4 && !bad; i++){
           const ai = (g.a >> i) & 1, bi = (g.b >> i) & 1, t = ai + bi + cin;
@@ -1175,105 +1278,24 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {STOPS, LO
         }
         if (!bad){
           st.n++; g.solved = true; g.cls = 'ok'; const tot = g.a + g.b;
-          g.msg = 'Correct: ' + g.a + ' + ' + g.b + ' = ' + tot + '.' + (tot > 15 ? ' The answer ' + tot + ' does not fit in 4 bits, so there is a carry out of the last column. This is called overflow: a 4-bit adder drops that carry and shows ' + (tot & 15) + '.' : '');
-          save(); if (st.n >= 3) finish(s);
+          g.msg = 'Correct: ' + g.a + ' + ' + g.b + ' = ' + tot + '.' + (tot > 15 ? ' The answer ' + tot + ' does not fit in 4 bits, so there is a carry out of the last column. A 4-bit adder drops that carry and shows ' + (tot & 15) + '.' : '') + ' Every column took in up to three bits and gave out two: a sum bit and a carry.';
+          save();
         }
         draw();
       };
-      if ($('#nextc')) $('#nextc').onclick = () => { G.add = fresh(); VIEW.addhand(s); };
+      if (nx) nx.onclick = () => { g = G.add = fresh(); draw(); };
     };
     draw();
-  };
-
-  VIEW.twos = function(s){
-    const st = S.games.twos || (S.games.twos = {make:0, neg:0});
-    const pick = mode => mode === 'make' ? {mode, target:(rnd(3) ? 8 + rnd(8) : 1 + rnd(7))} : {mode, target:(-[1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6, -7][rnd(14)]) & 15};
-    const g = G.twos || (G.twos = Object.assign({explore:13, bits:0, msg:'', cls:'', solved:false}, pick('make')));
-    const draw = () => {
-      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play</h3><p>The leftmost bit is now worth -8. Click the bits and watch what happens when it switches on.</p>' + bitsRow('explore', g.explore, WS, true) + '<p class="bigval">' + bin4(g.explore) + ' is ' + terms(g.explore, WS) + ' = <b>' + sg(g.explore) + '</b></p></section>';
-      h += '<section class="step"><h3><span class="stepn">2</span> Challenges</h3><p class="tallies">' + tally('Make a number', st.make, 3) + tally('Negate a number', st.neg, 3) + '</p>';
-      const x = (-g.target) & 15;
-      if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + sg(g.target) + '</b>.</p>';
-      else h += '<p class="ask">This is <b>' + sg(x) + '</b>:</p>' + bitsRow('x', x, WS, false) + '<p class="ask">Set the bits below to make its negative, <b>' + sg(g.target) + '</b>. Flip every bit, then add 1.</p>';
-      h += bitsRow('bits', g.bits, WS, !g.solved);
-      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn" id="nextc">Next challenge</button>' : '<button type="button" class="btn" id="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
-      main.innerHTML = h; bindBits(g, draw); bindFoot(s);
-      if ($('#check')) $('#check').onclick = () => {
-        if (g.bits === g.target){
-          st[g.mode]++; g.solved = true; g.cls = 'ok';
-          g.msg = g.mode === 'make' ? 'Yes: ' + terms(g.bits, WS) + ' = ' + sg(g.target) + '.' : 'Yes. Flipping ' + bin4(x) + ' gives ' + bin4(~x & 15) + ', and adding 1 gives ' + bin4(g.target) + ', which is ' + sg(g.target) + '.';
-          save(); if (st.make >= 3 && st.neg >= 3) finish(s);
-        } else {
-          g.cls = 'bad';
-          g.msg = 'Your bits are worth ' + terms(g.bits, WS) + ' = ' + sg(g.bits) + ', and you need ' + sg(g.target) + '.' + (g.mode === 'neg' ? ' Take it in two steps: flipping every bit of ' + bin4(x) + ' gives ' + bin4(~x & 15) + '. Now add 1 to that.' : (g.target > 7 ? ' Start by switching on the -8, then add back what you need to reach ' + sg(g.target) + '.' : ''));
-        }
-        draw();
-      };
-      if ($('#nextc')) $('#nextc').onclick = () => { let m = g.mode === 'make' ? 'neg' : 'make'; if (st.make >= 3 && st.neg < 3) m = 'neg'; if (st.neg >= 3 && st.make < 3) m = 'make'; Object.assign(g, pick(m), {bits:0, msg:'', cls:'', solved:false}); draw(); };
-    };
-    draw();
-  };
-
-  const CB = [['zx', 'zero x'], ['nx', 'flip x'], ['zy', 'zero y'], ['ny', 'flip y'], ['f', 'add (1) or And (0)'], ['no', 'flip output']];
-  VIEW.alu = function(s){
-    const g = G.alu || (G.alu = {x:3, y:2, c:{zx:0, nx:0, zy:0, ny:0, f:0, no:0}, t:13, msg:'', cls:''});
-    const sv = v => bin4(v) + ' (' + sg(v) + ')';
-    const draw = () => {
-      const r = alu(g.x, g.y, g.c), solved = Object.keys(S.alu).length;
-      let h = head(s) + '<section class="step"><h3><span class="stepn">1</span> Play with the switches</h3><div class="alu-grid"><div><div class="lbl">x = ' + sg(g.x) + '</div>' + bitsRow('x', g.x, WS, true) + '</div><div><div class="lbl">y = ' + sg(g.y) + '</div>' + bitsRow('y', g.y, WS, true) + '</div></div>';
-      h += '<div class="lbl" style="margin-top:12px">Control bits</div><div class="ctl">' + CB.map(([k, d]) => '<div class="bitcol"><button type="button" class="sw big' + (g.c[k] ? ' on' : '') + '" data-k="' + k + '" aria-pressed="' + (g.c[k] ? 'true' : 'false') + '" aria-label="' + k + ', ' + d + '">' + g.c[k] + '</button><span class="wt"><b>' + k + '</b><br>' + d + '</span></div>').join('') + '</div>';
-      h += '<div class="tablewrap"><table class="tt pipe"><tbody>' +
-        '<tr><th>x</th><td>' + sv(g.x) + '</td><td>' + (g.c.zx ? 'zx: set to zero' : 'zx off: unchanged') + '</td><td>' + sv(r.x1) + '</td><td>' + (g.c.nx ? 'nx: flip' : 'nx off: unchanged') + '</td><td class="o">' + sv(r.x2) + '</td></tr>' +
-        '<tr><th>y</th><td>' + sv(g.y) + '</td><td>' + (g.c.zy ? 'zy: set to zero' : 'zy off: unchanged') + '</td><td>' + sv(r.y1) + '</td><td>' + (g.c.ny ? 'ny: flip' : 'ny off: unchanged') + '</td><td class="o">' + sv(r.y2) + '</td></tr>' +
-        '<tr><th>f</th><td colspan="4">' + (g.c.f ? 'f is 1: add the two results' : 'f is 0: And the two results, bit by bit') + ' (' + bin4(r.x2) + (g.c.f ? ' + ' : ' & ') + bin4(r.y2) + ')</td><td class="o">' + sv(r.o1) + '</td></tr>' +
-        '<tr><th>out</th><td colspan="4">' + (g.c.no ? 'no: flip every bit' : 'no off: unchanged') + '</td><td class="o"><b>' + sv(r.out) + '</b></td></tr></tbody></table></div>' +
-        '<p class="muted">The ALU also reports two facts about its output: zr = ' + r.zr + ' (1 when the output is zero) and ng = ' + r.ng + ' (1 when the output is negative).</p></section>';
-      h += '<section class="step"><h3><span class="stepn">2</span> Hit a target</h3><p>Choose a function, find control bits that compute it for every x and y, and check. Solve any 6 to complete this stop. <span class="tallies">' + tally('Targets solved', solved, 6) + '</span></p><div class="targets">' +
-        ALU_TARGETS.map(([n], i) => '<button type="button" class="tgt' + (i === g.t ? ' cur' : '') + (S.alu[n] ? ' done' : '') + '" data-t="' + i + '" aria-pressed="' + (i === g.t ? 'true' : 'false') + '">' + (S.alu[n] ? '&#10003; ' : '') + esc(n) + '</button>').join('') + '</div>' +
-        '<p class="ask">Target: out = <b>' + esc(ALU_TARGETS[g.t][0]) + '</b></p><div class="row"><button type="button" class="btn" id="check">Check my control bits</button><button type="button" class="btn ghost" id="hint">Give me a hint</button></div><div id="hints"></div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>' + (isDone(s) ? afterHTML(s) : '') + '</section>' + foot(s);
-      main.innerHTML = h; bindFoot(s);
-      $$('.sw[data-g]').forEach(b => b.onclick = () => { g[b.dataset.g] ^= (1 << +b.dataset.b); draw(); const f = $('.sw[data-g="' + b.dataset.g + '"][data-b="' + b.dataset.b + '"]'); if (f) f.focus(); });
-      $$('.sw[data-k]').forEach(b => b.onclick = () => { g.c[b.dataset.k] ^= 1; g.msg = ''; g.cls = ''; draw(); const f = $('.sw[data-k="' + b.dataset.k + '"]'); if (f) f.focus(); });
-      $$('.tgt').forEach(b => b.onclick = () => { g.t = +b.dataset.t; g.msg = ''; g.cls = ''; draw(); });
-      const showHints = () => { $('#hints').innerHTML = s.hints.slice(0, H.alu || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + s.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H.alu || 0) >= s.hints.length) $('#hint').textContent = 'No more hints'; };
-      showHints();
-      $('#hint').onclick = () => { H.alu = Math.min((H.alu || 0) + 1, s.hints.length); showHints(); };
-      $('#check').onclick = () => {
-        const name = ALU_TARGETS[g.t][0], res = aluCheck(g.c, g.t, g.x, g.y);
-        if (res.ok){ S.alu[name] = true; g.cls = 'ok'; g.msg = 'Yes. These control bits give ' + name + ' for all 256 pairs of x and y.'; save(); if (Object.keys(S.alu).length >= 6) finish(s); }
-        else {
-          g.x = res.miss.x; g.y = res.miss.y; const want = ALU_TARGETS[g.t][1](g.x, g.y), got = alu(g.x, g.y, g.c).out;
-          g.cls = 'bad'; g.msg = 'Not yet. With x = ' + sg(g.x) + ' and y = ' + sg(g.y) + ', ' + name + ' should be ' + sg(want) + ', and your settings give ' + sg(got) + '. The table above now shows this case step by step.' + (res.same ? ' Right now your settings compute ' + res.same + '.' : '');
-        }
-        draw();
-      };
-    };
-    draw();
-  };
-
-  VIEW.look = function(s){
-    let h = head(s) + '<div class="tablewrap"><table class="tt res"><thead><tr><th>Chip</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
-    ORDER.slice(1).forEach(n => { h += '<tr class="' + (S.pass[n] ? 'pass' : '') + '"><td><code>' + n + '</code></td><td>' + (S.pass[n] ? '&#10003; built and tested' : 'not built yet') + '</td><td>' + (S.pass[n] ? S.nands[n] : '') + '</td><td>' + (B[n].par || '') + '</td></tr>'; });
-    h += '</tbody></table></div>';
-    if (S.pass.Add4) h += '<div class="msg ok">Your Add4 adds two 4-bit numbers with <b>' + S.nands.Add4 + ' Nand gates</b> and nothing else.</div>';
-    const open = TRAIL.filter(x => !isDone(x));
-    h += open.length ? '<p>Stops still open: ' + open.map(x => '<a href="#' + x.id + '" class="jump" data-i="' + STOPS.indexOf(x) + '">' + esc(x.short) + '</a>').join(', ') + '.</p>' : '<p>You completed every stop on the trail.</p>';
-    h += '<section class="step"><h3>Explain it</h3><p>Building a chip and explaining it are different skills. Try these three questions with a partner or with your AI:</p><ol>' + LOOK_QUESTIONS.map(q => '<li>' + esc(q) + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="ai">Copy these questions for my AI</button></div><div id="aibox"></div></section>';
-    h += '<section class="step"><h3>Start again</h3><p>This erases your saved chips and progress in this browser.</p><div class="row"><button type="button" class="btn ghost" id="wipe">Erase my progress</button></div></section>' + foot(s);
-    main.innerHTML = h; bindFoot(s);
-    $$('.jump').forEach(a => a.onclick = e => { e.preventDefault(); go(+a.dataset.i, true); });
-    $('#ai').onclick = () => copyOut('I just finished a learning trail based on the Nand to Tetris course, where I built logic gates and a 4-bit adder from Nand gates. Ask me the questions below one at a time. Let me try each one before you explain anything, and keep asking follow-up questions until you are sure I understand.\n\n' + LOOK_QUESTIONS.map((q, i) => (i + 1) + '. ' + q).join('\n'), $('#aibox'));
-    let armed = false;
-    $('#wipe').onclick = () => { if (!armed){ armed = true; $('#wipe').textContent = 'Click again to erase everything'; return; } try { localStorage.removeItem(KEY); } catch (e) {} location.hash = ''; location.reload(); };
-  };
+  }
 
   /* ---------- start ---------- */
-  const fromHash = () => { const id = (location.hash || '').slice(1); const i = STOPS.findIndex(s => s.id === id); return i; };
-  const hi = fromHash(); if (hi >= 0) S.stop = hi;
-  if (!(S.stop >= 0 && S.stop < STOPS.length)) S.stop = 0;
-  window.addEventListener('hashchange', () => { const i = fromHash(); if (i >= 0 && i !== S.stop) go(i, true); });
+  const fromHash = () => LEVELS.findIndex(l => l.id === (location.hash || '').slice(1));
+  const hi = fromHash(); if (hi >= 0 && unlocked(LEVELS[hi])) S.level = hi;
+  if (!(S.level >= 0 && S.level < LEVELS.length) || !unlocked(LEVELS[S.level])) S.level = 0;
+  if (LEVELS[S.level].chip && S.path[S.path.length - 1] !== LEVELS[S.level].chip) S.path = canon(LEVELS[S.level].chip);
+  window.addEventListener('hashchange', () => { const i = fromHash(); if (i >= 0 && i !== S.level) go(i); });
   render();
-  const sb = $('#startbtn'); if (sb){ if (TRAIL.some(isDone)) sb.textContent = 'Continue the trail'; sb.onclick = () => $('#map').scrollIntoView({behavior:'smooth', block:'start'}); }
+  const sb = $('#startbtn'); if (sb){ if (LEVELS.some(isDone)) sb.textContent = 'Continue the trail'; sb.onclick = () => $('#map').scrollIntoView({behavior:'smooth', block:'start'}); }
 })();
 
 </script>
