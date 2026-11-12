@@ -39,7 +39,8 @@ p{margin:0}
 a{color:var(--accent-ink)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
-.bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--surface);position:sticky;top:0;z-index:5}
+.bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--surface)}
+[hidden]{display:none!important}
 .bar .mark{font-family:var(--display);font-weight:800;font-size:17px;margin-right:auto;background:none;border:0;padding:6px 0;cursor:pointer;text-align:left}
 .bar .mark small{display:block;font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted)}
 .link{background:none;border:0;padding:10px 6px;color:var(--accent-ink);text-decoration:underline;cursor:pointer;font-size:16px;min-height:44px}
@@ -111,9 +112,8 @@ pre.out{white-space:pre-wrap;background:var(--accent-soft);border-radius:12px;pa
 </style>
 </head>
 <body>
-<header class="bar">
+<header class="bar" id="bar">
   <button class="mark" id="home" type="button">Capstone Festival<small>B.S. Computer Science · CSU Monterey Bay</small></button>
-  <button class="link" id="visitBtn" type="button">My visit</button>
 </header>
 <div class="wrap"><main id="view"></main></div>
 <footer class="sample">Prototype. The students and projects on this page are made up, and the links on each card are samples.</footer>
@@ -273,6 +273,7 @@ function buildRoute(){
 }
 
 function render(){
+  document.getElementById("bar").hidden=true;
   const h=location.hash.slice(1)||"start";
   if(h==="start"||!st.role&&h!=="all"&&h!=="visit"&&!h.startsWith("student-")) return start();
   if(h==="ask") return ask();
@@ -284,6 +285,7 @@ function render(){
 }
 
 function start(){
+  document.getElementById("bar").hidden=false;
   view.innerHTML=`<div class="narrow">
     <p class="eyebrow">December 2026 · date and rooms to be confirmed</p>
     <h1 class="h-big">Capstone Festival</h1>
@@ -306,7 +308,7 @@ function ask(){
     <div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="chip" type="button" data-sub="${k}">${esc(v)}</button>`).join("")}
     <button class="chip" type="button" data-sub="any">${r==="employer"?"Any of these":"Show me a mix"}</button></div>`;
   view.innerHTML=`<div class="narrow"><p class="eyebrow">${esc(ROLES[r].label)}</p>${body}
-    <p><button class="link" type="button" data-go="start">Change who I am</button></p></div>`;
+    <p><button class="link" type="button" data-go="start">Change who I am</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>`;
   if(r==="family"){ const inp=document.getElementById("who"); const draw=()=>{ const t=norm(inp.value.trim());
       document.getElementById("names").innerHTML=S.filter(s=>norm(s.name).includes(t)).map(s=>`<li><button class="row" type="button" data-sub="${s.id}"><span class="num">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><span><span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span><span></span></button></li>`).join("")||`<li class="muted">No student matches that name yet. Try fewer letters.</li>`; };
     inp.addEventListener("input",draw); draw(); }
@@ -352,7 +354,7 @@ function route(cur){
       <span class="where"><b>Room ${s.room}</b>Table ${s.table}</span></button></li>`; }).join("");
   view.innerHTML=`<div class="split ${cur?"open":""}">
     <div class="pane list-pane">${routeHead()}<ul class="rows">${rows}</ul>
-      <p><button class="link" type="button" data-go="ask">Change my answer</button> <button class="link" type="button" data-go="all">See all students</button></p></div>
+      <p><button class="link" type="button" data-go="ask">Change my answer</button> <button class="link" type="button" data-go="all">See all students</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>
     <div class="pane detail-pane">${open?card(byId(open)):""}</div></div>`;
   if(cur) window.scrollTo(0,0);
 }
@@ -360,7 +362,7 @@ function route(cur){
 function all(){
   view.innerHTML=`<div class="narrow"><h1 class="h-q">All ${S.length} students</h1>
     <input class="search" id="q" type="search" placeholder="Name or project" autocomplete="off" aria-label="Search students">
-    <ul class="rows" id="allrows"></ul><p><button class="link" type="button" data-go="${st.route.length?"route":"start"}">← Back</button></p></div>`;
+    <ul class="rows" id="allrows"></ul><p><button class="link" type="button" data-go="${st.route.length?"route":"start"}">← Back</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>`;
   const inp=document.getElementById("q"); const draw=()=>{ const t=norm(inp.value.trim());
     document.getElementById("allrows").innerHTML=S.filter(s=>norm(s.name+" "+s.project+" "+CATS[s.cat]).includes(t)).map(s=>`<li><button class="row" type="button" data-go="${s.id}"><span class="num">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><span><span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span><span class="where"><b>Room ${s.room}</b>Table ${s.table}</span></button></li>`).join("")||`<li class="muted">No one matches that yet. Try part of a name.</li>`; };
   inp.addEventListener("input",draw); draw();

@@ -12,6 +12,11 @@ All students and projects are made up (the same fifteen as the earlier sample).
 - No backend. A visitor's answers stay on their device. "Share my visit" sends a summary to a spreadsheet only if they press it, with checkboxes for what is included.
 - Prototype first, built here; Sergio gets the fine-tuning and the engineering parts.
 
+## Top bar and My visit
+- The top bar (Capstone Festival · B.S. Computer Science · CSU Monterey Bay) shows on the front door only and scrolls away with the page.
+- Inside screens have no top bar. "My visit" is a link at the bottom of each inside screen.
+- The student card has neither; on a phone it takes the whole screen, with "Back to my route" above the card.
+
 ## Front door
 - Eyebrow: December 2026 · date and rooms to be confirmed
 - Title: Capstone Festival
