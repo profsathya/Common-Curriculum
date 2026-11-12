@@ -257,6 +257,46 @@
   .trybox .pin{min-width:0; margin-left:6px}
   .trybox .sw,.trybox .lamp{margin-right:2px}
   .trybox .gives{margin:0 4px 0 12px}
+
+  /* transistor circuits */
+  .tpair{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media (max-width:700px){ .tpair{grid-template-columns:1fr} }
+  .tcirc{background:radial-gradient(500px 260px at 50% 40%, #0B1A2E 0%, var(--stage) 75%); border:1px solid var(--line); border-radius:10px; padding:10px 12px}
+  .tcirc.one{max-width:620px}
+  .tcirc svg{width:100%; height:auto; display:block; max-height:420px}
+  .tcirc text{font-family:"IBM Plex Mono",monospace}
+  .rail{stroke-width:5; stroke-linecap:round; fill:none}
+  .rail.p{stroke:var(--lamp)} .rail.g{stroke:var(--tc)}
+  .rl{font-size:11px; fill:#9FB4CC}
+  .tw{fill:none; stroke:#2A3D57; stroke-width:3; stroke-linecap:round}
+  .tw.hot1{stroke:var(--lamp); filter:drop-shadow(0 0 4px rgba(247,201,72,.7))}
+  .tw.hot0{stroke:var(--tc); filter:drop-shadow(0 0 4px rgba(91,184,245,.6))}
+  .tw.short{stroke:var(--bad); filter:drop-shadow(0 0 5px rgba(255,138,122,.8))}
+  .tw.unk{stroke-dasharray:4 6}
+  .tsw circle{fill:#DCE7F3}
+  .tsw .blade{stroke:#DCE7F3; stroke-width:4; stroke-linecap:round; fill:none}
+  .tsw.closed .blade{stroke:#FFFFFF}
+  .tsw .ctl{stroke:#7FD0C3; stroke-width:2; fill:none}
+  .tsw .neg{fill:var(--stage); stroke:#7FD0C3; stroke-width:2}
+  .tsw .tin{font-size:12px; fill:#7FD0C3}
+  .tsw .tst{font-size:11px; fill:#9FB4CC}
+  .tsw.closed .tst{fill:#FFFFFF}
+  .tjoin{fill:#DCE7F3}
+  .tout{fill:#121C2B; stroke:#3B4D66; stroke-width:2}
+  .tout.hot1{fill:var(--lamp); stroke:var(--lamp); filter:drop-shadow(0 0 12px rgba(247,201,72,.8))}
+  .tout.hot0{stroke:var(--tc)}
+  .tout.short{stroke:var(--bad); stroke-width:3}
+  .tout.unk{stroke-dasharray:4 4}
+  .toutv{font-size:17px; font-weight:600; fill:#FFFFFF}
+  .tout.hot1 + .toutv{fill:var(--lamp-ink)}
+  .choose{fill:none; stroke:#4B6788; stroke-dasharray:6 5}
+  .chooset{font-size:11px; fill:#9FB4CC}
+  .segrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:8px 0}
+  .segrow .lbl{min-width:190px}
+  .segbtn{font:inherit; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:5px 14px; cursor:pointer}
+  .segbtn:hover{border-color:var(--tc)}
+  .segbtn.on{background:var(--tc); border-color:var(--tc); color:var(--on-tc); font-weight:700}
+  .segbtn.wrong{border-color:var(--bad); color:var(--bad)}
 </style>
 </head>
 <body>
@@ -266,10 +306,10 @@
     <div>
       <div class="eyebrow">CST286 &middot; Learning trail &middot; Nand to Tetris</div>
       <h1>From one gate to a <em>machine that adds</em></h1>
-      <p>Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part.</p>
-      <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate.</p>
+      <p>Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part and the switches inside it.</p>
+      <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate and the transistors it is made of.</p>
       <button type="button" class="btn" id="startbtn">Start the trail</button>
-      <div class="meta">9 levels &middot; best on a laptop screen</div>
+      <div class="meta">10 levels &middot; best on a laptop screen</div>
     </div>
     <svg class="heroart" viewBox="0 0 420 260" role="img" aria-label="Signals flowing through Nand gates into a lit output">
       <path class="w" d="M20 50H110M20 100H110M20 160H110M20 210H110M196 75C240 75 240 110 280 110M196 185C240 185 240 150 280 150M366 130H392"/>
@@ -283,7 +323,7 @@
   <nav class="map" id="map" aria-label="Levels on this trail"></nav>
   <main id="stop"></main>
   <footer>
-    <p>The chips and the HDL on this page follow projects 1 and 2 of <a href="https://www.nand2tetris.org/" target="_blank" rel="noopener">Nand to Tetris</a>, a free course by Noam Nisan and Shimon Schocken. That course builds upward from the Nand gate; this trail visits the same chips from the top down. The HDL you write here uses the same rules as that course's Hardware Simulator. The adder on this page is 4 bits wide so that every case can be tested and shown; the course builds a 16-bit adder with the same design.</p>
+    <p>The chips and the HDL on this page follow projects 1 and 2 of <a href="https://www.nand2tetris.org/" target="_blank" rel="noopener">Nand to Tetris</a>, a free course by Noam Nisan and Shimon Schocken. That course builds upward from the Nand gate; this trail visits the same chips from the top down, and adds one level below the Nand gate to show the transistors inside it. The HDL you write here uses the same rules as that course's Hardware Simulator. The adder on this page is 4 bits wide so that every case can be tested and shown; the course builds a 16-bit adder with the same design.</p>
   </footer>
 </div>
 <script>
@@ -801,13 +841,30 @@ const LEVELS = [
    hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
    after:'Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.'},
 
-  {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The bottom: the Nand gate',
+  {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The last gate: Nand',
    objs:['State in one sentence what a Nand gate does.', 'Explain why every box above it could be built from this one gate.'],
    see:'Click <code>a</code> and <code>b</code> and try all four combinations.',
-   learn:'<p>You have reached the bottom of the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.</p><p>In a real chip, a Nand gate is made of a few transistors, which are tiny electrical switches. That is the place where logic meets physics.</p>',
+   learn:'<p>Nand is the last logic gate on the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.</p><p>The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s, and something physical has to carry it out. Inside a Nand gate there are four transistors, which are tiny electrical switches. That is the next level down, and it is where logic meets physics.</p>',
    practice:'Record what you saw in the truth table. Click a ? to set it to 0, and click again for 1.',
    rule:'Try each combination on the drawing again and copy what the output shows.',
+   open:'One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.',
    after:'In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.'},
+
+  {id:'transistor', kind:'switch', chip:'Transistor', short:'Transistors', title:'Under the gate: transistors',
+   objs:['Describe a transistor as a switch that an electrical signal opens and closes.', 'Build a Nand gate from four transistors, and explain why each pair is arranged the way it is.'],
+   see:'Here are two transistors, each between the power supply and a lamp. Click <code>in</code> and watch each one. A transistor has no moving parts: the signal on its control wire decides whether the path through it is closed, which lets electricity through, or open, which blocks it.',
+   learn:'<p>Until now a 1 or a 0 was just a value on a wire. Physically, a wire that carries 1 is connected to the power supply, and a wire that carries 0 is connected to ground, which is the other side of the supply. A gate has to connect its output wire to one of the two, depending on its inputs. The parts that make and break those connections are transistors.</p><p>There are two kinds, and chips use them in pairs. One kind closes when its control signal is 1. The other kind closes when its control signal is 0; in the drawings it has a small circle on its control wire. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.</p><p>A working gate keeps one rule for every combination of inputs: the output is connected to power or to ground, and never to both, and never to neither. If it is connected to both, electricity runs straight from power to ground, which is called a short circuit. If it is connected to neither, the output is not a 0 or a 1 at all.</p>',
+   practice:'This is the simplest gate, Not, made from one transistor of each kind. The input is set to 1. Before you see what the transistors do, answer the two questions.',
+   q:['The input is 1. Which transistor is closed?', 'So which is the output connected to?'],
+   qdone:'Now click <code>in</code> on the Not gate and watch the two transistors trade places. Each time, exactly one of them is closed, so the output is always connected to exactly one of power and ground.',
+   build:'<p>Now build the Nand gate. It has four transistors. The two at the top close when their input is 0, and they can connect the output to power. The two at the bottom close when their input is 1, and they can connect the output to ground.</p><p>You decide how each pair is connected. Two switches <b>one after the other</b> make a path that is closed only when both switches are closed. Two switches <b>side by side</b> make a path that is closed when either switch is closed. Choose an arrangement for each pair, click <code>a</code> and <code>b</code> to try it, and run the tests.</p>',
+   hints:['A Nand gate gives 0 in only one row: a = 1 and b = 1. So the path to ground should be closed only when both bottom transistors are closed.', 'In every other row at least one input is 0, and the output should be 1. The top transistors close when their input is 0, so the path to power should be closed when either of them is closed.', 'Bottom pair: one after the other. Top pair: side by side.'],
+   fb:{pass:'All 4 rows pass. Your four transistors behave as a Nand gate.',
+       nor:'This circuit keeps the rule, so it is a real gate, but it is a different gate: it gives 1 only when both inputs are 0. That gate is called Nor. Look at the row a = 1, b = 0, where a Nand gate should give 1.',
+       short:'When a and b are different, one top transistor and one bottom transistor are closed at the same time. That connects power straight to ground, which is a short circuit, so the output is not a clean 0 or 1.',
+       float:'When a and b are different, neither path is closed, so the output is connected to nothing. It is not a 0 or a 1.',
+       choose:'Choose an arrangement for both pairs first.'},
+   after:'Four transistors make one Nand gate. Two side by side connect the output to power when either input is 0, and two one after the other connect it to ground only when both inputs are 1. Every gate, adder and number above this level comes down to switches like these opening and closing.'},
 
   {id:'out', kind:'out', short:'Zoom out', title:'Zoom all the way out',
    objs:['Explain in your own words how a machine that adds numbers could be built from Nand gates alone.'],
@@ -815,8 +872,9 @@ const LEVELS = [
 ];
 
 const LOOK_QUESTIONS = [
-  'Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column\'s sum and carry, and how those gates come down to Nand.',
+  'Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column\'s sum and carry, how those gates come down to Nand, and what the transistors inside one Nand are doing.',
   'Why does a Nand gate with both inputs tied together act as a Not gate?',
+  'Inside a Nand gate, why are the two bottom transistors one after the other and the two top transistors side by side?',
   'Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?',
   'When your adder shows 0 for 15 + 1, which column produces the missing carry, and why is it not part of the four-bit answer?'
 ];
@@ -855,16 +913,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const BUILDS = LEVELS.filter(l => l.kind === 'build');
   const levelOf = chip => LEVELS.findIndex(l => l.chip === chip);
   const PARENTS = {Add4:['Adder'], FullAdder:['Add4'], HalfAdder:['Add4', 'FullAdder'], Xor:['HalfAdder', 'FullAdder'], And:['HalfAdder', 'FullAdder', 'Xor'], Or:['FullAdder', 'Xor'], Not:['Xor', 'And', 'Or'], Nand:['Xor', 'And', 'Or', 'Not']};
-  const CANON = {Add4:'Adder', FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
-  const isDone = l => (l.kind === 'build' || l.kind === 'top') ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : false;
+  const CANON = {Transistor:'Nand', Add4:'Adder', FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
+  const isDone = l => (l.kind === 'build' || l.kind === 'top' || l.kind === 'switch') ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : false;
   const allDone = () => LEVELS.filter(l => l.kind !== 'out').every(isDone);
-  const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
+  const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : l.kind === 'switch' ? (isDone(l) || !!S.pred.Nand) : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
   const canon = chip => { const p = [chip]; while (CANON[p[0]]) p.unshift(CANON[p[0]]); return p; };
   const reduced = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return true; } };
 
   /* ---------- map ---------- */
   function renderMap(){
-    let h = '<div class="map-lbl">From the whole machine down to one gate</div><div class="map-row">';
+    let h = '<div class="map-lbl">From the whole machine down to its switches</div><div class="map-row">';
     LEVELS.forEach((l, i) => {
       const open = unlocked(l), cls = 'dot' + (i === S.level ? ' cur' : '') + (isDone(l) ? ' done' : '') + (open ? '' : ' locked');
       h += (i ? '<span class="map-arrow" aria-hidden="true">&rsaquo;</span>' : '') + '<button type="button" class="' + cls + '" data-i="' + i + '"' + (open ? '' : ' disabled title="This box opens when you build the level above it"') + (i === S.level ? ' aria-current="step"' : '') + '><span class="dot-n">' + (isDone(l) ? '&#10003;' : !open ? '&#128274;' : l.kind === 'out' ? '&#8689;' : i + 1) + '</span><span class="dot-t">' + esc(l.short) + '</span></button>';
@@ -1314,14 +1372,93 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   };
 
   VIEW.bottom = function(l){
-    const key = 'Nand:see';
+    const key = 'Nand:see', ready = () => !!S.pred.Nand || UNLOCK_ALL;
     main.innerHTML = head(l) + stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>') +
       stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
-      stepHTML(3, 'Practice', predictHTML('Nand', l.practice) + '<div id="after">' + (isDone(l) ? afterHTML(l) : '') + '</div>') + foot(l);
-    bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null});
+      stepHTML(3, 'Practice', predictHTML('Nand', l.practice) + '<div id="after">' + (isDone(l) ? afterHTML(l) : '') + '</div>') +
+      stepHTML(4, 'Open the box', '<div id="open"></div>') + foot(l);
+    bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null, zoomSelf:true, zoom:(name, el) => zoomInto('Nand', 'Transistor', el), zoomReady:ready});
     drawStage(key, boxSketch('Nand')); drawProbe(key);
-    bindPredict(l, () => { $('#after').innerHTML = afterHTML(l); renderMap(); refreshNext(l); });
-    bindCommon(l);
+    const drawOpen = () => { $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="opennand">Open the Nand gate &#10530;</button></div>' : '<p class="muted">This step opens when your truth table is right.</p>'; if ($('#opennand')) $('#opennand').onclick = () => zoomInto('Nand', 'Transistor', $('#stage-see .gate')); };
+    bindPredict(l, () => { $('#after').innerHTML = afterHTML(l); renderMap(); refreshNext(l); drawOpen(); applyStage(key); });
+    drawOpen(); bindCommon(l);
+  };
+
+  /* ---------- transistors: switch circuits drawn between power and ground ---------- */
+  // a network is {mode:'one'|'ser'|'par'|null, type:'n'|'p', ins:[names]}; n closes on 1, p closes on 0
+  function netState(net, v){ if (!net || !net.mode) return {closed:[], on:false}; const closed = net.ins.map(n => net.type === 'n' ? !!v[n] : !v[n]); return {closed, on: net.mode === 'par' ? closed.some(Boolean) : closed.every(Boolean)}; }
+  function circuitOut(cfg, v){ const t = netState(cfg.top, v).on, b = netState(cfg.bottom, v).on; return cfg.bottom === undefined ? (t ? 1 : 'off') : (!cfg.top.mode || !cfg.bottom.mode) ? '?' : t && b ? 'short' : !t && !b ? 'float' : t ? 1 : 0; }
+  function circuitSVG(cfg, v, hide){
+    const X = 230, YP = 28, YO = 170, YG = 312, hasB = cfg.bottom !== undefined, out = circuitOut(cfg, v);
+    const sw = (x, y1, y2, closed, net, name) => {
+      const ym = (y1 + y2) / 2, st = hide ? '' : closed ? 'closed' : 'open';
+      return '<g class="tsw' + (hide ? ' hid' : closed ? ' closed' : '') + '"><circle cx="' + x + '" cy="' + y1 + '" r="3.5"/><circle cx="' + x + '" cy="' + y2 + '" r="3.5"/>' +
+        '<path class="blade" d="M' + x + ' ' + y1 + (hide ? '' : closed ? 'L' + x + ' ' + y2 : 'L' + (x + 17) + ' ' + (y2 - 6)) + '"/>' +
+        '<path class="ctl" d="M' + (x - 44) + ' ' + ym + 'H' + (x - (net.type === 'p' ? 17 : 9)) + '"/>' + (net.type === 'p' ? '<circle class="neg" cx="' + (x - 13) + '" cy="' + ym + '" r="4"/>' : '') +
+        '<text class="tin" x="' + (x - 50) + '" y="' + (ym + 4) + '" text-anchor="end">' + name + ' = ' + v[name] + '</text><text class="tst" x="' + (x + 24) + '" y="' + (ym + 4) + '">' + st + '</text></g>';
+    };
+    const net = (n, y0, y1, hot) => {
+      if (!n) return '';
+      const up = y0 < y1, a = Math.min(y0, y1), b = Math.max(y0, y1), stt = hide ? {closed:[], on:false} : netState(n, v), w = (d, on) => '<path class="tw' + (on ? ' ' + hot : '') + '" d="' + d + '"/>';
+      if (!n.mode) return '<rect class="choose" x="' + (X - 110) + '" y="' + (a + 14) + '" width="220" height="' + (b - a - 28) + '" rx="8"/><text class="chooset" x="' + X + '" y="' + ((a + b) / 2 + 4) + '" text-anchor="middle">choose how this pair is connected</text>';
+      if (n.mode === 'one') return w('M' + X + ' ' + a + 'V' + (a + 40), stt.on) + w('M' + X + ' ' + (a + 90) + 'V' + b, stt.on) + sw(X, a + 40, a + 90, stt.closed[0], n, n.ins[0]);
+      if (n.mode === 'ser') return w('M' + X + ' ' + a + 'V' + (a + 16), stt.on) + w('M' + X + ' ' + (a + 60) + 'V' + (a + 82), stt.on) + w('M' + X + ' ' + (a + 126) + 'V' + b, stt.on) + sw(X, a + 16, a + 60, stt.closed[0], n, n.ins[0]) + sw(X, a + 82, a + 126, stt.closed[1], n, n.ins[1]);
+      const xs = [X - 95, X + 95], rail = up ? a : b, join = up ? b - 26 : a + 26, s1 = up ? a + 30 : a + 62, s2 = s1 + 50;
+      return xs.map((x, k) => w('M' + x + ' ' + rail + 'V' + (up ? s1 : s2), stt.closed[k]) + w('M' + x + ' ' + (up ? s2 : s1) + 'V' + join, stt.closed[k]) + sw(x, s1, s2, stt.closed[k], n, n.ins[k])).join('') +
+        w('M' + xs[0] + ' ' + join + 'H' + xs[1], stt.on) + w('M' + X + ' ' + join + 'V' + (up ? b : a), stt.on);
+    };
+    const oc = hide ? 'unk' : out === 1 ? 'hot1' : out === 0 ? 'hot0' : out === 'short' ? 'short' : out === 'off' ? '' : 'unk';
+    const label = hide ? '?' : out === 1 ? '1' : out === 0 ? '0' : out === 'short' ? '!' : out === 'off' ? '0' : '?';
+    const H = hasB ? YG + 26 : YO + 60;
+    return '<svg viewBox="0 0 470 ' + H + '" role="img" aria-label="Transistor circuit. Output: ' + (hide ? 'hidden' : out === 'short' ? 'short circuit' : out === 'float' ? 'not connected' : out === 'off' ? 'off' : out) + '">' +
+      '<path class="rail p" d="M' + (X - 130) + ' ' + YP + 'H' + (X + 130) + '"/><text class="rl" x="' + (X + 138) + '" y="' + (YP + 4) + '">power (1)</text>' +
+      (hasB ? '<path class="rail g" d="M' + (X - 130) + ' ' + YG + 'H' + (X + 130) + '"/><text class="rl" x="' + (X + 138) + '" y="' + (YG + 4) + '">ground (0)</text>' : '') +
+      net(cfg.top, YP, YO, out === 'short' ? 'short' : 'hot1') + (hasB ? net(cfg.bottom, YG, YO, out === 'short' ? 'short' : 'hot0') : '') +
+      '<path class="tw ' + oc + '" d="M' + X + ' ' + YO + 'H' + (X + 150) + '"/><circle class="tjoin" cx="' + X + '" cy="' + YO + '" r="4"/>' +
+      '<circle class="tout ' + oc + '" cx="' + (X + 172) + '" cy="' + YO + '" r="20"/><text class="toutv" x="' + (X + 172) + '" y="' + (YO + 6) + '" text-anchor="middle">' + label + '</text><text class="rl" x="' + (X + 172) + '" y="' + (YO + 40) + '" text-anchor="middle">' + (cfg.outName || 'out') + '</text></svg>';
+  }
+  const OUT_WORD = {1:'1', 0:'0', short:'short circuit', float:'not connected', '?':'?'};
+
+  VIEW.switch = function(l){
+    const st = G.tr || (G.tr = {see:{in:0}, not:{in:1}, nand:{a:0, b:0}, q:[null, null]});
+    const pick = S.tr || (S.tr = {top:null, bottom:null, q:false});
+    const swBtns = (grp, v) => Object.keys(v).map(n => '<span class="pin">' + n + '</span><button type="button" class="sw' + (v[n] ? ' on' : '') + '" data-g="' + grp + '" data-n="' + n + '" aria-pressed="' + (v[n] ? 'true' : 'false') + '" aria-label="' + n + '">' + v[n] + '</button>').join('');
+    const seg = (which) => '<div class="segrow"><span class="lbl">' + (which === 'top' ? 'Top pair (close on 0)' : 'Bottom pair (close on 1)') + '</span>' + [['ser', 'One after the other'], ['par', 'Side by side']].map(([m, t]) => '<button type="button" class="segbtn' + (pick[which] === m ? ' on' : '') + '" data-w="' + which + '" data-m="' + m + '" aria-pressed="' + (pick[which] === m ? 'true' : 'false') + '">' + t + '</button>').join('') + '</div>';
+    const nandCfg = () => ({top:{mode:pick.top, type:'p', ins:['a', 'b']}, bottom:{mode:pick.bottom, type:'n', ins:['a', 'b']}});
+    const notCfg = {top:{mode:'one', type:'p', ins:['in']}, bottom:{mode:'one', type:'n', ins:['in']}};
+    let resHTML = '';
+    function draw(){
+      let h = head(l);
+      h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div class="tpair"><div class="tcirc"><div class="lbl">Closes when in is 1</div>' + circuitSVG({top:{mode:'one', type:'n', ins:['in']}, outName:'lamp'}, st.see) + '</div><div class="tcirc"><div class="lbl">Closes when in is 0</div>' + circuitSVG({top:{mode:'one', type:'p', ins:['in']}, outName:'lamp'}, st.see) + '</div></div><div class="row">' + swBtns('see', st.see) + '</div>');
+      h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
+      const A = [['top', 'The top one'], ['bottom', 'The bottom one']], Bq = [['power', 'Power, so out is 1'], ['ground', 'Ground, so out is 0']], right = ['bottom', 'ground'];
+      const qHTML = (k, opts) => '<div class="q"><p class="ask"><b>' + (k + 1) + '.</b> ' + esc(l.q[k]) + '</p><div class="row">' + opts.map(([val, t]) => '<button type="button" class="segbtn' + (st.q[k] === val ? (val === right[k] ? ' on' : ' wrong') : '') + '" data-q="' + k + '" data-v="' + val + '">' + t + '</button>').join('') + '</div>' + (st.q[k] === null ? '' : st.q[k] === right[k] ? '<div class="msg ok">' + (k === 0 ? 'Yes. The bottom transistor closes when its control signal is 1. The top one closes on 0, so it is open.' : 'Yes. The only closed path leads to ground, so out is 0. An input of 1 gave an output of 0.') + '</div>' : '<div class="msg bad">' + (k === 0 ? 'Look at the control wires. The transistor with the small circle closes when its signal is 0, and the one without it closes when its signal is 1.' : 'Follow the closed transistor. Which rail does it connect the output to?') + '</div>') + '</div>';
+      const solved = pick.q || (st.q[0] === right[0] && st.q[1] === right[1]);
+      h += stepHTML(3, 'Practice', '<p>' + esc(l.practice) + '</p><div class="tcirc one">' + circuitSVG(notCfg, solved ? st.not : {in:1}, !solved) + '</div>' + (solved ? '<div class="row">' + swBtns('not', st.not) + '</div><p>' + l.qdone + '</p>' : qHTML(0, A) + (st.q[0] === right[0] ? qHTML(1, Bq) : '')));
+      const cfg = nandCfg(), o = circuitOut(cfg, st.nand);
+      h += stepHTML(4, 'Build it', '<div class="idea">' + l.build + '</div>' + seg('top') + seg('bottom') + '<div class="tcirc one">' + circuitSVG(cfg, st.nand) + '</div><div class="row">' + swBtns('nand', st.nand) + '<span class="numout">out: <b>' + OUT_WORD[o] + '</b></span></div>' +
+        '<div class="row"><button type="button" class="btn" id="trun">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button></div><div id="hints">' + l.hints.slice(0, H.tr || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join('') + '</div><div id="tres" role="status">' + resHTML + '</div>' + (isDone(l) ? afterHTML(l) : ''));
+      h += foot(l);
+      main.innerHTML = h;
+      $$('.sw[data-g]').forEach(b => b.onclick = () => { st[b.dataset.g][b.dataset.n] ^= 1; draw(); const f = $('.sw[data-g="' + b.dataset.g + '"][data-n="' + b.dataset.n + '"]'); if (f) f.focus(); });
+      $$('.segbtn[data-q]').forEach(b => b.onclick = () => { st.q[+b.dataset.q] = b.dataset.v; if (st.q[0] === right[0] && st.q[1] === right[1]){ pick.q = true; save(); } draw(); });
+      $$('.segbtn[data-w]').forEach(b => b.onclick = () => { pick[b.dataset.w] = b.dataset.m; resHTML = ''; save(); draw(); const f = $('.segbtn[data-w="' + b.dataset.w + '"][data-m="' + b.dataset.m + '"]'); if (f) f.focus(); });
+      $('#hint').onclick = () => { H.tr = Math.min((H.tr || 0) + 1, l.hints.length); draw(); };
+      if ((H.tr || 0) >= l.hints.length) $('#hint').textContent = 'No more hints';
+      $('#trun').onclick = () => {
+        if (!pick.top || !pick.bottom){ resHTML = '<div class="msg warn">' + esc(l.fb.choose) + '</div>'; draw(); return; }
+        const rows = [[0, 0], [0, 1], [1, 0], [1, 1]].map(([a, b]) => ({a, b, exp:(a & b) ^ 1, got:circuitOut(nandCfg(), {a, b})}));
+        const ok = rows.every(r => r.got === r.exp), kind = ok ? 'pass' : rows.some(r => r.got === 'short') ? 'short' : rows.some(r => r.got === 'float') ? 'float' : 'nor';
+        if (ok){ S.pass.Transistor = true; save(); }
+        const bad = rows.find(r => r.got !== r.exp);
+        resHTML = '<div class="msg ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '' : '<b>' + rows.filter(r => r.got === r.exp).length + ' of 4 rows pass.</b> ') + esc(l.fb[kind]) + '</div>' +
+          '<div class="tablewrap"><table class="tt res"><thead><tr><th>a</th><th>b</th><th class="o">out should be</th><th class="o">your out</th><th></th></tr></thead><tbody>' + rows.map(r => '<tr class="' + (r.got === r.exp ? 'pass' : 'fail') + '"><td>' + r.a + '</td><td>' + r.b + '</td><td class="o">' + r.exp + '</td><td class="o' + (r.got === r.exp ? '' : ' diff') + '">' + OUT_WORD[r.got] + '</td><td class="mark">' + (r.got === r.exp ? '&#10003; pass' : '&#10007; fail') + '</td></tr>').join('') + '</tbody></table></div>';
+        if (bad){ st.nand.a = bad.a; st.nand.b = bad.b; }
+        draw(); renderMap();
+      };
+      bindCommon(l);
+    }
+    draw();
   };
 
   VIEW.out = function(l){
@@ -1330,7 +1467,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       try { flat = flatten('Add4', n => S.code[n]); c = build(flat, 'Add4'); } catch (e) { flat = null; }
     }
     if (c){
-      h += '<div class="idea">' + l.learn + '</div><div class="msg ok">Your adder is made of <b>' + c.parts.length + ' Nand gates</b> and nothing else.</div><div id="probe-flat"></div><div id="stage-flat" class="stage" style="margin-top:10px"></div><p class="muted">Scroll sideways to follow the carry from the first column to the last.</p>';
+      h += '<div class="idea">' + l.learn + '</div><div class="msg ok">Your adder is made of <b>' + c.parts.length + ' Nand gates</b> and nothing else. Each Nand gate is four transistors, so that is <b>' + (c.parts.length * 4) + ' transistors</b> opening and closing.</div><div id="probe-flat"></div><div id="stage-flat" class="stage" style="margin-top:10px"></div><p class="muted">Scroll sideways to follow the carry from the first column to the last.</p>';
     } else h += '<p>This view opens when every level is built. Levels still open: ' + LEVELS.filter(x => x.kind !== 'out' && !isDone(x)).map(x => esc(x.short)).join(', ') + '.</p>';
     h += '<div class="tablewrap"><table class="tt res"><thead><tr><th>Chip</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
     const counts = {}; ORDER.slice(1).forEach(n => { if (S.pass[n] && S.code[n]){ try { counts[n] = build(S.code[n], n, counts).nands; } catch (e) {} } });

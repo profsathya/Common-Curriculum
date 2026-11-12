@@ -291,7 +291,7 @@ One part is enough.
 
 ---
 
-## Level 9 - The bottom: the Nand gate (Nand)
+## Level 9 - The last gate: Nand (Nand)
 
 **After this level you can**
 - State in one sentence what a Nand gate does.
@@ -301,9 +301,9 @@ One part is enough.
 
 **Learn it**
 
-You have reached the bottom of the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.
+Nand is the last logic gate on the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.
 
-In a real chip, a Nand gate is made of a few transistors, which are tiny electrical switches. That is the place where logic meets physics.
+The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s, and something physical has to carry it out. Inside a Nand gate there are four transistors, which are tiny electrical switches. That is the next level down, and it is where logic meets physics.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -311,7 +311,59 @@ In a real chip, a Nand gate is made of a few transistors, which are tiny electri
 
 **Shown when the truth table has a wrong value:** Try each combination on the drawing again and copy what the output shows.
 
+**Open the box (appears when the truth table is right):** One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.
+
 **What you just showed (appears when the level is complete):** In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.
+
+---
+
+## Level 10 - Under the gate: transistors (Transistor)
+
+**After this level you can**
+- Describe a transistor as a switch that an electrical signal opens and closes.
+- Build a Nand gate from four transistors, and explain why each pair is arranged the way it is.
+
+**See it run:** Here are two transistors, each between the power supply and a lamp. Click `in` and watch each one. A transistor has no moving parts: the signal on its control wire decides whether the path through it is closed, which lets electricity through, or open, which blocks it.
+
+**Learn it**
+
+Until now a 1 or a 0 was just a value on a wire. Physically, a wire that carries 1 is connected to the power supply, and a wire that carries 0 is connected to ground, which is the other side of the supply. A gate has to connect its output wire to one of the two, depending on its inputs. The parts that make and break those connections are transistors.
+
+There are two kinds, and chips use them in pairs. One kind closes when its control signal is 1. The other kind closes when its control signal is 0; in the drawings it has a small circle on its control wire. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.
+
+A working gate keeps one rule for every combination of inputs: the output is connected to power or to ground, and never to both, and never to neither. If it is connected to both, electricity runs straight from power to ground, which is called a short circuit. If it is connected to neither, the output is not a 0 or a 1 at all.
+
+**Video:** none yet (slot is hidden until a video is added)
+
+**Practice:** This is the simplest gate, Not, made from one transistor of each kind. The input is set to 1. Before you see what the transistors do, answer the two questions.
+
+**Questions (the second appears when the first is right; the Not gate comes alive when both are right)**
+1. The input is 1. Which transistor is closed? Choices: The top one / The bottom one. Right answer: the bottom one.
+2. So which is the output connected to? Choices: Power, so out is 1 / Ground, so out is 0. Right answer: ground.
+
+**Shown when both are right:** Now click `in` on the Not gate and watch the two transistors trade places. Each time, exactly one of them is closed, so the output is always connected to exactly one of power and ground.
+
+**Build it**
+
+Now build the Nand gate. It has four transistors. The two at the top close when their input is 0, and they can connect the output to power. The two at the bottom close when their input is 1, and they can connect the output to ground.
+
+You decide how each pair is connected. Two switches <b>one after the other</b> make a path that is closed only when both switches are closed. Two switches <b>side by side</b> make a path that is closed when either switch is closed. Choose an arrangement for each pair, click `a` and `b` to try it, and run the tests.
+
+**Choices for each pair:** One after the other / Side by side.
+
+**Feedback after Run tests**
+- All correct (top side by side, bottom one after the other): All 4 rows pass. Your four transistors behave as a Nand gate.
+- Top one after the other, bottom side by side: This circuit keeps the rule, so it is a real gate, but it is a different gate: it gives 1 only when both inputs are 0. That gate is called Nor. Look at the row a = 1, b = 0, where a Nand gate should give 1.
+- Both side by side: When a and b are different, one top transistor and one bottom transistor are closed at the same time. That connects power straight to ground, which is a short circuit, so the output is not a clean 0 or 1.
+- Both one after the other: When a and b are different, neither path is closed, so the output is connected to nothing. It is not a 0 or a 1.
+- A pair not chosen yet: Choose an arrangement for both pairs first.
+
+**Hints (shown one at a time, on request)**
+1. A Nand gate gives 0 in only one row: a = 1 and b = 1. So the path to ground should be closed only when both bottom transistors are closed.
+2. In every other row at least one input is 0, and the output should be 1. The top transistors close when their input is 0, so the path to power should be closed when either of them is closed.
+3. Bottom pair: one after the other. Top pair: side by side.
+
+**What you just showed (appears when the level is complete):** Four transistors make one Nand gate. Two side by side connect the output to power when either input is 0, and two one after the other connect it to ground only when both inputs are 1. Every gate, adder and number above this level comes down to switches like these opening and closing.
 
 ---
 
@@ -360,7 +412,8 @@ A wire can go to more than one part. An output pin you do not need can be left o
 
 ## Explain it (questions at the end)
 
-1. Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column's sum and carry, and how those gates come down to Nand.
+1. Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column's sum and carry, how those gates come down to Nand, and what the transistors inside one Nand are doing.
 2. Why does a Nand gate with both inputs tied together act as a Not gate?
-3. Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?
-4. When your adder shows 0 for 15 + 1, which column produces the missing carry, and why is it not part of the four-bit answer?
+3. Inside a Nand gate, why are the two bottom transistors one after the other and the two top transistors side by side?
+4. Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?
+5. When your adder shows 0 for 15 + 1, which column produces the missing carry, and why is it not part of the four-bit answer?
