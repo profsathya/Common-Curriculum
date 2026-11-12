@@ -4,7 +4,7 @@ Editable companion to trail-nand-to-adder.html. Edit the words here and tell Ala
 
 CST286 - Learning trail
 
-Every computer you have used is built from millions of copies of one tiny part. You start with that part, a Nand gate, and build your way up to a chip that adds numbers. Each chip you write is drawn as a live circuit, so you can watch the signals move through your own design.
+Every computer you have used could be built from millions of copies of one tiny part. You start with that part, a Nand gate, and build your way up to a chip that adds numbers. Each chip you write is drawn as a live circuit, so you can watch the signals move through your own design.
 
 **Where you end up:** you can explain how a machine adds numbers using nothing but one kind of gate, because you built every layer yourself.
 
