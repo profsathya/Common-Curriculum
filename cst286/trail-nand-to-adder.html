@@ -245,6 +245,11 @@
   .numout b{color:var(--lamp); font-size:1.25rem}
   .q{border:1px solid var(--line); border-radius:10px; padding:4px 16px 8px; margin:10px 0}
   .tick{color:var(--ok); font-weight:700}
+
+  .wcol{display:inline-flex; flex-direction:column; align-items:center; gap:2px; margin-right:4px}
+  .wcol .sw,.wcol .lamp{margin-right:0}
+  .navwhy{margin-top:8px; text-align:right; min-height:1.2em}
+  .jump{font:inherit; background:none; border:1px solid var(--tc); color:var(--tc); border-radius:999px; padding:1px 10px; cursor:pointer; margin-left:4px}
 </style>
 </head>
 <body>
@@ -255,9 +260,9 @@
       <div class="eyebrow">CST286 &middot; Learning trail &middot; Nand to Tetris</div>
       <h1>From one gate to a <em>machine that adds</em></h1>
       <p>Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part.</p>
-      <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate, because you opened every box and rebuilt it yourself.</p>
+      <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate.</p>
       <button type="button" class="btn" id="startbtn">Start the trail</button>
-      <div class="meta">9 levels, from a machine that adds numbers down to the Nand gate &middot; best on a laptop screen</div>
+      <div class="meta">9 levels &middot; best on a laptop screen</div>
     </div>
     <svg class="heroart" viewBox="0 0 420 260" role="img" aria-label="Signals flowing through Nand gates into a lit output">
       <path class="w" d="M20 50H110M20 100H110M20 160H110M20 210H110M196 75C240 75 240 110 280 110M196 185C240 185 240 150 280 150M366 130H392"/>
@@ -268,13 +273,6 @@
       <circle class="lampc" cx="402" cy="130" r="10"/>
     </svg>
   </header>
-  <ol class="how">
-    <li><b>See it run</b>Flip the inputs of a working box and watch what it does.</li>
-    <li><b>Learn it</b>Read what the box is for.</li>
-    <li><b>Practice</b>Check that you can predict it.</li>
-    <li><b>Build it</b>Rebuild the box in HDL from the boxes one level down.</li>
-    <li><b>Open the box</b>Double-click a box you used and go inside it.</li>
-  </ol>
   <nav class="map" id="map" aria-label="Levels on this trail"></nav>
   <main id="stop"></main>
   <footer>
@@ -705,7 +703,7 @@ function aluCheck(c, ti, px, py){
 if (typeof module !== 'undefined' && module.exports) module.exports = {flatten, sketch, B, ORDER, parse, build, run, testChip, diagnose, combos, stub, alu, ALU_TARGETS, aluCheck, fmtVal, fmtIns};
 
 /* ===== The words on the page. trail-nand-to-adder.md is the editable companion. ===== */
-const HDL_HELP = '<p>You describe a chip in HDL (hardware description language), which tells the simulator which boxes to use and how to wire them. Each line under <code>PARTS:</code> is one box. Inside the parentheses, the name on the left of <code>=</code> is a pin of that box, and the name on the right is a wire in your chip. So <code>HalfAdder(a=x, b=y, sum=s, carry=c);</code> means: connect the HalfAdder\'s <code>a</code> pin to wire <code>x</code> and its <code>b</code> pin to wire <code>y</code>, and call its two outputs <code>s</code> and <code>c</code>.</p><p>The wires in your chip are its inputs, its outputs, and any new names you make up for wires between boxes. To send the output of one box into another box, give the wire between them a name of your own. One box writes to it, for example with <code>carry=c1</code>, and the other box reads it.</p>';
+const HDL_HELP = '<p>Each line under <code>PARTS:</code> is one part. Inside the parentheses, the name on the left of each <code>=</code> is a pin of that part, and the name on the right is the wire you connect it to. That wire is one of your chip\'s inputs or outputs, or a new name you make up for a wire between two parts. One part writes to the new wire (for example <code>out=w</code>) and another part reads it (for example <code>a=w</code>).</p><p>A wire can go to more than one part. An output pin you do not need can be left out. Leave the CHIP, IN and OUT lines as they are.</p>';
 
 const CHIP_SAYS = {
   Nand:'out is 0 only when a and b are both 1',
@@ -720,80 +718,81 @@ const CHIP_SAYS = {
 
 const LEVELS = [
   {id:'adder', kind:'top', chip:'Adder', short:'Adder', title:'A machine that adds',
-   objs:['Find the limits of a machine by testing it with inputs you choose.', 'Describe what this adder does when the true answer is larger than 15.'],
+   objs:['Find where a machine breaks by testing it with inputs you choose.', 'Describe the pattern in its wrong answers.'],
    see:'This box adds two whole numbers. Each number can be anything from 0 to 15. Change <code>a</code> and <code>b</code> and watch the answer. Try small numbers first, then large ones.',
    learn:'<p>Most of the time this machine gives the answer you expect. If you try enough pairs of numbers, you will find sums that it gets wrong.</p><p>When engineers find a machine giving a wrong answer, they treat it as a clue about how the machine is built inside. So before you open the box, find out exactly when it goes wrong.</p>',
-   inv:['Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.', 'What is the largest number the machine ever shows as an answer?', 'The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 10 + 8.'],
-   open:'A machine that adds gets 15 + 1 wrong, and it never shows a number above 15. The reason is in how the machine holds numbers inside. Double-click the Adder box on the drawing to go inside it, or use the button.',
+   inv:['Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.', 'What is the largest number the machine ever shows as an answer?', 'The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 12 + 7.'],
+   open:'The reason is inside the machine. Double-click the Adder box on the drawing to go inside it, or use the button.',
    after:'You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.'},
 
   {id:'add4', kind:'build', chip:'Add4', short:'Add4', title:'Inside the adder: numbers on wires',
    objs:['Read and write 4-bit binary numbers, and add two of them by hand with carries.', 'Build a 4-bit adder by chaining one small adder for each column.'],
-   see:'This is the same machine with the lid off. Inside, each number travels on four wires, and each wire carries either 0 or 1. Set <code>a</code> and <code>b</code> with the switches under the drawing and read <code>out</code>. Try 7 + 1. Then try 15 + 1, the sum the machine got wrong, and look at what the four output wires show.',
-   learn:'<p>A wire inside the machine can carry only two values, 0 or 1. So the machine writes each number with four wires: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four wires the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.</p><p>The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.</p><p>When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow. The dropped carry was worth 16, and that is why 15 + 1 shows 0 and 9 + 9 shows 2.</p>',
+   see:'Here are the wires that go into and out of that box. Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what it is worth: 8, 4, 2 or 1. Flip one switch of <code>a</code> at a time to see what each wire adds. Then turn on 4, 2 and 1 to make 7, set <code>b</code> to 1, and read <code>out</code>. After that, try 15 + 1, the sum the machine got wrong.',
+   learn:'<p>Inside the machine, a wire is read as one of two signal levels, which we write as 0 and 1. One wire is called a bit, so the machine writes each number with four bits. The rightmost bit is worth 1, and each bit to its left is worth double: 1, 2, 4, 8. The number is the sum of the bits that are 1, so 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four bits the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.</p><p>With two bits you can write four numbers: 00 is 0, 01 is 1, 10 is 2 and 11 is 3. You need these to add, because the machine adds the way you add by hand, one column at a time, starting from the right. A column adds a bit of a, a bit of b, and a carry of 1 if the column to its right produced one, so a column adds up to 0, 1, 2 or 3. A column can hold only one bit. So when it adds up to 2 (binary 10), it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11), it writes 1 and carries 1.</p><p>Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:</p><ul><li>The 1s column: 1 + 1 = 2, so write 0 and carry 1.</li><li>The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 8s column: 0 + 0 + the carry 1 = 1, so write 1.</li></ul><p>The answer is 1000, which is 8.</p><p>When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.</p>',
    practice:'Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.',
-   build:'<p>Now rebuild the machine to see how it works. Inside the box there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made boxes to use: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>The inputs <code>a</code> and <code>b</code> are 4 bits wide. A group of wires like this is called a bus, and <code>a[0]</code>, <code>a[1]</code>, <code>a[2]</code>, <code>a[3]</code> pick out its single bits, with <code>a[0]</code> as the 1s place. The first column is written for you. Add the other three columns.</p>' + HDL_HELP,
+   build:'<p>Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. <code>IN a[4], b[4]</code> says that a and b each come in on four wires, and <code>OUT out[4]</code> says that the answer leaves on four wires. Leave those lines as they are, and add your parts under <code>PARTS:</code>.</p><p>The first column is written for you: <code>HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);</code> Read it from left to right. <code>HalfAdder</code> is the part. Inside the parentheses, the name on the left of each <code>=</code> is a pin of that part, and the name on the right is the wire you connect it to. <code>a[0]</code> is the rightmost wire of a, the 1s place. So <code>[0]</code> picks one wire, while the <code>[4]</code> in the IN line says how many wires there are. <code>c1</code> is a name made up for a new wire, which carries this column\'s carry to the next column.</p><p>Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete <code>carry=</code> from that line. An output pin of a part can be left out when you do not need it.</p>',
    stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    \n}\n',
-   hints:['One adder for each column, as in the add-by-hand practice. The carry that leaves one column is the carry that enters the next column.', 'Columns 1, 2 and 3 each have three bits to add: a bit of a, a bit of b, and the carry from the column before. That is a FullAdder. Give each carry wire its own name, such as c2 and c3.', 'Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. The carry out of column 3 has nowhere to go, so you can leave that pin out.'],
-   after:'You rebuilt a machine that adds from four column adders. You used HalfAdder and FullAdder as boxes without knowing what is inside them, which is how engineers design large chips. Now open one of them.'},
+   hints:['Column 1 has three bits to add: a[1], b[1] and the carry from column 0, which arrives on the wire c1. Which of your two parts adds three bits?', 'A FullAdder line needs these connections: a, b, c, sum and carry. For column 1, c=c1 brings the carry in, and carry=c2 sends the new carry on to column 2.', 'Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. In column 3, leave carry= out.'],
+   after:'You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.'},
 
   {id:'fulladder', kind:'build', chip:'FullAdder', short:'FullAdder', title:'Inside a column: the FullAdder',
    objs:['Explain what a FullAdder does with its three input bits.', 'Build a FullAdder from two HalfAdders and one more gate.'],
    see:'This is the box that sat in three of your four columns. Click <code>a</code>, <code>b</code> and <code>c</code> on the drawing and watch <code>sum</code> and <code>carry</code>. Each time, count how many of the three inputs are 1.',
-   learn:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code>, and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3, so two output bits are enough to write the answer: <code>carry</code> is the left bit and <code>sum</code> is the right bit.</p><p>When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, and the box that adds two bits is the HalfAdder you used in column 0.</p>',
-   rule:'Count how many of the three inputs are 1. Write that count in binary: carry is the left bit and sum is the right bit.',
-   build:'<p>Build the FullAdder from the boxes below it. You have HalfAdder, and you also have the logic gates And, Or and Xor: And gives 1 only when both inputs are 1, Or gives 1 when at least one input is 1, and Xor gives 1 when the two inputs are different.</p>',
-   hints:['Add in two steps: first a + b, then add c to that result.', 'Each step is a HalfAdder. Each step can produce a carry, and the chip\'s carry is 1 when either step produced one.', 'Three parts: a HalfAdder of a and b giving s1 and c1, a HalfAdder of s1 and c giving sum and c2, and an Or of c1 and c2 going to carry.'],
-   after:'A question worth explaining to someone: the two HalfAdders inside your FullAdder can never both produce a carry for the same inputs. The truth table shows why.'},
+   learn:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code>, and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3. Written with two bits, those are 00, 01, 10 and 11. The left bit is the carry and the right bit is the sum, so an answer of 2 (binary 10) means carry 1 and sum 0.</p><p>When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, using the part that adds two bits, the HalfAdder. The first HalfAdder adds a and b, and it gives a sum bit and a carry bit. Only its sum bit goes on to the second step, where c is added to it. That second step can produce a carry of its own. So you end up with two carry wires, one from each step, while the chip has one carry output.</p>',
+   practice:'A table like this is called a truth table. It has one row for every setting of the inputs, so three inputs give eight rows. For each row, work out the two outputs and fill them in. The output columns are in the order sum, then carry. Click a ? to set it to 0, and click again for 1.',
+   rule:'Count how many of the three inputs are 1 in that row. A count of 0 or 1 has carry 0, and a count of 2 or 3 has carry 1. sum is 1 when the count is 1 or 3.',
+   build:'<p>Build the FullAdder from the parts below. Two of them do the two adding steps. Then decide what the chip\'s carry should be when you look at the two carry wires together, and pick the gate from the list that does that.</p>',
+   hints:['The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.', 'The second HalfAdder adds s1 and c. Its sum is the chip\'s sum. Its carry is a second carry wire, for example c2.', 'The chip\'s carry should be 1 when either step produced a carry. That is an Or of c1 and c2 going to carry.'],
+   after:'Something worth explaining to someone: the two HalfAdders inside your FullAdder never both produce a carry for the same inputs. You can check it in the part-by-part list under your chip. Set a = 1 and b = 1: the first step carries and its sum is 0, so the second step has nothing to carry.'},
 
   {id:'halfadder', kind:'build', chip:'HalfAdder', short:'HalfAdder', title:'Adding two bits: the HalfAdder',
    objs:['Match the sum column and the carry column of a truth table to logic gates.', 'Build a HalfAdder from two gates.'],
    see:'Click <code>a</code> and <code>b</code>. <code>sum</code> is the bit you write down in a column, and <code>carry</code> is the bit you carry to the next column. So 1 + 1 gives sum 0 and carry 1, which is binary 10.',
-   learn:'<p>Every box so far has been about numbers. At this level the numbers turn into logic.</p><p>A logic gate answers a yes-or-no question about its inputs. And asks "are both inputs 1?". Or asks "is at least one input 1?". Xor (exclusive or) asks "are the two inputs different?".</p><p>Fill in the truth table for sum and carry. Then look at each output column on its own and ask which of those three questions it answers.</p>',
+   learn:'<p>The FullAdder still had smaller adders inside it. Inside the HalfAdder there are no adders left, only logic gates.</p><p>A logic gate answers a yes-or-no question about its inputs, and it answers with a bit: 1 means yes and 0 means no. And asks "are both inputs 1?". Or asks "is at least one input 1?". Xor (exclusive or) asks "are the two inputs different?".</p><p>In the practice below, fill in the truth table for sum and carry. Then look at each output column on its own and ask which of those three questions it answers.</p>',
    rule:'Add a and b as numbers. The result is 0, 1 or 2, and 2 is written as carry 1, sum 0.',
    build:'<p>Build the HalfAdder from logic gates. Each output needs one gate.</p>',
    hints:['Compare the sum column and the carry column of your truth table with what And, Or and Xor do.', 'sum is 1 when exactly one input is 1. carry is 1 only when both inputs are 1.', 'Two parts: an Xor of a and b going to sum, and an And of a and b going to carry.'],
    after:'Arithmetic turned out to be logic: the sum bit is an Xor and the carry bit is an And.'},
 
   {id:'xor', kind:'build', chip:'Xor', short:'Xor', title:'Are they different? Xor',
-   objs:['Turn a sentence that uses "and", "or" and "not" into a circuit.', 'Count the Nand gates in your design and look for a smaller one.'],
+   objs:['Turn a truth table into a sentence that uses "and", "or" and "not".', 'Turn that sentence into a circuit, with one part for each "and", "or" and "not".'],
    see:'This is the gate that produced your sum bit. Click <code>a</code> and <code>b</code>: the output is 1 when they are different.',
-   learn:'<p>Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.</p><p>Here is a method that works for any truth table. Write a sentence for each row where the output is 1, then join the sentences with "or". Each "and", "or" and "not" in your sentence becomes one box.</p>',
+   learn:'<p>Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.</p><p>Here is a method that works for a truth table like this one. Take a row where the output is 1 and describe it with "and". An And gate gives 1 only when both of its inputs are 1. So an input that is 1 in that row is written by its name, and an input that is 0 is written with "not" in front of it, because Not turns that 0 into a 1. The row a = 1, b = 0 becomes "a and not b".</p><p>Do the same for the other row where the output is 1, and join the two with "or". Each "and", "or" and "not" in your sentence becomes one part.</p>',
    rule:'Xor gives 1 when a and b are different, and 0 when they are the same.',
-   build:'<p>Write the sentence for Xor first, then turn each word into a box.</p>',
-   hints:['Say it in words: out is 1 when (a is 1 and b is 0) or (a is 0 and b is 1).', 'Each "and", "or" and "not" in that sentence is one box. You need two Nots, two Ands and one Or.', 'Five parts: Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out. When it passes, look at the Nand count under the tests: there is a design with only four Nands.'],
-   after:'You have a method that turns any truth table into a circuit: one And for each row that gives 1, joined by Or.'},
+   build:'<p>Write your sentence first. Then give every "not" a part and a wire name, feed those wires into the "and" parts, and join the results with the "or" part.</p>',
+   hints:['The two rows where Xor gives 1 are a = 1, b = 0 and a = 0, b = 1. The first is "a and not b". Write the second the same way.', 'The full sentence is (a and not b) or (not a and b). It has two "not", two "and" and one "or", so it needs five parts.', 'Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.'],
+   after:'You have a method for turning a small truth table into a circuit: one And for each row that gives 1, with a Not on every input that is 0 in that row, and an Or to join the rows.'},
 
   {id:'and', kind:'build', chip:'And', short:'And', title:'Both at once: And',
    objs:['Build And from a Nand and a Not.', 'Explain And as the opposite of Nand.'],
    see:'Click <code>a</code> and <code>b</code>: the output is 1 only when both are 1.',
-   learn:'<p>You are now close to the bottom. There is one gate you have not met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And, so it gives 0 only when both inputs are 1.</p><p>That means And can be built from the two boxes below it: a Nand, and a Not that flips the result back.</p>',
+   learn:'<p>There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.</p><p>That means And can be built from the two parts below it: a Nand, and a Not that flips the result back.</p>',
    rule:'And gives 1 in one row only: when a and b are both 1.',
-   build:'<p>Connect the two boxes with a wire that you name yourself.</p>',
+   build:'<p>Connect the two parts with a wire that you name yourself.</p>',
    hints:['Nand is short for Not-And. What do you get when you take the opposite of the opposite?', 'Send a and b through a Nand and name its output, for example out=w.', 'Two parts: a Nand from a and b to a wire w, then a Not from w to out.'],
-   after:'And is a Nand followed by a Not. You chained two boxes with a wire you named.'},
+   after:'Try a = 1 and b = 1 on your drawing: the Nand gives 0, and the Not turns it back into 1. In every other row the Nand gives 1, and the Not turns it into 0.'},
 
   {id:'or', kind:'build', chip:'Or', short:'Or', title:'At least one: Or',
-   objs:['Build Or from Not and Nand.', 'Use the fact that "a or b" means the same as "not (not a and not b)".'],
+   objs:['Build Or from Not and Nand.', 'Change the inputs of a gate you have so that it behaves like the gate you need.'],
    see:'Click <code>a</code> and <code>b</code>: the output is 0 only when both are 0.',
-   learn:'<p>Or gives 1 when at least one input is 1. Neither of the boxes below it does that directly, so this level takes a piece of reasoning before any wiring.</p><p>Fill in the truth table and count the rows where Or gives 0. A Nand gate also gives 0 in exactly one row, the row where both of its inputs are 1. So the question becomes how to make that one row the right one.</p>',
+   learn:'<p>Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.</p><p>In the practice below, fill in the truth table and find the one row where Or gives 0. Nand also gives 0 in exactly one row, but it is a different row. So the question is what you could do to a and to b, before they reach the Nand, so that its 0 lands on the row you want.</p>',
    rule:'Or gives 0 in one row only: when a and b are both 0.',
    build:'<p>Decide what should happen to a and to b before they reach the Nand.</p>',
    hints:['Or is 0 in exactly one row, and Nand is 0 in exactly one row. Compare which row it is in each table.', 'Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
-   after:'You used a law of logic (De Morgan\'s law) to build a gate you did not have from gates you did have.'},
+   after:'Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan\'s law.'},
 
   {id:'not', kind:'build', chip:'Not', short:'Not', title:'Flip a bit: Not',
-   objs:['Build Not from a single Nand.', 'Explain why a Nand gate with both inputs tied together flips its input.'],
+   objs:['Build a one-input Not from a two-input Nand.', 'Explain what a Nand gate does when both of its inputs carry the same signal.'],
    see:'Click <code>in</code> and watch <code>out</code> do the opposite.',
-   learn:'<p>Not is the last box before the bottom. It has one input, and it flips it.</p><p>You build it from a single Nand gate. A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input. Remember what Nand does: it gives 0 only when both of its inputs are 1.</p>',
+   learn:'<p>Not has one input, and it flips it. You build it from a single Nand gate, which gives 0 only when both of its inputs are 1, and gives 1 in every other case.</p><p>A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.</p>',
    rule:'Not gives the opposite of its input.',
-   build:'<p>One box is enough.</p>',
-   hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. In those rows the output is the opposite of the input.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
-   after:'A Nand with both inputs tied together can only be in the rows 0,0 and 1,1, and in those rows its output is the opposite of its input.'},
+   build:'<p>One part is enough.</p>',
+   hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
+   after:'Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.'},
 
   {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The bottom: the Nand gate',
    objs:['State in one sentence what a Nand gate does.', 'Explain why every box above it could be built from this one gate.'],
-   see:'This is the one part that everything above it is made of. Click <code>a</code> and <code>b</code> and try all four combinations.',
+   see:'Click <code>a</code> and <code>b</code> and try all four combinations.',
    learn:'<p>You have reached the bottom of the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.</p><p>In a real chip, a Nand gate is made of a few transistors, which are tiny electrical switches. That is the place where logic meets physics.</p>',
    practice:'Record what you saw in the truth table. Click a ? to set it to 0, and click again for 1.',
    rule:'Try each combination on the drawing again and copy what the output shows.',
@@ -801,16 +800,31 @@ const LEVELS = [
 
   {id:'out', kind:'out', short:'Zoom out', title:'Zoom all the way out',
    objs:['Explain in your own words how a machine that adds numbers could be built from Nand gates alone.'],
-   learn:'<p>This is your own 4-bit adder with every box opened, all the way down. Set <code>a</code> and <code>b</code> with the switches and watch the signals travel through the Nand gates.</p>'}
+   learn:'<p>This is your own 4-bit adder with every box opened, all the way down. Set <code>a</code> to 0111 and <code>b</code> to 0001 with the switches, and follow the carry as it moves from the first column to the last.</p>'}
 ];
 
 const LOOK_QUESTIONS = [
+  'Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column\'s sum and carry, and how those gates come down to Nand.',
   'Why does a Nand gate with both inputs tied together act as a Not gate?',
   'Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?',
-  'When your adder shows 0 for 15 + 1, which wire carried the missing 1, and where did it go?'
+  'When your adder shows 0 for 15 + 1, which column produces the missing carry, and why is it not part of the four-bit answer?'
 ];
 
-if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, LOOK_QUESTIONS, CHIP_SAYS, HDL_HELP};
+/* Short lines the page shows around the activities (the same at every level unless noted). */
+const UI = {
+  partsFirst:'Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Click one to insert it:',
+  parts:'Parts you can use here (click one to insert it):',
+  insideFirst:'These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.',
+  inside:'Flip the inputs and read the value going into and out of every part.',
+  table:'Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.',
+  openLocked:'This step opens when your chip passes its tests.',
+  openFirst:'Your chip works, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.',
+  open:'Open a part you used. The others stay open for you to come back to.',
+  nextLocked:'The next level opens when you finish this one.',
+  outLocked:'Zoom all the way out opens when every level is done. Still open:'
+};
+
+if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, LOOK_QUESTIONS, CHIP_SAYS, HDL_HELP, UI};
 
 /* ===== Page behavior: a top-down trail. Each level is one box; building it opens the boxes inside. ===== */
 (function(){
@@ -873,15 +887,23 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   function foot(l){
     const i = LEVELS.indexOf(l), nx = LEVELS[i + 1];
     return '<div class="navb">' + (i > 0 ? '<button type="button" class="btn ghost" id="prev">&larr; Back up to ' + esc(LEVELS[i-1].short) + '</button>' : '<span></span>') +
-      (nx ? '<button type="button" class="btn' + (unlocked(nx) ? '' : ' ghost') + '" id="next"' + (unlocked(nx) ? '' : ' disabled') + '>' + (nx.kind === 'out' ? 'Zoom all the way out' : 'Go down to ' + esc(nx.short)) + ' &rarr;</button>' : '') + '</div>';
+      (nx ? '<button type="button" class="btn' + (unlocked(nx) ? '' : ' ghost') + '" id="next"' + (unlocked(nx) ? '' : ' disabled') + '>' + (nx.kind === 'out' ? 'Zoom all the way out' : 'Go down to ' + esc(nx.short)) + ' &rarr;</button>' : '') + '</div><div id="navwhy" class="navwhy muted" role="status">' + whyHTML(l) + '</div>';
   }
+  function whyHTML(l){
+    const nx = LEVELS[LEVELS.indexOf(l) + 1]; if (!nx || unlocked(nx)) return '';
+    if (nx.kind !== 'out') return UI.nextLocked;
+    if (!isDone(l)) return UI.nextLocked;
+    return UI.outLocked + ' ' + LEVELS.filter(x => x.kind !== 'out' && !isDone(x)).map(x => unlocked(x) ? '<button type="button" class="jump" data-i="' + LEVELS.indexOf(x) + '">' + esc(x.short) + '</button>' : esc(x.short)).join(' ');
+  }
+  function bindWhy(){ $$('#navwhy .jump').forEach(b => b.onclick = () => go(+b.dataset.i)); }
   function bindCommon(l){
+    bindWhy();
     const i = LEVELS.indexOf(l);
     if ($('#prev')) $('#prev').onclick = () => go(i - 1);
     if ($('#next')) $('#next').onclick = () => go(i + 1);
     $$('.zoompath .up').forEach(b => b.onclick = () => go(levelOf(b.dataset.c)));
   }
-  function refreshNext(l){ const nx = LEVELS[LEVELS.indexOf(l) + 1], b = $('#next'); if (b && nx && unlocked(nx)){ b.disabled = false; b.classList.remove('ghost'); } }
+  function refreshNext(l){ const nx = LEVELS[LEVELS.indexOf(l) + 1], b = $('#next'); if (b && nx && unlocked(nx)){ b.disabled = false; b.classList.remove('ghost'); } const y = $('#navwhy'); if (y){ y.innerHTML = whyHTML(l); bindWhy(); } }
   const afterHTML = l => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(l.after) + '</p></div>';
   const stepHTML = (n, title, body) => '<section class="step"><h3><span class="stepn">' + n + '</span> ' + title + '</h3>' + body + '</section>';
   const videoHTML = l => l.video ? '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(l.video) + '" title="' + esc(l.title) + '" allow="fullscreen" loading="lazy"></iframe></div>' : '';
@@ -921,7 +943,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     let h = '<div class="pr-grid"><div class="pr-col"><div class="lbl">Inputs (click to flip)</div>';
     spec.ins.forEach(([n, w]) => {
       h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
-      for (let b = w - 1; b >= 0; b--){ const v = (inp[n] >> b) & 1; h += '<button type="button" class="sw' + (v ? ' on' : '') + '" data-n="' + n + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + n + (w > 1 ? ' bit ' + b : '') + '">' + v + '</button>'; }
+      for (let b = w - 1; b >= 0; b--){ const v = (inp[n] >> b) & 1; h += (w > 1 ? '<span class="wcol"><span class="wt">' + (1 << b) + '</span>' : '') + '<button type="button" class="sw' + (v ? ' on' : '') + '" data-n="' + n + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + n + (w > 1 ? ', the wire worth ' + (1 << b) : '') + '">' + v + '</button>' + (w > 1 ? '</span>' : ''); }
       if (w > 1) h += '<span class="dec">= ' + inp[n] + '</span>';
       h += '</div>';
     });
@@ -929,7 +951,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     spec.outs.forEach(([n, w]) => {
       const v = res.outs[n], ok = v === exp[n];
       h += '<div class="pr-pin"><span class="pin">' + n + '</span>';
-      for (let b = w - 1; b >= 0; b--){ const x = (v >> b) & 1; h += '<span class="lamp' + (x ? ' on' : '') + '">' + x + '</span>'; }
+      for (let b = w - 1; b >= 0; b--){ const x = (v >> b) & 1; h += (w > 1 ? '<span class="wcol"><span class="wt">' + (1 << b) + '</span>' : '') + '<span class="lamp' + (x ? ' on' : '') + '">' + x + '</span>' + (w > 1 ? '</span>' : ''); }
       if (w > 1) h += '<span class="dec">= ' + v + '</span>';
       if (!ok) h += '<span class="should">should be ' + fmtVal(exp[n], w) + '</span>';
       h += '</div>';
@@ -1055,7 +1077,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   function zoomInto(from, name, gateEl){
     const i = levelOf(name); if (i < 0) return;
     const l = LEVELS[i];
-    if (!unlocked(l)){ const st = $('#stagestat'); if (st) st.innerHTML = '<span class="pill">Closed</span> The ' + name + ' box opens when your ' + from + ' passes its tests.'; return; }
+    if (!unlocked(l)){ const st = $('#stagestat'); if (st) st.innerHTML = '<span class="pill">Closed</span> ' + name + ' opens when your ' + from + ' passes its tests.'; return; }
     const svg = gateEl && gateEl.ownerSVGElement;
     if (!svg || reduced() || !svg.getBoundingClientRect){ go(i, from); return; }
     const a = svg.getBoundingClientRect(), b = gateEl.getBoundingClientRect();
@@ -1069,23 +1091,26 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   /* ---------- views ---------- */
   const VIEW = {};
   const below = chip => ORDER.slice(0, ORDER.indexOf(chip)).reverse();
+  // the parts list shows the boxes one level down, plus anything the student has already built
+  const ONE_DOWN = {Add4:['FullAdder', 'HalfAdder'], FullAdder:['HalfAdder', 'Xor', 'And', 'Or'], HalfAdder:['Xor', 'And', 'Or'], Xor:['And', 'Or', 'Not'], And:['Not', 'Nand'], Or:['Not', 'Nand'], Not:['Nand']};
+  const shownParts = chip => below(chip).filter(n => ONE_DOWN[chip].includes(n) || S.pass[n] || (n === 'Nand' && (S.pred.Nand || S.pass.And || S.pass.Or || S.pass.Not)));
   function template(name){ const c = B[name]; return name + '(' + c.ins.concat(c.outs).map(x => x[0] + '=').join(', ') + ');'; }
   const pins = name => { const c = B[name]; return c.ins.map(x => x[0]).join(', ') + ' &rarr; ' + c.outs.map(x => x[0]).join(', '); };
 
   VIEW.build = function(l){
-    const chip = l.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1), seeKey = chip + ':see';
+    const chip = l.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1), seeKey = chip + ':see', first = chip === 'Add4';
     let h = head(l);
     h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
     h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
-    h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, 'Fill in what ' + chip + ' does. This table is also what the simulator will test your chip against. Click a ? to set it to 0, and click again for 1.') : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
+    h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
     h += stepHTML(4, 'Build it',
       '<div class="idea">' + l.build + '</div>' + (l.build.indexOf('hardware description language') < 0 ? '<details class="help"><summary>How to write a part in HDL</summary>' + HDL_HELP + '</details>' : '') +
-      '<p>Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the boxes below this level. Click one to insert it:</p>' +
-      '<div class="tablewrap"><table class="parts"><tbody>' + below(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td></tr>').join('') + '</tbody></table></div>' +
-      '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
+      '<p>' + (first ? UI.partsFirst : UI.parts) + '</p>' +
+      '<div class="tablewrap"><table class="parts"><tbody>' + shownParts(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td></tr>').join('') + '</tbody></table></div>' +
+      '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
-      '<h4 class="sub">Look inside your chip</h4><p>These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.</p><div id="probe"></div>');
+      '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>');
     h += stepHTML(5, 'Open the box', '<div id="open"></div>') + foot(l);
     main.innerHTML = h;
 
@@ -1102,7 +1127,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       let why = '';
       try { K[chip].circ = build(ed.value, chip, S.nands); } catch (e) { if (!e.hdl) throw e; K[chip].circ = null; why = e.message; }
       const stat = $('#stagestat');
-      if (stat) stat.innerHTML = K[chip].circ ? '<span class="pill livep">Live</span> Click an input on the drawing to flip it, and watch the signal travel.' + (S.pass[chip] ? ' Double-click a box to open it.' : '') : !g.parts.length ? '<span class="pill">Empty</span> Each part you type under PARTS: appears here.' : '<span class="pill">Not running yet</span> ' + esc(why);
+      if (stat) stat.innerHTML = K[chip].circ ? '<span class="pill livep">Live</span> Click an input on the drawing to flip it, and watch the signal travel.' + (S.pass[chip] ? ' Double-click a part to open it.' : '') : !g.parts.length ? '<span class="pill">Empty</span> Each part you type under PARTS: appears here.' : '<span class="pill">Not running yet</span> ' + esc(why);
       drawProbe(chip);
     }
     ed.addEventListener('keydown', e => {
@@ -1131,14 +1156,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     $('#ai').onclick = () => {
       const L = LAST[chip];
       const said = !L ? 'I have not run the tests yet.' : L.error ? 'Error: ' + L.error : L.pass ? 'All ' + L.rows.length + ' test rows pass.' : L.rows.filter(r => r.ok).length + ' of ' + L.rows.length + ' test rows pass. ' + L.msgs.join(' ');
-      copyOut('I am working through a learning trail based on the Nand to Tetris course. It starts from a 4-bit adder and goes down level by level to the Nand gate, and at each level I build the chip in HDL from the boxes below it. I am on the ' + chip + ' chip (' + CHIP_SAYS[chip] + '). The parts I may use are: ' + below(chip).join(', ') + '.\n\nMy HDL:\n' + ed.value + '\nWhat the simulator says:\n' + said + '\n\nPlease do not write the HDL for me. Ask me one question at a time that helps me find the next step myself. When my chip works, keep asking me questions until you are sure I can explain why the design works.', $('#aibox'));
+      copyOut('I am working through a learning trail based on the Nand to Tetris course. It starts from a 4-bit adder and goes down level by level to the Nand gate, and at each level I build the chip in HDL from the boxes below it. I am on the ' + chip + ' chip (' + CHIP_SAYS[chip] + '). The parts I may use are: ' + shownParts(chip).join(', ') + '.\n\nMy HDL:\n' + ed.value + '\nWhat the simulator says:\n' + said + '\n\nPlease do not write the HDL for me. Ask me one question at a time that helps me find the next step myself. When my chip works, keep asking me questions until you are sure I can explain why the design works.', $('#aibox'));
     };
     $('#run').onclick = runTests;
     function openHTML(){
-      if (!S.pass[chip] && !UNLOCK_ALL) return '<p class="muted">This step opens when your ' + chip + ' passes its tests. Then you can go inside the boxes you used.</p>';
+      if (!S.pass[chip] && !UNLOCK_ALL) return '<p class="muted">' + UI.openLocked + '</p>';
       const used = K[chip].circ ? Array.from(new Set(K[chip].circ.parts.map(p => p.chip.name))) : [];
       const list = (used.length ? used : below(chip).slice(0, 2)).filter(n => levelOf(n) >= 0).sort((a, b) => levelOf(a) - levelOf(b));
-      return '<p>Your ' + chip + ' works, and you built it from boxes you have not looked inside yet. Double-click a box on your drawing to go inside it, or use a button:</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn" data-c="' + n + '">Open ' + n + ' &#10530;</button>').join('') + '</div>';
+      return '<p>' + (first ? UI.openFirst : UI.open) + '</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn" data-c="' + n + '">Open ' + n + ' &#10530;</button>').join('') + '</div>';
     }
     function drawOpen(){ $('#open').innerHTML = openHTML(); $$('.openbtn').forEach(b => b.onclick = () => zoomInto(chip, b.dataset.c, $('#stage .gate[data-chip="' + b.dataset.c + '"]'))); }
     function runTests(){
@@ -1160,7 +1185,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         S.pass[chip] = true; S.nands[chip] = c.nands; save();
         o += '<div class="msg ok"><b>All ' + rows.length + ' rows pass.</b> Your ' + chip + ' works.</div>';
         const known = c.parts.every(p => p.chip.name === 'Nand' || S.pass[p.chip.name]);
-        o += '<div class="msg info">' + (known ? 'Counting the Nand gates inside the boxes you used, your ' + chip + ' is made of <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b>. ' + (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') : 'Your ' + chip + ' is built from <b>' + c.parts.length + ' boxes</b>. You will see how many Nand gates that comes to when you have opened every box and zoom all the way out.') + '</div>';
+        o += '<div class="msg info">' + (known ? 'Counting the Nand gates inside the parts you used, your ' + chip + ' is made of <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b>. ' + (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') : 'Your ' + chip + ' is built from <b>' + c.parts.length + ' parts</b>. You will see how many Nand gates that comes to when you have opened every part and zoom all the way out.') + '</div>';
       } else {
         const okn = rows.filter(r => r.ok).length;
         o += '<div class="msg bad"><b>' + okn + ' of ' + rows.length + ' rows pass.</b> ' + (okn ? 'Your chip compiles and already gets some rows right.' : 'Your chip compiles, so the wiring is valid HDL. Now the behavior needs work.') + '</div>';
@@ -1212,7 +1237,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       box.innerHTML = ['a', 'b'].map(n => '<div class="numpin"><span class="pin">' + n + '</span><button type="button" class="sw" data-n="' + n + '" data-d="-1" aria-label="' + n + ' minus 1">&minus;</button><input class="num-in" type="number" min="0" max="15" inputmode="numeric" data-n="' + n + '" value="' + inp[n] + '" aria-label="' + n + '"><button type="button" class="sw" data-n="' + n + '" data-d="1" aria-label="' + n + ' plus 1">+</button></div>').join('') +
         '<div class="numout" role="status">' + inp.a + ' + ' + inp.b + ' &rarr; the machine shows <b>' + out + '</b></div>';
       $$('button[data-d]', box).forEach(b => b.onclick = () => { inp[b.dataset.n] = Math.max(0, Math.min(15, inp[b.dataset.n] + (+b.dataset.d))); applyStage(key); drawNum(); const f = $('button[data-n="' + b.dataset.n + '"][data-d="' + b.dataset.d + '"]', box); if (f) f.focus(); });
-      $$('input[data-n]', box).forEach(x => x.onchange = () => { const v = Math.round(+x.value); inp[x.dataset.n] = isNaN(v) ? 0 : Math.max(0, Math.min(15, v)); applyStage(key); drawNum(); });
+      const readout = () => '' + inp.a + ' + ' + inp.b + ' &rarr; the machine shows <b>' + ((inp.a + inp.b) & 15) + '</b>';
+      $$('input[data-n]', box).forEach(x => {
+        // update while typing without replacing the field, so the cursor stays where it is
+        x.oninput = () => { if (x.value.trim() === '') return; const v = Math.round(+x.value); if (isNaN(v)) return; inp[x.dataset.n] = Math.max(0, Math.min(15, v)); applyStage(key); $('.numout', box).innerHTML = readout(); };
+        x.onchange = () => { x.oninput(); x.value = inp[x.dataset.n]; };
+      });
     }
     drawStage(key, boxSketch('Add4')); drawProbe(key);
     const M = {};
@@ -1222,11 +1252,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       $('#inv').innerHTML =
         '<div class="q"><p class="ask">' + tick('q1') + '<b>1.</b> ' + esc(l.inv[0]) + '</p><div class="row"><button type="button" class="btn' + (inv.q1 ? ' ghost' : '') + '" id="q1">The machine gets this one wrong</button></div>' + msg('q1') + '</div>' +
         (!inv.q1 ? '' : '<div class="q"><p class="ask">' + tick('q2') + '<b>2.</b> ' + esc(l.inv[1]) + '</p><div class="row"><input class="num-in" id="a2" type="number" inputmode="numeric" aria-label="Largest number the machine shows"' + (inv.q2 ? ' value="15"' : '') + '><button type="button" class="btn' + (inv.q2 ? ' ghost' : '') + '" id="q2">Check</button></div>' + msg('q2') + '</div>') +
-        (!inv.q2 ? '' : '<div class="q"><p class="ask">' + tick('q3') + '<b>3.</b> ' + esc(l.inv[2]) + '</p><div class="row"><input class="num-in" id="a3" type="number" inputmode="numeric" aria-label="What the machine shows for 10 + 8"' + (inv.q3 ? ' value="2"' : '') + '><button type="button" class="btn' + (inv.q3 ? ' ghost' : '') + '" id="q3">Check</button></div>' + msg('q3') + '</div>') +
+        (!inv.q2 ? '' : '<div class="q"><p class="ask">' + tick('q3') + '<b>3.</b> ' + esc(l.inv[2]) + '</p><div class="row"><input class="num-in" id="a3" type="number" inputmode="numeric" aria-label="What the machine shows for 12 + 7"' + (inv.q3 ? ' value="3"' : '') + '><button type="button" class="btn' + (inv.q3 ? ' ghost' : '') + '" id="q3">Check</button></div>' + msg('q3') + '</div>') +
         (S.pass.Adder ? afterHTML(l) : '');
       $('#q1').onclick = () => { const t = inp.a + inp.b, m = t & 15; if (t > 15){ inv.q1 = true; M.q1 = ['ok', 'Yes. ' + inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + '.']; } else M.q1 = ['bad', inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + ', so it gets this one right. Try larger numbers.']; done(); };
       if ($('#q2')) $('#q2').onclick = () => { const v = $('#a2').value.trim(); if (v === '') M.q2 = ['warn', 'Type a number first.']; else if (+v === 15){ inv.q2 = true; M.q2 = ['ok', 'Yes. However large the true sum is, the machine never shows more than 15.']; } else if (+v < 15) M.q2 = ['bad', 'It can show more than ' + v + '. Try 7 + 8 on the machine.']; else M.q2 = ['bad', 'Try to make the machine show ' + v + '. Set a and b so the true sum is ' + v + ', and look at what it shows.']; done(); };
-      if ($('#q3')) $('#q3').onclick = () => { const v = $('#a3').value.trim(); if (v === '') M.q3 = ['warn', 'Type a number first.']; else if (+v === 2){ inv.q3 = true; M.q3 = ['ok', 'Yes. The true sum is 18, and the machine shows 2, which is 16 less.']; } else M.q3 = ['bad', 'Not ' + v + '. For 15 + 1 the true sum is 16 and the machine shows 0. For 9 + 9 the true sum is 18 and the machine shows 2. How far apart are the true sum and what the machine shows each time?']; done(); };
+      if ($('#q3')) $('#q3').onclick = () => { const v = $('#a3').value.trim(); if (v === '') M.q3 = ['warn', 'Type a number first.']; else if (+v === 3){ inv.q3 = true; M.q3 = ['ok', 'Yes. The true sum is 19, and the machine shows 3, which is 16 less.']; } else M.q3 = ['bad', 'Not ' + v + '. For 15 + 1 the true sum is 16 and the machine shows 0. For 9 + 9 the true sum is 18 and the machine shows 2. How far apart are the true sum and what the machine shows each time?']; done(); };
       ['a2', 'a3'].forEach((id, i) => $('#' + id) && $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter') $('#q' + (i + 2)).click(); }));
     }
     function drawOpen(){
@@ -1256,12 +1286,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     if (c){
       h += '<div class="idea">' + l.learn + '</div><div class="msg ok">Your adder is made of <b>' + c.parts.length + ' Nand gates</b> and nothing else.</div><div id="probe-flat"></div><div id="stage-flat" class="stage" style="margin-top:10px"></div><p class="muted">Scroll sideways to follow the carry from the first column to the last.</p>';
     } else h += '<p>This view opens when every level is built. Levels still open: ' + LEVELS.filter(x => x.kind !== 'out' && !isDone(x)).map(x => esc(x.short)).join(', ') + '.</p>';
-    h += '<div class="tablewrap"><table class="tt res"><thead><tr><th>Box</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
+    h += '<div class="tablewrap"><table class="tt res"><thead><tr><th>Chip</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
     const counts = {}; ORDER.slice(1).forEach(n => { if (S.pass[n] && S.code[n]){ try { counts[n] = build(S.code[n], n, counts).nands; } catch (e) {} } });
     const full = n => !!counts[n] && (function ok(x){ try { return build(S.code[x], x).parts.every(p => p.chip.name === 'Nand' || (counts[p.chip.name] && ok(p.chip.name))); } catch (e) { return false; } })(n);
     BUILDS.forEach(b => { const n = b.chip; h += '<tr class="' + (S.pass[n] ? 'pass' : '') + '"><td><code>' + n + '</code></td><td>' + (S.pass[n] ? '&#10003; built and tested' : 'not built yet') + '</td><td>' + (full(n) ? counts[n] : '') + '</td><td>' + (B[n].par || '') + '</td></tr>'; });
     h += '</tbody></table></div>';
-    h += '<section class="step"><h3>Explain it</h3><p>Building a chip and explaining it are different skills. Try these three questions with a partner or with your AI:</p><ol>' + LOOK_QUESTIONS.map(q => '<li>' + esc(q) + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="ai">Copy these questions for my AI</button></div><div id="aibox"></div></section>';
+    if (full('Xor') && counts.Xor > 4) h += '<div class="msg info">Extra challenge: your Xor is made of ' + counts.Xor + ' Nand gates, and a design with only 4 exists. Go back to the Xor level and try to build it from Nand parts alone.</div>';
+    h += '<section class="step"><h3>Explain it</h3><p>Building a chip and explaining it are different skills. Try these questions with a partner or with your AI:</p><ol>' + LOOK_QUESTIONS.map(q => '<li>' + esc(q) + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="ai">Copy these questions for my AI</button></div><div id="aibox"></div></section>';
     h += '<section class="step"><h3>Start again</h3><p>This erases your saved chips and progress in this browser.</p><div class="row"><button type="button" class="btn ghost" id="wipe">Erase my progress</button></div></section>' + foot(l);
     main.innerHTML = h;
     if (c){ bench('flat', {chip:'Add4', builtin:false, circ:c, stage:'#stage-flat', probe:'#probe-flat'}); K.flat.circ = c; drawStage('flat', sketch(flat, 'Add4')); drawProbe('flat'); }

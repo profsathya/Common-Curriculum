@@ -4,21 +4,21 @@ Editable companion to trail-nand-to-adder.html. Edit the words here and tell Ala
 
 Shape (decided 11 Nov 2026): the trail runs top-down. Level 1 is an adder that takes plain numbers; three discovery questions open it. Every level after that is one box: the student sees it run, learns it, practices, rebuilds it in HDL from the boxes one level down, and passing the tests opens the boxes inside (double-click to zoom in). Binary is first met at level 2, inside the adder. Reviewer shortcut: add ?unlock=1 to the page address to open every level.
 
+Revised 12 Nov 2026 after the three-way review for repetition and skipped steps (cowork/fall-2026-courses/nand-trail-review-2026-11-12/agreed.md).
+
 CST286 - Learning trail - Nand to Tetris
 
 Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part.
 
-**Where you end up:** you can explain how a machine adds numbers, all the way down to one kind of gate, because you opened every box and rebuilt it yourself.
-
-The five steps of a level: **See it run** (flip the inputs of a working box and watch what it does) - **Learn it** (read what the box is for) - **Practice** (check that you can predict it) - **Build it** (rebuild the box in HDL from the boxes one level down) - **Open the box** (double-click a box you used and go inside it).
+**Where you end up:** you can explain how a machine adds numbers, all the way down to one kind of gate.
 
 ---
 
 ## Level 1 - A machine that adds (Adder)
 
 **After this level you can**
-- Find the limits of a machine by testing it with inputs you choose.
-- Describe what this adder does when the true answer is larger than 15.
+- Find where a machine breaks by testing it with inputs you choose.
+- Describe the pattern in its wrong answers.
 
 **See it run:** This box adds two whole numbers. Each number can be anything from 0 to 15. Change `a` and `b` and watch the answer. Try small numbers first, then large ones.
 
@@ -33,9 +33,9 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 **Investigate (each question appears when the one before it is answered; all three open the box)**
 1. Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.
 2. What is the largest number the machine ever shows as an answer?
-3. The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 10 + 8.
+3. The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 12 + 7.
 
-**Open the box:** A machine that adds gets 15 + 1 wrong, and it never shows a number above 15. The reason is in how the machine holds numbers inside. Double-click the Adder box on the drawing to go inside it, or use the button.
+**Open the box:** The reason is inside the machine. Double-click the Adder box on the drawing to go inside it, or use the button.
 
 **What you just showed (appears when the level is complete):** You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.
 
@@ -47,15 +47,24 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 - Read and write 4-bit binary numbers, and add two of them by hand with carries.
 - Build a 4-bit adder by chaining one small adder for each column.
 
-**See it run:** This is the same machine with the lid off. Inside, each number travels on four wires, and each wire carries either 0 or 1. Set `a` and `b` with the switches under the drawing and read `out`. Try 7 + 1. Then try 15 + 1, the sum the machine got wrong, and look at what the four output wires show.
+**See it run:** Here are the wires that go into and out of that box. Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what it is worth: 8, 4, 2 or 1. Flip one switch of `a` at a time to see what each wire adds. Then turn on 4, 2 and 1 to make 7, set `b` to 1, and read `out`. After that, try 15 + 1, the sum the machine got wrong.
 
 **Learn it**
 
-A wire inside the machine can carry only two values, 0 or 1. So the machine writes each number with four wires: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four wires the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.
+Inside the machine, a wire is read as one of two signal levels, which we write as 0 and 1. One wire is called a bit, so the machine writes each number with four bits. The rightmost bit is worth 1, and each bit to its left is worth double: 1, 2, 4, 8. The number is the sum of the bits that are 1, so 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four bits the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.
 
-The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.
+With two bits you can write four numbers: 00 is 0, 01 is 1, 10 is 2 and 11 is 3. You need these to add, because the machine adds the way you add by hand, one column at a time, starting from the right. A column adds a bit of a, a bit of b, and a carry of 1 if the column to its right produced one, so a column adds up to 0, 1, 2 or 3. A column can hold only one bit. So when it adds up to 2 (binary 10), it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11), it writes 1 and carries 1.
 
-When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow. The dropped carry was worth 16, and that is why 15 + 1 shows 0 and 9 + 9 shows 2.
+Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:
+
+- The 1s column: 1 + 1 = 2, so write 0 and carry 1.
+- The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.
+- The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.
+- The 8s column: 0 + 0 + the carry 1 = 1, so write 1.
+
+The answer is 1000, which is 8.
+
+When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -63,18 +72,20 @@ When the last column produces a carry, there is no fifth wire to hold it, so the
 
 **Build it**
 
-Now rebuild the machine to see how it works. Inside the box there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made boxes to use: `HalfAdder` adds two bits, and `FullAdder` adds three bits (two bits plus a carry coming in).
+Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: `HalfAdder` adds two bits, and `FullAdder` adds three bits (two bits plus a carry coming in).
 
-The inputs `a` and `b` are 4 bits wide. A group of wires like this is called a bus, and `a[0]`, `a[1]`, `a[2]`, `a[3]` pick out its single bits, with `a[0]` as the 1s place. The first column is written for you. Add the other three columns.
+You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. `IN a[4], b[4]` says that a and b each come in on four wires, and `OUT out[4]` says that the answer leaves on four wires. Leave those lines as they are, and add your parts under `PARTS:`.
 
-(followed by the HDL explanation below)
+The first column is written for you: `HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);` Read it from left to right. `HalfAdder` is the part. Inside the parentheses, the name on the left of each `=` is a pin of that part, and the name on the right is the wire you connect it to. `a[0]` is the rightmost wire of a, the 1s place. So `[0]` picks one wire, while the `[4]` in the IN line says how many wires there are. `c1` is a name made up for a new wire, which carries this column's carry to the next column.
+
+Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete `carry=` from that line. An output pin of a part can be left out when you do not need it.
 
 **Hints (shown one at a time, on request)**
-1. One adder for each column, as in the add-by-hand practice. The carry that leaves one column is the carry that enters the next column.
-2. Columns 1, 2 and 3 each have three bits to add: a bit of a, a bit of b, and the carry from the column before. That is a FullAdder. Give each carry wire its own name, such as c2 and c3.
-3. Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. The carry out of column 3 has nowhere to go, so you can leave that pin out.
+1. Column 1 has three bits to add: a[1], b[1] and the carry from column 0, which arrives on the wire c1. Which of your two parts adds three bits?
+2. A FullAdder line needs these connections: a, b, c, sum and carry. For column 1, c=c1 brings the carry in, and carry=c2 sends the new carry on to column 2.
+3. Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. In column 3, leave carry= out.
 
-**What you just showed (appears when the level is complete):** You rebuilt a machine that adds from four column adders. You used HalfAdder and FullAdder as boxes without knowing what is inside them, which is how engineers design large chips. Now open one of them.
+**What you just showed (appears when the level is complete):** You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.
 
 ---
 
@@ -88,24 +99,26 @@ The inputs `a` and `b` are 4 bits wide. A group of wires like this is called a b
 
 **Learn it**
 
-Every column after the first has three bits to add: `a`, `b`, and the carry `c` that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3, so two output bits are enough to write the answer: `carry` is the left bit and `sum` is the right bit.
+Every column after the first has three bits to add: `a`, `b`, and the carry `c` that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3. Written with two bits, those are 00, 01, 10 and 11. The left bit is the carry and the right bit is the sum, so an answer of 2 (binary 10) means carry 1 and sum 0.
 
-When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, and the box that adds two bits is the HalfAdder you used in column 0.
+When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, using the part that adds two bits, the HalfAdder. The first HalfAdder adds a and b, and it gives a sum bit and a carry bit. Only its sum bit goes on to the second step, where c is added to it. That second step can produce a carry of its own. So you end up with two carry wires, one from each step, while the chip has one carry output.
 
 **Video:** none yet (slot is hidden until a video is added)
 
-**Shown when the truth table has a wrong value:** Count how many of the three inputs are 1. Write that count in binary: carry is the left bit and sum is the right bit.
+**Practice:** A table like this is called a truth table. It has one row for every setting of the inputs, so three inputs give eight rows. For each row, work out the two outputs and fill them in. The output columns are in the order sum, then carry. Click a ? to set it to 0, and click again for 1.
+
+**Shown when the truth table has a wrong value:** Count how many of the three inputs are 1 in that row. A count of 0 or 1 has carry 0, and a count of 2 or 3 has carry 1. sum is 1 when the count is 1 or 3.
 
 **Build it**
 
-Build the FullAdder from the boxes below it. You have HalfAdder, and you also have the logic gates And, Or and Xor: And gives 1 only when both inputs are 1, Or gives 1 when at least one input is 1, and Xor gives 1 when the two inputs are different.
+Build the FullAdder from the parts below. Two of them do the two adding steps. Then decide what the chip's carry should be when you look at the two carry wires together, and pick the gate from the list that does that.
 
 **Hints (shown one at a time, on request)**
-1. Add in two steps: first a + b, then add c to that result.
-2. Each step is a HalfAdder. Each step can produce a carry, and the chip's carry is 1 when either step produced one.
-3. Three parts: a HalfAdder of a and b giving s1 and c1, a HalfAdder of s1 and c giving sum and c2, and an Or of c1 and c2 going to carry.
+1. The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.
+2. The second HalfAdder adds s1 and c. Its sum is the chip's sum. Its carry is a second carry wire, for example c2.
+3. The chip's carry should be 1 when either step produced a carry. That is an Or of c1 and c2 going to carry.
 
-**What you just showed (appears when the level is complete):** A question worth explaining to someone: the two HalfAdders inside your FullAdder can never both produce a carry for the same inputs. The truth table shows why.
+**What you just showed (appears when the level is complete):** Something worth explaining to someone: the two HalfAdders inside your FullAdder never both produce a carry for the same inputs. You can check it in the part-by-part list under your chip. Set a = 1 and b = 1: the first step carries and its sum is 0, so the second step has nothing to carry.
 
 ---
 
@@ -119,11 +132,11 @@ Build the FullAdder from the boxes below it. You have HalfAdder, and you also ha
 
 **Learn it**
 
-Every box so far has been about numbers. At this level the numbers turn into logic.
+The FullAdder still had smaller adders inside it. Inside the HalfAdder there are no adders left, only logic gates.
 
-A logic gate answers a yes-or-no question about its inputs. And asks "are both inputs 1?". Or asks "is at least one input 1?". Xor (exclusive or) asks "are the two inputs different?".
+A logic gate answers a yes-or-no question about its inputs, and it answers with a bit: 1 means yes and 0 means no. And asks "are both inputs 1?". Or asks "is at least one input 1?". Xor (exclusive or) asks "are the two inputs different?".
 
-Fill in the truth table for sum and carry. Then look at each output column on its own and ask which of those three questions it answers.
+In the practice below, fill in the truth table for sum and carry. Then look at each output column on its own and ask which of those three questions it answers.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -145,8 +158,8 @@ Build the HalfAdder from logic gates. Each output needs one gate.
 ## Level 5 - Are they different? Xor (Xor)
 
 **After this level you can**
-- Turn a sentence that uses "and", "or" and "not" into a circuit.
-- Count the Nand gates in your design and look for a smaller one.
+- Turn a truth table into a sentence that uses "and", "or" and "not".
+- Turn that sentence into a circuit, with one part for each "and", "or" and "not".
 
 **See it run:** This is the gate that produced your sum bit. Click `a` and `b`: the output is 1 when they are different.
 
@@ -154,7 +167,9 @@ Build the HalfAdder from logic gates. Each output needs one gate.
 
 Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.
 
-Here is a method that works for any truth table. Write a sentence for each row where the output is 1, then join the sentences with "or". Each "and", "or" and "not" in your sentence becomes one box.
+Here is a method that works for a truth table like this one. Take a row where the output is 1 and describe it with "and". An And gate gives 1 only when both of its inputs are 1. So an input that is 1 in that row is written by its name, and an input that is 0 is written with "not" in front of it, because Not turns that 0 into a 1. The row a = 1, b = 0 becomes "a and not b".
+
+Do the same for the other row where the output is 1, and join the two with "or". Each "and", "or" and "not" in your sentence becomes one part.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -162,14 +177,14 @@ Here is a method that works for any truth table. Write a sentence for each row w
 
 **Build it**
 
-Write the sentence for Xor first, then turn each word into a box.
+Write your sentence first. Then give every "not" a part and a wire name, feed those wires into the "and" parts, and join the results with the "or" part.
 
 **Hints (shown one at a time, on request)**
-1. Say it in words: out is 1 when (a is 1 and b is 0) or (a is 0 and b is 1).
-2. Each "and", "or" and "not" in that sentence is one box. You need two Nots, two Ands and one Or.
-3. Five parts: Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out. When it passes, look at the Nand count under the tests: there is a design with only four Nands.
+1. The two rows where Xor gives 1 are a = 1, b = 0 and a = 0, b = 1. The first is "a and not b". Write the second the same way.
+2. The full sentence is (a and not b) or (not a and b). It has two "not", two "and" and one "or", so it needs five parts.
+3. Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.
 
-**What you just showed (appears when the level is complete):** You have a method that turns any truth table into a circuit: one And for each row that gives 1, joined by Or.
+**What you just showed (appears when the level is complete):** You have a method for turning a small truth table into a circuit: one And for each row that gives 1, with a Not on every input that is 0 in that row, and an Or to join the rows.
 
 ---
 
@@ -183,9 +198,9 @@ Write the sentence for Xor first, then turn each word into a box.
 
 **Learn it**
 
-You are now close to the bottom. There is one gate you have not met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And, so it gives 0 only when both inputs are 1.
+There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.
 
-That means And can be built from the two boxes below it: a Nand, and a Not that flips the result back.
+That means And can be built from the two parts below it: a Nand, and a Not that flips the result back.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -193,14 +208,14 @@ That means And can be built from the two boxes below it: a Nand, and a Not that 
 
 **Build it**
 
-Connect the two boxes with a wire that you name yourself.
+Connect the two parts with a wire that you name yourself.
 
 **Hints (shown one at a time, on request)**
 1. Nand is short for Not-And. What do you get when you take the opposite of the opposite?
 2. Send a and b through a Nand and name its output, for example out=w.
 3. Two parts: a Nand from a and b to a wire w, then a Not from w to out.
 
-**What you just showed (appears when the level is complete):** And is a Nand followed by a Not. You chained two boxes with a wire you named.
+**What you just showed (appears when the level is complete):** Try a = 1 and b = 1 on your drawing: the Nand gives 0, and the Not turns it back into 1. In every other row the Nand gives 1, and the Not turns it into 0.
 
 ---
 
@@ -208,15 +223,15 @@ Connect the two boxes with a wire that you name yourself.
 
 **After this level you can**
 - Build Or from Not and Nand.
-- Use the fact that "a or b" means the same as "not (not a and not b)".
+- Change the inputs of a gate you have so that it behaves like the gate you need.
 
 **See it run:** Click `a` and `b`: the output is 0 only when both are 0.
 
 **Learn it**
 
-Or gives 1 when at least one input is 1. Neither of the boxes below it does that directly, so this level takes a piece of reasoning before any wiring.
+Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.
 
-Fill in the truth table and count the rows where Or gives 0. A Nand gate also gives 0 in exactly one row, the row where both of its inputs are 1. So the question becomes how to make that one row the right one.
+In the practice below, fill in the truth table and find the one row where Or gives 0. Nand also gives 0 in exactly one row, but it is a different row. So the question is what you could do to a and to b, before they reach the Nand, so that its 0 lands on the row you want.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -231,23 +246,23 @@ Decide what should happen to a and to b before they reach the Nand.
 2. Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?
 3. Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.
 
-**What you just showed (appears when the level is complete):** You used a law of logic (De Morgan's law) to build a gate you did not have from gates you did have.
+**What you just showed (appears when the level is complete):** Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan's law.
 
 ---
 
 ## Level 8 - Flip a bit: Not (Not)
 
 **After this level you can**
-- Build Not from a single Nand.
-- Explain why a Nand gate with both inputs tied together flips its input.
+- Build a one-input Not from a two-input Nand.
+- Explain what a Nand gate does when both of its inputs carry the same signal.
 
 **See it run:** Click `in` and watch `out` do the opposite.
 
 **Learn it**
 
-Not is the last box before the bottom. It has one input, and it flips it.
+Not has one input, and it flips it. You build it from a single Nand gate, which gives 0 only when both of its inputs are 1, and gives 1 in every other case.
 
-You build it from a single Nand gate. A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input. Remember what Nand does: it gives 0 only when both of its inputs are 1.
+A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -255,14 +270,14 @@ You build it from a single Nand gate. A Nand has two inputs and Not has only one
 
 **Build it**
 
-One box is enough.
+One part is enough.
 
 **Hints (shown one at a time, on request)**
 1. Think about the Nand rows where a and b are equal: 0,0 and 1,1.
-2. When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. In those rows the output is the opposite of the input.
+2. When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.
 3. One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.
 
-**What you just showed (appears when the level is complete):** A Nand with both inputs tied together can only be in the rows 0,0 and 1,1, and in those rows its output is the opposite of its input.
+**What you just showed (appears when the level is complete):** Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.
 
 ---
 
@@ -272,7 +287,7 @@ One box is enough.
 - State in one sentence what a Nand gate does.
 - Explain why every box above it could be built from this one gate.
 
-**See it run:** This is the one part that everything above it is made of. Click `a` and `b` and try all four combinations.
+**See it run:** Click `a` and `b` and try all four combinations.
 
 **Learn it**
 
@@ -297,19 +312,19 @@ In a real chip, a Nand gate is made of a few transistors, which are tiny electri
 
 **Learn it**
 
-This is your own 4-bit adder with every box opened, all the way down. Set `a` and `b` with the switches and watch the signals travel through the Nand gates.
+This is your own 4-bit adder with every box opened, all the way down. Set `a` to 0111 and `b` to 0001 with the switches, and follow the carry as it moves from the first column to the last.
 
 **Video:** none yet (slot is hidden until a video is added)
 
 ---
 
-## How to write a part in HDL (shown in full at level 2, and as a fold-out at the other build levels)
+## How to write a part in HDL (a fold-out at build levels 3 to 8; level 2 teaches it in its Build it text)
 
-You describe a chip in HDL (hardware description language), which tells the simulator which boxes to use and how to wire them. Each line under `PARTS:` is one box. Inside the parentheses, the name on the left of `=` is a pin of that box, and the name on the right is a wire in your chip. So `HalfAdder(a=x, b=y, sum=s, carry=c);` means: connect the HalfAdder's `a` pin to wire `x` and its `b` pin to wire `y`, and call its two outputs `s` and `c`.
+Each line under `PARTS:` is one part. Inside the parentheses, the name on the left of each `=` is a pin of that part, and the name on the right is the wire you connect it to. That wire is one of your chip's inputs or outputs, or a new name you make up for a wire between two parts. One part writes to the new wire (for example `out=w`) and another part reads it (for example `a=w`).
 
-The wires in your chip are its inputs, its outputs, and any new names you make up for wires between boxes. To send the output of one box into another box, give the wire between them a name of your own. One box writes to it, for example with `carry=c1`, and the other box reads it.
+A wire can go to more than one part. An output pin you do not need can be left out. Leave the CHIP, IN and OUT lines as they are.
 
-## What each box does (shown in the parts list at each build level)
+## What each part does (shown in the parts list at each build level; a level lists only the parts one level down, plus any the student has already built)
 
 - **Nand:** out is 0 only when a and b are both 1
 - **Not:** out is the opposite of in
@@ -320,8 +335,22 @@ The wires in your chip are its inputs, its outputs, and any new names you make u
 - **FullAdder:** adds three bits (a, b and a carry c): sum is the bit you write down, carry is the bit you carry
 - **Add4:** out = a + b (4 bits, a carry out of the last column is dropped)
 
+## Short lines around the activities
+
+- **Above the parts list, level 2:** Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Click one to insert it:
+- **Above the parts list, later levels:** Parts you can use here (click one to insert it):
+- **Under "Look inside your chip", level 2:** These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.
+- **Under "Look inside your chip", later levels:** Flip the inputs and read the value going into and out of every part.
+- **Truth table, levels 4 to 8:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.
+- **Open the box, before the build passes:** This step opens when your chip passes its tests.
+- **Open the box, level 2:** Your chip works, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.
+- **Open the box, later levels:** Open a part you used. The others stay open for you to come back to.
+- **Under a locked "Go down" button:** The next level opens when you finish this one.
+- **Under a locked "Zoom all the way out" button:** Zoom all the way out opens when every level is done. Still open: [the open levels, as buttons]
+
 ## Explain it (questions at the end)
 
-1. Why does a Nand gate with both inputs tied together act as a Not gate?
-2. Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?
-3. When your adder shows 0 for 15 + 1, which wire carried the missing 1, and where did it go?
+1. Pick a sum such as 5 + 3 and trace it from top to bottom: how the two numbers sit on four wires, what one column does, how gates produce that column's sum and carry, and how those gates come down to Nand.
+2. Why does a Nand gate with both inputs tied together act as a Not gate?
+3. Why can the two HalfAdders inside a FullAdder never both produce a carry for the same inputs?
+4. When your adder shows 0 for 15 + 1, which column produces the missing carry, and why is it not part of the four-bit answer?
