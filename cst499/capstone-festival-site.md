@@ -70,6 +70,13 @@ Students present at their own laptops. Each table below shows a different area o
 - Share my visit with the organizers: [x] What I did: who I am here as, and which tables I visited · [ ] My name · One thing you will remember from today (optional)
 - In the prototype the button only shows what would be shared.
 
+## Finding the room (decided 11 Nov, not built yet)
+- A "Directions to the BIT building" button that opens Google Maps on the visitor's phone.
+- On each student card: a floor plan of the building with that student's room highlighted and a line from the entrance.
+- A QR code on a sign at each entrance and each room door opens the site with "you are here" already set, so the path starts from that spot. No location permission is asked.
+- No 3D model and no moving dot indoors.
+- Needed first: the BIT floor plans and the final list of festival rooms.
+
 ## Not built yet (for Sergio or a later round)
 - Real cards: AI drafting from the finished posters (due Mon 7 Dec) and the step where each student reads and approves their two card versions
 - Student opt-in for name and photo on the site
