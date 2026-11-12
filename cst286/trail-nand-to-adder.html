@@ -235,6 +235,16 @@
   .how{grid-template-columns:repeat(5,1fr)}
   @media (max-width:900px){ .how{grid-template-columns:1fr 1fr} }
   @media (prefers-reduced-motion: reduce){ .stage.canzoom .gate.zoomable .body{animation:none} #stop.arrive{animation:none} }
+
+  .numprobe{display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; margin-top:12px}
+  .numpin{display:flex; align-items:center; gap:6px}
+  .numpin .pin{min-width:18px}
+  .numpin .sw{margin:0; font-size:1.2rem}
+  .numpin .num-in{width:70px; text-align:center; font-family:"IBM Plex Mono",monospace; font-size:1.1rem}
+  .numout{font-size:1.1rem; padding:6px 14px; border:1px solid var(--line); border-radius:999px; background:var(--stage)}
+  .numout b{color:var(--lamp); font-size:1.25rem}
+  .q{border:1px solid var(--line); border-radius:10px; padding:4px 16px 8px; margin:10px 0}
+  .tick{color:var(--ok); font-weight:700}
 </style>
 </head>
 <body>
@@ -247,7 +257,7 @@
       <p>Every computer you have used could be built from millions of copies of one tiny part. You start at the top, with a working machine that adds two numbers. Then you open it box by box, and at every level you rebuild what you just saw, until you reach that one part.</p>
       <p class="dest">Where you end up: you can explain how a machine adds numbers, all the way down to one kind of gate, because you opened every box and rebuilt it yourself.</p>
       <button type="button" class="btn" id="startbtn">Start the trail</button>
-      <div class="meta">8 levels, from a 4-bit adder down to the Nand gate &middot; best on a laptop screen</div>
+      <div class="meta">9 levels, from a machine that adds numbers down to the Nand gate &middot; best on a laptop screen</div>
     </div>
     <svg class="heroart" viewBox="0 0 420 260" role="img" aria-label="Signals flowing through Nand gates into a lit output">
       <path class="w" d="M20 50H110M20 100H110M20 160H110M20 210H110M196 75C240 75 240 110 280 110M196 185C240 185 240 150 280 150M366 130H392"/>
@@ -709,10 +719,18 @@ const CHIP_SAYS = {
 };
 
 const LEVELS = [
-  {id:'add4', kind:'build', chip:'Add4', short:'Add4', title:'A machine that adds',
+  {id:'adder', kind:'top', chip:'Adder', short:'Adder', title:'A machine that adds',
+   objs:['Find the limits of a machine by testing it with inputs you choose.', 'Describe what this adder does when the true answer is larger than 15.'],
+   see:'This box adds two whole numbers. Each number can be anything from 0 to 15. Change <code>a</code> and <code>b</code> and watch the answer. Try small numbers first, then large ones.',
+   learn:'<p>Most of the time this machine gives the answer you expect. If you try enough pairs of numbers, you will find sums that it gets wrong.</p><p>When engineers find a machine giving a wrong answer, they treat it as a clue about how the machine is built inside. So before you open the box, find out exactly when it goes wrong.</p>',
+   inv:['Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.', 'What is the largest number the machine ever shows as an answer?', 'The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 10 + 8.'],
+   open:'A machine that adds gets 15 + 1 wrong, and it never shows a number above 15. The reason is in how the machine holds numbers inside. Double-click the Adder box on the drawing to go inside it, or use the button.',
+   after:'You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.'},
+
+  {id:'add4', kind:'build', chip:'Add4', short:'Add4', title:'Inside the adder: numbers on wires',
    objs:['Read and write 4-bit binary numbers, and add two of them by hand with carries.', 'Build a 4-bit adder by chaining one small adder for each column.'],
-   see:'This box adds two 4-bit numbers. Set <code>a</code> and <code>b</code> with the switches under the drawing and read <code>out</code>. Try 7 + 1. Then try 15 + 1, and notice what the machine shows when the answer needs a fifth bit.',
-   learn:'<p>The same wires that carry 0 and 1 can carry numbers. Four wires together carry a 4-bit number: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5.</p><p>The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.</p><p>When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow, and it is why 15 + 1 shows 0.</p>',
+   see:'This is the same machine with the lid off. Inside, each number travels on four wires, and each wire carries either 0 or 1. Set <code>a</code> and <code>b</code> with the switches under the drawing and read <code>out</code>. Try 7 + 1. Then try 15 + 1, the sum the machine got wrong, and look at what the four output wires show.',
+   learn:'<p>A wire inside the machine can carry only two values, 0 or 1. So the machine writes each number with four wires: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four wires the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.</p><p>The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.</p><p>When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow. The dropped carry was worth 16, and that is why 15 + 1 shows 0 and 9 + 9 shows 2.</p>',
    practice:'Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.',
    build:'<p>Now rebuild the machine to see how it works. Inside the box there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made boxes to use: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>The inputs <code>a</code> and <code>b</code> are 4 bits wide. A group of wires like this is called a bus, and <code>a[0]</code>, <code>a[1]</code>, <code>a[2]</code>, <code>a[3]</code> pick out its single bits, with <code>a[0]</code> as the 1s place. The first column is written for you. Add the other three columns.</p>' + HDL_HELP,
    stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    \n}\n',
@@ -801,7 +819,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
   const KEY = 'cst286-nand-trail-v2';
-  let S = {code:{}, pass:{}, nands:{}, pred:{}, games:{}, level:0, path:[]};
+  let S = {code:{}, pass:{}, nands:{}, pred:{}, games:{}, inv:{}, level:0, path:[]};
   try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); if (j && typeof j === 'object') S = Object.assign(S, j); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
   const UNLOCK_ALL = /[?&]unlock=1/.test(location.search);
@@ -811,9 +829,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const bin4 = v => v.toString(2).padStart(4, '0');
   const BUILDS = LEVELS.filter(l => l.kind === 'build');
   const levelOf = chip => LEVELS.findIndex(l => l.chip === chip);
-  const PARENTS = {FullAdder:['Add4'], HalfAdder:['Add4', 'FullAdder'], Xor:['HalfAdder', 'FullAdder'], And:['HalfAdder', 'FullAdder', 'Xor'], Or:['FullAdder', 'Xor'], Not:['Xor', 'And', 'Or'], Nand:['Xor', 'And', 'Or', 'Not']};
-  const CANON = {FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
-  const isDone = l => l.kind === 'build' ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : false;
+  const PARENTS = {Add4:['Adder'], FullAdder:['Add4'], HalfAdder:['Add4', 'FullAdder'], Xor:['HalfAdder', 'FullAdder'], And:['HalfAdder', 'FullAdder', 'Xor'], Or:['FullAdder', 'Xor'], Not:['Xor', 'And', 'Or'], Nand:['Xor', 'And', 'Or', 'Not']};
+  const CANON = {Add4:'Adder', FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
+  const isDone = l => (l.kind === 'build' || l.kind === 'top') ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : false;
   const allDone = () => LEVELS.filter(l => l.kind !== 'out').every(isDone);
   const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
   const canon = chip => { const p = [chip]; while (CANON[p[0]]) p.unshift(CANON[p[0]]); return p; };
@@ -896,7 +914,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   /* ---------- a bench = one drawing (stage) plus optional switches (probe), for a built-in box or the student's chip ---------- */
   function bench(key, o){ K[key] = o; const spec = B[o.chip]; if (!PRB[key]){ PRB[key] = {}; spec.ins.forEach(([n]) => PRB[key][n] = 0); } }
   function drawProbe(key){
-    const k = K[key], el = k.probe && $(k.probe); if (!el){ applyStage(key); return; }
+    const k = K[key], el = k.probe && $(k.probe); if (!el){ applyStage(key); if (k.onChange) k.onChange(); return; }
     const spec = B[k.chip], c = k.circ, inp = PRB[key];
     if (!k.builtin && !c){ el.innerHTML = '<p class="muted">The switches and the part-by-part list appear here as soon as your chip has no errors.</p>'; applyStage(key); return; }
     const exp = spec.fn(inp), res = k.builtin ? {outs:exp, trace:[]} : run(c, inp);
@@ -972,7 +990,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const k = K[key], el = $(k.stage); if (!el) return;
     const sig = JSON.stringify(g);
     if (STG[key] && STG[key].sig === sig && $('svg', el)) return;
-    const L = layoutGraph(g), r = v => Math.round(v * 10) / 10, dl = n => L.dense ? 30 : 110, chip = k.chip;
+    const L = layoutGraph(g), r = v => Math.round(v * 10) / 10, dl = n => L.dense ? 30 : 110, chip = k.chip, shown = v => k.label || v;
     let wires = '', tops = '';
     g.edges.forEach((e, i) => {
       const s = L.srcNode(e), d = L.dstNode(e);
@@ -987,10 +1005,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     L.I.forEach(n => { nodes += '<g class="innode" data-in="' + esc(n.n.key) + '" tabindex="0" role="button" aria-label="input ' + esc(n.n.key) + ', click to change"><rect x="' + n.x + '" y="' + r(n.y) + '" width="' + n.w + '" height="' + n.h + '" rx="16"/><text class="nm" x="' + (n.x + 12) + '" y="' + r(n.y + n.h / 2 + 4) + '">' + esc(n.n.key) + '</text><text class="val" x="' + (n.x + n.w - 11) + '" y="' + r(n.y + n.h / 2 + 5) + '" text-anchor="end"></text></g>'; });
     L.O.forEach(n => { nodes += '<g class="outnode" data-out="' + esc(n.n.key) + '" style="transition-delay:' + ((L.maxL + 1) * dl()) + 'ms"><rect x="' + n.x + '" y="' + r(n.y) + '" width="' + n.w + '" height="' + n.h + '" rx="16"/><text class="val" x="' + (n.x + 11) + '" y="' + r(n.y + n.h / 2 + 5) + '"></text><text class="nm" x="' + (n.x + n.w - 10) + '" y="' + r(n.y + n.h / 2 + 4) + '" text-anchor="end">' + esc(n.n.key) + '</text></g>'; });
     L.P.forEach(p => {
-      const part = g.parts[p.i], name = part.chip, can = k.zoom && levelOf(name) >= 0 && name !== chip;
-      let h = '<g class="gate' + (p.gl ? ' gl' : ' box') + (can ? ' zoomable' : '') + '" data-p="' + p.i + '" data-chip="' + name + '"' + (can ? ' tabindex="0" role="button" aria-label="' + name + ' box. Double-click or press Enter to open it."' : '') + ' style="transition-delay:' + (p.level * dl()) + 'ms">';
+      const part = g.parts[p.i], name = part.chip, can = k.zoom && levelOf(name) >= 0 && (name !== chip || k.zoomSelf);
+      let h = '<g class="gate' + (p.gl ? ' gl' : ' box') + (can ? ' zoomable' : '') + '" data-p="' + p.i + '" data-chip="' + name + '"' + (can ? ' tabindex="0" role="button" aria-label="' + shown(name) + ' box. Double-click or press Enter to open it."' : '') + ' style="transition-delay:' + (p.level * dl()) + 'ms">';
       h += p.gl ? glyph(name, p.x, r(p.y), p.w, p.h) : '<rect class="body" x="' + p.x + '" y="' + r(p.y) + '" width="' + p.w + '" height="' + p.h + '" rx="9"/>';
-      h += '<text class="gn" x="' + r(p.x + (p.gl ? (name === 'Not' ? p.w * .36 : p.w * .47) : p.w / 2)) + '" y="' + r(p.y + p.h / 2 + 4) + '" text-anchor="middle">' + name + '</text>';
+      h += '<text class="gn" x="' + r(p.x + (p.gl ? (name === 'Not' ? p.w * .36 : p.w * .47) : p.w / 2)) + '" y="' + r(p.y + p.h / 2 + 4) + '" text-anchor="middle">' + shown(name) + '</text>';
       if (!p.gl){
         p.c.ins.forEach((x, j) => { const q = L.inPort(p, j); h += '<text class="pn" x="' + (q.x + 6) + '" y="' + r(q.y + 3.5) + '">' + x[0] + '</text>'; });
         p.c.outs.forEach((x, j) => { const q = L.outPort(p, j); h += '<text class="pn" x="' + (q.x - 6) + '" y="' + r(q.y + 3.5) + '" text-anchor="end">' + x[0] + '</text>'; });
@@ -1021,14 +1039,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     // values are shown only when the drawing matches a chip that compiled
     if (k.builtin){ outs = spec.fn(inp); pouts = [outs]; }
     else if (c && c.parts.length === g.parts.length){ const res = run(c, inp); outs = res.outs; wires = res.wires; pouts = res.trace.slice().sort((a, b) => a.P.n - b.P.n).map(t => t.r); }
-    const live = !!outs, mk = w => (1 << w) - 1;
+    const live = !!outs, mk = w => (1 << w) - 1, show = (v, w) => k.decimal ? String(v) : v.toString(2).padStart(w, '0');
     el.classList.toggle('live', live);
     el.classList.toggle('canzoom', !!k.zoomReady && k.zoomReady());
     const ev = e => !live ? null : e.d.t === 'out' ? (outs[e.d.name] >> e.d.lo) & mk(e.w) : e.s.t === 'in' ? (inp[e.s.name] >> e.s.lo) & mk(e.w) : wires[e.s.wire];
-    g.edges.forEach((e, i) => { const v = ev(e); $$('[data-e="' + i + '"]', el).forEach(p => { p.classList.toggle('on', !!v); p.classList.toggle('unk', v === null || v === undefined); }); const t = $('[data-ev="' + i + '"]', el); if (t) t.textContent = v === null || v === undefined ? '' : v.toString(2).padStart(e.w, '0'); });
-    g.ins.forEach(n => { const nd = $('.innode[data-in="' + n.key + '"]', el), v = (inp[n.name] >> n.lo) & mk(n.w); nd.classList.toggle('on', !!v); $('.val', nd).textContent = n.w > 1 ? v.toString(2).padStart(n.w, '0') : v; });
+    g.edges.forEach((e, i) => { const v = ev(e); $$('[data-e="' + i + '"]', el).forEach(p => { p.classList.toggle('on', !!v); p.classList.toggle('unk', v === null || v === undefined); }); const t = $('[data-ev="' + i + '"]', el); if (t) t.textContent = v === null || v === undefined ? '' : show(v, e.w); });
+    g.ins.forEach(n => { const nd = $('.innode[data-in="' + n.key + '"]', el), v = (inp[n.name] >> n.lo) & mk(n.w); nd.classList.toggle('on', !!v); $('.val', nd).textContent = n.w > 1 ? show(v, n.w) : v; });
     const exp = spec.fn(inp);
-    g.outs.forEach(n => { const nd = $('.outnode[data-out="' + n.key + '"]', el), v = live ? (outs[n.name] >> n.lo) & mk(n.w) : null; nd.classList.toggle('on', !!v); nd.classList.toggle('unk', v === null); nd.classList.toggle('wrong', v !== null && v !== ((exp[n.name] >> n.lo) & mk(n.w))); $('.val', nd).textContent = v === null ? '?' : n.w > 1 ? v.toString(2).padStart(n.w, '0') : v; });
+    g.outs.forEach(n => { const nd = $('.outnode[data-out="' + n.key + '"]', el), v = live ? (outs[n.name] >> n.lo) & mk(n.w) : null; nd.classList.toggle('on', !!v); nd.classList.toggle('unk', v === null); nd.classList.toggle('wrong', v !== null && v !== ((exp[n.name] >> n.lo) & mk(n.w))); $('.val', nd).textContent = v === null ? '?' : n.w > 1 ? show(v, n.w) : v; });
     g.parts.forEach((p, i) => { const nd = $('.gate[data-p="' + i + '"]', el), o = B[p.chip].outs; nd.classList.toggle('on', live && !!pouts[i] && o.length === 1 && o[0][1] === 1 && !!pouts[i][o[0][0]]); });
   }
   const boxSketch = chip => { const c = B[chip]; return sketch('PARTS: ' + chip + '(' + c.ins.concat(c.outs).map(x => x[0] + '=' + x[0]).join(', ') + ');', chip, true); };
@@ -1177,6 +1195,47 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const show = ok => { box.innerHTML = '<div class="msg info">' + (ok ? 'Copied. Paste it into your AI Dojo or another AI chat.' : 'Select the text below, copy it, and paste it into your AI Dojo or another AI chat.') + '</div>' + (ok ? '' : '<textarea class="editor small" rows="8" readonly>' + esc(txt) + '</textarea>'); };
     try { navigator.clipboard.writeText(txt).then(() => show(true), () => show(false)); } catch (e) { show(false); }
   }
+
+
+  VIEW.top = function(l){
+    const key = 'Adder:see', inv = S.inv, ready = () => !!S.pass.Adder || UNLOCK_ALL;
+    main.innerHTML = head(l) +
+      stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div><div id="numprobe" class="numprobe"></div>') +
+      stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
+      stepHTML(3, 'Investigate', '<div id="inv"></div>') +
+      stepHTML(4, 'Open the box', '<div id="open"></div>') + foot(l);
+    bench(key, {chip:'Add4', builtin:true, stage:'#stage-see', probe:null, decimal:true, label:'Adder', zoomSelf:true, zoom:(name, el) => zoomInto('Adder', 'Add4', el), zoomReady:ready, onChange:drawNum});
+    const inp = PRB[key];
+    function drawNum(){
+      const box = $('#numprobe'); if (!box) return;
+      const out = (inp.a + inp.b) & 15;
+      box.innerHTML = ['a', 'b'].map(n => '<div class="numpin"><span class="pin">' + n + '</span><button type="button" class="sw" data-n="' + n + '" data-d="-1" aria-label="' + n + ' minus 1">&minus;</button><input class="num-in" type="number" min="0" max="15" inputmode="numeric" data-n="' + n + '" value="' + inp[n] + '" aria-label="' + n + '"><button type="button" class="sw" data-n="' + n + '" data-d="1" aria-label="' + n + ' plus 1">+</button></div>').join('') +
+        '<div class="numout" role="status">' + inp.a + ' + ' + inp.b + ' &rarr; the machine shows <b>' + out + '</b></div>';
+      $$('button[data-d]', box).forEach(b => b.onclick = () => { inp[b.dataset.n] = Math.max(0, Math.min(15, inp[b.dataset.n] + (+b.dataset.d))); applyStage(key); drawNum(); const f = $('button[data-n="' + b.dataset.n + '"][data-d="' + b.dataset.d + '"]', box); if (f) f.focus(); });
+      $$('input[data-n]', box).forEach(x => x.onchange = () => { const v = Math.round(+x.value); inp[x.dataset.n] = isNaN(v) ? 0 : Math.max(0, Math.min(15, v)); applyStage(key); drawNum(); });
+    }
+    drawStage(key, boxSketch('Add4')); drawProbe(key);
+    const M = {};
+    function drawInv(){
+      const tick = k => inv[k] ? '<span class="tick">&#10003;</span> ' : '';
+      const msg = k => '<div class="msg ' + (M[k] ? M[k][0] : '') + '" role="status">' + (M[k] ? esc(M[k][1]) : '') + '</div>';
+      $('#inv').innerHTML =
+        '<div class="q"><p class="ask">' + tick('q1') + '<b>1.</b> ' + esc(l.inv[0]) + '</p><div class="row"><button type="button" class="btn' + (inv.q1 ? ' ghost' : '') + '" id="q1">The machine gets this one wrong</button></div>' + msg('q1') + '</div>' +
+        (!inv.q1 ? '' : '<div class="q"><p class="ask">' + tick('q2') + '<b>2.</b> ' + esc(l.inv[1]) + '</p><div class="row"><input class="num-in" id="a2" type="number" inputmode="numeric" aria-label="Largest number the machine shows"' + (inv.q2 ? ' value="15"' : '') + '><button type="button" class="btn' + (inv.q2 ? ' ghost' : '') + '" id="q2">Check</button></div>' + msg('q2') + '</div>') +
+        (!inv.q2 ? '' : '<div class="q"><p class="ask">' + tick('q3') + '<b>3.</b> ' + esc(l.inv[2]) + '</p><div class="row"><input class="num-in" id="a3" type="number" inputmode="numeric" aria-label="What the machine shows for 10 + 8"' + (inv.q3 ? ' value="2"' : '') + '><button type="button" class="btn' + (inv.q3 ? ' ghost' : '') + '" id="q3">Check</button></div>' + msg('q3') + '</div>') +
+        (S.pass.Adder ? afterHTML(l) : '');
+      $('#q1').onclick = () => { const t = inp.a + inp.b, m = t & 15; if (t > 15){ inv.q1 = true; M.q1 = ['ok', 'Yes. ' + inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + '.']; } else M.q1 = ['bad', inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + ', so it gets this one right. Try larger numbers.']; done(); };
+      if ($('#q2')) $('#q2').onclick = () => { const v = $('#a2').value.trim(); if (v === '') M.q2 = ['warn', 'Type a number first.']; else if (+v === 15){ inv.q2 = true; M.q2 = ['ok', 'Yes. However large the true sum is, the machine never shows more than 15.']; } else if (+v < 15) M.q2 = ['bad', 'It can show more than ' + v + '. Try 7 + 8 on the machine.']; else M.q2 = ['bad', 'Try to make the machine show ' + v + '. Set a and b so the true sum is ' + v + ', and look at what it shows.']; done(); };
+      if ($('#q3')) $('#q3').onclick = () => { const v = $('#a3').value.trim(); if (v === '') M.q3 = ['warn', 'Type a number first.']; else if (+v === 2){ inv.q3 = true; M.q3 = ['ok', 'Yes. The true sum is 18, and the machine shows 2, which is 16 less.']; } else M.q3 = ['bad', 'Not ' + v + '. For 15 + 1 the true sum is 16 and the machine shows 0. For 9 + 9 the true sum is 18 and the machine shows 2. How far apart are the true sum and what the machine shows each time?']; done(); };
+      ['a2', 'a3'].forEach((id, i) => $('#' + id) && $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter') $('#q' + (i + 2)).click(); }));
+    }
+    function drawOpen(){
+      $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="openadder">Open the Adder &#10530;</button></div>' : '<p class="muted">This step opens when you have answered the questions above.</p>';
+      if ($('#openadder')) $('#openadder').onclick = () => zoomInto('Adder', 'Add4', $('#stage-see .gate'));
+    }
+    function done(){ if (inv.q1 && inv.q2 && inv.q3 && !S.pass.Adder){ S.pass.Adder = true; } save(); drawInv(); drawOpen(); applyStage(key); renderMap(); refreshNext(l); }
+    drawInv(); drawOpen(); bindCommon(l);
+  };
 
   VIEW.bottom = function(l){
     const key = 'Nand:see';

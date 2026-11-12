@@ -2,7 +2,7 @@
 
 Editable companion to trail-nand-to-adder.html. Edit the words here and tell Alan; Alan carries each edit into the .html. The simulator, the live circuit drawing, the tests and the feedback messages they generate live only in the .html.
 
-Shape (decided 11 Nov 2026): the trail runs top-down. Each level is one box. The student sees it run, learns it, practices, rebuilds it in HDL from the boxes one level down, and passing the tests opens the boxes inside (double-click to zoom in). Reviewer shortcut: add ?unlock=1 to the page address to open every level.
+Shape (decided 11 Nov 2026): the trail runs top-down. Level 1 is an adder that takes plain numbers; three discovery questions open it. Every level after that is one box: the student sees it run, learns it, practices, rebuilds it in HDL from the boxes one level down, and passing the tests opens the boxes inside (double-click to zoom in). Binary is first met at level 2, inside the adder. Reviewer shortcut: add ?unlock=1 to the page address to open every level.
 
 CST286 - Learning trail - Nand to Tetris
 
@@ -10,25 +10,52 @@ Every computer you have used could be built from millions of copies of one tiny 
 
 **Where you end up:** you can explain how a machine adds numbers, all the way down to one kind of gate, because you opened every box and rebuilt it yourself.
 
-Every level has the same five steps: **See it run** (flip the inputs of a working box and watch what it does) - **Learn it** (read what the box is for) - **Practice** (check that you can predict it) - **Build it** (rebuild the box in HDL from the boxes one level down) - **Open the box** (double-click a box you used and go inside it).
+The five steps of a level: **See it run** (flip the inputs of a working box and watch what it does) - **Learn it** (read what the box is for) - **Practice** (check that you can predict it) - **Build it** (rebuild the box in HDL from the boxes one level down) - **Open the box** (double-click a box you used and go inside it).
 
 ---
 
-## Level 1 - A machine that adds (Add4)
+## Level 1 - A machine that adds (Adder)
+
+**After this level you can**
+- Find the limits of a machine by testing it with inputs you choose.
+- Describe what this adder does when the true answer is larger than 15.
+
+**See it run:** This box adds two whole numbers. Each number can be anything from 0 to 15. Change `a` and `b` and watch the answer. Try small numbers first, then large ones.
+
+**Learn it**
+
+Most of the time this machine gives the answer you expect. If you try enough pairs of numbers, you will find sums that it gets wrong.
+
+When engineers find a machine giving a wrong answer, they treat it as a clue about how the machine is built inside. So before you open the box, find out exactly when it goes wrong.
+
+**Video:** none yet (slot is hidden until a video is added)
+
+**Investigate (each question appears when the one before it is answered; all three open the box)**
+1. Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.
+2. What is the largest number the machine ever shows as an answer?
+3. The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 10 + 8.
+
+**Open the box:** A machine that adds gets 15 + 1 wrong, and it never shows a number above 15. The reason is in how the machine holds numbers inside. Double-click the Adder box on the drawing to go inside it, or use the button.
+
+**What you just showed (appears when the level is complete):** You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.
+
+---
+
+## Level 2 - Inside the adder: numbers on wires (Add4)
 
 **After this level you can**
 - Read and write 4-bit binary numbers, and add two of them by hand with carries.
 - Build a 4-bit adder by chaining one small adder for each column.
 
-**See it run:** This box adds two 4-bit numbers. Set `a` and `b` with the switches under the drawing and read `out`. Try 7 + 1. Then try 15 + 1, and notice what the machine shows when the answer needs a fifth bit.
+**See it run:** This is the same machine with the lid off. Inside, each number travels on four wires, and each wire carries either 0 or 1. Set `a` and `b` with the switches under the drawing and read `out`. Try 7 + 1. Then try 15 + 1, the sum the machine got wrong, and look at what the four output wires show.
 
 **Learn it**
 
-The same wires that carry 0 and 1 can carry numbers. Four wires together carry a 4-bit number: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5.
+A wire inside the machine can carry only two values, 0 or 1. So the machine writes each number with four wires: each wire is worth 8, 4, 2 or 1, and the number is the sum of the wires that are 1. So 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four wires the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.
 
 The machine adds the way you add by hand, one column at a time, starting from the right. A column can hold only 0 or 1. So when a column adds up to 2 (binary 10) it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11) it writes 1 and carries 1.
 
-When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow, and it is why 15 + 1 shows 0.
+When the last column produces a carry, there is no fifth wire to hold it, so the carry is dropped. This is called overflow. The dropped carry was worth 16, and that is why 15 + 1 shows 0 and 9 + 9 shows 2.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -51,7 +78,7 @@ The inputs `a` and `b` are 4 bits wide. A group of wires like this is called a b
 
 ---
 
-## Level 2 - Inside a column: the FullAdder (FullAdder)
+## Level 3 - Inside a column: the FullAdder (FullAdder)
 
 **After this level you can**
 - Explain what a FullAdder does with its three input bits.
@@ -82,7 +109,7 @@ Build the FullAdder from the boxes below it. You have HalfAdder, and you also ha
 
 ---
 
-## Level 3 - Adding two bits: the HalfAdder (HalfAdder)
+## Level 4 - Adding two bits: the HalfAdder (HalfAdder)
 
 **After this level you can**
 - Match the sum column and the carry column of a truth table to logic gates.
@@ -115,7 +142,7 @@ Build the HalfAdder from logic gates. Each output needs one gate.
 
 ---
 
-## Level 4 - Are they different? Xor (Xor)
+## Level 5 - Are they different? Xor (Xor)
 
 **After this level you can**
 - Turn a sentence that uses "and", "or" and "not" into a circuit.
@@ -146,7 +173,7 @@ Write the sentence for Xor first, then turn each word into a box.
 
 ---
 
-## Level 5 - Both at once: And (And)
+## Level 6 - Both at once: And (And)
 
 **After this level you can**
 - Build And from a Nand and a Not.
@@ -177,7 +204,7 @@ Connect the two boxes with a wire that you name yourself.
 
 ---
 
-## Level 6 - At least one: Or (Or)
+## Level 7 - At least one: Or (Or)
 
 **After this level you can**
 - Build Or from Not and Nand.
@@ -208,7 +235,7 @@ Decide what should happen to a and to b before they reach the Nand.
 
 ---
 
-## Level 7 - Flip a bit: Not (Not)
+## Level 8 - Flip a bit: Not (Not)
 
 **After this level you can**
 - Build Not from a single Nand.
@@ -239,7 +266,7 @@ One box is enough.
 
 ---
 
-## Level 8 - The bottom: the Nand gate (Nand)
+## Level 9 - The bottom: the Nand gate (Nand)
 
 **After this level you can**
 - State in one sentence what a Nand gate does.
@@ -276,7 +303,7 @@ This is your own 4-bit adder with every box opened, all the way down. Set `a` an
 
 ---
 
-## How to write a part in HDL (shown in full at level 1, and as a fold-out at the other build levels)
+## How to write a part in HDL (shown in full at level 2, and as a fold-out at the other build levels)
 
 You describe a chip in HDL (hardware description language), which tells the simulator which boxes to use and how to wire them. Each line under `PARTS:` is one box. Inside the parentheses, the name on the left of `=` is a pin of that box, and the name on the right is a wire in your chip. So `HalfAdder(a=x, b=y, sum=s, carry=c);` means: connect the HalfAdder's `a` pin to wire `x` and its `b` pin to wire `y`, and call its two outputs `s` and `c`.
 

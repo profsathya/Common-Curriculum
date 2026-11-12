@@ -402,7 +402,7 @@ document.addEventListener("click",e=>{
   if(b.id==="visitBtn") return go("visit");
   if(b.dataset.role){ st.role=b.dataset.role; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); return go("ask"); }
   if(b.dataset.sub){ st.sub=b.dataset.sub; buildRoute(); st.seen=[]; return go(st.route[0]); }
-  if(b.dataset.visit){ const id=b.dataset.visit, i=st.visited.indexOf(id); if(i<0) st.visited.push(id); else st.visited.splice(i,1); save(); return render(); }
+  if(b.dataset.visit){ const id=b.dataset.visit, i=st.visited.indexOf(id), now=i<0; if(now) st.visited.push(id); else st.visited.splice(i,1); save(); b.classList.toggle("ghost",now); b.textContent=now?"Visited. Tap to undo":"I visited "+byId(id).first; return; }
   if(b.dataset.go){ if(b.dataset.go==="start"){ st.role=null; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); } return go(b.dataset.go); }
 });
 window.addEventListener("hashchange",render);
