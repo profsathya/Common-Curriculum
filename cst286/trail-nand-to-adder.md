@@ -4,7 +4,7 @@ Editable companion to trail-nand-to-adder.html. Edit the words here and tell Ala
 
 Shape (decided 11 Nov 2026): the trail runs top-down. Level 1 is an adder that takes plain numbers; three discovery questions open it. Every level after that is one box: the student sees it run, learns it, practices, rebuilds it in HDL from the boxes one level down, and passing the tests opens the boxes inside (double-click to zoom in). Binary is first met at level 2, inside the adder. Reviewer shortcut: add ?unlock=1 to the page address to open every level.
 
-Revised 12 Nov 2026 after the three-way review for repetition and skipped steps (cowork/fall-2026-courses/nand-trail-review-2026-11-12/agreed.md).
+Revised 12 Nov 2026 after the three-way review for repetition and skipped steps (cowork/fall-2026-courses/nand-trail-review-2026-11-12/agreed.md). Added the same day: a "Try it" button on every part in the parts list, and a one-line warm-up build at level 2.
 
 CST286 - Learning trail - Nand to Tetris
 
@@ -76,7 +76,17 @@ Now rebuild the machine to see how it works. From here on, a box is called a chi
 
 You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. `IN a[4], b[4]` says that a and b each come in on four wires, and `OUT out[4]` says that the answer leaves on four wires. Leave those lines as they are, and add your parts under `PARTS:`.
 
-The first column is written for you: `HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);` Read it from left to right. `HalfAdder` is the part. Inside the parentheses, the name on the left of each `=` is a pin of that part, and the name on the right is the wire you connect it to. `a[0]` is the rightmost wire of a, the 1s place. So `[0]` picks one wire, while the `[4]` in the IN line says how many wires there are. `c1` is a name made up for a new wire, which carries this column's carry to the next column.
+**First, one line (warm-up build)**
+
+Warm up with one line before the full build. This small chip adds only the 1s column. Its one part is already there, and its two outputs are already connected. Two blanks are left: after `a=` and `b=`, type the name of the wire that should go to that pin. The wires you have are the chip's inputs, a and b. Then press Run.
+
+The line the student completes: `HalfAdder(a=, b=, sum=sum, carry=carry);`
+
+When it passes: That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.
+
+**Build it, continued**
+
+Now the whole four-column adder. The first column is written for you: `HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);` Read it from left to right. `HalfAdder` is the part. Inside the parentheses, the name on the left of each `=` is a pin of that part, and the name on the right is the wire you connect it to. `a[0]` is the rightmost wire of a, the 1s place. So `[0]` picks one wire, while the `[4]` in the IN line says how many wires there are. `c1` is a name made up for a new wire, which carries this column's carry to the next column.
 
 Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete `carry=` from that line. An output pin of a part can be left out when you do not need it.
 
@@ -324,7 +334,7 @@ Each line under `PARTS:` is one part. Inside the parentheses, the name on the le
 
 A wire can go to more than one part. An output pin you do not need can be left out. Leave the CHIP, IN and OUT lines as they are.
 
-## What each part does (shown in the parts list at each build level; a level lists only the parts one level down, plus any the student has already built)
+## What each part does (shown in the parts list at each build level; a level lists only the parts one level down, plus any the student has already built; each has a "Try it" button that opens a small live copy of the part)
 
 - **Nand:** out is 0 only when a and b are both 1
 - **Not:** out is the opposite of in
@@ -337,8 +347,8 @@ A wire can go to more than one part. An output pin you do not need can be left o
 
 ## Short lines around the activities
 
-- **Above the parts list, level 2:** Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Click one to insert it:
-- **Above the parts list, later levels:** Parts you can use here (click one to insert it):
+- **Above the parts list, level 2:** Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Press Try it to flip a part's inputs and see what it gives before you use it. Click a part's line to insert it:
+- **Above the parts list, later levels:** Parts you can use here. Press Try it to see what a part does, or click its line to insert it:
 - **Under "Look inside your chip", level 2:** These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.
 - **Under "Look inside your chip", later levels:** Flip the inputs and read the value going into and out of every part.
 - **Truth table, levels 4 to 8:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.

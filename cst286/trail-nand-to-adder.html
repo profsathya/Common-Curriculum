@@ -250,6 +250,13 @@
   .wcol .sw,.wcol .lamp{margin-right:0}
   .navwhy{margin-top:8px; text-align:right; min-height:1.2em}
   .jump{font:inherit; background:none; border:1px solid var(--tc); color:var(--tc); border-radius:999px; padding:1px 10px; cursor:pointer; margin-left:4px}
+
+  .trybtn{font:inherit; font-size:.84rem; background:none; border:1px solid var(--tc); color:var(--tc); border-radius:999px; padding:2px 12px; cursor:pointer; white-space:nowrap}
+  .trybtn:hover{background:var(--tsoft)}
+  .trybox{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; background:var(--stage); border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:2px 0 8px}
+  .trybox .pin{min-width:0; margin-left:6px}
+  .trybox .sw,.trybox .lamp{margin-right:2px}
+  .trybox .gives{margin:0 4px 0 12px}
 </style>
 </head>
 <body>
@@ -294,6 +301,7 @@ defChip('HalfAdder', [['a',1],['b',1]], [['sum',1],['carry',1]], p => ({sum:p.a^
 defChip('FullAdder', [['a',1],['b',1],['c',1]], [['sum',1],['carry',1]], p => { const t=p.a+p.b+p.c; return {sum:t&1, carry:t>>1}; }, 9);
 defChip('Add4', [['a',4],['b',4]], [['out',4]], p => ({out:(p.a+p.b)&15}), null, 32);
 defChip('Inc4', [['in',4]], [['out',4]], p => ({out:(p.in+1)&15}), null, 20);
+defChip('FirstColumn', [['a',1],['b',1]], [['sum',1],['carry',1]], p => ({sum:p.a^p.b, carry:p.a&p.b}), null, 5);
 const ORDER = ['Nand','Not','And','Or','Xor','HalfAdder','FullAdder','Add4'];
 
 function E(line, msg){ const e = new Error(msg); e.hdl = true; e.line = line; return e; }
@@ -351,6 +359,7 @@ function parse(src){
     return list;
   }
   function ref(){
+    if (T[p-1] && T[p-1].t === '=' && (!T[p] || T[p].t !== 'id')) throw E(T[p-1].line, 'There is nothing after an = sign on this line. After each =, write the name of the wire that pin connects to.');
     const n = expect('id', 'a pin or wire name'); let lo = null, hi = null;
     if (peek() && peek().t === '['){
       p++; lo = expect('num', 'a bit number').v; hi = lo;
@@ -392,13 +401,13 @@ function declText(d){ return d.map(([n, w]) => w > 1 ? n + '[' + w + ']' : n).jo
 function pinList(c){ return c.ins.map(x => x[0]).concat(c.outs.map(x => x[0])).join(', '); }
 
 /* build: parse + check + order. counts = Nand counts of the student's own chips (optional). */
-function build(src, chipName, counts){
+function build(src, chipName, counts, allowedParts){
   const spec = B[chipName]; const ast = parse(src);
   if (ast.name !== chipName) throw E(ast.line, 'Keep the first line as: CHIP ' + chipName + ' {');
   if (!sameDecl(ast.ins, spec.ins) || !sameDecl(ast.outs, spec.outs))
     throw E(ast.line, 'Keep the IN and OUT lines the way they were given: IN ' + declText(spec.ins) + ';  OUT ' + declText(spec.outs) + ';');
   if (!ast.parts.length) throw E(null, 'There are no parts yet. Add at least one part under PARTS:');
-  const allowed = ORDER.slice(0, ORDER.indexOf(chipName));
+  const allowed = allowedParts || ORDER.slice(0, ORDER.indexOf(chipName));
   const sig = {};
   for (const [n, w] of spec.ins) sig[n] = {w, kind:'in', read:false};
   for (const [n, w] of spec.outs) sig[n] = {w, kind:'out', drv:new Array(w).fill(false)};
@@ -730,7 +739,9 @@ const LEVELS = [
    see:'Here are the wires that go into and out of that box. Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what it is worth: 8, 4, 2 or 1. Flip one switch of <code>a</code> at a time to see what each wire adds. Then turn on 4, 2 and 1 to make 7, set <code>b</code> to 1, and read <code>out</code>. After that, try 15 + 1, the sum the machine got wrong.',
    learn:'<p>Inside the machine, a wire is read as one of two signal levels, which we write as 0 and 1. One wire is called a bit, so the machine writes each number with four bits. The rightmost bit is worth 1, and each bit to its left is worth double: 1, 2, 4, 8. The number is the sum of the bits that are 1, so 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four bits the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.</p><p>With two bits you can write four numbers: 00 is 0, 01 is 1, 10 is 2 and 11 is 3. You need these to add, because the machine adds the way you add by hand, one column at a time, starting from the right. A column adds a bit of a, a bit of b, and a carry of 1 if the column to its right produced one, so a column adds up to 0, 1, 2 or 3. A column can hold only one bit. So when it adds up to 2 (binary 10), it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11), it writes 1 and carries 1.</p><p>Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:</p><ul><li>The 1s column: 1 + 1 = 2, so write 0 and carry 1.</li><li>The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 8s column: 0 + 0 + the carry 1 = 1, so write 1.</li></ul><p>The answer is 1000, which is 8.</p><p>When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.</p>',
    practice:'Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.',
-   build:'<p>Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. <code>IN a[4], b[4]</code> says that a and b each come in on four wires, and <code>OUT out[4]</code> says that the answer leaves on four wires. Leave those lines as they are, and add your parts under <code>PARTS:</code>.</p><p>The first column is written for you: <code>HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);</code> Read it from left to right. <code>HalfAdder</code> is the part. Inside the parentheses, the name on the left of each <code>=</code> is a pin of that part, and the name on the right is the wire you connect it to. <code>a[0]</code> is the rightmost wire of a, the 1s place. So <code>[0]</code> picks one wire, while the <code>[4]</code> in the IN line says how many wires there are. <code>c1</code> is a name made up for a new wire, which carries this column\'s carry to the next column.</p><p>Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete <code>carry=</code> from that line. An output pin of a part can be left out when you do not need it.</p>',
+   build:'<p>Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. <code>IN a[4], b[4]</code> says that a and b each come in on four wires, and <code>OUT out[4]</code> says that the answer leaves on four wires. Leave those lines as they are, and add your parts under <code>PARTS:</code>.</p>',
+   warm:{lead:'Warm up with one line before the full build. This small chip adds only the 1s column. Its one part is already there, and its two outputs are already connected. Two blanks are left: after <code>a=</code> and <code>b=</code>, type the name of the wire that should go to that pin. The wires you have are the chip\'s inputs, a and b. Then press Run.', done:'That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.', stub:'CHIP FirstColumn {\n    IN a, b;\n    OUT sum, carry;\n\n    PARTS:\n    HalfAdder(a=, b=, sum=sum, carry=carry);\n}\n'},
+   build2:'<p>Now the whole four-column adder. The first column is written for you: <code>HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);</code> Read it from left to right. <code>HalfAdder</code> is the part. Inside the parentheses, the name on the left of each <code>=</code> is a pin of that part, and the name on the right is the wire you connect it to. <code>a[0]</code> is the rightmost wire of a, the 1s place. So <code>[0]</code> picks one wire, while the <code>[4]</code> in the IN line says how many wires there are. <code>c1</code> is a name made up for a new wire, which carries this column\'s carry to the next column.</p><p>Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete <code>carry=</code> from that line. An output pin of a part can be left out when you do not need it.</p>',
    stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    \n}\n',
    hints:['Column 1 has three bits to add: a[1], b[1] and the carry from column 0, which arrives on the wire c1. Which of your two parts adds three bits?', 'A FullAdder line needs these connections: a, b, c, sum and carry. For column 1, c=c1 brings the carry in, and carry=c2 sends the new carry on to column 2.', 'Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. In column 3, leave carry= out.'],
    after:'You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.'},
@@ -812,8 +823,8 @@ const LOOK_QUESTIONS = [
 
 /* Short lines the page shows around the activities (the same at every level unless noted). */
 const UI = {
-  partsFirst:'Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Click one to insert it:',
-  parts:'Parts you can use here (click one to insert it):',
+  partsFirst:'Each part you type is drawn on the right, and the drawing comes alive as soon as the chip has no errors. These are the parts you can use here. Press Try it to flip a part\'s inputs and see what it gives before you use it. Click a part\'s line to insert it:',
+  parts:'Parts you can use here. Press Try it to see what a part does, or click its line to insert it:',
   insideFirst:'These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.',
   inside:'Flip the inputs and read the value going into and out of every part.',
   table:'Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.',
@@ -838,7 +849,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
   const UNLOCK_ALL = /[?&]unlock=1/.test(location.search);
   const main = $('#stop'), mapEl = $('#map');
-  const K = {}, PRB = {}, STG = {}, LAST = {}, P = {}, H = {}, G = {};
+  const K = {}, PRB = {}, STG = {}, LAST = {}, P = {}, H = {}, G = {}, TRY = {};
   const rnd = n => Math.floor(Math.random() * n);
   const bin4 = v => v.toString(2).padStart(4, '0');
   const BUILDS = LEVELS.filter(l => l.kind === 'build');
@@ -1105,8 +1116,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
     h += stepHTML(4, 'Build it',
       '<div class="idea">' + l.build + '</div>' + (l.build.indexOf('hardware description language') < 0 ? '<details class="help"><summary>How to write a part in HDL</summary>' + HDL_HELP + '</details>' : '') +
+      (l.warm ? '<div class="game" id="warm"></div><div class="idea">' + l.build2 + '</div>' : '') +
       '<p>' + (first ? UI.partsFirst : UI.parts) + '</p>' +
-      '<div class="tablewrap"><table class="parts"><tbody>' + shownParts(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td></tr>').join('') + '</tbody></table></div>' +
+      '<div class="tablewrap"><table class="parts"><tbody>' + shownParts(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td><td><button type="button" class="trybtn" data-c="' + a + '" aria-expanded="false">Try it</button></td></tr><tr class="tryrow" data-c="' + a + '" hidden><td colspan="3"></td></tr>').join('') + '</tbody></table></div>' +
       '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
@@ -1149,6 +1161,40 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       S.code[chip] = ed.value; save(); ed.focus(); live();
       const caret = at + line.indexOf('=') + 1; try { ed.setSelectionRange(caret, caret); } catch (e) {}
     });
+    // try a part before wiring it: a small live copy of the part, with its own switches
+    $$('.trybtn').forEach(b => b.onclick = () => {
+      const name = b.dataset.c, row = $('.tryrow[data-c="' + name + '"]'), c = B[name];
+      row.hidden = !row.hidden; b.setAttribute('aria-expanded', row.hidden ? 'false' : 'true'); b.textContent = row.hidden ? 'Try it' : 'Close';
+      if (row.hidden) return;
+      const st = TRY[name] || (TRY[name] = {}); c.ins.forEach(([n]) => { if (st[n] === undefined) st[n] = 0; });
+      const draw = () => {
+        const o = c.fn(st);
+        row.firstChild.innerHTML = '<div class="trybox"><span class="lbl">' + name + ' inputs</span>' + c.ins.map(([n]) => '<span class="pin">' + n + '</span><button type="button" class="sw' + (st[n] ? ' on' : '') + '" data-n="' + n + '" aria-pressed="' + (st[n] ? 'true' : 'false') + '" aria-label="' + name + ' input ' + n + '">' + st[n] + '</button>').join('') +
+          '<span class="lbl gives">gives</span>' + c.outs.map(([n]) => '<span class="pin">' + n + '</span><span class="lamp' + (o[n] ? ' on' : '') + '">' + o[n] + '</span>').join('') + '</div>';
+        $$('.sw', row).forEach(x => x.onclick = () => { st[x.dataset.n] ^= 1; draw(); const f = $('.sw[data-n="' + x.dataset.n + '"]', row); if (f) f.focus(); });
+      };
+      draw();
+    });
+    // level 2 warm-up: one line with two blanks, before the four-column build
+    if (l.warm){
+      const W0 = 'FirstColumn', box = $('#warm');
+      box.innerHTML = '<h4 class="sub">First, one line</h4><p>' + l.warm.lead + '</p><div class="bench"><div><label class="sr" for="wed">HDL for the warm-up chip</label><textarea id="wed" class="editor small" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" rows="8"></textarea></div><div><div id="stage-warm" class="stage"></div></div></div><div class="row"><button type="button" class="btn" id="wrun">Run</button><button type="button" class="btn ghost" id="wreset">Start over</button></div><div id="wres" role="status"></div>';
+      const wed = $('#wed'); wed.value = S.code[W0] || l.warm.stub;
+      bench('warm', {chip:W0, builtin:false, circ:null, stage:'#stage-warm', probe:null});
+      const parts = ['HalfAdder'];
+      const wlive = () => { drawStage('warm', sketch(wed.value, W0)); try { K.warm.circ = build(wed.value, W0, null, parts); } catch (e) { if (!e.hdl) throw e; K.warm.circ = null; } drawProbe('warm'); };
+      let wt = null;
+      wed.addEventListener('input', () => { S.code[W0] = wed.value; save(); clearTimeout(wt); wt = setTimeout(wlive, 220); });
+      $('#wreset').onclick = () => { wed.value = l.warm.stub; S.code[W0] = wed.value; save(); $('#wres').innerHTML = ''; wlive(); wed.focus(); };
+      $('#wrun').onclick = () => {
+        clearTimeout(wt); wlive(); const res = $('#wres'); let c;
+        try { c = build(wed.value, W0, null, parts); } catch (e) { if (!e.hdl) throw e; res.innerHTML = '<div class="msg bad"><b>' + (e.line ? 'Line ' + e.line + '. ' : '') + '</b>' + esc(e.message) + '</div>'; return; }
+        const rows = testChip(c), ok = rows.every(r => r.ok);
+        if (ok){ S.pass[W0] = true; save(); res.innerHTML = '<div class="msg ok"><b>It works.</b> Click a and b on the drawing to see 1 + 1 give sum 0 and carry 1. ' + esc(l.warm.done) + '</div>'; }
+        else res.innerHTML = '<div class="msg bad"><b>It runs, and ' + rows.filter(r => r.ok).length + ' of 4 rows are right.</b></div><ul class="diag">' + diagnose(rows, B[W0]).slice(0, 2).map(m => '<li>' + esc(m.replace(' Show that row on the drawing and follow the signal from the inputs to the first wire that looks wrong.', '')) + '</li>').join('') + '</ul>';
+      };
+      wlive(); if (S.pass[W0]) $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>';
+    }
     $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; live(); ed.focus(); };
     const showHints = () => { $('#hints').innerHTML = l.hints.slice(0, H[chip] || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H[chip] || 0) >= l.hints.length) $('#hint').textContent = 'No more hints'; };
     $('#hint').onclick = () => { H[chip] = Math.min((H[chip] || 0) + 1, l.hints.length); showHints(); };
