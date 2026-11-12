@@ -46,7 +46,7 @@ a{color:var(--accent-ink)}
 .link{background:none;border:0;padding:10px 6px;color:var(--accent-ink);text-decoration:underline;cursor:pointer;font-size:16px;min-height:44px}
 .sample{background:var(--gold-soft);color:var(--gold);font-size:14px;padding:8px 16px;text-align:center}
 
-.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 56px}
+.wrap{max-width:1120px;margin:0 auto;padding:16px 16px 40px}
 .narrow{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
 .eyebrow{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);font-weight:700}
 .h-big{font-size:clamp(34px,9vw,52px);font-weight:800}
@@ -59,6 +59,13 @@ a{color:var(--accent-ink)}
 .choice b{font-family:var(--display);font-size:21px;font-weight:600}
 .choice span{color:var(--muted);font-size:16px}
 .choice:hover,.row:hover{border-color:var(--accent)}
+.front{gap:12px}
+.front .h-big{font-size:clamp(30px,8vw,44px)}
+.front .muted{font-size:15px}
+.front .choices{gap:8px}
+.choice.slim{flex-direction:row;align-items:center;justify-content:space-between;padding:10px 16px;min-height:50px;border-left:5px solid var(--accent)}
+.choice.slim b{font-size:19px}
+.choice.slim i{font-style:normal;color:var(--accent-ink);font-size:22px}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{background:var(--surface);border:1.5px solid var(--rule);border-radius:999px;padding:12px 18px;min-height:48px;cursor:pointer;font-size:17px}
 .chip:hover{border-color:var(--accent)}
@@ -112,9 +119,6 @@ pre.out{white-space:pre-wrap;background:var(--accent-soft);border-radius:12px;pa
 </style>
 </head>
 <body>
-<header class="bar" id="bar">
-  <button class="mark" id="home" type="button">Capstone Festival<small>B.S. Computer Science · CSU Monterey Bay</small></button>
-</header>
 <div class="wrap"><main id="view"></main></div>
 <footer class="sample">Prototype. The students and projects on this page are made up, and the links on each card are samples.</footer>
 
@@ -126,10 +130,10 @@ const LENS={
   a:{label:"How students used AI in their work",line:"Where AI helped, and where the student had to direct or correct it."}
 };
 const ROLES={
-  family:{label:"Family or friend",sub:"I am here for a student"},
-  employer:{label:"Employer or industry guest",sub:"I want to meet students in my line of work"},
-  faculty:{label:"Faculty",sub:"I want to see how students worked"},
-  admin:{label:"Administrator",sub:"I want a picture of the whole program"},
+  family:{label:"Family member or friend",sub:"I am here for a student"},
+  employer:{label:"Hiring manager or industry guest",sub:"I want to meet students in my line of work"},
+  faculty:{label:"Faculty member",sub:"I want to see how students worked"},
+  admin:{label:"University administrator",sub:"I want a picture of the whole program"},
   student:{label:"Student",sub:"I want to see what capstone looks like"}
 };
 const UNIVERSAL="What was the hardest decision you made, and what did you give up by making it?";
@@ -273,7 +277,6 @@ function buildRoute(){
 }
 
 function render(){
-  document.getElementById("bar").hidden=true;
   const h=location.hash.slice(1)||"start";
   if(h==="start"||!st.role&&h!=="all"&&h!=="visit"&&!h.startsWith("student-")) return start();
   if(h==="ask") return ask();
@@ -285,14 +288,13 @@ function render(){
 }
 
 function start(){
-  document.getElementById("bar").hidden=false;
-  view.innerHTML=`<div class="narrow">
-    <p class="eyebrow">December 2026 · date and rooms to be confirmed</p>
+  view.innerHTML=`<div class="narrow front">
+    <div><p class="eyebrow">CSU Monterey Bay · B.S. Computer Science</p>
     <h1 class="h-big">Capstone Festival</h1>
-    <p class="lede">Tell us who you are. We will suggest which tables to visit and what to ask when you get there.</p>
-    <h2 class="h-q">Who are you?</h2>
-    <ul class="choices">${Object.entries(ROLES).map(([k,v])=>`<li><button class="choice" type="button" data-role="${k}"><b>${esc(v.label)}</b><span>${esc(v.sub)}</span></button></li>`).join("")}</ul>
-    <p><button class="link" type="button" data-go="all">Or see all ${S.length} students</button></p>
+    <p class="muted">December 2026. Pick one to get your route.</p></div>
+    <h2 class="h-q">I am a</h2>
+    <ul class="choices">${Object.entries(ROLES).map(([k,v])=>`<li><button class="choice slim" type="button" data-role="${k}"><b>${esc(v.label)}</b><i aria-hidden="true">›</i></button></li>`).join("")}</ul>
+    <p><button class="link" type="button" data-go="all">See all ${S.length} students</button></p>
   </div>`;
 }
 

@@ -13,21 +13,21 @@ All students and projects are made up (the same fifteen as the earlier sample).
 - Prototype first, built here; Sergio gets the fine-tuning and the engineering parts.
 
 ## Top bar and My visit
-- The top bar (Capstone Festival · B.S. Computer Science · CSU Monterey Bay) shows on the front door only and scrolls away with the page.
-- Inside screens have no top bar. "My visit" is a link at the bottom of each inside screen.
+- There is no top bar. The front door carries the title.
+- "My visit" is a link at the bottom of each inside screen.
 - The student card has neither; on a phone it takes the whole screen, with "Back to my route" above the card.
 
-## Front door
-- Eyebrow: December 2026 · date and rooms to be confirmed
+## Front door (meant to fit one phone screen without scrolling)
+- Eyebrow: CSU Monterey Bay · B.S. Computer Science
 - Title: Capstone Festival
-- Intro: Tell us who you are. We will suggest which tables to visit and what to ask when you get there.
-- Question: Who are you?
-  - Family or friend / I am here for a student
-  - Employer or industry guest / I want to meet students in my line of work
-  - Faculty / I want to see how students worked
-  - Administrator / I want a picture of the whole program
-  - Student / I want to see what capstone looks like
-- Link: Or see all 15 students
+- Line: December 2026. Pick one to get your route.
+- Heading: I am a
+  - Family member or friend
+  - Hiring manager or industry guest
+  - Faculty member
+  - University administrator
+  - Student
+- Link: See all 15 students
 
 ## Second question, by visitor
 - Family or friend: "Who are you here for?" Type a name, pick the student.
