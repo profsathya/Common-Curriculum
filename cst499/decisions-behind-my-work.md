@@ -108,13 +108,13 @@ You are encouraged to think through a second important decision the same way.
 
 ### Task 3 · My decision card, looking back
 
-**3a. Compare the decision card from your poster's first version with what you see now. What is different?**
+**3a. Compare the decision card from your poster's first version with what you see now. Does this reflection provide any ideas for you?**
 
-   **Your answer to 3a.** What is different now.
+   **Your answer to 3a.** Does this reflection provide any ideas for you.
 
-**3b. Does your card need to change? Why or why not?**
+**3b. Can you improve the decision card based on this reflection? Why or why not?**
 
-   **Your answer to 3b.** Whether your card needs to change, and why or why not.
+   **Your answer to 3b.** How can you improve the decision card based on this reflection.
 
 ## Look forward
 
