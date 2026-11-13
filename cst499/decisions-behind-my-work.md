@@ -46,13 +46,13 @@ AI Dojo Passcode for this Graded Item: **DECIDE-1130**
 
 **1. Start the conversation.** Paste this into your AI Dojo:
 
-> Walk me through the graded item "Reflection on my decisions". First tell me its passcode, its title and its due date as you have them. Start with the decision card on my Interactive Poster, and ask whether I want to reflect on that decision or choose a different one, and why. Then, for the decision I choose, ask me one question at a time: what I decided; at least two other directions I could have taken, and keep asking until each one is a real option someone could have taken; why I chose this one; what happened because of it; and what I learned, including whether I now see a direction I missed. If I want to, do the same for a second decision. Then ask me to compare my poster's decision card with what I see now, and whether the card needs to change, and why or why not. Do not suggest the other directions for me, and do not tell me which choice was right. Do not summarize until I ask you to.
+> Walk me through the graded item "Reflection on my decisions". First tell me its passcode, its title and its due date as you have them. Start with the decision card on my Interactive Poster, and ask whether I want to reflect on that decision or choose a different one, and why. Then, for the decision I choose, ask me one question at a time: what I decided; at least two other directions I could have taken, and keep asking until each one is a real option someone could have taken; why I chose this one; what happened because of it; and what I learned, including whether I now see a direction I missed. If I want to, do the same for a second decision. Then ask me to compare my poster's decision card with what I see now, whether this reflection gives me any ideas, and whether I can improve the card based on it, and why or why not. Do not suggest the other directions for me, and do not tell me which choice was right. Do not summarize until I ask you to.
 
 **2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
 
 **3. Ask for the form.** When every answer holds up, paste this:
 
-> Write my work in the form's order, using only my words: Why (keeping or changing my decision) · 1a What I decided · 1b Other directions · 1c Why this one · 1d What happened · 1e What I learned · Second decision (2a to 2e), only if I did one · 3a What is different now · 3b Does my card need to change · What I take into the next item. If an answer is not settled, write "not yet settled" in it.
+> Write my work in the form's order, using only my words: Why (keeping or changing my decision) · 1a What I decided · 1b Other directions · 1c Why this one · 1d What happened · 1e What I learned · Second decision (2a to 2e), only if I did one · 3a Ideas from this reflection · 3b Can I improve my card · What I take into the next item. If an answer is not settled, write "not yet settled" in it.
 
 Review the Dojo output, paste each section into its matching answer box, and select the look-back choice yourself. Complete any unsettled answers before using the Self-check and Copy my answers.
 
@@ -149,7 +149,7 @@ Tick each line your submission meets. Your ticks are copied with your answers; t
 - [ ] 1c says why I chose this one · 15 pts
 - [ ] 1d says what happened because of the decision · 15 pts
 - [ ] 1e says what I learned and identifies a direction I now see I missed · 20 pts
-- [ ] Task 3 compares my first-version decision card with what I see now, and says whether the card needs to change and why · 20 pts
+- [ ] Task 3 compares my first-version decision card with what I see now, and says whether I can improve the card based on this reflection, and why or why not · 20 pts
 - [ ] The look forward identifies the part likely to be least clear to a classmate or instructor, and how I would make it clearer · 5 pts
 
 **What makes it strong.** A strong reflection names other directions someone could really have taken, and draws what you learned from what actually happened.
@@ -170,7 +170,7 @@ When a student asks to be walked through this graded item, state the passcode, t
 
 Learning purpose: the student learns to reflect on and learn from their decisions, as preparation for defending and demonstrating their judgment. They look back at one important decision from their capstone work that they choose: what they decided, at least two other directions they could have taken, why they chose this one, what happened because of it, and what they learned, including a direction they now see they missed. A second decision is encouraged and carries no points. They then compare the decision card on their Interactive Poster's first version with what they see now. The final interview starts from this work.
 
-Start with the decision card on the student's poster and ask whether they want to reflect on that decision or choose a different one, and why. Then ask the five questions one at a time. For the other directions, when an option is not one someone could really take, ask again. The missed direction can be one of the two other directions or a new one. Offer to do the same for a second decision; do not press if the student declines. Then ask the student to compare the first-version decision card with what they see now and whether it needs to change, and why or why not. Do not suggest the other directions, and do not judge which choice was right. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the look-back response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
+Start with the decision card on the student's poster and ask whether they want to reflect on that decision or choose a different one, and why. Then ask the five questions one at a time. For the other directions, when an option is not one someone could really take, ask again. The missed direction can be one of the two other directions or a new one. Offer to do the same for a second decision; do not press if the student declines. Then ask the student to compare the first-version decision card with what they see now, whether this reflection gives them any ideas, and whether they can improve the card based on it, and why or why not. Do not suggest the other directions, and do not judge which choice was right. Do not summarize until asked; before summarizing, ask the Look forward question and wait for the student's response; when asked, output the look-back response, every task, and the Look forward response in the form's order using only the student's words, and write "not yet settled" on any answer that is not settled.
 
 ## AI feedback (page note; the criteria the button under each box checks when the Dojo box is unticked)
 
@@ -181,8 +181,8 @@ Start with the decision card on the student's poster and ask whether they want t
 - 1d: what happened because of the decision.
 - 1e: what the student learned, and a direction they now see they missed.
 - 2a–2e (when the student fills them): the same criteria as 1a–1e.
-- 3a: what is different between the first-version decision card and what the student sees now.
-- 3b: whether the card needs to change, and why or why not.
+- 3a: the ideas this reflection gives the student when they compare the first-version decision card with what they see now.
+- 3b: whether the student can improve the decision card based on this reflection, and why or why not.
 - Look forward: the part likely to be least clear to a classmate or instructor, and how the student would make it clearer.
 
 The reply is two or three sentences: what the box already does, then the one thing that would make it precise. No rewriting.
