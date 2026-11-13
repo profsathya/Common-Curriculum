@@ -62,33 +62,33 @@ Review the Dojo output, paste each section into its matching answer box, and sel
 
 ### Task 1 · One important decision
 
-Choose one important decision you made in your capstone work, and think it through.
+Choose one important decision you made in your capstone work, and reflect on what lessons you learned from making that decision.
 
 **1a. What did you decide?**
 
-*(Choose a decision that changed what you did next. If you could undo it in five minutes, it is probably not the one.)* [for Sathya's read: kept from draft 1]
+*(Choose a decision that set an important direction for your capstone. Try to consider a decision that had a long term impact on your project.)* [for Sathya's read: kept from draft 1]
 
    **Your answer to 1a.** The decision.
 
 **1b. What were at least two other directions you could have taken?**
 
-*(The other directions should be real options someone could have taken: a different tool or method, a different project, a certificate, a job or internship, or a different kind of work on the same problem.)* [for Sathya's read: shortened from draft 1]
+*(The other directions should be real options someone could have taken: a different tool or method, a different project, certificate, job or internship, or a different kind of work on the same problem.)* [for Sathya's read: shortened from draft 1 - Good]
 
    **Your answer to 1b.** At least two other directions.
 
-**1c. Why did you choose this one?**
+**1c. Why did you make the particular decision?**
 
-*(Connect your reasons to your goals, evidence and constraints, such as a posting, a user response, a test result, your time, your access or your experience.)* [for Sathya's read: shortened from draft 1]
+*(Connect your reasons to your goals, external evidence you considered and constraints, such as job postings, a user response, a test result, your time, your access or your experience.)* [for Sathya's read: shortened from draft 1]
 
-   **Your answer to 1c.** Why you chose this one.
+   **Your answer to 1c.** Why did you make the particular decision.
 
-**1d. What happened because of it?**
+**1d. What happened because of the decision?**
 
    **Your answer to 1d.** What happened.
 
-**1e. What did you learn, and is there a direction you now see you missed?**
+**1e. Can you think of any lessons you learned from making this decision, and is there a choice you think may have helped?**
 
-*(The direction you missed can be one of the two in 1b, or one you only see now.)*
+*(The decision you missed can be one of the two in 1b, or one you only see now.)*
 
    **Your answer to 1e.** What you learned; a direction you now see you missed.
 
