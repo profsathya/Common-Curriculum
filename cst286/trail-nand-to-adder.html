@@ -918,7 +918,11 @@ const TEACH = {
   full:'That is as long as this conversation can run. Ask for feedback now.',
   fail:'The AI helper did not answer. Your message is still in the box, so you can send it again.',
   fbTitle:'Feedback on your explanation',
+  fbFail:'The feedback helper is not answering right now, and your conversation is still saved here. You can try again, check your explanation yourself against the five links below, or copy the conversation and ask your own AI for feedback.',
+  fbRetry:'Try the feedback again', fbCopy:'Copy my conversation for my AI',
+  fbAsk:'Below is a conversation in which I explained to a classmate how a machine adds 5 + 3. For each of these five links, tell me whether I explained it, partly explained it, or did not reach it, and point to what I actually said: ',
   links:['Numbers to bits', 'One column', 'Column to gates', 'Gates to Nand', 'Nand to transistors'],
+  linkAsk:['did you say how 5 and 3 sit on four wires each?', 'did you say what one column takes in and gives out, and where the carry goes?', 'did you say which gates make the sum bit and the carry?', 'did you say how those gates can be made from Nand alone?', 'did you say what the four transistors do, and why each pair is arranged the way it is?'],
   system:`You are playing a college classmate in CST286, an introductory computer systems course. You missed the unit on how computers add. The student you are talking with has just finished it. They built a 4-bit adder and opened it level by level:
 - numbers sit on four wires as bits with place values 8, 4, 2, 1
 - the adder is one column circuit repeated four times, with the carry passed from each column to the next (a HalfAdder for the first column, FullAdders for the rest)
@@ -936,7 +940,8 @@ Your job is to get the student to explain this whole chain for the sum 5 + 3 by 
 
 Rules:
 - Stay in character as a curious classmate who knows none of this. Use casual, plain words.
-- Each reply is one or two short sentences and contains exactly one question.
+- You know only what the student has told you in this conversation. Never use a term or an idea (column, carry, bit, gate names, transistor) before the student has used it, and never hint at what the next step is.
+- Each reply is one or two short sentences and contains exactly one question. Write plain sentences with no dashes.
 - Never explain, define, correct or give an answer, even if the student asks you to. If they ask, say you were hoping they could tell you, and ask a smaller question.
 - When the student skips a step, uses a word without saying what it means (bit, carry, gate, Xor), or says something that does not add up, say what confuses you and ask about exactly that.
 - If the student says something incorrect, do not say it is wrong. Ask a concrete question that makes the consequence visible, for example "wait, so what would that column show for 1 + 1?".
@@ -1555,10 +1560,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
 
   /* ---------- teach-back: a short conversation with the course AI helper ---------- */
   const AI_URL = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy', TEACH_MAX = 12;
-  function askAI(system, messages, max){
-    return fetch(AI_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({system, messages, max_tokens:max})})
+  function askAI(system, messages, max, model){
+    return fetch(AI_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({system, messages, max_tokens:max, model})})
       .then(r => r.json().then(j => { if (!r.ok || !j.content) throw new Error(j.error || 'no reply'); return String(j.content); }));
   }
+  // The classmate tries the main model first and falls back to the small one. Feedback needs the main model, so it retries instead.
+  const SMALL = 'claude-haiku-4-5-20251001';
+  const askChat = (system, messages) => askAI(system, messages, 1000).catch(() => askAI(system, messages, 300, SMALL));
+  const askFb = (system, messages, n) => askAI(system, messages, 1500).catch(e => { if (n > 1) return askFb(system, messages, n - 1); throw e; });
   function teachNotes(){
     const st = S.stat || {hints:{}, fails:{}, tr:[]}, out = [];
     LEVELS.forEach(l => { if (!l.chip) return; const hN = st.hints[l.chip] || 0, f = st.fails[l.chip] || 0; if (hN || f) out.push(l.short + ': ' + [hN ? 'opened ' + hN + ' hint' + (hN > 1 ? 's' : '') : '', f ? f + ' failed test run' + (f > 1 ? 's' : '') : ''].filter(Boolean).join(', ')); });
@@ -1581,7 +1590,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       else h += '<label class="sr" for="tsay">' + TEACH.place + '</label><textarea id="tsay" class="editor small say-in" rows="3" maxlength="1500" placeholder="' + TEACH.place + '"' + (ui.busy || full ? ' disabled' : '') + '>' + esc(ui.draft) + '</textarea>' +
         (full ? '<div class="msg info">' + TEACH.full + '</div>' : '');
       if (ui.err) h += '<div class="msg bad" role="status">' + esc(ui.err) + '</div>';
-      h += '<div class="row">' + (T.fb ? '' : '<button type="button" class="btn" id="tsend"' + (ui.busy || full ? ' disabled' : '') + '>' + TEACH.send + '</button><button type="button" class="btn ghost" id="tdone"' + (ui.busy ? ' disabled' : '') + '>' + TEACH.done + '</button>') +
+      if (ui.fbFail && !T.fb) h += '<div class="msg warn" role="status">' + TEACH.fbFail + '<ol>' + TEACH.links.map((k, i) => '<li>' + k + ': ' + TEACH.linkAsk[i] + '</li>').join('') + '</ol><div class="row"><button type="button" class="btn ghost" id="tcopy">' + TEACH.fbCopy + '</button></div><div id="tcopybox"></div></div>';
+      h += '<div class="row">' + (T.fb ? '' : '<button type="button" class="btn" id="tsend"' + (ui.busy || full ? ' disabled' : '') + '>' + TEACH.send + '</button><button type="button" class="btn ghost" id="tdone"' + (ui.busy ? ' disabled' : '') + '>' + (ui.fbFail ? TEACH.fbRetry : TEACH.done) + '</button>') +
         (T.msgs.length ? '<button type="button" class="btn ghost" id="tnew"' + (ui.busy ? ' disabled' : '') + '>' + TEACH.again + '</button>' : '') + '</div>';
       box.innerHTML = h;
       const ta = $('#tsay', box), chat = $('.chat', box); chat.scrollTop = chat.scrollHeight;
@@ -1589,15 +1599,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if ($('#tsend', box)) $('#tsend', box).onclick = () => {
         const t = (ui.draft || '').trim(); if (!t || ui.busy) return;
         T.msgs.push({r:'u', t}); ui.draft = ''; ui.err = ''; ui.busy = 'chat'; save(); draw();
-        askAI(TEACH.system, wire(), 200).then(a => { T.msgs.push({r:'a', t:a.trim()}); }, () => { const last = T.msgs.pop(); ui.draft = last.t; ui.err = TEACH.fail; }).then(() => { ui.busy = false; save(); if (box.isConnected) draw(true); });
+        askChat(TEACH.system, wire()).then(a => { T.msgs.push({r:'a', t:a.trim()}); }, () => { const last = T.msgs.pop(); ui.draft = last.t; ui.err = TEACH.fail; }).then(() => { ui.busy = false; save(); if (box.isConnected) draw(true); });
       };
       if ($('#tdone', box)) $('#tdone', box).onclick = () => {
         if (mine() < 2){ ui.err = TEACH.early; draw(true); return; }
-        ui.err = ''; ui.busy = 'fb'; draw();
+        ui.err = ''; ui.busy = 'fb';
         const script = 'Classmate: ' + TEACH.opener + '\n' + T.msgs.map(m => (m.r === 'u' ? 'Student: ' : 'Classmate: ') + m.t).join('\n');
-        askAI(TEACH.fbSystem, [{role:'user', content:'Transcript:\n\n' + script}], 500).then(a => { T.fb = a.trim(); }, () => { ui.err = TEACH.fail; }).then(() => { ui.busy = false; save(); if (box.isConnected) draw(); });
+        draw(); askFb(TEACH.fbSystem, [{role:'user', content:'Transcript:\n\n' + script}], 3).then(a => { T.fb = a.trim(); ui.fbFail = false; }, () => { ui.fbFail = true; }).then(() => { ui.busy = false; save(); if (box.isConnected) draw(); });
       };
-      if ($('#tnew', box)) $('#tnew', box).onclick = () => { T.msgs = []; T.fb = ''; ui.err = ''; ui.draft = ''; save(); draw(true); };
+      if ($('#tcopy', box)) $('#tcopy', box).onclick = () => copyOut(TEACH.fbAsk + TEACH.links.join(', ') + '.\n\nClassmate: ' + TEACH.opener + '\n' + T.msgs.map(m => (m.r === 'u' ? 'Me: ' : 'Classmate: ') + m.t).join('\n'), $('#tcopybox', box));
+      if ($('#tnew', box)) $('#tnew', box).onclick = () => { T.msgs = []; T.fb = ''; ui.err = ''; ui.fbFail = false; ui.draft = ''; save(); draw(true); };
     }
     draw();
   }

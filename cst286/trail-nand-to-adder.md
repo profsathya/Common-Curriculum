@@ -438,6 +438,14 @@ Answer in your own words, a few sentences at a time. When you have explained as 
 
 **Shown if the AI helper does not answer:** The AI helper did not answer. Your message is still in the box, so you can send it again.
 
+**Shown if the feedback does not come back after three tries:** The feedback helper is not answering right now, and your conversation is still saved here. You can try again, check your explanation yourself against the five links below, or copy the conversation and ask your own AI for feedback.
+1. Numbers to bits: did you say how 5 and 3 sit on four wires each?
+2. One column: did you say what one column takes in and gives out, and where the carry goes?
+3. Column to gates: did you say which gates make the sum bit and the carry?
+4. Gates to Nand: did you say how those gates can be made from Nand alone?
+5. Nand to transistors: did you say what the four transistors do, and why each pair is arranged the way it is?
+Buttons: Try the feedback again / Copy my conversation for my AI
+
 **Feedback covers five links:** Numbers to bits, One column, Column to gates, Gates to Nand, Nand to transistors
 
 ### Instructions the classmate AI follows (students do not see this)
@@ -459,7 +467,8 @@ Your job is to get the student to explain this whole chain for the sum 5 + 3 by 
 
 Rules:
 - Stay in character as a curious classmate who knows none of this. Use casual, plain words.
-- Each reply is one or two short sentences and contains exactly one question.
+- You know only what the student has told you in this conversation. Never use a term or an idea (column, carry, bit, gate names, transistor) before the student has used it, and never hint at what the next step is.
+- Each reply is one or two short sentences and contains exactly one question. Write plain sentences with no dashes.
 - Never explain, define, correct or give an answer, even if the student asks you to. If they ask, say you were hoping they could tell you, and ask a smaller question.
 - When the student skips a step, uses a word without saying what it means (bit, carry, gate, Xor), or says something that does not add up, say what confuses you and ask about exactly that.
 - If the student says something incorrect, do not say it is wrong. Ask a concrete question that makes the consequence visible, for example "wait, so what would that column show for 1 + 1?".
