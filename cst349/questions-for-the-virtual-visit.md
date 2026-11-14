@@ -41,7 +41,7 @@
      Middle box of the Purpose chain is labelled "This Learning Experience", matching my-sprint-3-plan.md and
      what-i-learned-from-others.md. -->
 
-CST349 · Fall 2026 · Sprint 3 · Week 11 · Learn from the people who do the work
+CST349 · Fall 2026 · Sprint 3 · Week 11 · Learn to make genuine connections
 
 # Get to know someone, and learn from them
 
@@ -53,7 +53,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 **Builds on your earlier learning.** In the [Information Diet Audit](information-diet-audit.html), you reflected on where your information comes from and how much you can rely on each source.
 
-**This Learning Experience.** Practice coming up with questions that will help you connect with professionals and learn from them.
+**This Learning Experience.** Practice coming up with questions that will help you connect genuinely with other professionals and learn from them.
 
 **Prepare you for.** Exploring an idea from the visit through deeper conversations with two classmates ([Exploring an idea together](what-i-learned-from-others.html)).
 
@@ -101,11 +101,11 @@ At the end of the Information Diet Audit, you wrote down one question you wanted
 
 **Looking at my question again.** Write a sentence or two on why you still want to ask that question, or what you want to rethink after seeing who is joining us.
 
-## How to approach the conversations
+## How to come up with your questions
 
-Treat the visit as a chance to connect with each guest as a person and learn from their life and professional journey.
+Start with genuine interest in connecting with the person at a human level and learning from their life and professional journey. Looking at networking as "what can I get from this" is likely to fail most of the time - no one likes to be seen as just a means to getting something.
 
-1. **Start with genuine interest in the person and their work.** Each guest has spent years doing work you are heading toward. You will learn the most by being curious about them as individuals, how they got there, and what surprised them along the way.
+1. **Focus on the person and their work.** Each guest has spent years doing work you are heading toward. You will learn the most by being curious about them as individuals, how they got there, and what surprised them along the way.
 
 2. **Be open and transparent about yourself.** Tell them a little about where you are, so they can answer in a way that connects their experience to yours.
 
