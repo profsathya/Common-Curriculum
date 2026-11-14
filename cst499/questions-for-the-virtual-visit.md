@@ -71,6 +71,7 @@ These are professionals and alumni from Prof. Sathya's network who said yes to s
 | Juan Garcia-Rovetta | Performance Engineering, VMware (Broadcom) — South San Francisco | https://www.linkedin.com/in/jgarciar/ |
 | Derek Lilienthal | AI Software Engineer, Pacific Northwest National Laboratory — Portland | https://www.linkedin.com/in/derek-lilienthal/ |
 | Dante Moon | Data Science, Optum; MS Computer Science at UIUC — Irvine | https://www.linkedin.com/in/dantemoon/ |
+| Brian Zimmerman | PhD student and software engineer — Waterloo, Ontario | https://www.linkedin.com/in/briandzimmerman/ |
 | Edgar Morales-Reyes | Senior Data Engineer, MissionWired — San Jose | https://www.linkedin.com/in/edgar-morales-reyes/ |
 | Torki Ahmed | Software Engineer, Metafoodx — San Jose; CSU 2025 | https://www.linkedin.com/in/torki-ah/ |
 | Jason Zandona | Product, Panther — San Francisco Bay Area | https://www.linkedin.com/in/jason-zandona-b5b56569/ |
