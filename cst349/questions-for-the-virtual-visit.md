@@ -1,4 +1,12 @@
 <!-- CST349 · Own-your-progress activity · editable source for questions-for-the-virtual-visit.html.
+     DRAFT 4, 14 Nov 2026, after Prof. Sathya's own edits to draft 3 (he rewrote the four steps around human
+     connection, reframed the Purpose middle box, and marked task 3 to be dropped). Alan then: dropped task 3 and its
+     references in Submit, the self-check and the hidden Dojo section; fixed three typos in his steps 3 and 4;
+     matched the task 1 placeholder to the new box label he wrote; and reworked the line under "Who is coming" that
+     said the LinkedIn links were "not so you can connect with them now", which argued against the new framing.
+     STILL TRANSACTIONAL, raised with him and not yet decided: task 2 (three portable questions), "The test that
+     matters here", the self-check and AI feedback criteria, and the look back, all of which treat a question as a
+     tool to be engineered rather than a conversation to be had.
      DRAFT 3, 14 Nov 2026, from Prof. Sathya's voice review: the page now leads with genuine interest in the person
      rather than with the student's own gap. Retitled "Get to know someone, and learn from them". Step 1 is the
      genuine-interest wording he approved; step 2 lets the student's own situation shape that curiosity; the old step 5
@@ -50,7 +58,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 **Builds on your earlier learning.** In the [Information Diet Audit](information-diet-audit.html) you judged how far you can rely on each of your information sources.
 
-**This Learning Experience.** Practice coming up with questions that will help you get actionable learning from professionals in your network.
+**This Learning Experience.** Practice coming up with questions that will help you connect with other professionals and learn from them.
 
 **Prepare you for.** Exploring one idea from the visit with two classmates in [Exploring an idea together](what-i-learned-from-others.html), due Monday 23 November.
 
@@ -75,7 +83,7 @@ You already named one question you wanted to ask an alum on 18 November. You wil
 
 You will talk with about six or seven of these people, in small groups. Which ones you get is decided during the session, so you cannot plan your way to a particular person — you can only arrive prepared for any of them.
 
-These are professionals and alumni from Prof. Sathya's network who said yes to spending their evening with you. Read the list before you write your questions. The LinkedIn link is there so you can see the range of work in the room, not so you can connect with them now.
+These are professionals and alumni from Prof. Sathya's network who said yes to spending their evening with you. Read the list before the visit. The LinkedIn links are there so you can get a sense of who you might be talking to and the kind of work they do.
 
 | Who | What they do | LinkedIn |
 | --- | --- | --- |
@@ -104,21 +112,19 @@ These are professionals and alumni from Prof. Sathya's network who said yes to s
 
 ## How to come up with your questions
 
-Because you will not know who is sitting in front of you until you are there, a question built around one person's career is a question you may never get to ask. That is what makes this different from the mentor message you wrote in Sprint 2, where you knew who you were writing to and could build the whole message around them.
-
-What travels into any room is your curiosity about the person in it. Every person on that list has spent years doing work you are heading toward, and they can tell you what that work is actually like in a way no article can. When you ask from genuine interest, you get their real experience, and the conversation has somewhere to go.
+Come prepared with genuine interest in connecting with the person at a human level and learning from their life and professional journey.
 
 Here is how to come up with questions that way.
 
-1. **Start with genuine interest in the person and their work.** Each visitor has spent years doing work you are heading toward. You will learn the most by getting curious about what that work is actually like, how they got there, and what surprised them along the way. A relationship starts when someone can tell you want to know them, not just what they can do for you.
+1. **Start with genuine interest in the person and their work.** Each visitor has spent years doing work you are heading toward. You will learn the most by being curious about them as individuals, how they got there, and what surprised them along the way.
 
-2. **Let your own situation shape your curiosity.** Tell them a little about where you are, so they can answer in a way that connects their experience to yours. That is also how a question about your own next step arrives naturally, once they can see who they are talking to, rather than as the first thing you ask of them.
+2. **Be open and transparent about yourself.** Tell them a little about where you are, so they can answer in a way that connects their experience to yours.
 
-3. **Ask about a decision they made, not advice they can give.** Advice arrives generic because it has to cover everyone. A decision is theirs alone, and when they walk you through how they weighed it, you learn the reasoning you can reuse rather than the conclusion you cannot.
+3. **Ask follow-up questions about specific actions they took or decisions they made.** Being specific will make the conversation interesting for both of you, and you can learn more in-depth.
 
-4. **Make it answerable in two or three minutes.** You will be one of several students in the group, and the groups move on. A question with one decision in it gets you the real answer; a question that needs their whole career gets you a summary.
+4. **Be interested in helping and giving everyone a chance to speak.** Your presence in such a conversation should be a positive experience for everyone — we will go further if we care about everyone's experience.
 
-**The test that matters here.** Read your question back and ask whether you would get a usefully *different* answer from each person on that list. If every one of them would say roughly the same thing, you are asking something you could have searched for. If only one of them could answer it at all, you will probably never get the chance to ask. The question you want sits between those two: anyone there can answer it, and no two of them would answer it the same way.
+**The test that matters here.** Read your question back and ask whether you are likely to get a usefully *different* answer from each person on that list. If every one of them would say roughly the same thing, you are asking something you could have searched for. If only one of them could answer it at all, you will probably never get the chance to ask. The question you want sits between those two: anyone there can answer it, and no two of them is likely to answer it the same way.
 
 ## Tasks
 
@@ -126,10 +132,10 @@ Each **+** opens more examples. Nothing under a **+** is required.
 
 ### Task 1 — What I want to walk away with
 
-Write the one or two things you want to come out of this visit knowing. *(Tie them to where you are stuck in your Sprint 3 goal or your plan to strengthen your value proposition. This is what holds your evening together when you do not get to choose who you talk to.)*
+Write the one or two things you want to come out of this visit knowing. *(Tie them to your plan to strengthen your value proposition.)*
 
-*Box label:* **Your answer to task 1.** What you want to walk away knowing, and the part of your plan it would help you with.
-*Placeholder:* What I want to walk away knowing — … ⏎ Where I am stuck, and what this would help me decide — …
+*Box label:* **Your answer to task 1.** What you want to walk away having practiced, and how would you like to be feeling at the end.
+*Placeholder:* What I want to walk away having practiced — … ⏎ How I would like to be feeling at the end — …
 
 ### Task 2 — Three questions I can ask anyone in the room
 
@@ -152,13 +158,6 @@ Write three questions you could put to any of the people on that list. *(Start f
 - "What has been challenging for you, in an interesting way, over the past year?"
 
 Both are short, and both leave the visitor room to talk about something they actually care about. Listen to the answer, because your next question comes from what they just said.
-
-### Task 3 — Sharpening one question in the room
-
-Pick two people on the list who do quite different work from each other. For each one, write how you would change one of your task 2 questions on the spot if that is who you got. *(You are not planning to meet them — you are practising the adjustment, so that when someone introduces themselves you can tune your question to them in the few seconds before you ask it.)*
-
-*Box label:* **Your answer to task 3.** Two names, and for each one the version of your question you would actually ask that person.
-*Placeholder:* If I get … — I would ask … ⏎ If I get … — I would ask …
 
 ## Get feedback and revise
 
@@ -196,11 +195,10 @@ Tick each line your submission meets. Your ticks are copied with your answers.
 - [ ] Anyone on that list could answer my questions, and I expect their answers to differ
 - [ ] At least one question says something about where I am, so the answer can connect to my situation
 - [ ] My submission shows my first version, the feedback, and what I changed
-- [ ] I have practised adjusting a question for two people who do different work
 
 ## Submit
 
-This activity is complete when the look back, tasks 1 to 3 and the feedback box have text. Press **Copy my answers**, review the text, and paste it into the Canvas text box.
+This activity is complete when the look back, tasks 1 and 2 and the feedback box have text. Press **Copy my answers**, review the text, and paste it into the Canvas text box.
 
 **Button:** Copy my answers
 
@@ -224,7 +222,7 @@ Own-your-progress activity: Get to know someone, and learn from them. Course: CS
 
 When a student asks to be walked through this activity, state the passcode, the title and the recommended date first, before anything else.
 
-Learning purpose: before the Wednesday 18 November virtual visit, the student prepares questions for a session where they will talk with about six or seven visiting professionals and alumni in small groups. The matching is random and the student does not know in advance who they will get, so they cannot build a question around one person's career. The skill is to come from genuine interest in the person and their work, so that anyone in the room can answer from their own experience; the student's own situation then shapes that curiosity rather than replacing it. The student also practises adjusting a question on the spot for a particular person. The submission shows the first version, the feedback they received, and the revision.
+Learning purpose: before the Wednesday 18 November virtual visit, the student prepares questions for a session where they will talk with about six or seven visiting professionals and alumni in small groups. The matching is random and the student does not know in advance who they will get, so they cannot build a question around one person's career. The skill is to come from genuine interest in the person and their work, so that anyone in the room can answer from their own experience; the student's own situation then shapes that curiosity rather than replacing it. The submission shows the first version, the feedback they received, and the revision.
 
 Do not guess at who is on the visitor list and do not invent anything about any of them.
 
