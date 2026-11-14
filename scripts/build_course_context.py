@@ -20,6 +20,7 @@ The doc is downstream of the repo. The repo is the source of truth; each tab is
 regenerated from scratch when it syncs and any edit made in it is lost.
 """
 import argparse
+import fnmatch
 import json
 import os
 import re
@@ -293,12 +294,15 @@ def ordered_pages(course_dir, explicit_order):
 
 
 def is_skipped(rel_path, skip):
-    """A skip entry matches a full path, a bare filename, or a folder prefix."""
+    """A skip entry matches a full path, a bare filename, a folder prefix,
+    or (when it contains *) a wildcard pattern such as "*-bb.html"."""
     name = os.path.basename(rel_path)
     for entry in skip:
         if entry in (rel_path, name):
             return True
         if entry.endswith("/") and rel_path.startswith(entry):
+            return True
+        if "*" in entry and (fnmatch.fnmatch(name, entry) or fnmatch.fnmatch(rel_path, entry)):
             return True
     return False
 
