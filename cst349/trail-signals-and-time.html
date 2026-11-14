@@ -543,21 +543,25 @@
     '</div>';
   }
 
+  function clearIdleOpener(){
+    if (S.chat && (!S.chat.msgs || !S.chat.msgs.length)) S.chat.opener = '';
+  }
+
   function bindConsole(root){
     $$('[data-bdec]', root).forEach(btn => btn.onclick = () => {
       const id = btn.dataset.bdec;
-      if ((S.hrs[id] || 0) > 0){ S.hrs[id]--; save(); render(); }
+      if ((S.hrs[id] || 0) > 0){ S.hrs[id]--; clearIdleOpener(); save(); render(); }
     });
     $$('[data-binc]', root).forEach(btn => btn.onclick = () => {
       const id = btn.dataset.binc;
-      if ((S.hrs[id] || 0) < S.budget){ S.hrs[id]++; save(); render(); }
+      if ((S.hrs[id] || 0) < S.budget){ S.hrs[id]++; clearIdleOpener(); save(); render(); }
     });
     const dec = $('#tot-dec', root), inc = $('#tot-inc', root);
     if (dec) dec.onclick = () => {
-      if (S.budget > 4){ S.budget--; save(); render(); }
+      if (S.budget > 4){ S.budget--; clearIdleOpener(); save(); render(); }
     };
     if (inc) inc.onclick = () => {
-      if (S.budget < 20){ S.budget++; save(); render(); }
+      if (S.budget < 20){ S.budget++; clearIdleOpener(); save(); render(); }
     };
   }
 
@@ -668,9 +672,9 @@
 
     el.innerHTML = h + navBar(0);
     bindConsole(el);
-    $$('[data-track]', el).forEach(b => b.onclick = () => { S.track = b.dataset.track; save(); render(); });
+    $$('[data-track]', el).forEach(b => b.onclick = () => { S.track = b.dataset.track; clearIdleOpener(); save(); render(); });
     const otk = $('#other-tk', el);
-    if (otk) otk.oninput = () => { S.otherTrack = otk.value; save(); };
+    if (otk) otk.oninput = () => { S.otherTrack = otk.value; clearIdleOpener(); save(); };
     const nb = $('#note-base', el);
     if (nb) nb.oninput = () => {
       S.notes.baseline = nb.value; save();
