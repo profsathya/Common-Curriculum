@@ -53,7 +53,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 **Builds on your earlier learning.** In the [Information Diet Audit](information-diet-audit.html), you reflected on where your information comes from and how much you can rely on each source.
 
-**This Learning Experience.** Practice coming up with questions that will help you connect genuinely with other professionals and learn from them.
+**This Learning Experience.** Practice coming up with questions that open a genuine conversation and let you learn from how someone has found their way in this industry.
 
 **Prepare you for.** Exploring an idea from the visit through deeper conversations with two classmates ([Exploring an idea together](what-i-learned-from-others.html)).
 

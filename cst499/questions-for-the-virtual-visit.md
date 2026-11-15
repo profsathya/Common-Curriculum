@@ -38,7 +38,7 @@ Take ownership of your progress — this activity is provided to help you, but t
 
 **Builds on your earlier learning.** In the [Interactive Poster, first version](interactive-poster-first-version.html) you put your claim and your work in front of a reader for the first time.
 
-**This Learning Experience.** Practice coming up with questions that will help you connect genuinely with other professionals and learn from them.
+**This Learning Experience.** Practice coming up with questions that open a genuine conversation and let you learn from how someone has found their way in this industry.
 
 **Prepare you for.** Practising how you articulate your unique value proposition out loud in the [Rehearsal](rehearsal-in-class.html), in class on Wednesday 2 December.
 
