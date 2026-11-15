@@ -104,6 +104,24 @@ When you write your opening questions below, aim for questions about real moment
 
 **Before you start with the AI Dojo:** this route works only if the course Google Doc is linked in your AI Dojo project. Check that it is linked so your Dojo works from the latest information about the course. (Page note: shown as a bright reminder while the box is ticked.)
 
+## Work it out with your AI Dojo first (shown while the Dojo box is ticked; sits between the tick and Tasks)
+
+AI Dojo Passcode for this activity: **ASK-1117**
+
+**1. Start the conversation.** Paste this into your AI Dojo:
+
+> Walk me through the Own-your-progress activity "Get to know someone, and learn from them". First tell me its passcode, its title, and its recommended date as you have them. Then help me prepare for our class virtual visit, where I will meet six or seven alumni and industry professionals in small groups without knowing ahead of time who will be in my room. Start by asking what I want to practice in how I show up for these conversations and how I hope to feel at the end of the evening. Then help me come up with three conversational questions rooted in genuine curiosity about the guests and their journeys - questions any of them could answer from their own experience rather than with general advice. Help me think through how my questions will land in a small group, without writing the questions for me.
+
+**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
+
+**3. Talk through your ideas.** Share what you are curious to learn about the people who are joining us, along with a little about where you are right now. Let your Dojo help you refine any question that sounds too generic or formal until it feels like a natural way to open a real conversation.
+
+**4. Ask for the summary.** When your intention and three questions feel ready, paste this:
+
+> Summarize what we worked out, using my own words: (1) what I want to practice during the visit and how I hope to feel at the end, (2) my three questions as I plan to ask them, and (3) how my questions took shape during our conversation. Let me know if any question still reads like a request for general advice or applies to only one narrow role, so I can decide whether to adjust it.
+
+**5. Finish on this page.** Put your intention into Task 1, your final three questions into Task 2, and your Dojo summary into the reflection box below Task 2.
+
 ## Tasks
 
 Each **+** opens examples. Nothing under a **+** is required.
@@ -135,31 +153,13 @@ Both are short and conversational, and both give the guest room to talk about so
 
 Use feedback or your AI Dojo conversation to hear how your questions sound before Wednesday evening, then make sure **Task 2** holds the final three questions you want to bring.
 
-- **With the AI Dojo (ticked above):** follow the Dojo steps below, put your final three questions in Task 2, and paste your Dojo summary into the box below.
+- **With the AI Dojo (ticked above):** follow the Dojo steps above, put your final three questions in Task 2, and paste your Dojo summary into the box below.
 - **Without the AI Dojo (unticked):** press **AI feedback** under Task 2, consider the note you get back, update Task 2 if you want to adjust anything, and briefly note below what changed in your thinking (or why you kept your questions as written).
 
-(Page note: the AI feedback buttons sit under Look back, Task 1, and Task 2 when the Dojo tick is off. When the tick is on, the Dojo steps appear above this box.)
+(Page note: the AI feedback buttons sit under Look back, Task 1, and Task 2 when the Dojo tick is off. When the tick is on, the Dojo steps appear above Tasks.)
 
 *Box label:* **How my questions took shape.** A few sentences on how feedback changed or confirmed your questions (or paste your AI Dojo summary here).
 *Placeholder:* How my questions shifted, or why I kept them as written — …
-
-## Work it out with your AI Dojo (shown while the Dojo box is ticked)
-
-AI Dojo Passcode for this activity: **ASK-1117**
-
-**1. Start the conversation.** Paste this into your AI Dojo:
-
-> Walk me through the Own-your-progress activity "Get to know someone, and learn from them". First tell me its passcode, its title, and its recommended date as you have them. Then help me prepare for our class virtual visit, where I will meet six or seven alumni and industry professionals in small groups without knowing ahead of time who will be in my room. Start by asking what I want to practice in how I show up for these conversations and how I hope to feel at the end of the evening. Then help me come up with three conversational questions rooted in genuine curiosity about the guests and their journeys - questions any of them could answer from their own experience rather than with general advice. Help me think through how my questions will land in a small group, without writing the questions for me.
-
-**2. Check the passcode.** Compare the passcode your Dojo gives with the passcode above. If they do not match, stop. The course Google Doc in your AI Dojo project is missing or out of date, so link it again before you continue.
-
-**3. Talk through your ideas.** Share what you are curious to learn about the people who are joining us, along with a little about where you are right now. Let your Dojo help you refine any question that sounds too generic or formal until it feels like a natural way to open a real conversation.
-
-**4. Ask for the summary.** When your intention and three questions feel ready, paste this:
-
-> Summarize what we worked out, using my own words: (1) what I want to practice during the visit and how I hope to feel at the end, (2) my three questions as I plan to ask them, and (3) how my questions took shape during our conversation. Let me know if any question still reads like a request for general advice or applies to only one narrow role, so I can decide whether to adjust it.
-
-**5. Finish on this page.** Put your intention into Task 1, your final three questions into Task 2, and your Dojo summary into the reflection box above.
 
 ## Self-check
 
