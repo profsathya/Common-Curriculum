@@ -1,4 +1,6 @@
 <!-- CST499 · Own-your-progress activity · editable source for questions-for-the-virtual-visit.html.
+     16 Nov 2026: Jigar Patel accepted (Senior Software Engineer, DCSA — Monterey), so the guest list is
+     sixteen confirmed. Added to the table; the page states no total, so nothing else changed.
      Edit this file; Claude carries the changes into the HTML.
      DRAFT 2, 14 Nov 2026: rebuilt from cst349/questions-for-the-virtual-visit.md at its draft 5, so CST499 now carries
      the same human-connection framing Prof. Sathya wrote for CST349 — retitled "Get to know someone, and learn from
@@ -65,6 +67,7 @@ During the session, you will talk with about six or seven of these guests in sma
 | Piranavan Selvanandan | Advises and consults with startups building on generative AI — San Francisco | https://www.linkedin.com/in/piranavan/ |
 | Karandeep Singh | Finance technology leader and startup advisor — San Francisco Bay Area | https://www.linkedin.com/in/karandeep-singh-kataria/ |
 | Eduardo Pelegri-Llopart | Spent a career in software, now works on energy transition — Menlo Park | https://www.linkedin.com/in/pelegri/ |
+| Jigar Patel | Senior Software Engineer, Defense Counterintelligence and Security Agency — Monterey | https://www.linkedin.com/in/mrjigarpatel/ |
 
 **May also join** (not confirmed, be prepared just in case you get to talk to them)
 
