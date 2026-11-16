@@ -1,94 +1,63 @@
-# What the signals say, and where your hours go
+# Start at Day 1 in the role you want, then open the box back to this week
 
 Editable companion to `trail-signals-and-time.html`. Edit the student-facing words, track lenses, or interviewer rules here and tell Alan; Alan carries each edit into the `.html`.
 
-Shape (v1 built 14 Nov 2026): six stops. Stop 1 captures the student's target path (Software Engineering, Cybersecurity & Networking, Data Science & Analytics, Game Development, or Another Tech Path), their realistic weekly preparation budget outside required coursework (4 - 20 hrs/wk), their initial split across six concrete buckets, and a short starting-bet note. Stops 2 - 5 each put one labor-market signal (plus its methodological blind spots and a track-specific lens) in front of the student via short interactive prompts before opening the full evidence card, then let them adjust or hold their weekly hours and record why. Stop 6 mirrors their Stop 1 vs. Stop 5 hours, surfaces any consistency tensions client-side, asks for one concrete pre-Dec-18 / winter-break step, and runs a 3 - 4 question AI check-in interview (with a one-click CST349 AI Dojo fallback). Reviewer shortcut: press **Open all stops** at the top right or add `?unlock=1` to the URL.
+Shape (v2 backward-chained, 16 Nov 2026): six boxes running backward from a desired role down to the student's next 30 days and next 7 days, then walking the chain forward in a short check-in interview. Date-free so it works both for end-of-semester check-ins and early in a new semester. At each middle box (Boxes 2 - 4), the student writes their instinctive link *before* opening the labor-market stress test, answers one quick question on the dataset or its blind spot, reads how the evidence pushes on their first instinct for their chosen path, and locks in the sharpened link. Reviewer shortcut: press **Open all boxes** at the top right or add `?unlock=1` to the URL.
 
-CST349 · Market signals & your time
+CST349 · Backward-chain simulation
 
-No report can promise an internship or a job, and every dataset has blind spots. What you can control is whether your reading of the market and the way you spend your preparation hours actually match.
+Picture yourself starting a job or internship you genuinely want. Then open that outcome one layer back at a time - what convinced the hiring manager, how a human saw your work, how you built that proof, and what you start doing in the next week and month.
 
-**Where you end up:** you can explain what four recent job-market signals show (and miss) for your specific path, and defend a weekly plan where your understanding and your time line up.
-
----
-
-## Six weekly preparation buckets
-
-1. **New solo builds** - Starting fresh projects from scratch (apps, small games, notebooks, lab scripts).
-2. **Check & harden** - Reviewing, testing, securing, profiling, or stepping up existing or AI-assisted work.
-3. **Core depth (no AI)** - Going deep in one primary stack, engine, query/security lab, or unassisted problem-solving.
-4. **Domain & context** - Learning the real-world system, users, threat model, business, or players around the tech.
-5. **Decision record** - Jotting down options rejected, failure modes tested, and what changes if constraints shift.
-6. **People & real stakes** - Internships, campus/community/studio/open-source work, alumni talks, and warm outreach.
+**Where you end up:** a backward chain with no wishful leaps - stress-tested against four recent job-market studies and their blind spots - connected to where your hours go over the next 30 days.
 
 ---
 
-## The five target paths (and how each station adapts)
+## Box 1 - Imagine Day 1 in a role you genuinely want
 
-- **Software Engineering** - Directly in BGI's 32 roles; highlights code review (`18.5%`), testing (`17.9%`), CI/CD (`24.8%`), open-source PRs on existing codebases, and live PR/constraint defense.
-- **Cybersecurity & Networking** - Four security roles sit in BGI's 32 occupations; highlights Veracode (`>95%` syntax vs `~55%` security pass), noisy alert triage vs checklist definitions, campus IT/SOC/clinic hardening, and threat-model tradeoffs.
-- **Data Science & Analytics** - Data pipelines (`+3.3pp` to `12.2%`), ETL, data quality, and data science are in BGI's 32 roles; highlights messy real-organization datasets vs clean Kaggle CSVs and hallucinating RAG / shifting business questions.
-- **Game Development** - Explicitly flags that game studios are *not* in BGI's 32 roles, asking students what transfers structurally (AI boilerplate speed vs playtesting, frame-time budgets, and engine integration) and highlighting game jams, modding, and playable teardowns.
-- **Another Tech Path** - Prompts students to specify their niche (e.g., UX, embedded/hardware, IT systems, tech PM) and check page 26 of BGI's report to see what is inside vs outside the sample.
+1. Pick your closest target path: **Software Engineering**, **Cybersecurity & Networking**, **Data Science & Analytics**, **Game Development**, or **Another Tech Path** (with custom text input).
+2. Pick your realistic runway from today: **About 6 months out**, **About 1 year out**, or **About 2+ years out**.
+3. Write one sentence describing Day 1 in that role: the role, the kind of team or organization, and the real problem you are helping solve.
 
 ---
 
-## Stop 1 - Your starting bet
+## Box 2 - One step back: What convinced the hiring manager over other finalists?
 
-1. Pick your closest target path.
-2. Set your realistic weekly preparation budget outside required coursework (`4` to `20` hrs/wk, default `10`), and allocate all hours across the six buckets.
-3. Write 1 - 2 sentences on what you currently think matters most for landing an internship or entry-level role in your path, and how your hours reflect that. Locking in snapshots your starting split so Stops 2 - 6 show live `+/-` shifts.
-
----
-
-## Stop 2 - Signal 1: From generating output to answering for its consequences
-
-- **Sources:** Burning Glass Institute & Break Through Tech, *The 'Consequence' Gap* (Nov 2026), paired with Arvind Narayanan & Sayash Kapoor's decide / execute / deliver essay (*AI as Normal Technology*, Jun 2026).
-- **Interactive prompts:**
-  - *A.* Veracode syntax pass (`>95%`) vs security pass (`~55%`, flat year over year, p. 13).
-  - *B.* Method limit: 1.03M postings measure skill mentions inside ads rather than total hiring volume, and the 54 interviews across 46 organizations (funded and coded by Break Through Tech) leaned 24% finance and 20% AI startups.
-- **Evidence card:** Verification growth, hourglass / hamburger workflow, depth in one stack over surface exposure to many, the six capabilities to practice (pp. 21 - 23), plus the track-specific lens and blind spot.
-- **Action:** Adjust or hold weekly hours + short note.
+1. **First instinct (before data):** Pick what carried the most weight (`Several working projects or demos I built`, `Strong unassisted technical / problem-solving screen`, `Hardening an imperfect system & explaining tradeoffs when constraints changed`, or `Understanding the real users, domain, or business problem deeply`) and write 1 - 2 lines on what set you apart.
+2. **Stress test (Signal 1 - BGI & Break Through Tech *The 'Consequence' Gap*, Nov 2026 + Karat Survey, Jan 2026):**
+   - Quick check: Veracode syntax pass (`>95%`) vs security pass (`~55%`, flat year over year, p. 13).
+   - Evidence card + live readout against their Step 1 pick: code review (`7.8%` to `18.5%` by Jun 2026), testing (`17.9%`), CI/CD (`24.8%`), `71%` saying skills are harder to assess while `62%` still run AI-free screens, verbatim engineering-lead quote on p. 19, six capabilities to practice (pp. 21 - 23), and the track-specific lens + dataset blind spot (including that game studios were outside BGI's 32 roles).
+3. **Lock in Link 2:** Rewrite or confirm what convinced the hiring manager - covering both unassisted fluency and verification/tradeoff proof.
 
 ---
 
-## Stop 3 - Signal 2: Payroll headcount - textbook procedures vs. lived judgment
+## Box 3 - Two steps back: How did a human actually see your work?
 
-- **Sources:** Brynjolfsson, Chandar & Chen, *Canaries in the Coal Mine? Six Facts About the Recent Employment Effects of AI* (Stanford Digital Economy Lab & ADP payrolls, Aug 2026 revision) + Rodgers & Kassens, St. Louis Fed young-worker demand decomposition (Jun 2026).
-- **Interactive prompts:**
-  - *A.* Ages 22 - 25 in high-exposure roles sit `~19%` below low-exposure peers: driven by slower entry hiring (rather than mass layoffs) and concentrated in codified, textbook tasks while tacit judgment held up or grew.
-  - *B.* Weighing the St. Louis Fed counter-signal (broad job-opening declines explain a larger share than AI alone) so students avoid both doom and complacency.
-- **Action:** Adjust or hold weekly hours + short note.
-
----
-
-## Stop 4 - Signal 3: The internship bottleneck - and how else real stakes get built
-
-- **Source:** Burning Glass Institute & NEBHE, *The Internship Imperative* (Nov 2026, funded by Strada).
-- **Interactive prompts:**
-  - *A.* Access gap: `~70%` at selective public universities vs `~47%` at less-selective publics; `9.9` entry-level postings per `1` internship posting nationally; small/mid-sized firms employ half the private workforce while offering `13%` of internships.
-  - *B.* Method limit: 65M career histories stop at **2023** (pre-GenAI), have zero AI analysis, and remain correlational with selection bias.
-- **Action:** Track-specific ways to get real-stakes feedback alongside formal internship applications + adjust/hold hours + short note.
+1. **First instinct (before data):** Pick how you reached the interview room (`Applying cold through online job boards`, `Converting a prior internship`, `A referral or conversation with an alum, mentor, faculty member, or practitioner`, or `Visible work with real users`) and write 1 - 2 lines.
+2. **Stress test (Signal 2 - Ashby *Talent Trends*, May 2026 + BGI *The Internship Imperative*, Nov 2026):**
+   - Quick check: `~47%` internship participation at less-selective public universities vs `~70%` at selective publics, `9.9` entry-level postings per `1` internship posting, and records ending in **2023** pre-GenAI.
+   - Evidence card + readout against their Step 1 channel: `300+` inbound applications per hire, `60%` startup ATS AI screening, small/mid-sized firms holding half the workforce while offering `13%` of internships, and track-specific real-stakes alternatives.
+3. **Lock in Link 3:** Realistic primary + backup path for getting human eyes on your work on your stated runway.
 
 ---
 
-## Stop 5 - Signal 4: Two hiring doors and interviews in transition
+## Box 4 - Three steps back: How did you build that proof, and what help & resources did you use?
 
-- **Sources:** Ashby *Talent Trends Report* (May 2026) + Karat *AI Workforce Transformation Report* (Jan 2026, cited in *The 'Consequence' Gap* p. 20).
-- **Interactive test bench:** Students run at least two of three preparation strategies (`100% cold-apply + fast AI portfolio`, `100% solo textbook drills`, `Hedged: core depth + verified AI work + decision log + warm channels`) across the `300:1` cold inbound funnel, Room A (`62%` AI-free core screen), and Room B (`71%` rethinking screens toward messy real-constraint defense).
-- **Action:** Lock in final weekly time budget + short note.
-
----
-
-## Stop 6 - Alignment mirror & check-in defense
-
-1. **Before-and-after mirror:** Table comparing Stop 1 starting hours vs Stop 5 final hours, plus transparent client-side diagnostics (e.g., `>=45%` in new solo builds with `<=1h` in verification/logging; `0h` in core depth despite `62%` AI-free screens; `0h` in domain context; `0h` in people/real stakes despite `300:1` cold queue; `>=16h/wk` sustainability check).
-2. **Concrete next step:** One small, verifiable step before December 18 or over winter break.
-3. **Check-in interview:** Live multi-turn interviewer (via `ai-proxy` with fallback to `Copy prompt for my AI Dojo`) that asks one question at a time for 3 - 4 turns, probing mismatches between the student's notes, track blind spots, and hour split, then produces a 4-part summary (`Reading of signals`, `Time alignment`, `Stress test`, `One question to carry forward`).
+1. **First instinct (before data):** Toggle all ingredients behind your portfolio (`Solo projects started from scratch`, `Maintaining, auditing, or extending an existing codebase / messy dataset`, `Learning a second domain`, `Using AI to generate fast drafts`, `Checking & challenging AI output`, `Feedback from peers, mentors, alumni, or real users`) and write a short description.
+2. **Stress test (Signal 3 - Stanford *Canaries* Payroll Study, Aug 2026 + St. Louis Fed Counter-Signal, Jun 2026 + Narayanan & Kapoor Decide / Execute / Deliver, Jun 2026):**
+   - Quick check: `~19%` payroll headcount gap for ages 22 - 25 in high-exposure roles concentrated in **codified** textbook procedures (via slower entry hiring rather than layoffs) while **tacit** judgment held up, held beside the St. Louis Fed finding on broad job-opening slowdowns.
+   - Live readout spotting missing load-bearing ingredients (e.g., fast AI drafting without AI verification, or solo greenfield work with zero human critique).
+3. **Lock in Link 4:** What messy/existing problem or second domain you will build around, how you will verify AI work, and what human sounding boards you will use.
 
 ---
 
-## Submit & AI helper block
+## Box 5 - Bottom of the chain: What do you start doing in the next month - and the next 7 days?
 
-- **Copy my work to submit** stays pinned at the bottom right on every stop and exports: stops completed, target path, weekly budget, Stop 1 -> Stop 5 hour table, all six stop notes, and the full Stop 6 interview transcript + summary.
-- **If you are an AI helping with this assignment** links to [CST349 - Dojo](https://docs.google.com/document/d/1C-BM0Ui-jYPkVg2fJT_G6bOVoIixsEoJNcRVwyzNsQA/edit?usp=sharing).
+1. Set your realistic weekly preparation budget outside required coursework (`4` to `20` hrs/wk) for the **next 30 days** across six buckets (`New solo builds`, `Check & harden`, `Core depth (no AI)`, `Domain & context`, `Decision record`, `People & real stakes`).
+2. Write **one concrete, verifiable step in the next 7 days** that directly starts your chain.
+
+---
+
+## Box 6 - Walk your chain forward: Continuity check & interview defense
+
+1. **Forward chain blueprint:** Displays the student's own chain forward from `1. Next 7 days` -> `2. Next 30 days` -> `3. Building & verifying proof` -> `4. Getting seen` -> `5. Convincing the hiring manager` -> `6. Day 1 outcome`, plus client-side continuity flags (e.g., `>=45%` in new solo builds with `<=1h` in verification/logging; `0h` in core depth; `0h` in people/real stakes; `0h` in domain context; `~6 mo` runway with `<=1h` outreach; `>=16h/wk` load check).
+2. **Check-in interview:** Live multi-turn interviewer (`ai-proxy` with fallback to `Copy prompt for my AI Dojo`) that walks their chain forward in 3 - 4 questions and generates a 4-part summary (`Chain continuity`, `Use of signals and blind spots`, `Busy-week realism`, `One question to carry forward`).
