@@ -937,7 +937,7 @@ var MODEL = (function () {
     var status = card.querySelector(".aistatus");
     var question = card.querySelector("label").textContent;
     var notes = $("ai-notes-" + id).textContent;
-    var st = explState[id] = { text: "", fb: "", count: 0 };
+    var st = explState[id] = { text: "", fb: "", count: 0, rounds: [] };
 
     function render(msg, cls, hideFb) {
       status.innerHTML = "";
@@ -976,6 +976,8 @@ var MODEL = (function () {
         "\n\nThe student's explanation:\n" + text;
       askAI({ system: AI_SYSTEM, messages: [{ role: "user", content: content }], max_tokens: 500 }).then(function (reply) {
         st.fb = reply;
+        st.rounds.push({ text: text, fb: reply });
+        if (st.rounds.length > 12) st.rounds.shift();
         btn.disabled = false;
         render();
         save();
@@ -989,6 +991,8 @@ var MODEL = (function () {
       st.text = typeof s.text === "string" ? s.text : "";
       st.fb = typeof s.fb === "string" ? s.fb : "";
       st.count = s.count | 0;
+      st.rounds = Array.isArray(s.rounds) ? s.rounds.filter(function (r) { return r && typeof r.text === "string" && typeof r.fb === "string"; }) : [];
+      if (!st.rounds.length && st.fb) st.rounds = [{ text: st.text.trim(), fb: st.fb }];
       ta.value = st.text;
       render();
     };
@@ -1028,10 +1032,23 @@ var MODEL = (function () {
       var text = card.querySelector("textarea").value.trim();
       L.push("");
       L.push("Explanation " + id + ": " + card.querySelector("label").textContent);
-      L.push("My explanation: " + (text || "not written yet"));
-      if (e.fb) {
-        L.push("AI feedback I received:");
-        L.push(e.fb);
+      if (!e.rounds.length) {
+        L.push("My explanation: " + (text || "not written yet"));
+        L.push("AI feedback: not asked for yet");
+      } else {
+        e.rounds.forEach(function (r, k) {
+          L.push("Version " + (k + 1) + ", what I wrote before asking for feedback:");
+          L.push(r.text);
+          L.push("AI feedback on version " + (k + 1) + ":");
+          L.push(r.fb);
+        });
+        var last = e.rounds[e.rounds.length - 1].text;
+        if (text && text !== last) {
+          L.push("My explanation now, revised after the last feedback:");
+          L.push(text);
+        } else {
+          L.push("My explanation now: the same as version " + e.rounds.length + " (not revised after the last feedback).");
+        }
         L.push("Times I asked for feedback: " + e.count);
       }
     });
