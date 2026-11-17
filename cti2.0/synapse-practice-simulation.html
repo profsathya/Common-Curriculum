@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What practice changes in your brain</title>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --card: #ffffff;
+    --border: #e3e0d8;
+    --text: #1d2433;
+    --muted: #5d6475;
+    --teal: #0e8f83;
+    --amber: #d9822b;
+    --blue: #2f6fed;
+    --purple: #6b4fd8;
+    --thresh: #c2334d;
+    --good-bg: #e8f5f1;
+    --good-bd: #9fd3c6;
+    --warn-bg: #fdf3e7;
+    --warn-bd: #ecc18f;
+    --neutral-bg: #eef2fb;
+    --neutral-bd: #b9c8ec;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
+  a { color: #2557c7; overflow-wrap: anywhere; }
+
+  /* sticky control bar */
+  .controlbar {
+    position: sticky; top: 0; z-index: 20;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(29,36,51,0.05);
+  }
+  .controlbar .wrap {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+    padding-top: 10px; padding-bottom: 10px;
+  }
+  .btn {
+    border: 1px solid #cfd5e1; background: #fff; border-radius: 8px;
+    padding: 7px 14px; cursor: pointer; font-weight: 500; line-height: 1.2;
+  }
+  .btn:hover { background: #f2f4f8; }
+  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .btn.primary:hover { background: #2560d6; }
+  .btn:disabled { opacity: 0.6; cursor: default; }
+  .seg { display: inline-flex; border: 1px solid #cfd5e1; border-radius: 8px; overflow: hidden; }
+  .seg button { border: 0; background: #fff; padding: 7px 12px; cursor: pointer; font-weight: 500; line-height: 1.2; }
+  .seg button + button { border-left: 1px solid #cfd5e1; }
+  .seg button[aria-pressed="true"] { background: var(--text); color: #fff; }
+  .group { display: flex; align-items: center; gap: 8px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .actions .btn { border-color: #9fd3c6; }
+  .readouts { display: flex; flex-wrap: wrap; gap: 4px 16px; font-weight: 600; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+  .slider { display: flex; flex-direction: column; min-width: 220px; flex: 1 1 220px; max-width: 340px; }
+  .slider label { font-size: 13.5px; font-weight: 500; }
+  .slider input[type=range] { width: 100%; accent-color: var(--teal); margin: 4px 0 0; }
+
+  header.page { padding: 28px 0 8px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+  header.page p { max-width: 760px; margin: 0; color: #2e3647; }
+
+  /* zoom path */
+  nav.zoompath ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 18px 0 8px; align-items: center; }
+  nav.zoompath li { display: flex; align-items: center; gap: 6px; }
+  nav.zoompath .arrow { color: #9aa1b0; }
+  nav.zoompath button {
+    border: 1px solid var(--border); background: #fff; border-radius: 999px;
+    padding: 5px 12px 5px 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;
+  }
+  nav.zoompath button .num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--text); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
+  }
+  nav.zoompath button:disabled { cursor: not-allowed; color: #a5abb8; background: #f0efea; }
+  nav.zoompath button:disabled .num { background: #c4c8d1; }
+
+  /* levels */
+  section.level {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px; margin: 22px 0; scroll-margin-top: 140px;
+  }
+  section.level h2 { margin: 0 0 14px; font-size: 22px; line-height: 1.25; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .vis { min-width: 0; }
+  .text { min-width: 0; }
+  .text p { margin: 0 0 12px; }
+  .canvas-card {
+    border: 1px solid var(--border); border-radius: 12px; background: #fcfcfb; padding: 8px; overflow: hidden;
+  }
+  .canvas-card canvas { display: block; width: 100%; }
+  .canvas-card.zooming { animation: zoomIn 520ms cubic-bezier(.2,.8,.2,1); }
+  @keyframes zoomIn { from { transform: scale(0.12); opacity: 0.15; } to { transform: scale(1); opacity: 1; } }
+
+  .card {
+    border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 16px; margin: 14px 0;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  .card .q { font-weight: 600; margin: 0 0 12px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .options button {
+    text-align: left; border: 1px solid #cfd5e1; background: #fff; border-radius: 10px; padding: 10px 12px;
+    cursor: pointer; display: flex; gap: 10px; align-items: flex-start; line-height: 1.4;
+  }
+  .options button:hover { background: #f5f7fb; }
+  .options button .dot {
+    flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #9aa1b0; margin-top: 1px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .options button[aria-checked="true"] { border-color: var(--text); background: #f3f4f7; }
+  .options button[aria-checked="true"] .dot { border-color: var(--text); }
+  .options button[aria-checked="true"] .dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--text); }
+  .options .letter { font-weight: 600; margin-right: 4px; }
+  .feedback { margin-top: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; }
+  .feedback:empty { display: none; }
+  .feedback.good { background: var(--good-bg); border-color: var(--good-bd); }
+  .feedback.warn { background: var(--warn-bg); border-color: var(--warn-bd); }
+  .feedback.neutral { background: var(--neutral-bg); border-color: var(--neutral-bd); }
+  .zoombtn { margin-top: 14px; }
+
+  .answer-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .answer-row input[type=number] {
+    width: 120px; border: 1px solid #cfd5e1; border-radius: 8px; padding: 7px 10px; background: #fff;
+  }
+  .answer-row select { border: 1px solid #cfd5e1; border-radius: 8px; padding: 7px 8px; background: #fff; }
+
+  .equation {
+    margin-top: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff;
+    font-variant-numeric: tabular-nums; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  .equation .live { color: #2e3647; font-weight: 600; }
+  .formula {
+    border: 1px solid #d7dcea; background: #f6f8fd; border-radius: 12px; padding: 12px 14px; margin: 12px 0;
+    font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+  }
+  .formula .main { font-weight: 600; font-size: 16.5px; }
+  .formula .line { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; margin-top: 6px; }
+
+  .counters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .counter { border: 1px solid var(--border); border-radius: 10px; padding: 5px 10px; background: #fff; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 15px; }
+  .counter.strength { border-left: 4px solid var(--teal); }
+  .counter.fires { border-left: 4px solid var(--thresh); }
+  .level-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 22px; margin-top: 12px; }
+  .liveline { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; padding-bottom: 4px; }
+
+  .note { font-size: 14.5px; color: var(--muted); }
+  .testmsg { margin-top: 10px; }
+  .wide-cards { margin-top: 8px; }
+  textarea.reflect { width: 100%; min-height: 0; border: 1px solid #cfd5e1; border-radius: 10px; padding: 10px; resize: vertical; background: #fff; }
+  .copyrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+  textarea.fallback { width: 100%; min-height: 140px; margin-top: 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; border: 1px solid #cfd5e1; border-radius: 10px; padding: 8px; }
+  details.limits { border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; background: #fff; margin-top: 14px; }
+  details.limits summary { cursor: pointer; font-weight: 600; }
+  details.limits p { margin: 10px 0 0; }
+  details.limits ul { margin: 10px 0 0; padding-left: 20px; }
+  details.limits li + li { margin-top: 8px; }
+  .experiment p { margin: 0 0 10px; }
+
+  footer.page { text-align: center; padding: 10px 0 14px; font-size: 13.5px; }
+  .linkbtn { background: none; border: 0; padding: 2px; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 13.5px; }
+  .eyebrow { margin: 0 0 6px !important; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted) !important; }
+  header.page p + p { margin-top: 12px; }
+  .aistatus .feedback h4 { margin: 0 0 6px; font-size: 14px; }
+  .aistatus .aitext { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .aistatus .feedback + .feedback { margin-top: 8px; }
+  .clearrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin-bottom: 6px; }
+  .pagebottom { height: 96px; }
+  .submitdock {
+    position: fixed; right: 16px; bottom: 16px; z-index: 40;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    max-width: calc(100vw - 32px);
+  }
+  .submitbtn { box-shadow: 0 4px 14px rgba(29,36,51,0.22); padding: 11px 18px; }
+  .submitpanel {
+    position: relative; width: 380px; max-width: calc(100vw - 32px);
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(29,36,51,0.18); padding: 12px 40px 12px 14px; font-size: 14.5px;
+  }
+  .submitpanel p { margin: 0; }
+  .submitpanel textarea.fallback { min-height: 120px; max-height: 40vh; }
+  .submitpanel .closebtn {
+    position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; background: none;
+    border-radius: 6px; cursor: pointer; font-size: 20px; line-height: 1; color: var(--muted);
+  }
+  .submitpanel .closebtn:hover { background: #f2f4f8; }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 819px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    section.level { padding: 14px; scroll-margin-top: 130px; }
+    h1 { font-size: 25px; }
+    .slider { max-width: none; min-width: 0; flex-basis: 100%; }
+    .controlbar .wrap { gap: 6px 8px; padding: 6px 8px; }
+    .controlbar .btn { padding: 6px 8px; font-size: 14px; }
+    .seg button { padding: 6px 6px; font-size: 14px; }
+    .group { gap: 6px; }
+    .actions { order: 3; flex: 1 1 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .actions .btn { padding: 5px 3px; font-size: 13.5px; white-space: normal; line-height: 1.2; }
+    .readouts { flex: 1 1 0; min-width: 0; flex-direction: column; gap: 0; font-size: 11.5px; line-height: 1.35; letter-spacing: -0.01em; }
+    .readouts span { white-space: nowrap; }
+    .canvas-card { padding: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controlbar" role="region" aria-label="Simulation controls">
+  <div class="wrap">
+    <div class="group">
+      <button class="btn primary" id="playBtn" type="button" aria-label="Pause the simulation">Pause</button>
+      <div class="seg" role="group" aria-label="Speed">
+        <button type="button" data-speed="1" aria-pressed="true">1x</button>
+        <button type="button" data-speed="0.25" aria-pressed="false">0.25x</button>
+        <button type="button" data-speed="0.1" aria-pressed="false">0.1x</button>
+        <button type="button" data-speed="0.05" aria-pressed="false">0.05x</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" id="practice1">Practice 1 throw</button>
+      <button type="button" class="btn" id="practice10">Practice 10 throws</button>
+      <button type="button" class="btn" id="restWeek">Rest one week</button>
+      <button type="button" class="btn" id="startOver">Start over</button>
+    </div>
+    <div class="readouts">
+      <span id="roThrows">Throws practiced: 0</span>
+      <span id="roStrength">Each input adds: 0.50 mV</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="page">
+    <p class="eyebrow">Motor learning · Demonstration page</p>
+    <h1>What practice changes in your brain</h1>
+    <p>When you practice a movement, it gets better within minutes. Your muscles cannot grow stronger that fast, so the improvement has to come from somewhere else. On this page you follow it all the way down: from the throws you can watch, to the pathway that carries the command from the brain to the arm, to one connection between two neurons, to the number that says how strong that connection is. At each level you make a prediction first, then run the simulation to check it.</p>
+    <p>At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.</p>
+  </header>
+
+  <nav class="zoompath" aria-label="Zoom path">
+    <ol>
+      <li><button type="button" data-goto="1"><span class="num">1</span>The practice</button></li>
+      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="2" disabled><span class="num">2</span>The pathway</button></li>
+      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="3" disabled><span class="num">3</span>The synapse</button></li>
+      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="4" disabled><span class="num">4</span>The strength</button></li>
+    </ol>
+  </nav>
+
+  <!-- LEVEL 1 -->
+  <section class="level" id="level1" aria-labelledby="h1lvl">
+    <h2 id="h1lvl">Level 1: The practice</h2>
+    <div class="grid">
+      <div class="vis">
+        <div class="canvas-card">
+          <canvas id="c1" role="img" aria-label="A learner throws darts at a dartboard. Dots mark where the darts land, and a circle shows the spread of the throws. A chart under the board plots the spread against throws practiced."></canvas>
+        </div>
+      </div>
+      <div class="text">
+        <p>A learner is practicing dart throws. Press Practice 1 throw at the top a few times and watch where each dart lands. The circle on the board shows where about two out of three throws land, and its size is the spread of the throws. A smaller circle means the learner repeats the same throw more reliably.</p>
+        <p>Now press Practice 10 throws a few times, and watch the circle and the chart under the board. The learner's arm is no stronger than it was a few minutes ago, and the darts are the same. Something in the learner's nervous system is changing with every throw, and the next three levels zoom in to find it.</p>
+        <div class="card prediction" data-pred="1">
+          <h3>Prediction</h3>
+          <p class="q">The learner practices 60 throws in total. In which part of the practice does the spread shrink the most?</p>
+          <div class="options" role="radiogroup" aria-label="The learner practices 60 throws in total. In which part of the practice does the spread shrink the most?"></div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card explain" data-explain="1">
+          <h3>Explain your thinking</h3>
+          <label for="explain1" class="q" style="display:block">Explain your thinking: describe how the spread changed over the 60 throws. Then say what you think is changing inside the learner, since the muscles and the darts stayed the same. You will test your idea in the next levels.</label>
+          <textarea id="explain1" class="reflect" rows="4" maxlength="1500"></textarea>
+          <div class="copyrow">
+            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+          </div>
+          <div class="aistatus" aria-live="polite"></div>
+        </div>
+        <button type="button" class="btn primary zoombtn" data-zoom="2" hidden>Zoom in: the pathway</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVEL 2 -->
+  <section class="level" id="level2" aria-labelledby="h2lvl" hidden>
+    <h2 id="h2lvl">Level 2: The pathway from the brain to the arm</h2>
+    <div class="grid">
+      <div class="vis">
+        <div class="canvas-card" data-origin="20% 12%">
+          <canvas id="c2" role="img" aria-label="Side view of a head and upper body. A line runs from the motor cortex down the spinal cord and along a nerve to a muscle in the arm. An enlarged view shows 20 sending neurons connected to one receiving neuron, and a gauge with the threshold at 15 mV."></canvas>
+        </div>
+        <div class="equation"><div class="live" id="eq2">20 inputs × 0.50 mV = 10.0 mV. The threshold is 15 mV.</div></div>
+      </div>
+      <div class="text">
+        <p>The command for a throw starts in the motor cortex, the strip of the brain that controls movement. From there it travels down the spinal cord and out along a nerve to the muscles of the arm. The enlarged view shows one small part of that pathway inside the motor cortex: 20 sending neurons that all connect to one receiving neuron.</p>
+        <p>A neuron fires only when the voltage across its membrane rises far enough. On this page the receiving neuron has to rise 15 mV above its resting level, and that level is called its threshold. Each sending neuron that fires adds a small voltage to the receiving neuron, and the voltages from inputs that arrive together add up.</p>
+        <p>Before any practice, each of the 20 inputs adds 0.50 mV. Together they add 10 mV, which is not enough. During a practiced throw the receiving neuron still fires, because other inputs that are already strong add the rest. They are shown in grey, and they come from the areas that plan the movement and that feel the arm. Press Test the practiced inputs on their own to see what the 20 inputs can do without that help.</p>
+        <button type="button" class="btn primary" id="testInputs">Test the practiced inputs on their own</button>
+        <div class="feedback neutral testmsg" id="testMsg" aria-live="polite" hidden></div>
+        <div class="card practice" data-prac="1">
+          <h3>Practice</h3>
+          <p class="q">The receiving neuron fires when its inputs add up to 15 mV. Suppose 20 inputs arrive together and each one adds the same voltage. How large does each one have to be for the neuron to just reach its threshold?</p>
+          <div class="answer-row">
+            <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
+            <select aria-label="Your answer, unit"></select>
+            <button type="button" class="btn">Check</button>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card prediction" data-pred="2">
+          <h3>Prediction</h3>
+          <p class="q">Practice does not add neurons to this pathway, and on this page the threshold stays at 15 mV. For the same 20 inputs to reach the threshold on their own, what has to change?</p>
+          <div class="options" role="radiogroup" aria-label="For the same 20 inputs to reach the threshold on their own, what has to change?"></div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card explain" data-explain="2">
+          <h3>Explain your thinking</h3>
+          <label for="explain2" class="q" style="display:block">Explain your thinking: the sending neurons fire the same spike before and after practice. What would have to be different at the place where two neurons meet for the same spike to have a larger effect?</label>
+          <textarea id="explain2" class="reflect" rows="4" maxlength="1500"></textarea>
+          <div class="copyrow">
+            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+          </div>
+          <div class="aistatus" aria-live="polite"></div>
+        </div>
+        <button type="button" class="btn primary zoombtn" data-zoom="3" hidden>Zoom in: the synapse</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVEL 3 -->
+  <section class="level" id="level3" aria-labelledby="h3lvl" hidden>
+    <h2 id="h3lvl">Level 3: Inside one synapse</h2>
+    <div class="grid">
+      <div class="vis">
+        <div class="canvas-card" data-origin="70% 40%">
+          <canvas id="c3" role="img" aria-label="One synapse, greatly enlarged. The end of the sending neuron holds packets of glutamate above a narrow gap. The receiving neuron below has AMPA receptors in its membrane, two NMDA receptors plugged by magnesium, and spare AMPA receptors waiting inside. A small trace shows the voltage this synapse adds."></canvas>
+        </div>
+        <div class="level-controls">
+          <button type="button" class="btn" id="fireAlone">Fire the sending neuron alone</button>
+          <div class="slider">
+            <label for="gap3" id="gap3Label">Gap between the two firings: 0 ms (they fire together)</label>
+            <input type="range" id="gap3" min="0" max="100" step="5" value="0">
+          </div>
+          <div class="liveline" id="timing3">timing = 1.00</div>
+        </div>
+      </div>
+      <div class="text">
+        <p>The two neurons do not touch. The sending neuron ends just short of the receiving neuron, and the narrow gap between them is the synapse. Follow one spike across it. Slow motion helps here, so try 0.25x or 0.1x at the top.</p>
+        <p>Press Fire the sending neuron alone. The spike reaches the end of the sending neuron and releases a chemical messenger called glutamate into the gap. Glutamate binds to AMPA receptors on the receiving side. Each AMPA receptor is a channel, and when glutamate opens it, sodium ions flow into the receiving neuron and raise its voltage a little. The more AMPA receptors a synapse has, the more voltage the same spike produces. This page draws one receptor for every 0.05 mV.</p>
+        <p>Glutamate also binds to a second kind of receptor, the NMDA receptor. Nothing flows through it yet, because a magnesium ion sits in the channel like a plug. The plug stays in place while the receiving neuron is near its resting voltage.</p>
+        <p>Now press Practice 1 throw at the top. This time the receiving neuron fires while the glutamate is still bound. The jump in voltage pushes the magnesium plug out, and calcium ions flow in through the NMDA receptor. Calcium is the signal that tells the synapse that both neurons were active together. In response, the receiving neuron moves spare AMPA receptors into the synapse, so the next spike produces a larger voltage.</p>
+        <p>The calcium flows only while the two events overlap. Glutamate stays bound for a short time, so if the receiving neuron fires later, less calcium enters. Move the slider Gap between the two firings to make the receiving neuron fire later, practice one throw, and watch how much calcium enters.</p>
+        <p class="note">On this page one practiced throw stands for the many paired firings that a real synapse needs, typically 60 to 100, and the new receptors arrive within a second. In a real synapse they arrive over minutes.</p>
+        <div class="card prediction" data-pred="3">
+          <h3>Prediction</h3>
+          <p class="q">You press Fire the sending neuron alone 20 times. Glutamate is released every time. What happens to the number of AMPA receptors?</p>
+          <div class="options" role="radiogroup" aria-label="You press Fire the sending neuron alone 20 times. What happens to the number of AMPA receptors?"></div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card practice" data-prac="2">
+          <h3>Practice</h3>
+          <p class="q">This page draws one AMPA receptor for every 0.05 mV that a synapse adds. After some practice a synapse has 16 receptors. How much voltage does one spike add at that synapse now?</p>
+          <div class="answer-row">
+            <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
+            <select aria-label="Your answer, unit"></select>
+            <button type="button" class="btn">Check</button>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card prediction" data-pred="4">
+          <h3>Prediction</h3>
+          <p class="q">You set the gap to 60 ms, so the receiving neuron fires 60 ms after the sending neuron, and you practice one throw. How does the change in strength compare with a throw at a gap of 0 ms?</p>
+          <div class="options" role="radiogroup" aria-label="At a gap of 60 ms, how does the change in strength compare with a throw at a gap of 0 ms?"></div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card explain" data-explain="3">
+          <h3>Explain your thinking</h3>
+          <label for="explain3" class="q" style="display:block">Explain your thinking: why does the synapse get stronger only when both neurons are active together? Use what you saw happen to the magnesium plug and to the calcium.</label>
+          <textarea id="explain3" class="reflect" rows="4" maxlength="1500"></textarea>
+          <div class="copyrow">
+            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+          </div>
+          <div class="aistatus" aria-live="polite"></div>
+        </div>
+        <button type="button" class="btn primary zoombtn" data-zoom="4" hidden>Zoom in: the strength</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVEL 4 -->
+  <section class="level" id="level4" aria-labelledby="h4lvl" hidden>
+    <h2 id="h4lvl">Level 4: The strength over a whole practice</h2>
+    <div class="grid">
+      <div class="vis" id="graphArea">
+        <div class="counters">
+          <span class="counter" id="c4Throws">Throws practiced: 0</span>
+          <span class="counter strength" id="c4Each">Each input adds: 0.50 mV</span>
+          <span class="counter" id="c4Total">20 inputs together: 10.0 mV</span>
+          <span class="counter fires" id="c4Fires">Fires on its own: not yet</span>
+        </div>
+        <div class="canvas-card" data-origin="10% 70%">
+          <canvas id="c4" role="img" aria-label="A graph of the strength of each practiced input in mV against throws practiced, with lines for before practice at 0.50, the threshold at 0.75 and the ceiling at 1.00. Each rest is marked by a dotted line."></canvas>
+        </div>
+        <div class="level-controls">
+          <div class="slider">
+            <label for="gap4" id="gap4Label">Gap between the two firings: 0 ms (they fire together)</label>
+            <input type="range" id="gap4" min="0" max="100" step="5" value="0">
+          </div>
+        </div>
+      </div>
+      <div class="text">
+        <div class="formula">
+          <div class="main">new strength = strength + 0.05 × timing × (1.00 − strength)</div>
+          <div class="line" id="f4a">timing = 1.00 at a gap of 0 ms</div>
+          <div class="line" id="f4b">Practice a throw to see the rule at work.</div>
+        </div>
+        <p>One number now stands for everything you saw in the synapse: the strength, which is the voltage that each practiced input adds to the receiving neuron. Every practiced throw moves the strength part of the way toward a ceiling of 1.00 mV, where the synapse has no room for more receptors.</p>
+        <p>Read the rule in the box as a sentence. Each throw closes 5% of the distance that is still left to the ceiling, multiplied by the timing value. The timing value is 1 when the two neurons fire together, and it falls quickly as the gap between them grows: 0.61 at 10 ms, 0.37 at 20 ms and 0.14 at 40 ms. Because each throw closes a share of the distance that is left, the early throws change the strength more than the late ones. That is the curve you saw in the spread of the darts at Level 1.</p>
+        <p>Rest works in the other direction. On this page one week without practice removes 30% of what practice had added above the starting 0.50 mV.</p>
+        <div class="card practice" data-prac="3">
+          <h3>Practice</h3>
+          <p class="q">Each practiced input adds 0.60 mV. The learner practices one more throw with a gap of 0 ms. How much does each input add after that throw?</p>
+          <div class="answer-row">
+            <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
+            <select aria-label="Your answer, unit"></select>
+            <button type="button" class="btn">Check</button>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="card experiment">
+          <h3>Now you are the experimenter</h3>
+          <p>1. Press Start over, keep the gap at 0 ms, and practice one throw at a time until Fires on its own changes to yes. Count the throws it took.</p>
+          <p>2. Press Start over, set the gap to 20 ms, and practice until the 20 inputs reach the threshold again. Compare the number of throws with your first count.</p>
+          <p>3. Press Start over, practice with a gap of 0 ms until the inputs just reach the threshold, and then press Rest one week. Check whether the pathway still fires on its own, and count the throws that bring it back.</p>
+          <p style="margin-bottom:0">4. Find the smallest number of throws after which one week of rest still leaves the pathway above the threshold.</p>
+        </div>
+      </div>
+    </div>
+    <div class="wide-cards">
+      <div class="card explain" data-explain="4">
+        <h3>Explain your thinking</h3>
+        <label for="explain4" class="q" style="display:block">In your own words: how does repeating a movement change the brain so that the movement becomes more reliable? Use the words synapse, receptor and threshold.</label>
+        <textarea id="explain4" class="reflect" rows="4" maxlength="1500"></textarea>
+        <div class="copyrow">
+          <button type="button" class="btn primary aibtn">Get AI feedback</button>
+        </div>
+        <div class="aistatus" aria-live="polite"></div>
+      </div>
+      <details class="limits">
+        <summary>Where this model stops being true</summary>
+        <p>This page follows one group of 20 synapses and gives them all the same strength. A real throw depends on millions of synapses in the motor cortex, the cerebellum, the basal ganglia and the spinal cord, and they do not all change in the same way. The page ties the spread of the darts directly to the strength of these 20 synapses so that you can watch the two move together. In a real learner the link between synapses and performance runs through many more steps.</p>
+        <p>The page also compresses time. One practiced throw here stands for the many paired firings that a real synapse needs, typically 60 to 100, and the receptors arrive within a second. In a real synapse they arrive over minutes, and making the change last takes hours or longer because the neuron has to build new proteins.</p>
+        <p>The page leaves out other ways a pathway changes with practice. Synapses can also weaken, new synapses can form within an hour of training, and neurons can change how easily they fire. The numbers on the page (0.50 mV, 20 inputs, 15 mV, 5% for each throw, 30% lost in a week of rest) were chosen to be easy to work with, and they are not measurements.</p>
+        <p>The chain you followed is the one researchers have found in the motor cortex of animals that learn a reaching skill: two neurons are active together, calcium enters, receptors are added, and the connection grows stronger.</p>
+      </details>
+      <details class="limits">
+        <summary>Where the science comes from</summary>
+        <ul>
+          <li>Rioult-Pedotti, Friedman and Donoghue (2000). Learning-induced LTP in neocortex. Science 290, 533–536. Rats that learned a reaching skill had stronger connections in the motor cortex on the trained side. <a href="https://doi.org/10.1126/science.290.5491.533" target="_blank" rel="noopener">https://doi.org/10.1126/science.290.5491.533</a></li>
+          <li>Xu and colleagues (2009). Rapid formation and selective stabilization of synapses for enduring motor memories. Nature 462, 915–919. New synapses formed in the motor cortex of mice within an hour of training on a reaching task. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2844762/" target="_blank" rel="noopener">https://pmc.ncbi.nlm.nih.gov/articles/PMC2844762/</a></li>
+          <li>Bi and Poo (1998). Synaptic modifications in cultured hippocampal neurons: dependence on spike timing, synaptic strength, and postsynaptic cell type. Journal of Neuroscience 18, 10464–10472. A synapse grew stronger when the receiving neuron fired within about 20 ms after the sending neuron. <a href="https://doi.org/10.1523/JNEUROSCI.18-24-10464.1998" target="_blank" rel="noopener">https://doi.org/10.1523/JNEUROSCI.18-24-10464.1998</a></li>
+          <li>Huganir and Nicoll (2013). AMPARs and synaptic plasticity: the last 25 years. Neuron 80, 704–717. A review of how the magnesium block, calcium and AMPA receptors produce the change. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4195488/" target="_blank" rel="noopener">https://pmc.ncbi.nlm.nih.gov/articles/PMC4195488/</a></li>
+          <li>Feldman (2012). The spike-timing dependence of plasticity. Neuron 75, 556–571. A review of the timing rule, including how many paired firings a change typically needs. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3431193/" target="_blank" rel="noopener">https://pmc.ncbi.nlm.nih.gov/articles/PMC3431193/</a></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <footer class="page">
+    <div class="clearrow">
+      <button type="button" class="linkbtn" id="clearSaved">Clear my saved work on this page</button>
+      <button type="button" class="btn" id="clearConfirm" hidden>Yes, clear it</button>
+    </div>
+    <button type="button" class="linkbtn" id="openAll" hidden>Reviewing this page? Open all levels</button>
+  </footer>
+  <div class="pagebottom" aria-hidden="true"></div>
+</div>
+
+<div class="submitdock">
+  <div class="submitpanel" id="submitPanel" hidden>
+    <button type="button" class="closebtn" id="submitClose" aria-label="Close">&times;</button>
+    <p id="submitMsg" aria-live="polite"></p>
+    <textarea id="submitFallback" class="fallback" readonly hidden aria-label="Your work as text"></textarea>
+  </div>
+  <button type="button" class="btn primary submitbtn" id="submitBtn">Copy my work to submit</button>
+</div>
+
+<!-- Text sent with each "Get AI feedback" request. Not shown on the page. -->
+<script type="text/plain" id="ai-system">You are a teaching assistant for an introductory kinesiology course on motor learning. The student is working through an interactive page called 'What practice changes in your brain'. It shows a learner practicing dart throws, the pathway from the motor cortex to the arm, one synapse between a sending neuron and a receiving neuron (glutamate, AMPA receptors, NMDA receptors with a magnesium plug, calcium), and a graph of how the strength of the synapse changes with practice, timing and rest. The page is a simplified model and says so. The student has written a short explanation in answer to one question. You will receive the question, private notes on what a sound explanation contains, what the student has done on the page, and the student's explanation.
+
+Write feedback addressed to the student as "you". Use plain words and 3 to 5 sentences. No headings, no lists, no formulas the student did not use.
+
+First say what is right in the explanation, specifically, using a few of the student's own words. Then name the one most important gap or mistake in the reasoning, if there is one, and say what is missing without writing the missing part for them. Then ask one question that would lead them to it, and point to what to watch on the simulation: which part of the picture, which number, or which button or slider setting.
+
+If the explanation is complete and correct, say so plainly, and ask one question that tests it in a nearby situation.
+
+Never write the full correct explanation for the student, and do not give them numbers they have not given you. Do not introduce parts of the mechanism that the private notes say belong to a later level. If the explanation is off the topic of the question, ask them to describe what they saw on the simulation first. Do not praise in general terms.</script>
+<script type="text/plain" id="ai-notes-1">A sound answer describes the shape of the change: the spread shrank quickly during the first throws and more slowly later, and it levels off. It also offers a specific idea of what is changing inside the learner, in the nervous system and not in the muscles. At this level any reasoned idea is acceptable, because Levels 2 to 4 test it. Do not tell the student that synapses or receptors change; that belongs to later levels. Common gaps: saying only that the throws got better, with no description of the shape; using "muscle memory" as the whole explanation; saying the muscles got stronger.</script>
+<script type="text/plain" id="ai-notes-2">A sound answer starts from the fact that a spike is all-or-none and arrives unchanged, so the difference has to be at the place where the two neurons meet, in how strongly the receiving side responds to the same spike. A reasoned idea is enough here, for example that the receiving neuron has more of whatever responds to the signal. Do not reveal receptors, glutamate or calcium; that belongs to Level 3. Common gaps: saying the spike gets bigger or faster; saying more neurons join the pathway; restating the question.</script>
+<script type="text/plain" id="ai-notes-3">A sound answer says that glutamate alone opens the AMPA receptors, but the NMDA receptor stays plugged by magnesium while the receiving neuron is near rest. Only when the receiving neuron fires while glutamate is still bound does the jump in voltage push the plug out, so calcium can enter. Calcium is the signal that leads the neuron to add AMPA receptors, which makes the next spike produce more voltage. So both neurons have to be active, and close together in time. Common gaps: leaving out the magnesium plug or the voltage; saying glutamate itself adds the receptors; confusing calcium with sodium; not connecting calcium to the added receptors.</script>
+<script type="text/plain" id="ai-notes-4">A sound answer follows the whole chain. Each practiced throw makes sending and receiving neurons in the pathway fire together. At each of those synapses calcium enters and AMPA receptors are added, so each spike adds more voltage to the receiving neuron. When the inputs together reach the receiving neuron's threshold, the pathway fires on its own and the command for the movement is produced reliably. A strong answer also names a pattern or a limit: early throws change the strength more than late ones, poor timing slows the change, rest removes part of the gain, or the page is a simplified model of a much larger system. The student was asked to use the words synapse, receptor and threshold.</script>
+
+
+<script>
+/*MODEL-START*/
+// Pure model: no DOM. Shared by every level and by test-model.js.
+// Line 1: strength = voltage each of the 20 practiced inputs adds; starts 0.50 mV, ceiling 1.00 mV.
+// Line 2: one throw: s + 0.05 * timing * (1.00 - s), timing = e^(-gap / 20 ms), gap 0..100 step 5.
+// Line 3: rest one week: 0.50 + 0.70 * (s - 0.50).
+// Line 4: fires on the 20 inputs alone when 20 * s >= 15 mV (s >= 0.75 mV).
+// Line 5: spread (cm) = 20 - 32 * (s - 0.50); about 2 of 3 throws land inside that radius.
+// Line 6: AMPA receptors drawn = s / 0.05, rounded.
+var MODEL = (function () {
+  var START = 0.50, CEILING = 1.00, RATE = 0.05, TAU_MS = 20, KEEP = 0.70;
+  var INPUTS = 20, THRESHOLD_MV = 15, EPS = 1e-9;
+  var SPREAD_START = 20, SPREAD_PER_MV = 32, MV_PER_RECEPTOR = 0.05;
+  var GAP_MIN = 0, GAP_MAX = 100, GAP_STEP = 5;
+  var INSIDE = 2 / 3;
+  // 2D normal: P(r <= R) = 1 - exp(-R^2 / (2 sigma^2)) = 2/3  ->  sigma = R / sqrt(2 ln 3)
+  var SIGMA_PER_SPREAD = 1 / Math.sqrt(-2 * Math.log(1 - INSIDE));
+  var MAX_LANDINGS = 80, MAX_HIST = 4000;
+
+  function clampGap(g) {
+    g = Math.round(Number(g) / GAP_STEP) * GAP_STEP;
+    if (!(g >= GAP_MIN)) g = GAP_MIN;
+    if (g > GAP_MAX) g = GAP_MAX;
+    return g;
+  }
+  function timing(gap) { return Math.exp(-gap / TAU_MS); }
+  function afterThrow(s, gap) { return s + RATE * timing(gap) * (CEILING - s); }
+  function afterRest(s) { return START + KEEP * (s - START); }
+  function totalMv(s) { return INPUTS * s; }
+  function fires(s) { return INPUTS * s >= THRESHOLD_MV - EPS; }
+  function spreadCm(s) { return SPREAD_START - SPREAD_PER_MV * (s - START); }
+  function receptors(s) { return Math.round(s / MV_PER_RECEPTOR + EPS); }
+  // progress (0..1) of the next spare receptor toward the membrane
+  function receptorProgress(s) { var v = s / MV_PER_RECEPTOR + 0.5 + EPS; return v - Math.floor(v); }
+
+  function makeRng(seed) { return { s: (seed >>> 0) || 1 }; }
+  function rand(r) {
+    r.s = (r.s + 0x6D2B79F5) >>> 0;
+    var t = r.s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+  function gaussian(r) {
+    var u = 0;
+    while (u === 0) u = rand(r);
+    var v = rand(r);
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  function drawLanding(r, spread) {
+    var sg = spread * SIGMA_PER_SPREAD;
+    return { x: sg * gaussian(r), y: sg * gaussian(r) };
+  }
+  function insideSpread(p, spread) { return p.x * p.x + p.y * p.y <= spread * spread + EPS; }
+
+  function createState(seed) {
+    return {
+      s: START, throws: 0, gap: 0, rests: 0,
+      hist: [{ n: 0, s: START }], restMarks: [], landings: [], last: null,
+      rng: makeRng(seed == null ? 12345 : seed)
+    };
+  }
+  function setGap(st, g) { st.gap = clampGap(g); return st.gap; }
+  function practice(st, landing, gap) {
+    var g = gap == null ? st.gap : clampGap(gap);
+    var before = st.s, t = timing(g);
+    if (!landing) landing = drawLanding(st.rng, spreadCm(before));
+    st.s = afterThrow(before, g);
+    st.throws += 1;
+    st.last = { before: before, after: st.s, timing: t, gap: g };
+    st.hist.push({ n: st.throws, s: st.s });
+    if (st.hist.length > MAX_HIST) st.hist.splice(1, st.hist.length - MAX_HIST);
+    st.landings.push({ x: landing.x, y: landing.y, n: st.throws });
+    if (st.landings.length > MAX_LANDINGS) st.landings.shift();
+    return st.last;
+  }
+  function rest(st) {
+    var before = st.s;
+    st.s = afterRest(before);
+    st.rests += 1;
+    st.restMarks.push({ n: st.throws, before: before, after: st.s });
+    st.hist.push({ n: st.throws, s: st.s, rest: true });
+    return { before: before, after: st.s };
+  }
+  function startOver(st) {
+    st.s = START; st.throws = 0; st.gap = 0; st.rests = 0;
+    st.hist = [{ n: 0, s: START }]; st.restMarks = []; st.landings = []; st.last = null;
+    return st;
+  }
+  function throwsToReach(s0, gap, target) {
+    var s = s0, n = 0;
+    while (s < target - EPS && n < 100000) { s = afterThrow(s, gap); n++; }
+    return n;
+  }
+
+  return {
+    START: START, CEILING: CEILING, RATE: RATE, KEEP: KEEP, INPUTS: INPUTS, THRESHOLD_MV: THRESHOLD_MV,
+    EPS: EPS, MV_PER_RECEPTOR: MV_PER_RECEPTOR, GAP_MAX: GAP_MAX, GAP_STEP: GAP_STEP,
+    clampGap: clampGap, timing: timing, afterThrow: afterThrow, afterRest: afterRest,
+    totalMv: totalMv, fires: fires, spreadCm: spreadCm, receptors: receptors, receptorProgress: receptorProgress,
+    makeRng: makeRng, rand: rand, gaussian: gaussian, drawLanding: drawLanding, insideSpread: insideSpread,
+    createState: createState, setGap: setGap, practice: practice, rest: rest, startOver: startOver,
+    throwsToReach: throwsToReach
+  };
+})();
+/*MODEL-END*/
+
+(function () {
+  "use strict";
+  var M = MODEL;
+  var COL = {
+    teal: "#0e8f83", amber: "#d9822b", blue: "#2f6fed", purple: "#6b4fd8", thresh: "#c2334d",
+    text: "#1d2433", muted: "#5d6475", grey: "#8e93a0", ampa: "#4f6aa8", nmda: "#2c3550"
+  };
+  var FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+
+  var st = M.createState(Math.floor(Math.random() * 1e9) + 1);
+  var playing = true;
+  var speed = 1;
+  var queue = [];          // pending actions: { type: "throw" | "rest" | "alone", dur }
+  var cur = null;          // action being animated
+  var testAnim = null;     // Level 2 test of the practiced inputs
+  var lastCalcium = 0;     // calcium of the last completed action (Level 3 meter)
+  var aloneCount = 0;      // times "Fire the sending neuron alone" completed
+  var testedInputs = false;
+  var DUR_SINGLE = 2.4, DUR_BATCH = 0.25, DUR_REST = 0.9, DUR_TEST = 1.6;
+  var drawn = {};          // text drawn on canvases in the last frame (for review scripts)
+
+  function $(id) { return document.getElementById(id); }
+  function fmt(x, d) {
+    var v = Number(x).toFixed(d);
+    if (/^-0(\.0+)?$/.test(v)) v = v.slice(1);
+    return v.replace("-", "−");
+  }
+  // Readouts near the threshold: a strength just under 0.75 mV must not round up to
+  // "0.75 mV" / "15.0 mV" beside "Fires on its own: not yet".
+  function fmtS(s) {
+    var v = Number(s).toFixed(2);
+    if (!M.fires(s) && Number(v) >= 0.75) v = "0.74";
+    return v;
+  }
+  function fmtT(s) {
+    var v = Number(M.totalMv(s)).toFixed(1);
+    if (!M.fires(s) && Number(v) >= 15) v = "14.9";
+    return v;
+  }
+  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ramp(p, a, b) { return clamp01((p - a) / (b - a)); }
+  function ease(x) { x = clamp01(x); return x * x * (3 - 2 * x); }
+  function setText(el, t) { if (el && el.textContent !== t) el.textContent = t; }
+
+  /* ---------------- top bar ---------------- */
+  var playBtn = $("playBtn");
+  function setPlaying(v) {
+    playing = v;
+    playBtn.textContent = v ? "Pause" : "Play";
+    playBtn.setAttribute("aria-label", v ? "Pause the simulation" : "Play the simulation");
+  }
+  playBtn.addEventListener("click", function () { setPlaying(!playing); });
+  var speedBtns = document.querySelectorAll(".seg button[data-speed]");
+  Array.prototype.forEach.call(speedBtns, function (b) {
+    b.addEventListener("click", function () {
+      speed = parseFloat(b.getAttribute("data-speed"));
+      Array.prototype.forEach.call(speedBtns, function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+    });
+  });
+
+  $("practice1").addEventListener("click", function () { queue.push({ type: "throw", dur: DUR_SINGLE }); });
+  $("practice10").addEventListener("click", function () {
+    for (var i = 0; i < 10; i++) queue.push({ type: "throw", dur: DUR_BATCH });
+  });
+  $("restWeek").addEventListener("click", function () { queue.push({ type: "rest", dur: DUR_REST }); });
+  $("startOver").addEventListener("click", function () {
+    queue = []; cur = null; testAnim = null; lastCalcium = 0;
+    M.startOver(st);
+    $("testMsg").hidden = true;
+    syncGap();
+    updateReadouts();
+    save();
+  });
+  $("fireAlone").addEventListener("click", function () { queue.push({ type: "alone", dur: DUR_SINGLE }); });
+
+  function startAction(a) {
+    a.t = 0;
+    if (a.type === "throw") {
+      a.gap = st.gap;
+      a.timing = M.timing(a.gap);
+      a.sBefore = st.s;
+      a.sAfter = M.afterThrow(st.s, a.gap);
+      a.landing = M.drawLanding(st.rng, M.spreadCm(st.s));
+    } else if (a.type === "alone") {
+      a.sBefore = st.s; a.sAfter = st.s; a.timing = 0;
+    } else if (a.type === "rest") {
+      a.sBefore = st.s; a.sAfter = M.afterRest(st.s);
+    }
+    return a;
+  }
+  function commitAction(a) {
+    if (a.type === "throw") { M.practice(st, a.landing, a.gap); lastCalcium = a.timing; }
+    else if (a.type === "rest") { M.rest(st); }
+    else if (a.type === "alone") { aloneCount += 1; lastCalcium = 0; }
+    updateReadouts();
+    save();
+  }
+
+  /* ---------------- gap sliders (shared value) ---------------- */
+  var gap3 = $("gap3"), gap4 = $("gap4");
+  function gapLabel(g) { return "Gap between the two firings: " + g + " ms" + (g === 0 ? " (they fire together)" : ""); }
+  function syncGap() {
+    var g = st.gap;
+    gap3.value = g; gap4.value = g;
+    setText($("gap3Label"), gapLabel(g));
+    setText($("gap4Label"), gapLabel(g));
+    var vt = g + " milliseconds";
+    gap3.setAttribute("aria-valuetext", vt); gap4.setAttribute("aria-valuetext", vt);
+    setText($("timing3"), "timing = " + fmt(M.timing(g), 2));
+    setText($("f4a"), "timing = " + fmt(M.timing(g), 2) + " at a gap of " + g + " ms");
+  }
+  function onGap(e) { M.setGap(st, parseFloat(e.target.value)); syncGap(); save(); }
+  gap3.addEventListener("input", onGap);
+  gap4.addEventListener("input", onGap);
+
+  /* ---------------- readouts ---------------- */
+  function updateReadouts() {
+    var s = st.s;
+    setText($("roThrows"), "Throws practiced: " + st.throws);
+    setText($("roStrength"), "Each input adds: " + fmtS(s) + " mV");
+    setText($("eq2"), "20 inputs × " + fmtS(s) + " mV = " + fmtT(s) + " mV. The threshold is 15 mV.");
+    setText($("c4Throws"), "Throws practiced: " + st.throws);
+    setText($("c4Each"), "Each input adds: " + fmtS(s) + " mV");
+    setText($("c4Total"), "20 inputs together: " + fmtT(s) + " mV");
+    setText($("c4Fires"), "Fires on its own: " + (M.fires(s) ? "yes" : "not yet"));
+    if (st.last) {
+      var L = st.last;
+      setText($("f4b"), "last throw: " + fmt(L.before, 3) + " + 0.05 × " + fmt(L.timing, 2) + " × (1.00 − " + fmt(L.before, 3) + ") = " + fmt(L.after, 3) + " mV");
+    } else {
+      setText($("f4b"), "Practice a throw to see the rule at work.");
+    }
+    syncGap();
+  }
+
+  /* ---------------- Level 2 test ---------------- */
+  $("testInputs").addEventListener("click", function () {
+    var s = st.s, tot = fmtT(s), msg;
+    if (M.fires(s)) {
+      msg = "The 20 practiced inputs add " + tot + " mV. That reaches the threshold of 15 mV, so the receiving neuron fires and the command travels to the arm.";
+    } else {
+      msg = "The 20 practiced inputs add " + tot + " mV. That is below the threshold of 15 mV, so the receiving neuron stays silent and no command leaves for the arm.";
+    }
+    $("testMsg").textContent = msg;
+    $("testMsg").hidden = false;
+    testAnim = { t: 0, dur: DUR_TEST, s: s, fires: M.fires(s) };
+    testedInputs = true;
+    save();
+  });
+
+  /* ---------------- predictions ---------------- */
+  var PRED = {
+    1: { options: [
+      { k: "A", t: "In the first 20 throws", ok: true, fb: "Yes. Check it on the chart: the spread falls quickly at first and then levels off. Each throw closes part of the gap that is left, so there is less to gain as the learner gets closer to their best. Level 4 shows the rule behind this curve." },
+      { k: "B", t: "In the last 20 throws", ok: false, fb: "Practice 60 throws and read the chart. Compare how far the spread falls in the first 20 throws with how far it falls in the last 20. Choose again." },
+      { k: "C", t: "By the same amount in each part", ok: false, fb: "If each throw helped by the same amount, the chart would be a straight line. Practice 60 throws and look at its shape. Choose again." }
+    ] },
+    2: { options: [
+      { k: "A", t: "Each sending neuron has to fire a bigger spike", ok: false, fb: "A neuron's spike is all-or-none. When a neuron fires, the spike has the same size every time, however hard the neuron was driven. So the sending neurons cannot send a bigger spike. Choose again." },
+      { k: "B", t: "Each spike has to produce a larger voltage in the receiving neuron", ok: true, fb: "Yes. The spike that arrives stays the same, so the change has to happen at the place where the two neurons meet. That place is the synapse, and the next level takes you inside one." },
+      { k: "C", t: "Nothing has to change. The same inputs will get there if they keep trying", ok: false, fb: "Press Test the practiced inputs on their own several times without practicing in between. The 20 inputs add the same voltage every time, so repeating the test does not carry them over the threshold. Choose again." }
+    ] },
+    3: { options: [
+      { k: "A", t: "It rises a little each time", ok: false, fb: "Try it and count the receptors. Glutamate opens the AMPA receptors each time, but look at the NMDA receptor. Its magnesium plug never leaves, so no calcium enters and nothing tells the synapse to change. Choose again." },
+      { k: "B", t: "It stays the same", ok: true, fb: 'Yes. Glutamate alone is not enough. The calcium signal needs the sending neuron and the receiving neuron to be active together, and that is why people summarize this kind of change as "neurons that fire together wire together".' },
+      { k: "C", t: "It rises for the first few presses and then stops", ok: false, fb: "Try it and count the receptors after each press. On this page they do not change at all when the sending neuron fires alone, because no calcium enters. Choose again." }
+    ] },
+    4: { options: [
+      { k: "A", t: "It is about the same", ok: false, fb: "Set the gap to 60 ms, practice one throw and watch the calcium. Then compare the strength before and after the throw. Choose again." },
+      { k: "B", t: "It is much smaller", ok: true, fb: "Yes. At 60 ms the timing value is 0.05, so the throw strengthens the synapse only one twentieth as much as it would at 0 ms. A gap of 60 ms is long for a synapse, and the two firings hardly overlap. Level 4 shows what this does to a whole practice." },
+      { k: "C", t: "It is larger, because the synapse has more time", ok: false, fb: "More time works against the synapse here. Most of the glutamate has let go by the time the receiving neuron fires, so little calcium enters. Set the gap to 60 ms and test it. Choose again." }
+    ] }
+  };
+  // which zoom button each prediction unlocks, and which predictions it needs
+  var ZOOM_NEEDS = { 2: [1], 3: [2], 4: [3, 4] };
+  var firstChoice = {};
+  var finalChoice = {};
+  var predApply = {};
+  var questionText = {};
+  function optionText(id, k) {
+    var opts = PRED[id].options;
+    for (var i = 0; i < opts.length; i++) if (opts[i].k === k) return opts[i].k + ". " + opts[i].t;
+    return k;
+  }
+  function updateZoomButtons() {
+    for (var z in ZOOM_NEEDS) {
+      var ok = ZOOM_NEEDS[z].every(function (p) { return !!finalChoice[p]; });
+      var b = document.querySelector('.zoombtn[data-zoom="' + z + '"]');
+      if (ok || reviewOpened) b.hidden = false;
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".prediction"), function (card) {
+    var id = card.getAttribute("data-pred");
+    var def = PRED[id];
+    var box = card.querySelector(".options");
+    var fb = card.querySelector(".feedback");
+    questionText[id] = card.querySelector(".q").textContent;
+    var btns = {};
+    function choose(o) {
+      Array.prototype.forEach.call(box.children, function (c) { c.setAttribute("aria-checked", "false"); });
+      btns[o.k].setAttribute("aria-checked", "true");
+      if (!firstChoice[id]) firstChoice[id] = o.k;
+      finalChoice[id] = o.k;
+      fb.textContent = o.fb;
+      fb.className = "feedback " + (o.ok ? "good" : "warn");
+      updateZoomButtons();
+    }
+    def.options.forEach(function (o) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", "false");
+      b.setAttribute("data-k", o.k);
+      b.innerHTML = '<span class="dot" aria-hidden="true"></span><span><span class="letter">' + o.k + '</span> ' + o.t + '</span>';
+      b.addEventListener("click", function () { choose(o); save(); });
+      btns[o.k] = b;
+      box.appendChild(b);
+    });
+    predApply[id] = function (k) {
+      for (var i = 0; i < def.options.length; i++) if (def.options[i].k === k) choose(def.options[i]);
+    };
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".zoombtn"), function (zoom) {
+    zoom.addEventListener("click", function () {
+      reveal(parseInt(zoom.getAttribute("data-zoom"), 10), true);
+      save();
+    });
+  });
+
+  /* ---------------- practice problems ---------------- */
+  var UNITS = ["choose a unit", "mV", "ms", "cm", "N", "receptors"];
+  var PRAC = {
+    1: {
+      answer: 0.75, tol: 0.004, unit: "mV",
+      correct: "Correct. The 20 inputs share the 15 mV equally, so each one has to add 15 ÷ 20 = 0.75 mV. Keep this number in mind. It is the strength that the practiced inputs have to reach.",
+      near: [
+        { v: 300, tol: 0.5, fb: "You multiplied the threshold by the number of inputs. The 20 inputs together have to add up to 15 mV, so each one adds a share of it." },
+        { v: 15, tol: 0.05, fb: "15 mV is what all 20 inputs have to add together. Find the share that each single input adds." },
+        { v: 0.5, tol: 0.004, fb: "0.50 mV is what each input adds before practice, and 20 of them reach only 10 mV. Find the size that would reach 15 mV." }
+      ],
+      other: "Not yet. Start from: number of inputs × voltage from each input = total voltage, and solve for the voltage from each input.",
+      unitFb: "The number is right, but check the unit. You are answering with a voltage."
+    },
+    2: {
+      answer: 0.80, tol: 0.004, unit: "mV",
+      correct: "Correct. 16 receptors × 0.05 mV for each receptor = 0.80 mV. Before practice the same spike added 0.50 mV at this synapse.",
+      near: [
+        { v: 320, tol: 0.5, fb: "You divided the number of receptors by 0.05. Each receptor adds 0.05 mV, so multiply." }
+      ],
+      other: "Not yet. Use: voltage = number of receptors × 0.05 mV.",
+      unitFb: "The number is right, but check the unit. You are answering with a voltage."
+    },
+    3: {
+      answer: 0.62, tol: 0.003, unit: "mV",
+      correct: "Correct. The distance left to the ceiling is 1.00 − 0.60 = 0.40 mV. The throw closes 5% of it, which is 0.02 mV, so the new strength is 0.62 mV.",
+      near: [
+        { v: 0.63, tol: 0.003, fb: "You took 5% of the current strength. The rule takes 5% of the distance that is still left to the ceiling." },
+        { v: 0.65, tol: 0.003, fb: "You added 0.05 mV. The throw adds 5% of the distance that is still left to the ceiling, and that distance is less than 1 mV." },
+        { v: 0.02, tol: 0.003, fb: "0.02 mV is the amount this throw adds. Add it to the strength the input already had." }
+      ],
+      other: "Not yet. Use: new strength = strength + 0.05 × (1.00 − strength).",
+      unitFb: "The number is right, but check the unit. You are answering with a voltage."
+    }
+  };
+  var pracState = {};
+  var pracApply = {};
+  Array.prototype.forEach.call(document.querySelectorAll(".practice"), function (card) {
+    var id = card.getAttribute("data-prac");
+    var def = PRAC[id];
+    var input = card.querySelector("input");
+    var sel = card.querySelector("select");
+    var btn = card.querySelector("button");
+    var fb = card.querySelector(".feedback");
+    var ps = pracState[id] = { input: "", unit: "", checks: 0, last: null, fbText: "", fbClass: "" };
+    UNITS.forEach(function (u, i) {
+      var o = document.createElement("option");
+      o.value = i === 0 ? "" : u; o.textContent = u;
+      sel.appendChild(o);
+    });
+    function setFb(text, cls) {
+      fb.textContent = text; fb.className = "feedback " + cls;
+      ps.fbText = text; ps.fbClass = cls;
+    }
+    input.addEventListener("input", function () { ps.input = input.value; save(); });
+    sel.addEventListener("change", function () { ps.unit = sel.value; save(); });
+    btn.addEventListener("click", function () {
+      ps.input = input.value; ps.unit = sel.value;
+      var raw = String(input.value).trim().replace(",", ".");
+      var v = parseFloat(raw);
+      var unit = sel.value;
+      if (raw === "" || isNaN(v)) { setFb("Enter a number first.", "warn"); save(); return; }
+      ps.checks += 1;
+      var numOk = Math.abs(v - def.answer) <= def.tol + 1e-9;
+      var unitOk = unit === def.unit;
+      ps.last = { raw: raw, unit: unit, result: numOk && unitOk ? "correct" : "notyet" };
+      if (numOk && unitOk) { setFb(def.correct, "good"); save(); return; }
+      if (numOk) { setFb(def.unitFb, "warn"); save(); return; }
+      var msg = def.other;
+      for (var i = 0; i < def.near.length; i++) {
+        if (Math.abs(v - def.near[i].v) <= def.near[i].tol + 1e-9) { msg = def.near[i].fb; break; }
+      }
+      if (!unitOk) msg += " Also check the unit.";
+      setFb(msg, "warn");
+      save();
+    });
+    pracApply[id] = function (s) {
+      if (!s) return;
+      ps.input = typeof s.input === "string" ? s.input : "";
+      ps.unit = typeof s.unit === "string" ? s.unit : "";
+      ps.checks = s.checks | 0;
+      ps.last = s.last || null;
+      input.value = ps.input;
+      sel.value = ps.unit;
+      if (s.fbText) setFb(s.fbText, s.fbClass || "warn");
+    };
+  });
+
+  /* ---------------- level reveal ---------------- */
+  var revealed = { 1: true, 2: false, 3: false, 4: false };
+  var reviewOpened = false;
+  function reveal(n, animate) {
+    var sec = $("level" + n);
+    var wasHidden = sec.hidden;
+    sec.hidden = false;
+    revealed[n] = true;
+    var b = document.querySelector('nav.zoompath button[data-goto="' + n + '"]');
+    if (b) b.disabled = false;
+    resizeAll();
+    if (animate && wasHidden) {
+      var cc = sec.querySelector(".canvas-card");
+      cc.style.transformOrigin = cc.getAttribute("data-origin") || "50% 50%";
+      cc.classList.remove("zooming"); void cc.offsetWidth; cc.classList.add("zooming");
+      setTimeout(function () { cc.classList.remove("zooming"); }, 600);
+    }
+    if (animate) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("nav.zoompath button"), function (b) {
+    b.addEventListener("click", function () {
+      var n = parseInt(b.getAttribute("data-goto"), 10);
+      if (revealed[n]) $("level" + n).scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  $("openAll").addEventListener("click", function () {
+    reviewOpened = true;
+    for (var n = 2; n <= 4; n++) reveal(n, false);
+    Array.prototype.forEach.call(document.querySelectorAll(".zoombtn"), function (z) { z.hidden = false; });
+    save();
+  });
+  function checkReview() {
+    var q = /(^|&)review=1(&|$)/.test(String(location.search).replace(/^\?/, ""));
+    var h = String(location.hash) === "#review";
+    if (q || h) $("openAll").hidden = false;
+  }
+  checkReview();
+  window.addEventListener("hashchange", checkReview);
+
+  /* ---------------- explain your thinking, with AI feedback ---------------- */
+  var AI_URL = "https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy";
+  var AI_SYSTEM = $("ai-system").textContent;
+  var MSG_SHORT = "Write a few sentences first. Say what you saw on the simulation and why you think it happens.";
+  var MSG_WAIT = "Reading your explanation…";
+  var MSG_FAIL = "The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback.";
+  var explState = {};
+  var explApply = {};
+
+  function wordCount(s) { var m = String(s).trim().match(/\S+/g); return m ? m.length : 0; }
+
+  function progressLine() {
+    var parts = [], i;
+    for (i = 1; i <= 4; i++) {
+      if (firstChoice[i]) parts.push("Prediction " + i + " first choice: " + firstChoice[i] + " (final choice: " + finalChoice[i] + ").");
+    }
+    for (i = 1; i <= 3; i++) {
+      var p = pracState[i];
+      if (p && p.last) parts.push("Practice " + i + ": answered " + p.last.raw + " " + (p.last.unit || "(no unit)") + ", " + (p.last.result === "correct" ? "correct" : "not yet correct") + ".");
+    }
+    parts.push("Throws practiced: " + st.throws + "; each input adds " + fmtS(st.s) + " mV; gap between the two firings " + st.gap + " ms; weeks of rest taken: " + st.rests + ".");
+    if (testedInputs) parts.push("Tested the practiced inputs on their own.");
+    if (aloneCount) parts.push("Fired the sending neuron alone " + aloneCount + " times.");
+    return parts.join(" ");
+  }
+
+  function askOnce(body) {
+    var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 45000);
+    return fetch(AI_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) {
+      clearTimeout(timer);
+      if (!d || typeof d.content !== "string" || !d.content.trim()) throw new Error("no content");
+      return d.content;
+    }, function (e) {
+      clearTimeout(timer);
+      throw e;
+    });
+  }
+  function askAI(body) {
+    return askOnce(body).catch(function () { return askOnce(body); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".explain"), function (card) {
+    var id = card.getAttribute("data-explain");
+    var ta = card.querySelector("textarea");
+    var btn = card.querySelector(".aibtn");
+    var status = card.querySelector(".aistatus");
+    var question = card.querySelector("label").textContent;
+    var notes = $("ai-notes-" + id).textContent;
+    var es = explState[id] = { text: "", fb: "", count: 0 };
+
+    function render(msg, cls, hideFb) {
+      status.innerHTML = "";
+      if (msg) {
+        var m = document.createElement("div");
+        m.className = "feedback " + cls;
+        m.textContent = msg;
+        status.appendChild(m);
+      }
+      if (es.fb && !hideFb) {
+        var box = document.createElement("div");
+        box.className = "feedback neutral";
+        var h = document.createElement("h4");
+        h.textContent = "Feedback on your explanation";
+        var t = document.createElement("div");
+        t.className = "aitext";
+        t.textContent = es.fb;
+        box.appendChild(h); box.appendChild(t);
+        status.appendChild(box);
+      }
+      btn.textContent = es.fb ? "Get feedback again" : "Get AI feedback";
+    }
+
+    ta.addEventListener("input", function () { es.text = ta.value; save(); });
+    btn.addEventListener("click", function () {
+      var text = ta.value.trim();
+      es.text = ta.value;
+      if (wordCount(text) < 12) { render(MSG_SHORT, "warn"); return; }
+      btn.disabled = true;
+      render(MSG_WAIT, "neutral", true);
+      es.count += 1;
+      save();
+      var content = "Question the student was asked:\n" + question +
+        "\n\nWhat a sound explanation contains (private notes for you, do not quote them to the student):\n" + notes +
+        "\n\nWhat the student has done on the page so far:\n" + progressLine() +
+        "\n\nThe student's explanation:\n" + text;
+      askAI({ system: AI_SYSTEM, messages: [{ role: "user", content: content }], max_tokens: 500 }).then(function (reply) {
+        es.fb = reply;
+        btn.disabled = false;
+        render();
+        save();
+      }, function () {
+        btn.disabled = false;
+        render(MSG_FAIL, "warn");
+      });
+    });
+    explApply[id] = function (s) {
+      if (!s) return;
+      es.text = typeof s.text === "string" ? s.text : "";
+      es.fb = typeof s.fb === "string" ? s.fb : "";
+      es.count = s.count | 0;
+      ta.value = es.text;
+      render();
+    };
+  });
+
+  /* ---------------- copy my work to submit ---------------- */
+  function buildWork() {
+    var L = [], i, n;
+    L.push("What practice changes in your brain (motor learning demonstration)");
+    L.push("Copied: " + new Date().toLocaleString());
+    var open = 0;
+    for (n = 1; n <= 4; n++) if (revealed[n]) open++;
+    L.push("Levels opened: " + open + " of 4");
+    for (i = 1; i <= 4; i++) {
+      L.push("");
+      L.push("Prediction " + i + ": " + questionText[i]);
+      L.push("My first choice: " + (firstChoice[i] ? optionText(i, firstChoice[i]) : "not answered yet"));
+      L.push("My final choice: " + (finalChoice[i] ? optionText(i, finalChoice[i]) : "not answered yet"));
+    }
+    Array.prototype.forEach.call(document.querySelectorAll(".practice"), function (card) {
+      var id = card.getAttribute("data-prac");
+      var p = pracState[id];
+      var raw = String(p.input).trim();
+      L.push("");
+      L.push("Practice " + id + ": " + card.querySelector(".q").textContent);
+      L.push("My answer: " + (raw === "" ? "not answered yet" : raw + " " + (p.unit || "(no unit)")));
+      var checked = "not checked yet";
+      if (p.last && p.last.raw === raw.replace(",", ".") && p.last.unit === p.unit) {
+        checked = "Checked: " + (p.last.result === "correct" ? "correct" : "not yet correct");
+      }
+      L.push(checked);
+      L.push("Checks made: " + p.checks);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".explain"), function (card) {
+      var id = card.getAttribute("data-explain");
+      var e = explState[id];
+      var text = card.querySelector("textarea").value.trim();
+      L.push("");
+      L.push("Explanation " + id + ": " + card.querySelector("label").textContent);
+      L.push("My explanation: " + (text || "not written yet"));
+      if (e.fb) {
+        L.push("AI feedback I received:");
+        L.push(e.fb);
+        L.push("Times I asked for feedback: " + e.count);
+      }
+    });
+    L.push("");
+    L.push("Throws practiced: " + st.throws);
+    L.push("Each input adds: " + fmtS(st.s) + " mV");
+    L.push("Gap between the two firings: " + st.gap + " ms");
+    L.push("Weeks of rest taken: " + st.rests);
+    return L.join("\n");
+  }
+
+  var submitPanel = $("submitPanel"), submitMsg = $("submitMsg"), submitFallback = $("submitFallback");
+  $("submitBtn").addEventListener("click", function () {
+    var text = buildWork();
+    function ok() {
+      submitMsg.textContent = "Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.";
+      submitFallback.hidden = true;
+      submitPanel.hidden = false;
+    }
+    function fail() {
+      submitMsg.textContent = "Select the text below, copy it, and paste it where you were asked to submit it. Copying alone does not submit.";
+      submitFallback.value = text;
+      submitFallback.hidden = false;
+      submitPanel.hidden = false;
+      try { submitFallback.focus(); submitFallback.select(); } catch (e) {}
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, fail);
+      } else { fail(); }
+    } catch (e) { fail(); }
+  });
+  $("submitClose").addEventListener("click", function () { submitPanel.hidden = true; });
+
+  /* ---------------- saving work in this browser ---------------- */
+  var STORE_KEY = "kin-practice-synapse-v1";
+  var restoring = false, cleared = false;
+  function save() {
+    if (restoring || cleared) return;
+    var levels = [];
+    for (var n = 1; n <= 4; n++) if (revealed[n]) levels.push(n);
+    var data = {
+      levels: levels, review: reviewOpened, first: firstChoice, final: finalChoice, prac: pracState, expl: explState,
+      tested: testedInputs, alone: aloneCount, calcium: lastCalcium,
+      sim: { s: st.s, throws: st.throws, gap: st.gap, rests: st.rests, hist: st.hist, restMarks: st.restMarks,
+             landings: st.landings, last: st.last, rng: st.rng.s }
+    };
+    try { window.localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+  function num(x, d) { return typeof x === "number" && isFinite(x) ? x : d; }
+  function restore() {
+    var d = null;
+    try { var raw = window.localStorage.getItem(STORE_KEY); d = raw ? JSON.parse(raw) : null; } catch (e) { d = null; }
+    if (!d || typeof d !== "object") return;
+    restoring = true;
+    try {
+      reviewOpened = !!d.review;
+      (d.levels || []).forEach(function (n) { if (n >= 2 && n <= 4) reveal(n, false); });
+      for (var i = 1; i <= 4; i++) {
+        if (d.first && PRED[i] && d.first[i]) firstChoice[i] = d.first[i];
+        if (d.final && d.final[i] && predApply[i]) predApply[i](d.final[i]);
+      }
+      updateZoomButtons();
+      for (var p in pracApply) if (d.prac && d.prac[p]) pracApply[p](d.prac[p]);
+      for (var x in explApply) if (d.expl && d.expl[x]) explApply[x](d.expl[x]);
+      testedInputs = !!d.tested;
+      aloneCount = num(d.alone, 0) | 0;
+      lastCalcium = num(d.calcium, 0);
+      var s = d.sim;
+      if (s && typeof s === "object") {
+        var sv = num(s.s, M.START);
+        if (sv >= M.START - 1e-6 && sv <= M.CEILING + 1e-6) st.s = sv;
+        st.throws = Math.max(0, num(s.throws, 0) | 0);
+        st.gap = M.clampGap(num(s.gap, 0));
+        st.rests = Math.max(0, num(s.rests, 0) | 0);
+        if (Array.isArray(s.hist) && s.hist.length) st.hist = s.hist.filter(function (h) { return h && isFinite(h.n) && isFinite(h.s); });
+        if (!st.hist.length) st.hist = [{ n: 0, s: M.START }];
+        if (Array.isArray(s.restMarks)) st.restMarks = s.restMarks.filter(function (h) { return h && isFinite(h.n); });
+        if (Array.isArray(s.landings)) st.landings = s.landings.filter(function (h) { return h && isFinite(h.x) && isFinite(h.y); });
+        st.last = s.last && isFinite(s.last.before) ? s.last : null;
+        if (isFinite(s.rng) && s.rng > 0) st.rng.s = s.rng >>> 0;
+      }
+    } catch (e) {}
+    restoring = false;
+  }
+  $("clearSaved").addEventListener("click", function () { $("clearConfirm").hidden = false; $("clearConfirm").focus(); });
+  $("clearConfirm").addEventListener("click", function () {
+    cleared = true;
+    try { window.localStorage.removeItem(STORE_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  /* ---------------- canvas setup ---------------- */
+  var canvases = {
+    1: { el: $("c1"), W: 560, H: 440 },
+    2: { el: $("c2"), W: 560, H: 440 },
+    3: { el: $("c3"), W: 560, H: 510 },
+    4: { el: $("c4"), W: 560, H: 360 }
+  };
+  function resizeCanvas(c) {
+    var el = c.el;
+    var cssW = el.parentElement.clientWidth - 16;
+    if (el.parentElement.clientWidth < 500) cssW = el.parentElement.clientWidth - 8;
+    if (cssW <= 0) return;
+    var cssH = cssW * c.H / c.W;
+    var dpr = window.devicePixelRatio || 1;
+    el.style.width = cssW + "px";
+    el.style.height = cssH + "px";
+    el.width = Math.round(cssW * dpr);
+    el.height = Math.round(cssH * dpr);
+    c.k = (cssW / c.W) * dpr;
+    c.txt = cssW < 480 ? 1.25 : 1;
+    c.ctx = el.getContext("2d");
+  }
+  function resizeAll() {
+    for (var n = 1; n <= 4; n++) if (revealed[n]) resizeCanvas(canvases[n]);
+  }
+  window.addEventListener("resize", resizeAll);
+
+  function begin(c) {
+    var ctx = c.ctx;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, c.el.width, c.el.height);
+    ctx.setTransform(c.k, 0, 0, c.k, 0, 0);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    TXT = c.txt || 1;
+    return ctx;
+  }
+
+  /* ---------------- drawing helpers ---------------- */
+  var TXT = 1;   // larger canvas text when the canvas is drawn narrow (phones)
+  function label(ctx, text, x, y, color, opts) {
+    opts = opts || {};
+    ctx.save();
+    ctx.font = (opts.weight || 600) + " " + (opts.size || 14) * TXT + "px " + FONT;
+    ctx.textAlign = opts.align || "left";
+    ctx.textBaseline = opts.baseline || "middle";
+    ctx.lineWidth = 4; ctx.strokeStyle = opts.halo || "rgba(252,252,251,0.95)";
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  }
+  function leader(ctx, x1, y1, x2, y2) {
+    ctx.save(); ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.restore();
+  }
+  function pill(ctx, text, x, y, color, opts) {
+    opts = opts || {};
+    ctx.save();
+    ctx.font = "600 " + (opts.size || 13) * TXT + "px " + FONT;
+    var w = ctx.measureText(text).width + 14, h = (opts.size || 13) * TXT + 9;
+    if (opts.align === "right") x -= w;
+    if (opts.align === "center") x -= w / 2;
+    ctx.fillStyle = opts.fill || "rgba(255,255,255,0.95)"; ctx.strokeStyle = color; ctx.lineWidth = 1.2;
+    rrect(ctx, x, y - h / 2, w, h, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = opts.textColor || color; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText(text, x + 7, y + 0.5);
+    ctx.restore();
+    return w;
+  }
+  function badge(ctx, text, cx, y, size) {
+    ctx.save();
+    ctx.font = "600 " + (size || 15) * TXT + "px " + FONT;
+    var w = ctx.measureText(text).width + 28, h = 34 * Math.sqrt(TXT);
+    var x = cx - w / 2;
+    if (x < 6) { cx += 6 - x; x = 6; }
+    ctx.fillStyle = COL.text; rrect(ctx, x, y, w, h, 10); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(text, cx, y + h / 2 + 1);
+    ctx.restore();
+  }
+  function rrect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  function hatch(ctx, x, y, w, h, color) {
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+    for (var k = -h; k < w + h; k += 6) { ctx.beginPath(); ctx.moveTo(x + k, y + h); ctx.lineTo(x + k + h, y); ctx.stroke(); }
+    ctx.restore();
+  }
+  // where the current action is, as phase 0..1 (null when none)
+  function phaseOf(type) {
+    if (!cur || (type && cur.type !== type)) return null;
+    return clamp01(cur.t / cur.dur);
+  }
+
+  /* ---------------- Level 1: the practice ---------------- */
+  var BOARD = { x: 400, y: 138, cm: 4.4 };
+  function hand(p) {
+    // forearm angle keyframes (canvas angles, up = -90 deg)
+    var A = [[0, -80], [0.12, -80], [0.36, -128], [0.5, -14], [0.66, 12], [1, -80]];
+    var a = -80;
+    for (var i = 1; i < A.length; i++) {
+      if (p <= A[i][0]) { var f = ease((p - A[i - 1][0]) / (A[i][0] - A[i - 1][0])); a = A[i - 1][1] + (A[i][1] - A[i - 1][1]) * f; break; }
+    }
+    var ex = 164, ey = 126, r = a * Math.PI / 180;
+    return { ex: ex, ey: ey, hx: ex + 34 * Math.cos(r), hy: ey + 34 * Math.sin(r), a: r };
+  }
+  function drawDart(ctx, x, y, ang, len) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+    ctx.strokeStyle = COL.text; ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-len, 0); ctx.stroke();
+    ctx.fillStyle = COL.amber;
+    ctx.beginPath(); ctx.moveTo(-len, 0); ctx.lineTo(-len - 7, -5); ctx.lineTo(-len + 3, 0); ctx.lineTo(-len - 7, 5); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+  function drawL1() {
+    var c = canvases[1]; if (!c.ctx) return;
+    var ctx = begin(c), W = c.W;
+    var p = phaseOf("throw");
+    var floorY = 262;
+    // wall and floor
+    ctx.fillStyle = "#f3f1ea"; ctx.fillRect(0, 0, W, floorY);
+    ctx.fillStyle = "#e7e3d8"; ctx.fillRect(0, floorY, W, 10);
+    // board
+    var bx = BOARD.x, by = BOARD.y, k = BOARD.cm;
+    ctx.fillStyle = "#3b4256"; ctx.beginPath(); ctx.arc(bx, by, 25 * k + 6, 0, Math.PI * 2); ctx.fill();
+    var rings = [25, 20, 15, 10, 5];
+    rings.forEach(function (r, i) {
+      ctx.fillStyle = i % 2 === 0 ? "#f6f1e3" : "#e3dccb";
+      ctx.beginPath(); ctx.arc(bx, by, r * k, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.fillStyle = "#3b4256"; ctx.beginPath(); ctx.arc(bx, by, 1.6 * k, 0, Math.PI * 2); ctx.fill();
+
+    // landed darts
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, W, floorY); ctx.clip();
+    var Ls = st.landings, nL = Ls.length;
+    for (var i = 0; i < nL; i++) {
+      var d = Ls[i], recent = i >= nL - 10;
+      var x = bx + d.x * k, y = by - d.y * k;
+      ctx.globalAlpha = recent ? 1 : 0.28;
+      ctx.fillStyle = recent ? COL.text : "#6c7690";
+      ctx.beginPath(); ctx.arc(x, y, recent ? 4.2 : 3.2, 0, Math.PI * 2); ctx.fill();
+      if (recent) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.4; ctx.stroke(); }
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // spread circle
+    var spread = M.spreadCm(st.s), R = spread * k;
+    ctx.save(); ctx.setLineDash([7, 5]); ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.6;
+    ctx.beginPath(); ctx.arc(bx, by, R, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    var la = -Math.PI / 4;
+    label(ctx, "spread", bx + R * Math.cos(la) + 6, by + R * Math.sin(la) - 6, COL.teal, { size: 14 });
+
+    // learner
+    var hp = hand(p == null ? 0 : p);
+    ctx.save();
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    var body = "#7d879e", far = "#b4bccb", near = "#5f6983";
+    ctx.strokeStyle = far; ctx.lineWidth = 11;
+    ctx.beginPath(); ctx.moveTo(118, 118); ctx.lineTo(108, 160); ctx.lineTo(112, 196); ctx.stroke();
+    ctx.lineWidth = 13;
+    ctx.beginPath(); ctx.moveTo(116, 190); ctx.lineTo(96, 226); ctx.lineTo(86, floorY - 4); ctx.stroke();
+    ctx.strokeStyle = body; ctx.lineWidth = 22;
+    ctx.beginPath(); ctx.moveTo(118, 192); ctx.lineTo(124, 112); ctx.stroke();
+    ctx.strokeStyle = near; ctx.lineWidth = 13;
+    ctx.beginPath(); ctx.moveTo(120, 190); ctx.lineTo(146, 226); ctx.lineTo(150, floorY - 4); ctx.stroke();
+    ctx.fillStyle = body; ctx.beginPath(); ctx.arc(130, 80, 18, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = near; ctx.lineWidth = 11;
+    ctx.beginPath(); ctx.moveTo(128, 112); ctx.lineTo(hp.ex, hp.ey); ctx.lineTo(hp.hx, hp.hy); ctx.stroke();
+    ctx.restore();
+
+    // the dart: in the hand, in flight, or just landed
+    var landing = cur && cur.type === "throw" ? cur.landing : null;
+    if (p == null || p < 0.5) {
+      drawDart(ctx, hp.hx + 14, hp.hy, 0, 16);
+    } else if (landing) {
+      var tx = bx + landing.x * k, ty = by - landing.y * k;
+      var sx = 196, sy = 118;
+      var f = ramp(p, 0.5, 0.88);
+      var fx = sx + (tx - sx) * f, fy = sy + (ty - sy) * f - 34 * Math.sin(Math.PI * f);
+      var dfx = (tx - sx), dfy = (ty - sy) - 34 * Math.PI * Math.cos(Math.PI * f);
+      drawDart(ctx, fx, fy, Math.atan2(dfy, dfx), 18 - 6 * f);
+    }
+
+    // badge
+    var bt = "Spread of the throws: " + fmt(spread, 1) + " cm";
+    badge(ctx, bt, 150, 10, 15);
+    drawn.l1Badge = bt;
+
+    // chart under the board
+    var cl = 62, cr = 540, ct = 304, cb = 404;
+    var maxN = Math.max(60, Math.ceil((st.throws + 1) / 20) * 20);
+    function CX(n) { return cl + n / maxN * (cr - cl); }
+    function CY(v) { return cb - v / 20 * (cb - ct); }
+    ctx.fillStyle = "#fff"; ctx.fillRect(cl, ct, cr - cl, cb - ct);
+    ctx.lineWidth = 1;
+    [0, 5, 10, 15, 20].forEach(function (v) {
+      ctx.strokeStyle = "#eceae4"; ctx.beginPath(); ctx.moveTo(cl, CY(v)); ctx.lineTo(cr, CY(v)); ctx.stroke();
+      if (v % 10 === 0) label(ctx, String(v), cl - 8, CY(v), COL.muted, { size: 12, align: "right", weight: 500 });
+    });
+    var stepN = maxN <= 60 ? 10 : maxN <= 160 ? 20 : 50;
+    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), CX(n), cb + 13, COL.muted, { size: 12, align: "center", weight: 500 });
+    ctx.strokeStyle = "#b9b5aa"; ctx.lineWidth = 1.2; ctx.strokeRect(cl, ct, cr - cl, cb - ct);
+    label(ctx, "spread (cm)", cl, ct - 12, COL.muted, { size: 12.5, weight: 600 });
+    label(ctx, "throws practiced", cr, cb + 29, COL.muted, { size: 12.5, align: "right", weight: 600 });
+    ctx.save();
+    ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    st.hist.forEach(function (h, j) {
+      var x = CX(h.n), y = CY(M.spreadCm(h.s));
+      if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    var lastH = st.hist[st.hist.length - 1];
+    ctx.fillStyle = COL.teal; ctx.beginPath(); ctx.arc(CX(lastH.n), CY(M.spreadCm(lastH.s)), 4, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  /* ---------------- Level 2: the pathway ---------------- */
+  var PATH = [[112, 44], [100, 80], [88, 108], [78, 190], [150, 196], [170, 228]];
+  var pathLen = (function () { var L = 0; for (var i = 1; i < PATH.length; i++) L += Math.hypot(PATH[i][0] - PATH[i - 1][0], PATH[i][1] - PATH[i - 1][1]); return L; })();
+  function pathPoint(f) {
+    var target = f * pathLen, acc = 0;
+    for (var i = 1; i < PATH.length; i++) {
+      var seg = Math.hypot(PATH[i][0] - PATH[i - 1][0], PATH[i][1] - PATH[i - 1][1]);
+      if (acc + seg >= target) { var u = (target - acc) / seg; return [PATH[i - 1][0] + (PATH[i][0] - PATH[i - 1][0]) * u, PATH[i - 1][1] + (PATH[i][1] - PATH[i - 1][1]) * u]; }
+      acc += seg;
+    }
+    return PATH[PATH.length - 1];
+  }
+  function neuronTri(ctx, x, y, r, fill, stroke) {
+    ctx.beginPath(); ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.9, y + r * 0.7); ctx.lineTo(x - r * 0.9, y + r * 0.7); ctx.closePath();
+    ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  function drawL2() {
+    var c = canvases[2]; if (!c.ctx) return;
+    var ctx = begin(c);
+    var s = st.s;
+    // what is happening now
+    var mode = null, p = 0;
+    if (testAnim) { mode = "test"; p = clamp01(testAnim.t / testAnim.dur); }
+    else if (cur && cur.type === "throw") { mode = "throw"; p = clamp01(cur.t / cur.dur); }
+    var sNow = mode === "test" ? testAnim.s : (mode === "throw" ? cur.sBefore : s);
+    var decay = 1 - ramp(p, 0.72, 0.98);
+    var teal = mode ? 20 * sNow * ease(ramp(p, 0.12, 0.3)) * decay : 0;
+    var grey = mode === "throw" ? 6 * ease(ramp(p, 0.2, 0.34)) * decay : 0;
+    var willFire = mode === "throw" || (mode === "test" && testAnim.fires);
+    var firing = willFire && p >= 0.36 && p < 0.62;
+    var pulseF = willFire ? ramp(p, 0.38, 0.8) : 0;
+    var muscle = willFire && p >= 0.78 && p < 0.97;
+
+    // body, side view
+    ctx.save();
+    ctx.fillStyle = "#e9e5dc"; ctx.strokeStyle = "#a9a598"; ctx.lineWidth = 2;
+    rrect(ctx, 40, 172, 140, 262, 30); ctx.fill(); ctx.stroke();                // torso
+    ctx.beginPath(); ctx.moveTo(78, 140); ctx.lineTo(126, 140); ctx.lineTo(132, 180); ctx.lineTo(70, 180); ctx.closePath(); ctx.fill(); // neck
+    ctx.beginPath(); ctx.arc(108, 88, 58, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); // head
+    ctx.beginPath(); ctx.moveTo(162, 82); ctx.lineTo(176, 104); ctx.lineTo(162, 108); ctx.fill(); ctx.stroke(); // nose
+    // arm: upper arm down, forearm forward
+    ctx.strokeStyle = "#cfcabd"; ctx.lineWidth = 26;
+    ctx.beginPath(); ctx.moveTo(162, 196); ctx.lineTo(176, 300); ctx.lineTo(236, 282); ctx.stroke();
+    ctx.restore();
+    // brain
+    ctx.save();
+    ctx.fillStyle = "#f3e9ef"; ctx.strokeStyle = "#b99aab"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.ellipse(104, 76, 44, 32, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // motor cortex strip
+    ctx.strokeStyle = COL.amber; ctx.lineWidth = 9; ctx.lineCap = "butt";
+    ctx.beginPath(); ctx.ellipse(104, 76, 44, 32, 0, -Math.PI * 0.62, -Math.PI * 0.38); ctx.stroke();
+    ctx.restore();
+    label(ctx, "motor cortex", 10, 14, COL.amber, { size: 14 });
+    leader(ctx, 60, 22, 106, 42);
+    // zoom box on the cortex
+    ctx.save(); ctx.strokeStyle = COL.text; ctx.lineWidth = 1.4;
+    ctx.strokeRect(104, 38, 16, 14);
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = "#9aa1b0";
+    ctx.beginPath(); ctx.moveTo(120, 38); ctx.lineTo(262, 14); ctx.moveTo(120, 52); ctx.lineTo(262, 426); ctx.stroke();
+    ctx.restore();
+
+    // pathway line
+    ctx.save();
+    ctx.strokeStyle = "#7b6a95"; ctx.lineWidth = 4;
+    ctx.beginPath(); PATH.forEach(function (q, i) { if (i === 0) ctx.moveTo(q[0], q[1]); else ctx.lineTo(q[0], q[1]); }); ctx.stroke();
+    ctx.lineWidth = 7; ctx.strokeStyle = "#a597bd";
+    ctx.beginPath(); ctx.moveTo(88, 110); ctx.lineTo(74, 420); ctx.stroke();  // spinal cord
+    ctx.restore();
+    label(ctx, "spinal cord", 86, 400, COL.text, { size: 13 });
+    label(ctx, "nerve", 100, 214, COL.text, { size: 13 });
+    // muscle
+    ctx.save();
+    ctx.fillStyle = muscle ? COL.thresh : "#c98f86";
+    ctx.strokeStyle = muscle ? COL.text : "#9a6a62"; ctx.lineWidth = muscle ? 3 : 1.5;
+    ctx.beginPath(); ctx.ellipse(170, 246, 11, 30, -0.13, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    label(ctx, "muscle", 190, 236, COL.text, { size: 13 });
+    if (pulseF > 0 && pulseF < 1) {
+      var pp = pathPoint(pulseF);
+      ctx.save(); ctx.fillStyle = COL.thresh; ctx.strokeStyle = "#fff"; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(pp[0], pp[1], 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+    }
+
+    // enlarged view
+    var px = 262, py = 14, pw = 290, ph = 412;
+    ctx.save();
+    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#cfd5e1"; ctx.lineWidth = 1.5;
+    rrect(ctx, px, py, pw, ph, 12); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    var rx = 392, ry = 214;
+    var sendOn = mode && p >= 0.04 && p < 0.3;
+    for (var i = 0; i < 20; i++) {
+      var col = i < 10 ? 0 : 1;
+      var nx = 288 + col * 34, ny = 48 + (i % 10) * 34 + col * 12;
+      ctx.save(); ctx.strokeStyle = "#b8bfcc"; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(nx + 7, ny); ctx.lineTo(rx - 16, ry); ctx.stroke(); ctx.restore();
+      if (mode) {
+        var f2 = ramp(p, 0.04, 0.24);
+        if (f2 > 0 && f2 < 1) {
+          ctx.save(); ctx.fillStyle = COL.teal;
+          ctx.beginPath(); ctx.arc(nx + 7 + (rx - 16 - nx - 7) * f2, ny + (ry - ny) * f2, 3, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+        }
+      }
+      neuronTri(ctx, nx, ny, 9, sendOn ? COL.teal : "#dfe4ec", sendOn ? COL.text : "#7d8496");
+    }
+    label(ctx, "sending neurons", 336, 410, COL.text, { size: 13, align: "center" });
+    // receiving neuron and its axon
+    ctx.save(); ctx.strokeStyle = firing ? COL.thresh : "#7d8496"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(rx, ry + 14); ctx.lineTo(rx, 392); ctx.stroke(); ctx.restore();
+    if (willFire && p >= 0.36 && p < 0.5) {
+      var af = ramp(p, 0.36, 0.5);
+      ctx.save(); ctx.fillStyle = COL.thresh; ctx.beginPath(); ctx.arc(rx, ry + 14 + (392 - ry - 14) * af, 5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    neuronTri(ctx, rx, ry, 20, firing ? COL.thresh : "#f2f3f6", COL.text);
+    label(ctx, "receiving", rx, ry + 34, COL.text, { size: 13, align: "center" });
+    label(ctx, "neuron", rx, ry + 50, COL.text, { size: 13, align: "center" });
+    pill(ctx, firing ? "firing" : "at rest", rx, ry - 36, firing ? COL.thresh : COL.muted,
+      { align: "center", fill: firing ? COL.thresh : "#fff", textColor: firing ? "#fff" : COL.muted });
+
+    // gauge
+    var gx = 452, gw = 26, gTop = 50, gBot = 370;
+    function GY(v) { return gBot - v / 20 * (gBot - gTop); }
+    ctx.save();
+    ctx.fillStyle = "#f6f7f9"; ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
+    ctx.fillRect(gx, gTop, gw, gBot - gTop); ctx.strokeRect(gx, gTop, gw, gBot - gTop);
+    // practiced inputs, idle outline
+    if (!mode) {
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = COL.teal; ctx.lineWidth = 1.6;
+      ctx.strokeRect(gx + 3, GY(20 * s), gw - 6, gBot - GY(20 * s));
+      ctx.setLineDash([]);
+    }
+    var tealTop = GY(Math.min(20, teal));
+    if (teal > 0) { ctx.fillStyle = COL.teal; ctx.fillRect(gx + 1, tealTop, gw - 2, gBot - tealTop); }
+    if (grey > 0) {
+      var gTop2 = GY(Math.min(20, teal + grey));
+      ctx.fillStyle = "#c3c7cf"; ctx.fillRect(gx + 1, gTop2, gw - 2, tealTop - gTop2);
+      hatch(ctx, gx + 1, gTop2, gw - 2, tealTop - gTop2, "#8e93a0");
+    }
+    // ticks
+    for (var v = 0; v <= 20; v += 5) {
+      ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(gx - 5, GY(v)); ctx.lineTo(gx, GY(v)); ctx.stroke();
+      label(ctx, String(v), gx - 8, GY(v), COL.muted, { size: 12, align: "right", weight: 500 });
+    }
+    ctx.strokeStyle = COL.thresh; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(gx - 4, GY(15)); ctx.lineTo(gx + gw + 4, GY(15)); ctx.stroke();
+    ctx.restore();
+    label(ctx, "mV", gx + gw / 2, gTop - 14, COL.muted, { size: 12, align: "center" });
+    label(ctx, "threshold", gx + gw + 2, GY(15) - 13, COL.thresh, { size: 12.5, align: "left" });
+    // bar labels (only words naming the drawn bars)
+    var tY = GY(Math.max(1.5, Math.min(20, mode ? teal : 20 * s) / 2));
+    if (Math.abs(tY - GY(15)) < 30) tY = GY(15) + 30;
+    label(ctx, "practiced", gx + gw + 4, tY - 8, COL.teal, { size: 12.5 });
+    label(ctx, "inputs", gx + gw + 4, tY + 8, COL.teal, { size: 12.5 });
+    if (grey > 0.3) {
+      var gy2 = GY(Math.min(19, teal + grey / 2));
+      if (Math.abs(gy2 - GY(15)) < 26) gy2 = GY(15) - 32;
+      if (gy2 < gTop + 8) gy2 = gTop + 8;
+      label(ctx, "other", gx + gw + 4, gy2 - 8, "#5d6475", { size: 12.5 });
+      label(ctx, "inputs", gx + gw + 4, gy2 + 8, "#5d6475", { size: 12.5 });
+    }
+    drawn.l2Firing = firing;
+  }
+
+  /* ---------------- Level 3: one synapse ---------------- */
+  var SLOT_X = []; (function () { for (var i = 0; i < 22; i++) SLOT_X.push(59 + i * (362 / 21)); })();
+  var NMDA_SLOTS = [6, 15];
+  var AMPA_ORDER = (function () {
+    var idx = [];
+    for (var i = 0; i < 22; i++) if (NMDA_SLOTS.indexOf(i) < 0) idx.push(i);
+    idx.sort(function (a, b) { var d = Math.abs(a - 10.5) - Math.abs(b - 10.5); return d !== 0 ? d : a - b; });
+    return idx;
+  })();
+  var MEM_TOP = 206, MEM_BOT = 230, REC_TOP = 196, REC_H = 42;
+  var POOL = { x: 260, y: 314 };
+  function ampaIcon(ctx, x, yTop, open, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha == null ? 1 : alpha;
+    var g = open ? 3.2 : 1.2;
+    if (open) { ctx.fillStyle = "rgba(47,111,237,0.22)"; ctx.fillRect(x - g, yTop, 2 * g, REC_H); }
+    ctx.fillStyle = COL.ampa;
+    rrect(ctx, x - g - 5, yTop, 5, REC_H, 2); ctx.fill();
+    rrect(ctx, x + g, yTop, 5, REC_H, 2); ctx.fill();
+    ctx.restore();
+  }
+  function nmdaIcon(ctx, x) {
+    ctx.save();
+    ctx.fillStyle = COL.nmda;
+    rrect(ctx, x - 10, REC_TOP - 6, 6.5, REC_H + 8, 3); ctx.fill();
+    rrect(ctx, x + 3.5, REC_TOP - 6, 6.5, REC_H + 8, 3); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.fillRect(x - 10, REC_TOP + 2, 20, 2); // band marks the different receptor
+    ctx.restore();
+  }
+  function glutDot(ctx, x, y, a) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.amber; ctx.strokeStyle = "#8a4a10"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(x, y, 3.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+  }
+  function sodium(ctx, x, y, a) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.blue;
+    ctx.beginPath(); ctx.arc(x, y, 5.2, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(x - 2.8, y); ctx.lineTo(x + 2.8, y); ctx.moveTo(x, y - 2.8); ctx.lineTo(x, y + 2.8); ctx.stroke();
+    ctx.restore();
+  }
+  function calcium(ctx, x, y, a) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.purple; ctx.strokeStyle = "#fff"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 6); ctx.lineTo(x - 5, y); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+  function magnesium(ctx, x, y, a) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = "#a3a8b4"; ctx.strokeStyle = COL.text; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(x, y, 5.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+  }
+  // timeline of one spike at Level 3 (phase 0..1 of the action)
+  var T_BOUND = 0.22, T_FIRE0 = 0.40, FIRE_SPAN = 0.22, BOUND_TAU = FIRE_SPAN * 20 / 100;
+  function fireAt(gap) { return T_FIRE0 + FIRE_SPAN * gap / 100; }
+  function drawL3() {
+    var c = canvases[3]; if (!c.ctx) return;
+    var ctx = begin(c), W = c.W;
+    var a = cur && (cur.type === "throw" || cur.type === "alone") ? cur : null;
+    var p = a ? clamp01(a.t / a.dur) : null;
+    var sShow = a ? a.sBefore : st.s;
+    var nRec = M.receptors(sShow);
+    var paired = a && a.type === "throw";
+    var tFire = paired ? fireAt(a.gap) : 2;
+    var fired = paired && p >= tFire;
+    var firingNow = paired && p >= tFire && p < tFire + 0.12;
+
+    // receiving neuron body
+    ctx.fillStyle = firingNow ? "#fbe7ea" : "#f4f1fa";
+    ctx.fillRect(0, MEM_BOT, W, 470 - MEM_BOT);
+    // membrane
+    ctx.fillStyle = "#e3ddcf"; ctx.fillRect(0, MEM_TOP, W, MEM_BOT - MEM_TOP);
+    ctx.strokeStyle = firingNow ? COL.thresh : "#b3ab98"; ctx.lineWidth = firingNow ? 3 : 1.5;
+    ctx.beginPath(); ctx.moveTo(0, MEM_TOP); ctx.lineTo(W, MEM_TOP); ctx.moveTo(0, MEM_BOT); ctx.lineTo(W, MEM_BOT); ctx.stroke();
+
+    // sending terminal
+    ctx.save();
+    ctx.fillStyle = "#eef1f7"; ctx.strokeStyle = "#6c7690"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(40, 0); ctx.lineTo(40, 100); ctx.quadraticCurveTo(40, 150, 90, 150);
+    ctx.lineTo(390, 150); ctx.quadraticCurveTo(440, 150, 440, 100); ctx.lineTo(440, 0); ctx.stroke(); ctx.fill();
+    ctx.restore();
+    label(ctx, "sending neuron", 240, 16, COL.text, { size: 14, align: "center" });
+    // spike arriving
+    if (a && p < 0.12) {
+      var sy = 24 + 86 * ramp(p, 0, 0.1);
+      ctx.save(); ctx.fillStyle = "rgba(194,51,77,0.18)"; ctx.fillRect(48, sy - 9, 384, 18);
+      ctx.strokeStyle = COL.thresh; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(48, sy); ctx.lineTo(432, sy); ctx.stroke(); ctx.restore();
+      label(ctx, "spike", 56, sy - 14, COL.thresh, { size: 13 });
+    }
+    // vesicles (packets of glutamate)
+    var ves = [[110, 118], [175, 124], [240, 126], [305, 124], [370, 118], [150, 84], [330, 84]];
+    var fuse = a ? ramp(p, 0.08, 0.16) : 0;
+    var restore3 = a ? ramp(p, 0.8, 1) : 1;
+    ves.forEach(function (v, i) {
+      var releasing = i >= 1 && i <= 3;
+      var alpha = releasing && a ? (p < 0.8 ? 1 - 0.85 * fuse : 0.15 + 0.85 * restore3) : 1;
+      ctx.save(); ctx.globalAlpha = alpha;
+      ctx.fillStyle = "#fff"; ctx.strokeStyle = "#8a93a8"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(v[0], v[1], 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.restore();
+      glutDot(ctx, v[0] - 5, v[1] - 3, alpha); glutDot(ctx, v[0] + 5, v[1] - 2, alpha); glutDot(ctx, v[0], v[1] + 5, alpha);
+    });
+    label(ctx, "glutamate packets", 300, 50, COL.text, { size: 13 });
+    leader(ctx, 318, 58, 330, 70);
+
+    // receptors in the membrane
+    var targets = [];
+    for (var r = 0; r < nRec && r < AMPA_ORDER.length; r++) targets.push({ x: SLOT_X[AMPA_ORDER[r]], kind: "ampa", i: r });
+    NMDA_SLOTS.forEach(function (sIdx, j) { targets.push({ x: SLOT_X[sIdx], kind: "nmda", i: j }); });
+    // glutamate binding state per target
+    var nT = targets.length;
+    targets.forEach(function (tg, j) {
+      var u = (j * 0.618034) % 1;           // spread unbinding times
+      tg.unbind = T_FIRE0 - BOUND_TAU * Math.log(1 - u * 0.999);
+      tg.bound = a && p >= T_BOUND && p < tg.unbind;
+    });
+    targets.forEach(function (tg) {
+      if (tg.kind === "ampa") ampaIcon(ctx, tg.x, REC_TOP, !!tg.bound, 1);
+      else nmdaIcon(ctx, tg.x);
+    });
+    // glutamate in the gap
+    if (a && p >= 0.1) {
+      targets.forEach(function (tg, j) {
+        var src = ves[1 + (j % 3)];
+        var f = ease(ramp(p, 0.1 + (j % 4) * 0.008, T_BOUND));
+        var gx2, gy2, ga = 1;
+        if (p < T_BOUND) { gx2 = src[0] + (tg.x - src[0]) * f; gy2 = 150 + (REC_TOP - 8 - 150) * f; }
+        else if (tg.bound) { gx2 = tg.x; gy2 = REC_TOP - 8; }
+        else { var lf = ramp(p, tg.unbind, tg.unbind + 0.1); gx2 = tg.x + 10 * lf; gy2 = REC_TOP - 8 - 34 * lf; ga = 1 - lf; }
+        if (ga > 0.02) glutDot(ctx, gx2, gy2, ga);
+      });
+    }
+    // sodium in through open AMPA receptors
+    if (a && p >= T_BOUND + 0.01 && p < 0.5) {
+      targets.forEach(function (tg, j) {
+        if (tg.kind !== "ampa") return;
+        var f = ramp(p, T_BOUND + 0.01 + (j % 3) * 0.01, T_BOUND + 0.15 + (j % 3) * 0.01);
+        if (f <= 0) return;
+        sodium(ctx, tg.x, REC_TOP - 4 + 76 * f, 1 - ramp(p, 0.4, 0.5));
+      });
+    }
+    // magnesium plugs
+    NMDA_SLOTS.forEach(function (sIdx) {
+      var x = SLOT_X[sIdx], my = REC_TOP + 14, ma = 1;
+      if (fired) {
+        var out = ease(ramp(p, tFire, tFire + 0.06));
+        var back = ease(ramp(p, tFire + 0.32, tFire + 0.4));
+        my = REC_TOP + 14 - 40 * out * (1 - back);
+        ma = 1 - 0.35 * out * (1 - back);
+      }
+      magnesium(ctx, x, my, ma);
+    });
+    label(ctx, "magnesium", 352, 176, COL.text, { size: 13 });
+    leader(ctx, 352, 182, SLOT_X[15] + 6, REC_TOP + 8);
+    // calcium in through NMDA receptors
+    var caAmt = paired ? a.timing : 0;
+    if (fired) {
+      var nCa = Math.round(5 * caAmt);
+      if (nCa === 0 && caAmt >= 0.02) nCa = 1;
+      NMDA_SLOTS.forEach(function (sIdx, j) {
+        for (var q = 0; q < nCa; q++) {
+          var t0 = tFire + 0.03 + q * 0.018;
+          var f = ease(ramp(p, t0, t0 + 0.1));
+          if (f <= 0) continue;
+          var xx = SLOT_X[sIdx] + (q % 2 ? 7 : -7) * f + (q - 2) * 2 * f;
+          calcium(ctx, xx, REC_TOP - 10 + (64 + q * 6) * f, 1 - 0.4 * ramp(p, 0.9, 1));
+        }
+      });
+    }
+    // calcium meter
+    var caShown = a ? (fired ? caAmt * ease(ramp(p, tFire + 0.03, tFire + 0.16)) : 0) : lastCalcium;
+    var mx0 = 452, mw = 96, my0 = 300;
+    label(ctx, "calcium", mx0, my0 - 14, COL.purple, { size: 13 });
+    ctx.save(); ctx.fillStyle = "#fff"; ctx.strokeStyle = COL.purple; ctx.lineWidth = 1.2;
+    ctx.fillRect(mx0, my0, mw, 14); ctx.strokeRect(mx0, my0, mw, 14);
+    ctx.fillStyle = COL.purple; ctx.fillRect(mx0, my0, mw * clamp01(caShown), 14);
+    ctx.restore();
+    drawn.l3Calcium = caShown;
+
+    // spare AMPA receptors waiting inside
+    ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
+    rrect(ctx, 176, 304, 168, 58, 10); ctx.stroke(); ctx.restore();
+    [200, 226, 294, 320].forEach(function (x) { ampaIcon(ctx, x, 312, false, 1); });
+    label(ctx, "spare AMPA receptors", 260, 376, COL.text, { size: 13, align: "center" });
+    // the next spare receptor on its way to the membrane
+    if (nRec < 20) {
+      var q0 = M.receptorProgress(sShow), q1 = q0, arrives = false;
+      if (paired) {
+        arrives = M.receptors(a.sAfter) > nRec;
+        q1 = arrives ? 1 : M.receptorProgress(a.sAfter);
+      }
+      var mStart = tFire + 0.16, mEnd = tFire + 0.34;
+      var q = paired ? q0 + (q1 - q0) * ease(ramp(p, mStart, mEnd)) : q0;
+      var slot = SLOT_X[AMPA_ORDER[nRec]];
+      var lx = POOL.x + (slot - POOL.x) * q, ly = 312 + (REC_TOP - 312) * q;
+      if (q > 0.001 || !paired || p < mStart) {
+        ctx.save();
+        if (q > 0.02 && q < 0.999) {
+          ctx.setLineDash([3, 4]); ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(POOL.x, 312); ctx.lineTo(slot, REC_TOP + 20); ctx.stroke();
+        }
+        ctx.restore();
+        ampaIcon(ctx, lx, ly, false, 1);
+      }
+    }
+
+    // labels for receptors
+    label(ctx, "NMDA receptor", 18, 262, COL.text, { size: 13 });
+    leader(ctx, 70, 254, SLOT_X[6] - 4, REC_TOP + REC_H + 2);
+    var ampaLabelSlot = SLOT_X[0];
+    for (var r2 = 0; r2 < Math.min(nRec, 20); r2++) ampaLabelSlot = Math.max(ampaLabelSlot, SLOT_X[AMPA_ORDER[r2]]);
+    label(ctx, "AMPA receptor", 440, 262, COL.text, { size: 13 });
+    leader(ctx, 440, 258, ampaLabelSlot + 4, REC_TOP + REC_H + 2);
+    // gap marker
+    ctx.save(); ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(462, 152); ctx.lineTo(462, MEM_TOP - 2);
+    ctx.moveTo(456, 152); ctx.lineTo(468, 152); ctx.moveTo(456, MEM_TOP - 2); ctx.lineTo(468, MEM_TOP - 2); ctx.stroke(); ctx.restore();
+    label(ctx, "gap", 472, 179, COL.text, { size: 13 });
+
+    // receiving neuron label and its state
+    label(ctx, "receiving neuron", 18, 300, COL.text, { size: 14 });
+    pill(ctx, firingNow ? "firing" : "at rest", 18, 326, firingNow ? COL.thresh : COL.muted,
+      { fill: firingNow ? COL.thresh : "#fff", textColor: firingNow ? "#fff" : COL.muted });
+    drawn.l3State = firingNow ? "firing" : "at rest";
+
+    // voltage trace (what this synapse adds)
+    var tx0 = 452, ty0 = 8, tw = 100, th = 124;
+    ctx.save(); ctx.fillStyle = "#fff"; ctx.strokeStyle = "#cfd5e1"; ctx.lineWidth = 1.2;
+    rrect(ctx, tx0, ty0, tw, th, 8); ctx.fill(); ctx.stroke(); ctx.restore();
+    label(ctx, "voltage", tx0 + 8, ty0 + 13, COL.muted, { size: 12 });
+    var base = ty0 + th - 14, scale = 80; // px per mV
+    ctx.save(); ctx.strokeStyle = "#d9d6cd"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(tx0 + 8, base); ctx.lineTo(tx0 + tw - 8, base); ctx.stroke();
+    ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(tx0 + 8, base - sShow * scale); ctx.lineTo(tx0 + tw - 8, base - sShow * scale); ctx.stroke();
+    ctx.restore();
+    label(ctx, fmtS(sShow) + " mV", tx0 + tw - 8, base - sShow * scale - 9, COL.blue, { size: 11.5, align: "right" });
+    if (a) {
+      ctx.save(); ctx.strokeStyle = COL.blue; ctx.lineWidth = 2.2; ctx.beginPath();
+      var steps = 60;
+      for (var k = 0; k <= steps; k++) {
+        var pk = k / steps;
+        if (pk > p) break;
+        var xx = (pk - T_BOUND) / 0.08, vv = xx > 0 ? sShow * xx * Math.exp(1 - xx) : 0;
+        var X = tx0 + 8 + pk * (tw - 16), Y = base - vv * scale;
+        if (k === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+      }
+      ctx.stroke(); ctx.restore();
+    }
+
+    // badge
+    var bt = "AMPA receptors: " + nRec + " · This synapse adds " + fmtS(sShow) + " mV";
+    badge(ctx, bt, W / 2, 398, 15);
+    drawn.l3Badge = bt;
+    drawn.l3Receptors = nRec;
+
+    // legend
+    var ly0 = 488;
+    ctx.save(); ctx.fillStyle = "#fff"; ctx.fillRect(0, 470, W, 40); ctx.strokeStyle = "#e3e0d8"; ctx.beginPath(); ctx.moveTo(0, 470); ctx.lineTo(W, 470); ctx.stroke(); ctx.restore();
+    glutDot(ctx, 30, ly0, 1); label(ctx, "glutamate", 40, ly0, COL.text, { size: 13, weight: 500 });
+    sodium(ctx, 160, ly0, 1); label(ctx, "sodium", 172, ly0, COL.text, { size: 13, weight: 500 });
+    calcium(ctx, 270, ly0, 1); label(ctx, "calcium", 282, ly0, COL.text, { size: 13, weight: 500 });
+    magnesium(ctx, 385, ly0, 1); label(ctx, "magnesium", 397, ly0, COL.text, { size: 13, weight: 500 });
+  }
+
+  /* ---------------- Level 4: the strength over a whole practice ---------------- */
+  function drawL4() {
+    var c = canvases[4]; if (!c.ctx) return;
+    var ctx = begin(c), W = c.W;
+    var L = 56, R = W - 14, T = 14, B = 312;
+    var yMin = 0.4, yMax = 1.05;
+    var maxN = Math.max(30, Math.ceil((st.throws * 1.1 + 1) / 10) * 10);
+    function X(n) { return L + n / maxN * (R - L); }
+    function Y(v) { return B - (v - yMin) / (yMax - yMin) * (B - T); }
+    ctx.fillStyle = "#fff"; ctx.fillRect(L, T, R - L, B - T);
+    ctx.lineWidth = 1;
+    for (var v = 0.4; v <= 1.0001; v += 0.1) {
+      ctx.strokeStyle = "#eceae4"; ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(R, Y(v)); ctx.stroke();
+      label(ctx, v.toFixed(1), L - 8, Y(v), COL.muted, { size: 12, align: "right", weight: 500 });
+    }
+    var stepN = maxN <= 40 ? 5 : maxN <= 100 ? 10 : maxN <= 250 ? 25 : 50;
+    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), X(n), B + 13, COL.muted, { size: 12, align: "center", weight: 500 });
+    ctx.strokeStyle = "#b9b5aa"; ctx.lineWidth = 1.2; ctx.strokeRect(L, T, R - L, B - T);
+    label(ctx, "mV", L - 8, T - 2 + 4, COL.muted, { size: 12, align: "right" });
+    label(ctx, "throws practiced", R, B + 31, COL.muted, { size: 12.5, align: "right" });
+
+    // reference lines
+    ctx.save();
+    ctx.strokeStyle = "#8e93a0"; ctx.setLineDash([6, 5]); ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(L, Y(0.5)); ctx.lineTo(R, Y(0.5)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = COL.thresh; ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(L, Y(0.75)); ctx.lineTo(R, Y(0.75)); ctx.stroke();
+    ctx.strokeStyle = "#6c7280"; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(L, Y(1.0)); ctx.lineTo(R, Y(1.0)); ctx.stroke();
+    ctx.restore();
+
+    // rests
+    var seen = {};
+    st.restMarks.forEach(function (rm) {
+      var x = X(rm.n);
+      ctx.save(); ctx.strokeStyle = "#5d6475"; ctx.setLineDash([2, 4]); ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, B); ctx.stroke(); ctx.restore();
+      var k = seen[rm.n] = (seen[rm.n] || 0) + 1;
+      label(ctx, "1 week", x + 3, T + 12 + (k - 1) * 15, COL.muted, { size: 12 });
+    });
+
+    // strength curve with a dot for each throw
+    ctx.save();
+    ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    st.hist.forEach(function (h, j) { var x = X(h.n), y = Y(h.s); if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    ctx.stroke();
+    ctx.fillStyle = COL.teal;
+    var dotR = maxN > 150 ? 1.8 : 3;
+    st.hist.forEach(function (h) { ctx.beginPath(); ctx.arc(X(h.n), Y(h.s), h.rest ? dotR + 1 : dotR, 0, Math.PI * 2); ctx.fill(); });
+    // the throw in progress
+    if (cur && cur.type === "throw") {
+      var f = ease(ramp(cur.t / cur.dur, 0.6, 1));
+      if (f > 0) {
+        ctx.globalAlpha = 0.5; ctx.beginPath(); ctx.arc(X(st.throws + f), Y(cur.sBefore + (cur.sAfter - cur.sBefore) * f), 4, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    ctx.restore();
+
+    // line labels, placed after the curve so they stay readable
+    pill(ctx, "ceiling", L + 6, Y(1.0) - 13, "#6c7280", { size: 12 });
+    pill(ctx, "20 inputs reach the threshold", R - 6, Y(0.75) - 13, COL.thresh, { align: "right", size: 12 });
+    pill(ctx, "before practice", L + 6, Y(0.5) + 13, "#6c7280", { size: 12 });
+  }
+
+  /* ---------------- loop ---------------- */
+  var lastTs = null;
+  function frame(ts) {
+    if (lastTs === null) lastTs = ts;
+    var dt = Math.min(0.05, Math.max(0, (ts - lastTs) / 1000));
+    lastTs = ts;
+    if (playing) advance(dt * speed);
+    if (revealed[1]) drawL1();
+    if (revealed[2]) drawL2();
+    if (revealed[3]) drawL3();
+    if (revealed[4]) drawL4();
+    requestAnimationFrame(frame);
+  }
+  function advance(dts) {
+    if (testAnim) { testAnim.t += dts; if (testAnim.t >= testAnim.dur) testAnim = null; }
+    if (!cur && queue.length) cur = startAction(queue.shift());
+    if (cur) {
+      cur.t += dts;
+      if (cur.t >= cur.dur) {
+        var done = cur; cur = null;
+        commitAction(done);
+        if (queue.length) cur = startAction(queue.shift());
+      }
+    }
+  }
+
+  restore();
+  updateReadouts();
+  resizeAll();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { resizeAll(); });
+  requestAnimationFrame(frame);
+
+  // hook for automated review scripts only
+  window.__synapse = {
+    state: function () { return { s: st.s, throws: st.throws, gap: st.gap, rests: st.rests, receptors: M.receptors(st.s), queued: queue.length + (cur ? 1 : 0) }; },
+    drawn: function () { return JSON.parse(JSON.stringify(drawn)); },
+    flush: function () { var guard = 0; while ((cur || queue.length) && guard++ < 100000) advance(10); },
+    seek: function (phase) { if (!cur && queue.length) cur = startAction(queue.shift()); if (cur) cur.t = cur.dur * phase; },
+    work: buildWork
+  };
+})();
+</script>
+</body>
+</html>
