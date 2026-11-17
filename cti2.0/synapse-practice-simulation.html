@@ -4,226 +4,217 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What practice changes in your brain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-  :root {
-    --bg: #f7f6f2;
-    --card: #ffffff;
-    --border: #e3e0d8;
-    --text: #1d2433;
-    --muted: #5d6475;
-    --teal: #0e8f83;
-    --amber: #d9822b;
-    --blue: #2f6fed;
-    --purple: #6b4fd8;
-    --thresh: #c2334d;
-    --good-bg: #e8f5f1;
-    --good-bd: #9fd3c6;
-    --warn-bg: #fdf3e7;
-    --warn-bd: #ecc18f;
-    --neutral-bg: #eef2fb;
-    --neutral-bd: #b9c8ec;
+  /* Design tokens: the same as the Nand to Tetris trail (cst286/trail-nand-to-adder.html). */
+  :root{
+    color-scheme:dark;
+    --paper:#070D18; --card:#0E1726; --ink:#E6EDF5; --ink-soft:#93A4B8;
+    --line:#22324A; --line-soft:#162236;
+    --blaze:#F2B84B; --hero-ink:#050A13; --hero-cream:#F3EFE3;
+    --tc:#5BB8F5; --tsoft:#10263B; --on-tc:#04101C;
+    --ok:#5FD39A; --ok-soft:#0F2A22; --bad:#FF8A7A; --bad-soft:#33181A; --warn:#E3BD55; --warn-soft:#2B2410;
+    --lamp:#F7C948; --lamp-ink:#241A00; --code:#162236; --stage:#040912;
+    /* colour roles in the four pictures: one meaning, one colour */
+    --str:#3DD6C1;   /* strength, practiced inputs, AMPA receptors */
+    --thr:#FF7A90;   /* threshold */
+    --fire:#F7C948;  /* firing (same as --lamp) */
+    --other:#A6A6A6; /* other inputs */
+    --sans:"Atkinson Hyperlegible","Lato","Helvetica Neue",Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,"DejaVu Sans Mono",monospace;
+    --serif:Fraunces,Georgia,"Times New Roman",serif;
   }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
-    overflow-x: hidden;
-  }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
-  button, input, select, textarea { font: inherit; color: inherit; }
-  :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
-  a { color: #2557c7; overflow-wrap: anywhere; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans); color:var(--ink); background:var(--paper); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-wrap:break-word; overflow-x:hidden}
+  .page{max-width:1180px; margin:0 auto; padding:22px 22px 56px}
+  h1,h2,h3{font-family:var(--serif); text-wrap:balance; margin:0}
+  a{color:var(--blaze); overflow-wrap:anywhere}
+  p{margin:0 0 12px}
+  button,input,select,textarea{font:inherit; color:inherit}
+  a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--blaze); outline-offset:2px; border-radius:4px}
+  [hidden]{display:none !important}
+  .eyebrow,.lbl{font-family:var(--mono); font-size:.74rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft)}
 
-  /* sticky control bar */
-  .controlbar {
-    position: sticky; top: 0; z-index: 20;
-    background: #ffffff;
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 2px 10px rgba(29,36,51,0.05);
-  }
-  .controlbar .wrap {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
-    padding-top: 10px; padding-bottom: 10px;
-  }
-  .btn {
-    border: 1px solid #cfd5e1; background: #fff; border-radius: 8px;
-    padding: 7px 14px; cursor: pointer; font-weight: 500; line-height: 1.2;
-  }
-  .btn:hover { background: #f2f4f8; }
-  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
-  .btn.primary:hover { background: #2560d6; }
-  .btn:disabled { opacity: 0.6; cursor: default; }
-  .seg { display: inline-flex; border: 1px solid #cfd5e1; border-radius: 8px; overflow: hidden; }
-  .seg button { border: 0; background: #fff; padding: 7px 12px; cursor: pointer; font-weight: 500; line-height: 1.2; }
-  .seg button + button { border-left: 1px solid #cfd5e1; }
-  .seg button[aria-pressed="true"] { background: var(--text); color: #fff; }
-  .group { display: flex; align-items: center; gap: 8px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
-  .actions .btn { border-color: #9fd3c6; }
-  .readouts { display: flex; flex-wrap: wrap; gap: 4px 16px; font-weight: 600; font-size: 14.5px; font-variant-numeric: tabular-nums; }
-  .slider { display: flex; flex-direction: column; min-width: 220px; flex: 1 1 220px; max-width: 340px; }
-  .slider label { font-size: 13.5px; font-weight: 500; }
-  .slider input[type=range] { width: 100%; accent-color: var(--teal); margin: 4px 0 0; }
+  /* sticky simulation bar */
+  .controlbar{position:sticky; top:0; z-index:20; background:rgba(7,13,24,.94); border-bottom:1px solid var(--line); box-shadow:0 6px 24px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
+  .controlbar .wrap{max-width:1180px; margin:0 auto; padding:10px 22px; display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px}
+  .group{display:flex; align-items:center; gap:8px}
+  .seg{display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--paper)}
+  .seg button{border:0; background:transparent; color:var(--ink); padding:6px 12px; cursor:pointer; font-family:var(--mono); font-size:.86rem; line-height:1.3}
+  .seg button + button{border-left:1px solid var(--line)}
+  .seg button[aria-pressed="true"]{background:var(--tc); color:var(--on-tc); font-weight:600}
+  .seg button:focus-visible{outline-offset:-3px}
+  .actions{display:flex; flex-wrap:wrap; gap:8px}
+  .readouts{display:flex; flex-wrap:wrap; gap:2px 16px; font-family:var(--mono); font-size:.86rem; color:var(--ink); font-variant-numeric:tabular-nums}
+  .readouts #roStrength{border-bottom:2px solid var(--str)}
 
-  header.page { padding: 28px 0 8px; }
-  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
-  header.page p { max-width: 760px; margin: 0; color: #2e3647; }
+  /* buttons and messages, as on the Nand trail */
+  .btn{font:inherit; font-weight:700; border:1px solid var(--tc); background:var(--tc); color:var(--on-tc); border-radius:6px; padding:8px 15px; cursor:pointer; line-height:1.25}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line); font-weight:400}
+  .btn:hover{filter:brightness(1.08)} .btn.ghost:hover{border-color:var(--tc)}
+  .btn:disabled{opacity:.6; cursor:not-allowed}
+  .controlbar .btn{padding:7px 13px}
+  .msg,.feedback{border-radius:6px; padding:9px 13px; margin:10px 0; color:var(--ink)}
+  .msg:empty,.feedback:empty{display:none}
+  .msg.ok,.feedback.good{background:var(--ok-soft); border-left:4px solid var(--ok)}
+  .msg.bad{background:var(--bad-soft); border-left:4px solid var(--bad)}
+  .msg.warn,.feedback.warn{background:var(--warn-soft); border-left:4px solid var(--warn)}
+  .msg.info,.feedback.neutral{background:var(--tsoft); border-left:4px solid var(--tc)}
+  .muted,.note{color:var(--ink-soft); font-size:.93rem}
 
-  /* zoom path */
-  nav.zoompath ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 18px 0 8px; align-items: center; }
-  nav.zoompath li { display: flex; align-items: center; gap: 6px; }
-  nav.zoompath .arrow { color: #9aa1b0; }
-  nav.zoompath button {
-    border: 1px solid var(--border); background: #fff; border-radius: 999px;
-    padding: 5px 12px 5px 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;
-  }
-  nav.zoompath button .num {
-    width: 22px; height: 22px; border-radius: 50%; background: var(--text); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
-  }
-  nav.zoompath button:disabled { cursor: not-allowed; color: #a5abb8; background: #f0efea; }
-  nav.zoompath button:disabled .num { background: #c4c8d1; }
+  /* hero */
+  .hero{position:relative; overflow:hidden; background:radial-gradient(1100px 420px at 78% 40%, #12314F 0%, #0A1626 45%, var(--hero-ink) 100%); color:var(--hero-cream); border:1px solid var(--line); border-radius:12px; padding:50px 44px 44px; display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:26px; align-items:center}
+  .hero .eyebrow{color:var(--tc)}
+  .hero h1{font-size:clamp(2.1rem,5.2vw,3.5rem); line-height:1.04; font-weight:650; margin:10px 0 16px}
+  .hero h1 em{color:var(--blaze); font-style:italic; font-weight:500}
+  .hero p{max-width:54ch; margin:0; color:#C5D0DD; font-size:1.05rem}
+  .heroart{width:100%; height:auto; display:block}
+  .heroart .term{fill:url(#hgTerm); stroke:var(--tc); stroke-width:2.5}
+  .heroart .ves{fill:#0E1E33; stroke:#4B6788; stroke-width:2}
+  .heroart .glu{fill:#9BE15D}
+  .heroart .mem{fill:none; stroke:#3B5272; stroke-width:3; stroke-linecap:round}
+  .heroart .post{fill:url(#hgPost)}
+  .heroart .rec{fill:var(--str)}
+  .heroart .ca{fill:#C79BFF}
+  .heroart .spike{fill:var(--lamp); filter:drop-shadow(0 0 6px var(--lamp))}
+  .heroart .glow{fill:url(#hgGlow)}
+  .heroart .fall{animation:hfall 2.6s ease-in infinite}
+  .heroart .drift{animation:hdrift 2.6s ease-out infinite}
+  .heroart .spike{animation:hspike 2.6s ease-in infinite}
+  .heroart .glow{animation:hglow 2.6s ease-in-out infinite}
+  @keyframes hfall{0%,22%{transform:translateY(-4px); opacity:0} 30%{opacity:1} 62%{transform:translateY(38px); opacity:1} 72%,100%{transform:translateY(38px); opacity:0}}
+  @keyframes hdrift{0%,58%{transform:translateY(0); opacity:0} 66%{opacity:1} 100%{transform:translateY(34px); opacity:0}}
+  @keyframes hspike{0%{transform:translateY(0); opacity:0} 6%{opacity:1} 26%{transform:translateY(96px); opacity:1} 32%,100%{transform:translateY(96px); opacity:0}}
+  @keyframes hglow{0%,52%{opacity:.15} 66%{opacity:1} 100%{opacity:.15}}
+  p.intro2{max-width:78ch; margin:20px 4px 0; color:var(--ink)}
+
+  /* map of the levels */
+  .map{margin:18px 0 20px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px}
+  .map-row{display:flex; flex-wrap:wrap; align-items:center; gap:6px; list-style:none; margin:0; padding:0}
+  .map-row li{display:flex; align-items:center; gap:6px}
+  .map-arrow{color:var(--ink-soft)}
+  .dot{display:flex; align-items:center; gap:7px; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:4px 12px 4px 5px; font:inherit; font-size:.9rem; cursor:pointer}
+  .dot:hover{border-color:var(--tc)}
+  .dot-n{display:inline-grid; place-items:center; width:24px; height:24px; border-radius:50%; border:2px solid var(--ink-soft); font-family:var(--mono); font-size:.76rem; font-weight:600; color:var(--ink)}
+  .dot.cur{border-color:var(--tc); background:var(--tsoft); font-weight:700}
+  .dot.cur .dot-n{background:var(--tc); border-color:var(--tc); color:var(--on-tc); box-shadow:0 0 0 3px var(--tsoft),0 0 0 5px var(--tc)}
+  .dot.locked{opacity:.62; cursor:not-allowed}
+  .dot.locked:hover{border-color:var(--line)}
+  .dot.locked .dot-n{border:0; background:var(--line-soft)}
+  .dot-n svg{width:13px; height:13px; display:block}
 
   /* levels */
-  section.level {
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 22px; margin: 22px 0; scroll-margin-top: 140px;
-  }
-  section.level h2 { margin: 0 0 14px; font-size: 22px; line-height: 1.25; }
-  .grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-  .vis { min-width: 0; }
-  .text { min-width: 0; }
-  .text p { margin: 0 0 12px; }
-  .canvas-card {
-    border: 1px solid var(--border); border-radius: 12px; background: #fcfcfb; padding: 8px; overflow: hidden;
-  }
-  .canvas-card canvas { display: block; width: 100%; }
-  .canvas-card.zooming { animation: zoomIn 520ms cubic-bezier(.2,.8,.2,1); }
-  @keyframes zoomIn { from { transform: scale(0.12); opacity: 0.15; } to { transform: scale(1); opacity: 1; } }
+  section.level{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:28px 32px 26px; margin:0 0 20px; scroll-margin-top:var(--barh,120px)}
+  section.level h2{font-size:clamp(1.4rem,3.4vw,1.9rem); margin:4px 0 16px}
+  .zoompath{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:0 0 12px; font-family:var(--mono); font-size:.84rem; color:var(--ink-soft)}
+  .zoompath .up{font:inherit; background:none; border:1px solid var(--line); color:var(--tc); border-radius:999px; padding:1px 10px; cursor:pointer}
+  .zoompath .up:hover{border-color:var(--tc)}
+  .zoompath .here{border:1px solid var(--blaze); color:var(--blaze); border-radius:999px; padding:1px 10px}
+  .grid{display:grid; grid-template-columns:minmax(0,1.12fr) minmax(0,1fr); gap:26px; align-items:start}
+  .vis,.text{min-width:0}
+  .text > p{margin:0 0 12px}
+  .stage{position:relative; display:block; background:radial-gradient(600px 300px at 50% 40%, #0B1A2E 0%, var(--stage) 75%); border:1px solid var(--line); border-radius:10px; padding:10px; overflow:hidden}
+  .stage::before{content:""; position:absolute; inset:0; border-radius:10px; background-image:radial-gradient(rgba(147,164,184,.13) 1px, transparent 1px); background-size:22px 22px; pointer-events:none}
+  .stage canvas{display:block; position:relative; max-width:100%}
+  .stage.zooming{animation:zoomIn 520ms cubic-bezier(.2,.8,.2,1)}
+  @keyframes zoomIn{from{transform:scale(.12); opacity:.15} to{transform:scale(1); opacity:1}}
 
-  .card {
-    border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 16px; margin: 14px 0;
-  }
-  .card h3 { margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
-  .card .q { font-weight: 600; margin: 0 0 12px; }
-  .options { display: flex; flex-direction: column; gap: 8px; }
-  .options button {
-    text-align: left; border: 1px solid #cfd5e1; background: #fff; border-radius: 10px; padding: 10px 12px;
-    cursor: pointer; display: flex; gap: 10px; align-items: flex-start; line-height: 1.4;
-  }
-  .options button:hover { background: #f5f7fb; }
-  .options button .dot {
-    flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #9aa1b0; margin-top: 1px;
-    display: inline-flex; align-items: center; justify-content: center;
-  }
-  .options button[aria-checked="true"] { border-color: var(--text); background: #f3f4f7; }
-  .options button[aria-checked="true"] .dot { border-color: var(--text); }
-  .options button[aria-checked="true"] .dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--text); }
-  .options .letter { font-weight: 600; margin-right: 4px; }
-  .feedback { margin-top: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid transparent; }
-  .feedback:empty { display: none; }
-  .feedback.good { background: var(--good-bg); border-color: var(--good-bd); }
-  .feedback.warn { background: var(--warn-bg); border-color: var(--warn-bd); }
-  .feedback.neutral { background: var(--neutral-bg); border-color: var(--neutral-bd); }
-  .zoombtn { margin-top: 14px; }
+  .card{border:1px solid var(--line); border-radius:10px; padding:14px 16px 14px; margin:16px 0; background:rgba(4,9,18,.35)}
+  .card h3{font-size:1.12rem; margin:0 0 10px}
+  .card .q{margin:0 0 12px}
+  .options{display:flex; flex-direction:column; gap:8px}
+  .options button{text-align:left; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:8px; padding:10px 12px; cursor:pointer; display:flex; gap:10px; align-items:flex-start; line-height:1.45}
+  .options button:hover{border-color:var(--tc)}
+  .options .dotr{flex:0 0 auto; width:18px; height:18px; border-radius:50%; border:2px solid var(--ink-soft); margin-top:2px; display:inline-flex; align-items:center; justify-content:center}
+  .options button[aria-checked="true"]{border-color:var(--tc); background:var(--tsoft)}
+  .options button[aria-checked="true"] .dotr{border-color:var(--tc)}
+  .options button[aria-checked="true"] .dotr::after{content:""; width:8px; height:8px; border-radius:50%; background:var(--tc)}
+  .options .letter{font-family:var(--mono); font-weight:600; margin-right:4px; color:var(--tc)}
+  .zoombtn{margin-top:6px; border-radius:999px; padding:10px 20px; box-shadow:0 0 18px rgba(91,184,245,.3)}
 
-  .answer-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .answer-row input[type=number] {
-    width: 120px; border: 1px solid #cfd5e1; border-radius: 8px; padding: 7px 10px; background: #fff;
-  }
-  .answer-row select { border: 1px solid #cfd5e1; border-radius: 8px; padding: 7px 8px; background: #fff; }
+  .answer-row{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+  .answer-row input[type=number]{width:120px; padding:7px 9px; border:1px solid var(--ink-soft); border-radius:6px; background:var(--paper); color:var(--ink); font-family:var(--mono)}
+  .answer-row select{padding:7px 8px; border:1px solid var(--ink-soft); border-radius:6px; background:var(--paper); color:var(--ink)}
 
-  .equation {
-    margin-top: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff;
-    font-variant-numeric: tabular-nums; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px;
-    overflow-wrap: anywhere;
-  }
-  .equation .live { color: #2e3647; font-weight: 600; }
-  .formula {
-    border: 1px solid #d7dcea; background: #f6f8fd; border-radius: 12px; padding: 12px 14px; margin: 12px 0;
-    font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
-  }
-  .formula .main { font-weight: 600; font-size: 16.5px; }
-  .formula .line { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; margin-top: 6px; }
+  .equation{margin-top:10px; padding:9px 13px; border:1px solid var(--line); border-radius:8px; background:var(--stage); font-family:var(--mono); font-size:.88rem; font-variant-numeric:tabular-nums; overflow-wrap:anywhere}
+  .formula{border:1px solid var(--line); background:var(--code); border-radius:8px; padding:12px 14px; margin:0 0 14px; font-variant-numeric:tabular-nums; overflow-wrap:anywhere}
+  .formula .main{font-family:var(--mono); font-weight:600; font-size:.98rem; color:var(--ink)}
+  .formula .line{font-family:var(--mono); font-size:.86rem; margin-top:6px; color:var(--ink-soft)}
+  .counters{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px}
+  .counter{display:inline-block; border:1px solid var(--line); border-radius:999px; padding:3px 12px; font-family:var(--mono); font-size:.84rem; background:var(--paper); font-variant-numeric:tabular-nums}
+  .counter.strength{border-color:var(--str); box-shadow:inset 4px 0 0 var(--str)}
+  .counter.fires{border-color:var(--thr); box-shadow:inset 4px 0 0 var(--thr)}
+  .level-controls{display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px 22px; margin-top:12px}
+  .slider{display:flex; flex-direction:column; min-width:220px; flex:1 1 220px; max-width:340px}
+  .slider label{font-size:.88rem; color:var(--ink)}
+  .slider input[type=range]{width:100%; accent-color:var(--tc); margin:6px 0 0}
+  .liveline{font-family:var(--mono); font-size:.88rem; font-weight:600; font-variant-numeric:tabular-nums; padding-bottom:4px}
+  .testmsg{margin-top:10px}
+  textarea.reflect{width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--stage); color:#DCE7F3; resize:vertical; line-height:1.55; caret-color:var(--lamp)}
+  .copyrow{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:10px}
+  .aistatus .feedback h4{margin:0 0 6px; font-family:var(--serif); font-size:1rem}
+  .aistatus .aitext{white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.6}
+  .experiment p{margin:0 0 10px}
+  .wide-cards{margin-top:6px}
+  details.limits{margin:14px 0 0; border:1px solid var(--line); border-radius:8px; padding:8px 14px}
+  details.limits summary{cursor:pointer; color:var(--tc); font-weight:700}
+  details.limits p{margin:10px 0 4px}
+  details.limits ul{margin:10px 0 4px; padding-left:20px}
+  details.limits li + li{margin-top:8px}
 
-  .counters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
-  .counter { border: 1px solid var(--border); border-radius: 10px; padding: 5px 10px; background: #fff; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 15px; }
-  .counter.strength { border-left: 4px solid var(--teal); }
-  .counter.fires { border-left: 4px solid var(--thresh); }
-  .level-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 22px; margin-top: 12px; }
-  .liveline { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; padding-bottom: 4px; }
+  footer.page-foot{text-align:center; padding:6px 0 14px; font-size:.86rem; color:var(--ink-soft)}
+  .clearrow{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; margin-bottom:6px}
+  .linkbtn{background:none; border:0; padding:2px; color:var(--ink-soft); text-decoration:underline; cursor:pointer; font-size:.86rem}
+  .pagebottom{height:80px}
 
-  .note { font-size: 14.5px; color: var(--muted); }
-  .testmsg { margin-top: 10px; }
-  .wide-cards { margin-top: 8px; }
-  textarea.reflect { width: 100%; min-height: 0; border: 1px solid #cfd5e1; border-radius: 10px; padding: 10px; resize: vertical; background: #fff; }
-  .copyrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
-  textarea.fallback { width: 100%; min-height: 140px; margin-top: 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; border: 1px solid #cfd5e1; border-radius: 10px; padding: 8px; }
-  details.limits { border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; background: #fff; margin-top: 14px; }
-  details.limits summary { cursor: pointer; font-weight: 600; }
-  details.limits p { margin: 10px 0 0; }
-  details.limits ul { margin: 10px 0 0; padding-left: 20px; }
-  details.limits li + li { margin-top: 8px; }
-  .experiment p { margin: 0 0 10px; }
+  /* copy my work to submit */
+  .submitdock{position:fixed; right:18px; bottom:18px; z-index:40; display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:calc(100vw - 36px)}
+  .submitbtn{border-radius:999px; padding:11px 20px; box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  .submitpanel{position:relative; width:min(460px, calc(100vw - 36px)); max-height:70vh; overflow:auto; background:var(--card); border:1px solid var(--tc); border-radius:12px; padding:12px 42px 12px 14px; box-shadow:0 10px 34px rgba(0,0,0,.6); font-size:.95rem}
+  .submitpanel p{margin:0}
+  textarea.fallback{width:100%; min-height:120px; max-height:40vh; margin-top:10px; font-family:var(--mono); font-size:.8rem; border:1px solid var(--line); border-radius:8px; padding:8px; background:var(--stage); color:#DCE7F3}
+  .submitpanel .closebtn{position:absolute; top:6px; right:6px; width:30px; height:30px; border:0; background:none; border-radius:6px; cursor:pointer; font-size:20px; line-height:1; color:var(--ink-soft)}
+  .submitpanel .closebtn:hover{background:var(--line-soft)}
 
-  footer.page { text-align: center; padding: 10px 0 14px; font-size: 13.5px; }
-  .linkbtn { background: none; border: 0; padding: 2px; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 13.5px; }
-  .eyebrow { margin: 0 0 6px !important; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted) !important; }
-  header.page p + p { margin-top: 12px; }
-  .aistatus .feedback h4 { margin: 0 0 6px; font-size: 14px; }
-  .aistatus .aitext { white-space: pre-wrap; overflow-wrap: anywhere; }
-  .aistatus .feedback + .feedback { margin-top: 8px; }
-  .clearrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin-bottom: 6px; }
-  .pagebottom { height: 96px; }
-  .submitdock {
-    position: fixed; right: 16px; bottom: 16px; z-index: 40;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
-    max-width: calc(100vw - 32px);
+  @media (max-width:819px){
+    .page{padding:14px 12px 40px}
+    .hero{grid-template-columns:1fr; padding:30px 20px 26px; gap:18px}
+    .heroart{max-width:380px; margin:0 auto}
+    .grid{grid-template-columns:minmax(0,1fr)}
+    section.level{padding:20px 14px 18px}
+    .stage{padding:6px}
+    .card{padding:12px 12px}
+    .slider{max-width:none; min-width:0; flex-basis:100%}
+    .controlbar .wrap{padding:6px 8px; gap:6px 8px}
+    .controlbar .btn{padding:5px 9px; font-size:.86rem}
+    .seg button{padding:5px 5px; font-size:.78rem}
+    #playBtn{padding:5px 7px}
+    .group{gap:6px}
+    .actions{order:3; flex:1 1 100%; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px}
+    .actions .btn{padding:4px 3px; font-size:.82rem; line-height:1.2}
+    .readouts{flex:1 1 0; min-width:0; flex-direction:column; gap:0; font-size:12px; line-height:1.35; font-family:var(--sans)}
+    .readouts span{white-space:nowrap}
+    .map{padding:10px}
+    .dot{font-size:.84rem; padding:3px 10px 3px 4px}
   }
-  .submitbtn { box-shadow: 0 4px 14px rgba(29,36,51,0.22); padding: 11px 18px; }
-  .submitpanel {
-    position: relative; width: 380px; max-width: calc(100vw - 32px);
-    background: #fff; border: 1px solid var(--border); border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(29,36,51,0.18); padding: 12px 40px 12px 14px; font-size: 14.5px;
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .heroart *{animation:none !important}
+    .stage.zooming{animation:none}
   }
-  .submitpanel p { margin: 0; }
-  .submitpanel textarea.fallback { min-height: 120px; max-height: 40vh; }
-  .submitpanel .closebtn {
-    position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; background: none;
-    border-radius: 6px; cursor: pointer; font-size: 20px; line-height: 1; color: var(--muted);
-  }
-  .submitpanel .closebtn:hover { background: #f2f4f8; }
-
-  [hidden] { display: none !important; }
-
-  @media (max-width: 819px) {
-    .grid { grid-template-columns: minmax(0, 1fr); }
-    section.level { padding: 14px; scroll-margin-top: 130px; }
-    h1 { font-size: 25px; }
-    .slider { max-width: none; min-width: 0; flex-basis: 100%; }
-    .controlbar .wrap { gap: 6px 8px; padding: 6px 8px; }
-    .controlbar .btn { padding: 6px 8px; font-size: 14px; }
-    .seg button { padding: 6px 6px; font-size: 14px; }
-    .group { gap: 6px; }
-    .actions { order: 3; flex: 1 1 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
-    .actions .btn { padding: 5px 3px; font-size: 13.5px; white-space: normal; line-height: 1.2; }
-    .readouts { flex: 1 1 0; min-width: 0; flex-direction: column; gap: 0; font-size: 11.5px; line-height: 1.35; letter-spacing: -0.01em; }
-    .readouts span { white-space: nowrap; }
-    .canvas-card { padding: 4px; }
-  }
+  @media print{ .submitdock,.controlbar{display:none} }
 </style>
 </head>
 <body>
 
-<div class="controlbar" role="region" aria-label="Simulation controls">
+<div class="controlbar" id="controlbar" role="region" aria-label="Simulation controls">
   <div class="wrap">
     <div class="group">
-      <button class="btn primary" id="playBtn" type="button" aria-label="Pause the simulation">Pause</button>
+      <button class="btn" id="playBtn" type="button" aria-label="Pause the simulation">Pause</button>
       <div class="seg" role="group" aria-label="Speed">
         <button type="button" data-speed="1" aria-pressed="true">1x</button>
         <button type="button" data-speed="0.25" aria-pressed="false">0.25x</button>
@@ -234,8 +225,8 @@
     <div class="actions">
       <button type="button" class="btn" id="practice1">Practice 1 throw</button>
       <button type="button" class="btn" id="practice10">Practice 10 throws</button>
-      <button type="button" class="btn" id="restWeek">Rest one week</button>
-      <button type="button" class="btn" id="startOver">Start over</button>
+      <button type="button" class="btn ghost" id="restWeek">Rest one week</button>
+      <button type="button" class="btn ghost" id="startOver">Start over</button>
     </div>
     <div class="readouts">
       <span id="roThrows">Throws practiced: 0</span>
@@ -244,29 +235,72 @@
   </div>
 </div>
 
-<div class="wrap">
-  <header class="page">
-    <p class="eyebrow">Motor learning · Demonstration page</p>
-    <h1>What practice changes in your brain</h1>
-    <p>When you practice a movement, it gets better within minutes. Your muscles cannot grow stronger that fast, so the improvement has to come from somewhere else. On this page you follow it all the way down: from the throws you can watch, to the pathway that carries the command from the brain to the arm, to one connection between two neurons, to the number that says how strong that connection is. At each level you make a prediction first, then run the simulation to check it.</p>
-    <p>At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.</p>
+<div class="page">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Motor learning · Demonstration page</div>
+      <h1>What practice changes <em>in your brain</em></h1>
+      <p>When you practice a movement, it gets better within minutes. Your muscles cannot grow stronger that fast, so the improvement has to come from somewhere else. On this page you follow it all the way down: from the throws you can watch, to the pathway that carries the command from the brain to the arm, to one connection between two neurons, to the number that says how strong that connection is. At each level you make a prediction first, then run the simulation to check it.</p>
+    </div>
+    <svg class="heroart" viewBox="0 0 420 300" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="hgTerm" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#1A3A5C"/><stop offset="1" stop-color="#0A1626"/></radialGradient>
+        <linearGradient id="hgPost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12304A"/><stop offset="1" stop-color="#050A13" stop-opacity="0"/></linearGradient>
+        <radialGradient id="hgGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F7C948" stop-opacity=".5"/><stop offset="1" stop-color="#F7C948" stop-opacity="0"/></radialGradient>
+      </defs>
+      <path class="term" d="M182 0C182 38 180 52 162 66C112 92 72 110 72 140Q72 156 92 156H328Q348 156 348 140C348 110 308 92 258 66C240 52 238 38 238 0Z"/>
+      <circle class="spike" cx="210" cy="10" r="6"/>
+      <g>
+        <circle class="ves" cx="128" cy="130" r="13"/><circle class="ves" cx="176" cy="136" r="13"/><circle class="ves" cx="226" cy="138" r="13"/>
+        <circle class="ves" cx="276" cy="134" r="13"/><circle class="ves" cx="200" cy="104" r="13"/><circle class="ves" cx="252" cy="106" r="13"/>
+        <circle class="glu" cx="124" cy="127" r="3"/><circle class="glu" cx="132" cy="134" r="3"/><circle class="glu" cx="172" cy="133" r="3"/><circle class="glu" cx="181" cy="140" r="3"/>
+        <circle class="glu" cx="222" cy="135" r="3"/><circle class="glu" cx="230" cy="142" r="3"/><circle class="glu" cx="272" cy="131" r="3"/><circle class="glu" cx="281" cy="138" r="3"/>
+        <circle class="glu" cx="196" cy="101" r="3"/><circle class="glu" cx="205" cy="108" r="3"/><circle class="glu" cx="248" cy="103" r="3"/><circle class="glu" cx="257" cy="110" r="3"/>
+      </g>
+      <g>
+        <circle class="glu fall" cx="160" cy="162" r="3.4" style="animation-delay:0s"/><circle class="glu fall" cx="186" cy="160" r="3.4" style="animation-delay:.12s"/>
+        <circle class="glu fall" cx="214" cy="163" r="3.4" style="animation-delay:.05s"/><circle class="glu fall" cx="240" cy="160" r="3.4" style="animation-delay:.18s"/>
+        <circle class="glu fall" cx="266" cy="162" r="3.4" style="animation-delay:.09s"/><circle class="glu fall" cx="200" cy="168" r="3.4" style="animation-delay:.22s"/>
+        <circle class="glu fall" cx="228" cy="170" r="3.4" style="animation-delay:.14s"/>
+      </g>
+      <ellipse class="glow" cx="210" cy="232" rx="170" ry="54"/>
+      <path class="post" d="M30 206Q210 190 390 206V300H30Z"/>
+      <path class="mem" d="M30 206Q210 190 390 206"/>
+      <path class="mem" d="M30 216Q210 200 390 216"/>
+      <g>
+        <rect class="rec" x="112" y="192" width="5" height="26" rx="2"/><rect class="rec" x="121" y="192" width="5" height="26" rx="2"/>
+        <rect class="rec" x="152" y="189" width="5" height="26" rx="2"/><rect class="rec" x="161" y="189" width="5" height="26" rx="2"/>
+        <rect class="rec" x="192" y="187" width="5" height="26" rx="2"/><rect class="rec" x="201" y="187" width="5" height="26" rx="2"/>
+        <rect class="rec" x="232" y="187" width="5" height="26" rx="2"/><rect class="rec" x="241" y="187" width="5" height="26" rx="2"/>
+        <rect class="rec" x="272" y="189" width="5" height="26" rx="2"/><rect class="rec" x="281" y="189" width="5" height="26" rx="2"/>
+        <rect class="rec" x="312" y="192" width="5" height="26" rx="2"/><rect class="rec" x="321" y="192" width="5" height="26" rx="2"/>
+      </g>
+      <g>
+        <path class="ca drift" d="M160 228l5 6-5 6-5-6z" style="animation-delay:0s"/><path class="ca drift" d="M204 226l5 6-5 6-5-6z" style="animation-delay:.1s"/>
+        <path class="ca drift" d="M244 226l5 6-5 6-5-6z" style="animation-delay:.05s"/><path class="ca drift" d="M284 228l5 6-5 6-5-6z" style="animation-delay:.15s"/>
+      </g>
+    </svg>
   </header>
 
-  <nav class="zoompath" aria-label="Zoom path">
-    <ol>
-      <li><button type="button" data-goto="1"><span class="num">1</span>The practice</button></li>
-      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="2" disabled><span class="num">2</span>The pathway</button></li>
-      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="3" disabled><span class="num">3</span>The synapse</button></li>
-      <li><span class="arrow" aria-hidden="true">&rarr;</span><button type="button" data-goto="4" disabled><span class="num">4</span>The strength</button></li>
+  <p class="intro2">At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.</p>
+
+  <nav class="map" id="map" aria-label="Levels on this page">
+    <ol class="map-row">
+      <li><button type="button" class="dot" data-goto="1"><span class="dot-n" aria-hidden="true">1</span><span class="dot-t">The practice</span></button></li>
+      <li><span class="map-arrow" aria-hidden="true">&rarr;</span><button type="button" class="dot" data-goto="2"><span class="dot-n" aria-hidden="true">2</span><span class="dot-t">The pathway</span></button></li>
+      <li><span class="map-arrow" aria-hidden="true">&rarr;</span><button type="button" class="dot" data-goto="3"><span class="dot-n" aria-hidden="true">3</span><span class="dot-t">The synapse</span></button></li>
+      <li><span class="map-arrow" aria-hidden="true">&rarr;</span><button type="button" class="dot" data-goto="4"><span class="dot-n" aria-hidden="true">4</span><span class="dot-t">The strength</span></button></li>
     </ol>
   </nav>
 
   <!-- LEVEL 1 -->
   <section class="level" id="level1" aria-labelledby="h1lvl">
+    <nav class="zoompath" aria-label="Zoom path"><span class="here">The practice</span></nav>
+    <div class="eyebrow">Level 1 of 4</div>
     <h2 id="h1lvl">Level 1: The practice</h2>
     <div class="grid">
       <div class="vis">
-        <div class="canvas-card">
+        <div class="stage">
           <canvas id="c1" role="img" aria-label="A learner throws darts at a dartboard. Dots mark where the darts land, and a circle shows the spread of the throws. A chart under the board plots the spread against throws practiced."></canvas>
         </div>
       </div>
@@ -284,21 +318,23 @@
           <label for="explain1" class="q" style="display:block">Explain your thinking: describe how the spread changed over the 60 throws. Then say what you think is changing inside the learner, since the muscles and the darts stayed the same. You will test your idea in the next levels.</label>
           <textarea id="explain1" class="reflect" rows="4" maxlength="1500"></textarea>
           <div class="copyrow">
-            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+            <button type="button" class="btn aibtn">Get AI feedback</button>
           </div>
           <div class="aistatus" aria-live="polite"></div>
         </div>
-        <button type="button" class="btn primary zoombtn" data-zoom="2" hidden>Zoom in: the pathway</button>
+        <button type="button" class="btn zoombtn" data-zoom="2" hidden>Zoom in: the pathway</button>
       </div>
     </div>
   </section>
 
   <!-- LEVEL 2 -->
   <section class="level" id="level2" aria-labelledby="h2lvl" hidden>
+    <nav class="zoompath" aria-label="Zoom path"><button type="button" class="up" data-goto="1">The practice</button><span aria-hidden="true">&rarr;</span><span class="here">The pathway</span></nav>
+    <div class="eyebrow">Level 2 of 4</div>
     <h2 id="h2lvl">Level 2: The pathway from the brain to the arm</h2>
     <div class="grid">
       <div class="vis">
-        <div class="canvas-card" data-origin="20% 12%">
+        <div class="stage" data-origin="20% 12%">
           <canvas id="c2" role="img" aria-label="Side view of a head and upper body. A line runs from the motor cortex down the spinal cord and along a nerve to a muscle in the arm. An enlarged view shows 20 sending neurons connected to one receiving neuron, and a gauge with the threshold at 15 mV."></canvas>
         </div>
         <div class="equation"><div class="live" id="eq2">20 inputs × 0.50 mV = 10.0 mV. The threshold is 15 mV.</div></div>
@@ -307,7 +343,7 @@
         <p>The command for a throw starts in the motor cortex, the strip of the brain that controls movement. From there it travels down the spinal cord and out along a nerve to the muscles of the arm. The enlarged view shows one small part of that pathway inside the motor cortex: 20 sending neurons that all connect to one receiving neuron.</p>
         <p>A neuron fires only when the voltage across its membrane rises far enough. On this page the receiving neuron has to rise 15 mV above its resting level, and that level is called its threshold. Each sending neuron that fires adds a small voltage to the receiving neuron, and the voltages from inputs that arrive together add up.</p>
         <p>Before any practice, each of the 20 inputs adds 0.50 mV. Together they add 10 mV, which is not enough. During a practiced throw the receiving neuron still fires, because other inputs that are already strong add the rest. They are shown in grey, and they come from the areas that plan the movement and that feel the arm. Press Test the practiced inputs on their own to see what the 20 inputs can do without that help.</p>
-        <button type="button" class="btn primary" id="testInputs">Test the practiced inputs on their own</button>
+        <button type="button" class="btn" id="testInputs">Test the practiced inputs on their own</button>
         <div class="feedback neutral testmsg" id="testMsg" aria-live="polite" hidden></div>
         <div class="card practice" data-prac="1">
           <h3>Practice</h3>
@@ -315,7 +351,7 @@
           <div class="answer-row">
             <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
             <select aria-label="Your answer, unit"></select>
-            <button type="button" class="btn">Check</button>
+            <button type="button" class="btn ghost">Check</button>
           </div>
           <div class="feedback" aria-live="polite"></div>
         </div>
@@ -330,21 +366,23 @@
           <label for="explain2" class="q" style="display:block">Explain your thinking: the sending neurons fire the same spike before and after practice. What would have to be different at the place where two neurons meet for the same spike to have a larger effect?</label>
           <textarea id="explain2" class="reflect" rows="4" maxlength="1500"></textarea>
           <div class="copyrow">
-            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+            <button type="button" class="btn aibtn">Get AI feedback</button>
           </div>
           <div class="aistatus" aria-live="polite"></div>
         </div>
-        <button type="button" class="btn primary zoombtn" data-zoom="3" hidden>Zoom in: the synapse</button>
+        <button type="button" class="btn zoombtn" data-zoom="3" hidden>Zoom in: the synapse</button>
       </div>
     </div>
   </section>
 
   <!-- LEVEL 3 -->
   <section class="level" id="level3" aria-labelledby="h3lvl" hidden>
+    <nav class="zoompath" aria-label="Zoom path"><button type="button" class="up" data-goto="1">The practice</button><span aria-hidden="true">&rarr;</span><button type="button" class="up" data-goto="2">The pathway</button><span aria-hidden="true">&rarr;</span><span class="here">The synapse</span></nav>
+    <div class="eyebrow">Level 3 of 4</div>
     <h2 id="h3lvl">Level 3: Inside one synapse</h2>
     <div class="grid">
       <div class="vis">
-        <div class="canvas-card" data-origin="70% 40%">
+        <div class="stage" data-origin="70% 40%">
           <canvas id="c3" role="img" aria-label="One synapse, greatly enlarged. The end of the sending neuron holds packets of glutamate above a narrow gap. The receiving neuron below has AMPA receptors in its membrane, two NMDA receptors plugged by magnesium, and spare AMPA receptors waiting inside. A small trace shows the voltage this synapse adds."></canvas>
         </div>
         <div class="level-controls">
@@ -375,7 +413,7 @@
           <div class="answer-row">
             <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
             <select aria-label="Your answer, unit"></select>
-            <button type="button" class="btn">Check</button>
+            <button type="button" class="btn ghost">Check</button>
           </div>
           <div class="feedback" aria-live="polite"></div>
         </div>
@@ -390,17 +428,19 @@
           <label for="explain3" class="q" style="display:block">Explain your thinking: why does the synapse get stronger only when both neurons are active together? Use what you saw happen to the magnesium plug and to the calcium.</label>
           <textarea id="explain3" class="reflect" rows="4" maxlength="1500"></textarea>
           <div class="copyrow">
-            <button type="button" class="btn primary aibtn">Get AI feedback</button>
+            <button type="button" class="btn aibtn">Get AI feedback</button>
           </div>
           <div class="aistatus" aria-live="polite"></div>
         </div>
-        <button type="button" class="btn primary zoombtn" data-zoom="4" hidden>Zoom in: the strength</button>
+        <button type="button" class="btn zoombtn" data-zoom="4" hidden>Zoom in: the strength</button>
       </div>
     </div>
   </section>
 
   <!-- LEVEL 4 -->
   <section class="level" id="level4" aria-labelledby="h4lvl" hidden>
+    <nav class="zoompath" aria-label="Zoom path"><button type="button" class="up" data-goto="1">The practice</button><span aria-hidden="true">&rarr;</span><button type="button" class="up" data-goto="2">The pathway</button><span aria-hidden="true">&rarr;</span><button type="button" class="up" data-goto="3">The synapse</button><span aria-hidden="true">&rarr;</span><span class="here">The strength</span></nav>
+    <div class="eyebrow">Level 4 of 4</div>
     <h2 id="h4lvl">Level 4: The strength over a whole practice</h2>
     <div class="grid">
       <div class="vis" id="graphArea">
@@ -410,7 +450,7 @@
           <span class="counter" id="c4Total">20 inputs together: 10.0 mV</span>
           <span class="counter fires" id="c4Fires">Fires on its own: not yet</span>
         </div>
-        <div class="canvas-card" data-origin="10% 70%">
+        <div class="stage" data-origin="10% 70%">
           <canvas id="c4" role="img" aria-label="A graph of the strength of each practiced input in mV against throws practiced, with lines for before practice at 0.50, the threshold at 0.75 and the ceiling at 1.00. Each rest is marked by a dotted line."></canvas>
         </div>
         <div class="level-controls">
@@ -435,7 +475,7 @@
           <div class="answer-row">
             <input type="number" step="any" inputmode="decimal" aria-label="Your answer, number">
             <select aria-label="Your answer, unit"></select>
-            <button type="button" class="btn">Check</button>
+            <button type="button" class="btn ghost">Check</button>
           </div>
           <div class="feedback" aria-live="polite"></div>
         </div>
@@ -454,7 +494,7 @@
         <label for="explain4" class="q" style="display:block">In your own words: how does repeating a movement change the brain so that the movement becomes more reliable? Use the words synapse, receptor and threshold.</label>
         <textarea id="explain4" class="reflect" rows="4" maxlength="1500"></textarea>
         <div class="copyrow">
-          <button type="button" class="btn primary aibtn">Get AI feedback</button>
+          <button type="button" class="btn aibtn">Get AI feedback</button>
         </div>
         <div class="aistatus" aria-live="polite"></div>
       </div>
@@ -478,10 +518,10 @@
     </div>
   </section>
 
-  <footer class="page">
+  <footer class="page-foot">
     <div class="clearrow">
       <button type="button" class="linkbtn" id="clearSaved">Clear my saved work on this page</button>
-      <button type="button" class="btn" id="clearConfirm" hidden>Yes, clear it</button>
+      <button type="button" class="btn ghost" id="clearConfirm" hidden>Yes, clear it</button>
     </div>
     <button type="button" class="linkbtn" id="openAll" hidden>Reviewing this page? Open all levels</button>
   </footer>
@@ -494,7 +534,7 @@
     <p id="submitMsg" aria-live="polite"></p>
     <textarea id="submitFallback" class="fallback" readonly hidden aria-label="Your work as text"></textarea>
   </div>
-  <button type="button" class="btn primary submitbtn" id="submitBtn">Copy my work to submit</button>
+  <button type="button" class="btn submitbtn" id="submitBtn">Copy my work to submit</button>
 </div>
 
 <!-- Text sent with each "Get AI feedback" request. Not shown on the page. -->
@@ -623,11 +663,19 @@ var MODEL = (function () {
 (function () {
   "use strict";
   var M = MODEL;
+  var reducedMQ = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  function reduced() { return !!(reducedMQ && reducedMQ.matches); }
+  var idle = 0;            // clock for decorative motion only (shimmer); it stops under reduced motion
+  // One meaning, one colour, across all four pictures:
+  // str = strength / practiced inputs / AMPA receptors, thr = threshold, fire = firing, other = other inputs.
   var COL = {
-    teal: "#0e8f83", amber: "#d9822b", blue: "#2f6fed", purple: "#6b4fd8", thresh: "#c2334d",
-    text: "#1d2433", muted: "#5d6475", grey: "#8e93a0", ampa: "#4f6aa8", nmda: "#2c3550"
+    str: "#3DD6C1", thr: "#FF7A90", fire: "#F7C948", other: "#A6A6A6",
+    ink: "#E6EDF5", soft: "#93A4B8", line: "#22324A", tc: "#5BB8F5",
+    glu: "#9BE15D", na: "#5BB8F5", ca: "#C79BFF", mg: "#EDE3C8", nmda: "#8C9EFF",
+    stage: "#040912", panel: "#0A1526", body: "#16263B", bodyLine: "#3B5272", dim: "#4B6788"
   };
-  var FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+  var HALO = "#040912";
+  var MONO = "'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'DejaVu Sans Mono', monospace";
 
   var st = M.createState(Math.floor(Math.random() * 1e9) + 1);
   var playing = true;
@@ -833,7 +881,7 @@ var MODEL = (function () {
       b.setAttribute("role", "radio");
       b.setAttribute("aria-checked", "false");
       b.setAttribute("data-k", o.k);
-      b.innerHTML = '<span class="dot" aria-hidden="true"></span><span><span class="letter">' + o.k + '</span> ' + o.t + '</span>';
+      b.innerHTML = '<span class="dotr" aria-hidden="true"></span><span><span class="letter">' + o.k + '</span> ' + o.t + '</span>';
       b.addEventListener("click", function () { choose(o); save(); });
       btns[o.k] = b;
       box.appendChild(b);
@@ -945,22 +993,55 @@ var MODEL = (function () {
     var wasHidden = sec.hidden;
     sec.hidden = false;
     revealed[n] = true;
-    var b = document.querySelector('nav.zoompath button[data-goto="' + n + '"]');
-    if (b) b.disabled = false;
     resizeAll();
-    if (animate && wasHidden) {
-      var cc = sec.querySelector(".canvas-card");
+    if (animate && wasHidden && !reduced()) {
+      var cc = sec.querySelector(".stage");
       cc.style.transformOrigin = cc.getAttribute("data-origin") || "50% 50%";
       cc.classList.remove("zooming"); void cc.offsetWidth; cc.classList.add("zooming");
       setTimeout(function () { cc.classList.remove("zooming"); }, 600);
     }
-    if (animate) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (animate) { mapCurrent = n; goTo(n); }
+    updateMap();
   }
-  Array.prototype.forEach.call(document.querySelectorAll("nav.zoompath button"), function (b) {
-    b.addEventListener("click", function () {
+
+  /* ---------------- map of the levels (current / open / locked) ---------------- */
+  var MAP_NAMES = { 1: "The practice", 2: "The pathway", 3: "The synapse", 4: "The strength" };
+  var LOCK_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="#93A4B8"/><path d="M5.2 7V5.2a2.8 2.8 0 0 1 5.6 0V7" fill="none" stroke="#93A4B8" stroke-width="1.7"/></svg>';
+  var mapCurrent = 1;
+  function updateMap() {
+    Array.prototype.forEach.call(document.querySelectorAll("#map .dot"), function (b) {
       var n = parseInt(b.getAttribute("data-goto"), 10);
-      if (revealed[n]) $("level" + n).scrollIntoView({ behavior: "smooth", block: "start" });
+      var locked = !revealed[n], cur = !locked && n === mapCurrent;
+      var state = locked ? "locked" : cur ? "current" : "open";
+      if (b.getAttribute("data-state") === state) return;
+      b.setAttribute("data-state", state);
+      b.className = "dot" + (cur ? " cur" : "") + (locked ? " locked" : "");
+      b.disabled = locked;
+      if (cur) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+      b.setAttribute("aria-label", "Level " + n + ", " + MAP_NAMES[n] + (locked ? ", locked" : cur ? ", you are here" : ", open"));
+      b.querySelector(".dot-n").innerHTML = locked ? LOCK_SVG : String(n);
     });
+  }
+  function barHeight() { var b = $("controlbar"); return b ? b.getBoundingClientRect().height : 0; }
+  function goTo(n) {
+    if (!revealed[n]) return;
+    document.documentElement.style.setProperty("--barh", Math.ceil(barHeight() + 12) + "px");
+    $("level" + n).scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+  }
+  function spy() {
+    var line = barHeight() + 90, cur = 1;
+    for (var n = 2; n <= 4; n++) {
+      if (revealed[n] && $("level" + n).getBoundingClientRect().top <= line) cur = n;
+    }
+    if (cur !== mapCurrent) { mapCurrent = cur; updateMap(); }
+  }
+  var spyQueued = false;
+  window.addEventListener("scroll", function () {
+    if (spyQueued) return; spyQueued = true;
+    requestAnimationFrame(function () { spyQueued = false; spy(); });
+  }, { passive: true });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
+    b.addEventListener("click", function () { goTo(parseInt(b.getAttribute("data-goto"), 10)); });
   });
   $("openAll").addEventListener("click", function () {
     reviewOpened = true;
@@ -1033,7 +1114,7 @@ var MODEL = (function () {
     var status = card.querySelector(".aistatus");
     var question = card.querySelector("label").textContent;
     var notes = $("ai-notes-" + id).textContent;
-    var es = explState[id] = { text: "", fb: "", count: 0 };
+    var es = explState[id] = { text: "", fb: "", count: 0, rounds: [] };
 
     function render(msg, cls, hideFb) {
       status.innerHTML = "";
@@ -1072,6 +1153,8 @@ var MODEL = (function () {
         "\n\nThe student's explanation:\n" + text;
       askAI({ system: AI_SYSTEM, messages: [{ role: "user", content: content }], max_tokens: 500 }).then(function (reply) {
         es.fb = reply;
+        es.rounds.push({ text: text, fb: reply });
+        if (es.rounds.length > 12) es.rounds.shift();
         btn.disabled = false;
         render();
         save();
@@ -1085,6 +1168,8 @@ var MODEL = (function () {
       es.text = typeof s.text === "string" ? s.text : "";
       es.fb = typeof s.fb === "string" ? s.fb : "";
       es.count = s.count | 0;
+      es.rounds = Array.isArray(s.rounds) ? s.rounds.filter(function (r) { return r && typeof r.text === "string" && typeof r.fb === "string"; }).slice(-12) : [];
+      if (!es.rounds.length && es.fb) es.rounds = [{ text: es.text.trim(), fb: es.fb }];
       ta.value = es.text;
       render();
     };
@@ -1124,10 +1209,23 @@ var MODEL = (function () {
       var text = card.querySelector("textarea").value.trim();
       L.push("");
       L.push("Explanation " + id + ": " + card.querySelector("label").textContent);
-      L.push("My explanation: " + (text || "not written yet"));
-      if (e.fb) {
-        L.push("AI feedback I received:");
-        L.push(e.fb);
+      if (!e.rounds.length) {
+        L.push("My explanation: " + (text || "not written yet"));
+        L.push("AI feedback: not asked for yet");
+      } else {
+        e.rounds.forEach(function (r, k) {
+          L.push("Version " + (k + 1) + ", what I wrote before asking for feedback:");
+          L.push(r.text);
+          L.push("AI feedback on version " + (k + 1) + ":");
+          L.push(r.fb);
+        });
+        var last = e.rounds[e.rounds.length - 1].text;
+        if (text && text !== last) {
+          L.push("My explanation now, revised after the last feedback:");
+          L.push(text);
+        } else {
+          L.push("My explanation now: the same as version " + e.rounds.length + " (not revised after the last feedback).");
+        }
         L.push("Times I asked for feedback: " + e.count);
       }
     });
@@ -1221,86 +1319,118 @@ var MODEL = (function () {
   });
 
   /* ---------------- canvas setup ---------------- */
+  // Each picture has a wide layout and a taller narrow layout (phones), so that drawn text
+  // never has to shrink below 13 CSS px (wide) or 12 CSS px (narrow).
+  var NARROW_BELOW = 520;   // CSS px of canvas width
   var canvases = {
-    1: { el: $("c1"), W: 560, H: 440 },
-    2: { el: $("c2"), W: 560, H: 440 },
-    3: { el: $("c3"), W: 560, H: 510 },
-    4: { el: $("c4"), W: 560, H: 360 }
+    1: { el: $("c1"), wide: [560, 440], narrow: [340, 446] },
+    2: { el: $("c2"), wide: [560, 440], narrow: [340, 636] },
+    3: { el: $("c3"), wide: [560, 520], narrow: [340, 600] },
+    4: { el: $("c4"), wide: [560, 360], narrow: [340, 300] }
   };
   function resizeCanvas(c) {
-    var el = c.el;
-    var cssW = el.parentElement.clientWidth - 16;
-    if (el.parentElement.clientWidth < 500) cssW = el.parentElement.clientWidth - 8;
+    var el = c.el, box = el.parentElement, cs = getComputedStyle(box);
+    var cssW = Math.floor(box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
     if (cssW <= 0) return;
-    var cssH = cssW * c.H / c.W;
-    var dpr = window.devicePixelRatio || 1;
+    c.nar = cssW < NARROW_BELOW;
+    var d = c.nar ? c.narrow : c.wide;
+    c.W = d[0]; c.H = d[1];
+    var cssH = cssW * c.H / c.W, dpr = window.devicePixelRatio || 1;
     el.style.width = cssW + "px";
     el.style.height = cssH + "px";
     el.width = Math.round(cssW * dpr);
     el.height = Math.round(cssH * dpr);
-    c.k = (cssW / c.W) * dpr;
-    c.txt = cssW < 480 ? 1.25 : 1;
+    c.kc = cssW / c.W; c.dpr = dpr; c.k = c.kc * dpr;
     c.ctx = el.getContext("2d");
   }
   function resizeAll() {
     for (var n = 1; n <= 4; n++) if (revealed[n]) resizeCanvas(canvases[n]);
+    document.documentElement.style.setProperty("--barh", Math.ceil(barHeight() + 12) + "px");
   }
   window.addEventListener("resize", resizeAll);
 
-  function begin(c) {
+  var C = null;         // canvas being drawn
+  var fontLog = {};     // smallest drawn text on each level, in CSS px
+  var textPairs = {};   // "text colour|colour right behind it" for every drawn text
+  function begin(c, id) {
     var ctx = c.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, c.el.width, c.el.height);
     ctx.setTransform(c.k, 0, 0, c.k, 0, 0);
     ctx.lineCap = "round"; ctx.lineJoin = "round";
-    TXT = c.txt || 1;
+    C = c; c.id = id; c.minF = 1e9;
     return ctx;
+  }
+  function end(c) { if (c.minF < 1e9) fontLog[c.id] = Math.round(c.minF * 100) / 100; }
+  function sizes(c) { return c.nar ? { tick: 12, lab: 12.5, big: 13 } : { tick: 13, lab: 13.5, big: 14.5 }; }
+  // sets a font given in CSS px, whatever the current transform; returns the size in drawing units
+  function setFont(ctx, css, weight, family) {
+    var t = ctx.getTransform(), scale = Math.sqrt(t.a * t.a + t.b * t.b) / C.dpr;
+    var logical = css / scale;
+    ctx.font = (weight || 500) + " " + logical.toFixed(2) + "px " + (family || MONO);
+    if (logical * scale < C.minF) C.minF = logical * scale;
+    return logical;
   }
 
   /* ---------------- drawing helpers ---------------- */
-  var TXT = 1;   // larger canvas text when the canvas is drawn narrow (phones)
   function label(ctx, text, x, y, color, opts) {
     opts = opts || {};
     ctx.save();
-    ctx.font = (opts.weight || 600) + " " + (opts.size || 14) * TXT + "px " + FONT;
+    var lg = setFont(ctx, opts.size || 13, opts.weight || 500, opts.family);
     ctx.textAlign = opts.align || "left";
     ctx.textBaseline = opts.baseline || "middle";
-    ctx.lineWidth = 4; ctx.strokeStyle = opts.halo || "rgba(252,252,251,0.95)";
+    var halo = opts.halo || HALO;
+    ctx.lineWidth = Math.max(3, lg * 0.34); ctx.strokeStyle = halo;
     ctx.strokeText(text, x, y);
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
     ctx.restore();
+    textPairs[color + "|" + halo] = 1;
   }
-  function leader(ctx, x1, y1, x2, y2) {
-    ctx.save(); ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1.2;
+  function textW(ctx, text, css, weight) {
+    ctx.save(); setFont(ctx, css, weight || 500); var w = ctx.measureText(text).width; ctx.restore(); return w;
+  }
+  function leader(ctx, x1, y1, x2, y2, color) {
+    ctx.save(); ctx.strokeStyle = color || "#7F94AE"; ctx.lineWidth = 1.2;
     ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.restore();
   }
   function pill(ctx, text, x, y, color, opts) {
     opts = opts || {};
     ctx.save();
-    ctx.font = "600 " + (opts.size || 13) * TXT + "px " + FONT;
-    var w = ctx.measureText(text).width + 14, h = (opts.size || 13) * TXT + 9;
+    var lg = setFont(ctx, opts.size || 13, 600);
+    var w = ctx.measureText(text).width + lg * 1.1, h = lg * 1.7;
     if (opts.align === "right") x -= w;
     if (opts.align === "center") x -= w / 2;
-    ctx.fillStyle = opts.fill || "rgba(255,255,255,0.95)"; ctx.strokeStyle = color; ctx.lineWidth = 1.2;
-    rrect(ctx, x, y - h / 2, w, h, 6); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = opts.textColor || color; ctx.textAlign = "left"; ctx.textBaseline = "middle";
-    ctx.fillText(text, x + 7, y + 0.5);
+    var fill = opts.fill || COL.panel, tc = opts.textColor || color;
+    ctx.fillStyle = fill; ctx.strokeStyle = color; ctx.lineWidth = 1.3;
+    if (opts.glow) { ctx.shadowColor = opts.glow; ctx.shadowBlur = 14; }
+    rrect(ctx, x, y - h / 2, w, h, h / 2); ctx.fill(); ctx.shadowBlur = 0; ctx.stroke();
+    ctx.fillStyle = tc; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText(text, x + lg * 0.55, y + 0.5);
     ctx.restore();
+    textPairs[tc + "|" + fill] = 1;
     return w;
   }
-  function badge(ctx, text, cx, y, size) {
+  // value badge: dark plate with a teal edge (it reports what the practiced inputs have become)
+  function badge(ctx, lines, cx, y, css) {
     ctx.save();
-    ctx.font = "600 " + (size || 15) * TXT + "px " + FONT;
-    var w = ctx.measureText(text).width + 28, h = 34 * Math.sqrt(TXT);
+    var lg = setFont(ctx, css, 600);
+    var w = 0; lines.forEach(function (t) { w = Math.max(w, ctx.measureText(t).width); });
+    w += lg * 2; var lh = lg * 1.35, h = lh * lines.length + lg * 1.0;
     var x = cx - w / 2;
-    if (x < 6) { cx += 6 - x; x = 6; }
-    ctx.fillStyle = COL.text; rrect(ctx, x, y, w, h, 10); ctx.fill();
-    ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(text, cx, y + h / 2 + 1);
+    if (x < 4) { cx += 4 - x; x = 4; }
+    ctx.shadowColor = "rgba(0,0,0,0.55)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 3;
+    ctx.fillStyle = COL.panel; rrect(ctx, x, y, w, h, 8); ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = COL.str; ctx.lineWidth = 1.4; ctx.stroke();
+    ctx.fillStyle = COL.ink; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    lines.forEach(function (t, i) { ctx.fillText(t, cx, y + lg * 0.5 + lh * (i + 0.5) + 0.5); });
     ctx.restore();
+    textPairs[COL.ink + "|" + COL.panel] = 1;
+    return h;
   }
   function rrect(ctx, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
     ctx.beginPath();
     ctx.moveTo(x + r, y);
     ctx.arcTo(x + w, y, x + w, y + h, r);
@@ -1316,6 +1446,20 @@ var MODEL = (function () {
     for (var k = -h; k < w + h; k += 6) { ctx.beginPath(); ctx.moveTo(x + k, y + h); ctx.lineTo(x + k + h, y); ctx.stroke(); }
     ctx.restore();
   }
+  function disc(ctx, x, y, r, fill, glow, blur) {
+    ctx.save();
+    if (glow) { ctx.shadowColor = glow; ctx.shadowBlur = blur || 10; }
+    ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+  function sphere(ctx, x, y, r, light, dark, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha == null ? 1 : alpha;
+    var g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.1, x, y, r);
+    g.addColorStop(0, light); g.addColorStop(1, dark);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+  function hash(i, k) { var x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); }
   // where the current action is, as phase 0..1 (null when none)
   function phaseOf(type) {
     if (!cur || (type && cur.type !== type)) return null;
@@ -1323,7 +1467,6 @@ var MODEL = (function () {
   }
 
   /* ---------------- Level 1: the practice ---------------- */
-  var BOARD = { x: 400, y: 138, cm: 4.4 };
   function hand(p) {
     // forearm angle keyframes (canvas angles, up = -90 deg)
     var A = [[0, -80], [0.12, -80], [0.36, -128], [0.5, -14], [0.66, 12], [1, -80]];
@@ -1336,77 +1479,90 @@ var MODEL = (function () {
   }
   function drawDart(ctx, x, y, ang, len) {
     ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
-    ctx.strokeStyle = COL.text; ctx.lineWidth = 2.4;
+    ctx.strokeStyle = "#DCE7F3"; ctx.lineWidth = 2.4;
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-len, 0); ctx.stroke();
-    ctx.fillStyle = COL.amber;
+    ctx.fillStyle = COL.tc;
     ctx.beginPath(); ctx.moveTo(-len, 0); ctx.lineTo(-len - 7, -5); ctx.lineTo(-len + 3, 0); ctx.lineTo(-len - 7, 5); ctx.closePath(); ctx.fill();
     ctx.restore();
   }
   function drawL1() {
     var c = canvases[1]; if (!c.ctx) return;
-    var ctx = begin(c), W = c.W;
+    var ctx = begin(c, 1), W = c.W, Z = sizes(c), nar = c.nar;
+    var G = nar ? { bx: 236, by: 150, cm: 3.5, fx: -40, fy: 44, fs: 0.78, bcx: 170, cl: 46, cr: 330, ct: 302, cb: 398 }
+                : { bx: 400, by: 148, cm: 4.4, fx: 0, fy: 8, fs: 1, bcx: 156, cl: 62, cr: 540, ct: 308, cb: 394 };
+    function T(x, y) { return [G.fx + G.fs * x, G.fy + G.fs * y]; }
     var p = phaseOf("throw");
-    var floorY = 262;
-    // wall and floor
-    ctx.fillStyle = "#f3f1ea"; ctx.fillRect(0, 0, W, floorY);
-    ctx.fillStyle = "#e7e3d8"; ctx.fillRect(0, floorY, W, 10);
-    // board
-    var bx = BOARD.x, by = BOARD.y, k = BOARD.cm;
-    ctx.fillStyle = "#3b4256"; ctx.beginPath(); ctx.arc(bx, by, 25 * k + 6, 0, Math.PI * 2); ctx.fill();
-    var rings = [25, 20, 15, 10, 5];
-    rings.forEach(function (r, i) {
-      ctx.fillStyle = i % 2 === 0 ? "#f6f1e3" : "#e3dccb";
-      ctx.beginPath(); ctx.arc(bx, by, r * k, 0, Math.PI * 2); ctx.fill();
-    });
-    ctx.fillStyle = "#3b4256"; ctx.beginPath(); ctx.arc(bx, by, 1.6 * k, 0, Math.PI * 2); ctx.fill();
+    var floorY = T(0, 262)[1];
 
-    // landed darts
+    // wall and floor
+    var wg = ctx.createLinearGradient(0, 0, 0, floorY);
+    wg.addColorStop(0, "rgba(18,49,79,0.35)"); wg.addColorStop(1, "rgba(10,22,38,0.9)");
+    ctx.fillStyle = wg; ctx.fillRect(0, 0, W, floorY);
+    ctx.fillStyle = "#0E1E33"; ctx.fillRect(0, floorY, W, 8);
+    ctx.strokeStyle = "#2A405C"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(0, floorY); ctx.lineTo(W, floorY); ctx.stroke();
+
+    // board
+    var bx = G.bx, by = G.by, k = G.cm;
+    ctx.save(); ctx.shadowColor = "rgba(0,0,0,0.7)"; ctx.shadowBlur = 22; ctx.shadowOffsetY = 6;
+    ctx.fillStyle = "#0A1424"; ctx.beginPath(); ctx.arc(bx, by, 25 * k + 7, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    [25, 20, 15, 10, 5].forEach(function (r, i) {
+      ctx.fillStyle = i % 2 === 0 ? "#173049" : "#0F2136";
+      ctx.beginPath(); ctx.arc(bx, by, r * k, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = "#2A405C"; ctx.lineWidth = 1; ctx.stroke();
+    });
+    ctx.strokeStyle = "#4B6788"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(bx, by, 25 * k + 7, 0, Math.PI * 2); ctx.stroke();
+    disc(ctx, bx, by, 1.6 * k, "#DCE7F3");
+
+    // landed darts: the last ten bright, older ones faded
     ctx.save();
     ctx.beginPath(); ctx.rect(0, 0, W, floorY); ctx.clip();
     var Ls = st.landings, nL = Ls.length;
     for (var i = 0; i < nL; i++) {
       var d = Ls[i], recent = i >= nL - 10;
       var x = bx + d.x * k, y = by - d.y * k;
-      ctx.globalAlpha = recent ? 1 : 0.28;
-      ctx.fillStyle = recent ? COL.text : "#6c7690";
+      ctx.globalAlpha = recent ? 1 : 0.38;
+      ctx.fillStyle = recent ? "#F3EFE3" : "#93A4B8";
       ctx.beginPath(); ctx.arc(x, y, recent ? 4.2 : 3.2, 0, Math.PI * 2); ctx.fill();
-      if (recent) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.4; ctx.stroke(); }
+      if (recent) { ctx.strokeStyle = HALO; ctx.lineWidth = 1.4; ctx.stroke(); }
     }
     ctx.globalAlpha = 1;
     ctx.restore();
 
-    // spread circle
+    // spread circle (teal: it shrinks as the practiced inputs grow stronger)
     var spread = M.spreadCm(st.s), R = spread * k;
-    ctx.save(); ctx.setLineDash([7, 5]); ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.6;
+    ctx.save(); ctx.setLineDash([7, 5]); ctx.strokeStyle = COL.str; ctx.lineWidth = 2.6;
+    ctx.shadowColor = COL.str; ctx.shadowBlur = 8;
     ctx.beginPath(); ctx.arc(bx, by, R, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
-    var la = -Math.PI / 4;
-    label(ctx, "spread", bx + R * Math.cos(la) + 6, by + R * Math.sin(la) - 6, COL.teal, { size: 14 });
+    var la = -Math.PI / 3;
+    label(ctx, "spread", bx + R * Math.cos(la) + 6, by + R * Math.sin(la) - 6, COL.str, { size: Z.lab, weight: 600 });
 
     // learner
     var hp = hand(p == null ? 0 : p);
     ctx.save();
+    ctx.translate(G.fx, G.fy); ctx.scale(G.fs, G.fs);
     ctx.lineCap = "round"; ctx.lineJoin = "round";
-    var body = "#7d879e", far = "#b4bccb", near = "#5f6983";
+    var far = "#22344D", body = "#3B5272", near = "#56739A";
     ctx.strokeStyle = far; ctx.lineWidth = 11;
     ctx.beginPath(); ctx.moveTo(118, 118); ctx.lineTo(108, 160); ctx.lineTo(112, 196); ctx.stroke();
     ctx.lineWidth = 13;
-    ctx.beginPath(); ctx.moveTo(116, 190); ctx.lineTo(96, 226); ctx.lineTo(86, floorY - 4); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(116, 190); ctx.lineTo(96, 226); ctx.lineTo(86, 258); ctx.stroke();
     ctx.strokeStyle = body; ctx.lineWidth = 22;
     ctx.beginPath(); ctx.moveTo(118, 192); ctx.lineTo(124, 112); ctx.stroke();
     ctx.strokeStyle = near; ctx.lineWidth = 13;
-    ctx.beginPath(); ctx.moveTo(120, 190); ctx.lineTo(146, 226); ctx.lineTo(150, floorY - 4); ctx.stroke();
-    ctx.fillStyle = body; ctx.beginPath(); ctx.arc(130, 80, 18, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(120, 190); ctx.lineTo(146, 226); ctx.lineTo(150, 258); ctx.stroke();
+    var hg = ctx.createRadialGradient(124, 72, 2, 130, 80, 20);
+    hg.addColorStop(0, "#6F8BAA"); hg.addColorStop(1, body);
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(130, 80, 18, 0, Math.PI * 2); ctx.fill();
     ctx.strokeStyle = near; ctx.lineWidth = 11;
     ctx.beginPath(); ctx.moveTo(128, 112); ctx.lineTo(hp.ex, hp.ey); ctx.lineTo(hp.hx, hp.hy); ctx.stroke();
+    if (p == null || p < 0.5) drawDart(ctx, hp.hx + 14, hp.hy, 0, 16);
     ctx.restore();
 
-    // the dart: in the hand, in flight, or just landed
+    // the dart in flight
     var landing = cur && cur.type === "throw" ? cur.landing : null;
-    if (p == null || p < 0.5) {
-      drawDart(ctx, hp.hx + 14, hp.hy, 0, 16);
-    } else if (landing) {
+    if (p != null && p >= 0.5 && landing) {
       var tx = bx + landing.x * k, ty = by - landing.y * k;
-      var sx = 196, sy = 118;
+      var s0 = T(196, 118), sx = s0[0], sy = s0[1];
       var f = ramp(p, 0.5, 0.88);
       var fx = sx + (tx - sx) * f, fy = sy + (ty - sy) * f - 34 * Math.sin(Math.PI * f);
       var dfx = (tx - sx), dfy = (ty - sy) - 34 * Math.PI * Math.cos(Math.PI * f);
@@ -1415,36 +1571,37 @@ var MODEL = (function () {
 
     // badge
     var bt = "Spread of the throws: " + fmt(spread, 1) + " cm";
-    badge(ctx, bt, 150, 10, 15);
+    badge(ctx, [bt], G.bcx, 8, Z.big);
     drawn.l1Badge = bt;
 
     // chart under the board
-    var cl = 62, cr = 540, ct = 304, cb = 404;
+    var cl = G.cl, cr = G.cr, ct = G.ct, cb = G.cb;
     var maxN = Math.max(60, Math.ceil((st.throws + 1) / 20) * 20);
     function CX(n) { return cl + n / maxN * (cr - cl); }
     function CY(v) { return cb - v / 20 * (cb - ct); }
-    ctx.fillStyle = "#fff"; ctx.fillRect(cl, ct, cr - cl, cb - ct);
+    ctx.fillStyle = "rgba(4,9,18,0.75)"; ctx.fillRect(cl, ct, cr - cl, cb - ct);
     ctx.lineWidth = 1;
     [0, 5, 10, 15, 20].forEach(function (v) {
-      ctx.strokeStyle = "#eceae4"; ctx.beginPath(); ctx.moveTo(cl, CY(v)); ctx.lineTo(cr, CY(v)); ctx.stroke();
-      if (v % 10 === 0) label(ctx, String(v), cl - 8, CY(v), COL.muted, { size: 12, align: "right", weight: 500 });
+      ctx.strokeStyle = "#1A2A40"; ctx.beginPath(); ctx.moveTo(cl, CY(v)); ctx.lineTo(cr, CY(v)); ctx.stroke();
+      if (v % 10 === 0) label(ctx, String(v), cl - 8, CY(v), COL.soft, { size: Z.tick, align: "right" });
     });
-    var stepN = maxN <= 60 ? 10 : maxN <= 160 ? 20 : 50;
-    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), CX(n), cb + 13, COL.muted, { size: 12, align: "center", weight: 500 });
-    ctx.strokeStyle = "#b9b5aa"; ctx.lineWidth = 1.2; ctx.strokeRect(cl, ct, cr - cl, cb - ct);
-    label(ctx, "spread (cm)", cl, ct - 12, COL.muted, { size: 12.5, weight: 600 });
-    label(ctx, "throws practiced", cr, cb + 29, COL.muted, { size: 12.5, align: "right", weight: 600 });
+    var stepN = nar ? (maxN <= 60 ? 20 : maxN <= 160 ? 40 : 100) : (maxN <= 60 ? 10 : maxN <= 160 ? 20 : 50);
+    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), CX(n), cb + 14, COL.soft, { size: Z.tick, align: "center" });
+    ctx.strokeStyle = "#2E4563"; ctx.lineWidth = 1.2; ctx.strokeRect(cl, ct, cr - cl, cb - ct);
+    label(ctx, "spread (cm)", cl, ct - 13, COL.soft, { size: Z.lab });
+    label(ctx, "throws practiced", cr, cb + 31, COL.soft, { size: Z.lab, align: "right" });
     ctx.save();
-    ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.4;
+    ctx.strokeStyle = COL.str; ctx.lineWidth = 2.4; ctx.shadowColor = COL.str; ctx.shadowBlur = 6;
     ctx.beginPath();
     st.hist.forEach(function (h, j) {
       var x = CX(h.n), y = CY(M.spreadCm(h.s));
       if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
     ctx.stroke();
-    var lastH = st.hist[st.hist.length - 1];
-    ctx.fillStyle = COL.teal; ctx.beginPath(); ctx.arc(CX(lastH.n), CY(M.spreadCm(lastH.s)), 4, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
+    var lastH = st.hist[st.hist.length - 1];
+    disc(ctx, CX(lastH.n), CY(M.spreadCm(lastH.s)), 4, COL.str, COL.str, 8);
+    end(c);
   }
 
   /* ---------------- Level 2: the pathway ---------------- */
@@ -1459,15 +1616,25 @@ var MODEL = (function () {
     }
     return PATH[PATH.length - 1];
   }
-  function neuronTri(ctx, x, y, r, fill, stroke) {
+  function neuronTri(ctx, x, y, r, fill, stroke, glow) {
+    ctx.save();
+    if (glow) { ctx.shadowColor = glow; ctx.shadowBlur = 16; }
     ctx.beginPath(); ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.9, y + r * 0.7); ctx.lineTo(x - r * 0.9, y + r * 0.7); ctx.closePath();
-    ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = fill; ctx.fill(); ctx.shadowBlur = 0; ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.restore();
   }
+  var L2W = { fx: 0, fy: 0, fs: 1, px: 252, py: 14, pw: 302, ph: 412, cols: [278, 312], ny0: 48, ndy: 34, nr: 9, rx: 382, ry: 214, ax: 382,
+              send: [326, 410, "center"], gx: 442, gw: 26, gTop: 50, gBot: 370,
+              cortex: [8, 14, 40, 24], spinal: [86, 400], nerve: [100, 214], muscle: [190, 236], nerveLead: null, muscleLead: null, zoomTo: [[252, 14], [252, 426]] };
+  var L2N = { fx: 8, fy: 0, fs: 0.6, px: 6, py: 282, pw: 328, ph: 346, cols: [26, 60], ny0: 304, ndy: 27, nr: 8, rx: 160, ry: 436, ax: 596,
+              send: [12, 600, "left"], gx: 232, gw: 24, gTop: 318, gBot: 586,
+              cortex: [150, 22, 146, 26], spinal: [68, 236], nerve: [212, 96], muscle: [212, 128], nerveLead: [208, 98, 104, 120], muscleLead: [208, 130, 118, 146], zoomTo: [[6, 282], [334, 282]] };
   function drawL2() {
     var c = canvases[2]; if (!c.ctx) return;
-    var ctx = begin(c);
+    var ctx = begin(c, 2), Z = sizes(c), nar = c.nar;
+    var G = nar ? L2N : L2W;
+    function T(x, y) { return [G.fx + G.fs * x, G.fy + G.fs * y]; }
     var s = st.s;
-    // what is happening now
     var mode = null, p = 0;
     if (testAnim) { mode = "test"; p = clamp01(testAnim.t / testAnim.dur); }
     else if (cur && cur.type === "throw") { mode = "throw"; p = clamp01(cur.t / cur.dur); }
@@ -1480,139 +1647,139 @@ var MODEL = (function () {
     var pulseF = willFire ? ramp(p, 0.38, 0.8) : 0;
     var muscle = willFire && p >= 0.78 && p < 0.97;
 
-    // body, side view
+    // body, side view (drawn in its own scale; labels are drawn after, at full size)
     ctx.save();
-    ctx.fillStyle = "#e9e5dc"; ctx.strokeStyle = "#a9a598"; ctx.lineWidth = 2;
-    rrect(ctx, 40, 172, 140, 262, 30); ctx.fill(); ctx.stroke();                // torso
-    ctx.beginPath(); ctx.moveTo(78, 140); ctx.lineTo(126, 140); ctx.lineTo(132, 180); ctx.lineTo(70, 180); ctx.closePath(); ctx.fill(); // neck
-    ctx.beginPath(); ctx.arc(108, 88, 58, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); // head
-    ctx.beginPath(); ctx.moveTo(162, 82); ctx.lineTo(176, 104); ctx.lineTo(162, 108); ctx.fill(); ctx.stroke(); // nose
-    // arm: upper arm down, forearm forward
-    ctx.strokeStyle = "#cfcabd"; ctx.lineWidth = 26;
+    ctx.translate(G.fx, G.fy); ctx.scale(G.fs, G.fs);
+    ctx.fillStyle = "#13233A"; ctx.strokeStyle = "#2E4563"; ctx.lineWidth = 2;
+    rrect(ctx, 40, 172, 140, 262, 30); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(78, 140); ctx.lineTo(126, 140); ctx.lineTo(132, 180); ctx.lineTo(70, 180); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.arc(108, 88, 58, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(162, 82); ctx.lineTo(176, 104); ctx.lineTo(162, 108); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = "#1C3049"; ctx.lineWidth = 26;
     ctx.beginPath(); ctx.moveTo(162, 196); ctx.lineTo(176, 300); ctx.lineTo(236, 282); ctx.stroke();
-    ctx.restore();
-    // brain
-    ctx.save();
-    ctx.fillStyle = "#f3e9ef"; ctx.strokeStyle = "#b99aab"; ctx.lineWidth = 1.5;
+    // brain and motor cortex
+    var bg = ctx.createRadialGradient(96, 66, 4, 104, 76, 48);
+    bg.addColorStop(0, "#2A4A70"); bg.addColorStop(1, "#18304D");
+    ctx.fillStyle = bg; ctx.strokeStyle = "#4B6F99"; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.ellipse(104, 76, 44, 32, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    // motor cortex strip
-    ctx.strokeStyle = COL.amber; ctx.lineWidth = 9; ctx.lineCap = "butt";
+    ctx.strokeStyle = COL.tc; ctx.lineWidth = 9; ctx.lineCap = "butt"; ctx.shadowColor = COL.tc; ctx.shadowBlur = 10;
     ctx.beginPath(); ctx.ellipse(104, 76, 44, 32, 0, -Math.PI * 0.62, -Math.PI * 0.38); ctx.stroke();
-    ctx.restore();
-    label(ctx, "motor cortex", 10, 14, COL.amber, { size: 14 });
-    leader(ctx, 60, 22, 106, 42);
+    ctx.shadowBlur = 0; ctx.lineCap = "round";
     // zoom box on the cortex
-    ctx.save(); ctx.strokeStyle = COL.text; ctx.lineWidth = 1.4;
-    ctx.strokeRect(104, 38, 16, 14);
-    ctx.setLineDash([4, 4]); ctx.strokeStyle = "#9aa1b0";
-    ctx.beginPath(); ctx.moveTo(120, 38); ctx.lineTo(262, 14); ctx.moveTo(120, 52); ctx.lineTo(262, 426); ctx.stroke();
-    ctx.restore();
-
-    // pathway line
-    ctx.save();
-    ctx.strokeStyle = "#7b6a95"; ctx.lineWidth = 4;
+    ctx.strokeStyle = COL.ink; ctx.lineWidth = 1.4 / G.fs; ctx.strokeRect(104, 38, 16, 14);
+    // pathway line and spinal cord
+    ctx.strokeStyle = "#5A7396"; ctx.lineWidth = 7;
+    ctx.beginPath(); ctx.moveTo(88, 110); ctx.lineTo(74, 420); ctx.stroke();
+    ctx.strokeStyle = firing || pulseF > 0 && pulseF < 1 ? "#8AA4C4" : "#4B6788"; ctx.lineWidth = 4;
     ctx.beginPath(); PATH.forEach(function (q, i) { if (i === 0) ctx.moveTo(q[0], q[1]); else ctx.lineTo(q[0], q[1]); }); ctx.stroke();
-    ctx.lineWidth = 7; ctx.strokeStyle = "#a597bd";
-    ctx.beginPath(); ctx.moveTo(88, 110); ctx.lineTo(74, 420); ctx.stroke();  // spinal cord
-    ctx.restore();
-    label(ctx, "spinal cord", 86, 400, COL.text, { size: 13 });
-    label(ctx, "nerve", 100, 214, COL.text, { size: 13 });
     // muscle
-    ctx.save();
-    ctx.fillStyle = muscle ? COL.thresh : "#c98f86";
-    ctx.strokeStyle = muscle ? COL.text : "#9a6a62"; ctx.lineWidth = muscle ? 3 : 1.5;
-    ctx.beginPath(); ctx.ellipse(170, 246, 11, 30, -0.13, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    ctx.restore();
-    label(ctx, "muscle", 190, 236, COL.text, { size: 13 });
+    if (muscle) { ctx.shadowColor = COL.fire; ctx.shadowBlur = 20; }
+    ctx.fillStyle = muscle ? COL.fire : "#6B3A48"; ctx.strokeStyle = muscle ? "#FFF3C4" : "#A65B6C"; ctx.lineWidth = muscle ? 3 : 1.5;
+    ctx.beginPath(); ctx.ellipse(170, 246, 11, 30, -0.13, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0; ctx.stroke();
     if (pulseF > 0 && pulseF < 1) {
       var pp = pathPoint(pulseF);
-      ctx.save(); ctx.fillStyle = COL.thresh; ctx.strokeStyle = "#fff"; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(pp[0], pp[1], 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+      disc(ctx, pp[0], pp[1], 7, COL.fire, COL.fire, 16);
     }
+    ctx.restore();
+
+    // zoom lines from the cortex box to the enlarged view
+    var z1 = T(120, 38), z2 = T(120, 52);
+    ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = "#5A7396"; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(z1[0], z1[1]); ctx.lineTo(G.zoomTo[0][0], G.zoomTo[0][1]);
+    ctx.moveTo(z2[0], z2[1]); ctx.lineTo(G.zoomTo[1][0], G.zoomTo[1][1]); ctx.stroke(); ctx.restore();
+    // body labels
+    var cx0 = T(108, 42);
+    label(ctx, "motor cortex", G.cortex[0], G.cortex[1], COL.tc, { size: Z.lab, weight: 600 });
+    leader(ctx, G.cortex[2], G.cortex[3], cx0[0], cx0[1], COL.tc);
+    label(ctx, "spinal cord", G.spinal[0], G.spinal[1], COL.ink, { size: Z.lab });
+    label(ctx, "nerve", G.nerve[0], G.nerve[1], COL.ink, { size: Z.lab });
+    if (G.nerveLead) leader(ctx, G.nerveLead[0], G.nerveLead[1], G.nerveLead[2], G.nerveLead[3]);
+    label(ctx, "muscle", G.muscle[0], G.muscle[1], COL.ink, { size: Z.lab });
+    if (G.muscleLead) leader(ctx, G.muscleLead[0], G.muscleLead[1], G.muscleLead[2], G.muscleLead[3]);
 
     // enlarged view
-    var px = 262, py = 14, pw = 290, ph = 412;
     ctx.save();
-    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#cfd5e1"; ctx.lineWidth = 1.5;
-    rrect(ctx, px, py, pw, ph, 12); ctx.fill(); ctx.stroke();
+    ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowBlur = 18;
+    ctx.fillStyle = "rgba(10,21,38,0.96)"; rrect(ctx, G.px, G.py, G.pw, G.ph, 12); ctx.fill();
+    ctx.shadowBlur = 0; ctx.strokeStyle = "#2E4563"; ctx.lineWidth = 1.5; ctx.stroke();
     ctx.restore();
-    var rx = 392, ry = 214;
+    var rx = G.rx, ry = G.ry;
     var sendOn = mode && p >= 0.04 && p < 0.3;
     for (var i = 0; i < 20; i++) {
       var col = i < 10 ? 0 : 1;
-      var nx = 288 + col * 34, ny = 48 + (i % 10) * 34 + col * 12;
-      ctx.save(); ctx.strokeStyle = "#b8bfcc"; ctx.lineWidth = 1.2;
+      var nx = G.cols[col], ny = G.ny0 + (i % 10) * G.ndy + col * 12;
+      ctx.save(); ctx.strokeStyle = sendOn ? "rgba(61,214,193,0.55)" : "#2A405C"; ctx.lineWidth = 1.2;
       ctx.beginPath(); ctx.moveTo(nx + 7, ny); ctx.lineTo(rx - 16, ry); ctx.stroke(); ctx.restore();
       if (mode) {
         var f2 = ramp(p, 0.04, 0.24);
-        if (f2 > 0 && f2 < 1) {
-          ctx.save(); ctx.fillStyle = COL.teal;
-          ctx.beginPath(); ctx.arc(nx + 7 + (rx - 16 - nx - 7) * f2, ny + (ry - ny) * f2, 3, 0, Math.PI * 2); ctx.fill(); ctx.restore();
-        }
+        if (f2 > 0 && f2 < 1) disc(ctx, nx + 7 + (rx - 16 - nx - 7) * f2, ny + (ry - ny) * f2, 3, COL.str, COL.str, 8);
       }
-      neuronTri(ctx, nx, ny, 9, sendOn ? COL.teal : "#dfe4ec", sendOn ? COL.text : "#7d8496");
+      neuronTri(ctx, nx, ny, G.nr, sendOn ? COL.str : "#14263C", sendOn ? "#DFFBF6" : "#6F8BAA", sendOn ? COL.str : null);
     }
-    label(ctx, "sending neurons", 336, 410, COL.text, { size: 13, align: "center" });
+    label(ctx, "sending neurons", G.send[0], G.send[1], COL.ink, { size: Z.lab, align: G.send[2] });
     // receiving neuron and its axon
-    ctx.save(); ctx.strokeStyle = firing ? COL.thresh : "#7d8496"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(rx, ry + 14); ctx.lineTo(rx, 392); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.strokeStyle = firing ? COL.fire : "#4B6788"; ctx.lineWidth = 3;
+    if (firing) { ctx.shadowColor = COL.fire; ctx.shadowBlur = 10; }
+    ctx.beginPath(); ctx.moveTo(rx, ry + 14); ctx.lineTo(rx, G.ax); ctx.stroke(); ctx.restore();
     if (willFire && p >= 0.36 && p < 0.5) {
       var af = ramp(p, 0.36, 0.5);
-      ctx.save(); ctx.fillStyle = COL.thresh; ctx.beginPath(); ctx.arc(rx, ry + 14 + (392 - ry - 14) * af, 5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      disc(ctx, rx, ry + 14 + (G.ax - ry - 14) * af, 5, COL.fire, COL.fire, 12);
     }
-    neuronTri(ctx, rx, ry, 20, firing ? COL.thresh : "#f2f3f6", COL.text);
-    label(ctx, "receiving", rx, ry + 34, COL.text, { size: 13, align: "center" });
-    label(ctx, "neuron", rx, ry + 50, COL.text, { size: 13, align: "center" });
-    pill(ctx, firing ? "firing" : "at rest", rx, ry - 36, firing ? COL.thresh : COL.muted,
-      { align: "center", fill: firing ? COL.thresh : "#fff", textColor: firing ? "#fff" : COL.muted });
+    neuronTri(ctx, rx, ry, 20, firing ? COL.fire : "#14263C", firing ? "#FFF3C4" : COL.ink, firing ? COL.fire : null);
+    label(ctx, "receiving", rx, ry + 34, COL.ink, { size: Z.lab, align: "center" });
+    label(ctx, "neuron", rx, ry + 51, COL.ink, { size: Z.lab, align: "center" });
+    pill(ctx, firing ? "firing" : "at rest", rx, ry - 38, firing ? COL.fire : COL.soft,
+      { align: "center", size: Z.lab, fill: firing ? COL.fire : COL.panel, textColor: firing ? "#241A00" : COL.soft, glow: firing ? COL.fire : null });
 
-    // gauge
-    var gx = 452, gw = 26, gTop = 50, gBot = 370;
+    // gauge: 0 to 20 mV above rest
+    var gx = G.gx, gw = G.gw, gTop = G.gTop, gBot = G.gBot;
     function GY(v) { return gBot - v / 20 * (gBot - gTop); }
     ctx.save();
-    ctx.fillStyle = "#f6f7f9"; ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
+    ctx.fillStyle = "#081222"; ctx.strokeStyle = "#4B6788"; ctx.lineWidth = 1.2;
     ctx.fillRect(gx, gTop, gw, gBot - gTop); ctx.strokeRect(gx, gTop, gw, gBot - gTop);
-    // practiced inputs, idle outline
     if (!mode) {
-      ctx.setLineDash([4, 3]); ctx.strokeStyle = COL.teal; ctx.lineWidth = 1.6;
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = COL.str; ctx.lineWidth = 1.6;
       ctx.strokeRect(gx + 3, GY(20 * s), gw - 6, gBot - GY(20 * s));
       ctx.setLineDash([]);
     }
     var tealTop = GY(Math.min(20, teal));
-    if (teal > 0) { ctx.fillStyle = COL.teal; ctx.fillRect(gx + 1, tealTop, gw - 2, gBot - tealTop); }
+    if (teal > 0) {
+      var tg = ctx.createLinearGradient(gx, 0, gx + gw, 0);
+      tg.addColorStop(0, "#2AB3A1"); tg.addColorStop(0.5, COL.str); tg.addColorStop(1, "#2AB3A1");
+      ctx.shadowColor = COL.str; ctx.shadowBlur = 10;
+      ctx.fillStyle = tg; ctx.fillRect(gx + 1, tealTop, gw - 2, gBot - tealTop); ctx.shadowBlur = 0;
+    }
     if (grey > 0) {
       var gTop2 = GY(Math.min(20, teal + grey));
-      ctx.fillStyle = "#c3c7cf"; ctx.fillRect(gx + 1, gTop2, gw - 2, tealTop - gTop2);
-      hatch(ctx, gx + 1, gTop2, gw - 2, tealTop - gTop2, "#8e93a0");
+      ctx.fillStyle = "#5C5C5C"; ctx.fillRect(gx + 1, gTop2, gw - 2, tealTop - gTop2);
+      hatch(ctx, gx + 1, gTop2, gw - 2, tealTop - gTop2, COL.other);
     }
-    // ticks
     for (var v = 0; v <= 20; v += 5) {
-      ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1;
+      ctx.strokeStyle = "#7F94AE"; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(gx - 5, GY(v)); ctx.lineTo(gx, GY(v)); ctx.stroke();
-      label(ctx, String(v), gx - 8, GY(v), COL.muted, { size: 12, align: "right", weight: 500 });
+      label(ctx, String(v), gx - 8, GY(v), COL.soft, { size: Z.tick, align: "right" });
     }
-    ctx.strokeStyle = COL.thresh; ctx.lineWidth = 3;
+    ctx.strokeStyle = COL.thr; ctx.lineWidth = 3; ctx.shadowColor = COL.thr; ctx.shadowBlur = 6;
     ctx.beginPath(); ctx.moveTo(gx - 4, GY(15)); ctx.lineTo(gx + gw + 4, GY(15)); ctx.stroke();
     ctx.restore();
-    label(ctx, "mV", gx + gw / 2, gTop - 14, COL.muted, { size: 12, align: "center" });
-    label(ctx, "threshold", gx + gw + 2, GY(15) - 13, COL.thresh, { size: 12.5, align: "left" });
-    // bar labels (only words naming the drawn bars)
+    label(ctx, "mV", gx + gw / 2, gTop - 14, COL.soft, { size: Z.tick, align: "center" });
+    label(ctx, "threshold", gx + gw + 3, GY(15) - 13, COL.thr, { size: Z.lab, weight: 600 });
     var tY = GY(Math.max(1.5, Math.min(20, mode ? teal : 20 * s) / 2));
-    if (Math.abs(tY - GY(15)) < 30) tY = GY(15) + 30;
-    label(ctx, "practiced", gx + gw + 4, tY - 8, COL.teal, { size: 12.5 });
-    label(ctx, "inputs", gx + gw + 4, tY + 8, COL.teal, { size: 12.5 });
+    if (Math.abs(tY - GY(15)) < 34) tY = GY(15) + 34;
+    label(ctx, "practiced", gx + gw + 4, tY - 9, COL.str, { size: Z.lab });
+    label(ctx, "inputs", gx + gw + 4, tY + 9, COL.str, { size: Z.lab });
     if (grey > 0.3) {
       var gy2 = GY(Math.min(19, teal + grey / 2));
-      if (Math.abs(gy2 - GY(15)) < 26) gy2 = GY(15) - 32;
-      if (gy2 < gTop + 8) gy2 = gTop + 8;
-      label(ctx, "other", gx + gw + 4, gy2 - 8, "#5d6475", { size: 12.5 });
-      label(ctx, "inputs", gx + gw + 4, gy2 + 8, "#5d6475", { size: 12.5 });
+      if (Math.abs(gy2 - GY(15)) < 30) gy2 = GY(15) - 36;
+      if (gy2 < gTop + 10) gy2 = gTop + 10;
+      label(ctx, "other", gx + gw + 4, gy2 - 9, COL.other, { size: Z.lab });
+      label(ctx, "inputs", gx + gw + 4, gy2 + 9, COL.other, { size: Z.lab });
     }
     drawn.l2Firing = firing;
+    end(c);
   }
 
   /* ---------------- Level 3: one synapse ---------------- */
-  var SLOT_X = []; (function () { for (var i = 0; i < 22; i++) SLOT_X.push(59 + i * (362 / 21)); })();
   var NMDA_SLOTS = [6, 15];
   var AMPA_ORDER = (function () {
     var idx = [];
@@ -1620,51 +1787,75 @@ var MODEL = (function () {
     idx.sort(function (a, b) { var d = Math.abs(a - 10.5) - Math.abs(b - 10.5); return d !== 0 ? d : a - b; });
     return idx;
   })();
-  var MEM_TOP = 206, MEM_BOT = 230, REC_TOP = 196, REC_H = 42;
-  var POOL = { x: 260, y: 314 };
-  function ampaIcon(ctx, x, yTop, open, alpha) {
+  var L3W = { mt: 206, mb: 232, sl: 59, sr: 421, ib: 468, tl: 40, tr: 440, tb: 150, ru: 1, vr: 14,
+    ves: [[110, 118], [175, 124], [240, 126], [305, 124], [370, 118], [150, 84], [330, 84]],
+    send: [240, 18], pack: [262, 48], packLead: [300, 56, 322, 70],
+    mag: [352, 178], magLead: [356, 186], gapX: 466, gapLbl: [474, 179],
+    nmda: [18, 266, "left"], nmdaLead: [70, 257], ampa: [440, 266, "left"], ampaLead: [446, 257],
+    recv: [18, 302], pill: [18, 330], pool: [180, 300, 160, 60], spare: [204, 230, 290, 316], poolLbl: [260, 376],
+    ca: [446, 326, 102], trace: [448, 8, 106, 128], badge: [280, 398], legend: [[24, 494], [150, 494], [262, 494], [384, 494]] };
+  var L3N = { mt: 196, mb: 222, sl: 16, sr: 324, ib: 536, tl: 20, tr: 320, tb: 140, ru: 0.8, vr: 12,
+    ves: [[70, 110], [120, 116], [170, 118], [220, 116], [270, 110], [100, 76], [240, 76]],
+    send: [170, 18], pack: [140, 46], packLead: [214, 54, 232, 64],
+    mag: [250, 168], magLead: [256, 176], gapX: 8, gapLbl: [14, 168],
+    nmda: [12, 250, "left"], nmdaLead: [56, 241], ampa: [328, 250, "right"], ampaLead: [292, 241],
+    recv: [12, 288], pill: [12, 314], pool: [172, 266, 140, 56], spare: [192, 214, 270, 292], poolLbl: [242, 336],
+    ca: [12, 376, 140], trace: [182, 354, 144, 102], badge: [170, 476], legend: [[22, 556], [182, 556], [22, 582], [182, 582]] };
+  function ampaIcon(ctx, x, yTop, h, open, ru, alpha, glow) {
     ctx.save(); ctx.globalAlpha = alpha == null ? 1 : alpha;
-    var g = open ? 3.2 : 1.2;
-    if (open) { ctx.fillStyle = "rgba(47,111,237,0.22)"; ctx.fillRect(x - g, yTop, 2 * g, REC_H); }
-    ctx.fillStyle = COL.ampa;
-    rrect(ctx, x - g - 5, yTop, 5, REC_H, 2); ctx.fill();
-    rrect(ctx, x + g, yTop, 5, REC_H, 2); ctx.fill();
+    var g = (open ? 3.4 : 1.2) * ru, w = 5 * ru;
+    if (open) {
+      ctx.shadowColor = COL.str; ctx.shadowBlur = 10;
+      ctx.fillStyle = "rgba(61,214,193,0.35)"; ctx.fillRect(x - g, yTop + 2, 2 * g, h - 4);
+      ctx.shadowBlur = 0;
+    }
+    if (glow) { ctx.shadowColor = COL.str; ctx.shadowBlur = glow; }
+    var gr = ctx.createLinearGradient(0, yTop, 0, yTop + h);
+    gr.addColorStop(0, "#8AF3E4"); gr.addColorStop(0.5, COL.str); gr.addColorStop(1, "#1E8C7E");
+    ctx.fillStyle = gr;
+    rrect(ctx, x - g - w, yTop, w, h, 2.2 * ru); ctx.fill();
+    rrect(ctx, x + g, yTop, w, h, 2.2 * ru); ctx.fill();
     ctx.restore();
   }
-  function nmdaIcon(ctx, x) {
+  function nmdaIcon(ctx, x, yTop, h, ru, open) {
     ctx.save();
-    ctx.fillStyle = COL.nmda;
-    rrect(ctx, x - 10, REC_TOP - 6, 6.5, REC_H + 8, 3); ctx.fill();
-    rrect(ctx, x + 3.5, REC_TOP - 6, 6.5, REC_H + 8, 3); ctx.fill();
-    ctx.fillStyle = "#fff"; ctx.fillRect(x - 10, REC_TOP + 2, 20, 2); // band marks the different receptor
+    var w = 6.5 * ru, g = (open ? 4 : 3.5) * ru;
+    var gr = ctx.createLinearGradient(0, yTop, 0, yTop + h);
+    gr.addColorStop(0, "#C3CCFF"); gr.addColorStop(0.5, COL.nmda); gr.addColorStop(1, "#4A59B8");
+    ctx.fillStyle = gr;
+    rrect(ctx, x - g - w, yTop - 6, w, h + 8, 3); ctx.fill();
+    rrect(ctx, x + g, yTop - 6, w, h + 8, 3); ctx.fill();
     ctx.restore();
   }
   function glutDot(ctx, x, y, a) {
-    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.amber; ctx.strokeStyle = "#8a4a10"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(x, y, 3.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.globalAlpha = a; ctx.shadowColor = COL.glu; ctx.shadowBlur = 6;
+    ctx.fillStyle = COL.glu; ctx.beginPath(); ctx.arc(x, y, 3.4, 0, Math.PI * 2); ctx.fill(); ctx.restore();
   }
   function sodium(ctx, x, y, a) {
-    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.blue;
-    ctx.beginPath(); ctx.arc(x, y, 5.2, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.6;
+    ctx.save(); ctx.globalAlpha = a; ctx.shadowColor = COL.na; ctx.shadowBlur = 8;
+    ctx.fillStyle = COL.na; ctx.beginPath(); ctx.arc(x, y, 5.4, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0; ctx.strokeStyle = "#04101C"; ctx.lineWidth = 1.7;
     ctx.beginPath(); ctx.moveTo(x - 2.8, y); ctx.lineTo(x + 2.8, y); ctx.moveTo(x, y - 2.8); ctx.lineTo(x, y + 2.8); ctx.stroke();
     ctx.restore();
   }
   function calcium(ctx, x, y, a) {
-    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = COL.purple; ctx.strokeStyle = "#fff"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x + 5, y); ctx.lineTo(x, y + 6); ctx.lineTo(x - 5, y); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.save(); ctx.globalAlpha = a; ctx.shadowColor = COL.ca; ctx.shadowBlur = 10;
+    ctx.fillStyle = COL.ca;
+    ctx.beginPath(); ctx.moveTo(x, y - 6.5); ctx.lineTo(x + 5.5, y); ctx.lineTo(x, y + 6.5); ctx.lineTo(x - 5.5, y); ctx.closePath(); ctx.fill();
     ctx.restore();
   }
   function magnesium(ctx, x, y, a) {
-    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = "#a3a8b4"; ctx.strokeStyle = COL.text; ctx.lineWidth = 1.6;
-    ctx.beginPath(); ctx.arc(x, y, 5.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+    sphere(ctx, x, y, 6, "#FFFDF5", "#B7A982", a);
   }
   // timeline of one spike at Level 3 (phase 0..1 of the action)
   var T_BOUND = 0.22, T_FIRE0 = 0.40, FIRE_SPAN = 0.22, BOUND_TAU = FIRE_SPAN * 20 / 100;
   function fireAt(gap) { return T_FIRE0 + FIRE_SPAN * gap / 100; }
   function drawL3() {
     var c = canvases[3]; if (!c.ctx) return;
-    var ctx = begin(c), W = c.W;
+    var ctx = begin(c, 3), W = c.W, H = c.H, Z = sizes(c), nar = c.nar;
+    var G = nar ? L3N : L3W;
+    var MT = G.mt, MB = G.mb, RT = MT - 10, RH = nar ? 38 : 42, ru = G.ru;
+    var SX = []; for (var si = 0; si < 22; si++) SX.push(G.sl + si * (G.sr - G.sl) / 21);
     var a = cur && (cur.type === "throw" || cur.type === "alone") ? cur : null;
     var p = a ? clamp01(a.t / a.dur) : null;
     var sShow = a ? a.sBefore : st.s;
@@ -1673,95 +1864,132 @@ var MODEL = (function () {
     var tFire = paired ? fireAt(a.gap) : 2;
     var fired = paired && p >= tFire;
     var firingNow = paired && p >= tFire && p < tFire + 0.12;
+    var glowF = paired ? ramp(p, tFire, tFire + 0.02) * (1 - ramp(p, tFire + 0.1, tFire + 0.22)) : 0;
 
-    // receiving neuron body
-    ctx.fillStyle = firingNow ? "#fbe7ea" : "#f4f1fa";
-    ctx.fillRect(0, MEM_BOT, W, 470 - MEM_BOT);
-    // membrane
-    ctx.fillStyle = "#e3ddcf"; ctx.fillRect(0, MEM_TOP, W, MEM_BOT - MEM_TOP);
-    ctx.strokeStyle = firingNow ? COL.thresh : "#b3ab98"; ctx.lineWidth = firingNow ? 3 : 1.5;
-    ctx.beginPath(); ctx.moveTo(0, MEM_TOP); ctx.lineTo(W, MEM_TOP); ctx.moveTo(0, MEM_BOT); ctx.lineTo(W, MEM_BOT); ctx.stroke();
-
-    // sending terminal
+    // receiving neuron: inside, with a warm glow while it fires
+    var ig = ctx.createLinearGradient(0, MB, 0, G.ib);
+    ig.addColorStop(0, "rgba(20,48,74,0.95)"); ig.addColorStop(1, "rgba(8,18,32,0.55)");
+    ctx.fillStyle = ig; ctx.fillRect(0, MB, W, G.ib - MB);
+    if (glowF > 0) {
+      var rg = ctx.createRadialGradient(W / 2, MB + 10, 10, W / 2, MB + 10, W * 0.7);
+      rg.addColorStop(0, "rgba(247,201,72," + (0.32 * glowF).toFixed(3) + ")"); rg.addColorStop(1, "rgba(247,201,72,0)");
+      ctx.fillStyle = rg; ctx.fillRect(0, MB, W, G.ib - MB);
+    }
+    // the gap
+    ctx.fillStyle = "rgba(91,184,245,0.05)"; ctx.fillRect(0, G.tb, W, MT - G.tb);
+    // membrane: a lipid bilayer
+    ctx.fillStyle = "#16273E"; ctx.fillRect(0, MT, W, MB - MT);
+    for (var hx = 3; hx < W; hx += 7) {
+      var wob = Math.sin(idle * 2 + hx * 0.13) * 0.7;
+      ctx.fillStyle = "#3E5A7E";
+      ctx.beginPath(); ctx.arc(hx, MT + 3 + wob, 2.6, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(hx + 3.5, MB - 3 - wob, 2.6, 0, Math.PI * 2); ctx.fill();
+    }
     ctx.save();
-    ctx.fillStyle = "#eef1f7"; ctx.strokeStyle = "#6c7690"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(40, 0); ctx.lineTo(40, 100); ctx.quadraticCurveTo(40, 150, 90, 150);
-    ctx.lineTo(390, 150); ctx.quadraticCurveTo(440, 150, 440, 100); ctx.lineTo(440, 0); ctx.stroke(); ctx.fill();
+    ctx.strokeStyle = firingNow ? COL.fire : "#5A7396"; ctx.lineWidth = firingNow ? 2.6 : 1.4;
+    if (glowF > 0) { ctx.shadowColor = COL.fire; ctx.shadowBlur = 14 * glowF; }
+    ctx.beginPath(); ctx.moveTo(0, MT); ctx.lineTo(W, MT); ctx.moveTo(0, MB); ctx.lineTo(W, MB); ctx.stroke();
     ctx.restore();
-    label(ctx, "sending neuron", 240, 16, COL.text, { size: 14, align: "center" });
+
+    // sending neuron's terminal
+    var tl = G.tl, tr = G.tr, tb = G.tb;
+    ctx.save();
+    var tg = ctx.createRadialGradient((tl + tr) / 2, tb * 0.35, 10, (tl + tr) / 2, tb * 0.5, (tr - tl) * 0.62);
+    tg.addColorStop(0, "#1D4166"); tg.addColorStop(1, "#0B1828");
+    ctx.shadowColor = "rgba(0,0,0,0.65)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 5;
+    ctx.fillStyle = tg; ctx.strokeStyle = "#5B7FA6"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(tl, -2); ctx.lineTo(tl, tb - 50); ctx.quadraticCurveTo(tl, tb, tl + 50, tb);
+    ctx.lineTo(tr - 50, tb); ctx.quadraticCurveTo(tr, tb, tr, tb - 50); ctx.lineTo(tr, -2); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; ctx.stroke();
+    ctx.restore();
+    label(ctx, "sending neuron", G.send[0], G.send[1], COL.ink, { size: Z.lab, align: "center", weight: 600 });
     // spike arriving
     if (a && p < 0.12) {
-      var sy = 24 + 86 * ramp(p, 0, 0.1);
-      ctx.save(); ctx.fillStyle = "rgba(194,51,77,0.18)"; ctx.fillRect(48, sy - 9, 384, 18);
-      ctx.strokeStyle = COL.thresh; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(48, sy); ctx.lineTo(432, sy); ctx.stroke(); ctx.restore();
-      label(ctx, "spike", 56, sy - 14, COL.thresh, { size: 13 });
+      var sy = 30 + (tb - 46) * ramp(p, 0, 0.1);
+      ctx.save(); ctx.globalAlpha = 1 - ramp(p, 0.09, 0.12);
+      var sg = ctx.createLinearGradient(0, sy - 12, 0, sy + 12);
+      sg.addColorStop(0, "rgba(247,201,72,0)"); sg.addColorStop(0.5, "rgba(247,201,72,0.35)"); sg.addColorStop(1, "rgba(247,201,72,0)");
+      ctx.fillStyle = sg; ctx.fillRect(tl + 6, sy - 12, tr - tl - 12, 24);
+      ctx.strokeStyle = COL.fire; ctx.lineWidth = 2.5; ctx.shadowColor = COL.fire; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.moveTo(tl + 8, sy); ctx.lineTo(tr - 8, sy); ctx.stroke(); ctx.restore();
+      label(ctx, "spike", tl + 14, sy - 15, COL.fire, { size: Z.lab, weight: 600 });
     }
     // vesicles (packets of glutamate)
-    var ves = [[110, 118], [175, 124], [240, 126], [305, 124], [370, 118], [150, 84], [330, 84]];
     var fuse = a ? ramp(p, 0.08, 0.16) : 0;
     var restore3 = a ? ramp(p, 0.8, 1) : 1;
-    ves.forEach(function (v, i) {
+    G.ves.forEach(function (v, i) {
       var releasing = i >= 1 && i <= 3;
-      var alpha = releasing && a ? (p < 0.8 ? 1 - 0.85 * fuse : 0.15 + 0.85 * restore3) : 1;
+      var alpha = releasing && a ? (p < 0.8 ? 1 - 0.9 * fuse : 0.1 + 0.9 * restore3) : 1;
+      var vy = v[1] + (releasing && a && p < 0.8 ? (tb - G.vr - v[1]) * ease(fuse) : 0) + Math.sin(idle * 1.4 + i * 1.9) * 1.2;
       ctx.save(); ctx.globalAlpha = alpha;
-      ctx.fillStyle = "#fff"; ctx.strokeStyle = "#8a93a8"; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(v[0], v[1], 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      var vg = ctx.createRadialGradient(v[0] - 4, vy - 5, 2, v[0], vy, G.vr);
+      vg.addColorStop(0, "#26496E"); vg.addColorStop(1, "#0E1E33");
+      ctx.fillStyle = vg; ctx.strokeStyle = "#7F9CC0"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(v[0], vy, G.vr, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.restore();
-      glutDot(ctx, v[0] - 5, v[1] - 3, alpha); glutDot(ctx, v[0] + 5, v[1] - 2, alpha); glutDot(ctx, v[0], v[1] + 5, alpha);
+      var jx = Math.sin(idle * 2.1 + i) * 0.8;
+      glutDot(ctx, v[0] - 5 + jx, vy - 3, alpha); glutDot(ctx, v[0] + 5, vy - 2 - jx, alpha); glutDot(ctx, v[0] - jx, vy + 5, alpha);
     });
-    label(ctx, "glutamate packets", 300, 50, COL.text, { size: 13 });
-    leader(ctx, 318, 58, 330, 70);
+    label(ctx, "glutamate packets", G.pack[0], G.pack[1], COL.ink, { size: Z.lab });
+    leader(ctx, G.packLead[0], G.packLead[1], G.packLead[2], G.packLead[3]);
 
     // receptors in the membrane
     var targets = [];
-    for (var r = 0; r < nRec && r < AMPA_ORDER.length; r++) targets.push({ x: SLOT_X[AMPA_ORDER[r]], kind: "ampa", i: r });
-    NMDA_SLOTS.forEach(function (sIdx, j) { targets.push({ x: SLOT_X[sIdx], kind: "nmda", i: j }); });
-    // glutamate binding state per target
-    var nT = targets.length;
-    targets.forEach(function (tg, j) {
-      var u = (j * 0.618034) % 1;           // spread unbinding times
-      tg.unbind = T_FIRE0 - BOUND_TAU * Math.log(1 - u * 0.999);
-      tg.bound = a && p >= T_BOUND && p < tg.unbind;
+    for (var r = 0; r < nRec && r < AMPA_ORDER.length; r++) targets.push({ x: SX[AMPA_ORDER[r]], kind: "ampa", i: r });
+    NMDA_SLOTS.forEach(function (sIdx, j) { targets.push({ x: SX[sIdx], kind: "nmda", i: j }); });
+    targets.forEach(function (tg2, j) {
+      var u = (j * 0.618034) % 1;
+      tg2.unbind = T_FIRE0 - BOUND_TAU * Math.log(1 - u * 0.999);
+      tg2.bound = a && p >= T_BOUND && p < tg2.unbind;
     });
-    targets.forEach(function (tg) {
-      if (tg.kind === "ampa") ampaIcon(ctx, tg.x, REC_TOP, !!tg.bound, 1);
-      else nmdaIcon(ctx, tg.x);
+    targets.forEach(function (tg2) {
+      if (tg2.kind === "ampa") ampaIcon(ctx, tg2.x, RT, RH, !!tg2.bound, ru, 1);
+      else nmdaIcon(ctx, tg2.x, RT, RH, ru, fired);
     });
-    // glutamate in the gap
+    // glutamate drifting across the gap, binding, then letting go
     if (a && p >= 0.1) {
-      targets.forEach(function (tg, j) {
-        var src = ves[1 + (j % 3)];
-        var f = ease(ramp(p, 0.1 + (j % 4) * 0.008, T_BOUND));
+      targets.forEach(function (tg2, j) {
+        var src = G.ves[1 + (j % 3)];
+        var t0 = 0.1 + (j % 4) * 0.008;
+        var f = ease(ramp(p, t0, T_BOUND));
         var gx2, gy2, ga = 1;
-        if (p < T_BOUND) { gx2 = src[0] + (tg.x - src[0]) * f; gy2 = 150 + (REC_TOP - 8 - 150) * f; }
-        else if (tg.bound) { gx2 = tg.x; gy2 = REC_TOP - 8; }
-        else { var lf = ramp(p, tg.unbind, tg.unbind + 0.1); gx2 = tg.x + 10 * lf; gy2 = REC_TOP - 8 - 34 * lf; ga = 1 - lf; }
+        if (p < T_BOUND) {
+          var wig = Math.sin(p * 70 + j * 2.3) * 5 * Math.sin(Math.PI * f);
+          gx2 = src[0] + (tg2.x - src[0]) * f + wig; gy2 = tb + (RT - 8 - tb) * f;
+        } else if (tg2.bound) { gx2 = tg2.x; gy2 = RT - 8; }
+        else {
+          var lf = ramp(p, tg2.unbind, tg2.unbind + 0.12);
+          gx2 = tg2.x + (hash(j, 1) - 0.5) * 30 * lf; gy2 = RT - 8 - 36 * lf; ga = 1 - lf;
+        }
         if (ga > 0.02) glutDot(ctx, gx2, gy2, ga);
       });
     }
-    // sodium in through open AMPA receptors
+    // sodium flowing in through open AMPA receptors
     if (a && p >= T_BOUND + 0.01 && p < 0.5) {
-      targets.forEach(function (tg, j) {
-        if (tg.kind !== "ampa") return;
-        var f = ramp(p, T_BOUND + 0.01 + (j % 3) * 0.01, T_BOUND + 0.15 + (j % 3) * 0.01);
+      targets.forEach(function (tg2, j) {
+        if (tg2.kind !== "ampa") return;
+        var t0 = T_BOUND + 0.01 + (j % 3) * 0.012;
+        var f = ramp(p, t0, t0 + 0.15);
         if (f <= 0) return;
-        sodium(ctx, tg.x, REC_TOP - 4 + 76 * f, 1 - ramp(p, 0.4, 0.5));
+        var fe = 1 - (1 - f) * (1 - f);
+        sodium(ctx, tg2.x + (hash(j, 2) - 0.5) * 18 * fe, RT - 4 + 76 * fe, 1 - ramp(p, 0.4, 0.5));
       });
     }
     // magnesium plugs
     NMDA_SLOTS.forEach(function (sIdx) {
-      var x = SLOT_X[sIdx], my = REC_TOP + 14, ma = 1;
+      var x = SX[sIdx], my = RT + 14, ma = 1;
       if (fired) {
         var out = ease(ramp(p, tFire, tFire + 0.06));
         var back = ease(ramp(p, tFire + 0.32, tFire + 0.4));
-        my = REC_TOP + 14 - 40 * out * (1 - back);
-        ma = 1 - 0.35 * out * (1 - back);
+        my = RT + 14 - 40 * out * (1 - back);
+        x += 8 * out * (1 - back);
+        ma = 1 - 0.3 * out * (1 - back);
       }
       magnesium(ctx, x, my, ma);
     });
-    label(ctx, "magnesium", 352, 176, COL.text, { size: 13 });
-    leader(ctx, 352, 182, SLOT_X[15] + 6, REC_TOP + 8);
-    // calcium in through NMDA receptors
+    label(ctx, "magnesium", G.mag[0], G.mag[1], COL.ink, { size: Z.lab });
+    leader(ctx, G.magLead[0], G.magLead[1], SX[15] + 6, RT + 8);
+    // calcium flowing in through the NMDA receptors
     var caAmt = paired ? a.timing : 0;
     if (fired) {
       var nCa = Math.round(5 * caAmt);
@@ -1769,83 +1997,90 @@ var MODEL = (function () {
       NMDA_SLOTS.forEach(function (sIdx, j) {
         for (var q = 0; q < nCa; q++) {
           var t0 = tFire + 0.03 + q * 0.018;
-          var f = ease(ramp(p, t0, t0 + 0.1));
+          var f = ramp(p, t0, t0 + 0.12);
           if (f <= 0) continue;
-          var xx = SLOT_X[sIdx] + (q % 2 ? 7 : -7) * f + (q - 2) * 2 * f;
-          calcium(ctx, xx, REC_TOP - 10 + (64 + q * 6) * f, 1 - 0.4 * ramp(p, 0.9, 1));
+          var fe = 1 - Math.pow(1 - f, 3);
+          var xx = SX[sIdx] + (hash(q + 10 * j, 3) - 0.5) * 34 * fe;
+          calcium(ctx, xx, RT - 10 + (60 + q * 7) * fe, 1 - 0.45 * ramp(p, 0.9, 1));
         }
       });
     }
-    // calcium meter
     var caShown = a ? (fired ? caAmt * ease(ramp(p, tFire + 0.03, tFire + 0.16)) : 0) : lastCalcium;
-    var mx0 = 452, mw = 96, my0 = 300;
-    label(ctx, "calcium", mx0, my0 - 14, COL.purple, { size: 13 });
-    ctx.save(); ctx.fillStyle = "#fff"; ctx.strokeStyle = COL.purple; ctx.lineWidth = 1.2;
-    ctx.fillRect(mx0, my0, mw, 14); ctx.strokeRect(mx0, my0, mw, 14);
-    ctx.fillStyle = COL.purple; ctx.fillRect(mx0, my0, mw * clamp01(caShown), 14);
+    var cm = G.ca;
+    label(ctx, "calcium", cm[0], cm[1] - 14, COL.ca, { size: Z.lab, weight: 600 });
+    ctx.save(); ctx.fillStyle = "#081222"; ctx.strokeStyle = COL.ca; ctx.lineWidth = 1.2;
+    rrect(ctx, cm[0], cm[1], cm[2], 14, 7); ctx.fill(); ctx.stroke();
+    if (caShown > 0.002) {
+      ctx.shadowColor = COL.ca; ctx.shadowBlur = 10; ctx.fillStyle = COL.ca;
+      rrect(ctx, cm[0], cm[1], Math.max(14, cm[2] * clamp01(caShown)), 14, 7); ctx.fill();
+    }
     ctx.restore();
     drawn.l3Calcium = caShown;
 
     // spare AMPA receptors waiting inside
-    ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
-    rrect(ctx, 176, 304, 168, 58, 10); ctx.stroke(); ctx.restore();
-    [200, 226, 294, 320].forEach(function (x) { ampaIcon(ctx, x, 312, false, 1); });
-    label(ctx, "spare AMPA receptors", 260, 376, COL.text, { size: 13, align: "center" });
-    // the next spare receptor on its way to the membrane
+    var po = G.pool, spareY = po[1] + 9, spareH = RH * 0.92;
+    ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = "#5A7396"; ctx.lineWidth = 1.2;
+    rrect(ctx, po[0], po[1], po[2], po[3], 10); ctx.stroke(); ctx.restore();
+    G.spare.forEach(function (x, i) { ampaIcon(ctx, x, spareY + Math.sin(idle * 1.1 + i) * 1.2, spareH, false, ru, 0.85); });
+    label(ctx, "spare AMPA receptors", G.poolLbl[0], G.poolLbl[1], COL.ink, { size: Z.lab, align: "center" });
+    // the next spare receptor on its way: it rises from the pool, then slides up into the membrane
     if (nRec < 20) {
       var q0 = M.receptorProgress(sShow), q1 = q0, arrives = false;
       if (paired) {
         arrives = M.receptors(a.sAfter) > nRec;
         q1 = arrives ? 1 : M.receptorProgress(a.sAfter);
       }
-      var mStart = tFire + 0.16, mEnd = tFire + 0.34;
+      var mStart = tFire + 0.16, mEnd = tFire + 0.36;
       var q = paired ? q0 + (q1 - q0) * ease(ramp(p, mStart, mEnd)) : q0;
-      var slot = SLOT_X[AMPA_ORDER[nRec]];
-      var lx = POOL.x + (slot - POOL.x) * q, ly = 312 + (REC_TOP - 312) * q;
-      if (q > 0.001 || !paired || p < mStart) {
-        ctx.save();
-        if (q > 0.02 && q < 0.999) {
-          ctx.setLineDash([3, 4]); ctx.strokeStyle = "#9aa1b0"; ctx.lineWidth = 1.2;
-          ctx.beginPath(); ctx.moveTo(POOL.x, 312); ctx.lineTo(slot, REC_TOP + 20); ctx.stroke();
-        }
-        ctx.restore();
-        ampaIcon(ctx, lx, ly, false, 1);
+      var slot = SX[AMPA_ORDER[nRec]];
+      var px0 = po[0] + po[2] / 2, py0 = spareY, pyMid = MB + 18;
+      var lx, ly;
+      if (q < 0.65) { var u1 = ease(q / 0.65); lx = px0 + (slot - px0) * u1; ly = py0 + (pyMid - py0) * u1; }
+      else { var u2 = ease((q - 0.65) / 0.35); lx = slot; ly = pyMid + (RT - pyMid) * u2; }
+      if (q > 0.02 && q < 0.999) {
+        ctx.save(); ctx.setLineDash([3, 4]); ctx.strokeStyle = "rgba(61,214,193,0.5)"; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(px0, py0); ctx.lineTo(slot, pyMid); ctx.lineTo(slot, RT + RH); ctx.stroke(); ctx.restore();
       }
+      var moving = paired && p >= mStart && p < mEnd + 0.04;
+      drawn.l3Moving = [Math.round(lx), Math.round(ly), Math.round(q * 100) / 100];
+      ampaIcon(ctx, lx, ly, q > 0.65 ? RH : spareH, false, ru, 1, moving ? 12 : 0);
     }
 
-    // labels for receptors
-    label(ctx, "NMDA receptor", 18, 262, COL.text, { size: 13 });
-    leader(ctx, 70, 254, SLOT_X[6] - 4, REC_TOP + REC_H + 2);
-    var ampaLabelSlot = SLOT_X[0];
-    for (var r2 = 0; r2 < Math.min(nRec, 20); r2++) ampaLabelSlot = Math.max(ampaLabelSlot, SLOT_X[AMPA_ORDER[r2]]);
-    label(ctx, "AMPA receptor", 440, 262, COL.text, { size: 13 });
-    leader(ctx, 440, 258, ampaLabelSlot + 4, REC_TOP + REC_H + 2);
+    // labels for the receptors
+    label(ctx, "NMDA receptor", G.nmda[0], G.nmda[1], COL.nmda, { size: Z.lab, align: G.nmda[2], weight: 600 });
+    leader(ctx, G.nmdaLead[0], G.nmdaLead[1], SX[6] - 4, RT + RH + 2, COL.nmda);
+    var ampaLabelSlot = SX[0];
+    for (var r2 = 0; r2 < Math.min(nRec, 20); r2++) ampaLabelSlot = Math.max(ampaLabelSlot, SX[AMPA_ORDER[r2]]);
+    label(ctx, "AMPA receptor", G.ampa[0], G.ampa[1], COL.str, { size: Z.lab, align: G.ampa[2], weight: 600 });
+    leader(ctx, G.ampaLead[0], G.ampaLead[1], ampaLabelSlot + 4, RT + RH + 2, COL.str);
     // gap marker
-    ctx.save(); ctx.strokeStyle = "#7d8496"; ctx.lineWidth = 1.4;
-    ctx.beginPath(); ctx.moveTo(462, 152); ctx.lineTo(462, MEM_TOP - 2);
-    ctx.moveTo(456, 152); ctx.lineTo(468, 152); ctx.moveTo(456, MEM_TOP - 2); ctx.lineTo(468, MEM_TOP - 2); ctx.stroke(); ctx.restore();
-    label(ctx, "gap", 472, 179, COL.text, { size: 13 });
+    ctx.save(); ctx.strokeStyle = "#7F94AE"; ctx.lineWidth = 1.4;
+    var gX = G.gapX;
+    ctx.beginPath(); ctx.moveTo(gX, tb + 2); ctx.lineTo(gX, MT - 2);
+    ctx.moveTo(gX - 5, tb + 2); ctx.lineTo(gX + 5, tb + 2); ctx.moveTo(gX - 5, MT - 2); ctx.lineTo(gX + 5, MT - 2); ctx.stroke(); ctx.restore();
+    label(ctx, "gap", G.gapLbl[0], G.gapLbl[1], COL.ink, { size: Z.lab });
 
     // receiving neuron label and its state
-    label(ctx, "receiving neuron", 18, 300, COL.text, { size: 14 });
-    pill(ctx, firingNow ? "firing" : "at rest", 18, 326, firingNow ? COL.thresh : COL.muted,
-      { fill: firingNow ? COL.thresh : "#fff", textColor: firingNow ? "#fff" : COL.muted });
+    label(ctx, "receiving neuron", G.recv[0], G.recv[1], COL.ink, { size: Z.lab, weight: 600 });
+    pill(ctx, firingNow ? "firing" : "at rest", G.pill[0], G.pill[1], firingNow ? COL.fire : COL.soft,
+      { size: Z.lab, fill: firingNow ? COL.fire : COL.panel, textColor: firingNow ? "#241A00" : COL.soft, glow: firingNow ? COL.fire : null });
     drawn.l3State = firingNow ? "firing" : "at rest";
 
-    // voltage trace (what this synapse adds)
-    var tx0 = 452, ty0 = 8, tw = 100, th = 124;
-    ctx.save(); ctx.fillStyle = "#fff"; ctx.strokeStyle = "#cfd5e1"; ctx.lineWidth = 1.2;
+    // voltage trace: what this synapse adds
+    var tx0 = G.trace[0], ty0 = G.trace[1], tw = G.trace[2], th = G.trace[3];
+    ctx.save(); ctx.fillStyle = "rgba(8,18,34,0.94)"; ctx.strokeStyle = "#2E4563"; ctx.lineWidth = 1.2;
     rrect(ctx, tx0, ty0, tw, th, 8); ctx.fill(); ctx.stroke(); ctx.restore();
-    label(ctx, "voltage", tx0 + 8, ty0 + 13, COL.muted, { size: 12 });
-    var base = ty0 + th - 14, scale = 80; // px per mV
-    ctx.save(); ctx.strokeStyle = "#d9d6cd"; ctx.lineWidth = 1;
+    label(ctx, "voltage", tx0 + 8, ty0 + 14, COL.soft, { size: Z.tick, halo: "#08121F" });
+    var base = ty0 + th - 12, scale = th - 56;
+    ctx.save(); ctx.strokeStyle = "#2A405C"; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(tx0 + 8, base); ctx.lineTo(tx0 + tw - 8, base); ctx.stroke();
-    ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(tx0 + 8, base - sShow * scale); ctx.lineTo(tx0 + tw - 8, base - sShow * scale); ctx.stroke();
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = "rgba(61,214,193,0.6)";
+    ctx.beginPath(); ctx.moveTo(tx0 + 8, base - sShow * scale); ctx.lineTo(tx0 + tw - 8, base - sShow * scale); ctx.stroke();
     ctx.restore();
-    label(ctx, fmtS(sShow) + " mV", tx0 + tw - 8, base - sShow * scale - 9, COL.blue, { size: 11.5, align: "right" });
+    label(ctx, fmtS(sShow) + " mV", tx0 + tw - 8, base - sShow * scale - 10, COL.str, { size: Z.tick, align: "right", halo: "#08121F", weight: 600 });
     if (a) {
-      ctx.save(); ctx.strokeStyle = COL.blue; ctx.lineWidth = 2.2; ctx.beginPath();
-      var steps = 60;
+      ctx.save(); ctx.strokeStyle = COL.str; ctx.lineWidth = 2.2; ctx.shadowColor = COL.str; ctx.shadowBlur = 6; ctx.beginPath();
+      var steps = 80;
       for (var k = 0; k <= steps; k++) {
         var pk = k / steps;
         if (pk > p) break;
@@ -1858,47 +2093,51 @@ var MODEL = (function () {
 
     // badge
     var bt = "AMPA receptors: " + nRec + " · This synapse adds " + fmtS(sShow) + " mV";
-    badge(ctx, bt, W / 2, 398, 15);
+    badge(ctx, nar ? ["AMPA receptors: " + nRec + " ·", "This synapse adds " + fmtS(sShow) + " mV"] : [bt], G.badge[0], G.badge[1], Z.big);
     drawn.l3Badge = bt;
     drawn.l3Receptors = nRec;
 
     // legend
-    var ly0 = 488;
-    ctx.save(); ctx.fillStyle = "#fff"; ctx.fillRect(0, 470, W, 40); ctx.strokeStyle = "#e3e0d8"; ctx.beginPath(); ctx.moveTo(0, 470); ctx.lineTo(W, 470); ctx.stroke(); ctx.restore();
-    glutDot(ctx, 30, ly0, 1); label(ctx, "glutamate", 40, ly0, COL.text, { size: 13, weight: 500 });
-    sodium(ctx, 160, ly0, 1); label(ctx, "sodium", 172, ly0, COL.text, { size: 13, weight: 500 });
-    calcium(ctx, 270, ly0, 1); label(ctx, "calcium", 282, ly0, COL.text, { size: 13, weight: 500 });
-    magnesium(ctx, 385, ly0, 1); label(ctx, "magnesium", 397, ly0, COL.text, { size: 13, weight: 500 });
+    ctx.save(); ctx.fillStyle = "rgba(10,21,38,0.96)"; ctx.fillRect(0, G.ib, W, H - G.ib);
+    ctx.strokeStyle = "#22324A"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, G.ib); ctx.lineTo(W, G.ib); ctx.stroke(); ctx.restore();
+    var lgd = G.legend, lh = "#0A1526";
+    glutDot(ctx, lgd[0][0], lgd[0][1], 1); label(ctx, "glutamate", lgd[0][0] + 11, lgd[0][1], COL.glu, { size: Z.lab, halo: lh });
+    sodium(ctx, lgd[1][0], lgd[1][1], 1); label(ctx, "sodium", lgd[1][0] + 12, lgd[1][1], COL.na, { size: Z.lab, halo: lh });
+    calcium(ctx, lgd[2][0], lgd[2][1], 1); label(ctx, "calcium", lgd[2][0] + 12, lgd[2][1], COL.ca, { size: Z.lab, halo: lh });
+    magnesium(ctx, lgd[3][0], lgd[3][1], 1); label(ctx, "magnesium", lgd[3][0] + 12, lgd[3][1], COL.mg, { size: Z.lab, halo: lh });
+    end(c);
   }
 
   /* ---------------- Level 4: the strength over a whole practice ---------------- */
   function drawL4() {
     var c = canvases[4]; if (!c.ctx) return;
-    var ctx = begin(c), W = c.W;
-    var L = 56, R = W - 14, T = 14, B = 312;
+    var ctx = begin(c, 4), W = c.W, Z = sizes(c), nar = c.nar;
+    var L = nar ? 46 : 56, R = W - (nar ? 10 : 14), T = 16, B = nar ? 250 : 312;
     var yMin = 0.4, yMax = 1.05;
     var maxN = Math.max(30, Math.ceil((st.throws * 1.1 + 1) / 10) * 10);
     function X(n) { return L + n / maxN * (R - L); }
     function Y(v) { return B - (v - yMin) / (yMax - yMin) * (B - T); }
-    ctx.fillStyle = "#fff"; ctx.fillRect(L, T, R - L, B - T);
+    ctx.fillStyle = "rgba(4,9,18,0.75)"; ctx.fillRect(L, T, R - L, B - T);
+    // the region above the threshold
+    ctx.fillStyle = "rgba(255,122,144,0.05)"; ctx.fillRect(L, T, R - L, Y(0.75) - T);
     ctx.lineWidth = 1;
     for (var v = 0.4; v <= 1.0001; v += 0.1) {
-      ctx.strokeStyle = "#eceae4"; ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(R, Y(v)); ctx.stroke();
-      label(ctx, v.toFixed(1), L - 8, Y(v), COL.muted, { size: 12, align: "right", weight: 500 });
+      ctx.strokeStyle = "#1A2A40"; ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(R, Y(v)); ctx.stroke();
+      label(ctx, v.toFixed(1), L - 8, Y(v), COL.soft, { size: Z.tick, align: "right" });
     }
-    var stepN = maxN <= 40 ? 5 : maxN <= 100 ? 10 : maxN <= 250 ? 25 : 50;
-    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), X(n), B + 13, COL.muted, { size: 12, align: "center", weight: 500 });
-    ctx.strokeStyle = "#b9b5aa"; ctx.lineWidth = 1.2; ctx.strokeRect(L, T, R - L, B - T);
-    label(ctx, "mV", L - 8, T - 2 + 4, COL.muted, { size: 12, align: "right" });
-    label(ctx, "throws practiced", R, B + 31, COL.muted, { size: 12.5, align: "right" });
+    var stepN = nar ? (maxN <= 40 ? 10 : maxN <= 100 ? 20 : maxN <= 250 ? 50 : 100) : (maxN <= 40 ? 5 : maxN <= 100 ? 10 : maxN <= 250 ? 25 : 50);
+    for (var n = 0; n <= maxN; n += stepN) label(ctx, String(n), X(n), B + 14, COL.soft, { size: Z.tick, align: "center" });
+    ctx.strokeStyle = "#2E4563"; ctx.lineWidth = 1.2; ctx.strokeRect(L, T, R - L, B - T);
+    label(ctx, "mV", L - 8, T - 2, COL.soft, { size: Z.tick, align: "right" });
+    label(ctx, "throws practiced", R, B + 32, COL.soft, { size: Z.lab, align: "right" });
 
     // reference lines
     ctx.save();
-    ctx.strokeStyle = "#8e93a0"; ctx.setLineDash([6, 5]); ctx.lineWidth = 1.6;
+    ctx.strokeStyle = COL.soft; ctx.setLineDash([6, 5]); ctx.lineWidth = 1.6;
     ctx.beginPath(); ctx.moveTo(L, Y(0.5)); ctx.lineTo(R, Y(0.5)); ctx.stroke(); ctx.setLineDash([]);
-    ctx.strokeStyle = COL.thresh; ctx.lineWidth = 2.2;
-    ctx.beginPath(); ctx.moveTo(L, Y(0.75)); ctx.lineTo(R, Y(0.75)); ctx.stroke();
-    ctx.strokeStyle = "#6c7280"; ctx.lineWidth = 1.6;
+    ctx.strokeStyle = COL.thr; ctx.lineWidth = 2.4; ctx.shadowColor = COL.thr; ctx.shadowBlur = 6;
+    ctx.beginPath(); ctx.moveTo(L, Y(0.75)); ctx.lineTo(R, Y(0.75)); ctx.stroke(); ctx.shadowBlur = 0;
+    ctx.strokeStyle = COL.soft; ctx.lineWidth = 1.6;
     ctx.beginPath(); ctx.moveTo(L, Y(1.0)); ctx.lineTo(R, Y(1.0)); ctx.stroke();
     ctx.restore();
 
@@ -1906,34 +2145,35 @@ var MODEL = (function () {
     var seen = {};
     st.restMarks.forEach(function (rm) {
       var x = X(rm.n);
-      ctx.save(); ctx.strokeStyle = "#5d6475"; ctx.setLineDash([2, 4]); ctx.lineWidth = 1.6;
+      ctx.save(); ctx.strokeStyle = "#A9B8CA"; ctx.setLineDash([2, 4]); ctx.lineWidth = 1.6;
       ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, B); ctx.stroke(); ctx.restore();
       var k = seen[rm.n] = (seen[rm.n] || 0) + 1;
-      label(ctx, "1 week", x + 3, T + 12 + (k - 1) * 15, COL.muted, { size: 12 });
+      label(ctx, "1 week", x + 4, B - 14 - (k - 1) * 17, COL.soft, { size: Z.tick });
     });
 
     // strength curve with a dot for each throw
     ctx.save();
-    ctx.strokeStyle = COL.teal; ctx.lineWidth = 2.2;
+    ctx.strokeStyle = COL.str; ctx.lineWidth = 2.4; ctx.shadowColor = COL.str; ctx.shadowBlur = 8;
     ctx.beginPath();
     st.hist.forEach(function (h, j) { var x = X(h.n), y = Y(h.s); if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
-    ctx.stroke();
-    ctx.fillStyle = COL.teal;
+    ctx.stroke(); ctx.shadowBlur = 0;
+    ctx.fillStyle = COL.str;
     var dotR = maxN > 150 ? 1.8 : 3;
     st.hist.forEach(function (h) { ctx.beginPath(); ctx.arc(X(h.n), Y(h.s), h.rest ? dotR + 1 : dotR, 0, Math.PI * 2); ctx.fill(); });
-    // the throw in progress
     if (cur && cur.type === "throw") {
       var f = ease(ramp(cur.t / cur.dur, 0.6, 1));
       if (f > 0) {
-        ctx.globalAlpha = 0.5; ctx.beginPath(); ctx.arc(X(st.throws + f), Y(cur.sBefore + (cur.sAfter - cur.sBefore) * f), 4, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 0.6; ctx.shadowColor = COL.str; ctx.shadowBlur = 12;
+        ctx.beginPath(); ctx.arc(X(st.throws + f), Y(cur.sBefore + (cur.sAfter - cur.sBefore) * f), 4.5, 0, Math.PI * 2); ctx.fill();
       }
     }
     ctx.restore();
 
     // line labels, placed after the curve so they stay readable
-    pill(ctx, "ceiling", L + 6, Y(1.0) - 13, "#6c7280", { size: 12 });
-    pill(ctx, "20 inputs reach the threshold", R - 6, Y(0.75) - 13, COL.thresh, { align: "right", size: 12 });
-    pill(ctx, "before practice", L + 6, Y(0.5) + 13, "#6c7280", { size: 12 });
+    pill(ctx, "ceiling", L + 6, Y(1.0) - 14, COL.soft, { size: Z.tick });
+    pill(ctx, "20 inputs reach the threshold", R - 6, Y(0.75) - 14, COL.thr, { align: "right", size: Z.tick });
+    pill(ctx, "before practice", L + 6, Y(0.5) + 14, COL.soft, { size: Z.tick });
+    end(c);
   }
 
   /* ---------------- loop ---------------- */
@@ -1942,6 +2182,8 @@ var MODEL = (function () {
     if (lastTs === null) lastTs = ts;
     var dt = Math.min(0.05, Math.max(0, (ts - lastTs) / 1000));
     lastTs = ts;
+    if (!reduced()) idle += dt;
+    // the simulation is content started by the student's own button presses, so it runs under reduced motion too
     if (playing) advance(dt * speed);
     if (revealed[1]) drawL1();
     if (revealed[2]) drawL2();
@@ -1965,6 +2207,7 @@ var MODEL = (function () {
   restore();
   updateReadouts();
   resizeAll();
+  updateMap();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { resizeAll(); });
   requestAnimationFrame(frame);
 
@@ -1974,7 +2217,11 @@ var MODEL = (function () {
     drawn: function () { return JSON.parse(JSON.stringify(drawn)); },
     flush: function () { var guard = 0; while ((cur || queue.length) && guard++ < 100000) advance(10); },
     seek: function (phase) { if (!cur && queue.length) cur = startAction(queue.shift()); if (cur) cur.t = cur.dur * phase; },
-    work: buildWork
+    work: buildWork,
+    fonts: function () { return JSON.parse(JSON.stringify(fontLog)); },
+    textPairs: function () { return Object.keys(textPairs).map(function (k) { return k.split("|"); }); },
+    map: function () { return Array.prototype.map.call(document.querySelectorAll("#map .dot"), function (b) { return b.getAttribute("data-state"); }); },
+    idle: function () { return idle; }
   };
 })();
 </script>

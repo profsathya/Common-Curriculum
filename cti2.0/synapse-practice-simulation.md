@@ -2,6 +2,8 @@
 
 Motor learning · Demonstration page
 
+(Page note: look. The page follows the design of the Nand to Tetris learning trail, cst286/trail-nand-to-adder.html: a dark page, an opening hero that holds the label, the title and the first paragraph beside a small animated picture of a synapse, a map of the four levels under the hero, and each level headed by its zoom path and the line "Level N of 4". In the title the words "in your brain" are set in the accent style.)
+
 When you practice a movement, it gets better within minutes. Your muscles cannot grow stronger that fast, so the improvement has to come from somewhere else. On this page you follow it all the way down: from the throws you can watch, to the pathway that carries the command from the brain to the arm, to one connection between two neurons, to the number that says how strong that connection is. At each level you make a prediction first, then run the simulation to check it.
 
 At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.
@@ -243,7 +245,7 @@ Button: Copy my work to submit
 - When the copy works: Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.
 - When the browser blocks copying: Select the text below, copy it, and paste it where you were asked to submit it. Copying alone does not submit. (Page note: followed by a box holding the text, already selected.)
 
-(Page note: the copied text lists, in order: the title line "What practice changes in your brain (motor learning demonstration)"; the date and time and "Levels opened: N of 4"; for each of the four predictions the question, "My first choice:" and "My final choice:" (or "not answered yet"); for each of the three practice problems the problem, "My answer:", "Checked: correct", "Checked: not yet correct" or "not checked yet", and "Checks made: N"; for each of the four explanations the question, "My explanation:" (or "not written yet"), and if feedback exists "AI feedback I received:" with the latest feedback and "Times I asked for feedback: N"; then "Throws practiced: N", "Each input adds: x mV", "Gap between the two firings: g ms" and "Weeks of rest taken: N".)
+(Page note: the copied text lists, in order: the title line "What practice changes in your brain (motor learning demonstration)"; the date and time and "Levels opened: N of 4"; for each of the four predictions the question, "My first choice:" and "My final choice:" (or "not answered yet"); for each of the three practice problems the problem, "My answer:", "Checked: correct", "Checked: not yet correct" or "not checked yet", and "Checks made: N"; for each of the four explanations the question, then every round of feedback in order: "Version N, what I wrote before asking for feedback:" with the text the student sent, and "AI feedback on version N:" with the reply; then "My explanation now, revised after the last feedback:" with the current text, or a line saying it is the same as the last version; and "Times I asked for feedback: N". With no feedback yet it shows "My explanation:" (or "not written yet") and "AI feedback: not asked for yet". Up to 12 rounds are kept per box; then "Throws practiced: N", "Each input adds: x mV", "Gap between the two firings: g ms" and "Weeks of rest taken: N".)
 
 ## Bottom of the page
 
