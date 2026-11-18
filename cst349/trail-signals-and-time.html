@@ -241,6 +241,28 @@
   .say.wait{color:var(--ink-soft); font-style:italic}
   .fb{border-left:4px solid var(--ok); background:var(--ok-soft); border-radius:0 8px 8px 0; padding:12px 15px; margin:10px 0; font-size:.94rem}
 
+  /* Study card, expanders and counters (18 Nov 2026 revision) */
+  .evcard p{font-size:.95rem; margin:0 0 8px}
+  .evcard ul{margin:0 0 10px; padding-left:22px; font-size:.95rem}
+  .evcard li{margin-bottom:3px}
+  .evcard .limit{font-size:.9rem; color:var(--ink-soft); margin:10px 0 0}
+  .evcard .limit b{color:var(--ink)}
+  .msg ul{margin:6px 0 0; padding-left:20px}
+  .msg li{margin-bottom:4px}
+  details.more{margin:12px 0 0; border:1px solid var(--line); border-radius:8px; padding:0 14px; background:var(--paper); font-size:.9rem}
+  details.more summary{cursor:pointer; padding:9px 0; font-weight:700; color:var(--tc)}
+  details.more ul{margin:0 0 12px; padding-left:18px; font-size:.9rem}
+  details.more li{margin-bottom:6px; line-height:1.5}
+  details.more p{margin:0 0 10px; font-size:.9rem}
+  .prev-link ul{margin:6px 0 0; padding-left:18px}
+  .prev-link li{margin-bottom:4px}
+  .bgroup{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.76rem; letter-spacing:.04em; color:var(--blaze); margin:8px 0 0}
+  .mtotal{margin:0 0 4px}
+  .mtotal b{color:var(--hero-cream)}
+  ul.howto{margin:0 0 10px; padding-left:22px}
+  ul.howto li{margin-bottom:3px}
+  .qcount{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82rem; color:var(--blaze); margin:10px 0 6px}
+
   .navb{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:24px; border-top:1px solid var(--line); padding-top:16px; flex-wrap:wrap}
   footer{margin-top:22px; font-size:.85rem; color:var(--ink-soft)}
   .ai-helper{margin:18px 0 0; border:1px solid var(--line); border-radius:8px; padding:0 16px; font-size:.93rem; line-height:1.5; background:var(--card)}
@@ -274,8 +296,8 @@
     <div>
       <div class="eyebrow">CST349 &middot; Backward-chain simulation</div>
       <h1>Start at Day 1 in the role you want, then <em>open the box back to this week</em></h1>
-      <p>Picture yourself starting a job or internship you genuinely want. Then open that outcome one layer back at a time - what convinced the hiring manager, how a human saw your work, how you built that proof, and what you start doing in the next week and month.</p>
-      <p class="dest">Where you end up: a backward chain with no wishful leaps - stress-tested against four recent job-market studies and their blind spots - connected to where your hours go over the next 30 days.</p>
+      <p>Picture your first day in a job or internship you want. Then work backward, one step at a time, until you reach what you will do this week.</p>
+      <p class="dest">Where you end up: you can explain how what you do this week leads toward the role you want, and you have checked that explanation against recent studies of how hiring works now.</p>
       <button type="button" class="btn btn-hero" id="startbtn">Start at Day 1</button>
       <div class="meta">6 boxes &middot; about 35 - 45 minutes &middot; saved automatically in this browser</div>
     </div>
@@ -336,50 +358,50 @@
       name: 'Software Engineering',
       sub: 'Web, backend, mobile, cloud, or full-stack systems',
       day1Hint: 'Example: It is my first week as a junior backend engineer on a healthcare scheduling team, helping keep clinic booking services reliable.',
-      l2Lens: 'Software developer roles sit at the core of the 32 occupations in this study. Entry-level ads asking for code review rose to 18.5% by June 2026 alongside software testing (17.9%) and CI/CD (24.8%), because shipping code that runs locally is much easier than verifying security, cost, and edge cases in an existing codebase.',
-      l2Blind: 'Job postings count skill mentions inside ads rather than total hiring volume, and 44% of interviewed employers came from finance or AI-native startups.',
-      l3Lens: 'Software publishers post about 3.7 entry-level openings per internship (denser than the 9.9 national average), yet cold applicant queues still top 300 per role. Fixing issues in an active open-source codebase, building a tool used by a real campus or local group, and talking with alumni put human eyes on your work.',
-      l4Lens: 'Standard CRUD endpoints and textbook syntax are heavily codified in model training data. What compounds is tacit judgment: debugging unfamiliar code, weighing latency and cloud cost, and clarifying incomplete user requests.'
+      l2Lens: 'Software developer jobs are at the center of this study. The share of entry-level job ads that ask for code review more than doubled between 2020 and 2026, because checking code for security, cost and unusual cases is harder than getting it to run.',
+      l2Blind: 'It counts how often job ads mention a skill, so it cannot show how many people were hired. Many of the organizations interviewed were in finance or AI startups.',
+      l3Lens: 'Software companies post more internships for each entry-level job than the national average, and online applications are still crowded. Fixing an issue in an active open-source project, building a tool that a campus or local group uses, and talking with alumni are ways for people to see your work.',
+      l4Lens: 'Standard endpoints and textbook syntax are written-down knowledge that AI handles well. Judgment shows when you debug unfamiliar code, weigh speed against cloud cost, and clarify an incomplete request from a user.'
     },
     {
       id: 'sec',
       name: 'Cybersecurity & Networking',
       sub: 'AppSec, cloud security, SOC / incident response, network defense',
       day1Hint: 'Example: It is my first week as a junior security analyst helping a regional hospital or cloud team triage alerts and harden internal web apps.',
-      l2Lens: 'Four of the 32 roles in the report are security roles (AppSec, Cloud Security, InfoSec, and SecOps / Incident Response). Veracode\'s finding - AI syntax pass rates above 95% while security pass rates stay flat near 55% - shows why teams hire people who can catch plausible, vulnerable output and explain remediation tradeoffs.',
-      l2Blind: 'Job ads often over-list certifications and under-describe hands-on triage, and finance/AI startups look different from public-sector, defense, or SMB infrastructure.',
-      l3Lens: 'Titles labeled "cybersecurity intern" are scarce, especially at smaller organizations. Campus IT or SOC shifts, helping a local clinic or student org audit permissions, CTF write-ups, and practitioner conversations often open the real door.',
-      l4Lens: 'Port tables and checklist definitions are codified textbook facts; separating a real intrusion from noisy logs and persuading developers to ship a practical fix build tacit judgment.'
+      l2Lens: 'Four of the 32 jobs in this study are security jobs. The AI code test above shows why teams hire people who can spot code that looks right and is still vulnerable, and who can explain how to fix it.',
+      l2Blind: 'Job ads often list certifications and say little about hands-on work. Finance and AI startups may also hire differently from public agencies, defense or small businesses.',
+      l3Lens: 'Internships with "cybersecurity" in the title are scarce, especially at smaller organizations. Campus IT or security operations shifts, helping a local clinic or student organization review its permissions, capture-the-flag write-ups, and conversations with people in the field are other ways for people to see your work.',
+      l4Lens: 'Port tables and checklist definitions are written-down knowledge. Judgment shows when you separate a real intrusion from noisy logs and persuade developers to ship a practical fix.'
     },
     {
       id: 'data',
       name: 'Data Science & Analytics',
       sub: 'Data engineering, analytics, ML pipelines, applied AI',
       day1Hint: 'Example: It is my first week as a junior data analyst / data engineer helping a transit agency or product team clean messy operational pipelines.',
-      l2Lens: 'Data roles are directly in the 32-role sample: from January to June 2026, data pipelines rose 3.3 points to 12.2% of postings while ETL, data quality, data engineering, and data science each gained 2.0 to 2.6 points. Hiring managers test whether you catch broken schemas, duplicate counts, or hallucinating retrieval pipelines.',
-      l2Blind: 'Posting counts blend analytics, data engineering, and ML titles together and cannot show whether a team\'s data stack is ready for a junior hire.',
-      l3Lens: 'Clean Kaggle notebooks blend into the 300-per-role cold queue. Cleaning and auditing a messy dataset for a campus office, faculty lab, nonprofit, or small business puts a real stakeholder behind your work.',
-      l4Lens: 'Calling `fit()` on a tidy CSV is codified work AI drafts in seconds; discovering that two departments share one queue and double-count tickets is tacit judgment.'
+      l2Lens: 'Data jobs are part of this study, and job ads that mention data pipelines and data quality rose in the first half of 2026. Hiring managers look for people who notice a broken schema, a double count, or an AI answer that is made up.',
+      l2Blind: 'Its job-ad counts mix analytics, data engineering and machine learning jobs together, so they cannot show what one team needs from a new hire.',
+      l3Lens: 'A clean notebook on a public dataset looks like many other applications. Cleaning and checking a messy dataset for a campus office, a faculty lab, a nonprofit or a small business gives you a real person who depends on your work.',
+      l4Lens: 'Fitting a model to a tidy file is written-down knowledge that AI drafts in seconds. Judgment shows when you discover that two departments share one queue and count the same tickets twice.'
     },
     {
       id: 'game',
       name: 'Game Development',
       sub: 'Gameplay systems, engines, tools, technical art, indie / studio dev',
       day1Hint: 'Example: It is my first week as a junior gameplay or tools programmer at a game studio, helping tune combat feel and keep frame times under budget.',
-      l2Lens: 'Key blind spot: game studios were NOT among the 32 occupations Burning Glass tracked! Still, test what transfers structurally: AI can draft boilerplate Unity/Unreal scripts, shaders, or placeholder assets fast, while frame-time budgets, engine integration, playtester feel, and design tradeoffs when scope changes convince a lead.',
-      l2Blind: 'This dataset did not sample game studios at all - separate structural lessons about AI-assisted production from job-ad percentages written for enterprise tech.',
-      l3Lens: 'Formal studio internships are tiny in number and fiercely rationed. Shipping playable builds to strangers in game jams, modding complex games, building pipeline tools, and getting critiques from working devs create visible proof.',
-      l4Lens: 'Tutorial movement scripts are codified; diagnosing a frame-rate spike on target hardware, watching a stranger get confused in a playtest, and cutting scope to ship on time are tacit skills.'
+      l2Lens: 'AI can draft scripts and placeholder assets quickly, and a lead still looks for someone who can keep frame times within budget, respond to playtesters, and explain what to cut when the scope changes.',
+      l2Blind: 'Game studios were not among the 32 jobs it tracked, so its percentages do not describe game hiring. Its idea about checking and explaining your work may still apply.',
+      l3Lens: 'Studio internships are few. Shipping playable builds in game jams, modding existing games, building tools, and asking working developers for critique are ways to make your work visible.',
+      l4Lens: 'Tutorial movement scripts are written-down knowledge. Judgment shows when you find the cause of a frame-rate drop on the target hardware, watch a stranger get confused in a playtest, and cut scope to ship on time.'
     },
     {
       id: 'other',
       name: 'Another Tech Path',
       sub: 'IT systems, UX / product design, hardware / embedded, tech PM, research',
       day1Hint: 'Example: It is my first week in my target role, helping a team solve a concrete user, hardware, or operational problem.',
-      l2Lens: 'Check page 26 of the report against your target: UX/UI design, Computer Systems Analysis, QA/Test Automation, and Software Project Management are inside the 32 roles, while hardware/embedded and pure research sit outside it. Either way, fast AI first drafts raise the value of upfront constraint framing and real verification.',
-      l2Blind: 'Broad entry-level tech averages can hide distinct portfolio, lab, or hiring-cycle norms in your specific niche.',
-      l3Lens: 'When cold portals average 300+ applicants per role and regional-public internship rates sit near 47%, campus labs, local organizations, and direct conversations with practitioners matter as much as job boards.',
-      l4Lens: 'Any step that follows a neat template is easier for AI to draft; working with physical hardware limits, real users, or competing stakeholder constraints builds tacit judgment.'
+      l2Lens: 'UX and UI design, systems analysis, quality assurance and software project management are among the 32 jobs in this study, and hardware, embedded and research jobs are outside it. When AI makes first drafts fast, being clear about the requirements at the start and checking the result at the end become more valuable.',
+      l2Blind: 'Averages across all entry-level tech jobs can hide how hiring works in your specific field.',
+      l3Lens: 'When online applications are crowded and internships are limited, campus labs, local organizations and direct conversations with people in your field matter as much as job boards.',
+      l4Lens: 'Any step that follows a template is easier for AI to draft. Judgment shows when you work with hardware limits, real users, or people who want different things.'
     }
   ];
 
@@ -389,13 +411,19 @@
     { id: '2y',  label: 'About 2+ years out',  short: '2+ yr runway' }
   ];
 
+  const BOX_LABEL = {
+    2: 'Supports your Box 2 answer: what convinced the hiring manager',
+    3: 'Supports your Box 3 answer: how a person saw your work',
+    4: 'Supports your Box 4 answer: how you built your work'
+  };
+
   const BUCKETS = [
-    { id: 'build',  name: 'New solo builds',       color: 'var(--c0)', desc: 'Starting fresh projects from scratch (apps, small games, notebooks, lab scripts).' },
-    { id: 'check',  name: 'Check & harden',        color: 'var(--c1)', desc: 'Reviewing, testing, securing, profiling, or improving existing or AI-assisted work.' },
-    { id: 'core',   name: 'Core depth (no AI)',    color: 'var(--c2)', desc: 'Going deep in one primary stack, engine, query/security lab, or unassisted problem-solving.' },
-    { id: 'domain', name: 'Domain & context',      color: 'var(--c3)', desc: 'Learning the real-world system, users, threat model, business, or players around the tech.' },
-    { id: 'log',    name: 'Decision record',       color: 'var(--c4)', desc: 'Recording options rejected, failure modes tested, and what changes if constraints shift.' },
-    { id: 'people', name: 'People & real stakes',  color: 'var(--c5)', desc: 'Internships, campus/community/studio/open-source work, alumni talks, and warm outreach.' }
+    { id: 'core',   feeds: 2, name: 'Fundamentals without AI',     color: 'var(--c2)', desc: 'Practice solving problems in your main language, tool or engine without AI help.' },
+    { id: 'check',  feeds: 2, name: 'Checking and improving work', color: 'var(--c1)', desc: 'Review, test, secure or speed up work that already exists, including work AI helped you write.' },
+    { id: 'log',    feeds: 2, name: 'Writing down decisions',      color: 'var(--c4)', desc: 'Keep notes on the options you rejected, what you tested, and what you would change if the requirements changed.' },
+    { id: 'people', feeds: 3, name: 'People and real-world work',  color: 'var(--c5)', desc: 'Internships, campus, community or open-source work, conversations with alumni, and reaching out to people in your field.' },
+    { id: 'build',  feeds: 4, name: 'Building new projects',       color: 'var(--c0)', desc: 'Start a new project of your own (an app, a small game, a notebook, a lab script).' },
+    { id: 'domain', feeds: 4, name: 'Learning the field',          color: 'var(--c3)', desc: 'Learn about the users, the business, the threats or the players that your technical work serves.' }
   ];
 
   const STOPS = [
@@ -404,29 +432,29 @@
     { id: 'door',    tag: 'Box 3 · -2 steps',  title: 'How you got seen' },
     { id: 'build',   tag: 'Box 4 · -3 steps',  title: 'How you built it' },
     { id: 'month',   tag: 'Box 5 · Next 30d',  title: 'Next week & month' },
-    { id: 'forward', tag: 'Box 6 · Verify',    title: 'Walk it forward' }
+    { id: 'forward', tag: 'Box 6 · Check',     title: 'Walk it forward' }
   ];
 
   const PROOF_PICKS = [
     { id: 'working',  label: 'Several working projects or demos I built' },
-    { id: 'screen',   label: 'Strong unassisted technical / problem-solving screen' },
-    { id: 'tradeoff', label: 'Hardening an imperfect system & explaining tradeoffs when constraints changed' },
-    { id: 'domain',   label: 'Understanding the real users, domain, or business problem deeply' }
+    { id: 'screen',   label: 'Solving technical problems in the interview without AI help' },
+    { id: 'tradeoff', label: 'Improving a system that had problems, and explaining the tradeoffs I made' },
+    { id: 'domain',   label: 'Understanding the users and the problem the team is solving' }
   ];
 
   const DOOR_PICKS = [
-    { id: 'cold',   label: 'Applying cold through online job boards' },
-    { id: 'intern', label: 'Converting a prior internship at that organization' },
-    { id: 'warm',   label: 'A referral or conversation with an alum, mentor, faculty member, or practitioner' },
-    { id: 'public', label: 'Visible work with real users (campus/local org, open-source repo, game jam, lab)' }
+    { id: 'cold',   label: 'Applying online through job boards' },
+    { id: 'intern', label: 'An internship at that organization that turned into a job' },
+    { id: 'warm',   label: 'A referral or conversation with an alum, mentor, faculty member, or someone working in the field' },
+    { id: 'public', label: 'Work that real people use (a campus or local organization, an open-source project, a game jam, a lab)' }
   ];
 
   const INGREDIENT_CHIPS = [
-    { id: 'greenfield', label: 'Solo projects started from scratch' },
-    { id: 'existing',   label: 'Maintaining, auditing, or extending an existing codebase / messy dataset' },
-    { id: 'domain2',    label: 'Learning a second domain (health, finance, ops, education, players)' },
-    { id: 'ai_fast',    label: 'Using AI to generate fast drafts and prototypes' },
-    { id: 'ai_check',   label: 'Checking & challenging AI output for security, cost, and edge cases' },
+    { id: 'greenfield', label: 'Solo projects I started from scratch' },
+    { id: 'existing',   label: 'Maintaining or extending an existing codebase or a messy dataset' },
+    { id: 'domain2',    label: 'Learning a second field (health, finance, operations, education, players)' },
+    { id: 'ai_fast',    label: 'Using AI to produce fast drafts and prototypes' },
+    { id: 'ai_check',   label: 'Checking and questioning what AI produced (security, cost, unusual cases)' },
     { id: 'humans',     label: 'Feedback from peers, mentors, alumni, or real users' }
   ];
 
@@ -501,12 +529,12 @@
 
   function boxSnippet(idx){
     if (idx === 0) return S.day1.trim() || 'Choose your path & write one sentence';
-    if (idx === 1) return S.l2Final.trim() || S.l2First.trim() || 'Signal 1: Consequence Gap & Karat';
-    if (idx === 2) return S.l3Final.trim() || S.l3First.trim() || 'Signal 2: Ashby 300:1 & Internships';
-    if (idx === 3) return S.l4Final.trim() || S.l4First.trim() || 'Signal 3: Payroll data & hourglass';
-    if (idx === 4) return S.step7d.trim() ? S.budget + 'h/wk · ' + S.step7d.trim() : 'Allocate next 30d hours & 7-day step';
+    if (idx === 1) return S.l2Final.trim() || S.l2First.trim() || 'What convinced the hiring manager';
+    if (idx === 2) return S.l3Final.trim() || S.l3First.trim() || 'How a person saw your work';
+    if (idx === 3) return S.l4Final.trim() || S.l4First.trim() || 'How you built your work';
+    if (idx === 4) return S.step7d.trim() ? S.budget + 'h/wk · ' + S.step7d.trim() : 'Divide your hours and pick a 7-day step';
     const n = (S.chat.msgs || []).filter(m => m.r === 'u').length;
-    return S.chat.fb ? 'Check-in summary complete' : n ? n + ' interview repl' + (n === 1 ? 'y' : 'ies') + ' so far' : 'Check chain continuity & defend';
+    return S.chat.fb ? 'Check-in summary complete' : n ? n + ' interview repl' + (n === 1 ? 'y' : 'ies') + ' so far' : 'Read your chain forward and talk it through';
   }
 
   function go(idx){
@@ -529,68 +557,68 @@
     if (h.build >= Math.ceil(tot * 0.45) && verifyHrs <= 1){
       out.push({
         kind: 'tension',
-        title: 'Link break between Box 2 and Box 5: ' + buildPct + '% of your hours go to new solo builds while only ' + verifyHrs + ' hr goes to checking work + recording decisions',
-        detail: 'In Box 2, working first-draft output is what 200 other AI-assisted applicants also bring. Shifting even 1 - 2 hours from starting new builds into hardening existing work and logging tradeoffs tightens your chain.'
+        title: 'A gap between Box 2 and your hours: ' + buildPct + '% of your hours go to building new projects, and ' + verifyHrs + ' hr goes to checking work and writing down decisions',
+        detail: 'Your Box 2 answer depends on showing what you checked and why you made your choices. Moving 1 or 2 hours from new projects into checking work and writing down decisions would support it.'
       });
     } else if (verifyHrs >= 2){
       out.push({
         kind: 'aligned',
-        title: 'Verification link holds (' + verifyHrs + ' hrs/wk across check & harden + decision record)',
-        detail: 'Your next-30-day schedule actively builds the evidence of checking errors and explaining tradeoffs that your Box 2 hiring story depends on.'
+        title: 'Your hours support Box 2 (' + verifyHrs + ' hrs/wk on checking work and writing down decisions)',
+        detail: 'Your schedule builds the evidence of checking and explaining that your Box 2 answer depends on.'
       });
     }
 
     if (h.core === 0){
       out.push({
         kind: 'tension',
-        title: 'Unassisted screen gap: 0 hrs/wk in Core depth (no AI)',
-        detail: '62% of engineering leaders in the Karat survey still run AI-free screens, and catching subtle AI flaws requires deep fluency in at least one stack.'
+        title: 'No hours yet for fundamentals without AI',
+        detail: 'In a 2026 survey, 62% of engineering leaders said they do not allow AI in technical interviews, and finding problems in AI output takes solid skill in at least one language or tool.'
       });
     }
 
     if (h.people === 0){
       out.push({
         kind: 'tension',
-        title: 'Visibility gap between Box 3 and Box 5: 0 hrs/wk in People & real stakes',
-        detail: 'With cold inbound queues averaging 300+ applications per hire and regional-public internship rates near 47%, a purely solo month leaves Box 3 ("how a human saw my work") unsupported.'
+        title: 'A gap between Box 3 and your hours: no hours yet for people and real-world work',
+        detail: 'Your Box 3 answer describes how a person sees your work. That link needs some weekly time with users, partners or people in your field.'
       });
     } else {
       out.push({
         kind: 'aligned',
-        title: 'Human visibility link holds (' + h.people + ' hrs/wk in People & real stakes)',
-        detail: 'Your schedule puts real weekly hours behind getting outside eyes, users, or practitioner conversations rather than waiting to cold-apply at the end.'
+        title: 'Your hours support Box 3 (' + h.people + ' hrs/wk on people and real-world work)',
+        detail: 'Your schedule puts weekly time into getting other people to see your work.'
       });
     }
 
     if (h.domain === 0){
       out.push({
         kind: 'tension',
-        title: 'Context gap: 0 hrs/wk in Domain & context',
-        detail: 'Both the hourglass workflow (Box 2) and the tacit-knowledge payroll findings (Box 4) reward knowing the users, threat model, or second domain around the tech.'
+        title: 'No hours yet for learning the field',
+        detail: 'Your Box 2 and Box 4 answers both draw on knowing the users and the setting around the technology.'
       });
     }
 
     if (S.runway === '6m' && h.people <= 1){
       out.push({
         kind: 'tension',
-        title: 'Short-runway squeeze (~6 months out with ' + h.people + ' hr/wk on people & outreach)',
-        detail: 'When Day 1 is about six months away, hiring pipelines are already open now - building silently before talking to people risks missing the window.'
+        title: 'A short timeline with little time for people (about 6 months out, ' + h.people + ' hr/wk)',
+        detail: 'When Day 1 is about six months away, hiring for it is already under way, so conversations with people are worth starting now.'
       });
     }
 
     if (S.l4Chips.includes('ai_fast') && !S.l4Chips.includes('ai_check')){
       out.push({
         kind: 'tension',
-        title: 'Box 4 workflow risk: fast AI drafting selected without AI verification',
-        detail: 'Remember Veracode\'s 95% syntax pass vs 55% security pass - speed helps only when paired with a habit of checking what the tool hands back.'
+        title: 'Box 4: you selected fast AI drafts without checking what AI produced',
+        detail: 'In the Veracode tests, more than 95% of AI-written code ran and about 55% of it was secure, so speed helps most when you also check the result.'
       });
     }
 
     if (S.budget >= 16){
       out.push({
         kind: 'tension',
-        title: 'Heavy weekly load (' + S.budget + ' extra hrs/wk alongside coursework and life)',
-        detail: 'Be ready in the check-in below to identify which two buckets stay non-negotiable when a busy week cuts your time in half.'
+        title: 'A full schedule (' + S.budget + ' extra hrs/wk on top of coursework)',
+        detail: 'In the check-in below, be ready to say which two kinds of preparation you would keep in a week when your time is cut in half.'
       });
     }
     return out;
@@ -610,9 +638,12 @@
       return '<div class="stackseg" style="width:' + pct.toFixed(2) + '%;background:' + b.color + '" title="' + esc(b.name) + ': ' + v + 'h"></div>';
     }).join('');
 
+    let lastFeeds = 0;
     const rows = BUCKETS.map(b => {
       const v = S.hrs[b.id] || 0;
-      return '<div class="brow">' +
+      const head = b.feeds !== lastFeeds ? '<div class="bgroup">' + esc(BOX_LABEL[b.feeds]) + '</div>' : '';
+      lastFeeds = b.feeds;
+      return head + '<div class="brow">' +
         '<div class="binfo"><div class="bname"><span class="swatch" style="background:' + b.color + '"></span>' + esc(b.name) + '</div><div class="bdesc">' + esc(b.desc) + '</div></div>' +
         '<div class="bctrl">' +
           '<button type="button" class="stepbtn" data-bdec="' + b.id + '" aria-label="Subtract 1 hour from ' + esc(b.name) + '"' + (v <= 0 ? ' disabled' : '') + '>&minus;</button>' +
@@ -625,13 +656,14 @@
     return '<div class="console">' +
       '<div class="console-top">' +
         '<div class="hrs-ctl">' +
-          '<span class="muted">Realistic prep hours/week over the next 30 days (outside required classes):</span>' +
-          '<button type="button" class="stepbtn" id="tot-dec" aria-label="Decrease weekly budget">&minus;</button>' +
+          '<span class="muted">Hours per week you can give over the next 30 days (outside your required classes):</span>' +
+          '<button type="button" class="stepbtn" id="tot-dec" aria-label="Decrease weekly hours">&minus;</button>' +
           '<span class="bval">' + S.budget + ' hrs/wk</span>' +
-          '<button type="button" class="stepbtn" id="tot-inc" aria-label="Increase weekly budget">+</button>' +
+          '<button type="button" class="stepbtn" id="tot-inc" aria-label="Increase weekly hours">+</button>' +
         '</div>' +
         '<span class="hrs-pill ' + pillCls + '" role="status">' + pillTxt + '</span>' +
       '</div>' +
+      '<div class="muted mtotal">' + S.budget + ' hours a week is about <b>' + (S.budget * 4) + ' hours</b> over the next 30 days.</div>' +
       '<div class="stackbar" aria-hidden="true">' + segs + '</div>' +
       '<div class="bgrid">' + rows + '</div>' +
     '</div>';
@@ -652,11 +684,17 @@
   }
 
   /* ---------- Box 1: Day 1 in the Role ---------- */
+  function studyDetails(items){
+    return '<details class="more"><summary>See the numbers and where they come from</summary><ul>' +
+      items.map(x => '<li>' + x + '</li>').join('') + '</ul></details>';
+  }
+
   function renderStop0(el){
     const tk = curTrack();
     let h = '<div class="eyebrow">Box 1 of 6 &middot; Start at the outcome</div>' +
       '<h2>Imagine Day 1 in a role you genuinely want</h2>' +
-      '<div class="objs"><b>How this trail works</b>: Start at the future moment you are aiming for. At each stop after this, you open one box further back in time, write what you think happened there, and test that link against recent labor-market research until you land on what you will do in the next week and month.</div>' +
+      '<div class="objs"><b>How each box works</b>: you start at the day you are aiming for and work backward to this week. In Boxes 2 to 4 you do the same three things:' +
+        '<ul><li>Write your first answer.</li><li>See what one recent study found.</li><li>Update your answer if the finding changes your thinking.</li></ul></div>' +
 
       '<div class="step"><h3><span class="stepn">1</span>Which path is this role in?</h3>' +
       '<div class="tracks">' +
@@ -667,7 +705,7 @@
       '</div>' +
 
       '<div class="step"><h3><span class="stepn">2</span>Roughly how far from today is that Day 1?</h3>' +
-      '<p class="muted">Picking your real runway keeps the chain honest - a 6-month plan and a 2-year plan need different moves.</p>' +
+      '<p class="muted">A 6-month plan and a 2-year plan need different steps, so pick the one closest to your situation.</p>' +
       '<div class="pills">' +
         RUNWAYS.map(r => '<button type="button" class="pill' + (S.runway === r.id ? ' on' : '') + '" data-rw="' + r.id + '" aria-pressed="' + (S.runway === r.id ? 'true' : 'false') + '">' + esc(r.label) + '</button>').join('') +
       '</div></div>' +
@@ -694,67 +732,67 @@
     const canOpenSignal = !!S.l2Pick && S.l2First.trim().length >= 10;
 
     const pickFeedback = {
-      working: 'Watch the crowd effect: because AI models pass syntax checks >95% of the time, hundreds of other applicants also show up with working demos. What separated yours is whether you caught the ~45% where AI output is insecure, expensive, or poorly suited - and whether you could explain why your design beat the alternatives.',
-      screen: 'That clears a real gate - 62% of engineering leaders in Karat\'s survey still prohibit AI in live technical screens. At the same time, 71% say raw coding tests have become harder to trust, so teams increasingly pair screens with messy real-constraint discussions.',
-      tradeoff: 'That hits the exact gap employers describe: checking imperfect output, handling existing constraints, and explaining what you would change if requirements shifted.',
-      domain: 'Understanding the domain and user problem puts you ahead on the "decide" side of the hourglass - just make sure you pair it with unassisted technical fluency for the 62% of teams still running AI-free screens.'
+      working: 'Your projects stand out when you can show what you checked and fixed, and explain why your design was a good choice.',
+      screen: 'This still matters: in a 2026 survey, 62% of engineering leaders said they do not allow AI in technical interviews. Some teams also ask candidates to work through a messy, realistic problem, so it helps to practice both.',
+      tradeoff: 'This is close to what employers in the study described: checking work that has problems, working within real limits, and explaining what you would change if the requirements changed.',
+      domain: 'Understanding the users and the problem helps you decide what to build, which employers in the study valued. Pair it with technical skill you can show without AI, because 62% of engineering leaders in a 2026 survey do not allow AI in technical interviews.'
     };
 
     let h = '<div class="eyebrow">Box 2 of 6 &middot; One step earlier in time</div>' +
       '<h2>What convinced the hiring manager to pick you over other finalists?</h2>' +
       (S.day1.trim() ? '<div class="prev-link"><b>Your Box 1 outcome (' + esc(curRunway().short) + '):</b> ' + esc(S.day1) + '</div>' : '') +
 
-      '<div class="step"><h3><span class="stepn">1</span>Your first instinct (before opening the hiring data)</h3>' +
-      '<p>Rewind to the week the hiring team chose you over other candidates. What do you imagine carried the most weight?</p>' +
+      '<div class="step"><h3><span class="stepn">1</span>Write your first answer</h3>' +
+      '<p>Go back to the week the hiring team chose you over the other candidates. What do you think mattered most to them?</p>' +
       '<div class="choices">' +
         PROOF_PICKS.map(p => '<button type="button" class="cbtn' + (S.l2Pick === p.id ? ' picked' : '') + '" data-l2p="' + p.id + '">' + esc(p.label) + '</button>').join('') +
       '</div>' +
-      '<p style="margin-top:10px"><label for="l2-first">Write a line or two on what you showed in that interview that other applicants could not:</label></p>' +
+      '<p style="margin-top:10px"><label for="l2-first">Write a line or two about what you showed that the other candidates did not:</label></p>' +
       '<textarea id="l2-first" class="note-in" rows="2" placeholder="The hiring manager picked me over other finalists because I showed ...">' + esc(S.l2First) + '</textarea>' +
-      (!S.l2Open ? '<div class="row"><button type="button" class="btn blaze" id="l2-open-btn"' + (canOpenSignal ? '' : ' disabled') + '>Stress-test this link against 2026 employer data</button>' +
-        (!canOpenSignal ? '<span class="muted">Pick an option and jot a quick line above to open the stress test.</span>' : '') + '</div>' : '') +
+      (!S.l2Open ? '<div class="row"><button type="button" class="btn blaze" id="l2-open-btn"' + (canOpenSignal ? '' : ' disabled') + '>See what a recent study found</button>' +
+        (!canOpenSignal ? '<span class="muted">Pick an option and write a line above to open the study.</span>' : '') + '</div>' : '') +
       '</div>';
 
     if (S.l2Open){
-      h += '<div class="step"><h3><span class="stepn">2</span>Stress-test your hiring story</h3>' +
+      const right = S.l2Q === '55';
+      h += '<div class="step"><h3><span class="stepn">2</span>See what a recent study found</h3>' +
         '<div class="probe">' +
-          '<div class="probe-q">Quick check before seeing the full card: Veracode tested AI models across generations on the same tasks. Syntax pass rates rose above 95% (the work runs). Roughly where did the security pass rate sit?</div>' +
+          '<div class="probe-q">Make a quick guess first. A security company (Veracode) tested code written by AI tools. More than 95% of it ran without errors. About how much of it also passed the security checks?</div>' +
           '<div class="choices">' +
-            [['90', 'Around 90% - climbing right behind syntax'], ['55', 'Around 55% - flat year over year'], ['25', 'Around 25% - failing almost everything']].map(([k, lbl]) =>
+            [['90', 'About 90%'], ['55', 'About 55%'], ['25', 'About 25%']].map(([k, lbl]) =>
               '<button type="button" class="cbtn' + (S.l2Q === k ? (k === '55' ? ' right' : ' picked') : '') + '" data-l2q="' + k + '">' + lbl + '</button>'
             ).join('') +
           '</div>' +
-          (S.l2Q ? '<div class="msg ' + (S.l2Q === '55' ? 'ok' : 'info') + '">' +
-            (S.l2Q === '55' ? 'Spot on. ' : 'Surprisingly flat: ') +
-            'Syntax passed <b>>95%</b> while security stayed stuck near <b>55%</b> (<i>The \'Consequence\' Gap</i>, p. 13). Plausible output is now cheap; answering for its consequences is scarce.' +
-          '</div>' : '') +
+          (S.l2Q ? '<div class="msg ' + (right ? 'ok' : 'info') + '">' + (right ? 'Yes. ' : 'It was about 55%. ') +
+            'More than <b>95%</b> of the AI-written code ran, and only about <b>55%</b> of it was secure. The security number has stayed about the same from year to year.</div>' : '') +
         '</div>';
 
       if (S.l2Q !== null){
         h += '<div class="evcard">' +
-          '<span class="lbl">Signal 1 &middot; <a href="https://www.burningglassinstitute.org/research/the-consequence-gap" target="_blank" rel="noopener">The \'Consequence\' Gap</a> (BGI &amp; Break Through Tech, Nov 2026) + Karat Survey (Jan 2026)</span>' +
-          '<h4>What hiring managers say separates finalists now</h4>' +
-          '<div class="msg info" style="margin-top:0"><b>Against your first instinct:</b> ' + esc(pickFeedback[S.l2Pick] || '') + '</div>' +
-          '<div class="evgrid">' +
-            '<div class="evbox"><span class="lbl">Evidence from 1.03M ads &amp; 54 interviews</span><ul>' +
-              '<li><b>Verification doubled:</b> Code review rose from <code>7.8%</code> (2020) to <code>18.5%</code> (Jun 2026), alongside software testing (<code>17.9%</code>) and CI/CD (<code>24.8%</code>).</li>' +
-              '<li><b>Interviews in transition (p. 20):</b> <code>71%</code> of engineering leaders (Karat, n=400) say AI made skills harder to assess; <code>62%</code> still run AI-free screens while teams add open-book design, dirty-data, and legacy-system defenses.</li>' +
-              '<li><b>Practitioner quote (p. 19):</b> "Many can build something that works, but only a few people can explain why it works, why they chose one approach over another, and what they\'d need to change if requirements changed."</li>' +
-              '<li><b>Six capabilities to practice (pp. 21 - 23):</b> AI output review, production/integration awareness, applied AI integration, AI lifecycle checkpoints, engineering judgment, and business/product judgment.</li>' +
-            '</ul></div>' +
-            '<div class="evbox"><span class="lbl">Lens &amp; blind spots for ' + esc(tk.name) + '</span>' +
-              '<p style="margin-bottom:8px">' + esc(tk.l2Lens) + '</p>' +
-              '<div class="track-lens"><b>Dataset limit:</b> ' + esc(tk.l2Blind) + '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="step"><h3><span class="stepn">3</span>Lock in Link 2 of your chain (sharpened)</h3>' +
-        '<p><label for="l2-final">Rewrite or confirm what convinced the hiring manager in <b>' + esc(trackLabel()) + '</b> - covering both how you cleared an unassisted check and what tradeoff or verification proof set you apart from AI-generated portfolios:</label></p>' +
-        '<textarea id="l2-final" class="note-in" rows="3">' + esc(S.l2Final) + '</textarea>' +
+          '<span class="lbl">What the study found</span>' +
+          '<h4>Many applicants can now show working code. Employers look for people who can check it and explain it.</h4>' +
+          '<p>Employers in this study said they look for people who can:</p>' +
+          '<ul><li>find what is wrong in AI-written work,</li><li>explain why they chose one approach over another, and</li><li>say what they would change if the requirements changed.</li></ul>' +
+          '<div class="msg info"><b>For your first answer:</b> ' + esc(pickFeedback[S.l2Pick] || '') + '</div>' +
+          '<div class="track-lens"><b>For ' + esc(tk.name) + ':</b> ' + esc(tk.l2Lens) + '</div>' +
+          '<p class="limit"><b>What this study cannot tell you:</b> ' + esc(tk.l2Blind) + '</p>' +
+          studyDetails([
+            '<b>The study:</b> <a href="https://www.burningglassinstitute.org/research/the-consequence-gap" target="_blank" rel="noopener">The \'Consequence\' Gap</a> (Burning Glass Institute and Break Through Tech, November 2026). It analyzed about 1.03 million entry-level tech job ads from 2020 to June 2026 and included conversations with 54 practitioners at 46 organizations.',
+            '<b>Checking work is asked for more often:</b> job ads that ask for code review rose from <code>7.8%</code> in 2020 to <code>18.5%</code> in June 2026, and software testing reached <code>17.9%</code>.',
+            '<b>Interviews are changing:</b> in a Karat survey of 400 engineering leaders (January 2026), <code>71%</code> said AI has made technical skill harder to assess, and <code>62%</code> do not allow AI in interviews.',
+            '<b>Six capabilities the report describes (pp. 22 - 23):</b> reviewing AI output, production and integration awareness, applied AI integration, managing the AI development lifecycle, engineering judgment, and business and product judgment.',
+            '<b>The AI code test:</b> the Veracode figures are on p. 13 of the report.'
+          ]) +
         '</div>';
       }
       h += '</div>';
+
+      if (S.l2Q !== null){
+        h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
+        '<p><label for="l2-final">Rewrite or keep your answer about what convinced the hiring manager in <b>' + esc(trackLabel()) + '</b>. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain:</label></p>' +
+        '<textarea id="l2-final" class="note-in" rows="3">' + esc(S.l2Final) + '</textarea>' +
+        '</div>';
+      }
     }
 
     el.innerHTML = h + navBar(1, 'Open Box 3: How did a human see your work? &rarr;');
@@ -787,67 +825,66 @@
     const canOpen = !!S.l3Pick && S.l3First.trim().length >= 10;
 
     const doorFeedback = {
-      cold: 'High-friction bet: Ashby\'s 2026 ATS data shows applications per hire tripled since 2021 to 300+, with 60% of startup recruiting teams running AI filters and fraud checks. Cold applications can still be part of your mix, yet relying on them alone makes Box 2 hard to reach.',
-      intern: 'Strong conversion path - large employers hire roughly half their interns full-time. Still, check the access math: only ~47% of students at less-selective public universities get an internship, and there are 9.9 entry-level ads per 1 internship ad nationally. What is your parallel path if a formal internship slot is rationed?',
-      warm: 'Strong leverage against the 300:1 cold queue: someone who has seen how you think or who met you through alumni, faculty, or industry sessions can pull your work out of automated screening.',
-      public: 'High-trust proof: working where real users, maintainers, players, or campus/community partners depend on your output gives you both verifiable stakes and people who can vouch for you.'
+      cold: 'Online applications are crowded: hiring data from 2026 shows more than 300 applications for each hire. Applying online can be part of your plan, and it works better alongside a second way for a person to see your work.',
+      intern: 'An internship is a strong path, because large employers hire about half of their interns. Fewer than half of students at less-selective public universities get an internship, so it helps to plan a second path alongside it.',
+      warm: 'This path helps your work reach a person. Someone who knows how you think can bring your work to a hiring manager directly, while online applications wait in a queue of more than 300.',
+      public: 'This path gives you proof that other people can check. When real users or partners depend on your work, you gain experience with real consequences and people who can speak for you.'
     };
 
     let h = '<div class="eyebrow">Box 3 of 6 &middot; Two steps earlier in time</div>' +
       '<h2>Before you could impress that hiring manager, how did a human actually see your work?</h2>' +
-      (S.l2Final.trim() ? '<div class="prev-link"><b>Link above (what convinced them):</b> ' + esc(S.l2Final) + '</div>' : '') +
+      (S.l2Final.trim() ? '<div class="prev-link"><b>Your Box 2 answer (what convinced them):</b> ' + esc(S.l2Final) + '</div>' : '') +
 
-      '<div class="step"><h3><span class="stepn">1</span>Your first instinct: how did you get into that interview room?</h3>' +
+      '<div class="step"><h3><span class="stepn">1</span>Write your first answer: how did you get the interview?</h3>' +
       '<div class="choices">' +
         DOOR_PICKS.map(p => '<button type="button" class="cbtn' + (S.l3Pick === p.id ? ' picked' : '') + '" data-l3p="' + p.id + '">' + esc(p.label) + '</button>').join('') +
       '</div>' +
-      '<p style="margin-top:10px"><label for="l3-first">Describe in a line or two how your name and proof reached a real decision-maker:</label></p>' +
-      '<textarea id="l3-first" class="note-in" rows="2" placeholder="I got into that interview room because ...">' + esc(S.l3First) + '</textarea>' +
-      (!S.l3Open ? '<div class="row"><button type="button" class="btn blaze" id="l3-open-btn"' + (canOpen ? '' : ' disabled') + '>Stress-test this link against funnel &amp; internship data</button>' +
-        (!canOpen ? '<span class="muted">Pick a channel and write a quick line above to open the data.</span>' : '') + '</div>' : '') +
+      '<p style="margin-top:10px"><label for="l3-first">Describe in a line or two how your name and your work reached a person who makes hiring decisions:</label></p>' +
+      '<textarea id="l3-first" class="note-in" rows="2" placeholder="I got the interview because ...">' + esc(S.l3First) + '</textarea>' +
+      (!S.l3Open ? '<div class="row"><button type="button" class="btn blaze" id="l3-open-btn"' + (canOpen ? '' : ' disabled') + '>See what a recent study found</button>' +
+        (!canOpen ? '<span class="muted">Pick an option and write a line above to open the study.</span>' : '') + '</div>' : '') +
       '</div>';
 
     if (S.l3Open){
-      h += '<div class="step"><h3><span class="stepn">2</span>Check the funnel and access math</h3>' +
+      const right = S.l3Q === '47';
+      h += '<div class="step"><h3><span class="stepn">2</span>See what a recent study found</h3>' +
         '<div class="probe">' +
-          '<div class="probe-q">Across 65M career histories in <i>The Internship Imperative</i> (Nov 2026), ~70% of students at selective public universities completed an internship. What share did so at less-selective public universities - and when does that dataset end?</div>' +
+          '<div class="probe-q">Make a quick guess first. A 2026 study of 65 million career histories found that about 70% of students at selective public universities did an internship. What do you think the share was at less-selective public universities?</div>' +
           '<div class="choices">' +
-            [
-              ['47', '~47% interned - and the graduate records stop in 2023 (before generative AI), with correlational results and selection bias.'],
-              ['69', '~69% interned - measured through mid-2026 with randomized assignment.']
-            ].map(([k, lbl]) =>
+            [['65', 'About 65%'], ['47', 'About 47%'], ['25', 'About 25%']].map(([k, lbl]) =>
               '<button type="button" class="cbtn' + (S.l3Q === k ? (k === '47' ? ' right' : ' picked') : '') + '" data-l3q="' + k + '">' + lbl + '</button>'
             ).join('') +
           '</div>' +
-          (S.l3Q ? '<div class="msg ' + (S.l3Q === '47' ? 'ok' : 'info') + '">' +
-            'Right: <b>~47%</b> vs <b>~70%</b>, with <b>9.9 entry-level job ads per 1 internship ad</b> nationally - and its graduate records end in <b>2023</b> with zero AI analysis.' +
-          '</div>' : '') +
+          (S.l3Q ? '<div class="msg ' + (right ? 'ok' : 'info') + '">' + (right ? 'Yes. ' : 'It was about 47%. ') +
+            'About <b>47%</b> of students at less-selective public universities did an internship, compared with about <b>70%</b> at selective ones.</div>' : '') +
         '</div>';
 
       if (S.l3Q !== null){
         h += '<div class="evcard">' +
-          '<span class="lbl">Signal 2 &middot; Ashby Talent Trends (May 2026) + <a href="https://www.burningglassinstitute.org/research/the-internship-imperative" target="_blank" rel="noopener">The Internship Imperative</a> (Nov 2026)</span>' +
-          '<h4>Two very different doors into an interview</h4>' +
-          '<div class="msg info" style="margin-top:0"><b>Against your first instinct:</b> ' + esc(doorFeedback[S.l3Pick] || '') + '</div>' +
-          '<div class="evgrid">' +
-            '<div class="evbox"><span class="lbl">Key numbers &amp; limits</span><ul>' +
-              '<li><b>Cold inbound industrializing (Ashby):</b> Applications per hire tripled since 2021 to <code>300+</code>; <code>60%</code> of startup ATS customers use AI screening (Ashby samples high-growth tech startups, corroborated by ~68 - 70% HR-AI adoption in BCG/iCIMS enterprise surveys).</li>' +
-              '<li><b>Internship bottleneck (BGI):</b> Interns are ~half as likely to be underemployed, yet small/mid-sized firms employ nearly half the private workforce while offering only <code>13%</code> of internships.</li>' +
-              '<li><b>Alternative real-stakes contexts:</b> <i>The \'Consequence\' Gap</i> (p. 24) points to community/client projects, open-source maintenance, campus systems, and micro-internships when formal slots are rationed.</li>' +
-            '</ul></div>' +
-            '<div class="evbox"><span class="lbl">Getting seen in ' + esc(tk.name) + ' (' + esc(curRunway().short) + ')</span>' +
-              '<p>' + esc(tk.l3Lens) + '</p>' +
-              '<div class="track-lens"><b>Hedge check:</b> Pair targeted applications or internship bids with at least one warm or public-work channel where humans see your thinking before a resume filter does.</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="step"><h3><span class="stepn">3</span>Lock in Link 3 of your chain (sharpened)</h3>' +
-        '<p><label for="l3-final">Describe your realistic plan for getting a human to see your work on your <b>' + esc(curRunway().short) + '</b> (including your backup path if cold portals or formal internship slots are crowded):</label></p>' +
-        '<textarea id="l3-final" class="note-in" rows="3">' + esc(S.l3Final) + '</textarea>' +
+          '<span class="lbl">What the study found</span>' +
+          '<h4>An internship helps, and there are other ways to gain credible experience.</h4>' +
+          '<p>If a formal internship is hard to get, you can build credible experience in other ways:</p>' +
+          '<ul><li>contribute to an open-source project,</li><li>do a project for a client or a community organization, or</li><li>take a short micro-internship.</li></ul>' +
+          '<div class="msg info"><b>For your first answer:</b> ' + esc(doorFeedback[S.l3Pick] || '') + '</div>' +
+          '<div class="track-lens"><b>For ' + esc(tk.name) + ' (' + esc(curRunway().short) + '):</b> ' + esc(tk.l3Lens) + '</div>' +
+          '<p class="limit"><b>What this study cannot tell you:</b> Its graduate records end in 2023, before AI tools were widely used, and it shows a pattern without proving that internships caused the better outcomes.</p>' +
+          studyDetails([
+            '<b>The study:</b> <a href="https://www.burningglassinstitute.org/research/the-internship-imperative" target="_blank" rel="noopener">The Internship Imperative</a> (Burning Glass Institute, November 2026). It draws on more than 65 million career histories of people who graduated between 2016 and 2023.',
+            '<b>Internships are scarce:</b> nationally there are about <code>9.9</code> entry-level job ads for every internship ad. Small and mid-sized firms employ nearly half of private-sector workers and offer about <code>13%</code> of internships.',
+            '<b>Internships lead to jobs:</b> graduates who did an internship were about half as likely to be underemployed (working in a job that does not need their degree), and large employers hire about half of their interns into full-time jobs.',
+            '<b>Online applications:</b> Ashby Talent Trends (May 2026) reports that applications per hire have tripled since 2021 to more than <code>300</code>, and <code>60%</code> of its startup customers use AI in their hiring software. Ashby\'s customers are mostly fast-growing tech startups.',
+            '<b>Other ways to gain experience:</b> <i>The \'Consequence\' Gap</i> (pp. 24 - 25) lists client or community technology partnerships, open-source contributions, micro-internships and employer-sponsored challenges.'
+          ]) +
         '</div>';
       }
       h += '</div>';
+
+      if (S.l3Q !== null){
+        h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
+        '<p><label for="l3-final">Describe your plan for getting a person to see your work within your <b>' + esc(curRunway().short) + '</b>. Include a second path you would use if online applications or internships are crowded:</label></p>' +
+        '<textarea id="l3-final" class="note-in" rows="3">' + esc(S.l3Final) + '</textarea>' +
+        '</div>';
+      }
     }
 
     el.innerHTML = h + navBar(2, 'Open Box 4: How did you build that proof? &rarr;');
@@ -880,71 +917,73 @@
     const canOpen = S.l4Chips.length >= 1 && S.l4First.trim().length >= 10;
 
     let chipDiag = [];
-    if (!S.l4Chips.includes('existing')) chipDiag.push('You have not ticked working on an existing codebase or messy dataset yet - greenfield solo builds rarely force integration or legacy tradeoffs.');
-    if (!S.l4Chips.includes('domain2')) chipDiag.push('Consider where a second domain (health, finance, education, operations, or live players) enters your work so you practice framing real-world constraints.');
-    if (S.l4Chips.includes('ai_fast') && !S.l4Chips.includes('ai_check')) chipDiag.push('You ticked fast AI drafting without ticking checking & challenging AI output - that risks building work you cannot defend.');
-    if (!S.l4Chips.includes('humans')) chipDiag.push('You did not include feedback from peers, mentors, alumni, or real users - tacit judgment develops much faster when other humans question your choices.');
-    if (!chipDiag.length) chipDiag.push('Your ingredients combine existing/messy constraints, domain context, verified AI partnership, and outside human critique.');
+    if (S.l4Chips.includes('ai_fast') && !S.l4Chips.includes('ai_check')) chipDiag.push('You selected fast AI drafts without checking what AI produced. Adding the checking step gives you work you can explain and stand behind.');
+    if (!S.l4Chips.includes('existing')) chipDiag.push('Consider adding work on an existing codebase or a messy dataset, because it lets you practice fitting into what is already there.');
+    if (!S.l4Chips.includes('humans')) chipDiag.push('Consider adding feedback from peers, mentors, alumni or real users, because judgment grows faster when other people question your choices.');
+    if (!S.l4Chips.includes('domain2')) chipDiag.push('Consider where a second field (health, finance, education, operations or players) could enter your work, so that you practice working with real-world limits.');
+    chipDiag = chipDiag.slice(0, 2);
+    if (!chipDiag.length) chipDiag.push('Your selections include existing or messy work, a second field, AI output that you check, and feedback from other people.');
 
     let h = '<div class="eyebrow">Box 4 of 6 &middot; Three steps earlier in time</div>' +
       '<h2>How did you actually build that portfolio, and what help &amp; resources did you use?</h2>' +
-      (S.l3Final.trim() ? '<div class="prev-link"><b>Link above (how you got seen):</b> ' + esc(S.l3Final) + '</div>' : '') +
+      (S.l3Final.trim() ? '<div class="prev-link"><b>Your Box 3 answer (how you got seen):</b> ' + esc(S.l3Final) + '</div>' : '') +
 
-      '<div class="step"><h3><span class="stepn">1</span>Your first instinct: pick the ingredients behind your proof</h3>' +
-      '<p class="muted">Select all the ways you picture building that body of work (click to toggle):</p>' +
+      '<div class="step"><h3><span class="stepn">1</span>Write your first answer: what went into your work?</h3>' +
+      '<p class="muted">Select every way you picture building that body of work (click to turn each one on or off):</p>' +
       '<div class="choices">' +
         INGREDIENT_CHIPS.map(c => {
           const on = S.l4Chips.includes(c.id);
           return '<button type="button" class="cbtn' + (on ? ' picked' : '') + '" data-chip="' + c.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + (on ? '&#10003; ' : '+ ') + esc(c.label) + '</button>';
         }).join('') +
       '</div>' +
-      '<p style="margin-top:10px"><label for="l4-first">Briefly describe what you built or improved, and how AI, courses, peers, or mentors fit into how you worked:</label></p>' +
+      '<p style="margin-top:10px"><label for="l4-first">Briefly describe what you built or improved, and how AI, courses, peers or mentors were part of how you worked:</label></p>' +
       '<textarea id="l4-first" class="note-in" rows="2" placeholder="To build that evidence, I worked on ... and used help from ...">' + esc(S.l4First) + '</textarea>' +
-      (!S.l4Open ? '<div class="row"><button type="button" class="btn blaze" id="l4-open-btn"' + (canOpen ? '' : ' disabled') + '>Stress-test against payroll &amp; workflow studies</button>' +
-        (!canOpen ? '<span class="muted">Toggle at least one ingredient and write a short line above.</span>' : '') + '</div>' : '') +
+      (!S.l4Open ? '<div class="row"><button type="button" class="btn blaze" id="l4-open-btn"' + (canOpen ? '' : ' disabled') + '>See what a recent study found</button>' +
+        (!canOpen ? '<span class="muted">Select at least one option and write a line above to open the study.</span>' : '') + '</div>' : '') +
       '</div>';
 
     if (S.l4Open){
-      h += '<div class="step"><h3><span class="stepn">2</span>Weigh two payroll &amp; workflow signals together</h3>' +
+      const right = S.l4Q === 'codified' || S.l4Q === 'tacit';
+      h += '<div class="step"><h3><span class="stepn">2</span>See what a recent study found</h3>' +
         '<div class="probe">' +
-          '<div class="probe-q">Stanford\'s <i>Canaries in the Coal Mine</i> (ADP payrolls across 730+ occupations, Aug 2026) found 22 - 25-year-old headcount in high-AI-exposure roles ~19% below low-exposure peers, while a St. Louis Fed study (Jun 2026) found broad job-opening declines explained a larger share of young grads\' dip than AI alone. Where did Stanford find the gap concentrated?</div>' +
+          '<div class="probe-q">Make a quick guess first. A Stanford study of payroll records found that companies have been hiring fewer 22 to 25 year-olds in the jobs most exposed to AI. Which kind of work was affected most?</div>' +
           '<div class="choices">' +
             [
-              ['tacit', 'Slower entry hiring in codified textbook procedures - while tacit judgment built through messy, real-context practice and mentorship held steady or grew.'],
-              ['all', 'Identical layoffs across junior and senior workers in every occupation.']
+              ['codified', 'Work that follows written procedures you can learn from a textbook or tutorial'],
+              ['judgment', 'Work that depends on judgment learned through experience'],
+              ['all', 'All kinds of work equally']
             ].map(([k, lbl]) =>
-              '<button type="button" class="cbtn' + (S.l4Q === k ? (k === 'tacit' ? ' right' : ' picked') : '') + '" data-l4q="' + k + '">' + lbl + '</button>'
+              '<button type="button" class="cbtn' + (S.l4Q === k ? (k === 'codified' ? ' right' : ' picked') : '') + '" data-l4q="' + k + '">' + lbl + '</button>'
             ).join('') +
           '</div>' +
-          (S.l4Q ? '<div class="msg ' + (S.l4Q === 'tacit' ? 'ok' : 'info') + '">' +
-            'Yes: slower entry hiring concentrated in <b>codified</b> textbook tasks, while <b>tacit</b> judgment held up - and pairing Stanford with the St. Louis Fed counter-signal keeps you grounded without either panic or complacency.' +
-          '</div>' : '') +
+          (S.l4Q ? '<div class="msg ' + (right ? 'ok' : 'info') + '">' + (right ? 'Yes. ' : 'It was work that follows written procedures. ') +
+            'Employment fell among young workers in jobs built on <b>written, textbook knowledge</b>. It rose among experienced workers in jobs built on <b>judgment learned through practice and mentorship</b>.</div>' : '') +
         '</div>';
 
       if (S.l4Q !== null){
         h += '<div class="evcard">' +
-          '<span class="lbl">Signal 3 &middot; <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">Stanford Canaries</a> (Aug 2026) + St. Louis Fed (Jun 2026) + <a href="https://www.normaltech.ai/p/why-ai-hasnt-replaced-software-engineers" target="_blank" rel="noopener">Narayanan &amp; Kapoor</a> (Jun 2026)</span>' +
-          '<h4>Why how you build (and who critiques you) matters more than raw output volume</h4>' +
-          '<div class="msg info" style="margin-top:0"><b>Against your Step 1 ingredients:</b> ' + esc(chipDiag.join(' ')) + '</div>' +
-          '<div class="evgrid">' +
-            '<div class="evbox"><span class="lbl">What the research points to</span><ul>' +
-              '<li><b>Decide / execute / deliver:</b> Narayanan &amp; Kapoor\'s three-layer diagram matches BGI\'s "hourglass" - AI compresses middle execution while upfront problem framing and end-stage verification remain human work.</li>' +
-              '<li><b>Using AI to produce vs. learn:</b> Using AI just to finish artifacts erodes unassisted fluency, whereas checking AI mistakes, comparing options, and defending choices to mentors or peers builds tacit judgment.</li>' +
-              '<li><b>Caveats to remember:</b> Even Stanford notes its payroll gaps are descriptive rather than a single causal proof and shrink when controlling for education.</li>' +
-            '</ul></div>' +
-            '<div class="evbox"><span class="lbl">Codified vs. tacit in ' + esc(tk.name) + '</span>' +
-              '<p>' + esc(tk.l4Lens) + '</p>' +
-              '<div class="track-lens"><b>Resource check:</b> Identify at least one human sounding board (peer partner, alum, faculty, maintainer, real user) alongside how you check AI tools.</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="step"><h3><span class="stepn">3</span>Lock in Link 4 of your chain (sharpened)</h3>' +
-        '<p><label for="l4-final">Describe the kind of messy/existing problem or second domain you will build around, how you will verify AI-assisted work, and what human feedback or resources you will lean on:</label></p>' +
-        '<textarea id="l4-final" class="note-in" rows="3">' + esc(S.l4Final) + '</textarea>' +
+          '<span class="lbl">What the study found</span>' +
+          '<h4>Judgment that comes from real practice and feedback keeps its value.</h4>' +
+          '<p>You build this kind of judgment by working on real problems and getting feedback from other people.</p>' +
+          '<div class="msg info"><b>For your first answer:</b><ul>' + chipDiag.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' +
+          '<div class="track-lens"><b>For ' + esc(tk.name) + ':</b> ' + esc(tk.l4Lens) + '</div>' +
+          '<p class="limit"><b>What this study cannot tell you:</b> The authors say their results describe a pattern and do not prove that AI caused it. A St. Louis Fed study (June 2026) found that the overall drop in job openings explains more of the weaker job market for young workers than AI does.</p>' +
+          studyDetails([
+            '<b>The study:</b> <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">Canaries in the Coal Mine?</a> (Stanford Digital Economy Lab, revised August 2026). It uses payroll records that cover more than 730 occupations. The study calls written-down knowledge <b>codified</b> and judgment learned through experience <b>tacit</b>.',
+            '<b>The gap:</b> by mid-2026, employment of 22 to 25 year-olds in the jobs most exposed to AI was about <code>19%</code> below that of their peers in less-exposed jobs. The change came through slower hiring, without a rise in layoffs, and the gap gets smaller when the comparison accounts for education.',
+            '<b>A second view:</b> a <a href="https://www.stlouisfed.org/on-the-economy/2026/jun/how-shifts-labor-supply-demand-shape-outcomes-young-workers" target="_blank" rel="noopener">St. Louis Fed analysis</a> (June 2026) found that the decline in overall job openings accounted for the largest share of the weaker job market for young workers between 2023 and 2025. Demand for AI-related jobs accounted for a smaller share.',
+            '<b>Where people stay involved:</b> <a href="https://www.normaltech.ai/p/why-ai-hasnt-replaced-software-engineers" target="_blank" rel="noopener">Narayanan and Kapoor</a> (June 2026) describe software work as three layers: deciding what to build, writing it, and being accountable for what is delivered. AI speeds up the middle layer, and the first and last layers stay with people.'
+          ]) +
         '</div>';
       }
       h += '</div>';
+
+      if (S.l4Q !== null){
+        h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
+        '<p><label for="l4-final">Describe the existing or messy problem (or the second field) you will build around, how you will check AI-assisted work, and whose feedback you will ask for:</label></p>' +
+        '<textarea id="l4-final" class="note-in" rows="3">' + esc(S.l4Final) + '</textarea>' +
+        '</div>';
+      }
     }
 
     el.innerHTML = h + navBar(3, 'Open Box 5: The next week &amp; month &rarr;');
@@ -978,20 +1017,37 @@
 
   /* ---------- Box 5: Bottom of the Box - Next 30 Days & Next 7 Days ---------- */
   function renderStop4(el){
+    const links = [
+      ['Box 2 - What convinced the hiring manager', S.l2Final || S.l2First],
+      ['Box 3 - How a person saw your work', S.l3Final || S.l3First],
+      ['Box 4 - How you built your work', S.l4Final || S.l4First]
+    ].filter(x => (x[1] || '').trim());
+
     let h = '<div class="eyebrow">Box 5 of 6 &middot; Bottom of the chain</div>' +
       '<h2>What do you start doing in the next month - and the next 7 days?</h2>' +
-      '<div class="objs"><b>Where the chain meets your calendar</b>: Every link you wrote above - landing Day 1, convincing the hiring manager, getting a human to see your work, and building real-context proof - depends on what you actually do with your hours over the next 30 days.</div>' +
+      '<div class="objs"><b>From your chain to your calendar</b>: your three answers describe what needs to be true by Day 1. In this box you turn them into hours. Each kind of preparation below supports one of your answers, so you can decide where your hours go by asking which answer needs the most work.</div>' +
 
-      (S.l4Final.trim() ? '<div class="prev-link"><b>Link above (how you build &amp; verify your proof):</b> ' + esc(S.l4Final) + '</div>' : '') +
+      (links.length ? '<div class="prev-link"><b>Your three answers so far</b><ul>' +
+        links.map(x => '<li><b>' + x[0] + ':</b> ' + esc(x[1]) + '</li>').join('') + '</ul></div>' : '') +
 
-      '<div class="step"><h3><span class="stepn">1</span>Divide your weekly prep hours for the next 30 days</h3>' +
-      '<p class="muted">Set the hours per week you realistically have outside required coursework, and distribute all of them across the six buckets so they support the chain you just wrote.</p>' +
+      '<div class="step"><h3><span class="stepn">1</span>Divide your weekly hours for the next 30 days</h3>' +
+      '<p>Set the hours per week you can realistically give outside your required coursework. Then divide all of them across the six kinds of preparation.</p>' +
       '<div id="c-mount">' + renderConsole() + '</div>' +
+      '<details class="more"><summary>See one example of dividing 10 hours</summary>' +
+        '<p>A student who is about a year from Day 1 might divide 10 hours a week like this:</p>' +
+        '<ul>' +
+          '<li><b>5 hours for the Box 2 answer:</b> 2 on fundamentals without AI, 2 on checking and improving work, and 1 on writing down decisions, because that answer depends on explaining choices.</li>' +
+          '<li><b>2 hours for the Box 3 answer:</b> 2 on people and real-world work, because that answer depends on a person seeing the work.</li>' +
+          '<li><b>3 hours for the Box 4 answer:</b> 2 on building a new project and 1 on learning the field, because that answer depends on work in a real setting.</li>' +
+        '</ul>' +
+        '<p>Your split follows your own three answers, so it may look different.</p>' +
+      '</details>' +
       '</div>' +
 
-      '<div class="step"><h3><span class="stepn">2</span>Identify your first verifiable step in the next 7 days</h3>' +
-      '<p><label for="step-7d">Write one concrete step small enough to finish within the next 7 days that directly starts your chain - specific enough that a classmate or mentor could confirm it happened (a repo or dataset inspected, a failure-mode log started, a specific person messaged, a real-user test run):</label></p>' +
-      '<textarea id="step-7d" class="note-in" rows="3" placeholder="In the next 7 days, I will ... (someone could verify this by ...)">' + esc(S.step7d) + '</textarea>' +
+      '<div class="step"><h3><span class="stepn">2</span>Identify one step you will finish in the next 7 days</h3>' +
+      '<p><label for="step-7d">Write one step that is small enough to finish in the next 7 days and that starts your chain. Make it specific enough that a classmate or mentor could confirm it happened.</label></p>' +
+      '<p class="muted">For example: you looked through a specific repository or dataset, started your decision notes, messaged a specific person, or tested your project with a real user.</p>' +
+      '<textarea id="step-7d" class="note-in" rows="3" placeholder="In the next 7 days, I will ... (someone could confirm this by ...)">' + esc(S.step7d) + '</textarea>' +
       '</div>';
 
     el.innerHTML = h + navBar(4, 'Open Box 6: Walk your chain forward &rarr;');
@@ -1009,14 +1065,14 @@
 
     let h = '<div class="eyebrow">Box 6 of 6 &middot; Walk your chain forward</div>' +
       '<h2>Does your next month actually build toward Day 1?</h2>' +
-      '<div class="objs"><b>How this check works</b>: Read your own chain forward from this week up to Day 1. There is no single "correct" career formula - what matters is whether each step plausibly feeds the next without wishful leaps, and whether you can defend your tradeoffs in conversation.</div>' +
+      '<div class="objs"><b>How this check works</b>: read your chain forward, from this week up to Day 1. There is no single correct plan. What matters is that each step leads to the next one, and that you can explain your choices in a conversation.</div>' +
 
-      '<div class="step"><h3><span class="stepn">1</span>Your chain, read forward from this week to Day 1</h3>' +
+      '<div class="step"><h3><span class="stepn">1</span>Read your chain forward, from this week to Day 1</h3>' +
       '<div class="fchain">' +
         '<div class="fnode"><span class="lbl">1. Next 7 days</span>' + esc(S.step7d || '[Not written yet - open Box 5]') + '</div>' +
         '<div class="fnode"><span class="lbl">2. Next 30 days (' + S.budget + ' hrs/wk)</span>' + esc(hrsSummary || 'No hours assigned') + '</div>' +
-        '<div class="fnode"><span class="lbl">3. How the proof &amp; support get built (Box 4)</span>' + esc(S.l4Final || S.l4First || '[Not written yet - open Box 4]') + '</div>' +
-        '<div class="fnode"><span class="lbl">4. How a human sees your work (Box 3)</span>' + esc(S.l3Final || S.l3First || '[Not written yet - open Box 3]') + '</div>' +
+        '<div class="fnode"><span class="lbl">3. How you build your work (Box 4)</span>' + esc(S.l4Final || S.l4First || '[Not written yet - open Box 4]') + '</div>' +
+        '<div class="fnode"><span class="lbl">4. How a person sees your work (Box 3)</span>' + esc(S.l3Final || S.l3First || '[Not written yet - open Box 3]') + '</div>' +
         '<div class="fnode"><span class="lbl">5. What convinces the hiring manager (Box 2)</span>' + esc(S.l2Final || S.l2First || '[Not written yet - open Box 2]') + '</div>' +
         '<div class="fnode gold"><span class="lbl" style="color:var(--blaze)">6. Day 1 outcome (' + esc(trackLabel()) + ' &middot; ' + esc(curRunway().short) + ')</span>' + esc(S.day1 || '[Not written yet - open Box 1]') + '</div>' +
       '</div>' +
@@ -1024,11 +1080,16 @@
       '<div class="flag-list">' +
         diags.map(d => '<div class="flag-item ' + d.kind + '"><b>' + esc(d.title) + '.</b> ' + esc(d.detail) + '</div>').join('') +
       '</div>' +
-      '<p class="muted">Spot a weak link? Click any box in the chain bar above (such as <button type="button" class="btn ghost small" id="jump-b5">Box 5 hours &amp; 7-day step</button>) to tighten it before starting your check-in.</p>' +
+      '<p class="muted">Want to change something first? Click any box in the chain bar above (for example <button type="button" class="btn ghost small" id="jump-b5">Box 5: hours and 7-day step</button>) before you start the check-in.</p>' +
       '</div>' +
 
-      '<div class="step"><h3><span class="stepn">2</span>Walk through your chain in a short check-in interview</h3>' +
-      '<p>Answer at least <b>three questions</b> from the interviewer below, then press <b>I am ready - summarize my check-in</b>. If the live helper does not answer or you prefer your own CST349 AI Dojo, click <b>Copy prompt for my AI Dojo</b> anytime.</p>' +
+      '<div class="step"><h3><span class="stepn">2</span>Talk through your chain in a short check-in interview</h3>' +
+      '<p>The interviewer asks <b>one question at a time</b>. After you send your reply, the next question appears.</p>' +
+      '<ul class="howto">' +
+        '<li>Answer at least <b>three questions</b>.</li>' +
+        '<li>Then press <b>I am ready - summarize my check-in</b>.</li>' +
+        '<li>If the interviewer does not answer, or you prefer your own CST349 AI Dojo, click <b>Copy prompt for my AI Dojo</b>.</li>' +
+      '</ul>' +
       '<div id="chat-mount"></div>' +
       '</div>';
 
@@ -1061,12 +1122,12 @@
     const diags = computeContinuity();
     const tension = diags.find(d => d.kind === 'tension');
     if (tension){
-      if (S.hrs.core === 0) return 'Let\'s walk your chain forward from this week toward your ' + trackLabel() + ' goal. You set 0 hours/week for unassisted core depth even though 62% of leaders in the Karat survey still run AI-free screens - how are you handling that link?';
-      if (S.hrs.people === 0) return 'Let\'s walk your chain forward toward your ' + trackLabel() + ' goal. In Box 3 you mapped out how a human sees your work, yet your next-30-day schedule puts 0 hours into people or real-stakes channels - how does that link get started?';
-      if (S.hrs.domain === 0) return 'Let\'s walk your chain forward toward your ' + trackLabel() + ' goal. Your hiring story leans on real-world judgment, yet your 30-day hours put 0 time on domain and user context - where will that context come from?';
-      return 'Let\'s walk your chain forward from your 7-day step up to your ' + trackLabel() + ' goal. Most of your monthly hours still sit in starting new solo builds rather than hardening existing work or recording decisions - why does that split fit what convinced your hiring manager in Box 2?';
+      if (S.hrs.core === 0) return 'Let\'s walk your chain forward from this week toward your ' + trackLabel() + ' goal. You set 0 hours a week for fundamentals without AI, and 62% of engineering leaders in a 2026 survey do not allow AI in technical interviews - how will you prepare for that part?';
+      if (S.hrs.people === 0) return 'Let\'s walk your chain forward toward your ' + trackLabel() + ' goal. In Box 3 you described how a person sees your work, and your hours for the next 30 days put 0 hours into people and real-world work - how does that part get started?';
+      if (S.hrs.domain === 0) return 'Let\'s walk your chain forward toward your ' + trackLabel() + ' goal. Your Box 2 answer depends on understanding real users and settings, and your hours put 0 time into learning the field - where will that understanding come from?';
+      return 'Let\'s walk your chain forward from your 7-day step up to your ' + trackLabel() + ' goal. The page noted this about your plan: ' + tension.title + '. How does your plan handle that?';
     }
-    return 'Let\'s walk your chain forward from this week up to your ' + trackLabel() + ' role (' + curRunway().short + '). Looking at your 7-day step and your ' + S.budget + '-hour weekly split, where is the biggest leap of faith in your chain right now - and how did the blind spots in the reports shape how you hedged it?';
+    return 'Let\'s walk your chain forward from this week up to your ' + trackLabel() + ' role (' + curRunway().short + '). Looking at your 7-day step and your ' + S.budget + '-hour weekly split, which step in your chain are you least sure will lead to the next one - and how did the limits of the studies change what you planned?';
   }
 
   const INTERVIEW_SYS = [
@@ -1085,9 +1146,9 @@
     'You are writing a concise CST349 check-in summary addressed to the student as "you".',
     'Read their backward-chain snapshot and interview transcript. Evaluate internal alignment and thoughtful reading of signals rather than a single "right" formula.',
     'Format in plain text (no markdown headers or bullets, under 190 words) with four labeled paragraphs:',
-    'Chain continuity: One or two sentences on how plausibly their 7-day step and 30-day hours connect up to what they said convinces a hiring manager and gets seen (quoting a few of their words).',
-    'Use of signals and blind spots: One or two sentences on how clearly they accounted for both findings and dataset limits in their specific path.',
-    'Busy-week realism: One sentence on whether their runway and fallback plan feel sustainable.',
+    'How your steps connect: One or two sentences on how plausibly their 7-day step and 30-day hours connect up to what they said convinces a hiring manager and gets seen (quoting a few of their words).',
+    'Use of the studies and their limits: One or two sentences on how clearly they accounted for both findings and dataset limits in their specific path.',
+    'Busy-week plan: One sentence on whether their runway and fallback plan feel sustainable.',
     'One question to carry forward: One constructive question to test over the next month. Use US spelling and no em-dashes.'
   ].join('\n');
 
@@ -1107,7 +1168,7 @@
   function buildDojoPrompt(opener){
     return [
       'Act as my CST349 check-in interviewer for the backward-chain simulation ("Work back from the role you want").',
-      'Walk my chain forward by asking me ONE short question at a time (3 to 4 questions total) to test whether my 7-day step and 30-day hours plausibly build the proof, visibility, and hiring story I wrote - and how the four studies\' blind spots apply to my path. Also ask what I will protect when a busy week cuts my hours in half. Do not lecture or rewrite my plan. After 3 to 4 answers, write a short 4-part summary (Chain continuity, Use of signals and blind spots, Busy-week realism, One question to carry forward).',
+      'Walk my chain forward by asking me ONE short question at a time (3 to 4 questions total) to test whether my 7-day step and 30-day hours plausibly build the proof, visibility, and hiring story I wrote - and how the four studies\' blind spots apply to my path. Also ask what I will protect when a busy week cuts my hours in half. Do not lecture or rewrite my plan. After 3 to 4 answers, write a short 4-part summary (How your steps connect, Use of the studies and their limits, Busy-week plan, One question to carry forward).',
       '',
       '--- My backward-chain snapshot ---',
       buildPrivateContext(),
@@ -1126,17 +1187,26 @@
     const userCount = T.msgs.filter(m => m.r === 'u').length;
     const full = userCount >= CHAT_MAX;
 
+    let qn = 1;
+    const who = () => 'Check-in interviewer' + (qn <= 3 ? ' &middot; Question ' + qn : '');
     let h = '<div class="chat" aria-live="polite">' +
-      '<div class="say them"><span class="who">Check-in interviewer</span>' + esc(opener) + '</div>' +
-      T.msgs.map(m => '<div class="say ' + (m.r === 'u' ? 'me' : 'them') + '"><span class="who">' + (m.r === 'u' ? 'You' : 'Check-in interviewer') + '</span>' + esc(m.t).replace(/\n/g, '<br>') + '</div>').join('') +
+      '<div class="say them"><span class="who">' + who() + '</span>' + esc(opener) + '</div>' +
+      T.msgs.map(m => {
+        if (m.r === 'u') return '<div class="say me"><span class="who">You</span>' + esc(m.t).replace(/\n/g, '<br>') + '</div>';
+        qn++;
+        return '<div class="say them"><span class="who">' + who() + '</span>' + esc(m.t).replace(/\n/g, '<br>') + '</div>';
+      }).join('') +
       (UI.busy ? '<div class="say them wait">' + (UI.busy === 'fb' ? 'Writing your check-in summary...' : 'Thinking of a follow-up question...') + '</div>' : '') +
     '</div>';
 
     if (T.fb){
-      const fmt = esc(T.fb).replace(/^([A-Z][A-Za-z ]{2,32}):/gm, '<b>$1:</b>').replace(/\n/g, '<br>');
+      const fmt = esc(T.fb).replace(/^([A-Z][A-Za-z -]{2,44}):/gm, '<b>$1:</b>').replace(/\n/g, '<br>');
       h += '<div class="fb"><span class="lbl" style="color:var(--ok)">Check-in summary</span><p style="margin:6px 0 0">' + fmt + '</p></div>';
     } else {
-      h += '<label class="sr" for="chat-in">Your reply to the interviewer</label>' +
+      h += '<div class="qcount" role="status">' + (userCount < 3
+        ? 'Question ' + (userCount + 1) + ' of 3' + (UI.busy ? '' : ' - the next question appears after you send your reply.')
+        : 'You have answered ' + userCount + ' questions. Press "I am ready - summarize my check-in", or answer another question to keep going.') + '</div>' +
+        '<label class="sr" for="chat-in">Your reply to the interviewer</label>' +
         '<textarea id="chat-in" class="note-in" rows="3" maxlength="1600" placeholder="Type your answer in your own words (Enter to send, Shift+Enter for a new line)..."' + (UI.busy || full ? ' disabled' : '') + '>' + esc(UI.draft) + '</textarea>' +
         (full ? '<div class="msg info">You have reached ' + CHAT_MAX + ' replies. Press "I am ready - summarize my check-in" below.</div>' : '');
     }
@@ -1295,17 +1365,17 @@
       'Box 1 (Day 1 in the role): ' + (S.day1.trim() || '[not written yet]'),
       '',
       'Box 2 (What convinced the hiring manager):',
-      '  First instinct (' + (S.l2Pick || 'not chosen') + '): ' + (S.l2First.trim() || '[not written yet]'),
-      '  After Signal 1 stress test: ' + (S.l2Final.trim() || '[not written yet]'),
+      '  First answer (' + (S.l2Pick || 'not chosen') + '): ' + (S.l2First.trim() || '[not written yet]'),
+      '  Updated answer after the study: ' + (S.l2Final.trim() || '[not written yet]'),
       '',
-      'Box 3 (How a human saw your work):',
-      '  First instinct (' + (S.l3Pick || 'not chosen') + '): ' + (S.l3First.trim() || '[not written yet]'),
-      '  After Signal 2 stress test: ' + (S.l3Final.trim() || '[not written yet]'),
+      'Box 3 (How a person saw your work):',
+      '  First answer (' + (S.l3Pick || 'not chosen') + '): ' + (S.l3First.trim() || '[not written yet]'),
+      '  Updated answer after the study: ' + (S.l3Final.trim() || '[not written yet]'),
       '',
-      'Box 4 (How you built & verified the proof, and who/what helped):',
-      '  Ingredients selected: ' + (S.l4Chips.length ? S.l4Chips.join(', ') : '[none]'),
-      '  First instinct: ' + (S.l4First.trim() || '[not written yet]'),
-      '  After Signal 3 stress test: ' + (S.l4Final.trim() || '[not written yet]'),
+      'Box 4 (How you built your work, and what help you used):',
+      '  Selected: ' + (S.l4Chips.length ? S.l4Chips.join(', ') : '[none]'),
+      '  First answer: ' + (S.l4First.trim() || '[not written yet]'),
+      '  Updated answer after the study: ' + (S.l4Final.trim() || '[not written yet]'),
       '',
       '--- Box 5: Next 30 Days (' + S.budget + ' hrs/wk outside required classes) ---'
     ];
