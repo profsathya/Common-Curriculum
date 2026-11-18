@@ -406,9 +406,9 @@
   ];
 
   const RUNWAYS = [
-    { id: '6m',  label: 'About 6 months out',  short: '~6 mo runway' },
-    { id: '1y',  label: 'About 1 year out',    short: '~1 yr runway' },
-    { id: '2y',  label: 'About 2+ years out',  short: '2+ yr runway' }
+    { id: '6m',  label: 'About 6 months out',  short: 'about 6 months out' },
+    { id: '1y',  label: 'About 1 year out',    short: 'about 1 year out' },
+    { id: '2y',  label: 'About 2+ years out',  short: '2+ years out' }
   ];
 
   const BOX_LABEL = {
@@ -418,12 +418,12 @@
   };
 
   const BUCKETS = [
-    { id: 'core',   feeds: 2, name: 'Fundamentals without AI',     color: 'var(--c2)', desc: 'Practice solving problems in your main language, tool or engine without AI help.' },
-    { id: 'check',  feeds: 2, name: 'Checking and improving work', color: 'var(--c1)', desc: 'Review, test, secure or speed up work that already exists, including work AI helped you write.' },
-    { id: 'log',    feeds: 2, name: 'Writing down decisions',      color: 'var(--c4)', desc: 'Keep notes on the options you rejected, what you tested, and what you would change if the requirements changed.' },
+    { id: 'core',   feeds: 2, name: 'Fundamentals without AI',     color: 'var(--c2)', desc: 'Practice solving problems in your main language, tool or engine without AI help, because many technical interviews do not allow AI.' },
+    { id: 'check',  feeds: 2, name: 'Checking and improving work', color: 'var(--c1)', desc: 'Find and fix problems in work that already exists, including work AI helped you write (review, test, secure, speed up).' },
+    { id: 'log',    feeds: 2, name: 'Writing down decisions',      color: 'var(--c4)', desc: 'Keep short notes on why you made each choice, so that you can explain your work in an interview.' },
     { id: 'people', feeds: 3, name: 'People and real-world work',  color: 'var(--c5)', desc: 'Internships, campus, community or open-source work, conversations with alumni, and reaching out to people in your field.' },
     { id: 'build',  feeds: 4, name: 'Building new projects',       color: 'var(--c0)', desc: 'Start a new project of your own (an app, a small game, a notebook, a lab script).' },
-    { id: 'domain', feeds: 4, name: 'Learning the field',          color: 'var(--c3)', desc: 'Learn about the users, the business, the threats or the players that your technical work serves.' }
+    { id: 'domain', feeds: 4, name: 'Learning the field',          color: 'var(--c3)', desc: 'Learn about the people and the setting your target job serves (the users, the business, the threats, or the players).' }
   ];
 
   const STOPS = [
@@ -881,7 +881,7 @@
 
       if (S.l3Q !== null){
         h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
-        '<p><label for="l3-final">Describe your plan for getting a person to see your work within your <b>' + esc(curRunway().short) + '</b>. Include a second path you would use if online applications or internships are crowded:</label></p>' +
+        '<p><label for="l3-final">Describe your plan for getting a person to see your work, given that your Day 1 is <b>' + esc(curRunway().short) + '</b>. Include a second path you would use if online applications or internships are crowded:</label></p>' +
         '<textarea id="l3-final" class="note-in" rows="3">' + esc(S.l3Final) + '</textarea>' +
         '</div>';
       }
@@ -1025,13 +1025,14 @@
 
     let h = '<div class="eyebrow">Box 5 of 6 &middot; Bottom of the chain</div>' +
       '<h2>What do you start doing in the next month - and the next 7 days?</h2>' +
-      '<div class="objs"><b>From your chain to your calendar</b>: your three answers describe what needs to be true by Day 1. In this box you turn them into hours. Each kind of preparation below supports one of your answers, so you can decide where your hours go by asking which answer needs the most work.</div>' +
+      '<div class="objs"><b>From your chain to your calendar</b>: your three answers describe what needs to be true by Day 1. In this box you turn them into hours.</div>' +
 
       (links.length ? '<div class="prev-link"><b>Your three answers so far</b><ul>' +
         links.map(x => '<li><b>' + x[0] + ':</b> ' + esc(x[1]) + '</li>').join('') + '</ul></div>' : '') +
 
       '<div class="step"><h3><span class="stepn">1</span>Divide your weekly hours for the next 30 days</h3>' +
       '<p>Set the hours per week you can realistically give outside your required coursework. Then divide all of them across the six kinds of preparation.</p>' +
+      '<p><b>How to decide:</b> each kind of preparation supports one of your three answers. Ask yourself which answer needs the most work, and give that one the most hours.</p>' +
       '<div id="c-mount">' + renderConsole() + '</div>' +
       '<details class="more"><summary>See one example of dividing 10 hours</summary>' +
         '<p>A student who is about a year from Day 1 might divide 10 hours a week like this:</p>' +
@@ -1086,9 +1087,9 @@
       '<div class="step"><h3><span class="stepn">2</span>Talk through your chain in a short check-in interview</h3>' +
       '<p>The interviewer asks <b>one question at a time</b>. After you send your reply, the next question appears.</p>' +
       '<ul class="howto">' +
-        '<li>Answer at least <b>three questions</b>.</li>' +
+        '<li>Answer <b>three questions</b>. That is enough, and you can answer more if you want to.</li>' +
         '<li>Then press <b>I am ready - summarize my check-in</b>.</li>' +
-        '<li>If the interviewer does not answer, or you prefer your own CST349 AI Dojo, click <b>Copy prompt for my AI Dojo</b>.</li>' +
+        '<li>You can also do this interview in your own CST349 AI Dojo: click <b>Copy prompt for my AI Dojo</b>.</li>' +
       '</ul>' +
       '<div id="chat-mount"></div>' +
       '</div>';
