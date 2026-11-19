@@ -22,6 +22,12 @@ Week 14 · due Monday 23 November, 11:59 p.m. · 100 points · Graded items
 
 **Prepare you for.** Applying what you learn from your source to develop a plan for your professional growth.
 
+## If you missed the virtual visit
+
+Here is the first part of the Wednesday 18 November session, where each guest gave one piece of advice (about 18 minutes).
+
+**Video:** embedded Panopto recording (https://csumb.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=27bf5ac6-a587-46da-bbb6-b507001c8289), with a link to open it on Panopto if it does not play.
+
 ## Task
 
 On Thursday 19 November, open [The Commons](https://the-commons.symbioticthinking.ai), start a conversation with each of your two matches, and explore one idea from the virtual visit together until you each reach an action item and a date when you will get started on it. Relevant instructions and guidance for the conversation are built into The Commons tool.
