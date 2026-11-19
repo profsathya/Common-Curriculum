@@ -21,6 +21,9 @@ a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline;colo
 .viewtabs [role=tab][aria-selected=true]{background:#fff;color:var(--blue-dark);border-top:3px solid var(--blue);border-bottom:2px solid #fff;padding-top:7px}
 .viewtabs [role=tab]:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
 [role=tabpanel][hidden]{display:none}
+/* Updated dot: a tab whose words changed since this browser last opened it carries a small dot until the student opens it. */
+.viewtabs [role=tab] .upd{display:inline-block;width:8px;height:8px;border-radius:50%;background:#D9822B;margin-left:7px;vertical-align:middle;position:relative;top:-1px}
+.viewtabs [role=tab] .upd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .viewtabs{flex-wrap:wrap} .viewtabs [role=tab]{white-space:nowrap;padding-left:14px;padding-right:14px}
 @media (max-width:600px){.viewtabs{flex-wrap:wrap}.viewtabs [role=tab]{padding:9px 10px 8px;font-size:14px}}
 
@@ -399,6 +402,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
   function show(n,save){
     tabs.forEach(function(t,j){ t.setAttribute('aria-selected',j===n?'true':'false'); panels[j].hidden=(j!==n); });
     if(save){ try{ localStorage.setItem(KEY,name(tabs[n])); }catch(e){} }
+    markSeen(n);
   }
   tabs.forEach(function(t,j){
     t.addEventListener('click',function(){ show(j,true); });
@@ -409,6 +413,28 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
       e.preventDefault(); show(n,true); tabs[n].focus();
     });
   });
+  /* Updated dot. For each tab this browser keeps a short fingerprint of the tab's words as they were when the student last opened it.
+     The fingerprint is taken here, before the scripts below add the student's own notes and checks, so only changes to the page count.
+     On the first visit every tab is recorded as seen, so dots appear only for changes made after that; a tab added later shows a dot. */
+  var SEEN=KEY+'.seen';
+  function fp(p){ var s=(p.textContent||'').replace(/\s+/g,' ').trim(), h=5381; for(var i=0;i<s.length;i++){ h=((h<<5)+h+s.charCodeAt(i))|0; } return (h>>>0).toString(36)+'.'+s.length; }
+  var prints=panels.map(fp), seen=null;
+  try{ seen=JSON.parse(get(SEEN)||'null'); }catch(e){ seen=null; }
+  var first=(!seen||typeof seen!=='object'); if(first) seen={};
+  function keepSeen(){ try{ localStorage.setItem(SEEN,JSON.stringify(seen)); }catch(e){} }
+  function markSeen(n){
+    seen[name(tabs[n])]=prints[n]; keepSeen();
+    var d=tabs[n].querySelector('.upd'); if(d) d.parentNode.removeChild(d);
+  }
+  tabs.forEach(function(t,j){
+    if(first){ seen[name(t)]=prints[j]; return; }
+    if(seen[name(t)]!==prints[j]){
+      var d=document.createElement('span'); d.className='upd'; d.title='Updated since you last opened this tab';
+      var sr=document.createElement('span'); sr.className='upd-sr'; sr.textContent=' (updated)'; d.appendChild(sr);
+      t.appendChild(d);
+    }
+  });
+  if(first) keepSeen();
   var saved=get(KEY), start=0;
   tabs.forEach(function(t,j){ if(name(t)===saved) start=j; });
   show(start,false);
