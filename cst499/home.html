@@ -21,6 +21,9 @@ a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline;colo
 .viewtabs [role=tab][aria-selected=true]{background:#fff;color:var(--blue-dark);border-top:3px solid var(--blue);border-bottom:2px solid #fff;padding-top:7px}
 .viewtabs [role=tab]:focus-visible{outline:2px solid var(--blue-dark);outline-offset:2px}
 [role=tabpanel][hidden]{display:none}
+/* Updated dot: a tab whose words changed since this browser last opened it carries a small dot until the student opens it. */
+.viewtabs [role=tab] .upd{display:inline-block;width:8px;height:8px;border-radius:50%;background:#D9822B;margin-left:7px;vertical-align:middle;position:relative;top:-1px}
+.viewtabs [role=tab] .upd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .viewtabs{flex-wrap:wrap} .viewtabs [role=tab]{white-space:nowrap;padding-left:14px;padding-right:14px}
 @media (max-width:600px){.viewtabs{flex-wrap:wrap}.viewtabs [role=tab]{padding:9px 10px 8px;font-size:14px}}
 
@@ -353,6 +356,53 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
 </ul>
 </div>
 
+<div class="sess" id="job-session-3">
+<div class="sess-l">Session 3 &middot; Friday 20 Nov</div>
+
+<p>In our third session, Utsab Saha looked at LinkedIn profiles with us, talked about how to answer &ldquo;Why do you want to work here?&rdquo;, and made the case for reaching out to startups. Utsab has also offered to meet with each of you one-on-one to make a plan for your search.</p>
+
+<details class="xp"><summary><span class="plus" aria-hidden="true"></span><div class="ec-h">Watch the session (about 54 minutes)</div></summary>
+<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/s86a6EsBdaE?rel=0&amp;cc_load_policy=1" title="CST499 job search group, Session 3, Friday 20 November" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p class="vid-l">If the video does not play here, <a href="https://youtu.be/s86a6EsBdaE" target="_blank" rel="noopener">open it on YouTube</a>. The video&rsquo;s description on YouTube lists where each topic starts.</p>
+</details>
+
+<details class="xp"><summary><span class="plus" aria-hidden="true"></span><div class="ec-h">Make your LinkedIn profile show your work</div></summary>
+<ul>
+<li>Write at least one sentence in your About section that identifies your niche, meaning the kind of work or problem you want to focus on, and not only your job title.</li>
+<li>Write a short post (under 500 words) about your capstone. It could be one thing you learned, or how you found your way through a topic that was messy and unclear. After that, post every one to three months about what you are learning or building, and about the kind of work you want to do.</li>
+<li>Write only about things that genuinely interest you. Recruiters often filter for people who have been active on LinkedIn in the last week or month, so a post also helps them find you.</li>
+<li>Write your experience and project bullets so that they show the result of your work and that you care about it, which is the achiever mindset from Session 2. About three projects is a good number, and a class project is acceptable if you need a third.</li>
+<li>Fill in the skills section, because recruiters search LinkedIn by keyword.</li>
+</ul>
+</details>
+
+<details class="xp"><summary><span class="plus" aria-hidden="true"></span><div class="ec-h">Answer &ldquo;Why do you want to work here?&rdquo;</div></summary>
+<ul>
+<li>One startup founder wrote on LinkedIn that out of 150 applicants, only one said why they were excited about his company. If you try, you may be the only one who did.</li>
+<li>Point to work you have already done that is similar to the job. Someone applying everywhere cannot show that, so it tells the employer your interest is real.</li>
+<li>If you have a connection to the place, such as growing up nearby, say so. Employers in places like Monterey worry that a new hire will leave after a couple of years.</li>
+<li>Research what the company believes makes it different, and tell them what you found. If you cannot say how this company differs from a similar one, keep researching before you write.</li>
+</ul>
+</details>
+
+<details class="xp"><summary><span class="plus" aria-hidden="true"></span><div class="ec-h">Reach out to startups</div></summary>
+<ul>
+<li>Send a short personal email in place of a long cover letter: one reason you are excited about the company, and three bullets on your relevant work history. The smaller the company, the better this works.</li>
+<li>Find startups in your niche on <a href="https://wellfound.com" target="_blank" rel="noopener">wellfound.com</a>, or ask ChatGPT or Gemini which startups an investor such as Y Combinator has funded recently. A founder&rsquo;s email address is often listed on the site or easy to guess.</li>
+<li>Write to a startup even if it lists only senior roles. Any open role tells you they are hiring, and a startup that likes you can create a position for you.</li>
+<li>Startups usually pay less than large companies. Utsab sees them as a strong first step because you learn a lot, build connections and gain experience for your resume, even if the startup does not last. If you work at one for a few months, ask whether the work could come with a stipend.</li>
+<li>Anita&rsquo;s story in Session 2 shows how this can start from a capstone project.</li>
+</ul>
+</details>
+
+<div class="ec-h">Your one action before the next session</div>
+<ul>
+<li><b>Update your LinkedIn profile.</b> Add a sentence to your About section that identifies your niche, and write one short post about your capstone.</li>
+<li><b>Send one short personal email to a startup in your niche,</b> with one reason you are excited about it and three bullets on your relevant work history.</li>
+<li><b>If you would like a one-on-one meeting with Utsab,</b> email Prof. Sathya at <a href="mailto:snarayanan@csumb.edu">snarayanan@csumb.edu</a>.</li>
+</ul>
+</div>
+
 <div class="sess" id="job-guests">
 <div class="sess-l">Industry guests &middot; Wednesday 18 Nov</div>
 
@@ -399,6 +449,7 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
   function show(n,save){
     tabs.forEach(function(t,j){ t.setAttribute('aria-selected',j===n?'true':'false'); panels[j].hidden=(j!==n); });
     if(save){ try{ localStorage.setItem(KEY,name(tabs[n])); }catch(e){} }
+    markSeen(n);
   }
   tabs.forEach(function(t,j){
     t.addEventListener('click',function(){ show(j,true); });
@@ -409,6 +460,28 @@ h1{font-size:21px;font-weight:700;margin:3px 0 0;line-height:1.25}
       e.preventDefault(); show(n,true); tabs[n].focus();
     });
   });
+  /* Updated dot. For each tab this browser keeps a short fingerprint of the tab's words as they were when the student last opened it.
+     The fingerprint is taken here, before the scripts below add the student's own notes and checks, so only changes to the page count.
+     On the first visit every tab is recorded as seen, so dots appear only for changes made after that; a tab added later shows a dot. */
+  var SEEN=KEY+'.seen';
+  function fp(p){ var s=(p.textContent||'').replace(/\s+/g,' ').trim(), h=5381; for(var i=0;i<s.length;i++){ h=((h<<5)+h+s.charCodeAt(i))|0; } return (h>>>0).toString(36)+'.'+s.length; }
+  var prints=panels.map(fp), seen=null;
+  try{ seen=JSON.parse(get(SEEN)||'null'); }catch(e){ seen=null; }
+  var first=(!seen||typeof seen!=='object'); if(first) seen={};
+  function keepSeen(){ try{ localStorage.setItem(SEEN,JSON.stringify(seen)); }catch(e){} }
+  function markSeen(n){
+    seen[name(tabs[n])]=prints[n]; keepSeen();
+    var d=tabs[n].querySelector('.upd'); if(d) d.parentNode.removeChild(d);
+  }
+  tabs.forEach(function(t,j){
+    if(first){ seen[name(t)]=prints[j]; return; }
+    if(seen[name(t)]!==prints[j]){
+      var d=document.createElement('span'); d.className='upd'; d.title='Updated since you last opened this tab';
+      var sr=document.createElement('span'); sr.className='upd-sr'; sr.textContent=' (updated)'; d.appendChild(sr);
+      t.appendChild(d);
+    }
+  });
+  if(first) keepSeen();
   var saved=get(KEY), start=0;
   tabs.forEach(function(t,j){ if(name(t)===saved) start=j; });
   show(start,false);
