@@ -12,7 +12,7 @@
 
 # Exploring an idea together: conversations after the virtual visit
 
-Week 14 · due Monday 23 November, 11:59 p.m. · 100 points · Graded items
+Week 14 · due Wednesday 2 December, 11:59 p.m. · 100 points · Graded items
 
 ## Purpose (page note: three-box arrow chain, Builds on your earlier learning → This Learning Experience → Prepare you for)
 
@@ -40,7 +40,7 @@ On Thursday 19 November, open [The Commons](https://the-commons.symbioticthinkin
 
 ## For your AI Dojo (hidden on the page; copied into the course Google Doc)
 
-Graded item: Exploring an idea together: conversations after the virtual visit. Course: CST349. Due: Monday 23 November. No passcode; this item has no Dojo route.
+Graded item: Exploring an idea together: conversations after the virtual visit. Course: CST349. Due: Wednesday 2 December. No passcode; this item has no Dojo route.
 
 Learning purpose: the student learns to critically explore ideas they heard through deep conversation. After the 18 November virtual visit, each student is matched on The Commons with two classmates and explores one idea from the visit with each until they reach an action item that came out of talking it through, not one they had already planned, and a date when they will get started on it. The conversations and the closing reflection all happen on The Commons; nothing is submitted on Canvas.
 
