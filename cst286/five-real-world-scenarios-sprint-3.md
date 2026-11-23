@@ -1,5 +1,6 @@
 <!-- Revised 31 October 2026: approved distinct A/B/C paths, empty initial drafts, curiosity-led coaching and an embedded Path A learning record.
-5 November 2026, voice review with Prof. Sathya: the learning outcome is telling whether what you have learned applies to a situation you have not seen. Students no longer make up their own look-alikes (that works backwards from the condition). They are quizzed on new situations, by the AI Dojo or by a partner on a recorded call, and write up three that apply and two that do not, submitting the chat link or recording. The Dojo coaches each judgment until it is right; a corrected judgment costs nothing. Model guidance added (ChatGPT first, since CSUMB provides it). Worked examples, the AI guidance scenario buttons and the reviewer meeting are removed; the reviewer step may return after the exam. Path C's build test stays as an invitation. Lines marked [for Sathya's read] are Alan's wording he has not yet heard; the marker is not shown on the page. Record: cowork/fall-2026-courses/five-real-world-scenarios-sprint-3-review-2026-11-05.md -->
+5 November 2026, voice review with Prof. Sathya: the learning outcome is telling whether what you have learned applies to a situation you have not seen. Students no longer make up their own look-alikes (that works backwards from the condition). They are quizzed on new situations, by the AI Dojo or by a partner on a recorded call, and write up three that apply and two that do not, submitting the chat link or recording. The Dojo coaches each judgment until it is right; a corrected judgment costs nothing. Model guidance added (ChatGPT first, since CSUMB provides it). Worked examples, the AI guidance scenario buttons and the reviewer meeting are removed; the reviewer step may return after the exam. Path C's build test stays as an invitation. Lines marked [for Sathya's read] are Alan's wording he has not yet heard; the marker is not shown on the page. Record: cowork/fall-2026-courses/five-real-world-scenarios-sprint-3-review-2026-11-05.md
+22 November 2026: the look forward gains the heads-up for question 2 of the Sprint 3 Exam (a moment when something in the student's work made them notice they needed to change their approach to learning), an optional box and two examples behind a +. Prof. Sathya okayed carrying it to the page on 22 Nov; the examples keep the [for Sathya's read] marker until he has read them. Record: cowork/fall-2026-courses/cst286-sprint3-exam-words-2026-11-18.md -->
 
 CST286 · Fall 2026 · Sprint 3 · Week 13 · Apply it, and find its limits
 
@@ -144,6 +145,28 @@ Prepare for the [Sprint 3 Exam on Wednesday 2 December](sprint-3-exam.html) by p
 ○ Scenario 1 ○ Scenario 2 ○ Scenario 3
 
 **What I take into the exam.** Write one sentence: the scenario you would work on paper, and the step in it you want to practice before Wednesday. (Page note: saved as cst286.s3.3.leave; the home page shows it under item 3.)
+
+**The exam also asks about you as a self-directed learner.** Question 2 asks about one moment in Sprint 3 when something in your work made you notice that you needed to change your approach to learning:
+
+- what the moment was
+- what change you made, and how you expected it to help your learning
+- what the moment shows you about yourself as a learner
+
+Choose your moment now, so that you have time to think about what it shows you before the exam.
+
+**A moment I could write about.** Describe one moment in Sprint 3 when something in your work made you notice that you needed to change your approach to learning. Two or three sentences. (Page note: an optional box, saved as "moment"; it is copied with the answers when it has text, has no AI feedback button, and does not count toward completion or the Self-check.)
+
+*The + reads:* Examples
+
+**Two examples, to shape your thinking — not models to copy** [for Sathya's read]
+
+> **The moment.** Two weeks into the sprint I had notes from six sources on how a bicycle stays upright, and I still could not write one relationship. That is when I noticed that collecting more sources was not getting me closer to one.
+> **The change I made, and how I expected it to help.** I chose one piece of the topic, how far a rider leans in a turn at a given speed, and set the rest aside. I expected that one narrow question would give me a relationship I could test.
+> **What it shows me.** I keep collecting sources because a narrower question feels like giving up the interesting part of the topic. The narrow question is what let me make a prediction. The next time I learn something on my own, I will write the one relationship I am looking for before I open a third source.
+
+> **The moment.** I planned to run my check and write it up in one evening. The check took the whole evening, because my first two runs gave different results, and I had no time left to ask anyone why. That is when I noticed that my plan left no room for a surprise.
+> **The change I made, and how I expected it to help.** For my scenarios I ran the check two days before I planned to write. I expected that a result I did not understand would then leave me time to ask a question.
+> **What it shows me.** I plan my work as if every step will go right the first time. In my next course I will schedule a check at least two days before the writing that depends on it.
 
 ## Self-check
 
