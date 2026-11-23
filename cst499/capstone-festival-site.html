@@ -6,181 +6,190 @@
 <title>Capstone Festival Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=IBM+Plex+Sans:wght@400;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* Layout idea: one column on a phone, one question per screen, large touch targets.
-   From 900px the route sits on the left and the open table card on the right. */
+/* Layout idea: one phone-sized sheet per student, two pages. Page 1: who, what they did, what it shows.
+   Page 2: the stamp, questions to ask, who to visit next. Stamps collect in "My passport".
+   Colours are the Cal State Monterey Bay palette: Monterey Bay Blue, Ocean Blue, Valley Green (sparingly). */
 :root{
-  --bg:#EEF2F1; --surface:#FFFFFF; --ink:#0E2233; --muted:#516170; --rule:#CCD6D6;
-  --accent:#0F6B5F; --accent-ink:#0A4D45; --accent-soft:#DDEFEA;
-  --gold:#8A5A00; --gold-soft:#FBF0D9;
-  --display:"Bricolage Grotesque","Arial Narrow",Arial,sans-serif;
-  --body:"Atkinson Hyperlegible",Verdana,Arial,sans-serif;
   color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0C1820; --surface:#14242F; --ink:#E9F0EF; --muted:#9DB0B4; --rule:#2B3E48;
-    --accent:#5CC4B2; --accent-ink:#9BE0D3; --accent-soft:#173B38;
-    --gold:#F0C36A; --gold-soft:#3A2E14; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0C1820; --surface:#14242F; --ink:#E9F0EF; --muted:#9DB0B4; --rule:#2B3E48;
-  --accent:#5CC4B2; --accent-ink:#9BE0D3; --accent-soft:#173B38;
-  --gold:#F0C36A; --gold-soft:#3A2E14; color-scheme:dark;
+  --bay:#31456b;        /* Monterey Bay Blue, primary */
+  --bay-deep:#243552;   /* a darker shade of the same blue, for pressed states */
+  --ocean:#6b92b6;      /* Ocean Blue, primary */
+  --mist:#e7edf4;       /* a tint of Ocean Blue, for quiet panels */
+  --paper:#f4f6f9;      /* page background */
+  --white:#ffffff;
+  --ink:#1c2a42;        /* body text */
+  --muted:#55627a;
+  --line:#d2dbe7;
+  --green:#689466;      /* Valley Green, only for "done" marks */
+  --display:"Montserrat","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --otter:url("data:image/webp;base64,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");
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5}
-button,input,textarea{font:inherit;color:inherit}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.12}
-p{margin:0}
-a{color:var(--accent-ink)}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.5 var(--body);-webkit-text-size-adjust:100%}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ocean);outline-offset:2px}
+#view{min-height:100%}
+.wrap{max-width:560px;margin:0 auto;padding:28px 18px 40px;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font:700 12px/1.3 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.h-big{font:800 40px/1.05 var(--display);letter-spacing:-.01em;color:var(--bay);text-wrap:balance}
+.h-q{font:700 26px/1.2 var(--display);color:var(--bay);text-wrap:balance}
+.label{font:700 13px/1.3 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--bay);margin-bottom:8px}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+.link{background:none;border:0;padding:6px 0;margin-right:16px;color:var(--bay);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot{display:flex;flex-wrap:wrap;gap:2px 0}
+.proto{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
 
-.bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--surface)}
-[hidden]{display:none!important}
-.bar .mark{font-family:var(--display);font-weight:800;font-size:17px;margin-right:auto;background:none;border:0;padding:6px 0;cursor:pointer;text-align:left}
-.bar .mark small{display:block;font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted)}
-.link{background:none;border:0;padding:10px 6px;color:var(--accent-ink);text-decoration:underline;cursor:pointer;font-size:16px;min-height:44px}
-.sample{background:var(--gold-soft);color:var(--gold);font-size:14px;padding:8px 16px;text-align:center}
-
-.wrap{max-width:1120px;margin:0 auto;padding:16px 16px 84px}
-.narrow{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
-.eyebrow{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);font-weight:700}
-.h-big{font-size:clamp(34px,9vw,52px);font-weight:800}
-.h-q{font-size:clamp(26px,7vw,36px);font-weight:800}
-.lede{font-size:19px;color:var(--ink);max-width:34em}
-.muted{color:var(--muted);font-size:16px}
-
-.choices{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin:0}
-.choice{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--rule);border-radius:14px;padding:16px 18px;min-height:64px;cursor:pointer}
-.choice b{font-family:var(--display);font-size:21px;font-weight:600}
-.choice span{color:var(--muted);font-size:16px}
-.choice:hover,.row:hover{border-color:var(--accent)}
-.front{gap:12px}
-.front .h-big{font-size:clamp(30px,8vw,44px)}
-.front .muted{font-size:15px}
-.front .choices{gap:8px}
-.choice.slim{flex-direction:row;align-items:center;justify-content:space-between;padding:10px 16px;min-height:50px;border-left:5px solid var(--accent)}
-.choice.slim b{font-size:19px}
-.choice.slim i{font-style:normal;color:var(--accent-ink);font-size:22px}
-.chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{background:var(--surface);border:1.5px solid var(--rule);border-radius:999px;padding:12px 18px;min-height:48px;cursor:pointer;font-size:17px}
-.chip:hover{border-color:var(--accent)}
-.search{width:100%;padding:14px 16px;border:1.5px solid var(--rule);border-radius:12px;background:var(--surface);font-size:19px;min-height:54px}
-
-.split{display:grid;gap:24px;grid-template-columns:1fr}
-.pane{display:flex;flex-direction:column;gap:16px;min-width:0}
-.split.open .list-pane{display:none}
-.split:not(.open) .detail-pane{display:none}
+/* ---------- front door ---------- */
+.front{gap:18px;padding-top:28px}
+.otter{display:block;aspect-ratio:552/391;background:currentColor;-webkit-mask:var(--otter) center/contain no-repeat;mask:var(--otter) center/contain no-repeat}
+.front .eyebrow{font-size:11px;letter-spacing:.08em}
+.front .h-big{font-size:min(8.4vw,40px)}
+.mast{display:flex;flex-direction:column;gap:6px}
+.picked{font-size:14.5px;color:var(--muted);margin-top:8px}
+.choices{display:flex;flex-direction:column;gap:6px}
+.choice{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.choice b{font:600 16.5px/1.25 var(--display);color:var(--ink)}
+.choice span{display:block;font-size:14.5px;color:var(--muted);margin-top:2px}
+.choice i{font-style:normal;color:var(--ocean);font-size:22px;line-height:1}
+.choice:hover,.row:hover{border-color:var(--ocean)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:9px 15px;font-weight:600;color:var(--bay)}
+.chip:hover{border-color:var(--ocean)}
 @media (min-width:900px){
-  .split{grid-template-columns:400px 1fr;align-items:start}
-  .split.open .list-pane,.split:not(.open) .detail-pane{display:flex}
-  .back{display:none}
+  .front{max-width:980px;display:grid;grid-template-columns:1fr 1fr;column-gap:48px;align-items:start;padding-top:64px}
+    .front .mast{grid-column:1}
+  .front .who{grid-column:2;grid-row:1}
+  .front .tail{grid-column:1 / -1}
+  .front .h-big{font-size:54px}
+  .front .eyebrow{font-size:12px;letter-spacing:.12em}
 }
-.stage{display:grid;gap:20px;max-width:620px;margin:0 auto}
-@media (min-width:900px){.stage{max-width:1040px;grid-template-columns:1fr 340px;align-items:start}}
-.h-next{font-size:22px;font-weight:800}
-.rows{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin:0}
-.row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--rule);border-radius:14px;padding:14px;cursor:pointer;min-height:72px}
-.row[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft)}
-.num{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;background:var(--accent-soft);color:var(--accent-ink)}
-.row.done .num{background:var(--accent);color:var(--surface)}
-.row .nm{font-family:var(--display);font-weight:600;font-size:19px}
-.row .pj{font-size:15px;color:var(--muted)}
-.row .tag{font-size:13px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.where{text-align:right;font-size:14px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
-.where b{display:block;font-size:16px;color:var(--ink)}
 
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:18px;padding:22px 20px;display:flex;flex-direction:column;gap:18px}
-.card h2{font-size:clamp(28px,7vw,38px);font-weight:800}
-.find{display:flex;gap:12px}
-.find div{flex:1;background:var(--accent-soft);border-radius:12px;padding:10px 14px}
-.find small{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-ink)}
-.find b{font-family:var(--display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
-.block h3{font-size:14px;font-family:var(--body);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.block p{max-width:36em}
-.claim{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.25}
-.asks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-.asks li{background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:19px}
-.who{display:flex;gap:14px;align-items:center}
-.photo{width:84px;height:84px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:30px;flex:none}
-.links{display:flex;flex-wrap:wrap;gap:10px}
-a.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.made{font-size:14px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px}
-.btn{background:var(--accent);color:var(--surface);border:0;border-radius:12px;padding:14px 18px;min-height:52px;font-weight:700;cursor:pointer;font-size:18px}
-.btn.ghost{background:var(--surface);color:var(--accent-ink);border:1.5px solid var(--accent)}
-.story{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
-.story .draft{font-size:13px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;min-height:48px;cursor:pointer}
-.check input{width:24px;height:24px;margin-top:2px;accent-color:var(--accent)}
-textarea{width:100%;min-height:90px;padding:12px;border:1.5px solid var(--rule);border-radius:12px;background:var(--surface)}
-pre.out{white-space:pre-wrap;background:var(--accent-soft);border-radius:12px;padding:14px;font-family:var(--body);font-size:16px;margin:0}
-@media (prefers-reduced-motion:no-preference){.choice,.row,.chip{transition:border-color .15s,background-color .15s}}
+/* ---------- lists ---------- */
+.search{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink)}
+.rows{display:flex;flex-direction:column;gap:7px}
+.row{width:100%;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;text-align:left;background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:9px 12px}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--mist);color:var(--bay);font:700 14px/1 var(--display)}
+.row .nm{font:600 16px/1.25 var(--display);color:var(--ink)}
+.row .pj{font-size:14.5px;line-height:1.3;color:var(--muted)}
+.row .where{text-align:right;font-size:13.5px;color:var(--muted);white-space:nowrap}
+.row .where b{display:block;color:var(--bay);font:700 14px/1.3 var(--display)}
+.tag{display:inline-block;font:700 11px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--bay);margin-left:6px}
+.tag::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px}
 
-/* ---- Design switcher (prototype only): A is the base look above, B and C restyle the same page ---- */
-.looks{position:fixed;right:12px;bottom:12px;z-index:10;display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--surface);border:1.5px solid var(--rule);border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:13px;color:var(--muted)}
-.lk{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--rule);background:var(--bg);font-weight:700;cursor:pointer;font-family:var(--body);font-size:16px}
-.lk[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* ---------- the sheet: one student, five pages ---------- */
+body.pg #view{height:100%}
+.pager{height:100%;display:grid;place-items:center}
+.sheet{position:relative;width:100%;max-width:560px;height:100%;max-height:900px;display:flex;flex-direction:column;background:var(--white);color:var(--ink);overflow:hidden}
+.top{padding:12px 16px 0;display:flex;flex-direction:column;gap:10px}
+.prog{display:flex;gap:5px}
+.prog i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.prog i.on{background:var(--bay)}
+.bar{display:flex;align-items:center;gap:10px;min-height:40px}
+.bar .av{width:36px;height:36px;font-size:12px;flex:none}
+.bar .id{flex:1;min-width:0;font:600 14.5px/1.25 var(--display)}
+.bar .id small{display:block;font:400 13.5px/1.3 var(--body);opacity:.8}
+.x{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:transparent;font-size:24px;line-height:1;color:inherit}
+.x:hover{background:rgba(107,146,182,.22)}
+.slide{flex:1;min-height:0;overflow-y:auto}
+.k{font:700 12.5px/1.3 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--bay)}
+.name{font:800 40px/1.05 var(--display);letter-spacing:-.01em;text-wrap:balance}
+.proj{font:600 18px/1.3 var(--display);color:var(--bay);text-wrap:balance}
+.t{font-size:18px;line-height:1.5;max-width:34em}
+.claim{font:600 21px/1.36 var(--display);color:var(--bay);text-wrap:balance}
+.asks{display:flex;flex-direction:column;gap:10px}
+.asks li{background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;font-size:17.5px;line-height:1.4}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border-radius:999px;padding:6px 14px;font:700 14.5px/1.2 var(--display);background:var(--bay);color:var(--white)}
+.pill.o{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.photo{width:132px;height:132px;border-radius:20px;display:grid;place-items:center;background:var(--mist);color:var(--bay);font:800 40px/1 var(--display)}
+.hint{font-size:15px;opacity:.8}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;border-radius:12px;padding:13px 16px;font:700 16px/1.25 var(--display);background:var(--bay);color:var(--white);border:1.5px solid var(--bay)}
+.btn:hover{background:var(--bay-deep)}
+.btn.ghost{background:var(--white);color:var(--bay)}
+.btn.ghost:hover{background:var(--mist)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.two .btn{padding:10px 10px;font-size:14.5px}
+.made{font-size:13px;line-height:1.4;color:var(--muted)}
+.draft{display:inline-block;font:700 10.5px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:4px;padding:3px 5px;margin-left:6px;vertical-align:middle}
+.nav{display:flex;gap:10px;padding:10px 16px 16px}
+.nav button{flex:1;border-radius:12px;padding:13px 12px;font:700 16px/1.2 var(--display);border:1.5px solid var(--bay);background:var(--bay);color:var(--white)}
+.nav button.back{flex:0 0 34%;background:transparent;color:inherit;border-color:currentColor}
+.nav button[hidden]{display:none}
 
-/* B: festival night. Dark navy and gold, heavy capitals, room and table shown like a ticket. */
-:root[data-look="b"]{--bg:#0B1B2B;--surface:#122840;--ink:#F3F6F9;--muted:#A9B8C6;--rule:#27425C;
-  --accent:#F2B84B;--accent-ink:#F7CD7A;--accent-soft:#1B3A57;--gold:#F2B84B;--gold-soft:#1B3A57;
-  --display:"Archivo Black","Arial Black",Arial,sans-serif;--body:"IBM Plex Sans",Arial,sans-serif;color-scheme:dark}
-[data-look="b"] h1,[data-look="b"] h2{text-transform:uppercase;font-weight:400;letter-spacing:.01em}
-[data-look="b"] .h-big{font-size:clamp(38px,11vw,64px);color:var(--accent)}
-[data-look="b"] .choice.slim{border:0;border-bottom:3px solid var(--accent);border-radius:4px}
-[data-look="b"] .choice b,[data-look="b"] .row .nm{font-family:var(--body);font-weight:600}
-[data-look="b"] .find b,[data-look="b"] .num,[data-look="b"] .photo{font-weight:400}
-[data-look="b"] .btn{border-radius:4px}
-[data-look="b"] .btn.ghost{background:transparent}
-[data-look="b"] .card{border:0;border-top:8px solid var(--accent);border-radius:6px}
-[data-look="b"] .photo{width:96px;height:96px;border-radius:6px;background:var(--accent);color:var(--bg)}
-[data-look="b"] .find div{background:transparent;border:2px dashed var(--accent);border-radius:4px}
-[data-look="b"] .claim{font-family:var(--body);font-weight:600}
-[data-look="b"] .asks li{border-left:0;border-radius:4px;position:relative;padding-left:46px;font-size:20px}
-[data-look="b"] .asks li::before{content:"?";position:absolute;left:16px;top:9px;font-family:var(--display);font-size:24px;color:var(--accent)}
-[data-look="b"] .row{border-radius:6px}
-[data-look="b"] .num{border-radius:4px;background:var(--accent);color:var(--bg)}
+/* Page 1 opens with a Monterey Bay Blue band: who the student is and where to find them */
+.sheet.p1 .top{background:var(--bay);color:var(--white)}
+.sheet.p1 .prog i{background:rgba(255,255,255,.3)}
+.sheet.p1 .prog i.on{background:var(--white)}
+.hero{background:var(--bay);color:var(--white);padding:6px 22px 22px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.hero .photo{width:96px;height:96px;border-radius:18px;font-size:30px;background:rgba(255,255,255,.16);color:var(--white)}
+.hero .k{color:#c5d5e5;margin-bottom:4px}
+.hero .name{font-size:30px;margin-bottom:10px}
+.hero .pill{background:var(--white);color:var(--bay)}
+.hero .pill.o{background:transparent;color:var(--white)}
+.body{padding:20px 22px 14px;display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:8px}
+.claimbox{background:var(--mist);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.about{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;font-size:16px}
+.stampzone{display:flex;align-items:center;gap:16px}
+.target{flex:none;width:148px;height:148px;border-radius:50%;border:2px dashed var(--ocean);background:var(--white);display:grid;place-items:center;text-align:center;font:600 14px/1.3 var(--display);color:var(--bay);padding:18px}
+.target.done{border-color:transparent;padding:0;background:transparent}
+.stampzone p{font-size:15.5px;line-height:1.4;color:var(--muted)}
+.stampzone p b{display:block;color:var(--bay);font:700 16px/1.3 var(--display)}
 
-/* C: editorial. Serif headings, no boxes, thin rules, one color for each area of work. */
-:root[data-look="c"]{--bg:#FBFAF7;--surface:#FFFFFF;--ink:#1A1D21;--muted:#5C6168;--rule:#E3E0D8;
-  --accent:#1F4E8C;--accent-ink:#173B6B;--accent-soft:#E8EFF8;--gold:#1F4E8C;--gold-soft:#F3F1EA;--cat:#1F4E8C;
-  --display:"Fraunces",Georgia,serif;--body:"Source Sans 3","Segoe UI",Arial,sans-serif;color-scheme:light}
-[data-look="c"] .card[data-cat="security"]{--cat:#A3324A}
-[data-look="c"] .card[data-cat="data"]{--cat:#6B3FA0}
-[data-look="c"] .card[data-cat="web"]{--cat:#1E7A55}
-[data-look="c"] .card[data-cat="games"]{--cat:#B5560F}
-[data-look="c"] h1,[data-look="c"] h2{font-weight:600}
-[data-look="c"] .h-big{font-style:italic}
-[data-look="c"] .choice.slim{border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;padding:14px 2px}
-[data-look="c"] .choice.slim b{font-size:22px;font-weight:500}
-[data-look="c"] .card{border:0;border-radius:0;background:transparent;padding:0;gap:22px}
-[data-look="c"] .card .eyebrow{color:var(--cat)}
-[data-look="c"] .photo{width:104px;height:104px;border-radius:14px;background:var(--cat);color:#FFFFFF;font-weight:600}
-[data-look="c"] .find div{background:transparent;border-radius:0;border-top:3px solid var(--cat);padding:8px 0}
-[data-look="c"] .find small{color:var(--muted)}
-[data-look="c"] .find b{font-weight:600}
-[data-look="c"] .block{border-top:1px solid var(--rule);padding-top:14px}
-[data-look="c"] .claim{font-style:italic;font-weight:500;font-size:24px}
-[data-look="c"] .asks li{background:transparent;border-left:3px solid var(--cat);border-radius:0;font-family:var(--display);font-size:20px;padding:4px 0 4px 14px}
-[data-look="c"] .btn{border-radius:999px;background:var(--ink)}
-[data-look="c"] .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
-[data-look="c"] .row{border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;padding:14px 2px}
-[data-look="c"] .row .nm{font-weight:600}
-[data-look="c"] .num{background:transparent;border:1.5px solid var(--ink);color:var(--ink);font-weight:600}
-[data-look="c"] .story{border:0;border-left:3px solid var(--accent);border-radius:0;background:transparent}
-[data-look="c"] .sample{background:transparent;border-top:1px solid var(--rule);color:var(--muted)}
+/* The stamp: the otter spirit mark alone in a ring, in Monterey Bay Blue */
+.stamp{position:relative;display:block;width:148px;aspect-ratio:1;color:var(--bay);transform:rotate(var(--r,-8deg));opacity:.92}
+.stamp svg{position:absolute;inset:0;width:100%;height:100%}
+.stamp .otter{position:absolute;left:22%;width:56%;top:50%;transform:translateY(-52%)}
+.stamp.sm{width:100%}
+.stamp.sm .otter{left:13%;width:74%}
+.stamp.in{animation:thump .42s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes thump{from{transform:rotate(var(--r,-8deg)) scale(1.8);opacity:0}60%{opacity:.92}to{transform:rotate(var(--r,-8deg)) scale(1);opacity:.92}}
+@media (prefers-reduced-motion:reduce){.stamp.in{animation:none}}
+
+@media (min-width:640px) and (min-height:700px){
+  .pager{padding:24px}
+  .sheet{border-radius:22px;box-shadow:0 18px 50px rgba(36,53,82,.18)}
+  .body{padding:24px 34px 14px}
+  .hero{padding:8px 34px 26px}
+  .top{padding:16px 24px 0}
+  .nav{padding:10px 24px 22px}
+  .hero .name{font-size:36px}
+}
+
+/* ---------- my visit / my passport ---------- */
+.cover{background:var(--bay);color:var(--white);border-radius:16px;border-left:10px solid var(--bay-deep);padding:26px 20px 22px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.cover .otter{width:150px;color:var(--white);margin:6px 0 10px}
+.cover b{font:800 26px/1 var(--display);letter-spacing:.3em;margin-right:-.3em}
+.cover span{font:600 14px/1.4 var(--display);opacity:.9}
+.cover small{font-size:14px;opacity:.8}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px}
+.slot{background:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;text-align:center}
+.slot .ring{width:100%;max-width:104px;aspect-ratio:1;border-radius:50%;border:2px dashed var(--ocean);display:grid;place-items:center;font:600 12.5px/1.2 var(--display);color:var(--muted)}
+.slot .ring.done{border:0}
+.slot em{font:600 14px/1.2 var(--display);font-style:normal;color:var(--ink)}
+.room{font:700 13px/1.3 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--bay);border-bottom:1px solid var(--line);padding-bottom:6px}
+.panel{background:var(--white);border:1.5px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.check{display:flex;gap:10px;align-items:flex-start}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--bay);flex:none}
+textarea{width:100%;min-height:76px;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink)}
+.out{white-space:pre-wrap;font:500 14px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--mist);border-radius:12px;padding:14px;margin:0}
+[hidden]{display:none !important}
 </style>
 </head>
 <body>
-<div class="wrap"><main id="view"></main></div>
-<footer class="sample">Prototype. The students and projects on this page are made up, and the links on each card are samples.</footer>
-
-<div class="looks" role="group" aria-label="Compare designs"><span>Design</span><button class="lk" type="button" data-look="a">A</button><button class="lk" type="button" data-look="b">B</button><button class="lk" type="button" data-look="c">C</button></div>
-
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="arc-t" d="M24,100 a76,76 0 1,1 152,0"/>
+  <path id="arc-b" d="M15,100 a85,85 0 1,0 170,0"/>
+</defs></svg>
+<main id="view"></main>
 <script>
 const CATS={software:"Open source and software",security:"Security and certificates",data:"Data and AI",web:"Web and mobile apps",games:"Games and interactive"};
 const LENS={
@@ -304,18 +313,24 @@ const S=[
  "What did testers change that you would not have found yourself?",
  {x:"What did you learn from accessibility that you will use in your next project?",a:"Where did AI help with the game, and where did you override it?"}]
 ].map((r,i)=>({id:"student-"+String(i+1).padStart(2,"0"),name:r[0],first:r[0].split(" ")[0],project:r[1],cat:r[2],room:r[3],table:r[4],desc:r[5],plain:r[6],claim:r[7],fam:r[8],pro:r[9],lens:r[10]}));
+
+const POSTER="interactive-poster-samples.html";
+const LINKEDIN="https://www.linkedin.com/";
+
 const byId=id=>S.find(s=>s.id===id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const ini=s=>s.name.split(" ").map(p=>p[0]).join("");
 const order=ids=>ids.slice().sort((a,b)=>{const x=byId(a),y=byId(b);return x.room-y.room||x.table-y.table;});
 
-/* The visitor's answers stay in this browser. Nothing is sent anywhere. */
-const KEY="capstone-festival-guide-v1";
-let st={role:null,sub:null,route:[],visited:[],seen:[],cur:null,seed:Math.floor(Math.random()*7)};
+/* A visitor's answers stay on their own device. */
+const KEY="capstone-festival-passport-v2";
+const fresh=()=>({role:null,sub:null,route:[],seen:[],stamps:{},cur:null,seed:Math.floor(Math.random()*7)});
+let st=fresh();
 try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&typeof j==="object")st=Object.assign(st,j);}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
 const view=document.getElementById("view");
-const wide=window.matchMedia("(min-width:900px)");
+let pg=0, shown=null, justStamped=null;
 
 function go(h){ if(location.hash==="#"+h) render(); else location.hash=h; }
 function pick(list,n){ const out=[]; for(let i=0;i<list.length&&out.length<n;i++) out.push(list[(i+st.seed)%list.length]); return out; }
@@ -334,64 +349,6 @@ function buildRoute(){
   else { const inCat=S.filter(s=>s.cat===sub); st.route=inCat.slice(0,3).concat(pick(S.filter(s=>s.cat!==sub),1)).map(s=>s.id); save(); return; }
   st.route=order(list.map(s=>s.id)); save();
 }
-
-function render(){
-  const h=location.hash.slice(1)||"start";
-  if(h==="start"||!st.role&&h!=="all"&&h!=="visit"&&!h.startsWith("student-")) return start();
-  if(h==="ask") return ask();
-  if(h==="all") return all();
-  if(h==="visit") return visit();
-  if(h.startsWith("student-")&&byId(h)) return show(h);
-  if(!st.route.length) return ask();
-  return go(st.cur||st.route[0]);
-}
-
-function start(){
-  view.innerHTML=`<div class="narrow front">
-    <div><p class="eyebrow">CSU Monterey Bay · B.S. Computer Science</p>
-    <h1 class="h-big">Capstone Festival</h1>
-    <p class="muted">December 2026. Pick one to get your route.</p></div>
-    <h2 class="h-q">I am a</h2>
-    <ul class="choices">${Object.entries(ROLES).map(([k,v])=>`<li><button class="choice slim" type="button" data-role="${k}"><b>${esc(v.label)}</b><i aria-hidden="true">›</i></button></li>`).join("")}</ul>
-    <p><button class="link" type="button" data-go="all">See all ${S.length} students</button></p>
-  </div>`;
-}
-
-function ask(){
-  const r=st.role; let body="";
-  if(r==="family") body=`<h1 class="h-q">Who are you here for?</h1>
-    <input class="search" id="who" type="search" placeholder="Type a first or last name" autocomplete="off" aria-label="Student name">
-    <ul class="rows" id="names"></ul>`;
-  else if(r==="faculty") body=`<h1 class="h-q">What would you like to see today?</h1>
-    <ul class="choices">${Object.entries(LENS).map(([k,v])=>`<li><button class="choice" type="button" data-sub="${k}"><b>${esc(v.label)}</b><span>${esc(v.line)}</span></button></li>`).join("")}</ul>`;
-  else if(r==="admin"){ buildRoute(); st.seen=[]; return go(st.route[0]); }
-  else body=`<h1 class="h-q">${r==="employer"?"What kind of work do you hire for?":"What are you curious about?"}</h1>
-    <div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="chip" type="button" data-sub="${k}">${esc(v)}</button>`).join("")}
-    <button class="chip" type="button" data-sub="any">${r==="employer"?"Any of these":"Show me a mix"}</button></div>`;
-  view.innerHTML=`<div class="narrow"><p class="eyebrow">${esc(ROLES[r].label)}</p>${body}
-    <p><button class="link" type="button" data-go="start">Change who I am</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>`;
-  if(r==="family"){ const inp=document.getElementById("who"); const draw=()=>{ const t=norm(inp.value.trim());
-      document.getElementById("names").innerHTML=S.filter(s=>norm(s.name).includes(t)).map(s=>`<li><button class="row" type="button" data-sub="${s.id}"><span class="num">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><span><span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span><span></span></button></li>`).join("")||`<li class="muted">No student matches that name yet. Try fewer letters.</li>`; };
-    inp.addEventListener("input",draw); draw(); }
-}
-
-function card(s){
-  const fam=st.role==="family";
-  const q=fam?s.fam.concat([UNIVERSAL]):[st.role==="faculty"&&s.lens[st.sub]?s.lens[st.sub]:s.pro];
-  const done=st.visited.includes(s.id);
-  const mine=fam&&s.id===st.sub;
-  return `<article class="card" data-cat="${s.cat}">
-    <div class="who"><span class="photo" role="img" aria-label="Space for ${esc(s.first)}'s photo">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><div><p class="eyebrow">${mine?"You are here for":esc(CATS[s.cat])}</p><h2>${esc(s.name)}</h2></div></div>
-    <div class="find" aria-label="Where to find ${esc(s.first)}"><div><small>Room</small><b>${s.room}</b></div><div><small>Table</small><b>${s.table}</b></div></div>
-    <section class="block"><h3>${fam?"What "+esc(s.first)+" did":"Project"}</h3>${fam?"":`<p><b>${esc(s.project)}</b></p>`}<p>${esc(fam?s.plain:s.desc)}</p></section>
-    <section class="block"><h3>${fam?"What this shows about "+esc(s.first):esc(s.first)+"'s claim"}</h3><p class="claim">${esc(s.claim)}</p></section>
-    <section class="block"><h3>${q.length>1?"Questions you can ask "+esc(s.first):"A question to ask "+esc(s.first)}</h3><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></section>
-    <div class="links"><a class="btn ghost" href="interactive-poster-samples.html" target="_blank" rel="noopener">${esc(s.first)}'s Interactive Poster</a><a class="btn ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">${esc(s.first)} on LinkedIn</a></div>
-    <button class="btn ${done?"ghost":""}" type="button" data-visit="${s.id}">${done?"Visited. Tap to undo":"I visited "+esc(s.first)}</button>
-    <p class="made">Drafted by AI from ${esc(s.first)}'s Interactive Poster. Read and approved by ${esc(s.first)} before it was published.</p>
-  </article>`;
-}
-
 function nextTwo(cur){
   const me=byId(cur), seen=new Set(st.seen.concat([cur]));
   const fits=s=>st.role==="faculty"?!!s.lens[st.sub]:(st.role==="employer"||st.role==="student")&&st.sub!=="any"?s.cat===st.sub:false;
@@ -401,74 +358,177 @@ function nextTwo(cur){
   return planned.concat(others).slice(0,2);
 }
 
-function show(id){
-  const s=byId(id); st.cur=id; if(!st.seen.includes(id)) st.seen.push(id); save();
-  const story=st.role==="admin"&&id===st.route[0]?`<div class="story"><span class="draft">Draft wording</span>
-    <p>Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.</p>
-    <p>Students present at their own laptops. Each table below shows a different area of work.</p></div>`:"";
-  const nx=nextTwo(id);
-  const rows=nx.map(n=>`<li><button class="row" type="button" data-go="${n.id}">
-      <span class="num" aria-hidden="true">›</span>
-      <span><span class="nm">${esc(n.name)}</span><br><span class="pj">${esc(n.project)}</span></span>
-      <span class="where"><b>Room ${n.room}</b>Table ${n.table}</span></button></li>`).join("");
-  view.innerHTML=`<div class="stage">
-    <div class="pane">${story}${card(s)}</div>
-    <aside class="pane">${nx.length?`<h2 class="h-next">Visit next</h2><ul class="rows">${rows}</ul>`:`<p class="muted">You have opened every table.</p>`}
-      <p><button class="link" type="button" data-go="visit">My visit</button> <button class="link" type="button" data-go="all">All students</button> <button class="link" type="button" data-go="start">Start over</button></p></aside></div>`;
-  window.scrollTo(0,0);
+function render(){
+  const h=location.hash.slice(1)||"start";
+  document.body.classList.remove("pg");
+  if(h==="ask"&&st.role) return ask();
+  if(h==="all") return all();
+  if(h==="my") return my();
+  if(h.startsWith("student-")&&byId(h)) return show(h);
+  if(h==="route"&&(st.cur||st.route.length)) return go(st.cur||st.route[0]);
+  return start();
 }
 
+const stampCount=()=>Object.keys(st.stamps).length;
+function footLinks(){
+  return `<p class="foot"><button class="link" type="button" data-go="my">My passport${stampCount()?" ("+stampCount()+")":""}</button>
+    <button class="link" type="button" data-go="all">All students</button>
+    <button class="link" type="button" data-go="start" data-reset="1">Start over</button></p>`;
+}
+
+/* ---------- front door ---------- */
+function start(){
+  view.innerHTML=`<div class="wrap front">
+    <header class="mast"><p class="eyebrow">Cal State Monterey Bay · B.S. Computer Science</p>
+      <h1 class="h-big">Capstone Festival</h1>
+      <p class="muted">December 2026 · ${S.length} students. Collect a stamp for each student you visit.</p></header>
+    <section class="who"><h2 class="label">I am a</h2>
+      <ul class="choices">${Object.entries(ROLES).map(([k,v])=>`<li><button class="choice" type="button" data-role="${k}"><b>${esc(v.label)}</b><i aria-hidden="true">›</i></button></li>`).join("")}</ul></section>
+    <div class="tail"><p class="foot"><button class="link" type="button" data-go="all">See all ${S.length} students</button>${stampCount()?`<button class="link" type="button" data-go="my">My passport (${stampCount()})</button>`:""}</p>
+      <p class="proto">Prototype. The students and projects on this page are made up, and the links on each page are samples.</p></div>
+  </div>`;
+}
+
+function ask(){
+  const r=st.role; let body="";
+  if(r==="family") body=`<h1 class="h-q">Who are you here for?</h1>
+    <input class="search" id="who" type="search" placeholder="Type a first or last name" autocomplete="off" aria-label="Student name">
+    <ul class="rows" id="names"></ul>`;
+  else if(r==="faculty") body=`<h1 class="h-q">What would you like to see today?</h1>
+    <ul class="choices">${Object.entries(LENS).map(([k,v])=>`<li><button class="choice" type="button" data-sub="${k}"><span><b>${esc(v.label)}</b><span>${esc(v.line)}</span></span><i aria-hidden="true">›</i></button></li>`).join("")}</ul>`;
+  else if(r==="admin"){ buildRoute(); st.seen=[]; return go(st.route[0]); }
+  else body=`<h1 class="h-q">${r==="employer"?"What kind of work do you hire for?":"What are you curious about?"}</h1>
+    <div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="chip" type="button" data-sub="${k}">${esc(v)}</button>`).join("")}
+    <button class="chip" type="button" data-sub="any">${r==="employer"?"Any of these":"Show me a mix"}</button></div>`;
+  view.innerHTML=`<div class="wrap"><p class="eyebrow">${esc(ROLES[r].label)}</p>${body}
+    <p class="foot"><button class="link" type="button" data-go="start" data-reset="1">Change who I am</button></p></div>`;
+  if(r==="family"){ const inp=document.getElementById("who"); const draw=()=>{ const t=norm(inp.value.trim());
+      document.getElementById("names").innerHTML=S.filter(s=>norm(s.name).includes(t)).map(s=>`<li><button class="row" type="button" data-sub="${s.id}"><span class="av">${esc(ini(s))}</span><span><span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span><span></span></button></li>`).join("")||`<li class="muted">No student matches that name yet. Try fewer letters.</li>`; };
+    inp.addEventListener("input",draw); draw(); }
+}
+
+/* ---------- the stamp ---------- */
+function stamp(id,small,animate){
+  const r=((parseInt(id.slice(-2),10)*37)%19)-9;
+  const ring=small?`<circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="4"/>`
+    :`<circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="3.5"/>
+      <circle cx="100" cy="100" r="89.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <g fill="currentColor" font-family="Montserrat,sans-serif" font-weight="700" font-size="12" letter-spacing="2.6">
+        <text><textPath href="#arc-t" startOffset="50%" text-anchor="middle">CAPSTONE FESTIVAL</textPath></text>
+        <text><textPath href="#arc-b" startOffset="50%" text-anchor="middle">DECEMBER 2026</textPath></text></g>
+      <circle cx="19" cy="100" r="2.6" fill="currentColor"/><circle cx="181" cy="100" r="2.6" fill="currentColor"/>`;
+  return `<span class="stamp${small?" sm":""}${animate?" in":""}" style="--r:${r}deg" role="img" aria-label="Stamp"><svg viewBox="0 0 200 200" aria-hidden="true">${ring}</svg><span class="otter"></span></span>`;
+}
+
+/* ---------- one student, two pages ---------- */
+function nextRows(nx){
+  return nx.map(n=>`<li><button class="row" type="button" data-go="${n.id}">
+      <span class="av" aria-hidden="true">${esc(ini(n))}</span>
+      <span><span class="nm">${esc(n.name)}</span><br><span class="pj">${esc(n.project)}</span></span>
+      <span class="where"><b>Room ${n.room}</b>Table ${n.table}</span></button></li>`).join("");
+}
+function pageOne(s){
+  const fam=st.role==="family", mine=fam&&s.id===st.sub, f=esc(s.first);
+  const q=fam?s.fam.concat([UNIVERSAL]):[st.role==="faculty"&&s.lens[st.sub]?s.lens[st.sub]:s.pro];
+  const about=st.role==="admin"&&s.id===st.route[0]?`<div class="about"><p class="k">About this capstone <span class="draft">Draft wording</span></p>
+    <p>Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.</p>
+    <p>Students present at their own laptops. Each table on your route shows a different area of work.</p></div>`:"";
+  return `<header class="hero"><span class="photo" role="img" aria-label="Space for ${f}'s photo">${esc(ini(s))}</span>
+      <div><p class="k">${mine?"You are here for":esc(CATS[s.cat])}</p><h1 class="name">${esc(s.name)}</h1>
+        <div class="pills"><span class="pill">Room ${s.room}</span><span class="pill o">Table ${s.table}</span></div></div></header>
+    <div class="body">${about}
+      <section class="sec"><p class="k">${fam?"What "+f+" did":"The project"}</p>${fam?"":`<p class="proj">${esc(s.project)}</p>`}<p class="t">${esc(fam?s.plain:s.desc)}</p></section>
+      <section class="claimbox"><p class="k">${fam?"What this shows about "+f:f+"'s claim"}</p><p class="claim">${esc(s.claim)}</p></section>
+      <section class="sec"><p class="k">${q.length>1?"Questions you can ask "+f:"A question to ask "+f}</p><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></section>
+    </div>`;
+}
+function pageTwo(s){
+  const fam=st.role==="family", f=esc(s.first), ts=st.stamps[s.id], nx=nextTwo(s.id);
+  return `<div class="body">
+    <section class="sec"><p class="k">Stamp your visit</p>
+      <div class="stampzone"><button class="target${ts?" done":""}" type="button" data-stamp="${s.id}" aria-pressed="${!!ts}">${ts?stamp(s.id,false,justStamped===s.id):"Tap to stamp your visit"}</button>
+        <p>${ts?`<b>Stamped ${new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</b>Tap the stamp to undo.`:`<b>Room ${s.room} · Table ${s.table}</b>Stamp your passport when you have visited ${f}.`}</p></div>
+      <div class="two"><a class="btn" href="${POSTER}" target="_blank" rel="noopener">${f}'s Interactive Poster</a><a class="btn ghost" href="${LINKEDIN}" target="_blank" rel="noopener">${f} on LinkedIn</a></div></section>
+    <section class="sec">${nx.length?`<p class="k">Visit next</p><ul class="rows">${nextRows(nx)}</ul>`:`<p class="muted">You have opened every student.</p>`}</section>
+    ${footLinks()}
+    <p class="made">Drafted by AI from ${f}'s Interactive Poster. Read and approved by ${f} before it was published.</p></div>`;
+}
+function show(id){
+  const s=byId(id); if(shown!==id){ pg=0; shown=id; }
+  st.cur=id; if(!st.seen.includes(id)) st.seen.push(id); save();
+  const nx=pg===1?nextTwo(id)[0]:null;
+  const bars=`<div class="prog" role="img" aria-label="Page ${pg+1} of 2"><i class="on"></i><i class="${pg===1?"on":""}"></i></div>`;
+  const x=`<button class="x" type="button" data-go="all" aria-label="Close and see all students">×</button>`;
+  const top=pg===0?`${bars}<div class="bar"><span class="id"></span>${x}</div>`
+    :`${bars}<div class="bar"><span class="av" aria-hidden="true">${esc(ini(s))}</span><span class="id">${esc(s.name)}<small>Room ${s.room} · Table ${s.table}</small></span>${x}</div>`;
+  document.body.classList.add("pg");
+  view.innerHTML=`<div class="pager"><article class="sheet p${pg+1}">
+    <div class="top">${top}</div>
+    <div class="slide">${pg===0?pageOne(s):pageTwo(s)}</div>
+    <div class="nav">${pg===0?`<button type="button" data-turn="1">Next: stamp your visit</button>`
+      :`<button class="back" type="button" data-turn="-1">Back</button>${nx?`<button type="button" data-go="${nx.id}">Next: ${esc(nx.first)}</button>`:""}`}</div>
+  </article></div>`;
+  justStamped=null;
+}
+
+/* ---------- all students ---------- */
 function all(){
-  view.innerHTML=`<div class="narrow"><h1 class="h-q">All ${S.length} students</h1>
+  view.innerHTML=`<div class="wrap"><h1 class="h-q">All ${S.length} students</h1>
     <input class="search" id="q" type="search" placeholder="Name or project" autocomplete="off" aria-label="Search students">
-    <ul class="rows" id="allrows"></ul><p><button class="link" type="button" data-go="${st.route.length?"route":"start"}">← Back</button> <button class="link" type="button" data-go="visit">My visit</button></p></div>`;
+    <ul class="rows" id="allrows"></ul>${footLinks()}</div>`;
   const inp=document.getElementById("q"); const draw=()=>{ const t=norm(inp.value.trim());
-    document.getElementById("allrows").innerHTML=S.filter(s=>norm(s.name+" "+s.project+" "+CATS[s.cat]).includes(t)).map(s=>`<li><button class="row" type="button" data-go="${s.id}"><span class="num">${esc(s.name.split(" ").map(p=>p[0]).join(""))}</span><span><span class="nm">${esc(s.name)}</span><br><span class="pj">${esc(s.project)}</span></span><span class="where"><b>Room ${s.room}</b>Table ${s.table}</span></button></li>`).join("")||`<li class="muted">No one matches that yet. Try part of a name.</li>`; };
+    document.getElementById("allrows").innerHTML=S.filter(s=>norm(s.name+" "+s.project+" "+CATS[s.cat]).includes(t)).map(s=>`<li><button class="row" type="button" data-go="${s.id}"><span class="av">${esc(ini(s))}</span><span><span class="nm">${esc(s.name)}</span>${st.stamps[s.id]?`<span class="tag">Stamped</span>`:""}<br><span class="pj">${esc(s.project)}</span></span><span class="where"><b>Room ${s.room}</b>Table ${s.table}</span></button></li>`).join("")||`<li class="muted">No one matches that yet. Try part of a name.</li>`; };
   inp.addEventListener("input",draw); draw();
 }
 
-function visit(){
-  const seen=st.visited.map(byId).filter(Boolean);
-  view.innerHTML=`<div class="narrow"><h1 class="h-q">My visit</h1>
+/* ---------- my passport ---------- */
+function my(){
+  const n=stampCount(), stamped=S.filter(s=>st.stamps[s.id]);
+  const rooms=[...new Set(S.map(s=>s.room))];
+  view.innerHTML=`<div class="wrap"><h1 class="h-q">My passport</h1>
     <p class="muted">This is kept on your phone only. Nothing is shared unless you press the button below.</p>
-    <div class="story"><p><b>${st.role?esc(ROLES[st.role].label):"Visitor"}</b></p>
-      <p>${seen.length?"Tables visited: "+seen.map(s=>esc(s.name)).join(", ")+".":"You have not marked a table as visited yet."}</p></div>
-    <h2 class="h-q" style="font-size:24px">Share my visit with the organizers</h2>
-    <label class="check" for="c-did"><input type="checkbox" id="c-did" checked><span>What I did: who I am here as, and which tables I visited</span></label>
-    <label class="check" for="c-name"><input type="checkbox" id="c-name"><span>My name</span></label>
-    <input class="search" id="v-name" type="text" placeholder="Your name" hidden aria-label="Your name">
-    <label for="v-note" class="muted">One thing you will remember from today (optional)</label>
-    <textarea id="v-note"></textarea>
-    <button class="btn" type="button" id="share">Show what would be shared</button>
-    <pre class="out" id="out" hidden></pre>
-    <p><button class="link" type="button" data-go="${st.route.length?"route":"start"}">← Back</button> <button class="link" type="button" id="reset">Clear my answers and start over</button></p></div>`;
+    <div class="cover"><span class="otter" role="img" aria-label="Otter mark"></span><b>PASSPORT</b><span>Capstone Festival · December 2026</span><small>${st.role?esc(ROLES[st.role].label):"Visitor"}</small></div>
+    <p><b>${n} of ${S.length} stamps.</b> <span class="muted">Tap a circle to open that student.</span></p>
+    ${rooms.map(r=>`<h2 class="room">Room ${r}</h2><div class="grid">${S.filter(s=>s.room===r).map(s=>`<button class="slot" type="button" data-go="${s.id}" aria-label="${esc(s.name)}, table ${s.table}${st.stamps[s.id]?", stamped":""}">
+      <span class="ring${st.stamps[s.id]?" done":""}">${st.stamps[s.id]?stamp(s.id,true,false):"Table "+s.table}</span><em>${esc(s.first)}</em></button>`).join("")}</div>`).join("")}
+    <div class="panel"><h2 class="label" style="margin:0">Share my visit with the organizers</h2>
+      <label class="check" for="c-did"><input type="checkbox" id="c-did" checked><span>What I did: who I am here as, and which students I visited</span></label>
+      <label class="check" for="c-name"><input type="checkbox" id="c-name"><span>My name</span></label>
+      <input class="search" id="v-name" type="text" placeholder="Your name" hidden aria-label="Your name">
+      <label for="v-note" class="muted">One thing you will remember from today (optional)</label>
+      <textarea id="v-note"></textarea>
+      <button class="btn" type="button" id="share">Show what would be shared</button>
+      <pre class="out" id="out" hidden></pre></div>
+    <p class="foot"><button class="link" type="button" data-go="route">Back</button>
+      <button class="link" type="button" data-go="all">All students</button>
+      <button class="link" type="button" id="reset">Clear my answers and start over</button></p></div>`;
   const $=id=>document.getElementById(id);
   $("c-name").addEventListener("change",e=>{$("v-name").hidden=!e.target.checked;});
   $("share").addEventListener("click",()=>{ const L=[];
-    if($("c-did").checked){ L.push("Visitor: "+(st.role?ROLES[st.role].label:"not given")); L.push("Tables visited: "+(seen.length?seen.map(s=>s.name).join(", "):"none marked")); }
+    if($("c-did").checked){ L.push("Visitor: "+(st.role?ROLES[st.role].label:"not given"));
+      L.push("Students visited (stamps): "+(stamped.length?stamped.map(s=>s.name).join(", "):"none yet")); }
     if($("c-name").checked&&$("v-name").value.trim()) L.push("Name: "+$("v-name").value.trim());
     if($("v-note").value.trim()) L.push("Comment: "+$("v-note").value.trim());
     $("out").textContent=(L.length?L.join("\n"):"Nothing selected.")+"\n\nPrototype: nothing was sent. On the real site this goes to the festival spreadsheet."; $("out").hidden=false; });
-  $("reset").addEventListener("click",()=>{ st={role:null,sub:null,route:[],visited:[],seen:[],cur:null,seed:Math.floor(Math.random()*7)}; save(); go("start"); });
+  $("reset").addEventListener("click",()=>{ st=fresh(); shown=null; save(); go("start"); });
 }
 
-const LOOK="capstone-festival-look";
-function setLook(l){ document.documentElement.dataset.look=l; try{localStorage.setItem(LOOK,l);}catch(e){}
-  document.querySelectorAll(".lk").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.look===l))); }
-(function(){ let l="a"; try{l=localStorage.getItem(LOOK)||"a";}catch(e){} setLook(["a","b","c"].includes(l)?l:"a"); })();
-
+/* ---------- events ---------- */
+function turn(d){ if(!document.body.classList.contains("pg")||!shown) return;
+  const to=pg+d; if(to<0||to>1) return; pg=to; show(shown); }
 document.addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
-  if(b.dataset.look) return setLook(b.dataset.look);
-  if(b.id==="home") return go(st.route.length?"route":"start");
-  if(b.id==="visitBtn") return go("visit");
-  if(b.dataset.role){ st.role=b.dataset.role; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); return go("ask"); }
-  if(b.dataset.sub){ st.sub=b.dataset.sub; buildRoute(); st.seen=[]; return go(st.route[0]); }
-  if(b.dataset.visit){ const id=b.dataset.visit, i=st.visited.indexOf(id), now=i<0; if(now) st.visited.push(id); else st.visited.splice(i,1); save(); b.classList.toggle("ghost",now); b.textContent=now?"Visited. Tap to undo":"I visited "+byId(id).first; return; }
-  if(b.dataset.go){ if(b.dataset.go==="start"){ st.role=null; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; save(); } return go(b.dataset.go); }
+  if(b.dataset.turn) return turn(Number(b.dataset.turn));
+  if(b.dataset.role){ st.role=b.dataset.role; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; shown=null; save(); return go("ask"); }
+  if(b.dataset.sub){ st.sub=b.dataset.sub; buildRoute(); st.seen=[]; shown=null; return go(st.route[0]); }
+  if(b.dataset.stamp){ const id=b.dataset.stamp; if(st.stamps[id]) delete st.stamps[id]; else { st.stamps[id]=Date.now(); justStamped=id; } save(); return show(id); }
+  if(b.dataset.go){ if(b.dataset.reset){ st.role=null; st.sub=null; st.route=[]; st.seen=[]; st.cur=null; shown=null; save(); } return go(b.dataset.go); }
+});
+document.addEventListener("keydown",e=>{
+  if(e.target.closest("input,textarea")) return;
+  if(e.key==="ArrowRight") turn(1); else if(e.key==="ArrowLeft") turn(-1);
 });
 window.addEventListener("hashchange",render);
-wide.addEventListener("change",render);
 render();
 </script>
 </body>
