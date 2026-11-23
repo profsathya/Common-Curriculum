@@ -8,10 +8,11 @@ All students and projects are made up (the same fifteen as before).
 ## Decisions behind it
 - 11 Nov: the audience is festival visitors, and the site gives each visitor a personal route. AI drafts each student's page ahead of time from their Interactive Poster and the student approves it. One static page, no backend; a visitor's answers stay on their device. Prototype first; Sergio gets the fine-tuning and the engineering parts.
 - 20 Nov (Slack with Sergio and Utsab): a professional look with a small number of colors, the CSUMB colors. Another audience is Sathya's LinkedIn network.
-- 23 Nov: one design. Each student has two pages, to keep the clicks down. The visitor collects a stamp for each student, and the stamp is the Otter logo.
+- 23 Nov: one design. After trying two merged pages per student on a phone, Sathya chose one thing per screen with Next. The visitor collects a stamp for each student, and the stamp is the Otter logo.
 
 ## Front door (fits one phone screen)
-- Eyebrow: Cal State Monterey Bay · B.S. Computer Science
+- The Cal State Monterey Bay logo at the top left (the copy in cowork/fall-2026-courses/csumb-logo.jpg)
+- Eyebrow: B.S. Computer Science
 - Title: Capstone Festival
 - Line: December 2026 · 15 students. Collect a stamp for each student you visit.
 - Heading: I am a
@@ -39,21 +40,14 @@ All students and projects are made up (the same fifteen as before).
 - University administrator: one table per area, with a short program story above the first card (draft wording below).
 - When the planned students run out, the next two are the nearest tables the visitor has not opened.
 
-## Student, page 1
-- A Monterey Bay Blue band: photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work.
-- "What [first name] did" in plain words for family; "The project" (title and description) for everyone else.
-- "What this shows about [first name]" for family; "[First name]'s claim" for everyone else.
-- "Questions you can ask [first name]": two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
-- Button: "Next: stamp your visit"
-- University administrators see "About this capstone" above the first student's project (draft wording below).
-
-## Student, page 2
-- "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it.
-- Links: "[First name]'s Interactive Poster" · "[First name] on LinkedIn" (sample links in the prototype)
-- "Visit next": two students (name, project, Room and Table). Tapping one opens that student.
-- My passport · All students · Start over
-- Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
-- Buttons: Back · "Next: [next student's first name]"
+## One student, five screens (one thing on each)
+Five bars at the top fill in. Next and Back are at the bottom. A tap on the screen also moves on; a tap on the left third goes back. Each screen fits a phone without scrolling.
+1. Who: a white strip with the Cal State Monterey Bay logo, smaller, at the top left. Below it, on Monterey Bay Blue: photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work. Line: "Tap Next to meet [first name]."
+2. The work: "What [first name] did" in plain words for family; "The project" (title and description) for everyone else. Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
+3. The claim, on Monterey Bay Blue: "What this shows about [first name]" for family; "[First name]'s claim" for everyone else.
+4. Questions: "Questions you can ask [first name]", two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
+5. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
+- University administrators get one screen before the first student: "About this capstone" (draft wording below).
 
 ## Administrator story (draft wording)
 Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.
