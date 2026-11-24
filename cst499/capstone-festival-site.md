@@ -67,7 +67,12 @@ Students present at their own laptops. Each table below shows a different area o
 - "This is kept on your phone only. Nothing is shared unless you press the button below."
 - A cover with the otter mark, the count ("2 of 15 stamps"), and one circle per student grouped by room. A stamped circle shows the otter.
 - Share my visit with the organizers: [x] What I did: who I am here as, and which students I visited · [ ] My name · One thing you will remember from today (optional)
-- In the prototype the button only shows what would be shared.
+- In the preview copy (no address set) the button only shows what would be shared.
+
+## Share my visit: where it goes (built and tested 23 Nov)
+- The button sends the visitor's checked items to a Google Sheet in Sathya's Drive, "Capstone Festival: Share my visit (Fall 2026)", tab Visits. One visitor is one row: Received, Visitor, Students visited, Number visited, Name, One thing I will remember, Page.
+- A small script attached to the sheet receives each submission (the code is in cowork/fall-2026-courses/capstone-festival-share.gs). Sathya deployed it as a web app on 23 Nov, and its address is in SHARE_URL near the top of the script in the live .html. The address is meant to be public: it can only add a row to that one tab, and it cannot read the sheet or reach anything else in the Drive.
+- On the live page the button says "Share with the organizers", and the visitor sees "Sent to the festival organizers. Thank you." or "This did not go through. Check your connection and try again."
 
 ## The stamp
 - The Classic Otter Spirit Mark, alone inside a ring, in Monterey Bay Blue. Ring words: CAPSTONE FESTIVAL · DECEMBER 2026.
@@ -92,7 +97,6 @@ Students present at their own laptops. Each table below shows a different area o
 ## Not built yet (for Sergio or a later round)
 - Real cards: AI drafting from the finished posters (due Mon 7 Dec) and the step where each student reads and approves their two card versions
 - Student opt-in for name and photo on the site
-- The spreadsheet behind "Share my visit"
 - Typed-sentence matching for employers ("I hire for...")
 - Hosting and the QR code
 - Open question: Spanish version of the family path
