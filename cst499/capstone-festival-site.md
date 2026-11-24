@@ -42,7 +42,7 @@ All students and projects are made up (the same fifteen as before).
 
 ## One student, three screens
 Three bars at the top fill in. Next and Back are at the bottom. A tap on the screen also moves on; a tap on the left third goes back.
-1. Who and what: a white strip with the Cal State Monterey Bay logo, smaller, at the top left. A Monterey Bay Blue band with photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work. Below it: "What [first name] did" in plain words for family; "The project" (title and description) for everyone else. Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
+1. Who and what: a Monterey Bay Blue band with the white (reversed) Cal State Monterey Bay logo at its top right, then photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work. Below it: "What [first name] did" in plain words for family; "The project" (title and description) for everyone else. Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
 2. What it shows and what to ask: "What this shows about [first name]" for family, "[First name]'s claim" for everyone else. Then "Questions you can ask [first name]": two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
 3. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students, one line each. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
 - University administrators get one screen before the first student: "About this capstone" (draft wording below).
@@ -51,11 +51,11 @@ Three bars at the top fill in. Next and Back are at the bottom. A tap on the scr
 Measured on 23 Nov on the smallest common phone screen, 360 by 640 visible, with the real fonts. Each limit leaves some room for long words.
 - What [first name] did (family, plain words): up to 45 words. Longest sample now: 36.
 - Project title (everyone else): up to 10 words. Longest sample now: 11, which still fits.
-- Project description (everyone else): up to 30 words. Longest sample now: 25.
+- Project description (everyone else): up to 28 words. Longest sample now: 25.
 - The claim: up to 22 words. Longest sample now: 24, which still fits.
 - Each of the two family questions: up to 14 words. Longest sample now: 15, which still fits.
 - The one question for other visitors: up to 25 words. Longest sample now: 19.
-- A long name (two lines in the blue band) takes about 7 words from the first screen; the limits above allow for that.
+- A name longer than 18 characters is set in smaller type, so it does not take more room than a short one.
 - Checked: all 15 samples, for every kind of visitor, fit without scrolling at 360x640, 390x664 (current iPhones in Safari), 412x760 and 430x752. On an iPhone SE-size screen (375x553) screens 2 and 3 scroll by up to 17 pixels.
 - Why three screens: scrolling pages lose attention toward the bottom (Nielsen Norman Group eyetracking, 2018) and tap-through sequences lose people after three or four screens (Nielsen Norman Group, mobile carousels). Three screens that each fit the phone avoids both.
 
