@@ -268,6 +268,8 @@ const UNIVERSAL="What was the hardest decision you made, and what did you give u
 const S=(DATA.students||[]).filter(r=>r&&r.id&&r.name).map(r=>Object.assign({first:String(r.name).split(" ")[0],project:"",cat:"",desc:"",plain:"",claim:"",pro:"",room:null,table:null},r,
   {fam:Array.isArray(r.fam)?r.fam:[],lens:r.lens||{},approved:!!(DATA.allApproved||r.approved)}));
 const hasRooms=S.some(s=>s.room!=null);
+// Shown on a student's first screen until the data file gives that student a room. Set to null to show nothing.
+const PLACE_HOLDER={room:"X",table:"Y"};
 const area=s=>CATS[s.cat]||"";
 const place=s=>s.room!=null?`Room ${s.room}`+(s.table!=null?` · Table ${s.table}`:""):"";
 
@@ -405,7 +407,8 @@ function pages(s){
   /* 1. who the student is, and what they did */
   P.push({who:1,pre:`<header class="hero">${LOGO_WHITE}${photo(s,f)}
       <div><p class="k">${mine?"You are here for":esc(area(s))}</p><h1 class="name${s.name.length>18?" long":""}">${esc(s.name)}</h1>
-        ${s.room!=null?`<div class="pills"><span class="pill">Room ${s.room}</span>${s.table!=null?`<span class="pill o">Table ${s.table}</span>`:""}</div>`:""}</div></header>`,
+        ${s.room!=null?`<div class="pills"><span class="pill">Room ${esc(s.room)}</span>${s.table!=null?`<span class="pill o">Table ${esc(s.table)}</span>`:""}</div>`
+          :PLACE_HOLDER?`<div class="pills"><span class="pill">Room ${PLACE_HOLDER.room}</span><span class="pill o">Table ${PLACE_HOLDER.table}</span></div>`:""}</div></header>`,
     h:`<p class="k">${fam?"What "+f+" did":"The project"}</p>${fam?"":`<p class="proj">${esc(s.project)}</p>`}<p class="t">${esc(fam?s.plain:s.desc)}</p>
     <p class="made">Drafted by AI from ${f}'s Interactive Poster. ${s.approved?`Read and approved by ${f}.`:`${f} has not approved this page yet.`}</p>
     ${st.stamps[s.id]?`<span class="visited" role="img" aria-label="You stamped your visit to ${f}">${stamp(s.id,false,false)}</span>`:""}`});
