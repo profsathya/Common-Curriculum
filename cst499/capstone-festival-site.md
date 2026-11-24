@@ -47,6 +47,15 @@ Three bars at the top fill in. Next and Back are at the bottom. A tap on the scr
 3. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students, one line each. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
 - University administrators get one screen before the first student: "About this capstone" (draft wording below).
 
+## The data file (added 23 Nov)
+- The page holds the design and the wording. The students and the areas of work are in capstone-festival-data.js, next to the page. capstone-festival-data-sample.js holds the fifteen made-up students and shows the format; it is not edited.
+- Alan (Claude) edits the page and never opens capstone-festival-data.js once it holds real students. Codex writes that file and the posters folder.
+- Top of the file: sample (true only for made-up students), allApproved (set to true on Sat 12 Dec, which removes every "Draft" line), areas (key and label for each area of work), students (one entry each).
+- Each student: id ("student-" plus the name in lowercase with hyphens), name, project, cat (an area key), room and table (null until rooms are assigned), plain (family wording), desc (professional wording), claim, fam (two questions), pro (one question), lens (d, x, a questions, each optional), poster (posters/<name>.html), linkedin, photo, approved.
+- What the page does with missing things: no room, no Room and Table shown, and My passport groups students by area of work; no poster or no LinkedIn, that button is left out; no claim, the claim box is left out.
+- Until a student is approved, their first screen starts with "Draft. [First name] has not approved this page yet." and the foot line ends "[First name] has not approved this page yet." Students have until Fri 11 Dec to ask for changes.
+- The front page foot line for real students: "Each student's pages were drafted by AI from their Interactive Poster. A page marked Draft has not been approved by the student yet."
+
 ## Word limits (so each screen fits a phone without scrolling)
 Measured on 23 Nov on the smallest common phone screen, 360 by 640 visible, with the real fonts. Each limit leaves some room for long words.
 - What [first name] did (family, plain words): up to 45 words. Longest sample now: 36.
@@ -95,7 +104,7 @@ Students present at their own laptops. Each table below shows a different area o
 - Needed first: the BIT floor plans and the final list of festival rooms.
 
 ## Not built yet (for Sergio or a later round)
-- Real cards: AI drafting from the finished posters (due Mon 7 Dec) and the step where each student reads and approves their two card versions
+- Real students: Codex writes the data file from the first-version posters (prompt in cowork/fall-2026-courses/codex-prompt-capstone-festival-real-students.md); students read their pages and ask for changes by Fri 11 Dec
 - Student opt-in for name and photo on the site
 - Typed-sentence matching for employers ("I hire for...")
 - Hosting and the QR code
