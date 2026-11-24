@@ -8,7 +8,7 @@ All students and projects are made up (the same fifteen as before).
 ## Decisions behind it
 - 11 Nov: the audience is festival visitors, and the site gives each visitor a personal route. AI drafts each student's page ahead of time from their Interactive Poster and the student approves it. One static page, no backend; a visitor's answers stay on their device. Prototype first; Sergio gets the fine-tuning and the engineering parts.
 - 20 Nov (Slack with Sergio and Utsab): a professional look with a small number of colors, the CSUMB colors. Another audience is Sathya's LinkedIn network.
-- 23 Nov: one design. After trying two merged pages per student on a phone, Sathya chose one thing per screen with Next. The visitor collects a stamp for each student, and the stamp is the Otter logo.
+- 23 Nov: one design. Sathya tried two merged pages per student, then five screens with one thing on each, then asked what the research says and chose three screens per student, each fitting the phone. The visitor collects a stamp for each student, and the stamp is the Otter logo.
 
 ## Front door (fits one phone screen)
 - The Cal State Monterey Bay logo at the top left (the copy in cowork/fall-2026-courses/csumb-logo.jpg)
@@ -40,14 +40,24 @@ All students and projects are made up (the same fifteen as before).
 - University administrator: one table per area, with a short program story above the first card (draft wording below).
 - When the planned students run out, the next two are the nearest tables the visitor has not opened.
 
-## One student, five screens (one thing on each)
-Five bars at the top fill in. Next and Back are at the bottom. A tap on the screen also moves on; a tap on the left third goes back. Each screen fits a phone without scrolling.
-1. Who: a white strip with the Cal State Monterey Bay logo, smaller, at the top left. Below it, on Monterey Bay Blue: photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work. Line: "Tap Next to meet [first name]."
-2. The work: "What [first name] did" in plain words for family; "The project" (title and description) for everyone else. Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
-3. The claim, on Monterey Bay Blue: "What this shows about [first name]" for family; "[First name]'s claim" for everyone else.
-4. Questions: "Questions you can ask [first name]", two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
-5. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
+## One student, three screens
+Three bars at the top fill in. Next and Back are at the bottom. A tap on the screen also moves on; a tap on the left third goes back.
+1. Who and what: a white strip with the Cal State Monterey Bay logo, smaller, at the top left. A Monterey Bay Blue band with photo space (initials until a photo is added), name, Room and Table. Family see "You are here for"; everyone else sees the area of work. Below it: "What [first name] did" in plain words for family; "The project" (title and description) for everyone else. Foot line: "Drafted by AI from [first name]'s Interactive Poster. Read and approved by [first name] before it was published."
+2. What it shows and what to ask: "What this shows about [first name]" for family, "[First name]'s claim" for everyone else. Then "Questions you can ask [first name]": two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
+3. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students, one line each. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
 - University administrators get one screen before the first student: "About this capstone" (draft wording below).
+
+## Word limits (so each screen fits a phone without scrolling)
+Measured on 23 Nov on the smallest common phone screen, 360 by 640 visible, with the real fonts. Each limit leaves some room for long words.
+- What [first name] did (family, plain words): up to 45 words. Longest sample now: 36.
+- Project title (everyone else): up to 10 words. Longest sample now: 11, which still fits.
+- Project description (everyone else): up to 30 words. Longest sample now: 25.
+- The claim: up to 22 words. Longest sample now: 24, which still fits.
+- Each of the two family questions: up to 14 words. Longest sample now: 15, which still fits.
+- The one question for other visitors: up to 25 words. Longest sample now: 19.
+- A long name (two lines in the blue band) takes about 7 words from the first screen; the limits above allow for that.
+- Checked: all 15 samples, for every kind of visitor, fit without scrolling at 360x640, 390x664 (current iPhones in Safari), 412x760 and 430x752. On an iPhone SE-size screen (375x553) screens 2 and 3 scroll by up to 17 pixels.
+- Why three screens: scrolling pages lose attention toward the bottom (Nielsen Norman Group eyetracking, 2018) and tap-through sequences lose people after three or four screens (Nielsen Norman Group, mobile carousels). Three screens that each fit the phone avoids both.
 
 ## Administrator story (draft wording)
 Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.

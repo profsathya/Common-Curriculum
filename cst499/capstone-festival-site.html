@@ -98,14 +98,14 @@ body.pg #view{height:100%}
 .bar .id small{display:block;font:400 13.5px/1.3 var(--body);opacity:.8}
 .x{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:transparent;font-size:24px;line-height:1;color:inherit}
 .x:hover{background:rgba(107,146,182,.22)}
-.slide{flex:1;min-height:0;overflow-y:auto}
+.slide{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
 .k{font:700 12.5px/1.3 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--bay)}
 .name{font:800 40px/1.05 var(--display);letter-spacing:-.01em;text-wrap:balance}
-.proj{font:600 21px/1.3 var(--display);color:var(--bay);text-wrap:balance}
-.t{font-size:20px;line-height:1.5;max-width:34em}
-.claim{font:600 27px/1.32 var(--display);color:var(--bay);text-wrap:balance}
-.asks{display:flex;flex-direction:column;gap:10px}
-.asks li{background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;font-size:19px;line-height:1.4}
+.proj{font:600 19px/1.3 var(--display);color:var(--bay);text-wrap:balance}
+.t{font-size:19px;line-height:1.5;max-width:34em}
+.claim{font:600 21px/1.36 var(--display);color:var(--bay);text-wrap:balance}
+.asks{display:flex;flex-direction:column;gap:8px}
+.asks li{background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;font-size:17px;line-height:1.4}
 .pills{display:flex;gap:8px;flex-wrap:wrap}
 .pill{border-radius:999px;padding:6px 14px;font:700 14.5px/1.2 var(--display);background:var(--bay);color:var(--white)}
 .pill.o{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
@@ -128,9 +128,7 @@ body.pg #view{height:100%}
 /* Page 1 opens with a Monterey Bay Blue band: who the student is and where to find them */
 .top{padding-bottom:8px}
 .slide.bay{background:var(--bay);color:var(--white)}
-.one{min-height:100%;padding:22px 24px;display:flex;flex-direction:column;gap:16px}
-.one::before,.one::after{content:"";flex:1}
-.one.fromtop::before{display:none}
+.one{flex:1 0 auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
 .one.fromtop{gap:12px;padding-top:16px;padding-bottom:12px}
 .one.fromtop .target,.one.fromtop .stamp{width:124px;height:124px}
 .one.fromtop .target{padding:12px;font-size:13px}
@@ -144,7 +142,7 @@ body.pg #view{height:100%}
 .logo{display:block;height:auto}
 .mast .logo{width:214px;max-width:62%;margin:0 0 8px -3px}
 .bar .logo{width:auto;height:36px;margin-left:-2px}
-.hero{background:var(--bay);color:var(--white);padding:20px 22px 22px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.hero{flex:none;background:var(--bay);color:var(--white);padding:18px 22px 20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
 .hero .photo{width:96px;height:96px;border-radius:18px;font-size:30px;background:rgba(255,255,255,.16);color:var(--white)}
 .hero .k{color:#c5d5e5;margin-bottom:4px}
 .hero .name{font-size:30px;margin-bottom:10px}
@@ -169,15 +167,44 @@ body.pg #view{height:100%}
 .stamp.in{animation:thump .42s cubic-bezier(.2,.9,.3,1.2) both}
 @keyframes thump{from{transform:rotate(var(--r,-8deg)) scale(1.8);opacity:0}60%{opacity:.92}to{transform:rotate(var(--r,-8deg)) scale(1);opacity:.92}}
 @media (prefers-reduced-motion:reduce){.stamp.in{animation:none}}
+/* the stamp screen: next students on one line each, so the screen never needs a scroll */
+.one.fromtop .row{padding:8px 12px}
+.one.fromtop .row>span:nth-child(2){min-width:0}
+.one.fromtop .row .pj{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.one.fromtop .row br{display:none}
+.one.fromtop .link{font-size:15.5px;margin-right:13px;padding:4px 0}
+/* phones whose browser leaves less than 700px of height (most iPhones and small Android phones): tighter type */
+@media (max-height:700px){
+  .top{padding:10px 16px 6px;gap:8px}
+  .bar{min-height:36px}
+  .nav{padding:10px 16px 12px}
+  .nav button{padding:12px}
+  .one{padding:14px 20px;gap:12px}
+  .hero{padding:14px 20px 16px;gap:14px}
+  .hero .photo{width:80px;height:80px;font-size:26px;border-radius:16px}
+  .hero .name{font-size:27px;margin-bottom:8px}
+  .t{font-size:17.5px;line-height:1.45}
+  .proj{font-size:17.5px}
+  .claimbox{padding:13px 15px;gap:8px}
+  .claim{font-size:19px;line-height:1.34}
+  .asks{gap:7px}
+  .asks li{padding:9px 13px;font-size:16px;line-height:1.38}
+  .made{font-size:12.5px}
+  .one.fromtop{gap:10px;padding-top:12px;padding-bottom:8px}
+}
 
 @media (min-width:640px) and (min-height:700px){
   .pager{padding:24px}
   .sheet{border-radius:22px;box-shadow:0 18px 50px rgba(36,53,82,.18)}
-  .one{padding:26px 36px}
+  .one{padding:24px 34px}
+  .hero{padding:24px 34px 26px}
+  .hero .name{font-size:36px}
+  .t{font-size:20px}
+  .claim{font-size:24px}
   .mast .logo{width:270px}
   .top{padding:16px 24px 0}
   .nav{padding:10px 24px 22px}
-  .name{font-size:46px}
+  .name{font-size:40px}
 }
 
 /* ---------- my visit / my passport ---------- */
@@ -451,20 +478,16 @@ function pages(s){
   if(st.role==="admin"&&s.id===st.route[0]) P.push({h:`<p class="k">About this capstone <span class="draft">Draft wording</span></p>
     <p class="t">Each student in this capstone built an Interactive Poster. It opens with one claim about a skill the student can show, then the work behind it, a decision they made, and an obstacle they met.</p>
     <p class="t">Students present at their own laptops. Each table on your route shows a different area of work.</p>`});
-  /* 1. who */
-  P.push({who:1,tone:"bay",h:`<span class="photo" role="img" aria-label="Space for ${f}'s photo">${esc(ini(s))}</span>
-    <p class="k">${mine?"You are here for":esc(CATS[s.cat])}</p>
-    <h1 class="name">${esc(s.name)}</h1>
-    <div class="pills"><span class="pill">Room ${s.room}</span><span class="pill o">Table ${s.table}</span></div>
-    <p class="hint">Tap Next to meet ${f}.</p>`});
-  /* 2. what they did */
-  P.push({h:`<p class="k">${fam?"What "+f+" did":"The project"}</p>${fam?"":`<p class="proj">${esc(s.project)}</p>`}<p class="t">${esc(fam?s.plain:s.desc)}</p>
+  /* 1. who the student is, and what they did */
+  P.push({who:1,pre:`<header class="hero"><span class="photo" role="img" aria-label="Space for ${f}'s photo">${esc(ini(s))}</span>
+      <div><p class="k">${mine?"You are here for":esc(CATS[s.cat])}</p><h1 class="name">${esc(s.name)}</h1>
+        <div class="pills"><span class="pill">Room ${s.room}</span><span class="pill o">Table ${s.table}</span></div></div></header>`,
+    h:`<p class="k">${fam?"What "+f+" did":"The project"}</p>${fam?"":`<p class="proj">${esc(s.project)}</p>`}<p class="t">${esc(fam?s.plain:s.desc)}</p>
     <p class="made">Drafted by AI from ${f}'s Interactive Poster. Read and approved by ${f} before it was published.</p>`});
-  /* 3. what it shows */
-  P.push({tone:"bay",h:`<p class="k">${fam?"What this shows about "+f:f+"'s claim"}</p><p class="claim">${esc(s.claim)}</p>`});
-  /* 4. questions */
-  P.push({h:`<p class="k">${q.length>1?"Questions you can ask "+f:"A question to ask "+f}</p><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`});
-  /* 5. stamp, then who to visit next */
+  /* 2. what it shows, and what to ask */
+  P.push({h:`<section class="claimbox"><p class="k">${fam?"What this shows about "+f:f+"'s claim"}</p><p class="claim">${esc(s.claim)}</p></section>
+    <p class="k">${q.length>1?"Questions you can ask "+f:"A question to ask "+f}</p><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`});
+  /* 3. stamp, then who to visit next */
   const ts=st.stamps[s.id], nx=nextTwo(s.id);
   P.push({top:1,h:`<p class="k">Stamp your visit</p>
     <div class="stampzone"><button class="target${ts?" done":""}" type="button" data-stamp="${s.id}" aria-pressed="${!!ts}">${ts?stamp(s.id,false,justStamped===s.id):"Tap to stamp your visit"}</button>
@@ -486,7 +509,7 @@ function show(id){
   document.body.classList.add("pg");
   view.innerHTML=`<div class="pager"><article class="sheet">
     <div class="top">${top}</div>
-    <div class="slide${p.tone==="bay"?" bay":""}"><div class="one${p.top?" fromtop":""}">${p.h}</div></div>
+    <div class="slide">${p.pre||""}<div class="one${p.top?" fromtop":""}">${p.h}</div></div>
     <div class="nav"><button class="back" type="button" data-turn="-1"${pg===0?" hidden":""}>Back</button>
       ${last?(nx?`<button type="button" data-go="${nx.id}">Next: ${esc(nx.first)}</button>`:""):`<button type="button" data-turn="1">Next</button>`}</div>
   </article></div>`;
