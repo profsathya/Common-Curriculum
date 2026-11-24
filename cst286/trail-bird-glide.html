@@ -234,6 +234,11 @@
   .secth{display:flex; align-items:center; gap:8px; margin:22px 0 10px; padding-top:14px; border-top:1px solid var(--line-soft)}
   .secth .pn{background:var(--tc); color:var(--on-tc); font-weight:600}
   .parth + .secth{border-top:0; padding-top:0; margin-top:6px}
+  .hero .steps{max-width:60ch; color:#C5D0DD; font-size:1.05rem; margin-bottom:10px}
+  .msg p:last-child, details.limits p:last-child{margin-bottom:0}
+  .msg p{margin:0 0 8px}
+  .pop{font-weight:700; color:#fff; font-size:1.06em}
+  .hero .pop{color:var(--hero-cream); font-size:1.12em}
   @media print{ #subfab,#subbox{display:none} }
   @media (prefers-reduced-motion: reduce){ .heroart .path{animation:none} #stop.arrive{animation:none} .zooming{transition:none} }
 </style>
@@ -411,8 +416,21 @@ const COPY = {
  "eyebrow": "CST286 · Learning trail",
  "title": "How a bird glides without flapping",
  "intro": [
-  "A gull can cross a whole bay without moving its wings once. No engine pulls it forward, and yet it keeps going. On this learning trail you fly a gliding bird yourself, and then you open the flight up one level at a time: the forces on the bird, where the lifting force comes from, why one speed carries the bird farther than any other, and finally the program that calculates the whole flight. At each level you predict first, then test your prediction on the simulation, then explain what you saw in your own words.",
-  "You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail."
+  {
+   "b": "A gull can cross a whole bay without moving its wings once.",
+   "t": "No engine pulls it forward, and yet it keeps going. On this learning trail you fly a gliding bird yourself, and then you open the flight up one level at a time:"
+  },
+  {
+   "ul": [
+    "the forces on the bird,",
+    "where the lifting force comes from,",
+    "why one speed carries the bird farther than any other, and",
+    "finally the program that calculates the whole flight."
+   ]
+  },
+  "At each level you predict first, then test your prediction on the simulation, then explain what you saw in your own words.",
+  "You can ask for feedback on an explanation, improve it, and ask again.",
+  "When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail."
  ],
  "map": {
   "start": "Start",
@@ -435,8 +453,13 @@ const COPY = {
  "l1": {
   "heading": "Fly it",
   "p": [
-   "Start by flying. The bird leaves a cliff 30 m above the sea, already moving at 10 m/s. It does not flap. Your only control is where its nose points: a little up, level, or down. Use the slider or the up and down arrow keys.",
-   "Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it before the bird reaches the water. Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them."
+   {
+    "b": "Start by flying.",
+    "t": "The bird leaves a cliff 30 m above the sea, already moving at 10 m/s. It does not flap."
+   },
+   "Your only control is where its nose points: a little up, level, or down. Use the slider or the up and down arrow keys.",
+   "Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it before the bird reaches the water.",
+   "Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them."
   ],
   "stall": "Stall: the wing is tilted too far and has lost most of its lift, so the bird is dropping.",
   "hint": "Look at your table. Compare the flight where you held the nose highest with the flight where you held it lowest. Neither one went farthest. Try a nose angle between them and hold it steady.",
@@ -448,9 +471,23 @@ const COPY = {
  "l2": {
   "heading": "The forces on the bird",
   "p": [
-   "Three forces act on a gliding bird, and none of them points forward. The Earth pulls the bird down with its weight, 9.8 N for this 1.0 kg bird, and that never changes. The air pushes on the wings in two ways. Lift is the part of the air's push that is at a right angle to the direction the bird is moving. Drag is the part that points straight back along that direction, against the motion.",
-   "So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill. Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag. A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.",
-   "Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. Press Add the forces to see why: placed tip to tail, the three arrows close into a triangle, which means they add up to zero. By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."
+   {
+    "b": "Three forces act on a gliding bird, and none of them points forward:",
+    "t": ""
+   },
+   {
+    "ul": [
+     "Weight. The Earth pulls the bird down with 9.8 N for this 1.0 kg bird, and that never changes.",
+     "Lift. It is the part of the air's push on the wings that is at a right angle to the direction the bird is moving.",
+     "Drag. It is the other part of the air's push. It points straight back along that direction, against the motion."
+    ]
+   },
+   "So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill.",
+   "Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag.",
+   "A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.",
+   "Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing.",
+   "Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.",
+   "By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."
   ],
   "addForces": "Add the forces",
   "ratioText": "The triangle also tells you how far the bird goes. In a steady glide, the distance travelled forward for each meter of height lost is equal to lift divided by drag. This number is called the glide ratio.",
@@ -460,14 +497,37 @@ const COPY = {
  "l3": {
   "heading": "Where lift comes from",
   "p": [
-   "A wing makes lift by pushing air down. Look at the air leaving the back of the wing: it is heading downward, although it arrived level. The wing changed the air's direction, and changing the motion of something takes a force. The wing pushes the air down, and by Newton's third law the air pushes the wing up with an equal force. That upward push is lift.",
-   "How much lift depends on how much air the wing turns and how sharply it turns it. Three things set that: how fast the air is moving past the wing, how large the wing is, and how far the wing is tilted into the oncoming air. The relationship is:"
+   [
+    {
+     "b": "A wing makes lift by pushing air down.",
+     "t": "Look at the air leaving the back of the wing: it is heading downward, although it arrived level."
+    },
+    "The wing changed the air's direction, and changing the motion of something takes a force. The wing pushes the air down, and by Newton's third law the air pushes the wing up with an equal force. That upward push is lift."
+   ],
+   [
+    "How much lift depends on how much air the wing turns and how sharply it turns it. Three things set that:",
+    {
+     "ul": [
+      "how fast the air is moving past the wing",
+      "how large the wing is",
+      "how far the wing is tilted into the oncoming air"
+     ]
+    },
+    "The relationship is:"
+   ]
   ],
   "formula": "lift = ½ × air density × speed² × wing area × lift coefficient",
   "unitCheck": "Unit check: kg/m³ × m²/s² × m² = kg·m/s², which is a newton.",
-  "coef": "The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°. Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall.",
+  "coef": [
+   "The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°.",
+   "Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall."
+  ],
   "task": "Set the air speed to 10 m/s. Find the wing tilt at which the lift equals the bird's weight.",
-  "stallText": "Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N. When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5. So there is a slowest speed at which a steady glide is possible.",
+  "stallText": [
+   "Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N.",
+   "When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5.",
+   "So there is a slowest speed at which a steady glide is possible."
+  ],
   "tilt": "Wing tilt",
   "speed": "Air speed",
   "caption": "A sketch of the airflow, not a calculation of it.",
@@ -479,9 +539,14 @@ const COPY = {
  "l4": {
   "heading": "Why one speed goes farthest",
   "p": [
-   "At Level 2 you found that distance comes from the glide ratio, lift ÷ drag. In a steady glide the lift is fixed: it has to equal the weight. So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.",
+   {
+    "b": "At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.",
+    "t": "In a steady glide the lift is fixed: it has to equal the weight."
+   },
+   "So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.",
    "The first part comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive.",
-   "The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it. This part is largest at low speed and shrinks as the bird speeds up.",
+   "The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it.",
+   "This part is largest at low speed and shrinks as the bird speeds up.",
    "Add the two parts and you get a curve shaped like a valley. Move the speed slider and find the bottom of the valley."
   ],
   "xAxis": "glide speed (m/s)",
@@ -496,9 +561,17 @@ const COPY = {
   "found": "You found it. At about 10.3 m/s the total drag is smallest, the glide ratio is about 13, and the bird reaches about 387 m from a height of 30 m. Compare that with your best flight at Level 1.",
   "bird1": "1.0 kg bird",
   "bird2": "1.3 kg bird, after a large fish",
-  "heavy": "The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that. What changed is the speed: the heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner. Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier.",
+  "heavy": [
+   "The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that.",
+   "What changed is the speed. The heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner.",
+   "Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier."
+  ],
   "limitsSummary": "Where this model stops being true",
-  "limits": "This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air. The airflow picture at Level 3 is a sketch. The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft.",
+  "limits": [
+   "This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air.",
+   "The airflow picture at Level 3 is a sketch.",
+   "The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft."
+  ],
   "exit": "Zoom in: inside the simulation"
  },
  "l5": {
@@ -540,7 +613,10 @@ const COPY = {
   },
   "fnet": "F_net = lift * across - drag * along + vector(0, -mass * g, 0)",
   "intro": [
-   "Every flight on this page was calculated by a program. At this level you open that program and see how it works.",
+   {
+    "b": "Every flight on this page was calculated by a program.",
+    "t": "At this level you open that program and see how it works."
+   },
    "What you will do:",
    {
     "ol": [
@@ -647,22 +723,11 @@ const COPY = {
       "The lift coefficient. It depends on how far the wing is tilted into the oncoming air."
      ]
     },
-    "The wing tilt is the step that is easy to miss:",
-    {
-     "ul": [
-      "The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.",
-      "So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.",
-      "Example: the path slopes 4° downhill, so the path angle is −4°. A nose held 2° above level meets the air at 2° − (−4°) = 6°."
-     ]
-    },
-    "This one line explains the stall at Level 1:",
-    {
-     "ul": [
-      "Suppose you hold the nose up and do not move it.",
-      "As the bird slows down it begins to sink, so the path angle becomes more negative.",
-      "The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls."
-     ]
-    }
+    "The wing tilt is the step that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.",
+    "So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.",
+    "For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.",
+    "This one line explains the stall at Level 1. Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.",
+    "The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls."
    ],
    "watch": [
     {
@@ -719,22 +784,16 @@ const COPY = {
      ]
     },
     "At Level 2 you added the forces by placing their arrows tip to tail. The program does the same addition with numbers.",
-    "The drag:",
-    {
-     "ul": [
-      "It comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.",
-      "The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air. The CL² part is the price of making lift.",
-      "These are the two parts of the valley at Level 4."
-     ]
-    },
-    "The directions:",
+    "The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.",
+    "The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.",
+    "For the directions, the program makes two arrows:",
     {
      "ul": [
       "The arrow named along has length 1 and points in the direction of travel. hat( ) shrinks the velocity to length 1 without turning it.",
       "The arrow named across is along turned a quarter turn. It points at a right angle to the path."
      ]
     },
-    "The sum. Each force is a size times a direction:",
+    "Each force is then a size times a direction:",
     {
      "ul": [
       "The lift is lift × across.",
@@ -1338,7 +1397,7 @@ const COPY = {
  },
  "teach": {
   "title": "Teach it back",
-  "lead": "<p>Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with. Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper. It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.<\/p><p>Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.<\/p>",
+  "lead": "<p><b class=\"pop\">Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with.<\/b><\/p><p>Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper.<\/p><p>It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.<\/p><p>Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.<\/p>",
   "privacy": "What you type here is sent to the course AI helper so that it can reply. The course does not store it, and the conversation is kept only in this browser.",
   "opener": "I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what is moving it forward?",
   "place": "Type your explanation here",
@@ -1373,7 +1432,13 @@ const COPY = {
  },
  "side": {
   "heading": "Your side trail",
-  "lead": "A learning trail that someone else laid out only takes you so far. The skill this course has been building all semester is finding your own next question and following it. Here you plan a short side trail of your own, do it, and report what you found.",
+  "lead": [
+   {
+    "b": "A learning trail that someone else laid out only takes you so far.",
+    "t": "The skill this course has been building all semester is finding your own next question and following it."
+   },
+   "Here you plan a short side trail of your own, do it, and report what you found."
+  ],
   "youWrote": "At the start you wrote:",
   "after": "Has this learning trail answered it? If part of it is still open, that is a good side trail. If you want other ideas, here are six.",
   "options": [
@@ -1429,6 +1494,9 @@ const COPY = {
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
   const C = COPY, F = FLIGHT, D2R = Math.PI / 180, BUOY = 370;
   const words = t => String(t || '').trim().split(/\s+/).filter(Boolean).length;
+  // short paragraphs, bullet lists, numbered steps and formulas, from the words file
+  const blocks = a => a.map(x => typeof x === 'string' ? '<p>' + esc(x) + '</p>' : x.b ? '<p><b class="pop">' + esc(x.b) + '</b>' + (x.t ? ' ' + esc(x.t) : '') + '</p>' : x.f ? '<div class="formula"><div class="f">' + esc(x.f) + '</div></div>' :
+    '<' + (x.ol ? 'ol' : 'ul') + ' class="steps">' + (x.ol || x.ul).map(t => '<li>' + esc(t) + '</li>').join('') + '</' + (x.ol ? 'ol' : 'ul') + '>').join('');
   const ptxt = id => { const e = document.getElementById(id); return e ? e.textContent.trim() : ''; };
   const PROMPT = {explain:ptxt('p-explain-system'), notes:{ex1:ptxt('p-notes-1'), ex2:ptxt('p-notes-2'), ex3:ptxt('p-notes-3'), ex4:ptxt('p-notes-4'), exProg:ptxt('p-notes-5')}, planQ:ptxt('p-plan-question'), planNotes:ptxt('p-plan-notes'), classmate:ptxt('p-classmate-system'), fb:ptxt('p-feedback-system')};
 
@@ -1449,7 +1517,7 @@ const COPY = {
   /* ---------- static text ---------- */
   $('#h-eyebrow').textContent = C.eyebrow;
   $('#h-title').innerHTML = esc(C.title).replace('without flapping', '<em>without flapping</em>');
-  $('#h-intro').innerHTML = C.intro.map(p => '<p>' + esc(p) + '</p>').join('');
+  $('#h-intro').innerHTML = blocks(C.intro);
   $('#aih-sum').textContent = C.aiHelper.summary;
   $('#aih-body').innerHTML = esc(C.aiHelper.body) + '<a href="' + C.aiHelper.href + '" target="_blank" rel="noopener">' + esc(C.aiHelper.link) + '</a>' + C.aiHelper.end;
   $('#foot').textContent = C.footer;
@@ -1814,7 +1882,7 @@ const COPY = {
 
   VIEW.fly = function(l){
     const fs = S.flights;
-    main.innerHTML = head(l) + C.l1.p.map(p => '<p>' + esc(p) + '</p>').join('') +
+    main.innerHTML = head(l) + blocks(C.l1.p) +
       '<div class="sim" id="sim1"><div class="simrow"><div class="canwrap"><canvas id="c1" tabindex="0" aria-label="Side view: the bird, the cliff, the sea and the buoy. Use the up and down arrow keys to change the nose angle."></canvas><div class="banner" id="stall1" hidden>' + esc(C.l1.stall) + '</div></div>' + thetaCtl('th1') + '</div>' +
       '<div class="simbar"><button type="button" class="btn" id="launch"></button>' + speedBar() + '</div>' +
       '<div class="readouts">' + ro('Speed', 'r-v') + ro('Height', 'r-y') + ro('Distance', 'r-x') + ro('Nose angle', 'r-th') + '</div></div>' +
@@ -1870,7 +1938,7 @@ const COPY = {
   };
 
   VIEW.forces = function(l){
-    main.innerHTML = head(l) + C.l2.p.map(p => '<p>' + esc(p) + '</p>').join('') +
+    main.innerHTML = head(l) + blocks(C.l2.p) +
       '<div class="sim" id="sim2"><div class="simrow"><div class="canwrap"><canvas id="c2" tabindex="0" aria-label="The bird up close with its weight, lift and drag arrows and its direction of travel. Use the up and down arrow keys to change the nose angle."></canvas><div class="banner" id="stall2" hidden>' + esc(C.l1.stall) + '</div></div>' + thetaCtl('th2') + '</div>' +
       '<div class="simbar"><button type="button" class="btn ghost" id="addf" aria-pressed="false">' + esc(C.l2.addForces) + '</button>' + speedBar() + '</div>' +
       '<div class="readouts">' + ro('Speed', 'r2-v') + ro('Height', 'r2-y') + ro('Distance', 'r2-x') + ro('Nose angle', 'r2-th') + '</div></div>' +
@@ -1956,14 +2024,14 @@ const COPY = {
 
   VIEW.lift = function(l){
     const L3 = S.l3;
-    main.innerHTML = head(l) + '<p>' + esc(C.l3.p[0]) + '</p>' +
+    main.innerHTML = head(l) + blocks(C.l3.p[0]) +
       '<div class="sim" id="sim3"><div class="simrow"><div class="canwrap"><canvas id="c3" aria-label="A wing cross-section with air flowing past it from the left. The air leaving the back of the wing heads downward."></canvas></div>' +
       '<div class="gaugewrap" aria-hidden="true"><span class="gv" id="g-v"></span><div class="gauge"><div class="fill" id="g-f"></div><div class="wline" id="g-w"></div><div class="wlbl" id="g-wl"><span class="gw">' + esc(C.l3.weightLine) + '</span></div></div></div></div>' +
       '<div class="hsl"><label for="tilt">' + esc(C.l3.tilt) + '</label><input type="range" id="tilt" min="0" max="20" step="0.5"><output id="tilt-o"></output></div>' +
       '<div class="hsl"><label for="air">' + esc(C.l3.speed) + '</label><input type="range" id="air" min="4" max="20" step="0.5"><output id="air-o"></output></div>' +
       '<div class="simbar"><span></span>' + speedBar() + '</div></div>' +
-      '<p>' + esc(C.l3.p[1]) + '</p><div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div><div class="uc">' + esc(C.l3.unitCheck) + '</div></div>' +
-      '<p>' + esc(C.l3.coef) + '</p><p><b>' + esc(C.l3.task) + '</b></p>' + predHTML('p3') + prHTML('pr2') + '<p>' + esc(C.l3.stallText) + '</p>' + prHTML('pr3') + exHTML('ex3', C.explain.ex3) + foot(l);
+      blocks(C.l3.p[1]) + '<div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div><div class="uc">' + esc(C.l3.unitCheck) + '</div></div>' +
+      blocks(C.l3.coef) + '<p><b>' + esc(C.l3.task) + '</b></p>' + predHTML('p3') + prHTML('pr2') + blocks(C.l3.stallText) + prHTML('pr3') + exHTML('ex3', C.explain.ex3) + foot(l);
     bindSpeed($('#sim3')); bindPred('p3'); bindPr('pr2'); bindPr('pr3'); bindEx('ex3', C.explain.ex3);
     const cv = $('#c3'), tilt = $('#tilt'), air = $('#air');
     const upd = () => {
@@ -2056,7 +2124,7 @@ const COPY = {
 
   VIEW.speed = function(l){
     const L4 = S.l4;
-    main.innerHTML = head(l) + C.l4.p.map(p => '<p>' + esc(p) + '</p>').join('') +
+    main.innerHTML = head(l) + blocks(C.l4.p) +
       '<div class="sim" id="sim4"><div class="legend"><span><i style="border-color:#5677A6"></i>' + esc(C.l4.curves[0]) + '</span><span><i style="border-color:#C0577A"></i>' + esc(C.l4.curves[1]) + '</span><span><i class="bold" style="border-color:#E08A00"></i>' + esc(C.l4.curves[2]) + '</span></div>' +
       '<div class="canwrap"><canvas id="c4a" aria-label="Graph of drag against glide speed: one part rising, one part falling, and their total shaped like a valley."></canvas></div>' +
       '<div class="canwrap" style="margin-top:8px"><canvas id="c4b" aria-label="Side view of the glide from the 30 m cliff at the chosen speed, drawn as a straight line to where it lands."></canvas></div>' +
@@ -2064,7 +2132,7 @@ const COPY = {
       '<div class="readouts">' + ro('Lift (equal to the weight)', 'r4-l') + ro('Total drag', 'r4-d') + ro('Glide ratio', 'r4-r') + ro('Distance from 30 m', 'r4-x') + '</div>' +
       '<div class="row" id="birds"></div></div>' +
       '<div id="l4found"></div><div id="p4wrap"></div><div id="l4heavy"></div><div id="ex4wrap"></div>' +
-      '<details class="limits"><summary>' + esc(C.l4.limitsSummary) + '</summary><p>' + esc(C.l4.limits) + '</p></details>' + foot(l);
+      '<details class="limits"><summary>' + esc(C.l4.limitsSummary) + '</summary>' + blocks(C.l4.limits) + '</details>' + foot(l);
     const ca = $('#c4a'), cb = $('#c4b'), gs = $('#gs'), sess = G.speed || (G.speed = {best:null});
     const Wt = () => L4.bird === 1.3 ? 12.74 : 9.8;
     const paint = () => {
@@ -2076,7 +2144,7 @@ const COPY = {
       $('#r4-x').textContent = st.stall ? '-' : Math.round(30 * st.ratio) + ' m';
       if (!st.stall && (!sess.best || 30 * st.ratio > sess.best.d)) sess.best = {d:30 * st.ratio};
       $('#l4found').innerHTML = shown(L4.found1) ? '<div class="msg ok">' + esc(C.l4.found) + '</div>' : '';
-      $('#l4heavy').innerHTML = shown(L4.found2) ? '<div class="msg ok">' + esc(C.l4.heavy) + '</div>' : '';
+      $('#l4heavy').innerHTML = shown(L4.found2) ? '<div class="msg ok">' + blocks(C.l4.heavy) + '</div>' : '';
       const pw = $('#p4wrap'); if (shown(L4.found1) && !pw.firstChild){ pw.innerHTML = predHTML('p4'); bindPred('p4', paint); }
       const ew = $('#ex4wrap'); if (shown(L4.found1) && !ew.firstChild){ ew.innerHTML = exHTML('ex4', C.explain.ex4); bindEx('ex4', C.explain.ex4); }
       const bw = $('#birds');
@@ -2177,7 +2245,7 @@ const COPY = {
   const sideOptText = () => S.side.opt === null ? 'not chosen yet' : S.side.opt === 6 ? C.side.own : C.side.options[S.side.opt];
   VIEW.side = function(l){
     const SD = S.side, PL = C.side;
-    main.innerHTML = head(l) + '<p>' + esc(PL.lead) + '</p><p>' + esc(PL.youWrote) + '</p><blockquote class="mine">' + esc(S.startText.trim() || '-') + '</blockquote><p>' + esc(PL.after) + '</p>' +
+    main.innerHTML = head(l) + blocks(PL.lead) + '<p>' + esc(PL.youWrote) + '</p><blockquote class="mine">' + esc(S.startText.trim() || '-') + '</blockquote><p>' + esc(PL.after) + '</p>' +
       '<div class="choices" role="radiogroup">' + PL.options.concat([PL.own]).map((o, i) => '<label class="choice' + (SD.opt === i ? ' on' : '') + '"><input type="radio" name="sideopt" value="' + i + '"' + (SD.opt === i ? ' checked' : '') + '><span>' + esc(o) + '</span></label>').join('') + '</div>' +
       '<p class="guide">' + esc(PL.planGuide) + '</p>' +
       PL.plan.map((p, i) => '<div class="field"><label for="plan' + i + '">' + esc(p) + '</label><textarea id="plan' + i + '" class="editor" rows="3" maxlength="1500"></textarea></div>').join('') +
@@ -2266,9 +2334,6 @@ const COPY = {
     return out.length ? out.join('; ') : 'edited, with nose, mass, launch_speed, dt and the F_net line as in the original';
   }
 
-  // short paragraphs, bullet lists, numbered steps and formulas, from the words file
-  const blocks = a => a.map(x => typeof x === 'string' ? '<p>' + esc(x) + '</p>' : x.f ? '<div class="formula"><div class="f">' + esc(x.f) + '</div></div>' :
-    '<' + (x.ol ? 'ol' : 'ul') + ' class="steps">' + (x.ol || x.ul).map(t => '<li>' + esc(t) + '</li>').join('') + '</' + (x.ol ? 'ol' : 'ul') + '>').join('');
   const sect = (n, t) => '<h4 class="sub secth"><span class="pn">' + n + '</span>' + esc(t) + '</h4>';
 
   /* the program map: the program drawn as boxes, opened from top to bottom */

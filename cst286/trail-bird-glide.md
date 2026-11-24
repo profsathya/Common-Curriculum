@@ -4,9 +4,18 @@ CST286 · Learning trail
 
 (Page note: this .md is the words twin of trail-bird-glide.html in the same folder. It is generated from the page, so the two match word for word.)
 
-A gull can cross a whole bay without moving its wings once. No engine pulls it forward, and yet it keeps going. On this learning trail you fly a gliding bird yourself, and then you open the flight up one level at a time: the forces on the bird, where the lifting force comes from, why one speed carries the bird farther than any other, and finally the program that calculates the whole flight. At each level you predict first, then test your prediction on the simulation, then explain what you saw in your own words.
+**A gull can cross a whole bay without moving its wings once.** No engine pulls it forward, and yet it keeps going. On this learning trail you fly a gliding bird yourself, and then you open the flight up one level at a time:
 
-You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail.
+- the forces on the bird,
+- where the lifting force comes from,
+- why one speed carries the bird farther than any other, and
+- finally the program that calculates the whole flight.
+
+At each level you predict first, then test your prediction on the simulation, then explain what you saw in your own words.
+
+You can ask for feedback on an explanation, improve it, and ask again.
+
+When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail.
 
 (Page note: level map at the top: Start · Fly it · The forces · Where lift comes from · The best speed · Inside the simulation · Teach it back · Your side trail. Locked levels are greyed. With ?review=1 in the address every level is open and the page shows "Review mode: every level is open.")
 
@@ -24,9 +33,13 @@ What made you choose this learning trail, and what do you want to be able to exp
 
 ## Level 1: Fly it
 
-Start by flying. The bird leaves a cliff 30 m above the sea, already moving at 10 m/s. It does not flap. Your only control is where its nose points: a little up, level, or down. Use the slider or the up and down arrow keys.
+**Start by flying.** The bird leaves a cliff 30 m above the sea, already moving at 10 m/s. It does not flap.
 
-Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it before the bird reaches the water. Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them.
+Your only control is where its nose points: a little up, level, or down. Use the slider or the up and down arrow keys.
+
+Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it before the bird reaches the water.
+
+Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them.
 
 (Page note: canvas: side view of the 30 m cliff, the sea, distance marks every 50 m and a buoy with a flag at 370 m; the camera follows the bird. Nose-angle slider beside it (vertical, "nose up" at the top, "nose down" at the bottom), -10° to +20°, step 0.5°, default 0°; up and down arrow keys change it by 0.5° when the canvas has focus. Button "Launch", then "Launch again". Readouts: Speed, Height, Distance, Nose angle. When the bird lands the canvas marks where, "landed at N m".)
 
@@ -57,11 +70,23 @@ When a flight passes the buoy: You passed the buoy.
 
 ## Level 2: The forces on the bird
 
-Three forces act on a gliding bird, and none of them points forward. The Earth pulls the bird down with its weight, 9.8 N for this 1.0 kg bird, and that never changes. The air pushes on the wings in two ways. Lift is the part of the air's push that is at a right angle to the direction the bird is moving. Drag is the part that points straight back along that direction, against the motion.
+**Three forces act on a gliding bird, and none of them points forward:**
 
-So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill. Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag. A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.
+- Weight. The Earth pulls the bird down with 9.8 N for this 1.0 kg bird, and that never changes.
+- Lift. It is the part of the air's push on the wings that is at a right angle to the direction the bird is moving.
+- Drag. It is the other part of the air's push. It points straight back along that direction, against the motion.
 
-Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. Press Add the forces to see why: placed tip to tail, the three arrows close into a triangle, which means they add up to zero. By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
+So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill.
+
+Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag.
+
+A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.
+
+Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing.
+
+Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.
+
+By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
 
 (Page note: canvas: the bird large and centered, flying the same model; it relaunches from the cliff each time it reaches the water. Arrows: weight straight down, lift at a right angle to the direction of travel, drag back along it from the tail (at least 10 px long), and the dashed direction-of-travel arrow; 9.8 N is about 110 px. A small inset shows the glide path from the side. Same nose-angle slider and readouts as Level 1. The button "Add the forces" draws the three arrows tip to tail in a side panel, with the leftover arrow outlined in red and labelled "net force N.N N".)
 
@@ -99,17 +124,27 @@ The triangle also tells you how far the bird goes. In a steady glide, the distan
 
 ## Level 3: Where lift comes from
 
-A wing makes lift by pushing air down. Look at the air leaving the back of the wing: it is heading downward, although it arrived level. The wing changed the air's direction, and changing the motion of something takes a force. The wing pushes the air down, and by Newton's third law the air pushes the wing up with an equal force. That upward push is lift.
+**A wing makes lift by pushing air down.** Look at the air leaving the back of the wing: it is heading downward, although it arrived level.
+
+The wing changed the air's direction, and changing the motion of something takes a force. The wing pushes the air down, and by Newton's third law the air pushes the wing up with an equal force. That upward push is lift.
 
 (Page note: canvas: a wing cross-section in the middle with 10 animated streamlines arriving level from the left and leaving downward behind it; the downward turn grows with the tilt. Sliders "Wing tilt" 0° to 20° (step 0.5, default 6°) and "Air speed" 4 to 20 m/s (step 0.5, default 10). Blue arrows behind the wing labelled "air pushed down"; a teal arrow up from the wing labelled "lift N.N N". Beside the canvas a gauge: a teal bar for lift and a purple line at 9.8 N labelled "the bird's weight". Above 15° the flow over the top breaks into eddies, lift falls and a "stalled" label appears. Caption inside the canvas: "A sketch of the airflow, not a calculation of it.")
 
-How much lift depends on how much air the wing turns and how sharply it turns it. Three things set that: how fast the air is moving past the wing, how large the wing is, and how far the wing is tilted into the oncoming air. The relationship is:
+How much lift depends on how much air the wing turns and how sharply it turns it. Three things set that:
+
+- how fast the air is moving past the wing
+- how large the wing is
+- how far the wing is tilted into the oncoming air
+
+The relationship is:
 
 > lift = ½ × air density × speed² × wing area × lift coefficient  
 > live line, for example: ½ × 1.2 kg/m³ × (10.0 m/s)² × 0.20 m² × 0.60 = 7.2 N  
 > Unit check: kg/m³ × m²/s² × m² = kg·m/s², which is a newton.
 
-The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°. Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall.
+The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°.
+
+Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall.
 
 **Set the air speed to 10 m/s. Find the wing tilt at which the lift equals the bird's weight.**
 
@@ -134,7 +169,11 @@ The lift coefficient is a number with no unit that grows with the tilt of the wi
 - Right number, wrong unit: The number is right, but check the unit. You are answering with a force.
 - First step (after 2 misses): Start with the speed. 9.0 m/s squared is 81 m²/s². Then multiply by the other numbers in the relationship.
 
-Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N. When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5. So there is a slowest speed at which a steady glide is possible.
+Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N.
+
+When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5.
+
+So there is a slowest speed at which a steady glide is possible.
 
 **Practice:** For this bird (weight 9.8 N, wing area 0.20 m², air density 1.2 kg/m³, largest lift coefficient 1.5), what is the slowest speed at which the wings can still make 9.8 N of lift?
 
@@ -151,11 +190,15 @@ Now you can explain the stall you felt at Level 1. To hold a steady glide the wi
 
 ## Level 4: Why one speed goes farthest
 
-At Level 2 you found that distance comes from the glide ratio, lift ÷ drag. In a steady glide the lift is fixed: it has to equal the weight. So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.
+**At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.** In a steady glide the lift is fixed: it has to equal the weight.
+
+So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.
 
 The first part comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive.
 
-The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it. This part is largest at low speed and shrinks as the bird speeds up.
+The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it.
+
+This part is largest at low speed and shrinks as the bird speeds up.
 
 Add the two parts and you get a curve shaped like a valley. Move the speed slider and find the bottom of the valley.
 
@@ -176,13 +219,21 @@ When the slider is within 0.3 m/s of the best speed: You found it. At about 10.3
 - C. Farther, because it has more weight pulling it forward
   - Feedback: More weight does pull harder along the path. Test it: choose the heavier bird and find the bottom of its valley. Compare the best distance, and then compare the speed.
 
-When the heavier bird is chosen and the slider is within 0.3 m/s of its best speed: The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that. What changed is the speed: the heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner. Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier.
+When the heavier bird is chosen and the slider is within 0.3 m/s of its best speed: The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that.
+
+What changed is the speed. The heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner.
+
+Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier.
 
 **Explain your thinking: a glide ratio of about 13 is the best this bird can do, whatever it weighs. Describe one real situation in which the bird could travel farther than 13 m for each meter of height it loses, and say what that situation changes about the forces or the air.**
 
 **Where this model stops being true** (collapsed)
 
-This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air. The airflow picture at Level 3 is a sketch. The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft.
+This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air.
+
+The airflow picture at Level 3 is a sketch.
+
+The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft.
 
 (Page note: exit button "Zoom in: inside the simulation" opens once the heavier-bird message has shown.)
 
@@ -190,7 +241,7 @@ This page treats the bird as a fixed shape gliding through still air. Real birds
 
 ## Level 5: Inside the simulation
 
-Every flight on this page was calculated by a program. At this level you open that program and see how it works.
+**Every flight on this page was calculated by a program.** At this level you open that program and see how it works.
 
 What you will do:
 
@@ -284,17 +335,15 @@ The air density and the wing area never change. So at every step the program has
 - The speed. It is the length of the velocity arrow, and GlowScript calculates the length of an arrow with mag( ).
 - The lift coefficient. It depends on how far the wing is tilted into the oncoming air.
 
-The wing tilt is the step that is easy to miss:
+The wing tilt is the step that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.
 
-- The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.
-- So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.
-- Example: the path slopes 4° downhill, so the path angle is −4°. A nose held 2° above level meets the air at 2° − (−4°) = 6°.
+So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.
 
-This one line explains the stall at Level 1:
+For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.
 
-- Suppose you hold the nose up and do not move it.
-- As the bird slows down it begins to sink, so the path angle becomes more negative.
-- The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls.
+This one line explains the stall at Level 1. Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.
+
+The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls.
 
 **2. Watch the lines run**
 
@@ -360,18 +409,16 @@ The program now knows the size of the lift. Before it can add the forces, it nee
 
 At Level 2 you added the forces by placing their arrows tip to tail. The program does the same addition with numbers.
 
-The drag:
+The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.
 
-- It comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.
-- The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air. The CL² part is the price of making lift.
-- These are the two parts of the valley at Level 4.
+The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.
 
-The directions:
+For the directions, the program makes two arrows:
 
 - The arrow named along has length 1 and points in the direction of travel. hat( ) shrinks the velocity to length 1 without turning it.
 - The arrow named across is along turned a quarter turn. It points at a right angle to the path.
 
-The sum. Each force is a size times a direction:
+Each force is then a size times a direction:
 
 - The lift is lift × across.
 - The drag is drag × along, with a minus sign, because drag points backward along the path.
@@ -550,7 +597,11 @@ You have now opened every part of the program. Because you can read it, you can 
 
 ## Teach it back
 
-Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with. Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper. It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.
+**Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with.**
+
+Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper.
+
+It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.
 
 Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.
 
@@ -564,7 +615,9 @@ What you type here is sent to the course AI helper so that it can reply. The cou
 
 ## Your side trail
 
-A learning trail that someone else laid out only takes you so far. The skill this course has been building all semester is finding your own next question and following it. Here you plan a short side trail of your own, do it, and report what you found.
+**A learning trail that someone else laid out only takes you so far.** The skill this course has been building all semester is finding your own next question and following it.
+
+Here you plan a short side trail of your own, do it, and report what you found.
 
 At the start you wrote:
 
