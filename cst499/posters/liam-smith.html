@@ -1,0 +1,206 @@
+<div id="interactive-poster" aria-label="Interactive poster mockup">
+  <style>
+    #interactive-poster {
+      --ink: #17212b;
+      --muted-ink: #5f6c78;
+      --paper: #fbfaf5;
+      --paper-2: #f1eee4;
+      --line: #d8d2c5;
+      --blue: #5c83c8;
+      --blue-soft: #e6eefb;
+      --orange: #d98245;
+      --orange-soft: #fae9dc;
+      --green: #4f896f;
+      --green-soft: #e2f0e8;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 1024px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(44, 39, 30, 0.12);
+    }
+
+    #interactive-poster * { box-sizing: border-box; }
+    #interactive-poster button { font: inherit; }
+    #interactive-poster .poster-nav { display: flex; gap: 8px; padding: 14px 18px; background: var(--paper-2); border-bottom: 1px solid var(--line); }
+    #interactive-poster .poster-nav button { border: 1px solid var(--line); background: transparent; color: var(--muted-ink); border-radius: 999px; padding: 8px 13px; cursor: pointer; }
+    #interactive-poster .poster-nav button[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    #interactive-poster .poster-page { padding: clamp(22px, 4vw, 48px); }
+    #interactive-poster .eyebrow { color: var(--orange); font-size: 12px; letter-spacing: 0.14em; font-weight: 700; text-transform: uppercase; }
+    #interactive-poster h1 { margin: 10px 0 12px; font-size: clamp(32px, 6vw, 66px); line-height: 0.98; letter-spacing: -0.055em; max-width: 820px; }
+    #interactive-poster h2 { margin: 0; font-size: 18px; letter-spacing: -0.02em; }
+    #interactive-poster p { margin: 0; line-height: 1.55; }
+    #interactive-poster .subhead { color: var(--muted-ink); max-width: 760px; font-size: 16px; }
+    #interactive-poster .claim { margin-top: 28px; padding: 20px; border: 1px solid var(--ink); border-radius: 16px; background: #fffdf8; }
+    #interactive-poster .claim-label { color: var(--muted-ink); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 9px; }
+    #interactive-poster .claim-text { font-size: clamp(20px, 3vw, 30px); line-height: 1.18; letter-spacing: -0.025em; }
+    #interactive-poster .section-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin: 42px 0 14px; }
+    #interactive-poster .section-note { color: var(--muted-ink); font-size: 13px; }
+    #interactive-poster .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    #interactive-poster .card { background: #fffdf8; border: 1px solid var(--line); border-radius: 17px; padding: 18px; min-height: 270px; display: flex; flex-direction: column; gap: 14px; }
+    #interactive-poster .card.work { border-top: 5px solid var(--blue); }
+    #interactive-poster .card.decision { border-top: 5px solid var(--orange); }
+    #interactive-poster .card.obstacle { border-top: 5px solid var(--green); }
+    #interactive-poster .card-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    #interactive-poster .badge { border-radius: 999px; padding: 5px 8px; font-size: 11px; font-weight: 700; background: var(--paper-2); color: var(--muted-ink); }
+    #interactive-poster .card.work .badge { background: var(--blue-soft); color: #365a96; }
+    #interactive-poster .card.decision .badge { background: var(--orange-soft); color: #98501f; }
+    #interactive-poster .card.obstacle .badge { background: var(--green-soft); color: #35664f; }
+    #interactive-poster .card-body { color: var(--muted-ink); font-size: 14px; }
+    #interactive-poster .card-evidence { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); }
+    #interactive-poster .evidence-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-ink); font-weight: 700; }
+    #interactive-poster .evidence-value { margin-top: 5px; font-weight: 600; }
+    #interactive-poster .card button, #interactive-poster .timeline button { align-self: flex-start; border: 1px solid var(--ink); background: transparent; color: var(--ink); border-radius: 9px; padding: 8px 10px; cursor: pointer; }
+    #interactive-poster .detail { display: none; font-size: 13px; color: var(--muted-ink); line-height: 1.45; }
+    #interactive-poster .detail.is-open { display: block; }
+    #interactive-poster .architecture { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 12px; }
+    #interactive-poster .node { padding: 9px 10px; border-radius: 11px; text-align: center; font-weight: 700; }
+    #interactive-poster .node.iphone { background: var(--orange-soft); }
+    #interactive-poster .node.mac { background: var(--blue-soft); }
+    #interactive-poster .arrow { color: var(--muted-ink); font-size: 18px; }
+    #interactive-poster .timeline { margin-top: 16px; padding: 18px; background: var(--ink); color: var(--paper); border-radius: 17px; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+    #interactive-poster .timeline p { color: #dce2e7; font-size: 14px; }
+    #interactive-poster .dates { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    #interactive-poster .date { border: 1px solid rgba(255,255,255,0.25); border-radius: 9px; padding: 8px 10px; font-size: 12px; }
+    #interactive-poster .fallback { margin-top: 14px; padding: 14px 16px; background: var(--paper-2); border-radius: 13px; color: var(--muted-ink); font-size: 13px; }
+    #interactive-poster .timer { font-variant-numeric: tabular-nums; color: var(--green); font-weight: 800; font-size: 18px; }
+    #interactive-poster pre { margin: 0; padding: 22px; background: #20272e; color: #eef2f3; overflow: auto; white-space: pre-wrap; line-height: 1.55; min-height: 560px; }
+    #interactive-poster .plain-intro { color: var(--muted-ink); margin-bottom: 16px; }
+    @media (max-width: 760px) {
+      #interactive-poster .cards { grid-template-columns: 1fr; }
+      #interactive-poster .timeline { grid-template-columns: 1fr; }
+      #interactive-poster .section-head { align-items: flex-start; flex-direction: column; gap: 5px; }
+    }
+  </style>
+
+  <div class="poster-nav" role="tablist" aria-label="Poster views">
+    <button type="button" role="tab" aria-selected="true" aria-controls="poster-view" data-view="poster-view">Poster</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls="plaintext-view" data-view="plaintext-view">Plaintext</button>
+  </div>
+
+  <section id="poster-view" class="poster-page" role="tabpanel" aria-label="Running poster view">
+    <div class="eyebrow">Interactive Poster · first version</div>
+    <h1>Control your Mac from your iPhone.</h1>
+    <p class="subhead">A Bluetooth connection between an iPhone app and a receiver app on the Mac, with keyboard input and cursor input.</p>
+
+    <div class="claim">
+      <div class="claim-label">My claim now</div>
+      <p class="claim-text">I can control my Mac from my iPhone, including movement, left click, right click, keyboard shortcuts, Command, Option, Control, and the function keys.</p>
+    </div>
+
+    <div class="section-head">
+      <h2>Three cards</h2>
+      <span class="section-note">Select a card to reveal the evidence detail.</span>
+    </div>
+    <div class="cards">
+      <article class="card work">
+        <div class="card-top"><h2>Work</h2><span class="badge">live demo</span></div>
+        <p class="card-body">They could connect to my Mac via my phone and be able to fully control it.</p>
+        <div class="card-evidence"><div class="evidence-label">Best form</div><div class="evidence-value">A live demo</div></div>
+        <button type="button" data-detail="work-detail" aria-expanded="false">Show evidence detail</button>
+        <p id="work-detail" class="detail">[Placeholder: live demo of both device screens. Add the recording of both device screens showing they work as backup evidence.]</p>
+      </article>
+
+      <article class="card decision">
+        <div class="card-top"><h2>Decision</h2><span class="badge">architecture</span></div>
+        <p class="card-body">The Mac is the peripheral and the iPhone is central in regard to Bluetooth.</p>
+        <div class="architecture" aria-label="Architecture diagram placeholder"><span class="node iphone">iPhone<br>central</span><span class="arrow">→</span><span class="node mac">Mac<br>peripheral</span></div>
+        <div class="card-evidence"><div class="evidence-label">Best form</div><div class="evidence-value">An architecture diagram</div></div>
+        <button type="button" data-detail="decision-detail" aria-expanded="false">Show decision detail</button>
+        <p id="decision-detail" class="detail">[Placeholder: compare both designs and show why the other way would limit functionality, use more iPhone battery, and still need the Mac receiver app.]</p>
+      </article>
+
+      <article class="card obstacle">
+        <div class="card-top"><h2>Obstacle</h2><span class="badge">Bluetooth</span></div>
+        <p class="card-body">The connection kept dropping after less than a minute of idle time.</p>
+        <div class="card-evidence"><div class="evidence-label">Solution</div><div class="evidence-value">A ping every 10 seconds</div></div>
+        <button type="button" data-detail="obstacle-detail" aria-expanded="false">Show evidence detail</button>
+        <p id="obstacle-detail" class="detail">[Placeholder: start the timer, leave both devices idle, and show that the connection stays active.] <span class="timer" id="connection-timer">00:00</span></p>
+      </article>
+    </div>
+
+    <div class="section-head"><h2>Before Monday, December 7</h2><span class="section-note">Plan</span></div>
+    <div class="timeline">
+      <div>
+        <h2>Finish the minimum app capability</h2>
+        <p>Add function and modifier keys, test shortcuts, then polish the Mac-selection menu.</p>
+        <div class="dates"><span class="date">Monday · key test</span><span class="date">Right after · menu</span><span class="date">December 1 · poster update</span><span class="date">December 7 · review</span></div>
+      </div>
+      <button type="button" id="toggle-fallback">Show fallback</button>
+    </div>
+    <div class="fallback" id="fallback" hidden>If the live display takes too long: keep the Mac open and instruct people to use the app instead of the Mac’s keyboard/trackpad.</div>
+  </section>
+
+  <section id="plaintext-view" class="poster-page" role="tabpanel" aria-label="Plaintext version" hidden>
+    <div class="eyebrow">Plaintext</div>
+    <p class="plain-intro">The content currently represented by the poster.</p>
+    <pre>MY CLAIM NOW
+
+I can control my Mac from my iPhone, including movement, left click, right click, keyboard shortcuts, Command, Option, Control, and the function keys.
+
+WORK
+
+They could connect to my Mac via my phone and be able to fully control it.
+Best form: A live demo.
+[Placeholder: live demo of both device screens]
+
+DECISION
+
+The Mac is the peripheral and the iPhone is central in regard to Bluetooth.
+Best form: An architecture diagram.
+[Placeholder: compare both designs]
+
+OBSTACLE
+
+The connection kept dropping after less than a minute of idle time.
+Solution: a ping every 10 seconds.
+Best form: A live demo.
+[Placeholder: idle-period connection test]
+
+BEFORE MONDAY, DECEMBER 7
+
+Add function and modifier keys, test shortcuts, then polish the Mac-selection menu.
+Monday: key test.
+Right after: menu.
+December 1: poster update.
+If the live display takes too long: keep the Mac open and instruct people to use the app instead of the Mac’s keyboard/trackpad.</pre>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.getElementById('interactive-poster');
+      const tabs = root.querySelectorAll('[data-view]');
+      const panels = root.querySelectorAll('[role="tabpanel"]');
+      tabs.forEach((tab) => tab.addEventListener('click', () => {
+        tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+        panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.view; });
+      }));
+
+      root.querySelectorAll('[data-detail]').forEach((button) => button.addEventListener('click', () => {
+        const detail = root.querySelector('#' + button.dataset.detail);
+        const open = detail.classList.toggle('is-open');
+        button.setAttribute('aria-expanded', String(open));
+        button.textContent = open ? 'Hide evidence detail' : 'Show evidence detail';
+      }));
+
+      const fallbackButton = root.querySelector('#toggle-fallback');
+      const fallback = root.querySelector('#fallback');
+      fallbackButton.addEventListener('click', () => {
+        fallback.hidden = !fallback.hidden;
+        fallbackButton.textContent = fallback.hidden ? 'Show fallback' : 'Hide fallback';
+      });
+
+      let seconds = 0;
+      let timerId = null;
+      const timer = root.querySelector('#connection-timer');
+      const renderTimer = () => { timer.textContent = String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0'); };
+      root.querySelector('[data-detail="obstacle-detail"]').addEventListener('click', () => {
+        if (timerId) return;
+        timerId = window.setInterval(() => { seconds += 1; renderTimer(); }, 1000);
+      });
+    })();
+  </script>
+</div>

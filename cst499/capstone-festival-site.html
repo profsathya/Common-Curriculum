@@ -115,6 +115,11 @@ body.pg #view{height:100%}
 .btn:hover{background:var(--bay-deep)}
 .btn:disabled{opacity:.6;cursor:default}
 .two.solo{grid-template-columns:1fr}
+/* the stamp on the first screen of a student already visited: bottom right, behind the text */
+.one{position:relative}
+.one>*{position:relative;z-index:1}
+.one>.visited{position:absolute;z-index:0;right:14px;bottom:10px;pointer-events:none}
+.visited .stamp{width:108px}
 .draftnote{font:600 12.5px/1.3 var(--body);color:var(--muted)}
 img.photo{object-fit:cover}
 .btn.ghost{background:var(--white);color:var(--bay)}
@@ -297,21 +302,24 @@ function onePerRoom(list,n){ const seen=new Set(),out=[]; const rot=list.map((_,
 
 function buildRoute(){
   const r=st.role, sub=st.sub; let list=[];
+  const unstamped=S.filter(s=>!st.stamps[s.id]), T=unstamped.length?unstamped:S;
   if(r==="family"){ const me=byId(sub);
-    const same=S.filter(s=>s.room===me.room&&s.id!==me.id), other=S.filter(s=>s.room!==me.room);
+    const same=T.filter(s=>s.room===me.room&&s.id!==me.id), other=T.filter(s=>s.room!==me.room);
     const second=pick(same,1)[0], third=pick(other.length?other:same.filter(s=>s!==second),1)[0];
     list=[me,second,third].filter(Boolean); st.route=list.map(s=>s.id); save(); return; }
-  if(r==="faculty") list=onePerRoom(S.filter(s=>s.lens[sub]),4);
-  else if(r==="admin") list=onePerRoom(S,5);
-  else if(sub==="any") list=onePerRoom(S,r==="student"?5:4);
-  else { const inCat=S.filter(s=>s.cat===sub); st.route=inCat.slice(0,3).concat(pick(S.filter(s=>s.cat!==sub),1)).map(s=>s.id); save(); return; }
+  const lensed=T.filter(s=>s.lens[sub]), inCat=T.filter(s=>s.cat===sub);
+  if(r==="faculty") list=onePerRoom(lensed.length?lensed:T,4);
+  else if(r==="admin") list=onePerRoom(T,5);
+  else if(sub==="any") list=onePerRoom(T,r==="student"?5:4);
+  else if(inCat.length){ st.route=inCat.slice(0,3).concat(pick(T.filter(s=>s.cat!==sub),1)).map(s=>s.id); save(); return; }
+  else list=onePerRoom(T,4);
   st.route=order(list.map(s=>s.id)); save();
 }
 function nextTwo(cur){
   const me=byId(cur), seen=new Set(st.seen.concat([cur]));
   const fits=s=>st.role==="faculty"?!!s.lens[st.sub]:(st.role==="employer"||st.role==="student")&&st.sub!=="any"?s.cat===st.sub:false;
-  const planned=st.route.filter(id=>!seen.has(id)).map(byId);
-  const others=S.filter(s=>!seen.has(s.id)&&!st.route.includes(s.id))
+  const planned=st.route.filter(id=>!seen.has(id)&&!st.stamps[id]).map(byId).filter(Boolean);
+  const others=S.filter(s=>!seen.has(s.id)&&!st.stamps[s.id]&&!st.route.includes(s.id))
     .sort((x,y)=>(fits(y)-fits(x))||(Math.abs((x.room||0)-(me.room||0))-Math.abs((y.room||0)-(me.room||0)))||((x.table||0)-(y.table||0)));
   return planned.concat(others).slice(0,2);
 }
@@ -399,7 +407,8 @@ function pages(s){
       <div><p class="k">${mine?"You are here for":esc(area(s))}</p><h1 class="name${s.name.length>18?" long":""}">${esc(s.name)}</h1>
         ${s.room!=null?`<div class="pills"><span class="pill">Room ${s.room}</span>${s.table!=null?`<span class="pill o">Table ${s.table}</span>`:""}</div>`:""}</div></header>`,
     h:`<p class="k">${fam?"What "+f+" did":"The project"}</p>${fam?"":`<p class="proj">${esc(s.project)}</p>`}<p class="t">${esc(fam?s.plain:s.desc)}</p>
-    <p class="made">Drafted by AI from ${f}'s Interactive Poster. ${s.approved?`Read and approved by ${f}.`:`${f} has not approved this page yet.`}</p>`});
+    <p class="made">Drafted by AI from ${f}'s Interactive Poster. ${s.approved?`Read and approved by ${f}.`:`${f} has not approved this page yet.`}</p>
+    ${st.stamps[s.id]?`<span class="visited" role="img" aria-label="You stamped your visit to ${f}">${stamp(s.id,false,false)}</span>`:""}`});
   /* 2. what it shows, and what to ask */
   P.push({h:`${s.claim?`<section class="claimbox"><p class="k">${fam?"What this shows about "+f:f+"'s claim"}</p><p class="claim">${esc(s.claim)}</p></section>`:""}
     <p class="k">${q.length>1?"Questions you can ask "+f:"A question to ask "+f}</p><ul class="asks">${q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`});
@@ -409,7 +418,7 @@ function pages(s){
     <div class="stampzone"><button class="target${ts?" done":""}" type="button" data-stamp="${s.id}" aria-pressed="${!!ts}">${ts?stamp(s.id,false,justStamped===s.id):"Tap to stamp your visit"}</button>
       <p>${ts?`<b>Stamped ${new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</b>Tap the stamp to undo.`:`${place(s)?`<b>${place(s)}</b>`:""}Stamp your passport when you have visited ${f}.`}</p></div>
     ${s.poster||s.linkedin?`<div class="two${s.poster&&s.linkedin?"":" solo"}">${s.poster?`<a class="btn" href="${esc(s.poster)}" target="_blank" rel="noopener" aria-label="${f}'s Interactive Poster">Interactive Poster</a>`:""}${s.linkedin?`<a class="btn ghost" href="${esc(s.linkedin)}" target="_blank" rel="noopener" aria-label="${f} on LinkedIn">LinkedIn</a>`:""}</div>`:""}
-    ${nx.length?`<p class="k" style="margin-top:4px">Visit next</p><ul class="rows">${nextRows(nx)}</ul>`:`<p class="muted">You have opened every student.</p>`}
+    ${nx.length?`<p class="k" style="margin-top:4px">Visit next</p><ul class="rows">${nextRows(nx)}</ul>`:`<p class="muted">You have seen every student.</p>`}
     ${footLinks()}`});
   return P;
 }

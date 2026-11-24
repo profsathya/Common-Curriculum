@@ -46,6 +46,9 @@ Three bars at the top fill in. Next and Back are at the bottom. A tap on the scr
 2. What it shows and what to ask: "What this shows about [first name]" for family, "[First name]'s claim" for everyone else. Then "Questions you can ask [first name]": two specific questions and one that is the same on every student: "What was the hardest decision you made, and what did you give up by making it?" Everyone else gets "A question to ask [first name]" (faculty get the question for their lens).
 3. "Stamp your visit": a dashed circle that says "Tap to stamp your visit". Beside it: Room and Table, and "Stamp your passport when you have visited [first name]." Tapping stamps it; tapping the stamp undoes it. Then two buttons, "Interactive Poster" and "LinkedIn" (sample links in the prototype). Then "Visit next" with two students, one line each. Then My passport · All students · Start over. Buttons: Back · "Next: [next student's first name]".
 - University administrators get one screen before the first student: "About this capstone" (draft wording below).
+- A student the visitor has stamped is not offered again: not under "Visit next", not on the Next button, and not at the start of a new route after "Start over". If everyone in the chosen area is stamped, the route starts with students from other areas.
+- When the visitor opens a student they have already stamped, the stamp shows at the bottom right of that student's first screen, behind the text.
+- When no one is left to suggest, the third screen says "You have seen every student."
 
 ## The data file (added 23 Nov)
 - The page holds the design and the wording. The students and the areas of work are in capstone-festival-data.js, next to the page. capstone-festival-data-sample.js holds the fifteen made-up students and shows the format; it is not edited.
