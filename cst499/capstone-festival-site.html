@@ -293,6 +293,21 @@ const fresh=()=>({role:null,sub:null,route:[],seen:[],stamps:{},cur:null,seed:Ma
 let st=fresh();
 try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&typeof j==="object")st=Object.assign(st,j);}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+/* A phone can hold answers from an earlier list of students (the made-up ones, or a student since removed). Drop what no longer matches anyone, so the stamp count agrees with the circles. */
+if(S.length){
+  if(!st.stamps||typeof st.stamps!=="object") st.stamps={};
+  const stale=Object.keys(st.stamps).filter(id=>!byId(id));
+  if(!Array.isArray(st.route)) st.route=[]; if(!Array.isArray(st.seen)) st.seen=[];
+  const gone=stale.length||st.route.some(id=>!byId(id))||st.seen.some(id=>!byId(id))||(st.cur&&!byId(st.cur))||(st.role==="family"&&!byId(st.sub));
+  if(gone){
+    stale.forEach(id=>delete st.stamps[id]);
+    st.route=st.route.filter(id=>byId(id)); st.seen=st.seen.filter(id=>byId(id));
+    if(st.cur&&!byId(st.cur)) st.cur=null;
+    if(st.role==="family"&&!byId(st.sub)){ st.role=null; st.sub=null; st.route=[]; }
+    if(st.role) buildRoute();
+    save();
+  }
+}
 const view=document.getElementById("view");
 let pg=0, shown=null, justStamped=null;
 
@@ -337,7 +352,7 @@ function render(){
   return start();
 }
 
-const stampCount=()=>Object.keys(st.stamps).length;
+const stampCount=()=>S.filter(s=>st.stamps[s.id]).length;
 function footLinks(){
   return `<p class="foot"><button class="link" type="button" data-go="my">My passport${stampCount()?" ("+stampCount()+")":""}</button>
     <button class="link" type="button" data-go="all">All students</button>

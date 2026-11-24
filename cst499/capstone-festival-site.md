@@ -78,6 +78,7 @@ Students present at their own laptops. Each table below shows a different area o
 ## My passport
 - "This is kept on your phone only. Nothing is shared unless you press the button below."
 - A cover with the otter mark, the count ("2 of 15 stamps"), and one circle per student grouped by room. A stamped circle shows the otter.
+- The count only includes students who are on the page now. When the page opens, saved stamps and routes that match no current student are dropped (added 24 Nov: stamps saved for the made-up students were still being counted after the real students went in).
 - Share my visit with the organizers: [x] What I did: who I am here as, and which students I visited · [ ] My name · One thing you will remember from today (optional)
 - In the preview copy (no address set) the button only shows what would be shared.
 
