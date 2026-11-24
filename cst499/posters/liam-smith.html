@@ -1,4 +1,6 @@
-<div id="interactive-poster" aria-label="Interactive poster mockup">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Liam Smith · Interactive Poster</title><style>body{margin:0;background:#f1eee4}</style></head><body>
+<div id="interactive-poster" aria-label="Interactive poster">
   <style>
     #interactive-poster {
       --ink: #17212b;
@@ -74,14 +76,16 @@
       #interactive-poster .timeline { grid-template-columns: 1fr; }
       #interactive-poster .section-head { align-items: flex-start; flex-direction: column; gap: 5px; }
     }
+
+    @media (max-width:760px){
+      #interactive-poster{border:0;border-radius:0;box-shadow:none}
+      #interactive-poster .poster-page{padding:24px 18px}
+      #interactive-poster .card{min-height:0}
+      #interactive-poster h1{font-size:clamp(32px,9vw,46px)}
+    }
   </style>
 
-  <div class="poster-nav" role="tablist" aria-label="Poster views">
-    <button type="button" role="tab" aria-selected="true" aria-controls="poster-view" data-view="poster-view">Poster</button>
-    <button type="button" role="tab" aria-selected="false" aria-controls="plaintext-view" data-view="plaintext-view">Plaintext</button>
-  </div>
-
-  <section id="poster-view" class="poster-page" role="tabpanel" aria-label="Running poster view">
+  <section id="poster-view" class="poster-page" aria-label="Poster">
     <div class="eyebrow">Interactive Poster · first version</div>
     <h1>Control your Mac from your iPhone.</h1>
     <p class="subhead">A Bluetooth connection between an iPhone app and a receiver app on the Mac, with keyboard input and cursor input.</p>
@@ -100,8 +104,6 @@
         <div class="card-top"><h2>Work</h2><span class="badge">live demo</span></div>
         <p class="card-body">They could connect to my Mac via my phone and be able to fully control it.</p>
         <div class="card-evidence"><div class="evidence-label">Best form</div><div class="evidence-value">A live demo</div></div>
-        <button type="button" data-detail="work-detail" aria-expanded="false">Show evidence detail</button>
-        <p id="work-detail" class="detail">[Placeholder: live demo of both device screens. Add the recording of both device screens showing they work as backup evidence.]</p>
       </article>
 
       <article class="card decision">
@@ -109,16 +111,12 @@
         <p class="card-body">The Mac is the peripheral and the iPhone is central in regard to Bluetooth.</p>
         <div class="architecture" aria-label="Architecture diagram placeholder"><span class="node iphone">iPhone<br>central</span><span class="arrow">→</span><span class="node mac">Mac<br>peripheral</span></div>
         <div class="card-evidence"><div class="evidence-label">Best form</div><div class="evidence-value">An architecture diagram</div></div>
-        <button type="button" data-detail="decision-detail" aria-expanded="false">Show decision detail</button>
-        <p id="decision-detail" class="detail">[Placeholder: compare both designs and show why the other way would limit functionality, use more iPhone battery, and still need the Mac receiver app.]</p>
       </article>
 
       <article class="card obstacle">
         <div class="card-top"><h2>Obstacle</h2><span class="badge">Bluetooth</span></div>
         <p class="card-body">The connection kept dropping after less than a minute of idle time.</p>
         <div class="card-evidence"><div class="evidence-label">Solution</div><div class="evidence-value">A ping every 10 seconds</div></div>
-        <button type="button" data-detail="obstacle-detail" aria-expanded="false">Show evidence detail</button>
-        <p id="obstacle-detail" class="detail">[Placeholder: start the timer, leave both devices idle, and show that the connection stays active.] <span class="timer" id="connection-timer">00:00</span></p>
       </article>
     </div>
 
@@ -133,74 +131,17 @@
     </div>
     <div class="fallback" id="fallback" hidden>If the live display takes too long: keep the Mac open and instruct people to use the app instead of the Mac’s keyboard/trackpad.</div>
   </section>
-
-  <section id="plaintext-view" class="poster-page" role="tabpanel" aria-label="Plaintext version" hidden>
-    <div class="eyebrow">Plaintext</div>
-    <p class="plain-intro">The content currently represented by the poster.</p>
-    <pre>MY CLAIM NOW
-
-I can control my Mac from my iPhone, including movement, left click, right click, keyboard shortcuts, Command, Option, Control, and the function keys.
-
-WORK
-
-They could connect to my Mac via my phone and be able to fully control it.
-Best form: A live demo.
-[Placeholder: live demo of both device screens]
-
-DECISION
-
-The Mac is the peripheral and the iPhone is central in regard to Bluetooth.
-Best form: An architecture diagram.
-[Placeholder: compare both designs]
-
-OBSTACLE
-
-The connection kept dropping after less than a minute of idle time.
-Solution: a ping every 10 seconds.
-Best form: A live demo.
-[Placeholder: idle-period connection test]
-
-BEFORE MONDAY, DECEMBER 7
-
-Add function and modifier keys, test shortcuts, then polish the Mac-selection menu.
-Monday: key test.
-Right after: menu.
-December 1: poster update.
-If the live display takes too long: keep the Mac open and instruct people to use the app instead of the Mac’s keyboard/trackpad.</pre>
-  </section>
-
-  <script>
+<script>
     (() => {
       const root = document.getElementById('interactive-poster');
-      const tabs = root.querySelectorAll('[data-view]');
-      const panels = root.querySelectorAll('[role="tabpanel"]');
-      tabs.forEach((tab) => tab.addEventListener('click', () => {
-        tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
-        panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.view; });
-      }));
-
-      root.querySelectorAll('[data-detail]').forEach((button) => button.addEventListener('click', () => {
-        const detail = root.querySelector('#' + button.dataset.detail);
-        const open = detail.classList.toggle('is-open');
-        button.setAttribute('aria-expanded', String(open));
-        button.textContent = open ? 'Hide evidence detail' : 'Show evidence detail';
-      }));
-
-      const fallbackButton = root.querySelector('#toggle-fallback');
+      const button = root.querySelector('#toggle-fallback');
       const fallback = root.querySelector('#fallback');
-      fallbackButton.addEventListener('click', () => {
+      button.addEventListener('click', () => {
         fallback.hidden = !fallback.hidden;
-        fallbackButton.textContent = fallback.hidden ? 'Show fallback' : 'Hide fallback';
-      });
-
-      let seconds = 0;
-      let timerId = null;
-      const timer = root.querySelector('#connection-timer');
-      const renderTimer = () => { timer.textContent = String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0'); };
-      root.querySelector('[data-detail="obstacle-detail"]').addEventListener('click', () => {
-        if (timerId) return;
-        timerId = window.setInterval(() => { seconds += 1; renderTimer(); }, 1000);
+        button.textContent = fallback.hidden ? 'Show fallback' : 'Hide fallback';
       });
     })();
   </script>
 </div>
+
+</body></html>

@@ -397,7 +397,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What project evidence will replace the template prompts before visitors review your work?",
       "lens": {},
-      "poster": "posters/fernando-alvarado.html",
+      "poster": "",
       "linkedin": "",
       "photo": "",
       "approved": false
