@@ -16,7 +16,7 @@ window.FESTIVAL_DATA = {
       "cat": "data",
       "room": null,
       "table": null,
-      "plain": "Ryan built an AI grader and is testing whether its marks are similar to a teacher's. He set aside a tool for evaluating grades until the grader could produce results.",
+      "plain": "Ryan built a program that uses artificial intelligence to grade work and is testing whether its marks are similar to a teacher's. He set aside a tool for evaluating grades until the grader could produce results.",
       "desc": "Built an AI grader that produces results; testing is still needed before it can be used for grading.",
       "claim": "I can evaluate how to use my time to meet project goals more effectively.",
       "fam": [
@@ -69,8 +69,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What evidence shows your quote checker catches stale or conflicting program facts?",
       "lens": {
-        "d": "Why did you choose current catalogs and manual verification over the first available page?",
-        "a": "How did you correct the name filter when it removed course-title words, and what remains unresolved?"
+        "d": "Why did you choose current catalogs and manual verification over the first available page?"
       },
       "poster": "",
       "linkedin": "",
@@ -139,8 +138,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What evidence will show the Zeek logs reveal traffic you could not see before?",
       "lens": {
-        "d": "Why choose network logging over ticket handling, and what practice did you give up?",
-        "a": "How did you direct AI while configuring the homelab, and how did you check the setup?"
+        "d": "Why choose network logging over ticket handling, and what practice did you give up?"
       },
       "poster": "posters/abdalla-ali.html",
       "linkedin": "",
@@ -224,8 +222,8 @@ window.FESTIVAL_DATA = {
       "cat": "security",
       "room": null,
       "table": null,
-      "plain": "Eric worked on explaining security findings in terms of the risks that matter to an organization. His poster plans a lab recording and a chart comparing risks by likelihood and impact; the evidence is still being assembled.",
-      "desc": "Framed cybersecurity lab findings by organizational impact and planned a risk chart, lab recording, and troubleshooting evidence.",
+      "plain": "Eric described a way to rank security risks by their possible effect on an organization. His poster plans a lab recording and a chart; the test results are still to be shown.",
+      "desc": "Planned to connect cybersecurity lab work to organizational risk, with a chart, recording, and troubleshooting evidence still to be made.",
       "claim": "I can apply technical cybersecurity skills while prioritizing the risks and information that matter most to an organization.",
       "fam": [
         "How would your risk chart show what to fix first?",
@@ -319,8 +317,8 @@ window.FESTIVAL_DATA = {
       "cat": "data",
       "room": null,
       "table": null,
-      "plain": "Augustin built a process that collects air-quality readings, cleans them, and shows them on a dashboard. When a reading came back blank, he treated it as not delivered yet and used a later overlapping run to recover it.",
-      "desc": "Built an air-quality data pipeline and dashboard; preserved stored readings when the NSW API returned blanks and recovered values through overlapping runs.",
+      "plain": "Augustin built a process that collects air-quality readings, cleans them, and shows them on a dashboard, a screen of charts. When a reading came back blank, he treated it as not delivered yet and used a later overlapping run to recover it.",
+      "desc": "Built an air-quality data pipeline and dashboard; preserved stored readings when the source returned blanks and recovered values through overlapping runs.",
       "claim": "I can build a full-stack air-quality application that connects an external data source to backend processing and a user-facing dashboard.",
       "fam": [
         "What does the dashboard show about air quality?",
@@ -328,7 +326,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What test proves a blank API result cannot overwrite a stored reading?",
       "lens": {
-        "d": "Why treat a blank reading as not delivered rather than missing, and how did that affect the reject count?",
+        "d": "Why treat a blank reading as not delivered rather than missing, and how did that change the rejected-data count?",
         "x": "How did the behavior of air-quality readings change your data pipeline?"
       },
       "poster": "",
@@ -533,7 +531,7 @@ window.FESTIVAL_DATA = {
       "cat": "security",
       "room": null,
       "table": null,
-      "plain": "Gael planned a cloud storage setup that lets a teammate open files without uploading or deleting them. He chose a read-only role for one storage bucket and still needs to test whether another role grants extra access.",
+      "plain": "Gael planned an online file-storage setup that lets a teammate open files without uploading or deleting them. He chose a read-only role for one storage bucket and still needs to test whether another role grants extra access.",
       "desc": "Planned a Google Cloud bucket-level read-only role and tests for unintended project-level permissions; the lab results remain pending.",
       "claim": "By Monday, December 7, I can build and test state-based interaction systems that respond to user input and prevent conflicting actions.",
       "fam": [
@@ -611,10 +609,7 @@ window.FESTIVAL_DATA = {
         "What must happen before certificates show a player's own name?"
       ],
       "pro": "What two-account test will prove achievements and certificate names follow each player's saved progress?",
-      "lens": {
-        "d": "Why show earned and locked achievements together instead of only completed ones?",
-        "x": "How will player feedback change the labels or layout of the achievement screen?"
-      },
+      "lens": {},
       "poster": "posters/neil-cabanilla.html",
       "linkedin": "",
       "photo": "",
@@ -756,8 +751,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "Which AWS services and security checks would you choose for the first application, and why?",
       "lens": {
-        "d": "Why keep the planned app small instead of exploring more AWS services?",
-        "a": "How did you check AI explanations against the AWS course materials?"
+        "d": "Why keep the planned app small instead of exploring more AWS services?"
       },
       "poster": "posters/ruben-rivers.html",
       "linkedin": "",
@@ -780,8 +774,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What tests distinguish legitimate updates from changed scripts and deleted configuration files?",
       "lens": {
-        "d": "Why test command-line detection before building the dashboard, and what interface work did that delay?",
-        "a": "How did you test the initial AI-generated hashing and change-detection code?"
+        "d": "Why test command-line detection before building the dashboard, and what interface work did that delay?"
       },
       "poster": "posters/julius-sumagang.html",
       "linkedin": "",
@@ -851,8 +844,7 @@ window.FESTIVAL_DATA = {
       ],
       "pro": "What playable test will show the entity responds to repeated hiding or escape tactics?",
       "lens": {
-        "d": "Why should the entity remember behavior for one match only, and what would persistently learning do to later players?",
-        "x": "How will clues and choices change what players believe about the suburb?"
+        "d": "Why should the entity remember behavior for one match only, and what would persistently learning do to later players?"
       },
       "poster": "",
       "linkedin": "",
