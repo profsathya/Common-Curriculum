@@ -192,6 +192,7 @@
   /* level 5: inside the simulation */
   .runner{margin:14px 0 6px}
   .runner iframe{display:block; width:100%; height:660px; border:1px solid var(--line); border-radius:10px; background:#fff}
+  @media (max-width:1014px){ .runner iframe{height:1000px} }
   .parth{font-size:1.3rem; margin:2px 0 12px}
   .pmap{display:flex; flex-direction:column; gap:8px; margin:14px 0; padding:12px; border:1px solid var(--line); border-radius:10px; background:var(--stage)}
   .pgroup{border:1px dashed var(--line); border-radius:10px; padding:8px 10px 10px; display:flex; flex-direction:column; gap:8px}
@@ -1686,7 +1687,7 @@ const COPY = {
       m.className = 'msg ' + (st.last === 'correct' ? 'ok' : st.last ? 'bad' : ''); m.textContent = lineFor(st.last);
       const more = $('.more', box);
       if (!st.ok && st.misses >= 2){
-        more.innerHTML = (st.last !== 'other' ? '<div class="msg bad">' + esc(p.other) + '</div>' : '') + (st.hint ? '' : '<div class="row"><button type="button" class="btn ghost fs">' + U.firstStep + '</button></div>');
+        more.innerHTML = (st.last !== 'other' && st.last !== 'unit' ? '<div class="msg bad">' + esc(p.other) + '</div>' : '') + (st.hint ? '' : '<div class="row"><button type="button" class="btn ghost fs">' + U.firstStep + '</button></div>');
         const fs = $('.fs', more); if (fs) fs.onclick = () => { st.hint = true; save(); paint(); };
       } else more.innerHTML = '';
       $('.hint', box).textContent = st.hint && !st.ok ? (p.hint || p.other) : '';
@@ -1702,11 +1703,8 @@ const COPY = {
       st.checks++;
       const numOK = n >= p.lo && n <= p.hi, unitOK = sel.value === p.unit;
       if (numOK && unitOK){ st.ok = true; st.last = 'correct'; }
-      else {
-        st.misses++;
-        if (numOK) st.last = 'unit';
-        else { const r = p.ranges.findIndex(x => n >= x.lo && n <= x.hi); st.last = r >= 0 ? 'r' + r : 'other'; }
-      }
+      else if (numOK) st.last = 'unit';
+      else { st.misses++; const r = p.ranges.findIndex(x => n >= x.lo && n <= x.hi); st.last = r >= 0 ? 'r' + r : 'other'; }
       save(); paint(); refresh();
     };
     paint();
@@ -2029,7 +2027,7 @@ const COPY = {
     main.innerHTML = head(l) + blocks(C.l3.p[0]) +
       '<div class="sim" id="sim3"><div class="simrow"><div class="canwrap"><canvas id="c3" aria-label="A wing cross-section with air flowing past it from the left. The air leaving the back of the wing heads downward."></canvas></div>' +
       '<div class="gaugewrap" aria-hidden="true"><span class="gv" id="g-v"></span><div class="gauge"><div class="fill" id="g-f"></div><div class="wline" id="g-w"></div><div class="wlbl" id="g-wl"><span class="gw">' + esc(C.l3.weightLine) + '</span></div></div></div></div>' +
-      '<div class="hsl"><label for="tilt">' + esc(C.l3.tilt) + '</label><input type="range" id="tilt" min="0" max="20" step="0.5"><output id="tilt-o"></output></div>' +
+      '<div class="hsl"><label for="tilt">' + esc(C.l3.tilt) + '</label><input type="range" id="tilt" min="0" max="20" step="0.1"><output id="tilt-o"></output></div>' +
       '<div class="hsl"><label for="air">' + esc(C.l3.speed) + '</label><input type="range" id="air" min="4" max="20" step="0.5"><output id="air-o"></output></div>' +
       '<div class="simbar"><span></span>' + speedBar() + '</div></div>' +
       blocks(C.l3.p[1]) + '<div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div><div class="uc">' + esc(C.l3.unitCheck) + '</div></div>' +

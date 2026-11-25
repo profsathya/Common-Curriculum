@@ -129,7 +129,7 @@
   .chipbtn{font-size:.82rem; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:5px; padding:4px 9px; cursor:pointer}
   .chipbtn:hover{border-color:var(--tc); background:var(--tsoft)}
   .editor.small{min-height:0; height:auto}
-  .editor{width:100%; height:100%; min-height:300px; font-size:.95rem; line-height:1.55; padding:14px 16px; border:1px solid var(--line); border-radius:10px; background:var(--stage); color:#DCE7F3; resize:vertical; tab-size:4; caret-color:var(--lamp)}
+  .editor{white-space:pre-wrap; overflow-wrap:anywhere; width:100%; height:100%; min-height:300px; font-size:.95rem; line-height:1.55; padding:14px 16px; border:1px solid var(--line); border-radius:10px; background:var(--stage); color:#DCE7F3; resize:vertical; tab-size:4; caret-color:var(--lamp)}
 
   .bits,.ctl{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0}
   .bitcol{display:flex; flex-direction:column; align-items:center; gap:4px}
@@ -1274,7 +1274,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       (l.warm ? '<div class="game" id="warm"></div><div class="idea">' + l.build2 + '</div>' : '') +
       '<p>' + (first ? UI.partsFirst : UI.parts) + '</p>' +
       '<div class="tablewrap"><table class="parts"><tbody>' + shownParts(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td><td><button type="button" class="trybtn" data-c="' + a + '" aria-expanded="false">Try it</button></td></tr><tr class="tryrow" data-c="' + a + '" hidden><td colspan="3"></td></tr>').join('') + '</tbody></table></div>' +
-      '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
+      '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="soft" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
       '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>');
@@ -1333,7 +1333,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     // level 2 warm-up: one line with two blanks, before the four-column build
     if (l.warm){
       const W0 = 'FirstColumn', box = $('#warm');
-      box.innerHTML = '<h4 class="sub">First, one line</h4><p>' + l.warm.lead + '</p><div class="bench"><div><label class="sr" for="wed">HDL for the warm-up chip</label><textarea id="wed" class="editor small" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" rows="8"></textarea></div><div><div id="stage-warm" class="stage"></div></div></div><div class="row"><button type="button" class="btn" id="wrun">Run</button><button type="button" class="btn ghost" id="wreset">Start over</button></div><div id="wres" role="status"></div>';
+      box.innerHTML = '<h4 class="sub">First, one line</h4><p>' + l.warm.lead + '</p><div class="bench"><div><label class="sr" for="wed">HDL for the warm-up chip</label><textarea id="wed" class="editor small" wrap="soft" spellcheck="false" autocapitalize="off" autocomplete="off" rows="8"></textarea></div><div><div id="stage-warm" class="stage"></div></div></div><div class="row"><button type="button" class="btn" id="wrun">Run</button><button type="button" class="btn ghost" id="wreset">Start over</button></div><div id="wres" role="status"></div>';
       const wed = $('#wed'); wed.value = S.code[W0] || l.warm.stub;
       bench('warm', {chip:W0, builtin:false, circ:null, stage:'#stage-warm', probe:null});
       const parts = ['HalfAdder'];

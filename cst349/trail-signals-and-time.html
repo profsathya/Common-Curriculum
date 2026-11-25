@@ -458,15 +458,15 @@
     { id: 'humans',     label: 'Feedback from peers, mentors, alumni, or real users' }
   ];
 
-  const DEFAULT_HRS = { build: 3, check: 2, core: 2, domain: 1, log: 1, people: 1 };
+  const DEFAULT_HRS = { build: 0, check: 0, core: 0, domain: 0, log: 0, people: 0 };
 
   function freshState(){
     return {
       stop: 0,
       unlockedAll: new URLSearchParams(location.search).get('unlock') === '1',
-      track: 'swe',
+      track: '',
       otherTrack: '',
-      runway: '1y',
+      runway: '',
       day1: '',
       l2Pick: '', l2First: '', l2Open: false, l2Q: null, l2Final: '',
       l3Pick: '', l3First: '', l3Open: false, l3Q: null, l3Final: '',
@@ -493,6 +493,8 @@
     }
   } catch (e) {}
 
+  const REVIEWER = /[?&](unlock|review)=1/.test(location.search);
+  S.unlockedAll = REVIEWER;
   const UI = { busy: false, err: '', draft: '', fbFail: false };
 
   const $ = (sel, root) => (root || document).querySelector(sel);
@@ -510,7 +512,7 @@
   function sumHrs(){ return BUCKETS.reduce((acc, b) => acc + (Number(S.hrs[b.id]) || 0), 0); }
 
   function isStopDone(idx){
-    if (idx === 0) return S.day1.trim().length >= 15;
+    if (idx === 0) return !!S.track && !!S.runway && S.day1.trim().length >= 15;
     if (idx === 1) return !!S.l2Pick && S.l2Open && S.l2Q !== null && S.l2Final.trim().length >= 15;
     if (idx === 2) return !!S.l3Pick && S.l3Open && S.l3Q !== null && S.l3Final.trim().length >= 15;
     if (idx === 3) return S.l4Chips.length >= 1 && S.l4Open && S.l4Q !== null && S.l4Final.trim().length >= 15;
@@ -712,7 +714,7 @@
 
       '<div class="step"><h3><span class="stepn">3</span>Write one sentence describing your Day 1</h3>' +
       '<p><label for="day1-in">Describe the role, the kind of organization or team, and the real problem you are helping them with.</label></p>' +
-      '<p class="muted"><i>' + esc(tk.day1Hint) + '</i></p>' +
+      (S.track ? '<p class="muted"><i>' + esc(tk.day1Hint) + '</i></p>' : '') +
       '<textarea id="day1-in" class="note-in" rows="3" placeholder="It is my first week as a ... helping ...">' + esc(S.day1) + '</textarea>' +
       '</div>';
 
@@ -1415,6 +1417,7 @@
 
   $('#subfab').onclick = copyWork;
   $('#startbtn').onclick = () => $('#map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (!REVIEWER) $('#unlockbtn').style.display = 'none';
   $('#unlockbtn').onclick = () => {
     S.unlockedAll = !S.unlockedAll;
     save(); render();
