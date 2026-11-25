@@ -481,18 +481,20 @@ const COPY = {
      "Lift. It is the part of the air's push on the wings that is at a right angle to the direction the bird is moving.",
      "Drag. It is the other part of the air's push. It points straight back along that direction, against the motion."
     ]
-   },
+   }
+  ],
+  "addForces": "Add the forces",
+  "ratioText": "The triangle also tells you how far the bird goes. In a steady glide, the distance travelled forward for each meter of height lost is equal to lift divided by drag. This number is called the glide ratio.",
+  "formula": "glide ratio = lift ÷ drag = distance forward ÷ height lost",
+  "exit": "Zoom in: where lift comes from",
+  "after": [
    "So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill.",
    "Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag.",
    "A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.",
    "Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing.",
    "Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.",
    "By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."
-  ],
-  "addForces": "Add the forces",
-  "ratioText": "The triangle also tells you how far the bird goes. In a steady glide, the distance travelled forward for each meter of height lost is equal to lift divided by drag. This number is called the glide ratio.",
-  "formula": "glide ratio = lift ÷ drag = distance forward ÷ height lost",
-  "exit": "Zoom in: where lift comes from"
+  ]
  },
  "l3": {
   "heading": "Where lift comes from",
@@ -1941,7 +1943,7 @@ const COPY = {
     main.innerHTML = head(l) + blocks(C.l2.p) +
       '<div class="sim" id="sim2"><div class="simrow"><div class="canwrap"><canvas id="c2" tabindex="0" aria-label="The bird up close with its weight, lift and drag arrows and its direction of travel. Use the up and down arrow keys to change the nose angle."></canvas><div class="banner" id="stall2" hidden>' + esc(C.l1.stall) + '</div></div>' + thetaCtl('th2') + '</div>' +
       '<div class="simbar"><button type="button" class="btn ghost" id="addf" aria-pressed="false">' + esc(C.l2.addForces) + '</button>' + speedBar() + '</div>' +
-      '<div class="readouts">' + ro('Speed', 'r2-v') + ro('Height', 'r2-y') + ro('Distance', 'r2-x') + ro('Nose angle', 'r2-th') + '</div></div>' +
+      '<div class="readouts">' + ro('Speed', 'r2-v') + ro('Height', 'r2-y') + ro('Distance', 'r2-x') + ro('Nose angle', 'r2-th') + '</div></div>' + blocks(C.l2.after) +
       predHTML('p2') + '<p>' + esc(C.l2.ratioText) + '</p><div class="formula"><div class="f">' + esc(C.l2.formula) + '</div><div class="live" id="gr-live"></div></div>' +
       prHTML('pr1') + exHTML('ex2', C.explain.ex2) + foot(l);
     const cv = $('#c2'), sim = G.forces || (G.forces = {fl:newFlight(), add:false});

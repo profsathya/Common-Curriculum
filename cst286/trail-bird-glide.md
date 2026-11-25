@@ -76,6 +76,8 @@ When a flight passes the buoy: You passed the buoy.
 - Lift. It is the part of the air's push on the wings that is at a right angle to the direction the bird is moving.
 - Drag. It is the other part of the air's push. It points straight back along that direction, against the motion.
 
+(Page note: canvas: the bird large and centered, flying the same model; it relaunches from the cliff each time it reaches the water. Arrows: weight straight down, lift at a right angle to the direction of travel, drag back along it from the tail (at least 10 px long), and the dashed direction-of-travel arrow; 9.8 N is about 110 px. A small inset shows the glide path from the side. Same nose-angle slider and readouts as Level 1. The button "Add the forces" draws the three arrows tip to tail in a side panel, with the leftover arrow outlined in red and labelled "net force N.N N".)
+
 So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill.
 
 Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag.
@@ -87,8 +89,6 @@ Hold the nose steady and watch the three arrows for a few seconds. They settle t
 Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.
 
 By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
-
-(Page note: canvas: the bird large and centered, flying the same model; it relaunches from the cliff each time it reaches the water. Arrows: weight straight down, lift at a right angle to the direction of travel, drag back along it from the tail (at least 10 px long), and the dashed direction-of-travel arrow; 9.8 N is about 110 px. A small inset shows the glide path from the side. Same nose-angle slider and readouts as Level 1. The button "Add the forces" draws the three arrows tip to tail in a side panel, with the leftover arrow outlined in red and labelled "net force N.N N".)
 
 **Predict:** In a steady glide the bird moves in a straight line at constant speed, heading slightly downhill. What is the net force on it?
 
