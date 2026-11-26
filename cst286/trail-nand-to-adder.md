@@ -35,6 +35,16 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 2. What is the largest number the machine ever shows as an answer?
 3. The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 12 + 7.
 
+**Offered when the third question is answered, closed until the student clicks it. Nothing depends on it.**
+
+**Do you want to test your rule at its edge?** Your rule says where the machine stops being right. Find two sums that sit on either side of that point: the largest sum your rule says the machine still gets right, and the smallest one it gets wrong. Try both on the machine and see whether your rule holds.
+
+**Before you open the box (appears when the third question is answered; the box opens when a few words are written here and saved; the button is Save my guess)**
+
+You now know when the machine goes wrong. Before you look inside, write what you think is in there that makes it get the large sums wrong. A guess in a few words is enough, and it does not have to be right. You will see it again at the end of Level 2, next to what you found.
+
+(Page note: any real attempt opens the box. With nothing written the page says "Write a few words first." After saving it says "Saved. You can change it until you open the box." The guess is part of the copied work. A student who opened the box before 26 Nov is not asked.)
+
 **Open the box:** The reason is inside the machine. Double-click the Adder box on the drawing to go inside it, or use the button.
 
 **What you just showed (appears when the level is complete):** You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.
@@ -149,6 +159,8 @@ After `c=`, type the name of the wire that brings the carry in from column 0. Af
 
 **What you just showed (appears when the level is complete):** You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.
 
+Under it, the student's guess from Level 1 comes back: Before you opened the box, you guessed: "[the student's own words]". Compare it with what you found inside.
+
 ---
 
 ## Level 3 - Inside a column: the FullAdder (FullAdder)
@@ -163,17 +175,46 @@ After `c=`, type the name of the wire that brings the carry in from column 0. Af
 
 Every column after the first has three bits to add: `a`, `b`, and the carry `c` that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3. Written with two bits, those are 00, 01, 10 and 11. The left bit is the carry and the right bit is the sum, so an answer of 2 (binary 10) means carry 1 and sum 0.
 
-When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, using the part that adds two bits, the HalfAdder. The first HalfAdder adds a and b, and it gives a sum bit and a carry bit. Only its sum bit goes on to the second step, where c is added to it. That second step can produce a carry of its own. So you end up with two carry wires, one from each step, while the chip has one carry output.
-
 **Video:** none yet (slot is hidden until a video is added)
 
 **Practice:** A table like this is called a truth table. It has one row for every setting of the inputs, so three inputs give eight rows. For each row, work out the two outputs and fill them in. The output columns are in the order sum, then carry. Click a ? to set it to 0, and click again for 1.
 
+**Under that line:** In the table, `sum` (worth 1) comes first and `carry` (worth 2) comes second, so the count of 1s in a row is sum + 2 x carry.
+
 **Shown when the truth table has a wrong value:** Count how many of the three inputs are 1 in that row. A count of 0 or 1 has carry 0, and a count of 2 or 3 has carry 1. sum is 1 when the count is 1 or 3.
+
+**Two steps, two carry wires (a step of its own, between the practice and the build)**
+
+(Page note: a live drawing of the two adding steps. The first HalfAdder takes `a` and `b`. Its sum wire goes into the second HalfAdder together with `c`. The two carry wires are drawn in color and labeled "carry from step 1" and "carry from step 2". Where the last gate goes, the drawing has an empty box with a question mark, and the chip's `carry` output comes out of it.)
+
+When you add three numbers by hand, you add two of them first and then add the third to the result. The chip works the same way, with a part that adds two bits, the HalfAdder. Step 1 adds `a` and `b`. Step 2 adds `c` to the sum bit from step 1. Each step can produce a carry, so there are two carry wires, and the chip has only one carry output.
+
+Press each button and watch the two carry wires.
+
+- Button **a = 1, b = 1, c = 0**. Shown after it is pressed: Step 1 carries, because 1 + 1 is 2. Step 2 adds 0 and 0, so it does not carry.
+- Button **a = 1, b = 0, c = 1**. Shown after it is pressed: Step 1 adds 1 and 0, so it does not carry. Step 2 adds the sum bit from step 1, which is 1, to c, which is 1, and it carries.
+
+(Page note: when both have been pressed, a table opens with all eight rows. Its columns are a, b, c, carry from step 1, carry from step 2, and "the carry you filled in", which is the student's own column from the practice. Under it, when that column has gaps: A ? means you have not filled in that row of the truth table in the Practice step yet.)
+
+**In which rows should the chip's carry be 1?** Compare the carry column you filled in with the two carry wires.
+- In the rows where step 1 carried
+- In the rows where step 2 carried
+- In the rows where either step carried
+- In the rows where both steps carried
+
+Shown for "step 1": Look at the row a = 1, b = 0, c = 1. Step 1 did not carry there. What does your carry column say for that row?
+
+Shown for "step 2": Look at the row a = 1, b = 1, c = 0. Step 2 did not carry there. What does your carry column say for that row?
+
+Shown for "both steps": Look down the two carry-wire columns. Is there a row where both are 1?
+
+Shown for "either step": Yes. The chip's carry is 1 in every row where one of the two carry wires is 1. The empty box in the drawing is the gate that does this with two wires.
+
+(Page note: the build opens when this question has been answered once, with any of the four choices. A chip that has already passed its tests opens it too. Until then, in place of the editor: The build opens when you have answered the question about the two carry wires.)
 
 **Build it**
 
-Build the FullAdder from the parts below. Two of them do the two adding steps. Then decide what the chip's carry should be when you look at the two carry wires together, and pick the gate from the list that does that.
+Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that does what you just chose for the two carry wires.
 
 **Hints (shown one at a time, on request)**
 1. The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.
@@ -231,19 +272,40 @@ Xor can be built from the three simplest gates: And, Or and Not. Not has one inp
 
 Here is a method that works for a truth table like this one. Take a row where the output is 1 and describe it with "and". An And gate gives 1 only when both of its inputs are 1. So an input that is 1 in that row is written by its name, and an input that is 0 is written with "not" in front of it, because Not turns that 0 into a 1. The row a = 1, b = 0 becomes "a and not b".
 
-Do the same for the other row where the output is 1, and join the two with "or". Each "and", "or" and "not" in your sentence becomes one part.
-
 **Video:** none yet (slot is hidden until a video is added)
 
 **Shown when the truth table has a wrong value:** Xor gives 1 when a and b are different, and 0 when they are the same.
 
+**Write the sentence (a step of its own, above the build)**
+
+The row a = 1, b = 0 is written for you. Write the other row where Xor gives 1 in the same way.
+
+- Row a = 1, b = 0: `a and not b`
+- Row a = 0, b = 1: [text box] [Check]
+
+(Page note: the page recognizes "not a and b" and "b and not a", with or without parentheses and capitals, and with ! or ~ for "not" and & or && for "and". The first sentence the student checks opens the build, whether or not the page recognizes it. A button, **Show the sentence**, appears after the first check. Until a sentence has been checked, in place of the editor: The build opens when you have written a sentence and pressed Check.)
+
+Shown when the box is empty: Write your sentence in the box first.
+
+Shown when the box holds the first row again: That describes the row a = 1, b = 0. In the other row, a is 0 and b is 1.
+
+Shown for any other sentence the page does not recognize: I cannot check that wording here. For this exercise, try using "and" to join the two input conditions: the input that is 1 by its name, and "not" in front of the input that is 0.
+
+Shown when the page recognizes it, or when Show the sentence is pressed: The sentence for Xor is **(a and not b) or (not a and b)**. The "or" joins the two rows, because Xor gives 1 in either of them.
+
+**From the sentence to wires (appears with the sentence for Xor)**
+
+(Page note: the sentence drawn as five boxes labeled not, not, and, and, or, with the wires between them named `na`, `nb`, `w1` and `w2`.)
+
+Each "not", "and" and "or" in your sentence becomes one part, and the output of each part needs a wire. The drawing names the wires in the middle: `na` is "not a", `nb` is "not b", `w1` is "a and not b", and `w2` is "not a and b". The "or" joins `w1` and `w2` into `out`. You can use these names in your HDL or choose your own.
+
 **Build it**
 
-Write your sentence first. Then give every "not" a part and a wire name, feed those wires into the "and" parts, and join the results with the "or" part.
+Write one part for each box in the drawing: the two Not parts first, then the two And parts that read their wires, then the Or.
 
 **Hints (shown one at a time, on request)**
-1. The two rows where Xor gives 1 are a = 1, b = 0 and a = 0, b = 1. The first is "a and not b". Write the second the same way.
-2. The full sentence is (a and not b) or (not a and b). It has two "not", two "and" and one "or", so it needs five parts.
+1. Start with the two "not" boxes. Each one is a Not part with one input and one output, and its output goes to a wire that you name.
+2. The first And reads a and nb and writes w1. The second And reads na and b and writes w2.
 3. Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.
 
 **What you just showed (appears when the level is complete):** You have a method for turning a small truth table into a circuit: one And for each row that gives 1, with a Not on every input that is 0 in that row, and an Or to join the rows.
@@ -253,20 +315,30 @@ Write your sentence first. Then give every "not" a part and a wire name, feed th
 ## Level 6 - Both at once: And (And)
 
 **After this level you can**
-- Build And from a Nand and a Not.
+- Build an And gate from simpler parts.
 - Explain And as the opposite of Nand.
 
-**See it run:** Click `a` and `b`: the output is 1 only when both are 1.
+**Predict, then check (the truth table sits directly under the drawing, and the switches on the drawing work the whole time):** This is the gate that produced your carry bit. Fill in the table with what you expect And to give in each row. Then click `a` and `b` on the drawing, and change any row where the drawing shows something else. Click a ? to set it to 0, and click again for 1.
+
+**Shown when the table does not match the drawing (no cell is marked):** Your table and the drawing give different outputs in [number] of the rows. Set each row on the drawing, and change your table to match what you see.
+
+**Shown when a row has not been filled in:** Fill in every row first. Click a ? to set it to 0, and click again for 1.
 
 **Learn it**
 
 There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.
 
-That means And can be built from the two parts below it: a Nand, and a Not that flips the result back.
-
 **Video:** none yet (slot is hidden until a video is added)
 
-**Shown when the truth table has a wrong value:** And gives 1 in one row only: when a and b are both 1.
+**Your idea first (a step of its own, above the build)**
+
+A Nand gives the opposite of And in every row. What would you add to a Nand to get And back? Write your idea in a few words.
+
+[text box] [Compare]
+
+Shown after Compare: One way is to put a Not after the Nand. The Not flips every output of the Nand, and the opposite of the opposite of And is And. If your idea was different, try it in the build as well. The tests pass any chip that behaves like And.
+
+(Page note: Compare works when something is written. The idea is part of the copied work. Until Compare is pressed, in place of the editor: The build opens when you have compared your idea.)
 
 **Build it**
 
@@ -287,25 +359,31 @@ Connect the two parts with a wire that you name yourself.
 - Build Or from Not and Nand.
 - Change the inputs of a gate you have so that it behaves like the gate you need.
 
-**See it run:** Click `a` and `b`: the output is 0 only when both are 0.
+**Predict, then check (the truth table sits directly under the drawing, and the switches on the drawing work the whole time):** Fill in the table with what you expect Or to give in each row. Then click `a` and `b` on the drawing, and change any row where the drawing shows something else. Click a ? to set it to 0, and click again for 1. The two lines shown for a table that does not match, or is not finished, are the same as at Level 6.
 
 **Learn it**
 
 Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.
 
-In the practice below, fill in the truth table and find the one row where Or gives 0. Nand also gives 0 in exactly one row, but it is a different row. So the question is what you could do to a and to b, before they reach the Nand, so that its 0 lands on the row you want.
-
 **Video:** none yet (slot is hidden until a video is added)
 
-**Shown when the truth table has a wrong value:** Or gives 0 in one row only: when a and b are both 0.
+**Move the 0 (a step of its own, above the build)**
+
+(Page note: a live Nand gate. Each input wire has a switch on it, labeled "flip a" and "flip b", and both are off at the start. A switch that is on is drawn as a Not box. Under the gate, a table of four rows shows what comes out for each row of `a` and `b` with the switches as they are now. The row that gives 0 is highlighted and marked "the Nand gives 0 here". The row a = 0, b = 0 has an outline and the label "Or needs its 0 here".)
+
+Your table for Or has its 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.
+
+Shown when both switches are on: With both inputs flipped, the Nand gives 0 only when `a` and `b` are both 0, and that is the table for Or. Each flip switch is a Not gate. In the build, write down what you just made.
+
+(Page note: the build opens after the first flip of a switch. Until then, in place of the editor: The build opens when you have tried the switches.)
 
 **Build it**
 
-Decide what should happen to a and to b before they reach the Nand.
+Write the three parts you just used: one Not for each flip switch, and the Nand. Name the two flipped wires yourself.
 
 **Hints (shown one at a time, on request)**
-1. Or is 0 in exactly one row, and Nand is 0 in exactly one row. Compare which row it is in each table.
-2. Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?
+1. Each flip switch is a Not part. Its input is a or b, and its output goes to a new wire that you name.
+2. The two inputs of the Nand connect to the two flipped wires, and its output connects to out.
 3. Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.
 
 **What you just showed (appears when the level is complete):** Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan's law.
@@ -318,7 +396,7 @@ Decide what should happen to a and to b before they reach the Nand.
 - Build a one-input Not from a two-input Nand.
 - Explain what a Nand gate does when both of its inputs carry the same signal.
 
-**See it run:** Click `in` and watch `out` do the opposite.
+**Predict, then check (the truth table sits directly under the drawing, and the switches on the drawing work the whole time):** Fill in the table with what you expect Not to give in each row. Then click `in` on the drawing, and change any row where the drawing shows something else. Click a ? to set it to 0, and click again for 1. The two lines shown for a table that does not match, or is not finished, are the same as at Level 6.
 
 **Learn it**
 
@@ -327,8 +405,6 @@ Not has one input, and it flips it. You build it from a single Nand gate, which 
 A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.
 
 **Video:** none yet (slot is hidden until a video is added)
-
-**Shown when the truth table has a wrong value:** Not gives the opposite of its input.
 
 **Build it**
 
@@ -341,6 +417,10 @@ One part is enough.
 
 **What you just showed (appears when the level is complete):** Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.
 
+**Offered under Open the box when the level is complete, closed until the student clicks it. Nothing depends on it.**
+
+**Do you want to find a second way to build Not?** One way connects both Nand inputs to `in`. Another fixes `b` at 1 and connects `a` to `in`. Work out what the second one gives for in = 0 and for in = 1. Then check your answer: press Try it on Nand in the parts list, set `b` to 1, and flip `a` between 0 and 1.
+
 ---
 
 ## Level 9 - The last gate: Nand (Nand)
@@ -349,7 +429,7 @@ One part is enough.
 - State in one sentence what a Nand gate does.
 - Explain why every box above it could be built from this one gate.
 
-**See it run:** Click `a` and `b` and try all four combinations.
+**Predict, then check (the truth table sits directly under the drawing, and the switches on the drawing work the whole time):** You have used Nand in your last three chips. Fill in the table with what you expect it to give in each row. Then click `a` and `b` on the drawing to try all four rows, and change any row where the drawing shows something else. Click a ? to set it to 0, and click again for 1. The two lines shown for a table that does not match, or is not finished, are the same as at Level 6.
 
 **Learn it**
 
@@ -359,13 +439,15 @@ The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s
 
 **Video:** none yet (slot is hidden until a video is added)
 
-**Practice:** Record what you saw in the truth table. Click a ? to set it to 0, and click again for 1.
-
-**Shown when the truth table has a wrong value:** Try each combination on the drawing again and copy what the output shows.
-
 **Open the box (appears when the truth table is right):** One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.
 
 **What you just showed (appears when the level is complete):** In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.
+
+**Offered when the level is complete, closed until the student clicks it. Nothing depends on it.**
+
+**Do you want to build Xor from Nand gates alone?** The five-part Xor shown at Level 5 uses two Not, two And and one Or. Opened all the way down, those five parts are nine Nand gates. Xor can be built from four. Nand is now in the parts list at Level 5, so you can try it there. One place to start: send `a` and `b` through one Nand, and use the output of that Nand more than once. Trying this keeps the Xor that passed your tests safe, and you can put it back at any time.
+
+[Button: Go to Level 5]
 
 ---
 
@@ -377,13 +459,16 @@ The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s
 
 **See it run:** Here are two transistors, each between the power supply and a lamp. Click `in` and watch each one. A transistor has no moving parts: the signal on its control wire decides whether the path through it is closed, which lets electricity through, or open, which blocks it.
 
+**Kept in view (a small panel that stays at the top of the screen while the student scrolls through this level; the student can close it)**
+- A closed transistor lets electricity through. An open transistor blocks it.
+- No circle on the control wire: the transistor is closed when its signal is 1. A circle: it is closed when its signal is 0.
+- The rule for every gate: for every combination of inputs, the output is connected to power, which makes it 1, or to ground, which makes it 0. It is never connected to both, and never to neither.
+
 **Learn it**
 
 Until now a 1 or a 0 was just a value on a wire. Physically, a wire that carries 1 is connected to the power supply, and a wire that carries 0 is connected to ground, which is the other side of the supply. A gate has to connect its output wire to one of the two, depending on its inputs. The parts that make and break those connections are transistors.
 
-There are two kinds, and chips use them in pairs. One kind closes when its control signal is 1. The other kind closes when its control signal is 0; in the drawings it has a small circle on its control wire. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.
-
-A working gate keeps one rule for every combination of inputs: the output is connected to power or to ground, and never to both, and never to neither. If it is connected to both, electricity runs straight from power to ground, which is called a short circuit. If it is connected to neither, the output is not a 0 or a 1 at all.
+There are two kinds, and chips use them in pairs. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.
 
 **Video:** none yet (slot is hidden until a video is added)
 
@@ -406,8 +491,10 @@ You decide how each pair is connected. Two switches <b>one after the other</b> m
 **Feedback after Run tests**
 - All correct (top side by side, bottom one after the other): All 4 rows pass. Your four transistors behave as a Nand gate.
 - Top one after the other, bottom side by side: This circuit keeps the rule, so it is a real gate, but it is a different gate: it gives 1 only when both inputs are 0. That gate is called Nor. Look at the row a = 1, b = 0, where a Nand gate should give 1.
-- Both side by side: When a and b are different, one top transistor and one bottom transistor are closed at the same time. That connects power straight to ground, which is a short circuit, so the output is not a clean 0 or 1.
-- Both one after the other: When a and b are different, neither path is closed, so the output is connected to nothing. It is not a 0 or a 1.
+- Both side by side: When a and b are different, one top transistor and one bottom transistor are closed at the same time, so the output is connected to power and to ground at once. That breaks the rule.
+  Offered under this line, closed until the student clicks it: **Are you wondering what happens when an output is connected to both?** Electricity runs straight from power to ground through the two closed transistors. This is called a short circuit. The output is not a clean 0 or 1, and the current that flows wastes power and heats the chip.
+- Both one after the other: When a and b are different, neither path is closed, so the output is connected to neither power nor ground. That breaks the rule.
+  Offered under this line, closed until the student clicks it: **Are you wondering what the output is when it is connected to neither?** A wire that is connected to nothing has no value of its own. It is not a 0 or a 1, and a part that reads it could see either one. Engineers call this a floating output.
 - A pair not chosen yet: Choose an arrangement for both pairs first.
 
 **Hints (shown one at a time, on request)**
@@ -455,14 +542,16 @@ A wire can go to more than one part. An output pin you do not need can be left o
 - **Above the parts list, later levels:** Parts you can use here. Press Try it to see what a part does, or click its line to insert it:
 - **Under "Look inside your chip", level 2:** These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.
 - **Under "Look inside your chip", later levels:** Flip the inputs and read the value going into and out of every part.
-- **Truth table, levels 4 to 8:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.
+- **Truth table, levels 3 to 5:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1. (At Levels 6 to 9 the table is a prediction; its lines are in those levels.)
 - **Above a test result, after the student changes the HDL (the old result is dimmed until Run tests is pressed again):** You changed the HDL after these tests ran. Press Run tests to test it again.
 - **The same, above the result of the Level 2 warm-up:** You changed the HDL after this ran. Press Run to test it again.
 - **When nothing follows an = sign in the HDL:** There is nothing after an = sign on this line. After each =, write the name of the wire that pin connects to. If you do not need that output, delete the pin and its = from the line.
 - **In the copied work, when the editor holds something different from the HDL that passed:** "The HDL that passed every test:" above the HDL that passed, and "The HDL in my editor now (changed since it passed):" above the editor's HDL. When they are the same, the line is "My HDL (passes every test):".
 - **Open the box, before the build passes:** This step opens when your chip passes its tests.
-- **Open the box, level 2:** Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.
-- **Open the box, later levels:** Open a part you used. The others stay open for you to come back to.
+- **Open the box, level 2:** Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. The button marked **Next on the trail** follows the numbered order.
+- **Open the box, later levels:** Open a part you used. The button marked **Next on the trail** follows the numbered order. The other parts stay open, so you can come back for them.
+- **Open the box, when the next level is not a part of this chip (Level 6):** Open a part you used. The parts stay open, so you can come back for them. The next level on the trail is [next], which is not inside this chip. The "Go down to [next]" button at the bottom takes you there.
+- **Under the editor, once a chip has passed and the editor holds something different:** a button, Put back the [chip] that passed.
 - **Under a locked "Go down" button:** The next level opens when you finish this one.
 - **Under a locked "Zoom all the way out" button:** Zoom all the way out opens when every level is done. Still open: [the open levels, as buttons]
 

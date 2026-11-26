@@ -215,6 +215,29 @@
   .parts{border-collapse:collapse; margin:0 0 12px; font-size:.92rem}
   .parts td{padding:3px 12px 3px 0; vertical-align:middle; color:var(--ink-soft)}
   /* Level 2: wondering questions, the lock on the build step, and the labels on the first HDL line */
+  .svgwrap{overflow-x:auto; max-width:100%}
+  .fasvg{width:100%; min-width:540px; max-width:660px; height:auto; display:block; margin:6px 0}
+  .fasvg.sm{min-width:400px; max-width:520px}
+  .fasvg text{fill:var(--ink); font:600 13px "IBM Plex Mono",ui-monospace,Menlo,monospace}
+  .fasvg text.s{font-weight:400; font-size:11.5px; fill:var(--ink-soft)}
+  .fasvg .bx{fill:var(--card); stroke:var(--ink-soft); stroke-width:1.5}
+  .fasvg .bx.q{stroke-dasharray:5 4; stroke:var(--blaze)}
+  .fasvg .bx.off{stroke-dasharray:4 4; opacity:.6}
+  .fasvg .wire.c1{stroke:#F08A5D; opacity:.5} .fasvg .wire.c2{stroke:#4FD1C5; opacity:.5}
+  .fasvg .wire.c1.on,.fasvg .wire.c2.on{opacity:1; stroke-width:5; filter:none}
+  .fasvg text.c1{fill:#F08A5D} .fasvg text.c2{fill:#4FD1C5}
+  table.tt th.c1{color:#F08A5D} table.tt th.c2{color:#4FD1C5}
+  table.tt tr.zrow td{background:var(--bad-soft)} table.tt tr.trow td{outline:2px solid var(--blaze); outline-offset:-2px}
+  table.tt td.note{font-size:.8rem; color:var(--ink-soft); text-align:left; white-space:normal}
+  .sline{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0}
+  .sline input{flex:1 1 220px; min-width:0; font:inherit; font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; padding:7px 10px; border:1px solid var(--line); border-radius:6px; background:var(--stage); color:var(--ink)}
+  textarea.plain{width:100%; font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--stage); color:var(--ink)}
+  .nexttag{display:inline-block; margin-left:8px; font-size:.72rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; border:1px solid currentColor; border-radius:999px; padding:0 8px}
+  details.keptview{position:sticky; top:0; z-index:5; background:var(--card); border:1px solid var(--blaze); border-radius:8px; padding:6px 14px; margin:12px 0; font-size:.9rem}
+  details.keptview summary{cursor:pointer; font-weight:700; color:var(--blaze)}
+  @media (max-width:560px){ details.keptview{font-size:.8rem; padding:4px 10px} }
+  details.keptview ul{margin:6px 0 4px; padding-left:18px} details.keptview li{margin:2px 0}
+  p.tnote{color:var(--ink-soft); font-size:.92rem}
   details.wonder{margin:12px 0; border:1px dashed var(--line); border-radius:8px; padding:8px 14px}
   details.wonder summary{cursor:pointer; color:var(--tc); font-weight:600}
   details.wonder[open] summary{margin-bottom:8px}
@@ -813,6 +836,8 @@ const LEVELS = [
    see:'This box adds two whole numbers. Each number can be anything from 0 to 15. Change <code>a</code> and <code>b</code> and watch the answer. Try small numbers first, then large ones.',
    learn:'<p>Most of the time this machine gives the answer you expect. If you try enough pairs of numbers, you will find sums that it gets wrong.</p><p>When engineers find a machine giving a wrong answer, they treat it as a clue about how the machine is built inside. So before you open the box, find out exactly when it goes wrong.</p>',
    inv:['Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.', 'What is the largest number the machine ever shows as an answer?', 'The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 12 + 7.'],
+   edge:{id:'w-edge', q:`Do you want to test your rule at its edge?`, a:`<p>Your rule says where the machine stops being right. Find two sums that sit on either side of that point: the largest sum your rule says the machine still gets right, and the smallest one it gets wrong. Try both on the machine and see whether your rule holds.</p>`},
+   guess:{head:`Before you open the box.`, ask:`You now know when the machine goes wrong. Before you look inside, write what you think is in there that makes it get the large sums wrong. A guess in a few words is enough, and it does not have to be right. You will see it again at the end of Level 2, next to what you found.`, btn:`Save my guess`, short:`Write a few words first.`, saved:`Saved. You can change it until you open the box.`},
    open:'The reason is inside the machine. Double-click the Adder box on the drawing to go inside it, or use the button.',
    after:'You found the limit of the machine from the outside. It never shows more than 15, and when the true sum is larger, it shows a number that is exactly 16 too small. The next level shows why.'},
 
@@ -833,10 +858,24 @@ const LEVELS = [
   {id:'fulladder', kind:'build', chip:'FullAdder', short:'FullAdder', title:'Inside a column: the FullAdder',
    objs:['Explain what a FullAdder does with its three input bits.', 'Build a FullAdder from two HalfAdders and one more gate.'],
    see:'This is the box that sat in three of your four columns. Click <code>a</code>, <code>b</code> and <code>c</code> on the drawing and watch <code>sum</code> and <code>carry</code>. Each time, count how many of the three inputs are 1.',
-   learn:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code>, and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3. Written with two bits, those are 00, 01, 10 and 11. The left bit is the carry and the right bit is the sum, so an answer of 2 (binary 10) means carry 1 and sum 0.</p><p>When you add three numbers by hand, you add two of them first and then add the third to the result. The chip can work the same way, using the part that adds two bits, the HalfAdder. The first HalfAdder adds a and b, and it gives a sum bit and a carry bit. Only its sum bit goes on to the second step, where c is added to it. That second step can produce a carry of its own. So you end up with two carry wires, one from each step, while the chip has one carry output.</p>',
+   learn:'<p>Every column after the first has three bits to add: <code>a</code>, <code>b</code>, and the carry <code>c</code> that comes in from the column to its right. Three bits add up to 0, 1, 2 or 3. Written with two bits, those are 00, 01, 10 and 11. The left bit is the carry and the right bit is the sum, so an answer of 2 (binary 10) means carry 1 and sum 0.</p>',
    practice:'A table like this is called a truth table. It has one row for every setting of the inputs, so three inputs give eight rows. For each row, work out the two outputs and fill them in. The output columns are in the order sum, then carry. Click a ? to set it to 0, and click again for 1.',
    rule:'Count how many of the three inputs are 1 in that row. A count of 0 or 1 has carry 0, and a count of 2 or 3 has carry 1. sum is 1 when the count is 1 or 3.',
-   build:'<p>Build the FullAdder from the parts below. Two of them do the two adding steps. Then decide what the chip\'s carry should be when you look at the two carry wires together, and pick the gate from the list that does that.</p>',
+   tnote:`In the table, <code>sum</code> (worth 1) comes first and <code>carry</code> (worth 2) comes second, so the count of 1s in a row is sum + 2 x carry.`,
+   act:{title:`Two steps, two carry wires`,
+        under:`<p>When you add three numbers by hand, you add two of them first and then add the third to the result. The chip works the same way, with a part that adds two bits, the HalfAdder. Step 1 adds <code>a</code> and <code>b</code>. Step 2 adds <code>c</code> to the sum bit from step 1. Each step can produce a carry, so there are two carry wires, and the chip has only one carry output.</p><p>Press each button and watch the two carry wires.</p>`,
+        rows:[{v:{a:1, b:1, c:0}, t:`a = 1, b = 1, c = 0`, said:`Step 1 carries, because 1 + 1 is 2. Step 2 adds 0 and 0, so it does not carry.`},
+              {v:{a:1, b:0, c:1}, t:`a = 1, b = 0, c = 1`, said:`Step 1 adds 1 and 0, so it does not carry. Step 2 adds the sum bit from step 1, which is 1, to c, which is 1, and it carries.`}],
+        cols:[`carry from step 1`, `carry from step 2`, `the carry you filled in`],
+        blank:`A ? means you have not filled in that row of the truth table in the Practice step yet.`,
+        q:`In which rows should the chip's carry be 1?`, q2:`Compare the carry column you filled in with the two carry wires.`,
+        opts:[['s1', `In the rows where step 1 carried`], ['s2', `In the rows where step 2 carried`], ['either', `In the rows where either step carried`], ['both', `In the rows where both steps carried`]],
+        fb:{s1:`Look at the row a = 1, b = 0, c = 1. Step 1 did not carry there. What does your carry column say for that row?`,
+            s2:`Look at the row a = 1, b = 1, c = 0. Step 2 did not carry there. What does your carry column say for that row?`,
+            both:`Look down the two carry-wire columns. Is there a row where both are 1?`,
+            either:`Yes. The chip's carry is 1 in every row where one of the two carry wires is 1. The empty box in the drawing is the gate that does this with two wires.`},
+        lock:`The build opens when you have answered the question about the two carry wires.`},
+   build:`<p>Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that does what you just chose for the two carry wires.</p>`,
    hints:['The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.', 'The second HalfAdder adds s1 and c. Its sum is the chip\'s sum. Its carry is a second carry wire, for example c2.', 'The chip\'s carry should be 1 when either step produced a carry. That is an Or of c1 and c2 going to carry.'],
    after:'Something worth explaining to someone: the two HalfAdders inside your FullAdder never both produce a carry for the same inputs. You can check it in the part-by-part list under your chip. Set a = 1 and b = 1: the first step carries and its sum is 0, so the second step has nothing to carry.'},
 
@@ -852,52 +891,69 @@ const LEVELS = [
   {id:'xor', kind:'build', chip:'Xor', short:'Xor', title:'Are they different? Xor',
    objs:['Turn a truth table into a sentence that uses "and", "or" and "not".', 'Turn that sentence into a circuit, with one part for each "and", "or" and "not".'],
    see:'This is the gate that produced your sum bit. Click <code>a</code> and <code>b</code>: the output is 1 when they are different.',
-   learn:'<p>Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.</p><p>Here is a method that works for a truth table like this one. Take a row where the output is 1 and describe it with "and". An And gate gives 1 only when both of its inputs are 1. So an input that is 1 in that row is written by its name, and an input that is 0 is written with "not" in front of it, because Not turns that 0 into a 1. The row a = 1, b = 0 becomes "a and not b".</p><p>Do the same for the other row where the output is 1, and join the two with "or". Each "and", "or" and "not" in your sentence becomes one part.</p>',
+   learn:'<p>Xor can be built from the three simplest gates: And, Or and Not. Not has one input and flips it, so 0 becomes 1 and 1 becomes 0.</p><p>Here is a method that works for a truth table like this one. Take a row where the output is 1 and describe it with "and". An And gate gives 1 only when both of its inputs are 1. So an input that is 1 in that row is written by its name, and an input that is 0 is written with "not" in front of it, because Not turns that 0 into a 1. The row a = 1, b = 0 becomes "a and not b".</p>',
    rule:'Xor gives 1 when a and b are different, and 0 when they are the same.',
-   build:'<p>Write your sentence first. Then give every "not" a part and a wire name, feed those wires into the "and" parts, and join the results with the "or" part.</p>',
-   hints:['The two rows where Xor gives 1 are a = 1, b = 0 and a = 0, b = 1. The first is "a and not b". Write the second the same way.', 'The full sentence is (a and not b) or (not a and b). It has two "not", two "and" and one "or", so it needs five parts.', 'Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.'],
+   act:{title:`Write the sentence`,
+        lead:`The row a = 1, b = 0 is written for you. Write the other row where Xor gives 1 in the same way.`,
+        r1:`Row a = 1, b = 0:`, r1s:`a and not b`, r2:`Row a = 0, b = 1:`, check:`Check`, show:`Show the sentence`,
+        same:`That describes the row a = 1, b = 0. In the other row, a is 0 and b is 1.`,
+        other:`I cannot check that wording here. For this exercise, try using "and" to join the two input conditions: the input that is 1 by its name, and "not" in front of the input that is 0.`,
+        empty:`Write your sentence in the box first.`,
+        full:`The sentence for Xor is <b>(a and not b) or (not a and b)</b>. The "or" joins the two rows, because Xor gives 1 in either of them.`,
+        wires:`From the sentence to wires`,
+        under:`Each "not", "and" and "or" in your sentence becomes one part, and the output of each part needs a wire. The drawing names the wires in the middle: <code>na</code> is "not a", <code>nb</code> is "not b", <code>w1</code> is "a and not b", and <code>w2</code> is "not a and b". The "or" joins <code>w1</code> and <code>w2</code> into <code>out</code>. You can use these names in your HDL or choose your own.`,
+        lock:`The build opens when you have written a sentence and pressed Check.`},
+   build:`<p>Write one part for each box in the drawing: the two Not parts first, then the two And parts that read their wires, then the Or.</p>`,
+   hints:['Start with the two "not" boxes. Each one is a Not part with one input and one output, and its output goes to a wire that you name.', 'The first And reads a and nb and writes w1. The second And reads na and b and writes w2.', 'Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.'],
    after:'You have a method for turning a small truth table into a circuit: one And for each row that gives 1, with a Not on every input that is 0 in that row, and an Or to join the rows.'},
 
   {id:'and', kind:'build', chip:'And', short:'And', title:'Both at once: And',
-   objs:['Build And from a Nand and a Not.', 'Explain And as the opposite of Nand.'],
-   see:'Click <code>a</code> and <code>b</code>: the output is 1 only when both are 1.',
-   learn:'<p>There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.</p><p>That means And can be built from the two parts below it: a Nand, and a Not that flips the result back.</p>',
-   rule:'And gives 1 in one row only: when a and b are both 1.',
+   objs:['Build an And gate from simpler parts.', 'Explain And as the opposite of Nand.'],
+   pcheck:`This is the gate that produced your carry bit. Fill in the table with what you expect And to give in each row. Then click <code>a</code> and <code>b</code> on the drawing, and change any row where the drawing shows something else.`,
+   learn:'<p>There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.</p>',
+   act:{title:`Your idea first`,
+        q:`A Nand gives the opposite of And in every row. What would you add to a Nand to get And back? Write your idea in a few words.`, btn:`Compare`,
+        said:`One way is to put a Not after the Nand. The Not flips every output of the Nand, and the opposite of the opposite of And is And. If your idea was different, try it in the build as well. The tests pass any chip that behaves like And.`,
+        lock:`The build opens when you have compared your idea.`},
    build:'<p>Connect the two parts with a wire that you name yourself.</p>',
    hints:['Nand is short for Not-And. What do you get when you take the opposite of the opposite?', 'Send a and b through a Nand and name its output, for example out=w.', 'Two parts: a Nand from a and b to a wire w, then a Not from w to out.'],
    after:'Try a = 1 and b = 1 on your drawing: the Nand gives 0, and the Not turns it back into 1. In every other row the Nand gives 1, and the Not turns it into 0.'},
 
   {id:'or', kind:'build', chip:'Or', short:'Or', title:'At least one: Or',
    objs:['Build Or from Not and Nand.', 'Change the inputs of a gate you have so that it behaves like the gate you need.'],
-   see:'Click <code>a</code> and <code>b</code>: the output is 0 only when both are 0.',
-   learn:'<p>Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.</p><p>In the practice below, fill in the truth table and find the one row where Or gives 0. Nand also gives 0 in exactly one row, but it is a different row. So the question is what you could do to a and to b, before they reach the Nand, so that its 0 lands on the row you want.</p>',
-   rule:'Or gives 0 in one row only: when a and b are both 0.',
-   build:'<p>Decide what should happen to a and to b before they reach the Nand.</p>',
-   hints:['Or is 0 in exactly one row, and Nand is 0 in exactly one row. Compare which row it is in each table.', 'Nand gives 0 only when both of its inputs are 1. You want 0 only when a and b are both 0. What could you do to a and to b before they reach the Nand?', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
+   pcheck:`Fill in the table with what you expect Or to give in each row. Then click <code>a</code> and <code>b</code> on the drawing, and change any row where the drawing shows something else.`,
+   learn:'<p>Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.</p>',
+   act:{title:`Move the 0`,
+        lead:`Your table for Or has its 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.`,
+        fa:`flip a`, fb:`flip b`, target:`Or needs its 0 here`, zero:`the Nand gives 0 here`,
+        done:`With both inputs flipped, the Nand gives 0 only when <code>a</code> and <code>b</code> are both 0, and that is the table for Or. Each flip switch is a Not gate. In the build, write down what you just made.`,
+        lock:`The build opens when you have tried the switches.`},
+   build:`<p>Write the three parts you just used: one Not for each flip switch, and the Nand. Name the two flipped wires yourself.</p>`,
+   hints:['Each flip switch is a Not part. Its input is a or b, and its output goes to a new wire that you name.', 'The two inputs of the Nand connect to the two flipped wires, and its output connects to out.', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
    after:'Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan\'s law.'},
 
   {id:'not', kind:'build', chip:'Not', short:'Not', title:'Flip a bit: Not',
    objs:['Build a one-input Not from a two-input Nand.', 'Explain what a Nand gate does when both of its inputs carry the same signal.'],
-   see:'Click <code>in</code> and watch <code>out</code> do the opposite.',
+   pcheck:`Fill in the table with what you expect Not to give in each row. Then click <code>in</code> on the drawing, and change any row where the drawing shows something else.`,
+   extra:{id:'w-not2', q:`Do you want to find a second way to build Not?`, a:`<p>One way connects both Nand inputs to <code>in</code>. Another fixes <code>b</code> at 1 and connects <code>a</code> to <code>in</code>. Work out what the second one gives for in = 0 and for in = 1. Then check your answer: press Try it on Nand in the parts list, set <code>b</code> to 1, and flip <code>a</code> between 0 and 1.</p>`},
    learn:'<p>Not has one input, and it flips it. You build it from a single Nand gate, which gives 0 only when both of its inputs are 1, and gives 1 in every other case.</p><p>A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.</p>',
-   rule:'Not gives the opposite of its input.',
    build:'<p>One part is enough.</p>',
    hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
    after:'Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.'},
 
   {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The last gate: Nand',
    objs:['State in one sentence what a Nand gate does.', 'Explain why every box above it could be built from this one gate.'],
-   see:'Click <code>a</code> and <code>b</code> and try all four combinations.',
+   pcheck:`You have used Nand in your last three chips. Fill in the table with what you expect it to give in each row. Then click <code>a</code> and <code>b</code> on the drawing to try all four rows, and change any row where the drawing shows something else.`,
+   extra:{id:'w-xor4', q:`Do you want to build Xor from Nand gates alone?`, a:`<p>The five-part Xor shown at Level 5 uses two Not, two And and one Or. Opened all the way down, those five parts are nine Nand gates. Xor can be built from four. Nand is now in the parts list at Level 5, so you can try it there. One place to start: send <code>a</code> and <code>b</code> through one Nand, and use the output of that Nand more than once. Trying this keeps the Xor that passed your tests safe, and you can put it back at any time.</p>`, btn:`Go to Level 5`},
    learn:'<p>Nand is the last logic gate on the trail. Every box you opened on the way down was built from the boxes below it, and all of them end here.</p><p>The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s, and something physical has to carry it out. Inside a Nand gate there are four transistors, which are tiny electrical switches. That is the next level down, and it is where logic meets physics.</p>',
-   practice:'Record what you saw in the truth table. Click a ? to set it to 0, and click again for 1.',
-   rule:'Try each combination on the drawing again and copy what the output shows.',
    open:'One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.',
    after:'In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.'},
 
   {id:'transistor', kind:'switch', chip:'Transistor', short:'Transistors', title:'Under the gate: transistors',
    objs:['Describe a transistor as a switch that an electrical signal opens and closes.', 'Build a Nand gate from four transistors, and explain why each pair is arranged the way it is.'],
    see:'Here are two transistors, each between the power supply and a lamp. Click <code>in</code> and watch each one. A transistor has no moving parts: the signal on its control wire decides whether the path through it is closed, which lets electricity through, or open, which blocks it.',
-   learn:'<p>Until now a 1 or a 0 was just a value on a wire. Physically, a wire that carries 1 is connected to the power supply, and a wire that carries 0 is connected to ground, which is the other side of the supply. A gate has to connect its output wire to one of the two, depending on its inputs. The parts that make and break those connections are transistors.</p><p>There are two kinds, and chips use them in pairs. One kind closes when its control signal is 1. The other kind closes when its control signal is 0; in the drawings it has a small circle on its control wire. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.</p><p>A working gate keeps one rule for every combination of inputs: the output is connected to power or to ground, and never to both, and never to neither. If it is connected to both, electricity runs straight from power to ground, which is called a short circuit. If it is connected to neither, the output is not a 0 or a 1 at all.</p>',
+   learn:'<p>Until now a 1 or a 0 was just a value on a wire. Physically, a wire that carries 1 is connected to the power supply, and a wire that carries 0 is connected to ground, which is the other side of the supply. A gate has to connect its output wire to one of the two, depending on its inputs. The parts that make and break those connections are transistors.</p><p>There are two kinds, and chips use them in pairs. The transistors that close on 0 sit between the output and power, and the transistors that close on 1 sit between the output and ground.</p>',
+   kept:{title:`Kept in view`, items:[`A closed transistor lets electricity through. An open transistor blocks it.`, `No circle on the control wire: the transistor is closed when its signal is 1. A circle: it is closed when its signal is 0.`, `The rule for every gate: for every combination of inputs, the output is connected to power, which makes it 1, or to ground, which makes it 0. It is never connected to both, and never to neither.`]},
    practice:'This is the simplest gate, Not, made from one transistor of each kind. The input is set to 1. Before you see what the transistors do, answer the two questions.',
    q:['The input is 1. Which transistor is closed?', 'So which is the output connected to?'],
    qdone:'Now click <code>in</code> on the Not gate and watch the two transistors trade places. Each time, exactly one of them is closed, so the output is always connected to exactly one of power and ground.',
@@ -905,9 +961,11 @@ const LEVELS = [
    hints:['A Nand gate gives 0 in only one row: a = 1 and b = 1. So the path to ground should be closed only when both bottom transistors are closed.', 'In every other row at least one input is 0, and the output should be 1. The top transistors close when their input is 0, so the path to power should be closed when either of them is closed.', 'Bottom pair: one after the other. Top pair: side by side.'],
    fb:{pass:'All 4 rows pass. Your four transistors behave as a Nand gate.',
        nor:'This circuit keeps the rule, so it is a real gate, but it is a different gate: it gives 1 only when both inputs are 0. That gate is called Nor. Look at the row a = 1, b = 0, where a Nand gate should give 1.',
-       short:'When a and b are different, one top transistor and one bottom transistor are closed at the same time. That connects power straight to ground, which is a short circuit, so the output is not a clean 0 or 1.',
-       float:'When a and b are different, neither path is closed, so the output is connected to nothing. It is not a 0 or a 1.',
+       short:'When a and b are different, one top transistor and one bottom transistor are closed at the same time, so the output is connected to power and to ground at once. That breaks the rule.',
+       float:'When a and b are different, neither path is closed, so the output is connected to neither power nor ground. That breaks the rule.',
        choose:'Choose an arrangement for both pairs first.'},
+   fbw:{short:{q:`Are you wondering what happens when an output is connected to both?`, a:`Electricity runs straight from power to ground through the two closed transistors. This is called a short circuit. The output is not a clean 0 or 1, and the current that flows wastes power and heats the chip.`},
+        float:{q:`Are you wondering what the output is when it is connected to neither?`, a:`A wire that is connected to nothing has no value of its own. It is not a 0 or a 1, and a part that reads it could see either one. Engineers call this a floating output.`}},
    after:'Four transistors make one Nand gate. Two side by side connect the output to power when either input is 0, and two one after the other connect it to ground only when both inputs are 1. Every gate, adder and number above this level comes down to switches like these opening and closing.'},
 
   {id:'out', kind:'out', short:'Zoom out', title:'Zoom all the way out',
@@ -931,8 +989,14 @@ const UI = {
   inside:'Flip the inputs and read the value going into and out of every part.',
   table:'Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.',
   openLocked:'This step opens when your chip passes its tests.',
-  openFirst:'Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.',
-  open:'Open a part you used. The others stay open for you to come back to.',
+  openFirst:'Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. The button marked <b>Next on the trail</b> follows the numbered order.',
+  open:'Open a part you used. The button marked <b>Next on the trail</b> follows the numbered order. The other parts stay open, so you can come back for them.',
+  openSide:'Open a part you used. The parts stay open, so you can come back for them. The next level on the trail is [next], which is not inside this chip. The "Go down to [next]" button at the bottom takes you there.',
+  nextTag:'Next on the trail',
+  cells:'Click a ? to set it to 0, and click again for 1.',
+  mismatch:'Your table and the drawing give different outputs in [n] of the rows. Set each row on the drawing, and change your table to match what you see.',
+  guessBack:'Before you opened the box, you guessed: "[guess]". Compare it with what you found inside.',
+  restore:'Put back the [chip] that passed',
   nextLocked:'The next level opens when you finish this one.',
   outLocked:'Zoom all the way out opens when every level is done. Still open:'
 };
@@ -1089,7 +1153,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     $$('.zoompath .up').forEach(b => b.onclick = () => go(levelOf(b.dataset.c)));
   }
   function refreshNext(l){ const nx = LEVELS[LEVELS.indexOf(l) + 1], b = $('#next'); if (b && nx && unlocked(nx)){ b.disabled = false; b.classList.remove('ghost'); } const y = $('#navwhy'); if (y){ y.innerHTML = whyHTML(l); bindWhy(); } }
-  const afterHTML = l => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(l.after) + '</p></div>';
+  const afterHTML = l => '<div class="after"><div class="lbl">What you just showed</div><p>' + esc(l.after) + '</p>' + (l.chip === 'Add4' && (S.guess || '').trim() ? '<p id="guessback">' + esc(UI.guessBack.replace('[guess]', S.guess.trim())) + '</p>' : '') + '</div>';
   const stepHTML = (n, title, body) => '<section class="step"><h3><span class="stepn">' + n + '</span> ' + title + '</h3>' + body + '</section>';
   const videoHTML = l => l.video ? '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(l.video) + '" title="' + esc(l.title) + '" allow="fullscreen" loading="lazy"></iframe></div>' : '';
 
@@ -1111,9 +1175,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     $('#pcheck').onclick = () => {
       const m = $('#pmsg');
       if (P[chip].some(r => r.some(v => v === null))){ m.className = 'msg warn'; m.textContent = 'Fill in every row first. Click a ? to set it to 0, and click again for 1.'; return; }
-      let wrong = 0;
-      $$('#pt .cell').forEach(b => { const r = +b.dataset.r, o = +b.dataset.o; const ok = P[chip][r][o] === spec.fn(rows[r])[spec.outs[o][0]]; b.classList.toggle('ok', ok); b.classList.toggle('bad', !ok); if (!ok) wrong++; });
-      if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + l.rule; }
+      let wrong = 0; const PF = !!l.pcheck;
+      $$('#pt .cell').forEach(b => { const r = +b.dataset.r, o = +b.dataset.o; const ok = P[chip][r][o] === spec.fn(rows[r])[spec.outs[o][0]]; if (!PF){ b.classList.toggle('ok', ok); b.classList.toggle('bad', !ok); } if (!ok) wrong++; });
+      if (wrong && PF){ m.className = 'msg warn'; m.textContent = UI.mismatch.replace('[n]', wrong); }
+      else if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + l.rule; }
       else { m.className = 'msg ok'; m.textContent = 'Every row matches.'; S.pred[chip] = true; save(); if (onOK) onOK(); }
     };
   }
@@ -1274,6 +1339,107 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   }
 
   /* ---------- views ---------- */
+  /* ---------- 26 Nov 2026: a short activity above the build (Levels 3, 5, 6, 7). The build opens after an attempt, never only after a correct answer. ---------- */
+  const actState = chip => { const a = S.act || (S.act = {}); return a[chip] || (a[chip] = {}); };
+  const actOpen = chip => UNLOCK_ALL || !!S.pass[chip] || !!actState(chip).done;
+  let ACTLOCK = null;
+  const actDone = chip => { actState(chip).done = true; save(); if (ACTLOCK) ACTLOCK(); };
+  const svgW = (d, on, cls) => '<path class="wire' + (cls ? ' ' + cls : '') + (on ? ' on' : '') + '" d="' + d + '"/>';
+  const svgT = (x, y, t, cls, anchor) => '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + ' text-anchor="' + (anchor || 'start') + '">' + t + '</text>';
+  const svgB = (x, y, w, h, t, sub, cls) => '<rect class="bx' + (cls ? ' ' + cls : '') + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6"/>' + svgT(x + w / 2, y + h / 2 + (sub ? -1 : 5), t, '', 'middle') + (sub ? svgT(x + w / 2, y + h / 2 + 15, sub, 's', 'middle') : '');
+  const ACT = {};
+
+  // Level 3: the two adding steps, with the two carry wires in color and an empty box where the last gate goes
+  function faSVG(v){
+    const L = v !== null, s1 = L ? v.a ^ v.b : 0, c1 = L ? v.a & v.b : 0, sum = L ? s1 ^ v.c : 0, c2 = L ? s1 & v.c : 0, val = x => L ? ' = ' + x : '';
+    return '<div class="svgwrap"><svg class="fasvg" viewBox="0 0 690 250" role="img" aria-label="Two HalfAdders. The first adds a and b. The second adds c to the sum bit of the first. Each has a carry wire, and both carry wires go to an empty box.">' +
+      svgW('M64 62 H150', L && v.a) + svgW('M64 92 H150', L && v.b) + svgW('M64 192 H330', L && v.c) +
+      svgW('M260 92 H295 V162 H330', s1) + svgW('M260 62 H470', c1, 'c1') + svgW('M440 162 H455 V102 H470', c2, 'c2') +
+      svgW('M440 192 H590', sum) + '<path class="wire unk" d="M530 82 H590"/>' +
+      svgT(60, 66, 'a' + val(L ? v.a : ''), '', 'end') + svgT(60, 96, 'b' + val(L ? v.b : ''), '', 'end') + svgT(60, 196, 'c' + val(L ? v.c : ''), '', 'end') +
+      svgB(150, 44, 110, 66, 'HalfAdder', 'step 1') + svgB(330, 144, 110, 66, 'HalfAdder', 'step 2') + svgB(470, 52, 60, 60, '?', '', 'q') +
+      svgT(270, 54, 'carry from step 1' + val(c1), 'c1') + svgT(300, 132, 'sum bit' + val(s1), 's') + svgT(462, 236, 'carry from step 2' + val(c2), 'c2', 'middle') +
+      svgT(596, 196, 'sum' + val(sum)) + svgT(596, 86, 'carry') + '</svg></div>';
+  }
+  ACT.FullAdder = {draw(l){
+    const A = l.act, st = actState('FullAdder'), box = $('#act'); if (!box) return;
+    const cur = st.row === 0 || st.row === 1 ? A.rows[st.row] : null, both = st.r0 && st.r1, spec = B.FullAdder, rows = combos(spec), mine = P.FullAdder;
+    let h = faSVG(cur ? cur.v : null) + '<div class="idea">' + A.under + '</div><div class="row">' + A.rows.map((r, i) => '<button type="button" class="btn ghost" data-far="' + i + '" aria-pressed="' + (st.row === i ? 'true' : 'false') + '">' + r.t + '</button>').join('') + '</div>' +
+      (cur ? '<div class="msg info" role="status">' + esc(cur.said) + '</div>' : '');
+    if (both || st.done){
+      h += '<div class="tablewrap"><table class="tt" id="fat"><thead><tr><th>a</th><th>b</th><th>c</th><th class="o c1">' + A.cols[0] + '</th><th class="o c2">' + A.cols[1] + '</th><th class="o">' + A.cols[2] + '</th></tr></thead><tbody>' +
+        rows.map((r, ri) => { const mv = mine && mine[ri] ? mine[ri][1] : null; return '<tr><td>' + r.a + '</td><td>' + r.b + '</td><td>' + r.c + '</td><td class="o">' + (r.a & r.b) + '</td><td class="o">' + ((r.a ^ r.b) & r.c) + '</td><td class="o">' + (mv === null || mv === undefined ? '?' : mv) + '</td></tr>'; }).join('') + '</tbody></table></div>' + (mine && mine.some(r => r[1] === null) ? '<p class="tnote" id="fablank">' + esc(A.blank) + '</p>' : '') +
+        '<div class="q"><p class="ask"><b>' + esc(A.q) + '</b> ' + esc(A.q2) + '</p><div class="row">' + A.opts.map(([k, t]) => '<button type="button" class="segbtn' + (st.q === k ? (k === 'either' ? ' on' : ' wrong') : '') + '" data-faq="' + k + '">' + esc(t) + '</button>').join('') + '</div>' +
+        (st.q ? '<div class="msg ' + (st.q === 'either' ? 'ok' : 'info') + '" role="status">' + esc(A.fb[st.q]) + '</div>' : '') + '</div>';
+    }
+    box.innerHTML = h;
+    $$('[data-far]', box).forEach(b => b.onclick = () => { const i = +b.dataset.far; st.row = i; st['r' + i] = true; save(); ACT.FullAdder.draw(l); });
+    $$('[data-faq]', box).forEach(b => b.onclick = () => { st.q = b.dataset.faq; actDone('FullAdder'); ACT.FullAdder.draw(l); });
+  }};
+
+  // Level 5: the second row of the sentence, then the sentence drawn as wires
+  function xorSVG(){
+    return '<div class="svgwrap"><svg class="fasvg" viewBox="0 0 640 220" role="img" aria-label="The sentence as a circuit: two not boxes, two and boxes and one or box. The wires between them are named na, nb, w1 and w2.">' +
+      svgW('M40 52 H290') + svgW('M40 172 H290') + svgW('M92 52 V132 H140') + svgW('M116 172 V92 H140') + '<circle cx="92" cy="52" r="3.5" fill="currentColor"/><circle cx="116" cy="172" r="3.5" fill="currentColor"/>' +
+      svgW('M200 92 H245 V82 H290') + svgW('M200 132 H245 V142 H290') + svgW('M360 67 H410 V92 H450') + svgW('M360 157 H410 V132 H450') + svgW('M520 112 H590') +
+      svgT(36, 56, 'a', '', 'end') + svgT(36, 176, 'b', '', 'end') +
+      svgB(140, 76, 60, 32, 'not') + svgB(140, 116, 60, 32, 'not') + svgB(290, 40, 70, 54, 'and') + svgB(290, 130, 70, 54, 'and') + svgB(450, 82, 70, 60, 'or') +
+      svgT(222, 86, 'nb', 's', 'middle') + svgT(222, 150, 'na', 's', 'middle') + svgT(385, 60, 'w1', 's', 'middle') + svgT(385, 176, 'w2', 's', 'middle') + svgT(596, 116, 'out') + '</svg></div>';
+  }
+  const normSentence = x => String(x).toLowerCase().replace(/&&|&/g, ' and ').replace(/[!~]/g, ' not ').replace(/[().,;:"'`]/g, ' ').replace(/\s+/g, ' ').trim();
+  ACT.Xor = {draw(l){
+    const A = l.act, st = actState('Xor'), box = $('#act'); if (!box) return;
+    const full = st.ok || st.shown;
+    box.innerHTML = '<p>' + esc(A.lead) + '</p>' +
+      '<div class="sline"><span>' + esc(A.r1) + '</span> <code>' + esc(A.r1s) + '</code></div>' +
+      '<div class="sline"><label for="xs">' + esc(A.r2) + '</label><input id="xs" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="' + esc(st.s || '') + '"><button type="button" class="btn" id="xcheck">' + A.check + '</button>' + (st.done && !full ? '<button type="button" class="btn ghost" id="xshow">' + A.show + '</button>' : '') + '</div>' +
+      '<div id="xmsg" class="msg' + (st.m ? ' ' + st.m[0] : '') + '" role="status">' + (st.m ? esc(st.m[1]) : '') + '</div>' +
+      (full ? '<div class="msg ok">' + A.full + '</div><h4 class="sub">' + esc(A.wires) + '</h4>' + xorSVG() + '<div class="idea"><p>' + A.under + '</p></div>' : '');
+    const xs = $('#xs', box);
+    xs.oninput = () => { st.s = xs.value; save(); };
+    xs.addEventListener('keydown', e => { if (e.key === 'Enter') $('#xcheck', box).click(); });
+    $('#xcheck', box).onclick = () => {
+      const n = normSentence(st.s || '');
+      if (!n){ st.m = ['warn', A.empty]; ACT.Xor.draw(l); return; }
+      if (n === 'not a and b' || n === 'b and not a'){ st.ok = true; st.m = null; }
+      else st.m = ['info', n === 'a and not b' || n === 'not b and a' ? A.same : A.other];
+      actDone('Xor'); ACT.Xor.draw(l);
+    };
+    if ($('#xshow', box)) $('#xshow', box).onclick = () => { st.shown = true; st.m = null; save(); ACT.Xor.draw(l); };
+  }};
+
+  // Level 6: the student's own idea before the page says one
+  ACT.And = {draw(l){
+    const A = l.act, st = actState('And'), box = $('#act'); if (!box) return;
+    box.innerHTML = '<p><label for="idea">' + esc(A.q) + '</label></p><textarea id="idea" class="plain" rows="2">' + esc(st.idea || '') + '</textarea>' +
+      '<div class="row"><button type="button" class="btn' + (st.done ? ' ghost' : '') + '" id="icmp"' + ((st.idea || '').trim().length >= 3 ? '' : ' disabled') + '>' + A.btn + '</button></div>' +
+      (st.done ? '<div class="msg info" role="status">' + esc(A.said) + '</div>' : '');
+    const t = $('#idea', box);
+    t.oninput = () => { st.idea = t.value; save(); $('#icmp', box).disabled = t.value.trim().length < 3; };
+    $('#icmp', box).onclick = () => { if ((st.idea || '').trim().length < 3) return; actDone('And'); ACT.And.draw(l); };
+  }};
+
+  // Level 7: a live Nand with a flip switch on each input
+  function orSVG(fa, fb){
+    const fl = (y, on) => on ? svgB(150, y - 17, 64, 34, 'Not') : svgB(150, y - 17, 64, 34, '', '', 'off');
+    return '<div class="svgwrap"><svg class="fasvg sm" viewBox="0 0 520 170" role="img" aria-label="A Nand gate. Each of its two input wires has a flip switch on it.">' +
+      svgW('M50 55 H150') + svgW('M214 55 H300') + svgW('M50 115 H150') + svgW('M214 115 H300') + svgW('M390 85 H460') +
+      svgT(46, 59, 'a', '', 'end') + svgT(46, 119, 'b', '', 'end') + fl(55, fa) + fl(115, fb) + svgB(300, 35, 90, 100, 'Nand') + svgT(466, 89, 'out') + '</svg></div>';
+  }
+  ACT.Or = {draw(l){
+    const A = l.act, st = actState('Or'), box = $('#act'); if (!box) return;
+    const fa = st.fa ? 1 : 0, fb = st.fb ? 1 : 0, rows = [[0, 0], [0, 1], [1, 0], [1, 1]], out = (a, b) => 1 - ((a ^ fa) & (b ^ fb));
+    box.innerHTML = '<p>' + esc(A.lead) + '</p>' + orSVG(fa, fb) +
+      '<div class="row"><button type="button" class="sw' + (fa ? ' on' : '') + '" data-flip="fa" aria-pressed="' + (fa ? 'true' : 'false') + '">' + A.fa + ': ' + (fa ? 'on' : 'off') + '</button><button type="button" class="sw' + (fb ? ' on' : '') + '" data-flip="fb" aria-pressed="' + (fb ? 'true' : 'false') + '">' + A.fb + ': ' + (fb ? 'on' : 'off') + '</button></div>' +
+      '<div class="tablewrap"><table class="tt" id="ort"><thead><tr><th>a</th><th>b</th><th class="o">out</th><th></th></tr></thead><tbody>' +
+      rows.map(([a, b]) => { const o = out(a, b), tgt = a === 0 && b === 0; return '<tr class="' + (o === 0 ? 'zrow' : '') + (tgt ? ' trow' : '') + '"><td>' + a + '</td><td>' + b + '</td><td class="o">' + o + '</td><td class="note">' + (tgt ? A.target : o === 0 ? A.zero : '') + '</td></tr>'; }).join('') + '</tbody></table></div>' +
+      (fa && fb ? '<div class="msg ok" role="status">' + A.done + '</div>' : '');
+    $$('[data-flip]', box).forEach(b => b.onclick = () => { st[b.dataset.flip] = !st[b.dataset.flip]; actDone('Or'); ACT.Or.draw(l); const f = $('[data-flip="' + b.dataset.flip + '"]', box); if (f) f.focus(); });
+  }};
+
+  let KEPT_OPEN = true;   // Level 10: the panel that stays in view can be closed, and stays closed while the level is redrawn
+  main.addEventListener('toggle', e => { if (e.target && e.target.classList && e.target.classList.contains('keptview')) KEPT_OPEN = e.target.open; }, true);
+
   const VIEW = {};
   const below = chip => ORDER.slice(0, ORDER.indexOf(chip)).reverse();
   // the parts list shows the boxes one level down, plus anything the student has already built
@@ -1284,28 +1450,33 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
 
   VIEW.build = function(l){
     const chip = l.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1), seeKey = chip + ':see', first = chip === 'Add4';
-    let h = head(l);
+    let h = head(l), nstep = 2;
+    const hasAct = !!(l.act && ACT[chip]);
     const T3 = l.steps;   // Level 2 only: three steps, each ending in something the student does
     const wonderHTML = ws => ws.map(w => '<details class="wonder" id="' + w.id + '"><summary>' + w.q + '</summary><div class="idea">' + w.a + '</div></details>').join('');
     if (T3){
       h += stepHTML(1, 'Read the wires', '<div id="stage-see" class="stage"></div><div id="probe-see" style="margin-top:10px"></div><div class="idea" style="margin-top:14px">' + T3.read + '</div><div class="game" id="g-bin"></div>' + wonderHTML(T3.wRead) + videoHTML(l));
       h += stepHTML(2, 'Follow one carry', '<div class="idea">' + T3.carry + '</div><div class="game" id="g-add"></div>' + wonderHTML(T3.wCarry));
     } else {
-    h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
-    h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
-    h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
+    nstep = 0;
+    // Levels 6 to 8: the truth table is a prediction, filled in under the drawing before anything is read
+    if (l.pcheck) h += stepHTML(++nstep, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML(chip, l.pcheck + ' ' + UI.cells));
+    else h += stepHTML(++nstep, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
+    h += stepHTML(++nstep, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
+    if (!l.pcheck) h += stepHTML(++nstep, 'Practice', hasPred ? predictHTML(chip, (l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) + (l.tnote ? '</p><p class="tnote">' + l.tnote : '')) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
+    if (hasAct) h += stepHTML(++nstep, esc(l.act.title), '<div id="act"></div>');
     }
-    h += stepHTML(T3 ? 3 : 4, T3 ? 'Wire the columns' : 'Build it',
-      (T3 ? '<div class="msg info" id="buildlock">' + T3.lock + '</div><div id="buildwrap">' : '') +
+    h += stepHTML(nstep + 1, T3 ? 'Wire the columns' : 'Build it',
+      (T3 || hasAct ? '<div class="msg info" id="buildlock">' + (T3 ? T3.lock : esc(l.act.lock)) + '</div><div id="buildwrap">' : '') +
       '<div class="idea">' + l.build + '</div>' + (l.build.indexOf('hardware description language') < 0 ? '<details class="help"><summary>How to write a part in HDL</summary>' + HDL_HELP + '</details>' : '') +
       (l.warm ? '<div class="game" id="warm"></div><div class="idea">' + l.build2 + '</div>' : '') +
       '<p>' + (first ? UI.partsFirst : UI.parts) + '</p>' +
       '<div class="tablewrap"><table class="parts"><tbody>' + shownParts(chip).map(a => '<tr><td><button type="button" class="chipbtn" data-c="' + a + '" title="Insert ' + a + '">' + esc(template(a)) + '</button></td><td>' + esc(CHIP_SAYS[a]) + '</td><td><button type="button" class="trybtn" data-c="' + a + '" aria-expanded="false">Try it</button></td></tr><tr class="tryrow" data-c="' + a + '" hidden><td colspan="3"></td></tr>').join('') + '</tbody></table></div>' +
       '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="soft" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
-      '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
+      '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button><button type="button" class="btn ghost" id="restore" hidden>' + esc(UI.restore.replace('[chip]', chip)) + '</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
-      '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>' + (T3 ? '</div>' : ''));
-    h += stepHTML(T3 ? 4 : 5, 'Open the box', '<div id="open"></div>') + foot(l);
+      '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>' + (T3 || hasAct ? '</div>' : ''));
+    h += stepHTML(nstep + 2, 'Open the box', '<div id="open"></div>') + foot(l);
     main.innerHTML = h;
     // Level 2: the build opens once the student has made one number, read one number and finished one addition
     L2LOCK = null;
@@ -1313,6 +1484,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       const practiced = () => UNLOCK_ALL || !!S.pass[chip] || ((S.games.bin || {}).make >= 1 && (S.games.bin || {}).read >= 1 && (S.games.add || {}).n >= 1);
       L2LOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = practiced(); lock.hidden = open; wrap.hidden = !open; };
       L2LOCK();
+    }
+    ACTLOCK = null;
+    if (hasAct){
+      ACTLOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = actOpen(chip); lock.hidden = open; wrap.hidden = !open; };
+      ACTLOCK(); ACT[chip].draw(l);
     }
 
     bench(seeKey, {chip, builtin:true, stage:'#stage-see', probe:hasPred ? null : '#probe-see'});
@@ -1338,7 +1514,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (e.key === 'Tab' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); const a = ed.selectionStart; ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(ed.selectionEnd); ed.selectionStart = ed.selectionEnd = a + 4; S.code[chip] = ed.value; save(); }
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); runTests(); }
     });
-    ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); markStale(); clearTimeout(timer); timer = setTimeout(live, 220); });
+    ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); markStale(); showRestore(); clearTimeout(timer); timer = setTimeout(live, 220); });
+    function showRestore(){ const b = $('#restore'), won = (S.passed || {})[chip]; if (b) b.hidden = !(S.pass[chip] && won && won.replace(/\s+$/, '') !== ed.value.replace(/\s+$/, '')); }
+    $('#restore').onclick = () => { const won = (S.passed || {})[chip]; if (!won) return; ed.value = won; S.code[chip] = won; save(); $('#res').innerHTML = ''; tested = null; markStale(); showRestore(); live(); ed.focus(); };
     $$('.chipbtn').forEach(b => b.onclick = () => {
       const v = ed.value, pi = v.indexOf('PARTS:'), end = v.lastIndexOf('}'), pos = ed.selectionStart;
       const line = '    ' + template(b.dataset.c); let at;
@@ -1388,7 +1566,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       };
       wlive(); if (S.pass[W0]){ $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>'; wtested = wed.value; }
     }
-    $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; tested = null; markStale(); live(); ed.focus(); };
+    $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; tested = null; markStale(); showRestore(); live(); ed.focus(); };
     const showHints = () => { $('#hints').innerHTML = l.hints.slice(0, H[chip] || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H[chip] || 0) >= l.hints.length) $('#hint').textContent = 'No more hints'; };
     $('#hint').onclick = () => { H[chip] = Math.min((H[chip] || 0) + 1, l.hints.length); note('hints', chip, H[chip]); showHints(); };
     showHints();
@@ -1402,7 +1580,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (!S.pass[chip] && !UNLOCK_ALL) return '<p class="muted">' + UI.openLocked + '</p>';
       const used = K[chip].circ ? Array.from(new Set(K[chip].circ.parts.map(p => p.chip.name))) : [];
       const list = (used.length ? used : below(chip).slice(0, 2)).filter(n => levelOf(n) >= 0).sort((a, b) => levelOf(a) - levelOf(b));
-      return '<p>' + (first ? UI.openFirst : UI.open) + '</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn" data-c="' + n + '">Open ' + n + ' &#10530;</button>').join('') + '</div>';
+      const nxi = LEVELS.indexOf(l) + 1, hasNext = list.some(n => levelOf(n) === nxi);
+      return '<p>' + (first ? UI.openFirst : hasNext ? UI.open : esc(UI.openSide).split('[next]').join(esc(LEVELS[nxi].short))) + '</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn' + (hasNext && levelOf(n) !== nxi ? ' ghost' : '') + '" data-c="' + n + '">Open ' + n + ' &#10530;' + (levelOf(n) === nxi ? '<span class="nexttag">' + UI.nextTag + '</span>' : '') + '</button>').join('') + '</div>' +
+        (l.extra && S.pass[chip] ? wonderHTML([{id:l.extra.id, q:l.extra.q, a:l.extra.a}]) : '');
     }
     function drawOpen(){ $('#open').innerHTML = openHTML(); $$('.openbtn').forEach(b => b.onclick = () => zoomInto(chip, b.dataset.c, $('#stage .gate[data-chip="' + b.dataset.c + '"]'))); }
     function runTests(){
@@ -1437,10 +1617,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (pass) o += afterHTML(l);
       res.innerHTML = o;
       if ($('#toprobe')) $('#toprobe').onclick = () => { PRB[chip] = Object.assign({}, rows.find(r => !r.ok).ins); drawProbe(chip); $('#stage').scrollIntoView && $('#stage').scrollIntoView({block:'center'}); };
-      live(); renderMap(); drawOpen(); refreshNext(l);
+      live(); renderMap(); drawOpen(); refreshNext(l); showRestore();
     }
     function selectLine(n){ const lines = ed.value.split('\n'); let a = 0; for (let i = 0; i < n - 1 && i < lines.length; i++) a += lines[i].length + 1; try { ed.focus(); ed.setSelectionRange(a, a + (lines[n-1] || '').length); } catch (e) {} }
-    live(); drawOpen(); bindCommon(l);
+    live(); drawOpen(); bindCommon(l); showRestore();
   };
 
   function resultTable(rows, spec, pass){
@@ -1493,7 +1673,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         '<div class="q"><p class="ask">' + tick('q1') + '<b>1.</b> ' + esc(l.inv[0]) + '</p><div class="row"><button type="button" class="btn' + (inv.q1 ? ' ghost' : '') + '" id="q1">The machine gets this one wrong</button></div>' + msg('q1') + '</div>' +
         (!inv.q1 ? '' : '<div class="q"><p class="ask">' + tick('q2') + '<b>2.</b> ' + esc(l.inv[1]) + '</p><div class="row"><input class="num-in" id="a2" type="number" inputmode="numeric" aria-label="Largest number the machine shows"' + (inv.q2 ? ' value="15"' : '') + '><button type="button" class="btn' + (inv.q2 ? ' ghost' : '') + '" id="q2">Check</button></div>' + msg('q2') + '</div>') +
         (!inv.q2 ? '' : '<div class="q"><p class="ask">' + tick('q3') + '<b>3.</b> ' + esc(l.inv[2]) + '</p><div class="row"><input class="num-in" id="a3" type="number" inputmode="numeric" aria-label="What the machine shows for 12 + 7"' + (inv.q3 ? ' value="3"' : '') + '><button type="button" class="btn' + (inv.q3 ? ' ghost' : '') + '" id="q3">Check</button></div>' + msg('q3') + '</div>') +
+        (!inv.q3 ? '' : '<details class="wonder" id="' + l.edge.id + '"' + (M.edgeOpen ? ' open' : '') + '><summary>' + l.edge.q + '</summary><div class="idea">' + l.edge.a + '</div></details>') +
+        (!inv.q3 || (S.pass.Adder && !(S.guess || '').trim()) ? '' : '<div class="q" id="guessq"><p class="ask">' + ((S.guess || '').trim().length >= 3 ? '<span class="tick">&#10003;</span> ' : '') + '<b>' + l.guess.head + '</b> <label for="guess">' + esc(l.guess.ask) + '</label></p><textarea id="guess" class="plain" rows="2">' + esc(M.guessDraft !== undefined ? M.guessDraft : (S.guess || '')) + '</textarea><div class="row"><button type="button" class="btn' + ((S.guess || '').trim().length >= 3 ? ' ghost' : '') + '" id="gsave">' + l.guess.btn + '</button></div>' + msg('guess') + '</div>') +
         (S.pass.Adder ? afterHTML(l) : '');
+      const ed0 = $('#' + l.edge.id); if (ed0) ed0.ontoggle = () => { M.edgeOpen = ed0.open; };
+      const gt = $('#guess'); if (gt) gt.oninput = () => { M.guessDraft = gt.value; };
+      if ($('#gsave')) $('#gsave').onclick = () => { const v = $('#guess').value; if (v.trim().length < 3){ M.guess = ['warn', l.guess.short]; M.guessDraft = v; drawInv(); return; } S.guess = v; M.guessDraft = undefined; M.guess = ['ok', l.guess.saved]; done(); };
       $('#q1').onclick = () => { const t = inp.a + inp.b, m = t & 15; if (t > 15){ inv.q1 = true; M.q1 = ['ok', 'Yes. ' + inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + '.']; } else M.q1 = ['bad', inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + ', so it gets this one right. Try larger numbers.']; done(); };
       if ($('#q2')) $('#q2').onclick = () => { const v = $('#a2').value.trim(); if (v === '') M.q2 = ['warn', 'Type a number first.']; else if (+v === 15){ inv.q2 = true; M.q2 = ['ok', 'Yes. However large the true sum is, the machine never shows more than 15.']; } else if (+v < 15) M.q2 = ['bad', 'It can show more than ' + v + '. Try 7 + 8 on the machine.']; else M.q2 = ['bad', 'Try to make the machine show ' + v + '. Set a and b so the true sum is ' + v + ', and look at what it shows.']; done(); };
       if ($('#q3')) $('#q3').onclick = () => { const v = $('#a3').value.trim(); if (v === '') M.q3 = ['warn', 'Type a number first.']; else if (+v === 3){ inv.q3 = true; M.q3 = ['ok', 'Yes. The true sum is 19, and the machine shows 3, which is 16 less.']; } else M.q3 = ['bad', 'Not ' + v + '. For 15 + 1 the true sum is 16 and the machine shows 0. For 9 + 9 the true sum is 18 and the machine shows 2. How far apart are the true sum and what the machine shows each time?']; done(); };
@@ -1503,21 +1688,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="openadder">Open the Adder &#10530;</button></div>' : '<p class="muted">This step opens when you have answered the questions above.</p>';
       if ($('#openadder')) $('#openadder').onclick = () => zoomInto('Adder', 'Add4', $('#stage-see .gate'));
     }
-    function done(){ if (inv.q1 && inv.q2 && inv.q3 && !S.pass.Adder){ S.pass.Adder = true; } save(); drawInv(); drawOpen(); applyStage(key); renderMap(); refreshNext(l); }
+    function done(){ if (inv.q1 && inv.q2 && inv.q3 && (S.guess || '').trim().length >= 3 && !S.pass.Adder){ S.pass.Adder = true; } save(); drawInv(); drawOpen(); applyStage(key); renderMap(); refreshNext(l); }
     drawInv(); drawOpen(); bindCommon(l);
   };
 
   VIEW.bottom = function(l){
     const key = 'Nand:see', ready = () => !!S.pred.Nand || UNLOCK_ALL;
-    main.innerHTML = head(l) + stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>') +
+    const extra = () => isDone(l) && l.extra ? '<details class="wonder" id="' + l.extra.id + '"><summary>' + l.extra.q + '</summary><div class="idea">' + l.extra.a + '<div class="row"><button type="button" class="btn ghost" id="toxor">' + l.extra.btn + '</button></div></div></details>' : '';
+    main.innerHTML = head(l) + stepHTML(1, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML('Nand', l.pcheck + ' ' + UI.cells) + '<div id="after">' + (isDone(l) ? afterHTML(l) + extra() : '') + '</div>') +
       stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
-      stepHTML(3, 'Practice', predictHTML('Nand', l.practice) + '<div id="after">' + (isDone(l) ? afterHTML(l) : '') + '</div>') +
-      stepHTML(4, 'Open the box', '<div id="open"></div>') + foot(l);
+      stepHTML(3, 'Open the box', '<div id="open"></div>') + foot(l);
     bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null, zoomSelf:true, zoom:(name, el) => zoomInto('Nand', 'Transistor', el), zoomReady:ready});
     drawStage(key, boxSketch('Nand')); drawProbe(key);
     const drawOpen = () => { $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="opennand">Open the Nand gate &#10530;</button></div>' : '<p class="muted">This step opens when your truth table is right.</p>'; if ($('#opennand')) $('#opennand').onclick = () => zoomInto('Nand', 'Transistor', $('#stage-see .gate')); };
-    bindPredict(l, () => { $('#after').innerHTML = afterHTML(l); renderMap(); refreshNext(l); drawOpen(); applyStage(key); });
-    drawOpen(); bindCommon(l);
+    const bindExtra = () => { const b = $('#toxor'); if (b) b.onclick = () => go(levelOf('Xor')); };
+    bindPredict(l, () => { $('#after').innerHTML = afterHTML(l) + extra(); bindExtra(); renderMap(); refreshNext(l); drawOpen(); applyStage(key); });
+    drawOpen(); bindExtra(); bindCommon(l);
   };
 
   /* ---------- transistors: switch circuits drawn between power and ground ---------- */
@@ -1566,6 +1752,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     function draw(){
       let h = head(l);
       h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div class="tpair"><div class="tcirc"><div class="lbl">Closes when in is 1</div>' + circuitSVG({top:{mode:'one', type:'n', ins:['in']}, outName:'lamp'}, st.see) + '</div><div class="tcirc"><div class="lbl">Closes when in is 0</div>' + circuitSVG({top:{mode:'one', type:'p', ins:['in']}, outName:'lamp'}, st.see) + '</div></div><div class="row">' + swBtns('see', st.see) + '</div>');
+      h += '<details class="keptview"' + (KEPT_OPEN ? ' open' : '') + '><summary>' + l.kept.title + '</summary><ul>' + l.kept.items.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></details>';
       h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
       const A = [['top', 'The top one'], ['bottom', 'The bottom one']], Bq = [['power', 'Power, so out is 1'], ['ground', 'Ground, so out is 0']], right = ['bottom', 'ground'];
       const qHTML = (k, opts) => '<div class="q"><p class="ask"><b>' + (k + 1) + '.</b> ' + esc(l.q[k]) + '</p><div class="row">' + opts.map(([val, t]) => '<button type="button" class="segbtn' + (st.q[k] === val ? (val === right[k] ? ' on' : ' wrong') : '') + '" data-q="' + k + '" data-v="' + val + '">' + t + '</button>').join('') + '</div>' + (st.q[k] === null ? '' : st.q[k] === right[k] ? '<div class="msg ok">' + (k === 0 ? 'Yes. The bottom transistor closes when its control signal is 1. The top one closes on 0, so it is open.' : 'Yes. The only closed path leads to ground, so out is 0. An input of 1 gave an output of 0.') + '</div>' : '<div class="msg bad">' + (k === 0 ? 'Look at the control wires. The transistor with the small circle closes when its signal is 0, and the one without it closes when its signal is 1.' : 'Follow the closed transistor. Which rail does it connect the output to?') + '</div>') + '</div>';
@@ -1587,7 +1774,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         const ok = rows.every(r => r.got === r.exp), kind = ok ? 'pass' : rows.some(r => r.got === 'short') ? 'short' : rows.some(r => r.got === 'float') ? 'float' : 'nor';
         if (ok){ S.pass.Transistor = true; save(); } else note('fails', 'Transistor', kind);
         const bad = rows.find(r => r.got !== r.exp);
-        resHTML = '<div class="msg ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '' : '<b>' + rows.filter(r => r.got === r.exp).length + ' of 4 rows pass.</b> ') + esc(l.fb[kind]) + '</div>' +
+        resHTML = '<div class="msg ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '' : '<b>' + rows.filter(r => r.got === r.exp).length + ' of 4 rows pass.</b> ') + esc(l.fb[kind]) + '</div>' + (l.fbw && l.fbw[kind] ? '<details class="wonder" id="w-' + kind + '"><summary>' + l.fbw[kind].q + '</summary><div class="idea"><p>' + esc(l.fbw[kind].a) + '</p></div></details>' : '') +
           '<div class="tablewrap"><table class="tt res"><thead><tr><th>a</th><th>b</th><th class="o">out should be</th><th class="o">your out</th><th></th></tr></thead><tbody>' + rows.map(r => '<tr class="' + (r.got === r.exp ? 'pass' : 'fail') + '"><td>' + r.a + '</td><td>' + r.b + '</td><td class="o">' + r.exp + '</td><td class="o' + (r.got === r.exp ? '' : ' diff') + '">' + OUT_WORD[r.got] + '</td><td class="mark">' + (r.got === r.exp ? '&#10003; pass' : '&#10007; fail') + '</td></tr>').join('') + '</tbody></table></div>';
         if (bad){ st.nand.a = bad.a; st.nand.b = bad.b; }
         draw(); renderMap();
@@ -1632,9 +1819,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (l.kind === 'out') return;
       const code = S.code[l.chip], started = !!code || (l.kind === 'top' && (S.inv.q1 || S.inv.q2)) || (l.kind === 'switch' && S.tr && (S.tr.top || S.tr.bottom || S.tr.q));
       L.push('Level ' + (i + 1) + ' - ' + l.title + ': ' + (isDone(l) ? 'complete' : started ? 'started, not finished' : 'not finished'));
-      if (l.kind === 'top') L.push('  Discovery questions answered: ' + ['q1', 'q2', 'q3'].filter(k => S.inv[k]).length + ' of 3');
+      if (l.kind === 'top'){ L.push('  Discovery questions answered: ' + ['q1', 'q2', 'q3'].filter(k => S.inv[k]).length + ' of 3'); if ((S.guess || '').trim()) L.push('  My guess before I opened the box: ' + S.guess.trim()); }
       if (l.kind === 'build'){
         if (S.pred[l.chip]) L.push('  Truth table: correct');
+        const A = (S.act || {})[l.chip] || {};
+        if (l.chip === 'FullAdder' && A.q) L.push('  In which rows should the carry be 1? I chose: ' + (l.act.opts.find(o => o[0] === A.q) || ['', A.q])[1]);
+        if (l.chip === 'Xor' && (A.s || '').trim()) L.push('  My sentence for the row a = 0, b = 1: ' + A.s.trim());
+        if (l.chip === 'And' && (A.idea || '').trim()) L.push('  My idea for getting And back from a Nand: ' + A.idea.trim());
+        if (l.chip === 'Or' && A.done) L.push('  Flip switches on the Nand when I left them: ' + ([A.fa ? 'flip a' : '', A.fb ? 'flip b' : ''].filter(Boolean).join(' and ') || 'none'));
         const won = (S.passed || {})[l.chip], block = x => x.replace(/\s+$/, '').split('\n').map(y => '    ' + y).join('\n');
         if (code && S.pass[l.chip] && won && won.replace(/\s+$/, '') !== code.replace(/\s+$/, '')) L.push('  The HDL that passed every test:', block(won), '  The HDL in my editor now (changed since it passed):', block(code));
         else if (code) L.push('  My HDL' + (S.pass[l.chip] ? ' (passes every test)' : ' (not passing yet)') + ':', block(code));
