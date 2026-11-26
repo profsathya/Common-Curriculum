@@ -269,8 +269,13 @@
   .ai-helper summary{cursor:pointer; padding:10px 0; font-weight:700}
   .ai-helper p{margin:0 0 12px}
 
+  /* the button sits on its own strip, so nothing on the page is ever under it */
+  body.hasfab::after{content:''; position:fixed; left:0; right:0; bottom:0; height:70px; background:var(--paper); border-top:1px solid var(--line); z-index:39}
+  #subfab[hidden]{display:none}
+  @media (max-width:520px){ body #subfab{font-size:.85rem; line-height:1.3; padding:7px 14px; bottom:7px; max-width:calc(100vw - 36px)} }
+  #subfab.warn, #copy-end.warn{background:var(--bad); border-color:var(--bad); color:#2A0B08}
   #subfab{
-    position:fixed; right:18px; bottom:18px; z-index:40; border-radius:999px;
+    position:fixed; right:18px; bottom:13px; z-index:40; border-radius:999px;
     padding:11px 20px; box-shadow:0 6px 22px rgba(0,0,0,.55);
   }
   #subbox{
@@ -279,7 +284,7 @@
     border-radius:12px; padding:13px 15px; box-shadow:0 10px 34px rgba(0,0,0,.65);
   }
   #subbox textarea{width:100%; font-family:"IBM Plex Mono",monospace; font-size:.78rem; background:var(--stage); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:8px}
-  @media print{ #subfab,#subbox{display:none} }
+  @media print{ #subfab,#subbox,body.hasfab::after{display:none} }
 </style>
 </head>
 <body>
@@ -1330,10 +1335,11 @@
       go(target);
     });
     const ce = $('#copy-end', el);
-    if (ce) ce.onclick = copyWork;
+    if (ce) ce.onclick = function(){ guardedCopy(this); };
   }
 
   function updateMap(){
+    fabUpdate();
     const row = $('#map-row'), prog = $('#map-prog');
     if (!row) return;
     let doneCount = 0;
@@ -1424,7 +1430,21 @@
     try { navigator.clipboard.writeText(r.text).then(() => show(true), () => show(false)); } catch (e) { show(false); }
   }
 
-  $('#subfab').onclick = copyWork;
+  /* ---------- the copy button: shown from halfway, and it warns before copying unfinished work ---------- */
+  function fabUpdate(){
+    const fab = $('#subfab'); if (!fab) return;
+    fab.hidden = !(REVIEWER || STOPS.filter((s, i) => isStopDone(i)).length * 2 >= STOPS.length);
+    document.body.classList.toggle('hasfab', !fab.hidden);
+    if (!fab._armed){ fab.textContent = 'Copy my work to submit'; fab.classList.remove('warn'); }
+  }
+  function guardedCopy(btn){
+    const calm = () => { btn._armed = 0; btn.textContent = 'Copy my work to submit'; btn.classList.remove('warn'); };
+    if (!btn._armed && !STOPS.every((s, i) => isStopDone(i))){ btn.textContent = 'You are not done yet. Click again to copy anyway.'; btn.classList.add('warn'); btn._armed = setTimeout(calm, 12000); return; }
+    if (btn._armed) clearTimeout(btn._armed);
+    calm(); copyWork();
+  }
+  $('#subfab').onclick = function(){ guardedCopy(this); };
+  fabUpdate();
   $('#startbtn').onclick = () => $('#map').scrollIntoView({ behavior: 'smooth', block: 'start' });
   if (!REVIEWER) $('#unlockbtn').style.display = 'none';
   $('#unlockbtn').onclick = () => {

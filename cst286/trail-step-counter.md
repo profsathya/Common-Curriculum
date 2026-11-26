@@ -4,7 +4,7 @@ CST286 · Learning trail
 
 Your phone counts your steps from inside your pocket. It cannot see your feet, and nobody tells it when a foot lands. The only thing it can feel is how it is being pushed. On this page you follow that push all the way down: from your body, to the phone, to a tiny sensor inside the phone, to the number on your screen. At each level you make a prediction first, then run the simulation to check it.
 
-At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.
+At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail.
 
 (Page note: a sticky bar at the top holds Pause/Play, the speed buttons 1x, 0.25x, 0.1x and 0.05x, and two sliders. Walking pace: 0 to 140 steps per minute in steps of 5, default 110; at 0 the label reads "Walking pace: standing still". Bounce of the hip: 2 to 8 cm in steps of 0.5, default 5.0 cm.)
 
@@ -177,7 +177,7 @@ This page treats the rise and fall of the hip as a smooth wave. A real walk is b
 
 ## Copy my work to submit
 
-(Page note: a button fixed at the bottom right of the screen on every level.)
+(Page note: a button at the bottom right of the screen, on its own strip. It is hidden until Level 3 is open, which is half of the trail; with ?review=1 it always shows. Pressed before the trail is complete, it does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies. Complete means all four levels are open, the stroll test has been run, and each of the four explain boxes has something written in it.)
 
 Button: Copy my work to submit
 

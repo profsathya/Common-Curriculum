@@ -313,13 +313,18 @@
 
   /* copy my work to submit: stays on screen on every level */
   body{padding-bottom:76px}
-  #subfab{position:fixed; right:18px; bottom:18px; z-index:40; border-radius:999px; padding:11px 20px; box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  /* the button sits on its own strip, so nothing on the page is ever under it */
+  body.hasfab::after{content:''; position:fixed; left:0; right:0; bottom:0; height:70px; background:var(--paper); border-top:1px solid var(--line); z-index:39}
+  #subfab[hidden]{display:none}
+  @media (max-width:520px){ body #subfab{font-size:.85rem; line-height:1.3; padding:7px 14px; bottom:7px; max-width:calc(100vw - 36px)} }
+  #subfab.warn{background:var(--bad); border-color:var(--bad); color:#2A0B08}
+  #subfab{position:fixed; right:18px; bottom:13px; z-index:40; border-radius:999px; padding:11px 20px; box-shadow:0 6px 22px rgba(0,0,0,.55)}
   #subbox{position:fixed; right:18px; bottom:74px; z-index:40; width:min(520px, calc(100vw - 36px)); max-height:70vh; overflow:auto; background:var(--card); border:1px solid var(--tc); border-radius:12px; padding:12px 14px; box-shadow:0 10px 34px rgba(0,0,0,.6)}
   #subbox .editor{min-height:0; height:auto; font-size:.8rem}
   .ai-helper{margin:18px 0 0; border:1px solid var(--line); border-radius:8px; padding:0 16px; font-size:.95rem; line-height:1.5; background:var(--card)}
   .ai-helper summary{cursor:pointer; padding:10px 0; font-weight:700}
   .ai-helper p{margin:0 0 12px}
-  @media print{ #subfab,#subbox{display:none} }
+  @media print{ #subfab,#subbox,body.hasfab::after{display:none} }
 </style>
 </head>
 <body>
@@ -982,11 +987,12 @@ Rules: judge only the student's messages, never the classmate's. If the student 
 const SUBMIT = {
   btn:'Copy my work to submit',
   title:'Submit',
-  body:'<p>You can submit at any point on the trail, and you can submit again after you have done more. Press <b>Copy my work to submit</b>, review the text, and paste it into the Canvas text box. The button stays at the bottom of the screen on every level.</p><p>The copy holds your progress on each level, the HDL you wrote, your transistor choices and your teach-back conversation. It does not include the hints you opened or the test runs that failed.</p>',
+  body:'<p>You can submit from the halfway point of the trail, and you can submit again after you have done more. Press <b>Copy my work to submit</b>, review the text, and paste it into the Canvas text box. The button stays at the bottom of the screen from the halfway point on.</p><p>The copy holds your progress on each level, the HDL you wrote, your transistor choices and your teach-back conversation. It does not include the hints you opened or the test runs that failed.</p>',
   ok:'Your work is copied. Review the text and paste it into the Canvas text box. Copying alone does not submit.',
   part:'Levels you have not finished yet are listed as not finished. You can keep going and copy again later.',
   manual:'Select the text below, copy it, and paste it into the Canvas text box. Copying alone does not submit.',
-  close:'Close'
+  close:'Close',
+  notDone:'You are not done yet. Click again to copy anyway.'
 };
 
 if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, LOOK_QUESTIONS, CHIP_SAYS, HDL_HELP, UI, TEACH, SUBMIT};
@@ -1020,6 +1026,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
 
   /* ---------- map ---------- */
   function renderMap(){
+    fabUpdate();
     let h = '<div class="map-lbl">From the whole machine down to its switches</div><div class="map-row">';
     LEVELS.forEach((l, i) => {
       const open = unlocked(l), cls = 'dot' + (i === S.level ? ' cur' : '') + (isDone(l) ? ' done' : '') + (open ? '' : ' locked');
@@ -1624,7 +1631,20 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     };
     try { navigator.clipboard.writeText(r.text).then(() => show(true), () => show(false)); } catch (e) { show(false); }
   }
-  (function(){ const fab = $('#subfab'); if (fab){ fab.textContent = SUBMIT.btn; fab.onclick = copyWork; } })();
+  /* ---------- the copy button: shown from halfway (5 of 10 levels), and it warns before copying unfinished work ---------- */
+  function fabUpdate(){
+    const fab = $('#subfab'); if (!fab) return;
+    fab.hidden = !(UNLOCK_ALL || LEVELS.filter(l => l.kind !== 'out' && isDone(l)).length * 2 >= LEVELS.length - 1);
+    document.body.classList.toggle('hasfab', !fab.hidden);
+    if (!fab._armed){ fab.textContent = SUBMIT.btn; fab.classList.remove('warn'); }
+  }
+  $('#subfab').onclick = function(){
+    const fab = this, calm = () => { fab._armed = 0; fabUpdate(); };
+    if (!fab._armed && !allDone()){ fab.textContent = SUBMIT.notDone; fab.classList.add('warn'); fab._armed = setTimeout(calm, 12000); return; }
+    if (fab._armed) clearTimeout(fab._armed);
+    calm(); copyWork();
+  };
+  fabUpdate();
 
   /* ---------- teach-back: a short conversation with the course AI helper ---------- */
   const AI_URL = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy', TEACH_MAX = 12;

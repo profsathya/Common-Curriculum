@@ -188,6 +188,11 @@
     max-width: calc(100vw - 32px);
   }
   .submitbtn { box-shadow: 0 4px 14px rgba(29,36,51,0.22); padding: 11px 18px; }
+  .submitbtn.warn, .submitbtn.warn:hover { background: #b3261e; border-color: #b3261e; color: #fff; }
+  /* the button sits on its own strip, so nothing on the page is ever under it */
+  body.hasfab::after { content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 74px; background: var(--bg); border-top: 1px solid var(--border); z-index: 39; }
+  @media (max-width: 520px) { .submitbtn { font-size: 14px; line-height: 1.3; padding: 8px 14px; } }
+  @media print { .submitdock, body.hasfab::after { display: none; } }
   .submitpanel {
     position: relative; width: 380px; max-width: calc(100vw - 32px);
     background: #fff; border: 1px solid var(--border); border-radius: 12px;
@@ -242,7 +247,7 @@
     <p class="eyebrow">CST286 · Learning trail</p>
     <h1>How your phone counts your steps</h1>
     <p>Your phone counts your steps from inside your pocket. It cannot see your feet, and nobody tells it when a foot lands. The only thing it can feel is how it is being pushed. On this page you follow that push all the way down: from your body, to the phone, to a tiny sensor inside the phone, to the number on your screen. At each level you make a prediction first, then run the simulation to check it.</p>
-    <p>At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit at the bottom of the screen. It works at any point on the page.</p>
+    <p>At each level you will also explain your thinking in your own words. You can ask for feedback on an explanation, improve it, and ask again. When you are ready to submit, press Copy my work to submit. The button appears at the bottom of the screen once you are halfway through the learning trail.</p>
   </header>
 
   <nav class="zoompath" aria-label="Zoom path">
@@ -840,6 +845,7 @@ var MODEL = (function () {
     var wasHidden = sec.hidden;
     sec.hidden = false;
     revealed[n] = true;
+    submitUpdate();
     var b = document.querySelector('nav.zoompath button[data-goto="' + n + '"]');
     if (b) b.disabled = false;
     resizeAll();
@@ -1061,7 +1067,26 @@ var MODEL = (function () {
   }
 
   var submitPanel = $("submitPanel"), submitMsg = $("submitMsg"), submitFallback = $("submitFallback");
+  /* the copy button: shown from halfway (Level 3 open), and it warns before copying unfinished work */
+  var SUBMIT_LABEL = "Copy my work to submit", NOT_DONE = "You are not done yet. Click again to copy anyway.", submitArmed = 0;
+  var REVIEWING = /(^|&)review=1(&|$)/.test(String(location.search).replace(/^\?/, ""));
+  // complete: all four levels open, the stroll test run, and something written in each explain box
+  function trailComplete() {
+    if (!revealed[4] || !strollRun) return false;
+    for (var n = 1; n <= 4; n++) if (!$("explain" + n).value.replace(/\s+/g, "")) return false;
+    return true;
+  }
+  function submitUpdate() {
+    var b = $("submitBtn"); if (!b) return;
+    b.hidden = !(REVIEWING || revealed[3]);
+    document.body.classList.toggle("hasfab", !b.hidden);
+    if (!submitArmed) { b.textContent = SUBMIT_LABEL; b.classList.remove("warn"); }
+  }
   $("submitBtn").addEventListener("click", function () {
+    var b = this;
+    if (!submitArmed && !trailComplete()) { b.textContent = NOT_DONE; b.classList.add("warn"); submitArmed = setTimeout(function () { submitArmed = 0; submitUpdate(); }, 12000); return; }
+    if (submitArmed) { clearTimeout(submitArmed); submitArmed = 0; }
+    submitUpdate();
     var text = buildWork();
     function ok() {
       submitMsg.textContent = "Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.";
@@ -1600,6 +1625,7 @@ var MODEL = (function () {
 
   syncLabels();
   restore();
+  submitUpdate();
   resizeAll();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { resizeAll(); });
   requestAnimationFrame(frame);

@@ -496,9 +496,11 @@ The page also sends the AI a private note listing the levels where the student o
 
 ---
 
-## Submit (a section on the last page; the button also stays at the bottom of the screen on every level)
+## Submit (a section on the last page; the button is also at the bottom of the screen from the halfway point on)
 
-You can submit at any point on the trail, and you can submit again after you have done more. Press **Copy my work to submit**, review the text, and paste it into the Canvas text box. The button stays at the bottom of the screen on every level.
+You can submit from the halfway point of the trail, and you can submit again after you have done more. Press **Copy my work to submit**, review the text, and paste it into the Canvas text box. The button stays at the bottom of the screen from the halfway point on.
+
+(Page note: the button at the bottom of the screen sits on its own strip. It is hidden until 5 of the 10 levels are complete; with ?unlock=1 it always shows. Pressed before all 10 levels are complete, it does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
 
 The copy holds your progress on each level, the HDL you wrote, your transistor choices and your teach-back conversation. It does not include the hints you opened or the test runs that failed.
 

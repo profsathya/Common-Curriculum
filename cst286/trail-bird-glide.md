@@ -659,7 +659,7 @@ When your report is written, press Copy my work to submit.
 
 ## Copy my work to submit
 
-(Page note: floating button "Copy my work to submit" at the bottom right. It is hidden until half of the eight stops on the level map are complete (4 of 8); with ?review=1 it always shows. Pressed before every stop is complete, it does not copy: the button turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
+(Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen so that it never covers the page. It is hidden until half of the eight stops on the level map are complete (4 of 8); with ?review=1 it always shows. Pressed before every stop is complete, it does not copy: the button turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
 
 When copied: Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.
 

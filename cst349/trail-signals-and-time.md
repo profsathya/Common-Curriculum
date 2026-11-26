@@ -169,6 +169,8 @@ Your split follows your own three answers, so it may look different.
 - Then press **I am ready - summarize my check-in**.
 - You can also do this interview in your own CST349 AI Dojo: click **Copy prompt for my AI Dojo**.
 
+(Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen, and again at the foot of Box 6. The one at the bottom of the screen is hidden until 3 of the 6 boxes are complete; with ?review=1 or ?unlock=1 it always shows. Pressed before all six boxes are complete, either button does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
+
 The page shows "Question 1 of 3" above the reply box. The summary has four parts: How your steps connect · Use of the studies and their limits · Busy-week plan · One question to carry forward. When the interview did not ask about a busy week, that part reads: Busy-week plan: Not asked in this check-in.
 
 ---
