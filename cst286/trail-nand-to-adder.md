@@ -143,7 +143,7 @@ After `c=`, type the name of the wire that brings the carry in from column 0. Af
 (Page note: the editor starts with column 0 written and the column 1 line with its two blanks.)
 
 **Hints (shown one at a time, on request)**
-1. In column 1, the carry from column 0 arrives on the wire named in the line above it, after carry=. Which pin of the FullAdder takes a carry coming in?
+1. Column 1 has two blanks. The carry from column 0 arrives on the wire named after carry= in the line above, so that name goes after c=. After carry=, make up a new name, because that wire does not exist yet.
 2. The wire after carry= in one column is the wire after c= in the next column. So c1 goes from column 0 to column 1, c2 from column 1 to column 2, and c3 from column 2 to column 3.
 3. Column 2 is: FullAdder(a=a[2], b=b[2], c=c2, sum=out[2], carry=c3); Column 3 follows the same pattern, with carry= left out.
 
@@ -457,8 +457,11 @@ A wire can go to more than one part. An output pin you do not need can be left o
 - **Under "Look inside your chip", later levels:** Flip the inputs and read the value going into and out of every part.
 - **Truth table, levels 4 to 8:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.
 - **Above a test result, after the student changes the HDL (the old result is dimmed until Run tests is pressed again):** You changed the HDL after these tests ran. Press Run tests to test it again.
+- **The same, above the result of the Level 2 warm-up:** You changed the HDL after this ran. Press Run to test it again.
+- **When nothing follows an = sign in the HDL:** There is nothing after an = sign on this line. After each =, write the name of the wire that pin connects to. If you do not need that output, delete the pin and its = from the line.
+- **In the copied work, when the editor holds something different from the HDL that passed:** "The HDL that passed every test:" above the HDL that passed, and "The HDL in my editor now (changed since it passed):" above the editor's HDL. When they are the same, the line is "My HDL (passes every test):".
 - **Open the box, before the build passes:** This step opens when your chip passes its tests.
-- **Open the box, level 2:** Your chip works, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.
+- **Open the box, level 2:** Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.
 - **Open the box, later levels:** Open a part you used. The others stay open for you to come back to.
 - **Under a locked "Go down" button:** The next level opens when you finish this one.
 - **Under a locked "Zoom all the way out" button:** Zoom all the way out opens when every level is done. Still open: [the open levels, as buttons]

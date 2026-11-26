@@ -84,7 +84,7 @@
   .muted{color:var(--ink-soft); font-size:.93rem}
   .msg{border-radius:6px; padding:9px 13px; margin:10px 0}
   .msg:empty{display:none}
-  #res.stale > :not(#stalenote){opacity:.45}
+  #res.stale > :not(#stalenote), #wres.stale > :not(#wstalenote){opacity:.45}
   .msg.ok{background:var(--ok-soft); border-left:4px solid var(--ok)}
   .msg.bad{background:var(--bad-soft); border-left:4px solid var(--bad)}
   .msg.warn{background:var(--warn-soft); border-left:4px solid var(--warn)}
@@ -441,7 +441,7 @@ function parse(src){
     return list;
   }
   function ref(){
-    if (T[p-1] && T[p-1].t === '=' && (!T[p] || T[p].t !== 'id')) throw E(T[p-1].line, 'There is nothing after an = sign on this line. After each =, write the name of the wire that pin connects to.');
+    if (T[p-1] && T[p-1].t === '=' && (!T[p] || T[p].t !== 'id')) throw E(T[p-1].line, 'There is nothing after an = sign on this line. After each =, write the name of the wire that pin connects to. If you do not need that output, delete the pin and its = from the line.');
     const n = expect('id', 'a pin or wire name'); let lo = null, hi = null;
     if (peek() && peek().t === '['){
       p++; lo = expect('num', 'a bit number').v; hi = lo;
@@ -827,7 +827,7 @@ const LEVELS = [
    warm:{lead:'Warm up with one line before the full build. This small chip adds only the 1s column. Its one part is already there, and its two outputs are already connected. Two blanks are left: after <code>a=</code> and <code>b=</code>, type the name of the wire that should go to that pin. The wires you have are the chip\'s inputs, a and b. Then press Run.', done:'That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.', stub:'CHIP FirstColumn {\n    IN a, b;\n    OUT sum, carry;\n\n    PARTS:\n    HalfAdder(a=, b=, sum=sum, carry=carry);\n}\n'},
    build2:'<p><b>Column 0 is written for you.</b></p><p class="l2line"><code><span class="k1">HalfAdder</span>(<span class="k2">a</span>=<span class="k3">a<span class="k4">[0]</span></span>, <span class="k2">b</span>=<span class="k3">b[0]</span>, <span class="k2">sum</span>=<span class="k3">out[0]</span>, <span class="k2">carry</span>=<span class="k5">c1</span>);</code></p><ul class="l2labels"><li><code><span class="k1">HalfAdder</span></code> is the part.</li><li>The name on the <span class="k2">left of each <code>=</code></span> is a pin of the part.</li><li>The name on the <span class="k3">right of each <code>=</code></span> is the wire you connect to that pin.</li><li><code><span class="k3">a<span class="k4">[0]</span></span></code> is one wire of <code>a</code>, and the number picks which one: 0 is the 1s place, 1 is the 2s place, 2 is the 4s place and 3 is the 8s place. The <code>[4]</code> in the <code>IN</code> line is different. It says how many wires <code>a</code> has.</li><li><code><span class="k5">c1</span></code> is a name made up for a new wire. It takes this column\'s carry to column 1.</li></ul><p><b>Column 1: fill in two blanks.</b> Column 1 adds three bits, so it uses a FullAdder. Its line is in the editor with two blanks:</p><p class="l2line"><code>FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);</code></p><p>After <code>c=</code>, type the name of the wire that brings the carry in from column 0. After <code>carry=</code>, make up a name for the wire that takes this column\'s carry to column 2.</p><p><b>Column 2: type the line yourself, with column 1 in view.</b> Three things change from column 1: the number in the brackets, the wire that brings the carry in, and the name of the wire that takes the carry out.</p><p><b>Column 3: this one is yours.</b> Its carry has nowhere to go, because there is no fifth wire, so leave <code>carry=</code> out of the line. An output pin of a part can be left out when you do not need it.</p><p><b>You are finished when</b> you press Run tests and all 256 rows pass.</p>',
    stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);\n    \n}\n',
-   hints:['In column 1, the carry from column 0 arrives on the wire named in the line above it, after carry=. Which pin of the FullAdder takes a carry coming in?', 'The wire after carry= in one column is the wire after c= in the next column. So c1 goes from column 0 to column 1, c2 from column 1 to column 2, and c3 from column 2 to column 3.', 'Column 2 is: FullAdder(a=a[2], b=b[2], c=c2, sum=out[2], carry=c3); Column 3 follows the same pattern, with carry= left out.'],
+   hints:['Column 1 has two blanks. The carry from column 0 arrives on the wire named after carry= in the line above, so that name goes after c=. After carry=, make up a new name, because that wire does not exist yet.', 'The wire after carry= in one column is the wire after c= in the next column. So c1 goes from column 0 to column 1, c2 from column 1 to column 2, and c3 from column 2 to column 3.', 'Column 2 is: FullAdder(a=a[2], b=b[2], c=c2, sum=out[2], carry=c3); Column 3 follows the same pattern, with carry= left out.'],
    after:'You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.'},
 
   {id:'fulladder', kind:'build', chip:'FullAdder', short:'FullAdder', title:'Inside a column: the FullAdder',
@@ -931,7 +931,7 @@ const UI = {
   inside:'Flip the inputs and read the value going into and out of every part.',
   table:'Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.',
   openLocked:'This step opens when your chip passes its tests.',
-  openFirst:'Your chip works, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.',
+  openFirst:'Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.',
   open:'Open a part you used. The others stay open for you to come back to.',
   nextLocked:'The next level opens when you finish this one.',
   outLocked:'Zoom all the way out opens when every level is done. Still open:'
@@ -1375,17 +1375,18 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       bench('warm', {chip:W0, builtin:false, circ:null, stage:'#stage-warm', probe:null});
       const parts = ['HalfAdder'];
       const wlive = () => { drawStage('warm', sketch(wed.value, W0)); try { K.warm.circ = build(wed.value, W0, null, parts); } catch (e) { if (!e.hdl) throw e; K.warm.circ = null; } drawProbe('warm'); };
-      let wt = null;
-      wed.addEventListener('input', () => { S.code[W0] = wed.value; save(); clearTimeout(wt); wt = setTimeout(wlive, 220); });
-      $('#wreset').onclick = () => { wed.value = l.warm.stub; S.code[W0] = wed.value; save(); $('#wres').innerHTML = ''; wlive(); wed.focus(); };
+      let wt = null, wtested = null;
+      const wstale = () => { const res = $('#wres'), stale = wtested !== null && res.innerHTML !== '' && wed.value !== wtested, n = $('#wstalenote'); res.classList.toggle('stale', stale); if (stale && !n) res.insertAdjacentHTML('afterbegin', '<div class="msg warn" id="wstalenote">You changed the HDL after this ran. Press Run to test it again.</div>'); else if (!stale && n) n.remove(); };
+      wed.addEventListener('input', () => { S.code[W0] = wed.value; save(); wstale(); clearTimeout(wt); wt = setTimeout(wlive, 220); });
+      $('#wreset').onclick = () => { wed.value = l.warm.stub; S.code[W0] = wed.value; save(); $('#wres').innerHTML = ''; wtested = null; wstale(); wlive(); wed.focus(); };
       $('#wrun').onclick = () => {
-        clearTimeout(wt); wlive(); const res = $('#wres'); let c;
+        clearTimeout(wt); wlive(); const res = $('#wres'); let c; wtested = wed.value; res.classList.remove('stale');
         try { c = build(wed.value, W0, null, parts); } catch (e) { if (!e.hdl) throw e; res.innerHTML = '<div class="msg bad"><b>' + (e.line ? 'Line ' + e.line + '. ' : '') + '</b>' + esc(e.message) + '</div>'; return; }
         const rows = testChip(c), ok = rows.every(r => r.ok);
         if (ok){ S.pass[W0] = true; save(); res.innerHTML = '<div class="msg ok"><b>It works.</b> Click a and b on the drawing to see 1 + 1 give sum 0 and carry 1. ' + esc(l.warm.done) + '</div>'; }
         else res.innerHTML = '<div class="msg bad"><b>It runs, and ' + rows.filter(r => r.ok).length + ' of 4 rows are right.</b></div><ul class="diag">' + diagnose(rows, B[W0]).slice(0, 2).map(m => '<li>' + esc(m.replace(' Show that row on the drawing and follow the signal from the inputs to the first wire that looks wrong.', '')) + '</li>').join('') + '</ul>';
       };
-      wlive(); if (S.pass[W0]) $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>';
+      wlive(); if (S.pass[W0]){ $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>'; wtested = wed.value; }
     }
     $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; tested = null; markStale(); live(); ed.focus(); };
     const showHints = () => { $('#hints').innerHTML = l.hints.slice(0, H[chip] || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H[chip] || 0) >= l.hints.length) $('#hint').textContent = 'No more hints'; };
@@ -1421,7 +1422,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       LAST[chip] = {rows, pass, msgs}; if (!pass) note('fails', chip);
       let o = '';
       if (pass){
-        S.pass[chip] = true; S.nands[chip] = c.nands; save();
+        S.pass[chip] = true; S.nands[chip] = c.nands; (S.passed || (S.passed = {}))[chip] = ed.value; save();
         o += '<div class="msg ok"><b>All ' + rows.length + ' rows pass.</b> Your ' + chip + ' works.</div>';
         const known = c.parts.every(p => p.chip.name === 'Nand' || S.pass[p.chip.name]);
         o += '<div class="msg info">' + (known ? 'Counting the Nand gates inside the parts you used, your ' + chip + ' is made of <b>' + c.nands + ' Nand gate' + (c.nands === 1 ? '' : 's') + '</b>. ' + (spec.par ? (c.nands <= spec.par ? 'That matches the smallest design known for this chip.' : 'It works, and that comes first. If you want an extra challenge, a design with ' + spec.par + ' exists.') : '') : 'Your ' + chip + ' is built from <b>' + c.parts.length + ' parts</b>. You will see how many Nand gates that comes to when you have opened every part and zoom all the way out.') + '</div>';
@@ -1634,7 +1635,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (l.kind === 'top') L.push('  Discovery questions answered: ' + ['q1', 'q2', 'q3'].filter(k => S.inv[k]).length + ' of 3');
       if (l.kind === 'build'){
         if (S.pred[l.chip]) L.push('  Truth table: correct');
-        if (code) L.push('  My HDL' + (S.pass[l.chip] ? ' (passes every test)' : ' (not passing yet)') + ':', code.replace(/\s+$/, '').split('\n').map(x => '    ' + x).join('\n'));
+        const won = (S.passed || {})[l.chip], block = x => x.replace(/\s+$/, '').split('\n').map(y => '    ' + y).join('\n');
+        if (code && S.pass[l.chip] && won && won.replace(/\s+$/, '') !== code.replace(/\s+$/, '')) L.push('  The HDL that passed every test:', block(won), '  The HDL in my editor now (changed since it passed):', block(code));
+        else if (code) L.push('  My HDL' + (S.pass[l.chip] ? ' (passes every test)' : ' (not passing yet)') + ':', block(code));
       }
       if (l.kind === 'bottom') L.push('  Truth table: ' + (S.pred.Nand ? 'correct' : 'not finished'));
       if (l.kind === 'switch' && S.tr){ const w = {ser:'one after the other', par:'side by side'}; L.push('  Not gate questions: ' + (S.tr.q ? 'answered' : 'not finished'), '  Top pair: ' + (w[S.tr.top] || 'not chosen') + '. Bottom pair: ' + (w[S.tr.bottom] || 'not chosen') + '.' + (S.pass.Transistor ? ' Passes every test.' : '')); }
