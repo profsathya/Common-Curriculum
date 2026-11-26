@@ -263,7 +263,7 @@ For example: a list of the problems you found in a specific repository or datase
 
 ## Box 6 - Does your next month actually build toward Day 1?
 
-**How this check works:** read your chain forward, from this week up to Day 1. There is no single correct plan. What matters is that each step leads to the next one, and that you can explain your choices in a conversation.
+**How this check works:** read your chain forward, from this week up to Day 1. There is no single correct plan. What matters is that each step leads to the next one, and that you can explain your choices in a conversation. The check-in looks at the five ideas of this trail. After the summary, the page shows which of them your conversation confirmed.
 
 **1. Read your chain forward, from this week to Day 1.** The page shows the student's chain (next 7 days, next 30 days, Box 4, Box 3, Box 2, Day 1) and notes where the hours support an answer or leave a gap (for example "No hours yet for fundamentals without AI").
 
@@ -279,6 +279,40 @@ Shown above the conversation when the student changes an answer, the hours or th
 (Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen, and again at the foot of Box 6. The one at the bottom of the screen is hidden until 3 of the 6 boxes are complete; with ?review=1 or ?unlock=1 it always shows. Pressed before all six boxes are complete, either button does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
 
 The page shows "Question 1 of 3" above the reply box. The summary has four parts: How your steps connect · Use of the studies and their limits · Busy-week plan · One question to carry forward. When the interview did not ask about a busy week, that part reads: Busy-week plan: Not asked in this check-in.
+
+**The five ideas of this trail** (under the summary)
+
+Each idea carries one of two marks, "confirmed in this check-in" or "not confirmed yet", and a few words from the summary that say what the student said or what was missing.
+
+An idea is confirmed when you explained it for your own plan in the check-in. An idea that is not confirmed yet can still be answered: press Answer one question about this.
+
+When every idea is confirmed: Your check-in confirmed all five ideas.
+
+(Page note: the marks come from five lines at the end of the summary. An idea the student explained soundly for their own plan is confirmed whether or not the interviewer asked about it. Beside an idea that is not confirmed yet: button "Answer one question about this", which can be used again for the same idea. Beside a confirmed idea: button "Do you want a harder one?", offered once. Either button puts one question under the checklist, headed "Check-in interviewer · one question about idea N", with a reply box and "Send reply". After the reply the summary is written again. A mark that was confirmed stays confirmed. Both buttons are optional: three replies complete Box 6, as before. While the question is being found: Finding a question for this idea... While the summary is written again: Writing your check-in summary again... If the helper does not answer, the question is asked as written in the bank below. If the summary cannot be written after the reply: Your reply is saved. The summary helper could not be reached right now, so the marks above are from before this reply. Press Try summary again, or use "Copy my work to submit": your reply is in it. A check-in summarized before 26 Nov 2026 has no marks; it shows the button "Check the five ideas in my check-in". The copied work lists the five ideas with their marks and words.)
+
+**The question bank** (the interviewer asks from it in the page's own words, fitted to the student's chain: in the check-in at most one question per idea, the easier one, starting where the chain is thinnest)
+
+1. **Work that runs is not enough.** Work that runs does not, by itself, show how well someone can check it, explain a choice and change it.
+   - Easier: A demo runs. Identify one check that would make you trust it more, and explain why.
+   - Harder: Two fixes pass the same tests. What would you compare before choosing between them, and what change in the requirements might reverse your choice?
+   - What to listen for (private, for the interviewer and the summary): a concrete check, and a choice the student can defend; working output alone does not settle it.
+2. **A person has to see your work.** There is more than one path to that, and a plan needs a second one.
+   - Easier: You have a small, useful piece of work and no internship. Identify one person or community that could realistically look at it, and say how you would get it to them.
+   - Harder: The contact you were counting on cannot reply for a month. Give a second path that keeps the useful part of your plan and does not depend on knowing another insider.
+   - What to listen for (private, for the interviewer and the summary): a reachable audience and a piece of work to show; no claim that it guarantees a hiring outcome.
+3. **Judgment comes from practice and feedback.** It grows from work on something real or messy, from checking what AI produced, and from someone questioning your choices.
+   - Easier: An AI draft works on the example you gave it. What would you try yourself before trusting it, and what would you ask a reviewer?
+   - Harder: A reviewer disagrees with a choice you made. What evidence could change your mind, and how would you check both suggestions in the time you have?
+   - What to listen for (private, for the interviewer and the summary): testing, asking for specific feedback, and keeping responsibility for the decision.
+4. **A chain.** Each step of your plan leads to the next, from this week to Day 1.
+   - Easier: Point to one thing you will do this week, and explain which later step it supports.
+   - Harder: Your time drops by half and your contact cancels. Change one activity in your plan and keep a believable link to Day 1.
+   - What to listen for (private, for the interviewer and the summary): a reason that connects one step to the next, an action someone could see, a realistic amount of time, and uncertainty said out loud.
+5. **A study has limits.** For each finding, there is something it cannot tell you about your own case.
+   - Easier: A study finds that people who had an internship did better afterwards. Does it show that an internship guarantees your outcome? Explain.
+   - Harder: Two studies give different explanations for why fewer junior people are being hired. What plan stays sensible under both, and what would you want to find out locally?
+   - What to listen for (private, for the interviewer and the summary): a pattern across many people is not a forecast for one person; one thing going with another is not the same as causing it; a plan that still holds when the cause is uncertain.
+
 
 ---
 
