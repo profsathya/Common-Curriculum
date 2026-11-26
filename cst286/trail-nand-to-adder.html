@@ -465,7 +465,7 @@ function parse(src){
       if (!peek() || peek().t !== '=') throw E(l.line, 'Each connection needs the form pin=wire. After "' + l.name + '" there is no "=".');
       p++;
       const r = ref(); conns.push({l, r});
-      if (peek() && peek().t === ','){ p++; continue; }
+      if (peek() && peek().t === ','){ p++; if (peek() && peek().t === ')') break; continue; }
       break;
     }
     if (!peek() || peek().t !== ')') throw E(prevLine(), 'This part is missing its closing ")". Connections inside a part are separated by commas.');
@@ -1535,7 +1535,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const net = (n, y0, y1, hot) => {
       if (!n) return '';
       const up = y0 < y1, a = Math.min(y0, y1), b = Math.max(y0, y1), stt = hide ? {closed:[], on:false} : netState(n, v), w = (d, on) => '<path class="tw' + (on ? ' ' + hot : '') + '" d="' + d + '"/>';
-      if (!n.mode) return '<rect class="choose" x="' + (X - 110) + '" y="' + (a + 14) + '" width="220" height="' + (b - a - 28) + '" rx="8"/><text class="chooset" x="' + X + '" y="' + ((a + b) / 2 + 4) + '" text-anchor="middle">choose how this pair is connected</text>';
+      if (!n.mode) return '<rect class="choose" x="' + (X - 122) + '" y="' + (a + 14) + '" width="244" height="' + (b - a - 28) + '" rx="8"/><text class="chooset" x="' + X + '" y="' + ((a + b) / 2 + 4) + '" text-anchor="middle">choose how this pair is connected</text>';
       if (n.mode === 'one') return w('M' + X + ' ' + a + 'V' + (a + 40), stt.on) + w('M' + X + ' ' + (a + 90) + 'V' + b, stt.on) + sw(X, a + 40, a + 90, stt.closed[0], n, n.ins[0]);
       if (n.mode === 'ser') return w('M' + X + ' ' + a + 'V' + (a + 16), stt.on) + w('M' + X + ' ' + (a + 60) + 'V' + (a + 82), stt.on) + w('M' + X + ' ' + (a + 126) + 'V' + b, stt.on) + sw(X, a + 16, a + 60, stt.closed[0], n, n.ins[0]) + sw(X, a + 82, a + 126, stt.closed[1], n, n.ins[1]);
       const xs = [X - 95, X + 95], rail = up ? a : b, join = up ? b - 26 : a + 26, s1 = up ? a + 30 : a + 62, s2 = s1 + 50;
@@ -1743,6 +1743,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const g = G.bin || (G.bin = {mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
     const draw = () => {
       let h = '<h4 class="sub">Practice: read and write binary</h4><p>Make one number with the switches, and read one number from them. You need both for the build.</p><p class="tallies">' + tally('Make a number', st.make, 1) + tally('Read a number', st.read, 1) + '</p>';
+      if (g.prev) h += '<div class="msg ok" role="status">' + esc(g.prev) + '</div>';
       if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, !g.solved);
       else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
       h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
@@ -1750,6 +1751,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       const ans = $('#ans', box); if (ans) ans.addEventListener('keydown', e => { if (e.key === 'Enter') $('[data-a=check]', box).click(); });
       const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
       if (ck) ck.onclick = () => {
+        g.prev = '';
         if (g.mode === 'make'){
           if (g.bits === g.target){ st.make++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + terms(g.bits) + ' = ' + g.target + '.'; }
           else { const d = g.bits - g.target; g.cls = 'bad'; g.msg = 'Your bits are worth ' + terms(g.bits) + ' = ' + g.bits + '. You need ' + g.target + ', so you are ' + Math.abs(d) + ' too ' + (d > 0 ? 'high' : 'low') + '.'; }
@@ -1760,9 +1762,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
           else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
           else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
         }
+        // a required practice is never left behind a button: after the first number is made, the number to read comes up at once
+        if (g.mode === 'make' && g.solved && g.cls === 'ok' && st.read < 1){ g.prev = g.msg; g.mode = 'read'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; }
         save(); draw(); if (L2LOCK) L2LOCK();
       };
-      if (nx) nx.onclick = () => { g.mode = g.mode === 'make' ? 'read' : 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
+      if (nx) nx.onclick = () => { g.prev = ''; g.mode = g.mode === 'make' ? 'read' : 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
     };
     draw();
   }
