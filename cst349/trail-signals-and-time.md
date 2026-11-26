@@ -316,6 +316,38 @@ When every idea is confirmed: Your check-in confirmed all five ideas.
 
 ---
 
+## Save my work, and bring it back (under every box)
+
+(Page note: two buttons under every box, below the buttons that move between boxes: "Save my work" and "Bring back saved work".)
+
+**Save my work.** (Page note: the page copies the student's work as text and opens a new Gmail message in a new tab, with the subject "My work on [the name of this trail], saved [today's date]" and one line in it: "Paste your saved work under this line." The copied text is the same readable text as Copy my work to submit, followed by the line "Saved data for this page. Keep everything from the START line to the END line." and a block of letters and digits between the lines "=== TRAIL SAVE START ===" and "=== TRAIL SAVE END ===". That block is only in Save my work. Copy my work to submit does not have it.)
+
+After pressing it: Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.
+
+Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.
+
+If the browser did not open the tab: Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself. (with the link "Open a Gmail message")
+
+If the page could not copy: The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message. (Page note: the whole text is shown in a box, with the same line about keeping the whole text and the link "Open a Gmail message". The page says "Your work is copied" only when the copy succeeded.)
+
+**Bring back saved work.** Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.
+
+Button: Bring it back
+
+Before anything is replaced: This replaces the work kept in this browser with the work you pasted. Bring it back? (buttons "Yes, bring it back" and "Cancel")
+
+Afterwards: Your saved work is back.
+
+If the pasted text is not a save from this trail: This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.
+
+(Page note: spaces and line breaks inside the block are ignored, so a save that an email program has wrapped still works.)
+
+**After about 30 minutes.** (Page note: the page counts the minutes it is open and in front of the student. When 30 have gone by since the trail was started or since the last save that succeeded, the next time the student finishes a box the page shows this once, above the two buttons:)
+
+You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going.
+
+---
+
 ## Path notes (shown after the study in Boxes 2, 3 and 4)
 
 The notes for each path live in the `TRACKS` list at the top of the script in the `.html` (`l2Lens`, `l2Blind`, `l3Lens`, `l4Lens`). To change one, tell Alan the path, the box and the new sentence.

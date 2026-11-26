@@ -78,6 +78,8 @@
   .step h3{font-size:1.15rem; margin-bottom:10px; display:flex; align-items:center; gap:9px}
   .stepn{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--blaze); color:#1B1300; font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:.82rem}
   .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0}
+  .ts{margin:18px 0 0; padding:6px 0 0; border-top:1px dashed var(--line)}
+  .ts-ta{width:100%; box-sizing:border-box; font:inherit; font-size:.85rem; line-height:1.4; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:transparent; color:inherit}
   .btn{font:inherit; font-weight:700; border:1px solid var(--tc); background:var(--tc); color:var(--on-tc); border-radius:6px; padding:8px 15px; cursor:pointer}
   .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line); font-weight:400}
   .btn:hover{filter:brightness(1.08)} .btn.ghost:hover{border-color:var(--tc)}
@@ -1109,6 +1111,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   /* ---------- map ---------- */
   function renderMap(){
     fabUpdate();
+    tsProgress();
     let h = '<div class="map-lbl">From the whole machine down to its switches</div><div class="map-row">';
     LEVELS.forEach((l, i) => {
       const open = unlocked(l), cls = 'dot' + (i === S.level ? ' cur' : '') + (isDone(l) ? ' done' : '') + (open ? '' : ' locked');
@@ -1827,6 +1830,81 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   };
 
   /* ---------- copy my work to submit: available on every level ---------- */
+  /* ---------- Save my work, bring it back, and the 30-minute invitation (26 Nov 2026).
+     The same code is on the three trails; only TSC differs. ---------- */
+  var tsReady = false;
+  const TSW = {"save": "Save my work", "back": "Bring back saved work", "ok": "Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "okNoTab": "Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "keep": "Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.", "fail": "The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.", "gmail": "Open a Gmail message", "subject": "My work on {trail}, saved {date}", "body": "Paste your saved work under this line.", "block": "Saved data for this page. Keep everything from the START line to the END line.", "backHow": "Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.", "backBtn": "Bring it back", "backBad": "This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.", "backAsk": "This replaces the work kept in this browser with the work you pasted. Bring it back?", "backYes": "Yes, bring it back", "backNo": "Cancel", "backDone": "Your saved work is back.", "invite": "You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going."};
+  const TSC = { id: 'cst286-nand', name: 'From one gate to a machine that adds', key: KEY, state: () => S, work: () => workReport().text, count: () => workReport().done };
+  const TS_MIN = 30;   // minutes with the page open and visible before the invitation
+  function tsStore(){ try { const j = JSON.parse(localStorage.getItem(TSC.key + '.save') || 'null'); if (j && typeof j === 'object') return j; } catch (e) {} return { ms: 0, n: null, shown: false }; }
+  function tsPut(o){ try { localStorage.setItem(TSC.key + '.save', JSON.stringify(o)); } catch (e) {} }
+  // the readable work, then the block that restores the page
+  function tsText(){
+    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(TSC.state())))), lines = b64.match(/.{1,72}/g) || [];
+    return TSC.work() + '\n\n' + TSW.block + '\n=== TRAIL SAVE START ===\n' + TSC.id + ':\n' + lines.join('\n') + '\n=== TRAIL SAVE END ===\n';
+  }
+  // the state inside a pasted save, or null; spaces and line breaks inside the block are ignored
+  function tsRead(txt){
+    const m = String(txt || '').replace(/\u00a0/g, ' ').match(/===\s*TRAIL SAVE START\s*===([\s\S]*?)===\s*TRAIL SAVE END\s*===/);
+    if (!m) return null;
+    const body = m[1].replace(/[\s\u200b\ufeff>]/g, ''), i = body.indexOf(':');
+    if (i < 0 || body.slice(0, i) !== TSC.id) return null;
+    try { const o = JSON.parse(decodeURIComponent(escape(atob(body.slice(i + 1))))); return o && typeof o === 'object' && !Array.isArray(o) ? o : null; } catch (e) { return null; }
+  }
+  // called whenever the map is drawn: one more finished stop is a finished activity
+  function tsProgress(){
+    if (!tsReady) return;
+    let n = 0; try { n = TSC.count(); } catch (e) { return; }
+    const st = tsStore();
+    if (st.n === null || st.n === undefined || n < st.n){ st.n = n; tsPut(st); return; }
+    if (n > st.n){
+      st.n = n;
+      if ((st.ms || 0) >= TS_MIN * 60000 && !st.shown){ st.shown = true; const inv = document.getElementById('ts-invite'); if (inv) inv.hidden = false; }
+      tsPut(st);
+    }
+  }
+  function tsInit(){
+    const stop = document.getElementById('stop'); if (!stop || document.getElementById('ts-area')) return;
+    const el = id => document.getElementById(id), area = document.createElement('div'); area.id = 'ts-area'; area.className = 'ts';
+    area.innerHTML = '<div class="msg info" id="ts-invite" hidden>' + TSW.invite + '</div>' +
+      '<div class="row"><button type="button" class="btn ghost" id="ts-save">' + TSW.save + '</button><button type="button" class="btn ghost" id="ts-back" aria-expanded="false">' + TSW.back + '</button></div>' +
+      '<div id="ts-msg" role="status"></div>' +
+      '<div id="ts-backbox" hidden><p><label for="ts-in">' + TSW.backHow + '</label></p><textarea id="ts-in" class="ts-ta" rows="5"></textarea>' +
+      '<div class="row"><button type="button" class="btn" id="ts-go">' + TSW.backBtn + '</button></div><div id="ts-ask" role="status"></div></div>';
+    stop.insertAdjacentElement('afterend', area);
+    el('ts-save').onclick = () => {
+      const txt = tsText(), url = 'https://mail.google.com/mail/?view=cm&fs=1&su=' + encodeURIComponent(TSW.subject.replace('{trail}', TSC.name).replace('{date}', new Date().toLocaleDateString())) + '&body=' + encodeURIComponent(TSW.body);
+      let w = null; try { w = window.open(url, '_blank'); if (w) w.opener = null; } catch (e) { w = null; }   // on the click itself, so that the browser lets the tab open
+      const link = '<p><a href="' + url + '" target="_blank" rel="noopener">' + TSW.gmail + '</a></p>';
+      const done = ok => {
+        if (ok){
+          el('ts-msg').innerHTML = '<div class="msg info" id="ts-ok"><p>' + (w ? TSW.ok : TSW.okNoTab) + '</p><p>' + TSW.keep + '</p>' + (w ? '' : link) + '</div>';
+          const st = tsStore(); st.ms = 0; st.shown = false; tsPut(st); el('ts-invite').hidden = true;   // the 30 minutes start again only after a copy that succeeded
+        } else {
+          el('ts-msg').innerHTML = '<div class="msg info" id="ts-fail"><p>' + TSW.fail + '</p><p>' + TSW.keep + '</p>' + link + '</div><textarea class="ts-ta" id="ts-out" rows="8" readonly></textarea>';
+          el('ts-out').value = txt;
+        }
+      };
+      try { navigator.clipboard.writeText(txt).then(() => done(true), () => done(false)); } catch (e) { done(false); }
+    };
+    el('ts-back').onclick = () => { const b = el('ts-backbox'); b.hidden = !b.hidden; el('ts-back').setAttribute('aria-expanded', b.hidden ? 'false' : 'true'); el('ts-ask').innerHTML = ''; if (!b.hidden) el('ts-in').focus({ preventScroll: true }); };
+    el('ts-go').onclick = () => {
+      const st = tsRead(el('ts-in').value), ask = el('ts-ask');
+      if (!st){ ask.innerHTML = '<div class="msg info" id="ts-bad">' + TSW.backBad + '</div>'; return; }
+      ask.innerHTML = '<div class="msg info" id="ts-sure"><p>' + TSW.backAsk + '</p><div class="row"><button type="button" class="btn" id="ts-yes">' + TSW.backYes + '</button><button type="button" class="btn ghost" id="ts-no">' + TSW.backNo + '</button></div></div>';
+      el('ts-no').onclick = () => { ask.innerHTML = ''; };
+      el('ts-yes').onclick = () => {
+        try { localStorage.setItem(TSC.key, JSON.stringify(st)); sessionStorage.setItem(TSC.key + '.restored', '1'); } catch (e) {}
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}   // a ?reset=1 in the address must not clear what was just brought back
+        location.reload();
+      };
+    };
+    try { if (sessionStorage.getItem(TSC.key + '.restored')){ sessionStorage.removeItem(TSC.key + '.restored'); el('ts-msg').innerHTML = '<div class="msg info" id="ts-restored">' + TSW.backDone + '</div>'; } } catch (e) {}
+    tsReady = true; tsProgress();
+    setInterval(() => { if (document.visibilityState === 'visible'){ const st = tsStore(); st.ms = (st.ms || 0) + 15000; tsPut(st); } }, 15000);
+  }
+  setTimeout(tsInit, 0);
+
   function workReport(){
     const done = LEVELS.filter(l => l.kind !== 'out' && isDone(l)).length, total = LEVELS.length - 1, L = [];
     L.push('CST286 - From one gate to a machine that adds', 'Copied on ' + new Date().toLocaleString(), 'Progress: ' + done + ' of ' + total + ' levels complete', '');
