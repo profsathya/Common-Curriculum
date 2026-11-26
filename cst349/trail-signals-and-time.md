@@ -158,7 +158,7 @@ Under the revise box: This starts as a copy of your first answer.
 
 A second box under it: What led you to change it? Name the finding, or the thing the study cannot tell you.
 
-Under the first answer in step 1, once the next step is open: Your first answer stays as you wrote it. You keep it or revise it in the last step of this box.
+Under the first answer in step 1, once the next step is open: Your first answer stays as you wrote it. You keep it or revise it in the last step of this box. (Page note: in Box 4 the selected options and the "rely on most" marks are fixed at the same moment.)
 
 (Page note: the next box opens once the student has pressed Keep it and written at least a short sentence, or pressed Revise it, changed the answer and written what led to the change. A student who updated an answer before 26 Nov is shown as Revise it and is not asked what led to it. The first answer and the option chosen with it cannot be edited once the next step of a box is open. The copied work says which the student chose, with the reason or the revised answer, and names the options in words.)
 
@@ -273,6 +273,8 @@ Shown above the conversation when the student changes an answer, the hours or th
 - Answer three questions. That is enough, and you can answer more if you want to.
 - Then press **I am ready - summarize my check-in**.
 - You can also do this interview in your own CST349 AI Dojo: click **Copy prompt for my AI Dojo**.
+
+(Page note: any answer that is not blank counts as written. While the button to the next box is closed, one line under it says what is missing: "Finish the steps above to open Box N.", "Choose Keep it or Revise it above to open Box N.", "Write why you are keeping your answer to open Box N.", "Change the copy of your first answer above to finish revising it.", "Write what led you to change your answer to open Box N.", or "Write your step for the next 7 days to open Box 6.")
 
 (Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen, and again at the foot of Box 6. The one at the bottom of the screen is hidden until 3 of the 6 boxes are complete; with ?review=1 or ?unlock=1 it always shows. Pressed before all six boxes are complete, either button does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
 
