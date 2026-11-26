@@ -463,7 +463,7 @@ const COPY = {
    "Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them."
   ],
   "stall": "Stall: the wing is tilted too far and has lost most of its lift, so the bird is dropping.",
-  "hint": "Look at your table. Compare the flight where you held the nose highest with the flight where you held it lowest. Neither one went farthest. Try a nose angle between them and hold it steady.",
+  "hint": "Look at your table. Which flight went the longest distance, and what was its average nose angle? For your next two flights, choose one nose angle for each and hold it for the whole flight.",
   "passed": "You passed the buoy.",
   "launch": "Launch",
   "again": "Launch again",
@@ -473,7 +473,7 @@ const COPY = {
   "heading": "The forces on the bird",
   "p": [
    {
-    "b": "Three forces act on a gliding bird, and none of them points forward:",
+    "b": "Three forces act on a gliding bird, and none of them points along the direction the bird is moving:",
     "t": ""
    },
    {
@@ -525,7 +525,8 @@ const COPY = {
    "The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°.",
    "Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall."
   ],
-  "task": "Set the air speed to 10 m/s. Find the wing tilt at which the lift equals the bird's weight.",
+  "task": "Set the air speed to 10 m/s. Find the wing tilt at which the lift comes closest to the bird's weight, 9.8 N.",
+  "found": "You found it. At a wing tilt of 8.2° the lift is 9.8 N, as close to the bird's weight as this slider gets.",
   "stallText": [
    "Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N.",
    "When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5.",
@@ -1256,6 +1257,7 @@ const COPY = {
   ],
   "check": "Check",
   "firstStep": "Show me the first step",
+  "needUnit": "Choose a unit for your answer, then press Check again.",
   "moveOn": "You can move on and come back to this problem.",
   "answer": "Your answer",
   "unit": "Unit",
@@ -1385,7 +1387,7 @@ const COPY = {
  },
  "explain": {
   "ex1": "Explain your thinking: describe what happened on the flight where you pointed the nose up the most. What did the speed do, and what did the bird do next?",
-  "ex2": "Explain your thinking: no force on the bird points forward, and yet it keeps moving forward at a steady speed. How is that possible?",
+  "ex2": "Explain your thinking: no force on the bird points along the direction it is moving, and yet it keeps moving at a steady speed. How is that possible?",
   "ex3": "Explain your thinking: why does a gliding bird drop when it flies too slowly? Use the lift relationship in your explanation.",
   "ex4": "Explain your thinking: a glide ratio of about 13 is the best this bird can do, whatever it weighs. Describe one real situation in which the bird could travel farther than 13 m for each meter of height it loses, and say what that situation changes about the forces or the air.",
   "exProg": "Explain your thinking: which line did you change, and what did you predict? What did the flight do, and why did the program produce that result?"
@@ -1402,7 +1404,7 @@ const COPY = {
   "title": "Teach it back",
   "lead": "<p><b class=\"pop\">Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with.<\/b><\/p><p>Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper.<\/p><p>It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.<\/p><p>Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.<\/p>",
   "privacy": "What you type here is sent to the course AI helper so that it can reply. The course does not store it, and the conversation is kept only in this browser.",
-  "opener": "I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what is moving it forward?",
+  "opener": "I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what keeps it moving?",
   "place": "Type your explanation here",
   "send": "Send",
   "done": "I am done - give me feedback",
@@ -1681,13 +1683,13 @@ const COPY = {
     const st = S.pr[k] || (S.pr[k] = {val:'', unit:'', checks:0, misses:0, ok:false, last:'', hint:false});
     const inp = $('.num-in', box), sel = $('.unit-in', box);
     inp.value = st.val; sel.value = st.unit;
-    const lineFor = key => key === 'correct' ? p.correct : key === 'unit' ? p.unitFb : key === 'other' ? p.other : key && key[0] === 'r' ? p.ranges[+key.slice(1)].fb : '';
+    const lineFor = key => key === 'correct' ? p.correct : key === 'nounit' ? U.needUnit : key === 'unit' ? p.unitFb : key === 'other' ? p.other : key && key[0] === 'r' ? p.ranges[+key.slice(1)].fb : '';
     const paint = () => {
       const m = $('.msg', box);
-      m.className = 'msg ' + (st.last === 'correct' ? 'ok' : st.last ? 'bad' : ''); m.textContent = lineFor(st.last);
+      m.className = 'msg ' + (st.last === 'correct' ? 'ok' : st.last === 'nounit' ? 'info' : st.last ? 'bad' : ''); m.textContent = lineFor(st.last);
       const more = $('.more', box);
       if (!st.ok && st.misses >= 2){
-        more.innerHTML = (st.last !== 'other' && st.last !== 'unit' ? '<div class="msg bad">' + esc(p.other) + '</div>' : '') + (st.hint ? '' : '<div class="row"><button type="button" class="btn ghost fs">' + U.firstStep + '</button></div>');
+        more.innerHTML = (st.last !== 'other' && st.last !== 'unit' && st.last !== 'nounit' ? '<div class="msg bad">' + esc(p.other) + '</div>' : '') + (st.hint ? '' : '<div class="row"><button type="button" class="btn ghost fs">' + U.firstStep + '</button></div>');
         const fs = $('.fs', more); if (fs) fs.onclick = () => { st.hint = true; save(); paint(); };
       } else more.innerHTML = '';
       $('.hint', box).textContent = st.hint && !st.ok ? (p.hint || p.other) : '';
@@ -1700,6 +1702,7 @@ const COPY = {
     $('.prow .btn', box).onclick = () => {
       const n = parseFloat(String(inp.value).replace(',', '.').replace(/[^0-9.\-eE]/g, ''));
       if (!isFinite(n)){ inp.focus(); return; }
+      if (!sel.value){ st.last = 'nounit'; save(); paint(); sel.focus(); return; }   // asks for a unit; not a check, not a miss
       st.checks++;
       const numOK = n >= p.lo && n <= p.hi, unitOK = sel.value === p.unit;
       if (numOK && unitOK){ st.ok = true; st.last = 'correct'; }
@@ -2029,6 +2032,7 @@ const COPY = {
       '<div class="gaugewrap" aria-hidden="true"><span class="gv" id="g-v"></span><div class="gauge"><div class="fill" id="g-f"></div><div class="wline" id="g-w"></div><div class="wlbl" id="g-wl"><span class="gw">' + esc(C.l3.weightLine) + '</span></div></div></div></div>' +
       '<div class="hsl"><label for="tilt">' + esc(C.l3.tilt) + '</label><input type="range" id="tilt" min="0" max="20" step="0.1"><output id="tilt-o"></output></div>' +
       '<div class="hsl"><label for="air">' + esc(C.l3.speed) + '</label><input type="range" id="air" min="4" max="20" step="0.5"><output id="air-o"></output></div>' +
+      '<div class="msg ok" id="l3-found" role="status"></div>' +
       '<div class="simbar"><span></span>' + speedBar() + '</div></div>' +
       blocks(C.l3.p[1]) + '<div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div><div class="uc">' + esc(C.l3.unitCheck) + '</div></div>' +
       blocks(C.l3.coef) + '<p><b>' + esc(C.l3.task) + '</b></p>' + predHTML('p3') + prHTML('pr2') + blocks(C.l3.stallText) + prHTML('pr3') + exHTML('ex3', C.explain.ex3) + foot(l);
@@ -2037,6 +2041,7 @@ const COPY = {
     const upd = () => {
       const cl = F.CL(L3.tilt), L = F.lift(L3.air, cl);
       $('#tilt-o').textContent = L3.tilt.toFixed(1) + '°'; $('#air-o').textContent = L3.air.toFixed(1) + ' m/s';
+      $('#l3-found').textContent = L3.air === 10 && L.toFixed(1) === '9.8' ? C.l3.found : '';
       $('#lift-live').textContent = '½ × 1.2 kg/m³ × (' + L3.air.toFixed(1) + ' m/s)² × 0.20 m² × ' + cl.toFixed(2) + ' = ' + L.toFixed(1) + ' N';
       const top = 30; $('#g-f').style.height = Math.min(100, L / top * 100) + '%'; $('#g-w').style.bottom = (9.8 / top * 100) + '%'; $('#g-wl').style.top = (100 - 9.8 / top * 100) + '%'; $('#g-v').textContent = 'lift ' + L.toFixed(1) + ' N';
     };

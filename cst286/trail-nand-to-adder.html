@@ -84,6 +84,7 @@
   .muted{color:var(--ink-soft); font-size:.93rem}
   .msg{border-radius:6px; padding:9px 13px; margin:10px 0}
   .msg:empty{display:none}
+  #res.stale > :not(#stalenote){opacity:.45}
   .msg.ok{background:var(--ok-soft); border-left:4px solid var(--ok)}
   .msg.bad{background:var(--bad-soft); border-left:4px solid var(--bad)}
   .msg.warn{background:var(--warn-soft); border-left:4px solid var(--warn)}
@@ -1289,6 +1290,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const ed = $('#ed'), stub0 = l.stub || stub(chip, CHIP_SAYS[chip]);
     ed.value = S.code[chip] || stub0;
     let timer = null;
+    // a test result belongs to the HDL it ran on: once the HDL changes, the old result is dimmed and says so
+    let tested = null;
+    function markStale(){ const res = $('#res'), stale = tested !== null && res.innerHTML !== '' && ed.value !== tested, n = $('#stalenote'); res.classList.toggle('stale', stale); if (stale && !n) res.insertAdjacentHTML('afterbegin', '<div class="msg warn" id="stalenote">You changed the HDL after these tests ran. Press Run tests to test it again.</div>'); else if (!stale && n) n.remove(); }
     function live(){
       const g = sketch(ed.value, chip); drawStage(chip, g);
       let why = '';
@@ -1301,7 +1305,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       if (e.key === 'Tab' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); const a = ed.selectionStart; ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(ed.selectionEnd); ed.selectionStart = ed.selectionEnd = a + 4; S.code[chip] = ed.value; save(); }
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); runTests(); }
     });
-    ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); clearTimeout(timer); timer = setTimeout(live, 220); });
+    ed.addEventListener('input', () => { S.code[chip] = ed.value; save(); markStale(); clearTimeout(timer); timer = setTimeout(live, 220); });
     $$('.chipbtn').forEach(b => b.onclick = () => {
       const v = ed.value, pi = v.indexOf('PARTS:'), end = v.lastIndexOf('}'), pos = ed.selectionStart;
       const line = '    ' + template(b.dataset.c); let at;
@@ -1350,7 +1354,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       };
       wlive(); if (S.pass[W0]) $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>';
     }
-    $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; live(); ed.focus(); };
+    $('#reset').onclick = () => { ed.value = stub0; S.code[chip] = ed.value; save(); $('#res').innerHTML = ''; tested = null; markStale(); live(); ed.focus(); };
     const showHints = () => { $('#hints').innerHTML = l.hints.slice(0, H[chip] || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join(''); if ((H[chip] || 0) >= l.hints.length) $('#hint').textContent = 'No more hints'; };
     $('#hint').onclick = () => { H[chip] = Math.min((H[chip] || 0) + 1, l.hints.length); note('hints', chip, H[chip]); showHints(); };
     showHints();
@@ -1369,6 +1373,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     function drawOpen(){ $('#open').innerHTML = openHTML(); $$('.openbtn').forEach(b => b.onclick = () => zoomInto(chip, b.dataset.c, $('#stage .gate[data-chip="' + b.dataset.c + '"]'))); }
     function runTests(){
       const res = $('#res'); S.code[chip] = ed.value; save(); clearTimeout(timer); live();
+      tested = ed.value; res.classList.remove('stale');
       let c;
       try { c = build(ed.value, chip, S.nands); }
       catch (e){

@@ -65,6 +65,8 @@ Write a line or two about what you showed that the other candidates did not.
 
 **3. Update your answer.** Rewrite or keep your answer about what convinced the hiring manager in your path. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain.
 
+Under the box: This starts as a copy of your first answer. Change it, or add why you are keeping it. (Page note: the box counts as finished once the text is different from the first answer. The same line and rule are under the update box in Boxes 3 and 4.)
+
 ---
 
 ## Box 3 - Before you could impress that hiring manager, how did a human actually see your work?
@@ -111,7 +113,7 @@ Briefly describe what you built or improved, and how AI, courses, peers or mento
 - Quick guess: A Stanford study of payroll records found that companies have been hiring fewer 22 to 25 year-olds in the jobs most exposed to AI. Which kind of work was affected most? (**Work that follows written procedures you can learn from a textbook or tutorial** · Work that depends on judgment learned through experience · All kinds of work equally)
 - After the guess: Employment fell among young workers in jobs built on written, textbook knowledge. It rose among experienced workers in jobs built on judgment learned through practice and mentorship.
 - **What the study found:** Judgment that comes from real practice and feedback keeps its value. You build this kind of judgment by working on real problems and getting feedback from other people.
-- **For your first answer** (at most two of these, by what was selected):
+- **From the options you selected** (at most two of these, by what was selected):
   - You selected fast AI drafts without checking what AI produced. Adding the checking step gives you work you can explain and stand behind.
   - Consider adding work on an existing codebase or a messy dataset, because it lets you practice fitting into what is already there.
   - Consider adding feedback from peers, mentors, alumni or real users, because judgment grows faster when other people question your choices.
@@ -129,7 +131,7 @@ Briefly describe what you built or improved, and how AI, courses, peers or mento
 
 (The page shows the student's three answers from Boxes 2, 3 and 4 here.)
 
-**1. Divide your weekly hours for the next 30 days.** Set the hours per week you can realistically give outside your required coursework (4 to 20). Then divide all of them across the six kinds of preparation. The page shows the monthly total, for example "10 hours a week is about 40 hours over the next 30 days."
+**1. Divide your weekly hours for the next 30 days.** Set the hours per week you can realistically give outside your required coursework (4 to 20). Then divide all of them across the six kinds of preparation. The page shows the monthly total, for example "10 hours a week is about 40 hours over the next 30 days." When more hours are assigned than the weekly hours, a button appears: Set all six to 0 hours.
 
 **How to decide:** each kind of preparation supports one of your three answers. Ask yourself which answer needs the most work, and give that one the most hours.
 
@@ -167,7 +169,7 @@ Your split follows your own three answers, so it may look different.
 - Then press **I am ready - summarize my check-in**.
 - You can also do this interview in your own CST349 AI Dojo: click **Copy prompt for my AI Dojo**.
 
-The page shows "Question 1 of 3" above the reply box. The summary has four parts: How your steps connect · Use of the studies and their limits · Busy-week plan · One question to carry forward.
+The page shows "Question 1 of 3" above the reply box. The summary has four parts: How your steps connect · Use of the studies and their limits · Busy-week plan · One question to carry forward. When the interview did not ask about a busy week, that part reads: Busy-week plan: Not asked in this check-in.
 
 ---
 

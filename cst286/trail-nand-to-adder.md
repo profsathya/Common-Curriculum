@@ -404,6 +404,7 @@ A wire can go to more than one part. An output pin you do not need can be left o
 - **Under "Look inside your chip", level 2:** These switches are the same inputs as on your drawing. The list under them gives the value going into and out of every part, so when a test row fails you can find the part that gives the wrong value.
 - **Under "Look inside your chip", later levels:** Flip the inputs and read the value going into and out of every part.
 - **Truth table, levels 4 to 8:** Fill in what [chip] does. Your chip will be tested against this table. Click a ? to set it to 0, and click again for 1.
+- **Above a test result, after the student changes the HDL (the old result is dimmed until Run tests is pressed again):** You changed the HDL after these tests ran. Press Run tests to test it again.
 - **Open the box, before the build passes:** This step opens when your chip passes its tests.
 - **Open the box, level 2:** Your chip works, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. For a first pass, the "Go down to" button at the bottom follows the numbered order.
 - **Open the box, later levels:** Open a part you used. The others stay open for you to come back to.

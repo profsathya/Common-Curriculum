@@ -47,7 +47,7 @@ Stall banner across the canvas: Stall: the wing is tilted too far and has lost m
 
 (Page note: table "Your last five flights": Flight, Average nose angle, Average speed, Distance, Passed the buoy (tick).)
 
-After 3 flights without passing the buoy: Look at your table. Compare the flight where you held the nose highest with the flight where you held it lowest. Neither one went farthest. Try a nose angle between them and hold it steady.
+After 3 flights without passing the buoy: Look at your table. Which flight went the longest distance, and what was its average nose angle? For your next two flights, choose one nose angle for each and hold it for the whole flight.
 
 When a flight passes the buoy: You passed the buoy.
 
@@ -70,7 +70,7 @@ When a flight passes the buoy: You passed the buoy.
 
 ## Level 2: The forces on the bird
 
-**Three forces act on a gliding bird, and none of them points forward:**
+**Three forces act on a gliding bird, and none of them points along the direction the bird is moving:**
 
 - Weight. The Earth pulls the bird down with 9.8 N for this 1.0 kg bird, and that never changes.
 - Lift. It is the part of the air's push on the wings that is at a right angle to the direction the bird is moving.
@@ -116,11 +116,11 @@ The triangle also tells you how far the bird goes. In a steady glide, the distan
 - Right number, wrong unit: The number is right, but check the unit. You are answering with a distance.
 - First step (after 2 misses): First find lift ÷ drag. That is how many meters the bird moves forward for each meter it descends.
 
-**Explain your thinking: no force on the bird points forward, and yet it keeps moving forward at a steady speed. How is that possible?**
+**Explain your thinking: no force on the bird points along the direction it is moving, and yet it keeps moving at a steady speed. How is that possible?**
 
 (Page note: exit button "Zoom in: where lift comes from" opens when Prediction 2 is answered right and Practice 1 is correct, or after 4 misses on Practice 1. After 4 misses the problem shows: You can move on and come back to this problem.)
 
-(Page note: practice problems: a number box labelled "Your answer", a unit list labelled "Unit" (choose a unit, N, kg, m, m/s, m/s², no unit) and a Check button. Number and unit are checked separately, and the page counts the checks ("Checks made: N"). After 2 misses the page shows the "Other" line and a button "Show me the first step" that reveals the first-step line.)
+(Page note: practice problems: a number box labelled "Your answer", a unit list labelled "Unit" (choose a unit, N, kg, m, m/s, m/s², no unit) and a Check button. Number and unit are checked separately, and the page counts the checks ("Checks made: N"). When Check is pressed with no unit chosen, the page shows "Choose a unit for your answer, then press Check again." and does not count that press as a check or a miss. A right number with a wrong unit gets its "Right number, wrong unit" line and is not counted as a miss. After 2 misses the page shows the "Other" line and a button "Show me the first step" that reveals the first-step line.)
 
 ## Level 3: Where lift comes from
 
@@ -128,7 +128,7 @@ The triangle also tells you how far the bird goes. In a steady glide, the distan
 
 The wing changed the air's direction, and changing the motion of something takes a force. The wing pushes the air down, and by Newton's third law the air pushes the wing up with an equal force. That upward push is lift.
 
-(Page note: canvas: a wing cross-section in the middle with 10 animated streamlines arriving level from the left and leaving downward behind it; the downward turn grows with the tilt. Sliders "Wing tilt" 0° to 20° (step 0.5, default 6°) and "Air speed" 4 to 20 m/s (step 0.5, default 10). Blue arrows behind the wing labelled "air pushed down"; a teal arrow up from the wing labelled "lift N.N N". Beside the canvas a gauge: a teal bar for lift and a purple line at 9.8 N labelled "the bird's weight". Above 15° the flow over the top breaks into eddies, lift falls and a "stalled" label appears. Caption inside the canvas: "A sketch of the airflow, not a calculation of it.")
+(Page note: canvas: a wing cross-section in the middle with 10 animated streamlines arriving level from the left and leaving downward behind it; the downward turn grows with the tilt. Sliders "Wing tilt" 0° to 20° (step 0.1, default 6°) and "Air speed" 4 to 20 m/s (step 0.5, default 10). Blue arrows behind the wing labelled "air pushed down"; a teal arrow up from the wing labelled "lift N.N N". Beside the canvas a gauge: a teal bar for lift and a purple line at 9.8 N labelled "the bird's weight". Above 15° the flow over the top breaks into eddies, lift falls and a "stalled" label appears. Caption inside the canvas: "A sketch of the airflow, not a calculation of it.")
 
 How much lift depends on how much air the wing turns and how sharply it turns it. Three things set that:
 
@@ -146,7 +146,9 @@ The lift coefficient is a number with no unit that grows with the tilt of the wi
 
 Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall.
 
-**Set the air speed to 10 m/s. Find the wing tilt at which the lift equals the bird's weight.**
+**Set the air speed to 10 m/s. Find the wing tilt at which the lift comes closest to the bird's weight, 9.8 N.**
+
+(Page note: when the air speed is 10 m/s and the wing tilt is 8.2°, the page shows under the two sliders: You found it. At a wing tilt of 8.2° the lift is 9.8 N, as close to the bird's weight as this slider gets.)
 
 **Predict:** The wing is tilted at 6° and the air speed is 8 m/s. You double the speed to 16 m/s and leave the tilt alone. What happens to the lift?
 
@@ -605,7 +607,7 @@ It will not explain anything to you. It only asks questions, and it tells you wh
 
 Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.
 
-Classmate: I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what is moving it forward?
+Classmate: I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what keeps it moving?
 
 What you type here is sent to the course AI helper so that it can reply. The course does not store it, and the conversation is kept only in this browser.
 
