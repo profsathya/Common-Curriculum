@@ -27,7 +27,7 @@ When you are ready to submit, press Copy my work to submit. The button appears a
 
 What made you choose this learning trail, and what do you want to be able to explain by the end of it?
 
-*(Two or three sentences. A real question you have about flight is the most useful thing you can write here. You will come back to it at the end.)*
+*(Two or three sentences. A real question you have about flight is the most useful thing you can write here, for example "Why does a gliding bird not just fall?" or "Why does a bird that slows down too much suddenly drop?" You will come back to it at the end.)*
 
 (Page note: text box. The button "Start flying" works at 15 words or more; under 15 the page shows: Write a little more first, about 15 words or more. Level 1 opens on the click. No AI feedback here.)
 
@@ -41,19 +41,31 @@ Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it 
 
 Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them.
 
+**Before your first flight** (Page note: shown above the simulation. The Launch button works once one option is chosen; until then the page shows beside it: Choose what you will do with the nose first. Nothing is marked right or wrong, and the choice cannot be changed after the first flight. A student who flew before 26 Nov 2026 is not asked.)
+
+You are 30 m above the water and you want to land as far away as possible. What will you do with the nose?
+
+- Point it up, to stay high for as long as possible
+- Point it down, to go as fast as possible
+- Hold it at one moderate angle, a little above level, and keep it steady
+
+After the choice: Noted. Now fly it and see what happens.
+
 (Page note: canvas: side view of the 30 m cliff, the sea, distance marks every 50 m and a buoy with a flag at 370 m; the camera follows the bird. Nose-angle slider beside it (vertical, "nose up" at the top, "nose down" at the bottom), -10° to +20°, step 0.5°, default 0°; up and down arrow keys change it by 0.5° when the canvas has focus. Button "Launch", then "Launch again". Readouts: Speed, Height, Distance, Nose angle. When the bird lands the canvas marks where, "landed at N m".)
 
 Stall banner across the canvas: Stall: the wing is tilted too far and has lost most of its lift, so the bird is dropping.
 
 (Page note: table "Your last five flights": Flight, Average nose angle, Average speed, Distance, Passed the buoy (tick).)
 
-After 3 flights without passing the buoy: Look at your table. Which flight went the longest distance, and what was its average nose angle? For your next two flights, choose one nose angle for each and hold it for the whole flight.
+After 3 flights without passing the buoy: Look at your table. Which flight went the longest distance, and what was its average nose angle? For your next two flights, choose one nose angle for each and hold it for the whole flight. You can keep trying for the buoy. You can also explain what you observed below.
 
 When a flight passes the buoy: You passed the buoy.
 
-(Page note: Prediction 1 and the Level 1 explanation appear once a flight has passed the buoy. A wrong option shows its feedback and the student chooses again; the page records the first and final choice.)
+(Page note: Prediction 1 and the Level 1 explanation appear after the third flight lands, or once a flight has passed the buoy, whichever comes first. A wrong option shows its feedback and the student can choose again; the page records the first and final choice.)
 
-**Predict:** You are 30 m above the water and you want to reach land as far away as possible. What do you do with the nose?
+**Predict:** Before your first flight you chose: "[the student's choice]". You have flown it now. With 30 m of height and the goal of landing as far away as possible, what do you do with the nose?
+
+(Page note: for a student who was not asked before the first flight, the question is: You are 30 m above the water and you want to reach land as far away as possible. What do you do with the nose?)
 
 - A. Point it up, to stay high for as long as possible
   - Feedback: That is what most people try first. Look at your flights: with the nose high the bird slows down, and below a certain speed it stops gliding and drops. Staying high is not the same as going far. Choose again.
@@ -62,11 +74,11 @@ When a flight passes the buoy: You passed the buoy.
   - Feedback: Speed feels like it should help, but look at where your fast flights ended. A steep dive uses up the 30 m of height quickly, and height is the only thing the bird has to spend. Choose again.
 
 - C. Hold it at one moderate angle, a little above level, and keep it steady (right)
-  - Feedback: Yes. Your longest flights were the steady ones at a moderate angle. Why a moderate angle wins is not obvious yet. The next three levels open the flight up until you can explain it.
+  - Feedback: Yes. In this model, a steady moderate angle carries the bird farther than a steep climb or a dive. Compare that with your flights. Why a moderate angle wins is not obvious yet. The next three levels open the flight up until you can explain it.
 
 **Explain your thinking: describe what happened on the flight where you pointed the nose up the most. What did the speed do, and what did the bird do next?**
 
-(Page note: exit button "Zoom in: the forces on the bird" opens once Prediction 1 is answered with the right option. Until then: "The next level opens when you finish this one.")
+(Page note: exit button "Zoom in: the forces on the bird" opens once the prediction has been answered, with any option, and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation." A level finished before 26 Nov 2026 stays finished.)
 
 ## Level 2: The forces on the bird
 
@@ -78,17 +90,7 @@ When a flight passes the buoy: You passed the buoy.
 
 (Page note: canvas: the bird large and centered, flying the same model; it relaunches from the cliff each time it reaches the water. Arrows: weight straight down, lift at a right angle to the direction of travel, drag back along it from the tail (at least 10 px long), and the dashed direction-of-travel arrow; 9.8 N is about 110 px. A small inset shows the glide path from the side. Same nose-angle slider and readouts as Level 1. The button "Add the forces" draws the three arrows tip to tail in a side panel, with the leftover arrow outlined in red and labelled "net force N.N N".)
 
-So what keeps the bird moving forward? Look at the direction of travel. The bird is always heading slightly downhill.
-
-Because the path slopes down, a small part of the weight points along the path, and that part is what balances the drag.
-
-A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.
-
-Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing.
-
-Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.
-
-By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
+Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. A flight like that is called a steady glide.
 
 **Predict:** In a steady glide the bird moves in a straight line at constant speed, heading slightly downhill. What is the net force on it?
 
@@ -100,6 +102,24 @@ By Newton's first law, an object with zero net force keeps moving in a straight 
 
 - C. It is zero (right)
   - Feedback: Yes. Constant speed in a straight line means zero net force, even when that line slopes downhill. Lift and drag together exactly balance the weight.
+
+Shown after the first prediction choice, right or wrong:
+
+Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.
+
+By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
+
+Wondering question, closed until the student clicks it:
+
+**Are you wondering why the bird keeps a steady velocity when nothing pushes it forward?**
+
+(Page note: a picture opens with the question. It shows the bird on its downhill path with the weight arrow split into a short part along the path and a long part across it, the drag pointing back along the path and the lift across it. Caption: The slope is drawn steeper than a real glide, so that the small part of the weight can be seen.)
+
+Look at the direction of travel. The bird is always heading slightly downhill. Because the path slopes down, a small part of the weight points along the path, and that part balances the drag. The rest of the weight points across the path, and the lift balances it.
+
+A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height.
+
+(Page note: when the student chooses "It points forward", the page shows above the question: A place to start: look at the direction of travel. The bird is always heading slightly downhill. The question below goes on from there.)
 
 The triangle also tells you how far the bird goes. In a steady glide, the distance travelled forward for each meter of height lost is equal to lift divided by drag. This number is called the glide ratio.
 
@@ -116,9 +136,19 @@ The triangle also tells you how far the bird goes. In a steady glide, the distan
 - Right number, wrong unit: The number is right, but check the unit. You are answering with a distance.
 - First step (after 2 misses): First find lift ÷ drag. That is how many meters the bird moves forward for each meter it descends.
 
+Offered after the first correct check on the practice, closed until the student clicks it. Nothing depends on it.
+
+**Do you want a harder one?** With the same lift and drag, from what height would this bird have to start to glide 500 m?
+
+- Answer accepted: 40.5 to 42.5 m
+- Correct: Correct. The bird moves about 12.06 m forward for each meter it descends, so 500 m takes 500 ÷ 12.06 = about 41.5 m of height.
+- Other: Not yet. The glide ratio is the same as before. This time you know the distance forward and need the height lost.
+- Right number, wrong unit: The number is right, but check the unit. You are answering with a height.
+- First step (after 2 misses): Height lost = distance forward ÷ glide ratio.
+
 **Explain your thinking: no force on the bird points along the direction it is moving, and yet it keeps moving at a steady speed. How is that possible?**
 
-(Page note: exit button "Zoom in: where lift comes from" opens when Prediction 2 is answered right and Practice 1 is correct, or after 4 misses on Practice 1. After 4 misses the problem shows: You can move on and come back to this problem.)
+(Page note: exit button "Zoom in: where lift comes from" opens once the prediction has been answered, Check has been pressed once on the practice, and something is written in the explain box. No correct answer is needed. Until then: "The next level opens when you have answered the prediction, tried the practice and written your explanation.")
 
 (Page note: practice problems: a number box labelled "Your answer", a unit list labelled "Unit" (choose a unit, N, kg, m, m/s, m/s², no unit) and a Check button. Number and unit are checked separately, and the page counts the checks ("Checks made: N"). When Check is pressed with no unit chosen, the page shows "Choose a unit for your answer, then press Check again." and does not count that press as a check or a miss. A right number with a wrong unit gets its "Right number, wrong unit" line and is not counted as a miss. After 2 misses the page shows the "Other" line and a button "Show me the first step" that reveals the first-step line.)
 
@@ -188,7 +218,7 @@ So there is a slowest speed at which a steady glide is possible.
 
 **Explain your thinking: why does a gliding bird drop when it flies too slowly? Use the lift relationship in your explanation.**
 
-(Page note: exit button "Zoom in: the best speed" opens when Prediction 3 is answered right and Practices 2 and 3 are each correct or have 4 misses.)
+(Page note: exit button "Zoom in: the best speed" opens once the prediction has been answered, Check has been pressed once on each practice, and something is written in the explain box. No correct answer is needed. Until then: "The next level opens when you have answered the prediction, tried each practice and written your explanation.")
 
 ## Level 4: Why one speed goes farthest
 
@@ -237,7 +267,7 @@ The airflow picture at Level 3 is a sketch.
 
 The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft.
 
-(Page note: exit button "Zoom in: inside the simulation" opens once the heavier-bird message has shown.)
+(Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation.")
 
 (Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". Under 12 words: Write a few sentences first. Say what you saw on the simulation and why you think it happens. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
 
