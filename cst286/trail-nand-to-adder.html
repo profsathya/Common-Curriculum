@@ -214,6 +214,14 @@
   .game{border:1px solid var(--line); border-radius:10px; padding:4px 16px 10px; margin:12px 0; background:var(--stage)}
   .parts{border-collapse:collapse; margin:0 0 12px; font-size:.92rem}
   .parts td{padding:3px 12px 3px 0; vertical-align:middle; color:var(--ink-soft)}
+  /* Level 2: wondering questions, the lock on the build step, and the labels on the first HDL line */
+  details.wonder{margin:12px 0; border:1px dashed var(--line); border-radius:8px; padding:8px 14px}
+  details.wonder summary{cursor:pointer; color:var(--tc); font-weight:600}
+  details.wonder[open] summary{margin-bottom:8px}
+  #buildlock[hidden], #buildwrap[hidden]{display:none}
+  .l2line{margin:8px 0} .l2line code{display:inline-block; padding:8px 12px; line-height:1.9; white-space:pre-wrap; overflow-wrap:anywhere}
+  .k1{border-bottom:2px solid var(--blaze)} .k2{border-bottom:2px solid var(--tc)} .k3{border-bottom:2px solid var(--ok)} .k4{font-weight:700; color:var(--ok)} .k5{border-bottom:2px solid var(--warn)}
+  .l2labels{margin:0 0 14px; padding-left:22px} .l2labels li{margin:5px 0}
   details.help{margin:0 0 12px; border:1px solid var(--line); border-radius:8px; padding:8px 14px}
   details.help summary{cursor:pointer; color:var(--tc)}
   details.help p{margin:10px 0 4px}
@@ -810,14 +818,16 @@ const LEVELS = [
 
   {id:'add4', kind:'build', chip:'Add4', short:'Add4', title:'Inside the adder: numbers on wires',
    objs:['Read and write 4-bit binary numbers, and add two of them by hand with carries.', 'Build a 4-bit adder by chaining one small adder for each column.'],
-   see:'Here are the wires that go into and out of that box. Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what it is worth: 8, 4, 2 or 1. Flip one switch of <code>a</code> at a time to see what each wire adds. Then turn on 4, 2 and 1 to make 7, set <code>b</code> to 1, and read <code>out</code>. After that, try 15 + 1, the sum the machine got wrong.',
-   learn:'<p>Inside the machine, a wire is read as one of two signal levels, which we write as 0 and 1. One wire is called a bit, so the machine writes each number with four bits. The rightmost bit is worth 1, and each bit to its left is worth double: 1, 2, 4, 8. The number is the sum of the bits that are 1, so 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four bits the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.</p><p>With two bits you can write four numbers: 00 is 0, 01 is 1, 10 is 2 and 11 is 3. You need these to add, because the machine adds the way you add by hand, one column at a time, starting from the right. A column adds a bit of a, a bit of b, and a carry of 1 if the column to its right produced one, so a column adds up to 0, 1, 2 or 3. A column can hold only one bit. So when it adds up to 2 (binary 10), it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11), it writes 1 and carries 1.</p><p>Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:</p><ul><li>The 1s column: 1 + 1 = 2, so write 0 and carry 1.</li><li>The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 8s column: 0 + 0 + the carry 1 = 1, so write 1.</li></ul><p>The answer is 1000, which is 8.</p><p>When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.</p>',
-   practice:'Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.',
-   build:'<p>Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. <code>IN a[4], b[4]</code> says that a and b each come in on four wires, and <code>OUT out[4]</code> says that the answer leaves on four wires. Leave those lines as they are, and add your parts under <code>PARTS:</code>.</p>',
+   steps:{read:'<p><b>Here are the wires that go into and out of that box.</b> Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what its wire is worth: 8, 4, 2 or 1. The number is the sum of the wires that are on, so with 4 and 1 on, the number is 5.</p><p>One wire is called a bit, and writing a number this way is called binary.</p><p>Try it on the switches:</p><ul><li>Flip one switch of <code>a</code> at a time to see what each wire adds.</li><li>Turn on 4, 2 and 1 to make 7, set <code>b</code> to 1, and read <code>out</code>.</li><li>Then try 15 + 1, the sum the machine got wrong.</li></ul>',
+          wRead:[{id:'w-15', q:'Are you wondering why the machine never shows more than 15?', a:'<p>With all four wires on, the number is 8 + 4 + 2 + 1 = 15. There is no wire left to turn on, so 15 is the largest number that four wires can hold.</p>'}],
+          carry:'<p><b>The machine adds the way you add by hand: one column at a time, starting from the right.</b> Each column adds one bit of <code>a</code>, one bit of <code>b</code>, and a carry of 1 if the column to its right sent one. A column can write down only one bit, so what it does depends on what it adds up to:</p><ul><li>0 or 1: it writes that bit and carries nothing.</li><li>2: it writes 0 and carries 1 to the next column.</li><li>3: it writes 1 and carries 1 to the next column.</li></ul><p>Here is one carry, in 1 + 1. The 1s column adds 1 + 1 = 2, so it writes 0 and carries 1. The 2s column adds 0 + 0 + the carry 1 = 1, so it writes 1. The answer is 0010, which is 2.</p>',
+          wCarry:[{id:'w-long', q:'Are you wondering how a longer sum goes, with a carry in every column?', a:'<p>Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:</p><ul><li>The 1s column: 1 + 1 = 2, so write 0 and carry 1.</li><li>The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 8s column: 0 + 0 + the carry 1 = 1, so write 1.</li></ul><p>The answer is 1000, which is 8.</p>'}, {id:'w-over', q:'Are you wondering why 15 + 1 shows 0?', a:'<p>When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.</p>'}],
+          lock:'This step opens when you have made one number, read one number and finished one addition.'},
+   build:'<p><b>Now rebuild the machine yourself, to see how it works.</b> From here on, a box is called a chip, and the boxes inside it are called its parts. Add4 has one small adder for each column, and each column sends its carry to the next one. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language). Each line names one part and says which wire connects to each of its pins. The editor already holds the outside of the chip, so leave the <code>IN</code> and <code>OUT</code> lines as they are and write your parts under <code>PARTS:</code>.</p>',
    warm:{lead:'Warm up with one line before the full build. This small chip adds only the 1s column. Its one part is already there, and its two outputs are already connected. Two blanks are left: after <code>a=</code> and <code>b=</code>, type the name of the wire that should go to that pin. The wires you have are the chip\'s inputs, a and b. Then press Run.', done:'That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.', stub:'CHIP FirstColumn {\n    IN a, b;\n    OUT sum, carry;\n\n    PARTS:\n    HalfAdder(a=, b=, sum=sum, carry=carry);\n}\n'},
-   build2:'<p>Now the whole four-column adder. The first column is written for you: <code>HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);</code> Read it from left to right. <code>HalfAdder</code> is the part. Inside the parentheses, the name on the left of each <code>=</code> is a pin of that part, and the name on the right is the wire you connect it to. <code>a[0]</code> is the rightmost wire of a, the 1s place. So <code>[0]</code> picks one wire, while the <code>[4]</code> in the IN line says how many wires there are. <code>c1</code> is a name made up for a new wire, which carries this column\'s carry to the next column.</p><p>Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete <code>carry=</code> from that line. An output pin of a part can be left out when you do not need it.</p>',
-   stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    \n}\n',
-   hints:['Column 1 has three bits to add: a[1], b[1] and the carry from column 0, which arrives on the wire c1. Which of your two parts adds three bits?', 'A FullAdder line needs these connections: a, b, c, sum and carry. For column 1, c=c1 brings the carry in, and carry=c2 sends the new carry on to column 2.', 'Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. In column 3, leave carry= out.'],
+   build2:'<p><b>Column 0 is written for you.</b></p><p class="l2line"><code><span class="k1">HalfAdder</span>(<span class="k2">a</span>=<span class="k3">a<span class="k4">[0]</span></span>, <span class="k2">b</span>=<span class="k3">b[0]</span>, <span class="k2">sum</span>=<span class="k3">out[0]</span>, <span class="k2">carry</span>=<span class="k5">c1</span>);</code></p><ul class="l2labels"><li><code><span class="k1">HalfAdder</span></code> is the part.</li><li>The name on the <span class="k2">left of each <code>=</code></span> is a pin of the part.</li><li>The name on the <span class="k3">right of each <code>=</code></span> is the wire you connect to that pin.</li><li><code><span class="k3">a<span class="k4">[0]</span></span></code> is one wire of <code>a</code>, and the number picks which one: 0 is the 1s place, 1 is the 2s place, 2 is the 4s place and 3 is the 8s place. The <code>[4]</code> in the <code>IN</code> line is different. It says how many wires <code>a</code> has.</li><li><code><span class="k5">c1</span></code> is a name made up for a new wire. It takes this column\'s carry to column 1.</li></ul><p><b>Column 1: fill in two blanks.</b> Column 1 adds three bits, so it uses a FullAdder. Its line is in the editor with two blanks:</p><p class="l2line"><code>FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);</code></p><p>After <code>c=</code>, type the name of the wire that brings the carry in from column 0. After <code>carry=</code>, make up a name for the wire that takes this column\'s carry to column 2.</p><p><b>Column 2: type the line yourself, with column 1 in view.</b> Three things change from column 1: the number in the brackets, the wire that brings the carry in, and the name of the wire that takes the carry out.</p><p><b>Column 3: this one is yours.</b> Its carry has nowhere to go, because there is no fifth wire, so leave <code>carry=</code> out of the line. An output pin of a part can be left out when you do not need it.</p><p><b>You are finished when</b> you press Run tests and all 256 rows pass.</p>',
+   stub:'// Add4: out = a + b. One small adder for each column.\nCHIP Add4 {\n    IN a[4], b[4];\n    OUT out[4];\n\n    PARTS:\n    // Column 0 (the 1s place) has no carry coming in, so a HalfAdder is enough.\n    // Its carry goes out on a wire named c1, which column 1 can read.\n    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);\n    FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);\n    \n}\n',
+   hints:['In column 1, the carry from column 0 arrives on the wire named in the line above it, after carry=. Which pin of the FullAdder takes a carry coming in?', 'The wire after carry= in one column is the wire after c= in the next column. So c1 goes from column 0 to column 1, c2 from column 1 to column 2, and c3 from column 2 to column 3.', 'Column 2 is: FullAdder(a=a[2], b=b[2], c=c2, sum=out[2], carry=c3); Column 3 follows the same pattern, with carry= left out.'],
    after:'You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.'},
 
   {id:'fulladder', kind:'build', chip:'FullAdder', short:'FullAdder', title:'Inside a column: the FullAdder',
@@ -1012,6 +1022,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const UNLOCK_ALL = /[?&]unlock=1/.test(location.search);
   const main = $('#stop'), mapEl = $('#map');
   const K = {}, PRB = {}, STG = {}, LAST = {}, P = {}, H = {}, G = {}, TRY = {};
+  let L2LOCK = null;   // set by Level 2; the practice games call it when a practice is finished
   const rnd = n => Math.floor(Math.random() * n);
   const bin4 = v => v.toString(2).padStart(4, '0');
   const BUILDS = LEVELS.filter(l => l.kind === 'build');
@@ -1274,10 +1285,18 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   VIEW.build = function(l){
     const chip = l.chip, spec = B[chip], hasPred = spec.ins.every(x => x[1] === 1), seeKey = chip + ':see', first = chip === 'Add4';
     let h = head(l);
+    const T3 = l.steps;   // Level 2 only: three steps, each ending in something the student does
+    const wonderHTML = ws => ws.map(w => '<details class="wonder" id="' + w.id + '"><summary>' + w.q + '</summary><div class="idea">' + w.a + '</div></details>').join('');
+    if (T3){
+      h += stepHTML(1, 'Read the wires', '<div id="stage-see" class="stage"></div><div id="probe-see" style="margin-top:10px"></div><div class="idea" style="margin-top:14px">' + T3.read + '</div><div class="game" id="g-bin"></div>' + wonderHTML(T3.wRead) + videoHTML(l));
+      h += stepHTML(2, 'Follow one carry', '<div class="idea">' + T3.carry + '</div><div class="game" id="g-add"></div>' + wonderHTML(T3.wCarry));
+    } else {
     h += stepHTML(1, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
     h += stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
     h += stepHTML(3, 'Practice', hasPred ? predictHTML(chip, l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
-    h += stepHTML(4, 'Build it',
+    }
+    h += stepHTML(T3 ? 3 : 4, T3 ? 'Wire the columns' : 'Build it',
+      (T3 ? '<div class="msg info" id="buildlock">' + T3.lock + '</div><div id="buildwrap">' : '') +
       '<div class="idea">' + l.build + '</div>' + (l.build.indexOf('hardware description language') < 0 ? '<details class="help"><summary>How to write a part in HDL</summary>' + HDL_HELP + '</details>' : '') +
       (l.warm ? '<div class="game" id="warm"></div><div class="idea">' + l.build2 + '</div>' : '') +
       '<p>' + (first ? UI.partsFirst : UI.parts) + '</p>' +
@@ -1285,9 +1304,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       '<div class="bench"><div><label class="sr" for="ed">HDL for ' + chip + '</label><textarea id="ed" class="editor" wrap="soft" spellcheck="false" autocapitalize="off" autocomplete="off" rows="' + (chip === 'Add4' ? 15 : 13) + '"></textarea></div><div><div id="stage" class="stage"></div><div id="stagestat" class="stagestat" role="status"></div></div></div>' +
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
-      '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>');
-    h += stepHTML(5, 'Open the box', '<div id="open"></div>') + foot(l);
+      '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>' + (T3 ? '</div>' : ''));
+    h += stepHTML(T3 ? 4 : 5, 'Open the box', '<div id="open"></div>') + foot(l);
     main.innerHTML = h;
+    // Level 2: the build opens once the student has made one number, read one number and finished one addition
+    L2LOCK = null;
+    if (T3){
+      const practiced = () => UNLOCK_ALL || !!S.pass[chip] || ((S.games.bin || {}).make >= 1 && (S.games.bin || {}).read >= 1 && (S.games.add || {}).n >= 1);
+      L2LOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = practiced(); lock.hidden = open; wrap.hidden = !open; };
+      L2LOCK();
+    }
 
     bench(seeKey, {chip, builtin:true, stage:'#stage-see', probe:hasPred ? null : '#probe-see'});
     drawStage(seeKey, boxSketch(chip)); drawProbe(seeKey);
@@ -1716,7 +1742,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const st = S.games.bin || (S.games.bin = {make:0, read:0});
     const g = G.bin || (G.bin = {mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
     const draw = () => {
-      let h = '<h4 class="sub">Read and write binary</h4><p class="tallies">' + tally('Make a number', st.make, 2) + tally('Read a number', st.read, 2) + '</p>';
+      let h = '<h4 class="sub">Practice: read and write binary</h4><p>Make one number with the switches, and read one number from them. You need both for the build.</p><p class="tallies">' + tally('Make a number', st.make, 1) + tally('Read a number', st.read, 1) + '</p>';
       if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, !g.solved);
       else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
       h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
@@ -1734,7 +1760,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
           else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
           else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
         }
-        save(); draw();
+        save(); draw(); if (L2LOCK) L2LOCK();
       };
       if (nx) nx.onclick = () => { g.mode = g.mode === 'make' ? 'read' : 'make'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; draw(); };
     };
@@ -1747,30 +1773,34 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const draw = () => {
       const cell = (grp, b, v) => g.solved ? '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>' : '<button type="button" class="sw big' + (v ? ' on' : '') + '" data-g="' + grp + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + (grp === 'c' ? 'carry into column ' + b : 'sum bit ' + b) + '">' + v + '</button>';
       const fixed = v => '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>';
-      let h = '<h4 class="sub">Add by hand</h4><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column.</p><p class="tallies">' + tally('Correct additions', st.n, 2) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
+      let h = '<h4 class="sub">Practice: add by hand</h4><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Finish one addition.</p><p class="tallies">' + tally('Correct additions', st.n, 1) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
       h += '<tr><th>carry</th><td>' + cell('c', 4, (g.c >> 4) & 1) + '</td>' + [3, 2, 1].map(b => '<td>' + cell('c', b, (g.c >> b) & 1) + '</td>').join('') + '<td></td><td></td></tr>';
       h += '<tr><th>a</th><td></td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.a >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.a : '') + '</td></tr>';
       h += '<tr><th>b</th><td class="plus">+</td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.b >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.b : '') + '</td></tr>';
       h += '<tr class="sumrow"><th>sum</th><td></td>' + [3, 2, 1, 0].map(b => '<td>' + cell('s', b, (g.s >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.s : '') + '</td></tr></tbody></table></div>';
       h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Another one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
+      // the feedback offers the wondering question that fits what just happened
+      const wq = g.offer && $('#' + g.offer + ' summary');
+      if (wq) h += '<div class="row"><button type="button" class="btn ghost woffer">' + wq.innerHTML + '</button></div>';
       box.innerHTML = h; bindBits(box, g, draw);
+      const wo = $('.woffer', box); if (wo) wo.onclick = () => { const d = $('#' + g.offer); if (d){ d.open = true; d.scrollIntoView({behavior:'smooth', block:'center'}); } };
       const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
       if (ck) ck.onclick = () => {
-        let cin = 0, bad = false;
+        let cin = 0, bad = false; g.offer = '';
         for (let i = 0; i < 4 && !bad; i++){
           const ai = (g.a >> i) & 1, bi = (g.b >> i) & 1, t = ai + bi + cin;
           if (((g.s >> i) & 1) !== (t & 1) || ((g.c >> (i + 1)) & 1) !== (t >> 1)){
-            bad = true; g.cls = 'bad';
+            bad = true; g.cls = 'bad'; g.offer = 'w-long';
             g.msg = 'Look at the ' + W[3-i] + 's column' + (i ? '. The columns to its right are correct' : '') + '. There you add ' + ai + ' + ' + bi + (i ? ' plus a carry of ' + cin : '') + ', which makes ' + t + '. In binary ' + t + ' is written ' + (t >> 1) + '' + (t & 1) + ', so the sum bit is ' + (t & 1) + ' and the carry into the next column is ' + (t >> 1) + '.';
           }
           cin = t >> 1;
         }
         if (!bad){
-          st.n++; g.solved = true; g.cls = 'ok'; const tot = g.a + g.b;
+          st.n++; g.solved = true; g.cls = 'ok'; const tot = g.a + g.b; if (tot > 15) g.offer = 'w-over';
           g.msg = 'Correct: ' + g.a + ' + ' + g.b + ' = ' + tot + '.' + (tot > 15 ? ' The answer ' + tot + ' does not fit in 4 bits, so there is a carry out of the last column. A 4-bit adder drops that carry and shows ' + (tot & 15) + '.' : '') + ' Every column took in up to three bits and gave out two: a sum bit and a carry.';
           save();
         }
-        draw();
+        draw(); if (L2LOCK) L2LOCK();
       };
       if (nx) nx.onclick = () => { g = G.add = fresh(); draw(); };
     };

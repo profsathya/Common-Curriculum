@@ -47,15 +47,47 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 - Read and write 4-bit binary numbers, and add two of them by hand with carries.
 - Build a 4-bit adder by chaining one small adder for each column.
 
-**See it run:** Here are the wires that go into and out of that box. Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what it is worth: 8, 4, 2 or 1. Flip one switch of `a` at a time to see what each wire adds. Then turn on 4, 2 and 1 to make 7, set `b` to 1, and read `out`. After that, try 15 + 1, the sum the machine got wrong.
+### Step 1. Read the wires
 
-**Learn it**
+(Page note: the drawing of the box with its switches comes first, and the words below sit under it.)
 
-Inside the machine, a wire is read as one of two signal levels, which we write as 0 and 1. One wire is called a bit, so the machine writes each number with four bits. The rightmost bit is worth 1, and each bit to its left is worth double: 1, 2, 4, 8. The number is the sum of the bits that are 1, so 0101 is 4 + 1 = 5. This way of writing numbers is called binary. With four bits the largest number is 1111, which is 8 + 4 + 2 + 1 = 15, and that is why the machine never showed more than 15.
+**Here are the wires that go into and out of that box.** Each number travels on four wires, and each wire carries either 0 or 1. The switches under the drawing are those wires, and the label above each switch says what its wire is worth: 8, 4, 2 or 1. The number is the sum of the wires that are on, so with 4 and 1 on, the number is 5.
 
-With two bits you can write four numbers: 00 is 0, 01 is 1, 10 is 2 and 11 is 3. You need these to add, because the machine adds the way you add by hand, one column at a time, starting from the right. A column adds a bit of a, a bit of b, and a carry of 1 if the column to its right produced one, so a column adds up to 0, 1, 2 or 3. A column can hold only one bit. So when it adds up to 2 (binary 10), it writes 0 and carries 1 to the next column, and when it adds up to 3 (binary 11), it writes 1 and carries 1.
+One wire is called a bit, and writing a number this way is called binary.
 
-Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:
+Try it on the switches:
+
+- Flip one switch of `a` at a time to see what each wire adds.
+- Turn on 4, 2 and 1 to make 7, set `b` to 1, and read `out`.
+- Then try 15 + 1, the sum the machine got wrong.
+
+**Practice: read and write binary.** Make one number with the switches, and read one number from them. You need both for the build.
+
+(Page note: the counters read "Make a number: 0 of 1" and "Read a number: 0 of 1". "Next one" gives another.)
+
+Wondering question, closed until the student clicks it:
+
+**Are you wondering why the machine never shows more than 15?** With all four wires on, the number is 8 + 4 + 2 + 1 = 15. There is no wire left to turn on, so 15 is the largest number that four wires can hold.
+
+**Video:** none yet (slot is hidden until a video is added)
+
+### Step 2. Follow one carry
+
+**The machine adds the way you add by hand: one column at a time, starting from the right.** Each column adds one bit of `a`, one bit of `b`, and a carry of 1 if the column to its right sent one. A column can write down only one bit, so what it does depends on what it adds up to:
+
+- 0 or 1: it writes that bit and carries nothing.
+- 2: it writes 0 and carries 1 to the next column.
+- 3: it writes 1 and carries 1 to the next column.
+
+Here is one carry, in 1 + 1. The 1s column adds 1 + 1 = 2, so it writes 0 and carries 1. The 2s column adds 0 + 0 + the carry 1 = 1, so it writes 1. The answer is 0010, which is 2.
+
+**Practice: add by hand.** Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Finish one addition.
+
+(Page note: the counter reads "Correct additions: 0 of 1". "Another one" gives another.)
+
+Wondering questions, closed until the student clicks them. The page also offers the first one, as a button under its feedback, after a missed addition, and the second after an addition whose answer is larger than 15.
+
+**Are you wondering how a longer sum goes, with a carry in every column?** Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:
 
 - The 1s column: 1 + 1 = 2, so write 0 and carry 1.
 - The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.
@@ -64,17 +96,17 @@ Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:
 
 The answer is 1000, which is 8.
 
-When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.
+**Are you wondering why 15 + 1 shows 0?** When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.
 
-**Video:** none yet (slot is hidden until a video is added)
+### Step 3. Wire the columns
 
-**Practice:** Two short practices, because the build step depends on both: reading binary numbers, and adding them column by column.
+(Page note: locked until the student has made one number, read one number and finished one addition. A student who has already passed this level, or who opens the page with ?unlock=1, is not locked. While it is locked the page shows only this line.)
 
-**Build it**
+This step opens when you have made one number, read one number and finished one addition.
 
-Now rebuild the machine to see how it works. From here on, a box is called a chip, and the boxes inside it are called its parts. Inside Add4 there is one small adder for each column, and the carry from each column goes into the next column. You have two ready-made parts: `HalfAdder` adds two bits, and `FullAdder` adds three bits (two bits plus a carry coming in).
+**Now rebuild the machine yourself, to see how it works.** From here on, a box is called a chip, and the boxes inside it are called its parts. Add4 has one small adder for each column, and each column sends its carry to the next one. You have two ready-made parts: `HalfAdder` adds two bits, and `FullAdder` adds three bits (two bits plus a carry coming in).
 
-You describe a chip in HDL (hardware description language), which tells the simulator which parts to use and how to wire them. The editor below already holds the outside of the chip. `IN a[4], b[4]` says that a and b each come in on four wires, and `OUT out[4]` says that the answer leaves on four wires. Leave those lines as they are, and add your parts under `PARTS:`.
+You describe a chip in HDL (hardware description language). Each line names one part and says which wire connects to each of its pins. The editor already holds the outside of the chip, so leave the `IN` and `OUT` lines as they are and write your parts under `PARTS:`.
 
 **First, one line (warm-up build)**
 
@@ -84,16 +116,36 @@ The line the student completes: `HalfAdder(a=, b=, sum=sum, carry=carry);`
 
 When it passes: That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.
 
-**Build it, continued**
+(Page note: in the first line below, each kind of name is underlined in its own color, and the five labels under it carry the same colors.)
 
-Now the whole four-column adder. The first column is written for you: `HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);` Read it from left to right. `HalfAdder` is the part. Inside the parentheses, the name on the left of each `=` is a pin of that part, and the name on the right is the wire you connect it to. `a[0]` is the rightmost wire of a, the 1s place. So `[0]` picks one wire, while the `[4]` in the IN line says how many wires there are. `c1` is a name made up for a new wire, which carries this column's carry to the next column.
+**Column 0 is written for you.**
 
-Add columns 1, 2 and 3. Use the same number for a, b and out within a column: 1 for the 2s place, 2 for the 4s place and 3 for the 8s place. In column 3 the carry has nowhere to go, so delete `carry=` from that line. An output pin of a part can be left out when you do not need it.
+`HalfAdder(a=a[0], b=b[0], sum=out[0], carry=c1);`
+
+- `HalfAdder` is the part.
+- The name on the left of each `=` is a pin of the part.
+- The name on the right of each `=` is the wire you connect to that pin.
+- `a[0]` is one wire of `a`, and the number picks which one: 0 is the 1s place, 1 is the 2s place, 2 is the 4s place and 3 is the 8s place. The `[4]` in the `IN` line is different. It says how many wires `a` has.
+- `c1` is a name made up for a new wire. It takes this column's carry to column 1.
+
+**Column 1: fill in two blanks.** Column 1 adds three bits, so it uses a FullAdder. Its line is in the editor with two blanks:
+
+`FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);`
+
+After `c=`, type the name of the wire that brings the carry in from column 0. After `carry=`, make up a name for the wire that takes this column's carry to column 2.
+
+**Column 2: type the line yourself, with column 1 in view.** Three things change from column 1: the number in the brackets, the wire that brings the carry in, and the name of the wire that takes the carry out.
+
+**Column 3: this one is yours.** Its carry has nowhere to go, because there is no fifth wire, so leave `carry=` out of the line. An output pin of a part can be left out when you do not need it.
+
+**You are finished when** you press Run tests and all 256 rows pass.
+
+(Page note: the editor starts with column 0 written and the column 1 line with its two blanks.)
 
 **Hints (shown one at a time, on request)**
-1. Column 1 has three bits to add: a[1], b[1] and the carry from column 0, which arrives on the wire c1. Which of your two parts adds three bits?
-2. A FullAdder line needs these connections: a, b, c, sum and carry. For column 1, c=c1 brings the carry in, and carry=c2 sends the new carry on to column 2.
-3. Column 1 is: FullAdder(a=a[1], b=b[1], c=c1, sum=out[1], carry=c2); Columns 2 and 3 follow the same pattern. In column 3, leave carry= out.
+1. In column 1, the carry from column 0 arrives on the wire named in the line above it, after carry=. Which pin of the FullAdder takes a carry coming in?
+2. The wire after carry= in one column is the wire after c= in the next column. So c1 goes from column 0 to column 1, c2 from column 1 to column 2, and c3 from column 2 to column 3.
+3. Column 2 is: FullAdder(a=a[2], b=b[2], c=c2, sum=out[2], carry=c3); Column 3 follows the same pattern, with carry= left out.
 
 **What you just showed (appears when the level is complete):** You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.
 
