@@ -527,6 +527,7 @@
       // an answer never holds fewer hours than its kinds of preparation already have
       [2, 3, 4].forEach(g => { const gs = BUCKETS.filter(b => b.feeds === g).reduce((x, b) => x + (Number(S.hrs[b.id]) || 0), 0); if (S.ans[g] < gs) S.ans[g] = gs; });
       if (new URLSearchParams(location.search).get('unlock') === '1') S.unlockedAll = true;
+      if (!S.chat.sig && ((S.chat.msgs || []).length || S.chat.fb)) S.chat.sig = planSig();   // a check-in from before 26 Nov 2026 is taken to be about the plan as it was saved
     }
   } catch (e) {}
 
@@ -1491,9 +1492,14 @@
     ].join('\n');
   }
 
+  // the plan a check-in was held about: when the plan changes afterwards, the page says so
+  function planSig(){ return JSON.stringify([S.track, S.otherTrack, S.runway, S.day1.trim(), (S.l2Final || '').trim(), (S.l3Final || '').trim(), (S.l4Final || '').trim(), S.budget, S.ans, S.hrs, S.step7d.trim()]); }
+  function chatStale(){ const T = S.chat || {}; return !!(T.sig && ((T.msgs || []).length || T.fb) && T.sig !== planSig()); }
+  const CHAT_STALE = `Your plan changed after this check-in. The conversation and the summary here describe your earlier plan. Press Restart interview to check the plan you have now.`;
   function renderChat(box){
     if (!box) return;
     const T = S.chat || (S.chat = { msgs: [], fb: '', opener: '' });
+    if (!T.sig && (T.msgs.length || T.fb)) T.sig = planSig();   // a check-in from before 26 Nov 2026 is taken to be about the plan as it stands
     if (!T.opener) T.opener = dynamicOpener();
     const opener = T.opener;
     const userCount = T.msgs.filter(m => m.r === 'u').length;
@@ -1501,7 +1507,7 @@
 
     let qn = 1;
     const who = () => 'Check-in interviewer' + (qn <= 3 ? ' &middot; Question ' + qn : '');
-    let h = '<div class="chat" aria-live="polite">' +
+    let h = (chatStale() ? '<div class="msg warn" id="chat-stale" role="status">' + CHAT_STALE + '</div>' : '') + '<div class="chat" aria-live="polite">' +
       '<div class="say them"><span class="who">' + who() + '</span>' + esc(opener) + '</div>' +
       T.msgs.map(m => {
         if (m.r === 'u') return '<div class="say me"><span class="who">You</span>' + esc(m.t).replace(/\n/g, '<br>') + '</div>';
@@ -1546,6 +1552,7 @@
     if (sendBtn) sendBtn.onclick = () => {
       const txt = (UI.draft || '').trim();
       if (!txt || UI.busy) return;
+      if (!T.msgs.length) T.sig = planSig();
       T.msgs.push({ r: 'u', t: txt });
       UI.draft = ''; UI.err = ''; UI.busy = 'chat';
       save(); updateMap(); renderChat(box);
@@ -1709,6 +1716,7 @@
     const T = S.chat;
     if (T && T.msgs && T.msgs.length){
       L.push('--- Box 6: Forward Walk Check-In Interview ---');
+      if (chatStale()) L.push('Note: my plan changed after this check-in. The conversation and the summary below describe my earlier plan.');
       L.push('Interviewer: ' + (T.opener || dynamicOpener()));
       T.msgs.forEach(m => L.push((m.r === 'u' ? 'Me: ' : 'Interviewer: ') + m.t));
       if (T.fb) L.push('', '--- Check-In Summary ---', T.fb);

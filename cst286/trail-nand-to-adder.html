@@ -875,7 +875,7 @@ const LEVELS = [
             both:`Look down the two carry-wire columns. Is there a row where both are 1?`,
             either:`Yes. The chip's carry is 1 in every row where one of the two carry wires is 1. The empty box in the drawing is the gate that does this with two wires.`},
         lock:`The build opens when you have answered the question about the two carry wires.`},
-   build:`<p>Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that does what you just chose for the two carry wires.</p>`,
+   build:`<p>Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that joins the two carry wires so that the chip's carry matches your truth table.</p>`,
    hints:['The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.', 'The second HalfAdder adds s1 and c. Its sum is the chip\'s sum. Its carry is a second carry wire, for example c2.', 'The chip\'s carry should be 1 when either step produced a carry. That is an Or of c1 and c2 going to carry.'],
    after:'Something worth explaining to someone: the two HalfAdders inside your FullAdder never both produce a carry for the same inputs. You can check it in the part-by-part list under your chip. Set a = 1 and b = 1: the first step carries and its sum is 0, so the second step has nothing to carry.'},
 
@@ -903,7 +903,7 @@ const LEVELS = [
         wires:`From the sentence to wires`,
         under:`Each "not", "and" and "or" in your sentence becomes one part, and the output of each part needs a wire. The drawing names the wires in the middle: <code>na</code> is "not a", <code>nb</code> is "not b", <code>w1</code> is "a and not b", and <code>w2</code> is "not a and b". The "or" joins <code>w1</code> and <code>w2</code> into <code>out</code>. You can use these names in your HDL or choose your own.`,
         lock:`The build opens when you have written a sentence and pressed Check.`},
-   build:`<p>Write one part for each box in the drawing: the two Not parts first, then the two And parts that read their wires, then the Or.</p>`,
+   build:`<p>Write one part for each "not", "and" and "or" in the sentence for Xor: the Not parts first, then the And parts that read their wires, then the Or. To see that sentence as a drawing with its wires named, press Show the sentence above. A design of your own that passes the tests is just as good.</p>`,
    hints:['Start with the two "not" boxes. Each one is a Not part with one input and one output, and its output goes to a wire that you name.', 'The first And reads a and nb and writes w1. The second And reads na and b and writes w2.', 'Not a to na, Not b to nb, And of a and nb to w1, And of na and b to w2, Or of w1 and w2 to out.'],
    after:'You have a method for turning a small truth table into a circuit: one And for each row that gives 1, with a Not on every input that is 0 in that row, and an Or to join the rows.'},
 
@@ -928,7 +928,7 @@ const LEVELS = [
         fa:`flip a`, fb:`flip b`, target:`Or needs its 0 here`, zero:`the Nand gives 0 here`,
         done:`With both inputs flipped, the Nand gives 0 only when <code>a</code> and <code>b</code> are both 0, and that is the table for Or. Each flip switch is a Not gate. In the build, write down what you just made.`,
         lock:`The build opens when you have tried the switches.`},
-   build:`<p>Write the three parts you just used: one Not for each flip switch, and the Nand. Name the two flipped wires yourself.</p>`,
+   build:`<p>Write in HDL what the switches showed you: a Not for each input that has to be flipped to put the Nand's 0 on the row a = 0, b = 0, and the Nand. Name the flipped wires yourself.</p>`,
    hints:['Each flip switch is a Not part. Its input is a or b, and its output goes to a new wire that you name.', 'The two inputs of the Nand connect to the two flipped wires, and its output connects to out.', 'Three parts: a Not for a, a Not for b, and a Nand of the two flipped signals going to out.'],
    after:'Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan\'s law.'},
 
@@ -939,7 +939,7 @@ const LEVELS = [
    learn:'<p>Not has one input, and it flips it. You build it from a single Nand gate, which gives 0 only when both of its inputs are 1, and gives 1 in every other case.</p><p>A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.</p>',
    build:'<p>One part is enough.</p>',
    hints:['Think about the Nand rows where a and b are equal: 0,0 and 1,1.', 'When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.', 'One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.'],
-   after:'Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.'},
+   after:'Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: at least one input of the Nand is 0, so it gives 1.'},
 
   {id:'nand', kind:'bottom', chip:'Nand', short:'Nand', title:'The last gate: Nand',
    objs:['State in one sentence what a Nand gate does.', 'Explain why every box above it could be built from this one gate.'],
@@ -1414,11 +1414,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   ACT.And = {draw(l){
     const A = l.act, st = actState('And'), box = $('#act'); if (!box) return;
     box.innerHTML = '<p><label for="idea">' + esc(A.q) + '</label></p><textarea id="idea" class="plain" rows="2">' + esc(st.idea || '') + '</textarea>' +
-      '<div class="row"><button type="button" class="btn' + (st.done ? ' ghost' : '') + '" id="icmp"' + ((st.idea || '').trim().length >= 3 ? '' : ' disabled') + '>' + A.btn + '</button></div>' +
+      '<div class="row"><button type="button" class="btn' + (st.done ? ' ghost' : '') + '" id="icmp"' + ((st.idea || '').trim().length >= 1 ? '' : ' disabled') + '>' + A.btn + '</button></div>' +
       (st.done ? '<div class="msg info" role="status">' + esc(A.said) + '</div>' : '');
     const t = $('#idea', box);
-    t.oninput = () => { st.idea = t.value; save(); $('#icmp', box).disabled = t.value.trim().length < 3; };
-    $('#icmp', box).onclick = () => { if ((st.idea || '').trim().length < 3) return; actDone('And'); ACT.And.draw(l); };
+    t.oninput = () => { st.idea = t.value; save(); $('#icmp', box).disabled = t.value.trim().length < 1; };
+    $('#icmp', box).onclick = () => { if ((st.idea || '').trim().length < 1) return; actDone('And'); ACT.And.draw(l); };
   }};
 
   // Level 7: a live Nand with a flip switch on each input
@@ -1676,11 +1676,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         (!inv.q1 ? '' : '<div class="q"><p class="ask">' + tick('q2') + '<b>2.</b> ' + esc(l.inv[1]) + '</p><div class="row"><input class="num-in" id="a2" type="number" inputmode="numeric" aria-label="Largest number the machine shows"' + (inv.q2 ? ' value="15"' : '') + '><button type="button" class="btn' + (inv.q2 ? ' ghost' : '') + '" id="q2">Check</button></div>' + msg('q2') + '</div>') +
         (!inv.q2 ? '' : '<div class="q"><p class="ask">' + tick('q3') + '<b>3.</b> ' + esc(l.inv[2]) + '</p><div class="row"><input class="num-in" id="a3" type="number" inputmode="numeric" aria-label="What the machine shows for 12 + 7"' + (inv.q3 ? ' value="3"' : '') + '><button type="button" class="btn' + (inv.q3 ? ' ghost' : '') + '" id="q3">Check</button></div>' + msg('q3') + '</div>') +
         (!inv.q3 ? '' : '<details class="wonder" id="' + l.edge.id + '"' + (M.edgeOpen ? ' open' : '') + '><summary>' + l.edge.q + '</summary><div class="idea">' + l.edge.a + '</div></details>') +
-        (!inv.q3 || (S.pass.Adder && !(S.guess || '').trim()) ? '' : '<div class="q" id="guessq"><p class="ask">' + ((S.guess || '').trim().length >= 3 ? '<span class="tick">&#10003;</span> ' : '') + '<b>' + l.guess.head + '</b> <label for="guess">' + esc(l.guess.ask) + '</label></p><textarea id="guess" class="plain" rows="2">' + esc(M.guessDraft !== undefined ? M.guessDraft : (S.guess || '')) + '</textarea><div class="row"><button type="button" class="btn' + ((S.guess || '').trim().length >= 3 ? ' ghost' : '') + '" id="gsave">' + l.guess.btn + '</button></div>' + msg('guess') + '</div>') +
+        (!inv.q3 || (S.pass.Adder && !(S.guess || '').trim()) ? '' : '<div class="q" id="guessq"><p class="ask">' + ((S.guess || '').trim().length >= 1 ? '<span class="tick">&#10003;</span> ' : '') + '<b>' + l.guess.head + '</b> <label for="guess">' + esc(l.guess.ask) + '</label></p><textarea id="guess" class="plain" rows="2">' + esc(M.guessDraft !== undefined ? M.guessDraft : (S.guess || '')) + '</textarea><div class="row"><button type="button" class="btn' + ((S.guess || '').trim().length >= 1 ? ' ghost' : '') + '" id="gsave">' + l.guess.btn + '</button></div>' + msg('guess') + '</div>') +
         (S.pass.Adder ? afterHTML(l) : '');
       const ed0 = $('#' + l.edge.id); if (ed0) ed0.ontoggle = () => { M.edgeOpen = ed0.open; };
       const gt = $('#guess'); if (gt) gt.oninput = () => { M.guessDraft = gt.value; };
-      if ($('#gsave')) $('#gsave').onclick = () => { const v = $('#guess').value; if (v.trim().length < 3){ M.guess = ['warn', l.guess.short]; M.guessDraft = v; drawInv(); return; } S.guess = v; M.guessDraft = undefined; M.guess = ['ok', l.guess.saved]; done(); };
+      if ($('#gsave')) $('#gsave').onclick = () => { const v = $('#guess').value; if (v.trim().length < 1){ M.guess = ['warn', l.guess.short]; M.guessDraft = v; drawInv(); return; } S.guess = v; M.guessDraft = undefined; M.guess = ['ok', l.guess.saved]; done(); };
       $('#q1').onclick = () => { const t = inp.a + inp.b, m = t & 15; if (t > 15){ inv.q1 = true; M.q1 = ['ok', 'Yes. ' + inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + '.']; } else M.q1 = ['bad', inp.a + ' + ' + inp.b + ' is ' + t + ', and the machine shows ' + m + ', so it gets this one right. Try larger numbers.']; done(); };
       if ($('#q2')) $('#q2').onclick = () => { const v = $('#a2').value.trim(); if (v === '') M.q2 = ['warn', 'Type a number first.']; else if (+v === 15){ inv.q2 = true; M.q2 = ['ok', 'Yes. However large the true sum is, the machine never shows more than 15.']; } else if (+v < 15) M.q2 = ['bad', 'It can show more than ' + v + '. Try 7 + 8 on the machine.']; else M.q2 = ['bad', 'Try to make the machine show ' + v + '. Set a and b so the true sum is ' + v + ', and look at what it shows.']; done(); };
       if ($('#q3')) $('#q3').onclick = () => { const v = $('#a3').value.trim(); if (v === '') M.q3 = ['warn', 'Type a number first.']; else if (+v === 3){ inv.q3 = true; M.q3 = ['ok', 'Yes. The true sum is 19, and the machine shows 3, which is 16 less.']; } else M.q3 = ['bad', 'Not ' + v + '. For 15 + 1 the true sum is 16 and the machine shows 0. For 9 + 9 the true sum is 18 and the machine shows 2. How far apart are the true sum and what the machine shows each time?']; done(); };
@@ -1690,7 +1690,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="openadder">Open the Adder &#10530;</button></div>' : '<p class="muted">This step opens when you have answered the questions above.</p>';
       if ($('#openadder')) $('#openadder').onclick = () => zoomInto('Adder', 'Add4', $('#stage-see .gate'));
     }
-    function done(){ if (inv.q1 && inv.q2 && inv.q3 && (S.guess || '').trim().length >= 3 && !S.pass.Adder){ S.pass.Adder = true; } save(); drawInv(); drawOpen(); applyStage(key); renderMap(); refreshNext(l); }
+    function done(){ if (inv.q1 && inv.q2 && inv.q3 && (S.guess || '').trim().length >= 1 && !S.pass.Adder){ S.pass.Adder = true; } save(); drawInv(); drawOpen(); applyStage(key); renderMap(); refreshNext(l); }
     drawInv(); drawOpen(); bindCommon(l);
   };
 

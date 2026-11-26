@@ -268,6 +268,8 @@ For example: a list of the problems you found in a specific repository or datase
 **1. Read your chain forward, from this week to Day 1.** The page shows the student's chain (next 7 days, next 30 days, Box 4, Box 3, Box 2, Day 1) and notes where the hours support an answer or leave a gap (for example "No hours yet for fundamentals without AI").
 
 **2. Talk through your chain in a short check-in interview.** The interviewer asks one question at a time. After you send your reply, the next question appears.
+
+Shown above the conversation when the student changes an answer, the hours or the 7-day step after the check-in started: Your plan changed after this check-in. The conversation and the summary here describe your earlier plan. Press Restart interview to check the plan you have now. (Page note: the copied work carries the same note. The box stays complete.)
 - Answer three questions. That is enough, and you can answer more if you want to.
 - Then press **I am ready - summarize my check-in**.
 - You can also do this interview in your own CST349 AI Dojo: click **Copy prompt for my AI Dojo**.

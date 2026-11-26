@@ -45,7 +45,7 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 
 You now know when the machine goes wrong. Before you look inside, write what you think is in there that makes it get the large sums wrong. A guess in a few words is enough, and it does not have to be right. You will see it again at the end of Level 2, next to what you found.
 
-(Page note: any real attempt opens the box. With nothing written the page says "Write a few words first." After saving it says "Saved. You can change it until you open the box." The guess is part of the copied work. A student who opened the box before 26 Nov is not asked.)
+(Page note: anything written opens the box, even one character. With nothing written the page says "Write a few words first." After saving it says "Saved. You can change it until you open the box." The guess is part of the copied work. A student who opened the box before 26 Nov is not asked.)
 
 **Open the box:** The reason is inside the machine. Double-click the Adder box on the drawing to go inside it, or use the button.
 
@@ -216,7 +216,7 @@ Shown for "either step": Yes. The chip's carry is 1 in every row where one of th
 
 **Build it**
 
-Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that does what you just chose for the two carry wires.
+Build the FullAdder from the parts below. Two HalfAdders do the two adding steps in the drawing above. For the last part, pick the gate from the list that joins the two carry wires so that the chip's carry matches your truth table.
 
 **Hints (shown one at a time, on request)**
 1. The two adding steps are two HalfAdders. Name the wires that come out of the first one, for example sum=s1 and carry=c1.
@@ -303,7 +303,7 @@ Each "not", "and" and "or" in your sentence becomes one part, and the output of 
 
 **Build it**
 
-Write one part for each box in the drawing: the two Not parts first, then the two And parts that read their wires, then the Or.
+Write one part for each "not", "and" and "or" in the sentence for Xor: the Not parts first, then the And parts that read their wires, then the Or. To see that sentence as a drawing with its wires named, press Show the sentence above. A design of your own that passes the tests is just as good.
 
 **Hints (shown one at a time, on request)**
 1. Start with the two "not" boxes. Each one is a Not part with one input and one output, and its output goes to a wire that you name.
@@ -340,7 +340,7 @@ A Nand gives the opposite of And in every row. What would you add to a Nand to g
 
 Shown after Compare: One way is to put a Not after the Nand. The Not flips every output of the Nand, and the opposite of the opposite of And is And. If your idea was different, try it in the build as well. The tests pass any chip that behaves like And.
 
-(Page note: Compare works when something is written. The idea is part of the copied work. Until Compare is pressed, in place of the editor: The build opens when you have compared your idea.)
+(Page note: Compare works when anything is written, even one character. The idea is part of the copied work. Until Compare is pressed, in place of the editor: The build opens when you have compared your idea.)
 
 **Build it**
 
@@ -381,7 +381,7 @@ Shown when both switches are on: With both inputs flipped, the Nand gives 0 only
 
 **Build it**
 
-Write the three parts you just used: one Not for each flip switch, and the Nand. Name the two flipped wires yourself.
+Write in HDL what the switches showed you: a Not for each input that has to be flipped to put the Nand's 0 on the row a = 0, b = 0, and the Nand. Name the flipped wires yourself.
 
 **Hints (shown one at a time, on request)**
 1. Each flip switch is a Not part. Its input is a or b, and its output goes to a new wire that you name.
@@ -417,7 +417,7 @@ One part is enough.
 2. When the same signal goes into both inputs of a Nand, only the rows 0,0 and 1,1 can happen. Look at the output in those two rows.
 3. One part: a Nand whose a pin and b pin both connect to in, and whose out pin connects to out.
 
-**What you just showed (appears when the level is complete):** Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: both inputs are 0, so it gives 1.
+**What you just showed (appears when the level is complete):** Set in to 1 on your drawing: both inputs of the Nand are 1, so it gives 0. Set in to 0: at least one input of the Nand is 0, so it gives 1.
 
 **Offered under Open the box when the level is complete, closed until the student clicks it. Nothing depends on it.**
 
