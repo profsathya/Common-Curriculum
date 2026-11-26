@@ -783,7 +783,7 @@ If the pasted text is not a save from this trail: This does not look like work s
 
 (Page note: spaces and line breaks inside the block are ignored, so a save that an email program has wrapped still works.)
 
-**After about 30 minutes.** (Page note: the page counts the minutes it is open and in front of the student. When 30 have gone by since the trail was started or since the last save that succeeded, the next time the student finishes a level the page shows this once, above the two buttons:)
+**After about 30 minutes.** (Page note: the page counts the minutes it is open and in front of the student. When 30 have gone by since the trail was started or since the last save that succeeded, the next time the student finishes a level the page shows this once, above the two buttons. The Level 2 warm-up chip counts as finishing a level here; because the buttons are far down the page at that point, a line under the warm-up result says: You have been working on this trail for about 30 minutes. If you want to save your work, the Save my work button is at the bottom of this page.)
 
 You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going.
 

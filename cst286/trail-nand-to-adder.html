@@ -1586,7 +1586,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         clearTimeout(wt); wlive(); const res = $('#wres'); let c; wtested = wed.value; res.classList.remove('stale');
         try { c = build(wed.value, W0, null, parts); } catch (e) { if (!e.hdl) throw e; res.innerHTML = '<div class="msg bad"><b>' + (e.line ? 'Line ' + e.line + '. ' : '') + '</b>' + esc(e.message) + '</div>'; return; }
         const rows = testChip(c), ok = rows.every(r => r.ok);
-        if (ok){ S.pass[W0] = true; save(); res.innerHTML = '<div class="msg ok"><b>It works.</b> Click a and b on the drawing to see 1 + 1 give sum 0 and carry 1. ' + esc(l.warm.done) + '</div>'; }
+        if (ok){ S.pass[W0] = true; save(); tsProgress(res); res.innerHTML = '<div class="msg ok"><b>It works.</b> Click a and b on the drawing to see 1 + 1 give sum 0 and carry 1. ' + esc(l.warm.done) + '</div>'; }
         else res.innerHTML = '<div class="msg bad"><b>It runs, and ' + rows.filter(r => r.ok).length + ' of 4 rows are right.</b></div><ul class="diag">' + diagnose(rows, B[W0]).slice(0, 2).map(m => '<li>' + esc(m.replace(' Show that row on the drawing and follow the signal from the inputs to the first wire that looks wrong.', '')) + '</li>').join('') + '</ul>';
       };
       wlive(); if (S.pass[W0]){ $('#wres').innerHTML = '<div class="msg ok">' + esc(l.warm.done) + '</div>'; wtested = wed.value; }
@@ -2024,8 +2024,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   /* ---------- Save my work, bring it back, and the 30-minute invitation (26 Nov 2026).
      The same code is on the three trails; only TSC differs. ---------- */
   var tsReady = false;
-  const TSW = {"save": "Save my work", "back": "Bring back saved work", "ok": "Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "okNoTab": "Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "keep": "Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.", "fail": "The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.", "gmail": "Open a Gmail message", "noTab": "If no new tab opened:", "subject": "My work on {trail}, saved {date}", "body": "Paste your saved work under this line.", "block": "Saved data for this page. Keep everything from the START line to the END line.", "backHow": "Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.", "backBtn": "Bring it back", "backBad": "This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.", "backAsk": "This replaces the work kept in this browser with the work you pasted. Bring it back?", "backYes": "Yes, bring it back", "backNo": "Cancel", "backDone": "Your saved work is back.", "invite": "You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going."};
-  const TSC = { id: 'cst286-nand', name: 'From one gate to a machine that adds', key: KEY, state: () => S, work: () => workReport().text, count: () => workReport().done };
+  const TSW = {"save": "Save my work", "back": "Bring back saved work", "ok": "Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "okNoTab": "Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "keep": "Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.", "fail": "The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.", "gmail": "Open a Gmail message", "inviteNear": "You have been working on this trail for about 30 minutes. If you want to save your work, the Save my work button is at the bottom of this page.", "noTab": "If no new tab opened:", "subject": "My work on {trail}, saved {date}", "body": "Paste your saved work under this line.", "block": "Saved data for this page. Keep everything from the START line to the END line.", "backHow": "Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.", "backBtn": "Bring it back", "backBad": "This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.", "backAsk": "This replaces the work kept in this browser with the work you pasted. Bring it back?", "backYes": "Yes, bring it back", "backNo": "Cancel", "backDone": "Your saved work is back.", "invite": "You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going."};
+  const TSC = { id: 'cst286-nand', name: 'From one gate to a machine that adds', key: KEY, state: () => S, work: () => workReport().text, count: () => workReport().done + (S.pass && S.pass.FirstColumn ? 0.5 : 0) }   // the Level 2 warm-up counts as a finished activity;
   const TS_MIN = 30;   // minutes with the page open and visible before the invitation
   function tsStore(){ try { const j = JSON.parse(localStorage.getItem(TSC.key + '.save') || 'null'); if (j && typeof j === 'object') return j; } catch (e) {} return { ms: 0, n: null, shown: false }; }
   function tsPut(o){ try { localStorage.setItem(TSC.key + '.save', JSON.stringify(o)); } catch (e) {} }
@@ -2043,14 +2043,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     try { const o = JSON.parse(decodeURIComponent(escape(atob(body.slice(i + 1))))); return o && typeof o === 'object' && !Array.isArray(o) ? o : null; } catch (e) { return null; }
   }
   // called whenever the map is drawn: one more finished stop is a finished activity
-  function tsProgress(){
+  function tsProgress(near){   // near: an element to put a pointer under, when the Save button is far from where the student is
     if (!tsReady) return;
     let n = 0; try { n = TSC.count(); } catch (e) { return; }
     const st = tsStore();
     if (st.n === null || st.n === undefined || n < st.n){ st.n = n; tsPut(st); return; }
     if (n > st.n){
       st.n = n;
-      if ((st.ms || 0) >= TS_MIN * 60000 && !st.shown){ st.shown = true; const inv = document.getElementById('ts-invite'); if (inv) inv.hidden = false; }
+      if ((st.ms || 0) >= TS_MIN * 60000 && !st.shown){ st.shown = true; const inv = document.getElementById('ts-invite'); if (inv) inv.hidden = false; if (near && !document.getElementById('ts-near')) near.insertAdjacentHTML('afterend', '<p class="msg info" id="ts-near">' + TSW.inviteNear + '</p>'); }
       tsPut(st);
     }
   }

@@ -324,7 +324,7 @@ When every idea is confirmed: Your check-in confirmed all five ideas.
 
 (Page note: two buttons under every box, below the buttons that move between boxes: "Save my work" and "Bring back saved work".)
 
-**Save my work.** (Page note: the page copies the student's work as text and opens a new Gmail message in a new tab, with the subject "My work on [the name of this trail], saved [today's date]" and one line in it: "Paste your saved work under this line." The copied text is the same readable text as Copy my work to submit, followed by the line "Saved data for this page. Keep everything from the START line to the END line." and a block of letters and digits between the lines "=== TRAIL SAVE START ===" and "=== TRAIL SAVE END ===". That block is only in Save my work. Copy my work to submit does not have it.)
+**Save my work.** (Page note: the page copies the student's work as text and opens a new Gmail message in a new tab, with the subject "My work on [the name of this trail], saved [today's date]" and one line in it: "Paste your saved work under this line." The copied text is the same readable text as Copy my work to submit, followed by the line "Saved data for this page. Keep everything from the START line to the END line." and a block of letters and digits between the lines "=== TRAIL SAVE START ===" and "=== TRAIL SAVE END ===". That block is only in Save my work. Copy my work to submit does not have it. A save made on an address with ?unlock=1 does not carry "every box open" with it.)
 
 After pressing it: Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.
 
