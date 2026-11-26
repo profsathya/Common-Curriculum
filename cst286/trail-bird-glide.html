@@ -160,6 +160,9 @@
   .legend span{display:inline-flex; align-items:center; gap:6px}
   .legend i{display:inline-block; width:24px; height:0; border-top:2px solid}
   .legend i.bold{border-top-width:4px}
+  .legend button{font:inherit; color:inherit; display:inline-flex; align-items:center; gap:6px; background:none; border:1px dashed var(--line); border-radius:999px; padding:2px 10px; cursor:pointer}
+  .legend button[aria-pressed="true"]{border-style:solid; background:var(--card); color:var(--ink)}
+  .legend button[aria-pressed="false"] i{opacity:.45}
   .flt{border-collapse:collapse; margin:6px 0; font-size:.93rem; width:100%; max-width:640px}
   .flt th,.flt td{border:1px solid var(--line); padding:5px 10px; text-align:center}
   .flt th{background:var(--line-soft); font-weight:600}
@@ -525,10 +528,15 @@ const COPY = {
       "how large the wing is",
       "how far the wing is tilted into the oncoming air"
      ]
-    },
-    "The relationship is:"
+    }
    ]
   ],
+  "relLead": "The relationship is:",
+  "lock": "The rest of this level appears when you have chosen an answer above.",
+  "wUnit": {"id": "w-newton", "q": "Are you wondering why the answer is in newtons?", "peek": "A place to start: multiply the units the same way as the numbers. The question \"Are you wondering why the answer is in newtons?\" above goes on from there.", "a": ["Multiply the units the same way as the numbers: kg/m³ × m²/s² × m² = kg·m/s². One kg·m/s² is one newton, the unit of force. The lift coefficient has no unit, so it does not change this."]},
+  "wStall": {"id": "w-stall", "q": "Are you wondering why the lift drops when the wing tilts past 15 degrees?", "peek": "The lift fell when the tilt passed 15°. The question above says why.", "a": ["Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall. You can see it on the drawing: move the wing tilt above 15°."]},
+  "simFirst": {"b": "Find it on the simulation first.", "t": "Set the wing tilt to 15°, the largest tilt before the stall. Lower the air speed one step at a time and watch the lift bar come down toward the weight line."},
+  "bracket": "At 7.5 m/s the lift is still above the bird's weight, and at 7.0 m/s it is below it. The slowest speed for a steady glide is between the two. Now calculate it.",
   "formula": "lift = ½ × air density × speed² × wing area × lift coefficient",
   "unitCheck": "Unit check: kg/m³ × m²/s² × m² = kg·m/s², which is a newton.",
   "coef": [
@@ -538,7 +546,7 @@ const COPY = {
   "task": "Set the air speed to 10 m/s. Find the wing tilt at which the lift comes closest to the bird's weight, 9.8 N.",
   "found": "You found it. At a wing tilt of 8.2° the lift is 9.8 N, as close to the bird's weight as this slider gets.",
   "stallText": [
-   "Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N.",
+   "Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift very nearly equal to the weight, 9.8 N. The glide is so shallow that the two differ by less than 1%, and the calculations here treat them as equal.",
    "When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5.",
    "So there is a slowest speed at which a steady glide is possible."
   ],
@@ -553,16 +561,13 @@ const COPY = {
  "l4": {
   "heading": "Why one speed goes farthest",
   "p": [
-   {
-    "b": "At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.",
-    "t": "In a steady glide the lift is fixed: it has to equal the weight."
-   },
-   "So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.",
-   "The first part comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive.",
-   "The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it.",
-   "This part is largest at low speed and shrinks as the bird speeds up.",
-   "Add the two parts and you get a curve shaped like a valley. Move the speed slider and find the bottom of the valley."
+{"b": "At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.", "t": "In a steady glide the lift is fixed: it is very nearly equal to the weight."}, "So the bird goes farthest at the speed where drag is smallest. The graph shows the total drag at every glide speed. Move the speed slider and find the lowest point of the curve."
   ],
+  "wFast": {"id": "w-fast", "q": "Are you wondering why drag rises when the bird flies fast?", "a": ["One part of drag comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive. The curve \"drag from pushing through the air\" is now on the graph."]},
+  "wSlow": {"id": "w-slow", "q": "Are you wondering why drag is also high when the bird flies slowly?", "a": ["The other part of drag is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it. This part is largest at low speed and shrinks as the bird speeds up. The curve \"drag from making lift\" is now on the graph. Add the two parts and you get the total, a curve shaped like a valley."]},
+  "wWater": {"id": "w-water", "q": "Are you wondering who would make a glider heavier on purpose?", "a": ["Glider pilots do. On a day when they want to fly fast, they carry water in the wings. The heavier glider covers the same distance from the same height, and it gets there sooner."]},
+  "cue": "A place to start: think about what this model held fixed. The air was still, the wing kept one shape, and the bird did not flap.",
+  "legHow": "Press a name to show or hide its curve.",
   "xAxis": "glide speed (m/s)",
   "yAxis": "force (N)",
   "curves": [
@@ -577,10 +582,9 @@ const COPY = {
   "bird2": "1.3 kg bird, after a large fish",
   "heavy": [
    "The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that.",
-   "What changed is the speed. The heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner.",
-   "Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier."
+   "What changed is the speed. The heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner."
   ],
-  "limitsSummary": "Where this model stops being true",
+  "limitsSummary": "Are you wondering where this model stops being true?",
   "limits": [
    "This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air.",
    "The airflow picture at Level 3 is a sketch.",
@@ -1015,13 +1019,13 @@ const COPY = {
     {
      "k": "A",
      "t": "It doubles",
-     "fb": "Doubling would be right if lift grew in step with speed. Look at the relationship again: speed is squared. Set the tilt to 6°, read the lift at 8 m/s and then at 16 m/s. Choose again."
+     "fb": "Doubling would be right if lift grew in step with speed. Test it: set the tilt to 6°, read the lift at 8 m/s and then at 16 m/s. Choose again."
     },
     {
      "k": "B",
      "t": "It becomes four times larger",
      "ok": true,
-     "fb": "Yes. Speed is squared in the relationship, so twice the speed gives 2 × 2 = 4 times the lift. This is why a slow bird is in trouble: when the speed falls, the lift falls much faster."
+     "fb": "Yes. Twice the speed gives four times the lift. The relationship below shows why: speed is squared in it. This is why a slow bird is in trouble: when the speed falls, the lift falls much faster."
     },
     {
      "k": "C",
@@ -1140,22 +1144,26 @@ const COPY = {
    "unitFb": "The number is right, but check the unit. You are answering with a force.",
    "hint": "Start with the speed. 9.0 m/s squared is 81 m²/s². Then multiply by the other numbers in the relationship."
   },
+  "pr3a": {"label": "Practice, first step", "q": "For this bird (weight 9.8 N, wing area 0.20 m², air density 1.2 kg/m³, largest lift coefficient 1.5), put the lift equal to the weight in the relationship. What is the speed squared?", "lo": 53.4, "hi": 55.4, "unit": "m²/s²", "units": ["choose a unit", "N", "kg", "m", "m/s", "m²/s²", "m/s²", "no unit"], "correct": "Correct. 9.8 = ½ × 1.2 × speed² × 0.20 × 1.5, so speed² = 9.8 ÷ 0.18 = about 54.4 m²/s².", "ranges": [{"lo": 7.28, "hi": 7.48, "fb": "7.4 is the speed itself. This step asks for the speed squared. Keep 7.4 for the next step."}], "other": "Not yet. Write the relationship with 9.8 N for the lift and 1.5 for the lift coefficient. Multiply the numbers on the right, and divide 9.8 by the result.", "unitFb": "The number is right, but check the unit. You are answering with a speed squared.", "hint": "½ × 1.2 × 0.20 × 1.5 = 0.18, so the relationship reads 9.8 = 0.18 × speed²."},
+  "h2": {"q": "The same gull slows to 8.0 m/s. What lift coefficient does it need now to make the same 9.72 N of lift?", "lo": 1.24, "hi": 1.29, "unit": "no unit", "optional": true, "correct": "Correct. 9.72 = ½ × 1.2 × 8.0² × 0.20 × lift coefficient, so the lift coefficient is 9.72 ÷ 7.68 = about 1.27. That needs a wing tilt of nearly 13°, close to the 15° where the wing stalls.", "ranges": [], "other": "Not yet. Put every number you know into the relationship. The lift coefficient is then the only unknown.", "unitFb": "The number is right, but check the unit. A coefficient is a plain number.", "hint": "½ × 1.2 × 8.0² × 0.20 = 7.68, so the relationship reads 9.72 = 7.68 × lift coefficient."},
+  "h3": {"q": "After a large fish the bird weighs 12.74 N. What is the slowest speed for a steady glide now?", "lo": 8.3, "hi": 8.5, "unit": "m/s", "optional": true, "correct": "Correct. 12.74 = 0.18 × speed², so speed² = about 70.8 m²/s² and the speed is about 8.4 m/s. A heavier bird stalls at a higher speed.", "ranges": [{"lo": 69.8, "hi": 71.8, "fb": "70.8 is the speed squared. Take its square root to get the speed."}], "other": "Not yet. Only the weight changed. Use the same two steps: the speed squared first, then its square root.", "unitFb": "The number is right, but check the unit. You are answering with a speed.", "hint": "12.74 = 0.18 × speed². Divide, then take the square root."},
   "pr3": {
-   "q": "For this bird (weight 9.8 N, wing area 0.20 m², air density 1.2 kg/m³, largest lift coefficient 1.5), what is the slowest speed at which the wings can still make 9.8 N of lift?",
+   "label": "Practice, second step",
+   "q": "Take the square root. What is the slowest speed at which the wings can still make 9.8 N of lift?",
    "lo": 7.28,
    "hi": 7.48,
    "unit": "m/s",
-   "correct": "Correct. Setting 9.8 = ½ × 1.2 × v² × 0.20 × 1.5 gives v² = 54.4 m²/s², so v = 7.4 m/s. Below that speed no tilt of the wing gives enough lift, and the bird drops. Check it against the speed at which your bird stalled at Level 1.",
+   "correct": "Correct. The square root of 54.4 is 7.4 m/s. Below that speed no tilt of the wing gives enough lift, and the bird drops. Compare it with what you found on the simulation, and with the speed at which your bird stalled at Level 1.",
    "ranges": [
     {
      "lo": 53.4,
      "hi": 55.4,
-     "fb": "54.4 is v², in m²/s². Take the square root to get the speed."
+     "fb": "54.4 is the speed squared, in m²/s². Take its square root to get the speed."
     }
    ],
-   "other": "Not yet. Put the largest lift coefficient into the lift relationship, set the lift equal to the weight, and solve for the speed.",
+   "other": "Not yet. Take the square root of the speed squared, 54.4 m²/s².",
    "unitFb": "The number is right, but check the unit. You are answering with a speed.",
-   "hint": "Write the lift relationship with lift = 9.8 N and lift coefficient = 1.5. The speed is then the only unknown."
+   "hint": "7 × 7 = 49 and 8 × 8 = 64, so the square root of 54.4 lies between 7 and 8."
   },
   "prSetup": {
    "q": "The wing is tilted 20° into the oncoming air. What does lift_coefficient give back?",
@@ -1553,7 +1561,7 @@ const COPY = {
     {id:'start', short:C.map.start, icon:'&#9656;', title:C.start.heading, done:() => S.started},
     {id:'fly', n:1, short:C.map.l1, title:C.l1.heading, exit:C.l1.exit, done:() => was('fly') || (predTried('p1') && exWritten('ex1'))},
     {id:'forces', n:2, short:C.map.l2, title:C.l2.heading, exit:C.l2.exit, done:() => was('forces') || (predTried('p2') && prTried('pr1') && exWritten('ex2'))},
-    {id:'lift', n:3, short:C.map.l3, title:C.l3.heading, exit:C.l3.exit, done:() => was('lift') || (predTried('p3') && prTried('pr2') && prTried('pr3') && exWritten('ex3'))},
+    {id:'lift', n:3, short:C.map.l3, title:C.l3.heading, exit:C.l3.exit, done:() => was('lift') || (predTried('p3') && prTried('pr2') && (prTried('pr3a') || prTried('pr3')) && prTried('pr3') && exWritten('ex3'))},
     {id:'speed', n:4, short:C.map.l4, title:C.l4.heading, exit:C.l4.exit, done:() => was('speed') || (predTried('p4') && exWritten('ex4'))},
     {id:'code', n:5, short:C.map.l5, title:C.l5.heading, exit:C.l5.exit, done:() => codeDone()},
     {id:'teach', short:C.map.teach, icon:'T', title:C.teach.title, exit:C.teach.exit, done:() => !!S.teach.fb},
@@ -1642,7 +1650,7 @@ const COPY = {
     out.push('Levels opened: ' + LV.filter((l, i) => unlocked(i)).map(l => l.short).join(', ') + '.');
     out.push('Flights flown at Level 1: ' + f.count + (f.count ? ', best distance ' + Math.round(f.best) + ' m' : '') + '; ' + (f.passed ? 'passed the buoy after ' + f.beforeBuoy + ' flight' + (f.beforeBuoy === 1 ? '' : 's') + ' that did not.' : 'has not passed the buoy yet.'));
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k]; if (p && p.first) out.push(PRED_L[k] + ' prediction: first choice ' + optText(k, p.first) + ', final choice ' + optText(k, p.final) + '.'); });
-    ['pr1', 'pr2', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.checks) out.push('Practice problem ' + (i + 1) + ': ' + (p.ok ? 'correct' : 'not correct yet') + ' after ' + p.checks + ' check' + (p.checks > 1 ? 's' : '') + (p.hint ? ', opened the first step' : '') + '.'); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.checks) out.push('Practice problem ' + (i + 1) + ': ' + (p.ok ? 'correct' : 'not correct yet') + ' after ' + p.checks + ' check' + (p.checks > 1 ? 's' : '') + (p.hint ? ', opened the first step' : '') + '.'); });
     if (S.l4.found1 || S.l4.found2) out.push('Level 4: found the best speed for the 1.0 kg bird: ' + (S.l4.found1 ? 'yes' : 'no') + '; for the 1.3 kg bird: ' + (S.l4.found2 ? 'yes' : 'no') + '.');
     if (unlocked(5)){
       const z = PZ.filter(k => S.prog.pz[k] && S.prog.pz[k].checks);
@@ -1657,7 +1665,7 @@ const COPY = {
     if (f.passed) out.push('Flew ' + f.beforeBuoy + ' flight' + (f.beforeBuoy === 1 ? '' : 's') + ' at Level 1 before first passing the buoy'); else if (f.count) out.push('Flew ' + f.count + ' flights at Level 1 without passing the buoy');
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k], right = C.predictions[k].opts.find(o => o.ok); if (p && p.first && right && p.first !== right.k) out.push(PRED_L[k] + ' prediction: first chose ' + optText(k, p.first)); });
     if (S.pred.p4 && S.pred.p4.first) out.push('Level 4 prediction about the heavier bird: chose ' + optText('p4', S.pred.p4.first));
-    ['pr1', 'pr2', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.misses >= 2) out.push('Practice problem ' + (i + 1) + ' (' + C.practice[k].q + '): ' + p.misses + ' misses' + (p.ok ? ', then correct' : ', not solved')); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.misses >= 2) out.push('Practice problem ' + (i + 1) + ' (' + C.practice[k].q + '): ' + p.misses + ' misses' + (p.ok ? ', then correct' : ', not solved')); });
     return '[Private notes for you, not written by the student. Trouble spots on the trail: ' + (out.length ? out.join('. ') + '.' : 'none recorded.') + ' The conversation starts now.]';
   }
 
@@ -1690,9 +1698,9 @@ const COPY = {
   /* ---------- practice problems ---------- */
   function prHTML(k){
     const p = C.practice[k], U = C.practiceUI;
-    return '<div class="q" id="pr-' + k + '"><div class="lbl">Practice</div><p class="ask">' + esc(p.q) + '</p><div class="prow">' +
+    return '<div class="q" id="pr-' + k + '"><div class="lbl">' + esc(p.label || 'Practice') + '</div><p class="ask">' + esc(p.q) + '</p><div class="prow">' +
       '<label>' + U.answer + '<input class="num-in" type="text" inputmode="decimal" autocomplete="off"></label>' +
-      '<label>' + U.unit + '<select class="unit-in">' + U.units.map((u, i) => '<option value="' + (i ? esc(u) : '') + '">' + esc(u) + '</option>').join('') + '</select></label>' +
+      '<label>' + U.unit + '<select class="unit-in">' + (p.units || U.units).map((u, i) => '<option value="' + (i ? esc(u) : '') + '">' + esc(u) + '</option>').join('') + '</select></label>' +
       '<button type="button" class="btn">' + U.check + '</button></div><div class="msg" role="status"></div><div class="more"></div><div class="hint"></div><p class="muted cnt"></p><p class="muted moveon"></p></div>';
   }
   function bindPr(k){
@@ -2082,14 +2090,30 @@ const COPY = {
       '<div class="hsl"><label for="air">' + esc(C.l3.speed) + '</label><input type="range" id="air" min="4" max="20" step="0.5"><output id="air-o"></output></div>' +
       '<div class="msg ok" id="l3-found" role="status"></div>' +
       '<div class="simbar"><span></span>' + speedBar() + '</div></div>' +
-      blocks(C.l3.p[1]) + '<div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div><div class="uc">' + esc(C.l3.unitCheck) + '</div></div>' +
-      blocks(C.l3.coef) + '<p><b>' + esc(C.l3.task) + '</b></p>' + predHTML('p3') + prHTML('pr2') + blocks(C.l3.stallText) + prHTML('pr3') + exHTML('ex3', C.explain.ex3) + foot(l);
-    bindSpeed($('#sim3')); bindPred('p3'); bindPr('pr2'); bindPr('pr3'); bindEx('ex3', C.explain.ex3);
+      blocks(C.l3.p[1]) + predHTML('p3') + '<div class="msg info" id="l3lock">' + esc(C.l3.lock) + '</div><div id="l3rest" hidden>' +
+      '<p>' + esc(C.l3.relLead) + '</p><div class="formula"><div class="f">' + esc(C.l3.formula) + '</div><div class="live" id="lift-live"></div></div>' +
+      blocks([C.l3.coef[0]]) + wonderHTML(C.l3.wUnit) + wonderHTML(C.l3.wStall) + '<p class="peek" id="l3peek" hidden></p>' +
+      '<p><b>' + esc(C.l3.task) + '</b></p>' + prHTML('pr2') + '<p class="peek" id="l3peekU" hidden></p>' + hardHTML('pr2', 'h2') +
+      blocks(C.l3.stallText) + blocks([C.l3.simFirst]) + '<div class="msg info" id="l3-bracket" role="status" hidden></div>' +
+      prHTML('pr3a') + '<div id="pr3wrap" hidden>' + prHTML('pr3') + hardHTML('pr3', 'h3') + '</div></div>' + exHTML('ex3', C.explain.ex3) + foot(l);
+    bindSpeed($('#sim3')); bindPred('p3'); bindPr('pr2'); bindPr('h2'); bindPr('pr3a'); bindPr('pr3'); bindPr('h3'); bindEx('ex3', C.explain.ex3);
+    // everything under the prediction appears after the first choice; the second step after the first has been tried
+    G.onRefresh = () => {
+      const tried = shown(predTried('p3')); $('#l3rest').hidden = !tried; $('#l3lock').hidden = tried;
+      $('#pr3wrap').hidden = !shown(prTried('pr3a') || prTried('pr3'));
+      hardShow('pr2', 'h2'); hardShow('pr3', 'h3');
+      const pu = $('#l3peekU'), st = S.pr.pr2, off = !!st && st.last === 'unit'; pu.hidden = !off; pu.textContent = off ? C.l3.wUnit.peek : '';
+    };
+    G.onRefresh();
     const cv = $('#c3'), tilt = $('#tilt'), air = $('#air');
     const upd = () => {
       const cl = F.CL(L3.tilt), L = F.lift(L3.air, cl);
       $('#tilt-o').textContent = L3.tilt.toFixed(1) + '°'; $('#air-o').textContent = L3.air.toFixed(1) + ' m/s';
       $('#l3-found').textContent = L3.air === 10 && L.toFixed(1) === '9.8' ? C.l3.found : '';
+      // the slowest speed on the simulation: both readings at a tilt of 15 degrees have to be seen
+      if (Math.abs(L3.tilt - 15) < 0.05){ if (L3.air === 7.5 && !L3.s75){ L3.s75 = true; save(); } if (L3.air === 7 && !L3.s70){ L3.s70 = true; save(); } }
+      const br = $('#l3-bracket'); if (br){ const both = !!(L3.s75 && L3.s70); br.hidden = !both; br.textContent = both ? C.l3.bracket : ''; }
+      const pk = $('#l3peek'); if (pk){ const off = L3.air === 10 && L3.tilt > 15; pk.hidden = !off; pk.textContent = off ? C.l3.wStall.peek : ''; }
       $('#lift-live').textContent = '½ × 1.2 kg/m³ × (' + L3.air.toFixed(1) + ' m/s)² × 0.20 m² × ' + cl.toFixed(2) + ' = ' + L.toFixed(1) + ' N';
       const top = 30; $('#g-f').style.height = Math.min(100, L / top * 100) + '%'; $('#g-w').style.bottom = (9.8 / top * 100) + '%'; $('#g-wl').style.top = (100 - 9.8 / top * 100) + '%'; $('#g-v').textContent = 'lift ' + L.toFixed(1) + ' N';
     };
@@ -2178,16 +2202,23 @@ const COPY = {
   VIEW.speed = function(l){
     const L4 = S.l4;
     main.innerHTML = head(l) + blocks(C.l4.p) +
-      '<div class="sim" id="sim4"><div class="legend"><span><i style="border-color:#5677A6"></i>' + esc(C.l4.curves[0]) + '</span><span><i style="border-color:#C0577A"></i>' + esc(C.l4.curves[1]) + '</span><span><i class="bold" style="border-color:#E08A00"></i>' + esc(C.l4.curves[2]) + '</span></div>' +
+      '<div class="sim" id="sim4"><div class="legend"><span><i class="bold" style="border-color:#E08A00"></i>' + esc(C.l4.curves[2]) + '</span><button type="button" data-curve="d0" aria-pressed="false"><i style="border-color:#5677A6"></i>' + esc(C.l4.curves[0]) + '</button><button type="button" data-curve="di" aria-pressed="false"><i style="border-color:#C0577A"></i>' + esc(C.l4.curves[1]) + '</button><span class="muted">' + esc(C.l4.legHow) + '</span></div>' +
       '<div class="canwrap"><canvas id="c4a" aria-label="Graph of drag against glide speed: one part rising, one part falling, and their total shaped like a valley."></canvas></div>' +
       '<div class="canwrap" style="margin-top:8px"><canvas id="c4b" aria-label="Side view of the glide from the 30 m cliff at the chosen speed, drawn as a straight line to where it lands."></canvas></div>' +
       '<div class="hsl"><label for="gs">' + esc(C.l4.slider) + '</label><input type="range" id="gs" min="6" max="20" step="0.1"><output id="gs-o"></output></div>' +
-      '<div class="readouts">' + ro('Lift (equal to the weight)', 'r4-l') + ro('Total drag', 'r4-d') + ro('Glide ratio', 'r4-r') + ro('Distance from 30 m', 'r4-x') + '</div>' +
+      '<div class="readouts">' + ro('Lift (very nearly the weight)', 'r4-l') + ro('Total drag', 'r4-d') + ro('Glide ratio', 'r4-r') + ro('Distance from 30 m', 'r4-x') + '</div>' +
       '<div class="row" id="birds"></div></div>' +
-      '<div id="l4found"></div><div id="p4wrap"></div><div id="l4heavy"></div><div id="ex4wrap"></div>' +
-      '<details class="limits"><summary>' + esc(C.l4.limitsSummary) + '</summary>' + blocks(C.l4.limits) + '</details>' + foot(l);
+      wonderHTML(C.l4.wFast) + wonderHTML(C.l4.wSlow) +
+      '<div id="l4found"></div><div id="p4wrap"></div><div id="l4heavy"></div>' +
+      '<details class="wonder" id="w-limits"><summary>' + esc(C.l4.limitsSummary) + '</summary>' + blocks(C.l4.limits) + '</details><div id="ex4wrap"></div>' + foot(l);
     const ca = $('#c4a'), cb = $('#c4b'), gs = $('#gs'), sess = G.speed || (G.speed = {best:null});
     const Wt = () => L4.bird === 1.3 ? 12.74 : 9.8;
+    // the two parts of drag are off at first; a legend button or its wondering question switches one on
+    const show = L4.show || (L4.show = {d0:false, di:false});
+    const tried4 = () => !!L4.found1 || (L4.tries || 0) >= 3;   // the prediction waits for a real try at the slider, never for the right speed
+    const legPaint = () => $$('#sim4 .legend button').forEach(b => b.setAttribute('aria-pressed', show[b.dataset.curve] ? 'true' : 'false'));
+    $$('#sim4 .legend button').forEach(b => b.onclick = () => { show[b.dataset.curve] = !show[b.dataset.curve]; save(); legPaint(); paint(); });
+    [['w-fast', 'd0'], ['w-slow', 'di']].forEach(([id, c]) => { const d = $('#' + id); if (d) d.addEventListener('toggle', () => { if (d.open && !show[c]){ show[c] = true; save(); legPaint(); paint(); } }); });
     const paint = () => {
       const W = Wt(), v = L4.v, st = F.steady(v, W);
       $('#gs-o').textContent = v.toFixed(1) + ' m/s';
@@ -2197,12 +2228,12 @@ const COPY = {
       $('#r4-x').textContent = st.stall ? '-' : Math.round(30 * st.ratio) + ' m';
       if (!st.stall && (!sess.best || 30 * st.ratio > sess.best.d)) sess.best = {d:30 * st.ratio};
       $('#l4found').innerHTML = shown(L4.found1) ? '<div class="msg ok">' + esc(C.l4.found) + '</div>' : '';
-      $('#l4heavy').innerHTML = shown(L4.found2) ? '<div class="msg ok">' + blocks(C.l4.heavy) + '</div>' : '';
-      const pw = $('#p4wrap'); if (shown(L4.found1) && !pw.firstChild){ pw.innerHTML = predHTML('p4'); bindPred('p4', paint); }
-      const ew = $('#ex4wrap'); if (shown(L4.found1) && !ew.firstChild){ ew.innerHTML = exHTML('ex4', C.explain.ex4); bindEx('ex4', C.explain.ex4); }
+      const hv = $('#l4heavy'); if (shown(L4.found2)){ if (!hv.firstChild) hv.innerHTML = '<div class="msg ok">' + blocks(C.l4.heavy) + '</div>' + wonderHTML(C.l4.wWater); } else hv.innerHTML = '';
+      const pw = $('#p4wrap'); if (shown(tried4()) && !pw.firstChild){ pw.innerHTML = predHTML('p4'); bindPred('p4', paint); }
+      const ew = $('#ex4wrap'); if (shown(tried4()) && !ew.firstChild){ ew.innerHTML = exHTML('ex4', C.explain.ex4); bindEx('ex4', C.explain.ex4); $('#ex-ex4 .ask').insertAdjacentHTML('afterend', '<p class="guide">' + esc(C.l4.cue) + '</p>'); }
       const bw = $('#birds');
       if (shown(predDone('p4'))){ if (!bw.firstChild){ bw.innerHTML = [[1, C.l4.bird1], [1.3, C.l4.bird2]].map(b => '<button type="button" class="segbtn" data-b="' + b[0] + '">' + esc(b[1]) + '</button>').join(''); $$('.segbtn', bw).forEach(b => b.onclick = () => { L4.bird = +b.dataset.b; save(); check(); paint(); }); } $$('.segbtn', bw).forEach(b => b.classList.toggle('on', +b.dataset.b === L4.bird)); }
-      graph(ca, W, v); strip(cb, st, sess.best);
+      graph(ca, W, v, show); strip(cb, st, sess.best);
     };
     const check = () => {
       if (Math.abs(L4.v - F.bestSpeed(9.8)) <= .3 && L4.bird !== 1.3) L4.found1 = true;
@@ -2210,12 +2241,14 @@ const COPY = {
       save(); refresh();
     };
     gs.value = L4.v; gs.oninput = () => { L4.v = +gs.value; check(); paint(); };
-    paint();
+    gs.onchange = () => { L4.tries = (L4.tries || 0) + 1; save(); paint(); };
+    legPaint(); paint();
     let lw = 0;
     ACTIVE = { draw(){ const w = ca.parentElement.clientWidth; if (w !== lw){ lw = w; paint(); } }, zoomAt(){ return [(ca._w || 600) / 2, (ca._h || 300) / 2]; }, state(){ return {v:L4.v, bird:L4.bird}; } };
     bindFoot(l, () => $('#sim4'), () => ACTIVE.zoomAt());
   };
-  function graph(cv, Wt, v){
+  function graph(cv, Wt, v, show){
+    show = show || {d0:true, di:true};
     const narrow = cv.parentElement.clientWidth < 520, {ctx, W, H} = fit(cv, narrow ? 260 : 320);
     const m = {l:narrow ? 46 : 54, r:12, t:12, b:44}, pw = W - m.l - m.r, ph = H - m.t - m.b;
     const X = s => m.l + (s - 6) / 14 * pw, Y = f => m.t + ph - Math.min(2.5, Math.max(0, f)) / 2.5 * ph;
@@ -2232,10 +2265,10 @@ const COPY = {
     ctx.font = '12.5px "Atkinson Hyperlegible", Arial, sans-serif'; ctx.fillStyle = '#26303C'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.fillText(C.l4.xAxis, m.l + pw / 2, H - 4);
     ctx.save(); ctx.translate(13, m.t + ph / 2); ctx.rotate(-Math.PI / 2); ctx.textBaseline = 'middle'; ctx.fillText(C.l4.yAxis, 0, 0); ctx.restore();
     const curve = (fn, color, w) => { ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t, pw, ph); ctx.clip(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.beginPath(); for (let s = 6; s <= 20.001; s += .05){ const p = [X(s), Y(fn(F.steady(s, Wt)))]; s === 6 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]); } ctx.stroke(); ctx.restore(); };
-    curve(st => st.d0, '#5677A6', 2); curve(st => st.di, '#C0577A', 2); curve(st => st.drag, '#E08A00', 4.5);
+    if (show.d0) curve(st => st.d0, '#5677A6', 2); if (show.di) curve(st => st.di, '#C0577A', 2); curve(st => st.drag, '#E08A00', 4.5);
     const st = F.steady(v, Wt);
     ctx.strokeStyle = '#1B2533'; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(X(v), m.t); ctx.lineTo(X(v), m.t + ph); ctx.stroke(); ctx.setLineDash([]);
-    [[st.d0, '#5677A6'], [st.di, '#C0577A'], [st.drag, '#E08A00']].forEach(p => { if (p[0] <= 2.5){ ctx.fillStyle = p[1]; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(v), Y(p[0]), 5, 0, 7); ctx.fill(); ctx.stroke(); } });
+    [[st.d0, '#5677A6', show.d0], [st.di, '#C0577A', show.di], [st.drag, '#E08A00', true]].filter(p => p[2]).forEach(p => { if (p[0] <= 2.5){ ctx.fillStyle = p[1]; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(v), Y(p[0]), 5, 0, 7); ctx.fill(); ctx.stroke(); } });
   }
   function strip(cv, st, best){
     const {ctx, W, H} = fit(cv, 140);
@@ -2698,7 +2731,7 @@ const COPY = {
     L.push('', 'Predictions');
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k]; L.push(PRED_L[k] + ': ' + C.predictions[k].q, '  First choice: ' + (p && p.first ? optText(k, p.first) : 'not answered yet'), '  Final choice: ' + (p && p.final ? optText(k, p.final) : 'not answered yet')); });
     L.push('', 'Practice problems');
-    ['pr1', 'pr2', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach(k => { const p = S.pr[k] || {}, P = C.practice[k]; L.push(P.q, '  My answer: ' + ((p.val || '').trim() ? p.val.trim() + (p.unit ? ' ' + p.unit : ' (no unit chosen)') : 'not answered yet'), '  Result: ' + (p.ok ? 'correct' : p.checks ? 'not correct yet' : 'not checked yet'), '  Checks made: ' + (p.checks || 0)); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach(k => { const p = S.pr[k] || {}, P = C.practice[k]; L.push(P.q, '  My answer: ' + ((p.val || '').trim() ? p.val.trim() + (p.unit ? ' ' + p.unit : ' (no unit chosen)') : 'not answered yet'), '  Result: ' + (p.ok ? 'correct' : p.checks ? 'not correct yet' : 'not checked yet'), '  Checks made: ' + (p.checks || 0)); });
     ['h1', 'h2', 'h3'].forEach(k => { const p = S.pr[k], P = C.practice[k]; if (p && p.checks && P) L.push('A harder question I chose to try: ' + P.q, '  My answer: ' + (p.val || '').trim() + (p.unit ? ' ' + p.unit : ''), '  Result: ' + (p.ok ? 'correct' : 'not correct yet'), '  Checks made: ' + p.checks); });
     L.push('', 'Explain your thinking');
     ['ex1', 'ex2', 'ex3', 'ex4', 'exProg'].forEach(k => exReport(L, k, C.explain[k]));

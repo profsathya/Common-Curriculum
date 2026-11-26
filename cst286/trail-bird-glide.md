@@ -166,30 +166,37 @@ How much lift depends on how much air the wing turns and how sharply it turns it
 - how large the wing is
 - how far the wing is tilted into the oncoming air
 
+**Predict:** The wing is tilted at 6° and the air speed is 8 m/s. You double the speed to 16 m/s and leave the tilt alone. What happens to the lift?
+
+- A. It doubles
+  - Feedback: Doubling would be right if lift grew in step with speed. Test it: set the tilt to 6°, read the lift at 8 m/s and then at 16 m/s. Choose again.
+
+- B. It becomes four times larger (right)
+  - Feedback: Yes. Twice the speed gives four times the lift. The relationship below shows why: speed is squared in it. This is why a slow bird is in trouble: when the speed falls, the lift falls much faster.
+
+- C. It stays the same, because the tilt did not change
+  - Feedback: Tilt is one of the things that sets lift, but not the only one. Faster air means more air turned every second, and turned harder. Try it on the simulation. Choose again.
+
+(Page note: everything from here to the explain box appears after the first choice on the prediction, right or wrong. Until then the page shows: The rest of this level appears when you have chosen an answer above.)
+
 The relationship is:
 
 > lift = ½ × air density × speed² × wing area × lift coefficient  
-> live line, for example: ½ × 1.2 kg/m³ × (10.0 m/s)² × 0.20 m² × 0.60 = 7.2 N  
-> Unit check: kg/m³ × m²/s² × m² = kg·m/s², which is a newton.
+> live line, for example: ½ × 1.2 kg/m³ × (10.0 m/s)² × 0.20 m² × 0.60 = 7.2 N
 
 The lift coefficient is a number with no unit that grows with the tilt of the wing: about 0.1 for each degree, up to a tilt of 15°.
 
-Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall.
+Two wondering questions, closed until the student clicks them:
+
+**Are you wondering why the answer is in newtons?** Multiply the units the same way as the numbers: kg/m³ × m²/s² × m² = kg·m/s². One kg·m/s² is one newton, the unit of force. The lift coefficient has no unit, so it does not change this.
+
+**Are you wondering why the lift drops when the wing tilts past 15 degrees?** Past 15° the air can no longer follow the top of the wing. It breaks away, the wing turns much less air, and the lift coefficient falls. That is a stall. You can see it on the drawing: move the wing tilt above 15°.
+
+(Page note: when the wing tilt passes 15° at an air speed of 10 m/s, the page shows under the two questions: The lift fell when the tilt passed 15°. The question above says why. When a practice answer has the right number and the wrong unit, it shows under that practice: A place to start: multiply the units the same way as the numbers. The question "Are you wondering why the answer is in newtons?" above goes on from there.)
 
 **Set the air speed to 10 m/s. Find the wing tilt at which the lift comes closest to the bird's weight, 9.8 N.**
 
 (Page note: when the air speed is 10 m/s and the wing tilt is 8.2°, the page shows under the two sliders: You found it. At a wing tilt of 8.2° the lift is 9.8 N, as close to the bird's weight as this slider gets.)
-
-**Predict:** The wing is tilted at 6° and the air speed is 8 m/s. You double the speed to 16 m/s and leave the tilt alone. What happens to the lift?
-
-- A. It doubles
-  - Feedback: Doubling would be right if lift grew in step with speed. Look at the relationship again: speed is squared. Set the tilt to 6°, read the lift at 8 m/s and then at 16 m/s. Choose again.
-
-- B. It becomes four times larger (right)
-  - Feedback: Yes. Speed is squared in the relationship, so twice the speed gives 2 × 2 = 4 times the lift. This is why a slow bird is in trouble: when the speed falls, the lift falls much faster.
-
-- C. It stays the same, because the tilt did not change
-  - Feedback: Tilt is one of the things that sets lift, but not the only one. Faster air means more air turned every second, and turned harder. Try it on the simulation. Choose again.
 
 **Practice:** A gull has a wing area of 0.20 m². It glides at 9.0 m/s with a lift coefficient of 1.0. Air density is 1.2 kg/m³. How much lift do its wings make?
 
@@ -201,20 +208,54 @@ Past 15° the air can no longer follow the top of the wing. It breaks away, the 
 - Right number, wrong unit: The number is right, but check the unit. You are answering with a force.
 - First step (after 2 misses): Start with the speed. 9.0 m/s squared is 81 m²/s². Then multiply by the other numbers in the relationship.
 
-Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift equal to the weight, 9.8 N.
+Offered after the first correct check on the practice above, closed until the student clicks it. Nothing depends on it.
+
+**Do you want a harder one?** The same gull slows to 8.0 m/s. What lift coefficient does it need now to make the same 9.72 N of lift?
+
+- Answer accepted: 1.24 to 1.29 no unit
+- Correct: Correct. 9.72 = ½ × 1.2 × 8.0² × 0.20 × lift coefficient, so the lift coefficient is 9.72 ÷ 7.68 = about 1.27. That needs a wing tilt of nearly 13°, close to the 15° where the wing stalls.
+- Other: Not yet. Put every number you know into the relationship. The lift coefficient is then the only unknown.
+- Right number, wrong unit: The number is right, but check the unit. A coefficient is a plain number.
+- First step (after 2 misses): ½ × 1.2 × 8.0² × 0.20 = 7.68, so the relationship reads 9.72 = 7.68 × lift coefficient.
+
+Now you can explain the stall you felt at Level 1. To hold a steady glide the wings must make lift very nearly equal to the weight, 9.8 N. The glide is so shallow that the two differ by less than 1%, and the calculations here treat them as equal.
 
 When the bird slows down, it has to tilt its wings more to keep the same lift. The tilt cannot go past 15°, where the lift coefficient reaches its largest value, 1.5.
 
 So there is a slowest speed at which a steady glide is possible.
 
-**Practice:** For this bird (weight 9.8 N, wing area 0.20 m², air density 1.2 kg/m³, largest lift coefficient 1.5), what is the slowest speed at which the wings can still make 9.8 N of lift?
+**Find it on the simulation first.** Set the wing tilt to 15°, the largest tilt before the stall. Lower the air speed one step at a time and watch the lift bar come down toward the weight line.
+
+(Page note: shown once both 7.5 m/s and 7.0 m/s have been visited with the wing tilt at 15°: At 7.5 m/s the lift is still above the bird's weight, and at 7.0 m/s it is below it. The slowest speed for a steady glide is between the two. Now calculate it.)
+
+**Practice, first step:** For this bird (weight 9.8 N, wing area 0.20 m², air density 1.2 kg/m³, largest lift coefficient 1.5), put the lift equal to the weight in the relationship. What is the speed squared?
+
+- Answer accepted: 53.4 to 55.4 m²/s² (the unit list for this step has m²/s² in it)
+- Correct: Correct. 9.8 = ½ × 1.2 × speed² × 0.20 × 1.5, so speed² = 9.8 ÷ 0.18 = about 54.4 m²/s².
+- If the number is between 7.28 and 7.48: 7.4 is the speed itself. This step asks for the speed squared. Keep 7.4 for the next step.
+- Other: Not yet. Write the relationship with 9.8 N for the lift and 1.5 for the lift coefficient. Multiply the numbers on the right, and divide 9.8 by the result.
+- Right number, wrong unit: The number is right, but check the unit. You are answering with a speed squared.
+- First step (after 2 misses): ½ × 1.2 × 0.20 × 1.5 = 0.18, so the relationship reads 9.8 = 0.18 × speed².
+
+**Practice, second step** (appears once Check has been pressed on the first step): Take the square root. What is the slowest speed at which the wings can still make 9.8 N of lift?
 
 - Answer accepted: 7.28 to 7.48 m/s
-- Correct: Correct. Setting 9.8 = ½ × 1.2 × v² × 0.20 × 1.5 gives v² = 54.4 m²/s², so v = 7.4 m/s. Below that speed no tilt of the wing gives enough lift, and the bird drops. Check it against the speed at which your bird stalled at Level 1.
-- If the number is between 53.4 and 55.4: 54.4 is v², in m²/s². Take the square root to get the speed.
-- Other: Not yet. Put the largest lift coefficient into the lift relationship, set the lift equal to the weight, and solve for the speed.
+- Correct: Correct. The square root of 54.4 is 7.4 m/s. Below that speed no tilt of the wing gives enough lift, and the bird drops. Compare it with what you found on the simulation, and with the speed at which your bird stalled at Level 1.
+- If the number is between 53.4 and 55.4: 54.4 is the speed squared, in m²/s². Take its square root to get the speed.
+- Other: Not yet. Take the square root of the speed squared, 54.4 m²/s².
 - Right number, wrong unit: The number is right, but check the unit. You are answering with a speed.
-- First step (after 2 misses): Write the lift relationship with lift = 9.8 N and lift coefficient = 1.5. The speed is then the only unknown.
+- First step (after 2 misses): 7 × 7 = 49 and 8 × 8 = 64, so the square root of 54.4 lies between 7 and 8.
+
+Offered after the first correct check on the practice above, closed until the student clicks it. Nothing depends on it.
+
+**Do you want a harder one?** After a large fish the bird weighs 12.74 N. What is the slowest speed for a steady glide now?
+
+- Answer accepted: 8.3 to 8.5 m/s
+- Correct: Correct. 12.74 = 0.18 × speed², so speed² = about 70.8 m²/s² and the speed is about 8.4 m/s. A heavier bird stalls at a higher speed.
+- If the number is between 69.8 and 71.8: 70.8 is the speed squared. Take its square root to get the speed.
+- Other: Not yet. Only the weight changed. Use the same two steps: the speed squared first, then its square root.
+- Right number, wrong unit: The number is right, but check the unit. You are answering with a speed.
+- First step (after 2 misses): 12.74 = 0.18 × speed². Divide, then take the square root.
 
 **Explain your thinking: why does a gliding bird drop when it flies too slowly? Use the lift relationship in your explanation.**
 
@@ -222,23 +263,21 @@ So there is a slowest speed at which a steady glide is possible.
 
 ## Level 4: Why one speed goes farthest
 
-**At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.** In a steady glide the lift is fixed: it has to equal the weight.
+**At Level 2 you found that distance comes from the glide ratio, lift ÷ drag.** In a steady glide the lift is fixed: it is very nearly equal to the weight.
 
-So the bird goes farthest at the speed where drag is smallest. Drag has two parts, and they pull in opposite directions.
+So the bird goes farthest at the speed where drag is smallest. The graph shows the total drag at every glide speed. Move the speed slider and find the lowest point of the curve.
 
-The first part comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive.
+(Page note: graph: x axis "glide speed (m/s)" from 6 to 20, y axis "force (N)" from 0 to 2.5. The graph opens with "total drag" only (bold amber). The legend above it names the two parts, "drag from pushing through the air" and "drag from making lift", as two buttons that show or hide each curve, with the line: Press a name to show or hide its curve. Speeds below the stall speed are shaded and labelled "stall: no steady glide". A dashed marker follows the "Glide speed" slider (6 to 20 m/s, step 0.1, default 14). Readouts: Lift (very nearly the weight), Total drag, Glide ratio, Distance from 30 m. Under the graph a strip shows the 30 m cliff and the glide at the chosen speed as a straight line to its landing point, with the best line of the visit kept faint. Bird buttons "1.0 kg bird" and "1.3 kg bird, after a large fish" appear after Prediction 4 is answered; the heavier bird redraws the curves for 12.74 N.)
 
-The second part is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it.
+Two wondering questions under the graph, closed until the student clicks them. Opening one switches its curve on.
 
-This part is largest at low speed and shrinks as the bird speeds up.
+**Are you wondering why drag rises when the bird flies fast?** One part of drag comes from pushing the body and wings through the air. Like lift, it grows with the square of the speed, so flying fast is expensive. The curve "drag from pushing through the air" is now on the graph.
 
-Add the two parts and you get a curve shaped like a valley. Move the speed slider and find the bottom of the valley.
-
-(Page note: graph: x axis "glide speed (m/s)" from 6 to 20, y axis "force (N)" from 0 to 2.5. Curves (legend above the graph): "drag from pushing through the air", "drag from making lift", "total drag" (bold amber). Speeds below the stall speed are shaded and labelled "stall: no steady glide". A dashed marker follows the "Glide speed" slider (6 to 20 m/s, step 0.1, default 14). Readouts: Lift (equal to the weight), Total drag, Glide ratio, Distance from 30 m. Under the graph a strip shows the 30 m cliff and the glide at the chosen speed as a straight line to its landing point, with the best line of the visit kept faint. Bird buttons "1.0 kg bird" and "1.3 kg bird, after a large fish" appear after Prediction 4 is answered; the heavier bird redraws the curves for 12.74 N.)
+**Are you wondering why drag is also high when the bird flies slowly?** The other part of drag is the price of making lift. A slow bird has to tilt its wings steeply to hold itself up, and a steeply tilted wing throws air downward hard and leaves more disturbed air behind it. This part is largest at low speed and shrinks as the bird speeds up. The curve "drag from making lift" is now on the graph. Add the two parts and you get the total, a curve shaped like a valley.
 
 When the slider is within 0.3 m/s of the best speed: You found it. At about 10.3 m/s the total drag is smallest, the glide ratio is about 13, and the bird reaches about 387 m from a height of 30 m. Compare that with your best flight at Level 1.
 
-(Page note: Prediction 4 appears with that message. Every option opens the bird buttons; none is marked right or wrong.)
+(Page note: Prediction 4 and the explain box appear once the student has found the best speed, or has let go of the speed slider three times, whichever comes first. Every option opens the bird buttons; none is marked right or wrong.)
 
 **Predict:** The bird swallows a large fish and is now 30% heavier. It starts from the same 30 m. Compared with before, how far can it glide at its new best speed?
 
@@ -255,17 +294,23 @@ When the heavier bird is chosen and the slider is within 0.3 m/s of its best spe
 
 What changed is the speed. The heavier bird needs more lift, so the whole valley moves to a higher speed, about 11.7 m/s. It covers the same distance and arrives sooner.
 
-Glider pilots use this. On a day when they want to fly fast, they carry water in the wings to make the glider heavier.
+Wondering question under that message, closed until the student clicks it:
 
-**Explain your thinking: a glide ratio of about 13 is the best this bird can do, whatever it weighs. Describe one real situation in which the bird could travel farther than 13 m for each meter of height it loses, and say what that situation changes about the forces or the air.**
+**Are you wondering who would make a glider heavier on purpose?** Glider pilots do. On a day when they want to fly fast, they carry water in the wings. The heavier glider covers the same distance from the same height, and it gets there sooner.
 
-**Where this model stops being true** (collapsed)
+Wondering question above the explain box, closed until the student clicks it, never locked:
+
+**Are you wondering where this model stops being true?**
 
 This page treats the bird as a fixed shape gliding through still air. Real birds change the shape and spread of their wings from moment to moment, flap, and use air that is itself moving: wind, and columns of warm rising air.
 
 The airflow picture at Level 3 is a sketch.
 
 The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft.
+
+**Explain your thinking: a glide ratio of about 13 is the best this bird can do, whatever it weighs. Describe one real situation in which the bird could travel farther than 13 m for each meter of height it loses, and say what that situation changes about the forces or the air.**
+
+A place to start: think about what this model held fixed. The air was still, the wing kept one shape, and the bird did not flap.
 
 (Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation.")
 
