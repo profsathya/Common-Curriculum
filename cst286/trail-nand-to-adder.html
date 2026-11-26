@@ -216,6 +216,9 @@
   .parts td{padding:3px 12px 3px 0; vertical-align:middle; color:var(--ink-soft)}
   /* Level 2: wondering questions, the lock on the build step, and the labels on the first HDL line */
   .svgwrap{overflow-x:auto; max-width:100%}
+  .svgnote{display:none; font-size:.82rem; margin:0 0 6px}
+  @media (max-width:640px){ .svgnote{display:block} }
+  @media (min-width:501px){ .svgnote.sm{display:none} }
   .fasvg{width:100%; min-width:540px; max-width:660px; height:auto; display:block; margin:6px 0}
   .fasvg.sm{min-width:400px; max-width:520px}
   .fasvg text{fill:var(--ink); font:600 13px "IBM Plex Mono",ui-monospace,Menlo,monospace}
@@ -933,7 +936,7 @@ const LEVELS = [
    after:'Your chip says: out is 0 only when not-a and not-b are both 1, which happens only when a and b are both 0. The rule you used, that "a or b" is the same as "not (not a and not b)", is called De Morgan\'s law.'},
 
   {id:'not', kind:'build', chip:'Not', short:'Not', title:'Flip a bit: Not',
-   objs:['Build a one-input Not from a two-input Nand.', 'Explain what a Nand gate does when both of its inputs carry the same signal.'],
+   objs:['Build a one-input Not from a two-input Nand.', 'Explain how a gate with two inputs can do the job of a gate with one.'],
    pcheck:`Fill in the table with what you expect Not to give in each row. Then click <code>in</code> on the drawing, and change any row where the drawing shows something else.`,
    extra:{id:'w-not2', q:`Do you want to find a second way to build Not?`, a:`<p>One way connects both Nand inputs to <code>in</code>. Another fixes <code>b</code> at 1 and connects <code>a</code> to <code>in</code>. Work out what the second one gives for in = 0 and for in = 1. Then check your answer: press Try it on Nand in the parts list, set <code>b</code> to 1, and flip <code>a</code> between 0 and 1.</p>`},
    learn:'<p>Not has one input, and it flips it. You build it from a single Nand gate, which gives 0 only when both of its inputs are 1, and gives 1 in every other case.</p><p>A Nand has two inputs and Not has only one, so the question at this level is what to connect to the second input.</p>',
@@ -994,6 +997,8 @@ const UI = {
   openSide:'Open a part you used. The parts stay open, so you can come back for them. The next level on the trail is [next], which is not inside this chip. The "Go down to [next]" button at the bottom takes you there.',
   nextTag:'Next on the trail',
   cells:'Click a ? to set it to 0, and click again for 1.',
+  predLock:'The rest of this level appears when you have filled in the table and pressed Check my table.',
+  sideways:'Scroll sideways to see the whole drawing.',
   mismatch:'Your table and the drawing give different outputs in [n] of the rows. Set each row on the drawing, and change your table to match what you see.',
   guessBack:'Before you opened the box, you guessed: "[guess]". Compare it with what you found inside.',
   restore:'Put back the [chip] that passed',
@@ -1173,11 +1178,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   }
   function bindPredict(l, onOK){
     const chip = l.chip, spec = B[chip], rows = combos(spec);
-    $$('#pt .cell').forEach(b => b.onclick = () => { const r = +b.dataset.r, o = +b.dataset.o, v = P[chip][r][o]; P[chip][r][o] = v === null ? 0 : 1 - v; b.textContent = P[chip][r][o]; b.classList.remove('ok', 'bad'); });
+    $$('#pt .cell').forEach(b => b.onclick = () => { const r = +b.dataset.r, o = +b.dataset.o, v = P[chip][r][o]; P[chip][r][o] = v === null ? 0 : 1 - v; b.textContent = P[chip][r][o]; b.classList.remove('ok', 'bad'); if (chip === 'FullAdder' && $('#fat')) ACT.FullAdder.draw(l); });
     $('#pcheck').onclick = () => {
       const m = $('#pmsg');
       if (P[chip].some(r => r.some(v => v === null))){ m.className = 'msg warn'; m.textContent = 'Fill in every row first. Click a ? to set it to 0, and click again for 1.'; return; }
       let wrong = 0; const PF = !!l.pcheck;
+      if (PF){ (S.ptry || (S.ptry = {}))[chip] = true; save(); if (PREDLOCK) PREDLOCK(); }
       $$('#pt .cell').forEach(b => { const r = +b.dataset.r, o = +b.dataset.o; const ok = P[chip][r][o] === spec.fn(rows[r])[spec.outs[o][0]]; if (!PF){ b.classList.toggle('ok', ok); b.classList.toggle('bad', !ok); } if (!ok) wrong++; });
       if (wrong && PF){ m.className = 'msg warn'; m.textContent = UI.mismatch.replace('[n]', wrong); }
       else if (wrong){ m.className = 'msg bad'; m.textContent = wrong + (wrong === 1 ? ' value does' : ' values do') + ' not match yet (marked in the table). ' + l.rule; }
@@ -1345,6 +1351,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const actState = chip => { const a = S.act || (S.act = {}); return a[chip] || (a[chip] = {}); };
   const actOpen = chip => UNLOCK_ALL || !!S.pass[chip] || !!actState(chip).done;
   let ACTLOCK = null;
+  // Levels 6 to 9: the steps under the predicted table appear after the table has been checked once
+  let PREDLOCK = null;
+  const predOpen = chip => UNLOCK_ALL || !!S.pass[chip] || !!S.pred[chip] || !!(S.ptry && S.ptry[chip]);
+  const setPredLock = chip => { PREDLOCK = () => { const lock = $('#predlock'), wrap = $('#predwrap'); if (!lock || !wrap) return; const open = predOpen(chip); lock.hidden = open; wrap.hidden = !open; }; PREDLOCK(); };
   const actDone = chip => { actState(chip).done = true; save(); if (ACTLOCK) ACTLOCK(); };
   const svgW = (d, on, cls) => '<path class="wire' + (cls ? ' ' + cls : '') + (on ? ' on' : '') + '" d="' + d + '"/>';
   const svgT = (x, y, t, cls, anchor) => '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + ' text-anchor="' + (anchor || 'start') + '">' + t + '</text>';
@@ -1361,7 +1371,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       svgT(60, 66, 'a' + val(L ? v.a : ''), '', 'end') + svgT(60, 96, 'b' + val(L ? v.b : ''), '', 'end') + svgT(60, 196, 'c' + val(L ? v.c : ''), '', 'end') +
       svgB(150, 44, 110, 66, 'HalfAdder', 'step 1') + svgB(330, 144, 110, 66, 'HalfAdder', 'step 2') + svgB(470, 52, 60, 60, '?', '', 'q') +
       svgT(270, 54, 'carry from step 1' + val(c1), 'c1') + svgT(300, 132, 'sum bit' + val(s1), 's') + svgT(462, 236, 'carry from step 2' + val(c2), 'c2', 'middle') +
-      svgT(596, 196, 'sum' + val(sum)) + svgT(596, 86, 'carry') + '</svg></div>';
+      svgT(596, 196, 'sum' + val(sum)) + svgT(596, 86, 'carry') + '</svg></div><p class="muted svgnote">' + UI.sideways + '</p>';
   }
   ACT.FullAdder = {draw(l){
     const A = l.act, st = actState('FullAdder'), box = $('#act'); if (!box) return;
@@ -1386,7 +1396,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       svgW('M200 92 H245 V82 H290') + svgW('M200 132 H245 V142 H290') + svgW('M360 67 H410 V92 H450') + svgW('M360 157 H410 V132 H450') + svgW('M520 112 H590') +
       svgT(36, 56, 'a', '', 'end') + svgT(36, 176, 'b', '', 'end') +
       svgB(140, 76, 60, 32, 'not') + svgB(140, 116, 60, 32, 'not') + svgB(290, 40, 70, 54, 'and') + svgB(290, 130, 70, 54, 'and') + svgB(450, 82, 70, 60, 'or') +
-      svgT(222, 86, 'nb', 's', 'middle') + svgT(222, 150, 'na', 's', 'middle') + svgT(385, 60, 'w1', 's', 'middle') + svgT(385, 176, 'w2', 's', 'middle') + svgT(596, 116, 'out') + '</svg></div>';
+      svgT(222, 86, 'nb', 's', 'middle') + svgT(222, 150, 'na', 's', 'middle') + svgT(385, 60, 'w1', 's', 'middle') + svgT(385, 176, 'w2', 's', 'middle') + svgT(596, 116, 'out') + '</svg></div><p class="muted svgnote">' + UI.sideways + '</p>';
   }
   const normSentence = x => String(x).toLowerCase().replace(/&&|&/g, ' and ').replace(/[!~]/g, ' not ').replace(/[().,;:"'`]/g, ' ').replace(/\s+/g, ' ').trim();
   ACT.Xor = {draw(l){
@@ -1426,7 +1436,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const fl = (y, on) => on ? svgB(150, y - 17, 64, 34, 'Not') : svgB(150, y - 17, 64, 34, '', '', 'off');
     return '<div class="svgwrap"><svg class="fasvg sm" viewBox="0 0 520 170" role="img" aria-label="A Nand gate. Each of its two input wires has a flip switch on it.">' +
       svgW('M50 55 H150') + svgW('M214 55 H300') + svgW('M50 115 H150') + svgW('M214 115 H300') + svgW('M390 85 H460') +
-      svgT(46, 59, 'a', '', 'end') + svgT(46, 119, 'b', '', 'end') + fl(55, fa) + fl(115, fb) + svgB(300, 35, 90, 100, 'Nand') + svgT(466, 89, 'out') + '</svg></div>';
+      svgT(46, 59, 'a', '', 'end') + svgT(46, 119, 'b', '', 'end') + fl(55, fa) + fl(115, fb) + svgB(300, 35, 90, 100, 'Nand') + svgT(466, 89, 'out') + '</svg></div><p class="muted svgnote sm">' + UI.sideways + '</p>';
   }
   ACT.Or = {draw(l){
     const A = l.act, st = actState('Or'), box = $('#act'); if (!box) return;
@@ -1462,7 +1472,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     } else {
     nstep = 0;
     // Levels 6 to 8: the truth table is a prediction, filled in under the drawing before anything is read
-    if (l.pcheck) h += stepHTML(++nstep, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML(chip, l.pcheck + ' ' + UI.cells));
+    if (l.pcheck) h += stepHTML(++nstep, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML(chip, l.pcheck + ' ' + UI.cells)) + '<div class="msg info" id="predlock">' + UI.predLock + '</div><div id="predwrap">';
     else h += stepHTML(++nstep, 'See it run', '<p>' + l.see + '</p><div id="stage-see" class="stage"></div>' + (hasPred ? '' : '<div id="probe-see" style="margin-top:10px"></div>'));
     h += stepHTML(++nstep, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l));
     if (!l.pcheck) h += stepHTML(++nstep, 'Practice', hasPred ? predictHTML(chip, (l.practice ? esc(l.practice) + ' ' + 'Your chip will be tested against this table.' : 'Fill in what ' + chip + ' does. ' + UI.table) + (l.tnote ? '</p><p class="tnote">' + l.tnote : '')) : '<p>' + l.practice + '</p><div class="game" id="g-bin"></div><div class="game" id="g-add"></div>');
@@ -1478,7 +1488,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       '<div class="row"><button type="button" class="btn" id="run">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button><button type="button" class="btn ghost" id="ai">Copy a question for my AI</button><button type="button" class="btn ghost" id="reset">Start over</button><button type="button" class="btn ghost" id="restore" hidden>' + esc(UI.restore.replace('[chip]', chip)) + '</button></div>' +
       '<div id="hints"></div><div id="aibox"></div><div id="res" role="status"></div>' +
       '<h4 class="sub">Look inside your chip</h4><p>' + (first ? UI.insideFirst : UI.inside) + '</p><div id="probe"></div>' + (T3 || hasAct ? '</div>' : ''));
-    h += stepHTML(nstep + 2, 'Open the box', '<div id="open"></div>') + foot(l);
+    h += stepHTML(nstep + 2, 'Open the box', '<div id="open"></div>') + (l.pcheck ? '</div>' : '') + foot(l);
     main.innerHTML = h;
     // Level 2: the build opens once the student has made one number, read one number and finished one addition
     L2LOCK = null;
@@ -1487,6 +1497,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       L2LOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = practiced(); lock.hidden = open; wrap.hidden = !open; };
       L2LOCK();
     }
+    PREDLOCK = null; if (l.pcheck) setPredLock(chip);
     ACTLOCK = null;
     if (hasAct){
       ACTLOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = actOpen(chip); lock.hidden = open; wrap.hidden = !open; };
@@ -1583,7 +1594,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       const used = K[chip].circ ? Array.from(new Set(K[chip].circ.parts.map(p => p.chip.name))) : [];
       const list = (used.length ? used : below(chip).slice(0, 2)).filter(n => levelOf(n) >= 0).sort((a, b) => levelOf(a) - levelOf(b));
       const nxi = LEVELS.indexOf(l) + 1, hasNext = list.some(n => levelOf(n) === nxi);
-      return '<p>' + (first ? UI.openFirst : hasNext ? UI.open : esc(UI.openSide).split('[next]').join(esc(LEVELS[nxi].short))) + '</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn' + (hasNext && levelOf(n) !== nxi ? ' ghost' : '') + '" data-c="' + n + '">Open ' + n + ' &#10530;' + (levelOf(n) === nxi ? '<span class="nexttag">' + UI.nextTag + '</span>' : '') + '</button>').join('') + '</div>' +
+      return '<p>' + (first ? UI.openFirst : hasNext ? UI.open : esc(UI.openSide).split('[next]').join(esc(LEVELS[nxi].short))) + '</p><div class="row">' + list.map(n => '<button type="button" class="btn openbtn' + (!hasNext || levelOf(n) !== nxi ? ' ghost' : '') + '" data-c="' + n + '">Open ' + n + ' &#10530;' + (levelOf(n) === nxi ? '<span class="nexttag">' + UI.nextTag + '</span>' : '') + '</button>').join('') + '</div>' +
         (l.extra && S.pass[chip] ? wonderHTML([{id:l.extra.id, q:l.extra.q, a:l.extra.a}]) : '');
     }
     function drawOpen(){ $('#open').innerHTML = openHTML(); $$('.openbtn').forEach(b => b.onclick = () => zoomInto(chip, b.dataset.c, $('#stage .gate[data-chip="' + b.dataset.c + '"]'))); }
@@ -1697,9 +1708,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   VIEW.bottom = function(l){
     const key = 'Nand:see', ready = () => !!S.pred.Nand || UNLOCK_ALL;
     const extra = () => isDone(l) && l.extra ? '<details class="wonder" id="' + l.extra.id + '"><summary>' + l.extra.q + '</summary><div class="idea">' + l.extra.a + '<div class="row"><button type="button" class="btn ghost" id="toxor">' + l.extra.btn + '</button></div></div></details>' : '';
-    main.innerHTML = head(l) + stepHTML(1, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML('Nand', l.pcheck + ' ' + UI.cells) + '<div id="after">' + (isDone(l) ? afterHTML(l) + extra() : '') + '</div>') +
+    main.innerHTML = head(l) + stepHTML(1, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML('Nand', l.pcheck + ' ' + UI.cells) + '<div id="after">' + (isDone(l) ? afterHTML(l) + extra() : '') + '</div>') + '<div class="msg info" id="predlock">' + UI.predLock + '</div><div id="predwrap">' +
       stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
-      stepHTML(3, 'Open the box', '<div id="open"></div>') + foot(l);
+      stepHTML(3, 'Open the box', '<div id="open"></div>') + '</div>' + foot(l);
+    setPredLock('Nand');
     bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null, zoomSelf:true, zoom:(name, el) => zoomInto('Nand', 'Transistor', el), zoomReady:ready});
     drawStage(key, boxSketch('Nand')); drawProbe(key);
     const drawOpen = () => { $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="opennand">Open the Nand gate &#10530;</button></div>' : '<p class="muted">This step opens when your truth table is right.</p>'; if ($('#opennand')) $('#opennand').onclick = () => zoomInto('Nand', 'Transistor', $('#stage-see .gate')); };
@@ -1788,15 +1800,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
 
   VIEW.out = function(l){
     let h = head(l), flat = null, c = null;
-    if (BUILDS.every(b => S.pass[b.chip] && S.code[b.chip])){
-      try { flat = flatten('Add4', n => S.code[n]); c = build(flat, 'Add4'); } catch (e) { flat = null; }
+    const won = n => (S.passed && S.passed[n]) || S.code[n];   // the HDL that passed, whatever the editor holds now
+    if (BUILDS.every(b => S.pass[b.chip] && won(b.chip))){
+      try { flat = flatten('Add4', n => won(n)); c = build(flat, 'Add4'); } catch (e) { flat = null; }
     }
     if (c){
       h += '<div class="idea">' + l.learn + '</div><div class="msg ok">Your adder is made of <b>' + c.parts.length + ' Nand gates</b> and nothing else. Each Nand gate is four transistors, so that is <b>' + (c.parts.length * 4) + ' transistors</b> opening and closing.</div><div id="probe-flat"></div><div id="stage-flat" class="stage" style="margin-top:10px"></div><p class="muted">Scroll sideways to follow the carry from the first column to the last.</p>';
     } else h += '<p>This view opens when every level is built. Levels still open: ' + LEVELS.filter(x => x.kind !== 'out' && !isDone(x)).map(x => esc(x.short)).join(', ') + '.</p>';
     h += '<div class="tablewrap"><table class="tt res"><thead><tr><th>Chip</th><th>Status</th><th>Nand gates in yours</th><th>Smallest known</th></tr></thead><tbody>';
-    const counts = {}; ORDER.slice(1).forEach(n => { if (S.pass[n] && S.code[n]){ try { counts[n] = build(S.code[n], n, counts).nands; } catch (e) {} } });
-    const full = n => !!counts[n] && (function ok(x){ try { return build(S.code[x], x).parts.every(p => p.chip.name === 'Nand' || (counts[p.chip.name] && ok(p.chip.name))); } catch (e) { return false; } })(n);
+    const counts = {}; ORDER.slice(1).forEach(n => { if (S.pass[n] && won(n)){ try { counts[n] = build(won(n), n, counts).nands; } catch (e) {} } });
+    const full = n => !!counts[n] && (function ok(x){ try { return build(won(x), x).parts.every(p => p.chip.name === 'Nand' || (counts[p.chip.name] && ok(p.chip.name))); } catch (e) { return false; } })(n);
     BUILDS.forEach(b => { const n = b.chip; h += '<tr class="' + (S.pass[n] ? 'pass' : '') + '"><td><code>' + n + '</code></td><td>' + (S.pass[n] ? '&#10003; built and tested' : 'not built yet') + '</td><td>' + (full(n) ? counts[n] : '') + '</td><td>' + (B[n].par || '') + '</td></tr>'; });
     h += '</tbody></table></div>';
     if (full('Xor') && counts.Xor > 4) h += '<div class="msg info">Extra challenge: your Xor is made of ' + counts.Xor + ' Nand gates, and a design with only 4 exists. Go back to the Xor level and try to build it from Nand parts alone.</div>';

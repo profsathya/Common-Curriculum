@@ -161,7 +161,7 @@ After `c=`, type the name of the wire that brings the carry in from column 0. Af
 
 **What you just showed (appears when the level is complete):** You rebuilt a machine that adds from four column adders, using HalfAdder and FullAdder as ready-made parts. That is how engineers design large chips: they use a part for what it does before they look at how it is made.
 
-Under it, the student's guess from Level 1 comes back: Before you opened the box, you guessed: "[the student's own words]". Compare it with what you found inside.
+(Page note: under it, the student's guess from Level 1 comes back, in this sentence: Before you opened the box, you guessed: "[the student's own words]". Compare it with what you found inside.)
 
 ---
 
@@ -326,6 +326,8 @@ Write one part for each "not", "and" and "or" in the sentence for Xor: the Not p
 
 **Shown when a row has not been filled in:** Fill in every row first. Click a ? to set it to 0, and click again for 1.
 
+**Shown under the table until Check my table has been pressed once with every row filled in (the same at Levels 7, 8 and 9; a chip that has already passed skips this):** The rest of this level appears when you have filled in the table and pressed Check my table. (Page note: the steps below the table, from Learn it on, are not shown until then.)
+
 **Learn it**
 
 There is one gate you may not have met yet, and everything from here down is made of it: Nand, which is short for Not-And. A Nand gate gives the opposite of And. It gives 0 only when both inputs are 1, and it gives 1 in every other case.
@@ -396,7 +398,7 @@ Write in HDL what the switches showed you: a Not for each input that has to be f
 
 **After this level you can**
 - Build a one-input Not from a two-input Nand.
-- Explain what a Nand gate does when both of its inputs carry the same signal.
+- Explain how a gate with two inputs can do the job of a gate with one.
 
 **Predict, then check (the truth table sits directly under the drawing, and the switches on the drawing work the whole time):** Fill in the table with what you expect Not to give in each row. Then click `in` on the drawing, and change any row where the drawing shows something else. Click a ? to set it to 0, and click again for 1. The two lines shown for a table that does not match, or is not finished, are the same as at Level 6.
 
@@ -553,7 +555,8 @@ A wire can go to more than one part. An output pin you do not need can be left o
 - **Open the box, level 2:** Your chip passed its tests, and you built it from parts you have not looked inside yet. Double-click a part on your drawing to go inside it, or use a button. The other parts stay open, so you can come back for them. The button marked **Next on the trail** follows the numbered order.
 - **Open the box, later levels:** Open a part you used. The button marked **Next on the trail** follows the numbered order. The other parts stay open, so you can come back for them.
 - **Open the box, when the next level is not a part of this chip (Level 6):** Open a part you used. The parts stay open, so you can come back for them. The next level on the trail is [next], which is not inside this chip. The "Go down to [next]" button at the bottom takes you there.
-- **Under the editor, once a chip has passed and the editor holds something different:** a button, Put back the [chip] that passed.
+- **Under the editor, once a chip has passed and the editor holds something different:** a button, Put back the [chip] that passed. Zoom all the way out always uses the HDL that passed.
+- **Under the drawings at Levels 3, 5 and 7, on a narrow screen:** Scroll sideways to see the whole drawing.
 - **Under a locked "Go down" button:** The next level opens when you finish this one.
 - **Under a locked "Zoom all the way out" button:** Zoom all the way out opens when every level is done. Still open: [the open levels, as buttons]
 
