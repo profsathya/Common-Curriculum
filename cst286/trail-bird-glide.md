@@ -29,7 +29,7 @@ What made you choose this learning trail, and what do you want to be able to exp
 
 *(Two or three sentences. A real question you have about flight is the most useful thing you can write here, for example "Why does a gliding bird not just fall?" or "Why does a bird that slows down too much suddenly drop?" You will come back to it at the end.)*
 
-(Page note: text box. The button "Start flying" works at 15 words or more; under 15 the page shows: Write a little more first, about 15 words or more. Level 1 opens on the click. No AI feedback here.)
+(Page note: text box. The button "Start flying" works once the box is not blank. Level 1 opens on the click. No AI feedback here.)
 
 ## Level 1: Fly it
 
@@ -78,7 +78,7 @@ When a flight passes the buoy: You passed the buoy.
 
 **Explain your thinking: describe what happened on the flight where you pointed the nose up the most. What did the speed do, and what did the bird do next?**
 
-(Page note: exit button "Zoom in: the forces on the bird" opens once the prediction has been answered, with any option, and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation." A level finished before 26 Nov 2026 stays finished.)
+(Page note: exit button "Zoom in: the forces on the bird" opens once the prediction has been answered, with any option, and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation." Before the prediction is on the page, the line reads: "Fly first. The prediction and the explain box appear after your third flight, or when you pass the buoy." A level finished before 26 Nov 2026 stays finished.)
 
 ## Level 2: The forces on the bird
 
@@ -90,7 +90,9 @@ When a flight passes the buoy: You passed the buoy.
 
 (Page note: canvas: the bird large and centered, flying the same model; it relaunches from the cliff each time it reaches the water. Arrows: weight straight down, lift at a right angle to the direction of travel, drag back along it from the tail (at least 10 px long), and the dashed direction-of-travel arrow; 9.8 N is about 110 px. A small inset shows the glide path from the side. Same nose-angle slider and readouts as Level 1. The button "Add the forces" draws the three arrows tip to tail in a side panel, with the leftover arrow outlined in red and labelled "net force N.N N".)
 
-Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. A flight like that is called a steady glide.
+The nose starts at 3° here. Leave it there and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. A flight like that is called a steady glide.
+
+(Page note: the nose angle is set to 3° when the level opens, whatever it was at Level 1.)
 
 **Predict:** In a steady glide the bird moves in a straight line at constant speed, heading slightly downhill. What is the net force on it?
 
@@ -105,7 +107,7 @@ Hold the nose steady and watch the three arrows for a few seconds. They settle t
 
 Shown after the first prediction choice, right or wrong:
 
-Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.
+Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero. If you have moved the nose and the arrows do not close, set it back to 3° and wait a few seconds.
 
 By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide.
 
@@ -277,18 +279,18 @@ Two wondering questions under the graph, closed until the student clicks them. O
 
 When the slider is within 0.3 m/s of the best speed: You found it. At about 10.3 m/s the total drag is smallest, the glide ratio is about 13, and the bird reaches about 387 m from a height of 30 m. Compare that with your best flight at Level 1.
 
-(Page note: Prediction 4 and the explain box appear once the student has found the best speed, or has let go of the speed slider three times, whichever comes first. Every option opens the bird buttons; none is marked right or wrong.)
+(Page note: Prediction 4 appears once the student has found the best speed, or has let go of the speed slider three times, whichever comes first. The explain box appears after the prediction is answered. Every option opens the bird buttons; none is marked right or wrong.)
 
 **Predict:** The bird swallows a large fish and is now 30% heavier. It starts from the same 30 m. Compared with before, how far can it glide at its new best speed?
 
 - A. Not as far, because it is heavier
-  - Feedback: It is reasonable to expect a heavier bird to come down sooner. Test it: choose the heavier bird and find the bottom of its valley. Compare the best distance, and then compare the speed.
+  - Feedback: It is reasonable to expect a heavier bird to come down sooner. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Compare the best distance, and then compare the speed.
 
 - B. Just as far, but it has to fly faster to do it
-  - Feedback: Good prediction. Test it: choose the heavier bird and find the bottom of its valley. Then work out why the distance did not change.
+  - Feedback: Good prediction. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Then work out why the distance did not change.
 
 - C. Farther, because it has more weight pulling it forward
-  - Feedback: More weight does pull harder along the path. Test it: choose the heavier bird and find the bottom of its valley. Compare the best distance, and then compare the speed.
+  - Feedback: More weight does pull harder along the path. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Compare the best distance, and then compare the speed.
 
 When the heavier bird is chosen and the slider is within 0.3 m/s of its best speed: The heavier bird glides just as far. Its best glide ratio is the same, about 13, because the glide ratio at the bottom of the valley depends only on the shape of the bird and its wings, and the fish did not change that.
 
@@ -314,9 +316,9 @@ A place to start: think about what this model held fixed. The air was still, the
 
 **A place to stop.** Levels 1 to 4 are the first sitting of this learning trail. Level 5, the teach-back and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Copy my work to submit now and paste it somewhere safe.
 
-(Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation.")
+(Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then, the line under the button reads, in turn: "Move the speed slider first. The prediction appears when you have found the lowest point of the curve or tried three speeds." then "Answer the prediction above. The explain box appears after it." then "The next level opens when you have answered the prediction and written your explanation.")
 
-(Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". Under 12 words: Write a few sentences first. Say what you saw on the simulation and why you think it happens. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
+(Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". Under 12 words: Write a few sentences first. Say what you saw on the simulation and why you think it happens. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. A reply that stops in the middle of a sentence is asked for once more and is never shown; if the second one is cut off too, the student sees the message for a helper that is not answering. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
 
 ## Level 5: Inside the simulation
 
@@ -341,6 +343,8 @@ What you will do:
 The bar above the code keeps your last two runs, so that you can compare them.
 
 (Page note: the GlowScript runner in a frame, loading cst286/sims/bird-glide.py: the code on the left with Run and Reset to original, the flight and a graph of height against distance on the right, and a line starting RESULT under the picture. The runner shows the last two runs above the code. The student's edited copy of the program is kept in this browser and put back when the page is opened again.)
+
+(On a screen narrower than 660 px, above this line: On a narrow screen, scroll the picture sideways to see the whole flight.)
 
 Your changes to the program are saved in this browser. Reset to original brings the program back as it was.
 
@@ -686,7 +690,7 @@ You have now opened every part of the program. Because you can read it, you can 
 
 Wondering question under the program, closed until the student clicks it, never locked:
 
-**Are you wondering why the heavier bird lands shorter here than at Level 4?**
+**Are you wondering how the launch speed affects the heavier bird?**
 
 At Level 4 each bird flew at its own best speed. Here the launch speed is still 10 m/s, and the heavier bird's best speed is about 11.7 m/s. Change launch_speed and run it again.
 
@@ -695,7 +699,7 @@ At Level 4 each bird flew at its own best speed. Here the launch speed is still 
 - Remove the drag from the F_net line.
 - Make dt ten times larger, and then fifty times larger.
 
-**Explain your thinking: which line did you change, and what did you predict? What did the flight do, and why did the program produce that result?**
+**Explain your thinking: which line did you change? How did the flight compare with your prediction above, and why did the program produce that result?**
 
 (Page note: exit button "Next: teach it back" opens when Parts 1 to 4 are finished and something is written in this explain box. Until then: "Teach it back opens when you have tried all four parts and written your explanation under the program in Put it together." A student who finished Level 5 before 26 Nov 2026 keeps it finished. The side trail opens at the same moment.)
 
@@ -755,7 +759,7 @@ Has this learning trail answered it? If part of it is still open, that is a good
 6. Keep the lift, the lift coefficient and the wing area the same, and use an air density 0.02 times the Earth's. I expect a glider on Mars to need a speed about ___ times higher, because ___.
 7. I expect ___ (give a direction or a number), because ___.
 
-(Page note: button "Get AI feedback on my plan" (same mechanics and round-keeping as the Explain cards; needs 25 words across the three boxes, else: Fill in all three parts of your plan first.) and button "Save my plan and start" (needs all three boxes filled).)
+(Page note: button "Get AI feedback on my plan" (same mechanics and round-keeping as the Explain cards; it works once all three boxes have something in them; with a box empty: Fill in all three parts of your plan first.) and button "Save my plan and start" (needs all three boxes filled).)
 
 After saving: Do your side trail, then come back to this page. Your plan is saved in this browser.
 

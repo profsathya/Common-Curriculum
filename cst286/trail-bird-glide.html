@@ -246,6 +246,7 @@
   .mvb:disabled{opacity:.35; cursor:not-allowed}
   .steps{margin:0 0 12px; padding-left:24px}
   .steps li{margin:5px 0}
+  @media (min-width:660px){ .narrowonly{display:none} }
   .steps code{font-family:"IBM Plex Mono",monospace; font-size:.92em}
   .steps .steps{margin:6px 0 4px}
   .secth{display:flex; align-items:center; gap:8px; margin:22px 0 10px; padding-top:14px; border-top:1px solid var(--line-soft)}
@@ -464,8 +465,7 @@ const COPY = {
   "heading": "Before you start: why this learning trail?",
   "q": "What made you choose this learning trail, and what do you want to be able to explain by the end of it?",
   "guide": "(Two or three sentences. A real question you have about flight is the most useful thing you can write here, for example \"Why does a gliding bird not just fall?\" or \"Why does a bird that slows down too much suddenly drop?\" You will come back to it at the end.)",
-  "btn": "Start flying",
-  "more": "Write a little more first, about 15 words or more."
+  "btn": "Start flying"
  },
  "l1": {
   "heading": "Fly it",
@@ -506,11 +506,11 @@ const COPY = {
   "ratioText": "The triangle also tells you how far the bird goes. In a steady glide, the distance travelled forward for each meter of height lost is equal to lift divided by drag. This number is called the glide ratio.",
   "formula": "glide ratio = lift ÷ drag = distance forward ÷ height lost",
   "exit": "Zoom in: where lift comes from",
-  "task": "Hold the nose steady and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. A flight like that is called a steady glide.",
-  "why": ["Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.", "By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."],
+  "task": "The nose starts at 3° here. Leave it there and watch the three arrows for a few seconds. They settle to fixed lengths, and the speed stops changing. A flight like that is called a steady glide.",
+  "why": ["Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero. If you have moved the nose and the arrows do not close, set it back to 3° and wait a few seconds.", "By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."],
   "wonder": {"id": "w-steady", "q": "Are you wondering why the bird keeps a steady velocity when nothing pushes it forward?", "peek": "A place to start: look at the direction of travel. The bird is always heading slightly downhill. The question below goes on from there.", "cap": "The slope is drawn steeper than a real glide, so that the small part of the weight can be seen.", "a": ["Look at the direction of travel. The bird is always heading slightly downhill. Because the path slopes down, a small part of the weight points along the path, and that part balances the drag. The rest of the weight points across the path, and the lift balances it.", "A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height."]}
  },
- "gate": {"fly": "The next level opens when you have answered the prediction and written your explanation.", "forces": "The next level opens when you have answered the prediction, tried the practice and written your explanation.", "lift": "The next level opens when you have answered the prediction, tried each practice and written your explanation.", "speed": "The next level opens when you have answered the prediction and written your explanation.", "code": "Teach it back opens when you have tried all four parts and written your explanation under the program in Put it together."},
+ "gate": {"fly": "The next level opens when you have answered the prediction and written your explanation.", "forces": "The next level opens when you have answered the prediction, tried the practice and written your explanation.", "lift": "The next level opens when you have answered the prediction, tried each practice and written your explanation.", "speed": "The next level opens when you have answered the prediction and written your explanation.", "fly0": "Fly first. The prediction and the explain box appear after your third flight, or when you pass the buoy.", "speed0": "Move the speed slider first. The prediction appears when you have found the lowest point of the curve or tried three speeds.", "speed1": "Answer the prediction above. The explain box appears after it.", "code": "Teach it back opens when you have tried all four parts and written your explanation under the program in Put it together."},
  "harderUI": {"q": "Do you want a harder one?"},
  "l3": {
   "heading": "Where lift comes from",
@@ -598,6 +598,7 @@ const COPY = {
  "l5": {
   "heading": "Inside the simulation",
   "exit": "Next: teach it back",
+  "runnerNarrow": "On a narrow screen, scroll the picture sideways to see the whole flight.",
   "second": "This is where the second sitting begins.",
   "more": "More practice",
   "mapLabel": "Map of the program",
@@ -893,7 +894,7 @@ const COPY = {
     "Time in the air"
    ]
   },
-  "together": {"lead": "You have now opened every part of the program. Because you can read it, you can also question it.", "steps": ["Read the loop once from top to bottom. The comments numbered 1, 2 and 3 mark where the lift, the sum of the forces and the time step begin.", {"t": "Choose one change to make. Two are set up for you:", "ul": [{"b": "A heavier bird.", "t": "Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here."}, {"b": "A different wing.", "t": "Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing."}]}, "Write your prediction in one line, then make the change and press Run.", "Explain what happened in the box under the program."], "pred": "My prediction", "wonder": {"id": "w-heavy", "q": "Are you wondering why the heavier bird lands shorter here than at Level 4?", "a": ["At Level 4 each bird flew at its own best speed. Here the launch speed is still 10 m/s, and the heavier bird's best speed is about 11.7 m/s. Change launch_speed and run it again."]}, "ideasTitle": "Further changes you could try", "ideas": ["Remove the drag from the F_net line.", "Make dt ten times larger, and then fifty times larger."]}
+  "together": {"lead": "You have now opened every part of the program. Because you can read it, you can also question it.", "steps": ["Read the loop once from top to bottom. The comments numbered 1, 2 and 3 mark where the lift, the sum of the forces and the time step begin.", {"t": "Choose one change to make. Two are set up for you:", "ul": [{"b": "A heavier bird.", "t": "Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here."}, {"b": "A different wing.", "t": "Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing."}]}, "Write your prediction in one line, then make the change and press Run.", "Explain what happened in the box under the program."], "pred": "My prediction", "wonder": {"id": "w-heavy", "q": "Are you wondering how the launch speed affects the heavier bird?", "a": ["At Level 4 each bird flew at its own best speed. Here the launch speed is still 10 m/s, and the heavier bird's best speed is about 11.7 m/s. Change launch_speed and run it again."]}, "ideasTitle": "Further changes you could try", "ideas": ["Remove the drag from the F_net line.", "Make dt ten times larger, and then fifty times larger."]}
  },
  "predictions": {
   "p1": {
@@ -966,17 +967,17 @@ const COPY = {
     {
      "k": "A",
      "t": "Not as far, because it is heavier",
-     "fb": "It is reasonable to expect a heavier bird to come down sooner. Test it: choose the heavier bird and find the bottom of its valley. Compare the best distance, and then compare the speed."
+     "fb": "It is reasonable to expect a heavier bird to come down sooner. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Compare the best distance, and then compare the speed."
     },
     {
      "k": "B",
      "t": "Just as far, but it has to fly faster to do it",
-     "fb": "Good prediction. Test it: choose the heavier bird and find the bottom of its valley. Then work out why the distance did not change."
+     "fb": "Good prediction. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Then work out why the distance did not change."
     },
     {
      "k": "C",
      "t": "Farther, because it has more weight pulling it forward",
-     "fb": "More weight does pull harder along the path. Test it: choose the heavier bird and find the bottom of its valley. Compare the best distance, and then compare the speed."
+     "fb": "More weight does pull harder along the path. Test it: choose the heavier bird, with the button under the graph above, and find the bottom of its valley. Compare the best distance, and then compare the speed."
     }
    ]
   },
@@ -1336,7 +1337,7 @@ const COPY = {
   "ex2": "Explain your thinking: no force on the bird points along the direction it is moving, and yet it keeps moving at a steady speed. How is that possible?",
   "ex3": "Explain your thinking: why does a gliding bird drop when it flies too slowly? Use the lift relationship in your explanation.",
   "ex4": "Explain your thinking: a glide ratio of about 13 is the best this bird can do, whatever it weighs. Describe one real situation in which the bird could travel farther than 13 m for each meter of height it loses, and say what that situation changes about the forces or the air.",
-  "exProg": "Explain your thinking: which line did you change, and what did you predict? What did the flight do, and why did the program produce that result?"
+  "exProg": "Explain your thinking: which line did you change? How did the flight compare with your prediction above, and why did the program produce that result?"
  },
  "explainUI": {
   "ask": "Get AI feedback",
@@ -1521,18 +1522,26 @@ const COPY = {
   }
   function render(){ ACTIVE = null; G.onRefresh = null; renderMap(); VIEW[LV[S.level].id](LV[S.level]); renderClear(); }
   function refresh(){ refresh0(); if (G.onRefresh) G.onRefresh(); }
-  function refresh0(){ renderMap(); const b = $('#next'), i = S.level; if (b && unlocked(i + 1)){ b.disabled = false; b.classList.remove('ghost'); const y = $('#navwhy'); if (y) y.textContent = ''; } }
+  function refresh0(){ renderMap(); const b = $('#next'), i = S.level; if (b && unlocked(i + 1)){ b.disabled = false; b.classList.remove('ghost'); const y = $('#navwhy'); if (y) y.textContent = ''; } else if (b && LV[i]){ const y = $('#navwhy'); if (y) y.textContent = gateText(LV[i]); } }
 
   function head(l){
     const eb = l.n ? 'Level ' + l.n + ' of 5' : l.id === 'start' ? C.map.start : l.id === 'teach' ? 'After Level 5' : 'End of the trail';
     return '<div class="eyebrow">' + eb + '</div><h2>' + esc(l.title) + '</h2>';
+  }
+  // what still stands between the student and the next level; before a prediction is on the page, the line names the step that brings it
+  function gateText(l){
+    const g = C.gate || {};
+    if (l.id === 'fly' && !(S.flights.passed || S.flights.count >= 3)) return g.fly0;
+    if (l.id === 'speed' && !(S.l4.found1 || (S.l4.tries || 0) >= 3)) return g.speed0;
+    if (l.id === 'speed' && !predTried('p4')) return g.speed1;
+    return g[l.id] || 'The next level opens when you finish this one.';
   }
   function foot(l){
     const i = LV.indexOf(l), nx = LV[i + 1], open = nx && unlocked(i + 1);
     let h = '<div class="navb">' + (i > 0 ? '<button type="button" class="btn ghost" id="prev">&larr; ' + esc(LV[i - 1].short) + '</button>' : '<span></span>');
     if (nx && l.exit) h += '<button type="button" class="btn' + (open ? '' : ' ghost') + '" id="next"' + (open ? '' : ' disabled') + '>' + esc(l.exit) + ' &rarr;</button>';
     h += '</div>';
-    if (nx && l.exit) h += '<div id="navwhy" class="navwhy muted" role="status">' + (open ? '' : esc((C.gate && C.gate[l.id]) || 'The next level opens when you finish this one.')) + '</div>';
+    if (nx && l.exit) h += '<div id="navwhy" class="navwhy muted" role="status">' + (open ? '' : esc(gateText(l))) + '</div>';
     return h;
   }
   function bindFoot(l, zoomEl, zoomAt){
@@ -1561,7 +1570,9 @@ const COPY = {
   const SMALL = 'claude-haiku-4-5-20251001';
   const askChat = (system, messages) => askAI(system, messages, 1000).catch(() => askAI(system, messages, 300, SMALL));
   const askFb = (system, messages, n) => askAI(system, messages, 1500).catch(e => { if (n > 1) return askFb(system, messages, n - 1); throw e; });
-  const askExplain = messages => askAI(PROMPT.explain, messages, 500).catch(() => askAI(PROMPT.explain, messages, 500));
+  // a reply that stops in the middle of a sentence is asked for once more, and is never shown cut off
+  const whole = t => /[.?!"'\u201d\u2019):]\s*$/.test(String(t).trim()) ? t : Promise.reject(new Error('cut off'));
+  const askExplain = messages => askAI(PROMPT.explain, messages, 900).then(whole).catch(() => askAI(PROMPT.explain, messages, 900).then(whole));
   function copyOut(txt, box){
     const show = ok => { box.innerHTML = '<div class="msg info">' + (ok ? 'Copied. Paste it into your AI Dojo or another AI chat.' : 'Select the text below, copy it, and paste it into your AI Dojo or another AI chat.') + '</div>' + (ok ? '' : '<textarea class="editor" rows="8" readonly>' + esc(txt) + '</textarea>'); };
     try { navigator.clipboard.writeText(txt).then(() => show(true), () => show(false)); } catch (e) { show(false); }
@@ -1580,6 +1591,7 @@ const COPY = {
       const z = PZ.filter(k => S.prog.pz[k] && S.prog.pz[k].checks);
       if (z.length) out.push('Level 5 line-ordering puzzles: ' + z.map(k => C.puzzles[k].name + (S.prog.pz[k].ok ? ' in a working order' : ' not in a working order yet') + ' after ' + S.prog.pz[k].checks + ' check' + (S.prog.pz[k].checks > 1 ? 's' : '')).join('; ') + '.');
       out.push('Changes the student has made to the GlowScript program: ' + progChanges() + '.');
+      if ((S.prog.pred || '').trim()) out.push('The prediction the student wrote before running their change in Put it together: "' + S.prog.pred.trim() + '".');
     }
     if (S.side.opt !== null) out.push('Side trail option chosen: ' + sideOptText() + '.');
     return out.join(' ');
@@ -1832,9 +1844,9 @@ const COPY = {
       '<div class="row"><button type="button" class="btn" id="startgo">' + esc(C.start.btn) + '</button></div><div class="msg warn" id="startmsg" role="status"></div>';
     const ta = $('#startta'), b = $('#startgo'), m = $('#startmsg');
     ta.value = S.startText;
-    const upd = () => { const ok = words(ta.value) >= 15; b.disabled = !ok; m.textContent = ok || !ta.value.trim() ? '' : C.start.more; };
+    const upd = () => { b.disabled = !ta.value.trim(); m.textContent = ''; };   // any answer of the student's own opens Level 1
     ta.oninput = () => { S.startText = ta.value; save(); upd(); };
-    b.onclick = () => { if (words(ta.value) < 15) return; S.started = true; save(); go(1, true); };
+    b.onclick = () => { if (!ta.value.trim()) return; S.started = true; save(); go(1, true); };
     upd();
   };
 
@@ -1924,6 +1936,7 @@ const COPY = {
       '<circle cx="260" cy="113.5" r="5" fill="#1B2533"/></svg><figcaption>' + esc(C.l2.wonder.cap) + '</figcaption></figure>') +
       '<p>' + esc(C.l2.ratioText) + '</p><div class="formula"><div class="f">' + esc(C.l2.formula) + '</div><div class="live" id="gr-live"></div></div>' +
       prHTML('pr1') + hardHTML('pr1', 'h1') + exHTML('ex2', C.explain.ex2) + foot(l);
+    if (!G.forces) S.theta = 3;   // the nose angle left over from Level 1 can be a stall; this level starts in a steady glide
     const cv = $('#c2'), sim = G.forces || (G.forces = {fl:newFlight(), add:false});
     bindTheta('th2', cv); bindSpeed($('#sim2')); bindPred('p2'); bindPr('pr1'); bindPr('h1'); bindEx('ex2', C.explain.ex2);
     // the sentences that answer the prediction appear after the first choice; a wrong 'forward' choice is offered the wondering question
@@ -2154,7 +2167,7 @@ const COPY = {
       $('#l4found').innerHTML = shown(L4.found1) ? '<div class="msg ok">' + esc(C.l4.found) + '</div>' : '';
       const hv = $('#l4heavy'); if (shown(L4.found2)){ if (!hv.firstChild) hv.innerHTML = '<div class="msg ok">' + blocks(C.l4.heavy) + '</div>' + wonderHTML(C.l4.wWater); } else hv.innerHTML = '';
       const pw = $('#p4wrap'); if (shown(tried4()) && !pw.firstChild){ pw.innerHTML = predHTML('p4'); bindPred('p4', paint); }
-      const ew = $('#ex4wrap'); if (shown(tried4()) && !ew.firstChild){ ew.innerHTML = exHTML('ex4', C.explain.ex4); bindEx('ex4', C.explain.ex4); $('#ex-ex4 .ask').insertAdjacentHTML('afterend', '<p class="guide">' + esc(C.l4.cue) + '</p>'); }
+      const ew = $('#ex4wrap'); if (shown(predTried('p4')) && !ew.firstChild){ ew.innerHTML = exHTML('ex4', C.explain.ex4); bindEx('ex4', C.explain.ex4); $('#ex-ex4 .ask').insertAdjacentHTML('afterend', '<p class="guide">' + esc(C.l4.cue) + '</p>'); }
       const bw = $('#birds');
       if (shown(predDone('p4'))){ if (!bw.firstChild){ bw.innerHTML = [[1, C.l4.bird1], [1.3, C.l4.bird2]].map(b => '<button type="button" class="segbtn" data-b="' + b[0] + '">' + esc(b[1]) + '</button>').join(''); $$('.segbtn', bw).forEach(b => b.onclick = () => { L4.bird = +b.dataset.b; save(); check(); paint(); }); } $$('.segbtn', bw).forEach(b => b.classList.toggle('on', +b.dataset.b === L4.bird)); }
       graph(ca, W, v, show); strip(cb, st, sess.best);
@@ -2165,7 +2178,7 @@ const COPY = {
       save(); refresh();
     };
     gs.value = L4.v; gs.oninput = () => { L4.v = +gs.value; check(); paint(); };
-    gs.onchange = () => { L4.tries = (L4.tries || 0) + 1; save(); paint(); };
+    gs.onchange = () => { L4.tries = (L4.tries || 0) + 1; save(); paint(); refresh0(); };
     legPaint(); paint();
     let lw = 0;
     ACTIVE = { draw(){ const w = ca.parentElement.clientWidth; if (w !== lw){ lw = w; paint(); } }, zoomAt(){ return [(ca._w || 600) / 2, (ca._h || 300) / 2]; }, state(){ return {v:L4.v, bird:L4.bird}; } };
@@ -2271,7 +2284,7 @@ const COPY = {
     tas.forEach((ta, i) => { ta.value = SD.plan[i]; ta.oninput = () => { SD.plan[i] = ta.value; E.text = planText(); save(); paint(); }; });
     const ui = {busy:b => { fbb.disabled = b; }, status:(c, t) => { st.className = 'msg ' + c; st.textContent = t; }, done:paint};
     fbb.onclick = () => {
-      if (words(SD.plan.join(' ')) < 25 || !SD.plan.every(t => t.trim())){ ui.status('warn', PL.planShort); return; }
+      if (!SD.plan.every(t => t.trim())){ ui.status('warn', PL.planShort); return; }
       requestFeedback(E, PROMPT.planQ, PROMPT.planNotes, planText(), ui);
     };
     gob.onclick = () => { if (!SD.plan.every(t => t.trim())) return; SD.saved = true; save(); drawReport(); refresh(); const r = $('#report'); if (r.scrollIntoView) r.scrollIntoView({block:'start', behavior:'smooth'}); };
@@ -2573,7 +2586,7 @@ const COPY = {
   VIEW.code = function(l){
     const K = S.prog; if (!(K.part >= 0 && K.part <= 5) || !partOpen(K.part)) K.part = 0;
     const P = K.part, T = L5.sec;
-    const runner = () => '<div class="runner"><iframe id="gsframe" title="' + esc(L5.runnerTitle) + '" src="glowscript/sim.html?sim=' + SIM + '"></iframe></div><p class="muted">' + esc(L5.runnerNote) + '</p>';
+    const runner = () => '<div class="runner"><iframe id="gsframe" title="' + esc(L5.runnerTitle) + '" src="glowscript/sim.html?sim=' + SIM + '"></iframe></div><p class="muted narrowonly">' + esc(L5.runnerNarrow) + '</p><p class="muted">' + esc(L5.runnerNote) + '</p>';
     const nextBtn = () => '<div class="row"><button type="button" class="btn" id="pnext">' + esc(L5.zoom[P]) + ' &rarr;</button></div><div class="muted" id="pwhy" role="status"></div>';
     const partHead = () => '<div class="step"><div class="eyebrow">' + esc(P === 5 ? L5.partAll : L5.partOf.replace('{n}', P)) + '</div><h3 class="parth">' + esc(L5.parts[P]) + '</h3>';
     let h = head(l), draw = null;
