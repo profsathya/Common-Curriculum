@@ -237,7 +237,7 @@
   .speeds .muted{align-self:center}
   .pzl{list-style:none; margin:8px 0; padding:0; display:flex; flex-direction:column; gap:6px}
   .pzi{display:flex; justify-content:space-between; gap:10px; align-items:center; border:1px solid var(--line); background:var(--card); border-radius:8px; padding:6px 8px 6px 12px; cursor:grab}
-  .pzi code{font-size:.9rem; white-space:pre-wrap}
+  .pzi code{font-size:.9rem; white-space:pre-wrap; min-width:0; overflow-wrap:anywhere}
   .pzi.ok{border-color:var(--ok); background:var(--ok-soft); cursor:default; padding:9px 12px}
   .pzi.drag{opacity:.5}
   .mv{display:flex; gap:4px; flex:none}
@@ -246,6 +246,8 @@
   .mvb:disabled{opacity:.35; cursor:not-allowed}
   .steps{margin:0 0 12px; padding-left:24px}
   .steps li{margin:5px 0}
+  .steps code{font-family:"IBM Plex Mono",monospace; font-size:.92em}
+  .steps .steps{margin:6px 0 4px}
   .secth{display:flex; align-items:center; gap:8px; margin:22px 0 10px; padding-top:14px; border-top:1px solid var(--line-soft)}
   .secth .pn{background:var(--tc); color:var(--on-tc); font-weight:600}
   .parth + .secth{border-top:0; padding-top:0; margin-top:6px}
@@ -320,7 +322,7 @@ The student changed the GlowScript program that calculates the glide (the nose a
 The student is planning a short side trail of their own after finishing the learning trail. Their plan has three parts: the question, what they will do, and what they expect to find.
 </script>
 <script type="text/plain" id="p-plan-notes">
-A sound plan has one specific question that can be answered in an hour or two; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
+A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
 </script>
 <script type="text/plain" id="p-classmate-system">
 You are playing a college classmate in CST286, an introductory physics course for computing students. You have not done the learning trail on how birds glide. The student you are talking with has just finished it. They flew a gliding bird and opened the flight up level by level:
@@ -508,7 +510,7 @@ const COPY = {
   "why": ["Press Add the forces to see why. Placed tip to tail, the three arrows close into a triangle, which means they add up to zero.", "By Newton's first law, an object with zero net force keeps moving in a straight line at a constant speed. That is a steady glide."],
   "wonder": {"id": "w-steady", "q": "Are you wondering why the bird keeps a steady velocity when nothing pushes it forward?", "peek": "A place to start: look at the direction of travel. The bird is always heading slightly downhill. The question below goes on from there.", "cap": "The slope is drawn steeper than a real glide, so that the small part of the weight can be seen.", "a": ["Look at the direction of travel. The bird is always heading slightly downhill. Because the path slopes down, a small part of the weight points along the path, and that part balances the drag. The rest of the weight points across the path, and the lift balances it.", "A glider is always falling, slowly and at an angle. It pays for every meter forward with a little height."]}
  },
- "gate": {"fly": "The next level opens when you have answered the prediction and written your explanation.", "forces": "The next level opens when you have answered the prediction, tried the practice and written your explanation.", "lift": "The next level opens when you have answered the prediction, tried each practice and written your explanation.", "speed": "The next level opens when you have answered the prediction and written your explanation."},
+ "gate": {"fly": "The next level opens when you have answered the prediction and written your explanation.", "forces": "The next level opens when you have answered the prediction, tried the practice and written your explanation.", "lift": "The next level opens when you have answered the prediction, tried each practice and written your explanation.", "speed": "The next level opens when you have answered the prediction and written your explanation.", "code": "Teach it back opens when you have tried all four parts and written your explanation under the program in Put it together."},
  "harderUI": {"q": "Do you want a harder one?"},
  "l3": {
   "heading": "Where lift comes from",
@@ -590,11 +592,14 @@ const COPY = {
    "The airflow picture at Level 3 is a sketch.",
    "The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft."
   ],
+  "stop": {"b": "A place to stop.", "t": "Levels 1 to 4 are the first sitting of this learning trail. Level 5, the teach-back and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Copy my work to submit now and paste it somewhere safe."},
   "exit": "Zoom in: inside the simulation"
  },
  "l5": {
   "heading": "Inside the simulation",
   "exit": "Next: teach it back",
+  "second": "This is where the second sitting begins.",
+  "more": "More practice",
   "mapLabel": "Map of the program",
   "parts": [
    "The whole program",
@@ -613,7 +618,7 @@ const COPY = {
    "Zoom in: one time step",
    "Zoom out: put it together"
   ],
-  "partWhy": "The next part opens when you finish this one.",
+  "partWhy": ["", "The next part opens when you have tried the practice.", "The next part opens when you have tried both practice steps and the puzzle.", "The next part opens when you have answered the prediction and tried the practice and the puzzle.", "Put it together opens when you have answered the prediction and tried the practice and the puzzle."],
   "partOf": "Part {n} of 4",
   "partAll": "All four parts",
   "sec": {
@@ -651,8 +656,8 @@ const COPY = {
     "ol": [
      "Press Run. The white line is the path of the bird. The three arrows are the same three forces as at Level 2.",
      "When the bird reaches the water, read the line under the picture that starts with RESULT. It says where the bird landed.",
-     "Change the nose angle in the first line of the program, and press Run again.",
-     "Find the nose angle that carries the bird farthest."
+     "Change `nose = 3` near the top of the program to another value between 2 and 6, and press Run again.",
+     "Try a second nose angle between 2 and 6 degrees, and compare the two RESULT lines. If you want to go on, look for the nose angle that carries the bird farthest."
     ]
    },
    "The bar above the code keeps your last two runs, so that you can compare them."
@@ -685,7 +690,7 @@ const COPY = {
      "ul": [
       "Your choices: the nose angle, the mass, the launch speed and the time step. These are the four lines marked change this.",
       "The bird and the air: g, the air density and the wing area. They are the same numbers as at Level 3.",
-      "Two rules: lift_coefficient and drag_coefficient. Each rule takes the wing tilt and gives back a coefficient.",
+      "One rule: lift_coefficient. It takes the wing tilt and gives back the lift coefficient. A second rule, for the drag, comes in Part 3.",
       "The start of the flight: the bird is at the top of the 30 m cliff, moving level at the launch speed."
      ]
     }
@@ -716,10 +721,6 @@ const COPY = {
     {
      "c": "return 0.1 * wing_tilt",
      "g": "everywhere else: 0.1 for each degree of tilt"
-    },
-    {
-     "c": "drag_coefficient(wing_tilt, CL)",
-     "g": "what the second rule gives back for the same wing tilt: 0.03 + 0.05 × CL², with extra drag when the wing is stalled"
     }
    ],
    "slider": "Wing tilt",
@@ -729,33 +730,9 @@ const COPY = {
    "canvas": "Graph of the lift coefficient against the wing tilt: it rises in a straight line up to 15 degrees and falls after that. A dot marks the wing tilt on the slider."
   },
   "lift": {
-   "idea": [
-    "The loop begins by finding the lift. You know the relationship from Level 3:",
-    {
-     "f": "lift = ½ × air density × speed² × wing area × lift coefficient"
-    },
-    "The air density and the wing area never change. So at every step the program has to work out two things:",
-    {
-     "ul": [
-      "The speed. It is the length of the velocity arrow, and GlowScript calculates the length of an arrow with mag( ).",
-      "The lift coefficient. It depends on how far the wing is tilted into the oncoming air."
-     ]
-    },
-    "The wing tilt is the step that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.",
-    "So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.",
-    "For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.",
-    "This one line explains the stall at Level 1. Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.",
-    "The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls."
-   ],
-   "watch": [
-    {
-     "ol": [
-      "Move the three sliders, and watch each line recalculate.",
-      "Set the nose to 10°.",
-      "Make the path steeper, a few degrees at a time, until the wing stalls."
-     ]
-    }
-   ],
+   "watch": ["The loop begins by finding the lift, with the relationship from Level 3. The air density and the wing area never change, so at every step the program works out two things: the speed and the lift coefficient. These five lines do that.", {"ol": ["Leave the nose and the speed where they are. Move the path angle slider, and watch the line for wing_tilt.", "Set the nose to 10°.", "Make the path steeper, a few degrees at a time, until the wing stalls."]}],
+   "idea": ["The line for wing_tilt is the one that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.", "So the tilt that counts is measured from the path: wing tilt = nose angle − path angle.", "For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°."],
+   "wonder": {"id": "w-stall5", "q": "Are you wondering how this one line explains the stall at Level 1?", "a": ["Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.", "The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls."]},
    "rows": [
     {
      "c": "speed = mag(bird.velocity)",
@@ -793,48 +770,14 @@ const COPY = {
    "canvas": "The bird with its nose at the chosen angle, the direction of travel, the wing tilt between them, and the lift and weight arrows."
   },
   "net": {
-   "idea": [
-    "The program now knows the size of the lift. Before it can add the forces, it needs two more things:",
-    {
-     "ul": [
-      "The size of the drag.",
-      "A direction for each force, because forces are vectors."
-     ]
-    },
-    "At Level 2 you added the forces by placing their arrows tip to tail. The program does the same addition with numbers.",
-    "The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.",
-    "The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.",
-    "For the directions, the program makes two arrows:",
-    {
-     "ul": [
-      "The arrow named along has length 1 and points in the direction of travel. hat( ) shrinks the velocity to length 1 without turning it.",
-      "The arrow named across is along turned a quarter turn. It points at a right angle to the path."
-     ]
-    },
-    "Each force is then a size times a direction:",
-    {
-     "ul": [
-      "The lift is lift × across.",
-      "The drag is drag × along, with a minus sign, because drag points backward along the path.",
-      "The weight is mass × g, straight down.",
-      "The net force is the sum of the three."
-     ]
-    }
-   ],
-   "watch": [
-    "Now test your prediction. The five lines below calculate a whole flight.",
-    {
-     "ol": [
-      "Switch one force off with the buttons under the code.",
-      "Say what you expect the path to look like.",
-      "Look at the path, and at where the bird lands."
-     ]
-    }
-   ],
+   "lead": ["The program now knows the size of the lift. It still needs the size of the drag and a direction for each force. Then it can add the three forces, as you did with arrows at Level 2."],
+   "watch": ["Now test your prediction. The five lines below calculate a whole flight.", {"ol": ["Switch one force off with the buttons under the code.", "Say what you expect the path to look like.", "Look at the path, and at where the bird lands."]}],
+   "idea": ["The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.", "The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4."],
+   "wonder": {"id": "w-dir", "q": "Are you wondering how the program gives a force its direction?", "a": ["Start with a bird flying level, to the right. Its direction of travel is an arrow of length 1 that points right, and the program calls that arrow along. Turn it a quarter turn counterclockwise, from right to up, and it points straight up. The program calls that arrow across.", "Each force is a size times a direction. The drag is the size of the drag times along, with a minus sign, because drag points backward. The lift is the size of the lift times across, so on a level path it points straight up. The weight is mass × g, straight down, whatever the path does. The net force is the sum of the three.", "When the path slopes downhill, along tilts down with it and across leans forward, and the same lines still give each force its direction. hat( ) is how the program makes along: it changes the length of the velocity arrow to 1 without changing its direction.", "In GlowScript, vector(x, y, 0) writes an arrow as how far right and how far up it points. On a level flight along is vector(1, 0, 0), and vector(-along.y, along.x, 0) swaps its two parts to give vector(0, 1, 0), which points straight up."]},
    "rows": [
     {
      "c": "CD = drag_coefficient(wing_tilt, CL)",
-     "g": "the rule from the setup gives the drag coefficient"
+     "g": "a second rule gives the drag coefficient: 0.03 + 0.05 × CL², with extra drag when the wing is stalled"
     },
     {
      "c": "drag = 0.5 * rho * speed**2 * wing_area * CD",
@@ -899,7 +842,8 @@ const COPY = {
     "The stepper below runs these lines one at a time. It starts with a time step of 0.1 s, so that each change is large enough to see. The nose is held at 3°.",
     {
      "ol": [
-      "Press Run one line. Watch which number changes, and by how much.",
+      "Press Run one line until one whole step has run. During this first step, watch only the velocity: which line changes it, and by how much?",
+      "Run a second step. This time watch only the position.",
       "After a few steps, press Run to the water.",
       "Choose a different time step and run to the water again. Compare the rows of the table."
      ]
@@ -949,26 +893,7 @@ const COPY = {
     "Time in the air"
    ]
   },
-  "together": {
-   "p": [
-    "You have now opened every part of the program. Because you can read it, you can also question it.",
-    {
-     "ol": [
-      "Read the loop once from top to bottom. The comments numbered 1, 2 and 3 mark where the lift, the sum of the forces and the time step begin.",
-      "Choose one change to make, and predict what the flight will do.",
-      "Make the change and press Run.",
-      "Explain what happened in the box under the program."
-     ]
-    }
-   ],
-   "ideasTitle": "Some changes you could try",
-   "ideas": [
-    "Remove the drag from the F_net line.",
-    "Make dt ten times larger, and then fifty times larger.",
-    "Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here. If it does not, look at the launch speed.",
-    "Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing."
-   ]
-  }
+  "together": {"lead": "You have now opened every part of the program. Because you can read it, you can also question it.", "steps": ["Read the loop once from top to bottom. The comments numbered 1, 2 and 3 mark where the lift, the sum of the forces and the time step begin.", {"t": "Choose one change to make. Two are set up for you:", "ul": [{"b": "A heavier bird.", "t": "Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here."}, {"b": "A different wing.", "t": "Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing."}]}, "Write your prediction in one line, then make the change and press Run.", "Explain what happened in the box under the program."], "pred": "My prediction", "wonder": {"id": "w-heavy", "q": "Are you wondering why the heavier bird lands shorter here than at Level 4?", "a": ["At Level 4 each bird flew at its own best speed. Here the launch speed is still 10 m/s, and the heavier bird's best speed is about 11.7 m/s. Change launch_speed and run it again."]}, "ideasTitle": "Further changes you could try", "ideas": ["Remove the drag from the F_net line.", "Make dt ten times larger, and then fifty times larger."]}
  },
  "predictions": {
   "p1": {
@@ -1187,6 +1112,8 @@ const COPY = {
    "unitFb": "The number is right, but check the unit. A coefficient is a plain number.",
    "hint": "20° is past 15°, so the first line answers: 1.5 − 0.08 × (20 − 15)."
   },
+  "prTilt": {"label": "Practice, first step", "q": "The nose of the bird points 3° above level. Its path slopes 5° downhill, so path_angle is −5°. What is the wing tilt?", "lo": 7.9, "hi": 8.1, "unit": "degrees", "units": ["choose a unit", "degrees", "N", "m", "m/s", "no unit"], "correct": "Correct. wing_tilt = nose − path_angle = 3 − (−5) = 8°.", "ranges": [{"lo": 2.9, "hi": 3.1, "fb": "3° is the nose angle, measured from level. The air arrives along the path, and the path slopes 5° downhill. Measure the nose from the path."}, {"lo": -2.1, "hi": -1.9, "fb": "Check the sign. path_angle is −5°, and subtracting a negative number adds: 3 − (−5)."}], "other": "Not yet. Use the line wing_tilt = nose − path_angle.", "unitFb": "The number is right, but check the unit. A wing tilt is an angle.", "hint": "wing_tilt = nose − path_angle = 3 − (−5)."},
+  "prCL": {"label": "Practice, second step", "q": "What does lift_coefficient give back for that wing tilt?", "lo": 0.79, "hi": 0.81, "unit": "no unit", "correct": "Correct. 8° is between −5° and 15°, so the last line of the rule answers: 0.1 × 8 = 0.8.", "ranges": [{"lo": 7.9, "hi": 8.1, "fb": "8 is the wing tilt. The rule multiplies it by 0.1."}], "other": "Not yet. Decide which line of the rule answers for a tilt of 8°, and put 8 in for wing_tilt.", "unitFb": "The number is right, but check the unit. A coefficient is a plain number.", "hint": "8° is between −5° and 15°, so the last line of the rule answers: 0.1 × wing_tilt."},
   "prLift": {
    "q": "The nose of the bird points 2° above level. Its path slopes 4° downhill, so path_angle is −4°. The bird is moving at 10 m/s. The wing area is 0.20 m² and the air density is 1.2 kg/m³. How much lift do the wings make?",
    "lo": 7.1,
@@ -1359,7 +1286,7 @@ const COPY = {
     {
      "a": 2,
      "b": 3,
-     "fb": "across is made by turning along a quarter turn, so along has to be made first."
+     "fb": "across is made by turning along a quarter turn, so along has to be made first. If these two arrows are new to you, open the question under The idea: Are you wondering how the program gives a force its direction? It starts with a bird flying level, to the right."
     },
     {
      "a": 1,
@@ -1461,25 +1388,21 @@ const COPY = {
     "b": "A learning trail that someone else laid out only takes you so far.",
     "t": "The skill this course has been building all semester is finding your own next question and following it."
    },
-   "Here you plan a short side trail of your own, do it, and report what you found."
+   "Here you plan a short side trail of your own, do it, and report what you found. Plan for about 20 minutes of work."
   ],
   "youWrote": "At the start you wrote:",
   "after": "Has this learning trail answered it? If part of it is still open, that is a good side trail. If you want other ideas, here are six.",
-  "options": [
-   "Measure a real glide. Fold a paper airplane, launch it gently from a measured height, and measure how far it travels. Work out its glide ratio and compare it with the bird's 13.",
-   "Flapping. In a glide nothing pushes the bird forward. Find out where the forward force comes from when a bird flaps.",
-   "Rising air. Hawks and vultures circle upward for minutes without flapping. Find out what is carrying them up, and what that changes in the force picture from Level 2.",
-   "The V formation. Find out what a goose gains by flying behind and to the side of another goose, and connect it to the air the wing pushes down at Level 3.",
-   "From bird to airplane. An airliner has a glide ratio of about 17. Find out how far it could glide from cruising height with its engines off, and what its pilots are trained to do in that case.",
-   "Another planet. The air on Mars is less than 2% as dense as the air on Earth. Use the lift relationship to work out what a glider or a helicopter has to do differently to fly there."
-  ],
+  "options": ["Measure a real glide. Fold one paper airplane, launch it gently three times from a measured height, and measure how far it travels each time. Work out its glide ratio and compare it with the bird's 13.", "Flapping. In a glide the bird has no thrust. Find out where the forward force comes from when a bird flaps.", "Rising air. Hawks and vultures circle upward for minutes without flapping. Find out what is carrying them up, and what that changes in the force picture from Level 2. Read one explanation, then sketch the air and the bird's arrows.", "The V formation. Find out what a goose gains by flying behind and to the side of another goose, and connect it to the air the wing pushes down at Level 3. Read one explanation, then sketch the air and the bird's arrows.", "From bird to airplane. An airliner has a glide ratio of about 17. Find out how far it could glide from cruising height with its engines off. If you want to go further, find out what its pilots are trained to do in that case.", "Another planet. The air on Mars is less than 2% as dense as the air on Earth. Use the lift relationship to work out what a glider or a helicopter has to do differently to fly there."],
   "own": "My own question",
+  "ownHint": "Choose one thing you can do in about 20 minutes.",
+  "starters": ["I expect a glide ratio of about ___, which is (higher / lower) than the bird's 13, because ___.", "I expect flapping to push air ___ and the bird ___, because ___.", "I expect rising air to change the bird's height above the ground by ___, because ___.", "I expect the goose behind to need (more / less) effort, because the air just off the tip of another goose's wing is moving (upward / downward), due to ___.", "I expect it could glide about ___ km from a height of ___ km, because ___.", "Keep the lift, the lift coefficient and the wing area the same, and use an air density 0.02 times the Earth's. I expect a glider on Mars to need a speed about ___ times higher, because ___.", "I expect ___ (give a direction or a number), because ___."],
+  "starterLead": "A place to start:",
   "plan": [
    "The question I want to answer",
    "What I will do to answer it (measure, simulate, calculate, read, ask someone)",
    "What I expect to find, and why"
   ],
-  "planGuide": "(Write your plan before you start. A plan with a prediction in it gives you something to check your result against.)",
+  "planGuide": "(Write your plan before you start. Give a direction or a number in what you expect, and a reason. That gives you something to check your result against.)",
   "planAsk": "Get AI feedback on my plan",
   "planShort": "Fill in all three parts of your plan first.",
   "save": "Save my plan and start",
@@ -1519,8 +1442,9 @@ const COPY = {
   const C = COPY, F = FLIGHT, D2R = Math.PI / 180, BUOY = 370;
   const words = t => String(t || '').trim().split(/\s+/).filter(Boolean).length;
   // short paragraphs, bullet lists, numbered steps and formulas, from the words file
+  const escc = t => esc(t).replace(/`([^`]+)`/g, '<code>$1</code>');   // `words` in the copy are shown as code
   const blocks = a => a.map(x => typeof x === 'string' ? '<p>' + esc(x) + '</p>' : x.b ? '<p><b class="pop">' + esc(x.b) + '</b>' + (x.t ? ' ' + esc(x.t) : '') + '</p>' : x.f ? '<div class="formula"><div class="f">' + esc(x.f) + '</div></div>' :
-    '<' + (x.ol ? 'ol' : 'ul') + ' class="steps">' + (x.ol || x.ul).map(t => '<li>' + esc(t) + '</li>').join('') + '</' + (x.ol ? 'ol' : 'ul') + '>').join('');
+    '<' + (x.ol ? 'ol' : 'ul') + ' class="steps">' + (x.ol || x.ul).map(t => '<li>' + escc(t) + '</li>').join('') + '</' + (x.ol ? 'ol' : 'ul') + '>').join('');
   const ptxt = id => { const e = document.getElementById(id); return e ? e.textContent.trim() : ''; };
   const PROMPT = {explain:ptxt('p-explain-system'), notes:{ex1:ptxt('p-notes-1'), ex2:ptxt('p-notes-2'), ex3:ptxt('p-notes-3'), ex4:ptxt('p-notes-4'), exProg:ptxt('p-notes-5')}, planQ:ptxt('p-plan-question'), planNotes:ptxt('p-plan-notes'), classmate:ptxt('p-classmate-system'), fb:ptxt('p-feedback-system')};
 
@@ -1530,7 +1454,7 @@ const COPY = {
   const fresh = () => ({level:0, startText:'', started:false, theta:0, speed:1,
     flights:{count:0, last:[], best:0, passed:false, beforeBuoy:null, lastPassed:false},
     pred:{}, pr:{}, ex:{}, l3:{tilt:6, air:10}, l4:{v:14, bird:1, found1:false, found2:false},
-    prog:{part:0, src:'', dt:0.1, runs:{}, pz:{}, c0:{tilt:6}, c2:{nose:2, speed:10, path:-4, stalled:false}, c3:{nose:3, on:{lift:true, drag:true, weight:true}, tried:[]}},
+    prog:{part:0, src:'', pred:'', dt:0.1, runs:{}, pz:{}, c0:{tilt:6}, c2:{nose:2, speed:10, path:-4, stalled:false}, c3:{nose:3, on:{lift:true, drag:true, weight:true}, tried:[]}},
     teach:{msgs:[], fb:''}, side:{opt:null, plan:['', '', ''], saved:false, report:['', '', '', '']}});
   function merge(a, b){ if (!b || typeof b !== 'object' || Array.isArray(b)) return a; Object.keys(b).forEach(k => { const v = b[k]; if (a[k] && typeof a[k] === 'object' && !Array.isArray(a[k]) && v && typeof v === 'object' && !Array.isArray(v)) merge(a[k], v); else a[k] = v; }); return a; }
   let S = fresh();
@@ -1650,7 +1574,7 @@ const COPY = {
     out.push('Levels opened: ' + LV.filter((l, i) => unlocked(i)).map(l => l.short).join(', ') + '.');
     out.push('Flights flown at Level 1: ' + f.count + (f.count ? ', best distance ' + Math.round(f.best) + ' m' : '') + '; ' + (f.passed ? 'passed the buoy after ' + f.beforeBuoy + ' flight' + (f.beforeBuoy === 1 ? '' : 's') + ' that did not.' : 'has not passed the buoy yet.'));
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k]; if (p && p.first) out.push(PRED_L[k] + ' prediction: first choice ' + optText(k, p.first) + ', final choice ' + optText(k, p.final) + '.'); });
-    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.checks) out.push('Practice problem ' + (i + 1) + ': ' + (p.ok ? 'correct' : 'not correct yet') + ' after ' + p.checks + ' check' + (p.checks > 1 ? 's' : '') + (p.hint ? ', opened the first step' : '') + '.'); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prTilt', 'prCL', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.checks) out.push('Practice problem ' + (i + 1) + ': ' + (p.ok ? 'correct' : 'not correct yet') + ' after ' + p.checks + ' check' + (p.checks > 1 ? 's' : '') + (p.hint ? ', opened the first step' : '') + '.'); });
     if (S.l4.found1 || S.l4.found2) out.push('Level 4: found the best speed for the 1.0 kg bird: ' + (S.l4.found1 ? 'yes' : 'no') + '; for the 1.3 kg bird: ' + (S.l4.found2 ? 'yes' : 'no') + '.');
     if (unlocked(5)){
       const z = PZ.filter(k => S.prog.pz[k] && S.prog.pz[k].checks);
@@ -1665,7 +1589,7 @@ const COPY = {
     if (f.passed) out.push('Flew ' + f.beforeBuoy + ' flight' + (f.beforeBuoy === 1 ? '' : 's') + ' at Level 1 before first passing the buoy'); else if (f.count) out.push('Flew ' + f.count + ' flights at Level 1 without passing the buoy');
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k], right = C.predictions[k].opts.find(o => o.ok); if (p && p.first && right && p.first !== right.k) out.push(PRED_L[k] + ' prediction: first chose ' + optText(k, p.first)); });
     if (S.pred.p4 && S.pred.p4.first) out.push('Level 4 prediction about the heavier bird: chose ' + optText('p4', S.pred.p4.first));
-    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.misses >= 2) out.push('Practice problem ' + (i + 1) + ' (' + C.practice[k].q + '): ' + p.misses + ' misses' + (p.ok ? ', then correct' : ', not solved')); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prTilt', 'prCL', 'prDrag', 'prStep'].forEach((k, i) => { const p = S.pr[k]; if (p && p.misses >= 2) out.push('Practice problem ' + (i + 1) + ' (' + C.practice[k].q + '): ' + p.misses + ' misses' + (p.ok ? ', then correct' : ', not solved')); });
     return '[Private notes for you, not written by the student. Trouble spots on the trail: ' + (out.length ? out.join('. ') + '.' : 'none recorded.') + ' The conversation starts now.]';
   }
 
@@ -2210,7 +2134,7 @@ const COPY = {
       '<div class="row" id="birds"></div></div>' +
       wonderHTML(C.l4.wFast) + wonderHTML(C.l4.wSlow) +
       '<div id="l4found"></div><div id="p4wrap"></div><div id="l4heavy"></div>' +
-      '<details class="wonder" id="w-limits"><summary>' + esc(C.l4.limitsSummary) + '</summary>' + blocks(C.l4.limits) + '</details><div id="ex4wrap"></div>' + foot(l);
+      '<details class="wonder" id="w-limits"><summary>' + esc(C.l4.limitsSummary) + '</summary>' + blocks(C.l4.limits) + '</details><div id="ex4wrap"></div><div class="msg info" id="l4stop">' + blocks([C.l4.stop]) + '</div>' + foot(l);
     const ca = $('#c4a'), cb = $('#c4b'), gs = $('#gs'), sess = G.speed || (G.speed = {best:null});
     const Wt = () => L4.bird === 1.3 ? 12.74 : 9.8;
     // the two parts of drag are off at first; a legend button or its wondering question switches one on
@@ -2332,12 +2256,14 @@ const COPY = {
   VIEW.side = function(l){
     const SD = S.side, PL = C.side;
     main.innerHTML = head(l) + blocks(PL.lead) + '<p>' + esc(PL.youWrote) + '</p><blockquote class="mine">' + esc(S.startText.trim() || '-') + '</blockquote><p>' + esc(PL.after) + '</p>' +
-      '<div class="choices" role="radiogroup">' + PL.options.concat([PL.own]).map((o, i) => '<label class="choice' + (SD.opt === i ? ' on' : '') + '"><input type="radio" name="sideopt" value="' + i + '"' + (SD.opt === i ? ' checked' : '') + '><span>' + esc(o) + '</span></label>').join('') + '</div>' +
+      '<div class="choices" role="radiogroup">' + PL.options.concat([PL.own]).map((o, i) => '<label class="choice' + (SD.opt === i ? ' on' : '') + '"><input type="radio" name="sideopt" value="' + i + '"' + (SD.opt === i ? ' checked' : '') + '><span>' + esc(o) + (i === PL.options.length ? ' ' + esc(PL.ownHint) : '') + '</span></label>').join('') + '</div>' +
       '<p class="guide">' + esc(PL.planGuide) + '</p>' +
-      PL.plan.map((p, i) => '<div class="field"><label for="plan' + i + '">' + esc(p) + '</label><textarea id="plan' + i + '" class="editor" rows="3" maxlength="1500"></textarea></div>').join('') +
+      PL.plan.map((p, i) => '<div class="field"><label for="plan' + i + '">' + esc(p) + '</label>' + (i === 2 ? '<p class="guide" id="starter" hidden></p>' : '') + '<textarea id="plan' + i + '" class="editor" rows="3" maxlength="1500"></textarea></div>').join('') +
       '<div class="row"><button type="button" class="btn ghost" id="planfb"></button><button type="button" class="btn" id="plango">' + esc(PL.save) + '</button></div><div class="msg" id="planst" role="status"></div><div id="planfbw"></div>' +
       '<div id="report"></div>' + foot(l);
-    $$('input[name=sideopt]').forEach(r => r.onchange = () => { SD.opt = +r.value; save(); $$('.choice').forEach((c, i) => c.classList.toggle('on', i === SD.opt)); });
+    const starter = () => { const t = SD.opt === null ? '' : PL.starters[SD.opt] || '', el = $('#starter'); el.hidden = !t; el.textContent = t ? PL.starterLead + ' ' + t : ''; $('#plan2').placeholder = t; };
+    $$('input[name=sideopt]').forEach(r => r.onchange = () => { SD.opt = +r.value; save(); $$('.choice').forEach((c, i) => c.classList.toggle('on', i === SD.opt)); starter(); });
+    starter();
     const E = S.ex.plan || (S.ex.plan = {text:'', rounds:[], asks:0});
     const tas = PL.plan.map((p, i) => $('#plan' + i)), fbb = $('#planfb'), gob = $('#plango'), st = $('#planst');
     const planText = () => PL.plan.map((p, i) => p + ':\n' + SD.plan[i].trim()).join('\n\n');
@@ -2397,9 +2323,15 @@ const COPY = {
   // parts of the level, in the order of the program: 0 whole, 1 setup, 2 lift, 3 sum of the forces, 4 time step, 5 together
   const PZ = ['pzLift', 'pzNet', 'pzStep'];
   const pzOK = k => { const p = S.prog.pz[k]; return !!p && (p.ok || p.misses >= 4); };
-  const partDone = i => i === 1 ? prOK('prSetup') : i === 2 ? prOK('prLift') && pzOK('pzLift') : i === 3 ? predDone('pDrag') && prOK('prDrag') && pzOK('pzNet') : i === 4 ? predDone('pDt') && prOK('prStep') && pzOK('pzStep') : true;
+  // Level 5 finished under the rule in force before 26 Nov 2026 stays finished
+  if (!S.v3){ S.old = S.old || {}; S.old.code = prOK('prSetup') && prOK('prLift') && pzOK('pzLift') && predDone('pDrag') && prOK('prDrag') && pzOK('pzNet') && predDone('pDt') && prOK('prStep') && pzOK('pzStep'); S.v3 = true; }
+  // a part is finished by one attempt at its prediction, at each practice step and at its puzzle, right or wrong.
+  // The lift problem Part 2 asked before 26 Nov 2026 (now More practice) counts for both of its steps.
+  const pzTried = k => { const p = S.prog.pz[k]; return !!p && (p.checks >= 1 || p.ok); };
+  const liftTried = k => prTried(k) || prTried('prLift');
+  const partDone = i => i === 1 ? prTried('prSetup') : i === 2 ? liftTried('prTilt') && liftTried('prCL') && pzTried('pzLift') : i === 3 ? predTried('pDrag') && prTried('prDrag') && pzTried('pzNet') : i === 4 ? predTried('pDt') && prTried('prStep') && pzTried('pzStep') : true;
   const partOpen = i => REVIEW || [1, 2, 3, 4].filter(j => j < i).every(partDone);
-  const codeDone = () => [1, 2, 3, 4].every(partDone);
+  const codeDone = () => was('code') || ([1, 2, 3, 4].every(partDone) && exWritten('exProg'));
 
   // the student's copy of the program is kept by this page, because the runner has no storage of its own
   window.addEventListener('message', ev => {
@@ -2519,7 +2451,6 @@ const COPY = {
       const t = c.tilt, v = PROG.liftC(t), row = t > 15 ? 0 : t < -5 ? 1 : 2;
       $('#l5t-o').textContent = t.toFixed(1) + '°';
       [0, 1, 2].forEach(i => { $('#su' + i).classList.toggle('cur', i === row); $('#su' + i + 'v').textContent = i === row ? v.toFixed(2) : ''; });
-      $('#su3v').textContent = PROG.dragC(t, v).toFixed(3);
       draw();
     };
     const r = $('#l5t'); r.value = c.tilt; r.oninput = () => { c.tilt = +r.value; save(); paint(); };
@@ -2647,7 +2578,7 @@ const COPY = {
     const partHead = () => '<div class="step"><div class="eyebrow">' + esc(P === 5 ? L5.partAll : L5.partOf.replace('{n}', P)) + '</div><h3 class="parth">' + esc(L5.parts[P]) + '</h3>';
     let h = head(l), draw = null;
     if (P === 0){
-      h += blocks(L5.intro) + sect(1, L5.runTitle) + blocks(L5.run) + runner() + sect(2, L5.builtTitle) + blocks(L5.built) + pmapHTML() + nextBtn();
+      h += '<p class="guide" id="l5second">' + esc(L5.second) + '</p>' + blocks(L5.intro) + sect(1, L5.runTitle) + blocks(L5.run) + runner() + sect(2, L5.builtTitle) + blocks(L5.built) + pmapHTML() + nextBtn();
     } else if (P === 1){
       const R = L5.setup;
       h += pmapHTML() + partHead() + sect(1, T.idea) + blocks(R.idea) + sect(2, T.rule) + blocks(R.watch) +
@@ -2655,16 +2586,17 @@ const COPY = {
         sect(3, T.solve) + prHTML('prSetup') + nextBtn() + '</div>';
     } else if (P === 2){
       const R = L5.lift;
-      h += pmapHTML() + partHead() + sect(1, T.idea) + blocks(R.idea) + sect(2, T.watch) + blocks(R.watch) +
+      h += pmapHTML() + partHead() + sect(1, T.watch) + blocks(R.watch) +
         '<div class="sim" id="sim5b"><div class="split"><div class="canwrap"><canvas id="c5b" aria-label="' + esc(R.canvas) + '"></canvas></div><div>' + codeRows(R.rows, 'lf') + '</div></div>' +
         hsl('l5n', R.sliders[0], -10, 20, 0.5) + hsl('l5s', R.sliders[1], 4, 20, 0.5) + hsl('l5p', R.sliders[2], -30, 10, 1) + '<div class="msg" id="lf-msg" role="status"></div></div>' +
-        sect(3, T.solve) + prHTML('prLift') + sect(4, T.build) + pzHTML('pzLift') + nextBtn() + '</div>';
+        sect(2, T.idea) + blocks(R.idea) + wonderHTML(R.wonder) + sect(3, T.solve) + prHTML('prTilt') + '<div id="prCLwrap" hidden>' + prHTML('prCL') + '</div>' +
+        '<details class="wonder" id="more-lift"><summary>' + esc(L5.more) + '</summary>' + prHTML('prLift') + '</details>' + sect(4, T.build) + pzHTML('pzLift') + nextBtn() + '</div>';
     } else if (P === 3){
       const R = L5.net;
-      h += pmapHTML() + partHead() + sect(1, T.idea) + blocks(R.idea) + sect(2, T.watch) + predHTML('pDrag') + blocks(R.watch) +
+      h += pmapHTML() + partHead() + sect(1, T.watch) + blocks(R.lead) + predHTML('pDrag') + blocks(R.watch) +
         '<div class="sim" id="sim5c"><div class="split"><div>' + codeRows(R.rows, 'nf') + '<div class="togs" id="nf-tog" role="group" aria-label="' + esc(R.togLabel) + '"><span class="muted">' + esc(R.togLabel) + '</span>' + R.toggles.map(t => '<button type="button" class="segbtn" data-f="' + t[0] + '">' + esc(t[2]) + '</button>').join('') + '</div><p class="muted" id="nf-snap"></p></div>' +
         '<div><div class="canwrap"><canvas id="c5c" aria-label="' + esc(R.canvas) + '"></canvas></div><p class="muted">' + esc(R.stretch) + '</p>' + hsl('l5q', R.slider, -10, 20, 0.5) + '<div class="msg" id="nf-msg" role="status"></div></div></div></div>' +
-        sect(3, T.solve) + prHTML('prDrag') + sect(4, T.build) + pzHTML('pzNet') + nextBtn() + '</div>';
+        sect(2, T.idea) + blocks(R.idea) + wonderHTML(R.wonder) + sect(3, T.solve) + prHTML('prDrag') + sect(4, T.build) + pzHTML('pzNet') + nextBtn() + '</div>';
     } else if (P === 4){
       const R = L5.step;
       h += pmapHTML() + partHead() + sect(1, T.idea) + blocks(R.idea) + sect(2, T.watch) + blocks(R.watch) +
@@ -2675,22 +2607,25 @@ const COPY = {
         predHTML('pDt') + sect(3, T.solve) + prHTML('prStep') + sect(4, T.build) + pzHTML('pzStep') + nextBtn() + '</div>';
     } else {
       const R = L5.together;
-      h += pmapHTML() + partHead() + blocks(R.p) + runner() + '<h4 class="sub">' + esc(R.ideasTitle) + '</h4><ul class="steps">' + R.ideas.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>' + exHTML('exProg', C.explain.exProg) + '</div>';
+      h += pmapHTML() + partHead() + '<p>' + esc(R.lead) + '</p><ol class="steps">' + R.steps.map(x => typeof x === 'string' ? '<li>' + escc(x) + '</li>' : '<li>' + esc(x.t) + '<ul class="steps">' + x.ul.map(u => '<li><b>' + esc(u.b) + '</b> ' + esc(u.t) + '</li>').join('') + '</ul></li>').join('') + '</ol>' +
+        '<div class="field"><label for="mypred">' + esc(R.pred) + '</label><input type="text" id="mypred" class="editor" maxlength="300" autocomplete="off"></div>' +
+        runner() + wonderHTML(R.wonder) + '<h4 class="sub">' + esc(R.ideasTitle) + '</h4><ul class="steps">' + R.ideas.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>' + exHTML('exProg', C.explain.exProg) + '</div>';
     }
     main.innerHTML = h + foot(l);
     const setPart = i => { if (!partOpen(i)) return; K.part = i; save(); render(); if (main.scrollIntoView) main.scrollIntoView({block:'start'}); };
     const bindMap = () => $$('.pbox[data-p]', main).forEach(b => b.onclick = () => setPart(+b.dataset.p));
     const upd = () => {
       const m = $('.pmap', main); if (m && !m.contains(document.activeElement)){ m.outerHTML = pmapHTML(); bindMap(); }
-      const b = $('#pnext'); if (b){ const ok = partOpen(P + 1); b.disabled = !ok; b.classList.toggle('ghost', !ok); $('#pwhy').textContent = ok ? '' : L5.partWhy; }
+      const b = $('#pnext'); if (b){ const ok = partOpen(P + 1); b.disabled = !ok; b.classList.toggle('ghost', !ok); $('#pwhy').textContent = ok ? '' : L5.partWhy[P]; }
+      const cw = $('#prCLwrap'); if (cw) cw.hidden = !shown(liftTried('prTilt') || prTried('prCL'));
     };
     bindMap();
     if ($('#pnext')) $('#pnext').onclick = () => setPart(P + 1);
     if (P === 1){ draw = setupBox(); bindPr('prSetup'); }
-    else if (P === 2){ draw = liftBox(); bindPr('prLift'); bindPz('pzLift'); }
+    else if (P === 2){ draw = liftBox(); bindPr('prTilt'); bindPr('prCL'); bindPr('prLift'); bindPz('pzLift'); }
     else if (P === 3){ bindPred('pDrag'); draw = netBox(); bindPr('prDrag'); bindPz('pzNet'); }
     else if (P === 4){ draw = stepperBox(); bindPred('pDt'); bindPr('prStep'); bindPz('pzStep'); }
-    else if (P === 5) bindEx('exProg', C.explain.exProg);
+    else if (P === 5){ bindEx('exProg', C.explain.exProg); const mp = $('#mypred'); mp.value = K.pred || ''; mp.oninput = () => { K.pred = mp.value; save(); }; }
     G.onRefresh = upd; upd();
     if (draw){ const cv = $('canvas', main); let lw = cv.parentElement.clientWidth; ACTIVE = { draw(){ const w = cv.parentElement.clientWidth; if (w !== lw){ lw = w; draw(); } } }; }
     bindFoot(l);
@@ -2731,8 +2666,9 @@ const COPY = {
     L.push('', 'Predictions');
     ['p1', 'p2', 'p3', 'p4', 'pDrag', 'pDt'].forEach((k, i) => { const p = S.pred[k]; L.push(PRED_L[k] + ': ' + C.predictions[k].q, '  First choice: ' + (p && p.first ? optText(k, p.first) : 'not answered yet'), '  Final choice: ' + (p && p.final ? optText(k, p.final) : 'not answered yet')); });
     L.push('', 'Practice problems');
-    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prLift', 'prDrag', 'prStep'].forEach(k => { const p = S.pr[k] || {}, P = C.practice[k]; L.push(P.q, '  My answer: ' + ((p.val || '').trim() ? p.val.trim() + (p.unit ? ' ' + p.unit : ' (no unit chosen)') : 'not answered yet'), '  Result: ' + (p.ok ? 'correct' : p.checks ? 'not correct yet' : 'not checked yet'), '  Checks made: ' + (p.checks || 0)); });
+    ['pr1', 'pr2', 'pr3a', 'pr3', 'prSetup', 'prTilt', 'prCL', 'prDrag', 'prStep'].forEach(k => { const p = S.pr[k] || {}, P = C.practice[k]; L.push(P.q, '  My answer: ' + ((p.val || '').trim() ? p.val.trim() + (p.unit ? ' ' + p.unit : ' (no unit chosen)') : 'not answered yet'), '  Result: ' + (p.ok ? 'correct' : p.checks ? 'not correct yet' : 'not checked yet'), '  Checks made: ' + (p.checks || 0)); });
     ['h1', 'h2', 'h3'].forEach(k => { const p = S.pr[k], P = C.practice[k]; if (p && p.checks && P) L.push('A harder question I chose to try: ' + P.q, '  My answer: ' + (p.val || '').trim() + (p.unit ? ' ' + p.unit : ''), '  Result: ' + (p.ok ? 'correct' : 'not correct yet'), '  Checks made: ' + p.checks); });
+    { const p = S.pr.prLift, P = C.practice.prLift; if (p && p.checks) L.push('More practice I chose to try: ' + P.q, '  My answer: ' + (p.val || '').trim() + (p.unit ? ' ' + p.unit : ''), '  Result: ' + (p.ok ? 'correct' : 'not correct yet'), '  Checks made: ' + p.checks); }
     L.push('', 'Explain your thinking');
     ['ex1', 'ex2', 'ex3', 'ex4', 'exProg'].forEach(k => exReport(L, k, C.explain[k]));
     L.push('Level 4', 'Best speed found for the 1.0 kg bird: ' + (S.l4.found1 ? 'yes' : 'no'), 'Best speed found for the 1.3 kg bird: ' + (S.l4.found2 ? 'yes' : 'no'), '');
@@ -2740,6 +2676,7 @@ const COPY = {
     L.push('Level 5: inside the simulation', 'Time steps I ran to the water in the stepper: ' + (ks.length ? ks.map(d => d + ' s (reached the water at ' + Math.round(K.runs[d].x) + ' m in ' + K.runs[d].n + ' steps)').join('; ') : 'none yet'));
     L.push('Forces I switched off in the net force: ' + (K.c3.tried.length ? K.c3.tried.join('; ') : 'none yet'));
     PZ.forEach(k => { const p = K.pz[k], P = C.puzzles[k]; L.push('Put the lines in order: ' + P.name, '  Result: ' + (p && p.ok ? 'in a working order' : p && p.checks ? 'not in a working order yet' : 'not checked yet'), '  Checks made: ' + (p ? p.checks : 0)); if (p && p.first){ L.push('  The first order I checked:'); p.first.forEach(id => L.push('    ' + P.lines[id])); } });
+    L.push('Put it together, my prediction before I ran my change: ' + ((K.pred || '').trim() || 'not written yet'));
     L.push('My changes to the program: ' + progChanges(), '');
     const T = S.teach;
     if (T.msgs.length){ L.push('Teach it back', 'Classmate: ' + C.teach.opener); T.msgs.forEach(m => L.push((m.r === 'u' ? 'Me: ' : 'Classmate: ') + m.t)); if (T.fb) L.push('', 'Feedback I received:', T.fb); }

@@ -312,11 +312,15 @@ The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio abo
 
 A place to start: think about what this model held fixed. The air was still, the wing kept one shape, and the bird did not flap.
 
+**A place to stop.** Levels 1 to 4 are the first sitting of this learning trail. Level 5, the teach-back and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Copy my work to submit now and paste it somewhere safe.
+
 (Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then: "The next level opens when you have answered the prediction and written your explanation.")
 
 (Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". Under 12 words: Write a few sentences first. Say what you saw on the simulation and why you think it happens. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
 
 ## Level 5: Inside the simulation
+
+*This is where the second sitting begins.*
 
 **Every flight on this page was calculated by a program.** At this level you open that program and see how it works.
 
@@ -331,8 +335,8 @@ What you will do:
 
 1. Press Run. The white line is the path of the bird. The three arrows are the same three forces as at Level 2.
 2. When the bird reaches the water, read the line under the picture that starts with RESULT. It says where the bird landed.
-3. Change the nose angle in the first line of the program, and press Run again.
-4. Find the nose angle that carries the bird farthest.
+3. Change `nose = 3` near the top of the program to another value between 2 and 6, and press Run again.
+4. Try a second nose angle between 2 and 6 degrees, and compare the two RESULT lines. If you want to go on, look for the nose angle that carries the bird farthest.
 
 The bar above the code keeps your last two runs, so that you can compare them.
 
@@ -356,9 +360,9 @@ With the nose at 3° the flight lasts about 37 seconds. That is about 3,700 pass
 
 The boxes below are a map of the program. Open them from top to bottom.
 
-(Page note: the map of the program, drawn as boxes that are buttons, numbered 1 to 6 from top to bottom in the order the program runs: "The whole program", "Set up the bird and the air", then a dashed box "The loop: repeat until the bird reaches the water" holding a dashed box "Find the net force" with "The lift" and "The drag, and the sum of the forces", and under it "One time step", then "Put it together". A part opens when the part before it is finished: its prediction answered right, its practice problem correct or 4 misses, and its puzzle in a working order or 4 misses. A locked box shows a lock, a finished one a tick. The map is shown at the top of every part. Each part ends with a button to the next part ("Zoom in: the setup", "Zoom in: the lift", "Zoom in: the drag, and the sum of the forces", "Zoom in: one time step", "Zoom out: put it together"). Until a part is finished that button shows: The next part opens when you finish this one.)
+(Page note: the map of the program, drawn as boxes that are buttons, numbered 1 to 6 from top to bottom in the order the program runs: "The whole program", "Set up the bird and the air", then a dashed box "The loop: repeat until the bird reaches the water" holding a dashed box "Find the net force" with "The lift" and "The drag, and the sum of the forces", and under it "One time step", then "Put it together". A part opens when the part before it is finished: one attempt at its prediction, at each practice step and at its puzzle, right or wrong. A locked box shows a lock, a finished one a tick. The map is shown at the top of every part. Each part ends with a button to the next part ("Zoom in: the setup", "Zoom in: the lift", "Zoom in: the drag, and the sum of the forces", "Zoom in: one time step", "Zoom out: put it together"). Until a part is finished that button shows, in Part 1: "The next part opens when you have tried the practice." In Part 2: "The next part opens when you have tried both practice steps and the puzzle." In Part 3: "The next part opens when you have answered the prediction and tried the practice and the puzzle." In Part 4: "Put it together opens when you have answered the prediction and tried the practice and the puzzle.")
 
-(Page note: inside a part the steps carry numbered headings: "The idea" or "Watch the lines run" / "Watch a rule run", then "Solve one by hand", then "Build this part".)
+(Page note: inside a part the steps carry numbered headings. Parts 1 and 4 begin with "The idea", then "Watch a rule run" or "Watch the lines run". Parts 2 and 3 begin with "Watch the lines run", then "The idea". Then "Solve one by hand", then "Build this part".)
 
 ### Part 1 of 4: Set up the bird and the air
 
@@ -368,7 +372,7 @@ The setup is the first section of the program. It runs once, before anything mov
 
 - Your choices: the nose angle, the mass, the launch speed and the time step. These are the four lines marked change this.
 - The bird and the air: g, the air density and the wing area. They are the same numbers as at Level 3.
-- Two rules: lift_coefficient and drag_coefficient. Each rule takes the wing tilt and gives back a coefficient.
+- One rule: lift_coefficient. It takes the wing tilt and gives back the lift coefficient. A second rule, for the drag, comes in Part 3.
 - The start of the flight: the bird is at the top of the 30 m cliff, moving level at the launch speed.
 
 **2. Watch a rule run**
@@ -383,7 +387,6 @@ In a program, a rule like this is called a function. At every time step the loop
 - `if wing_tilt > 15: return max(0, 1.5 - 0.08 * (wing_tilt - 15))` past 15° the wing is stalled, and the lift coefficient falls
 - `if wing_tilt < -5: return -0.5` a wing tilted far below the oncoming air is pushed down
 - `return 0.1 * wing_tilt` everywhere else: 0.1 for each degree of tilt
-- `drag_coefficient(wing_tilt, CL)` what the second rule gives back for the same wing tilt: 0.03 + 0.05 × CL², with extra drag when the wing is stalled
 
 (Page note: the lines of lift_coefficient are shown as a list; the line that answers for the chosen wing tilt is highlighted and shows its answer. Beside it a graph of the lift coefficient against the wing tilt from -10° to 30°, with the part past 15° shaded and labelled "stalled", and a dot labelled "lift coefficient" at the chosen wing tilt. Slider "Wing tilt" -10° to 30° (default 6°).)
 
@@ -401,30 +404,11 @@ In a program, a rule like this is called a function. At every time step the loop
 
 ### Part 2 of 4: The lift
 
-**1. The idea**
+**1. Watch the lines run**
 
-The loop begins by finding the lift. You know the relationship from Level 3:
+The loop begins by finding the lift, with the relationship from Level 3. The air density and the wing area never change, so at every step the program works out two things: the speed and the lift coefficient. These five lines do that.
 
-> lift = ½ × air density × speed² × wing area × lift coefficient
-
-The air density and the wing area never change. So at every step the program has to work out two things:
-
-- The speed. It is the length of the velocity arrow, and GlowScript calculates the length of an arrow with mag( ).
-- The lift coefficient. It depends on how far the wing is tilted into the oncoming air.
-
-The wing tilt is the step that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.
-
-So the tilt that counts is measured from the path, not from level: wing tilt = nose angle − path angle.
-
-For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.
-
-This one line explains the stall at Level 1. Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.
-
-The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls.
-
-**2. Watch the lines run**
-
-1. Move the three sliders, and watch each line recalculate.
+1. Leave the nose and the speed where they are. Move the path angle slider, and watch the line for wing_tilt.
 2. Set the nose to 10°.
 3. Make the path steeper, a few degrees at a time, until the wing stalls.
 
@@ -438,7 +422,46 @@ The wing tilt keeps growing although the nose has not moved. When it passes 15°
 
 When the wing tilt is past 15°: Stalled: the wing tilt is past 15°, so the lift coefficient is falling.
 
+**2. The idea**
+
+The line for wing_tilt is the one that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.
+
+So the tilt that counts is measured from the path: wing tilt = nose angle − path angle.
+
+For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.
+
+Wondering question, closed until the student clicks it, never locked:
+
+**Are you wondering how this one line explains the stall at Level 1?**
+
+Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.
+
+The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls.
+
 **3. Solve one by hand**
+
+**Practice, first step:** The nose of the bird points 3° above level. Its path slopes 5° downhill, so path_angle is −5°. What is the wing tilt?
+
+- Answer accepted: 7.9 to 8.1 degrees
+- Correct: Correct. wing_tilt = nose − path_angle = 3 − (−5) = 8°.
+- If the number is between 2.9 and 3.1: 3° is the nose angle, measured from level. The air arrives along the path, and the path slopes 5° downhill. Measure the nose from the path.
+- If the number is between -2.1 and -1.9: Check the sign. path_angle is −5°, and subtracting a negative number adds: 3 − (−5).
+- Other: Not yet. Use the line wing_tilt = nose − path_angle.
+- Right number, wrong unit: The number is right, but check the unit. A wing tilt is an angle.
+- First step (after 2 misses): wing_tilt = nose − path_angle = 3 − (−5).
+
+(Page note: the unit list for the first step is: degrees, N, m, m/s, no unit. The second step appears once the first has been checked once, right or wrong.)
+
+**Practice, second step:** What does lift_coefficient give back for that wing tilt?
+
+- Answer accepted: 0.79 to 0.81 no unit
+- Correct: Correct. 8° is between −5° and 15°, so the last line of the rule answers: 0.1 × 8 = 0.8.
+- If the number is between 7.9 and 8.1: 8 is the wing tilt. The rule multiplies it by 0.1.
+- Other: Not yet. Decide which line of the rule answers for a tilt of 8°, and put 8 in for wing_tilt.
+- Right number, wrong unit: The number is right, but check the unit. A coefficient is a plain number.
+- First step (after 2 misses): 8° is between −5° and 15°, so the last line of the rule answers: 0.1 × wing_tilt.
+
+**More practice** (closed until the student clicks it; nothing depends on it)
 
 **Practice:** The nose of the bird points 2° above level. Its path slopes 4° downhill, so path_angle is −4°. The bird is moving at 10 m/s. The wing area is 0.20 m² and the air density is 1.2 kg/m³. How much lift do the wings make?
 
@@ -477,32 +500,9 @@ The page accepts any order that keeps these rules, and gives this message when o
 
 ### Part 3 of 4: The drag, and the sum of the forces
 
-**1. The idea**
+**1. Watch the lines run**
 
-The program now knows the size of the lift. Before it can add the forces, it needs two more things:
-
-- The size of the drag.
-- A direction for each force, because forces are vectors.
-
-At Level 2 you added the forces by placing their arrows tip to tail. The program does the same addition with numbers.
-
-The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.
-
-The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.
-
-For the directions, the program makes two arrows:
-
-- The arrow named along has length 1 and points in the direction of travel. hat( ) shrinks the velocity to length 1 without turning it.
-- The arrow named across is along turned a quarter turn. It points at a right angle to the path.
-
-Each force is then a size times a direction:
-
-- The lift is lift × across.
-- The drag is drag × along, with a minus sign, because drag points backward along the path.
-- The weight is mass × g, straight down.
-- The net force is the sum of the three.
-
-**2. Watch the lines run**
+The program now knows the size of the lift. It still needs the size of the drag and a direction for each force. Then it can add the three forces, as you did with arrows at Level 2.
 
 **Predict:** You remove the drag from the net force and leave the lift and the weight. The nose stays at 3°. What does the bird do?
 
@@ -521,7 +521,7 @@ Now test your prediction. The five lines below calculate a whole flight.
 2. Say what you expect the path to look like.
 3. Look at the path, and at where the bird lands.
 
-- `CD = drag_coefficient(wing_tilt, CL)` the rule from the setup gives the drag coefficient
+- `CD = drag_coefficient(wing_tilt, CL)` a second rule gives the drag coefficient: 0.03 + 0.05 × CL², with extra drag when the wing is stalled
 - `drag = 0.5 * rho * speed**2 * wing_area * CD` the same relationship as the lift, with CD in place of CL
 - `along = hat(bird.velocity)` an arrow of length 1 in the direction of travel
 - `across = vector(-along.y, along.x, 0)` along turned a quarter turn: at a right angle to the path
@@ -536,6 +536,24 @@ The numbers beside the lines are for the last instant before the bird reaches th
 Heights are drawn stretched, so that you can see the shape of the path.
 
 Results: The bird reached the water {x} m from the cliff after {t} s. / The bird is still in the air after 120 s. It is {x} m from the cliff and {y} m above the water. / The bird climbed out of the top of the picture.
+
+**2. The idea**
+
+The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.
+
+The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.
+
+Wondering question, closed until the student clicks it, never locked:
+
+**Are you wondering how the program gives a force its direction?**
+
+Start with a bird flying level, to the right. Its direction of travel is an arrow of length 1 that points right, and the program calls that arrow along. Turn it a quarter turn counterclockwise, from right to up, and it points straight up. The program calls that arrow across.
+
+Each force is a size times a direction. The drag is the size of the drag times along, with a minus sign, because drag points backward. The lift is the size of the lift times across, so on a level path it points straight up. The weight is mass × g, straight down, whatever the path does. The net force is the sum of the three.
+
+When the path slopes downhill, along tilts down with it and across leans forward, and the same lines still give each force its direction. hat( ) is how the program makes along: it changes the length of the velocity arrow to 1 without changing its direction.
+
+In GlowScript, vector(x, y, 0) writes an arrow as how far right and how far up it points. On a level flight along is vector(1, 0, 0), and vector(-along.y, along.x, 0) swaps its two parts to give vector(0, 1, 0), which points straight up.
 
 **3. Solve one by hand**
 
@@ -567,7 +585,7 @@ The lines, in the order the page first shows them:
 The page accepts any order that keeps these rules, and gives this message when one is broken:
 
 - `CD` before `drag`: The drag line multiplies by CD, so the drag coefficient has to be worked out first.
-- `along` before `across`: across is made by turning along a quarter turn, so along has to be made first.
+- `along` before `across`: across is made by turning along a quarter turn, so along has to be made first. If these two arrows are new to you, open the question under The idea: Are you wondering how the program gives a force its direction? It starts with a bird flying level, to the right.
 - `drag` before `F_net`: The net force includes the drag, so the drag has to be worked out before the F_net line.
 - `across` before `F_net`: The F_net line points the lift along across and the drag along along. Both arrows have to be made before it.
 - In a working order: That is the net force: three sizes, three directions and one sum. It is the same addition you did with arrows at Level 2, done with numbers.
@@ -591,9 +609,10 @@ The program never knows the whole path in advance. It only takes the next small 
 
 The stepper below runs these lines one at a time. It starts with a time step of 0.1 s, so that each change is large enough to see. The nose is held at 3°.
 
-1. Press Run one line. Watch which number changes, and by how much.
-2. After a few steps, press Run to the water.
-3. Choose a different time step and run to the water again. Compare the rows of the table.
+1. Press Run one line until one whole step has run. During this first step, watch only the velocity: which line changes it, and by how much?
+2. Run a second step. This time watch only the position.
+3. After a few steps, press Run to the water.
+4. Choose a different time step and run to the water again. Compare the rows of the table.
 
 - `while bird.pos.y > 0 and t < 300:` repeat for as long as the bird is above the water, and for 300 s at most
 - `F_net = ...` the net force on the bird at this instant: the lines you opened in the last two parts
@@ -655,22 +674,30 @@ The page accepts any order that keeps these rules, and gives this message when o
 You have now opened every part of the program. Because you can read it, you can also question it.
 
 1. Read the loop once from top to bottom. The comments numbered 1, 2 and 3 mark where the lift, the sum of the forces and the time step begin.
-2. Choose one change to make, and predict what the flight will do.
-3. Make the change and press Run.
+2. Choose one change to make. Two are set up for you:
+   - **A heavier bird.** Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here.
+   - **A different wing.** Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing.
+3. Write your prediction in one line, then make the change and press Run.
 4. Explain what happened in the box under the program.
+
+**My prediction** (Page note: one line above the program, up to 300 characters. It is saved, and copied with the work as its own line. The Run button does not wait for it.)
 
 (Page note: the GlowScript runner again, with the student's copy of the program.)
 
-**Some changes you could try**
+Wondering question under the program, closed until the student clicks it, never locked:
+
+**Are you wondering why the heavier bird lands shorter here than at Level 4?**
+
+At Level 4 each bird flew at its own best speed. Here the launch speed is still 10 m/s, and the heavier bird's best speed is about 11.7 m/s. Change launch_speed and run it again.
+
+**Further changes you could try**
 
 - Remove the drag from the F_net line.
 - Make dt ten times larger, and then fifty times larger.
-- Set mass to 1.3. Level 4 found that the heavier bird can glide just as far. Check whether it does here. If it does not, look at the launch speed.
-- Change one number in lift_coefficient or drag_coefficient, as if the bird had a different wing.
 
 **Explain your thinking: which line did you change, and what did you predict? What did the flight do, and why did the program produce that result?**
 
-(Page note: exit button "Next: teach it back" opens when Parts 1 to 4 are finished.)
+(Page note: exit button "Next: teach it back" opens when Parts 1 to 4 are finished and something is written in this explain box. Until then: "Teach it back opens when you have tried all four parts and written your explanation under the program in Put it together." A student who finished Level 5 before 26 Nov 2026 keeps it finished. The side trail opens at the same moment.)
 
 ## Teach it back
 
@@ -694,7 +721,7 @@ What you type here is sent to the course AI helper so that it can reply. The cou
 
 **A learning trail that someone else laid out only takes you so far.** The skill this course has been building all semester is finding your own next question and following it.
 
-Here you plan a short side trail of your own, do it, and report what you found.
+Here you plan a short side trail of your own, do it, and report what you found. Plan for about 20 minutes of work.
 
 At the start you wrote:
 
@@ -702,21 +729,31 @@ At the start you wrote:
 
 Has this learning trail answered it? If part of it is still open, that is a good side trail. If you want other ideas, here are six.
 
-1. Measure a real glide. Fold a paper airplane, launch it gently from a measured height, and measure how far it travels. Work out its glide ratio and compare it with the bird's 13.
-2. Flapping. In a glide nothing pushes the bird forward. Find out where the forward force comes from when a bird flaps.
-3. Rising air. Hawks and vultures circle upward for minutes without flapping. Find out what is carrying them up, and what that changes in the force picture from Level 2.
-4. The V formation. Find out what a goose gains by flying behind and to the side of another goose, and connect it to the air the wing pushes down at Level 3.
-5. From bird to airplane. An airliner has a glide ratio of about 17. Find out how far it could glide from cruising height with its engines off, and what its pilots are trained to do in that case.
+1. Measure a real glide. Fold one paper airplane, launch it gently three times from a measured height, and measure how far it travels each time. Work out its glide ratio and compare it with the bird's 13.
+2. Flapping. In a glide the bird has no thrust. Find out where the forward force comes from when a bird flaps.
+3. Rising air. Hawks and vultures circle upward for minutes without flapping. Find out what is carrying them up, and what that changes in the force picture from Level 2. Read one explanation, then sketch the air and the bird's arrows.
+4. The V formation. Find out what a goose gains by flying behind and to the side of another goose, and connect it to the air the wing pushes down at Level 3. Read one explanation, then sketch the air and the bird's arrows.
+5. From bird to airplane. An airliner has a glide ratio of about 17. Find out how far it could glide from cruising height with its engines off. If you want to go further, find out what its pilots are trained to do in that case.
 6. Another planet. The air on Mars is less than 2% as dense as the air on Earth. Use the lift relationship to work out what a glider or a helicopter has to do differently to fly there.
-7. My own question
+7. My own question Choose one thing you can do in about 20 minutes.
 
-*(Write your plan before you start. A plan with a prediction in it gives you something to check your result against.)*
+*(Write your plan before you start. Give a direction or a number in what you expect, and a reason. That gives you something to check your result against.)*
 
 **The question I want to answer**
 
 **What I will do to answer it (measure, simulate, calculate, read, ask someone)**
 
 **What I expect to find, and why**
+
+(Page note: when an option is chosen, its starter is shown above this box after the words "A place to start:", and as the grey text inside the empty box. Nothing is typed into the box for the student. The starters, in the order of the options:)
+
+1. I expect a glide ratio of about ___, which is (higher / lower) than the bird's 13, because ___.
+2. I expect flapping to push air ___ and the bird ___, because ___.
+3. I expect rising air to change the bird's height above the ground by ___, because ___.
+4. I expect the goose behind to need (more / less) effort, because the air just off the tip of another goose's wing is moving (upward / downward), due to ___.
+5. I expect it could glide about ___ km from a height of ___ km, because ___.
+6. Keep the lift, the lift coefficient and the wing area the same, and use an air density 0.02 times the Earth's. I expect a glider on Mars to need a speed about ___ times higher, because ___.
+7. I expect ___ (give a direction or a number), because ___.
 
 (Page note: button "Get AI feedback on my plan" (same mechanics and round-keeping as the Explain cards; needs 25 words across the three boxes, else: Fill in all three parts of your plan first.) and button "Save my plan and start" (needs all three boxes filled).)
 
@@ -811,7 +848,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-A sound plan has one specific question that can be answered in an hour or two; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
+A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
 ```
 
 ### Teach it back: classmate system prompt
