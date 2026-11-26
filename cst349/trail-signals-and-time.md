@@ -4,6 +4,8 @@ Editable companion to `trail-signals-and-time.html`. Edit the student-facing wor
 
 Shape (v2 backward chain, 16 Nov 2026; revised 18 Nov 2026 from Nancy's review): six boxes that run backward from a role the student wants to the next 30 days and the next 7 days, then a short check-in interview that walks the chain forward. In Boxes 2 to 4 the student writes a first answer, makes one quick guess, sees one finding from a recent study, and updates the answer. The numbers and sources sit behind a "See the numbers and where they come from" expander. Reviewer shortcut: press **Open all boxes** at the top right, or add `?unlock=1` to the URL.
 
+What changed on 26 Nov 2026: in Box 2 the quick guess is replaced by a short scenario in which the student is the hiring manager choosing between two finalists, Morgan and Jamie. The Veracode numbers moved behind a wondering question. Boxes 3 and 4 keep their quick guess.
+
 What changed on 18 Nov 2026 (Nancy's review):
 - Shorter opening and a three-line "How each box works" in Box 1.
 - After each first answer: one finding, one note on the student's first answer, one note for their path, one line on what the study cannot tell them. All other statistics and sources moved into the expander.
@@ -48,9 +50,49 @@ Picture your first day in a job or internship you want. Then work backward, one 
 
 Write a line or two about what you showed that the other candidates did not.
 
-**2. See what a recent study found.**
-- Quick guess: A security company (Veracode) tested code written by AI tools. More than 95% of it ran without errors. About how much of it also passed the security checks? (About 90% · **About 55%** · About 25%)
-- After the guess: More than 95% of the AI-written code ran, and only about 55% of it was secure. The security number has stayed about the same from year to year.
+**2. Now sit on the other side of the table.** (Page note: this step opens from a button with the same words, once the first answer has an option and a line. It took the place of the quick guess on 26 Nov 2026.)
+
+**For the next few minutes you are the hiring manager.** Your team looks after the sign-up page that a campus club uses for its events. You have two finalists, Morgan and Jamie, and one job.
+
+Last week you sent both of them the same piece of work. An AI tool had written a waiting list for events that are full, and you asked each finalist to get it ready for members to use. Each of them starts by telling you what they did.
+
+- **Morgan:** "I made the waiting list ready for real members. I checked it carefully, I thought about how the club really runs its events, and I can explain every choice in it."
+- **Jamie:** "I made the waiting list safe to put in front of members. I checked it the way people really use a sign-up page, I found out how the club handles a full event today, and I can explain why it works the way it does."
+
+Both finalists claim the same three things. You have time for three questions. Choose the three you most want to ask, and read both answers to each one.
+
+(Page note: the five questions are buttons. Pressing one shows both answers under it. After three, the other two cannot be pressed.)
+
+1. "You said you checked it. What exactly did you try, and what happened?"
+   - **Morgan:** "I ran it many times with different names and different events, and it gave the right result every time. The tests the AI tool wrote all pass as well. I am confident it is solid."
+   - **Jamie:** "Three things. I signed up twice with the same email, and it put me on the list twice, so I fixed that. I changed the number at the end of the page address and saw another member's sign-up with their email, so I fixed that and added a test for it. I did not get to test two people taking the last seat in the same second."
+2. "You said you know how the club runs its events. Where did you learn that?"
+   - **Morgan:** "I have been to a lot of club events, so I know how sign-ups go. People want it to be quick and to look good on a phone. That is why I added a countdown and a dark mode."
+   - **Jamie:** "I asked the club's events officer what she does today when an event is full. She texts the next person and gives them two hours to answer. So an open seat is now held for two hours before it moves to the next person on the list."
+3. "Why is the waiting list first come, first served?"
+   - **Morgan:** "It is the fairest way, and it is what members expect."
+   - **Jamie:** "I thought about giving priority to members who missed the last event. I kept first come, first served because anyone can check the order, and the events officer told me that arguments about fairness take up most of her time. The cost is that someone who was unlucky last time gets no help this time."
+4. "The club now wants paying members to get seats before guests. What would you change?"
+   - **Morgan:** "That is a simple change. I would update the waiting list and make sure everything still works."
+   - **Jamie:** "One place: the step that picks who gets an open seat. Today it takes the earliest sign-up. I would have it take the earliest paying member first. Then I would check one case by hand, a guest who signed up before a member."
+5. "What have you not checked?"
+   - **Morgan:** "Nothing I can think of. I am confident in it."
+   - **Jamie:** "Two people taking the last seat in the same second, and what happens when the email to the next person fails."
+
+**Make the offer** (Page note: appears once three questions have been asked.)
+
+**Which finalist gets the job?** Morgan · Jamie
+
+1. Pick one claim your finalist made. What did they show you that would let you check it yourself?
+2. What would you still ask the other finalist before you ruled them out?
+
+(Page note: the page does not mark the choice right or wrong. Under the two boxes it asks one question back, with a box for the answer, which is not required.)
+- If the student chooses Morgan: Morgan may be just as capable as Jamie. From today's answers, which of Morgan's three claims could you check yourself tomorrow? If you cannot find one, write what you would ask Morgan to bring to a second conversation.
+- If the student chooses Jamie: Jamie gave you things you can check. Which of Jamie's claims did you not get evidence for today?
+
+(Page note: the button "See what a recent study found" opens the next step once three questions are asked, a finalist is chosen, and something is written for 1 and 2.)
+
+**3. See what a recent study found.**
 - **What the study found:** Many applicants can now show working code. Employers look for people who can check it and explain it. Employers in this study said they look for people who can:
   - find what is wrong in AI-written work,
   - explain why they chose one approach over another, and
@@ -61,9 +103,12 @@ Write a line or two about what you showed that the other candidates did not.
   - Improving a system: This is close to what employers in the study described: checking work that has problems, working within real limits, and explaining what you would change if the requirements changed.
   - Understanding users: Understanding the users and the problem helps you decide what to build, which employers in the study valued. Pair it with technical skill you can show without AI, because 62% of engineering leaders in a 2026 survey do not allow AI in technical interviews.
 - **For your path** and **What this study cannot tell you:** one short note each, by path (see "Path notes" below).
+- Wondering question, closed until clicked: **Are you wondering how often AI-written code runs and still has a problem?** A security company (Veracode) tested code written by AI tools. More than 95% of it ran without errors, and only about 55% of it also passed the security checks. The security number has stayed about the same from year to year.
 - Expander, "See the numbers and where they come from": *The 'Consequence' Gap* (Burning Glass Institute and Break Through Tech, Nov 2026; 1.03 million job ads, 54 practitioners at 46 organizations); code review in job ads 7.8% (2020) to 18.5% (June 2026), software testing 17.9%; Karat survey (Jan 2026, 400 engineering leaders): 71% say skill is harder to assess, 62% do not allow AI in interviews; the report's six capabilities (pp. 22 - 23); Veracode figures on p. 13.
 
-**3. Update your answer.** Rewrite or keep your answer about what convinced the hiring manager in your path. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain.
+**4. Update your answer.** **Back to your own Day 1.** Look at the first answer you wrote at the top of this box. Which part of it could a hiring manager check, and what would you show them?
+
+Rewrite or keep your answer about what convinced the hiring manager in your path. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain.
 
 Under the box: This starts as a copy of your first answer. Change it, or add why you are keeping it. (Page note: the box counts as finished once the text is different from the first answer. The same line and rule are under the update box in Boxes 3 and 4.)
 
