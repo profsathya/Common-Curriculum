@@ -1079,6 +1079,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
   const KEY = 'cst286-nand-trail-v2';
   let S = {code:{}, pass:{}, nands:{}, pred:{}, games:{}, inv:{}, level:0, path:[]};
+  // ?reset=1 starts the trail from nothing, for a reader who needs a fresh walk
+  if (/[?&]reset=1/.test(location.search)){ try { localStorage.removeItem(KEY); } catch (e) {} }
   try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); if (j && typeof j === 'object') S = Object.assign(S, j); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
   // trouble spots, kept in this browser only: hints opened and failed test runs per level

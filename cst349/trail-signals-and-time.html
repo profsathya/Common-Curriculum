@@ -511,6 +511,7 @@
       S = Object.assign(freshState(), parsed);
       S.hrs = Object.assign({}, DEFAULT_HRS, parsed.hrs || {});
       S.l4Chips = Array.isArray(parsed.l4Chips) ? parsed.l4Chips : [];
+      S.l4Top = Array.isArray(parsed.l4Top) ? parsed.l4Top : [];
       S.chat = Object.assign({ msgs: [], fb: '', opener: '' }, parsed.chat || {});
       S.hm = Object.assign({ asked: [], pick: '', a1: '', a2: '', a3: '' }, parsed.hm || {}); if (!Array.isArray(S.hm.asked)) S.hm.asked = [];
       // 26 Nov 2026: keep-or-revise. An update that already differs from the first answer counts as a revision.
@@ -670,6 +671,17 @@
     return ' [keep or revise not chosen]';
   }
 
+  const B4W = {
+    src: `Two kinds of evidence are behind these two sentences. The first rests on a security company's test of code written by AI tools, most of which ran. The second rests on interviews with 54 people at 46 organizations, and on what entry-level job ads ask for.`,
+    top: `Which one or two of these will you rely on most this month?`,
+    topHow: `Press one or two. The others stay in your plan.`,
+    topLock: `Mark the one or two you will rely on most to open the study.`,
+    topNote: `You said you will rely most on these this month:`
+  };
+  // Box 4: with three or more options selected, the student marks the one or two they will rely on most
+  function l4NeedTop(){ return S.l4Chips.length >= 3; }
+  function l4Top(){ return (S.l4Top || []).filter(id => S.l4Chips.includes(id)).slice(0, 2); }
+  function l4CanOpen(){ return S.l4Chips.length >= 1 && S.l4First.trim().length >= 10 && (!l4NeedTop() || l4Top().length >= 1); }
   const B5W = {
     hoursQ: `How many hours a week can you really give over the next 30 days, outside your required classes?`,
     range: `hours a week, from 1 to 20`,
@@ -1047,6 +1059,7 @@
           '<div class="evcard">' +
           '<span class="lbl">What the study found</span>' +
           '<h4>Many applicants can now show working code. Employers look for people who can check it and explain it.</h4>' +
+          '<p class="muted" id="l2-src">' + B4W.src + '</p>' +
           '<p>Employers in this study said they look for people who can:</p>' +
           '<ul><li>find what is wrong in AI-written work,</li><li>explain why they chose one approach over another, and</li><li>say what they would change if the requirements changed.</li></ul>' +
           '<div class="msg info"><b>For your first answer:</b> ' + esc(pickFeedback[S.l2Pick] || '') + '</div>' +
@@ -1199,7 +1212,7 @@
   /* ---------- Box 4: Three Steps Back - Building the Proof & Support ---------- */
   function renderStop3(el){
     const tk = curTrack();
-    const canOpen = S.l4Chips.length >= 1 && S.l4First.trim().length >= 10;
+    const canOpen = l4CanOpen(), top = l4Top();
 
     let chipDiag = [];
     if (S.l4Chips.includes('ai_fast') && !S.l4Chips.includes('ai_check')) chipDiag.push('You selected fast AI drafts without checking what AI produced. Adding the checking step gives you work you can explain and stand behind.');
@@ -1222,11 +1235,15 @@
           return '<button type="button" class="cbtn' + (on ? ' picked' : '') + '" data-chip="' + c.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + (on ? '&#10003; ' : '+ ') + esc(c.label) + '</button>';
         }).join('') +
       '</div>' +
+      (l4NeedTop() ? '<div id="l4-top"><p style="margin-top:12px"><b>' + B4W.top + '</b> <span class="muted">' + B4W.topHow + '</span></p><div class="choices">' +
+        INGREDIENT_CHIPS.filter(c => S.l4Chips.includes(c.id)).map(c => { const on = top.includes(c.id);
+          return '<button type="button" class="cbtn' + (on ? ' picked' : '') + '" data-top="' + c.id + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (!on && top.length >= 2 ? ' disabled' : '') + '>' + esc(c.label) + '</button>'; }).join('') +
+        '</div></div>' : '') +
       '<p style="margin-top:10px"><label for="l4-first">Briefly describe what you built or improved, and how AI, courses, peers or mentors were part of how you worked:</label></p>' +
       '<textarea id="l4-first" class="note-in" rows="2"' + (S.l4Open ? ' readonly' : '') + ' placeholder="To build that evidence, I worked on ... and used help from ...">' + esc(S.l4First) + '</textarea>' +
       (S.l4Open ? '<p class="muted">' + KRW.locked + '</p>' : '') +
       (!S.l4Open ? '<div class="row"><button type="button" class="btn blaze" id="l4-open-btn"' + (canOpen ? '' : ' disabled') + '>See what a recent study found</button>' +
-        (!canOpen ? '<span class="muted">Select at least one option and write a line above to open the study.</span>' : '') + '</div>' : '') +
+        (!canOpen ? '<span class="muted" id="l4-why">' + (S.l4Chips.length >= 1 && S.l4First.trim().length >= 10 ? B4W.topLock : 'Select at least one option and write a line above to open the study.') + '</span>' : '') + '</div>' : '') +
       '</div>';
 
     if (S.l4Open){
@@ -1252,7 +1269,7 @@
           '<span class="lbl">What the study found</span>' +
           '<h4>Judgment that comes from real practice and feedback keeps its value.</h4>' +
           '<p>You build this kind of judgment by working on real problems and getting feedback from other people.</p>' +
-          '<div class="msg info"><b>From the options you selected:</b><ul>' + chipDiag.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' +
+          '<div class="msg info"><b>From the options you selected:</b><ul>' + (l4NeedTop() && top.length ? '<li id="l4-topnote">' + B4W.topNote + ' ' + esc(top.map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ')) + '.</li>' : '') + chipDiag.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' +
           '<div class="track-lens"><b>For ' + esc(tk.name) + ':</b> ' + esc(tk.l4Lens) + '</div>' +
           '<p class="limit"><b>What this study cannot tell you:</b> The authors say their results describe a pattern and do not prove that AI caused it. A St. Louis Fed study (June 2026) found that the overall drop in job openings explains more of the weaker job market for young workers than AI does.</p>' +
           studyDetails([
@@ -1275,14 +1292,22 @@
       const id = b.dataset.chip;
       const idx = S.l4Chips.indexOf(id);
       if (idx >= 0) S.l4Chips.splice(idx, 1); else S.l4Chips.push(id);
+      S.l4Top = l4Top();
       clearIdleOpener(); save(); render();
+    });
+    $$('[data-top]', el).forEach(b => b.onclick = () => {
+      const id = b.dataset.top, cur = l4Top(), k = cur.indexOf(id);
+      if (k >= 0) cur.splice(k, 1); else if (cur.length < 2) cur.push(id);
+      S.l4Top = cur; clearIdleOpener();
+      const y = window.scrollY; save(); render(); window.scrollTo(0, y);
     });
     const f1 = $('#l4-first', el);
     if (f1) f1.oninput = () => {
       S.l4First = f1.value; if (S.l4Keep === 'keep') S.l4Final = S.l4First; save();
       const ag = $('#l4-again', el); if (ag) ag.innerHTML = '<b>Your first answer:</b> ' + esc(S.l4First);
       const btn = $('#l4-open-btn', el);
-      if (btn) btn.disabled = !(S.l4Chips.length >= 1 && S.l4First.trim().length >= 10);
+      if (btn) btn.disabled = !l4CanOpen();
+      const why = $('#l4-why', el); if (why) why.textContent = l4CanOpen() ? '' : (S.l4Chips.length >= 1 && S.l4First.trim().length >= 10 ? B4W.topLock : 'Select at least one option and write a line above to open the study.');
     };
     const ob = $('#l4-open-btn', el);
     if (ob) ob.onclick = () => {
@@ -1395,7 +1420,7 @@
       'Box 2 sharpened (What convinced hiring manager): ' + (S.l2Final || '(blank)') + krNote('l2'),
       'Box 3 first instinct (' + (S.l3Pick || 'none') + '): ' + (S.l3First || '(blank)'),
       'Box 3 sharpened (How a human saw the work): ' + (S.l3Final || '(blank)') + krNote('l3'),
-      'Box 4 ingredients: ' + (S.l4Chips.join(', ') || 'none'),
+      'Box 4 ingredients: ' + (S.l4Chips.join(', ') || 'none') + (l4NeedTop() && l4Top().length ? ' | relies most on this month: ' + l4Top().join(', ') : ''),
       'Box 4 sharpened (How proof was built & verified + help used): ' + (S.l4Final || '(blank)') + krNote('l4'),
       'Box 5 next-30-day weekly budget (' + S.budget + ' hrs/wk): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + 'h').join(', ') + ' | hours by answer: ' + GROUPS.map(g => 'Box ' + g + '=' + (S.ans[g] || 0) + 'h').join(', '),
       'Box 5 concrete 7-day step: ' + (S.step7d || '(blank)'),
@@ -1667,6 +1692,7 @@
       '',
       'Box 4 (How you built your work, and what help you used):',
       '  Selected: ' + (S.l4Chips.length ? S.l4Chips.map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ') : '[none]'),
+      ...(l4NeedTop() && l4Top().length ? ['  I will rely most on this month: ' + l4Top().map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ')] : []),
       '  First answer: ' + (S.l4First.trim() || '[not written yet]'),
       ...krReport('l4'),
       '',

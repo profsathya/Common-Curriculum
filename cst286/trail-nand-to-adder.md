@@ -14,6 +14,8 @@ Every computer you have used could be built from millions of copies of one tiny 
 
 ---
 
+Reviewer note: opening the page once with `?reset=1` at the end of the address clears the saved work in that browser, so the trail starts from nothing. Remove it from the address afterwards, or every reload starts over.
+
 ## Level 1 - A machine that adds (Adder)
 
 **After this level you can**

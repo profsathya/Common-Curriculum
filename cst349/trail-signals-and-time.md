@@ -133,7 +133,9 @@ Both finalists claim the same three things. You have time for three questions. C
 (Page note: the button "See what a recent study found" opens the next step once three questions are asked, a finalist is chosen, and something is written for 1 and 2.)
 
 **3. See what a recent study found.**
-- **What the study found:** Many applicants can now show working code. Employers look for people who can check it and explain it. Employers in this study said they look for people who can:
+- **What the study found:** Many applicants can now show working code. Employers look for people who can check it and explain it.
+  - Under the heading, which finding rests on which evidence: Two kinds of evidence are behind these two sentences. The first rests on a security company's test of code written by AI tools, most of which ran. The second rests on interviews with 54 people at 46 organizations, and on what entry-level job ads ask for.
+  - Employers in this study said they look for people who can:
   - find what is wrong in AI-written work,
   - explain why they chose one approach over another, and
   - say what they would change if the requirements changed.
@@ -200,13 +202,15 @@ Describe in a line or two how your name and your work reached a person who makes
 - Checking and questioning what AI produced (security, cost, unusual cases)
 - Feedback from peers, mentors, alumni, or real users
 
+Shown when three or more are selected: **Which one or two of these will you rely on most this month?** Press one or two. The others stay in your plan. (Page note: the selected options are shown again as buttons, and at most two can be pressed. The study opens once one is pressed. Until then, beside the button: Mark the one or two you will rely on most to open the study.)
+
 Briefly describe what you built or improved, and how AI, courses, peers or mentors were part of how you worked.
 
 **2. See what a recent study found.**
 - Quick guess: A Stanford study of payroll records found that companies have been hiring fewer 22 to 25 year-olds in the jobs most exposed to AI. Which kind of work was affected most? (**Work that follows written procedures you can learn from a textbook or tutorial** · Work that depends on judgment learned through experience · All kinds of work equally)
 - After the guess: Employment fell among young workers in jobs built on written, textbook knowledge. It rose among experienced workers in jobs built on judgment learned through practice and mentorship.
 - **What the study found:** Judgment that comes from real practice and feedback keeps its value. You build this kind of judgment by working on real problems and getting feedback from other people.
-- **From the options you selected** (at most two of these, by what was selected):
+- **From the options you selected** (first, when the student marked one or two: "You said you will rely most on these this month: [the options]."; then at most two of these, by what was selected):
   - You selected fast AI drafts without checking what AI produced. Adding the checking step gives you work you can explain and stand behind.
   - Consider adding work on an existing codebase or a messy dataset, because it lets you practice fitting into what is already there.
   - Consider adding feedback from peers, mentors, alumni or real users, because judgment grows faster when other people question your choices.
