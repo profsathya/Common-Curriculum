@@ -655,6 +655,8 @@ After pressing it: Your work is copied. A Gmail message is opening in a new tab.
 
 Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.
 
+If no new tab opened: (followed by the link "Open a Gmail message")
+
 If the browser did not open the tab: Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself. (with the link "Open a Gmail message")
 
 If the page could not copy: The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message. (Page note: the whole text is shown in a box, with the same line about keeping the whole text and the link "Open a Gmail message". The page says "Your work is copied" only when the copy succeeded.)

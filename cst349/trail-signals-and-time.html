@@ -1480,6 +1480,8 @@
       if (o && o.ok && !x.ok) return o;
       if (o && !x.ok && !x.note && o.note) return { ok: false, note: o.note, prev: true };   // the new summary gave no words for it: keep the earlier ones, labelled
       return x; });
+    // every summary is kept for the copied work, with the place in the conversation it followed and the marks as it left them
+    T.hist = (T.hist || []).concat([{ at: (T.msgs || []).length, fb: T.fb, ideas: T.ideas ? T.ideas.map(x => ({ ok: !!x.ok, note: x.note || '', prev: !!x.prev })) : null }]).slice(-12);
   }
   function ideasHTML(T){
     const ID = T.ideas || IDEAS.map(() => ({ ok: false, note: '' })), allOk = !!T.ideas && ID.every(x => x.ok), tried = T.hardAsked || {};
@@ -1804,7 +1806,7 @@
   /* ---------- Save my work, bring it back, and the 30-minute invitation (26 Nov 2026).
      The same code is on the three trails; only TSC differs. ---------- */
   var tsReady = false;
-  const TSW = {"save": "Save my work", "back": "Bring back saved work", "ok": "Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "okNoTab": "Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "keep": "Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.", "fail": "The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.", "gmail": "Open a Gmail message", "subject": "My work on {trail}, saved {date}", "body": "Paste your saved work under this line.", "block": "Saved data for this page. Keep everything from the START line to the END line.", "backHow": "Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.", "backBtn": "Bring it back", "backBad": "This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.", "backAsk": "This replaces the work kept in this browser with the work you pasted. Bring it back?", "backYes": "Yes, bring it back", "backNo": "Cancel", "backDone": "Your saved work is back.", "invite": "You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going."};
+  const TSW = {"save": "Save my work", "back": "Bring back saved work", "ok": "Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "okNoTab": "Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.", "keep": "Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.", "fail": "The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.", "gmail": "Open a Gmail message", "noTab": "If no new tab opened:", "subject": "My work on {trail}, saved {date}", "body": "Paste your saved work under this line.", "block": "Saved data for this page. Keep everything from the START line to the END line.", "backHow": "Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.", "backBtn": "Bring it back", "backBad": "This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.", "backAsk": "This replaces the work kept in this browser with the work you pasted. Bring it back?", "backYes": "Yes, bring it back", "backNo": "Cancel", "backDone": "Your saved work is back.", "invite": "You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going."};
   const TSC = { id: 'cst349-work-back', name: 'Work back from the role you want', key: STORE_KEY, state: () => S, work: () => workReport().text, count: () => workReport().done };
   const TS_MIN = 30;   // minutes with the page open and visible before the invitation
   function tsStore(){ try { const j = JSON.parse(localStorage.getItem(TSC.key + '.save') || 'null'); if (j && typeof j === 'object') return j; } catch (e) {} return { ms: 0, n: null, shown: false }; }
@@ -1849,7 +1851,7 @@
       const link = '<p><a href="' + url + '" target="_blank" rel="noopener">' + TSW.gmail + '</a></p>';
       const done = ok => {
         if (ok){
-          el('ts-msg').innerHTML = '<div class="msg info" id="ts-ok"><p>' + (w ? TSW.ok : TSW.okNoTab) + '</p><p>' + TSW.keep + '</p>' + (w ? '' : link) + '</div>';
+          el('ts-msg').innerHTML = '<div class="msg info" id="ts-ok"><p>' + (w ? TSW.ok : TSW.okNoTab) + '</p><p>' + TSW.keep + '</p>' + (w ? '<p id="ts-notab">' + TSW.noTab + ' <a href="' + url + '" target="_blank" rel="noopener">' + TSW.gmail + '</a></p>' : link) + '</div>';
           const st = tsStore(); st.ms = 0; st.shown = false; tsPut(st); el('ts-invite').hidden = true;   // the 30 minutes start again only after a copy that succeeded
         } else {
           el('ts-msg').innerHTML = '<div class="msg info" id="ts-fail"><p>' + TSW.fail + '</p><p>' + TSW.keep + '</p>' + link + '</div><textarea class="ts-ta" id="ts-out" rows="8" readonly></textarea>';
@@ -1921,8 +1923,12 @@
       L.push('--- Box 6: Forward Walk Check-In Interview ---');
       if (chatStale()) L.push('Note: my plan changed after this check-in. The conversation and the summary below describe my earlier plan.');
       L.push('Interviewer: ' + (T.opener || dynamicOpener()));
-      T.msgs.forEach(m => L.push((m.r === 'u' ? 'Me: ' : 'Interviewer: ') + m.t));
-      if (T.fb) L.push('', '--- Check-In Summary ---', T.fb);
+      // each earlier summary sits after the reply it followed; the latest one comes last, as before
+      const marks = ID => IDEAS.forEach((I, k) => L.push((k + 1) + '. ' + I.t + ' ' + (ID[k].ok ? IDW.yes : IDW.no) + (ID[k].note ? ' - ' + ID[k].note + (ID[k].prev ? ' ' + IDW.prev : '') : '')));
+      const hist = (T.hist || []).slice(0, -1), nSum = (T.hist || []).length;
+      T.msgs.forEach((m, i) => { L.push((m.r === 'u' ? 'Me: ' : 'Interviewer: ') + m.t);
+        hist.forEach((h, j) => { if (h.at === i + 1){ L.push('', '--- Check-In Summary ' + (j + 1) + ' of ' + nSum + ' (written at this point) ---', h.fb); if (h.ideas){ L.push('The five ideas after this summary:'); marks(h.ideas); } L.push(''); } }); });
+      if (T.fb) L.push('', nSum > 1 ? '--- Check-In Summary ' + nSum + ' of ' + nSum + ' (the latest) ---' : '--- Check-In Summary ---', T.fb);
       if (T.fb && T.ideas){ L.push('', '--- The five ideas of this trail ---'); IDEAS.forEach((I, k) => L.push((k + 1) + '. ' + I.t + ' ' + (T.ideas[k].ok ? IDW.yes : IDW.no) + (T.ideas[k].note ? ' - ' + T.ideas[k].note + (T.ideas[k].prev ? ' ' + IDW.prev : '') : ''))); }
     } else {
       L.push('--- Box 6: Check-In Interview not started yet (or completed in CST349 AI Dojo - paste Dojo transcript below if used) ---');
