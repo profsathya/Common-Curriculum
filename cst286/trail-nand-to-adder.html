@@ -1964,12 +1964,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const AI_URL = 'https://ai-assisted-pedagogy.netlify.app/.netlify/functions/ai-proxy', TEACH_MAX = 12;
   function askAI(system, messages, max, model){
     return fetch(AI_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({system, messages, max_tokens:max, model})})
-      .then(r => r.json().then(j => { if (!r.ok || !j.content) throw new Error(j.error || 'no reply'); return String(j.content); }));
+      .then(r => r.json().then(j => { if (!r.ok || !j.content) throw new Error(j.error || 'no reply'); if (j.usage && Number(j.usage.output_tokens) >= max) throw new Error('cut off');   /* the reply used its whole allowance, so its end is missing */ return String(j.content); }));
   }
   // The classmate tries the main model first and falls back to the small one. Feedback needs the main model, so it retries instead.
   const SMALL = 'claude-haiku-4-5-20251001';
-  const askChat = (system, messages) => askAI(system, messages, 1000).catch(() => askAI(system, messages, 300, SMALL));
-  const askFb = (system, messages, n) => askAI(system, messages, 1500).catch(e => { if (n > 1) return askFb(system, messages, n - 1); throw e; });
+  const askChat = (system, messages) => askAI(system, messages, 2000).catch(() => askAI(system, messages, 800, SMALL));
+  const askFb = (system, messages, n) => askAI(system, messages, 2500).catch(e => { if (n > 1) return askFb(system, messages, n - 1); throw e; });
   function teachNotes(){
     const st = S.stat || {hints:{}, fails:{}, tr:[]}, out = [];
     LEVELS.forEach(l => { if (!l.chip) return; const hN = st.hints[l.chip] || 0, f = st.fails[l.chip] || 0; if (hN || f) out.push(l.short + ': ' + [hN ? 'opened ' + hN + ' hint' + (hN > 1 ? 's' : '') : '', f ? f + ' failed test run' + (f > 1 ? 's' : '') : ''].filter(Boolean).join(', ')); });
