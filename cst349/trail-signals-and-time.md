@@ -6,6 +6,11 @@ Shape (v2 backward chain, 16 Nov 2026; revised 18 Nov 2026 from Nancy's review):
 
 What changed on 26 Nov 2026: in Box 2 the quick guess is replaced by a short scenario in which the student is the hiring manager choosing between two finalists, Morgan and Jamie. The Veracode numbers moved behind a wondering question. Boxes 3 and 4 keep their quick guess.
 
+Also changed on 26 Nov 2026 (words in `cowork/fall-2026-courses/learning-trails/trails/work-back-from-the-role/step4-words-draft1.md`):
+- Box 1 has a line for the student who has not settled on a role, and three examples for each path as buttons.
+- In Boxes 2 to 4, "Update your answer" is now "Keep or revise your answer": the student presses Keep it and says why, or presses Revise it and changes the answer.
+- In Box 5 the weekly hours start empty (1 to 20). The student divides them across the three answers first, and then inside each answer. The 7-day step has new wording.
+
 What changed on 18 Nov 2026 (Nancy's review):
 - Shorter opening and a three-line "How each box works" in Box 1.
 - After each first answer: one finding, one note on the student's first answer, one note for their path, one line on what the study cannot tell them. All other statistics and sources moved into the expander.
@@ -29,18 +34,53 @@ Picture your first day in a job or internship you want. Then work backward, one 
 
 ## Box 1 - Imagine Day 1 in a role you genuinely want
 
+If you have not settled on a role, choose one to explore today. You can come back and change it. If you set a goal in an earlier CST349 assignment, bring it here.
+
 **How each box works:** you start at the day you are aiming for and work backward to this week. In Boxes 2 to 4 you do the same three things:
 - Write your first answer.
 - See what one recent study found.
-- Update your answer if the finding changes your thinking.
+- Keep your answer or revise it, and say why.
 
 1. **Which path is this role in?** Software Engineering · Cybersecurity & Networking · Data Science & Analytics · Game Development · Another Tech Path (with a box to specify it).
 2. **Roughly how far from today is that Day 1?** A 6-month plan and a 2-year plan need different steps, so pick the one closest to your situation. (About 6 months out · About 1 year out · About 2+ years out)
 3. **Write one sentence describing your Day 1.** Describe the role, the kind of organization or team, and the real problem you are helping them with.
 
+Above the examples (shown once a path is chosen): Here are three examples for this path. Press one to put it in the box, then change any details needed to fit the role and problem you want to explore.
+
+Software Engineering
+- It is my first week as a junior backend engineer on a healthcare scheduling team, helping keep clinic booking services reliable.
+- It is my first week as a junior mobile developer at a credit union, helping fix the login problems that members report most.
+- It is my first week as a junior full-stack developer at a small logistics company, helping replace the spreadsheet that dispatchers use to assign trucks.
+
+Cybersecurity & Networking
+- It is my first week as a junior security analyst helping a regional hospital or cloud team triage alerts and harden internal web apps.
+- It is my first week as a network technician for a school district, helping keep the Wi-Fi working in 20 schools during testing week.
+- It is my first week as a junior security engineer at a software company, helping the team find and fix weak spots in its sign-in system.
+
+Data Science & Analytics
+- It is my first week as a junior data analyst / data engineer helping a transit agency or product team clean messy operational pipelines.
+- It is my first week as a junior data analyst at a county health department, helping turn clinic visit records into a weekly report that nurses use.
+- It is my first week as a junior machine learning engineer at an online store, helping find out why its product recommendations got worse last month.
+
+Game Development
+- It is my first week as a junior gameplay or tools programmer at a game studio, helping tune combat feel and keep frame times under budget.
+- It is my first week as a junior tools programmer at an indie studio, helping level designers place and test enemies faster.
+- It is my first week as a QA engineer on a mobile game team, helping find out why the game crashes on older phones.
+
+Another Tech Path
+- It is my first week as an IT support specialist at a community college, helping staff move to a new sign-in system.
+- It is my first week as a junior UX designer at a nonprofit, helping make its volunteer sign-up form easier to finish on a phone.
+- It is my first week as a junior embedded developer at an agriculture company, helping soil sensors report reliably from the field.
+
+Shown when an example is pressed while the student's own sentence is in the box (the sentence is left as it is): Your own sentence is in the box. Clear the box first if you want to start from an example.
+
+Shown while the box holds an example that has not been changed (Box 2 stays closed until it is changed): This is still the example. Change any details needed to fit the role and problem you want to explore.
+
 ---
 
 ## Box 2 - What convinced the hiring manager to pick you over other finalists?
+
+You are looking back from Day 1. Answer as the person who got there. (Page note: the same line is at the top of Boxes 3 and 4.)
 
 **1. Write your first answer.** Go back to the week the hiring team chose you over the other candidates. What do you think mattered most to them?
 - Several working projects or demos I built
@@ -83,12 +123,12 @@ Both finalists claim the same three things. You have time for three questions. C
 
 **Which finalist gets the job?** Morgan · Jamie
 
-1. Pick one claim your finalist made. What did they show you that would let you check it yourself?
-2. What would you still ask the other finalist before you ruled them out?
+1. Pick one claim your finalist made. What did they show you that would let you check it yourself? If they showed you nothing you could check, say so.
+2. What are you still not sure about in your choice? What would you ask the other finalist before you ruled them out?
 
-(Page note: the page does not mark the choice right or wrong. Under the two boxes it asks one question back, with a box for the answer, which is not required.)
+(Page note: the page does not mark the choice right or wrong. Under the two boxes it asks one question back, labeled **Optional: think further.**, with a box for the answer, which is not required. What the student writes about one finalist stays with that finalist if they change their choice.)
 - If the student chooses Morgan: Morgan may be just as capable as Jamie. From today's answers, which of Morgan's three claims could you check yourself tomorrow? If you cannot find one, write what you would ask Morgan to bring to a second conversation.
-- If the student chooses Jamie: Jamie gave you things you can check. Which of Jamie's claims did you not get evidence for today?
+- If the student chooses Jamie: Jamie gave you things you can check. What about Jamie's work did you not get to check today?
 
 (Page note: the button "See what a recent study found" opens the next step once three questions are asked, a finalist is chosen, and something is written for 1 and 2.)
 
@@ -106,11 +146,19 @@ Both finalists claim the same three things. You have time for three questions. C
 - Wondering question, closed until clicked: **Are you wondering how often AI-written code runs and still has a problem?** A security company (Veracode) tested code written by AI tools. More than 95% of it ran without errors, and only about 55% of it also passed the security checks. The security number has stayed about the same from year to year.
 - Expander, "See the numbers and where they come from": *The 'Consequence' Gap* (Burning Glass Institute and Break Through Tech, Nov 2026; 1.03 million job ads, 54 practitioners at 46 organizations); code review in job ads 7.8% (2020) to 18.5% (June 2026), software testing 17.9%; Karat survey (Jan 2026, 400 engineering leaders): 71% say skill is harder to assess, 62% do not allow AI in interviews; the report's six capabilities (pp. 22 - 23); Veracode figures on p. 13.
 
-**4. Update your answer.** **Back to your own Day 1.** Look at the first answer you wrote at the top of this box. Which part of it could a hiring manager check, and what would you show them?
+**4. Keep or revise your answer.** **Back to your own Day 1.** Here is your first answer again. Now that you have seen the finding and what the study cannot tell you, choose one. (Page note: the student's first answer is shown under this line, with two buttons: **Keep it** and **Revise it**. Boxes 3 and 4 have the same step.)
 
-Rewrite or keep your answer about what convinced the hiring manager in your path. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain.
+If the student presses Keep it: Why are you keeping it? Point to something in the finding, or to something the study cannot tell you. Then say what a person could check to support your answer.
 
-Under the box: This starts as a copy of your first answer. Change it, or add why you are keeping it. (Page note: the box counts as finished once the text is different from the first answer. The same line and rule are under the update box in Boxes 3 and 4.)
+If the student presses Revise it: Revise your answer about what convinced the hiring manager in your path. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain.
+
+Under the revise box: This starts as a copy of your first answer.
+
+A second box under it: What led you to change it? Name the finding, or the thing the study cannot tell you.
+
+Under the first answer in step 1, once the next step is open: Your first answer stays as you wrote it. You keep it or revise it in the last step of this box.
+
+(Page note: the next box opens once the student has pressed Keep it and written at least a short sentence, or pressed Revise it, changed the answer and written what led to the change. A student who updated an answer before 26 Nov is shown as Revise it and is not asked what led to it. The first answer and the option chosen with it cannot be edited once the next step of a box is open. The copied work says which the student chose, with the reason or the revised answer, and names the options in words.)
 
 ---
 
@@ -138,7 +186,7 @@ Describe in a line or two how your name and your work reached a person who makes
 - **What this study cannot tell you:** Its graduate records end in 2023, before AI tools were widely used, and it shows a pattern without proving that internships caused the better outcomes.
 - Expander: *The Internship Imperative* (Burning Glass Institute, Nov 2026; 65 million career histories, graduates 2016 - 2023); 9.9 entry-level job ads per internship ad; small and mid-sized firms offer about 13% of internships; interns about half as likely to be underemployed, and large employers hire about half of their interns; Ashby Talent Trends (May 2026): more than 300 applications per hire, 60% of its startup customers use AI in hiring software; other ways to gain experience from *The 'Consequence' Gap* (pp. 24 - 25).
 
-**3. Update your answer.** Describe your plan for getting a person to see your work, given how far out your Day 1 is. Include a second path you would use if online applications or internships are crowded.
+**3. Keep or revise your answer.** The same step as in Box 2. If the student presses Revise it: Describe your plan for getting a person to see your work, given how far out your Day 1 is. Include a second path you would use if online applications or internships are crowded.
 
 ---
 
@@ -166,7 +214,7 @@ Briefly describe what you built or improved, and how AI, courses, peers or mento
 - **What this study cannot tell you:** The authors say their results describe a pattern and do not prove that AI caused it. A St. Louis Fed study (June 2026) found that the overall drop in job openings explains more of the weaker job market for young workers than AI does.
 - Expander: Stanford *Canaries in the Coal Mine?* (revised Aug 2026; payroll records, 730+ occupations; about a 19% gap for ages 22 - 25 in the most AI-exposed jobs, through slower hiring; codified and tacit knowledge); St. Louis Fed (June 2026); Narayanan and Kapoor (June 2026) on deciding, writing and being accountable.
 
-**3. Update your answer.** Describe the existing or messy problem (or the second field) you will build around, how you will check AI-assisted work, and whose feedback you will ask for.
+**3. Keep or revise your answer.** The same step as in Box 2. If the student presses Revise it: Describe the existing or messy problem (or the second field) you will build around, how you will check AI-assisted work, and whose feedback you will ask for.
 
 ---
 
@@ -176,9 +224,13 @@ Briefly describe what you built or improved, and how AI, courses, peers or mento
 
 (The page shows the student's three answers from Boxes 2, 3 and 4 here.)
 
-**1. Divide your weekly hours for the next 30 days.** Set the hours per week you can realistically give outside your required coursework (4 to 20). Then divide all of them across the six kinds of preparation. The page shows the monthly total, for example "10 hours a week is about 40 hours over the next 30 days." When more hours are assigned than the weekly hours, a button appears: Set all six to 0 hours.
+**1. Divide your weekly hours for the next 30 days.** How many hours a week can you really give over the next 30 days, outside your required classes? (Page note: the box starts empty and takes 1 to 20, with the words "hours a week, from 1 to 20" beside it. Until a number is entered the page says "Enter your weekly hours to start". The page then shows the monthly total, for example "10 hours a week is about 40 hours over the next 30 days.")
 
-**How to decide:** each kind of preparation supports one of your three answers. Ask yourself which answer needs the most work, and give that one the most hours.
+**First divide your hours across your three answers.** Ask yourself which answer needs the most work, and give that one the most hours. An answer can get 0 hours this month. (Page note: three rows, one for each answer, each showing the student's answer with a minus and a plus button.)
+
+**Then divide each answer's hours across the kinds of preparation that support it.** Your Box 3 answer has one kind, so that kind takes all of its hours. One hour can help more than one answer. Count it once, under the answer it helps most. (Page note: the six kinds below, grouped under their answer. A kind cannot take more hours than its answer has. The Box 3 answer has one kind, so it takes all of that answer's hours by itself. An answer with no hours shows "0 hours this month." With fewer than 4 hours a week, Box 6 does not list each kind that has no hours as a gap.)
+
+(Page note: the status line reads, in turn, "8 hrs left to give to your three answers", "6 hrs left to divide inside your answers" and "All 8 hrs/wk assigned". When the weekly hours are lowered below what is already given, it reads "2 hrs over your 5 hr total" and a button appears: Set all six to 0 hours.)
 
 Supports your Box 2 answer: what convinced the hiring manager
 - **Fundamentals without AI** - Practice solving problems in your main language, tool or engine without AI help, because many technical interviews do not allow AI.
@@ -199,7 +251,9 @@ Expander, "See one example of dividing 10 hours": A student who is about a year 
 
 Your split follows your own three answers, so it may look different.
 
-**2. Identify one step you will finish in the next 7 days.** Write one step that is small enough to finish in the next 7 days and that starts your chain. Make it specific enough that a classmate or mentor could confirm it happened. For example: you looked through a specific repository or dataset, started your decision notes, messaged a specific person, or tested your project with a real user.
+**2. Identify one step you will finish in the next 7 days.** Write one step that you will finish in the next 7 days. Say what will exist that does not exist today, and who could check it. Choose a step that is in your own hands: sending a message to a specific person is in your hands, and getting a reply is not.
+
+For example: a list of the problems you found in a specific repository or dataset, the first page of your decision notes, a message sent to a specific person, or notes from testing your project with one real user.
 
 ---
 

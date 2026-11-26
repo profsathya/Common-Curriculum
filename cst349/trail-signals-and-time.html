@@ -263,6 +263,17 @@
   .prev-link li{margin-bottom:4px}
   .bgroup{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.76rem; letter-spacing:.04em; color:var(--blaze); margin:8px 0 0}
   .mtotal{margin:0 0 4px}
+  .d1ex{display:grid; gap:8px; margin:8px 0 10px}
+  .cbtn.picked[disabled]{opacity:1}
+  textarea[readonly]{opacity:.8}
+  .d1ex .cbtn{display:block; width:100%; text-align:left}
+  .lookback{margin:-6px 0 14px; font-style:italic}
+  .tot-in{width:3.4em; padding:6px 4px; text-align:center; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); font:inherit; font-weight:600}
+  .tot-set{display:inline-flex; align-items:center; gap:8px; flex-wrap:nowrap}
+  .bhow{margin:14px 0 8px}
+  .bzero{margin:2px 0 6px}
+  .brow.ans{border-color:var(--line)}
+  .bfix{font-size:.8rem; color:var(--ink-soft)}
   .mtotal b{color:var(--hero-cream)}
   ul.howto{margin:0 0 10px; padding-left:22px}
   ul.howto li{margin-bottom:3px}
@@ -478,11 +489,12 @@
       otherTrack: '',
       runway: '',
       day1: '',
-      l2Pick: '', l2First: '', l2Open: false, l2Q: null, l2Final: '',
+      l2Pick: '', l2First: '', l2Open: false, l2Q: null, l2Final: '', l2Keep: '', l2Why: '', l2Rev: '', l2Chg: '', l2Old: false,
       hm: { asked: [], pick: '', a1: '', a2: '', a3: '' },   // Box 2, as the hiring manager
-      l3Pick: '', l3First: '', l3Open: false, l3Q: null, l3Final: '',
-      l4Chips: [], l4First: '', l4Open: false, l4Q: null, l4Final: '',
-      budget: 10,
+      l3Pick: '', l3First: '', l3Open: false, l3Q: null, l3Final: '', l3Keep: '', l3Why: '', l3Rev: '', l3Chg: '', l3Old: false,
+      l4Chips: [], l4First: '', l4Open: false, l4Q: null, l4Final: '', l4Keep: '', l4Why: '', l4Rev: '', l4Chg: '', l4Old: false,
+      budget: 0,                       // weekly hours start empty (26 Nov 2026)
+      ans: { 2: 0, 3: 0, 4: 0 },       // hours given to each of the three answers
       hrs: Object.assign({}, DEFAULT_HRS),
       step7d: '',
       visited: { 0: true },
@@ -501,6 +513,18 @@
       S.l4Chips = Array.isArray(parsed.l4Chips) ? parsed.l4Chips : [];
       S.chat = Object.assign({ msgs: [], fb: '', opener: '' }, parsed.chat || {});
       S.hm = Object.assign({ asked: [], pick: '', a1: '', a2: '', a3: '' }, parsed.hm || {}); if (!Array.isArray(S.hm.asked)) S.hm.asked = [];
+      // 26 Nov 2026: keep-or-revise. An update that already differs from the first answer counts as a revision.
+      ['l2', 'l3', 'l4'].forEach(k => {
+        ['Keep', 'Why', 'Rev', 'Chg'].forEach(f => { if (typeof S[k + f] !== 'string') S[k + f] = ''; });
+        const f1 = String(S[k + 'First'] || '').trim(), fn = String(S[k + 'Final'] || '').trim();
+        if (!S[k + 'Keep'] && fn && fn !== f1){ S[k + 'Keep'] = 'revise'; S[k + 'Rev'] = S[k + 'Final']; S[k + 'Old'] = true; }
+      });
+      // 26 Nov 2026: hours are divided across the three answers first. Saved hours keep their split.
+      S.budget = Math.max(0, Math.min(20, parseInt(parsed.budget, 10) || 0));
+      S.ans = { 2: 0, 3: 0, 4: 0 };
+      if (parsed.ans){ [2, 3, 4].forEach(g => { S.ans[g] = Math.max(0, parseInt(parsed.ans[g], 10) || 0); }); }
+      // an answer never holds fewer hours than its kinds of preparation already have
+      [2, 3, 4].forEach(g => { const gs = BUCKETS.filter(b => b.feeds === g).reduce((x, b) => x + (Number(S.hrs[b.id]) || 0), 0); if (S.ans[g] < gs) S.ans[g] = gs; });
       if (new URLSearchParams(location.search).get('unlock') === '1') S.unlockedAll = true;
     }
   } catch (e) {}
@@ -535,16 +559,138 @@
     ],
     offer: `Make the offer`,
     which: `Which finalist gets the job?`,
-    p1: `Pick one claim your finalist made. What did they show you that would let you check it yourself?`,
-    p2: `What would you still ask the other finalist before you ruled them out?`,
+    p1: `Pick one claim your finalist made. What did they show you that would let you check it yourself? If they showed you nothing you could check, say so.`,
+    p2: `What are you still not sure about in your choice? What would you ask the other finalist before you ruled them out?`,
+    opt: `Optional: think further.`,
     reply: { m: `Morgan may be just as capable as Jamie. From today's answers, which of Morgan's three claims could you check yourself tomorrow? If you cannot find one, write what you would ask Morgan to bring to a second conversation.`,
-             j: `Jamie gave you things you can check. Which of Jamie's claims did you not get evidence for today?` },
+             j: `Jamie gave you things you can check. What about Jamie's work did you not get to check today?` },
     wonderQ: `Are you wondering how often AI-written code runs and still has a problem?`,
     wonderA: `A security company (Veracode) tested code written by AI tools. More than 95% of it ran without errors, and only about 55% of it also passed the security checks. The security number has stayed about the same from year to year.`,
-    back: `<b>Back to your own Day 1.</b> Look at the first answer you wrote at the top of this box. Which part of it could a hiring manager check, and what would you show them?`
+    back: `<b>Back to your own Day 1.</b>`
   };
   const hmReady = () => S.hm.asked.length >= 3 && !!S.hm.pick && S.hm.a1.trim().length >= 10 && S.hm.a2.trim().length >= 10;
-  const COPY_NOTE = 'This starts as a copy of your first answer. Change it, or add why you are keeping it.';
+  const COPY_NOTE = 'This starts as a copy of your first answer.';
+
+  /* ---------- Box 1 examples, keep-or-revise, Box 5 words (step4-words-draft1.md, 26 Nov 2026) ---------- */
+  const D1W = {
+    settle: `If you have not settled on a role, choose one to explore today. You can come back and change it. If you set a goal in an earlier CST349 assignment, bring it here.`,
+    above: `Here are three examples for this path. Press one to put it in the box, then change any details needed to fit the role and problem you want to explore.`,
+    mine: `Your own sentence is in the box. Clear the box first if you want to start from an example.`,
+    same: `This is still the example. Change any details needed to fit the role and problem you want to explore.`
+  };
+  const DAY1_EX = {
+    swe: [
+      `It is my first week as a junior backend engineer on a healthcare scheduling team, helping keep clinic booking services reliable.`,
+      `It is my first week as a junior mobile developer at a credit union, helping fix the login problems that members report most.`,
+      `It is my first week as a junior full-stack developer at a small logistics company, helping replace the spreadsheet that dispatchers use to assign trucks.`
+    ],
+    sec: [
+      `It is my first week as a junior security analyst helping a regional hospital or cloud team triage alerts and harden internal web apps.`,
+      `It is my first week as a network technician for a school district, helping keep the Wi-Fi working in 20 schools during testing week.`,
+      `It is my first week as a junior security engineer at a software company, helping the team find and fix weak spots in its sign-in system.`
+    ],
+    data: [
+      `It is my first week as a junior data analyst / data engineer helping a transit agency or product team clean messy operational pipelines.`,
+      `It is my first week as a junior data analyst at a county health department, helping turn clinic visit records into a weekly report that nurses use.`,
+      `It is my first week as a junior machine learning engineer at an online store, helping find out why its product recommendations got worse last month.`
+    ],
+    game: [
+      `It is my first week as a junior gameplay or tools programmer at a game studio, helping tune combat feel and keep frame times under budget.`,
+      `It is my first week as a junior tools programmer at an indie studio, helping level designers place and test enemies faster.`,
+      `It is my first week as a QA engineer on a mobile game team, helping find out why the game crashes on older phones.`
+    ],
+    other: [
+      `It is my first week as an IT support specialist at a community college, helping staff move to a new sign-in system.`,
+      `It is my first week as a junior UX designer at a nonprofit, helping make its volunteer sign-up form easier to finish on a phone.`,
+      `It is my first week as a junior embedded developer at an agriculture company, helping soil sensors report reliably from the field.`
+    ]
+  };
+  const ALL_D1_EX = [].concat.apply([], Object.keys(DAY1_EX).map(k => DAY1_EX[k]));
+  function isDay1Example(){ return ALL_D1_EX.includes(S.day1.trim()); }
+
+  const KRW = {
+    look: `You are looking back from Day 1. Answer as the person who got there.`,
+    head: `Keep or revise your answer`,
+    again: `Here is your first answer again. Now that you have seen the finding and what the study cannot tell you, choose one.`,
+    keep: `Keep it`, revise: `Revise it`,
+    why: `Why are you keeping it? Point to something in the finding, or to something the study cannot tell you. Then say what a person could check to support your answer.`,
+    chg: `What led you to change it? Name the finding, or the thing the study cannot tell you.`,
+    locked: `Your first answer stays as you wrote it. You keep it or revise it in the last step of this box.`
+  };
+  function krDone(k){
+    if (S[k + 'Keep'] === 'keep') return S[k + 'Why'].trim().length >= 15;
+    // a revision made before 26 Nov 2026 (Old) was never asked what led to it
+    if (S[k + 'Keep'] === 'revise') return S[k + 'Final'].trim().length >= 15 && S[k + 'Final'].trim() !== S[k + 'First'].trim() && (!!S[k + 'Old'] || S[k + 'Chg'].trim().length >= 15);
+    return false;
+  }
+  function krStep(k, n, label, pre){
+    const keep = S[k + 'Keep'];
+    let h = '<div class="step"><h3><span class="stepn">' + n + '</span>' + KRW.head + '</h3>' + 
+      '<p>' + (pre ? pre + ' ' : '') + KRW.again + '</p>' +
+      '<div class="prev-link" id="' + k + '-again"><b>Your first answer:</b> ' + esc(S[k + 'First']) + '</div>' +
+      '<div class="row">' +
+        '<button type="button" class="cbtn' + (keep === 'keep' ? ' picked' : '') + '" data-kr="keep" aria-pressed="' + (keep === 'keep' ? 'true' : 'false') + '">' + KRW.keep + '</button>' +
+        '<button type="button" class="cbtn' + (keep === 'revise' ? ' picked' : '') + '" data-kr="revise" aria-pressed="' + (keep === 'revise' ? 'true' : 'false') + '">' + KRW.revise + '</button>' +
+      '</div>';
+    if (keep === 'keep') h += '<p><label for="' + k + '-why">' + KRW.why + '</label></p>' +
+      '<textarea id="' + k + '-why" class="note-in" rows="3">' + esc(S[k + 'Why']) + '</textarea>';
+    if (keep === 'revise') h += '<p><label for="' + k + '-final">' + label + '</label></p>' +
+      '<textarea id="' + k + '-final" class="note-in" rows="3">' + esc(S[k + 'Final']) + '</textarea>' +
+      '<p class="muted">' + COPY_NOTE + '</p>' +
+      '<p><label for="' + k + '-chg">' + KRW.chg + '</label></p>' +
+      '<textarea id="' + k + '-chg" class="note-in" rows="2">' + esc(S[k + 'Chg']) + '</textarea>';
+    return h + '</div>';
+  }
+  function krBind(el, k, idx){
+    $$('[data-kr]', el).forEach(b => b.onclick = () => {
+      const v = b.dataset.kr;
+      if (S[k + 'Keep'] === 'revise') S[k + 'Rev'] = S[k + 'Final'];   // a revision is kept if the student changes their mind twice
+      S[k + 'Keep'] = v;
+      S[k + 'Final'] = v === 'keep' ? S[k + 'First'] : (S[k + 'Rev'].trim() ? S[k + 'Rev'] : S[k + 'First']);
+      clearIdleOpener();
+      const y = window.scrollY; save(); render(); window.scrollTo(0, y);
+      const t = $('#' + k + (v === 'keep' ? '-why' : '-final')); if (t) t.focus({ preventScroll: true });
+    });
+    const w = $('#' + k + '-why', el);
+    if (w) w.oninput = () => { S[k + 'Why'] = w.value; clearIdleOpener(); save(); updateNavState(el, idx); };
+    const c = $('#' + k + '-chg', el);
+    if (c) c.oninput = () => { S[k + 'Chg'] = c.value; clearIdleOpener(); save(); updateNavState(el, idx); };
+  }
+  function pickLabel(list, id){ const x = list.find(o => o.id === id); return x ? x.label : 'not chosen'; }
+  function krReport(k){
+    if (S[k + 'Keep'] === 'keep') return ['  After the study: I kept my first answer.',
+      '  Why I kept it, and what a person could check: ' + (S[k + 'Why'].trim() || '[not written yet]')];
+    if (S[k + 'Keep'] === 'revise') return ['  After the study: I revised my answer.', '  Revised answer: ' + (S[k + 'Final'].trim() || '[not written yet]'),
+      '  What led me to change it: ' + (S[k + 'Chg'].trim() || (S[k + 'Old'] ? '[revised before this question was on the page]' : '[not written yet]'))];
+    return ['  After the study: [keep or revise not chosen yet]'];
+  }
+  function krNote(k){
+    if (S[k + 'Keep'] === 'keep') return ' [kept the first answer; the student wrote: ' + (S[k + 'Why'].trim() || '(nothing)') + ']';
+    if (S[k + 'Keep'] === 'revise') return ' [revised after the study; what led to the change, in the student\'s words: ' + (S[k + 'Chg'].trim() || '(nothing)') + ']';
+    return ' [keep or revise not chosen]';
+  }
+
+  const B5W = {
+    hoursQ: `How many hours a week can you really give over the next 30 days, outside your required classes?`,
+    range: `hours a week, from 1 to 20`,
+    first: `<b>First divide your hours across your three answers.</b> Ask yourself which answer needs the most work, and give that one the most hours. An answer can get 0 hours this month.`,
+    then: `<b>Then divide each answer's hours across the kinds of preparation that support it.</b> Your Box 3 answer has one kind, so that kind takes all of its hours. One hour can help more than one answer. Count it once, under the answer it helps most.`,
+    start: `Enter your weekly hours to start`,
+    zero: `0 hours this month.`,
+    single: `all of this answer's hours`
+  };
+  const ANS_LABEL = {
+    2: 'Your Box 2 answer: what convinced the hiring manager',
+    3: 'Your Box 3 answer: how a person saw your work',
+    4: 'Your Box 4 answer: how you built your work'
+  };
+  const GROUPS = [2, 3, 4];
+  function groupBuckets(g){ return BUCKETS.filter(b => b.feeds === g); }
+  function sumAns(){ return GROUPS.reduce((a, g) => a + (Number(S.ans[g]) || 0), 0); }
+  function groupSum(g){ return groupBuckets(g).reduce((a, b) => a + (Number(S.hrs[b.id]) || 0), 0); }
+  function hoursDone(){ return S.budget >= 1 && sumAns() === S.budget && GROUPS.every(g => groupSum(g) === (S.ans[g] || 0)); }
+  // an answer with one kind of preparation gives all of its hours to that kind
+  function syncSingles(){ GROUPS.forEach(g => { const bs = groupBuckets(g); if (bs.length === 1) S.hrs[bs[0].id] = S.ans[g] || 0; }); }
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -561,11 +707,11 @@
   function sumHrs(){ return BUCKETS.reduce((acc, b) => acc + (Number(S.hrs[b.id]) || 0), 0); }
 
   function isStopDone(idx){
-    if (idx === 0) return !!S.track && !!S.runway && S.day1.trim().length >= 15;
-    if (idx === 1) return !!S.l2Pick && S.l2Open && S.l2Q !== null && S.l2Final.trim().length >= 15 && S.l2Final.trim() !== S.l2First.trim();
-    if (idx === 2) return !!S.l3Pick && S.l3Open && S.l3Q !== null && S.l3Final.trim().length >= 15 && S.l3Final.trim() !== S.l3First.trim();
-    if (idx === 3) return S.l4Chips.length >= 1 && S.l4Open && S.l4Q !== null && S.l4Final.trim().length >= 15 && S.l4Final.trim() !== S.l4First.trim();
-    if (idx === 4) return sumHrs() === S.budget && S.step7d.trim().length >= 15;
+    if (idx === 0) return !!S.track && !!S.runway && S.day1.trim().length >= 15 && !isDay1Example();
+    if (idx === 1) return !!S.l2Pick && S.l2Open && S.l2Q !== null && krDone('l2');
+    if (idx === 2) return !!S.l3Pick && S.l3Open && S.l3Q !== null && krDone('l3');
+    if (idx === 3) return S.l4Chips.length >= 1 && S.l4Open && S.l4Q !== null && krDone('l4');
+    if (idx === 4) return hoursDone() && S.step7d.trim().length >= 15;
     if (idx === 5){
       const userTurns = (S.chat.msgs || []).filter(m => m.r === 'u').length;
       return userTurns >= 3 || !!S.chat.fb;
@@ -672,69 +818,121 @@
         detail: 'In the check-in below, be ready to say which two kinds of preparation you would keep in a week when your time is cut in half.'
       });
     }
-    return out;
+    // with fewer than 4 hours a week some kinds must stay at 0, so the page does not list each one as a gap
+    return S.budget < 4 ? out.filter(d => !/no hours yet/i.test(d.title)) : out;
   }
 
   /* ---------- Time-Budget Console ---------- */
   function renderConsole(){
-    const total = sumHrs();
-    const diff = S.budget - total;
-    let pillCls = 'ok', pillTxt = total + ' of ' + S.budget + ' hrs/wk assigned';
-    if (diff > 0){ pillCls = 'warn'; pillTxt = diff + ' hr' + (diff === 1 ? '' : 's') + ' left to assign (' + total + '/' + S.budget + ')'; }
-    if (diff < 0){ pillCls = 'bad'; pillTxt = Math.abs(diff) + ' hr' + (Math.abs(diff) === 1 ? '' : 's') + ' over your ' + S.budget + ' hr budget'; }
+    const B = S.budget, total = sumHrs(), sa = sumAns();
+    const hr = n => n + ' hr' + (n === 1 ? '' : 's');
+    let pillCls = 'warn', pillTxt;
+    if (!B) pillTxt = B5W.start;
+    else if (sa < B) pillTxt = hr(B - sa) + ' left to give to your three answers';
+    else if (sa > B){ pillCls = 'bad'; pillTxt = hr(sa - B) + ' over your ' + B + ' hr total'; }
+    else {
+      const left = GROUPS.reduce((a, g) => a + Math.max(0, (S.ans[g] || 0) - groupSum(g)), 0);
+      if (left) pillTxt = hr(left) + ' left to divide inside your answers';
+      else { pillCls = 'ok'; pillTxt = 'All ' + B + ' hrs/wk assigned'; }
+    }
 
     const segs = BUCKETS.map(b => {
       const v = S.hrs[b.id] || 0;
-      const pct = total > 0 ? (v / Math.max(total, S.budget)) * 100 : 0;
+      const pct = total > 0 ? (v / Math.max(total, B, 1)) * 100 : 0;
       return '<div class="stackseg" style="width:' + pct.toFixed(2) + '%;background:' + b.color + '" title="' + esc(b.name) + ': ' + v + 'h"></div>';
     }).join('');
 
-    let lastFeeds = 0;
-    const rows = BUCKETS.map(b => {
-      const v = S.hrs[b.id] || 0;
-      const head = b.feeds !== lastFeeds ? '<div class="bgroup">' + esc(BOX_LABEL[b.feeds]) + '</div>' : '';
-      lastFeeds = b.feeds;
-      return head + '<div class="brow">' +
-        '<div class="binfo"><div class="bname"><span class="swatch" style="background:' + b.color + '"></span>' + esc(b.name) + '</div><div class="bdesc">' + esc(b.desc) + '</div></div>' +
+    const answerText = { 2: S.l2Final || S.l2First, 3: S.l3Final || S.l3First, 4: S.l4Final || S.l4First };
+    const ansRows = GROUPS.map(g => {
+      const v = S.ans[g] || 0, txt = String(answerText[g] || '').trim();
+      return '<div class="brow ans">' +
+        '<div class="binfo"><div class="bname">' + esc(ANS_LABEL[g]) + '</div>' + (txt ? '<div class="bdesc">' + esc(txt.length > 150 ? txt.slice(0, 150) + '...' : txt) + '</div>' : '') + '</div>' +
         '<div class="bctrl">' +
-          '<button type="button" class="stepbtn" data-bdec="' + b.id + '" aria-label="Subtract 1 hour from ' + esc(b.name) + '"' + (v <= 0 ? ' disabled' : '') + '>&minus;</button>' +
-          '<span class="bval">' + v + ' hr' + (v === 1 ? '' : 's') + '</span>' +
-          '<button type="button" class="stepbtn" data-binc="' + b.id + '" aria-label="Add 1 hour to ' + esc(b.name) + '"' + (v >= S.budget ? ' disabled' : '') + '>+</button>' +
+          '<button type="button" class="stepbtn" data-gdec="' + g + '" aria-label="Take 1 hour from your Box ' + g + ' answer"' + (v <= 0 ? ' disabled' : '') + '>&minus;</button>' +
+          '<span class="bval" id="ans-' + g + '">' + hr(v) + '</span>' +
+          '<button type="button" class="stepbtn" data-ginc="' + g + '" aria-label="Give 1 hour to your Box ' + g + ' answer"' + (sa >= B ? ' disabled' : '') + '>+</button>' +
         '</div>' +
       '</div>';
+    }).join('');
+
+    const kindRows = GROUPS.map(g => {
+      const a = S.ans[g] || 0, gs = groupSum(g), bs = groupBuckets(g);
+      let out = '<div class="bgroup">' + esc(BOX_LABEL[g]) + ' &middot; ' + gs + ' of ' + hr(a) + ' divided</div>';
+      if (a === 0 && gs === 0) return out + '<div class="muted bzero">' + B5W.zero + '</div>';
+      return out + bs.map(b => {
+        const v = S.hrs[b.id] || 0;
+        return '<div class="brow">' +
+          '<div class="binfo"><div class="bname"><span class="swatch" style="background:' + b.color + '"></span>' + esc(b.name) + '</div><div class="bdesc">' + esc(b.desc) + '</div></div>' +
+          '<div class="bctrl">' +
+            (bs.length === 1
+              ? '<span class="bval" id="hrs-' + b.id + '">' + hr(v) + '</span><span class="bfix">' + B5W.single + '</span>'
+              : '<button type="button" class="stepbtn" data-bdec="' + b.id + '" aria-label="Subtract 1 hour from ' + esc(b.name) + '"' + (v <= 0 ? ' disabled' : '') + '>&minus;</button>' +
+                '<span class="bval" id="hrs-' + b.id + '">' + hr(v) + '</span>' +
+                '<button type="button" class="stepbtn" data-binc="' + b.id + '" aria-label="Add 1 hour to ' + esc(b.name) + '"' + (gs >= a ? ' disabled' : '') + '>+</button>') +
+          '</div>' +
+        '</div>';
+      }).join('');
     }).join('');
 
     return '<div class="console">' +
       '<div class="console-top">' +
         '<div class="hrs-ctl">' +
-          '<span class="muted">Hours per week you can give over the next 30 days (outside your required classes):</span>' +
-          '<button type="button" class="stepbtn" id="tot-dec" aria-label="Decrease weekly hours">&minus;</button>' +
-          '<span class="bval">' + S.budget + ' hrs/wk</span>' +
-          '<button type="button" class="stepbtn" id="tot-inc" aria-label="Increase weekly hours">+</button>' +
+          '<label for="tot-in">' + B5W.hoursQ + '</label>' +
+          '<span class="tot-set"><button type="button" class="stepbtn" id="tot-dec" aria-label="Decrease weekly hours"' + (B <= 1 ? ' disabled' : '') + '>&minus;</button>' +
+          '<input id="tot-in" class="tot-in" type="text" inputmode="numeric" maxlength="2" autocomplete="off" value="' + (B || '') + '" aria-describedby="tot-range">' +
+          '<button type="button" class="stepbtn" id="tot-inc" aria-label="Increase weekly hours"' + (B >= 20 ? ' disabled' : '') + '>+</button>' +
+          '<span class="muted" id="tot-range">' + B5W.range + '</span></span>' +
         '</div>' +
         '<span class="hrs-pill ' + pillCls + '" role="status">' + pillTxt + '</span>' +
-        (diff < 0 ? '<button type="button" class="btn ghost small" id="hrs-zero">Set all six to 0 hours</button>' : '') +
+        (sa > B ? '<button type="button" class="btn ghost small" id="hrs-zero">Set all six to 0 hours</button>' : '') +
       '</div>' +
-      '<div class="muted mtotal">' + S.budget + ' hours a week is about <b>' + (S.budget * 4) + ' hours</b> over the next 30 days.</div>' +
+      (B ? '<div class="muted mtotal">' + B + ' hour' + (B === 1 ? '' : 's') + ' a week is about <b>' + (B * 4) + ' hours</b> over the next 30 days.</div>' : '') +
       '<div class="stackbar" aria-hidden="true">' + segs + '</div>' +
-      '<div class="bgrid">' + rows + '</div>' +
+      '<p class="bhow">' + B5W.first + '</p>' +
+      '<div class="bgrid">' + ansRows + '</div>' +
+      '<p class="bhow">' + B5W.then + '</p>' +
+      '<div class="bgrid">' + kindRows + '</div>' +
     '</div>';
   }
 
   function bindConsole(root, onUpdate){
+    const upd = () => { syncSingles(); clearIdleOpener(); save(); onUpdate(); };
+    $$('[data-gdec]', root).forEach(btn => btn.onclick = () => {
+      const g = +btn.dataset.gdec;
+      if ((S.ans[g] || 0) <= 0) return;
+      S.ans[g]--;
+      // an hour taken from an answer comes out of its kinds of preparation, last kind first
+      while (groupSum(g) > S.ans[g]){
+        const b = groupBuckets(g).filter(x => (S.hrs[x.id] || 0) > 0).pop();
+        if (!b) break;
+        S.hrs[b.id]--;
+      }
+      upd();
+    });
+    $$('[data-ginc]', root).forEach(btn => btn.onclick = () => {
+      const g = +btn.dataset.ginc;
+      if (sumAns() < S.budget){ S.ans[g] = (S.ans[g] || 0) + 1; upd(); }
+    });
     $$('[data-bdec]', root).forEach(btn => btn.onclick = () => {
       const id = btn.dataset.bdec;
-      if ((S.hrs[id] || 0) > 0){ S.hrs[id]--; clearIdleOpener(); save(); onUpdate(); }
+      if ((S.hrs[id] || 0) > 0){ S.hrs[id]--; upd(); }
     });
     $$('[data-binc]', root).forEach(btn => btn.onclick = () => {
-      const id = btn.dataset.binc;
-      if ((S.hrs[id] || 0) < S.budget){ S.hrs[id]++; clearIdleOpener(); save(); onUpdate(); }
+      const id = btn.dataset.binc, b = BUCKETS.find(x => x.id === id);
+      if (b && groupSum(b.feeds) < (S.ans[b.feeds] || 0)){ S.hrs[id] = (S.hrs[id] || 0) + 1; upd(); }
     });
     const zero = $('#hrs-zero', root);
-    if (zero) zero.onclick = () => { BUCKETS.forEach(b => { S.hrs[b.id] = 0; }); clearIdleOpener(); save(); onUpdate(); };
-    const dec = $('#tot-dec', root), inc = $('#tot-inc', root);
-    if (dec) dec.onclick = () => { if (S.budget > 4){ S.budget--; clearIdleOpener(); save(); onUpdate(); } };
-    if (inc) inc.onclick = () => { if (S.budget < 20){ S.budget++; clearIdleOpener(); save(); onUpdate(); } };
+    if (zero) zero.onclick = () => { BUCKETS.forEach(b => { S.hrs[b.id] = 0; }); GROUPS.forEach(g => { S.ans[g] = 0; }); upd(); };
+    const dec = $('#tot-dec', root), inc = $('#tot-inc', root), ti = $('#tot-in', root);
+    if (dec) dec.onclick = () => { if (S.budget > 1){ S.budget--; upd(); } };
+    if (inc) inc.onclick = () => { if (S.budget < 20){ S.budget++; upd(); } };
+    if (ti) ti.oninput = () => {
+      const v = parseInt(String(ti.value).replace(/[^0-9]/g, ''), 10);
+      S.budget = isNaN(v) ? 0 : Math.max(0, Math.min(20, v));
+      upd();
+      const t2 = $('#tot-in');   // the console was redrawn: put the cursor back at the end of the number
+      if (t2){ t2.focus({ preventScroll: true }); try { t2.setSelectionRange(t2.value.length, t2.value.length); } catch (e) {} }
+    };
   }
 
   /* ---------- Box 1: Day 1 in the Role ---------- */
@@ -747,8 +945,9 @@
     const tk = curTrack();
     let h = '<div class="eyebrow">Box 1 of 6 &middot; Start at the outcome</div>' +
       '<h2>Imagine Day 1 in a role you genuinely want</h2>' +
+      '<p>' + D1W.settle + '</p>' +
       '<div class="objs"><b>How each box works</b>: you start at the day you are aiming for and work backward to this week. In Boxes 2 to 4 you do the same three things:' +
-        '<ul><li>Write your first answer.</li><li>See what one recent study found.</li><li>Update your answer if the finding changes your thinking.</li></ul></div>' +
+        '<ul><li>Write your first answer.</li><li>See what one recent study found.</li><li>Keep your answer or revise it, and say why.</li></ul></div>' +
 
       '<div class="step"><h3><span class="stepn">1</span>Which path is this role in?</h3>' +
       '<div class="tracks">' +
@@ -766,8 +965,11 @@
 
       '<div class="step"><h3><span class="stepn">3</span>Write one sentence describing your Day 1</h3>' +
       '<p><label for="day1-in">Describe the role, the kind of organization or team, and the real problem you are helping them with.</label></p>' +
-      (S.track ? '<p class="muted"><i>' + esc(tk.day1Hint) + '</i></p>' : '') +
+      (S.track ? '<p class="muted">' + D1W.above + '</p>' +
+        '<div class="d1ex">' + (DAY1_EX[S.track] || []).map((x, i) => '<button type="button" class="cbtn" data-d1ex="' + i + '">' + esc(x) + '</button>').join('') + '</div>' +
+        '<p class="msg info" id="d1ex-note" style="display:none">' + D1W.mine + '</p>' : '') +
       '<textarea id="day1-in" class="note-in" rows="3" placeholder="It is my first week as a ... helping ...">' + esc(S.day1) + '</textarea>' +
+      '<p class="msg info" id="d1-same"' + (isDay1Example() ? '' : ' style="display:none"') + '>' + D1W.same + '</p>' +
       '</div>';
 
     el.innerHTML = h + navBar(0, 'Open Box 2: What convinced the hiring manager? &rarr;');
@@ -776,7 +978,18 @@
     const otk = $('#other-tk', el);
     if (otk) otk.oninput = () => { S.otherTrack = otk.value; clearIdleOpener(); save(); updateMap(); };
     const d1 = $('#day1-in', el);
-    if (d1) d1.oninput = () => { S.day1 = d1.value; clearIdleOpener(); save(); updateNavState(el, 0); };
+    if (d1) d1.oninput = () => {
+      S.day1 = d1.value; clearIdleOpener(); save(); updateNavState(el, 0);
+      const sm = $('#d1-same', el); if (sm) sm.style.display = isDay1Example() ? '' : 'none';
+      const nt = $('#d1ex-note', el); if (nt && !S.day1.trim()) nt.style.display = 'none';
+    };
+    $$('[data-d1ex]', el).forEach(b => b.onclick = () => {
+      const ex = (DAY1_EX[S.track] || [])[+b.dataset.d1ex] || '';
+      if (S.day1.trim() && !isDay1Example()){ const nt = $('#d1ex-note', el); if (nt) nt.style.display = ''; return; }   // never write over the student's own sentence
+      S.day1 = ex; clearIdleOpener();
+      const y = window.scrollY; save(); render(); window.scrollTo(0, y);
+      const t = $('#day1-in'); if (t) t.focus({ preventScroll: true });
+    });
     bindNav(el, 0);
   }
 
@@ -794,17 +1007,19 @@
 
     let h = '<div class="eyebrow">Box 2 of 6 &middot; One step earlier in time</div>' +
       '<h2>What convinced the hiring manager to pick you over other finalists?</h2>' +
+      '<p class="muted lookback">' + KRW.look + '</p>' +
       (S.day1.trim() ? '<div class="prev-link"><b>Your Box 1 outcome (' + esc(curRunway().short) + '):</b> ' + esc(S.day1) + '</div>' : '') +
 
       '<div class="step"><h3><span class="stepn">1</span>Write your first answer</h3>' +
       '<p>Go back to the week the hiring team chose you over the other candidates. What do you think mattered most to them?</p>' +
       '<div class="choices">' +
-        PROOF_PICKS.map(p => '<button type="button" class="cbtn' + (S.l2Pick === p.id ? ' picked' : '') + '" data-l2p="' + p.id + '">' + esc(p.label) + '</button>').join('') +
+        PROOF_PICKS.map(p => '<button type="button" class="cbtn' + (S.l2Pick === p.id ? ' picked' : '') + '" data-l2p="' + p.id + '"' + (S.l2Open ? ' disabled' : '') + '>' + esc(p.label) + '</button>').join('') +
       '</div>' +
       '<p style="margin-top:10px"><label for="l2-first">Write a line or two about what you showed that the other candidates did not:</label></p>' +
-      '<textarea id="l2-first" class="note-in" rows="2" placeholder="The hiring manager picked me over other finalists because I showed ...">' + esc(S.l2First) + '</textarea>' +
+      '<textarea id="l2-first" class="note-in" rows="2"' + (S.l2Open ? ' readonly' : '') + ' placeholder="The hiring manager picked me over other finalists because I showed ...">' + esc(S.l2First) + '</textarea>' +
+      (S.l2Open ? '<p class="muted">' + KRW.locked + '</p>' : '') +
       (!S.l2Open ? '<div class="row"><button type="button" class="btn blaze" id="l2-open-btn"' + (canOpenSignal ? '' : ' disabled') + '>' + HMW.title + '</button>' +
-        (!canOpenSignal ? '<span class="muted">Pick an option and write a line above to open the study.</span>' : '') + '</div>' : '') +
+        (!canOpenSignal ? '<span class="muted">Pick an option and write a line above to continue.</span>' : '') + '</div>' : '') +
       '</div>';
 
     if (S.l2Open){
@@ -821,7 +1036,7 @@
         if (HM.pick){
           h += '<p><label for="hm-a1">1. ' + HMW.p1 + '</label></p><textarea id="hm-a1" class="note-in" rows="2">' + esc(HM.a1) + '</textarea>' +
             '<p><label for="hm-a2">2. ' + HMW.p2 + '</label></p><textarea id="hm-a2" class="note-in" rows="2">' + esc(HM.a2) + '</textarea>' +
-            '<div class="msg info"><label for="hm-a3">' + esc(HMW.reply[HM.pick]) + '</label></div><textarea id="hm-a3" class="note-in" rows="2">' + esc(HM.a3) + '</textarea>';
+            '<div class="msg info"><label for="hm-a3"><b>' + HMW.opt + '</b> ' + esc(HMW.reply[HM.pick]) + '</label></div><textarea id="hm-a3" class="note-in" rows="2">' + esc(HM.a3) + '</textarea>';
         }
       }
       if (!studyOpen) h += '<div class="row"><button type="button" class="btn blaze" id="l2-study-btn"' + (hmReady() ? '' : ' disabled') + '>See what a recent study found</button></div>';
@@ -847,12 +1062,7 @@
           ]) +
         '</div></div>';
 
-        h += '<div class="step"><h3><span class="stepn">4</span>Update your answer</h3>' +
-        '<p>' + HMW.back + '</p>' +
-        '<p><label for="l2-final">Rewrite or keep your answer about what convinced the hiring manager in <b>' + esc(trackLabel()) + '</b>. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain:</label></p>' +
-        '<textarea id="l2-final" class="note-in" rows="3">' + esc(S.l2Final) + '</textarea>' +
-        '<p class="muted">' + COPY_NOTE + '</p>' +
-        '</div>';
+        h += krStep('l2', 4, 'Revise your answer about what convinced the hiring manager in <b>' + esc(trackLabel()) + '</b>. Include one thing you could do without AI, and one thing you checked or one tradeoff you can explain:', HMW.back);
       }
     }
 
@@ -860,7 +1070,8 @@
     $$('[data-l2p]', el).forEach(b => b.onclick = () => { S.l2Pick = b.dataset.l2p; save(); render(); });
     const f1 = $('#l2-first', el);
     if (f1) f1.oninput = () => {
-      S.l2First = f1.value; save();
+      S.l2First = f1.value; if (S.l2Keep === 'keep') S.l2Final = S.l2First; save();
+      const ag = $('#l2-again', el); if (ag) ag.innerHTML = '<b>Your first answer:</b> ' + esc(S.l2First);
       const btn = $('#l2-open-btn', el);
       if (btn) btn.disabled = !(!!S.l2Pick && S.l2First.trim().length >= 10);
     };
@@ -869,7 +1080,15 @@
     // re-drawing the box must not move the page under the student
     const redraw = () => { const y = window.scrollY; save(); render(); window.scrollTo(0, y); };
     $$('[data-hmq]', el).forEach(b => b.onclick = () => { const i = +b.dataset.hmq; if (!S.hm.asked.includes(i) && S.hm.asked.length < 3){ S.hm.asked.push(i); redraw(); } });
-    $$('[data-hmp]', el).forEach(b => b.onclick = () => { S.hm.pick = b.dataset.hmp; redraw(); const a = $('#hm-a1'); if (a) a.focus({ preventScroll: true }); });
+    $$('[data-hmp]', el).forEach(b => b.onclick = () => {
+      const v = b.dataset.hmp;
+      if (v !== S.hm.pick){
+        S.hm.by = S.hm.by || {};
+        if (S.hm.pick) S.hm.by[S.hm.pick] = { a1: S.hm.a1, a2: S.hm.a2, a3: S.hm.a3 };
+        const o = S.hm.by[v] || { a1: '', a2: '', a3: '' };
+        S.hm.a1 = o.a1; S.hm.a2 = o.a2; S.hm.a3 = o.a3; S.hm.pick = v;
+      }
+      redraw(); const a = $('#hm-a1'); if (a) a.focus({ preventScroll: true }); });
     ['a1', 'a2', 'a3'].forEach(k => { const t = $('#hm-' + k, el); if (t) t.oninput = () => { S.hm[k] = t.value; save(); const sb = $('#l2-study-btn', el); if (sb) sb.disabled = !hmReady(); }; });
     const sb = $('#l2-study-btn', el);
     if (sb) sb.onclick = () => {
@@ -880,6 +1099,7 @@
     };
     const fn = $('#l2-final', el);
     if (fn) fn.oninput = () => { S.l2Final = fn.value; clearIdleOpener(); save(); updateNavState(el, 1); };
+    krBind(el, 'l2', 1);
     bindNav(el, 1);
   }
 
@@ -897,14 +1117,16 @@
 
     let h = '<div class="eyebrow">Box 3 of 6 &middot; Two steps earlier in time</div>' +
       '<h2>Before you could impress that hiring manager, how did a human actually see your work?</h2>' +
+      '<p class="muted lookback">' + KRW.look + '</p>' +
       (S.l2Final.trim() ? '<div class="prev-link"><b>Your Box 2 answer (what convinced them):</b> ' + esc(S.l2Final) + '</div>' : '') +
 
       '<div class="step"><h3><span class="stepn">1</span>Write your first answer: how did you get the interview?</h3>' +
       '<div class="choices">' +
-        DOOR_PICKS.map(p => '<button type="button" class="cbtn' + (S.l3Pick === p.id ? ' picked' : '') + '" data-l3p="' + p.id + '">' + esc(p.label) + '</button>').join('') +
+        DOOR_PICKS.map(p => '<button type="button" class="cbtn' + (S.l3Pick === p.id ? ' picked' : '') + '" data-l3p="' + p.id + '"' + (S.l3Open ? ' disabled' : '') + '>' + esc(p.label) + '</button>').join('') +
       '</div>' +
       '<p style="margin-top:10px"><label for="l3-first">Describe in a line or two how your name and your work reached a person who makes hiring decisions:</label></p>' +
-      '<textarea id="l3-first" class="note-in" rows="2" placeholder="I got the interview because ...">' + esc(S.l3First) + '</textarea>' +
+      '<textarea id="l3-first" class="note-in" rows="2"' + (S.l3Open ? ' readonly' : '') + ' placeholder="I got the interview because ...">' + esc(S.l3First) + '</textarea>' +
+      (S.l3Open ? '<p class="muted">' + KRW.locked + '</p>' : '') +
       (!S.l3Open ? '<div class="row"><button type="button" class="btn blaze" id="l3-open-btn"' + (canOpen ? '' : ' disabled') + '>See what a recent study found</button>' +
         (!canOpen ? '<span class="muted">Pick an option and write a line above to open the study.</span>' : '') + '</div>' : '') +
       '</div>';
@@ -944,11 +1166,7 @@
       h += '</div>';
 
       if (S.l3Q !== null){
-        h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
-        '<p><label for="l3-final">Describe your plan for getting a person to see your work, given that your Day 1 is <b>' + esc(curRunway().short) + '</b>. Include a second path you would use if online applications or internships are crowded:</label></p>' +
-        '<textarea id="l3-final" class="note-in" rows="3">' + esc(S.l3Final) + '</textarea>' +
-        '<p class="muted">' + COPY_NOTE + '</p>' +
-        '</div>';
+        h += krStep('l3', 3, 'Describe your plan for getting a person to see your work, given that your Day 1 is <b>' + esc(curRunway().short) + '</b>. Include a second path you would use if online applications or internships are crowded:');
       }
     }
 
@@ -956,7 +1174,8 @@
     $$('[data-l3p]', el).forEach(b => b.onclick = () => { S.l3Pick = b.dataset.l3p; save(); render(); });
     const f1 = $('#l3-first', el);
     if (f1) f1.oninput = () => {
-      S.l3First = f1.value; save();
+      S.l3First = f1.value; if (S.l3Keep === 'keep') S.l3Final = S.l3First; save();
+      const ag = $('#l3-again', el); if (ag) ag.innerHTML = '<b>Your first answer:</b> ' + esc(S.l3First);
       const btn = $('#l3-open-btn', el);
       if (btn) btn.disabled = !(!!S.l3Pick && S.l3First.trim().length >= 10);
     };
@@ -973,6 +1192,7 @@
     });
     const fn = $('#l3-final', el);
     if (fn) fn.oninput = () => { S.l3Final = fn.value; clearIdleOpener(); save(); updateNavState(el, 2); };
+    krBind(el, 'l3', 2);
     bindNav(el, 2);
   }
 
@@ -991,6 +1211,7 @@
 
     let h = '<div class="eyebrow">Box 4 of 6 &middot; Three steps earlier in time</div>' +
       '<h2>How did you actually build that portfolio, and what help &amp; resources did you use?</h2>' +
+      '<p class="muted lookback">' + KRW.look + '</p>' +
       (S.l3Final.trim() ? '<div class="prev-link"><b>Your Box 3 answer (how you got seen):</b> ' + esc(S.l3Final) + '</div>' : '') +
 
       '<div class="step"><h3><span class="stepn">1</span>Write your first answer: what went into your work?</h3>' +
@@ -1002,7 +1223,8 @@
         }).join('') +
       '</div>' +
       '<p style="margin-top:10px"><label for="l4-first">Briefly describe what you built or improved, and how AI, courses, peers or mentors were part of how you worked:</label></p>' +
-      '<textarea id="l4-first" class="note-in" rows="2" placeholder="To build that evidence, I worked on ... and used help from ...">' + esc(S.l4First) + '</textarea>' +
+      '<textarea id="l4-first" class="note-in" rows="2"' + (S.l4Open ? ' readonly' : '') + ' placeholder="To build that evidence, I worked on ... and used help from ...">' + esc(S.l4First) + '</textarea>' +
+      (S.l4Open ? '<p class="muted">' + KRW.locked + '</p>' : '') +
       (!S.l4Open ? '<div class="row"><button type="button" class="btn blaze" id="l4-open-btn"' + (canOpen ? '' : ' disabled') + '>See what a recent study found</button>' +
         (!canOpen ? '<span class="muted">Select at least one option and write a line above to open the study.</span>' : '') + '</div>' : '') +
       '</div>';
@@ -1044,11 +1266,7 @@
       h += '</div>';
 
       if (S.l4Q !== null){
-        h += '<div class="step"><h3><span class="stepn">3</span>Update your answer</h3>' +
-        '<p><label for="l4-final">Describe the existing or messy problem (or the second field) you will build around, how you will check AI-assisted work, and whose feedback you will ask for:</label></p>' +
-        '<textarea id="l4-final" class="note-in" rows="3">' + esc(S.l4Final) + '</textarea>' +
-        '<p class="muted">' + COPY_NOTE + '</p>' +
-        '</div>';
+        h += krStep('l4', 3, 'Describe the existing or messy problem (or the second field) you will build around, how you will check AI-assisted work, and whose feedback you will ask for:');
       }
     }
 
@@ -1061,7 +1279,8 @@
     });
     const f1 = $('#l4-first', el);
     if (f1) f1.oninput = () => {
-      S.l4First = f1.value; save();
+      S.l4First = f1.value; if (S.l4Keep === 'keep') S.l4Final = S.l4First; save();
+      const ag = $('#l4-again', el); if (ag) ag.innerHTML = '<b>Your first answer:</b> ' + esc(S.l4First);
       const btn = $('#l4-open-btn', el);
       if (btn) btn.disabled = !(S.l4Chips.length >= 1 && S.l4First.trim().length >= 10);
     };
@@ -1078,6 +1297,7 @@
     });
     const fn = $('#l4-final', el);
     if (fn) fn.oninput = () => { S.l4Final = fn.value; clearIdleOpener(); save(); updateNavState(el, 3); };
+    krBind(el, 'l4', 3);
     bindNav(el, 3);
   }
 
@@ -1097,8 +1317,6 @@
         links.map(x => '<li><b>' + x[0] + ':</b> ' + esc(x[1]) + '</li>').join('') + '</ul></div>' : '') +
 
       '<div class="step"><h3><span class="stepn">1</span>Divide your weekly hours for the next 30 days</h3>' +
-      '<p>Set the hours per week you can realistically give outside your required coursework. Then divide all of them across the six kinds of preparation.</p>' +
-      '<p><b>How to decide:</b> each kind of preparation supports one of your three answers. Ask yourself which answer needs the most work, and give that one the most hours.</p>' +
       '<div id="c-mount">' + renderConsole() + '</div>' +
       '<details class="more"><summary>See one example of dividing 10 hours</summary>' +
         '<p>A student who is about a year from Day 1 might divide 10 hours a week like this:</p>' +
@@ -1112,8 +1330,8 @@
       '</div>' +
 
       '<div class="step"><h3><span class="stepn">2</span>Identify one step you will finish in the next 7 days</h3>' +
-      '<p><label for="step-7d">Write one step that is small enough to finish in the next 7 days and that starts your chain. Make it specific enough that a classmate or mentor could confirm it happened.</label></p>' +
-      '<p class="muted">For example: you looked through a specific repository or dataset, started your decision notes, messaged a specific person, or tested your project with a real user.</p>' +
+      '<p><label for="step-7d">Write one step that you will finish in the next 7 days. Say what will exist that does not exist today, and who could check it. Choose a step that is in your own hands: sending a message to a specific person is in your hands, and getting a reply is not.</label></p>' +
+      '<p class="muted">For example: a list of the problems you found in a specific repository or dataset, the first page of your decision notes, a message sent to a specific person, or notes from testing your project with one real user.</p>' +
       '<textarea id="step-7d" class="note-in" rows="3" placeholder="In the next 7 days, I will ... (someone could confirm this by ...)">' + esc(S.step7d) + '</textarea>' +
       '</div>';
 
@@ -1174,12 +1392,12 @@
       'Target path: ' + trackLabel() + ' (' + curRunway().label + ')',
       'Box 1 (Day 1 role): ' + (S.day1 || '(blank)'),
       'Box 2 first instinct (' + (S.l2Pick || 'none') + '): ' + (S.l2First || '(blank)'),
-      'Box 2 sharpened (What convinced hiring manager): ' + (S.l2Final || '(blank)'),
+      'Box 2 sharpened (What convinced hiring manager): ' + (S.l2Final || '(blank)') + krNote('l2'),
       'Box 3 first instinct (' + (S.l3Pick || 'none') + '): ' + (S.l3First || '(blank)'),
-      'Box 3 sharpened (How a human saw the work): ' + (S.l3Final || '(blank)'),
+      'Box 3 sharpened (How a human saw the work): ' + (S.l3Final || '(blank)') + krNote('l3'),
       'Box 4 ingredients: ' + (S.l4Chips.join(', ') || 'none'),
-      'Box 4 sharpened (How proof was built & verified + help used): ' + (S.l4Final || '(blank)'),
-      'Box 5 next-30-day weekly budget (' + S.budget + ' hrs/wk): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + 'h').join(', '),
+      'Box 4 sharpened (How proof was built & verified + help used): ' + (S.l4Final || '(blank)') + krNote('l4'),
+      'Box 5 next-30-day weekly budget (' + S.budget + ' hrs/wk): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + 'h').join(', ') + ' | hours by answer: ' + GROUPS.map(g => 'Box ' + g + '=' + (S.ans[g] || 0) + 'h').join(', '),
       'Box 5 concrete 7-day step: ' + (S.step7d || '(blank)'),
       'Continuity checks flagged on page: ' + diags.map(d => d.title).join(' | ')
     ].join('\n');
@@ -1435,26 +1653,29 @@
       'Box 1 (Day 1 in the role): ' + (S.day1.trim() || '[not written yet]'),
       '',
       'Box 2 (What convinced the hiring manager):',
-      '  First answer (' + (S.l2Pick || 'not chosen') + '): ' + (S.l2First.trim() || '[not written yet]'),
+      '  First answer (' + pickLabel(PROOF_PICKS, S.l2Pick) + '): ' + (S.l2First.trim() || '[not written yet]'),
       '  As the hiring manager, I asked: ' + (S.hm.asked.length ? S.hm.asked.map(i => HMW.qs[i].q).join(' ') : '[no questions asked yet]'),
       '  I offered the job to: ' + (S.hm.pick ? HMW.names[S.hm.pick] : '[not chosen yet]'),
       '  What my finalist showed me that I could check: ' + (S.hm.a1.trim() || '[not written yet]'),
-      '  What I would still ask the other finalist: ' + (S.hm.a2.trim() || '[not written yet]'),
+      '  What I am still not sure about, and what I would ask the other finalist: ' + (S.hm.a2.trim() || '[not written yet]'),
       ...(S.hm.a3.trim() ? ['  My answer to the question the page asked back: ' + S.hm.a3.trim()] : []),
-      '  Updated answer after the study: ' + (S.l2Final.trim() || '[not written yet]'),
+      ...krReport('l2'),
       '',
       'Box 3 (How a person saw your work):',
-      '  First answer (' + (S.l3Pick || 'not chosen') + '): ' + (S.l3First.trim() || '[not written yet]'),
-      '  Updated answer after the study: ' + (S.l3Final.trim() || '[not written yet]'),
+      '  First answer (' + pickLabel(DOOR_PICKS, S.l3Pick) + '): ' + (S.l3First.trim() || '[not written yet]'),
+      ...krReport('l3'),
       '',
       'Box 4 (How you built your work, and what help you used):',
-      '  Selected: ' + (S.l4Chips.length ? S.l4Chips.join(', ') : '[none]'),
+      '  Selected: ' + (S.l4Chips.length ? S.l4Chips.map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ') : '[none]'),
       '  First answer: ' + (S.l4First.trim() || '[not written yet]'),
-      '  Updated answer after the study: ' + (S.l4Final.trim() || '[not written yet]'),
+      ...krReport('l4'),
       '',
       '--- Box 5: Next 30 Days (' + S.budget + ' hrs/wk outside required classes) ---'
     ];
-    BUCKETS.forEach(b => L.push('  ' + b.name + ': ' + (S.hrs[b.id] || 0) + ' hr(s)/wk'));
+    GROUPS.forEach(g => {
+      L.push('  For my Box ' + g + ' answer: ' + (S.ans[g] || 0) + ' hr(s)/wk');
+      groupBuckets(g).forEach(b => L.push('    ' + b.name + ': ' + (S.hrs[b.id] || 0) + ' hr(s)/wk'));
+    });
     L.push(
       '  First verifiable step in the next 7 days: ' + (S.step7d.trim() || '[not written yet]'),
       ''
