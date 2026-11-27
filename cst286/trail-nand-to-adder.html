@@ -862,7 +862,7 @@ const LEVELS = [
           wRead:[{id:'w-15', q:'Are you wondering why the machine never shows more than 15?', a:'<p>With all four wires on, the number is 8 + 4 + 2 + 1 = 15. There is no wire left to turn on, so 15 is the largest number that four wires can hold.</p>'}],
           carry:'<p><b>The machine adds the way you add by hand: one column at a time, starting from the right.</b> Each column adds one bit of <code>a</code>, one bit of <code>b</code>, and a carry of 1 if the column to its right sent one. A column can write down only one bit, so what it does depends on what it adds up to:</p><ul><li>0 or 1: it writes that bit and carries nothing.</li><li>2: it writes 0 and carries 1 to the next column.</li><li>3: it writes 1 and carries 1 to the next column.</li></ul><p>Here is one carry, in 1 + 1. The 1s column adds 1 + 1 = 2, so it writes 0 and carries 1. The 2s column adds 0 + 0 + the carry 1 = 1, so it writes 1. The answer is 0010, which is 2.</p>',
           wCarry:[{id:'w-long', q:'Are you wondering how a longer sum goes, with a carry in every column?', a:'<p>Here is 0011 + 0101, which is 3 + 5, one column at a time from the right:</p><ul><li>The 1s column: 1 + 1 = 2, so write 0 and carry 1.</li><li>The 2s column: 1 + 0 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 4s column: 0 + 1 + the carry 1 = 2, so write 0 and carry 1.</li><li>The 8s column: 0 + 0 + the carry 1 = 1, so write 1.</li></ul><p>The answer is 1000, which is 8.</p>'}, {id:'w-over', q:'Are you wondering why 15 + 1 shows 0?', a:'<p>When the 8s column produces a carry, there is no fifth wire to hold it, so the carry is dropped. A fifth wire would be worth double 8, which is 16. This is called overflow, and it is why 15 + 1 shows 0 and 9 + 9 shows 2: each answer is missing 16.</p>'}],
-          lock:'This step opens when you have made one number, read one number and finished one addition.'},
+          lock:'This step opens when you have tried each practice once: make a number, read a number, and add once by hand.'},
    build:'<p><b>Now rebuild the machine yourself, to see how it works.</b> From here on, a box is called a chip, and the boxes inside it are called its parts. Add4 has one small adder for each column, and each column sends its carry to the next one. You have two ready-made parts: <code>HalfAdder</code> adds two bits, and <code>FullAdder</code> adds three bits (two bits plus a carry coming in).</p><p>You describe a chip in HDL (hardware description language). Each line names one part and says which wire connects to each of its pins. The editor already holds the outside of the chip, so leave the <code>IN</code> and <code>OUT</code> lines as they are and write your parts under <code>PARTS:</code>.</p>',
    warm:{lead:'Warm up with one line before the full build. This small chip adds only the 1s column. Its one part is already there, and its two outputs are already connected. Two blanks are left: after <code>a=</code> and <code>b=</code>, type the name of the wire that should go to that pin. The wires you have are the chip\'s inputs, a and b. Then press Run.', done:'That line is the whole pattern: the pin of the part on the left of each =, and your wire on the right. The full build below uses the same pattern four times.', stub:'CHIP FirstColumn {\n    IN a, b;\n    OUT sum, carry;\n\n    PARTS:\n    HalfAdder(a=, b=, sum=sum, carry=carry);\n}\n'},
    build2:'<p><b>Column 0 is written for you.</b></p><p class="l2line"><code><span class="k1">HalfAdder</span>(<span class="k2">a</span>=<span class="k3">a<span class="k4">[0]</span></span>, <span class="k2">b</span>=<span class="k3">b[0]</span>, <span class="k2">sum</span>=<span class="k3">out[0]</span>, <span class="k2">carry</span>=<span class="k5">c1</span>);</code></p><ul class="l2labels"><li><code><span class="k1">HalfAdder</span></code> is the part.</li><li>The name on the <span class="k2">left of each <code>=</code></span> is a pin of the part.</li><li>The name on the <span class="k3">right of each <code>=</code></span> is the wire you connect to that pin.</li><li><code><span class="k3">a<span class="k4">[0]</span></span></code> is one wire of <code>a</code>, and the number picks which one: 0 is the 1s place, 1 is the 2s place, 2 is the 4s place and 3 is the 8s place. The <code>[4]</code> in the <code>IN</code> line is different. It says how many wires <code>a</code> has.</li><li><code><span class="k5">c1</span></code> is a name made up for a new wire. It takes this column\'s carry to column 1.</li></ul><p><b>Column 1: fill in two blanks.</b> Column 1 adds three bits, so it uses a FullAdder. Its line is in the editor with two blanks:</p><p class="l2line"><code>FullAdder(a=a[1], b=b[1], c=, sum=out[1], carry=);</code></p><p>After <code>c=</code>, type the name of the wire that brings the carry in from column 0. After <code>carry=</code>, make up a name for the wire that takes this column\'s carry to column 2.</p><p><b>Column 2: type the line yourself, with column 1 in view.</b> Three things change from column 1: the number in the brackets, the wire that brings the carry in, and the name of the wire that takes the carry out.</p><p><b>Column 3: this one is yours.</b> Its carry has nowhere to go, because there is no fifth wire, so leave <code>carry=</code> out of the line. An output pin of a part can be left out when you do not need it.</p><p><b>You are finished when</b> you press Run tests and all 256 rows pass.</p>',
@@ -932,14 +932,14 @@ const LEVELS = [
         lock:`The build opens when you have compared your idea.`},
    build:'<p>Connect the two parts with a wire that you name yourself.</p>',
    hints:['Nand is short for Not-And. What do you get when you take the opposite of the opposite?', 'Send a and b through a Nand and name its output, for example out=w.', 'Two parts: a Nand from a and b to a wire w, then a Not from w to out.'],
-   after:'Try a = 1 and b = 1 on your drawing: the Nand gives 0, and the Not turns it back into 1. In every other row the Nand gives 1, and the Not turns it into 0.'},
+   after:'Try a = 1 and b = 1 on your drawing: the first Nand gives 0, and the part after it turns that 0 back into 1. In every other row the first Nand gives 1, and the part after it turns that 1 into 0.'},
 
   {id:'or', kind:'build', chip:'Or', short:'Or', title:'At least one: Or',
    objs:['Build Or from Not and Nand.', 'Change the inputs of a gate you have so that it behaves like the gate you need.'],
    pcheck:`Fill in the table with what you expect Or to give in each row. Then click <code>a</code> and <code>b</code> on the drawing, and change any row where the drawing shows something else.`,
    learn:'<p>Or gives 1 when at least one input is 1. Neither of the parts below it does that directly. Not flips one bit, and Nand gives 0 only when both of its inputs are 1.</p>',
    act:{title:`Move the 0`,
-        lead:`Your table for Or has its 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.`,
+        lead:`Or gives 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.`,
         fa:`flip a`, fb:`flip b`, target:`Or needs its 0 here`, zero:`the Nand gives 0 here`,
         done:`With both inputs flipped, the Nand gives 0 only when <code>a</code> and <code>b</code> are both 0, and that is the table for Or. Each flip switch is a Not gate. In the build, write down what you just made.`,
         lock:`The build opens when you have tried the switches.`},
@@ -1506,7 +1506,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     // Level 2: the build opens once the student has made one number, read one number and finished one addition
     L2LOCK = null;
     if (T3){
-      const practiced = () => UNLOCK_ALL || !!S.pass[chip] || ((S.games.bin || {}).make >= 1 && (S.games.bin || {}).read >= 1 && (S.games.add || {}).n >= 1);
+      const practiced = () => UNLOCK_ALL || !!S.pass[chip] || (((S.games.bin || {}).make >= 1 || (S.games.bin || {}).makeTry) && ((S.games.bin || {}).read >= 1 || (S.games.bin || {}).readTry) && ((S.games.add || {}).n >= 1 || (S.games.add || {}).tried));   // attempts, not right answers
       L2LOCK = () => { const lock = $('#buildlock'), wrap = $('#buildwrap'); if (!lock || !wrap) return; const open = practiced(); lock.hidden = open; wrap.hidden = !open; };
       L2LOCK();
     }
@@ -1786,7 +1786,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       const A = [['top', 'The top one'], ['bottom', 'The bottom one']], Bq = [['power', 'Power, so out is 1'], ['ground', 'Ground, so out is 0']], right = ['bottom', 'ground'];
       const qHTML = (k, opts) => '<div class="q"><p class="ask"><b>' + (k + 1) + '.</b> ' + esc(l.q[k]) + '</p><div class="row">' + opts.map(([val, t]) => '<button type="button" class="segbtn' + (st.q[k] === val ? (val === right[k] ? ' on' : ' wrong') : '') + '" data-q="' + k + '" data-v="' + val + '">' + t + '</button>').join('') + '</div>' + (st.q[k] === null ? '' : st.q[k] === right[k] ? '<div class="msg ok">' + (k === 0 ? 'Yes. The bottom transistor closes when its control signal is 1. The top one closes on 0, so it is open.' : 'Yes. The only closed path leads to ground, so out is 0. An input of 1 gave an output of 0.') + '</div>' : '<div class="msg bad">' + (k === 0 ? 'Look at the control wires. The transistor with the small circle closes when its signal is 0, and the one without it closes when its signal is 1.' : 'Follow the closed transistor. Which rail does it connect the output to?') + '</div>') + '</div>';
       const solved = pick.q || (st.q[0] === right[0] && st.q[1] === right[1]);
-      h += stepHTML(3, 'Practice', '<p>' + esc(l.practice) + '</p><div class="tcirc one">' + circuitSVG(notCfg, solved ? st.not : {in:1}, !solved) + '</div>' + (solved ? '<div class="row">' + swBtns('not', st.not) + '</div><p>' + l.qdone + '</p>' : qHTML(0, A) + (st.q[0] === right[0] ? qHTML(1, Bq) : '')));
+      h += stepHTML(3, 'Practice', '<p>' + esc(l.practice) + '</p><div class="tcirc one">' + circuitSVG(notCfg, solved ? st.not : {in:1}, !solved) + '</div>' + (solved ? '<div class="row">' + swBtns('not', st.not) + '</div><p>' + l.qdone + '</p>' : qHTML(0, A) + (st.q[0] !== null ? qHTML(1, Bq) : '')));
       const cfg = nandCfg(), o = circuitOut(cfg, st.nand);
       h += stepHTML(4, 'Build it', '<div class="idea">' + l.build + '</div>' + seg('top') + seg('bottom') + '<div class="tcirc one">' + circuitSVG(cfg, st.nand) + '</div><div class="row">' + swBtns('nand', st.nand) + '<span class="numout">out: <b>' + OUT_WORD[o] + '</b></span></div>' +
         '<div class="row"><button type="button" class="btn" id="trun">Run tests</button><button type="button" class="btn ghost" id="hint">Give me a hint</button></div><div id="hints">' + l.hints.slice(0, H.tr || 0).map((t, i) => '<div class="hint"><b>Hint ' + (i + 1) + ' of ' + l.hints.length + '.</b> ' + esc(t) + '</div>').join('') + '</div><div id="tres" role="status">' + resHTML + '</div>' + (isDone(l) ? afterHTML(l) : ''));
@@ -2266,25 +2266,26 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const st = S.games.bin || (S.games.bin = {make:0, read:0});
     const g = G.bin || (G.bin = {mode:'make', target:1 + rnd(15), bits:0, msg:'', cls:'', solved:false, tries:0});
     const draw = () => {
-      let h = '<h4 class="sub">Practice: read and write binary</h4><p>Make one number with the switches, and read one number from them. You need both for the build.</p><p class="tallies">' + tally('Make a number', st.make, 1) + tally('Read a number', st.read, 1) + '</p>';
+      let h = '<h4 class="sub">Practice: read and write binary</h4><p>Make one number with the switches, and read one number from them. You need both for the build.</p><p class="tallies">' + tally('Make a number', Math.max(st.make, st.makeTry ? 1 : 0), 1) + tally('Read a number', Math.max(st.read, st.readTry ? 1 : 0), 1) + '</p>';
       if (g.prev) h += '<div class="msg ok" role="status">' + esc(g.prev) + '</div>';
       if (g.mode === 'make') h += '<p class="ask">Set the bits to make <b>' + g.target + '</b>.</p>' + bitsRow('bits', g.bits, !g.solved);
       else h += '<p class="ask">What number is this?</p>' + bitsRow('x', g.target, false) + (g.solved ? '' : '<div class="row"><label for="ans">Decimal value</label> <input id="ans" class="num-in" type="number" min="0" max="15" inputmode="numeric"></div>');
-      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '<button type="button" class="btn" data-a="check">Check</button>') + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
+      h += '<div class="row">' + (g.solved ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '<button type="button" class="btn" data-a="check">Check</button>' + ((g.mode === 'make' ? st.makeTry : st.readTry) ? '<button type="button" class="btn ghost" data-a="next">Next one</button>' : '')) + '</div><div class="msg ' + g.cls + '" role="status">' + esc(g.msg) + '</div>';
       box.innerHTML = h; bindBits(box, g, draw);
       const ans = $('#ans', box); if (ans) ans.addEventListener('keydown', e => { if (e.key === 'Enter') $('[data-a=check]', box).click(); });
       const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
       if (ck) ck.onclick = () => {
         g.prev = '';
         if (g.mode === 'make'){
+          st.makeTry = true;
           if (g.bits === g.target){ st.make++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + terms(g.bits) + ' = ' + g.target + '.'; }
           else { const d = g.bits - g.target; g.cls = 'bad'; g.msg = 'Your bits are worth ' + terms(g.bits) + ' = ' + g.bits + '. You need ' + g.target + ', so you are ' + Math.abs(d) + ' too ' + (d > 0 ? 'high' : 'low') + '.'; }
         } else {
           const v = ans.value.trim();
           if (v === ''){ g.cls = 'warn'; g.msg = 'Type the decimal value first.'; }
-          else if (+v === g.target){ st.read++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '.'; }
+          else if ((st.readTry = true) && +v === g.target){ st.read++; g.solved = true; g.cls = 'ok'; g.msg = 'Yes: ' + bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '.'; }
           else if (++g.tries < 2){ g.cls = 'bad'; g.msg = v + ' is not it. Add up the place values (8, 4, 2, 1) of the bits that are 1, and try again.'; }
-          else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '. This one does not count, so try the next one.'; }
+          else { g.solved = true; g.cls = 'bad'; g.msg = bin4(g.target) + ' is ' + terms(g.target) + ' = ' + g.target + '.'; }
         }
         // a required practice is never left behind a button: after the first number is made, the number to read comes up at once
         if (g.mode === 'make' && g.solved && g.cls === 'ok' && st.read < 1){ g.prev = g.msg; g.mode = 'read'; g.target = 1 + rnd(15); g.bits = 0; g.msg = ''; g.cls = ''; g.solved = false; g.tries = 0; }
@@ -2301,7 +2302,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     const draw = () => {
       const cell = (grp, b, v) => g.solved ? '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>' : '<button type="button" class="sw big' + (v ? ' on' : '') + '" data-g="' + grp + '" data-b="' + b + '" aria-pressed="' + (v ? 'true' : 'false') + '" aria-label="' + (grp === 'c' ? 'carry into column ' + b : 'sum bit ' + b) + '">' + v + '</button>';
       const fixed = v => '<span class="lamp big' + (v ? ' on' : '') + '">' + v + '</span>';
-      let h = '<h4 class="sub">Practice: add by hand</h4><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Finish one addition.</p><p class="tallies">' + tally('Correct additions', st.n, 1) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
+      let h = '<h4 class="sub">Practice: add by hand</h4><p>Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Check one addition.</p><p class="tallies">' + tally('Additions checked', Math.max(st.n, st.tried ? 1 : 0), 1) + '</p><div class="tablewrap"><table class="addt"><thead><tr><th></th><th>carry out</th><th>8s</th><th>4s</th><th>2s</th><th>1s</th><th></th></tr></thead><tbody>';
       h += '<tr><th>carry</th><td>' + cell('c', 4, (g.c >> 4) & 1) + '</td>' + [3, 2, 1].map(b => '<td>' + cell('c', b, (g.c >> b) & 1) + '</td>').join('') + '<td></td><td></td></tr>';
       h += '<tr><th>a</th><td></td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.a >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.a : '') + '</td></tr>';
       h += '<tr><th>b</th><td class="plus">+</td>' + [3, 2, 1, 0].map(b => '<td>' + fixed((g.b >> b) & 1) + '</td>').join('') + '<td class="dec">' + (g.solved ? '= ' + g.b : '') + '</td></tr>';
@@ -2314,7 +2315,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
       const wo = $('.woffer', box); if (wo) wo.onclick = () => { const d = $('#' + g.offer); if (d){ d.open = true; d.scrollIntoView({behavior:'smooth', block:'center'}); } };
       const ck = $('[data-a=check]', box), nx = $('[data-a=next]', box);
       if (ck) ck.onclick = () => {
-        let cin = 0, bad = false; g.offer = '';
+        let cin = 0, bad = false; g.offer = ''; st.tried = true; save();
         for (let i = 0; i < 4 && !bad; i++){
           const ai = (g.a >> i) & 1, bi = (g.b >> i) & 1, t = ai + bi + cin;
           if (((g.s >> i) & 1) !== (t & 1) || ((g.c >> (i + 1)) & 1) !== (t >> 1)){

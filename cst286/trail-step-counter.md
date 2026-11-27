@@ -189,9 +189,9 @@ Button: Test my prediction: stroll at 60 steps per minute
 
 (Page note: canvas. A scrolling graph of the phone's signal over the last six seconds, in metres per second squared. A grey dashed line marks 9.8, the reading when standing still. A crimson line marks the count line. Crimson dots mark each counted step, and small dark ticks along the bottom mark each time a foot really landed. Above the graph, the counters "Feet landed: N" and "Phone counted: N" and a button "Reset counts". Under the graph two sliders. Count line: 9.8 to 16 m/s² in steps of 0.1, default 11.0 ("Count line: N m/s²"). Pocket jostle: 0 to 2 m/s² in steps of 0.1, default 0.0 ("Pocket jostle: N m/s²"). Pills in the graph: "standing still, 9.8" and "count line 11.0".)
 
-(Page note: the button sets walking pace 60, bounce 5.0 cm, count line 11.0 and jostle 0, says so in a line above the graph, and runs for 6 seconds:)
+(Page note: the button sets walking pace 60, bounce 5.0 cm, count line 11.0 and jostle 0, sets the speed to 1x (shown selected in the control bar), says so in a line above the graph, and runs for 6 seconds. The button is closed while the test runs. Before the test has been pressed, the line under the exit button reads "Press Test my prediction first." While the test runs it reads "The stroll test is running. It takes about six seconds.")
 
-Set for this test: 60 steps per minute, 5.0 cm bounce, count line 11.0 m/s², no jostle.
+Set for this test: 60 steps per minute, 5.0 cm bounce, count line 11.0 m/s², no jostle, normal speed.
 
 After the test: At 60 steps per minute the highest reading is 9.8 + 0.025 × (2π × 1.0)² = 10.79 m/s². That is below the count line of 11.0, so the phone missed every step. (Page note: followed by the two counters from the run, "Feet landed: N. Phone counted: N.")
 
@@ -260,7 +260,7 @@ This page treats the rise and fall of the hip as a smooth wave. A real walk is b
 
 **A place to stop.** Levels 1 to 4 are the first sitting of this learning trail. Level 5, the stop named Check what you can explain, and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Save my work at the bottom of the page.
 
-(Page note: Level 5 opens when the stroll test has run, Task 1a has been checked once, one 20-second run has been made in Task 1b and one in Task 2, and something is written in the explain box. The line under the exit button names the first of these that is missing: "Press Test my prediction first.", "Press Check on the practice problem once. It does not have to be right.", "In Task 1b, press Run for 20 seconds once.", "In Task 2, press Run for 20 seconds once.", "Write something in the explain box. Your first thoughts are enough.")
+(Page note: Level 5 opens when the stroll test has run, Task 1a has been checked once, one 20-second run has been made in Task 1b and one in Task 2, and something is written in the explain box. The line under the exit button names the first of these that is missing: "Press Test my prediction first." (while the test runs: "The stroll test is running. It takes about six seconds."), "Press Check on the practice problem once. It does not have to be right.", "In Task 1b, press Run for 20 seconds once.", "In Task 2, press Run for 20 seconds once.", "Write something in the explain box. Your first thoughts are enough.")
 
 Exit button: Zoom in: inside the simulation
 
@@ -284,6 +284,8 @@ What you will do:
 3. Change `pace = 110` near the top of the program to 120, and press Run again. Compare the two RESULT lines.
 
 (Page note: the GlowScript runner in a frame, loading cst286/sims/step-counter.py: the code on the left with Run and Reset to original; on the right the line "RESULT: 37 feet landed, 37 steps counted. Highest reading 13.12 m/s²." (at 120 steps per minute: 40 and 40, 13.75 m/s²) and a graph of the reading against time with the count line and a dot at each count. The runner keeps the last two runs above the code. The student's edited copy is kept in this browser and put back when the page is opened again.)
+
+(On a screen narrower than 660 px, above the runner: On a narrow screen, scroll the graph sideways to see the whole run. The frame keeps the graph at its full size and scrolls sideways.)
 
 Your changes to the program are saved in this browser. Reset to original brings the program back as it was.
 
@@ -680,7 +682,7 @@ You have been working on this trail for about 30 minutes. This is a good place t
 
 ## Copy my work to submit
 
-(Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen. It is hidden until Level 3 is open, which is half of the trail; with ?review=1 it always shows. Pressed before all eight stops are complete, it does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
+(Page note: button "Copy my work to submit" at the bottom right, on its own strip across the bottom of the screen. It is hidden until half of the eight stops on the level map are complete (4 of 8); with ?review=1 it always shows. Pressed before all eight stops are complete, it does not copy: it turns red and reads "You are not done yet. Click again to copy anyway." for 12 seconds, and a second press in that time copies.)
 
 When copied: Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.
 
@@ -716,36 +718,38 @@ Never write the full correct explanation for the student, and do not give them n
 The simulation has Pause and slow motion. It has no way to slide to a chosen moment; do not tell the student to.
 
 Never supply what the student left out or got wrong. Say which part does not hold up or is not there yet, and ask one question.
+
+If you point to the page, point only to a control, a drawing or a readout named under 'At this stop' in the notes. If the thing to look at is at another level, name that level.
 ```
 
 ### Private notes for Level 1
 
 ```text
-A sound explanation says that at the lowest point of the wave the phone's up-and-down motion turns around, from moving down to moving up. Turning the motion around is an upward acceleration. By Newton's second law an upward acceleration needs a net upward force, so the pocket's push must be larger than the phone's weight there. At the top of the wave the opposite happens and the push is smaller than the weight. Common gaps: saying only 'because the foot hits the ground' without connecting it to acceleration or net force; thinking the force is largest where the phone moves fastest; mixing up the phone's position with the force on it.
+A sound explanation says that at the lowest point of the wave the phone's up-and-down motion turns around, from moving down to moving up. Turning the motion around is an upward acceleration. By Newton's second law an upward acceleration needs a net upward force, so the pocket's push must be larger than the phone's weight there. At the top of the wave the opposite happens and the push is smaller than the weight. Common gaps: saying only 'because the foot hits the ground' without connecting it to acceleration or net force; thinking the force is largest where the phone moves fastest; mixing up the phone's position with the force on it. At this stop the student sees a side view of a person walking in place with a phone in the hip pocket, a dotted trail of the phone's wave, and a badge with the steps counted. Controls: Pause, the speed buttons (1x, 0.25x, 0.1x, 0.05x), the Walking pace slider and the Bounce of the hip slider. There are no arrows and no numbers for force or acceleration at this stop; those are at Level 2.
 ```
 
 ### Private notes for Level 2
 
 ```text
-A sound explanation says that standing still means zero acceleration, and zero acceleration means zero net force, not zero forces. The Earth still pulls the phone down with its weight, so the pocket must push up with an equal force to balance it. If the push were zero, the weight would be unbalanced and the phone would accelerate downward. Common gaps: 'no motion means no force'; forgetting that the weight still acts; not separating the net force from the individual forces.
+A sound explanation says that standing still means zero acceleration, and zero acceleration means zero net force, not zero forces. The Earth still pulls the phone down with its weight, so the pocket must push up with an equal force to balance it. If the push were zero, the weight would be unbalanced and the phone would accelerate downward. Common gaps: 'no motion means no force'; forgetting that the weight still acts; not separating the net force from the individual forces. At this stop the student sees the phone drawn large with three arrows: its weight (purple, pointing down), the pocket's push (teal, pointing up) and the net force and acceleration (amber), and a live line 'pocket push − weight = mass × acceleration' with numbers. Controls: Pause, the speed buttons, the Walking pace slider and the Bounce of the hip slider. A walking pace of 0 is standing still.
 ```
 
 ### Private notes for Level 3
 
 ```text
-A sound explanation says that the sensor does not measure the phone's acceleration directly; it measures how much the spring holding the small mass is stretched. At rest, gravity still pulls the small mass down, so the spring must stay stretched enough to hold it up, and that amount of stretch is what the phone reports as 9.8 m/s². When the phone accelerates up or down, the stretch grows or shrinks, and the reading moves above or below 9.8. Common gaps: saying 'gravity accelerates the phone at 9.8 m/s²' although the phone is not accelerating; not mentioning the spring or the stretch; treating 9.8 as an error in the sensor.
+A sound explanation says that the sensor does not measure the phone's acceleration directly; it measures how much the spring holding the small mass is stretched. At rest, gravity still pulls the small mass down, so the spring must stay stretched enough to hold it up, and that amount of stretch is what the phone reports as 9.8 m/s². When the phone accelerates up or down, the stretch grows or shrinks, and the reading moves above or below 9.8. Common gaps: saying 'gravity accelerates the phone at 9.8 m/s²' although the phone is not accelerating; not mentioning the spring or the stretch; treating 9.8 as an error in the sensor. At this stop the student sees the inside of the sensor: a frame, a small mass on a spring, a ruler with the reading in m/s², and the live line 'reading = 9.8 m/s² + acceleration of the phone'. Controls: Pause, the speed buttons, the Walking pace slider and the Bounce of the hip slider. There are no force arrows at this stop; those are at Level 2.
 ```
 
 ### Private notes for Level 4
 
 ```text
-A sound explanation follows the whole chain. Each step turns the phone's motion around from down to up, which needs a push from the pocket larger than the phone's weight, so the phone accelerates upward. Inside the sensor the spring stretches more, so the reading rises above the resting 9.8 m/s². The phone counts a step each time the reading climbs above the count line. A strong explanation also names a limit: slow steps give a smaller acceleration and may never reach the count line, and jostling can cross the line without a step. The student was asked to use the words force, acceleration and count line.
+A sound explanation follows the whole chain. Each step turns the phone's motion around from down to up, which needs a push from the pocket larger than the phone's weight, so the phone accelerates upward. Inside the sensor the spring stretches more, so the reading rises above the resting 9.8 m/s². The phone counts a step each time the reading climbs above the count line. A strong explanation also names a limit: slow steps give a smaller acceleration and may never reach the count line, and jostling can cross the line without a step. The student was asked to use the words force, acceleration and count line. At this stop the student sees a graph of the reading over the last six seconds with the count line, a dashed line at 9.8, a dot at each counted step and a tick at each landing; two counters, Feet landed and Phone counted; the sliders Count line and Pocket jostle; the buttons Test my prediction, Run for 20 seconds, Run the stroll for 20 seconds and Run the brisk walk for 20 seconds; and Pause, the speed buttons, the Walking pace slider and the Bounce of the hip slider. There are no force arrows at this stop; those are at Level 2.
 ```
 
 ### Private notes for Level 5 (Put it together)
 
 ```text
-A sound explanation says that the program works out the reading 50 times a second from the phone's acceleration (reading = 9.8 + acceleration), and counts a step when one reading is below the count line and the next is at or above it. The stroll was missed because at 60 steps per minute the highest reading is about 10.79 m/s², below the count line of 11.0, so the reading never climbs through the line. A strong explanation adds that the pace is squared in the acceleration, or that readings too far apart can miss the hill. Common gaps: "it counts when the reading is high" without the climb through the line; blaming the bounce, which did not change; not naming the count line. Note: at some paces a 20-second run ends between a climb through the line and the landing that follows, so the count can be one more than the feet landed; that is not an error in the student's work.
+A sound explanation says that the program works out the reading 50 times a second from the phone's acceleration (reading = 9.8 + acceleration), and counts a step when one reading is below the count line and the next is at or above it. The stroll was missed because at 60 steps per minute the highest reading is about 10.79 m/s², below the count line of 11.0, so the reading never climbs through the line. A strong explanation adds that the pace is squared in the acceleration, or that readings too far apart can miss the hill. Common gaps: "it counts when the reading is high" without the climb through the line; blaming the bounce, which did not change; not naming the count line. Note: at some paces a 20-second run ends between a climb through the line and the landing that follows, so the count can be one more than the feet landed; that is not an error in the student's work. At this stop the student sees the program in a runner with Run and Reset to original, a graph of the reading against time with the count line and a dot at each count, and the RESULT line above the graph. The student changes a number by editing its line (pace, bounce, count_line, run_time, dt, min_gap, or a line of the loop) and pressing Run. The runner has no Pause, no slow motion and no slider. In Part 3 the student was asked to try a time between readings of 0.5 s at 120 steps per minute, where the program counts nothing; a student who describes that is describing the experiment they were asked to do, not the usual 0.02 s.
 ```
 
 ### Side-trail plan: the question sent
@@ -757,7 +761,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a change to the program and what to read in its RESULT line, a calculation with the relationship for the highest reading, a measurement with a sensor app on a real phone, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
+A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a change to the program and what to read in its RESULT line, a calculation with the relationship for the highest reading, a measurement with a sensor app on a real phone, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find. If you point to the page, point only to what exists: at Levels 1 to 4, Pause, the speed buttons, the Walking pace and Bounce of the hip sliders, and at Level 4 the Count line and Pocket jostle sliders; in the program, the student changes a number by editing its line and pressing Run, and reads the RESULT line. The runner has no Pause and no slow motion. You do not see the student's earlier runs: never say where a number in their plan came from; if a comparison depends on an earlier run, ask them to check that it used the same settings.
 ```
 
 ### Check what you can explain: the question bank (the "sound answer" lines are private: they go to the helper that checks an answer and are never shown to the student)

@@ -234,7 +234,7 @@ Briefly describe what you built or improved, and how AI, courses, peers or mento
 
 **Then divide each answer's hours across the kinds of preparation that support it.** Your Box 3 answer has one kind, so that kind takes all of its hours. One hour can help more than one answer. Count it once, under the answer it helps most. (Page note: the six kinds below, grouped under their answer. A kind cannot take more hours than its answer has. The Box 3 answer has one kind, so it takes all of that answer's hours by itself. An answer with no hours shows "0 hours this month." With fewer than 4 hours a week, Box 6 does not list each kind that has no hours as a gap.)
 
-(Page note: the status line reads, in turn, "8 hrs left to give to your three answers", "6 hrs left to divide inside your answers" and "All 8 hrs/wk assigned". When the weekly hours are lowered below what is already given, it reads "2 hrs over your 5 hr total" and a button appears: Set all six to 0 hours.)
+(Page note: the status line reads, in turn, "8 hrs left to give to your three answers", "6 hrs left to divide inside your answers" and "All 8 hrs/wk assigned". When the weekly hours are lowered below what is already given, it reads "2 hrs over your 5 hr total" and a button appears: Set all six to 0 hours. That happens when a lower number is typed. The minus button beside the weekly hours takes each extra hour off the last answer that has hours, so nothing is left over. One hour reads "1 hr".)
 
 Supports your Box 2 answer: what convinced the hiring manager
 - **Fundamentals without AI** - Practice solving problems in your main language, tool or engine without AI help, because many technical interviews do not allow AI.

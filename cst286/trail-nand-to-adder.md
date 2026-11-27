@@ -77,7 +77,7 @@ Try it on the switches:
 
 **Practice: read and write binary.** Make one number with the switches, and read one number from them. You need both for the build.
 
-(Page note: the counters read "Make a number: 0 of 1" and "Read a number: 0 of 1". "Next one" gives another.)
+(Page note: the counters read "Make a number: 0 of 1" and "Read a number: 0 of 1". Each counts once Check has been pressed, right or wrong; the feedback says which it was. After a check that is not right, "Next one" is offered beside Check. "Next one" gives another.)
 
 Wondering question, closed until the student clicks it:
 
@@ -95,9 +95,9 @@ Wondering question, closed until the student clicks it:
 
 Here is one carry, in 1 + 1. The 1s column adds 1 + 1 = 2, so it writes 0 and carries 1. The 2s column adds 0 + 0 + the carry 1 = 1, so it writes 1. The answer is 0010, which is 2.
 
-**Practice: add by hand.** Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Finish one addition.
+**Practice: add by hand.** Start in the rightmost column. Click a sum bit or a carry bit to change it. The carry row shows the 1 you carry into each column. Check one addition.
 
-(Page note: the counter reads "Correct additions: 0 of 1". "Another one" gives another.)
+(Page note: the counter reads "Additions checked: 0 of 1". It counts once Check has been pressed, right or wrong. "Another one" gives another.)
 
 Wondering questions, closed until the student clicks them. The page also offers the first one, as a button under its feedback, after a missed addition, and the second after an addition whose answer is larger than 15.
 
@@ -114,9 +114,9 @@ The answer is 1000, which is 8.
 
 ### Step 3. Wire the columns
 
-(Page note: locked until the student has made one number, read one number and finished one addition. A student who has already passed this level, or who opens the page with ?unlock=1, is not locked. While it is locked the page shows only this line.)
+(Page note: locked until the student has pressed Check once on each of the three practices: making a number, reading a number, and one addition. No right answer is needed. A student who has already passed this level, or who opens the page with ?unlock=1, is not locked. While it is locked the page shows only this line.)
 
-This step opens when you have made one number, read one number and finished one addition.
+This step opens when you have tried each practice once: make a number, read a number, and add once by hand.
 
 **Now rebuild the machine yourself, to see how it works.** From here on, a box is called a chip, and the boxes inside it are called its parts. Add4 has one small adder for each column, and each column sends its carry to the next one. You have two ready-made parts: `HalfAdder` adds two bits, and `FullAdder` adds three bits (two bits plus a carry coming in).
 
@@ -355,7 +355,7 @@ Connect the two parts with a wire that you name yourself.
 2. Send a and b through a Nand and name its output, for example out=w.
 3. Two parts: a Nand from a and b to a wire w, then a Not from w to out.
 
-**What you just showed (appears when the level is complete):** Try a = 1 and b = 1 on your drawing: the Nand gives 0, and the Not turns it back into 1. In every other row the Nand gives 1, and the Not turns it into 0.
+**What you just showed (appears when the level is complete):** Try a = 1 and b = 1 on your drawing: the first Nand gives 0, and the part after it turns that 0 back into 1. In every other row the first Nand gives 1, and the part after it turns that 1 into 0.
 
 ---
 
@@ -377,7 +377,7 @@ Or gives 1 when at least one input is 1. Neither of the parts below it does that
 
 (Page note: a live Nand gate. Each input wire has a switch on it, labeled "flip a" and "flip b", and both are off at the start. A switch that is on is drawn as a Not box. Under the gate, a table of four rows shows what comes out for each row of `a` and `b` with the switches as they are now. The row that gives 0 is highlighted and marked "the Nand gives 0 here". The row a = 0, b = 0 has an outline and the label "Or needs its 0 here".)
 
-Your table for Or has its 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.
+Or gives 0 in one row: a = 0, b = 0. This Nand also gives 0 in only one row, and it is a different row. A flip switch turns the signal on its wire into the opposite before the signal reaches the Nand. Use the two switches to make the Nand's 0 land on the row a = 0, b = 0.
 
 Shown when both switches are on: With both inputs flipped, the Nand gives 0 only when `a` and `b` are both 0, and that is the table for Or. Each flip switch is a Not gate. In the build, write down what you just made.
 
@@ -480,7 +480,7 @@ There are two kinds, and chips use them in pairs. The transistors that close on 
 
 **Practice:** This is the simplest gate, Not, made from one transistor of each kind. The input is set to 1. Before you see what the transistors do, answer the two questions.
 
-**Questions (the second appears when the first is right; the Not gate comes alive when both are right)**
+**Questions (the second appears when the first has been answered, right or not; the Not gate comes alive when both are right)**
 1. The input is 1. Which transistor is closed? Choices: The top one / The bottom one. Right answer: the bottom one.
 2. So which is the output connected to? Choices: Power, so out is 1 / Ground, so out is 0. Right answer: ground.
 

@@ -782,7 +782,7 @@
     } else if (verifyHrs >= 2){
       out.push({
         kind: 'aligned',
-        title: 'Your hours support Box 2 (' + verifyHrs + ' hrs/wk on checking work and writing down decisions)',
+        title: 'Your hours support Box 2 (' + verifyHrs + (verifyHrs === 1 ? ' hr/wk' : ' hrs/wk') + ' on checking work and writing down decisions)',
         detail: 'Your schedule builds the evidence of checking and explaining that your Box 2 answer depends on.'
       });
     }
@@ -804,7 +804,7 @@
     } else {
       out.push({
         kind: 'aligned',
-        title: 'Your hours support Box 3 (' + h.people + ' hrs/wk on people and real-world work)',
+        title: 'Your hours support Box 3 (' + h.people + (h.people === 1 ? ' hr/wk' : ' hrs/wk') + ' on people and real-world work)',
         detail: 'Your schedule puts weekly time into getting other people to see your work.'
       });
     }
@@ -855,7 +855,7 @@
     else {
       const left = GROUPS.reduce((a, g) => a + Math.max(0, (S.ans[g] || 0) - groupSum(g)), 0);
       if (left) pillTxt = hr(left) + ' left to divide inside your answers';
-      else { pillCls = 'ok'; pillTxt = 'All ' + B + ' hrs/wk assigned'; }
+      else { pillCls = 'ok'; pillTxt = 'All ' + B + (B === 1 ? ' hr/wk' : ' hrs/wk') + ' assigned'; }
     }
 
     const segs = BUCKETS.map(b => {
@@ -946,7 +946,9 @@
     const zero = $('#hrs-zero', root);
     if (zero) zero.onclick = () => { BUCKETS.forEach(b => { S.hrs[b.id] = 0; }); GROUPS.forEach(g => { S.ans[g] = 0; }); upd(); };
     const dec = $('#tot-dec', root), inc = $('#tot-inc', root), ti = $('#tot-in', root);
-    if (dec) dec.onclick = () => { if (S.budget > 1){ S.budget--; upd(); } };
+    // hours given out beyond a lowered total come off the last answer that has hours, and off its last kind of preparation
+    const trimToBudget = () => { let guard = 60; while (sumAns() > S.budget && guard-- > 0){ const g = GROUPS.slice().reverse().find(x => (S.ans[x] || 0) > 0); if (!g) break; S.ans[g]--; while (groupSum(g) > S.ans[g]){ const b = groupBuckets(g).filter(x => (S.hrs[x.id] || 0) > 0).pop(); if (!b) break; S.hrs[b.id]--; } } };
+    if (dec) dec.onclick = () => { if (S.budget > 1){ S.budget--; trimToBudget(); upd(); } };
     if (inc) inc.onclick = () => { if (S.budget < 20){ S.budget++; upd(); } };
     if (ti) ti.oninput = () => {
       const v = parseInt(String(ti.value).replace(/[^0-9]/g, ''), 10);
@@ -1392,7 +1394,7 @@
       '<div class="step"><h3><span class="stepn">1</span>Read your chain forward, from this week to Day 1</h3>' +
       '<div class="fchain">' +
         '<div class="fnode"><span class="lbl">1. Next 7 days</span>' + esc(S.step7d || '[Not written yet - open Box 5]') + '</div>' +
-        '<div class="fnode"><span class="lbl">2. Next 30 days (' + S.budget + ' hrs/wk)</span>' + esc(hrsSummary || 'No hours assigned') + '</div>' +
+        '<div class="fnode"><span class="lbl">2. Next 30 days (' + S.budget + (S.budget === 1 ? ' hr/wk' : ' hrs/wk') + ')</span>' + esc(hrsSummary || 'No hours assigned') + '</div>' +
         '<div class="fnode"><span class="lbl">3. How you build your work (Box 4)</span>' + esc(S.l4Final || S.l4First || '[Not written yet - open Box 4]') + '</div>' +
         '<div class="fnode"><span class="lbl">4. How a person sees your work (Box 3)</span>' + esc(S.l3Final || S.l3First || '[Not written yet - open Box 3]') + '</div>' +
         '<div class="fnode"><span class="lbl">5. What convinces the hiring manager (Box 2)</span>' + esc(S.l2Final || S.l2First || '[Not written yet - open Box 2]') + '</div>' +
@@ -1428,11 +1430,11 @@
     return [
       'Target path: ' + trackLabel() + ' (' + curRunway().label + ')',
       'Box 1 (Day 1 role): ' + (S.day1 || '(blank)'),
-      'Box 2 first instinct (' + (S.l2Pick || 'none') + '): ' + (S.l2First || '(blank)'),
+      'Box 2 first instinct (' + (S.l2Pick ? pickLabel(PROOF_PICKS, S.l2Pick) : 'none') + '): ' + (S.l2First || '(blank)'),
       'Box 2 sharpened (What convinced hiring manager): ' + (S.l2Final || '(blank)') + krNote('l2'),
-      'Box 3 first instinct (' + (S.l3Pick || 'none') + '): ' + (S.l3First || '(blank)'),
+      'Box 3 first instinct (' + (S.l3Pick ? pickLabel(DOOR_PICKS, S.l3Pick) : 'none') + '): ' + (S.l3First || '(blank)'),
       'Box 3 sharpened (How a human saw the work): ' + (S.l3Final || '(blank)') + krNote('l3'),
-      'Box 4 ingredients: ' + (S.l4Chips.join(', ') || 'none') + (l4NeedTop() && l4Top().length ? ' | relies most on this month: ' + l4Top().join(', ') : ''),
+      'Box 4 ingredients: ' + (S.l4Chips.map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ') || 'none') + (l4NeedTop() && l4Top().length ? ' | relies most on this month: ' + l4Top().map(id => pickLabel(INGREDIENT_CHIPS, id)).join('; ') : ''),
       'Box 4 sharpened (How proof was built & verified + help used): ' + (S.l4Final || '(blank)') + krNote('l4'),
       'Box 5, hours per week for the next 30 days (' + S.budget + ' hours a week in all; every number in this line is hours PER WEEK, not a total for the 30 days): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + ' h/week').join(', ') + ' | hours per week by answer: ' + GROUPS.map(g => 'Box ' + g + '=' + (S.ans[g] || 0) + ' h/week').join(', '),
       'Box 5 concrete 7-day step: ' + (S.step7d || '(blank)'),
@@ -1471,7 +1473,9 @@
     const i = raw.search(/^\s*Ideas\s*:/im), text = (i >= 0 ? raw.slice(0, i) : raw).trim(), tail = i >= 0 ? raw.slice(i) : '';
     const ideas = IDEAS.map(() => ({ ok: false, note: '' })), found = {};
     tail.split('\n').forEach(line => { const m = line.match(/^\s*([1-5])\s*[:.)]\s*(confirmed|not yet)\b[\s:,.\u2013\u2014-]*(.*)$/i); if (m){ found[m[1]] = true; ideas[+m[1] - 1] = { ok: /^confirmed$/i.test(m[2]), note: m[3].trim().split(/\s+/).filter(Boolean).slice(0, 14).join(' ') }; } });
-    return { text, ideas: Object.keys(found).length === IDEAS.length ? ideas : null };   // complete only with all five lines
+    let byHours = false;
+    ideas.forEach(x => { if (!x.ok && /\b(?:0|zero|no|few)\s*(?:h|hrs?|hours?)\b|hours? (?:a|per) week|\bbudget|\ballocat|\bassigns?\s+(?:0|zero|no)\b/i.test(x.note)){ byHours = true; x.note = ''; } });
+    return { text, ideas: Object.keys(found).length === IDEAS.length ? ideas : null, byHours };   // complete only with all five lines
   }
   // a mark that was confirmed stays confirmed when the summary is written again
   function setSummary(T, raw){
@@ -1523,11 +1527,13 @@
     'Write in plain words that are on the page in front of the student. Do not use the names of studies or authors, and do not use the words counter-signal, runway, signal or human validation.',
     'Format in plain text (no markdown headers or bullets, under 190 words) with four labeled paragraphs:',
     'How your steps connect: One or two sentences on how plausibly their 7-day step and their weekly hours for the next 30 days connect up to what they said convinces a hiring manager and gets seen (quoting a few of their words).',
-    'Use of the studies and their limits: One or two sentences on how clearly they accounted for both findings and dataset limits in their specific path.',
+    'Use of the studies and their limits: One or two sentences on how clearly they accounted for both findings and dataset limits in their specific path. Judge their reasoning about what the studies show and cannot show, not their hours.',
     'Busy-week plan: If the interview asked what the student would keep in a busy week and the student answered, one sentence on what they said they would keep. If the interview did not ask, write exactly: Not asked in this check-in.',
     'One question to carry forward: One constructive question to test over the next month. Use US spelling and no em-dashes.',
     'In the transcript, a tag such as "(question about idea 3)" says which idea that question was about, so read the reply that follows it against that idea first. The tag confirms nothing by itself: an idea is confirmed only by the reasoning in the student\'s own replies.',
     'After the four paragraphs, a line that reads exactly "Ideas:" and then five lines, one per idea, in the order 1 to 5: (1) work that runs is not enough; (2) a person has to see your work; (3) judgment comes from practice and feedback; (4) each step of the plan leads to the next; (5) a study has limits.',
+    'What explaining each idea soundly means: ' + IDEAS.map((I, k) => '(' + (k + 1) + ') ' + I.l).join(' '),
+    'For the five idea lines, judge ONLY what the student said in the interview transcript. Leave the hours of Box 5 out of these lines altogether: never write "not yet" because something has 0 hours or few hours, and do not mention hours, a budget or an allocation in an idea line. How the student will find the time is a fair question for the paragraph "One question to carry forward"; it is not part of whether they explained an idea.',
     'Each of the five lines is the number, a colon, then exactly "confirmed" or "not yet", then a dash and at most twelve words. Write "confirmed" only if the student explained that idea soundly for their own plan somewhere in the interview, whether or not the interviewer asked about it; the twelve words then point to what the student said. Specific wording that rests on mistaken reasoning is "not yet". Otherwise write "not yet", and the twelve words say either that it did not come up or what was missing. These five lines do not count toward the 190 words.'
   ].join('\n');
 
@@ -1579,7 +1585,7 @@
       const transcript = 'Interviewer (question about idea 4): ' + opener + '\n' + T.msgs.map(m => (m.r === 'u' ? 'Student: ' : 'Interviewer' + (typeof m.i === 'number' ? ' (question about idea ' + (m.i + 1) + ')' : '') + ': ') + m.t).join('\n');
       // a summary that comes back without its five lines is asked for once more
       const sumMsgs = [{ role: 'user', content: 'Backward-chain snapshot:\n' + buildPrivateContext() + '\n\nInterview transcript:\n' + transcript }];
-      const askSum = left => askFb(FEEDBACK_SYS, sumMsgs, 2).then(fb => splitSummary(fb).ideas || left <= 0 ? fb : askSum(left - 1));
+      const askSum = left => askFb(FEEDBACK_SYS, sumMsgs, 2).then(fb => { const sp = splitSummary(fb); return (sp.ideas && !sp.byHours) || left <= 0 ? fb : askSum(left - 1); });
       askSum(1).then(
         fb => { const had = !!T.ideas; setSummary(T, fb); UI.fbFail = false; if (had && !splitSummary(fb).ideas){ UI.fbFail = true; UI.err = IDW.sumPart; } },   // an incomplete new summary leaves the marks as they were, and says so
         () => {
@@ -1911,7 +1917,7 @@
       '  First answer: ' + (S.l4First.trim() || '[not written yet]'),
       ...krReport('l4'),
       '',
-      '--- Box 5: Next 30 Days (' + S.budget + ' hrs/wk outside required classes) ---'
+      '--- Box 5: Next 30 Days (' + S.budget + (S.budget === 1 ? ' hr/wk' : ' hrs/wk') + ' outside required classes) ---'
     ];
     GROUPS.forEach(g => {
       L.push('  For my Box ' + g + ' answer: ' + (S.ans[g] || 0) + ' hr(s)/wk');
