@@ -1819,7 +1819,7 @@ const COPY = {
       '<div class="row"><button type="button" class="btn" id="startgo">' + esc(St.btn) + '</button></div><p class="muted" id="startmsg" role="status"></p>';
     const ta = [$('#startta0'), $('#startta1')], b = $('#startgo'), m = $('#startmsg');
     ta[0].value = S.startWhy; ta[1].value = S.startText;
-    const upd = () => { const e = !ta[0].value.trim() || !ta[1].value.trim(); b.disabled = e; m.textContent = e ? St.empty : ''; };   // something in each box opens Level 1
+    const upd = () => { const e = !REVIEW && (!ta[0].value.trim() || !ta[1].value.trim()); b.disabled = e; m.textContent = e ? St.empty : ''; };   // something in each box opens Level 1
     ta[0].oninput = () => { S.startWhy = ta[0].value; save(); upd(); };
     ta[1].oninput = () => { S.startText = ta[1].value; save(); upd(); };
     b.onclick = () => { if (b.disabled) return; S.started = true; save(); go(1, true); };

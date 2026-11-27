@@ -1857,9 +1857,9 @@ const COPY = {
       '<div class="row"><button type="button" class="btn" id="startgo">' + esc(C.start.btn) + '</button></div><div class="msg warn" id="startmsg" role="status"></div>';
     const ta = $('#startta'), b = $('#startgo'), m = $('#startmsg');
     ta.value = S.startText;
-    const upd = () => { b.disabled = !ta.value.trim(); m.textContent = ''; };   // any answer of the student's own opens Level 1
+    const upd = () => { b.disabled = !REVIEW && !ta.value.trim(); m.textContent = ''; };   // any answer of the student's own opens Level 1
     ta.oninput = () => { S.startText = ta.value; save(); upd(); };
-    b.onclick = () => { if (!ta.value.trim()) return; S.started = true; save(); go(1, true); };
+    b.onclick = () => { if (!REVIEW && !ta.value.trim()) return; S.started = true; save(); go(1, true); };
     upd();
   };
 

@@ -2114,9 +2114,9 @@ const COPY = {
       '<div class="row"><button type="button" class="btn" id="startgo">' + esc(C.start.btn) + '</button></div><p class="muted" id="startmsg" role="status"></p>';
     const ta = $('#startta'), b = $('#startgo'), m = $('#startmsg');
     ta.value = S.startText;
-    const upd = () => { const e = !ta.value.trim(); b.disabled = e; m.textContent = e ? C.start.empty : ''; };   // any answer of the student's own opens Level 1
+    const upd = () => { const e = !REVIEW && !ta.value.trim(); b.disabled = e; m.textContent = e ? C.start.empty : ''; };   // any answer of the student's own opens Level 1
     ta.oninput = () => { S.startText = ta.value; save(); upd(); };
-    b.onclick = () => { if (!ta.value.trim()) return; S.started = true; save(); go(1, true); };
+    b.onclick = () => { if (!REVIEW && !ta.value.trim()) return; S.started = true; save(); go(1, true); };
     upd();
   };
 

@@ -1469,9 +1469,9 @@ const COPY = {
       C.start.q.map((q, i) => '<div class="field"><label for="st' + i + '">' + (i + 1) + '. ' + esc(q) + '</label><textarea id="st' + i + '" class="editor" rows="3" maxlength="1500"></textarea></div>').join('') +
       '<div class="row"><button type="button" class="btn" id="startgo">' + esc(C.start.btn) + '</button></div><p class="muted" id="startmsg" role="status"></p>';
     const b = $('#startgo'), m = $('#startmsg');
-    const upd = () => { const e = !S.start.every(t => t.trim()); b.disabled = e; m.textContent = e ? C.start.empty : ''; };
+    const upd = () => { const e = !REVIEW && !S.start.every(t => t.trim()); b.disabled = e; m.textContent = e ? C.start.empty : ''; };
     [0, 1].forEach(i => { const ta = $('#st' + i); ta.value = S.start[i]; ta.oninput = () => { S.start[i] = ta.value; save(); upd(); }; });
-    b.onclick = () => { if (!S.start.every(t => t.trim())) return; S.started = true; save(); go(1, true); };
+    b.onclick = () => { if (!REVIEW && !S.start.every(t => t.trim())) return; S.started = true; save(); go(1, true); };
     upd();
   };
 
