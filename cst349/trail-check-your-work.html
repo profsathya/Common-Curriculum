@@ -357,6 +357,8 @@ Never write the full correct explanation for the student. If the explanation is 
 - Never tell the student which sentences have a fault, how many of their marks are right, or what kind of fault to look for, unless the notes for that stop say the page has already shown it.
 - If you point to the page, point only to something the notes say is at that stop: the request, the table, the update, the student's list, the scoreboard, the two example replies. If the thing to look at is at another level, name that level.
 - The two replies at Level 4 are prepared examples and are marked as examples. Do not speak as if you wrote them, and do not check the student's own work in their place.
+- You are not told which of the student's marks are right, and you must not guess. Never say or imply that a particular mark is a catch, a fault, right or wrong, unless the notes say the page has shown that sentence. If the student asks, say that the page shows it at Level 3.
+- Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for one or two sentences: do not ask for a complete account.
 </script>
 <script type="text/plain" id="ai-notes-ex1">
 a sound explanation says something about reading as the writer or reading from memory of the request: the reader already has an idea of what the update is supposed to say and reads that idea, or did not put each sentence next to the request or the table. Common gaps: "I was not careful enough" with nothing about what careful would mean; blaming the update's length. At this stop the student sees the request, the table and the update with their own marks, and two counts. They have NOT been shown which sentences have faults. Do not name a sentence, a kind of fault or a place to look.
@@ -966,7 +968,7 @@ const COPY = {
    "Saturday's Repair Cafe took in 22 items.",
    "Volunteers fixed 16 of them.",
    "Laptops were the most common item, with 9.",
-   "Phones were the hardest: only 2 of the 6 left working.",
+   "Phones had the lowest share fixed: only 2 of the 6 left working.",
    "Before the next one we need more phone screen kits.",
    "Everyone who came said they would come back."
   ],
@@ -1174,6 +1176,7 @@ const COPY = {
   const hitsAt = stages => FAULTS.filter(n => mk(n) && stages.includes(mk(n).st));
   const readHits = () => hitsAt(['read']).length;
   const readMarks = () => Object.keys(S.marks).filter(n => S.marks[n].st === 'read').length;
+  const readMarksAll = () => Object.keys(S.marks).length;
   const listNew = () => hitsAt(['list']).length;
   const before4 = () => LAST4.filter(n => mk(n) && (mk(n).st === 'read' || mk(n).st === 'list')).length;
   const pieceHits = () => PFAULTS.filter(n => S.pmarks[n]).length;
@@ -1298,7 +1301,9 @@ const COPY = {
     const out = [], id = LV[S.level].id;
     out.push('Levels opened: ' + LV.filter((l, i) => unlocked(i)).map(l => l.short).join(', ') + '.');
     if (S.l1.choice !== null) out.push('Level 1 prediction, how much one read catches: "' + C.l1.opts[S.l1.choice] + '".');
-    out.push('The student\'s marks on Casey\'s update: ' + marksLine() + '.');
+    // before the page has shown all six, the helper is not told which sentences are marked or what was written on them: it cannot confirm what it does not see
+    if (S.l3.ways >= 3) out.push('The student\'s marks on Casey\'s update: ' + marksLine() + '.');
+    else out.push('The student has marked ' + readMarksAll() + ' of the twelve sentences. Which ones, and what they wrote on them, is not given to you.');
     if (S.l1.done) out.push('After the one read the student expected ' + S.l1.left + ' faults to be left; the page told them: ' + l1Result() + '');
     if (S.l2.items.some(t => t.trim())) out.push('The student\'s list: 1. ' + C.l2.item1 + ' ' + S.l2.items.filter(t => t.trim()).map((t, i) => (i + 2) + '. ' + t.trim()).join(' ') + '.');
     if ((S.l2.more || '').trim()) out.push('Before checking against the list, they expected ' + S.l2.more + ' more.');
@@ -1570,7 +1575,8 @@ const COPY = {
     function paint(){
       const a = $('#l4a');
       if (shown(s4.choice !== null) && !a.firstChild){
-        a.innerHTML = '<div class="step"><h4 class="sub">' + bt(L4.draftHead) + '</h4><ol class="sents draft">' + L4.draft.map((t, i) => '<li class="sl"><div class="sent ro"><span class="sn">' + (i + 1) + '</span><span class="stx">' + esc(t) + (L4.changed[i] ? ' <i class="chg">' + esc(L4.changedTag) + '</i>' : '') + '</span></div></li>').join('') + '</ol>' +
+        const W0 = C.work, src = '<div class="wleft"><div class="wreq"><div class="lbl">' + esc(W0.reqHead) + '</div><p>' + esc(W0.reqLead) + '</p><ol>' + W0.req.map(r => '<li>' + esc(r) + '</li>').join('') + '</ol></div><div class="lbl wtl">' + esc(W0.tableHead) + '</div>' + tableHTML(W0.table) + '</div>';
+        a.innerHTML = '<div class="step"><div class="work" id="work-l4">' + src + '<div class="wright"><h4 class="sub">' + bt(L4.draftHead) + '</h4><ol class="sents draft">' + L4.draft.map((t, i) => '<li class="sl"><div class="sent ro"><span class="sn">' + (i + 1) + '</span><span class="stx">' + esc(t) + (L4.changed[i] ? ' <i class="chg">' + esc(L4.changedTag) + '</i>' : '') + '</span></div></li>').join('') + '</ol></div></div>' +
           '<h4 class="sub">' + esc(L4.replyA) + '</h4><p class="exlbl">' + esc(L4.example) + '</p><blockquote class="reply">' + esc(L4.aText) + '</blockquote>' +
           '<h4 class="sub">' + esc(L4.replyB) + '</h4><p class="exlbl">' + esc(L4.example) + '</p><blockquote class="reply"><ol>' + L4.bPoints.map(t => '<li>' + esc(t) + '</li>').join('') + '</ol></blockquote>' +
           '<p>' + esc(L4.inA) + '</p><p>' + esc(L4.examples) + '</p><p>' + bt(L4.checkHead) + '</p><div id="pts"></div>' +

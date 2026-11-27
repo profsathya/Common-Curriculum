@@ -356,7 +356,7 @@ Think of the kind of work you do most in your path: code, a lab write-up, an ana
 1. Saturday's Repair Cafe took in 22 items.
 2. Volunteers fixed 16 of them.
 3. Laptops were the most common item, with 9.
-4. Phones were the hardest: only 2 of the 6 left working.
+4. Phones had the lowest share fixed: only 2 of the 6 left working.
 5. Before the next one we need more phone screen kits.
 6. Everyone who came said they would come back.
 
@@ -500,6 +500,8 @@ Never write the full correct explanation for the student. If the explanation is 
 - Never tell the student which sentences have a fault, how many of their marks are right, or what kind of fault to look for, unless the notes for that stop say the page has already shown it.
 - If you point to the page, point only to something the notes say is at that stop: the request, the table, the update, the student's list, the scoreboard, the two example replies. If the thing to look at is at another level, name that level.
 - The two replies at Level 4 are prepared examples and are marked as examples. Do not speak as if you wrote them, and do not check the student's own work in their place.
+- You are not told which of the student's marks are right, and you must not guess. Never say or imply that a particular mark is a catch, a fault, right or wrong, unless the notes say the page has shown that sentence. If the student asks, say that the page shows it at Level 3.
+- Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for one or two sentences: do not ask for a complete account.
 ```
 
 ### Private notes for Level 1
