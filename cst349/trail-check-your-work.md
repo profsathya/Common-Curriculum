@@ -14,7 +14,7 @@ Start · 1 One read · 2 The list · 3 Another way to read · 4 A second checker
 
 ## Start
 
-**You send an update to your team lead. An hour later the reply comes back: "The number in your second line is wrong." You had read the update before you sent it.** Most people have a version of this story. This trail is about why one read does not catch what the next person sees at once, and what does.
+**You send an update to your team lead. An hour later the reply comes back: "The number in your second line is wrong." You had read the update before you sent it.** This trail is about why one read does not catch what the next person sees at once, and what does.
 
 Before you start, write two things.
 
@@ -181,9 +181,9 @@ Then the list comes from somewhere else: the assignment's rubric, the ticket, th
 
 **The four faults that are left are inside sentences that are there. A list of what must be there walks past them.** To find them you have to stop reading as the person who wrote the update. Here are three ways to do that. Take them one at a time.
 
-**Predict.** Four faults are left. How many of the four do you think you have already marked?
+**Predict.** Four faults are left, and you are about to check in three more ways. By the time the page shows each one, how many of the four do you think you will have marked?
 
-(Page note: a number box, 0 to 4. The marking and the three ways open once it is entered. Line: "Enter how many of the four you think you have marked first." The ways open one at a time: way 2 after way 1's button, way 3 after way 2's.)
+(Page note: a number box, 0 to 4. The marking and the three ways open once it is entered. Line: "Enter how many of the four you expect to have marked first." The ways open one at a time: way 2 after way 1's button, way 3 after way 2's.)
 
 **Way 1: read it as Alex.** Alex was not in the tutoring center during the pilot and has not seen the team's notes. Read each sentence and ask two things. Would Alex know every word in it? Would Alex ask "how do you know that?"
 
@@ -225,7 +225,7 @@ The other numbers hold. In sentence 5, 23 is 14 + 9 and 17 is 6 + 11. In sentenc
 | Before you read | "More than half" of what is wrong is caught by one read | Your one read found 1 of 6 |
 | After your one read | 2 faults left | 5 were left |
 | Before the list | the list would find 1 more | the list found 1 that you had missed |
-| Before the three ways | 3 of the last 4 already marked | 1 of the last 4 was marked |
+| Before the three ways | you would mark 3 of the last 4 | you marked 1 of the last 4 |
 
 (Page note: every cell is the student's own number or choice, with the right singular or plural: "1 fault left", "1 was left", "2 of the last 4 were marked".)
 
@@ -247,7 +247,7 @@ On this page the three ways took a few minutes for twelve sentences. On your own
 
 **A place to stop.** Levels 1 to 3 are the first sitting of this learning trail. A second checker, the stop named Check what you can explain and your side trail are the second. You can stop here and come back: your work is saved in this browser. If you want a copy outside this browser, press Save my work at the bottom of the page.
 
-(Page note: Level 4 opens when the number of the prediction is entered, the three ways are done and something is written in the explain box. Lines: "Enter how many of the four you think you have marked first." / "Finish the three ways first: Alex, the steps, the numbers." / "Write something in the explain box. Your first thoughts are enough.")
+(Page note: Level 4 opens when the number of the prediction is entered, the three ways are done and something is written in the explain box. Lines: "Enter how many of the four you expect to have marked first." / "Finish the three ways first: Alex, the steps, the numbers." / "Write something in the explain box. Your first thoughts are enough.")
 
 ## Level 4: A second checker
 
@@ -500,6 +500,7 @@ Never write the full correct explanation for the student. If the explanation is 
 - Never tell the student which sentences have a fault, how many of their marks are right, or what kind of fault to look for, unless the notes for that stop say the page has already shown it.
 - If you point to the page, point only to something the notes say is at that stop: the request, the table, the update, the student's list, the scoreboard, the two example replies. If the thing to look at is at another level, name that level.
 - The two replies at Level 4 are prepared examples and are marked as examples. Do not speak as if you wrote them, and do not check the student's own work in their place.
+- Plain text only: no asterisks, no markdown, no headings.
 - You are not told which of the student's marks are right, and you must not guess. Never say or imply that a particular mark is a catch, a fault, right or wrong, unless the notes say the page has shown that sentence. If the student asks, say that the page shows it at Level 3.
 - Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for one or two sentences: do not ask for a complete account.
 ```

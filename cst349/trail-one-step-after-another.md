@@ -513,6 +513,7 @@ Never write the full correct explanation for the student. If the explanation is 
 - If you point to the page, point only to something the notes say is at that stop: the board, the table of hours that arrived, the three wordings, the table of eight steps, the student's order, the comparison table, the treasurer's reaction. If the thing to look at is at another level, name that level.
 - You do not see the student's runs unless the notes for that stop give them to you. Do not state what a run showed beyond what the notes say.
 - Quinn and the treasurer are made up for this page. Do not add facts about them.
+- Plain text only: no asterisks, no markdown, no headings.
 - Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for a few sentences: do not ask for a complete account.
 ```
 
@@ -619,6 +620,7 @@ Words this trail does not use: SMART goals, agile, scrum, backlog, MVP, iteratio
 - If you point to the page, point only to something the notes say is at that stop: the board, the table of hours that arrived, the three wordings, the table of eight steps, the student's order, the comparison table, the treasurer's reaction. If the thing to look at is at another level, name that level.
 - You do not see the student's runs unless the notes for that stop give them to you. Do not state what a run showed beyond what the notes say.
 - Quinn and the treasurer are made up for this page. Do not add facts about them.
+- Plain text only: no asterisks, no markdown, no headings.
 - Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for a few sentences: do not ask for a complete account.
 
 ### Check what you can explain: instructions the classmate follows (teach-back 1)

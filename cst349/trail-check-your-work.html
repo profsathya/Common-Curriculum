@@ -357,6 +357,7 @@ Never write the full correct explanation for the student. If the explanation is 
 - Never tell the student which sentences have a fault, how many of their marks are right, or what kind of fault to look for, unless the notes for that stop say the page has already shown it.
 - If you point to the page, point only to something the notes say is at that stop: the request, the table, the update, the student's list, the scoreboard, the two example replies. If the thing to look at is at another level, name that level.
 - The two replies at Level 4 are prepared examples and are marked as examples. Do not speak as if you wrote them, and do not check the student's own work in their place.
+- Plain text only: no asterisks, no markdown, no headings.
 - You are not told which of the student's marks are right, and you must not guess. Never say or imply that a particular mark is a catch, a fault, right or wrong, unless the notes say the page has shown that sentence. If the student asks, say that the page shows it at Level 3.
 - Before you say that something is missing, read the student's words again. If they have said it, in any words, treat it as there. Your one question may take their idea a step further; it must not ask for something they already wrote. The page asks for one or two sentences: do not ask for a complete account.
 </script>
@@ -400,7 +401,7 @@ const COPY = {
   "p": [
    {
     "b": "You send an update to your team lead. An hour later the reply comes back: \"The number in your second line is wrong.\" You had read the update before you sent it.",
-    "t": "Most people have a version of this story. This trail is about why one read does not catch what the next person sees at once, and what does."
+    "t": "This trail is about why one read does not catch what the next person sees at once, and what does."
    }
   ],
   "lead": "Before you start, write two things.",
@@ -638,9 +639,9 @@ const COPY = {
   },
   "pred": {
    "b": "Predict.",
-   "t": "Four faults are left. How many of the four do you think you have already marked?"
+   "t": "Four faults are left, and you are about to check in three more ways. By the time the page shows each one, how many of the four do you think you will have marked?"
   },
-  "needN": "Enter how many of the four you think you have marked first.",
+  "needN": "Enter how many of the four you expect to have marked first.",
   "ways": [
    {
     "k": "alex",
@@ -739,8 +740,8 @@ const COPY = {
    ],
    [
     "Before the three ways",
-    "3 of the last 4 already marked",
-    "1 of the last 4 was marked"
+    "you would mark 3 of the last 4",
+    "you marked 1 of the last 4"
    ]
   ],
   "sure": {
@@ -771,7 +772,7 @@ const COPY = {
    "t": "Levels 1 to 3 are the first sitting of this learning trail. A second checker, the stop named Check what you can explain and your side trail are the second. You can stop here and come back: your work is saved in this browser. If you want a copy outside this browser, press Save my work at the bottom of the page."
   },
   "gate": [
-   "Enter how many of the four you think you have marked first.",
+   "Enter how many of the four you expect to have marked first.",
    "Finish the three ways first: Alex, the steps, the numbers.",
    "Write something in the explain box. Your first thoughts are enough."
   ]
@@ -1178,7 +1179,9 @@ const COPY = {
   const readMarks = () => Object.keys(S.marks).filter(n => S.marks[n].st === 'read').length;
   const readMarksAll = () => Object.keys(S.marks).length;
   const listNew = () => hitsAt(['list']).length;
-  const before4 = () => LAST4.filter(n => mk(n) && (mk(n).st === 'read' || mk(n).st === 'list')).length;
+  // of the last four, those the student marked before the page showed them: 4 and 9 are shown after reading as Alex, 12 after the steps, 2 after the numbers
+  const STAGE_N = {read:0, list:1, alex:2, steps:3, numbers:4}, SHOWN_AT = {4:2, 9:2, 12:3, 2:4};
+  const before4 = () => LAST4.filter(n => mk(n) && STAGE_N[mk(n).st] <= SHOWN_AT[n]).length;
   const pieceHits = () => PFAULTS.filter(n => S.pmarks[n]).length;
   // the stage a new mark is made at, or null when marking is closed
   function stageNow(){
@@ -1308,7 +1311,7 @@ const COPY = {
     if (S.l2.items.some(t => t.trim())) out.push('The student\'s list: 1. ' + C.l2.item1 + ' ' + S.l2.items.filter(t => t.trim()).map((t, i) => (i + 2) + '. ' + t.trim()).join(' ') + '.');
     if ((S.l2.more || '').trim()) out.push('Before checking against the list, they expected ' + S.l2.more + ' more.');
     if (S.l2.done) out.push('The list check has been made: the page has shown the faults in sentences 8 and 11. ' + twoNumbers());
-    if ((S.l3.n || '').trim()) out.push('Before the three ways, they expected ' + S.l3.n + ' of the last four to be marked already.');
+    if ((S.l3.n || '').trim()) out.push('Before the three ways, they expected ' + S.l3.n + ' of the last four to be marked by them before the page showed them.');
     if (S.l3.ways >= 3) out.push('Scoreboard: ' + scoreRows().map(r => r[0] + ': expected ' + r[1] + '; happened ' + r[2]).join(' | ') + '.');
     if (S.l4.choice !== null) out.push('Level 4 prediction: ' + C.l4.opts[S.l4.choice].k + '.');
     if (S.l4.shown) out.push('Level 4 decisions on the three points of the reply to B: ' + S.l4.pts.map((p, i) => 'point ' + (i + 1) + ' ' + (p === 'right' ? 'the checker is right' : 'the checker is wrong') + ' (' + (p === C.l4.truth[i] ? 'matches the page' : 'does not match the page') + ')').join('; ') + '.');
@@ -1324,14 +1327,16 @@ const COPY = {
     return out.join('\n');
   }
   function teachNotes(){
-    const out = [];
-    if (S.l1.done && readHits() < 3) out.push('the first read found ' + readHits() + ' of 6');
-    if (S.l2.done && !LISTF.every(n => mk(n))) out.push('after the list check, ' + LISTF.filter(n => !mk(n)).length + ' of the two faults a list finds were still unmarked');
-    if (S.l3.ways >= 3){ const m = LAST4.filter(n => !mk(n)).length; if (m) out.push(m + ' of the four faults found by the three ways were never marked'); }
-    if (S.l1.done && Math.abs((+S.l1.left) - (6 - readHits())) >= 2) out.push('after the first read they expected ' + S.l1.left + ' faults left, and ' + (6 - readHits()) + ' were');
-    if (S.l4.shown){ const w = S.l4.pts.filter((p, i) => p !== C.l4.truth[i]).length; if (w) out.push(w + ' of the three decisions at Level 4 did not match the page'); }
-    return '[Private notes for you, not written by the student. Trouble spots on the trail: ' + (out.length ? out.join('; ') + '.' : 'none recorded.') + '\n' + trailFacts() + '\nThe conversation starts now.]';
+    // the classmate gets idea numbers only: given the student's numbers, the real helper quoted them back (Carbon and Astra, 26 Nov)
+    const ids = [];
+    if (S.l1.done && readHits() < 3) ids.push(0);
+    if (S.l2.done && !LISTF.every(n => mk(n))) ids.push(1);
+    if (S.l3.ways >= 3 && LAST4.some(n => !mk(n))) ids.push(2);
+    if (S.l1.done && Math.abs((+S.l1.left) - (6 - readHits())) >= 2) ids.push(3);
+    if (S.l4.shown && S.l4.pts.some((p, k) => p !== C.l4.truth[k])) ids.push(4);
+    return '[Private notes for you, not written by the student. Earlier on the trail this student had trouble with: ' + (ids.length ? ids.map(i => 'idea ' + (i + 1)).join(', ') + '.' : 'nothing in particular.') + ' Use this only to choose where to ask one more question. You have been told nothing else about what the student did, and the student has told you nothing yet: never state a number, a result or an answer of theirs that they have not written in this conversation.\nThe conversation starts now.]';
   }
+
   // ideas asked first: the record shows trouble with them
   function troubleIdeas(){
     const o = [];
@@ -1449,7 +1454,7 @@ const COPY = {
       [R[1][0], '"' + (S.l1.choice !== null ? C.l1.opts[S.l1.choice] : '') + '" of what is wrong is caught by one read', 'Your one read found ' + h + ' of 6'],
       [R[2][0], e1 + ' ' + plural(e1, 'fault', 'faults') + ' left', left + ' ' + plural(left, 'was', 'were') + ' left'],
       [R[3][0], 'the list would find ' + e2 + ' more', 'the list found ' + k + ' that you had missed'],
-      [R[4][0], e3 + ' of the last 4 already marked', b4 + ' of the last 4 ' + plural(b4, 'was', 'were') + ' marked']
+      [R[4][0], 'you would mark ' + e3 + ' of the last 4', 'you marked ' + b4 + ' of the last 4']
     ];
   }
   const endLine2 = n => { const m = mk(n); return !m ? C.l2.ends[2] : m.st === 'read' ? C.l2.ends[0] : C.l2.ends[1]; };
