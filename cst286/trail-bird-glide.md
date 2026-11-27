@@ -39,7 +39,7 @@ Your only control is where its nose points: a little up, level, or down. Use the
 
 Your goal is distance. A buoy floats 370 m from the cliff. Try to glide past it before the bird reaches the water.
 
-Most people do not reach it on the first flight, so fly as many times as you like. The page keeps your last five flights in a table so that you can compare them.
+Fly as many times as you like. The page keeps your last five flights in a table so that you can compare them.
 
 **Before your first flight** (Page note: shown above the simulation. The Launch button works once one option is chosen; until then the page shows beside it: Choose what you will do with the nose first. Nothing is marked right or wrong, and the choice cannot be changed after the first flight. A student who flew before 26 Nov 2026 is not asked.)
 
@@ -68,7 +68,7 @@ When a flight passes the buoy: You passed the buoy.
 (Page note: for a student who was not asked before the first flight, the question is: You are 30 m above the water and you want to reach land as far away as possible. What do you do with the nose?)
 
 - A. Point it up, to stay high for as long as possible
-  - Feedback: That is what most people try first. Look at your flights: with the nose high the bird slows down, and below a certain speed it stops gliding and drops. Staying high is not the same as going far. Choose again.
+  - Feedback: Look at your flights: with the nose high the bird slows down, and below a certain speed it stops gliding and drops. Staying high is not the same as going far. Choose again.
 
 - B. Point it down, to go as fast as possible
   - Feedback: Speed feels like it should help, but look at where your fast flights ended. A steep dive uses up the 30 m of height quickly, and height is the only thing the bird has to spend. Choose again.
@@ -318,7 +318,7 @@ A place to start: think about what this model held fixed. The air was still, the
 
 (Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then, the line under the button reads, in turn: "Move the speed slider first. The prediction appears when you have found the lowest point of the curve or tried three speeds." then "Answer the prediction above. The explain box appears after it." then "The next level opens when you have answered the prediction and written your explanation.")
 
-(Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". Under 12 words: Write a few sentences first. Say what you saw on the simulation and why you think it happens. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. A reply that used up its whole allowance, or that stops in the middle of a sentence, is asked for once more and is never shown; if the second one is cut off too, the student sees the message for a helper that is not answering. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
+(Page note: every "Explain your thinking" card: a text box (up to 1500 characters) and a button "Get AI feedback", which becomes "Get feedback again". With the box empty: Write your explanation first. While waiting: Reading your explanation… If the helper fails after one automatic retry: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback. A reply that used up its whole allowance, or that stops in the middle of a sentence, is asked for once more and is never shown; if the second one is cut off too, the student sees the message for a helper that is not answering. The answer shows under "Feedback on your explanation". Every round (what was sent and the feedback) is kept, up to 12 per card.)
 
 ## Level 5: Inside the simulation
 
@@ -605,7 +605,7 @@ The program now knows the net force on the bird at this instant. The last four l
 3. A velocity is the rate at which the position changes. So during the same short time, the position changes by velocity × dt.
 4. The clock moves forward by dt, and the loop starts again with a new net force.
 
-These four lines are the same in every simulation of motion, whether the moving thing is a bird, a planet or a soccer ball.
+The same four lines can simulate other motion too, such as a planet or a soccer ball.
 
 The program never knows the whole path in advance. It only takes the next small step. The path you watched is thousands of these steps placed end to end.
 
@@ -745,6 +745,12 @@ Under a conversation before it starts: Your classmate has not done this trail. A
 (Page note: with the student's first reply the page sends the classmate a private note: ask one question next, a follow-up or, where the conversation has a fixed second question and the first idea is already explained, that question; do not suggest feedback yet. The feedback button opens after the second reply.)
 
 (Page note: the feedback, under "Feedback on your explanation", has one line for each of the two ideas, with "explained", "partly explained" or "not reached" and one sentence, and then one question to take the explanation further. An idea marked "explained" becomes confirmed. An idea that was confirmed stays confirmed.)
+
+Under an idea marked "partly explained": You said: “[a few of the student's own words]”. The reasoning for this idea is not complete in your explanation yet. It was taught at [Level N], and a question on it follows below.
+
+Under an idea marked "not reached": Your explanation did not get to this idea. It was taught at [Level N], and a question on it follows below.
+
+(Page note: for these two marks the page shows only words the student wrote, when the helper quoted some and they are in the conversation, and then its own sentence. What the helper says was missing is not shown, because it tended to carry the missing answer.)
 
 If the classmate does not answer: The AI helper did not answer. Your reply is saved here. You can send another reply, or press Save my explanation anyway.
 
@@ -893,7 +899,7 @@ You are a teaching assistant for CST286, an introductory physics course for comp
 
 Write feedback addressed to the student as "you". Use plain words and 3 to 5 sentences. No headings, no lists, no formulas the student did not use.
 
-First say what is right in the explanation, specifically, using a few of the student's own words. Then name the one most important gap or mistake in the reasoning, if there is one, and say what is missing without writing the missing part for them. Then ask one question that would lead them to it, and point to what to watch on the simulation: which arrow, which number, or which slider setting.
+First say what is right in the explanation, specifically, using a few of the student's own words. Then name the one most important gap or mistake in the reasoning, if there is one: say which part is not there yet or does not hold up, and stop there. Never supply the missing relationship, number, name or direction, not even inside your question. Then ask one question that would lead them to it. If you point to the page, point only to a control or a readout named under "Controls at this stop" in the notes; the stop has no others.
 
 If the explanation is complete and correct, say so plainly, and ask one question that tests it in a nearby situation.
 
@@ -903,31 +909,31 @@ Never write the full correct explanation for the student, and do not give them n
 ### Private notes for Level 1
 
 ```text
-A sound answer describes what the student saw: with the nose high the bird slowed down (the speed readout fell); below about 7 m/s it stopped gliding and dropped quickly, with the stall banner showing; it lost height fast and reached the water far short of the buoy. At this level the student is not expected to explain why. A description of what they observed that mentions the speed is complete. Common gaps: no mention of the speed; saying the bird 'ran out of energy' or that gravity got stronger.
+A sound answer describes what the student saw: with the nose high the bird slowed down (the speed readout fell); below about 7 m/s it stopped gliding and dropped quickly, with the stall banner showing; it lost height fast and reached the water far short of the buoy. At this level the student is not expected to explain why. A description of what they observed that mentions the speed is complete. Common gaps: no mention of the speed; saying the bird 'ran out of energy' or that gravity got stronger. Controls at this stop: the nose-angle slider (or the up and down arrow keys); readouts for the speed, the height and the distance; a banner when the bird stalls; a table of the last five flights. Nothing else can be changed here.
 ```
 
 ### Private notes for Level 2
 
 ```text
-A sound explanation says that moving at a steady speed needs zero net force, not a forward force (Newton's first law); that the bird's path slopes downhill, so part of its weight acts along the path and balances the drag; and that the bird is trading height for distance. Common gaps: saying lift pushes the bird forward; saying 'momentum keeps it going' without dealing with drag; believing a force is needed to keep something moving.
+A sound explanation says that moving at a steady speed needs zero net force, not a forward force (Newton's first law); that the bird's path slopes downhill, so part of its weight acts along the path and balances the drag; and that the bird is trading height for distance. Common gaps: saying lift pushes the bird forward; saying 'momentum keeps it going' without dealing with drag; believing a force is needed to keep something moving. Controls at this stop: the button "Add the forces during a steady glide"; on the drawing, the arrows for weight, lift and drag and the dashed direction of travel. There are no sliders at this stop.
 ```
 
 ### Private notes for Level 3
 
 ```text
-A sound explanation says that a steady glide needs lift equal to weight; that lift depends on speed squared and on the lift coefficient, which comes from the wing's tilt; that a slower bird must tilt its wings more to keep the same lift; that the tilt has a limit (about 15°, lift coefficient 1.5) beyond which the air breaks away and lift falls; and that below about 7.4 m/s the lift is less than the weight whatever the tilt, so there is a net downward force and the bird accelerates downward. Common gaps: 'not enough speed' with no mechanism; saying gravity increases; leaving out the limit on tilt.
+A sound explanation says that a steady glide needs lift equal to weight; that lift depends on speed squared and on the lift coefficient, which comes from the wing's tilt; that a slower bird must tilt its wings more to keep the same lift; that the tilt has a limit (about 15°, lift coefficient 1.5) beyond which the air breaks away and lift falls; and that below about 7.4 m/s the lift is less than the weight whatever the tilt, so there is a net downward force and the bird accelerates downward. Common gaps: 'not enough speed' with no mechanism; saying gravity increases; leaving out the limit on tilt. Controls at this stop: two sliders, "Wing tilt" (0 to 20 degrees) and "Air speed" (4 to 20 m/s), and the lift shown as a number. There is no slider for the lift coefficient.
 ```
 
 ### Private notes for Level 4
 
 ```text
-The relationship (glide ratio = lift ÷ drag, at most about 13) holds for a steady glide through still air with a fixed wing shape. A sound answer names a situation that breaks one of those conditions and says what changes: flapping adds a forward force, so it is no longer a glide; rising air (warm air columns, or wind pushed up by a cliff) carries the bird up with it, so it loses less height over the ground although the forces from the air are the same; a tailwind adds ground distance in the same way; changing the wing's shape or spread changes the drag. Answers that stay inside the model do not work: flying faster or slower cannot beat the bottom of the valley, and being lighter does not change the best glide ratio, as Level 4 showed. Common gaps: naming a situation without saying what it changes; proposing 'fly faster' or 'weigh less'.
+The relationship (glide ratio = lift ÷ drag, at most about 13) holds for a steady glide through still air with a fixed wing shape. A sound answer names a situation that breaks one of those conditions and says what changes: flapping adds a forward force, so it is no longer a glide; rising air (warm air columns, or wind pushed up by a cliff) carries the bird up with it, so it loses less height over the ground although the forces from the air are the same; a tailwind adds ground distance in the same way; changing the wing's shape or spread changes the drag. Answers that stay inside the model do not work: flying faster or slower cannot beat the bottom of the valley, and being lighter does not change the best glide ratio, as Level 4 showed. Common gaps: naming a situation without saying what it changes; proposing 'fly faster' or 'weigh less'. Controls at this stop: the glide speed slider under the graph; the two names in the legend, which show or hide each part of the drag; the buttons that choose the bird or the heavier bird. There is no slider for the mass.
 ```
 
 ### Private notes for Level 5
 
 ```text
-The student changed the GlowScript program that calculates the glide (the nose angle, the mass, the launch speed, the time step dt, or a line of the loop), predicted the result, ran the program, and is explaining what happened. A sound answer names the line and the change, states the prediction made before running, reports what the flight did with a number from the RESULT line, and explains the result from what that line calculates. Facts about this program, for checking only: the original settings are nose 3°, mass 1.0 kg, launch speed 10 m/s and dt 0.01 s, and that flight lands about 381 m from the cliff; the longest flight with those settings is about 390 m, at a nose angle near 4.5°. With the drag removed from F_net the bird never lands: nothing takes energy away, it sinks about 9 m while it speeds up to about 16.5 m/s, and then it flies level. With the lift removed it falls like a thrown ball and lands about 13 m from the cliff. With dt 0.1 s the flight hardly changes (about 381 m); with dt 0.5 s the program holds each force too long, the bird stalls, and it lands about 46 m from the cliff. With mass 1.3 kg and the launch speed left at 10 m/s the bird lands shorter (about 359 m at nose 3°, about 372 m at best), because 10 m/s is below the heavier bird's best speed of about 11.7 m/s, so it spends height gaining speed; the Level 4 result that the heavier bird glides just as far is for a steady glide at each bird's own best speed. A faster launch carries either bird farther, because it starts with more kinetic energy. Common gaps: reporting a result with no prediction; describing the change without saying what the line calculates; saying the program 'broke' when it calculated exactly what the changed line says.
+The student changed the GlowScript program that calculates the glide (the nose angle, the mass, the launch speed, the time step dt, or a line of the loop), predicted the result, ran the program, and is explaining what happened. A sound answer names the line and the change, states the prediction made before running, reports what the flight did with a number from the RESULT line, and explains the result from what that line calculates. Facts about this program, for checking only: the original settings are nose 3°, mass 1.0 kg, launch speed 10 m/s and dt 0.01 s, and that flight lands about 381 m from the cliff; the longest flight with those settings is about 390 m, at a nose angle near 4.5°. With the drag removed from F_net the bird never lands: nothing takes energy away, it sinks about 9 m while it speeds up to about 16.5 m/s, and then it flies level. With the lift removed it falls like a thrown ball and lands about 13 m from the cliff. With dt 0.1 s the flight hardly changes (about 381 m); with dt 0.5 s the program holds each force too long, the bird stalls, and it lands about 46 m from the cliff. With mass 1.3 kg and the launch speed left at 10 m/s the bird lands shorter (about 359 m at nose 3°, about 372 m at best), because 10 m/s is below the heavier bird's best speed of about 11.7 m/s, so it spends height gaining speed; the Level 4 result that the heavier bird glides just as far is for a steady glide at each bird's own best speed. A faster launch carries either bird farther, because it starts with more kinetic energy. Common gaps: reporting a result with no prediction; describing the change without saying what the line calculates; saying the program 'broke' when it calculated exactly what the changed line says. Controls at this stop: the program itself. The student changes a number by editing its line (nose, mass, launch_speed, dt, or a line of the loop) and pressing Run; Reset to original puts the program back; the RESULT line under the picture says where the bird landed. There are no sliders.
 ```
 
 ### Side-trail plan: the question sent
@@ -939,7 +945,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find.
+A sound plan has one specific question that can be answered with about 20 minutes of work; a concrete action (a measurement, a calculation with the lift relationship, a simulation run, or named sources to read); and a prediction with a reason, with numbers where the question allows it. Help the student sharpen the weakest of the three parts. Do not answer their question or tell them what they will find. If you point to the page, point only to what exists: at Level 4, the glide speed slider and the buttons that choose the bird or the heavier bird; in the Level 5 program, the student changes a number by editing its line (nose, mass, launch_speed, dt) and pressing Run. There is no mass slider and no lift coefficient slider.
 ```
 
 ### Check what you can explain: the question bank (the "sound answer" lines are private: they go to the helper that checks an answer and are never shown to the student)
@@ -1045,14 +1051,12 @@ The two ideas, and what a sound explanation of each contains:
 2. Forces in balance. the three forces add up to zero; with zero net force the velocity does not change (Newton's first law). Saying in so many words that no forward push is needed is not required.
 
 Format, exactly:
-- Two lines, one per idea, in this order. Each line is the idea's number, a colon, then exactly one of: explained, partly explained, not reached. Then a dash and one sentence that points to what the student actually said, quoting a few of their own words, or says which part was missing without supplying it.
-- Then a line starting with "Next:" with one sentence that asks the one question that would take their explanation a step further. The question must not contain or hint at a missing answer.
+- Two lines, one per idea, in this order. Each line is the idea's number, a colon, then exactly one of: explained, partly explained, not reached. Then a dash.
+  After the dash, for an idea that is explained: one sentence that points to what the student actually said, quoting a few of their own words.
+  After the dash, for an idea that is partly explained or not reached: only a few of the student's own words about that idea, copied exactly and put in quotation marks, or nothing at all if they said nothing about it. Do not say what was missing or wrong. The page tells the student where the idea was taught, and they will answer a question on it next; that answer has to be their own.
+- Then a line starting with "Next:" with one sentence that asks the one question that would take their explanation a step further. The question must not contain or hint at a missing answer. Give no correct name, part, value, number, arrangement or direction in it.
 
-Rules: judge only the student's messages, never the classmate's. Write "explained" only when the reasoning listed for that idea is there in the student's own words, with nothing that contradicts it. A correct conclusion with no reason is "partly explained". Never rewrite their explanation.
-
-Read all of the student's messages together: reasoning given in any one of them counts. Reasoning that means the same as what is listed counts, in any words. The list is the whole standard: do not require anything that is not on it. When you point to what the student said, quote their words; do not restate their reasoning in words of your own.
-
-The student will next answer a question on each idea that is not explained, and that answer has to be their own. So never state the correct version of anything the student got wrong or left out: no correct name, part, value, number, arrangement or direction, whether in a sentence, in brackets or inside the Next question. Say which part of what they said does not hold up, or that the reasoning for an idea is not there yet, and stop there. Do not list the names, parts or quantities that were missing. Do not use a technical term that the student did not use.
+Rules: judge only the student's messages, never the classmate's. Read all of the student's messages together: reasoning given in any one of them counts. Write "explained" only when the reasoning listed for that idea is there in the student's own words, in any words that mean the same, with nothing that contradicts it. The list is the whole standard: do not require anything that is not on it. A correct conclusion with no reason is "partly explained". Never rewrite their explanation, and do not restate their reasoning in words of your own. Do not use a technical term that the student did not use.
 
 Start each sentence plainly, for example "You said that ..."; never start with "You,". Plain text only, with no markdown, bullets or headings. No praise words, grades or scores. Under 120 words.
 Words this trail does not use, so do not use them: angle of attack (the trail says "tilt of the wing"), induced drag, parasitic drag, L/D.

@@ -294,6 +294,7 @@
   .ai-helper p{margin:0 0 12px}
 
   /* the button sits on its own strip, so nothing on the page is ever under it */
+  html{scroll-padding-bottom:84px}   /* room for the strip that holds Copy my work, when the page scrolls to something */
   body.hasfab::after{content:''; position:fixed; left:0; right:0; bottom:0; height:70px; background:var(--paper); border-top:1px solid var(--line); z-index:39}
   #subfab[hidden]{display:none}
   @media (max-width:520px){ body #subfab{font-size:.85rem; line-height:1.3; padding:7px 14px; bottom:7px; max-width:calc(100vw - 36px)} }
@@ -1433,7 +1434,7 @@
       'Box 3 sharpened (How a human saw the work): ' + (S.l3Final || '(blank)') + krNote('l3'),
       'Box 4 ingredients: ' + (S.l4Chips.join(', ') || 'none') + (l4NeedTop() && l4Top().length ? ' | relies most on this month: ' + l4Top().join(', ') : ''),
       'Box 4 sharpened (How proof was built & verified + help used): ' + (S.l4Final || '(blank)') + krNote('l4'),
-      'Box 5 next-30-day weekly budget (' + S.budget + ' hrs/wk): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + 'h').join(', ') + ' | hours by answer: ' + GROUPS.map(g => 'Box ' + g + '=' + (S.ans[g] || 0) + 'h').join(', '),
+      'Box 5, hours per week for the next 30 days (' + S.budget + ' hours a week in all; every number in this line is hours PER WEEK, not a total for the 30 days): ' + BUCKETS.map(b => b.name + '=' + (S.hrs[b.id] || 0) + ' h/week').join(', ') + ' | hours per week by answer: ' + GROUPS.map(g => 'Box ' + g + '=' + (S.ans[g] || 0) + ' h/week').join(', '),
       'Box 5 concrete 7-day step: ' + (S.step7d || '(blank)'),
       'Continuity checks flagged on page: ' + diags.map(d => d.title).join(' | ')
     ].join('\n');
@@ -1500,7 +1501,7 @@
     '- Ask in plain words that are on the page in front of the student. Do not use the names of studies or authors, and do not use the words counter-signal, runway, signal or human validation. Do not ask about anything the student could only know by opening "See the numbers and where they come from".',
     '- Ask ONE clear, plain question per turn in two or three sentences max. Use spaced hyphens ( - ) if needed, never em-dashes.',
     '- Never lecture, grade, or rewrite their plan. Keep the register warm, curious, and direct.',
-    '- Probe concrete links in their private context: how their 7-day step and 30-day hours realistically build Box 4 and Box 2 on their stated timeline, how dataset limits apply to their specific track (e.g., Game Dev outside BGI\'s 32 roles, 2016-2023 internship records pre-AI, postings vs headcount), and which two buckets survive when a busy week cuts their prep hours in half.',
+    '- Probe concrete links in their private context: how their 7-day step and their weekly hours for the next 30 days realistically build Box 4 and Box 2 on their stated timeline, how dataset limits apply to their specific track (e.g., Game Dev outside BGI\'s 32 roles, 2016-2023 internship records pre-AI, postings vs headcount), and which two buckets survive when a busy week cuts their prep hours in half.',
     '- A note from the page, in square brackets at the end of the student\'s message, tells you which idea to ask about next. Ask that idea\'s question, fitted to this student\'s own chain: name their step, their link or their choice in the question. You may take up one thing the student just said in a short clause. Then the one question, and nothing else. The page itself tells the student when they can ask for the summary.',
     'The trail has five ideas, and you take your questions from this bank. For each idea: the easier question, the harder question, and what to listen for.',
     "Idea 1 - Work that runs is not enough. Work that runs does not, by itself, show how well someone can check it, explain a choice and change it. Easier: A demo runs. Identify one check that would make you trust it more, and explain why. Harder: Two fixes pass the same tests. What would you compare before choosing between them, and what change in the requirements might reverse your choice? Listen for: a concrete check, and a choice the student can defend; working output alone does not settle it.",
@@ -1517,9 +1518,11 @@
     'You are writing a concise CST349 check-in summary addressed to the student as "you".',
     'Comment only on what the student wrote in the boxes or said in the interview. If the interview did not ask what the student would keep in a busy week, write "Not asked in this check-in." for that part.',
     'Read their backward-chain snapshot and interview transcript. Evaluate internal alignment and thoughtful reading of the findings rather than a single "right" formula.',
+    'Hours in the snapshot are hours per week. When you mention hours, write "hours a week" and use the numbers as given. Never call them 30-day hours or turn them into a monthly total.',
+    'The page lets a student give zero hours this month to one of their answers. Zero hours for something is not a reason to write "not yet" for an idea, and it says nothing about any other idea. Judge an idea only by what the student explained in the interview.',
     'Write in plain words that are on the page in front of the student. Do not use the names of studies or authors, and do not use the words counter-signal, runway, signal or human validation.',
     'Format in plain text (no markdown headers or bullets, under 190 words) with four labeled paragraphs:',
-    'How your steps connect: One or two sentences on how plausibly their 7-day step and 30-day hours connect up to what they said convinces a hiring manager and gets seen (quoting a few of their words).',
+    'How your steps connect: One or two sentences on how plausibly their 7-day step and their weekly hours for the next 30 days connect up to what they said convinces a hiring manager and gets seen (quoting a few of their words).',
     'Use of the studies and their limits: One or two sentences on how clearly they accounted for both findings and dataset limits in their specific path.',
     'Busy-week plan: If the interview asked what the student would keep in a busy week and the student answered, one sentence on what they said they would keep. If the interview did not ask, write exactly: Not asked in this check-in.',
     'One question to carry forward: One constructive question to test over the next month. Use US spelling and no em-dashes.',
@@ -1545,7 +1548,7 @@
   function buildDojoPrompt(opener){
     return [
       'Act as my CST349 check-in interviewer for the backward-chain simulation ("Work back from the role you want").',
-      'Walk my chain forward by asking me ONE short question at a time (3 to 4 questions total) to test whether my 7-day step and 30-day hours plausibly build the proof, visibility, and hiring story I wrote - and how the four studies\' blind spots apply to my path. Also ask what I will protect when a busy week cuts my hours in half. Do not lecture or rewrite my plan. After 3 to 4 answers, write a short 4-part summary (How your steps connect, Use of the studies and their limits, Busy-week plan, One question to carry forward).',
+      'Walk my chain forward by asking me ONE short question at a time (3 to 4 questions total) to test whether my 7-day step and my weekly hours for the next 30 days plausibly build the proof, visibility, and hiring story I wrote - and how the four studies\' blind spots apply to my path. Also ask what I will protect when a busy week cuts my hours in half. Do not lecture or rewrite my plan. After 3 to 4 answers, write a short 4-part summary (How your steps connect, Use of the studies and their limits, Busy-week plan, One question to carry forward).',
       '',
       'At the end of your summary, list these five ideas and say for each one whether I explained it for my own plan, in a few words: (1) work that runs is not enough; (2) a person has to see your work; (3) judgment comes from practice and feedback; (4) each step of the plan leads to the next; (5) a study has limits.',
       '',

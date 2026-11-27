@@ -32,16 +32,18 @@ When engineers find a machine giving a wrong answer, they treat it as a clue abo
 
 **Video:** none yet (slot is hidden until a video is added)
 
-**Investigate (each question appears when the one before it is answered; all three open the box)**
+**Investigate (each question appears when the one before it has been tried; all three open the box)**
 1. Find a sum that the machine gets wrong. Set a and b to that sum on the machine above, then press the button.
 2. What is the largest number the machine ever shows as an answer?
 3. The machine shows 0 for 15 + 1, and it shows 2 for 9 + 9. Predict what it shows for 12 + 7.
 
-**Offered when the third question is answered, closed until the student clicks it. Nothing depends on it.**
+(Page note: question 1 needs a sum that the machine really gets wrong, which the student finds by trying. Questions 2 and 3 each need one Check with a number in the box. A wrong number gets its feedback and stays in the box, and the next question still appears; a right number gets a tick. No correct number is needed to open the box.)
+
+**Offered when the third question has been tried, closed until the student clicks it. Nothing depends on it.**
 
 **Do you want to test your rule at its edge?** Your rule says where the machine stops being right. Find two sums that sit on either side of that point: the largest sum your rule says the machine still gets right, and the smallest one it gets wrong. Try both on the machine and see whether your rule holds.
 
-**Before you open the box (appears when the third question is answered; the box opens when a few words are written here and saved; the button is Save my guess)**
+**Before you open the box (appears when the third question has been tried; the box opens when a few words are written here and saved; the button is Save my guess)**
 
 You now know when the machine goes wrong. Before you look inside, write what you think is in there that makes it get the large sums wrong. A guess in a few words is enough, and it does not have to be right. You will see it again at the end of Level 2, next to what you found.
 
@@ -603,6 +605,12 @@ Under a conversation before it starts: Your classmate has not done this trail. A
 
 (Page note: the feedback, under "Feedback on your explanation", has one line for each of the two ideas, with "explained", "partly explained" or "not reached" and one sentence, and then one question to take the explanation further. An idea marked "explained" becomes confirmed. An idea that was confirmed stays confirmed.)
 
+Under an idea marked "partly explained": You said: “[a few of the student's own words]”. The reasoning for this idea is not complete in your explanation yet. It was taught at [Level N], and a question on it follows below.
+
+Under an idea marked "not reached": Your explanation did not get to this idea. It was taught at [Level N], and a question on it follows below.
+
+(Page note: for these two marks the page shows only words the student wrote, when the helper quoted some and they are in the conversation, and then its own sentence. What the helper says was missing is not shown, because it tended to carry the missing answer.)
+
 If the classmate does not answer: The AI helper did not answer. Your reply is saved here. You can send another reply, or press Save my explanation anyway.
 
 If the feedback does not come: The feedback helper is not answering right now, and your conversation is saved here. You can try again, or press Save my explanation anyway and go on. (buttons "Try the feedback again" and "Save my explanation anyway")
@@ -734,14 +742,12 @@ The two ideas, and what a sound explanation of each contains:
 2. Numbers on wires. the wires are worth 8, 4, 2 and 1; a number is the sum of the wires that are on. One example of the student's own is enough; no particular number is required.
 
 Format, exactly:
-- Two lines, one per idea, in this order. Each line is the idea's number, a colon, then exactly one of: explained, partly explained, not reached. Then a dash and one sentence that points to what the student actually said, quoting a few of their own words, or says which part was missing without supplying it.
-- Then a line starting with "Next:" with one sentence that asks the one question that would take their explanation a step further. The question must not contain or hint at a missing answer.
+- Two lines, one per idea, in this order. Each line is the idea's number, a colon, then exactly one of: explained, partly explained, not reached. Then a dash.
+  After the dash, for an idea that is explained: one sentence that points to what the student actually said, quoting a few of their own words.
+  After the dash, for an idea that is partly explained or not reached: only a few of the student's own words about that idea, copied exactly and put in quotation marks, or nothing at all if they said nothing about it. Do not say what was missing or wrong. The page tells the student where the idea was taught, and they will answer a question on it next; that answer has to be their own.
+- Then a line starting with "Next:" with one sentence that asks the one question that would take their explanation a step further. The question must not contain or hint at a missing answer. Give no correct name, part, value, number, arrangement or direction in it.
 
-Rules: judge only the student's messages, never the classmate's. Write "explained" only when the reasoning listed for that idea is there in the student's own words, with nothing that contradicts it. A correct conclusion with no reason is "partly explained". Never rewrite their explanation.
-
-Read all of the student's messages together: reasoning given in any one of them counts. Reasoning that means the same as what is listed counts, in any words. The list is the whole standard: do not require anything that is not on it. When you point to what the student said, quote their words; do not restate their reasoning in words of your own.
-
-The student will next answer a question on each idea that is not explained, and that answer has to be their own. So never state the correct version of anything the student got wrong or left out: no correct name, part, value, number, arrangement or direction, whether in a sentence, in brackets or inside the Next question. Say which part of what they said does not hold up, or that the reasoning for an idea is not there yet, and stop there. Do not list the names, parts or quantities that were missing. Do not use a technical term that the student did not use.
+Rules: judge only the student's messages, never the classmate's. Read all of the student's messages together: reasoning given in any one of them counts. Write "explained" only when the reasoning listed for that idea is there in the student's own words, in any words that mean the same, with nothing that contradicts it. The list is the whole standard: do not require anything that is not on it. A correct conclusion with no reason is "partly explained". Never rewrite their explanation, and do not restate their reasoning in words of your own. Do not use a technical term that the student did not use.
 
 Start each sentence plainly, for example "You said that ..."; never start with "You,". Plain text only, with no markdown, bullets or headings. No praise words, grades or scores. Under 120 words.
 Words this trail does not use, so do not use them: pMOS, nMOS, CMOS, pull-up, pull-down, in series, in parallel (the trail says "one after the other" and "side by side").
