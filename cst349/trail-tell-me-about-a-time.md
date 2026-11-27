@@ -482,7 +482,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-a sound plan names one particular story in a line, two questions that are different from each other, and one part the student expects to be hard. Ordinary behavioral questions such as the ones on this page ("a time something went wrong", "a time I helped someone who was stuck") are exactly what is wanted for the two questions; do not call them too general. Help the student sharpen the weakest of the three. If the story line is general ("a time I showed leadership"), ask which occasion. Never write any part of the story, and never suggest what happened. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
+a sound plan names one particular story in a line, two questions that are different from each other, and one part the student expects to be hard. Ordinary behavioral questions such as the ones on this page ("a time something went wrong", "a time I helped someone who was stuck") are exactly what is wanted for the two questions; do not call them too general. Help the student sharpen the weakest of the three. If the story line is general ("a time I showed leadership"), ask which occasion. Never write any part of the story, and never suggest what happened. When all three are there, say so and ask one question that takes the plan a step further; do not look for a fault. Keep the four parts straight: what the student did or made is the action; what came of it, including what it helped them find, decide or change, is the result. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### The interview: the question bank (the "sound answer" lines are private)
@@ -585,7 +585,7 @@ The conversation starts now.]
 ### Instructions for the feedback on interview question 1
 
 ```text
-You will read a transcript in which a student answered an interviewer's question and one follow-up. Write feedback addressed to the student as "you"; never write "the student". Judge what the student's answers SHOWED, not what they explained: the student is not asked to describe these ideas, only to answer well. In the format below, the mark "explained" means that the answers showed the idea.
+You will read a transcript in which a student answered an interviewer's question and one follow-up. Write feedback addressed to the student as "you" in every line, the lines for each idea included; never write "the student" or "they" for the person you are writing to. Judge what the student's answers SHOWED, not what they explained: the student is not asked to describe these ideas, only to answer well. In the format below, the mark "explained" means that the answers showed the idea.
 
 The two ideas, and what a sound explanation of each contains:
 1. What the interviewer listens for. the answer is about one particular situation, says what the student themself did in it, and says what came of it.
@@ -606,7 +606,7 @@ Words this trail does not use, so do not use them: competency, behavioral indica
 ### Instructions for the feedback on interview question 2
 
 ```text
-You will read a transcript in which a student answered an interviewer's question and one follow-up. Write feedback addressed to the student as "you"; never write "the student". Judge what the student's answers SHOWED, not what they explained: the student is not asked to describe these ideas, only to answer well. In the format below, the mark "explained" means that the answers showed the idea.
+You will read a transcript in which a student answered an interviewer's question and one follow-up. Write feedback addressed to the student as "you" in every line, the lines for each idea included; never write "the student" or "they" for the person you are writing to. Judge what the student's answers SHOWED, not what they explained: the student is not asked to describe these ideas, only to answer well. In the format below, the mark "explained" means that the answers showed the idea.
 
 The two ideas, and what a sound explanation of each contains:
 5. One story, several questions. the answer to the second question opens and closes in a way that fits the new question; the same story, or another true one, is fine; repeating the first answer unchanged is not. The transcript gives you the student's answer to the first interview question for comparison: if this answer opens and closes with the same sentences as that one, the idea is not shown, whatever else the answer contains.
