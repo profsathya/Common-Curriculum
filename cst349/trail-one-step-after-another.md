@@ -289,7 +289,7 @@ You begin with your order from Level 3.
 
 So step g is no longer what Quinn guessed. "Fix what the treasurer's try showed (2 hours)" becomes "Let one expense be split among members (4 hours)". The plan just grew by two hours, and the hours in the month did not.
 
-Change the order of what is left. Something near the bottom will not get done. You decide what.
+Change the order of what is left, or keep it if what can wait is already at the bottom. Something near the bottom will not get done. You decide what.
 
 (Page note: step g's bar grows from 2 to 4 hours and its name changes at the moment f is finished, so any hours left in that week already count toward the 4. If step f is never finished in the four weeks, the reaction is not shown, and after week 4 the page says: "The treasurer never tried the tracker in these four weeks, so nothing came back to change the plan." The student can press "Play the four weeks again" to start Level 4 over from their Level 3 order; each play is kept.)
 
@@ -304,7 +304,7 @@ Change the order of what is left. Something near the bottom will not get done. Y
 
 The treasurer's reaction made Quinn's plan look worse: one step doubled, and something had to be left out. Without step f Quinn would have spent those hours on categories, summaries and looks for a tracker that the one person it is for was not going to use. Changing the plan after that reaction is not giving up on the goal. It is how the goal stays reachable.
 
-**Explain.** After the treasurer's try you changed the order. What did you move down or leave out, and why that?
+**Explain.** After the treasurer's try the plan was two hours longer, so something had to be left out. What did you move down or leave at the bottom, and why that?
 
 (Page note: if the reaction never came, the question reads: "The treasurer never tried the tracker. Looking at your four weeks, what would you change in the order, and when?")
 
@@ -539,7 +539,7 @@ a sound explanation says that the order decides which steps get the hours that a
 
 ### Private notes for Level 4: The week
 
-a sound explanation names what was moved or left out and gives a reason that goes back to the goal or to the person the tracker is for: for example "I left out 'make it look good' because the treasurer will not use it at all without splitting". It may say that the plan changed and the goal did not. Common gaps: describing the change with no reason; treating the reaction as bad luck and not as information; "I would work more hours". At this stop the student sees the board week by week, the hours that arrived each week with the reason, the treasurer's reaction if step f was finished, the changed step g, their changes of order, and the four lines after week 4.
+a sound explanation names what was moved or left out and gives a reason that goes back to the goal or to the person the tracker is for: for example "I left out 'make it look good' because the treasurer will not use it at all without splitting". It may say that the plan changed and the goal did not. If the student's order already had the changed step ahead of what they left at the bottom, keeping that order is a sound choice of what to leave out and not a mistake: "changes of order: none" in what the page sends you is then what to expect, and the question is why those steps can wait. Common gaps: describing the change with no reason; treating the reaction as bad luck and not as information; "I would work more hours". At this stop the student sees the board week by week, the hours that arrived each week with the reason, the treasurer's reaction if step f was finished, the changed step g, their changes of order, and the four lines after week 4.
 
 ### Private notes for Your side trail (about 20 minutes), for the plan feedback
 
