@@ -220,6 +220,12 @@ Avery's first answer told you what Avery did. It did not tell you whether Avery 
 
 (Page note: explain box ("Explain your thinking"), up to 1500 characters, with the button "Get AI feedback". With the box empty: "Write your explanation first." No number of words is asked for. The private notes for the feedback helper are at the end of this file, under Level 3.)
 
+(Page note: that question is shown when the student has asked Devon the second of the three questions. When they have not, the question reads:)
+
+**Explain.** You asked Devon one more question. What did the reply tell you that the first answer had not, and what would you still want to ask?
+
+(Page note: explain box ("Explain your thinking"), up to 1500 characters, with the button "Get AI feedback". With the box empty: "Write your explanation first." No number of words is asked for. The private notes for the feedback helper are at the end of this file, under Level 3.)
+
 **Are you wondering how you would know what an interviewer will ask?**
 
 You cannot know the exact question. You can know the kinds: What exactly happened? What did you do, as opposed to the team? Why that and not something else? What did the other person think? What would you do differently? Say your story to someone and ask them which of these they still want to ask. Those are the details to add.
@@ -312,6 +318,8 @@ The story does not have to be impressive. It has to be particular. A shift where
 - Save without feedback: Save my answers anyway
 - After that: Saved without feedback. This part confirms no idea; the questions below can.
 - Before the written questions open: The questions open when the two interview questions above are finished.
+- When the question is over: That is the end of this question. Ask for feedback now.
+- The interviewer's closing line: Thank you. That is the end of this question.
 
 (Page note: the module's line for a feedback that does not come names its own button; here it reads: "The feedback helper is not answering right now, and your conversation is saved here. You can try again, or press Save my answers anyway and go on.")
 
@@ -438,31 +446,31 @@ Never write the full correct explanation for the student. If the explanation is 
 ### Private notes for Level 1
 
 ```text
-a sound explanation says that Avery's answer gives one particular situation with what Avery did and what came of it, so the interviewer can picture it, ask about it and judge the choices; Devon's gives general statements that fit anyone, so the interviewer learns nothing particular to Devon. Common gaps: "Avery's is longer" or "more detailed" with nothing about what the detail is for; deciding that Devon is a worse teammate, which the answer does not show. At this stop the student sees the question, both answers, their own choice and sentence, and the table of what each answer gives. They have not yet seen the four parts by name or the follow-up questions; do not introduce them.
+a sound explanation says that Avery's answer gives one particular situation with what Avery did and what came of it, so the interviewer can picture it, ask about it and judge the choices; Devon's gives general statements that fit anyone, so the interviewer learns nothing particular to Devon. Common gaps: "Avery's is longer" or "more detailed" with nothing about what the detail is for; deciding that Devon is a worse teammate, which the answer does not show. At this stop the student sees the question, both answers, their own choice and sentence, and the table of what each answer gives. They have not yet seen the four parts by name or the follow-up questions; do not introduce them. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 2
 
 ```text
-a sound explanation says to shorten the situation and task to a sentence or two and give most of the answer to the action, because the action is what shows the interviewer how the person works; it may add that the result should be something that can be seen or counted, and that the action should be told with "I". Common gaps: only "use STAR" with no sizes; "add more detail" without saying to which part. At this stop the student sees Kai's answer in order with its four parts and their shares, Avery's answer marked by part, and Devon's five sentences with the page's reading of each beside their own choices.
+a sound explanation says to shorten the situation and task to a sentence or two and give most of the answer to the action, because the action is what shows the interviewer how the person works; it may add that the result should be something that can be seen or counted, and that the action should be told with "I". Common gaps: only "use STAR" with no sizes; "add more detail" without saying to which part. At this stop the student sees Kai's answer in order with its four parts and their shares, Avery's answer marked by part, and Devon's five sentences with the page's reading of each beside their own choices. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 3
 
 ```text
-a sound explanation says that the specific follow-up asked for the particular thing the first answer left out (what the disagreement was and what Devon did), and that Devon had the story but did not tell it until asked; for preparation, that the details an interviewer would ask for should be in the answer or ready, because the follow-up may never come. Common gaps: "Devon was nervous" with nothing about the question; concluding that the interviewer should always ask better questions, which the candidate cannot control. At this stop the student sees what they wrote about what was unclear, the three questions for each candidate and the replies to those they asked. Replies to questions they did not ask are not shown to them: do not quote those.
+a sound explanation says that the specific follow-up asked for the particular thing the first answer left out (what the disagreement was and what Devon did), and that Devon had the story but did not tell it until asked; for preparation, that the details an interviewer would ask for should be in the answer or ready, because the follow-up may never come. Common gaps: "Devon was nervous" with nothing about the question; concluding that the interviewer should always ask better questions, which the candidate cannot control. At this stop the student sees what they wrote about what was unclear, the three questions for each candidate and the replies to those they asked. Replies to questions they did not ask are not shown to them: do not quote those. A student who did not ask Devon the specific question has not seen Devon's story about the database project: for them a sound answer says that the reply added nothing particular, and names a question that would ask for what happened and what Devon did. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 4
 
 ```text
-a sound explanation says a few true stories, around three to five, each of which can be opened and closed to fit different questions, because the middle of a story stays the same and questions overlap; preparing one per question is impossible and makes the stories thinner. The number itself does not matter. Common gaps: "one story is enough for everything"; "memorize an answer for each question". At this stop the student sees their question, both versions of their answer, any feedback they asked for, their looking-back answer, the second question and their two new sentences, and the Avery example.
+a sound explanation says a few true stories, around three to five, each of which can be opened and closed to fit different questions, because the middle of a story stays the same and questions overlap; preparing one per question is impossible and makes the stories thinner. The number itself does not matter. Common gaps: "one story is enough for everything"; "memorize an answer for each question". At this stop the student sees their question, both versions of their answer, any feedback they asked for, their looking-back answer, the second question and their two new sentences, and the Avery example. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 4, "Which part is thin?"
 
 ```text
-the student has written an answer to a behavioral interview question. Say which of the four parts (situation, task, action, result) is the thinnest or is missing, pointing to a few of their own words; say whether the action is told with "I" or with "we"; and ask one question an interviewer would ask about the thing left most unclear. Never rewrite the answer or any sentence of it, never supply an example sentence, and never invent a detail of their story. Do not judge whether the story is impressive. If the answer is a general statement with no particular situation, say that you cannot yet tell which occasion it is about, and ask when it happened. At this stop the student sees their chosen question and their own answer.
+the student has written an answer to a behavioral interview question. Say which of the four parts (situation, task, action, result) is the thinnest or is missing, pointing to a few of their own words; say whether the action is told with "I" or with "we"; and ask one question an interviewer would ask about the thing left most unclear. Never rewrite the answer or any sentence of it, never supply an example sentence, and never invent a detail of their story. Do not judge whether the story is impressive. If the answer is a general statement with no particular situation, say that you cannot yet tell which occasion it is about, and ask when it happened. At this stop the student sees their chosen question and their own answer. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Side-trail plan: the question sent
@@ -474,7 +482,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-a sound plan names one particular story in a line, two questions that are different from each other, and one part the student expects to be hard. Help the student sharpen the weakest of the three. If the story line is general ("a time I showed leadership"), ask which occasion. Never write any part of the story, and never suggest what happened.
+a sound plan names one particular story in a line, two questions that are different from each other, and one part the student expects to be hard. Ordinary behavioral questions such as the ones on this page ("a time something went wrong", "a time I helped someone who was stuck") are exactly what is wanted for the two questions; do not call them too general. Help the student sharpen the weakest of the three. If the story line is general ("a time I showed leadership"), ask which occasion. Never write any part of the story, and never suggest what happened. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### The interview: the question bank (the "sound answer" lines are private)
@@ -552,7 +560,7 @@ What it means for an interview answer to show each idea (private, used in the fe
 1. the answer is about one particular situation, says what the student themself did in it, and says what came of it.
 3. the action is told in the first person, with at least one detail that could be pictured or checked: a named thing, a number, a day, what was said or made.
 4. the reply to the follow-up gives the particular thing that was asked for, and does not repeat the first answer in general words.
-5. the answer to the second question opens and closes in a way that fits the new question; the same story, or another true one, is fine; repeating the first answer unchanged is not.
+5. the answer to the second question opens and closes in a way that fits the new question; the same story, or another true one, is fine; repeating the first answer unchanged is not. The transcript gives you the student's answer to the first interview question for comparison: if this answer opens and closes with the same sentences as that one, the idea is not shown, whatever else the answer contains.
 
 Words this trail does not use: competency, behavioral indicator, elevator pitch, personal brand, soft skills, storytelling framework. STAR appears once, in a wondering question.
 
@@ -601,7 +609,7 @@ Words this trail does not use, so do not use them: competency, behavioral indica
 You will read a transcript in which a student answered an interviewer's question and one follow-up. Judge what the student's answers SHOWED, not what they explained: the student is not asked to describe these ideas, only to answer well. The format, the three marks and every other rule stay as in the shared feedback instructions, with "shown" meaning the mark "explained".
 
 The two ideas, and what a sound explanation of each contains:
-5. One story, several questions. the answer to the second question opens and closes in a way that fits the new question; the same story, or another true one, is fine; repeating the first answer unchanged is not.
+5. One story, several questions. the answer to the second question opens and closes in a way that fits the new question; the same story, or another true one, is fine; repeating the first answer unchanged is not. The transcript gives you the student's answer to the first interview question for comparison: if this answer opens and closes with the same sentences as that one, the idea is not shown, whatever else the answer contains.
 4. A follow-up settles something. the reply to the follow-up gives the particular thing that was asked for, and does not repeat the first answer in general words.
 
 Format, exactly:

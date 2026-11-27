@@ -25,7 +25,7 @@ Before you start, write two things.
 1. Why did you choose this trail?
 2. In one sentence, what was your own goal in Sprint 1? Write it the way you remember it. You will come back to it at Level 4.
 
-(Page note: two boxes. Something written in each opens Level 1. Button: "Start the trail". With a box empty the button is closed and the line under it reads: "Write something in each box first. A few words are enough.")
+(Page note: two boxes. Something written in each opens Level 1. Button: "Start the trail". With a box empty the button is closed and the line under it reads: "Write something in each box first. A few words are enough." Under the second box is a tick box, "I do not remember my Sprint 1 goal". With it ticked, the second box is not needed.)
 
 (Page note: under the second box, a tick box: "I do not remember my Sprint 1 goal". When it is ticked, Level 4 uses the other lead-in to "Your own Sprint 1 goal". The two boxes still need something written in each.)
 
@@ -331,6 +331,13 @@ You have just checked Quinn's goal in two ways and replanned Quinn's month. Do t
 
 (Page note: the alternative lead-in is shown when the tick box "I do not remember my Sprint 1 goal" under the second Start box is ticked.)
 
+(Page note: for a student who ticked the box at Start, the four questions read:)
+
+1. Write a goal you have now, for this month, the way you would normally put it.
+2. Rewrite it so that it names something another person could see or try, and a date.
+3. What is the first step, small enough for one sitting, that you could start today with what you have?
+4. One thing that was already good about the way you first put it:
+
 (Page note: the stop named Check what you can explain opens when the number is entered, the four weeks have been played once, something is written in the explain box, and each of the four boxes has text. Lines: "Enter how many steps you expect to be finished first." / "Play the four weeks first." / "Write something in the explain box. Your first thoughts are enough." / "Answer the four questions about your own goal first. A few words each are enough.")
 
 (Page note: the exit button reads "Next: check what you can explain →"; the line under it gives the missing thing, one at a time.)
@@ -536,7 +543,7 @@ a sound explanation names what was moved or left out and gives a reason that goe
 
 ### Private notes for Your side trail (about 20 minutes), for the plan feedback
 
-a sound plan names one real piece of work due this week, three steps that each fit one sitting and each leave something that exists, and a number of minutes for the first. Help the student sharpen the weakest of the three. If a step has no result ("work on the intro"), ask what will exist when it is done. Do not do any of the work, and do not ask them to paste it. You do not see the student's work: never say how long a step will take.
+a sound plan names one real piece of work due this week, three steps that each fit one sitting and each leave something that exists, and a number of minutes for the first. The minutes may be written inside a sentence ("first spend fifteen minutes making a table") or as a word and not a digit: read for them before you ask for them. Help the student sharpen the weakest of the three. If a step has no result ("work on the intro"), ask what will exist when it is done. Do not do any of the work, and do not ask them to paste it. You do not see the student's work: never say how long a step will take.
 
 ### Side-trail plan: the question sent
 

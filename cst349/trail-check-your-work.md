@@ -509,25 +509,25 @@ Never write the full correct explanation for the student. If the explanation is 
 ### Private notes for Level 1
 
 ```text
-a sound explanation says something about reading as the writer or reading from memory of the request: the reader already has an idea of what the update is supposed to say and reads that idea, or did not put each sentence next to the request or the table. Common gaps: "I was not careful enough" with nothing about what careful would mean; blaming the update's length. At this stop the student sees the request, the table and the update with their own marks, and two counts. They have NOT been shown which sentences have faults. Do not name a sentence, a kind of fault or a place to look. They have made one read and nothing else: they have not written a list or checked in any other way yet, so ask only about the read.
+a sound explanation says something about reading as the writer or reading from memory of the request: the reader already has an idea of what the update is supposed to say and reads that idea, or did not put each sentence next to the request or the table. Common gaps: "I was not careful enough" with nothing about what careful would mean; blaming the update's length. At this stop the student sees the request, the table and the update with their own marks, and two counts. They have NOT been shown which sentences have faults. Do not name a sentence, a kind of fault or a place to look. They have made one read and nothing else: they have not written a list or checked in any other way yet, so ask only about the read. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 2
 
 ```text
-a sound explanation connects a particular item to a particular result: for example, "my list said 'next steps' and not 'each next step has a person and a date', so sentence 11 passed", or "I had an item for the reason and it caught sentence 8". It says that an item has to be small enough to answer yes or no. Common gaps: restating that lists are useful; an item so broad that every update passes it. At this stop the student has been shown the faults in sentences 8 and 11 and the page's list of eight items. They have NOT been shown the other four. Do not name another sentence, a kind of fault not yet shown, or a place to look.
+a sound explanation connects a particular item to a particular result: for example, "my list said 'next steps' and not 'each next step has a person and a date', so sentence 11 passed", or "I had an item for the reason and it caught sentence 8". It says that an item has to be small enough to answer yes or no. Common gaps: restating that lists are useful; an item so broad that every update passes it. At this stop the student has been shown the faults in sentences 8 and 11 and the page's list of eight items. They have NOT been shown the other four. Do not name another sentence, a kind of fault not yet shown, or a place to look. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 3
 
 ```text
-a sound explanation uses the student's own numbers and says in which direction they were off, or that they were close, and what they will do with that: for example check more than feels needed, or trust a list over a feeling. Common gaps: describing the update's faults instead of their own expectations; "I need to be more careful" with no number. A student whose expectations were close should say so; that is a sound answer too. At this stop the student has been shown all six faults, with their kinds, and their scoreboard.
+a sound explanation uses the student's own numbers and says in which direction they were off, or that they were close, and what they will do with that: for example check more than feels needed, or trust a list over a feeling. Common gaps: describing the update's faults instead of their own expectations; "I need to be more careful" with no number. A student whose expectations were close should say so; that is a sound answer too. At this stop the student has been shown all six faults, with their kinds, and their scoreboard. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Private notes for Level 4
 
 ```text
-a sound explanation has two parts: ask the checker to list faults or mismatches and give it what the work was supposed to do (the request, the rubric, the data), and check what it says before acting on it, because it can be wrong. Common gaps: only "use a better prompt"; only "do not trust AI"; nothing about handing over the request. At this stop the student sees Casey's second draft, two example replies marked as examples, and their three decisions with the page's answers. The replies are prepared examples; do not speak as if you wrote them.
+a sound explanation has two parts: ask the checker to list faults or mismatches and give it what the work was supposed to do (the request, the rubric, the data), and check what it says before acting on it, because it can be wrong. Common gaps: only "use a better prompt"; only "do not trust AI"; nothing about handing over the request. At this stop the student sees Casey's second draft, two example replies marked as examples, and their three decisions with the page's answers. The replies are prepared examples; do not speak as if you wrote them. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### The six faults of Casey's update (private)
@@ -551,7 +551,7 @@ The student is planning a short side trail of their own after finishing the lear
 ### Side-trail plan: private notes
 
 ```text
-a sound plan names one real piece of work, three checks that are things the student does with a result they can see, and a number they expect. Help the student sharpen the weakest of the three. Do not check their work for them and do not ask them to paste it. You do not see the student's work or any earlier check: never say what a check will find.
+a sound plan names one real piece of work, three checks that are things the student does with a result they can see, and a number they expect. Help the student sharpen the weakest of the three. Do not check their work for them and do not ask them to paste it. You do not see the student's work or any earlier check: never say what a check will find. Before you call anything missing, find the student's own words on it: if they are there, in any wording, it is not missing.
 ```
 
 ### Check what you can explain: the question bank (the "sound answer" lines are private)
