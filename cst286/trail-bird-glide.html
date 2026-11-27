@@ -201,6 +201,7 @@
   /* copy my work to submit: stays on screen on every level */
   body{padding-bottom:84px}
   /* the button sits on its own strip, so nothing on the page is ever under it */
+  html{scroll-padding-bottom:84px}   /* room for the strip that holds Copy my work, when the page scrolls to something */
   body.hasfab::after{content:''; position:fixed; left:0; right:0; bottom:0; height:70px; background:var(--paper); border-top:1px solid var(--line); z-index:39}
   #subfab[hidden]{display:none}
   @media (max-width:520px){ body #subfab{font-size:.85rem; line-height:1.3; padding:7px 14px; bottom:7px; max-width:calc(100vw - 36px)} }
@@ -603,7 +604,7 @@ const COPY = {
    "The airflow picture at Level 3 is a sketch.",
    "The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio about 13) were chosen to be close to a large gull, and the lift relationship is the same one used to design aircraft."
   ],
-  "stop": {"b": "A place to stop.", "t": "Levels 1 to 4 are the first sitting of this learning trail. Level 5, the stop named Check what you can explain, and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Copy my work to submit now and paste it somewhere safe."},
+  "stop": {"b": "A place to stop.", "t": "Levels 1 to 4 are the first sitting of this learning trail. Level 5, the stop named Check what you can explain, and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Save my work at the bottom of the page."},
   "exit": "Zoom in: inside the simulation"
  },
  "l5": {
@@ -1699,7 +1700,7 @@ const COPY = {
       '<div class="row"><button type="button" class="btn askfb"></button></div><div class="msg st" role="status"></div><div class="fbwrap"></div></div>';
   }
   const fmt = t => esc(t).replace(/\n/g, '<br>');
-  function fbBlock(E){ const r = E.rounds[E.rounds.length - 1]; return r ? '<div class="fb"><h4 class="sub">' + C.explainUI.fbTitle + '</h4><p>' + fmt(r.fb) + '</p></div>' : ''; }
+  function fbBlock(E){ const r = E.rounds[E.rounds.length - 1]; return r ? '<div class="fb"><h4 class="sub">' + (E === S.ex.plan ? 'Feedback on your plan' : C.explainUI.fbTitle) + '</h4><p>' + fmt(r.fb) + '</p></div>' : ''; }
   // one feedback request: keeps every round
   function requestFeedback(E, question, notes, text, ui){
     E.asks = (E.asks || 0) + 1; save();
@@ -3037,7 +3038,7 @@ const COPY = {
   function renderClear(){
     const w = $('#clearwrap');
     w.innerHTML = '<button type="button" class="linkbtn" id="clr">' + esc(C.submit.clear) + '</button> <span id="clr2"></span>';
-    $('#clr').onclick = () => { $('#clr2').innerHTML = '<button type="button" class="btn ghost" id="clryes">' + esc(C.submit.clearYes) + '</button>'; $('#clryes').onclick = () => { try { localStorage.removeItem(KEY); } catch (e) {} S = fresh(); try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); }; };
+    $('#clr').onclick = () => { $('#clr2').innerHTML = '<button type="button" class="btn ghost" id="clryes">' + esc(C.submit.clearYes) + '</button>'; $('#clryes').onclick = () => { try { localStorage.removeItem(KEY); localStorage.removeItem(KEY + '.save'); } catch (e) {} S = fresh(); try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); }; };
   }
 
   /* ---------- animation loop ---------- */

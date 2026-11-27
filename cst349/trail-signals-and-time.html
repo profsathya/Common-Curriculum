@@ -513,7 +513,7 @@
 
   let S = freshState();
   try {
-    if (new URLSearchParams(location.search).get('reset') === '1') localStorage.removeItem(STORE_KEY);
+    if (new URLSearchParams(location.search).get('reset') === '1'){ localStorage.removeItem(STORE_KEY); localStorage.removeItem(STORE_KEY + '.save'); }
     const raw = localStorage.getItem(STORE_KEY);
     if (raw){
       const parsed = JSON.parse(raw);
@@ -1979,7 +1979,7 @@
   };
   $('#resetbtn').onclick = () => {
     if (!confirm('Clear your saved choices and notes on this browser and start fresh?')) return;
-    localStorage.removeItem(STORE_KEY);
+    localStorage.removeItem(STORE_KEY); localStorage.removeItem(STORE_KEY + '.save');
     S = freshState();
     render();
   };

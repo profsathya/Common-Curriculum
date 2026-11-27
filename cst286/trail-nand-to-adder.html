@@ -1097,7 +1097,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const KEY = 'cst286-nand-trail-v2';
   let S = {code:{}, pass:{}, nands:{}, pred:{}, games:{}, inv:{}, level:0, path:[]};
   // ?reset=1 starts the trail from nothing, for a reader who needs a fresh walk
-  if (/[?&]reset=1/.test(location.search)){ try { localStorage.removeItem(KEY); } catch (e) {} }
+  if (/[?&]reset=1/.test(location.search)){ try { localStorage.removeItem(KEY); localStorage.removeItem(KEY + '.save'); } catch (e) {} }
   try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); if (j && typeof j === 'object') S = Object.assign(S, j); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
   // trouble spots, kept in this browser only: hints opened and failed test runs per level
@@ -1112,9 +1112,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   const levelOf = chip => LEVELS.findIndex(l => l.chip === chip);
   const PARENTS = {Add4:['Adder'], FullAdder:['Add4'], HalfAdder:['Add4', 'FullAdder'], Xor:['HalfAdder', 'FullAdder'], And:['HalfAdder', 'FullAdder', 'Xor'], Or:['FullAdder', 'Xor'], Not:['Xor', 'And', 'Or'], Nand:['Xor', 'And', 'Or', 'Not']};
   const CANON = {Transistor:'Nand', Add4:'Adder', FullAdder:'Add4', HalfAdder:'FullAdder', Xor:'HalfAdder', And:'HalfAdder', Or:'FullAdder', Not:'And', Nand:'Not'};
-  const isDone = l => (l.kind === 'build' || l.kind === 'top' || l.kind === 'switch') ? !!S.pass[l.chip] : l.kind === 'bottom' ? !!S.pred.Nand : l.kind === 'out' ? endDone() : false;
+  const isDone = l => (l.kind === 'build' || l.kind === 'top' || l.kind === 'switch') ? !!S.pass[l.chip] : l.kind === 'bottom' ? (!!S.pred.Nand || !!(S.ptry && S.ptry.Nand)) : l.kind === 'out' ? endDone() : false;
   const allDone = () => LEVELS.filter(l => l.kind !== 'out').every(isDone);
-  const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : l.kind === 'switch' ? (isDone(l) || !!S.pred.Nand) : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
+  const unlocked = l => UNLOCK_ALL || l === LEVELS[0] || (l.kind === 'out' ? allDone() : l.kind === 'switch' ? (isDone(l) || !!S.pred.Nand || !!(S.ptry && S.ptry.Nand)) : (isDone(l) || PARENTS[l.chip].some(c => S.pass[c])));
   const canon = chip => { const p = [chip]; while (CANON[p[0]]) p.unshift(CANON[p[0]]); return p; };
   const reduced = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return true; } };
 
@@ -1720,15 +1720,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
   };
 
   VIEW.bottom = function(l){
-    const key = 'Nand:see', ready = () => !!S.pred.Nand || UNLOCK_ALL;
-    const extra = () => isDone(l) && l.extra ? '<details class="wonder" id="' + l.extra.id + '"><summary>' + l.extra.q + '</summary><div class="idea">' + l.extra.a + '<div class="row"><button type="button" class="btn ghost" id="toxor">' + l.extra.btn + '</button></div></div></details>' : '';
-    main.innerHTML = head(l) + stepHTML(1, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML('Nand', l.pcheck + ' ' + UI.cells) + '<div id="after">' + (isDone(l) ? afterHTML(l) + extra() : '') + '</div>') + '<div class="msg info" id="predlock">' + UI.predLock + '</div><div id="predwrap">' +
+    const key = 'Nand:see', ready = () => !!S.pred.Nand || !!(S.ptry && S.ptry.Nand) || UNLOCK_ALL;   // one check of a full table, right or wrong
+    const extra = () => S.pred.Nand && l.extra ? '<details class="wonder" id="' + l.extra.id + '"><summary>' + l.extra.q + '</summary><div class="idea">' + l.extra.a + '<div class="row"><button type="button" class="btn ghost" id="toxor">' + l.extra.btn + '</button></div></div></details>' : '';
+    main.innerHTML = head(l) + stepHTML(1, 'Predict, then check', '<div id="stage-see" class="stage"></div>' + predictHTML('Nand', l.pcheck + ' ' + UI.cells) + '<div id="after">' + (S.pred.Nand ? afterHTML(l) + extra() : '') + '</div>') + '<div class="msg info" id="predlock">' + UI.predLock + '</div><div id="predwrap">' +
       stepHTML(2, 'Learn it', '<div class="idea">' + l.learn + '</div>' + videoHTML(l)) +
       stepHTML(3, 'Open the box', '<div id="open"></div>') + '</div>' + foot(l);
     setPredLock('Nand');
+    { const lock0 = PREDLOCK; PREDLOCK = () => { lock0(); if ($('#open')){ drawOpen(); renderMap(); refreshNext(l); applyStage(key); } }; }   // a first check that is not yet right opens the box too
     bench(key, {chip:'Nand', builtin:true, stage:'#stage-see', probe:null, zoomSelf:true, zoom:(name, el) => zoomInto('Nand', 'Transistor', el), zoomReady:ready});
     drawStage(key, boxSketch('Nand')); drawProbe(key);
-    const drawOpen = () => { $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="opennand">Open the Nand gate &#10530;</button></div>' : '<p class="muted">This step opens when your truth table is right.</p>'; if ($('#opennand')) $('#opennand').onclick = () => zoomInto('Nand', 'Transistor', $('#stage-see .gate')); };
+    const drawOpen = () => { $('#open').innerHTML = ready() ? '<p>' + esc(l.open) + '</p><div class="row"><button type="button" class="btn openbtn" id="opennand">Open the Nand gate &#10530;</button></div>' : '<p class="muted">This step opens when you have checked your truth table once.</p>'; if ($('#opennand')) $('#opennand').onclick = () => zoomInto('Nand', 'Transistor', $('#stage-see .gate')); };
     const bindExtra = () => { const b = $('#toxor'); if (b) b.onclick = () => go(levelOf('Xor')); };
     bindPredict(l, () => { $('#after').innerHTML = afterHTML(l) + extra(); bindExtra(); renderMap(); refreshNext(l); drawOpen(); applyStage(key); });
     drawOpen(); bindExtra(); bindCommon(l);
@@ -1834,7 +1835,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
     if (c){ bench('flat', {chip:'Add4', builtin:false, circ:c, stage:'#stage-flat', probe:'#probe-flat'}); K.flat.circ = c; drawStage('flat', sketch(flat, 'Add4')); drawProbe('flat'); }
     endDraw(false); $('#subhere').onclick = copyWork;
     let armed = false;
-    $('#wipe').onclick = () => { if (!armed){ armed = true; $('#wipe').textContent = 'Click again to erase everything'; return; } try { localStorage.removeItem(KEY); } catch (e) {} try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); };
+    $('#wipe').onclick = () => { if (!armed){ armed = true; $('#wipe').textContent = 'Click again to erase everything'; return; } try { localStorage.removeItem(KEY); localStorage.removeItem(KEY + '.save'); } catch (e) {} try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); };
     bindCommon(l);
   };
 
@@ -2157,7 +2158,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {LEVELS, L
         if (code && S.pass[l.chip] && won && won.replace(/\s+$/, '') !== code.replace(/\s+$/, '')) L.push('  The HDL that passed every test:', block(won), '  The HDL in my editor now (changed since it passed):', block(code));
         else if (code) L.push('  My HDL' + (S.pass[l.chip] ? ' (passes every test)' : ' (not passing yet)') + ':', block(code));
       }
-      if (l.kind === 'bottom') L.push('  Truth table: ' + (S.pred.Nand ? 'correct' : 'not finished'));
+      if (l.kind === 'bottom') L.push('  Truth table: ' + (S.pred.Nand ? 'correct' : S.ptry && S.ptry.Nand ? 'checked, not yet correct' : 'not finished'));
       if (l.kind === 'switch' && S.tr){ const w = {ser:'one after the other', par:'side by side'}; L.push('  Not gate questions: ' + (S.tr.q ? 'answered' : 'not finished'), '  Top pair: ' + (w[S.tr.top] || 'not chosen') + '. Bottom pair: ' + (w[S.tr.bottom] || 'not chosen') + '.' + (S.pass.Transistor ? ' Passes every test.' : '')); }
       L.push('');
     });

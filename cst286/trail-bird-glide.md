@@ -314,7 +314,7 @@ The numbers for this bird (mass 1.0 kg, wing area 0.20 m², best glide ratio abo
 
 A place to start: think about what this model held fixed. The air was still, the wing kept one shape, and the bird did not flap.
 
-**A place to stop.** Levels 1 to 4 are the first sitting of this learning trail. Level 5, the stop named Check what you can explain, and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Copy my work to submit now and paste it somewhere safe.
+**A place to stop.** Levels 1 to 4 are the first sitting of this learning trail. Level 5, the stop named Check what you can explain, and your side trail are the second sitting. Everything you have done is kept in this browser, so you can close the page and come back to it in the same browser on this computer. If you want a copy outside this browser, press Save my work at the bottom of the page.
 
 (Page note: exit button "Zoom in: inside the simulation" opens once the prediction about the fish has been answered and something is written in the explain box. Until then, the line under the button reads, in turn: "Move the speed slider first. The prediction appears when you have found the lowest point of the curve or tried three speeds." then "Answer the prediction above. The explain box appears after it." then "The next level opens when you have answered the prediction and written your explanation.")
 
@@ -820,7 +820,7 @@ Has this learning trail answered it? If part of it is still open, that is a good
 6. Keep the lift, the lift coefficient and the wing area the same, and use an air density 0.02 times the Earth's. I expect a glider on Mars to need a speed about ___ times higher, because ___.
 7. I expect ___ (give a direction or a number), because ___.
 
-(Page note: button "Get AI feedback on my plan" (same mechanics and round-keeping as the Explain cards; it works once all three boxes have something in them; with a box empty: Fill in all three parts of your plan first.) and button "Save my plan and start" (needs all three boxes filled).)
+(Page note: button "Get AI feedback on my plan" (same mechanics and round-keeping as the Explain cards, with the reply under the heading "Feedback on your plan"; it works once all three boxes have something in them; with a box empty: Fill in all three parts of your plan first.) and button "Save my plan and start" (needs all three boxes filled).)
 
 After saving: Do your side trail, then come back to this page. Your plan is saved in this browser.
 

@@ -445,7 +445,7 @@ The Nand gate is still not the bottom, though. A gate is an idea about 0s and 1s
 
 **Video:** none yet (slot is hidden until a video is added)
 
-**Open the box (appears when the truth table is right):** One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.
+**Open the box (appears when the truth table has been checked once with every cell filled in, right or wrong; before that: "This step opens when you have checked your truth table once."):** One box is left to open. Double-click the Nand gate on the drawing to go inside it, or use the button.
 
 **What you just showed (appears when the level is complete):** In one sentence: a Nand gate gives 0 only when both inputs are 1. The Not, And, Or, Xor, HalfAdder, FullAdder and Add4 you built are all arrangements of this one gate.
 
