@@ -1,3 +1,5 @@
+(Page note: this file holds every word a student can see on trail-bird-glide.html. Edit the words here and tell Alan; he carries them into the page. Lines in round brackets beginning 'Page note' and everything below the divider are not shown to students.)
+
 (Page note: Front page: title and description, then the button 'Get started'. Each stage is shown alone under the stage sequence; the description is not repeated. Where a level has headed sections, they are its steps: the step names are a second row under the level sequence, one step is shown at a time, and Next goes to the next step, then to the next level.)
 
 # How a bird glides without flapping
@@ -903,6 +905,216 @@ Helping is welcome. On this learning trail the student learns by flying the simu
 ---
 
 The bird on this page is a simplified model. Its numbers were chosen to be close to a large gull.
+
+
+## Buttons and short messages (shown to students)
+
+(Page note: words the page shows that were not yet in this file, found in the page source on 27 Nov 2026. Each line is "where it appears: text". Pieces the page joins to a number or a name it works out are listed in step38 NOTES.md, not here.)
+
+- On the page around the levels: ← CST286 home
+- Page code (COPY.l1.pre.back): Before your first flight you chose: "[choice]". You have flown it now. With 30 m of height and the goal of landing as far away as possible, what do you do with the nose?
+- Page code (COPY.l3.unitCheck): Unit check: kg/m³ × m²/s² × m² = kg·m/s², which is a newton.
+- Page code (COPY.l5.mapLabel): Map of the program
+- Page code (COPY.l5.fnet): F_net = lift * across - drag * along + vector(0, -mass * g, 0)
+- Page code (COPY.l5.runnerTitle): The GlowScript program that calculates the glide: the code is on the left and the flight is on the right
+- Page code (COPY.l5.setup.rows.g): a wing tilted far below the oncoming air is pushed down
+- Page code (COPY.l5.setup.rows.g): everywhere else: 0.1 for each degree of tilt
+- Page code (COPY.l5.setup.canvas): Graph of the lift coefficient against the wing tilt: it rises in a straight line up to 15 degrees and falls after that. A dot marks the wing tilt on the slider.
+- Page code (COPY.l5.lift.watch): The loop begins by finding the lift, with the relationship from Level 3. The air density and the wing area never change, so at every step the program works out two things: the speed and the lift coefficient. These five lines do that.
+- Page code (COPY.l5.lift.watch.ol): Leave the nose and the speed where they are. Move the path angle slider, and watch the line for wing_tilt.
+- Page code (COPY.l5.lift.watch.ol): Set the nose to 10°.
+- Page code (COPY.l5.lift.watch.ol): Make the path steeper, a few degrees at a time, until the wing stalls.
+- Page code (COPY.l5.lift.idea): The line for wing_tilt is the one that is easy to miss. The air does not arrive level. It arrives along the path of the bird, and the path slopes downhill.
+- Page code (COPY.l5.lift.idea): So the tilt that counts is measured from the path: wing tilt = nose angle − path angle.
+- Page code (COPY.l5.lift.idea): For example, when the path slopes 4° downhill, the path angle is −4°. A nose held 2° above level then meets the air at 2° − (−4°) = 6°.
+- Page code (COPY.l5.lift.wonder.q): Are you wondering how this one line explains the stall at Level 1?
+- Page code (COPY.l5.lift.wonder.a): Suppose you hold the nose up and do not move it. As the bird slows down it begins to sink, so the path angle becomes more negative.
+- Page code (COPY.l5.lift.wonder.a): The wing tilt keeps growing although the nose has not moved. When it passes 15°, the wing stalls.
+- Page code (COPY.l5.lift.rows.g): the length of the velocity arrow
+- Page code (COPY.l5.lift.rows.g): the rule from the setup gives the lift coefficient
+- Page code (COPY.l5.lift.rows.g): the lift relationship from Level 3
+- Page code (COPY.l5.lift.stalled): Stalled: the wing tilt is past 15°, so the lift coefficient is falling.
+- Page code (COPY.l5.lift.canvas): The bird with its nose at the chosen angle, the direction of travel, the wing tilt between them, and the lift and weight arrows.
+- Page code (COPY.l5.net.lead): The program now knows the size of the lift. It still needs the size of the drag and a direction for each force. Then it can add the three forces, as you did with arrows at Level 2.
+- Page code (COPY.l5.net.watch): Now test your prediction. The five lines below calculate a whole flight.
+- Page code (COPY.l5.net.watch.ol): Switch one force off with the buttons under the code.
+- Page code (COPY.l5.net.watch.ol): Say what you expect the path to look like.
+- Page code (COPY.l5.net.watch.ol): Look at the path, and at where the bird lands.
+- Page code (COPY.l5.net.idea): The drag comes from the same relationship as the lift, with a drag coefficient in place of the lift coefficient.
+- Page code (COPY.l5.net.idea): The drag coefficient is 0.03 + 0.05 × CL². The 0.03 is the cost of pushing the body and wings through the air, and the CL² part is the price of making lift. These are the two parts of the valley at Level 4.
+- Page code (COPY.l5.net.wonder.q): Are you wondering how the program gives a force its direction?
+- Page code (COPY.l5.net.wonder.a): Start with a bird flying level, to the right. Its direction of travel is an arrow of length 1 that points right, and the program calls that arrow along. Turn it a quarter turn counterclockwise, from right to up, and it points straight up. The program calls that arrow across.
+- Page code (COPY.l5.net.wonder.a): Each force is a size times a direction. The drag is the size of the drag times along, with a minus sign, because drag points backward. The lift is the size of the lift times across, so on a level path it points straight up. The weight is mass × g, straight down, whatever the path does. The net force is the sum of the three.
+- Page code (COPY.l5.net.wonder.a): When the path slopes downhill, along tilts down with it and across leans forward, and the same lines still give each force its direction. hat( ) is how the program makes along: it changes the length of the velocity arrow to 1 without changing its direction.
+- Page code (COPY.l5.net.wonder.a): In GlowScript, vector(x, y, 0) writes an arrow as how far right and how far up it points. On a level flight along is vector(1, 0, 0), and vector(-along.y, along.x, 0) swaps its two parts to give vector(0, 1, 0), which points straight up.
+- Page code (COPY.l5.net.rows.g): a second rule gives the drag coefficient: 0.03 + 0.05 × CL², with extra drag when the wing is stalled
+- Page code (COPY.l5.net.rows.g): the same relationship as the lift, with CD in place of CL
+- Page code (COPY.l5.net.rows.g): an arrow of length 1 in the direction of travel
+- Page code (COPY.l5.net.rows.g): along turned a quarter turn: at a right angle to the path
+- Page code (COPY.l5.net.rows.g): each force is a size times a direction, and the net force is their sum
+- Page code (COPY.l5.net.togLabel): Forces in the last line
+- Page code (COPY.l5.net.toggles): - drag * along
+- Page code (COPY.l5.net.toggles): + vector(0, -mass * g, 0)
+- Page code (COPY.l5.net.snap): The numbers beside the lines are for the instant 20 s after launch.
+- Page code (COPY.l5.net.snapEnd): The numbers beside the lines are for the last instant before the bird reaches the water.
+- Page code (COPY.l5.net.dot): The red dot on the path marks that instant.
+- Page code (COPY.l5.net.stretch): Heights are drawn stretched, so that you can see the shape of the path.
+- Page code (COPY.l5.net.up): The bird climbed out of the top of the picture.
+- Page code (COPY.l5.net.canvas): Side view of the cliff and the sea, with the path of the flight that these lines calculate.
+- Page code (COPY.l5.step.idea): The program now knows the net force on the bird at this instant. The last four lines of the loop use it to move the bird forward one step in time:
+- Page code (COPY.l5.step.idea.ol): Newton's second law turns the net force into an acceleration: a = net force ÷ mass.
+- Page code (COPY.l5.step.idea.ol): An acceleration is the rate at which the velocity changes. So during a short time dt, the velocity changes by a × dt.
+- Page code (COPY.l5.step.idea.ol): A velocity is the rate at which the position changes. So during the same short time, the position changes by velocity × dt.
+- Page code (COPY.l5.step.idea.ol): The clock moves forward by dt, and the loop starts again with a new net force.
+- Page code (COPY.l5.step.idea): The same four lines can simulate other motion too, such as a planet or a soccer ball.
+- Page code (COPY.l5.step.idea): The program never knows the whole path in advance. It only takes the next small step. The path you watched is thousands of these steps placed end to end.
+- Page code (COPY.l5.step.watch): The stepper below runs these lines one at a time. It starts with a time step of 0.1 s, so that each change is large enough to see. The nose is held at 3°.
+- Page code (COPY.l5.step.watch.ol): Press Run one line until one whole step has run. During this first step, watch only the velocity: which line changes it, and by how much?
+- Page code (COPY.l5.step.watch.ol): Run a second step. This time watch only the position.
+- Page code (COPY.l5.step.watch.ol): After a few steps, press Run to the water.
+- Page code (COPY.l5.step.watch.ol): Choose a different time step and run to the water again. Compare the rows of the table.
+- Page code (COPY.l5.step.canvas): The bird seen close up, with its velocity arrow and the net force arrow. Dots mark where the bird was after each earlier step.
+- Page code (COPY.l5.step.canvas2): Side view of the cliff and the sea, with the path the bird has flown so far.
+- Page code (COPY.predictions.pDrag.q): You remove the drag from the net force and leave the lift and the weight. The nose stays at 3°. What does the bird do?
+- Page code (COPY.predictions.pDrag.opts.t): It lands in almost the same place, because drag is much smaller than lift and weight
+- Page code (COPY.predictions.pDrag.opts.fb): Drag is small. In a steady glide it is less than a tenth of the lift. Test it: switch the drag off below and look at where the path goes. Choose again.
+- Page code (COPY.predictions.pDrag.opts.t): It lands much farther away, but it still comes down
+- Page code (COPY.predictions.pDrag.opts.fb): It is reasonable to expect a longer glide. Test it: switch the drag off below and follow the path to the right edge of the picture. Choose again.
+- Page code (COPY.predictions.pDrag.opts.t): It never reaches the water
+- Page code (COPY.predictions.pDrag.opts.fb): Yes. Without drag nothing takes energy away from the bird. It sinks about 9 m while it speeds up to about 16.5 m/s. From then on the lift balances the weight, and the bird flies level. Drag is the smallest of the three forces, but it is the reason a glider has to keep paying height for distance.
+- Page code (COPY.practice.prSetup.q): The wing is tilted 20° into the oncoming air. What does lift_coefficient give back?
+- Page code (COPY.practice.prSetup.correct): Correct. 20° is past 15°, so the first line of the rule answers: 1.5 − 0.08 × (20 − 15) = 1.1. A coefficient is a plain number, with no unit.
+- Page code (COPY.practice.prSetup.ranges.fb): 2.0 would be right if the lift coefficient kept growing by 0.1 for each degree. Look at the first line of the rule: is 20° past 15°?
+- Page code (COPY.practice.prSetup.ranges.fb): You multiplied 0.08 by the whole tilt. The rule multiplies it by the part of the tilt that is past 15°: 20 − 15.
+- Page code (COPY.practice.prSetup.other): Not yet. First decide which line of the rule answers for 20°. Then put 20 in for wing_tilt.
+- Page code (COPY.practice.prSetup.hint): 20° is past 15°, so the first line answers: 1.5 − 0.08 × (20 − 15).
+- Page code (COPY.practice.prTilt.q): The nose of the bird points 3° above level. Its path slopes 5° downhill, so path_angle is −5°. What is the wing tilt?
+- Page code (COPY.practice.prTilt.correct): Correct. wing_tilt = nose − path_angle = 3 − (−5) = 8°.
+- Page code (COPY.practice.prTilt.ranges.fb): 3° is the nose angle, measured from level. The air arrives along the path, and the path slopes 5° downhill. Measure the nose from the path.
+- Page code (COPY.practice.prTilt.ranges.fb): Check the sign. path_angle is −5°, and subtracting a negative number adds: 3 − (−5).
+- Page code (COPY.practice.prTilt.other): Not yet. Use the line wing_tilt = nose − path_angle.
+- Page code (COPY.practice.prTilt.unitFb): The number is right, but check the unit. A wing tilt is an angle.
+- Page code (COPY.practice.prTilt.hint): wing_tilt = nose − path_angle = 3 − (−5).
+- Page code (COPY.practice.prCL.q): What does lift_coefficient give back for that wing tilt?
+- Page code (COPY.practice.prCL.correct): Correct. 8° is between −5° and 15°, so the last line of the rule answers: 0.1 × 8 = 0.8.
+- Page code (COPY.practice.prCL.ranges.fb): 8 is the wing tilt. The rule multiplies it by 0.1.
+- Page code (COPY.practice.prCL.other): Not yet. Decide which line of the rule answers for a tilt of 8°, and put 8 in for wing_tilt.
+- Page code (COPY.practice.prCL.hint): 8° is between −5° and 15°, so the last line of the rule answers: 0.1 × wing_tilt.
+- Page code (COPY.practice.prLift.q): The nose of the bird points 2° above level. Its path slopes 4° downhill, so path_angle is −4°. The bird is moving at 10 m/s. The wing area is 0.20 m² and the air density is 1.2 kg/m³. How much lift do the wings make?
+- Page code (COPY.practice.prLift.correct): Correct. wing_tilt = 2 − (−4) = 6°, so CL = 0.1 × 6 = 0.6, and lift = ½ × 1.2 × 10² × 0.20 × 0.6 = 7.2 N. That is less than the 9.8 N weight, so at this instant the path of the bird is bending further downward.
+- Page code (COPY.practice.prLift.ranges.fb): You used the nose angle, 2°, as the wing tilt. The air arrives along the path, and the path slopes 4° downhill. Measure the nose from the path: nose − path_angle.
+- Page code (COPY.practice.prLift.ranges.fb): Check the sign. path_angle is −4°, and subtracting a negative number adds: 2 − (−4).
+- Page code (COPY.practice.prLift.ranges.fb): 0.6 is the lift coefficient. Now put it into the lift relationship.
+- Page code (COPY.practice.prLift.other): Not yet. Work down the lines in order: wing_tilt first, then CL = 0.1 × wing_tilt, then the lift relationship.
+- Page code (COPY.practice.prLift.hint): Start with wing_tilt = nose − path_angle = 2 − (−4).
+- Page code (COPY.practice.prDrag.q): At one instant the bird is moving at 10 m/s and its lift coefficient is 0.8. The drag coefficient is 0.03 + 0.05 × CL². The wing area is 0.20 m² and the air density is 1.2 kg/m³. How much drag acts on the bird?
+- Page code (COPY.practice.prDrag.correct): Correct. CD = 0.03 + 0.05 × 0.8² = 0.062, and drag = ½ × 1.2 × 10² × 0.20 × 0.062 = 0.74 N. The lift at the same instant is 9.6 N, about 13 times larger. That ratio is the glide ratio from Level 2.
+- Page code (COPY.practice.prDrag.ranges.fb): Check the CL in the drag coefficient. It is squared: 0.05 × 0.8².
+- Page code (COPY.practice.prDrag.ranges.fb): 0.062 is the drag coefficient. Now put it into the relationship you used for the lift, in place of CL.
+- Page code (COPY.practice.prDrag.ranges.fb): That is the lift. The drag uses the drag coefficient, CD, in place of CL.
+- Page code (COPY.practice.prDrag.other): Not yet. First find CD = 0.03 + 0.05 × CL². Then use drag = ½ × air density × speed² × wing area × CD.
+- Page code (COPY.practice.prDrag.hint): Start with CL² = 0.8 × 0.8 = 0.64. Then CD = 0.03 + 0.05 × 0.64.
+- Practice questions and puzzles: You can move on and come back to this problem.
+- Practice questions and puzzles: Move this line up
+- Practice questions and puzzles: Move this line down
+- Practice questions and puzzles: You can move on and come back to this puzzle.
+- Page code (COPY.puzzles.pzLift.q): These are the five lines that find the lift. Put them in an order that works.
+- Page code (COPY.puzzles.pzLift.lines): path_angle = degrees(atan2(bird.velocity.y, bird.velocity.x))
+- Page code (COPY.puzzles.pzLift.lines): wing_tilt = nose - path_angle
+- Page code (COPY.puzzles.pzLift.lines): CL = lift_coefficient(wing_tilt)
+- Page code (COPY.puzzles.pzLift.lines): lift = 0.5 * rho * speed**2 * wing_area * CL
+- Page code (COPY.puzzles.pzLift.rules.fb): wing_tilt is calculated from path_angle, so the program has to work out the path angle first.
+- Page code (COPY.puzzles.pzLift.rules.fb): The lift coefficient depends on the wing tilt. Work out wing_tilt before the line that finds CL.
+- Page code (COPY.puzzles.pzLift.rules.fb): The lift line multiplies by CL, so CL has to be worked out before it.
+- Page code (COPY.puzzles.pzLift.rules.fb): The lift line uses the speed. Work out the speed before the lift.
+- Page code (COPY.puzzles.pzLift.correct): That is the lift. Each line uses a number from a line above it: the velocity gives the speed and the path angle, the path angle gives the wing tilt, the wing tilt gives the lift coefficient, and the lift relationship puts them together.
+- Page code (COPY.puzzles.pzNet.q): These are the five lines that find the drag and add the forces. Put them in an order that works.
+- Page code (COPY.puzzles.pzNet.lines): CD = drag_coefficient(wing_tilt, CL)
+- Page code (COPY.puzzles.pzNet.lines): drag = 0.5 * rho * speed**2 * wing_area * CD
+- Page code (COPY.puzzles.pzNet.lines): across = vector(-along.y, along.x, 0)
+- Page code (COPY.puzzles.pzNet.rules.fb): The drag line multiplies by CD, so the drag coefficient has to be worked out first.
+- Page code (COPY.puzzles.pzNet.rules.fb): across is made by turning along a quarter turn, so along has to be made first. If these two arrows are new to you, open the question under The idea: Are you wondering how the program gives a force its direction? It starts with a bird flying level, to the right.
+- Page code (COPY.puzzles.pzNet.rules.fb): The net force includes the drag, so the drag has to be worked out before the F_net line.
+- Page code (COPY.puzzles.pzNet.rules.fb): The F_net line points the lift along across and the drag along along. Both arrows have to be made before it.
+- Page code (COPY.puzzles.pzNet.correct): That is the net force: three sizes, three directions and one sum. It is the same addition you did with arrows at Level 2, done with numbers.
+- Page code (COPY.teach.lead): Flying the bird and explaining its flight are different skills, and explaining is the one this learning trail is meant to leave you with.
+- Page code (COPY.teach.lead): Here a classmate who has not done this trail asks you how a bird can glide so far without flapping. The classmate is played by the course AI helper.
+- Page code (COPY.teach.lead): It will not explain anything to you. It only asks questions, and it tells you when a step in your explanation is missing, so that you can find the gaps yourself.
+- Page code (COPY.teach.lead): Answer in your own words, a few sentences at a time. When you have explained as far as the best speed, or you have gone as far as you can, ask for feedback.
+- Page code (COPY.teach.privacy): What you type here is sent to the course AI helper so that it can reply. The course does not store it, and the conversation is kept only in this browser.
+- Page code (COPY.teach.opener): I watched a seagull yesterday go all the way across the harbor without flapping once. I do not get it. If it is not flapping, what is keeping it up there, and what keeps it moving?
+- Page code (COPY.teach.place): Type your explanation here
+- Page code (COPY.teach.fail): The AI helper did not answer. Your message is still in the box, so you can send it again.
+- Page code (COPY.teach.fbFail): The feedback helper is not answering right now, and your conversation is still saved here. You can try again, check your explanation yourself against the five links below, or copy the conversation and ask your own AI for feedback.
+- Page code (COPY.teach.fbCopy): Copy my conversation for my AI
+- Page code (COPY.teach.fbAsk): Below is a conversation in which I explained to a classmate how a bird glides without flapping. For each of these five links, tell me whether I explained it, partly explained it, or did not reach it, and point to what I actually said:
+- Page code (COPY.teach.linkAsk): did you say that a gliding bird is always losing height, and what that does for it?
+- Page code (COPY.teach.linkAsk): did you say how lift, drag and weight compare in a steady glide, and what that means for the speed?
+- Page code (COPY.teach.linkAsk): did you say what the wing does to the air, and what lift depends on?
+- Page code (COPY.teach.linkAsk): did you say why flying too slowly makes the bird drop?
+- Page code (COPY.teach.linkAsk): did you say what decides how far the bird goes, and why one speed is best?
+- Page code (PRED_L.pDrag): Level 5, the sum of the forces
+- Page code (PRED_L.pDt): Level 5, one time step
+- Level map, level heading or the line under a closed Next button: complete. Your work is saved in this browser.
+- Level map, level heading or the line under a closed Next button: End of the trail
+- Level map, level heading or the line under a closed Next button: The next level opens when you finish this one.
+- Copy my work: Copied. Paste it into your AI Dojo or another AI chat.
+- Copy my work: Select the text below, copy it, and paste it into your AI Dojo or another AI chat.
+- Page code (drawTable.innerHTML): No flights yet.
+- Page code (script): Student:
+- Page code (onclick): . Classmate:
+- Page code (onclick): Me:
+- Page code (progChanges): none (the original program)
+- Page code (progChanges): the F_net line now reads:
+- Page code (progChanges): edited, with nose, mass, launch_speed, dt and the F_net line as in the original
+- In the text that Copy my work copies: , what I wrote before asking for feedback:
+- In the text that Copy my work copies: My explanation now, revised after the last feedback:
+- In the text that Copy my work copies: My explanation now: the same as version
+- In the text that Copy my work copies: (not revised after the last feedback).
+- In the text that Copy my work copies: My explanation:
+- In the text that Copy my work copies: AI feedback: not asked for yet
+- In the text that Copy my work copies: Times I asked for feedback:
+- Check what you can explain: This conversation opens when the one before it is finished.
+- Page code (raw): SOUND (from an earlier version of this check, which is no longer relied on).
+- In the text that Copy my work copies: of 3, an earlier conversation (
+- In the text that Copy my work copies: Feedback I received:
+- In the text that Copy my work copies: Earlier feedback (
+- In the text that Copy my work copies: Feedback: not checked: the helper did not answer
+- In the text that Copy my work copies: Feedback: not asked for yet
+- In the text that Copy my work copies: Question:
+- In the text that Copy my work copies: My answer:
+- In the text that Copy my work copies: The helper's reply:
+- In the text that Copy my work copies: not checked: the helper's reply could not be used. It wrote:
+- In the text that Copy my work copies: not checked: the helper gave no reply the page could use
+- In the text that Copy my work copies: SOUND.
+- In the text that Copy my work copies: NOT YET.
+- In the text that Copy my work copies: A harder question I chose to try:
+- In the text that Copy my work copies: Levels opened:
+- In the text that Copy my work copies: Flights flown:
+- In the text that Copy my work copies: Best distance:
+- In the text that Copy my work copies: Last five flights:
+- In the text that Copy my work copies: : average nose angle
+- In the text that Copy my work copies: , passed the buoy
+- In the text that Copy my work copies: Before my first flight I chose:
+- In the text that Copy my work copies: First choice:
+- In the text that Copy my work copies: Final choice:
+- In the text that Copy my work copies: Result:
+- In the text that Copy my work copies: More practice I chose to try:
+- In the text that Copy my work copies: Best speed found for the 1.0 kg bird:
+- In the text that Copy my work copies: Best speed found for the 1.3 kg bird:
+- In the text that Copy my work copies: Level 5: inside the simulation
+- In the text that Copy my work copies: Time steps I ran to the water in the stepper:
+- In the text that Copy my work copies: s (reached the water at
+- In the text that Copy my work copies: Forces I switched off in the net force:
+- In the text that Copy my work copies: The first order I checked:
+- In the text that Copy my work copies: Put it together, my prediction before I ran my change:
+- In the text that Copy my work copies: My changes to the program:
+- In the text that Copy my work copies: Teach it back (one conversation, held before the ending changed)
+- In the text that Copy my work copies: Option chosen:
+- In the text that Copy my work copies: AI feedback on my plan: not asked for yet
+
+
+--- Everything below this line is not shown to students ---
 
 ## For the AI buttons (not shown to students)
 

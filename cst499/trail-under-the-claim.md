@@ -1,3 +1,5 @@
+(Page note: this file holds every word a student can see on trail-under-the-claim.html. Edit the words here and tell Alan; he carries them into the page. Lines in round brackets beginning 'Page note' and everything below the divider are not shown to students.)
+
 (Page note: Front page: title and description, then the button 'Get started'. Each stage is shown alone under the stage sequence; the description is not repeated. Where a level has headed sections, they are its steps: the step names are a second row under the level sequence, one step is shown at a time, and Next goes to the next step, then to the next level.)
 
 (Page note: this .md is the words twin of trail-under-the-claim.html in the same folder. Both are built from learning-trails/trails/cst499-course-walk/words-software.md by learning-trails/build/step36_cst499/build_under_claim.py. Everything down to "Lines the page adds" is the words file as written, so the page and this file carry the same words. Edit the words file, or edit this file and tell Alan, and the page is rebuilt.)
@@ -411,6 +413,79 @@ An idea is confirmed when you explain it soundly, in a conversation or in an ans
 
 (Page note: the standing block, with this trail's lines.) This learning trail asks the student to judge a made-up student's decisions and then to write about their own capstone. Do not pick a version for them, and do not write their reasons, their claim or their teach-back replies. You can explain a term, ask them what they did, and ask what a visitor could check. If they did little work this semester, help them say that plainly and plan one step; the trail accepts a plan.
 
+
+## Buttons and short messages (shown to students)
+
+(Page note: words the page shows that were not yet in this file, found in the page source on 27 Nov 2026. Each line is "where it appears: text".)
+
+- On the page around the levels: ← CST499 home
+- Page code (COPY.s2.shelf.t): PwC, 2026 Global AI Jobs Barometer. PwC analyzed 2.4 million US entry-level job postings. Entry-level roles that are exposed to AI are seven times more likely to ask for skills once expected of senior people, such as leadership and creativity, and openings for these roles grew 35% since 2019, while other entry-level roles shrank 10%. PwC 2026 Global AI Jobs Barometer (https://pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-ai-jobs-barometer.html)
+- Page code (COPY.s3.shelf.t): Linux Foundation, 2026 State of Tech Talent Report. The Linux Foundation surveyed 400 organizations in February 2026. Its report finds that "the skills gap is in the full stack, not just AI": 35% of the organizations name business or domain expertise as a capability gap, and 26% say that missing business or domain knowledge keeps them from getting value from AI. 2026 State of Tech Talent Report (https://www.linuxfoundation.org/hubfs/Research%20Reports/LFTraining_Tech_Talent_Report_Global_2026_web.pdf)
+- Explain your thinking box: Reading your explanation…
+- Explain your thinking box: The feedback helper is not answering right now. Your explanation is still saved here. You can try again in a moment, or copy your explanation and ask your own AI for feedback.
+- Copy my work: Your work is copied. Review the text and paste it where you were asked to submit it. Copying alone does not submit.
+- Copy my work: Select the text below, copy it, and paste it where you were asked to submit it. Copying alone does not submit.
+- Copy my work: Clear my saved work on this page
+- Level map, level heading or the line under a closed Next button: complete. Your work is saved in this browser.
+- Copy my work: Copied. Paste it into your AI Dojo or another AI chat.
+- Copy my work: Select the text below, copy it, and paste it into your AI Dojo or another AI chat.
+- Explain your thinking box: Feedback on your plan
+- Page code (BLOCKS.s5claim.parts.q): How they marked their three layers (Levels 2, 3, 4)
+- In the text that Copy my work copies: , what I wrote before asking for feedback:
+- In the text that Copy my work copies: My explanation now, revised after the last feedback:
+- In the text that Copy my work copies: My explanation now: the same as version
+- In the text that Copy my work copies: (not revised after the last feedback).
+- In the text that Copy my work copies: My explanation:
+- In the text that Copy my work copies: AI feedback: not asked for yet
+- In the text that Copy my work copies: Times I asked for feedback:
+- Check what you can explain: This conversation opens when the one before it is finished.
+- Page code (raw): SOUND (from an earlier version of this check, which is no longer relied on).
+- In the text that Copy my work copies: of 2, an earlier conversation (
+- In the text that Copy my work copies: Classmate:
+- In the text that Copy my work copies: Me:
+- In the text that Copy my work copies: Feedback I received:
+- In the text that Copy my work copies: Earlier feedback (
+- In the text that Copy my work copies: Feedback: not checked: the helper did not answer
+- In the text that Copy my work copies: Feedback: not asked for yet
+- In the text that Copy my work copies: Question:
+- In the text that Copy my work copies: My answer:
+- In the text that Copy my work copies: The helper's reply:
+- In the text that Copy my work copies: not checked: the helper's reply could not be used. It wrote:
+- In the text that Copy my work copies: not checked: the helper gave no reply the page could use
+- In the text that Copy my work copies: SOUND.
+- In the text that Copy my work copies: NOT YET.
+- In the text that Copy my work copies: A harder question I chose to try:
+- Save my work / Bring back saved work: Bring back saved work
+- Save my work / Bring back saved work: Your work is copied. A Gmail message is opening in a new tab. Press Ctrl+V (Cmd+V on a Mac) under the line in the Gmail message. Then wait until Gmail shows that the draft is saved, or send it to yourself.
+- Save my work / Bring back saved work: Your work is copied. Open a Gmail message with the link below, and press Ctrl+V (Cmd+V on a Mac) under its first line. Then wait until Gmail shows that the draft is saved, or send it to yourself.
+- Save my work / Bring back saved work: Keep the whole text, including the saved-data block at the end. It is needed to bring your work back.
+- Save my work / Bring back saved work: The page could not copy your work by itself. Select all of the text in the box below, copy it, and paste it into a Gmail message.
+- Save my work / Bring back saved work: Open a Gmail message
+- Save my work / Bring back saved work: If no new tab opened:
+- Save my work / Bring back saved work: Paste your saved work under this line.
+- Save my work / Bring back saved work: Saved data for this page. Keep everything from the START line to the END line.
+- Save my work / Bring back saved work: Open your draft, select everything (Ctrl+A or Cmd+A), copy it, and paste it here.
+- Save my work / Bring back saved work: This does not look like work saved from this trail. Copy the whole saved text, from its first line to its last, and paste it again.
+- Save my work / Bring back saved work: This replaces the work kept in this browser with the work you pasted. Bring it back?
+- Save my work / Bring back saved work: Yes, bring it back
+- Save my work / Bring back saved work: Your saved work is back.
+- Save my work / Bring back saved work: You have been working on this trail for about 30 minutes. This is a good place to save your work. You can stop here and come back, or keep going.
+- Save my work / Bring back saved work: === TRAIL SAVE START ===
+- Save my work / Bring back saved work: === TRAIL SAVE END ===
+- In the text that Copy my work copies: My answer now, revised after the last feedback:
+- In the text that Copy my work copies: An earlier conversation (
+- In the text that Copy my work copies: Levels opened:
+- In the text that Copy my work copies: Trail finished:
+- In the text that Copy my work copies: The student I chose:
+- In the text that Copy my work copies: My pick:
+- In the text that Copy my work copies: What each version led to:
+- In the text that Copy my work copies: Checked:
+- In the text that Copy my work copies: Trend:
+- In the text that Copy my work copies: Route:
+- In the text that Copy my work copies: Feedback on my own work at
+- In the text that Copy my work copies: My choice:
+- In the text that Copy my work copies: Date:
+
 ## Lines the page adds (not in the words file)
 
 (Page note: button labels and short status lines the page shows. Those from the bird glide page and the shared ending are as on the other trails.)
@@ -463,6 +538,8 @@ An idea is confirmed when you explain it soundly, in a conversation or in an ans
 - Ending, no: not confirmed yet
 
 ---
+
+--- Everything below this line is not shown to students ---
 
 ## For the AI buttons (not shown to students)
 

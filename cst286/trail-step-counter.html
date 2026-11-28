@@ -319,6 +319,23 @@
   .s37dot:disabled{opacity:.45; cursor:default}
   #s37nav{display:flex; justify-content:space-between; gap:10px; margin:14px 0}
   #s37nav[hidden]{display:none}
+
+  /* step 38: "About this trail" beside the one-line title, and its panel */
+  .s38about{display:none}
+  body.s37stage .hero{display:flex !important; align-items:center; justify-content:space-between; gap:10px}
+  body.s37stage .hero > :first-child{min-width:0; flex:1 1 auto}
+  body.s37stage .hero > .s38about{display:inline-flex !important; flex:none; font-size:.82rem; padding:4px 10px; white-space:nowrap}
+  #s38panel{position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.6); display:flex; align-items:flex-start; justify-content:center; padding:4vh 12px; overflow:auto}
+  #s38panel[hidden]{display:none}
+  #s38panel .s38box{position:relative; max-width:980px; width:100%; background:var(--paper, #0b1220); border:1px solid var(--line, #2a3a50); border-radius:14px; padding:14px 16px 16px; box-shadow:0 10px 40px rgba(0,0,0,.5)}
+  #s38panel .s38box .hero{display:grid !important; margin:0 !important}
+  #s38panel .s38box .hero > *{display:block !important}
+  #s38panel .s38box .hero > :first-child > *{display:revert !important}
+  #s38panel .s38box .hero > :first-child > ul, #s38panel .s38box .hero > :first-child > ol{display:block !important}
+  #s38panel .s38box .hero{padding:18px 20px !important; border:0 !important; box-shadow:none !important; min-height:0 !important}
+  #s38panel .s38box .hero h1{font-size:revert !important; white-space:normal !important}
+  #s38panel .s38close{display:flex; justify-content:flex-end; margin-bottom:6px}
+  @media (max-width:820px){ #s38panel .s38box .hero{grid-template-columns:1fr !important} #s38panel .s38box .heroart{max-width:280px} }
 </style>
 </head>
 <body>
@@ -2948,6 +2965,43 @@ const COPY = {
   window.__stepTrail = {ff(sec){ if (ACTIVE && ACTIVE.tick){ for (let k = 0; k < sec / .05; k++) ACTIVE.tick(.05); ACTIVE.draw(); } }, sim, workReport, PROG, saved(){ return S; }};
 
 
+
+  /* ---------- step 38: "About this trail" (27 Nov 2026). The front page's content in a panel; nothing on the page changes. ---------- */
+  (function(){
+    const W38 = {about: "About this trail", close: "Close"};
+    let btn = null, panel = null, y0 = 0;
+    function open(){
+      const hero = document.querySelector('.page > .hero, .hero'); if (!hero) return;
+      if (!panel){
+        panel = document.createElement('div'); panel.id = 's38panel'; panel.hidden = true;
+        panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', W38.about);
+        panel.innerHTML = '<div class="s38box"><div class="s38close"><button type="button" class="btn ghost" id="s38close">' + W38.close + '</button></div><div class="s38body"></div></div>';
+        document.body.appendChild(panel);
+        panel.addEventListener('click', e => { if (e.target === panel) close(); });
+        panel.querySelector('#s38close').onclick = close;
+        panel.addEventListener('keydown', e => {
+          if (e.key === 'Escape'){ e.preventDefault(); close(); }
+          if (e.key === 'Tab'){ e.preventDefault(); panel.querySelector('#s38close').focus(); }   // the close button is the only control in the panel
+        });
+      }
+      // a copy of the hero as the front page shows it: no ids, no Get started, no buttons of its own
+      const c = hero.cloneNode(true);
+      c.querySelectorAll('.s37go, .s38about, .s37hide, button').forEach(e => e.remove());
+      [c].concat(Array.from(c.querySelectorAll('[id]'))).forEach(e => e.removeAttribute('id'));
+      const body = panel.querySelector('.s38body'); body.innerHTML = ''; body.appendChild(c);
+      y0 = window.scrollY; panel.hidden = false;
+      panel.querySelector('#s38close').focus({preventScroll: true});
+    }
+    function close(){ if (!panel || panel.hidden) return; panel.hidden = true; if (btn) btn.focus({preventScroll: true}); window.scrollTo(0, y0); }   // the page stays where it was
+    function init(){
+      const hero = document.querySelector('.page > .hero, .hero'); if (!hero || document.getElementById('s38about')) return;
+      btn = document.createElement('button'); btn.type = 'button'; btn.id = 's38about'; btn.className = 'btn ghost s38about'; btn.textContent = W38.about;
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.onclick = open;
+      hero.appendChild(btn);
+    }
+    setTimeout(init, 0);
+  })();
   /* ---------- step 37: the front page, one level at a time, and the steps of a level (27 Nov 2026). Visibility and navigation only. ---------- */
   (function(){
     const CFG = {"main": "#stop", "map": "#map", "steps": "h3, h4.sub", "exclude": "details, .chat, .fb, .endq, .say, .vcards, .vcard, .layer, .work, .pmap, .quinn, .runner", "pin": ".runner, .sim, .stage, canvas", "top": "nav.zoompath, .eyebrow, h2"};
