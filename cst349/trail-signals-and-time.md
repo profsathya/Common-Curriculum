@@ -591,4 +591,15 @@ The notes for each path live in the `TRACKS` list at the top of the script in th
 - Copy my work: Your work is copied to the clipboard. Review it below and paste it into Canvas (copying alone does not submit).
 - Copy my work: Select the text below, copy it, and paste it into Canvas.
 - Page code (onclick): Clear your saved choices and notes on this browser and start fresh?
+- Page code (STOPS.title): What convinced them
+- Page code (STOPS.title): Walk it forward
+- Page code (script): Chg
+- Page code (fn): Final
+- Page code (krDone): Old
+- Page code (h): No hours assigned
+- Page code (renderChat): You have reached
+- Page code (L): Copied on
+- Copy my work: Close
+- Page code (onclick.textContent): Lock sequential order
+- About this trail: About this trail
 

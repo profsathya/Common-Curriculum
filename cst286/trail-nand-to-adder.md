@@ -904,6 +904,32 @@ The copy holds your progress on each level, the HDL you wrote, your transistor c
 - Page code (draw.onclick.msg): Correct:
 - Page code (draw.onclick.msg): does not fit in 4 bits, so there is a carry out of the last column. A 4-bit adder drops that carry and shows
 - Page code (draw.onclick.msg): Every column took in up to three bits and gave out two: a sum bit and a carry.
+- Page code (script): Mux
+- Page code (build): 's pin
+- Page code (build): In part
+- Page code (LEVELS.short): Transistors
+- Page code (LEVELS.short): Zoom out
+- Page code (TEACH.links): Numbers to bits
+- Page code (TEACH.links): Column to gates
+- Page code (SUBMIT.close): Close
+- Page code (drawProbe): Outputs
+- Page code (innerHTML): Closed
+- Page code (build): Start over
+- Page code (build.innerHTML): Live
+- Page code (build.innerHTML): Empty
+- Page code (build.innerHTML): Not running yet
+- Page code (build.onclick.innerHTML): It runs, and
+- Page code (showHints.textContent): No more hints
+- Page code (resultTable): ✓ pass
+- Page code (resultTable): ✗ fail
+- Page code (out): Status
+- Page code (out): Smallest known
+- Page code (out): Start again
+- Page code (out): Erase my progress
+- In the text that Copy my work copies: Copied on
+- Page code (draw): Decimal value
+- About this trail: About this trail
+- Page code (textContent): Continue the trail
 
 
 

@@ -580,6 +580,14 @@ Helping is welcome. On this learning trail the student learns by planning and ru
 - In the text that Copy my work copies: The treasurer tried it in week
 - In the text that Copy my work copies: Weeks played:
 - In the text that Copy my work copies: AI feedback on my plan: not asked for yet
+- Practice questions and puzzles: Check the order
+- Copy my work: Close
+- In the text that Copy my work copies: Version
+- In the text that Copy my work copies: Copied on
+- In the text that Copy my work copies: My order, run
+- In the text that Copy my work copies: Plays: none yet
+- About this trail: About this trail
+- Step navigation: Back
 
 
 --- Everything below this line is not shown to students ---

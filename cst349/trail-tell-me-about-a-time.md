@@ -479,6 +479,13 @@ Helping is welcome. On this learning trail the student learns by reading intervi
 - In the text that Copy my work copies: , the answer I asked about:
 - In the text that Copy my work copies: My answer, second version:
 - In the text that Copy my work copies: AI feedback on my plan: not asked for yet
+- Explain your thinking box: Get feedback again
+- Copy my work: Close
+- In the text that Copy my work copies: Version
+- Save my work / Bring back saved work: Cancel
+- In the text that Copy my work copies: Copied on
+- About this trail: About this trail
+- Step navigation: Back
 
 
 --- Everything below this line is not shown to students ---

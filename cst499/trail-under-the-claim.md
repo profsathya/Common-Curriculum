@@ -485,6 +485,16 @@ An idea is confirmed when you explain it soundly, in a conversation or in an ans
 - In the text that Copy my work copies: Feedback on my own work at
 - In the text that Copy my work copies: My choice:
 - In the text that Copy my work copies: Date:
+- Copy my work: Close
+- Copy my work: Yes, clear it
+- Page code (BLOCKS.s5claim.parts.q): Their choice
+- Check what you can explain: The reasoning for this idea is not complete in your explanation yet. It was taught at {level}, and a question on it comes at the last level.
+- Check what you can explain: Your explanation did not get to this idea. It was taught at {level}, and a question on it comes at the last level.
+- Save my work / Bring back saved work: Cancel
+- In the text that Copy my work copies: Feedback on version
+- In the text that Copy my work copies: Copied on
+- About this trail: About this trail
+- Step navigation: Back
 
 ## Lines the page adds (not in the words file)
 

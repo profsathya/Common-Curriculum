@@ -560,6 +560,14 @@ Helping is welcome. On this learning trail the student learns by checking a piec
 - In the text that Copy my work copies: were left.
 - In the text that Copy my work copies: Option chosen:
 - In the text that Copy my work copies: AI feedback on my plan: not asked for yet
+- Explain your thinking box: Get feedback again
+- In the text that Copy my work copies: Version
+- Check what you can explain: The reasoning for this idea is not complete in your explanation yet. It was taught at {level}, and a question on it follows below.
+- Check what you can explain: Your explanation did not get to this idea. It was taught at {level}, and a question on it follows below.
+- Save my work / Bring back saved work: Cancel
+- In the text that Copy my work copies: Copied on
+- About this trail: About this trail
+- Step navigation: Back
 
 
 --- Everything below this line is not shown to students ---

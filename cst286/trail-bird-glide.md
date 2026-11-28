@@ -1112,6 +1112,17 @@ The bird on this page is a simplified model. Its numbers were chosen to be close
 - In the text that Copy my work copies: Teach it back (one conversation, held before the ending changed)
 - In the text that Copy my work copies: Option chosen:
 - In the text that Copy my work copies: AI feedback on my plan: not asked for yet
+- Page code (COPY.l5.lift.sliders): Path angle
+- Page code (COPY.l5.net.time): The bird is still in the air after 120 s. It is {x} m from the cliff and {y} m above the water.
+- Practice questions and puzzles: Check the order
+- In the text that Copy my work copies: Version
+- In the text that Copy my work copies: Copied on
+- In the text that Copy my work copies: °, average speed
+- In the text that Copy my work copies: Predictions
+- In the text that Copy my work copies: Practice problems
+- In the text that Copy my work copies: Side trail
+- About this trail: About this trail
+- Step navigation: Back
 
 
 --- Everything below this line is not shown to students ---
