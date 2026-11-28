@@ -1,3 +1,5 @@
+(Page note: Front page: title and description, then the button 'Get started'. Each stage is shown alone under the stage sequence; the description is not repeated. Where a level has headed sections, they are its steps: the step names are a second row under the level sequence, one step is shown at a time, and Next goes to the next step, then to the next level.)
+
 # Start at Day 1 in the role you want, then open the box back to this week
 
 Editable companion to `trail-signals-and-time.html`. Edit the student-facing words here and tell Alan; Alan carries each edit into the `.html`.

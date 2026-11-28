@@ -301,6 +301,24 @@
   @media (max-width:659px){ .runner iframe{width:660px; max-width:none} }
   .mono{font-family:"IBM Plex Mono",monospace; font-size:.92rem}
   @media (max-width:640px){ .sim.scsim{padding:4px} }
+
+  /* step 37: the front page, one level at a time, the steps of a level */
+  body.s37front .page > :not(.crumb):not(.hero):not(.topbar), body.s37front #subfab, body.s37front #subbox, body.s37front .top-tools{display:none !important}
+  body.s37front .s37hide, body.s37stage .s37hide{display:none !important}
+  .s37go{margin-top:14px}
+  body.s37stage .hero{display:block !important; min-height:0 !important; padding:4px 0 !important; margin:0 0 6px !important; background:none !important; border:0 !important; box-shadow:none !important}
+  body.s37stage .hero > :not(:first-child){display:none !important}
+  body.s37stage .hero > :first-child > :not(h1){display:none !important}
+  body.s37stage .hero h1{font-size:1.05rem !important; line-height:1.3 !important; margin:0 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .s37off{display:none !important}
+  #s37steps{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px}
+  #s37steps[hidden]{display:none}
+  .s37dot{font:inherit; font-size:.84rem; border:1px solid var(--line); border-radius:999px; padding:3px 11px; background:transparent; color:var(--ink-soft); cursor:pointer; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .s37dot.cur{border-color:var(--tc, #5BB8F5); color:var(--ink); background:var(--tsoft, rgba(91,184,245,.15)); font-weight:600}
+  .s37dot.past{color:var(--ink)}
+  .s37dot:disabled{opacity:.45; cursor:default}
+  #s37nav{display:flex; justify-content:space-between; gap:10px; margin:14px 0}
+  #s37nav[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -2929,6 +2947,137 @@ const COPY = {
   // for automated checks of this page: run the walk forward
   window.__stepTrail = {ff(sec){ if (ACTIVE && ACTIVE.tick){ for (let k = 0; k < sec / .05; k++) ACTIVE.tick(.05); ACTIVE.draw(); } }, sim, workReport, PROG, saved(){ return S; }};
 
+
+  /* ---------- step 37: the front page, one level at a time, and the steps of a level (27 Nov 2026). Visibility and navigation only. ---------- */
+  (function(){
+    const CFG = {"main": "#stop", "map": "#map", "steps": "h3, h4.sub", "exclude": "details, .chat, .fb, .endq, .say, .vcards, .vcard, .layer, .work, .pmap, .quinn, .runner", "pin": ".runner, .sim, .stage, canvas", "top": "nav.zoompath, .eyebrow, h2"};
+    const W37 = {go: "Get started", back: "Back", next: "Next"};
+    const M = () => document.querySelector(CFG.main);
+    const lvl = () => (S.level);
+    const isReview = () => !!(REVIEW);
+    const short = () => { try { return String(LV[S.level].short || ''); } catch (e) { return ''; } };
+    const st = {level: null, cur: 0, names: [], reached: {}, mode: 'auto', lastClick: 0, busy: false, row: null, nav: null, steps: []};
+    const hid = new Set();
+    const vis = el => !!el && !el.closest('.s37off');
+    const name = h => Array.from(h.childNodes).map(n => n.textContent.trim()).filter(Boolean).join(' ').replace(/\s+/g, ' ');
+    const isHead = (el, m) => el.matches(CFG.steps) && !(CFG.exclude && el.closest(CFG.exclude)) && m.contains(el);
+    // the blocks of the level, in page order: a child that holds a step heading or a simulation is opened up, anything else is one block
+    function blocks(m){
+      const out = [];
+      const heads = Array.from(m.querySelectorAll(CFG.steps)).filter(h => isHead(h, m));
+      const pins = CFG.pin ? Array.from(m.querySelectorAll(CFG.pin)).filter(p => !p.parentElement.closest(CFG.pin)) : [];
+      const walk = (e, cont) => Array.from(e.children).forEach(c => {
+        if (c.id === 's37nav') return;
+        if (heads.includes(c)) out.push({el:c, head:true, cont});
+        else if (pins.includes(c)) out.push({el:c, pin:true, cont});
+        else if (heads.some(h => c.contains(h)) || pins.some(p => c.contains(p))){ out.push({el:c, box:true, cont}); walk(c, c); }
+        else out.push({el:c, cont});
+      });
+      walk(m, null);
+      return out;
+    }
+    const meaningful = el => !!(el.textContent.trim() || el.querySelector('input,textarea,select,button,svg,canvas,iframe,img'));
+    function compute(){
+      const m = M(); if (!m || st.busy) return;
+      st.busy = true;
+      try {
+        hid.forEach(e => e.classList.remove('s37off')); hid.clear();
+        const B = blocks(m), lv = lvl();
+        // the level's own head (where-you-are path, eyebrow, title) stays on every step
+        let i0 = 0; while (i0 < B.length && !B[i0].cont && !B[i0].head && B[i0].el.matches(CFG.top)) { B[i0].top = true; i0++; }
+        const steps = [];
+        const firstHead = B.findIndex(b => b.head);
+        const leadReal = firstHead > 0 && B.slice(0, firstHead).some(b => !b.top && !b.box && meaningful(b.el));
+        if (leadReal) steps.push({name: short(), lead: true});
+        B.forEach(b => { if (b.head) steps.push({name: name(b.el), el: b.el}); });
+        let k = 0;
+        B.forEach(b => { if (b.head) k = steps.findIndex(x => x.el === b.el); b.step = b.top ? -1 : k; });
+        const names = steps.map(s => s.name), n = Math.max(1, steps.length);
+        const fresh = st.level !== lv;
+        if (fresh){
+          st.level = lv;
+          if (isReview() || st.mode === 'next' || n === 1) st.cur = 0;
+          else {   // the first step with an empty box to fill in; otherwise the last step the page shows
+            let c = -1;
+            for (let s = 0; s < n && c < 0; s++){ if (B.some(b => b.step === s && !b.box && Array.from(b.el.matches('textarea,input') ? [b.el] : b.el.querySelectorAll('textarea, input[type=text], input:not([type])')).some(t => !t.disabled && !t.readOnly && !t.value.trim() && !t.closest('details')))) c = s; }
+            st.cur = c < 0 ? n - 1 : c;
+          }
+          st.mode = 'auto';
+          st.reached[lv] = st.cur;
+        } else {
+          // a step the page has just revealed after a button press: go to it
+          const added = names.map((x, s) => st.names.includes(x) ? -1 : s).filter(s => s > st.cur);
+          if (added.length && Date.now() - st.lastClick < 2500){ st.cur = added[0]; window.scrollTo(0, 0); }
+          st.cur = Math.min(st.cur, n - 1);
+        }
+        st.names = names; st.steps = steps;
+        st.reached[lv] = Math.max(st.reached[lv] || 0, st.cur);
+        if (n > 1){
+          const keep = new Set();
+          B.forEach(b => { if (b.top || b.box) return; if (b.step === st.cur || (b.pin && b.step <= st.cur)) keep.add(b.el); else { b.el.classList.add('s37off'); hid.add(b.el); } });
+          // a container whose blocks are all hidden is hidden too
+          B.filter(b => b.box).reverse().forEach(b => { if (!B.some(x => x.cont === b.el && !hid.has(x.el))) { b.el.classList.add('s37off'); hid.add(b.el); } });
+        }
+        drawRow(n);
+      } finally { st.busy = false; }
+    }
+    function toStep(s){ st.cur = s; st.reached[st.level] = Math.max(st.reached[st.level] || 0, s); compute(); window.scrollTo(0, 0); }
+    function drawRow(n){
+      const m = M(), map = document.querySelector(CFG.map);
+      if (!st.row){ st.row = document.createElement('nav'); st.row.id = 's37steps'; st.row.setAttribute('aria-label', 'Steps'); }
+      if (map && st.row.previousElementSibling !== map) map.insertAdjacentElement('afterend', st.row);
+      if (!st.nav){ st.nav = document.createElement('div'); st.nav.id = 's37nav'; }
+      if (m && st.nav.previousElementSibling !== m) m.insertAdjacentElement('afterend', st.nav);
+      const front = document.body.classList.contains('s37front');
+      if (n < 2 || front){ st.sig = null; st.row.hidden = true; st.nav.hidden = true; st.row.innerHTML = ''; st.nav.innerHTML = ''; return; }
+ const reached = st.reached[st.level] || 0;
+      const sig = JSON.stringify([st.level, st.cur, reached, st.names, isReview()]);
+      if (st.sig === sig && !st.row.hidden) return;   // nothing changed: the buttons stay as they are
+      st.sig = sig;
+      st.row.hidden = false;
+      st.row.innerHTML = st.names.map((x, s) => { const open = isReview() || s <= reached || s === st.cur;
+        return '<button type="button" class="s37dot' + (s === st.cur ? ' cur' : '') + (s < st.cur ? ' past' : '') + '" data-s37="' + s + '"' + (open ? '' : ' disabled') + (s === st.cur ? ' aria-current="step"' : '') + '>' + x.replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c])) + '</button>'; }).join('');
+      st.row.querySelectorAll('[data-s37]').forEach(b => b.onclick = () => { if (!b.disabled) toStep(+b.dataset.s37); });
+      const last = st.cur >= n - 1;
+      st.nav.hidden = last && st.cur === 0;
+      st.nav.innerHTML = (st.cur > 0 ? '<button type="button" class="btn ghost" id="s37back">&larr; ' + W37.back + '</button>' : '<span></span>') +
+        (last ? '' : '<button type="button" class="btn" id="s37next">' + W37.next + ' &rarr;</button>');
+      const bb = st.nav.querySelector('#s37back'); if (bb) bb.onclick = () => toStep(st.cur - 1);
+      const nb = st.nav.querySelector('#s37next'); if (nb) nb.onclick = () => toStep(st.cur + 1);
+    }
+    // the front page and the level view
+    function front(on){
+      document.body.classList.toggle('s37front', on); document.body.classList.toggle('s37stage', !on);
+      const hero = document.querySelector('.hero');
+      if (on && hero && !document.getElementById('s37go')){
+        const w = document.createElement('div'); w.className = 's37go'; w.innerHTML = '<button type="button" class="btn" id="s37go">' + W37.go + '</button>';
+        (hero.firstElementChild || hero).appendChild(w);
+        document.getElementById('s37go').onclick = () => { front(false); st.mode = 'next'; st.level = null; go(S.level); window.scrollTo(0, 0); compute(); };
+      }
+      const g = document.getElementById('s37go'); if (g) g.parentElement.hidden = !on;
+      if (CFG.hideAlways) document.querySelectorAll(CFG.hideAlways).forEach(e => e.classList.add('s37hide'));
+      drawRow(st.steps.length);
+    }
+    // the page's go and render, wrapped: moving to another level starts at its top, and its steps are worked out again
+    const go0 = go;
+    go = function(){ const before = lvl(); const r = go0.apply(this, arguments); const after = lvl(); if (after !== before){ st.mode = (typeof after === 'number' && typeof before === 'number' && after === before + 1) ? 'next' : 'auto'; st.level = null; window.scrollTo(0, 0); } compute(); return r; };
+    const render0 = render;
+    render = function(){ const r = render0.apply(this, arguments); compute(); return r; };
+    function init(){
+      const m = M(); if (!m) return;
+      document.addEventListener('click', e => { if (e.target && e.target.closest && e.target.closest('button') && M() && M().contains(e.target)) st.lastClick = Date.now(); }, true);
+      let q = false;
+      // changes inside a simulation (its readouts move every frame) do not change the steps
+      const inPin = r => { const t = r.target.nodeType === 1 ? r.target : r.target.parentElement; return !!(CFG.pin && t && t.closest && t.closest(CFG.pin)); };
+      new MutationObserver(recs => { if (st.busy || q || recs.every(inPin)) return; q = true; Promise.resolve().then(() => { q = false; compute(); }); }).observe(m, {childList:true, subtree:true});
+      front(!isReview() && !!((() => { try { const r = localStorage.getItem(KEY); return r === null || r === JSON.stringify(fresh()); } catch (e) { return false; } })()));
+      compute();
+    }
+    // for automated checks: show the step that holds an element
+    window.__s37 = {state: () => ({cur: st.cur, names: st.names.slice(), level: st.level}), toStep, front,
+      reveal: sel => { const e = document.querySelector(sel); if (!e || vis(e)) return !!e; for (let k = 0; k < st.names.length; k++){ toStep(k); if (vis(e)) return true; } return false; }};
+    setTimeout(init, 0);
+  })();
   /* ---------- start ---------- */
   const fromHash = () => LV.findIndex(l => l.id === (location.hash || '').slice(1));
   const hi = fromHash(); if (hi >= 0 && unlocked(hi)) S.level = hi;

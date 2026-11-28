@@ -1,3 +1,5 @@
+(Page note: Front page: title and description, then the button 'Get started'. Each stage is shown alone under the stage sequence; the description is not repeated. Where a level has headed sections, they are its steps: the step names are a second row under the level sequence, one step is shown at a time, and Next goes to the next step, then to the next level.)
+
 # How your phone counts your steps
 
 CST286 · Learning trail

@@ -1,3 +1,5 @@
+(Page note: Front page: title and description, then the button 'Get started'. Each stage is shown alone under the stage sequence; the description is not repeated. Where a level has headed sections, they are its steps: the step names are a second row under the level sequence, one step is shown at a time, and Next goes to the next step, then to the next level.)
+
 # From one gate to a machine that adds
 
 Editable companion to trail-nand-to-adder.html. Edit the words here and tell Alan; Alan carries each edit into the .html. The simulator, the live circuit drawing, the tests and the feedback messages they generate live only in the .html.
